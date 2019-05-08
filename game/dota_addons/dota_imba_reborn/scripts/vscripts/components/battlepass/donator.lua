@@ -126,7 +126,6 @@ function DonatorCompanion(ID, unit_name, js)
 	-- set mini doom as default companion if something goes wrong
 	if unit_name == nil then
 		if api:GetPlayerCompanion(ID) then
-			print("Player companion unit name:", api:GetPlayerCompanion(ID))
 			unit_name = api:GetPlayerCompanion(ID)
 		else
 			unit_name = "npc_donator_companion_demi_doom"
@@ -139,7 +138,6 @@ function DonatorCompanion(ID, unit_name, js)
 
 	local model
 	local model_scale
---	local color = hero:GetFittingColor()
 
 	for key, value in pairs(LoadKeyValues("scripts/npc/units/companions.txt")) do
 		if key == unit_name then
@@ -149,7 +147,7 @@ function DonatorCompanion(ID, unit_name, js)
 		end
 	end
 
---	print(unit_name, model, model_scale)
+	print(unit_name, model, model_scale)
 
 	local companion = CreateUnitByName("npc_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
 	companion:SetModel(model)
@@ -171,10 +169,11 @@ function DonatorCompanion(ID, unit_name, js)
 		particle_name[6] = "particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"
 		particle_name[7] = "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
 		particle_name[8] = "particles/econ/courier/courier_babyroshan_winter18/courier_babyroshan_winter18_ambient.vpcf"
+		particle_name[9] = "particles/econ/courier/courier_babyroshan_ti9/courier_babyroshan_ti9_ambient.vpcf"
 
-		if RandomInt(1, 2) == 2 then
-			model = model.."_flying"
-		end
+--		if RandomInt(1, 2) == 2 then
+--			model = model.."_flying"
+--		end
 
 		-- also attach eyes effect later
 		local random_int = RandomInt(0, #particle_name)
@@ -189,6 +188,9 @@ function DonatorCompanion(ID, unit_name, js)
 		elseif random_int == 8 then
 			companion:SetModel("models/courier/baby_rosh/babyroshan_winter18.vmdl")
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_winter18.vmdl")
+		elseif random_int == 9 then
+			companion:SetModel("models/courier/baby_rosh/babyroshan_ti9.vmdl")
+			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_ti9.vmdl")
 		end
 	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
@@ -216,10 +218,4 @@ function DonatorCompanionSkin(id, unit, skin)
 	if hero.companion and hero.companion:GetUnitName() == unit then
 		hero.companion:SetMaterialGroup(tostring(skin))
 	end
-end
-
-function DonatorTag(id)
-	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
-
-	hero:SetCustomHealthLabel("", 0, 0, 0)
 end

@@ -25,7 +25,8 @@ var api = {
 //		rankingsImr10v10 : "imba/meta/rankings/imr-10v10",
 		rankingsXp : "website/statistics/ranking/xp",
 //		rankingsLevel1v1 : "imba/meta/rankings/level-1v1",
-		toggleIngameTag : "imba/toggle-ingame-tag"
+		toggleIngameTag : "imba/toggle-ingame-tag",
+		toggleBPRewards : "imba/toggle-bp-rewards"
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
@@ -109,6 +110,7 @@ var api = {
 		});
 	},
 	updateIngameTag : function(data, success_callback, error_callback) {
+		$.Msg(data)
 		$.AsyncWebRequest(api.base + api.urls.toggleIngameTag, {
 			type : "POST",
 			dataType : "json",
@@ -127,6 +129,30 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error ingame tag " + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+	updateBPRewards : function(data, success_callback, error_callback) {
+		$.Msg(data)
+		$.AsyncWebRequest(api.base + api.urls.toggleBPRewards, {
+			type : "POST",
+			dataType : "json",
+			data : data,
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				$.Msg(obj)
+				if (obj.error) {
+					$.Msg("Error updating bp rewards");
+					error_callback();
+				} else {
+					$.Msg("Updated bp rewards");
+					success_callback();
+				}
+			},
+			error : function(err) {
+				$.Msg("Error bp rewards " + JSON.stringify(err));
 				error_callback();
 			}
 		});
@@ -170,7 +196,7 @@ function ToggleGameOptions() {
 
 var current_sub_tab = "";
 
-function RefreshBattlepass() {
+function RefreshBattlepass(bRewardsDisabled) {
 	if ($("#RefreshBattlepass").BHasClass("Active")) {
 		return;
 	}
@@ -200,9 +226,9 @@ function RefreshBattlepass() {
 	$.Schedule(1.0, function() {
 		$("#RefreshBattlepass").RemoveClass("Active");
 		if (current_sub_tab != "") {
-			Battlepass(true);
+			Battlepass(true, bRewardsDisabled);
 		} else {
-			Battlepass();
+			Battlepass(false, bRewardsDisabled);
 		}		
 	});
 }
@@ -245,7 +271,7 @@ function SwitchDonatorWrapper(type) {
 
 var top_xp = [];
 
-function Battlepass(retainSubTab) {
+function Battlepass(retainSubTab, bRewardsDisabled) {
 	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
 
@@ -262,10 +288,12 @@ function Battlepass(retainSubTab) {
 		HallOfFame("XP");
 	});
 
-	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
+	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
 
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions")["1"];
 	GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
+
+	SetupPanel();
 }
 
 var companion_changed = false;
@@ -454,7 +482,7 @@ function SafeToLeave() {
 	$("#SafeToLeave").style.visibility = "visible";
 }
 
-function GenerateBattlepassPanel(BattlepassRewards, player) {
+function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var i_count = 0;
 	var class_option_count = 1;
 	var plyData = CustomNetTables.GetTableValue("player_table", player);
@@ -515,7 +543,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
 			reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
 
-			if (plyData != null) {
+			if (plyData != null || bRewardsDisabled & bRewardsDisabled == true) {
 				if (i <= plyData.Lvl) {
 					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_panel_unlock");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
@@ -574,10 +602,15 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		var vip = false;
 		i_count = i_count + 1;
 		if (companions[i] != undefined) {
-			companion_unit[i] = companions[i].file;
-			companion_name[i] = companions[i].name;
-			companion_id[i] = companions[i].id;
-			if (companions[i].file == "npc_donator_companion_sappling")
+			companion_unit[i] = companions[i];
+			companion_id[i] = i;
+
+			if (i == 0)
+				companion_name[i] = "Disabled";
+			else
+				companion_name[i] = $.Localize(companion_unit[i]);
+
+			if (companion_unit[i] == "npc_donator_companion_sappling")
 				companion_skin[i] = 3;
 //		} else {
 //			var steamId = Game.GetLocalPlayerInfo().player_steamid;
@@ -599,8 +632,6 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 //			} else {
 //				return;
 //			}
-
-			companion_name[i] = $.Localize(companion_unit[i]);
 		}
 
 		if (i_count > 5) {
@@ -703,22 +734,31 @@ function CompanionSkin(unit, j) {
 }
 
 function SettingsIngameTag() {
-	var tag = False;
+	var tag = false;
+	if (CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).in_game_tag != undefined) {
+		tag = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).in_game_tag
+
+		if (tag == 1)
+			tag = 0
+		else
+			tag = 1
+	}
 
 	api.updateIngameTag({
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
 		in_game_tag : tag
 	}, function() {
 		GameEvents.SendCustomGameEventToServer("change_ingame_tag", {
-			ID : Players.GetLocalPlayer()
+			ID : Players.GetLocalPlayer(),
+			tag : tag
 		});
-		$.Msg("Ingame tag update: success!")
+//		$.Msg("Ingame tag update: success!")
 //		$.Schedule(6.0, function() {
 //			$("#CompanionNotification").RemoveClass("success");
 //			companion_changed = false;
 //		});
 	}, function() {
-		$.Msg("Ingame tag update: failure")
+//		$.Msg("Ingame tag update: failure")
 //		$("#CompanionNotification").AddClass("failure");
 //		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
 //		$.Schedule(6.0, function() {
@@ -726,6 +766,54 @@ function SettingsIngameTag() {
 //			companion_changed = false;
 //		});
 	});
+}
+
+function SettingsBattlepassRewards() {
+	var toggle_rewards = false;
+	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards)
+	if (CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards != undefined) {
+		toggle_rewards = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards
+		$.Msg(typeof(toggle_rewards))
+		if (toggle_rewards == 1)
+			toggle_rewards = 0
+		else
+			toggle_rewards = 1
+	}
+
+	$.Msg("BP Rewards :" + toggle_rewards)
+
+	api.updateBPRewards({
+		steamid : Game.GetLocalPlayerInfo().player_steamid,
+		bp_rewards : toggle_rewards
+	}, function() {
+		RefreshBattlepass(toggle_rewards);
+		$.Msg("BP rewards update: success!")
+//		$.Schedule(6.0, function() {
+//			$("#CompanionNotification").RemoveClass("success");
+//			companion_changed = false;
+//		});
+	}, function() {
+		$.Msg("BP rewards update: failure")
+//		$("#CompanionNotification").AddClass("failure");
+//		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+//		$.Schedule(6.0, function() {
+//			$("#CompanionNotification").RemoveClass("failure");
+//			companion_changed = false;
+//		});
+	});
+}
+
+function SetupPanel() {
+	var player_table = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer());
+
+	$.Msg(player_table.bp_rewards)
+	if (player_table) {
+		if (player_table.in_game_tag)
+			$("#IngameTagCheckBox").checked = player_table.in_game_tag;
+
+		if (player_table.bp_rewards)
+			$("#BPRewardsCheckBox").checked = player_table.bp_rewards;
+	}
 }
 
 /*

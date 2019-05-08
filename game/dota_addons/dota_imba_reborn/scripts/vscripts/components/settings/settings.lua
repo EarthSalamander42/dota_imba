@@ -278,32 +278,27 @@ BANNED_ITEMS[MapDiretide()] = {
 
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns"
 }
 TOWER_ABILITIES["tower2"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration"
 }
 TOWER_ABILITIES["tower3"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
 }
 TOWER_ABILITIES["tower4"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
 	"imba_tower_splash_fire"
 }
-
 
 -- Update game mode net tables
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})

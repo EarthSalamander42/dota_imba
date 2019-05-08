@@ -8,6 +8,14 @@
 			"modifier"		"particles/units/heroes/hero_antimage/antimage_blade_primary.vpcf"
 		}
 	}
+	"5"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"7"
 	{
 		"asset_modifier0"
@@ -392,6 +400,62 @@
 			"type"		"particle_create"
 			"modifier"		"particles/units/heroes/hero_abaddon/abaddon_blade.vpcf"
 		}
+	}
+	"459"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
+	"460"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
 	}
 	"462"
 	{
@@ -877,6 +941,7 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/units/heroes/hero_terrorblade/terrorblade_feet_effects.vpcf"
+			"affected_by_color_gems"		"1"
 		}
 	}
 	"541"
@@ -1447,6 +1512,14 @@
 			"skin"		"1"
 		}
 	}
+	"4010"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"4011"
 	{
 		"asset_modifier0"
@@ -1470,6 +1543,14 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_glow_bfury.vpcf"
+		}
+	}
+	"4023"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"4030"
@@ -1685,6 +1766,14 @@
 			"modifier"		"particles/econ/items/tidehunter/tidehunter_mine/tidehunter_mine_drag_sparks.vpcf"
 		}
 	}
+	"4134"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"4145"
 	{
 		"skin"		"1"
@@ -1713,12 +1802,28 @@
 			"modifier"		"particles/econ/items/kunkka/kunkka_weapon_admirable/kunkka_weapon_glow_admirable_ambient.vpcf"
 		}
 	}
+	"4163"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"4166"
 	{
 		"asset_modifier0"
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/drow/drow_bow_coldcase/drow_bowstring_coldcase.vpcf"
+		}
+	}
+	"4172"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"4176"
@@ -1833,6 +1938,14 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/units/heroes/hero_drow/drow_bowstring.vpcf"
+		}
+	}
+	"4283"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"4300"
@@ -2008,6 +2121,14 @@
 			"type"		"activity"
 			"asset"		"ACT_DOTA_DIE"
 			"modifier"		"faces_hakama"
+		}
+	}
+	"4406"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"4411"
@@ -2207,6 +2328,14 @@
 	{
 		"skip_model_combine"		"1"
 	}
+	"4494"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"4510"
 	{
 		"asset_modifier0"
@@ -2314,6 +2443,14 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/doom/doom_judgement_day/doom_bringer_judgement_day_sword_ambient.vpcf"
+		}
+	}
+	"4528"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"4542"
@@ -3187,6 +3324,15 @@
 			"modifier"		"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
 		}
 	}
+	"4803"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
+			"modifier"		"particles/econ/items/keeper_of_the_light/kotl_weapon_arcane_staff/keeper_base_attack_arcane_staff.vpcf"
+		}
+	}
 	"4811"
 	{
 		"asset_modifier0"
@@ -3636,6 +3782,14 @@
 			"modifier"		"spear"
 		}
 	}
+	"5030"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"5047"
 	{
 		"skip_model_combine"		"1"
@@ -3954,6 +4108,15 @@
 	"5180"
 	{
 		"skip_model_combine"		"1"
+	}
+	"5186"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
+			"modifier"		"particles/econ/items/queen_of_pain/qop_navi_mace/queen_base_attack_navi_mace.vpcf"
+		}
 	}
 	"5192"
 	{
@@ -4613,6 +4776,62 @@
 			"modifier"		"particles/econ/items/natures_prophet/natures_prophet_weapon_enchanted/natures_prophet_enchanted_ambient.vpcf"
 		}
 	}
+	"5392"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"5393"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
 	"5395"
 	{
 		"asset_modifier2"
@@ -4660,6 +4879,12 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/zeus/lightning_weapon_fx/zues_immortal_lightning_weapon.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
+			"modifier"		"particles/econ/items/zeus/lightning_weapon_fx/zuus_base_attack_immortal_lightning.vpcf"
 		}
 	}
 	"5416"
@@ -5143,6 +5368,62 @@
 			"asset"		"npc_dota_warlock_golem"
 			"modifier"		"models/items/warlock/golem/the_torchbearer/the_torchbearer.vmdl"
 		}
+	}
+	"5626"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
+	"5628"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
 	}
 	"5637"
 	{
@@ -5871,6 +6152,15 @@
 			"modifier"		"spear"
 		}
 	}
+	"5753"
+	{
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/luna_eternal_eclipse/luna_attack_eternal_eclipse.vpcf"
+		}
+	}
 	"5755"
 	{
 		"styles"
@@ -5899,6 +6189,34 @@
 				"icon_path"		"econ/items/antimage/gift_of_the_awakened_style_2/gift_of_the_awakened_style_2"
 			}
 		}
+	}
+	"5756"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
 	}
 	"5758"
 	{
@@ -5958,6 +6276,34 @@
 			"1"
 			{
 				"icon_path"		"econ/items/earthshaker/golden_reel_head_alt/golden_reel_head_alt"
+			}
+		}
+	}
+	"5777"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
 			}
 		}
 	}
@@ -6059,6 +6405,15 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/natures_prophet/natures_prophet_weapon_scythe_of_ice/natures_prophet_scythe_of_ice.vpcf"
+		}
+	}
+	"5823"
+	{
+		"asset_modifier2"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/luna_crescent_moon/luna_attack_crescent_moon.vpcf"
 		}
 	}
 	"5828"
@@ -6727,6 +7082,15 @@
 			"modifier"		"particles/units/heroes/hero_kunkka/kunkka_weapon_glow_ambient.vpcf"
 		}
 	}
+	"5945"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/luna_lucent_rider/luna_attack_lucent_rider.vpcf"
+		}
+	}
 	"5947"
 	{
 		"asset_modifier0"
@@ -6776,6 +7140,34 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/units/heroes/hero_death_prophet/death_prophet_ambient_dress.vpcf"
+		}
+	}
+	"5964"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
 		}
 	}
 	"5968"
@@ -8100,6 +8492,62 @@
 			"modifier"		"models/items/beastmaster/hawk/fotw_eagle/fotw_eagle.vmdl"
 		}
 	}
+	"6308"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
+	"6314"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
 	"6316"
 	{
 		"asset_modifier0"
@@ -8290,6 +8738,70 @@
 			"1"
 			{
 				"icon_path"		"econ/items/silencer/whispertribunal_shield_s1/whispertribunal_shield_s1"
+			}
+		}
+	}
+	"6396"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
+	"6400"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"6402"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
 			}
 		}
 	}
@@ -8561,6 +9073,12 @@
 			"modifier"		"MGC"
 		}
 		"skip_model_combine"		"1"
+		"asset_modifier0"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
+			"modifier"		"particles/econ/items/sniper/sniper_charlie/sniper_base_attack_charlie.vpcf"
+		}
 	}
 	"6458"
 	{
@@ -8650,6 +9168,34 @@
 			}
 		}
 	}
+	"6479"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
 	"6480"
 	{
 		"asset_modifier0"
@@ -8721,8 +9267,31 @@
 	}
 	"6486"
 	{
-		"skin"		"1"
 		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"1"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"1"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
 	}
 	"6487"
 	{
@@ -8999,6 +9568,34 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/faceless_void/faceless_void_head_eternalmind/faceless_void_head_eternalmind.vpcf"
+		}
+	}
+	"6578"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
 		}
 	}
 	"6580"
@@ -9484,6 +10081,34 @@
 			"modifier"		"particles/econ/items/natures_prophet/natures_prophet_weapon_lunar/natures_prophet_weapon_lunar.vpcf"
 		}
 	}
+	"6713"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
 	"6716"
 	{
 		"asset_modifier0"
@@ -9808,6 +10433,34 @@
 			"modifier"		"models/items/shadowshaman/serpent_ward/tangki_serpent_ward/tangki_serpent_ward.vmdl"
 		}
 	}
+	"6820"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
 	"6824"
 	{
 		"asset_modifier0"
@@ -10032,6 +10685,12 @@
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/techies/techies_arcana/techies_bigshot_fuse.vpcf"
 		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_techies/techies_base_attack.vpcf"
+			"modifier"		"particles/econ/items/techies/techies_arcana/techies_base_attack_arcana.vpcf"
+		}
 	}
 	"6881"
 	{
@@ -10134,6 +10793,34 @@
 			"asset"		"npc_dota_gyrocopter_homing_missile"
 			"modifier"		"models/items/gyrocopter/rainmaker_offhand/rainmaker_offhand.vmdl"
 		}
+	}
+	"6904"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
 	}
 	"6907"
 	{
@@ -10771,6 +11458,12 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient_eyes.vpcf"
+		}
+		"asset_modifier6"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+			"modifier"		"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_base_attack.vpcf"
 		}
 		"asset_modifier7"
 		{
@@ -11672,6 +12365,37 @@
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_ambient.vpcf"
 			"style"		"0"
+		}
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier12"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_right_only_ambient.vpcf"
+			"style"		"1"
 		}
 	}
 	"7295"
@@ -13585,6 +14309,14 @@
 			"modifier"		"models/items/gyrocopter/g17_flying_fortress_offhand/g17_flying_fortress_offhand.vmdl"
 		}
 	}
+	"7766"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"7778"
 	{
 		"asset_modifier0"
@@ -14270,6 +15002,14 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/warlock/warlock_staff_ceaseless_ambient/warlock_ceaseless_ambient_glow.vpcf"
+		}
+	}
+	"7901"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"7905"
@@ -15007,6 +15747,15 @@
 	{
 		"skip_model_combine"		"0"
 	}
+	"7962"
+	{
+		"asset_modifier2"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/nightsilver_woods_weapon/luna_attack_nightsilver.vpcf"
+		}
+	}
 	"7971"
 	{
 		"asset_modifier"
@@ -15388,6 +16137,12 @@
 			"type"		"particle_replace"
 			"asset"		"particles/units/heroes/hero_razor/razor_whip.vpcf"
 			"modifier"		"particles/econ/items/razor/razor_ti6/razor_whip_ti6.vpcf"
+		}
+		"asset_modifier3"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
+			"modifier"		"particles/econ/items/razor/razor_ti6/razor_base_attack_ti6.vpcf"
 		}
 	}
 	"8001"
@@ -16046,6 +16801,16 @@
 			}
 		}
 	}
+	"8085"
+	{
+		"asset_modifier0"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"ti9_taunt"
+			"gesture"		"1"
+		}
+	}
 	"8086"
 	{
 		"asset_modifier0"
@@ -16163,6 +16928,62 @@
 	"8133"
 	{
 		"skip_model_combine"		"0"
+	}
+	"8142"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"8145"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
 	}
 	"8147"
 	{
@@ -16414,6 +17235,12 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/shadow_fiend/sf_desolation/shadow_fiend_desolation_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+			"modifier"		"particles/econ/items/shadow_fiend/sf_desolation/sf_base_attack_desolation.vpcf"
 		}
 	}
 	"8267"
@@ -16883,6 +17710,14 @@
 	{
 		"skip_model_combine"		"1"
 	}
+	"8384"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"8387"
 	{
 		"skip_model_combine"		"1"
@@ -17120,6 +17955,11 @@
 	"8470"
 	{
 		"skin"		"1"
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
 	}
 	"8471"
 	{
@@ -18294,6 +19134,62 @@
 			}
 		}
 	}
+	"8577"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+	}
+	"8578"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
 	"8581"
 	{
 		"asset_modifier0"
@@ -18405,6 +19301,12 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/leshrac/leshrac_tormented_staff/leshrac_tormented_staff.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_leshrac/leshrac_base_attack.vpcf"
+			"modifier"		"particles/econ/items/leshrac/leshrac_tormented_staff/leshrac_base_attack_tormented.vpcf"
 		}
 	}
 	"8618"
@@ -19732,6 +20634,14 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/units/heroes/hero_earth_spirit/espirit_ambient_weapon.vpcf"
+		}
+	}
+	"8908"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
 		}
 	}
 	"8915"
@@ -21662,6 +22572,13 @@
 			"modifier"		"particles/econ/items/sniper/sniper_witch_hunter/sniper_witch_hunter_weapon_ambient.vpcf"
 			"style"		"0"
 		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
+			"modifier"		"particles/econ/items/sniper/sniper_witch_hunter/sniper_witch_hunter_base_attack.vpcf"
+			"style"		"0"
+		}
 	}
 	"9109"
 	{
@@ -21817,6 +22734,17 @@
 	"9140"
 	{
 		"skip_model_combine"		"1"
+	}
+	"9147"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"drum_beat"
+			"style"		"0"
+			"gesture"		"1"
+		}
 	}
 	"9150"
 	{
@@ -22114,6 +23042,13 @@
 			"type"		"activity"
 			"asset"		"ALL"
 			"modifier"		"immortal_shoulder"
+			"style"		"0"
+		}
+		"asset_modifier6"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
+			"modifier"		"particles/econ/items/crystal_maiden/ti7_immortal_shoulder/cm_ti7_immortal_base_attack.vpcf"
 			"style"		"0"
 		}
 	}
@@ -23207,6 +24142,12 @@
 			"asset"		"particles/units/heroes/hero_templar_assassin/templar_assassin_ambient.vpcf"
 			"modifier"		"particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_ambient.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+			"modifier"		"particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf"
+		}
 	}
 	"9321"
 	{
@@ -24239,6 +25180,14 @@
 			"modifier"		"models/items/dragon_knight/legacy_of_the_winterwyrm_form_of_the_winterwyrm/legacy_of_the_winterwyrm_form_of_the_winterwyrm.vmdl"
 		}
 	}
+	"9647"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/axe/ti9_jungle_axe/axe_ti9__undie.vmdl"
+		}
+	}
 	"9664"
 	{
 		"asset_modifier"
@@ -24248,6 +25197,16 @@
 			"modifier"		"ti8_taunt"
 			"gesture"		"1"
 			"style"		"0"
+		}
+	}
+	"9666"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"ti9_taunt"
+			"gesture"		"1"
 		}
 	}
 	"9667"
@@ -24545,7 +25504,6 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/earthshaker/es_might_weapon/es_might_weapon_ambient.vpcf"
-			"style"		"0"
 		}
 		"skip_model_combine"		"1"
 		"asset_modifier1"
@@ -24553,7 +25511,30 @@
 			"type"		"activity"
 			"asset"		"ALL"
 			"modifier"		"totem"
-			"style"		"0"
+		}
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
 		}
 	}
 	"9733"
@@ -24571,6 +25552,37 @@
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/earthshaker/es_might_arms/es_might_arms_ambient.vpcf"
 			"style"		"0"
+		}
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earthshaker/es_might_arms/es_might_arms_ambient_right_only.vpcf"
+			"style"		"1"
 		}
 	}
 	"9736"
@@ -39853,6 +40865,16 @@
 			"style"		"0"
 		}
 	}
+	"12306"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"ti9_taunt"
+			"gesture"		"1"
+		}
+	}
 	"12307"
 	{
 		"skip_model_combine"		"1"
@@ -39962,6 +40984,12 @@
 			{
 				"icon_path"		"econ/items/leshrac/tormented_staff_ti8_retro/tormented_staff_ti8_retro1_style1"
 			}
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_leshrac/leshrac_base_attack.vpcf"
+			"modifier"		"particles/econ/items/leshrac/leshrac_tormented_staff_retro/leshrac_base_attack_retro_tormented.vpcf"
 		}
 	}
 	"12309"
@@ -40094,6 +41122,13 @@
 			"type"		"activity"
 			"asset"		"ALL"
 			"modifier"		"ti8"
+			"style"		"0"
+		}
+		"asset_modifier8"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
+			"modifier"		"particles/econ/items/queen_of_pain/qop_ti8_immortal/qop_ti8_base_attack.vpcf"
 			"style"		"0"
 		}
 	}
@@ -40268,6 +41303,13 @@
 			"style"		"0"
 		}
 		"skin"		"1"
+		"asset_modifier8"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
+			"modifier"		"particles/econ/items/queen_of_pain/qop_ti8_immortal/qop_ti8_golden_base_attack.vpcf"
+			"style"		"0"
+		}
 	}
 	"12392"
 	{
@@ -40342,6 +41384,17 @@
 			"style"		"0"
 		}
 	}
+	"12413"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"hang_ten_gesture"
+			"gesture"		"1"
+			"style"		"0"
+		}
+	}
 	"12414"
 	{
 		"skip_model_combine"		"1"
@@ -40356,6 +41409,13 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/silencer/silencer_ti8/silencer_ti8_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
+			"modifier"		"particles/econ/items/silencer/silencer_ti8/silencer_ti8_attack.vpcf"
 			"style"		"0"
 		}
 	}
@@ -40514,6 +41574,26 @@
 			"style"		"0"
 		}
 		"skin"		"2"
+	}
+	"12432"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"average_bear"
+			"gesture"		"1"
+		}
+	}
+	"12434"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"ck_gesture"
+			"gesture"		"1"
+		}
 	}
 	"12444"
 	{
@@ -40787,6 +41867,62 @@
 	"12471"
 	{
 		"skip_model_combine"		"0"
+	}
+	"12480"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"12481"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
 	}
 	"12482"
 	{
@@ -41280,6 +42416,68 @@
 	{
 		"skip_model_combine"		"1"
 	}
+	"12746"
+	{
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"bracer"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Bracers_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"bracer"		"0"
+				}
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"12747"
+	{
+		"skip_model_combine"		"1"
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"frostivus"
+		}
+	}
 	"12748"
 	{
 		"skip_model_combine"		"1"
@@ -41689,6 +42887,17 @@
 			"asset"		"models/items/death_prophet/skirt_of_the_blizzard/skirt_of_the_blizzard_vortex.vmdl"
 		}
 	}
+	"12918"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"drum_major_gesture"
+			"style"		"0"
+			"gesture"		"1"
+		}
+	}
 	"12919"
 	{
 		"asset_modifier0"
@@ -41720,6 +42929,1270 @@
 			"type"		"particle_create"
 			"modifier"		"particles/econ/courier/courier_nian/courier_nian_ambient.vpcf"
 		}
+	}
+	"12920"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"taunt_ti9"
+			"gesture"		"1"
+		}
+	}
+	"12923"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"ti9_taunt"
+			"gesture"		"1"
+		}
+	}
+	"12926"
+	{
+		"asset_modifier2"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"skip_model_combine"		"1"
+	}
+	"12931"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_ambient_hair_ti9.vpcf"
+		}
+	}
+	"12933"
+	{
+		"asset_modifier2"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_head"
+			"style"		"0"
+		}
+	}
+	"12934"
+	{
+		"asset_modifier4"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_immortal_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier5"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_arms"
+			"style"		"0"
+		}
+	}
+	"12940"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"taunt_antimage_cheer"
+			"gesture"		"1"
+		}
+	}
+	"12945"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_weapon"
+		}
+		"asset_modifier5"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_ti9_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12946"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier4"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
+			"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_base_attack.vpcf"
+			"style"		"0"
+		}
+	}
+	"12947"
+	{
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_observer_wards"
+			"modifier"		"models/items/wards/ti9_totem_ward/ti9_totem_ward.vmdl"
+			"frequency"		"1"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_sentry_wards"
+			"modifier"		"models/items/wards/ti9_totem_ward/ti9_totem_ward.vmdl"
+			"frequency"		"1"
+		}
+	}
+	"12953"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_TAUNT"
+			"modifier"		"lich_ballplay"
+			"gesture"		"1"
+		}
+	}
+	"12957"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier4"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12962"
+	{
+		"asset_modifier0"
+		{
+			"type"		"courier"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1.vmdl"
+			"asset"		"radiant"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"courier"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1.vmdl"
+			"asset"		"dire"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"courier_flying"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_flying.vmdl"
+			"asset"		"radiant"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"courier_flying"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_flying.vmdl"
+			"asset"		"dire"
+			"style"		"0"
+		}
+		"asset_modifier"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl2/courier_ti9_lvl2.vmdl"
+			"style"		"1"
+		}
+		"asset_modifier4"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl2/courier_ti9_lvl2.vmdl"
+			"style"		"1"
+		}
+		"asset_modifier5"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl2/courier_ti9_lvl2_flying.vmdl"
+			"style"		"1"
+		}
+		"asset_modifier6"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl2/courier_ti9_lvl2_flying.vmdl"
+			"style"		"1"
+		}
+		"asset_modifier7"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl3/courier_ti9_lvl3.vmdl"
+			"style"		"2"
+		}
+		"asset_modifier8"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl3/courier_ti9_lvl3.vmdl"
+			"style"		"2"
+		}
+		"asset_modifier9"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl3/courier_ti9_lvl3_flying.vmdl"
+			"style"		"2"
+		}
+		"asset_modifier10"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl3/courier_ti9_lvl3_flying.vmdl"
+			"style"		"2"
+		}
+		"asset_modifier11"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl4/courier_ti9_lvl4.vmdl"
+			"style"		"3"
+		}
+		"asset_modifier12"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl4/courier_ti9_lvl4.vmdl"
+			"style"		"3"
+		}
+		"asset_modifier13"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl4/courier_ti9_lvl4_flying.vmdl"
+			"style"		"3"
+		}
+		"asset_modifier14"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl4/courier_ti9_lvl4_flying.vmdl"
+			"style"		"3"
+		}
+		"asset_modifier15"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl5/courier_ti9_lvl5.vmdl"
+			"style"		"4"
+		}
+		"asset_modifier16"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl5/courier_ti9_lvl5.vmdl"
+			"style"		"4"
+		}
+		"asset_modifier17"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl5/courier_ti9_lvl5_flying.vmdl"
+			"style"		"4"
+		}
+		"asset_modifier18"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl5/courier_ti9_lvl5_flying.vmdl"
+			"style"		"4"
+		}
+		"asset_modifier19"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl6/courier_ti9_lvl6.vmdl"
+			"style"		"5"
+		}
+		"asset_modifier20"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl6/courier_ti9_lvl6.vmdl"
+			"style"		"5"
+		}
+		"asset_modifier21"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl6/courier_ti9_lvl6_flying.vmdl"
+			"style"		"5"
+		}
+		"asset_modifier22"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl6/courier_ti9_lvl6_flying.vmdl"
+			"style"		"5"
+		}
+		"asset_modifier23"
+		{
+			"type"		"courier"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl7/courier_ti9_lvl7.vmdl"
+			"style"		"6"
+		}
+		"asset_modifier24"
+		{
+			"type"		"courier"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl7/courier_ti9_lvl7.vmdl"
+			"style"		"6"
+		}
+		"asset_modifier25"
+		{
+			"type"		"courier_flying"
+			"asset"		"radiant"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl7/courier_ti9_lvl7_flying.vmdl"
+			"style"		"6"
+		}
+		"asset_modifier26"
+		{
+			"type"		"courier_flying"
+			"asset"		"dire"
+			"modifier"		"models/items/courier/courier_ti9/courier_ti9_lvl7/courier_ti9_lvl7_flying.vmdl"
+			"style"		"6"
+		}
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_Default"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17499"
+					"price"		"1"
+				}
+			}
+			"2"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_2"
+				"alternate_icon"		"2"
+				"unlock"
+				{
+					"item_def"		"17500"
+					"price"		"1"
+				}
+			}
+			"3"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_3"
+				"alternate_icon"		"3"
+				"unlock"
+				{
+					"item_def"		"17501"
+					"price"		"1"
+				}
+			}
+			"4"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_4"
+				"alternate_icon"		"4"
+				"unlock"
+				{
+					"item_def"		"17502"
+					"price"		"1"
+				}
+			}
+			"5"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_5"
+				"alternate_icon"		"5"
+				"unlock"
+				{
+					"item_def"		"17503"
+					"price"		"1"
+				}
+			}
+			"6"
+			{
+				"name"		"#DOTA_Style_TI9_Courier_6"
+				"alternate_icon"		"6"
+				"unlock"
+				{
+					"item_def"		"17504"
+					"price"		"1"
+				}
+			}
+		}
+		"asset_modifier27"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl1_base.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier28"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl2_base.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier29"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl3_base.vpcf"
+			"style"		"2"
+		}
+		"asset_modifier30"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl4_base.vpcf"
+			"style"		"3"
+		}
+		"asset_modifier31"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl5_base.vpcf"
+			"style"		"4"
+		}
+		"asset_modifier32"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl6_base.vpcf"
+			"style"		"5"
+		}
+		"asset_modifier33"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_ti9/courier_ti9_lvl7_base.vpcf"
+			"style"		"6"
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style1"
+			}
+			"2"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style2"
+			}
+			"3"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style3"
+			}
+			"4"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style4"
+			}
+			"5"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style5"
+			}
+			"6"
+			{
+				"icon_path"		"econ/items/courier/courier_ti9/courier_ti9_lvl1/courier_ti9_lvl1_style6"
+			}
+		}
+	}
+	"12964"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_hero_axe"
+			"modifier"		"models/items/axe/ti9_jungle_axe/axe_bare.vmdl"
+		}
+		"asset_modifier2"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+		"asset_modifier14"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_misc_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12965"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_armor_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12966"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_belt_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12968"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12969"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_totem"
+		}
+		"hide_styles_from_ui"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_0"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level == 0"
+				"body_groups"
+				{
+					"saddle"		"1"
+				}
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Totem_Arcana_Test_1"
+				"skin"		"0"
+				"auto_style_rule"		"arcana_level > 0"
+				"body_groups"
+				{
+					"saddle"		"0"
+				}
+			}
+		}
+		"asset_modifier4"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier5"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient.vpcf"
+			"style"		"1"
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal"
+			}
+		}
+	}
+	"12973"
+	{
+		"skip_model_combine"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17506"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_head/ti9_cavern_crawl_dazzle_head"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_head/ti9_cavern_crawl_dazzle_head_style1"
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_set/dazzle_ti9_head_ambient.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_set/dazzle_ti9_head_lvl1_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12974"
+	{
+		"skip_model_combine"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17506"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_shoulders/ti9_cavern_crawl_dazzle_shoulders"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_shoulders/ti9_cavern_crawl_dazzle_shoulders_style1"
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_set/dazzle_ti9_shoulder_ambient.vpcf"
+			"style"		"1"
+		}
+	}
+	"12975"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17506"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_arms/ti9_cavern_crawl_dazzle_arms"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_arms/ti9_cavern_crawl_dazzle_arms_style1"
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"12976"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17506"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_legs/ti9_cavern_crawl_dazzle_legs"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_legs/ti9_cavern_crawl_dazzle_legs_style1"
+			}
+		}
+		"skip_model_combine"		"1"
+	}
+	"12977"
+	{
+		"skip_model_combine"		"1"
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17506"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_weapon/ti9_cavern_crawl_dazzle_weapon"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_weapon/ti9_cavern_crawl_dazzle_weapon_style1"
+			}
+		}
+	}
+	"12981"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17507"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_arms/ti9_cavern_crawl_ursa_arms"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_arms/ti9_cavern_crawl_ursa_arms_style1"
+			}
+		}
+	}
+	"12982"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17507"
+					"price"		"1"
+				}
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ursa/ursa_ti9/ursa_ti9_head_ambient.vpcf"
+			"style"		"0"
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_head/ti9_cavern_crawl_ursa_head"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_head/ti9_cavern_crawl_ursa_head_style1"
+			}
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ursa/ursa_ti9/ursa_ti9_head_alt_ambient.vpcf"
+			"style"		"1"
+		}
+	}
+	"12983"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17507"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_back/ti9_cavern_crawl_ursa_back"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_back/ti9_cavern_crawl_ursa_back_style1"
+			}
+		}
+	}
+	"12984"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17507"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_belt/ti9_cavern_crawl_ursa_belt"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_belt/ti9_cavern_crawl_ursa_belt_style1"
+			}
+		}
+	}
+	"12987"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_weapon/ti9_sven_cavern_crawl_weapon"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_weapon/ti9_sven_cavern_crawl_weapon_style1"
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/sven/sven_ti9/sven_ti9_weapon_ambient.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/sven/sven_ti9/sven_ti9_weapon_ambient_lvl1.vpcf"
+			"style"		"0"
+		}
+	}
+	"12988"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_arms/ti9_sven_cavern_crawl_arms"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_arms/ti9_sven_cavern_crawl_arms_style1"
+			}
+		}
+	}
+	"12989"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_belt/ti9_sven_cavern_crawl_belt"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_belt/ti9_sven_cavern_crawl_belt_style1"
+			}
+		}
+	}
+	"12990"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_back/ti9_sven_cavern_crawl_back"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_back/ti9_sven_cavern_crawl_back_style1"
+			}
+		}
+	}
+	"12991"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_head/ti9_sven_cavern_crawl_head"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_head/ti9_sven_cavern_crawl_head_style1"
+			}
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/sven/sven_ti9/sven_ti9_head_ambient.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/sven/sven_ti9/sven_ti9_head_ambient_lvl1.vpcf"
+			"style"		"0"
+		}
+	}
+	"12992"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Default"
+				"skin"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_TI9_Cavern_Crawl_Upgrade"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"item_def"		"17508"
+					"price"		"1"
+				}
+			}
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_shoulder/ti9_sven_cavern_crawl_shoulder"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_shoulder/ti9_sven_cavern_crawl_shoulder_style1"
+			}
+		}
+	}
+	"12993"
+	{
+		"skip_model_combine"		"1"
+		"skin"		"1"
+		"asset_modifier2"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_golden_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+	}
+	"12994"
+	{
+		"asset_modifier4"
+		{
+			"type"		"courier"
+			"modifier"		"models/courier/baby_rosh/babyroshan_ti9.vmdl"
+			"asset"		"radiant"
+		}
+		"asset_modifier5"
+		{
+			"type"		"courier"
+			"modifier"		"models/courier/baby_rosh/babyroshan_ti9.vmdl"
+			"asset"		"dire"
+		}
+		"asset_modifier0"
+		{
+			"type"		"courier_flying"
+			"modifier"		"models/courier/baby_rosh/babyroshan_ti9_flying.vmdl"
+			"asset"		"radiant"
+		}
+		"asset_modifier2"
+		{
+			"type"		"courier_flying"
+			"modifier"		"models/courier/baby_rosh/babyroshan_ti9_flying.vmdl"
+			"asset"		"dire"
+		}
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_babyroshan_ti9/courier_babyroshan_ti9_ambient.vpcf"
+			"ground_courier_only"		"1"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/courier/courier_babyroshan_ti9/courier_babyroshan_ti9_ambient.vpcf"
+			"flying_courier_only"		"1"
+			"style"		"0"
+		}
+		"skin"		"6"
+	}
+	"12996"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/events/ti9/ti9_emblem_effect.vpcf"
+			"spawn_in_loadout_only"		"2"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti9/emblem_loadout_ambient_ti9.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"
+		}
+	}
+	"12998"
+	{
+		"asset_modifier4"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_immortal_ambient_gold.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier5"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_arms"
+			"style"		"0"
+		}
+		"skin"		"1"
+		"skip_model_combine"		"0"
 	}
 	"15869"
 	{
@@ -42991,6 +45464,118 @@
 			"modifier"		"models/props_structures/tower_dragon_black.vmdl"
 		}
 	}
+	"17483"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17484"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17486"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17511"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17512"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17513"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
+	"17514"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+		}
+	}
 	"20129"
 	{
 		"asset_modifier0"
@@ -43063,6 +45648,48 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"models/items/courier/frostivus2018_courier_serac_the_seal/frostivus2018_courier_serac_the_seal_flying.vmdl"
+		}
+	}
+	"21326"
+	{
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_weapon/ti9_cavern_crawl_dazzle_weapon"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/dazzle/ti9_cavern_crawl_dazzle_weapon/ti9_cavern_crawl_dazzle_weapon_style1"
+			}
+		}
+	}
+	"21327"
+	{
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_belt/ti9_cavern_crawl_ursa_belt"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/ursa/ti9_cavern_crawl_ursa_belt/ti9_cavern_crawl_ursa_belt_style1"
+			}
+		}
+	}
+	"21328"
+	{
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_weapon/ti9_sven_cavern_crawl_weapon"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/sven/ti9_sven_cavern_crawl_weapon/ti9_sven_cavern_crawl_weapon_style1"
+			}
 		}
 	}
 }

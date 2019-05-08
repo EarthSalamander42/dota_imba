@@ -170,6 +170,8 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			IMR_5v5_change = 0,
 			donator_level = api:GetDonatorStatus(ID),
 			donator_color = rgbToHex(donator_color),
+			in_game_tag = api:GetPlayerTagEnabled(ID),
+			bp_rewards = api:GetPlayerBPRewardsEnabled(ID)
 		})
 	end
 

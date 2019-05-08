@@ -383,6 +383,32 @@ function Wearable:WearAfterRespawn(hUnit, hNewWears)
 							ActivityModifier:AddWearableActivity(hUnit, am_table.modifier, sItemDef)
 							hWear["activity"] = true
 						end
+					elseif type(am_table) == "table" and am_table.type == "particle_projectile" then
+						-- 更换攻击弹道特效
+						if
+							((not am_table.style) or tostring(am_table.style) == sStyle) and
+								(not am_table.spawn_in_loadout_only)
+						 then
+							local default_projectile = am_table.asset
+							local new_projectile = am_table.modifier
+							if hUnit:GetRangedProjectileName() == default_projectile then
+								hWear["default_projectile"] = default_projectile
+								hUnit:SetRangedProjectileName(new_projectile)
+							end
+						end
+					elseif type(am_table) == "table" and am_table.type == "entity_model" then
+						-- print("entity_model", am_table.asset)
+						-- 更换召唤物模型
+						hUnit.summon_model = hUnit.summon_model or {}
+						hUnit.summon_model[am_table.asset] = am_table.modifier
+						hWear["bChangeSummon"] = hWear["bChangeSummon"] or {}
+						hWear["bChangeSummon"][am_table.asset] = true
+	
+						-- 召唤物skin写在外面，目前发现骨法金棒子 剑圣金猫
+						local nSkin = asset_modifiers["skin"]
+						if nSkin ~= nil then
+							hUnit.summon_skin = nSkin
+						end
 					end
 				end
 			end
@@ -664,6 +690,10 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 				end
 			end
 
+			if hUnit.Slots[sSlotName]["default_projectile"] then
+				hUnit:SetRangedProjectileName(hUnit.Slots[sSlotName]["default_projectile"])
+			end
+
 			if hUnit.Slots[sSlotName]["additional_wearable"] then
 				for _, prop in pairs(hUnit.Slots[sSlotName]["additional_wearable"]) do
 					if prop and IsValidEntity(prop) then
@@ -834,6 +864,16 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 					Wearable:AddParticle(hUnit, hWear, particle_name, sSlotName, sStyle)
 					hWear["replace_particle_names"] = hWear["replace_particle_names"] or {}
 					hWear["replace_particle_names"][default_particle_name] = true
+				end
+			elseif type(am_table) == "table" and am_table.type == "particle_projectile" then
+				-- 更换攻击弹道特效
+				if ((not am_table.style) or tostring(am_table.style) == sStyle) and (not am_table.spawn_in_loadout_only) then
+					local default_projectile = am_table.asset
+					local new_projectile = am_table.modifier
+					if hUnit:GetRangedProjectileName() == default_projectile then
+						hWear["default_projectile"] = default_projectile
+						hUnit:SetRangedProjectileName(new_projectile)
+					end
 				end
 			elseif type(am_table) == "table" and am_table.type == "model_skin" then
 				-- 模型皮肤
@@ -1180,16 +1220,12 @@ function Wearable:SwitchPrismatic(hUnit, sPrismaticName)
 			if hUnit.Slots then
 				hWear = hUnit.Slots[sSlotName]
 			end
-			-- if hWear["model"] then
-			--     hWear["model"]:SetRenderColor(vColor.x, vColor.y, vColor.z)
-			-- end
+
 			if particle_index ~= false then
 				ParticleManager:DestroyParticle(particle_index, true)
 				ParticleManager:ReleaseParticleIndex(particle_index)
 			end
 			local new_p_index = Wearable:AddParticle(hUnit, hWear, particle_name, sSlotName, sStyle)
-			ParticleManager:SetParticleControl(new_p_index, 16, Vector(1, 0, 0))
-			ParticleManager:SetParticleControl(new_p_index, 15, vColor)
 
 			p_table.particle_index = new_p_index
 			if hWear then
@@ -1445,6 +1481,8 @@ function Wearable:SpecialFixAnim(hUnit, sItemDef)
 		return "ACT_DOTA_IDLE"
 	elseif sItemDef == "7375" then
 		-- 修复海民不朽企鹅动作 其他动作还没支持
+	elseif sItemDef == "9059" then
+		-- 修复主宰至宝动作 其他动作还没支持
 		return "ACT_DOTA_IDLE"
 	elseif sItemDef == "9241" then
 		-- 修复血魔不朽头动作 其他动作还没支持
@@ -1511,26 +1549,20 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 	if not hUnit.Slots then
 		hUnit.Slots = {}
 		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
-
-		-- testing
---		Timers:CreateTimer(function()
---			print(hUnit.Slots)
-
---			return 1.0
---		end)
 	end
 
 --	print("Default Wearables:")
 	for i, child in ipairs(hUnit:GetChildren()) do
-		if child:GetClassname() == "dota_item_wearable" then
+		if IsValidEntity(child) and child:GetClassname() == "dota_item_wearable" then
 			if child:GetModelName() ~= "" then
 				if IsInToolsMode() then
-					print(child:GetModelName())
+--					print("Wearable:", child, child:GetModelName())
 				end
 
 				for key, value in pairs(Wearable.items_game["items"]) do
 					if value["model_player"] == child:GetModelName() then
-						child:RemoveSelf()
+--						print("Remove wearable:", child:GetModelName())
+						UTIL_Remove(child)
 
 						local item_slot = value["item_slot"]
 

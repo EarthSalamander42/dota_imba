@@ -25,6 +25,7 @@ function Precache( context )
 	LinkLuaModifier("modifier_invulnerable_hidden", "components/modifiers/modifier_invulnerable_hidden.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("components/modifiers/demo/lm_take_no_damage", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
 	-- Battlepass precaching
 	Wearables:PrecacheWearables(context)

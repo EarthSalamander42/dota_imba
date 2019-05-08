@@ -90,6 +90,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/huskar_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/axe_immortal.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
