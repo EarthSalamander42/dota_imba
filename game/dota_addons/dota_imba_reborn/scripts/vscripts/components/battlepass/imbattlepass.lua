@@ -557,7 +557,7 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
 				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
+		elseif hero:GetUnitName() == "npc_dota_hero_enigma" and not PlayerResource:GetSteamID(hero:GetPlayerID()) == 76561198046069202 then -- Manual Crux exception zzz
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")
 

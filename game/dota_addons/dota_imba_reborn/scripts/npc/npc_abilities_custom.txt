@@ -14,6 +14,7 @@
 #base heroes/enchantress/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
+#base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/medusa/abilities.txt
 #base heroes/night_stalker/abilities.txt
@@ -334,7 +335,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"defense_stack"					"-5"
+				"defense_stack"					"-5 -4"
 			}
 			"03"
 			{
@@ -344,7 +345,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"incoming_damage_tooltip"		"25 50"
+				"incoming_damage_tooltip"		"25 40"
 			}
 		}
 	}
