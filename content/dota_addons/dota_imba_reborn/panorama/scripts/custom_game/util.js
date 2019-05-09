@@ -90,7 +90,7 @@ function IsDonator(ID) {
 
 	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
 	var donators = CustomNetTables.GetTableValue("game_options", "donators");
-	$.Msg(donators)
+//	$.Msg(donators)
 
 	for (var key in donators) {
 		var steamid = donators[key];
@@ -150,7 +150,7 @@ function OverrideTopBarHeroImage(args) {
 	var arcana_level = 0;
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-	if (ply_battlepass) {
+	if (ply_battlepass && ply_battlepass.arcana) {
 		if (ply_battlepass.arcana[args.hero_name]) {
 			arcana_level = ply_battlepass.arcana[args.hero_name];
 		}
@@ -161,9 +161,12 @@ function OverrideTopBarHeroImage(args) {
 		team = "Dire"
 	}
 
-	var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
-	if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
+	if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer())) {
+		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
+		if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
+	}
 }
+
 GameEvents.Subscribe("override_hero_image", OverrideTopBarHeroImage);
 
 /*
@@ -237,7 +240,7 @@ function Mutation(args) {
 
 function SetMutationTooltip(j) {
 	var panel = $("#Mutation" + j)
-	$.Msg(panel)
+//	$.Msg(panel)
 
 	$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]);
 

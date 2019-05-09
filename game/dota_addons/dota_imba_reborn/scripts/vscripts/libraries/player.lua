@@ -130,7 +130,7 @@ function CDOTA_BaseNPC:SetupHealthBarLabel()
 		return
 	end
 
-	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
+--	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
 		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
 		if donator_level and donator_level > 0 then
