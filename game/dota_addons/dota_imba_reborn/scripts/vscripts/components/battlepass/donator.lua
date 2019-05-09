@@ -147,7 +147,7 @@ function DonatorCompanion(ID, unit_name, js)
 		end
 	end
 
-	print(unit_name, model, model_scale)
+--	print(unit_name, model, model_scale)
 
 	local companion = CreateUnitByName("npc_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
 	companion:SetModel(model)

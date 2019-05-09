@@ -211,6 +211,9 @@
 				<DOTASettingsCheckbox id="BPRewardsCheckBox" class="SettingsButtonClass" onactivate="SettingsBattlepassRewards();">
 					<Label text="#toggle_bp_rewards"/>
 				</DOTASettingsCheckbox>
+				<DOTASettingsCheckbox id="PlayerXPCheckBox" class="SettingsButtonClass" onactivate="SettingsPlayerXP();">
+					<Label text="#toggle_player_xp"/>
+				</DOTASettingsCheckbox>
 			</Panel>
 		</Panel>
 	</Panel>

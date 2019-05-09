@@ -48,7 +48,7 @@ function UpdatePlayer( teamPanel, playerId )
 		playerPanel.AddClass( "is_local_player" );
 	}
 
-	var player_table = CustomNetTables.GetTableValue("player_table", playerId.toString());
+	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
 //	$.Msg(player_table.donator_level)
 //	$.Msg(player_table.donator_color)
 

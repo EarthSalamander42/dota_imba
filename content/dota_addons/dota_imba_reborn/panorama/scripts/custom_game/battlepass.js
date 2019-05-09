@@ -26,7 +26,8 @@ var api = {
 		rankingsXp : "website/statistics/ranking/xp",
 //		rankingsLevel1v1 : "imba/meta/rankings/level-1v1",
 		toggleIngameTag : "imba/toggle-ingame-tag",
-		toggleBPRewards : "imba/toggle-bp-rewards"
+		toggleBPRewards : "imba/toggle-bp-rewards",
+		togglePlayerXP : "imba/toggle-player-xp"
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
@@ -110,7 +111,6 @@ var api = {
 		});
 	},
 	updateIngameTag : function(data, success_callback, error_callback) {
-		$.Msg(data)
 		$.AsyncWebRequest(api.base + api.urls.toggleIngameTag, {
 			type : "POST",
 			dataType : "json",
@@ -134,8 +134,31 @@ var api = {
 		});
 	},
 	updateBPRewards : function(data, success_callback, error_callback) {
-		$.Msg(data)
 		$.AsyncWebRequest(api.base + api.urls.toggleBPRewards, {
+			type : "POST",
+			dataType : "json",
+			data : data,
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				$.Msg(obj)
+				if (obj.error) {
+					$.Msg("Error updating bp rewards");
+					error_callback();
+				} else {
+					$.Msg("Updated bp rewards");
+					success_callback();
+				}
+			},
+			error : function(err) {
+				$.Msg("Error bp rewards " + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+	updatePlayerXP : function(data, success_callback, error_callback) {
+		$.Msg(data)
+		$.AsyncWebRequest(api.base + api.urls.togglePlayerXP, {
 			type : "POST",
 			dataType : "json",
 			data : data,
@@ -485,7 +508,7 @@ function SafeToLeave() {
 function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var i_count = 0;
 	var class_option_count = 1;
-	var plyData = CustomNetTables.GetTableValue("player_table", player);
+	var plyData = CustomNetTables.GetTableValue("battlepass", player);
 
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
@@ -577,7 +600,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	donator_row.AddClass("DonatorRow");
 
 	// Companion Generator
-	var plyData = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer());
+	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
 
 	/*
 	 * if (plyData.companion_enabled == 1) { if
@@ -735,8 +758,8 @@ function CompanionSkin(unit, j) {
 
 function SettingsIngameTag() {
 	var tag = false;
-	if (CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).in_game_tag != undefined) {
-		tag = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).in_game_tag
+	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).in_game_tag != undefined) {
+		tag = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).in_game_tag
 
 		if (tag == 1)
 			tag = 0
@@ -770,10 +793,9 @@ function SettingsIngameTag() {
 
 function SettingsBattlepassRewards() {
 	var toggle_rewards = false;
-	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards)
-	if (CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards != undefined) {
-		toggle_rewards = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer()).bp_rewards
-		$.Msg(typeof(toggle_rewards))
+	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards)
+	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards != undefined) {
+		toggle_rewards = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards
 		if (toggle_rewards == 1)
 			toggle_rewards = 0
 		else
@@ -786,6 +808,10 @@ function SettingsBattlepassRewards() {
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
 		bp_rewards : toggle_rewards
 	}, function() {
+		GameEvents.SendCustomGameEventToServer("change_battlepass_rewards", {
+			ID : Players.GetLocalPlayer(),
+			bp_rewards : toggle_rewards
+		});
 		RefreshBattlepass(toggle_rewards);
 		$.Msg("BP rewards update: success!")
 //		$.Schedule(6.0, function() {
@@ -803,16 +829,54 @@ function SettingsBattlepassRewards() {
 	});
 }
 
+function SettingsPlayerXP() {
+	var toggle = false;
+	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp)
+	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp != undefined) {
+		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp
+		if (toggle == 1)
+			toggle = 0
+		else
+			toggle = 1
+	}
+
+	$.Msg("Player XP :" + toggle)
+
+	api.updatePlayerXP({
+		steamid : Game.GetLocalPlayerInfo().player_steamid,
+		player_xp : toggle
+	}, function() {
+		GameEvents.SendCustomGameEventToServer("change_player_xp", {
+			ID : Players.GetLocalPlayer(),
+			player_xp : toggle
+		});
+		$.Msg("Player XP update: success!")
+//		$.Schedule(6.0, function() {
+//			$("#CompanionNotification").RemoveClass("success");
+//			companion_changed = false;
+//		});
+	}, function() {
+		$.Msg("Player XP update: failure")
+//		$("#CompanionNotification").AddClass("failure");
+//		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+//		$.Schedule(6.0, function() {
+//			$("#CompanionNotification").RemoveClass("failure");
+//			companion_changed = false;
+//		});
+	});
+}
+
 function SetupPanel() {
-	var player_table = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer());
+	var ply_table = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
 
-	$.Msg(player_table.bp_rewards)
-	if (player_table) {
-		if (player_table.in_game_tag)
-			$("#IngameTagCheckBox").checked = player_table.in_game_tag;
-
-		if (player_table.bp_rewards)
-			$("#BPRewardsCheckBox").checked = player_table.bp_rewards;
+	$.Msg(ply_table.bp_rewards)
+	if (ply_table) {
+		if (ply_table.in_game_tag)
+			$("#IngameTagCheckBox").checked = ply_table.in_game_tag;
+		if (ply_table.bp_rewards)
+			$("#BPRewardsCheckBox").checked = ply_table.bp_rewards;
+		if (ply_table.player_xp)
+			$("#PlayerXPCheckBox").checked = ply_table.player_xp;
 	}
 }
 

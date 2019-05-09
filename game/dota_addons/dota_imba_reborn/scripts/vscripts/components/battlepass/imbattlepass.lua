@@ -118,6 +118,8 @@ CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATT
 
 function Imbattlepass:Init()
 	CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(self, 'DonatorTag'))
+	CustomGameEventManager:RegisterListener("change_battlepass_rewards", Dynamic_Wrap(self, 'BattlepassRewards'))
+	CustomGameEventManager:RegisterListener("change_player_xp", Dynamic_Wrap(self, 'PlayerXP'))
 
 	IMBATTLEPASS_FOUNTAIN = {}
 	IMBATTLEPASS_BLINK = {}
@@ -193,14 +195,19 @@ end
 function Imbattlepass:AddItemEffects(hero)
 	if hero.GetPlayerID == nil then return end
 
-	Imbattlepass:GetBlinkEffect(hero)
-	Imbattlepass:GetForceStaffEffect(hero)
-	Imbattlepass:GetRadianceEffect(hero)
-	Imbattlepass:GetSheepstickEffect(hero)
-	Imbattlepass:GetShivaEffect(hero)
-	Imbattlepass:GetMekansmEffect(hero)
-	Imbattlepass:GetFountainEffect(hero)
---	Imbattlepass:GetBottleEffect(hero)
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+
+	if ply_table and ply_table.bp_rewards == 0 then
+	else
+		Imbattlepass:GetBlinkEffect(hero)
+		Imbattlepass:GetForceStaffEffect(hero)
+		Imbattlepass:GetRadianceEffect(hero)
+		Imbattlepass:GetSheepstickEffect(hero)
+		Imbattlepass:GetShivaEffect(hero)
+		Imbattlepass:GetMekansmEffect(hero)
+		Imbattlepass:GetFountainEffect(hero)
+--		Imbattlepass:GetBottleEffect(hero)
+	end
 
 	-- some effects override some items effects, need to call it after items setup
 	Imbattlepass:GetHeroEffect(hero)
@@ -208,9 +215,9 @@ end
 
 function Imbattlepass:GetRewardUnlocked(ID)
 	if IsInToolsMode() then return 1000 end
-	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
-		if CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl then
-			return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+	if CustomNetTables:GetTableValue("battlepass", tostring(ID)) then
+		if CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl then
+			return CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl
 		end
 	end
 
@@ -573,6 +580,12 @@ function Imbattlepass:GetHeroEffect(hero)
 		hero.relocate_return_out_sound = "Hero_Wisp.TeleportOut"
 	end
 
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+
+	if ply_table and ply_table.bp_rewards == 0 then
+		return
+	end
+
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		if hero:GetUnitName() == "npc_dota_hero_axe" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_AXE["axe_immortal"] then
@@ -920,12 +933,63 @@ end
 
 function Imbattlepass:DonatorTag(keys)
 	local hero = PlayerResource:GetPlayer(keys.ID):GetAssignedHero()
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
 
-	if keys.tag == 1 then
-		hero:SetupHealthBarLabel()
-	else
-		hero:SetCustomHealthLabel("", 0, 0, 0)
-	end
+	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+		XP = ply_table.XP,
+		MaxXP = ply_table.MaxXP,
+		Lvl = ply_table.Lvl,
+		ply_color = ply_table.ply_color,
+		title = ply_table.title,
+		title_color = ply_table.title_color,
+		XP_change = 0,
+		IMR_5v5_change = 0,
+		donator_level = ply_table.donator_level,
+		donator_color = ply_table.donator_color,
+		in_game_tag = keys.tag,
+		bp_rewards = ply_table.bp_rewards,
+		player_xp = ply_table.player_xp
+	})
 
-	CustomNetTables:SetTableValue("player_table", tostring(keys.ID), {in_game_tag = keys.tag})
+	hero:SetupHealthBarLabel()
+end
+
+function Imbattlepass:BattlepassRewards(keys)
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+
+	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+		XP = ply_table.XP,
+		MaxXP = ply_table.MaxXP,
+		Lvl = ply_table.Lvl,
+		ply_color = ply_table.ply_color,
+		title = ply_table.title,
+		title_color = ply_table.title_color,
+		XP_change = 0,
+		IMR_5v5_change = 0,
+		donator_level = ply_table.donator_level,
+		donator_color = ply_table.donator_color,
+		in_game_tag = ply_table.in_game_tag,
+		bp_rewards = keys.bp_rewards,
+		player_xp = ply_table.player_xp
+	})
+end
+
+function Imbattlepass:PlayerXP(keys)
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+
+	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+		XP = ply_table.XP,
+		MaxXP = ply_table.MaxXP,
+		Lvl = ply_table.Lvl,
+		ply_color = ply_table.ply_color,
+		title = ply_table.title,
+		title_color = ply_table.title_color,
+		XP_change = 0,
+		IMR_5v5_change = 0,
+		donator_level = ply_table.donator_level,
+		donator_color = ply_table.donator_color,
+		in_game_tag = ply_table.in_game_tag,
+		bp_rewards = ply_table.bp_rewards,
+		player_xp = keys.player_xp
+	})
 end

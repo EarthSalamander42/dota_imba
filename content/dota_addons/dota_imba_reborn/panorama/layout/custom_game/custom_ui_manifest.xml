@@ -123,6 +123,7 @@
 		PreMinimapContainer.style.height = "270px";
 
 		HidePickScreen();
+//		OverrideVersusScreen();
 
 		function HidePickScreen() {
 			if (!Game.GameStateIs(3)) {
@@ -133,6 +134,84 @@
 				PreGame.style.opacity = "1";				
 			}
 		}
+
+		// Enable Friends and Foes feature
+		if (PreGame.FindChildTraverse("BattlePassHeroUpsell")) {
+			PreGame.FindChildTraverse("BattlePassHeroUpsell").style.visibility = "collapse";
+			PreGame.FindChildTraverse("BattlePassHeroData").style.visibility = "visible";
+		}
+
+		// Override Versus Screen with IMBA info (Credits: EarthSalamander)
+		function OverrideVersusScreen() {
+			if (PreGame.FindChildTraverse("VersusScreen2")) {
+				var versus_screen = PreGame.FindChildTraverse("VersusScreen2");
+				var radiant_team_panel = versus_screen.FindChildTraverse("RadiantScene")
+				var dire_team_panel = versus_screen.FindChildTraverse("DireScene")
+				var radiant_hero_name = radiant_team_panel.FindChildTraverse("FeaturedHeroName")
+				var dire_hero_name = dire_team_panel.FindChildTraverse("FeaturedHeroName")
+				var radiant_player = undefined;
+				var dire_player = undefined;
+
+				if (Game.GameStateIsBefore(3) || radiant_hero_name == undefined) {
+					$.Schedule(0.25, OverrideVersusScreen)
+					return;
+				}
+
+				for (var i = 0; i < 24; i++) {
+					if (Game.GetPlayerInfo(i)) {
+//						$.Msg(Game.GetPlayerInfo(i).player_selected_hero + " / " + radiant_hero_name.text)
+						if ($.Localize(Game.GetPlayerInfo(i).player_selected_hero).toUpperCase() == radiant_hero_name.text)
+							radiant_player = Game.GetPlayerInfo(i);
+						if ($.Localize(Game.GetPlayerInfo(i).player_selected_hero).toUpperCase() == dire_hero_name.text)
+							dire_player = Game.GetPlayerInfo(i);
+						if (radiant_player && dire_player)
+							break;
+					}
+				}
+
+//				$.Msg(radiant_player)
+//				$.Msg(dire_player)
+
+				var radiant_ply_table = CustomNetTables.GetTableValue("battlepass", radiant_player.player_id);
+
+//				$.Msg(radiant_ply_table)
+
+				if (radiant_ply_table) {
+					radiant_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
+					radiant_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
+					radiant_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
+					radiant_team_panel.FindChildTraverse("LevelNumber").text = radiant_ply_table.Lvl;
+
+					if (radiant_ply_table.Lvl > 100) {
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
+						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
+					} else if (radiant_ply_table.Lvl > 75) {
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
+						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
+					} else if (radiant_ply_table.Lvl > 50) {
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
+					} else if (radiant_ply_table.Lvl > 25) {
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+					} else if (radiant_ply_table.Lvl > 0) {
+						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+					}
+				}
+			}
+		}
+
+		// Dota Plus kill graph
+//		if ($.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillCam")) {
+//			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillgraphButton").style.visibility = "visible";
+
+			// Dota Plus death killgraph code is not working, have to reverse-engineer it
+//			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.opacity = "0";
+//			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.visibility = "collapse";
+//			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.transform = "TranslateX(-1000px)";
+//		}
 	</script>
 
 	<Panel>
@@ -158,7 +237,6 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" />
 
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
-<!--		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" /> -->
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" /> -->
 	</Panel>

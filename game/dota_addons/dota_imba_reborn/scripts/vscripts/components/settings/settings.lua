@@ -16,7 +16,7 @@ require('components/settings/settings_donator')
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.13"
+GAME_VERSION = "7.13b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 
 -- Picking screen constants
@@ -31,18 +31,18 @@ IMBA_REINCARNATION_TIME = 3.0
 IMBA_MAX_RESPAWN_TIME = 50.0		-- Maximum respawn time, does not include bonus reaper scythe duration
 IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla respawn time
 
-RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
+RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = false
+	BOTS_ENABLED = true
 else
 	BOTS_ENABLED = false
 end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
-STRATEGY_TIME = 0.0						-- How long should strategy time last?
-SHOWCASE_TIME = 0.0						-- How long should showcase time last?
+STRATEGY_TIME = 0.0					-- How long should strategy time last?
+SHOWCASE_TIME = 20.0				-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() then
 	AP_BAN_TIME = 0.0

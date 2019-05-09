@@ -96,7 +96,7 @@
 "battlepass_huskar_immortal"			"#{DOTA_Item_Searing_Dominator}"
 "battlepass_bristleback_rare"			"#{DOTA_Set_Violent_Precipitate}"
 "battlepass_bristleback_rare2"			"#{DOTA_Set_Violent_Precipitate} (Champion)"
-"battlepass_axe_immortal"				"#{DOTA_Set_Axe_Unleashed}"
+"battlepass_axe_immortal"				"Axe Unleashed"
 
 //Donator Tab
 "donator_companion"				"Companion"
@@ -122,5 +122,6 @@
 
 // settings
 "toggle_ingame_tag"				"Toggle health bar label"
-"disable_companion"				"Disable Companion"
+"disable_companion"				"Disable companion"
 "toggle_bp_rewards"				"Toggle battlepass rewards"
+"toggle_player_xp"				"Toggle battlepass XP visibility (will take effect on next game)"
