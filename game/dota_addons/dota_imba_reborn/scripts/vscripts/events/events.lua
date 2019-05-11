@@ -777,6 +777,29 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_medusa_split_shot_modifiers"
 							}
 							upgraded = true
+						elseif string.find(text, 'luna') and hero:GetName() == "npc_dota_hero_luna" then
+							ability_set = {
+								[0] = "imba_luna_lucent_beam",
+								[1] = "imba_luna_moon_glaive",
+								[2] = "imba_luna_lunar_blessing",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_luna_eclipse",
+								[6] = "special_bonus_attack_speed_15",
+								[7] = "special_bonus_cast_range_300",
+								[8] = "special_bonus_unique_luna_2",
+								[9] = "special_bonus_movement_speed_30",
+								[10] = "special_bonus_all_stats_8",
+								[11] = "special_bonus_unique_luna_1",
+								[12] = "special_bonus_lifesteal_25",
+								[13] = "special_bonus_unique_luna_5"
+							}
+							upgraded = true
+						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
+							ability_set = {
+								[2] = "imba_life_stealer_open_wounds"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
