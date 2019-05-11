@@ -7,3 +7,6 @@
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_slow_tooltip"					"%MAX SLOW:"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_duration"						"DURATION:"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_tooltip_range"					"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_life_stealer_open_wounds" "Open Wounds"
+"DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_Description"	"Movement speed decreased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%"

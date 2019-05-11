@@ -1,6 +1,8 @@
 -- Creator:
 --	   AltiV, May 11th, 2019
 
+-- This file currently only contains "Lua-fication" for Open Wounds (for cosmetic related interactions), and has no IMBAfications.
+
 LinkLuaModifier("modifier_imba_life_stealer_open_wounds", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 
 imba_life_stealer_open_wounds 			= class({})
