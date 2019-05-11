@@ -57,6 +57,10 @@ function modifier_imba_life_stealer_open_wounds:GetEffectName()
 	return "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
 end
 
+function modifier_imba_life_stealer_open_wounds:GetStatusEffectName()
+	return "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
+end
+
 function modifier_imba_life_stealer_open_wounds:OnCreated()
 	self.heal_percent	= self:GetAbility():GetTalentSpecialValueFor("heal_percent")
 	
