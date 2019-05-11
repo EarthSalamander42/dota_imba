@@ -14,7 +14,8 @@
 #base heroes/enchantress/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
-// #base heroes/luna/abilities.txt
+#base heroes/life_stealer/abilities.txt
+#base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/medusa/abilities.txt
 #base heroes/night_stalker/abilities.txt
