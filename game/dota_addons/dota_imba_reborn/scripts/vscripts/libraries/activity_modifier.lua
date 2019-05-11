@@ -50,7 +50,7 @@ LinkLuaModifier("modifier_activity17", "libraries/modifiers/modifier_activity17.
 LinkLuaModifier("modifier_activity18", "libraries/modifiers/modifier_activity18.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_activity19", "libraries/modifiers/modifier_activity19.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_activity20", "libraries/modifiers/modifier_activity20.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_wearable_arcana_spellicons", "libraries/modifiers/modifier_wearable_arcana_spellicons.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_battlepass_wearable_spellicons", "libraries/modifiers/modifier_battlepass_wearable_spellicons.lua", LUA_MODIFIER_MOTION_NONE)
 
 function GetTable(ParentTable, key)
     if not ParentTable[key] then

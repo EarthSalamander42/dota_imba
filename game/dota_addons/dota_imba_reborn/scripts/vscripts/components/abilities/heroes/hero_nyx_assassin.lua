@@ -13,10 +13,6 @@ LinkLuaModifier("modifier_imba_impale_stun", "components/abilities/heroes/hero_n
 LinkLuaModifier("modifier_imba_impale_talent_slow", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_talent_thinker", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-function imba_nyx_assassin_impale:GetAbilityTextureName()
-	return "nyx_assassin_impale"
-end
-
 function imba_nyx_assassin_impale:IsHiddenWhenStolen()
 	return false
 end
@@ -536,10 +532,6 @@ LinkLuaModifier("modifier_imba_mana_burn_parasite", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mana_burn_talent_parasite", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-function imba_nyx_assassin_mana_burn:GetAbilityTextureName()
-	return "nyx_assassin_mana_burn"
-end
-
 function imba_nyx_assassin_mana_burn:IsHiddenWhenStolen()
 	return false
 end
@@ -948,7 +940,9 @@ LinkLuaModifier("modifier_imba_spiked_carapace", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_spiked_carapace_stun", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_spiked_carapace:GetAbilityTextureName()
-	return "nyx_assassin_spiked_carapace"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "nyx_assassin_spiked_carapace" end
+	return "nyx_assassin_spiked_carapace_ti9"
 end
 
 function imba_nyx_assassin_spiked_carapace:IsHiddenWhenStolen()
@@ -982,16 +976,28 @@ end
 -- Spiked carapace modifier (owner)
 modifier_imba_spiked_carapace = class({})
 
+function modifier_imba_spiked_carapace:GetStatusEffectName()
+	if self:GetStackCount() == 1 then
+		return "particles/econ/items/nyx_assassin/nyx_ti9_immortal/status_effect_nyx_ti9_carapace.vpcf"
+	end
+
+	return "particles/units/heroes/hero_nyx_assassin/status_effect_nyx_assassin_spiked_carapace.vpcf"
+end
+
 function modifier_imba_spiked_carapace:OnCreated()
 	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.vendetta_ability = self.caster:FindAbilityByName("imba_nyx_assassin_vendetta")
-		self.particle_spikes = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
 		self.modifier_stun = "modifier_imba_spiked_carapace_stun"
 		self.modifier_vendetta = "modifier_imba_vendetta_charge"
 		self.modifier_burrowed = "modifier_nyx_assassin_burrow"
+
+		-- Yes, i know. If you find another way to send a particle name clientside for the status effect i'll take it.
+		if Imbattlepass and IMBATTLEPASS_NYX_ASSASSIN and Imbattlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= IMBATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
+			self:SetStackCount(1)
+		end
 
 		-- Ability specials
 		self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
@@ -1008,7 +1014,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 		end
 
 		-- Add spikes particles
-		self.particle_spikes_fx = ParticleManager:CreateParticle(self.particle_spikes, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
+		self.particle_spikes_fx = ParticleManager:CreateParticle(self.caster.spiked_carapace_pfx, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
 		ParticleManager:SetParticleControlEnt(self.particle_spikes_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
 		self:AddParticle(self.particle_spikes_fx, false, false, -1, false, false)
 
@@ -1167,7 +1173,6 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 			attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
 		end
 	end
-
 end
 
 -- Spiked carapace stun modifier
@@ -1177,13 +1182,12 @@ function modifier_imba_spiked_carapace_stun:OnCreated()
 	if IsServer() then
 		self.parent = self:GetParent()
 		self.sound_hit = "Hero_NyxAssassin.SpikedCarapace.Stun"
-		self.particle_spike_hit = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
 
 		-- Play hit sound
 		EmitSoundOn(self.sound_hit, self.parent)
 
 		-- Add spikes hit particle
-		self.particle_spike_hit_fx = ParticleManager:CreateParticle(self.particle_spike_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+		self.particle_spike_hit_fx = ParticleManager:CreateParticle(self:GetCaster().spiked_carapace_debuff_pfx, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 		ParticleManager:SetParticleControl(self.particle_spike_hit_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.particle_spike_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle_spike_hit_fx, 2, Vector(1,0,0))
@@ -1219,10 +1223,6 @@ imba_nyx_assassin_vendetta = class({})
 LinkLuaModifier("modifier_imba_vendetta", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_break", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-
-function imba_nyx_assassin_vendetta:GetAbilityTextureName()
-	return "nyx_assassin_vendetta"
-end
 
 function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
 function imba_nyx_assassin_vendetta:IsHiddenWhenStolen()

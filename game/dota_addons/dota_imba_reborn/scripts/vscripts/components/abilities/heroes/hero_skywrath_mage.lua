@@ -9,7 +9,13 @@ LinkLuaModifier("modifier_imba_arcane_bolt_buff", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_skywrath_flying_movement", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_arcane_bolt:GetAbilityTextureName()
-   return "skywrath_mage_arcane_bolt"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "skywrath_mage_arcane_bolt" end
+	if self:GetCaster().arcana_style == 0 then
+		return "skywrath_mage_arcane_bolt_ti9"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "skywrath_mage_arcane_bolt_ti9_gold"
+	end
 end
 
 function imba_skywrath_mage_arcane_bolt:IsHiddenWhenStolen()
@@ -121,7 +127,6 @@ end
 
 function LaunchArcaneBolt(caster, ability, target)
 	-- Ability properties
-	local particle_projectile = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"        
 	local modifier_wrath = "modifier_imba_arcane_bolt_buff"
 
 	-- Ability specials
@@ -146,7 +151,7 @@ function LaunchArcaneBolt(caster, ability, target)
 	arcane_bolt_projectile = {Target = target,
 							  Source = caster,
 							  Ability = ability,
-							  EffectName = particle_projectile,
+							  EffectName = caster.arcane_bolt_pfx,
 							  iMoveSpeed = projectile_speed,
 							  bDodgeable = false, 
 							  bVisibleToEnemies = true,

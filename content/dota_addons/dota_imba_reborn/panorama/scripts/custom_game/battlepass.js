@@ -58,15 +58,15 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.ingame_statues)
-					$.Msg("Error Loading Statues! " + JSON.stringify(obj.message));
-				else {
-					$.Msg("Loaded " + obj.data.ingame_statues.length + " statues.");
+				if (obj.error || !obj.data || !obj.data.ingame_statues) {
+//					$.Msg("Error Loading Statues! " + JSON.stringify(obj.message));
+				} else {
+//					$.Msg("Loaded " + obj.data.ingame_statues.length + " statues.");
 					callback(obj.data.ingame_statues);
 				}
 			},
 			error : function(err) {
-				$.Msg("Error Loading Statues! " + JSON.stringify(err));
+//				$.Msg("Error Loading Statues! " + JSON.stringify(err));
 			}
 		});
 	},
@@ -118,7 +118,7 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
-				$.Msg(obj)
+//				$.Msg(obj)
 				if (obj.error) {
 					$.Msg("Error updating ingame tag");
 					error_callback();
@@ -141,7 +141,7 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
-				$.Msg(obj)
+//				$.Msg(obj)
 				if (obj.error) {
 					$.Msg("Error updating bp rewards");
 					error_callback();
@@ -157,7 +157,6 @@ var api = {
 		});
 	},
 	updatePlayerXP : function(data, success_callback, error_callback) {
-		$.Msg(data)
 		$.AsyncWebRequest(api.base + api.urls.togglePlayerXP, {
 			type : "POST",
 			dataType : "json",
@@ -165,7 +164,7 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
-				$.Msg(obj)
+//				$.Msg(obj)
 				if (obj.error) {
 					$.Msg("Error updating bp rewards");
 					error_callback();
@@ -561,10 +560,13 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			else if (is_mythical == true)
 				reward_label.AddClass("mythical_text");
 
-			var hero_name = BattlepassRewards[i].replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "");
-			var reward_hero_icon = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_icon");
-			reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
-			reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
+			var hero_name = BattlepassRewards[i].replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "").replace("2", "");
+			// WARNING: The following line is NSFW.
+			if (hero_name == "axe" || hero_name == "bristleback" || hero_name == "centaur" || hero_name == "chen" || hero_name == "dark_seer" || hero_name == "drow_ranger" || hero_name == "enigma" || hero_name == "huskar" || hero_name == "juggernaut" || hero_name == "nyx_assassin" || hero_name == "pudge" || hero_name == "skywrath_mage" || hero_name == "vengefulspirit" || hero_name == "wisp" || hero_name == "zuus") {
+				var reward_hero_icon = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_icon");
+				reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
+				reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
+			}
 
 			if (plyData != null || bRewardsDisabled & bRewardsDisabled == true) {
 				if (i <= plyData.Lvl) {
@@ -793,7 +795,7 @@ function SettingsIngameTag() {
 
 function SettingsBattlepassRewards() {
 	var toggle_rewards = false;
-	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards)
+//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards)
 	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards != undefined) {
 		toggle_rewards = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards
 		if (toggle_rewards == 1)
@@ -802,7 +804,7 @@ function SettingsBattlepassRewards() {
 			toggle_rewards = 1
 	}
 
-	$.Msg("BP Rewards :" + toggle_rewards)
+//	$.Msg("BP Rewards :" + toggle_rewards)
 
 	api.updateBPRewards({
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
@@ -813,13 +815,13 @@ function SettingsBattlepassRewards() {
 			bp_rewards : toggle_rewards
 		});
 		RefreshBattlepass(toggle_rewards);
-		$.Msg("BP rewards update: success!")
+//		$.Msg("BP rewards update: success!")
 //		$.Schedule(6.0, function() {
 //			$("#CompanionNotification").RemoveClass("success");
 //			companion_changed = false;
 //		});
 	}, function() {
-		$.Msg("BP rewards update: failure")
+//		$.Msg("BP rewards update: failure")
 //		$("#CompanionNotification").AddClass("failure");
 //		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
 //		$.Schedule(6.0, function() {
@@ -831,7 +833,7 @@ function SettingsBattlepassRewards() {
 
 function SettingsPlayerXP() {
 	var toggle = false;
-	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp)
+//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp)
 	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp != undefined) {
 		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp
 		if (toggle == 1)
@@ -840,7 +842,7 @@ function SettingsPlayerXP() {
 			toggle = 1
 	}
 
-	$.Msg("Player XP :" + toggle)
+//	$.Msg("Player XP :" + toggle)
 
 	api.updatePlayerXP({
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
@@ -850,13 +852,13 @@ function SettingsPlayerXP() {
 			ID : Players.GetLocalPlayer(),
 			player_xp : toggle
 		});
-		$.Msg("Player XP update: success!")
+//		$.Msg("Player XP update: success!")
 //		$.Schedule(6.0, function() {
 //			$("#CompanionNotification").RemoveClass("success");
 //			companion_changed = false;
 //		});
 	}, function() {
-		$.Msg("Player XP update: failure")
+//		$.Msg("Player XP update: failure")
 //		$("#CompanionNotification").AddClass("failure");
 //		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
 //		$.Schedule(6.0, function() {
@@ -869,7 +871,7 @@ function SettingsPlayerXP() {
 function SetupPanel() {
 	var ply_table = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
 
-	$.Msg(ply_table.bp_rewards)
+//	$.Msg(ply_table.bp_rewards)
 	if (ply_table) {
 		if (ply_table.in_game_tag)
 			$("#IngameTagCheckBox").checked = ply_table.in_game_tag;

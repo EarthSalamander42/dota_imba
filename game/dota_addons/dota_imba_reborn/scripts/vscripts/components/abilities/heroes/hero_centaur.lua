@@ -8,10 +8,6 @@
 imba_centaur_thick_hide = class({})
 LinkLuaModifier("modifier_imba_thick_hide", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_centaur_thick_hide:GetAbilityTextureName()
-	return "custom/centaur_thick_hide"
-end
-
 function imba_centaur_thick_hide:GetIntrinsicModifierName()
 	return "modifier_imba_thick_hide"
 end
@@ -64,10 +60,6 @@ imba_centaur_hoof_stomp = class({})
 LinkLuaModifier("modifier_imba_hoof_stomp_stun", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_centaur_hoof_stomp:GetAbilityTextureName()
-	return "centaur_hoof_stomp"
-end
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
@@ -464,8 +456,6 @@ function modifier_imba_hoof_stomp_arena_buff:IsDebuff()
 	return false
 end
 
-
-
 ---------------------------------
 -- 		   Double Edge         --
 ---------------------------------
@@ -474,11 +464,31 @@ end
 imba_centaur_double_edge = class({})
 
 function imba_centaur_double_edge:GetAbilityTextureName()
-	return "centaur_double_edge"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "centaur_double_edge" end
+	return "centaur_double_edge_ti9"
 end
 
 function imba_centaur_double_edge:IsHiddenWhenStolen()
 	return false
+end
+
+function imba_centaur_double_edge:OnAbilityPhaseStart()
+	if IsServer() then
+		self.phase_double_edge_pfx = ParticleManager:CreateParticle(self:GetCaster().double_edge_phase_pfx, PATTACH_CUSTOMORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 3, self:GetCaster():GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 9, self:GetCaster():GetAbsOrigin())
+	end
+
+	return true
+end
+
+function imba_centaur_double_edge:OnAbilityPhaseInterrupted()
+	if self.phase_double_edge_pfx then
+		ParticleManager:DestroyParticle(self.phase_double_edge_pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.phase_double_edge_pfx)
+	end
 end
 
 function imba_centaur_double_edge:OnSpellStart()
@@ -490,7 +500,6 @@ function imba_centaur_double_edge:OnSpellStart()
 		local sound_cast = "Hero_Centaur.DoubleEdge"
 		local cast_response
 		local kill_response = "centaur_cent_doub_edge_0"..RandomInt(5, 6)
-		local particle_edge = "particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 
 		-- Ability specials
 		-- #4 Talent: Damage increased by 2*strength
@@ -535,12 +544,14 @@ function imba_centaur_double_edge:OnSpellStart()
 		end
 
 		-- Add double edge particle
-		local particle_edge_fx = ParticleManager:CreateParticle(particle_edge, PATTACH_ABSORIGIN, caster)
+		local particle_edge_fx = ParticleManager:CreateParticle(caster.double_edge_pfx, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(particle_edge_fx, 0, target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_edge_fx, 1, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_edge_fx, 2, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_edge_fx, 4, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_edge_fx, 1, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_edge_fx, 2, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_edge_fx, 3, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_edge_fx, 4, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_edge_fx, 5, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_edge_fx, 9, target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_edge_fx)
 
 		-- Find all enemies in the target's radius
@@ -601,10 +612,6 @@ LinkLuaModifier("modifier_imba_return_passive", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_return_damage_block", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block_buff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_bonus_damage", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-
-function imba_centaur_return:GetAbilityTextureName()
-	return "centaur_return"
-end
 
 function imba_centaur_return:GetIntrinsicModifierName()
 	return "modifier_imba_return_aura"
@@ -892,10 +899,6 @@ imba_centaur_stampede = class({})
 LinkLuaModifier("modifier_imba_stampede_haste", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_stun", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_slow", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-
-function imba_centaur_stampede:GetAbilityTextureName()
-	return "centaur_stampede"
-end
 
 function imba_centaur_stampede:IsHiddenWhenStolen()
 	return false

@@ -97,6 +97,11 @@
 "battlepass_bristleback_rare"			"#{DOTA_Set_Violent_Precipitate}"
 "battlepass_bristleback_rare2"			"#{DOTA_Set_Violent_Precipitate} (Champion)"
 "battlepass_axe_immortal"				"Axe Unleashed"
+"battlepass_nyx_assassin_immortal"		"Latticean Hierarchy"
+"battlepass_skywrath_mage_immortal"		"Flight of Epiphany"
+"battlepass_skywrath_mage_immortal2"	"Golden Flight of Epiphany"
+"battlepass_centaur_immortal"			"Infernal Menace"
+"battlepass_drow_ranger_immortal"		"Reaper's Wreath"
 
 //Donator Tab
 "donator_companion"				"Companion"

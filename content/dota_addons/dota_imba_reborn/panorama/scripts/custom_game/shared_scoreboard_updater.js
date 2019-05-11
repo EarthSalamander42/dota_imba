@@ -93,7 +93,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 
 	// xp shown fix (temporary?)
 	var player_info = CustomNetTables.GetTableValue("battlepass", playerId)
-	$.Msg(player_info)
+//	$.Msg(player_info)
 	if (player_info.player_xp == 0) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "N/A");
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, "N/A");
