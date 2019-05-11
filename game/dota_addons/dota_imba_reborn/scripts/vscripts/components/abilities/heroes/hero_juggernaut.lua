@@ -2205,8 +2205,6 @@ function imba_juggernaut_omni_slash:OnOwnerSpawned()
 end
 
 -- Arcana animation handler
-LinkLuaModifier("modifier_juggernaut_arcana_kill", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-
 modifier_juggernaut_arcana = modifier_juggernaut_arcana or class ({})
 
 function modifier_juggernaut_arcana:RemoveOnDeath()

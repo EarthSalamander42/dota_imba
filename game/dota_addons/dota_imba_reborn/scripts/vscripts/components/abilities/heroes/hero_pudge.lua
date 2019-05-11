@@ -465,9 +465,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 					if self:GetCaster().successful_hooks >= 2 then
 						EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
 						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
-						if self:GetCaster().battlepass_arcana == 1 then
+						if HasPudgeArcana(self:GetCaster()) == 1 then
 							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
 						end
+
+						self:GetCaster():EmitSound("Hero.Pudge.Arcana.Streak")
 
 						local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
 						local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
@@ -1047,7 +1049,7 @@ function imba_pudge_dismember:OnSpellStart()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self.channelTime})
 
-	if self:GetCaster().battlepass_arcana then
+	if HasPudgeArcana(self:GetCaster()) then
 		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
 		ParticleManager:SetParticleControl(self.pfx, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.pfx, 8, Vector(1, 1, 1))

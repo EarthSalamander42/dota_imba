@@ -10,6 +10,7 @@
 #base heroes/bristleback/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
+#base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
 #base heroes/huskar/abilities.txt

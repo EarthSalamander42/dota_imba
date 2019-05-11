@@ -83,6 +83,8 @@
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_mythical.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/pudge_arcana.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/pudge_arcana2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/wisp_arcana.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/chen_mythical.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/dark_seer_immortal.png" hittest="false" />
@@ -96,6 +98,11 @@
 			<Image src="file://panorama/images/custom_game/battlepass/nyx_assassin_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/skywrath_mage_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/skywrath_mage_immortal2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/leshrac_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/death_prophet_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal2.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
@@ -133,6 +140,21 @@
 			<Image src="file://panorama/images/custom_game/loading_screen/frantic_thunder.png" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/patreon.png" hittest="false" />
+
+
+			<Image src="file://panorama/images/custom_game/battlepass/alchemist_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/dark_willow_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/invoker_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/leshrac_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/lion_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/furion_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/pangolier_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/slark_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/vengefulspirit_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/windrunner_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/zuus_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>
