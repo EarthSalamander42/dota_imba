@@ -757,6 +757,9 @@
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy"            "Moon Shard"
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy_Description"            "Increased attack speed and night vision"
 
+"DOTA_Tooltip_modifier_item_imba_moon_shard"					"Working Moon Shards"
+"DOTA_Tooltip_modifier_item_imba_moon_shard_Description"		"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed and %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% bonus night vision fron unconsumed Moon Shards."
+
 "DOTA_Tooltip_modifier_item_imba_moon_shard_active"					"Moon Shard"
 "DOTA_Tooltip_modifier_item_imba_moon_shard_active_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and night vision increased by %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% after consuming Moon Shard(s)."
 
@@ -835,7 +838,6 @@
 
 // Nether Wand
 "DOTA_Tooltip_Ability_item_imba_nether_wand"                    "Nether Wand"
-"DOTA_Tooltip_ability_item_imba_nether_wand_Description"                    "<h1>Passive: Nether Power</h1> Increases the bearer's spell amp."
 "DOTA_Tooltip_ability_item_imba_nether_wand_Lore"              "A wicked wand, whose wild energies are nigh uncontrollable."
 "DOTA_Tooltip_ability_item_imba_nether_wand_Note0"              "Nether burn's damage does not refresh itself."
 "DOTA_Tooltip_ability_item_imba_nether_wand_Note1"              "spell amp from Aether Lens-based sources does not stack with itself."
@@ -988,7 +990,7 @@
 
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
-"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
+"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
 "DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
 "DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"

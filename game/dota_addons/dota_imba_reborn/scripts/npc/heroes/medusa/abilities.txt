@@ -26,18 +26,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_modifier"		"-70 -55 -40 -25"
+				"damage_modifier"		"-65 -50 -35 -20"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_modifier_tooltip"		"30 45 60 75"
+				"damage_modifier_tooltip"		"35 50 65 80"
 			}
 			"03"
 			{	
 				"var_type"					"FIELD_INTEGER"
-				"arrow_count"				"3"
-				"LinkedSpecialBonus"			"special_bonus_unique_medusa_2"
+				"arrow_count"				"4"
+				//"LinkedSpecialBonus"			"special_bonus_unique_medusa_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_medusa_extra_split_shot_targets"
 			}
 			"04"
 			{
@@ -87,7 +88,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11"
+		"AbilityCooldown"				"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -100,12 +101,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"475 475 475 475"
+				"radius"				"475 525 575 625"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_jumps"			"3 4 5 6"
+				"snake_jumps"			"3 5 7 9"
 			}
 			"03"
 			{
@@ -115,13 +116,14 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_damage"			"80 120 160 200"
+				"snake_damage"			"80 140 200 260"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_mana_steal"		"11 14 17 20"
-				"LinkedSpecialBonus"			"special_bonus_unique_medusa_3"
+				"snake_mana_steal"		"12 16 20 24"
+				//"LinkedSpecialBonus"			"special_bonus_unique_medusa_3"
+				"LinkedSpecialBonus"			"special_bonus_imba_mystic_snake_mana_steal"
 			}
 			"06"
 			{
@@ -131,17 +133,17 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"initial_speed"			"800"
+				"initial_speed"			"800 950 1100 1250"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"return_speed"			"800"
+				"return_speed"			"1200 1400 1600 1800"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stone_form_scepter_base"		"1.0"
+				"stone_form_scepter_base"		"1.4"
 			}
 			"10"
 			{
@@ -151,8 +153,8 @@
 			
 			"11"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"myotoxin_duration"		"2.5"
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_duration"		"3"
 			}
 			"12"
 			{
@@ -204,7 +206,6 @@
 		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5506"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		
 		"AbilitySound"					"Hero_Medusa.ManaShield.On"
@@ -220,7 +221,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_mana"		"1.6 1.9 2.2 2.5"
+				"damage_per_mana"		"1.6 2.4 3.5 4.8"
 			}
 			"02"
 			{
@@ -264,7 +265,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90"
+		"AbilityCooldown"				"90 80 70"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -283,17 +284,18 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"5 6 7"
-				"LinkedSpecialBonus"		"special_bonus_unique_medusa"
+				//"LinkedSpecialBonus"		"special_bonus_unique_medusa"
+				"LinkedSpecialBonus"		"special_bonus_imba_medusa_stone_gaze_duration"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"35"
+				"slow"						"35 45 55"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stone_duration"			"3.0"
+				"stone_duration"			"3.0 3.75 4.5"
 			}
 			"05"
 			{
@@ -309,6 +311,194 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_physical_damage"		"50"
+			}
+			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"red_eyes_radius"			"500"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"red_eyes_vision_cone"		"0.06"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"red_eyes_duration"			"6"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"red_eyes_max_slow"			"30 35 40"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"red_eyes_stone_duration"	"3"
+			}
+			
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stiff_joints_duration"		"15 25 35"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stiff_joints_movespeed"	"-50 -65 -80"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stiff_joints_turnspeed"	"-50 -65 -80"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stiff_joints_orders"		"20 40 60"
+			}
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_mystic_snake_mana_steal"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_medusa_mystic_snake"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_medusa_stone_gaze_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_medusa_stone_gaze"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"3.25"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_medusa_extra_split_shot_targets"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_medusa_split_shot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_medusa_split_shot_modifiers"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_medusa_split_shot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_medusa_bonus_mana"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_medusa_mana_shield"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1400"
 			}
 		}
 	}

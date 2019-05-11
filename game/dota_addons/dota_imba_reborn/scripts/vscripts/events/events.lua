@@ -746,7 +746,7 @@ function GameMode:OnPlayerChat(keys)
 								[0] = "imba_huskar_inner_fire",
 								[1] = "imba_huskar_burning_spear",
 								[2] = "imba_huskar_berserkers_blood",
-								[3] = "imba_huskar_inner_vitality",
+								[3] = "generic_hidden",
 								[4] = "generic_hidden",
 								[5] = "imba_huskar_life_break",
 								[6] = "special_bonus_hp_300",
@@ -759,61 +759,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_unique_huskar_5"
 							}
 							upgraded = true
-							
-						elseif string.find(text, 'dark_seer') and hero:GetName() == "npc_dota_hero_dark_seer" then
-							ability_set = {
-								[0] = "imba_dark_seer_vacuum",
-								[1] = "imba_dark_seer_ion_shell",
-								[2] = "imba_dark_seer_surge",
-								[3] = "imba_dark_seer_wormhole",
-								[4] = "generic_hidden",
-								[5] = "imba_dark_seer_wall_of_replica",
-								[6] = "special_bonus_evasion_15",
-								[7] = "special_bonus_attack_damage_90",
-								[8] = "special_bonus_hp_regen_15",
-								[9] = "special_bonus_imba_dark_seer_surge_cast_range",
-								[10] = "special_bonus_cooldown_reduction_15",
-								[11] = "special_bonus_imba_dark_seer_vacuum_increased_duration",
-								[12] = "special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration",
-								[13] = "special_bonus_unique_dark_seer"
-							}
-							upgraded = true
-						elseif string.find(text, 'chen') and hero:GetName() == "npc_dota_hero_chen" then
-							ability_set = {
-								[0] = "imba_chen_penitence",
-								[1] = "imba_chen_divine_favor",
-								[2] = "imba_chen_holy_persuasion",
-								[3] = "imba_chen_test_of_faith",
-								[4] = "generic_hidden",
-								[5] = "imba_chen_hand_of_god",
-								[6] = "special_bonus_exp_boost_60",
-								[7] = "special_bonus_cast_range_200",
-								[8] = "special_bonus_armor_8",
-								[9] = "special_bonus_imba_chen_divine_favor_cd_reduction",
-								[10] = "special_bonus_gold_income_50",
-								[11] = "special_bonus_imba_chen_test_of_faith_cd_reduction",
-								[12] = "special_bonus_imba_chen_holy_persuasion_max_unit_increase",
-								[13] = "special_bonus_imba_chen_remnants_of_penitence"
-							}
-							upgraded = true
-						elseif (string.find(text, 'rattletrap') or string.find(text, 'clockwerk')) and hero:GetName() == "npc_dota_hero_rattletrap" then
-							ability_set = {
-								[0] = "imba_rattletrap_battery_assault",
-								[1] = "imba_rattletrap_power_cogs",
-								[2] = "imba_rattletrap_rocket_flare",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_rattletrap_hookshot",
-								[6] = "special_bonus_armor_5",
-								[7] = "special_bonus_movement_speed_20",
-								[8] = "special_bonus_strength_15",
-								[9] = "special_bonus_imba_rattletrap_battery_assault_aura",
-								[10] = "special_bonus_imba_rattletrap_rocket_flare_truesight",
-								[11] = "special_bonus_imba_rattletrap_second_gear",
-								[12] = "special_bonus_magic_resistance_50",
-								[13] = "special_bonus_imba_rattletrap_battery_assault_interval"
-							}
-							upgraded = true
 						elseif string.find(text, 'medusa') and hero:GetName() == "npc_dota_hero_medusa" then
 							ability_set = {
 								[0] = "imba_medusa_split_shot",
@@ -822,14 +767,14 @@ function GameMode:OnPlayerChat(keys)
 								[3] = "generic_hidden",
 								[4] = "generic_hidden",
 								[5] = "imba_medusa_stone_gaze",
-								-- [6] = "special_bonus_armor_5",
-								-- [7] = "special_bonus_movement_speed_20",
-								-- [8] = "special_bonus_strength_15",
-								-- [9] = "special_bonus_imba_rattletrap_battery_assault_aura",
-								-- [10] = "special_bonus_imba_rattletrap_rocket_flare_truesight",
-								-- [11] = "special_bonus_imba_rattletrap_second_gear",
-								-- [12] = "special_bonus_magic_resistance_50",
-								-- [13] = "special_bonus_imba_rattletrap_battery_assault_interval"
+								[6] = "special_bonus_attack_damage_15",
+								[7] = "special_bonus_evasion_15",
+								[8] = "special_bonus_attack_speed_50",
+								[9] = "special_bonus_imba_mystic_snake_mana_steal",
+								[10] = "special_bonus_imba_medusa_extra_split_shot_targets",
+								[11] = "special_bonus_imba_medusa_stone_gaze_duration",
+								[12] = "special_bonus_imba_medusa_bonus_mana",
+								[13] = "special_bonus_imba_medusa_split_shot_modifiers"
 							}
 							upgraded = true
 						end
@@ -986,6 +931,15 @@ function GameMode:OnThink()
 					end
 				end
 			end
+		end
+	end
+
+	-- Testing trying to remove invinicible 0 hp illusions (really hoping this doesn't lag things to death)
+	local entities = Entities:FindAllInSphere(GetGroundPosition(Vector(0, 0, 0), nil), 25000)
+
+	for _, entity in pairs(entities) do
+		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 then
+			entity:RemoveSelf()
 		end
 	end
 

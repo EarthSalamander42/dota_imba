@@ -309,7 +309,7 @@ function onPlayerStatChange(table, key, data) {
 				var player_color = "#DDDDDD";
 				if (typeof data[nkey].id != 'undefined') {
 					// $('#MyEntry').SetFocus();
-					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
+					var player_table = CustomNetTables.GetTableValue("battlepass", data[nkey].id.toString());
 					if (player_table) {
 						if (currentMap == "ranked_5v5") {
 							if (player_table.IMR_5v5_calibrating) {
@@ -533,7 +533,7 @@ function SetupIMRAverage() {
 	var dire_count = 0
 
 	$.Each( radiantPlayers, function( player ) {
-		var plyData = CustomNetTables.GetTableValue("player_table", player)
+		var plyData = CustomNetTables.GetTableValue("battlepass", player)
 		if (currentMap == "ranked_5v5") {
 			radiant_imr = radiant_imr + plyData.IMR_5v5
 			radiant_count = radiant_count + 1
@@ -544,7 +544,7 @@ function SetupIMRAverage() {
 	})
 
 	$.Each( direPlayers, function( player ) {
-		var plyData = CustomNetTables.GetTableValue("player_table", player)
+		var plyData = CustomNetTables.GetTableValue("battlepass", player)
 		if (currentMap == "ranked_5v5") {
 			dire_imr = dire_imr + plyData.IMR_5v5
 			dire_count = dire_count + 1
@@ -847,7 +847,7 @@ function PreviewHeroCM (name) {
 }
 
 function SelectHero(hero) {
-	var player_table = CustomNetTables.GetTableValue("player_table", Game.GetLocalPlayerID().toString());
+	var player_table = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID().toString());
 	if (player_table)
 		if (player_table.donator_level == 10)
 			return;

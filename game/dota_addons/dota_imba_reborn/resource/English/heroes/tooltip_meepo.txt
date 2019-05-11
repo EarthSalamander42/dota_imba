@@ -1,3 +1,3 @@
 "DOTA_Tooltip_ability_meepo_poof_Description"					"Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %poof_tooltip% seconds, dealing damage in both the departure and arrival locations."
 
-"DOTA_Tooltip_ability_meepo_divided_we_stand_Note1"				"Clones cannot copy custom / IMBA boots."
+"DOTA_Tooltip_ability_meepo_divided_we_stand_Description"		"Meepo summons an imperfect, semi-autonomous duplicate of himself, which can gain gold and experience as he does and shares his experience, attributes and abilities. However, the clones cannot wield any items but the boots that Meepo himself wears.  If any of the clones die, they all die.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Royalty Cloak:</font> Using White Queen's Cape, Black Queen's Cape, or Black King Bar applies its magic immunity effects to all Meepos. Does not apply if Black Queen Cape was used on Meepo by another hero."

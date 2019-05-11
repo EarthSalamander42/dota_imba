@@ -15,7 +15,7 @@
 		"Ability1"		"imba_huskar_inner_fire"
 		"Ability2"		"imba_huskar_burning_spear"
 		"Ability3"		"imba_huskar_berserkers_blood"
-		"Ability4"		"imba_huskar_inner_vitality"
+		"Ability4"		"generic_hidden"
 		"Ability5"		"generic_hidden"
 		"Ability6"		"imba_huskar_life_break"
 		
@@ -27,6 +27,9 @@
 		"Ability15"		"special_bonus_unique_huskar"
 		"Ability16"		"special_bonus_attack_range_200"
 		"Ability17"		"special_bonus_unique_huskar_5"
+		
+		// Removed Abilities
+		// "Ability4"		"imba_huskar_inner_vitality"
 		
 		// Removed Talents
 	}

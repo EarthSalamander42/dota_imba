@@ -1,19 +1,20 @@
 <root>
-		<styles>
+	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-		<include src="s2r://panorama/styles/custom_game/multiteam_hero_select_overlay.vcss_c" />
-		</styles>
+		<include src="s2r://panorama/styles/custom_game/multiteam_hero_select_overlay.css" />
+	</styles>
 
-		<scripts>
-			<include src="s2r://panorama/scripts/custom_game/multiteam_hero_select_overlay.vjs_c" />
-			<include src="file://{resources}/scripts/custom_game/util.js" /> 
-		</scripts>
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/multiteam_hero_select_overlay.js" />
+		<include src="file://{resources}/scripts/custom_game/util.js" /> 
+	</scripts>
 
 	<Panel class="HeroSelectOverlayRoot">
 		<Panel id="PhaseInstructions">
 			<Label id="BanPhaseInstructions" text="#DOTA_LoadingBanPhase"/>
 			<Label id="PickPhaseInstructions" text="#DOTA_LoadingPickPhase"/>
 		</Panel>
+
 		<Panel class="HeroSelectTeamRowsContainer">
 			<Panel id="HeroSelectTeamsContainer" />
 			<Panel id="HeroSelectTeamsContainer2" />

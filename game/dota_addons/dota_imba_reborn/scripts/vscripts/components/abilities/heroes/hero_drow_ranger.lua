@@ -25,10 +25,6 @@ LinkLuaModifier("modifier_imba_frost_arrows_slow", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_frost_arrows_freeze", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_arrows_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
-function imba_drow_ranger_frost_arrows:GetAbilityTextureName()
-	return "drow_ranger_frost_arrows"
-end
-
 function imba_drow_ranger_frost_arrows:GetIntrinsicModifierName()
 	return "modifier_imba_frost_arrows_thinker"
 end
@@ -238,10 +234,10 @@ end
 
 function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
 	if marksmanship_attack then
-		local marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+		local marksmanship_arrow = caster.marksmanship_arrow
 
 		if frost_attack then
-			marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
+			marksmanship_arrow = caster.marksmanship_frost_arrow_pfx
 		end
 
 		caster:SetRangedProjectileName(marksmanship_arrow)
@@ -266,7 +262,7 @@ function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
 	local lifesteal_projectile = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 
 	-- Frost arrow projectiles
-	local basic_arrow = "particles/units/heroes/hero_drow/drow_base_attack.vpcf"
+	local basic_arrow = caster.base_attack_projectile
 	local frost_arrow = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
 
 	local frost_lifesteal_projectile = "particles/hero/drow/lifesteal_arrows/drow_lifedrain_frost_arrow.vpcf"
@@ -382,8 +378,11 @@ function modifier_imba_frost_arrows_slow:OnCreated()
 	self.stacks_to_freeze = self.ability:GetSpecialValueFor("stacks_to_freeze")
 	self.freeze_duration = self.ability:GetSpecialValueFor("freeze_duration")
 
+	self.pfx = ParticleManager:CreateParticle(self.caster.frost_arrows_debuff_pfx, PATTACH_POINT_FOLLOW, self.parent)
+	ParticleManager:SetParticleControl(self.pfx, 0, self.parent:GetAbsOrigin())
+
 	-- Play freeze sound
-	EmitSoundOn(self.modifier_freeze, self.parent)
+	EmitSoundOn(self.sound_freeze, self.parent)
 end
 
 function modifier_imba_frost_arrows_slow:OnRemoved()
@@ -396,6 +395,11 @@ function modifier_imba_frost_arrows_slow:OnRemoved()
 		else
 			self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - target_stacks)
 		end
+
+		if self.pfx then
+			ParticleManager:DestroyParticle(self.pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.pfx)
+		end
 	end
 end
 
@@ -403,15 +407,11 @@ function modifier_imba_frost_arrows_slow:GetTexture()
 	return "drow_ranger_frost_arrows"
 end
 
-function modifier_imba_frost_arrows_slow:GetEffectName()
-	return "particles/generic_gameplay/generic_slowed_cold.vpcf"
-end
-
-function modifier_imba_frost_arrows_slow:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
 function modifier_imba_frost_arrows_slow:GetStatusEffectName()
+--	if self:GetStackCount() == 1 then
+--		return "particles/econ/items/drow/drow_ti9_immortal/status_effect_drow_ti9_frost_arrow.vpcf"
+--	end
+
 	return "particles/status_fx/status_effect_frost.vpcf"
 end
 
@@ -537,10 +537,6 @@ end
 imba_drow_ranger_deadeye = class({})
 LinkLuaModifier("modifier_imba_deadeye_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_deadeye_vision", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-
-function imba_drow_ranger_deadeye:GetAbilityTextureName()
-	return "custom/drow_deadeye"
-end
 
 function imba_drow_ranger_deadeye:IsInnateAbility()
 	return true
@@ -672,10 +668,6 @@ imba_drow_ranger_gust = class({})
 LinkLuaModifier("modifier_imba_gust_silence", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_gust_movement", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_gust_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-
-function imba_drow_ranger_gust:GetAbilityTextureName()
-	return "drow_ranger_wave_of_silence"
-end
 
 function imba_drow_ranger_gust:IsHiddenWhenStolen()
 	return false
@@ -997,10 +989,6 @@ LinkLuaModifier("modifier_imba_trueshot", "components/abilities/heroes/hero_drow
 LinkLuaModifier("modifier_imba_trueshot_active", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trueshot_talent_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
-function imba_drow_ranger_trueshot:GetAbilityTextureName()
-	return "drow_ranger_trueshot"
-end
-
 function imba_drow_ranger_trueshot:GetIntrinsicModifierName()
 	return "modifier_imba_trueshot_aura"
 end
@@ -1280,7 +1268,9 @@ LinkLuaModifier("modifier_imba_markmanship_buff", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_markmanship_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_marksmanship:GetAbilityTextureName()
-	return "drow_ranger_marksmanship"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "drow_ranger_marksmanship" end
+	return "drow_ranger_marksmanship_ti9"
 end
 
 function imba_drow_ranger_marksmanship:GetIntrinsicModifierName()
@@ -1431,7 +1421,7 @@ end
 
 function modifier_imba_marksmanship:GetModifierProjectileName()
 	if self:GetStackCount() == 1 then
-		return "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+		return self:GetParent().marksmanship_arrow_pfx
 	end
 end
 

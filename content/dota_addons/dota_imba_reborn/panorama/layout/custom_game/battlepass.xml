@@ -203,13 +203,17 @@
 
 			<Panel id="SettingsInfoContainer" hittest="false">
 				<Button class="SettingsButtonClass" onactivate="SetCompanion('', 'disabled', 0);">
-					<Panel id="RefreshBattlepass" onactivate="SetCompanion('', 'disabled', 0);"/>
-					<Label id="RefreshLabel" text="#disable_companion"/>
+					<Label text="#disable_companion"/>
 				</Button>
-				<Button class="SettingsButtonClass" onactivate="SettingsIngameTag();">
-					<Panel id="RefreshBattlepass" onactivate="SettingsIngameTag();"/>
-					<Label id="RefreshLabel" text="#toggle_ingame_tag"/>
-				</Button>
+				<DOTASettingsCheckbox id="IngameTagCheckBox" class="SettingsButtonClass" onactivate="SettingsIngameTag();">
+					<Label text="#toggle_ingame_tag"/>
+				</DOTASettingsCheckbox>
+				<DOTASettingsCheckbox id="BPRewardsCheckBox" class="SettingsButtonClass" onactivate="SettingsBattlepassRewards();">
+					<Label text="#toggle_bp_rewards"/>
+				</DOTASettingsCheckbox>
+				<DOTASettingsCheckbox id="PlayerXPCheckBox" class="SettingsButtonClass" onactivate="SettingsPlayerXP();">
+					<Label text="#toggle_player_xp"/>
+				</DOTASettingsCheckbox>
 			</Panel>
 		</Panel>
 	</Panel>

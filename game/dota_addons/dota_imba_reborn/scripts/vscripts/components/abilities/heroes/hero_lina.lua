@@ -94,10 +94,6 @@ end
 
 imba_lina_dragon_slave = class({})
 
-function imba_lina_dragon_slave:GetIntrinsicModifierName()
-	return "modifier_imba_lina_dragon_slave_handler"
-end
-
 function imba_lina_dragon_slave:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().arcana_style then return "lina_dragon_slave" end

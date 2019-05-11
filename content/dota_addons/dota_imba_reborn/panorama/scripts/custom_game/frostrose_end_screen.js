@@ -188,26 +188,30 @@ function EndScoreboard(args) {
 		values.level.text = player.info.player_level;
 
 		// XP
-		var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
+		var ply_table = CustomNetTables.GetTableValue("battlepass", player.id.toString());
 
-		var player_xp = player_table.XP;
+		var player_xp = ply_table.XP;
 
-		if (player_table) {
-			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(player_table.MaxXP);
-			values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
-			values.xp.rank_name.text = player_table.title;
-			values.xp.rank_name.style.color = player_table.title_color;
-			values.xp.booster.style.color = player_table.donator_color;
+		$.Msg(ply_table.player_xp)
+		if (ply_table && ply_table.player_xp == 1) {
+			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(ply_table.MaxXP);
+			values.xp.level.text = $.Localize("#battlepass_level") + ply_table.Lvl;
+			values.xp.rank_name.text = ply_table.title;
+			values.xp.rank_name.style.color = ply_table.title_color;
+			values.xp.booster.style.color = ply_table.donator_color;
 
-//			$.Msg(Math.floor(player_xp) + " / " + Math.floor(player_table.MaxXP))
-//			$.Msg(Math.floor(player_xp) / Math.floor(player_table.MaxXP))
+//			$.Msg(Math.floor(player_xp) + " / " + Math.floor(ply_table.MaxXP))
+//			$.Msg(Math.floor(player_xp) / Math.floor(ply_table.MaxXP))
 
-			var progress = Math.round((100.0 * Math.floor(player_xp)) / Math.floor(player_table.MaxXP));
+			var progress = Math.round((100.0 * Math.floor(player_xp)) / Math.floor(ply_table.MaxXP));
 			values.xp.progress.style.width = progress + "%";
-
-			values.xp.booster.style.color = player_table.donator_color;
-		} else {
+		} else {			
+			values.xp.rank.text = "N/A";
+			values.xp.level.text = "N/A";
+			values.xp.rank_name.text = "N/A";
+			values.xp.rank_name.style.color = "#FFFFFF";
 			values.xp.booster.style.color = "white";
+			values.xp.progress.style.width = "0%";			
 		}
 
 		if (player.result != null) {
@@ -217,12 +221,12 @@ function EndScoreboard(args) {
 				values.xp.earned.text = "+" + xpDiff;
 				values.xp.earned.AddClass("es-text-green");
 
-				if (player_table) {
-					var progress_diff = Math.round(100.0 * (xpDiff / player_table.MaxXP));
+				if (ply_table) {
+					var progress_diff = Math.round(100.0 * (xpDiff / ply_table.MaxXP));
 					values.xp.progress_diff.style.width = progress_diff + "%";
 					values.xp.progress_diff.style.marginLeft = (progress - 1) + "%";
 
-					if (Math.floor(player_xp + xpDiff) / Math.floor(player_table.MaxXP) >= 1) {
+					if (Math.floor(player_xp + xpDiff) / Math.floor(ply_table.MaxXP) >= 1) {
 						values.xp.bar[0].AddClass("level-up");
 					}
 				}

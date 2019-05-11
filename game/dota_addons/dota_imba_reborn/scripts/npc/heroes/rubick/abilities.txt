@@ -228,6 +228,42 @@
 	}
 
 	//=================================================================================================================
+	// Rubick: Arcane Supremacy
+	//=================================================================================================================
+	"imba_rubick_arcane_supremacy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_rubick"
+		"AbilityTextureName"			"rubick_null_field"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spell_amp"						"14 18 22 26"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"status_resistance"				"20 28 36 44"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+				"LinkedSpecialBonus"			"special_bonus_imba_rubick_6"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Rubick Spell Steal Contorller
 	//=================================================================================================================
 	"imba_rubick_spell_steal_controller"
@@ -488,7 +524,8 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_rubick_telekinesis"			
+			"01" 	"imba_rubick_null_field"
+			"02" 	"imba_rubick_arcane_supremacy"
 		}
 
 		// Special

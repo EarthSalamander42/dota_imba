@@ -48,8 +48,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
 	end
 
-	Imbattlepass:AddItemEffects(hero)
-
 	if hero:GetUnitName() == "npc_dota_hero_sohei" then
 		HeroSelection:Attachments(hero)
 	end

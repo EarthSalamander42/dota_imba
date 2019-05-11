@@ -13,6 +13,14 @@ ListenToGameEvent('npc_spawned', function(event)
 	local npc = EntIndexToHScript(event.entindex)
 
 	if npc:IsRealHero() then
+		Imbattlepass:AddItemEffects(npc)
+
+		local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(npc:GetPlayerID()))
+
+		if ply_table and ply_table.bp_rewards == 0 then
+			return
+		end
+
 		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
 			hero_name = string.gsub(npc:GetUnitName(), "npc_dota_hero_", ""),
 		})

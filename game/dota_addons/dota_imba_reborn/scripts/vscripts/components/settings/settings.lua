@@ -16,7 +16,7 @@ require('components/settings/settings_donator')
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.13"
+GAME_VERSION = "7.13b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 
 -- Picking screen constants
@@ -31,18 +31,18 @@ IMBA_REINCARNATION_TIME = 3.0
 IMBA_MAX_RESPAWN_TIME = 50.0		-- Maximum respawn time, does not include bonus reaper scythe duration
 IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla respawn time
 
-RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
+RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = false
+	BOTS_ENABLED = true
 else
 	BOTS_ENABLED = false
 end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
-STRATEGY_TIME = 0.0						-- How long should strategy time last?
-SHOWCASE_TIME = 0.0						-- How long should showcase time last?
+STRATEGY_TIME = 0.0					-- How long should strategy time last?
+SHOWCASE_TIME = 20.0				-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() then
 	AP_BAN_TIME = 0.0
@@ -101,6 +101,8 @@ BUYBACK_COST_PER_LEVEL_AFTER_25 = 20										-- Level-based buyback cost growth
 BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
 BUYBACK_COOLDOWN_MAXIMUM = 180												-- Maximum buyback cooldown
+
+BUYBACK_RESPAWN_PENALTY	= 15												-- Increased respawn time when dying after a buyback
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
@@ -178,6 +180,7 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
+IMBA_FRANTIC_RESPAWN_REDUCTION_PCT = 16
 IMBA_BASE_FRANTIC_VALUE = 25
 IMBA_SUPER_FRANTIC_VALUE = 40 -- Do not exceed 40% EVER, causing many broken spells to be used permanently
 CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})
@@ -275,32 +278,27 @@ BANNED_ITEMS[MapDiretide()] = {
 
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns"
 }
 TOWER_ABILITIES["tower2"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration"
 }
 TOWER_ABILITIES["tower3"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
 }
 TOWER_ABILITIES["tower4"] = {
-	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
 	"imba_tower_splash_fire"
 }
-
 
 -- Update game mode net tables
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})
