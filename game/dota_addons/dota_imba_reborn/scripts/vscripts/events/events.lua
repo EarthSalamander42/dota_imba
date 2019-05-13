@@ -255,7 +255,7 @@ function GameMode:OnNPCSpawned(keys)
 			GameMode:OnHeroSpawned(npc)
 
 			return
-		elseif string.find(npc:GetUnitName(), "tower") then
+		elseif npc:GetClassname() == "npc_dota_tower" then
 			print("Tower Spawned!")
 			SetupTower(npc)
 			return

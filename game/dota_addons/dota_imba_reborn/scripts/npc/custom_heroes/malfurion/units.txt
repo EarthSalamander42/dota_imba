@@ -1,0 +1,148 @@
+"DOTAUnits"
+{
+	"Version"	"1"
+
+	//=================================================================================
+	// Living Tower (Radiant)
+	//=================================================================================
+	"npc_imba_malfurion_living_tower_radiant"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                 "npc_dota_creature"
+		"Model"                     "models/props_structures/rock_golem/tower_radiant_rock_golem.vmdl" // models/props_structures/rock_golem/tower_dire_rock_golem.vmdl
+		"SoundSet"					"Tower.Water"					// Name of sound set.
+		"Level"                     "1"
+		"ModelScale"                "1.0"
+		"ConsideredHero"			"1"
+		"CanBeDominated"            "0"     
+		"UnitLabel"                 "living_tower"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                  "neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "100"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"				"2.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.1"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"    "0"
+		"AttackRange"               "0"
+		"ProjectileModel"           "particles/econ/events/ti9/rock_golem_tower/radiant_tower_attack.vpcf" // particles/econ/events/ti9/rock_golem_tower/dire_tower_attack.vpcf
+		"ProjectileSpeed"           "900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"             "0"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"              "10000"
+		"StatusHealthRegen"         "0.0"        
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "1900"
+		"VisionNighttimeRange"      "800"
+	}
+
+	//=================================================================================
+	// Living Tower (Dire)
+	//=================================================================================
+	"npc_imba_malfurion_living_tower_dire"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                 "npc_dota_creature"
+		"Model"                     "models/props_structures/rock_golem/tower_dire_rock_golem.vmdl"
+		"SoundSet"					"Tower.fire"					// Name of sound set.
+		"Level"                     "1"
+		"ModelScale"                "1.0"
+		"ConsideredHero"			"1"
+		"CanBeDominated"            "0"     
+		"UnitLabel"                 "living_tower"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                  "neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "100"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"				"2.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.1"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"    "0"
+		"AttackRange"               "0"
+		"ProjectileModel"           "particles/econ/events/ti9/rock_golem_tower/dire_tower_attack.vpcf"
+		"ProjectileSpeed"           "900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"             "0"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"              "10000"
+		"StatusHealthRegen"         "0.0"        
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "1900"
+		"VisionNighttimeRange"      "800"
+	}
+}

@@ -135,9 +135,9 @@ if IsServer() then
 	function sohei_dash:RefreshCharges()
 		local modifier_charges = self:GetCaster():FindModifierByName( "modifier_sohei_dash_charges" )
 
-    if modifier_charges and not modifier_charges:IsNull() then
+	if modifier_charges and not modifier_charges:IsNull() then
 		  modifier_charges:SetStackCount( self:GetSpecialValueFor( "max_charges" ) )
-    end
+	end
 	end
 end
 
@@ -416,7 +416,7 @@ function sohei_flurry_of_blows:OnOwnerSpawned()
 end
 
 
-function sohei_flurry_of_blows:GetAssociatedPrimaryAbilities()
+function sohei_flurry_of_blows:GetAssociatedSecondaryAbilities()
 	return "sohei_momentum"
 end
 
@@ -424,102 +424,102 @@ end
 
 -- Cast animation + playback rate
 function sohei_flurry_of_blows:GetCastAnimation()
-  return ACT_DOTA_OVERRIDE_ABILITY_2
+	return ACT_DOTA_OVERRIDE_ABILITY_2
 end
 
 function sohei_flurry_of_blows:GetPlaybackRateOverride()
-  return 1.2
+	return 1.2
 end
 
 --------------------------------------------------------------------------------
 
 function sohei_flurry_of_blows:OnAbilityPhaseStart()
-  if IsServer() then
-    self:GetCaster():EmitSound( "Hero_EmberSpirit.FireRemnant.Stop" )
-    return true
-  end
+	if IsServer() then
+		self:GetCaster():EmitSound( "Hero_EmberSpirit.FireRemnant.Stop" )
+		return true
+	end
 end
 
 --------------------------------------------------------------------------------
 
 function sohei_flurry_of_blows:OnAbilityPhaseInterrupted()
-  if IsServer() then
-    self:GetCaster():StopSound( "Hero_EmberSpirit.FireRemnant.Stop" )
-  end
+	if IsServer() then
+		self:GetCaster():StopSound( "Hero_EmberSpirit.FireRemnant.Stop" )
+	end
 end
 
 --------------------------------------------------------------------------------
 
 function sohei_flurry_of_blows:GetChannelTime()
-  --[[
-  if self:GetCaster():HasScepter() then
-    return 300
-  end--]]
+	--[[
+	if self:GetCaster():HasScepter() then
+	return 300
+	end--]]
 
-  return self:GetSpecialValueFor( "max_duration" )
+	return self:GetSpecialValueFor( "max_duration" )
 end
 
 --------------------------------------------------------------------------------
 
 function sohei_flurry_of_blows:OnAbilityPhaseInterrupted()
-  if IsServer() then
-    self:GetCaster():StopSound( "Hero_EmberSpirit.FireRemnant.Stop" )
-  end
+	if IsServer() then
+		self:GetCaster():StopSound( "Hero_EmberSpirit.FireRemnant.Stop" )
+	end
 end
 
 --------------------------------------------------------------------------------
 
 if IsServer() then
-  function sohei_flurry_of_blows:OnSpellStart()
-    local caster = self:GetCaster()
-    local target_loc = self:GetCursorPosition()
-    local flurry_radius = self:GetAOERadius()
-    local max_attacks = self:GetSpecialValueFor( "max_attacks" )
-    local max_duration = self:GetSpecialValueFor( "max_duration" )
-    local attack_interval = self:GetSpecialValueFor( "attack_interval" )
+	function sohei_flurry_of_blows:OnSpellStart()
+		local caster = self:GetCaster()
+		local target_loc = self:GetCursorPosition()
+		local flurry_radius = self:GetAOERadius()
+		local max_attacks = self:GetSpecialValueFor( "max_attacks" )
+		local max_duration = self:GetSpecialValueFor( "max_duration" )
+		local attack_interval = self:GetSpecialValueFor( "attack_interval" )
 
-    -- Emit sound
-    caster:EmitSound( "Hero_EmberSpirit.FireRemnant.Cast" )
+		-- Emit sound
+		caster:EmitSound( "Hero_EmberSpirit.FireRemnant.Cast" )
 
-    -- Draw the particle
-    if caster.flurry_ground_pfx then
-      ParticleManager:DestroyParticle( caster.flurry_ground_pfx, false )
-      ParticleManager:ReleaseParticleIndex( caster.flurry_ground_pfx )
-    end
-    caster.flurry_ground_pfx = ParticleManager:CreateParticle( "particles/hero/sohei/flurry_of_blows_ground.vpcf", PATTACH_CUSTOMORIGIN, nil )
-    ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 0, target_loc )
-	ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 10, Vector(flurry_radius, 0, 0) )
+		-- Draw the particle
+		if caster.flurry_ground_pfx then
+			ParticleManager:DestroyParticle( caster.flurry_ground_pfx, false )
+			ParticleManager:ReleaseParticleIndex( caster.flurry_ground_pfx )
+		end
+		caster.flurry_ground_pfx = ParticleManager:CreateParticle( "particles/hero/sohei/flurry_of_blows_ground.vpcf", PATTACH_CUSTOMORIGIN, nil )
+		ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 0, target_loc )
+		ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 10, Vector(flurry_radius, 0, 0) )
 
-    -- Start the spell
-    caster:SetAbsOrigin( target_loc + Vector(0, 0, 200) )
-    caster:AddNewModifier( caster, self, "modifier_sohei_flurry_self", {
-      duration = max_duration,
-      max_attacks = max_attacks,
-      flurry_radius = flurry_radius,
-      attack_interval = attack_interval
-    } )
-  end
+		-- Start the spell
+		caster:SetAbsOrigin( target_loc + Vector(0, 0, 200) )
+		caster:AddNewModifier(caster, self, "modifier_sohei_flurry_self", {
+			duration = max_duration,
+			max_attacks = max_attacks,
+			flurry_radius = flurry_radius,
+			attack_interval = attack_interval
+		})
+	end
 
 --------------------------------------------------------------------------------
 
-  function sohei_flurry_of_blows:OnChannelFinish()
-    local caster = self:GetCaster()
+	function sohei_flurry_of_blows:OnChannelFinish()
+		local caster = self:GetCaster()
 
-    caster:RemoveModifierByName( "modifier_sohei_flurry_self" )
-  end
+		caster:RemoveModifierByName( "modifier_sohei_flurry_self" )
+	end
 end
 
 --------------------------------------------------------------------------------
 
 function sohei_flurry_of_blows:GetAOERadius()
-  local caster = self:GetCaster()
-  local additionalRadius = 0
+	local caster = self:GetCaster()
+	local additionalRadius = 0
 
 	if self:GetCaster():HasTalent("special_bonus_sohei_fob_radius") then
 		additionalRadius = self:GetCaster():FindTalentValue("special_bonus_sohei_fob_radius")
-    end
+	end
 
-  return self:GetSpecialValueFor( "flurry_radius" ) + additionalRadius
+	return self:GetSpecialValueFor( "flurry_radius" ) + additionalRadius
 end
 
 --------------------------------------------------------------------------------
@@ -530,445 +530,40 @@ modifier_sohei_flurry_self = modifier_sohei_flurry_self or class ({})
 --------------------------------------------------------------------------------
 
 function modifier_sohei_flurry_self:IsDebuff()
-  return false
+	return false
 end
 
 function modifier_sohei_flurry_self:IsHidden()
-  return true
+	return true
 end
 
 function modifier_sohei_flurry_self:IsPurgable()
-  return false
+	return false
 end
 
 function modifier_sohei_flurry_self:IsStunDebuff()
-  return false
+	return false
 end
 
 --------------------------------------------------------------------------------
 
 function modifier_sohei_flurry_self:StatusEffectPriority()
-   return 20
+	return 20
 end
 
 function modifier_sohei_flurry_self:GetStatusEffectName()
-  return "particles/status_fx/status_effect_omnislash.vpcf"
+	return "particles/status_fx/status_effect_omnislash.vpcf"
 end
 
 --------------------------------------------------------------------------------
 
 function modifier_sohei_flurry_self:CheckState()
-  local state = {
-    [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-    [MODIFIER_STATE_INVULNERABLE] = true,
-    [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-    [MODIFIER_STATE_MAGIC_IMMUNE] = true,
-    [MODIFIER_STATE_ROOTED] = true
-  }
-
-  return state
-end
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_flurry_self:OnDestroy()
-  if IsServer() then
-    local caster = self:GetCaster()
-
-    ParticleManager:DestroyParticle( caster.flurry_ground_pfx, false )
-    ParticleManager:ReleaseParticleIndex( caster.flurry_ground_pfx )
-    caster.flurry_ground_pfx = nil
-
-    caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-
-    caster:Interrupt()
-  end
-end
-
---------------------------------------------------------------------------------
-
-if IsServer() then
-  function modifier_sohei_flurry_self:OnCreated( event )
-    self.remaining_attacks = event.max_attacks
-    self.radius = event.flurry_radius
-    self.attack_interval = event.attack_interval
-    self.position = self:GetCaster():GetAbsOrigin()
-    self.positionGround = self.position - Vector( 0, 0, 200 )
-
-    self:StartIntervalThink( self.attack_interval )
-
-    self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_OVERRIDE_ABILITY_2 , 1.4)
-
-
-    if self:PerformFlurryBlow() then
-      self.remaining_attacks = self.remaining_attacks - 1
-    end
-  end
-
---------------------------------------------------------------------------------
-
-  function modifier_sohei_flurry_self:OnIntervalThink()
-    -- Attempt a strike
-    if self:PerformFlurryBlow() then
-      self.remaining_attacks = self.remaining_attacks - 1
-
-      --[[
-      if self:GetParent():HasScepter() then
-        self:SetDuration( self:GetRemainingTime() + self.attack_interval, true )
-      end
-      --]]
-    end
-
-    -- If there are no strikes left, end
-    if self.remaining_attacks <= 0 then
-      self:Destroy()
-    end
-  end
-
---------------------------------------------------------------------------------
-
-  function modifier_sohei_flurry_self:PerformFlurryBlow()
-    local parent = self:GetParent()
-
-    -- If there is at least one target to attack, hit it
-    local targets = FindUnitsInRadius(
-      parent:GetTeamNumber(),
-      self.positionGround,
-      nil,
-      self.radius,
-      DOTA_UNIT_TARGET_TEAM_ENEMY,
-      DOTA_UNIT_TARGET_HERO,
-      bit.bor( DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, DOTA_UNIT_TARGET_FLAG_NO_INVIS, DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE ),
-      FIND_ANY_ORDER,
-      false
-    )
-
-    if targets[1] then
-      local target = targets[1]
-      local targetOrigin = target:GetAbsOrigin()
-      local abilityDash = parent:FindAbilityByName( "sohei_dash" )
-      local distance = 50
-
-      if abilityDash then
-        distance = abilityDash:GetSpecialValueFor( "dash_distance" ) + 50
-      end
-
-      local targetOffset = ( targetOrigin - self.positionGround ):Normalized() * distance
-      local tickOrigin = targetOrigin + targetOffset
-
-      parent:SetAbsOrigin( tickOrigin )
-      parent:SetForwardVector( ( ( self.positionGround ) - tickOrigin ):Normalized() )
-      parent:FaceTowards( targetOrigin )
-
-      -- this stuff should probably be removed if we get actual animations
-      -- just let the animations handle the movement
-      if abilityDash and abilityDash:GetLevel() > 0 then
-        abilityDash:PerformDash()
-      end
-
-      parent:PerformAttack( targets[1], true, true, true, false, false, false, false )
-
-      return true
-
-    -- Else, return false and keep meditating
-    else
-      parent:SetAbsOrigin( self.position )
-      parent:StartGestureWithPlaybackRate( ACT_DOTA_OVERRIDE_ABILITY_2 , 0.5)
-
-      return false
-    end
-  end
-end
-
-sohei_guard = sohei_guard or class ({})
-
-LinkLuaModifier( "modifier_sohei_guard_reflect", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_sohei_guard_knockback", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
-
---------------------------------------------------------------------------------
-
--- unfinished talent stuff
-function sohei_guard:CastFilterResultTarget( target )
-	local caster = self:GetCaster()
-
-	if ( target ~= caster ) and caster:IsStunned() then
-		return UF_FAIL_CUSTOM
-	end
-
-	local ufResult = UnitFilter(
-		target,
-		self:GetAbilityTargetTeam(),
-		self:GetAbilityTargetType(),
-		self:GetAbilityTargetFlags(),
-		caster:GetTeamNumber()
-	)
-
-	return ufResult
-end
-
---------------------------------------------------------------------------------
-
--- unfinished talent stuff
-function sohei_guard:GetCustomCastErrorTarget( target )
-	local caster = self:GetCaster()
-
-	if ( target ~= caster ) and caster:IsStunned() then
-		return "#dota_hud_error_cant_cast_on_ally_while_stunned"
-	end
-
-	return ""
-end
-
---------------------------------------------------------------------------------
-
-if IsServer() then
-	-- always preferrable to stop a cast instead of faking not casting
-	function sohei_guard:GetBehavior()
-		local behavior = self.BaseClass.GetBehavior( self )
-		local caster = self:GetCaster()
-		local modifier_charges = caster:FindModifierByName( "modifier_sohei_dash_charges" )
-		local talent = caster:FindAbilityByName( "special_bonus_sohei_guard_allycast" )
-
-		-- unfinished talent stuff
-		if talent and talent:GetLevel() > 0 then
-			behavior = bit.bor( DOTA_ABILITY_BEHAVIOR_UNIT_TARGET, DOTA_ABILITY_BEHAVIOR_IMMEDIATE, DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL )
-		end
-
-		if modifier_charges and modifier_charges:GetStackCount() >= 2 then
-			behavior = bit.bor( behavior, DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE )
-		end
-
-		return behavior
-	end
-
---------------------------------------------------------------------------------
-
-	function sohei_guard:OnSpellStart()
-		local caster = self:GetCaster()
-		local target = self:GetCursorTarget() or caster
-
-		-- Check if there are enough charges to cast the ability, if the caster is stunned
-
-		if caster:IsStunned() then
-			local modifier_charges = caster:FindModifierByName( "modifier_sohei_dash_charges" )
-
-			if modifier_charges then
-				modifier_charges:SetStackCount( modifier_charges:GetStackCount() - 2 )
-			end
-			-- there could be the whole thing about faking the ability not casting here
-			-- if there aren't enough charges
-			-- but really, that still procs magic wand and stuff
-		end
-
-		-- Hard Dispel
-		target:Purge( false, true, false, true, true )
-
-		-- Start an animation
-    caster:StartGestureWithPlaybackRate( ACT_DOTA_OVERRIDE_ABILITY_1 , 1)
-
-		-- Play guard sound
-		target:EmitSound( "Sohei.Guard" )
-
-		--Apply Linken's + Lotus Orb + Attack reflect modifier for 2 seconds
-		local duration = self:GetSpecialValueFor("guard_duration")
-		target:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", { duration = duration })
-		target:AddNewModifier(caster, self, "modifier_sohei_guard_reflect", { duration = duration })
-
-		-- Stop the animation when it's done
-		Timers:CreateTimer(duration, function()
-			caster:FadeGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
-		end)
-
-		-- If there is at least one target to attack, hit it
-		local talent = caster:FindAbilityByName("special_bonus_sohei_guard_knockback")
-
-		if talent and talent:GetLevel() > 0 then
-			local radius = talent:GetSpecialValueFor( "value" )
-			local pushTargets = FindUnitsInRadius(
-				caster:GetTeamNumber(),
-				target:GetAbsOrigin(),
-				nil,
-				radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE +	DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
-				FIND_ANY_ORDER,
-				false
-			)
-
-			for _, pushTarget in pairs(pushTargets) do
-				self:PushAwayEnemy(pushTarget)
-			end
-		end
-	end
-
---------------------------------------------------------------------------------
-
-	function sohei_guard:PushAwayEnemy( target )
-		local caster = self:GetCaster()
-		local casterposition = caster:GetAbsOrigin()
-		local targetposition = target:GetAbsOrigin()
-		local radius = caster:FindAbilityByName( "special_bonus_sohei_guard_knockback" ):GetSpecialValueFor("value" )
-
-		local vVelocity = casterposition - targetposition
-		vVelocity.z = 0.0
-
-		local distance = radius - vVelocity:Length2D() + caster:GetPaddedCollisionRadius()
-		local duration = distance / self:GetSpecialValueFor( "knockback_speed" )
-
-		target:AddNewModifier( caster, self, "modifier_sohei_guard_knockback", {
-			duration = duration,
-			distance = distance,
-			tree_radius = target:GetPaddedCollisionRadius()
-		} )
-	end
-
---------------------------------------------------------------------------------
-
-	function sohei_guard:OnProjectileHit_ExtraData( target, location, extra_data )
-		target:EmitSound( "Sohei.GuardHit" )
-		ApplyDamage( {
-			victim = target,
-			attacker = self:GetCaster(),
-			damage = extra_data.damage,
-			damage_type = DAMAGE_TYPE_PHYSICAL,
-			ability = self
-		} )
-	end
-end
-
---------------------------------------------------------------------------------
-
--- Guard projectile reflect modifier
-modifier_sohei_guard_reflect = modifier_sohei_guard_reflect or class ({})
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_guard_reflect:IsDebuff()
-	return false
-end
-
-function modifier_sohei_guard_reflect:IsHidden()
-	return false
-end
-
-function modifier_sohei_guard_reflect:IsPurgable()
-	return false
-end
-
---------------------------------------------------------------------------------
-
---[[
-function modifier_sohei_guard_reflect:GetEffectName()
-	return "particles/items3_fx/lotus_orb_shell.vpcf"
-end
-function modifier_sohei_guard_reflect:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-]]--
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_guard_reflect:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_AVOID_DAMAGE,
-		MODIFIER_PROPERTY_ABSORB_SPELL,
-		--MODIFIER_PROPERTY_REFLECT_SPELL,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-	}
-
-	return funcs
-end
-
---------------------------------------------------------------------------------
-
-if IsServer() then
-	function modifier_sohei_guard_reflect:GetModifierAvoidDamage( event )
-		if event.ranged_attack == true and event.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK then
-			return 1
-		end
-
-		return 0
-	end
-
---------------------------------------------------------------------------------
-
-	function modifier_sohei_guard_reflect:GetAbsorbSpell( event )
-		return 1
-	end
-
---------------------------------------------------------------------------------
-
-	-- why does this do nothing
-	function modifier_sohei_guard_reflect:GetReflectSpell( event )
-		return 1
-	end
-
---------------------------------------------------------------------------------
-
-	function modifier_sohei_guard_reflect:OnAttackLanded( event )
-		if event.target == self:GetParent() then
-			if event.ranged_attack == true then
-				-- Pre-heal for the damage done
-				local parent = self:GetParent()
-				--local parent_armor = parent:GetPhysicalArmorValue()
-				--parent:Heal(event.damage * (1 - parent_armor / (parent_armor + 20)), parent)
-				-- what is this, wc3
-
-				-- Send the target's projectile back to them
-				ProjectileManager:CreateTrackingProjectile( {
-					Target = event.attacker,
-					Source = parent,
-					Ability = self:GetAbility(),
-					EffectName = event.attacker:GetRangedProjectileName(),
-					iMoveSpeed = event.attacker:GetProjectileSpeed(),
-					vSpawnOrigin = parent:GetAbsOrigin(),
-					bDodgeable = true,
-					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-
-					ExtraData = {
-						damage = event.damage
-					}
-				} )
-
-				parent:EmitSound( "Sohei.GuardProc" )
-			end
-		end
-	end
-end
-
---------------------------------------------------------------------------------
-
--- Dash movement modifier
-modifier_sohei_guard_knockback = modifier_sohei_guard_knockback or class ({})
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_guard_knockback:IsDebuff()
-	return true
-end
-
-function modifier_sohei_guard_knockback:IsHidden()
-	return true
-end
-
-function modifier_sohei_guard_knockback:IsPurgable()
-	return false
-end
-
-function modifier_sohei_guard_knockback:IsStunDebuff()
-	return false
-end
-
-function modifier_sohei_guard_knockback:GetPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
-end
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_guard_knockback:CheckState()
 	local state = {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+		[MODIFIER_STATE_ROOTED] = true
 	}
 
 	return state
@@ -976,78 +571,264 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_sohei_guard_knockback:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
-	}
+function modifier_sohei_flurry_self:OnDestroy()
+	if IsServer() then
+		local caster = self:GetCaster()
 
-	return funcs
-end
+		ParticleManager:DestroyParticle( caster.flurry_ground_pfx, false )
+		ParticleManager:ReleaseParticleIndex( caster.flurry_ground_pfx )
+		caster.flurry_ground_pfx = nil
 
---------------------------------------------------------------------------------
+		caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 
-function modifier_sohei_guard_knockback:GetOverrideAnimation( event )
-	return ACT_DOTA_FLAIL
-end
-
---------------------------------------------------------------------------------
-
-function modifier_sohei_guard_knockback:GetOverrideAnimationRate( event )
-	return 2.5
+		caster:Interrupt()
+		caster:RemoveNoDraw()
+	end
 end
 
 --------------------------------------------------------------------------------
 
 if IsServer() then
-	function modifier_sohei_guard_knockback:OnCreated( event )
-		local unit = self:GetParent()
-		local caster = self:GetCaster()
+	function modifier_sohei_flurry_self:OnCreated( event )
+		self.remaining_attacks = event.max_attacks
+		self.radius = event.flurry_radius
+		self.attack_interval = event.attack_interval
+		self.position = self:GetCaster():GetAbsOrigin()
+		self.positionGround = self.position - Vector( 0, 0, 200 )
 
-		local difference = unit:GetAbsOrigin() - caster:GetAbsOrigin()
+		self:StartIntervalThink( self.attack_interval )
 
-		-- Movement parameters
-		self.direction = difference:Normalized()
-		self.distance = event.distance
-		self.speed = self:GetAbility():GetSpecialValueFor( "knockback_speed" )
-		self.tree_radius = event.tree_radius
+		self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_OVERRIDE_ABILITY_2 , 1.4)
 
-		if self:ApplyHorizontalMotionController() == false then
-			self:Destroy()
-			return
+
+		if self:PerformFlurryBlow() then
+			self.remaining_attacks = self.remaining_attacks - 1
 		end
 	end
 
 --------------------------------------------------------------------------------
 
-	function modifier_sohei_guard_knockback:OnDestroy()
+	function modifier_sohei_flurry_self:OnIntervalThink()
+		-- Attempt a strike
+		if self:PerformFlurryBlow() then
+			self.remaining_attacks = self.remaining_attacks - 1
+
+			--[[
+			if self:GetParent():HasScepter() then
+			self:SetDuration( self:GetRemainingTime() + self.attack_interval, true )
+			end
+			--]]
+		end
+
+		-- If there are no strikes left, end
+		if self.remaining_attacks <= 0 then
+			self:Destroy()
+		end
+	end
+
+--------------------------------------------------------------------------------
+
+	function modifier_sohei_flurry_self:PerformFlurryBlow()
 		local parent = self:GetParent()
 
-		parent:RemoveHorizontalMotionController( self )
-		ResolveNPCPositions( parent:GetAbsOrigin(), 128 )
+		-- If there is at least one target to attack, hit it
+		local targets = FindUnitsInRadius(
+			parent:GetTeamNumber(),
+			self.positionGround,
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO,
+			bit.bor( DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, DOTA_UNIT_TARGET_FLAG_NO_INVIS, DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE ),
+			FIND_ANY_ORDER,
+			false
+		)
+
+		if targets[1] then
+			local target = targets[1]
+			local targetOrigin = target:GetAbsOrigin()
+			local abilityDash = parent:FindAbilityByName( "sohei_dash" )
+			local abilityMomentum = parent:FindAbilityByName( "sohei_momentum" )
+			local distance = 50
+
+			parent:RemoveNoDraw()
+
+			if abilityDash then
+				distance = abilityDash:GetSpecialValueFor( "dash_distance" ) + 50
+			end
+
+			local targetOffset = ( targetOrigin - self.positionGround ):Normalized() * distance
+			local tickOrigin = targetOrigin + targetOffset
+
+			parent:SetAbsOrigin( tickOrigin )
+			parent:SetForwardVector( ( ( self.positionGround ) - tickOrigin ):Normalized() )
+			parent:FaceTowards( targetOrigin )
+
+			-- this stuff should probably be removed if we get actual animations
+			-- just let the animations handle the movement
+			if abilityDash and abilityDash:GetLevel() > 0 then
+				abilityDash:PerformDash()
+			end
+
+			-- Remove if the ability is passive
+			if abilityMomentum and abilityMomentum:GetLevel() > 0 then
+				if not abilityMomentum:GetToggleState() then
+					abilityMomentum:ToggleAbility()
+				end
+			end
+
+			parent:PerformAttack( targets[1], true, true, true, false, false, false, false )
+
+			return true
+		-- Else, return false and keep meditating
+		else
+			parent:AddNoDraw()
+			parent:SetAbsOrigin(self.position)
+			parent:StartGestureWithPlaybackRate(ACT_DOTA_OVERRIDE_ABILITY_2 , 0.5)
+
+			return false
+		end
 	end
+end
+
+sohei_wholeness_of_body = class({})
+
+LinkLuaModifier("modifier_sohei_wholeness_of_body_status", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_sohei_wholeness_of_body_knockback", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function sohei_wholeness_of_body:GetBehavior()
+	local caster = self:GetCaster()
+--	caster:HasTalent(...) will return true on the client only when OnPlayerLearnedAbility event happens
+--	caster:HasModifier(...) will return true on the client only if the talent is leveled up with aghanim scepter
+	if caster:HasTalent("special_bonus_sohei_wholeness_allycast") or caster:HasModifier("modifier_special_bonus_sohei_wholeness_allycast") then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	end
+
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+end
+--------------------------------------------------------------------------------
+
+function sohei_wholeness_of_body:CastFilterResultTarget( target )
+	local default_result = self.BaseClass.CastFilterResultTarget(self, target)
+	return default_result
+end
+
+function sohei_wholeness_of_body:OnSpellStart()
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget() or caster
+	-- Activation sound
+	target:EmitSound("Sohei.Guard")
+	-- Basic Dispel
+	target:Purge(false, true, false, false, false)
+	-- Applying the buff
+	target:AddNewModifier(caster, self, "modifier_sohei_wholeness_of_body_status", {duration = self:GetTalentSpecialValueFor("sr_duration")})
+	-- Knockback talent
+	if caster:HasTalent("special_bonus_sohei_wholeness_knockback") then
+		local position = target:GetAbsOrigin()
+		local radius = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback")
+		local team = caster:GetTeamNumber()
+		local enemies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _, enemy in ipairs( enemies ) do
+			local modifierKnockback = {
+				center_x = position.x,
+				center_y = position.y,
+				center_z = position.z,
+				duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
+				knockback_duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
+				knockback_distance = radius - (position - enemy:GetAbsOrigin()):Length2D(),
+			}
+
+			enemy:AddNewModifier(caster, self, "modifier_knockback", modifierKnockback )
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 
-	function modifier_sohei_guard_knockback:UpdateHorizontalMotion( parent, deltaTime )
-		local parentOrigin = parent:GetAbsOrigin()
+-- wholeness_of_body modifier
+modifier_sohei_wholeness_of_body_status = class({})
+--------------------------------------------------------------------------------
 
-		local tickSpeed = self.speed * deltaTime
-		tickSpeed = math.min( tickSpeed, self.distance )
-		local tickOrigin = parentOrigin + ( tickSpeed * self.direction )
+function modifier_sohei_wholeness_of_body_status:IsDebuff()
+	return false
+end
 
-		parent:SetAbsOrigin( tickOrigin )
+function modifier_sohei_wholeness_of_body_status:IsHidden()
+	return false
+end
 
-		self.distance = self.distance - tickSpeed
-
-		GridNav:DestroyTreesAroundPoint( tickOrigin, self.tree_radius, false )
-	end
+function modifier_sohei_wholeness_of_body_status:IsPurgable()
+	return false
+end
 
 --------------------------------------------------------------------------------
 
-	function modifier_sohei_guard_knockback:OnHorizontalMotionInterrupted()
-		self:Destroy()
+function modifier_sohei_wholeness_of_body_status:GetEffectName()
+	return "particles/hero/sohei/guard.vpcf"
+end
+
+function modifier_sohei_wholeness_of_body_status:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_sohei_wholeness_of_body_status:OnCreated()
+	local ability = self:GetAbility()
+	self.status_resistance = ability:GetTalentSpecialValueFor("status_resistance")
+	self.damageheal = ability:GetTalentSpecialValueFor("damage_taken_heal") / 100
+	self.endHeal = 0
+end
+
+function modifier_sohei_wholeness_of_body_status:OnRefresh()
+	local ability = self:GetAbility()
+	self.status_resistance = ability:GetTalentSpecialValueFor("status_resistance")
+	self.damageheal = ability:GetTalentSpecialValueFor("damage_taken_heal") / 100
+end
+
+function modifier_sohei_wholeness_of_body_status:OnDestroy()
+	if IsServer() then
+		self:GetParent():Heal(self.endHeal + self:GetAbility():GetTalentSpecialValueFor("post_heal"), self:GetAbility())
 	end
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_sohei_wholeness_of_body_status:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+
+	return funcs
+end
+
+function modifier_sohei_wholeness_of_body_status:GetModifierStatusResistance( )
+	return self.status_resistance
+end
+
+function modifier_sohei_wholeness_of_body_status:OnTakeDamage( params )
+	if params.unit == self:GetParent() then
+		self.endHeal = self.endHeal + params.damage * self.damageheal
+	end
+end
+
+if modifier_special_bonus_sohei_wholeness_allycast == nil then
+	modifier_special_bonus_sohei_wholeness_allycast = class({})
+end
+
+function modifier_special_bonus_sohei_wholeness_allycast:IsHidden()
+	return true
+end
+
+function modifier_special_bonus_sohei_wholeness_allycast:IsPurgable()
+	return false
+end
+
+function modifier_special_bonus_sohei_wholeness_allycast:AllowIllusionDuplicate()
+	return false
+end
+
+function modifier_special_bonus_sohei_wholeness_allycast:RemoveOnDeath()
+	return false
 end
 
 sohei_momentum = sohei_momentum or class ({})

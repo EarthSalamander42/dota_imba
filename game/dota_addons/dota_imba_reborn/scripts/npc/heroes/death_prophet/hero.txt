@@ -1,0 +1,16 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Death Prophet
+	//=================================================================================================================
+	"npc_dota_hero_death_prophet"
+	{
+		"override_hero"				"npc_dota_hero_death_prophet"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability2"					"imba_death_prophet_silence"
+	}
+}

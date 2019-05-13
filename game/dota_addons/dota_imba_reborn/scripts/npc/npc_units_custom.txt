@@ -1,4 +1,5 @@
 #base custom_heroes/malfurion/hero.txt
+#base custom_heroes/malfurion/units.txt
 #base custom_heroes/sohei/hero.txt
 
 #base units/companions.txt
@@ -8565,7 +8566,7 @@
 		"ModelScale"				"1.0"
 		"Level"						"1"
 		"IsAncient"					"1"
-		"IsConsideredHero"			"1"
+		"ConsideredHero"			"1"
 		"UnitLabel"					"npc_imba_roshan"
 		"MinimapIcon"				"minimap_roshancamp"
 		"MinimapIconSize"			"400"

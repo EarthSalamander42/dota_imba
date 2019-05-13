@@ -514,22 +514,9 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 
 	for (var i = 1; i <= 500; i++) {
 		if (BattlepassRewards[i] != undefined) {
-			var is_arcana = false;
-			var is_immortal = false;
-			var is_mythical = false;
-
+			var bp_reward = BattlepassRewards[i][1];
+			var bp_rarity = BattlepassRewards[i][2];
 			i_count++;
-
-			var arcana = BattlepassRewards[i].search("arcana");
-			var immortal = BattlepassRewards[i].search("immortal");
-			var mythical = BattlepassRewards[i].search("mythical");
-
-			if (arcana != -1)
-				is_arcana = true;
-			else if (immortal != -1)
-				is_immortal = true;
-			else if (mythical != -1)
-				is_mythical = true;
 
 			if (i_count > 10) {
 				class_option_count = class_option_count + 1;
@@ -538,57 +525,47 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 				i_count = 1;
 			}
 
-			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
+			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), bp_reward);
 			reward.AddClass("BattlepassReward");
-			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
-			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+			var reward_icon = $.CreatePanel("Panel", reward, bp_reward + "_icon");
+			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + bp_reward + '.png")';
 			reward_icon.AddClass("BattlepassRewardIcon");
-			if (is_arcana == true)
-				reward_icon.AddClass("arcana_border");
-			else if (is_immortal == true)
-				reward_icon.AddClass("immortal_border");
-			else if (is_mythical == true)
-				reward_icon.AddClass("mythical_border");
+			reward_icon.AddClass(bp_rarity + "_border");
 
-			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
+			var reward_label = $.CreatePanel("Label", reward, bp_reward + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");
 			reward_label.text = $.Localize("battlepass_level") + i;
-			if (is_arcana == true)
-				reward_label.AddClass("arcana_text");
-			else if (is_immortal == true)
-				reward_label.AddClass("immortal_text");
-			else if (is_mythical == true)
-				reward_label.AddClass("mythical_text");
+			reward_label.AddClass(bp_rarity + "_text");
 
-			var hero_name = BattlepassRewards[i].replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "").replace("2", "");
-			// WARNING: The following line is NSFW.
-			if (hero_name == "axe" || hero_name == "bristleback" || hero_name == "centaur" || hero_name == "chen" || hero_name == "dark_seer" || hero_name == "drow_ranger" || hero_name == "earthshaker" || hero_name == "enigma" || hero_name == "huskar" || hero_name == "juggernaut" || hero_name == "life_stealer" || hero_name == "lina" || hero_name == "nyx_assassin" || hero_name == "pudge" || hero_name == "skywrath_mage" || hero_name == "vengefulspirit" || hero_name == "wisp" || hero_name == "zuus") {
-				var reward_hero_icon = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_icon");
+			var hero_name = bp_reward.replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "").replace("2", "");
+			// WARNING: The following line is NSFW. Later on use GetTableValue("battlepass", "hero_name")
+			if (hero_name == "axe" || hero_name == "bristleback" || hero_name == "centaur" || hero_name == "chen" || hero_name == "dark_seer" || hero_name == "death_prophet" || hero_name == "drow_ranger" || hero_name == "earthshaker" || hero_name == "enigma" || hero_name == "huskar" || hero_name == "juggernaut" || hero_name == "leshrac" || hero_name == "life_stealer" || hero_name == "lina" || hero_name == "nyx_assassin" || hero_name == "pudge" || hero_name == "skywrath_mage" || hero_name == "vengefulspirit" || hero_name == "wisp" || hero_name == "zuus") {
+				var reward_hero_icon = $.CreatePanel("Panel", reward_icon, bp_reward + "_icon");
 				reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
 				reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
 			}
 
 			if (plyData != null || bRewardsDisabled & bRewardsDisabled == true) {
 				if (i <= plyData.Lvl) {
-					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_panel_unlock");
+					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, bp_reward + "_panel_unlock");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
 					reward_label.AddClass("unlocked");
 
-					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, BattlepassRewards[i] + "_label");
+					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, bp_reward + "_label");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
-					reward_label_unlocked.text = $.Localize("#battlepass_" + BattlepassRewards[i]);
+					reward_label_unlocked.text = $.Localize("#battlepass_" + bp_reward);
 				} else {
 					reward_label.AddClass("locked");
 					reward_icon.AddClass("BattlepassRewardIcon_locked")
-					var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+					var reward_label_locked = $.CreatePanel("Label", reward_icon, bp_reward + "_label");
 					reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-					reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + BattlepassRewards[i]);
+					reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + bp_reward);
 				}
 			} else {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
-				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+				var reward_label_locked = $.CreatePanel("Label", reward_icon, bp_reward + "_label");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + BattlepassRewards[i]);
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + bp_reward);
 			}
 		}
 	}

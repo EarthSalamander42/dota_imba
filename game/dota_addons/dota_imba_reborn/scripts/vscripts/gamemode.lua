@@ -6,7 +6,7 @@ end
 require('addon_init')
 
 require('components/api/init')
-require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+-- require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 
 require('libraries/animations')
 require('libraries/keyvalues')
@@ -247,7 +247,7 @@ function GameMode:PlayHeroTaunt(keys)
 	local taunt_unlocked = false
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
-		if v == hero_short_name.."_taunt" then
+		if v[1] == hero_short_name.."_taunt" then
 			if Imbattlepass:GetRewardUnlocked(keys.ID) >= k then
 				taunt_unlocked = true
 

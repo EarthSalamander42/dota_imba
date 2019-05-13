@@ -66,8 +66,6 @@
 			PlayHeroTaunt();
 		}, "", 0);
 
-		$.Msg(GetKeyBind("HeroTaunt"))
-
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")

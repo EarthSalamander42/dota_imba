@@ -1,4 +1,5 @@
 -- Credits: Elfansoer.
+-- Earthshaker Fissure luafied
 -- https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_fissure_lua/earthshaker_fissure_lua.lua
 -- https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_fissure_lua/modifier_earthshaker_fissure_lua_thinker.lua
 

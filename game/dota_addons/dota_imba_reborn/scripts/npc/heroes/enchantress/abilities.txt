@@ -271,12 +271,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_fast"			"500"
+				"speed_fast"			"300"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_slow"			"-500"
+				"speed_slow"			"-300"
 			}
 		}
 	}
@@ -344,7 +344,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_cast_stack"			"16"
+				"attack_cast_stack"			"10"
 			}
 			"05"
 			{

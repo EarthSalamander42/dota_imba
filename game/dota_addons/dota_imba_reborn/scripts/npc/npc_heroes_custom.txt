@@ -1,10 +1,13 @@
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
+#base heroes/death_prophet/hero.txt
 #base heroes/earthshaker/hero.txt
 #base heroes/enchantress/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
+#base heroes/leshrac/hero.txt
+#base heroes/life_stealer/hero.txt
 #base heroes/rattletrap/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt

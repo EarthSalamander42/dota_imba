@@ -1092,17 +1092,38 @@
 	animation-iteration-count: infinite;
 }
 
-.arcana_text {
-	color:#88ff4d;
+.common_text {
+	color: #b0c3d9;
 }
 
-.immortal_text {
-	color:#e6b800;
+.uncommon_text {
+	color: #5e98d9;
+}
+
+.rare_text {
+	color: #4b69ff;
 }
 
 .mythical_text {
-	color:#720585;
+	color: #8847ff;
 }
+
+.legendary_text {
+	color: #d32ce6;
+}
+
+.immortal_text {
+	color: #b28a33;
+}
+
+.arcana_text {
+	color: #ade55c;
+}
+
+.ancient_text {
+	color: #eb4b4b;
+}
+
 
 .gold {
 	color: gold;

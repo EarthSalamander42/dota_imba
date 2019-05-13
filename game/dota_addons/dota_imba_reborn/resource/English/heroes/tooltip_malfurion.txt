@@ -16,6 +16,9 @@
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_total_heal_tooltip"			"TOTAL HEAL:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_duration"						"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
+"DOTA_Tooltip_modifier_imba_rejuvenation"										"Rejuvenation"
+"DOTA_Tooltip_modifier_imba_rejuvenation_Description"							"Healed periodically."
+
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw"							"Mark of the Claw"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Description"				"Gives a chance to trigger a cleave attack, dealing bonus damage."
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Lore"						""
@@ -23,3 +26,40 @@
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_bonus_damage_pct"			"%BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_radius"					"CLEAVE RADIUS:"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_splash_damage_pct"		"%CLEAVE:"
+
+"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild"							"Strength of the Wild"
+"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_Description"				"Increase Malfurion's base attacks against non-heroes enemies."
+"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_Lore"						""
+"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_bonus_damage_tooltip"		"%DAMAGE MULTIPLIER:"
+
+"DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild"							"Strength of the Wild"
+"DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild_Description"				"Increases Malfurion's attack damage by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% against non-heroes enemies."
+
+"DOTA_Tooltip_ability_imba_malfurion_living_tower"							"Living Tower"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_Description"				"Summons a powerful living tower unable to move with cleave attacks."
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_Lore"						""
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_health"					"TOWER HEALTH:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_damage"					"TOWER DAMAGE:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_attack_range"				"TOWER ATTACK RANGE:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_attack_speed"				"TOWER ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_cleave_radius"			"CLEAVE RADIUS:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_cleave_pct"				"%CLEAVE DAMAGE:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_xp_bounty"				"DEATH XP BOUNTY:"
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_gold_bounty"				"DEATH GOLD BOUNTY:"
+
+"npc_imba_malfurion_living_tower_radiant"				"Living Tower"
+"npc_imba_malfurion_living_tower_dire"					"Living Tower"
+
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_1"						"Living Aegis"
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_1_Description"			"Allies armor increased around Living Tower."
+
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_2"						"Living Atrophy"
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_2_Description"			"Reduces the attack damage of all enemy units around Living Tower."
+
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_3"						"Living Soul Leech"
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_3_Description"			"Allies near Living Tower lifesteal all damage done to enemies, including magical and pure damage."
+
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_4"						"Living Barrier"
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_4_Description"			"Grants allies near Living Tower a barrier that blocks all damage, up to a certain threshold."
+
+"DOTA_Tooltip_ability_special_bonus_imba_malfurion_5"						"+%value% heal/sec for Rejuvenation"

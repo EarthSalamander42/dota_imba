@@ -10,11 +10,13 @@
 #base heroes/bristleback/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
+#base heroes/death_prophet/abilities.txt
 #base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
+#base heroes/leshrac/abilities.txt
 #base heroes/life_stealer/abilities.txt
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
@@ -21112,7 +21114,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1300"
 		"AbilityCastPoint"				"0.2"
- 		"AbilityCastAnimation"			"ACT_INVALID"
+		"AbilityCastAnimation"			"ACT_INVALID"
 
 
 		// Special
@@ -28317,7 +28319,7 @@
 		}
 	}
 
-    //=================================================================================================================
+	//=================================================================================================================
 	// Juggernaut Talent 9: Omnislash EX
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_9"
@@ -28601,7 +28603,7 @@
 		}
 	}
 
-    //=================================================================================================================
+	//=================================================================================================================
 	// Mirana's Leap
 	//=================================================================================================================
 	"imba_mirana_leap"
@@ -28773,7 +28775,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_mirana_starfall"
-            "02"    "imba_mirana_moonlight_shadow"
+			"02"    "imba_mirana_moonlight_shadow"
 		}
 
 		// Special
@@ -32978,9 +32980,9 @@
 			}
 			
 			"09"
- 			{
- 				"var_type"					"FIELD_INTEGER"
- 				"projectiles"				"1"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectiles"				"1"
 			}
 		}
 	}
@@ -33062,10 +33064,10 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"miss_chance_pct"           "30"
-  			}
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"miss_chance_pct"           "30"
+			}
 		}
 	}
 
@@ -33093,10 +33095,10 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"charges_per_recharge"      "2"
-  			}
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"charges_per_recharge"      "2"
+			}
 		}
 	}
 
@@ -33149,16 +33151,16 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"total_projectiles"	        "3"
- 			}
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"total_projectiles"	        "3"
+			}
  
- 			"03"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"refire_delay"		        "0.2"
-  			}
+			"03"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"refire_delay"		        "0.2"
+			}
 		}
 	}
 
@@ -33180,26 +33182,26 @@
 		"AbilitySpecial"
 		{
 			"01"
-  			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"damage_per_second"         "80"
- 			}
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_per_second"         "80"
+			}
  
- 			"02"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"vision_loss"	         	"500"
- 			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"vision_loss"	         	"500"
+			}
  
- 			"03"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"duration"			        "5"
- 			}
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"			        "5"
+			}
  
- 			"04"
- 			{
-  				"var_type"                  "FIELD_FLOAT"
+			"04"
+			{
+				"var_type"                  "FIELD_FLOAT"
 				"damage_interval"	        "0.5"
 			}
 		}
@@ -34109,13 +34111,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trembling_steps_damage"	"30 60 90 120"
-  			}
+			}
 
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"trembling_steps_cooldown"	"0.4"
-  			}
+			}
 
 			"12"
 			{
@@ -34127,7 +34129,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_damage_pct"			"50"				
-  			}
+			}
 
 			"14"
 			{
@@ -34191,7 +34193,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attacks_num"			"4 5 6 7"				
-  			}
+			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -34206,7 +34208,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"disarm_duration"		"0.8 1.2 1.6 2.0"				
-  			}
+			}
 		}
 	}
 
@@ -34262,7 +34264,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"deep_stack_multiplier"	"150"				
-  			}
+			}
 
 			"05"
 			{
@@ -34325,7 +34327,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_radius_skills"	"100 120 140"				
-  			}
+			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -34415,20 +34417,20 @@
 				"value"					"50"
 			}
 			"02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage_threshold"  "750"
-            }
-            "03"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "damage_reset"      "3"
-            }
-            "04"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "enrage_cooldown"   "60"
-            }
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_threshold"  "750"
+			}
+			"03"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"damage_reset"      "3"
+			}
+			"04"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"enrage_cooldown"   "60"
+			}
 		}
 	}
 
@@ -34515,10 +34517,10 @@
 				"armor_reduction"		"2"
 			}
 			"02"
- 			{
- 				"var_type"				"FIELD_INTEGER"
- 				"duration"				"3"
-  			}
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"3"
+			}
 		}
 	}
 
@@ -34540,13 +34542,13 @@
 		"AbilitySpecial"
 		{
 			"01"
-  			{
- 				"var_type"				"FIELD_FLOAT"
- 				"maximum_health_dmg"	"3.5"
- 			}
+			{
+				"var_type"				"FIELD_FLOAT"
+				"maximum_health_dmg"	"3.5"
+			}
  
- 			"02"
- 			{
+			"02"
+			{
 				"var_type"				"FIELD_INTEGER"
 				"health_threshold_pct"	"50"
 			}
@@ -38324,8 +38326,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-		  "particle"          "particles/econ/items/juggernaut/bladekeeper_omnislash/_dc_juggernaut_omni_slash_trail.vpcf"
-		  "soundfile"         "soundevents/ronin_soundevents.vsndevts"
+			"particle"          "particles/econ/items/juggernaut/bladekeeper_omnislash/_dc_juggernaut_omni_slash_trail.vpcf"
+			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38385,7 +38387,6 @@
 		"AbilityTextureName"		"custom/ronin_flurry_of_blows"
 		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
 
-
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"			"1.0"
@@ -38438,40 +38439,42 @@
 	}
 
 	//=================================================================================================================
-	// Ronin: Guard
+	// Ronin: wholeness_of_body
 	//=================================================================================================================
-	"sohei_guard"
+	"sohei_wholeness_of_body"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"ability_lua"
-		"ID"						"9502"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_NONE"
-		"AbilityTextureName"		"custom/ronin_guard"
-		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
+		"BaseClass"             "ability_lua"
+		"ID"                    "9511"
+		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"     "SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"    "custom/ronin_guard"
+		"ScriptFile"			"components/abilities/heroes/hero_sohei.lua"
+		"MaxLevel"              "6"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"        "0.0"
-		"AbilityCastRange"        "0"
+		"AbilityCastPoint"		"0.0"
+		"AbilityCastRange"		"1800"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22"
+		"AbilityCooldown"		"20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"       "80"
+		"AbilityManaCost"		"80"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-		  "particle"          "particles/hero/ronin/guard.vpcf"
-		  "soundfile"         "soundevents/ronin_soundevents.vsndevts"
+			"particle"          "particles/hero/sohei/guard.vpcf"
+			"particle"          "particles/hero/sohei/knockback.vpcf"
+			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38480,18 +38483,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"charges_required"		"4"
+				"var_type"					"FIELD_INTEGER"
+				"status_resistance"			"100"
 			}
 			"02"
 			{
-				"var_type"          "FIELD_FLOAT"
-				"guard_duration"      "1.5 2.0 2.5 3.0"
+				"var_type"					"FIELD_FLOAT"
+				"sr_duration"				"5"
 			}
 			"03"
 			{
-				"var_type"          "FIELD_FLOAT"
-				"knockback_speed"   "1200"
+				"var_type"					"FIELD_INTEGER"
+				"post_heal"					"90 160 230 300 650 1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_taken_heal"			"25"
 			}
 		}
 	}
@@ -38533,7 +38541,7 @@
 		{
 		  "particle"          "particles/hero/ronin/momentum.vpcf"
 		  "particle"          "particles/hero/ronin/knockback.vpcf"
-		  "soundfile"         "soundevents/ronin_soundevents.vsndevts"
+			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38583,72 +38591,72 @@
   //=================================================================================================================
   "sohei_palm_of_life"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"             	"ability_lua"
-    "ID"                    	"9510"
-    "AbilityBehavior"       	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-    "AbilityUnitTargetType" 	"DOTA_UNIT_TARGET_HERO"
-    "AbilityUnitTargetTeam" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-    "AbilityTextureName"    	"omniknight_purification"
-    "ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
-    "MaxLevel"              	"1"
-    "IsGrantedByScepter"    	"1"
-    "HasScepterUpgrade"     	"1"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"             	"ability_lua"
+	"ID"                    	"9510"
+	"AbilityBehavior"       	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitTargetType" 	"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetTeam" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityTextureName"    	"omniknight_purification"
+	"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
+	"MaxLevel"              	"1"
+	"IsGrantedByScepter"    	"1"
+	"HasScepterUpgrade"     	"1"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"        "0.0"
-    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_4"
-    "AbilityCastRange"        "600"
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"        "0.0"
+	"AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_4"
+	"AbilityCastRange"        "600"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"       "5"
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"       "5"
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"       "50"
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"       "50"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-      "particle"          "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-      "soundfile"         "soundevents/ronin_soundevents.vsndevts"
-      "soundfile"         "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-    }
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"          "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+		"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	}
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"          "FIELD_INTEGER"
-        "hp_as_heal"        "10"
-      }
-      "02"
-      {
-        "var_type"          "FIELD_INTEGER"
-        "dash_speed"        "2400"
-      }
-      "03"
-      {
-        "var_type"          "FIELD_INTEGER"
-        "end_distance"      "70"
-      }
-      "04"
-      {
-        "var_type"          "FIELD_INTEGER"
-        "tree_radius"       "175"
-      }
-      "05"
-      {
-        "var_type"          "FIELD_FLOAT"
-        "max_duration"      "1.5"
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"          "FIELD_INTEGER"
+		"hp_as_heal"        "10"
+	  }
+	  "02"
+	  {
+		"var_type"          "FIELD_INTEGER"
+		"dash_speed"        "2400"
+	  }
+	  "03"
+	  {
+		"var_type"          "FIELD_INTEGER"
+		"end_distance"      "70"
+	  }
+	  "04"
+	  {
+		"var_type"          "FIELD_INTEGER"
+		"tree_radius"       "175"
+	  }
+	  "05"
+	  {
+		"var_type"          "FIELD_FLOAT"
+		"max_duration"      "1.5"
+	  }
+	}
   }
 
   //=================================================================================================================
@@ -38656,23 +38664,23 @@
   //=================================================================================================================
   "special_bonus_sohei_stun"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9504"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"           "special_bonus_undefined"
+	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
+	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"ID"                  "9504"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_FLOAT"
-        "value"         "0.2"     // Stun duration
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"        "FIELD_FLOAT"
+		"value"         "0.2"     // Stun duration
+	  }
+	}
   }
 
   //=================================================================================================================
@@ -38680,23 +38688,23 @@
   //=================================================================================================================
   "special_bonus_sohei_guard_knockback"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9505"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"           "special_bonus_undefined"
+	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
+	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"ID"                  "9505"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_INTEGER"
-        "value"         "300"     // Knockback max distance
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"        "FIELD_INTEGER"
+		"value"         "300"     // Knockback max distance
+	  }
+	}
   }
 
   //=================================================================================================================
@@ -38704,23 +38712,23 @@
   //=================================================================================================================
   "special_bonus_sohei_momentum_guard_cooldown"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9506"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"           "special_bonus_undefined"
+	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
+	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"ID"                  "9506"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_FLOAT"
-        "value"         "1.0"     // Cooldown reduction in seconds
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"        "FIELD_FLOAT"
+		"value"         "1.0"     // Cooldown reduction in seconds
+	  }
+	}
   }
 
   //=================================================================================================================
@@ -38728,23 +38736,23 @@
   //=================================================================================================================
   "special_bonus_sohei_dash_recharge"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9507"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"           "special_bonus_undefined"
+	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
+	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"ID"                  "9507"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_FLOAT"
-        "value"         "3.0"     // Cooldown reduction in seconds
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"        "FIELD_FLOAT"
+		"value"         "3.0"     // Cooldown reduction in seconds
+	  }
+	}
   }
 
   //=================================================================================================================
@@ -38752,48 +38760,77 @@
   //=================================================================================================================
   "special_bonus_sohei_fob_radius"
   {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9508"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"           "special_bonus_undefined"
+	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
+	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"ID"                  "9508"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_INTEGER"
-        "value"         "300"     // Radius increase
-      }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+	  "01"
+	  {
+		"var_type"        "FIELD_INTEGER"
+		"value"         "300"     // Radius increase
+	  }
+	}
   }
 
-  //=================================================================================================================
-  // sohei talent 6: Guard can be cast on allies, this isn't ready don't use this
-  //=================================================================================================================
-  "special_bonus_sohei_guard_allycast"
-  {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-    "BaseClass"           "special_bonus_undefined"
-    "AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "ID"                  "9509"
+	//=================================================================================================================
+	// sohei talent 6: Wholeness of Body can be cast on allies, this isn't ready don't use this
+	//=================================================================================================================
+	"special_bonus_sohei_wholeness_allycast"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"					"9509"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-      "01"
-      {
-        "var_type"        "FIELD_FLOAT"
-        "value"         "1"     // nothing
-      }
-    }
-  }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"		// nothing
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// sohei talent 2: Wholeness of Body also knockbacks enemies until they are 300 units away
+	//=================================================================================================================
+	"special_bonus_sohei_wholeness_knockback"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"					"9505"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"500"		// Knockback max distance
+			}
+			"02"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"duration"		"0.2"		// Knockback max distance
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Ember Spirit: Searing Chains
@@ -38811,7 +38848,6 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"		"ember_spirit_searing_chains"
 		"ScriptFile"				"components/abilities/heroes/hero_ember.lua"
-
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

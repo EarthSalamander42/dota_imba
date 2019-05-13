@@ -12,6 +12,16 @@ modifier_imba_life_stealer_open_wounds 	= class({})
 -- OPEN WOUNDS --
 -----------------
 
+function imba_life_stealer_open_wounds:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "life_stealer_open_wounds" end
+	if self:GetCaster().arcana_style == 0 then
+		return "life_stealer_open_wounds_ti9"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "life_stealer_open_wounds_ti9_gold"
+	end
+end
+
 function imba_life_stealer_open_wounds:OnSpellStart()
 	if not IsServer() then return end
 	
@@ -42,8 +52,8 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 			end
 		end
 	end	
-	
-	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+
+	local impact_particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_impact, PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
 	
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
@@ -54,11 +64,11 @@ end
 --------------------------
 
 function modifier_imba_life_stealer_open_wounds:GetEffectName()
-	return "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds
 end
 
 function modifier_imba_life_stealer_open_wounds:GetStatusEffectName()
-	return "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
+	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_status_effect
 end
 
 function modifier_imba_life_stealer_open_wounds:OnCreated()
@@ -105,7 +115,7 @@ end
 function modifier_imba_life_stealer_open_wounds:OnTakeDamage(keys)
 	if not IsServer() then return end
 
-	if keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() then
+	if self:GetParent() == keys.unit and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() then
 		local heal_amount = keys.damage * self.heal_percent * 0.01
 	
 		keys.attacker:Heal(heal_amount, self:GetAbility())

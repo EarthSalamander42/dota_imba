@@ -12,6 +12,7 @@
 "battlepass"						"Battlepass"
 "coming_soon"						"Upcoming feature: being able to choose reward"
 "battlepass_reward_locked"			"Locked!"
+"battlepass_reward_description"		"You've reached level "
 "battlepass_level"					"Level: "
 "battlepass_refresh"				"Refresh"
 "donator_patreon"					"Patreon"
@@ -118,6 +119,8 @@
 "battlepass_windrunner_taunt"			"#{DOTA_Item_Taunt_You_Prefer_Arrows}"
 "battlepass_enigma_taunt"				"#{DOTA_Item_Taunt_Enigmatic_Style}"
 "battlepass_ursa_immortal"				"#{DOTA_Item_The_Alpine_Stalkers_Set}"
+"battlepass_leshrac_immortal"			"Tormented Crown"
+"battlepass_death_prophet_immortal"		"Mask of Mortis"
 
 //Donator Tab
 "donator_companion"				"Companion"
