@@ -27,6 +27,7 @@
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/sven/abilities.txt
+#base custom_heroes/vardor/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 #base heroes/winter_wyvern/abilities.txt
@@ -1162,7 +1163,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"40"
+				"bonus_armor"			"100"
 			}
 			"03"
 			{
@@ -37518,7 +37519,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 16 12 8"
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37598,7 +37599,7 @@
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
 		"AbilityTextureName"			"custom/scaldris_ice_floes"
-		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -37607,7 +37608,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"22.0 20.0 18.0 16.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38327,7 +38328,7 @@
 		"precache"
 		{
 			"particle"          "particles/econ/items/juggernaut/bladekeeper_omnislash/_dc_juggernaut_omni_slash_trail.vpcf"
-			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38447,7 +38448,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"             "ability_lua"
 		"ID"                    "9511"
-		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"     "SPELL_IMMUNITY_ALLIES_YES"
@@ -38474,7 +38475,7 @@
 		{
 			"particle"          "particles/hero/sohei/guard.vpcf"
 			"particle"          "particles/hero/sohei/knockback.vpcf"
-			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38541,7 +38542,7 @@
 		{
 		  "particle"          "particles/hero/ronin/momentum.vpcf"
 		  "particle"          "particles/hero/ronin/knockback.vpcf"
-			"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		}
 
 		// Special
@@ -38623,7 +38624,7 @@
 	"precache"
 	{
 		"particle"          "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-		"soundfile"         "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts"
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 	}
 

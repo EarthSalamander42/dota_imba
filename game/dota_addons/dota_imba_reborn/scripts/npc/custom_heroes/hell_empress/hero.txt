@@ -94,6 +94,6 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_hell_empress.vsndevts"
 	}
 }

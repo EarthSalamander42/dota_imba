@@ -24,7 +24,7 @@ end, nil)
 -- GameEvent: OnNPCSpawned
 --------------------------------------------------------------------------------
 ListenToGameEvent('npc_spawned', function(event)
-	spawnedUnit = EntIndexToHScript( event.entindex )
+	local spawnedUnit = EntIndexToHScript( event.entindex )
 
 	if spawnedUnit:GetPlayerOwnerID() == 0 and spawnedUnit:IsRealHero() and not spawnedUnit:IsClone() then
 		--print( "spawnedUnit is player's hero" )

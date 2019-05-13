@@ -486,6 +486,7 @@ if IsServer() then
 			ParticleManager:DestroyParticle( caster.flurry_ground_pfx, false )
 			ParticleManager:ReleaseParticleIndex( caster.flurry_ground_pfx )
 		end
+
 		caster.flurry_ground_pfx = ParticleManager:CreateParticle( "particles/hero/sohei/flurry_of_blows_ground.vpcf", PATTACH_CUSTOMORIGIN, nil )
 		ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 0, target_loc )
 		ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 10, Vector(flurry_radius, 0, 0) )

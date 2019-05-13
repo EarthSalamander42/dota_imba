@@ -46,6 +46,7 @@ SHOWCASE_TIME = 20.0				-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() then
 	AP_BAN_TIME = 0.0
+	SHOWCASE_TIME = 0.0
 end
 AP_GAME_TIME = 60.0
 if GetMapName() == MapOverthrow() or GetMapName() == "imba_demo" then

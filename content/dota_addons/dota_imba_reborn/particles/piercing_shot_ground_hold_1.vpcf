@@ -1,0 +1,157 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 8
+	m_nInitialParticles = 1
+	m_BoundingBoxMax = [ 10.0, 10.0, 210.0 ]
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderModels"
+			m_nSkin = 1
+			m_bOrientZ = true
+			m_bScaleAnimationRate = true
+			m_flAnimationRate = 15.0
+			m_bSuppressTint = true
+			m_ModelList = 
+			[
+				{
+					m_model = resource:"models/items/phantom_lancer/weapon_kinship/weapon_kinship.vmdl"
+				},
+			]
+			m_bAnimated = true
+			m_nLOD = 1
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_nOpEndCapState = 0
+			m_Gravity = [ 0.0, 0.0, -20.0 ]
+			m_fDrag = 0.05
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_Orient2DRelToCP"
+			m_nFieldOutput = 12
+			m_flRotOffset = 90.0
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = -5.0
+			m_nField = 16
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_Gravity = [ 0.0, 0.0, -5000.0 ]
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndTime = 0.25
+			m_flStartScale = 0.0
+			m_flBias = 0.85
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartTime = 0.3
+			m_flEndScale = 0.0
+			m_flBias = 0.25
+			m_flEndTime = 0.8
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_flEndTime_max = 0.25
+			m_flEndTime_min = 0.25
+			m_flStartTime_max = 0.0
+			m_flStartTime_min = 0.0
+		},
+		{
+			_class = "C_OP_RemapDirectionToCPToVector"
+			m_flOffsetRot = 180.0
+			m_bNormalize = true
+			m_nFieldOutput = 21
+			m_nCP = 1
+		},
+		{
+			_class = "C_OP_SetSingleControlPointPosition"
+			m_vecCP1Pos = [ 0.0, 0.0, 100.0 ]
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_vecDistanceBiasAbs = [ 0.0, 0.0, 1.0 ]
+			m_fRadiusMax = 24.0
+			m_fRadiusMin = 4.0
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_vecOutputMax = [ 18.0, 18.0, 20.0 ]
+			m_vecOutputMin = [ -18.0, -18.0, 18.0 ]
+			m_flNoiseScaleLoc = 8.0
+			m_flNoiseScale = 4.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 100
+			m_nAlphaMax = 100
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 3.5
+			m_fLifetimeMin = 3.0
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 0.75
+		},
+		{
+			_class = "C_INIT_RandomTrailLength"
+			m_flMaxLength = 1.1
+			m_flMinLength = 1.0
+		},
+		{
+			_class = "C_INIT_RandomSecondSequence"
+			m_nSequenceMax = 3
+			m_nSequenceMin = 1
+		},
+		{
+			_class = "C_INIT_RemapScalar"
+			m_bScaleInitialRange = true
+			m_flOutputMin = 0.5
+			m_nFieldOutput = 10
+			m_flInputMax = 1.1
+			m_flInputMin = 1.0
+			m_nFieldInput = 13
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, -35.0 ]
+			m_OffsetMax = [ 0.0, 0.0, -25.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 1.5
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff_steam.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff_base.vpcf"
+		},
+	]
+}
