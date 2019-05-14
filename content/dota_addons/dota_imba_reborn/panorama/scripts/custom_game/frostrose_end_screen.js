@@ -2,7 +2,7 @@
 
 (function () {
 	GameEvents.Subscribe("end_game", EndScoreboard);
-/*
+
 	// Placeholder
 	var args = {
 		"data":{
@@ -62,7 +62,7 @@
 	};
 
 	EndScoreboard(args);
-*/
+
 })();
 
 function RawTimetoGameTime(time) {
@@ -190,9 +190,9 @@ function EndScoreboard(args) {
 		// XP
 		var ply_table = CustomNetTables.GetTableValue("battlepass", player.id.toString());
 
-		var player_xp = ply_table.XP;
+//		var player_xp = ply_table.XP;
+		var player_xp = 7800;
 
-		$.Msg(ply_table.player_xp)
 		if (ply_table && ply_table.player_xp == 1) {
 			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(ply_table.MaxXP);
 			values.xp.level.text = $.Localize("#battlepass_level") + ply_table.Lvl;
@@ -221,13 +221,78 @@ function EndScoreboard(args) {
 				values.xp.earned.text = "+" + xpDiff;
 				values.xp.earned.AddClass("es-text-green");
 
-				if (ply_table) {
+				if (ply_table && progress) {
 					var progress_diff = Math.round(100.0 * (xpDiff / ply_table.MaxXP));
 					values.xp.progress_diff.style.width = progress_diff + "%";
 					values.xp.progress_diff.style.marginLeft = (progress - 1) + "%";
 
+					// This might not show rewards for multi-levelup at once
 					if (Math.floor(player_xp + xpDiff) / Math.floor(ply_table.MaxXP) >= 1) {
 						values.xp.bar[0].AddClass("level-up");
+
+						var level = ply_table.Lvl + 1;
+						var battlepass = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
+
+						if (battlepass != undefined && battlepass[level] != undefined) {
+							var battlepass_reward = battlepass[level][1];
+							var battlepass_rarity = battlepass[level][2];
+//							$.Msg(battlepass_reward)
+//							$.Msg(battlepass_rarity)
+
+							var rp = $('#es-player-reward-container');
+
+							var rewards = {
+								desc: rp.FindChildInLayoutFile('es-player-reward-description'),
+								name: rp.FindChildInLayoutFile('es-player-reward-name'),
+								rarity: rp.FindChildInLayoutFile('es-player-reward-rarity'),
+								image: rp.FindChildInLayoutFile('es-player-reward-image')
+							};
+
+							if (Game.IsInToolsMode()) {
+								rp.RemoveClass("level-common");
+								rp.RemoveClass("level-uncommon");
+								rp.RemoveClass("level-rare");
+								rp.RemoveClass("level-mythical");
+								rp.RemoveClass("level-legendary");
+								rp.RemoveClass("level-immortal");
+								rp.RemoveClass("level-arcana");
+								rp.RemoveClass("level-ancient");
+								rewards.rarity.RemoveClass("common");
+								rewards.rarity.RemoveClass("uncommon");
+								rewards.rarity.RemoveClass("rare");
+								rewards.rarity.RemoveClass("mythical");
+								rewards.rarity.RemoveClass("legendary");
+								rewards.rarity.RemoveClass("immortal");
+								rewards.rarity.RemoveClass("arcana");
+								rewards.rarity.RemoveClass("ancient");
+							}
+
+							rp.style.visibility = 'visible';
+							rewards.desc.text = $.Localize("battlepass_reward_description") + level;
+							rewards.name.text = $.Localize("battlepass_" + battlepass_reward);
+							rewards.rarity.AddClass(battlepass_rarity);
+							rewards.rarity.text = battlepass_rarity;
+							rewards.image.style.backgroundImage = 'url("file://{resources}/images/custom_game/battlepass/' + battlepass_reward + '.png")';
+							rewards.image.style.backgroundSize = 'cover';
+
+							rp.AddClass('level-' + battlepass_rarity);
+
+							var sound_name = {};
+							sound_name["common"] = "Loot_Drop_Sfx";
+							sound_name["uncommon"] = "Loot_Drop_Stinger_Uncommon";
+							sound_name["rare"] = "Loot_Drop_Stinger_Rare";
+							sound_name["mythical"] = "Loot_Drop_Stinger_Mythical";
+							sound_name["legendary"] = "Loot_Drop_Stinger_Legendary";
+							sound_name["immortal"] = "Loot_Drop_Stinger_Immortal";
+							sound_name["arcana"] = "Loot_Drop_Stinger_Arcana";
+							sound_name["ancient"] = "Loot_Drop_Stinger_Ancient";
+
+							Game.EmitSound(sound_name[battlepass_rarity])							
+						} else {
+							if (Game.IsInToolsMode()) {
+								$('#es-player-reward-container').style.visibility = "collapse";
+							}
+						}
 					}
 				}
 			} else if (xpDiff == 0) {
@@ -256,4 +321,8 @@ function EndScoreboard(args) {
 	}
 
 	$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
+}
+
+function CloseBottlepassReward() {
+	$('#es-player-reward-container').style.visibility = 'collapse';
 }

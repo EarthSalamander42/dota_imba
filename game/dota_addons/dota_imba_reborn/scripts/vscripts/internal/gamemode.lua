@@ -10,6 +10,7 @@ function GameMode:_InitGameMode()
 
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
+	CustomGameEventManager:RegisterListener("play_hero_taunt", Dynamic_Wrap(self, "PlayHeroTaunt"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
 	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))

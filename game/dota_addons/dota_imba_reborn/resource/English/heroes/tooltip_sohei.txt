@@ -5,10 +5,11 @@
 "dota_tooltip_ability_sohei_dash_max_charges"                  "CHARGES:"
 "dota_tooltip_ability_sohei_dash_dash_speed"                   "DASH SPEED:"
 
-"DOTA_Tooltip_Ability_sohei_guard"                        "Guard"
-"DOTA_Tooltip_Ability_sohei_guard_description"            "Hard dispels you. Reflects all ranged attacks and most targetted spells (similar to Lotus Orb) that would hit you for the next 2 seconds. Can be used while stunned, but requires and consumes %charges_required% charges of Dash."
-"DOTA_Tooltip_Ability_sohei_guard_note1"                  "Can be activated while stunned but not while silenced."
-"DOTA_Tooltip_Ability_sohei_guard_guard_duration"         "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_Ability_sohei_wholeness_of_body"                                  "Wholeness of Body"
+"DOTA_Tooltip_Ability_sohei_wholeness_of_body_description"                      "Grants 100% status resistance for %sr_duration% seconds. When the buff expires, Sohei will be healed for a base amount plus a percentage of the damage he took while the buff was active.\n\nDISPEL TYPE: Basic Dispel"
+"DOTA_Tooltip_Ability_sohei_wholeness_of_body_guard_duration"                   "DURATION:"
+"DOTA_Tooltip_Ability_sohei_wholeness_of_body_post_heal"                        "BASE HEAL:"
+"DOTA_Tooltip_Ability_sohei_wholeness_of_body_damage_taken_heal"                "%HEAL PER DAMAGE TAKEN:"
 
 "DOTA_Tooltip_Ability_sohei_momentum"                     "Momentum"
 "DOTA_Tooltip_Ability_sohei_momentum_description"         "When toggled on, after moving 300 units your next attack is a critical strike and pushes your target 300 units. If the enemy is pushed into a cliff or tree then they are slowed and the knockback stops. If colliding with another enemy hero, both heroes are slowed."
@@ -32,8 +33,8 @@
 // modifiers
 "DOTA_Tooltip_modifier_sohei_dash_charges"               "Dash Charges"
 
-"DOTA_Tooltip_modifier_sohei_guard_reflect"              "Guard"
-"DOTA_Tooltip_modifier_sohei_guard_reflect_description"  "Reflecting incoming projectiles."
+"DOTA_Tooltip_modifier_sohei_wholeness_of_body_status"                          "Wholeness of Body"
+"DOTA_Tooltip_modifier_sohei_wholeness_of_body_status_description"              "Granted %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,%% status resistance and being healed upon expiry"
 
 "DOTA_Tooltip_modifier_sohei_momentum_passive"              "Momentum"
 "DOTA_Tooltip_modifier_sohei_momentum_passive_description"  "The next attack will deal bonus damage and knockback."
@@ -41,13 +42,10 @@
 // talents
 "DOTA_Tooltip_Ability_special_bonus_sohei_stun"                                 "Momentum Collision Stun"
 "DOTA_Tooltip_Ability_special_bonus_sohei_stun_description"                     "Any unit that receives the slow from Momentum collisions now also receives a %value% second stun."
-"DOTA_Tooltip_Ability_special_bonus_sohei_guard_knockback"                      "Guard Pushes Away Enemies"
-"DOTA_Tooltip_Ability_special_bonus_sohei_guard_knockback_description"          "Whenever Guard is activated, push all nearby enemies until they are %value% units away."
-"DOTA_Tooltip_Ability_special_bonus_sohei_guard_allycast"                       "Guard Can Be Cast On Allies"
-"DOTA_Tooltip_Ability_special_bonus_sohei_guard_allycast_description"           "Allows casting on allies."
-"DOTA_Tooltip_Ability_special_bonus_sohei_momentum_guard_cooldown"              "Momentum Reduces Guard Cooldown"
-"DOTA_Tooltip_Ability_special_bonus_sohei_momentum_guard_cooldown_description"  "Each time Momentum is used, Guard's current cooldown is reduced by %value% second."
-"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge"                        "-3s Dash Charge Recovery"
+"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_knockback"					"Wholeness of Body Pushes Away Enemies"
+"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_knockback_description"		"Whenever Wholeness of Body is activated, push all nearby enemies until they are %value% units away."
+"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_allycast"					"Wholeness of Body can be cast on allies"
+"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge"                        "-%value%s Dash Charge Recovery"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge_description"            ""
-"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+300 Flurry of Blows Radius"
+"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+%value%s Flurry of Blows Radius"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius_description"               ""

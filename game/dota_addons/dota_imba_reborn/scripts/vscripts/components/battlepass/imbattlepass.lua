@@ -31,93 +31,111 @@ if IsInToolsMode() then
 end
 
 IMBATTLEPASS_LEVEL_REWARD = {}
-IMBATTLEPASS_LEVEL_REWARD[4]	= "fountain"
-IMBATTLEPASS_LEVEL_REWARD[6]	= "bristleback_rare"
-IMBATTLEPASS_LEVEL_REWARD[9]	= "blink"
-IMBATTLEPASS_LEVEL_REWARD[11]	= "chen_mythical"
-IMBATTLEPASS_LEVEL_REWARD[13]	= "fountain2"
-IMBATTLEPASS_LEVEL_REWARD[15]	= "vengefulspirit_immortal"
-IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
-IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
-IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
+IMBATTLEPASS_LEVEL_REWARD[2]	= {"vengefulspirit_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[4]	= {"fountain", "common"}
+IMBATTLEPASS_LEVEL_REWARD[6]	= {"bristleback_rare", "rare"}
+IMBATTLEPASS_LEVEL_REWARD[7]	= {"slark_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[9]	= {"blink", "common"}
+IMBATTLEPASS_LEVEL_REWARD[11]	= {"chen_mythical", "mythical"}
+IMBATTLEPASS_LEVEL_REWARD[13]	= {"fountain2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[14]	= {"alchemist_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[15]	= {"vengefulspirit_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[16]	= {"force_staff", "common"}
+IMBATTLEPASS_LEVEL_REWARD[18]	= {"blink2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[22]	= {"fountain3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[23]	= {"enigma_taunt", "rare"}
 -- IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
-IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
-IMBATTLEPASS_LEVEL_REWARD[28]	= "dark_seer_immortal"
-IMBATTLEPASS_LEVEL_REWARD[30]	= "zuus_arcana"
-IMBATTLEPASS_LEVEL_REWARD[31]	= "fountain4"
-IMBATTLEPASS_LEVEL_REWARD[32]	= "force_staff2"
-IMBATTLEPASS_LEVEL_REWARD[33]	= "skywrath_mage_immortal"
-IMBATTLEPASS_LEVEL_REWARD[35]	= "mekansm"
-IMBATTLEPASS_LEVEL_REWARD[36]	= "blink4"
-IMBATTLEPASS_LEVEL_REWARD[39]	= "bristleback_rare2"
-IMBATTLEPASS_LEVEL_REWARD[40]	= "fountain5"
-IMBATTLEPASS_LEVEL_REWARD[44]	= "radiance"
-IMBATTLEPASS_LEVEL_REWARD[45]	= "blink5"
-IMBATTLEPASS_LEVEL_REWARD[46]	= "nyx_assassin_immortal"
-IMBATTLEPASS_LEVEL_REWARD[48]	= "force_staff3"
-IMBATTLEPASS_LEVEL_REWARD[49]	= "fountain6"
+IMBATTLEPASS_LEVEL_REWARD[27]	= {"blink3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[28]	= {"dark_seer_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[30]	= {"zuus_arcana", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[31]	= {"fountain4", "common"}
+IMBATTLEPASS_LEVEL_REWARD[32]	= {"force_staff2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[33]	= {"skywrath_mage_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[35]	= {"mekansm", "common"}
+IMBATTLEPASS_LEVEL_REWARD[36]	= {"blink4", "common"}
+IMBATTLEPASS_LEVEL_REWARD[38]	= {"lion_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[39]	= {"bristleback_rare2", "rare"}
+IMBATTLEPASS_LEVEL_REWARD[40]	= {"fountain5", "common"}
+IMBATTLEPASS_LEVEL_REWARD[44]	= {"radiance", "common"}
+IMBATTLEPASS_LEVEL_REWARD[45]	= {"blink5", "common"}
+IMBATTLEPASS_LEVEL_REWARD[46]	= {"nyx_assassin_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[48]	= {"force_staff3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[49]	= {"fountain6", "common"}
 -- IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
-IMBATTLEPASS_LEVEL_REWARD[52]	= "enigma_mythical"
-IMBATTLEPASS_LEVEL_REWARD[54]	= "blink6"
-IMBATTLEPASS_LEVEL_REWARD[55]	= "lina_arcana"
-IMBATTLEPASS_LEVEL_REWARD[56]	= "huskar_immortal"
-IMBATTLEPASS_LEVEL_REWARD[58]	= "fountain7"
-IMBATTLEPASS_LEVEL_REWARD[60]	= "sheepstick"
-IMBATTLEPASS_LEVEL_REWARD[63]	= "blink7"
-IMBATTLEPASS_LEVEL_REWARD[64]	= "force_staff4"
+IMBATTLEPASS_LEVEL_REWARD[52]	= {"enigma_mythical", "mythical"}
+IMBATTLEPASS_LEVEL_REWARD[54]	= {"blink6", "common"}
+IMBATTLEPASS_LEVEL_REWARD[55]	= {"lina_arcana", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[56]	= {"huskar_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[58]	= {"fountain7", "common"}
+IMBATTLEPASS_LEVEL_REWARD[60]	= {"sheepstick", "common"}
+IMBATTLEPASS_LEVEL_REWARD[62]	= {"dark_willow_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[63]	= {"blink7", "common"}
+IMBATTLEPASS_LEVEL_REWARD[64]	= {"force_staff4", "common"}
 if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[65]	= "juggernaut_arcana"
+	IMBATTLEPASS_LEVEL_REWARD[65]	= {"juggernaut_arcana", "arcana"}
 end
-IMBATTLEPASS_LEVEL_REWARD[67]	= "fountain8"
-IMBATTLEPASS_LEVEL_REWARD[68]	= "axe_immortal"
-IMBATTLEPASS_LEVEL_REWARD[70]	= "mekansm2"
-IMBATTLEPASS_LEVEL_REWARD[72]	= "blink8"
+IMBATTLEPASS_LEVEL_REWARD[67]	= {"fountain8", "common"}
+IMBATTLEPASS_LEVEL_REWARD[68]	= {"axe_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[70]	= {"mekansm2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[71]	= {"zuus_taunt", "mythical"}
+IMBATTLEPASS_LEVEL_REWARD[72]	= {"blink8", "common"}
 -- IMBATTLEPASS_LEVEL_REWARD[74]	= "bottle3"
-IMBATTLEPASS_LEVEL_REWARD[76]	= "fountain9"
-IMBATTLEPASS_LEVEL_REWARD[80]	= "force_staff5"
-IMBATTLEPASS_LEVEL_REWARD[75]	= "pudge_arcana"
-IMBATTLEPASS_LEVEL_REWARD[81]	= "blink9"
-IMBATTLEPASS_LEVEL_REWARD[83]	= "centaur_immortal"
-IMBATTLEPASS_LEVEL_REWARD[85]	= "fountain10"
-IMBATTLEPASS_LEVEL_REWARD[88]	= "radiance2"
-IMBATTLEPASS_LEVEL_REWARD[90]	= "blink10"
-IMBATTLEPASS_LEVEL_REWARD[94]	= "fountain11"
+IMBATTLEPASS_LEVEL_REWARD[75]	= {"pudge_arcana", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[76]	= {"fountain9", "common"}
+IMBATTLEPASS_LEVEL_REWARD[80]	= {"force_staff5", "common"}
+IMBATTLEPASS_LEVEL_REWARD[81]	= {"blink9", "common"}
+IMBATTLEPASS_LEVEL_REWARD[83]	= {"centaur_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[84]	= {"pangolier_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[85]	= {"fountain10", "common"}
+IMBATTLEPASS_LEVEL_REWARD[88]	= {"radiance2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[90]	= {"blink10", "common"}
+IMBATTLEPASS_LEVEL_REWARD[94]	= {"fountain11", "common"}
+IMBATTLEPASS_LEVEL_REWARD[95]	= {"furion_taunt", "immortal"}
 if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[95]	= "juggernaut_arcana2"
+	IMBATTLEPASS_LEVEL_REWARD[95]	= {"juggernaut_arcana2", "arcana"}
 end
-IMBATTLEPASS_LEVEL_REWARD[96]	= "force_staff6"
+IMBATTLEPASS_LEVEL_REWARD[96]	= {"force_staff6", "common"}
+IMBATTLEPASS_LEVEL_REWARD[97]	= {"life_stealer_immortal", "immortal"}
 -- IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
-IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
-IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
-IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
-IMBATTLEPASS_LEVEL_REWARD[105]	= "mekansm3"
-IMBATTLEPASS_LEVEL_REWARD[108]	= "blink12"
-IMBATTLEPASS_LEVEL_REWARD[110]	= "pudge_arcana2"
-IMBATTLEPASS_LEVEL_REWARD[112]	= "fountain13"
-IMBATTLEPASS_LEVEL_REWARD[117]	= "blink13"
-IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
-IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
+IMBATTLEPASS_LEVEL_REWARD[99]	= {"blink11", "common"}
+IMBATTLEPASS_LEVEL_REWARD[100]	= {"shiva", "common"}
+IMBATTLEPASS_LEVEL_REWARD[103]	= {"fountain12", "common"}
+IMBATTLEPASS_LEVEL_REWARD[105]	= {"mekansm3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[106]	= {"earthshaker_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[108]	= {"blink12", "common"}
+IMBATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[112]	= {"fountain13", "common"}
+IMBATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
+IMBATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
 -- IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
-IMBATTLEPASS_LEVEL_REWARD[126]	= "blink14"
-IMBATTLEPASS_LEVEL_REWARD[128]	= "dark_seer_immortal2"
-IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
-IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
-IMBATTLEPASS_LEVEL_REWARD[133]	= "skywrath_mage_immortal2"
-IMBATTLEPASS_LEVEL_REWARD[139]	= "fountain16"
-IMBATTLEPASS_LEVEL_REWARD[140]	= "mekansm4"
-IMBATTLEPASS_LEVEL_REWARD[145]	= "wisp_arcana"
-IMBATTLEPASS_LEVEL_REWARD[148]	= "fountain17"
-IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
-IMBATTLEPASS_LEVEL_REWARD[157]	= "fountain18"
-IMBATTLEPASS_LEVEL_REWARD[166]	= "fountain19"
-IMBATTLEPASS_LEVEL_REWARD[170]	= "enigma_immortal"
-IMBATTLEPASS_LEVEL_REWARD[175]	= "fountain20"
-IMBATTLEPASS_LEVEL_REWARD[176]	= "radiance4"
-IMBATTLEPASS_LEVEL_REWARD[180]	= "drow_ranger_immortal"
-IMBATTLEPASS_LEVEL_REWARD[184]	= "fountain21"
-IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
-IMBATTLEPASS_LEVEL_REWARD[250]	= "shiva4"
-IMBATTLEPASS_LEVEL_REWARD[275]	= "pudge_immortal"
+IMBATTLEPASS_LEVEL_REWARD[126]	= {"blink14", "common"}
+IMBATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
+IMBATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
+IMBATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
+IMBATTLEPASS_LEVEL_REWARD[144]	= {"death_prophet_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
+IMBATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[157]	= {"fountain18", "common"}
+IMBATTLEPASS_LEVEL_REWARD[166]	= {"fountain19", "common"}
+IMBATTLEPASS_LEVEL_REWARD[170]	= {"enigma_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
+IMBATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
+IMBATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
+IMBATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
+IMBATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
+IMBATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -150,59 +168,74 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_NYX_ASSASSIN = {}
 	IMBATTLEPASS_SKYWRATH_MAGE = {}
 	IMBATTLEPASS_CENTAUR = {}
-	IMBATTLEPASS_DROW_RANGER ={}
+	IMBATTLEPASS_DROW_RANGER = {}
+	IMBATTLEPASS_EARTHSHAKER = {}
+	IMBATTLEPASS_LIFE_STEALER = {}
+	IMBATTLEPASS_URSA = {}
+	IMBATTLEPASS_LESHRAC = {}
+	IMBATTLEPASS_DEATH_PROPHET = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
-		if string.find(v, "fountain") then
-			IMBATTLEPASS_FOUNTAIN[v] = k
-		elseif string.find(v, "blink") then
-			IMBATTLEPASS_BLINK[v] = k
-		elseif string.find(v, "force_staff") then
-			IMBATTLEPASS_FORCE_STAFF[v] = k
-		elseif string.find(v, "bottle") then
-			IMBATTLEPASS_BOTTLE[v] = k
-		elseif string.find(v, "mekansm") then
-			IMBATTLEPASS_MEKANSM[v] = k
-		elseif string.find(v, "radiance") then
-			IMBATTLEPASS_RADIANCE[v] = k
-		elseif string.find(v, "sheepstick") then
-			IMBATTLEPASS_SHEEPSTICK[v] = k
-		elseif string.find(v, "shiva") then
-			IMBATTLEPASS_SHIVA[v] = k
-		elseif string.find(v, "pudge") then
-			IMBATTLEPASS_PUDGE[v] = k
-		elseif string.find(v, "juggernaut") then
-			IMBATTLEPASS_JUGGERNAUT[v] = k
-		elseif string.find(v, "ancient_apparition") then
-			IMBATTLEPASS_ANCIENT_APPARITION[v] = k
-		elseif string.find(v, "vengefulspirit") then
-			IMBATTLEPASS_VENGEFULSPIRIT[v] = k
-		elseif string.find(v, "zuus") then
-			IMBATTLEPASS_ZUUS[v] = k
-		elseif string.find(v, "lina") then
-			IMBATTLEPASS_LINA[v] = k
-		elseif string.find(v, "wisp") then
-			IMBATTLEPASS_WISP[v] = k
-		elseif string.find(v, "enigma") then
-			IMBATTLEPASS_ENIGMA[v] = k
-		elseif string.find(v, "chen") then
-			IMBATTLEPASS_CHEN[v] = k
-		elseif string.find(v, "dark_seer") then
-			IMBATTLEPASS_DARK_SEER[v] = k
-		elseif string.find(v, "huskar") then
-			IMBATTLEPASS_HUSKAR[v] = k
-		elseif string.find(v, "bristleback") then
-			IMBATTLEPASS_BRISTLEBACK[v] = k
-		elseif string.find(v, "axe") then
-			IMBATTLEPASS_AXE[v] = k
-		elseif string.find(v, "nyx_assassin") then
-			IMBATTLEPASS_NYX_ASSASSIN[v] = k
-		elseif string.find(v, "skywrath_mage") then
-			IMBATTLEPASS_SKYWRATH_MAGE[v] = k
-		elseif string.find(v, "centaur") then
-			IMBATTLEPASS_CENTAUR[v] = k
-		elseif string.find(v, "drow_ranger") then
-			IMBATTLEPASS_DROW_RANGER[v] = k
+		if string.find(v[1], "fountain") then
+			IMBATTLEPASS_FOUNTAIN[v[1]] = k
+		elseif string.find(v[1], "blink") then
+			IMBATTLEPASS_BLINK[v[1]] = k
+		elseif string.find(v[1], "force_staff") then
+			IMBATTLEPASS_FORCE_STAFF[v[1]] = k
+		elseif string.find(v[1], "bottle") then
+			IMBATTLEPASS_BOTTLE[v[1]] = k
+		elseif string.find(v[1], "mekansm") then
+			IMBATTLEPASS_MEKANSM[v[1]] = k
+		elseif string.find(v[1], "radiance") then
+			IMBATTLEPASS_RADIANCE[v[1]] = k
+		elseif string.find(v[1], "sheepstick") then
+			IMBATTLEPASS_SHEEPSTICK[v[1]] = k
+		elseif string.find(v[1], "shiva") then
+			IMBATTLEPASS_SHIVA[v[1]] = k
+		elseif string.find(v[1], "pudge") then
+			IMBATTLEPASS_PUDGE[v[1]] = k
+		elseif string.find(v[1], "juggernaut") then
+			IMBATTLEPASS_JUGGERNAUT[v[1]] = k
+		elseif string.find(v[1], "ancient_apparition") then
+			IMBATTLEPASS_ANCIENT_APPARITION[v[1]] = k
+		elseif string.find(v[1], "vengefulspirit") then
+			IMBATTLEPASS_VENGEFULSPIRIT[v[1]] = k
+		elseif string.find(v[1], "zuus") then
+			IMBATTLEPASS_ZUUS[v[1]] = k
+		elseif string.find(v[1], "lina") then
+			IMBATTLEPASS_LINA[v[1]] = k
+		elseif string.find(v[1], "wisp") then
+			IMBATTLEPASS_WISP[v[1]] = k
+		elseif string.find(v[1], "enigma") then
+			IMBATTLEPASS_ENIGMA[v[1]] = k
+		elseif string.find(v[1], "chen") then
+			IMBATTLEPASS_CHEN[v[1]] = k
+		elseif string.find(v[1], "dark_seer") then
+			IMBATTLEPASS_DARK_SEER[v[1]] = k
+		elseif string.find(v[1], "huskar") then
+			IMBATTLEPASS_HUSKAR[v[1]] = k
+		elseif string.find(v[1], "bristleback") then
+			IMBATTLEPASS_BRISTLEBACK[v[1]] = k
+		elseif string.find(v[1], "axe") then
+			IMBATTLEPASS_AXE[v[1]] = k
+		elseif string.find(v[1], "nyx_assassin") then
+			IMBATTLEPASS_NYX_ASSASSIN[v[1]] = k
+		elseif string.find(v[1], "skywrath_mage") then
+			IMBATTLEPASS_SKYWRATH_MAGE[v[1]] = k
+		elseif string.find(v[1], "centaur") then
+			IMBATTLEPASS_CENTAUR[v[1]] = k
+		elseif string.find(v[1], "drow_ranger") then
+			IMBATTLEPASS_DROW_RANGER[v[1]] = k
+		elseif string.find(v[1], "earthshaker") then
+			IMBATTLEPASS_EARTHSHAKER[v[1]] = k
+		elseif string.find(v[1], "life_stealer") then
+			IMBATTLEPASS_LIFE_STEALER[v[1]] = k
+		elseif string.find(v[1], "ursa") then
+			IMBATTLEPASS_URSA[v[1]] = k
+		elseif string.find(v[1], "leshrac") then
+			IMBATTLEPASS_LESHRAC[v[1]] = k
+		elseif string.find(v[1], "death_prophet") then
+			IMBATTLEPASS_DEATH_PROPHET[v[1]] = k
 		end
 	end
 
@@ -569,11 +602,20 @@ function Imbattlepass:GetHeroEffect(hero)
 		hero.ion_shell_damage_effect = "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
 		hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start"
 		hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end"
+	elseif hero:GetUnitName() == "npc_dota_hero_death_prophet" then
+		CustomNetTables:SetTableValue("battlepass", "death_prophet", {
+			silence = "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf",
+			silence_impact = "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf",
+			silence_overhead = "particles/generic_gameplay/generic_silenced.vpcf",
+			silence_custom = "particles/units/heroes/hero_death_prophet/death_prophet_silence_custom.vpcf",
+		})
 	elseif hero:GetUnitName() == "npc_dota_hero_drow_ranger" then
 		hero.base_attack_projectile = "particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 		hero.frost_arrows_debuff_pfx = "particles/units/heroes/hero_drow/drow_frost_arrow_debuff.vpcf"
 		hero.marksmanship_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
 		hero.marksmanship_frost_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
+		hero.fissure_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
 		hero.life_break_cast_effect = "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
 		hero.life_break_start_effect = "particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf"
@@ -587,6 +629,16 @@ function Imbattlepass:GetHeroEffect(hero)
 		hero.omni_slash_status_effect = "particles/status_fx/status_effect_omnislash.vpcf"
 		hero.omni_slash_end = "particles/units/heroes/hero_juggernaut/juggernaut_omni_end.vpcf"
 		hero.omni_slash_light = "particles/units/heroes/hero_juggernaut/juggernaut_omnislash_light.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
+		CustomNetTables:SetTableValue("battlepass", "leshrac", {
+			diabolic_edict = "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf",
+		})
+	elseif hero:GetUnitName() == "npc_dota_hero_life_stealer" then
+		CustomNetTables:SetTableValue("battlepass", "life_stealer", {
+			open_wounds_impact = "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf",
+			open_wounds = "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf",
+			open_wounds_status_effect = "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf",
+		})
 	elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 		hero.spiked_carapace_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
 		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
@@ -683,6 +735,19 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
 				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
 			end
+		elseif hero:GetUnitName() == "npc_dota_hero_death_prophet" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_DEATH_PROPHET["death_prophet_immortal"] then
+				CustomNetTables:SetTableValue("battlepass", "death_prophet", {
+					silence = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_ti9.vpcf",
+					silence_impact = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_impact_ti9.vpcf",
+					silence_overhead = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_custom_ti9_overhead_model.vpcf",
+					silence_custom = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_custom_ti9.vpcf",
+				})
+
+				Wearable:_WearProp(hero, "12931", "head")
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_drow_ranger" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_DROW_RANGER["drow_ranger_immortal"] then
 				hero.base_attack_projectile = "particles/econ/items/drow/drow_ti9_immortal/drow_ti9_base_attack.vpcf"
@@ -695,7 +760,15 @@ function Imbattlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_enigma" and not PlayerResource:GetSteamID(hero:GetPlayerID()) == 76561198046069202 then -- Manual Crux exception zzz
+		elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_EARTHSHAKER["earthshaker_immortal"] then
+				hero.fissure_pfx = "particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
+
+				Wearable:_WearProp(hero, "12969", "weapon")
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")
 
@@ -749,6 +822,38 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
 				Wearable:_WearProp(hero, "9059", "head", style)
 			end
+		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LESHRAC["leshrac_immortal"] then
+				CustomNetTables:SetTableValue("battlepass", "leshrac", {
+					diabolic_edict = "particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_edict.vpcf",
+				})
+
+				Wearable:_WearProp(hero, "12933", "head")
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_life_stealer" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LIFE_STEALER["life_stealer_immortal2"] then
+				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
+					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold_impact.vpcf",
+					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold.vpcf",
+					open_wounds_status_effect = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/status_effect_ls_ti9_open_wounds_gold.vpcf",
+				})
+
+				Wearable:_WearProp(hero, "12998", "weapon")
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
+			elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LIFE_STEALER["life_stealer_immortal"] then
+				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
+					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf",
+					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf",
+					open_wounds_status_effect = "particles/econ/items/lifestealer/ls_ti9_immortal/status_effect_ls_ti9_open_wounds.vpcf",
+				})
+
+				Wearable:_WearProp(hero, "12934", "weapon")
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
 				Wearable:_WearProp(hero, "4794", "head")
@@ -800,6 +905,13 @@ function Imbattlepass:GetHeroEffect(hero)
 
 				-- custom icons
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_ursa" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_URSA["ursa_immortal"] then
+				Wearable:_WearProp(hero, "4212", "head")
+				Wearable:_WearProp(hero, "4213", "back")
+				Wearable:_WearProp(hero, "4214", "belt")
+				Wearable:_WearProp(hero, "4215", "arms")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then

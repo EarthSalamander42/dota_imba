@@ -1,0 +1,99 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Vardor
+	//=================================================================================================================
+	"npc_dota_hero_vardor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_phantom_lancer"
+		"HeroID"					"124"
+		"Model"						"models/heroes/phantom_lancer/phantom_lancer.vmdl"
+		"ModelScale"				"0.840000"
+		"SoundSet"					"Hero_PhantomLancer"
+
+		//Picking Screen
+		"IsCustom"					"1"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"3.0"									// Physical protection.
+		"MagicalResistance"			"25"									// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"26"										// Damage range min.
+		"AttackDamageMax"			"38"										// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
+		"AttackRate"				"1.700"									// Speed of attack.
+		"AttackAnimationPoint"		"0.500000"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
+		"AttackRange"				"128"									// Range within a target can be attacked.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"	// Primary Attribute
+		"AttributeBaseStrength"		"22"						// Base strength
+		"AttributeStrengthGain"		"2.3"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"14"							// Base intelligence
+		"AttributeIntelligenceGain"	"1.6"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"22"						// Base agility
+		"AttributeAgilityGain"		"2.7"						// Agility bonus per level.
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"vardor_piercing_shot"			// Ability 1
+		"Ability2"					"vardor_graceful_jump"			// Ability 2
+		"Ability3"					"vardor_mental_thrusts"			// Ability 3
+		"Ability4"					"vardor_return_of_the_yari"		// Bonus Ability
+		"Ability5"					"generic_hidden"
+		"Ability6"					"vardor_celestial_yari"			// Ultimate
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_magic_resistance_12"
+		"Ability12"					"special_bonus_vardor_3"
+		"Ability13"					"special_bonus_movement_speed_30"
+		"Ability14"					"special_bonus_vardor_5"
+		"Ability15"					"special_bonus_vardor_6"
+		"Ability16"					"special_bonus_vardor_7"
+		"Ability17"					"special_bonus_vardor_8"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"190"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"305"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"2.1"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		"HasInventory"				"1" // This KV is required for units file only
+		
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+	}
+}

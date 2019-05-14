@@ -40,6 +40,32 @@
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 
+		function PlayHeroTaunt() {
+			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
+				ID : Players.GetLocalPlayer(),
+			});
+		}
+
+		// Credits: ark120202
+		// https://github.com/ark120202/angel-arena-black-star/blob/2c8854fcbeba025b1ec1f512b01b98b7d679c456/content/panorama/scripts/hotkey_tracker.js#L8-L13
+		function GetKeyBind(name) {
+			$.GetContextPanel().BCreateChildren('<DOTAHotkey keybind="' + name + '" />');
+			var keyElement = $.GetContextPanel().GetChild($.GetContextPanel().GetChildCount() - 1);
+			keyElement.DeleteAsync(0);
+			return keyElement.GetChild(0).text;
+		}
+
+		$.RegisterKeyBind($.GetContextPanel(), 'key_' + GetKeyBind("HeroTaunt").toLowerCase(), function()
+		{
+			PlayHeroTaunt();
+		});
+
+	    Game.CreateCustomKeyBind(GetKeyBind("HeroTaunt").toLowerCase(), "HeroTaunt");
+
+	    Game.AddCommand("HeroTaunt", function() {
+			PlayHeroTaunt();
+		}, "", 0);
+
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")
@@ -97,9 +123,8 @@
 
 		<!-- Vanilla pick screen -->
 		var PreGame = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame")
-		var PregameBG = PreGame.FindChildTraverse("PregameBG")
-		var AmbientFX = PreGame.FindChildTraverse("AmbientFXContainer")
-		var MainContents = PreGame.FindChildTraverse("MainContents")
+//		var PregameBG = PreGame.FindChildTraverse("PregameBG")
+//		var AmbientFX = PreGame.FindChildTraverse("AmbientFXContainer")
 		var HeroPickScreen = PreGame.FindChildTraverse("HeroPickScreen")
 		var MainHeroPickScreenContents = PreGame.FindChildTraverse("MainHeroPickScreenContents")
 		var HeroPickLeftColumn = PreGame.FindChildTraverse("HeroPickLeftColumn")
@@ -107,15 +132,15 @@
 		var GridCore = PreGame.FindChildTraverse("GridCore")
 		var PreMinimapContainer = PreGame.FindChildTraverse("PreMinimapContainer")
 
-		PreGame.style.backgroundColor = "none";
+//		PreGame.style.backgroundColor = "none";
 		HeroPickScreen.style.marginTop = "125px"; // 112px
 //		Minimap.style.visibility = "collapse";
 //		BattlePass.style.visibility = "collapse";
 //		GridTeam.style.visibility = "collapse";
 //		HeroInspect.style.visibility = "collapse";
 //		HeroFilters.style.visibility = "collapse";
-		PregameBG.style.opacity = "0";
-		AmbientFX.style.backgroundColor = "#000000fa";
+//		PregameBG.style.opacity = "0";
+//		AmbientFX.style.backgroundColor = "#000000fa";
 		MainHeroPickScreenContents.style.height = "87%";
 		HeroPickLeftColumn.style.height = "100%";
 		HeroGrid.style.height = "92%";
@@ -234,7 +259,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" />
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
 
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />

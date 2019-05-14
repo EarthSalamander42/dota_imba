@@ -1,13 +1,18 @@
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
+#base heroes/death_prophet/hero.txt
+#base heroes/earthshaker/hero.txt
 #base heroes/enchantress/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
+#base heroes/leshrac/hero.txt
+#base heroes/life_stealer/hero.txt
 #base heroes/rattletrap/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
+#base custom_heroes/vardor/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
@@ -2108,7 +2113,7 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_hell_empress.vsndevts"
 	}
 
 	//=================================================================================================================
@@ -2206,7 +2211,7 @@
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
 	}
 
@@ -2408,7 +2413,7 @@
 //		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 //		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 //
-//		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
+//		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 //	}
 
 	//=================================================================================================================

@@ -77,12 +77,12 @@ function HeroSelection:Init()
 	})
 
 	-- lock down the "pick" hero so that they can't do anything
-	--	GameEvents:OnHeroInGame(function (npc)
-	--		local playerId = npc:GetPlayerID()
-	--		print("An NPC spawned " .. npc:GetUnitName())
-	--		if npc:GetUnitName() == FORCE_PICKED_HERO then
-	--			npc:AddNewModifier(nil, nil, "modifier_out_of_duel", nil)
-	--			npc:AddNoDraw()
+	--	GameEvents:OnHeroInGame(function (hero)
+	--		local playerId = hero:GetPlayerID()
+	--		print("An hero spawned " .. hero:GetUnitName())
+	--		if hero:GetUnitName() == FORCE_PICKED_HERO then
+	--			hero:AddNewModifier(nil, nil, "modifier_out_of_duel", nil)
+	--			hero:AddNoDraw()
 	--
 	--			if self.attemptedSpawnPlayers[playerId] then
 	--				self:GiveStartingHero(playerId, self.attemptedSpawnPlayers[playerId])
@@ -126,21 +126,35 @@ function HeroSelection:UnsafeRandomHero()
 	end
 end
 
-local load_attachment_modifier = false
+-- local load_attachment_modifier = false
 function HeroSelection:Attachments(hero)
-	if load_attachment_modifier == false then
-		load_attachment_modifier = true
-		LinkLuaModifier( "modifier_animation_translate_permanent_string", "libraries/modifiers/modifier_animation_translate_permanent_string.lua", LUA_MODIFIER_MOTION_NONE )
-	end
+--	if load_attachment_modifier == false then
+--		load_attachment_modifier = true
+--		LinkLuaModifier( "modifier_animation_translate_permanent_string", "libraries/modifiers/modifier_animation_translate_permanent_string.lua", LUA_MODIFIER_MOTION_NONE )
+--	end
 
-	hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-
-	if hero_name == "sohei" then
+	if hero:GetUnitName() == "npc_dota_hero_scaldris" then
+		hero:SetRenderColor(0, 0, 0)
+		hero.cape = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/invoker/arsenal_magus_cape_white/arsenal_magus_cape_white.vmdl"})
+		hero.cape:FollowEntity(hero, true)
+		hero.shoulder = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/invoker/ti8_invoker_prism_crystal_spellcaster_shoulder/ti8_invoker_prism_crystal_spellcaster_shoulder.vmdl"})
+		hero.shoulder:FollowEntity(hero, true)
+		hero.hat = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/invoker/sempiternal_revelations_hat/sempiternal_revelations_hat.vmdl"})
+		hero.hat:FollowEntity(hero, true)
+		-- MUHAHAHAHAHAHAHA! NOPE!
+--		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/invoker/invoker_head.vmdl"})
+--		hero.head:FollowEntity(hero, true)
+--		hero.head:SetRenderColor(0, 0, 0)
+		hero.hands = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/invoker/arsenal_magus_bracers/arsenal_magus_bracers.vmdl"})
+		hero.hands:FollowEntity(hero, true)
+		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/invoker/arsenal_magus_belt/arsenal_magus_belt.vmdl"})
+		hero.legs:FollowEntity(hero, true)
+--	elseif hero:GetUnitName() == "npc_dota_hero_sohei" then
 		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
-		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
+--		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
 
 		-- lock to bone
-		hero.hand:FollowEntity(hero, true)
+--		hero.hand:FollowEntity(hero, true)
 
 		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
 		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})

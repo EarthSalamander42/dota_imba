@@ -31,6 +31,17 @@
 			</Panel>
 		</Panel>
 -->
+		<Panel id="es-player-reward-container" hittest="false">
+			<Label id="es-player-reward-description" text="#battlepass_reward_description" />
+			<Label id="es-player-reward-name" text="Common" />
+			<Label id="es-player-reward-rarity" text="Rarity" />
+			<Panel id="es-player-reward-image" />
+
+			<Button class="es-player-reward-button" onactivate="CloseBottlepassReward()">
+				<Label text="Accept" />
+			</Button>
+		</Panel>
+
 		<Panel class="end-screen">
 			<Panel id="es-victory-info">
 				<Label id="es-victory-info-text" text="Whoops! Something went wrong with the server." />

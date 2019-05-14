@@ -466,7 +466,7 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	self.heal 			= self.ability:GetSpecialValueFor("heal")
 	self.radius 		= self.ability:GetSpecialValueFor("radius")
 	self.wisp_count 	= self.ability:GetSpecialValueFor("wisp_count")
-	
+
 	self.critical_health_pct		= self.ability:GetSpecialValueFor("critical_health_pct")
 	self.base_damage_reduction_pct	= self.ability:GetSpecialValueFor("base_damage_reduction_pct")
 	self.cyan_mana_restore			= self.ability:GetSpecialValueFor("cyan_mana_restore")
@@ -474,7 +474,7 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	self.orange_day_vision			= self.ability:GetSpecialValueFor("orange_day_vision")
 	self.orange_night_vision		= self.ability:GetSpecialValueFor("orange_night_vision")
 	self.pink_movespeed_pct			= self.ability:GetSpecialValueFor("pink_movespeed_pct")
-	
+
 	-- Sprites' Attraction Talent (multiply a bunch of values..)
 	if self.caster:HasTalent("special_bonus_imba_enchantress_8") then
 		self.multiplier		= self.caster:FindTalentValue("special_bonus_imba_enchantress_8")
@@ -489,7 +489,7 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 		self.orange_night_vision		= self.orange_night_vision 			* self.multiplier
 		self.pink_movespeed_pct			= self.pink_movespeed_pct 			* self.multiplier
 	end
-	
+
 	self.level			= self.ability:GetLevel()
 	
 	if not IsServer() then return end

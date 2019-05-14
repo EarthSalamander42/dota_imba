@@ -1,0 +1,67 @@
+// Credits: EarthSalamander
+
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Leshrac: Diabolic Edict
+	//=================================================================================================================
+	"imba_leshrac_diabolic_edict"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_leshrac.lua"
+		"AbilityTextureName"			"leshrac_diabolic_edict"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22 22 22 22"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"95 120 135 155"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"11 22 33 44"
+		"AbilityDuration"				"10"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"num_explosions"		"40 48 56 64"
+				"LinkedSpecialBonus"	"special_bonus_unique_leshrac_1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500 550 600 650"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tower_bonus"			"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"10"
+			}
+		}
+	}
+}

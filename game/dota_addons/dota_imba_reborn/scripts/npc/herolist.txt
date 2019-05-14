@@ -124,4 +124,6 @@
 	"npc_dota_hero_scaldris"			"1"
 	"npc_dota_hero_sohei"				"1"
 	"npc_dota_hero_mars"				"1"
+	"npc_dota_hero_malfurion"			"1"
+	"npc_dota_hero_vardor"				"0"
 }

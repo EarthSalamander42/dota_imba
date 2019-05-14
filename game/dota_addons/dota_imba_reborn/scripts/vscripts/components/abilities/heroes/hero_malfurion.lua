@@ -65,6 +65,20 @@ LinkLuaModifier("modifier_imba_rejuvenation", "components/abilities/heroes/hero_
 
 imba_malfurion_rejuvenation = imba_malfurion_rejuvenation or class({})
 
+function imba_malfurion_rejuvenation:OnAbilityPhaseStart()
+	if not IsServer() then return end
+
+	self:GetCaster():StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+
+	return true
+end
+
+function imba_malfurion_rejuvenation:OnAbilityPhaseInterrupted()
+	if not IsServer() then return end
+
+	self:GetCaster():FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+end
+
 function imba_malfurion_rejuvenation:OnSpellStart()
 	if IsServer() then
 		self:GetCaster():EmitSound("Hero_Warlock.ShadowWordCastGood")
@@ -85,7 +99,7 @@ function modifier_imba_rejuvenation:OnCreated()
 end
 
 function modifier_imba_rejuvenation:OnIntervalThink()
-	local heal_per_sec = self:GetAbility():GetSpecialValueFor("heal_per_sec")
+	local heal_per_sec = self:GetAbility():GetSpecialValueFor("heal_per_sec") + self:GetCaster():FindTalentValue("special_bonus_imba_malfurion_5")
 
 	if self:GetParent():IsBuilding() then
 		heal_per_sec = heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
@@ -108,7 +122,7 @@ function modifier_imba_rejuvenation:GetEffectAttachType()
 end
 
 -----------------------------
---     Curse Of Avernus    --
+--     Mark of the Claw    --
 -----------------------------
 
 LinkLuaModifier("modifier_imba_mark_of_the_claw", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
@@ -120,6 +134,8 @@ function imba_malfurion_mark_of_the_claw:GetIntrinsicModifierName()
 end
 
 modifier_imba_mark_of_the_claw = modifier_imba_mark_of_the_claw or class({})
+
+function modifier_imba_mark_of_the_claw:IsHidden() return true end
 
 function modifier_imba_mark_of_the_claw:DeclareFunctions()
 	local funcs = {
@@ -138,9 +154,6 @@ function modifier_imba_mark_of_the_claw:OnAttackLanded(kv)
 				local base_damage = kv.damage * (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") / 100)
 				local splash_damage = base_damage * (self:GetAbility():GetSpecialValueFor("splash_damage_pct") / 100)
 
-				print("Base damage: "..base_damage)
-				print("Splash damage : "..splash_damage)
-
 				ApplyDamage({
 					victim = kv.target,
 					attacker = kv.attacker,
@@ -155,10 +168,190 @@ function modifier_imba_mark_of_the_claw:OnAttackLanded(kv)
 				ParticleManager:SetParticleControlEnt(coup_pfx, 1, kv.target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", kv.target:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(coup_pfx)
 
-				DoCleaveAttack(kv.attacker, kv.target, self:GetAbility(), splash_damage, self:GetAbility():GetSpecialValueFor("cleave_start"), self:GetAbility():GetSpecialValueFor("cleave_end"), self:GetAbility():GetSpecialValueFor("radius"), "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave.vpcf")
+				DoCleaveAttack(
+					kv.attacker,
+					kv.target,
+					self:GetAbility(),
+					splash_damage,
+					self:GetAbility():GetSpecialValueFor("cleave_start"),
+					self:GetAbility():GetSpecialValueFor("cleave_end"),
+					self:GetAbility():GetSpecialValueFor("radius"),
+					"particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave_gods_strength.vpcf"
+				)
 			end
 		end
 	end
 end
 
+-----------------------------
+--  Strength of the Wild   --
+-----------------------------
+
+LinkLuaModifier("modifier_imba_malfurion_strength_of_the_wild", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+
+imba_malfurion_strength_of_the_wild = imba_malfurion_strength_of_the_wild or class({})
+
+function imba_malfurion_strength_of_the_wild:IsInnateAbility() return true end
+
+function imba_malfurion_strength_of_the_wild:GetIntrinsicModifierName()
+	return "modifier_imba_malfurion_strength_of_the_wild"
+end
+
+modifier_imba_malfurion_strength_of_the_wild = modifier_imba_malfurion_strength_of_the_wild or class({})
+
+function imba_malfurion_strength_of_the_wild:IsHidden() return true end
+
+function modifier_imba_malfurion_strength_of_the_wild:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE  
+	}
+	return funcs
+end
+
+function modifier_imba_malfurion_strength_of_the_wild:GetModifierDamageOutgoing_Percentage(keys)
+	if keys.target and not keys.target:IsRealHero() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage_percentage")
+	end
+end
+
+---------------------
+--  Living Tower   --
+---------------------
+
+LinkLuaModifier("modifier_imba_malfurion_living_tower", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+
+imba_malfurion_living_tower = imba_malfurion_living_tower or class({})
+
+function imba_malfurion_living_tower:OnAbilityPhaseStart()
+	if not IsServer() then return end
+
+	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
+
+	return true
+end
+
+function imba_malfurion_living_tower:OnAbilityPhaseInterrupted()
+	if not IsServer() then return end
+
+	self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_4)
+end
+
+function imba_malfurion_living_tower:OnSpellStart()
+	if IsServer() then
+		local tower_name = {}
+		tower_name[2] = "radiant"
+		tower_name[3] = "dire"
+		self.living_tower = CreateUnitByName("npc_imba_malfurion_living_tower_"..tower_name[self:GetCaster():GetTeamNumber()], self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeam())
+		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_kill", {duration=self:GetSpecialValueFor("duration")})
+		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_imba_malfurion_living_tower", {})
+		self.living_tower:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
+		self.living_tower:SetMaxHealth(self:GetSpecialValueFor("health"))
+		self.living_tower:SetHealth(self:GetSpecialValueFor("health"))
+		self.living_tower:SetBaseMaxHealth(self:GetSpecialValueFor("health"))
+		self.living_tower:SetBaseDamageMin(self:GetSpecialValueFor("damage") * 0.9)
+		self.living_tower:SetBaseDamageMax(self:GetSpecialValueFor("damage") * 1.1)
+		self.living_tower:SetAcquisitionRange(self:GetSpecialValueFor("attack_range"))
+		self.living_tower:SetDeathXP(self:GetSpecialValueFor("xp_bounty"))
+		self.living_tower:SetMinimumGoldBounty(self:GetSpecialValueFor("gold_bounty"))
+		self.living_tower:SetMaximumGoldBounty(self:GetSpecialValueFor("gold_bounty"))
+		self.living_tower:EmitSound("Hero_Treant.Overgrowth.Cast")
+		if self:GetCaster():HasTalent("special_bonus_imba_malfurion_1") then
+			self.living_tower:AddAbility("imba_tower_aegis"):SetLevel(self:GetLevel())
+		end
+		if self:GetCaster():HasTalent("special_bonus_imba_malfurion_2") then
+			self.living_tower:AddAbility("imba_tower_atrophy"):SetLevel(self:GetLevel())
+		end
+		if self:GetCaster():HasTalent("special_bonus_imba_malfurion_3") then
+			self.living_tower:AddAbility("imba_tower_soul_leech"):SetLevel(self:GetLevel())
+		end
+		if self:GetCaster():HasTalent("special_bonus_imba_malfurion_4") then
+			self.living_tower:AddAbility("imba_tower_barrier"):SetLevel(self:GetLevel())
+		end
+	end
+end
+
+modifier_imba_malfurion_living_tower = modifier_imba_malfurion_living_tower or class({})
+
+function modifier_imba_malfurion_living_tower:IsHidden() return true end
+function modifier_imba_malfurion_living_tower:RemoveOnDeath() return false end
+
+function modifier_imba_malfurion_living_tower:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_EVENT_ON_DEATH,
+	}
+	return funcs
+end
+--[[
+function modifier_imba_malfurion_living_tower:GetEffectName()
+	if self:GetStackCount() == 2 then
+		return "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl4.vpcf"
+	elseif self:GetStackCount() == 3 then
+		return "particles/econ/items/natures_prophet/natures_prophet_weapon_sufferwood/natures_prophet_sufferwood_ambient.vpcf"
+	end
+end
+
+function modifier_imba_malfurion_living_tower:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
 --]]
+function modifier_imba_malfurion_living_tower:GetOverrideAnimation()
+	return ACT_DOTA_CUSTOM_TOWER_IDLE
+end
+
+function modifier_imba_malfurion_living_tower:OnCreated()
+	if not IsServer() then return end
+
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(pfx)
+
+--	self:SetStackCount(self:GetCaster():GetTeamNumber())
+end
+
+function modifier_imba_malfurion_living_tower:OnAttackStart(keys)
+	if not IsServer() then return end
+
+	if keys.attacker == self:GetParent() then
+		self:GetParent():EmitSound("Tree.GrowBack")
+		self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CUSTOM_TOWER_ATTACK, self:GetParent():GetAttacksPerSecond())
+	end
+end
+
+function modifier_imba_malfurion_living_tower:OnAttackLanded(keys)
+	if not IsServer() then return end
+
+	if keys.attacker == self:GetParent() then
+		if keys.attacker:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+			DoCleaveAttack(
+				self:GetParent(),
+				keys.target,
+				self:GetAbility(),
+				self:GetAbility():GetSpecialValueFor("cleave_pct"),
+				self:GetAbility():GetSpecialValueFor("cleave_radius"),
+				self:GetAbility():GetSpecialValueFor("cleave_radius"),
+				self:GetAbility():GetSpecialValueFor("cleave_radius"),
+				"particles/items_fx/battlefury_cleave.vpcf"
+			)
+		end
+	end
+end
+
+function modifier_imba_malfurion_living_tower:OnDeath(keys)
+	if not IsServer() then return end
+
+	if keys.unit == self:GetParent() then
+		self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CUSTOM_TOWER_DIE, 0.75)
+	end
+end
+
+function modifier_imba_malfurion_living_tower:GetModifierAttackSpeedBonus_Constant()
+	return self:GetAbility():GetSpecialValueFor("attack_speed")
+end
+
+function modifier_imba_malfurion_living_tower:GetModifierAttackRangeBonus()
+	return self:GetAbility():GetSpecialValueFor("attack_range")
+end

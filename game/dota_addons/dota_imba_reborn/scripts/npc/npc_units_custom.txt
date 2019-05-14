@@ -1,5 +1,8 @@
 #base custom_heroes/malfurion/hero.txt
+#base custom_heroes/malfurion/units.txt
 #base custom_heroes/sohei/hero.txt
+#base custom_heroes/vardor/hero.txt
+#base custom_heroes/vardor/units.txt
 
 #base units/companions.txt
 #base units/contributors.txt
@@ -8446,7 +8449,7 @@
 		"HasInventory"				"1"
 
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_hell_empress.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
 		"RenderablePortrait"
 		{
@@ -8546,7 +8549,7 @@
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
 	}
 
@@ -8565,7 +8568,7 @@
 		"ModelScale"				"1.0"
 		"Level"						"1"
 		"IsAncient"					"1"
-		"IsConsideredHero"			"1"
+		"ConsideredHero"			"1"
 		"UnitLabel"					"npc_imba_roshan"
 		"MinimapIcon"				"minimap_roshancamp"
 		"MinimapIconSize"			"400"
@@ -9169,7 +9172,7 @@
 //		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 //		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 //
-//		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
+//		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 //	}
 
 	"npc_dota_broodmother_spiderling"

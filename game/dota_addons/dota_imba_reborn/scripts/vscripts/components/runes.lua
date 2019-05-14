@@ -273,7 +273,6 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
-			print("ADD ARCANE MODIFIER: "..duration)
 			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Arcane", unit)
 		elseif rune_name == "doubledamage" then

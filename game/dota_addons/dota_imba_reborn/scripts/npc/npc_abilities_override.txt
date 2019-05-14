@@ -3926,36 +3926,6 @@
 	}
 
 	//=================================================================================================================
-	//	Earthshaker: Fissure
-	//=================================================================================================================
-	"earthshaker_fissure"
-	{
-		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
-		"AbilityCastRange"				"1400 1575 1750 1925"
-		"AbilityDuration"				"1.0 1.5 2.0 2.5"
-		"AbilityDamage"					"115 230 345 460"
-
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fissure_duration"			"12.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"fissure_radius"			"250 275 300 325"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0 1.5 2.0 2.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Earthshaker: bonus Fissure range
 	//=================================================================================================================
 	"special_bonus_unique_earthshaker_3"
@@ -4074,7 +4044,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_damage"			"75 150 225"
+				"echo_slam_echo_damage"			"100 170 240"
 				"LinkedSpecialBonus"			"special_bonus_unique_earthshaker_2"
 			}
 			"05"
@@ -5977,30 +5947,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"2"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Leshrac: Diabolic Edict
-	//=================================================================================================================
-	"leshrac_diabolic_edict"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityDamage"					"11 22 33 44"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"num_explosions"		"40 48 56 64"
-				"LinkedSpecialBonus"	"special_bonus_unique_leshrac_1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 550 600 650"
 			}
 		}
 	}

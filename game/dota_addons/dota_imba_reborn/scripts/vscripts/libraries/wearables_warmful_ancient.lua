@@ -1561,9 +1561,6 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 
 				for key, value in pairs(Wearable.items_game["items"]) do
 					if value["model_player"] == child:GetModelName() then
---						print("Remove wearable:", child:GetModelName())
-						UTIL_Remove(child)
-
 						local item_slot = value["item_slot"]
 
 						if not item_slot then
@@ -1575,6 +1572,9 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 --						print(item_slot)
 
 						if not hUnit.Slots[item_slot] then
+--							print("Remove wearable:", child:GetModelName())
+							UTIL_Remove(child)
+
 							Wearable:_WearProp(hUnit, tonumber(key), item_slot)
 						end
 

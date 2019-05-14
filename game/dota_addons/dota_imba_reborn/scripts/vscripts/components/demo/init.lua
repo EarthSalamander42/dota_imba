@@ -9,7 +9,6 @@ ListenToGameEvent('game_rules_state_change', function()
 	local state = GameRules:State_Get()
 
 	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		print("demo")
 		GameMode:InitDemo()
 	elseif state == DOTA_GAMERULES_STATE_PRE_GAME then
 --		SendToServerConsole( "dota_dev forcegamestart" )
