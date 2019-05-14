@@ -46,26 +46,6 @@
 			});
 		}
 
-		// Credits: ark120202
-		// https://github.com/ark120202/angel-arena-black-star/blob/2c8854fcbeba025b1ec1f512b01b98b7d679c456/content/panorama/scripts/hotkey_tracker.js#L8-L13
-		function GetKeyBind(name) {
-			$.GetContextPanel().BCreateChildren('<DOTAHotkey keybind="' + name + '" />');
-			var keyElement = $.GetContextPanel().GetChild($.GetContextPanel().GetChildCount() - 1);
-			keyElement.DeleteAsync(0);
-			return keyElement.GetChild(0).text;
-		}
-
-		$.RegisterKeyBind($.GetContextPanel(), 'key_' + GetKeyBind("HeroTaunt").toLowerCase(), function()
-		{
-			PlayHeroTaunt();
-		});
-
-	    Game.CreateCustomKeyBind(GetKeyBind("HeroTaunt").toLowerCase(), "HeroTaunt");
-
-	    Game.AddCommand("HeroTaunt", function() {
-			PlayHeroTaunt();
-		}, "", 0);
-
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")
@@ -226,6 +206,28 @@
 					}
 				}
 			}
+		}
+
+		// Credits: ark120202
+		// https://github.com/ark120202/angel-arena-black-star/blob/2c8854fcbeba025b1ec1f512b01b98b7d679c456/content/panorama/scripts/hotkey_tracker.js#L8-L13
+		function GetKeyBind(name) {
+			$.GetContextPanel().BCreateChildren('<DOTAHotkey keybind="' + name + '" />');
+			var keyElement = $.GetContextPanel().GetChild($.GetContextPanel().GetChildCount() - 1);
+			keyElement.DeleteAsync(0);
+			return keyElement.GetChild(0).text;
+		}
+
+		if (GetKeyBind("HeroTaunt")) {
+			$.RegisterKeyBind($.GetContextPanel(), 'key_' + GetKeyBind("HeroTaunt").toLowerCase(), function()
+			{
+				PlayHeroTaunt();
+			});
+
+		    Game.CreateCustomKeyBind(GetKeyBind("HeroTaunt").toLowerCase(), "HeroTaunt");
+
+		    Game.AddCommand("HeroTaunt", function() {
+				PlayHeroTaunt();
+			}, "", 0);
 		}
 
 		// Dota Plus kill graph
