@@ -25774,7 +25774,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.5 2.85 3.2 3.55"
+				"stun_duration"			"2.5 2.9 3.3 3.7"
 			}
 			"02"
 			{
@@ -25890,7 +25890,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fire_speed"				"700"
+				"fire_speed"				"900"
 			}
 			"06"
 			{
@@ -38495,7 +38495,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"post_heal"					"90 160 230 300 650 1000"
+				"post_heal"					"100 150 200 250"
 			}
 			"04"
 			{
@@ -38572,7 +38572,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"120 140 160 180"
+				"crit_damage"				"160 200 240 280"
 			}
 			"06"
 			{

@@ -47,6 +47,24 @@
 	}
 }
 
+@keyframes 'breathe_ancient'
+{
+	0%
+	{
+		box-shadow: inset #eb4b4b 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #eb4b4b 0 0 4px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #eb4b4b 0 0 1px 0;
+	}
+}
+
 @keyframes 'breathe_arcana'
 {
 	0%
@@ -1070,6 +1088,12 @@
 }
 
 /* colors */
+.ancient_border {
+	animation-name: breathe_ancient;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
 
 .arcana_border {
 	animation-name: breathe_arcana;

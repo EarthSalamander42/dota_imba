@@ -10,10 +10,9 @@
 		"BaseClass"					"npc_dota_hero_ursa"
 		"HeroID"					"123"
 		"Model"						"models/items/lone_druid/true_form/form_of_the_atniw/form_of_the_atniw.vmdl"
-		"ModelScale"				"0.95"
+		"ModelScale"				"0.87"
 		"SoundSet"					"Hero_Ursa"
 //		"Portrait"					"vgui/hud/heroportraits/portrait_treant"
-//		"DisableWearables"			"1"
 
 		//Picking Screen
 		"IsCustom"					"1"
@@ -67,7 +66,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"70"
-		"HealthBarOffset"			"240"
+		"HealthBarOffset"			"220"
 
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------

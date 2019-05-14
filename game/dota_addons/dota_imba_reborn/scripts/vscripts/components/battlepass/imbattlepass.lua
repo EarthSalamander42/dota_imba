@@ -61,6 +61,7 @@ IMBATTLEPASS_LEVEL_REWARD[45]	= {"blink5", "common"}
 IMBATTLEPASS_LEVEL_REWARD[46]	= {"nyx_assassin_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[48]	= {"force_staff3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[49]	= {"fountain6", "common"}
+-- IMBATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
 -- IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
 IMBATTLEPASS_LEVEL_REWARD[52]	= {"enigma_mythical", "mythical"}
 IMBATTLEPASS_LEVEL_REWARD[54]	= {"blink6", "common"}
@@ -84,7 +85,6 @@ IMBATTLEPASS_LEVEL_REWARD[75]	= {"pudge_arcana", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[76]	= {"fountain9", "common"}
 IMBATTLEPASS_LEVEL_REWARD[80]	= {"force_staff5", "common"}
 IMBATTLEPASS_LEVEL_REWARD[81]	= {"blink9", "common"}
-IMBATTLEPASS_LEVEL_REWARD[83]	= {"centaur_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[84]	= {"pangolier_taunt", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[85]	= {"fountain10", "common"}
 IMBATTLEPASS_LEVEL_REWARD[88]	= {"radiance2", "common"}
@@ -101,11 +101,12 @@ IMBATTLEPASS_LEVEL_REWARD[99]	= {"blink11", "common"}
 IMBATTLEPASS_LEVEL_REWARD[100]	= {"shiva", "common"}
 IMBATTLEPASS_LEVEL_REWARD[103]	= {"fountain12", "common"}
 IMBATTLEPASS_LEVEL_REWARD[105]	= {"mekansm3", "common"}
-IMBATTLEPASS_LEVEL_REWARD[106]	= {"earthshaker_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[108]	= {"blink12", "common"}
 IMBATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
-IMBATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[112]	= {"fountain13", "common"}
+IMBATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
 IMBATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
 IMBATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
@@ -117,7 +118,7 @@ IMBATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
 IMBATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
-IMBATTLEPASS_LEVEL_REWARD[144]	= {"death_prophet_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[144]	= {"earthshaker_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
 IMBATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
@@ -174,6 +175,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_URSA = {}
 	IMBATTLEPASS_LESHRAC = {}
 	IMBATTLEPASS_DEATH_PROPHET = {}
+--	IMBATTLEPASS_TIDEHUNTER = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v[1], "fountain") then
@@ -236,6 +238,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_LESHRAC[v[1]] = k
 		elseif string.find(v[1], "death_prophet") then
 			IMBATTLEPASS_DEATH_PROPHET[v[1]] = k
+--		elseif string.find(v[1], "tidehunter") then
+--			IMBATTLEPASS_TIDEHUNTER[v[1]] = k
 		end
 	end
 
@@ -264,7 +268,7 @@ function Imbattlepass:AddItemEffects(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	if IsInToolsMode() then return 1000 end
+	if IsInToolsMode() then return 100 end
 	if CustomNetTables:GetTableValue("battlepass", tostring(ID)) then
 		if CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl then
 			return CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl
@@ -906,6 +910,16 @@ function Imbattlepass:GetHeroEffect(hero)
 				-- custom icons
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
+--		elseif hero:GetUnitName() == "npc_dota_hero_tidehunter" then
+--			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_TIDEHUNTER["tidehunter_ancient"] then
+--				Wearable:RemoveWearables(hero)
+--				hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_arms_wh/tidehunter_arms_wh.vmdl"})
+--				hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_back_wh/tidehunter_back_wh.vmdl"})
+--				hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_belt_wh/tidehunter_belt_wh.vmdl"})
+--				hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_head_wh/tidehunter_head_wh.vmdl"})
+--				hero.offhand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_offhand_wh/tidehunter_offhand_wh.vmdl"})
+--				hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_weapon_wh/tidehunter_weapon_wh.vmdl"})
+--			end
 		elseif hero:GetUnitName() == "npc_dota_hero_ursa" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_URSA["ursa_immortal"] then
 				Wearable:_WearProp(hero, "4212", "head")

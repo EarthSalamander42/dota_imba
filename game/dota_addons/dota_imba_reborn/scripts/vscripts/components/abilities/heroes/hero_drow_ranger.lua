@@ -368,7 +368,6 @@ function modifier_imba_frost_arrows_slow:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	self.sound_freeze = "hero_Crystal.frostbite"
 	self.modifier_freeze = "modifier_imba_frost_arrows_freeze"
 	self.caster_modifier = "modifier_imba_frost_arrows_buff" -- talent movement speed buff
 
@@ -380,9 +379,6 @@ function modifier_imba_frost_arrows_slow:OnCreated()
 
 	self.pfx = ParticleManager:CreateParticle(self.caster.frost_arrows_debuff_pfx, PATTACH_POINT_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.pfx, 0, self.parent:GetAbsOrigin())
-
-	-- Play freeze sound
-	EmitSoundOn(self.sound_freeze, self.parent)
 end
 
 function modifier_imba_frost_arrows_slow:OnRemoved()
@@ -431,17 +427,21 @@ function modifier_imba_frost_arrows_slow:OnStackCountChanged()
 					self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - self.stacks_to_freeze)
 				end
 			end
+
 			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration})
+
+			-- Play freeze sound
+			EmitSoundOn("hero_Crystal.frostbite", self.parent)
 		else --target not frozen
 			--talent buff: if Drow doesn't have the buff, apply it
 			if self.caster:HasTalent("special_bonus_imba_drow_ranger_4") and not self.caster:HasModifier(self.caster_modifier)  then
 				self.caster:AddNewModifier(self.caster, self.ability, self.caster_modifier, {})
 				self.caster:SetModifierStackCount(self.caster_modifier, self, 1)
-		else
-			--talent buff: increase the buff stack count
-			local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self)
-			self.caster:SetModifierStackCount(self.caster_modifier, self, stack_count + 1)
-		end
+			else
+				--talent buff: increase the buff stack count
+				local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self)
+				self.caster:SetModifierStackCount(self.caster_modifier, self, stack_count + 1)
+			end
 		end
 	end
 end

@@ -140,12 +140,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"200"
+				"bonus_damage_pct"		"180 200 220 240"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
+				"radius"				"400"
 			}
 			"04"
 			{

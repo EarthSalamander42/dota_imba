@@ -312,8 +312,9 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
 
-	var companions = CustomNetTables.GetTableValue("battlepass", "companions")["1"];
-	GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
+	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
+	if (companions != undefined)
+		GenerateCompanionPanel(companions["1"], Players.GetLocalPlayer(), "Companion", retainSubTab);
 
 	SetupPanel();
 }

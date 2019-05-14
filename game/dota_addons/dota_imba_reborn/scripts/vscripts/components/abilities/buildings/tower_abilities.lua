@@ -3922,7 +3922,7 @@ function modifier_imba_tower_barrier_aura_buff:OnTakeDamage(keys)
 
 			-- Adjust damage according to armor or magic resist, if damage types match.
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * GetReductionFromArmor(self.parent)
+				damage = damage * GetReductionFromArmor(self.parent:GetPhysicalArmorValue())
 
 			elseif damage_type == DAMAGE_TYPE_MAGICAL then
 				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)

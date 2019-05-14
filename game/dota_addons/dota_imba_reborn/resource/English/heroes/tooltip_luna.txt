@@ -39,4 +39,4 @@
 "DOTA_Tooltip_modifier_imba_luna_eclipse"							"Eclipse"
 "DOTA_Tooltip_modifier_imba_luna_eclipse_Description"				"Striking nearby targets with Lucent Beam."
 
-"DOTA_Tooltip_special_bonus_imba_luna_lucent_beam_cooldown"			"-4s Lucent Beam Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_luna_lucent_beam_cooldown"			"-4s Lucent Beam Cooldown"
