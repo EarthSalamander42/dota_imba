@@ -1583,5 +1583,15 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 				end
 			end
 		end
-	end	
+	end
+end
+
+function Wearable:RemoveWearables(hUnit)
+	for i, child in ipairs(hUnit:GetChildren()) do
+		if IsValidEntity(child) and child:GetClassname() == "dota_item_wearable" then
+			if child:GetModelName() ~= "" then
+				UTIL_Remove(child)
+			end
+		end
+	end
 end

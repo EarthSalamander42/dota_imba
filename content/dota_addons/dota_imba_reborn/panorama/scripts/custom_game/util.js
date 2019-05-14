@@ -151,8 +151,10 @@ function OverrideTopBarHeroImage(args) {
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
 	if (ply_battlepass && ply_battlepass.arcana) {
-		if (ply_battlepass.arcana[args.hero_name]) {
-			arcana_level = ply_battlepass.arcana[args.hero_name];
+		if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] == 0) {
+			arcana_level = ply_battlepass.arcana["npc_dota_hero_" + args.hero_name];
+		} else {
+			return;
 		}
 	}
 

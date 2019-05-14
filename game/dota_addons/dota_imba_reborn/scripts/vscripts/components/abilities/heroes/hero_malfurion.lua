@@ -279,26 +279,26 @@ function modifier_imba_malfurion_living_tower:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
+--		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_EVENT_ON_DEATH,
 	}
 	return funcs
 end
---[[
+
 function modifier_imba_malfurion_living_tower:GetEffectName()
 	if self:GetStackCount() == 2 then
-		return "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl4.vpcf"
+		return "particles/econ/world/towers/rock_golem/radiant_rock_golem_ambient.vpcf"
 	elseif self:GetStackCount() == 3 then
-		return "particles/econ/items/natures_prophet/natures_prophet_weapon_sufferwood/natures_prophet_sufferwood_ambient.vpcf"
+		return "particles/econ/world/towers/rock_golem/dire_rock_golem_ambient.vpcf"
 	end
 end
 
 function modifier_imba_malfurion_living_tower:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
---]]
+
 function modifier_imba_malfurion_living_tower:GetOverrideAnimation()
 	return ACT_DOTA_CUSTOM_TOWER_IDLE
 end
@@ -309,7 +309,9 @@ function modifier_imba_malfurion_living_tower:OnCreated()
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(pfx)
 
---	self:SetStackCount(self:GetCaster():GetTeamNumber())
+	self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_dragon_knight_splash_attack")
+
+	self:SetStackCount(self:GetCaster():GetTeamNumber())
 end
 
 function modifier_imba_malfurion_living_tower:OnAttackStart(keys)
@@ -321,6 +323,7 @@ function modifier_imba_malfurion_living_tower:OnAttackStart(keys)
 	end
 end
 
+--[[ -- Works around the caster only
 function modifier_imba_malfurion_living_tower:OnAttackLanded(keys)
 	if not IsServer() then return end
 
@@ -339,7 +342,7 @@ function modifier_imba_malfurion_living_tower:OnAttackLanded(keys)
 		end
 	end
 end
-
+--]]
 function modifier_imba_malfurion_living_tower:OnDeath(keys)
 	if not IsServer() then return end
 

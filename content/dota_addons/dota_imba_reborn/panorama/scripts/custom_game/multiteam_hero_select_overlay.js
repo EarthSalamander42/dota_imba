@@ -6,6 +6,27 @@ function OnUpdateHeroSelection()
 	{
 		UpdateTeam( teamId );
 	}
+
+	var localPlayerInfo = Game.GetLocalPlayerInfo();
+	if ( !localPlayerInfo )
+		return;
+
+	if (localPlayerInfo.possible_hero_selection !== "")
+		var hype_text = $.Localize("npc_dota_hero_" + localPlayerInfo.possible_hero_selection + "_hype");
+
+	var friends_and_foes = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("FriendsAndFoes");
+	var hero_bio = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroBio");
+	if (hero_bio == null) {
+		hero_bio = $.CreatePanel('Label', friends_and_foes, 'HeroBio');
+		hero_bio.style.paddingLeft = "5%";
+		hero_bio.style.paddingRight = "5%";
+		hero_bio.style.color = "#6283BB";
+	}
+
+	// Testing purpose
+//	hero_bio.DeleteAsync(0);
+
+	hero_bio.text = hype_text;
 }
 
 function UpdateTeam( teamId )

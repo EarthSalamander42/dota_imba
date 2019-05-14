@@ -966,7 +966,8 @@ function modifier_imba_medusa_stone_gaze_red_eyes:OnIntervalThink()
 		math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.red_eyes_vision_cone * 1000 and
 		enemy:GetTeamNumber() ~= DOTA_TEAM_NEUTRALS and
 		not self:GetParent():PassivesDisabled() and
-		not self:GetParent():IsIllusion()
+		not self:GetParent():IsIllusion() and
+		self:GetParent():IsAlive()
 		then
 			if not facing_modifier and not stone_modifier then
 				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_red_eyes_facing", 

@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots"							"Entrangling Roots"
-"DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Description"				"Entrangle an unit, dealing %dmg_per_sec% damage per second. lasts %duration% seconds."
+"DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Description"				"Disarm and Root the target, dealing %dmg_per_sec% damage per second for %duration% seconds."
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Note0"					"First damage instance start on cast."
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Lore"					""
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_dmg_per_sec"				"DMG PER SEC:"
@@ -7,13 +7,14 @@
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_total_damage_tooltip"	"TOTAL DAMAGE:"
 
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation"								"Rejuvenation"
-"DOTA_Tooltip_ability_imba_malfurion_rejuvenation_Description"					"Heals all allies around Malfurion over time. lasts %duration% seconds."
+"DOTA_Tooltip_ability_imba_malfurion_rejuvenation_Description"					"Heals allies in radius over time. last %duration% seconds. Healing reduced to 50% on buildings."
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_Note0"						"Creep are healed only 50% of the healing value."
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_Note1"						"Buildings are healed only 25% of the healing value."
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec"					"HEAL PER SEC:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec_creeps_pct"		"%HEAL PER SEC (CREEPS):"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec_building_pct"	"%HEAL PER SEC (BUILDINGS):"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_total_heal_tooltip"			"TOTAL HEAL:"
+"DOTA_Tooltip_ability_imba_malfurion_rejuvenation_radius"						"RADIUS:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_duration"						"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_rejuvenation"										"Rejuvenation"

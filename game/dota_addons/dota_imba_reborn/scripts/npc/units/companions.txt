@@ -9,7 +9,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_companion"
+		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"        
 		"Level"						"1"
 		"ModelScale"				"1.0"
@@ -329,5 +329,12 @@
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/courier/donkey_ti7/donkey_ti7_flying.vmdl"
 		"ModelScale"				"0.65"
+	}
+
+	"npc_donator_companion_hastur"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/props_tree/tree_pinestatic_02.vmdl"
+		"ModelScale"				"0.5"
 	}
 }

@@ -1163,6 +1163,12 @@ function GameMode:DamageFilter( keys )
 				victim:RemoveModifierByName("modifier_imba_tidebringer_cleave_hit_target")
 			end
 		end
+		
+		-- Another testing trying to remove invinicible 0 hp illusions
+		if attacker:IsIllusion() and attacker:GetHealth() <= 0 then
+			attacker:RemoveSelf()
+			keys.damage = 0
+		end
 	end
 
 --	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then

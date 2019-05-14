@@ -225,10 +225,6 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:CheckState()
 	local state = {}
 	
 	if not self.ability:IsChanneling() then
-		if not self.caster:HasScepter() then
-			state[MODIFIER_STATE_PROVIDES_VISION] = true
-		end
-		
 		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_travelling_light") then
 			state[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
 		end

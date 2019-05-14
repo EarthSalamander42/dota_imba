@@ -52,6 +52,16 @@ ListenToGameEvent('dota_player_used_ability', function(event)
 					ability:RefreshCharges()
 				end
 			end
+
+			for i = 0, 15 do
+				local item = hero:GetItemInSlot(i)
+
+				if item then
+					item:EndCooldown()
+					item:RefundManaCost()
+					item:RefreshCharges()
+				end
+			end
 		end
 	end
 end, nil)
@@ -67,6 +77,16 @@ function GameMode:RefreshPlayers()
 			if ability then
 				if not ability:IsCooldownReady() then
 					ability:EndCooldown()
+				end
+			end
+
+			for i = 0, 15 do
+				local item = hero:GetItemInSlot(i)
+
+				if item then
+					item:EndCooldown()
+					item:RefundManaCost()
+					item:RefreshCharges()
 				end
 			end
 		end
@@ -176,9 +196,10 @@ end
 function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
 	hPlayerHero:AddExperience( 100000, false, false ) -- for some reason maxing your level this way fixes the bad interaction with OnHeroReplaced
-	--while hPlayerHero:GetLevel() < 25 do
-		--hPlayerHero:HeroLevelUp( false )
-	--end
+	if hPlayerHero:GetLevel() == 42 then
+		self:BroadcastMsg( "#MaxLevelAlready_Msg" )
+		return
+	end
 
 	for i = 0, 24 - 1 do
 		local hAbility = hPlayerHero:GetAbilityByIndex( i )
@@ -274,14 +295,11 @@ function GameMode:OnSpawnEnemyButtonPressed( eventSourceIndex, data )
 		return
 	end
 
-	local hAbility = self.hNeutralCaster:FindAbilityByName( "la_spawn_enemy_at_target" )
-	self.hNeutralCaster:CastAbilityImmediately( hAbility, -1 )
-
-	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
-	local hAbilityTestSearch = hPlayerHero:FindAbilityByName( "la_spawn_enemy_at_target" )
-	if hAbilityTestSearch then -- Testing whether AddAbility worked successfully on the lua-based ability
-		--print( "hPlayerHero:AddAbility( \"la_spawn_enemy_at_target\" ) was successful" )
-	end
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
+	table.insert( self.m_tEnemiesList, CreateUnitByName( "npc_dota_hero_axe", hPlayerHero:GetAbsOrigin(), true, nil, nil, self.m_nENEMIES_TEAM ) )
+	local hEnemyHero = self.m_tEnemiesList[ #self.m_tEnemiesList ]
+	hEnemyHero:Stop()
+	hEnemyHero:SetControllableByPlayer(data.PlayerID, false)
 
 	self:BroadcastMsg( "#SpawnEnemy_Msg" )
 end

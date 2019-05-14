@@ -1,6 +1,7 @@
 "Refresh_Msg"								"Hero Refreshed"
 "LevelUp_Msg"								"Hero Levelled Up"
 "MaxLevel_Msg"								"Hero Maxed Out"
+"MaxLevelAlready_Msg"						"Max level already!"
 "FreeSpellsOn_Msg"							"Free Spells: On"
 "FreeSpellsOff_Msg"							"Free Spells: Off"
 "InvulnerabilityOn_Msg"						"Invulnerability: On"

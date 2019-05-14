@@ -31,6 +31,7 @@ IMBA_DONATOR_COMPANION["76561197995265925"] = "npc_donator_companion_rubick_arca
 IMBA_DONATOR_COMPANION["76561198046069202"] = "npc_donator_companion_crux"
 IMBA_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
 IMBA_DONATOR_COMPANION["76561198065838676"] = "npc_donator_companion_miku"
+IMBA_DONATOR_COMPANION["76561198124080528"] = "npc_donator_companion_hastur"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
