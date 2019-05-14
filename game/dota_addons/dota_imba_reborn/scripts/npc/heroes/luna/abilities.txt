@@ -45,29 +45,39 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.8"
+				"stun_duration"			"0.8 0.9 1.0 1.1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"beam_damage"			"75 150 225 300"
+				"beam_damage"			"90 180 270 360"
 				"LinkedSpecialBonus"	"special_bonus_unique_luna_1"
 			}
 
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"refraction_damage_radius"	"100"
+				"var_type"					"FIELD_INTEGER"
+				"refraction_damage_radius"	"75"
 			}			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"refraction_inner_radius"	"200"
+				"refraction_waves"		"5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"refraction_inner_beams"			"4"
+				"refraction_beams"		"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"refraction_distance"	"150"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"refraction_delay"		"0.1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -99,7 +109,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"500"
+				"range"						"500 515 530 545"
 			}
 			"02"
 			{
@@ -109,7 +119,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_percent"	"35"
+				"damage_reduction_percent"	"35 30 25 20"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -126,8 +136,12 @@
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -135,17 +149,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"radius"					"25000"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"primary_attribute"			"6 12 18 24"
+				"primary_attribute"			"10 15 20 25"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_night_vision"		"200 400 600 800"
+				"bonus_night_vision"		"250 500 750 1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"full_moon_duration"		"12"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -164,7 +183,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -182,7 +201,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140.0"
+		"AbilityCooldown"				"140.0 130.0 120.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -195,7 +214,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams"						"6 9 12"
+				"beams"						"6 10 14"
 			}
 			"02"
 			{
@@ -205,42 +224,96 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"beam_interval"				"0.6 0.6 0.6"
+				"beam_interval"				"0.6 0.5 0.4"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"beam_interval_scepter"				"0.3"
+				"beam_interval_scepter"				"0.3 0.25 0.2"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip"			"2.4 4.2 6.0"
+				"duration_tooltip"			"3.0 4.5 5.2"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"675 675 675"
+				"radius"					"675 765 855"
 			}	
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams_scepter"				"6 12 18"
+				"beams_scepter"				"7 14 21"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_count_scepter"			"6 12 18"
+				"hit_count_scepter"			"7 14 21"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip_scepter"	"1.8 3.6 5.4"
+				"duration_tooltip_scepter"	"1.8 3.25 4.0"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_tooltip_scepter"	"2500"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"night_duration"			"10"
+			}		
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dark_moon_additional_beams"	"3"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"moonscraper_beams"			"8"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"moonscraper_spread"		"10"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"moonscraper_radius"		"75"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// -Xs Lucent Beam Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_luna_lucent_beam_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_luna_lucent_beam"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
 			}
 		}
 	}
