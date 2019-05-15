@@ -328,7 +328,6 @@ function imba_luna_lunar_blessing:CastFilterResult()
 	return UF_SUCCESS
 end
 
--- Doesn't work
 function imba_luna_lunar_blessing:GetAbilityTextureName()
 	if self.full_moon and GameRules:GetDOTATime(true, true) - self.full_moon <= self:GetSpecialValueFor("full_moon_duration") then
 		return "custom/luna_lunar_blessing_full_moon"
@@ -351,7 +350,7 @@ function modifier_imba_luna_lunar_blessing_aura:GetAuraSearchFlags()			return DO
 function modifier_imba_luna_lunar_blessing_aura:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_luna_lunar_blessing_aura:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO end
 function modifier_imba_luna_lunar_blessing_aura:GetModifierAura()				return "modifier_imba_luna_lunar_blessing_aura" end
-function modifier_imba_luna_lunar_blessing_aura:GetAuraEntityReject(hEntity)	return hEntity == self:GetCaster() end -- Already an intrinsic modifier
+-- function modifier_imba_luna_lunar_blessing_aura:GetAuraEntityReject(hEntity)	return hEntity == self:GetCaster() end -- Already an intrinsic modifier
 
 function modifier_imba_luna_lunar_blessing_aura:GetEffectName()
 	if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and (self:GetParent() == self:GetCaster() or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) then return "particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf" end
@@ -570,6 +569,11 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 		return
 	end
 	
+	-- "Provides 675 radius ground vision for its duration when not targeting a unit."
+	if self.target_position then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), self.target_position, self.radius, self.beam_interval_scepter, true)
+	end
+	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target_position or self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 	
 	-- First check if there are any valid enemies first; if not, draw the Lucent Beam particle to a random area
@@ -639,32 +643,42 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 	end
 
 	-- IMBAfication: Moonscraper
+	
+	-- I should have set these variables earlier but w/e
+	if self:GetCaster():HasScepter() then
+		self.think_interval = self.beam_interval_scepter
+	else
+		self.think_interval = self.beam_interval
+	end
+	
 	for outer_beam = 0, self.moonscraper_beams - 1 do
-		local beam_pos = RotatePosition(self.cast_pos, QAngle(0, self.moonscraper_spread * outer_beam, 0), self.refraction_pos)
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_eclipse_impact.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
-		ParticleManager:SetParticleControl(particle, 1, beam_pos)
-		ParticleManager:SetParticleControl(particle, 5, beam_pos)
-		ParticleManager:SetParticleControl(particle, 60, Vector(RandomInt(0, 255), RandomInt(0, 255), RandomInt(0, 255)))
-		ParticleManager:SetParticleControl(particle, 61, Vector(1, 0, 0))
-		ParticleManager:ReleaseParticleIndex(particle)
-		
-		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), beam_pos, nil, self.moonscraper_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		
-		for _, enemy in pairs(enemies) do
-		
-			if lucent_beam_ability then
-				local damageTable = {
-					victim 			= enemy,
-					damage 			= lucent_beam_ability:GetTalentSpecialValueFor("beam_damage"),
-					damage_type		= lucent_beam_ability:GetAbilityDamageType(),
-					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-					attacker 		= self:GetCaster(),
-					ability 		= lucent_beam_ability
-				}
-				
-				ApplyDamage(damageTable)
+		Timers:CreateTimer((outer_beam / self.moonscraper_beams) * self.think_interval, function()
+			local beam_pos = GetGroundPosition(RotatePosition(self.cast_pos, QAngle(0, self.moonscraper_spread * outer_beam, 0), self.refraction_pos), nil)
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_eclipse_impact.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+			ParticleManager:SetParticleControl(particle, 1, beam_pos)
+			ParticleManager:SetParticleControl(particle, 5, beam_pos)
+			ParticleManager:SetParticleControl(particle, 60, Vector(RandomInt(0, 255), RandomInt(0, 255), RandomInt(0, 255)))
+			ParticleManager:SetParticleControl(particle, 61, Vector(1, 0, 0))
+			ParticleManager:ReleaseParticleIndex(particle)
+			
+			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), beam_pos, nil, self.moonscraper_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			
+			for _, enemy in pairs(enemies) do
+			
+				if lucent_beam_ability then
+					local damageTable = {
+						victim 			= enemy,
+						damage 			= lucent_beam_ability:GetTalentSpecialValueFor("beam_damage"),
+						damage_type		= lucent_beam_ability:GetAbilityDamageType(),
+						damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+						attacker 		= self:GetCaster(),
+						ability 		= lucent_beam_ability
+					}
+					
+					ApplyDamage(damageTable)
+				end
 			end
-		end
+		end)
 	end
 	
 	self.cast_pos = self.target_position or self:GetParent():GetAbsOrigin()
@@ -672,6 +686,13 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 	
 	-- Increase the total amount of beams fired by one
 	self.beams_elapsed = self.beams_elapsed + 1
+	
+	-- Update stack count to let player know how many beams are left to that Eclipse
+	if self:GetCaster():HasScepter() then
+		self:SetStackCount(math.max(self.beams_scepter - self.beams_elapsed, 0))
+	else
+		self:SetStackCount(math.max(self.beams - self.beams_elapsed, 0))
+	end
 end
 
 ---------------------
