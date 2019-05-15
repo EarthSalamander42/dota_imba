@@ -24,7 +24,7 @@
 
 			<Panel id="ImbaLoadingSocial">
 				<Panel class="Row">
-					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('https://preview.dota2imba.fr/statistics/rankings');">
+					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('http://dota2imba.fr/ranking');">
 						<Label text="Official Website" />
 					</Button>
 					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
