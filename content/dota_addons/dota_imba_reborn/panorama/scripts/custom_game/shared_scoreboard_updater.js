@@ -93,14 +93,14 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 
 	// xp shown fix (temporary?)
 	var player_info = CustomNetTables.GetTableValue("battlepass", playerId)
-//	$.Msg(player_info)
-	if (player_info.player_xp == 0) {
+
+	if (!player_info || player_info.player_xp == 0) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "N/A");
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, "N/A");
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, "N/A");
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, 0);
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#FFFFFF";
-	} else {
+	} else if (player_info.player_xp == 1) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl);

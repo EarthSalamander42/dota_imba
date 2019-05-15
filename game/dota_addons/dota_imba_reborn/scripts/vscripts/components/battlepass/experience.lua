@@ -154,6 +154,16 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			donator_color = DONATOR_COLOR[0]
 		end
 
+		-- check arcana icon replacement
+		local arcana = {}
+		if Imbattlepass then
+			arcana["npc_dota_hero_axe"] = Imbattlepass:HasAxeArcana(i)
+			arcana["npc_dota_hero_juggernaut"] = Imbattlepass:HasJuggernautArcana(i)
+			arcana["npc_dota_hero_pudge"] = Imbattlepass:HasPudgeArcana(i)
+			arcana["npc_dota_hero_zuus"] = Imbattlepass:HasZuusArcana(i)
+			arcana["npc_dota_hero_wisp"] = Imbattlepass:HasWispArcana(i)
+		end
+
 		CustomNetTables:SetTableValue("battlepass", tostring(ID),
 		{
 			XP = current_xp_in_level,
@@ -168,7 +178,8 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			donator_color = rgbToHex(donator_color),
 			in_game_tag = api:GetPlayerTagEnabled(ID),
 			bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
-			player_xp = api:GetPlayerXPEnabled(ID)
+			player_xp = api:GetPlayerXPEnabled(ID),
+			arcana = arcana
 		})
 	end
 
