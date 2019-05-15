@@ -14,6 +14,9 @@ function OnUpdateHeroSelection()
 	if (localPlayerInfo.possible_hero_selection !== "")
 		var hype_text = $.Localize("npc_dota_hero_" + localPlayerInfo.possible_hero_selection + "_hype");
 
+	if (hype_text == undefined)
+		return;
+
 	var friends_and_foes = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("FriendsAndFoes");
 	var hero_bio = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroBio");
 	if (hero_bio == null) {

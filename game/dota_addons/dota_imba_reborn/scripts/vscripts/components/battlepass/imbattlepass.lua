@@ -242,8 +242,6 @@ function Imbattlepass:Init()
 --			IMBATTLEPASS_TIDEHUNTER[v[1]] = k
 		end
 	end
-
-	Imbattlepass:BattlepassCheckArcana()
 end
 
 function Imbattlepass:AddItemEffects(hero)
@@ -984,7 +982,7 @@ function Imbattlepass:GetHeroEffect(hero)
 	end
 end
 
-function HasPudgeArcana(ID)
+function Imbattlepass:HasPudgeArcana(ID)
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
 		return 1
 	elseif Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
@@ -994,7 +992,7 @@ function HasPudgeArcana(ID)
 	end
 end
 
-function HasJuggernautArcana(ID)
+function Imbattlepass:HasJuggernautArcana(ID)
 	if next_reward_shown == false then return nil end
 
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
@@ -1006,7 +1004,7 @@ function HasJuggernautArcana(ID)
 	end
 end
 
-function HasZuusArcana(ID)
+function Imbattlepass:HasZuusArcana(ID)
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
 		return 0
 	else
@@ -1014,7 +1012,7 @@ function HasZuusArcana(ID)
 	end
 end
 
-function HasLinaArcana(ID)
+function Imbattlepass:HasLinaArcana(ID)
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
 		return 0
 	else
@@ -1022,7 +1020,7 @@ function HasLinaArcana(ID)
 	end
 end
 
-function HasWispArcana(ID)
+function Imbattlepass:HasWispArcana(ID)
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
 		return 0
 	else
@@ -1031,25 +1029,11 @@ function HasWispArcana(ID)
 end
 
 -- not an arcana, but this is used for replacing top bar icon (FORMAT ME PLEASE)
-function HasAxeArcana(ID)
+function Imbattlepass:HasAxeArcana(ID)
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_AXE["axe_immortal"] then
 		return 0
 	else
 		return nil
-	end
-end
-
--- override pick screen and top bar image
-function Imbattlepass:BattlepassCheckArcana()
-	for i = 0, PlayerResource:GetPlayerCount() - 1 do
-		local arcana = {}
-		arcana["npc_dota_hero_axe"] = HasAxeArcana(i)
-		arcana["npc_dota_hero_juggernaut"] = HasJuggernautArcana(i)
-		arcana["npc_dota_hero_pudge"] = HasPudgeArcana(i)
-		arcana["npc_dota_hero_zuus"] = HasZuusArcana(i)
-		arcana["npc_dota_hero_wisp"] = HasWispArcana(i)
-
-		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end
 end
 

@@ -85,7 +85,7 @@ function imba_malfurion_rejuvenation:OnSpellStart()
 
 		local allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, ally in pairs (allies) do
-			ally:AddNewModifier(ally, self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
+			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
 		end
 	end
 end
@@ -94,23 +94,22 @@ modifier_imba_rejuvenation = modifier_imba_rejuvenation or class({})
 
 function modifier_imba_rejuvenation:OnCreated()
 	if IsServer() then
+		self.heal_per_sec = self:GetAbility():GetSpecialValueFor("heal_per_sec") + self:GetCaster():FindTalentValue("special_bonus_imba_malfurion_5")
 		self:StartIntervalThink(1.0)
 	end
 end
 
 function modifier_imba_rejuvenation:OnIntervalThink()
-	local heal_per_sec = self:GetAbility():GetSpecialValueFor("heal_per_sec") + self:GetCaster():FindTalentValue("special_bonus_imba_malfurion_5")
-
-	if self:GetParent():IsBuilding() then
-		heal_per_sec = heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
+	if self:GetParent():IsBuilding() or string.find("living_tower", self:GetParent():GetUnitName()) then
+		self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
 	else
 		if not self:GetParent():IsHero() then
-			heal_per_sec = heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
+			self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
 		end
 	end
 
-	self:GetParent():Heal(heal_per_sec, self:GetCaster())
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), heal_per_sec, nil)
+	self:GetParent():Heal(self.heal_per_sec, self:GetCaster())
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_sec, nil)
 end
 
 function modifier_imba_rejuvenation:GetEffectName()
@@ -309,7 +308,7 @@ function modifier_imba_malfurion_living_tower:OnCreated()
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(pfx)
 
-	self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_dragon_knight_splash_attack")
+	self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_dragon_knight_splash_attack", {})
 
 	self:SetStackCount(self:GetCaster():GetTeamNumber())
 end
