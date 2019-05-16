@@ -339,8 +339,8 @@ function GameMode:OnSettingVote(keys)
 
 	GameMode.VoteTable[keys.category][pid] = keys.vote
 
-	Say(nil, keys.category, false)
-	Say(nil, tostring(keys.vote), false)
+--	Say(nil, keys.category, false)
+--	Say(nil, tostring(keys.vote), false)
 
 	-- TODO: Finish votes show up
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
