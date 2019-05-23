@@ -5,10 +5,7 @@
 *.tmp
 
 # Compiled formats
-*.vmdl_c
-*.vsndevts_c
 *.vmat_c
-*.vmdl_c
 *.vagrp_c
 *.vmesh_c
 

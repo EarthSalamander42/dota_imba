@@ -8,22 +8,22 @@ if Mutation == nil then
 end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
-		if GameRules:GetCustomGameDifficulty() ~= 2 then return end
-	end
-
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		require('components/mutation/util')
-		require('components/mutation/events')
-		require('components/mutation/mutation')
-		require('components/mutation/mutation_list')
-		require('components/mutation/mutation_settings')
+		Timers:CreateTimer(0.5, function()
+			if GameRules:GetCustomGameDifficulty() ~= 2 then return end
 
-		Mutation:Init()
+			require('components/mutation/util')
+			require('components/mutation/events')
+			require('components/mutation/mutation')
+			require('components/mutation/mutation_list')
+			require('components/mutation/mutation_settings')
 
---		if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
---			Mutation:ARDM()
---		end
+			Mutation:Init()
+
+--			if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+--				Mutation:ARDM()
+--			end
+		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		Timers:CreateTimer(function()
 			Mutation:OnThink()
@@ -75,20 +75,20 @@ function Mutation:Init()
 
 	IMBA_MUTATION["imba"] = "frantic"
 
-	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "ultimate_level"
-		IMBA_MUTATION["negative"] = "monkey_business"
-		IMBA_MUTATION["terrain"] = "river_flows"
-	else
+--	if IsInToolsMode() then
+--		IMBA_MUTATION["positive"] = "ultimate_level"
+--		IMBA_MUTATION["negative"] = "monkey_business"
+--		IMBA_MUTATION["terrain"] = "river_flows"
+--	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
-	end
+--	end
 
-	if IsInToolsMode() then
-		print("Mutations:")
-		print(IMBA_MUTATION)
-	end
+--	if IsInToolsMode() then
+--		print("Mutations:")
+--		print(IMBA_MUTATION)
+--	end
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
 

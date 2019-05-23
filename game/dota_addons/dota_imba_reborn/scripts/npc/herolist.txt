@@ -90,7 +90,7 @@
 	"npc_dota_hero_disruptor" 			"1"
 	"npc_dota_hero_undying" 			"1"
 	"npc_dota_hero_templar_assassin" 	"1"
-	"npc_dota_hero_naga_siren" 			"1"
+	"npc_dota_hero_naga_siren" 			"0"
 	"npc_dota_hero_nyx_assassin" 		"1"
 	"npc_dota_hero_keeper_of_the_light" "1"
 	"npc_dota_hero_visage" 				"1"

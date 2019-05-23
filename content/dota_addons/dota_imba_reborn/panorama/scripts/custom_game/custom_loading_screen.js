@@ -117,14 +117,10 @@ function OnVotesReceived(data)
 //	$.Msg(data.vote.toString())
 //	$.Msg(data.table)
 
-//	$.Msg(data.table2)
-
 	var vote_count = []
 	vote_count[1] = 0;
 	vote_count[2] = 0;
 	vote_count[3] = 0;
-	vote_count[4] = 0;
-	vote_count[5] = 0;
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
@@ -134,8 +130,8 @@ function OnVotesReceived(data)
 	}
 
 	// Check number of votes for each gamemodes
-	for (var id in data.table2){
-		var gamemode = data.table2[id]
+	for (var id in data.table){
+		var gamemode = data.table[id]
 		vote_count[gamemode]++;
 	}
 
@@ -147,7 +143,7 @@ function OnVotesReceived(data)
 		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
 	}
 
-//	if (data.category == "creep_lanes") {
+//	if (data.category == "random_tower_abilities") {
 
 //	}
 }

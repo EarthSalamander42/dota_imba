@@ -40,12 +40,6 @@
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 
-		function PlayHeroTaunt() {
-			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
-				ID : Players.GetLocalPlayer(),
-			});
-		}
-
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")
@@ -177,35 +171,74 @@
 //				$.Msg(radiant_player)
 //				$.Msg(dire_player)
 
-				var radiant_ply_table = CustomNetTables.GetTableValue("battlepass", radiant_player.player_id);
+				if (radiant_player) {
+					var radiant_ply_table = CustomNetTables.GetTableValue("battlepass", radiant_player.player_id);
 
-//				$.Msg(radiant_ply_table)
+//					$.Msg(radiant_ply_table)
 
-				if (radiant_ply_table) {
-					radiant_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
-					radiant_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
-					radiant_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
-					radiant_team_panel.FindChildTraverse("LevelNumber").text = radiant_ply_table.Lvl;
+					if (radiant_ply_table != undefined) {
+						radiant_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
+						radiant_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
+						radiant_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
+						radiant_team_panel.FindChildTraverse("LevelNumber").text = radiant_ply_table.Lvl;
 
-					if (radiant_ply_table.Lvl > 100) {
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
-						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
-					} else if (radiant_ply_table.Lvl > 75) {
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
-						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
-					} else if (radiant_ply_table.Lvl > 50) {
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
-					} else if (radiant_ply_table.Lvl > 25) {
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
-					} else if (radiant_ply_table.Lvl > 0) {
-						radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-						radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+						if (radiant_ply_table.Lvl > 100) {
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
+							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
+						} else if (radiant_ply_table.Lvl > 75) {
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
+							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
+						} else if (radiant_ply_table.Lvl > 50) {
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
+						} else if (radiant_ply_table.Lvl > 25) {
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+						} else if (radiant_ply_table.Lvl > 0) {
+							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+						}
+					}					
+				}
+
+				if (dire_player != undefined) {
+					var dire_ply_table = CustomNetTables.GetTableValue("battlepass", dire_player.player_id);
+
+//					$.Msg(dire_ply_table)
+
+					if (dire_ply_table) {
+						dire_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
+						dire_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
+						dire_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
+						dire_team_panel.FindChildTraverse("LevelNumber").text = dire_ply_table.Lvl;
+
+						if (dire_ply_table.Lvl > 100) {
+							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+							dire_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
+							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
+						} else if (dire_ply_table.Lvl > 75) {
+							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
+							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
+						} else if (dire_ply_table.Lvl > 50) {
+							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
+							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
+						} else if (dire_ply_table.Lvl > 25) {
+							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+						} else if (dire_ply_table.Lvl > 0) {
+							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
+							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
+						}
 					}
 				}
 			}
+		}
+
+		function PlayHeroTaunt() {
+			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
+				ID : Players.GetLocalPlayer(),
+			});
 		}
 
 		// Credits: ark120202
@@ -235,7 +268,7 @@
 				$.Msg("Taunt keybind of player ID " + Players.GetLocalPlayer() + ": " + GetKeyBind("HeroTaunt"))
 			} else {
 				$.Msg("Local player nil, retry taunt key gathering...")
-				$.Schedule(0.25, SetupTauntKeyBind)
+				$.Schedule(1.0, SetupTauntKeyBind)
 			}
 		}
 
