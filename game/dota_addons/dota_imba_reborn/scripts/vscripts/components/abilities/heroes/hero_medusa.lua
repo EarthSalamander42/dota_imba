@@ -256,6 +256,14 @@ end
 -- MYSTIC SNAKE --
 ------------------
 
+function imba_medusa_mystic_snake:GetCooldown(level)
+	if self:GetCaster():GetLevel() >= 20 then
+		return self:GetSpecialValueFor("innate_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_medusa_mystic_snake:OnSpellStart()
 	if not IsServer() then return end
 	
