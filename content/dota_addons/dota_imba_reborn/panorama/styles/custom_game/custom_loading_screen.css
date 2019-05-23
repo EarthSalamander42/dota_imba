@@ -180,7 +180,7 @@
 	background-color: #003339;
 }
 
-#ImbaLoadingSocial {
+.LoadingButtons {
 	margin-left: 220px;
 	overflow: scroll;
 	flow-children: down;
@@ -188,25 +188,25 @@
 	border-left: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 	border-right: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 	border-bottom: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
-} 
+}
 
-#ImbaLoadingSocial Panel {
+.LoadingButtons Panel {
 	padding: 0px 20px;
 	flow-children: right;
 }
 
-#ImbaLoadingSocial Button:hover {
+.LoadingButtons Button:hover {
 	box-shadow: 0 0 7px #333;
 }
 
-#ImbaLoadingSocial Button {
+.LoadingButtons Button {
 	border: 1px solid #333;
 	padding: 5px 20px 3px;
 	margin: 4px 12px 4px 0px;
 	box-shadow: 0 0 5px  #222;
 }
 
-#ImbaLoadingSocial Label {
+.LoadingButtons Label {
 	font-size: 20px;
 	color: #fff;
 }
@@ -221,13 +221,15 @@
 }
 
 #ImbaLoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
-#ImbaLoadingSocialSteamWorkshop { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
-#ImbaLoadingSocialSteamChat { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
 #ImbaLoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
 #ImbaLoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
 #ImbaLoadingSocialReddit { background-color: gradient(linear, 0% 0%, 0% 100%, from(#ff6600), to(#111)); }
 #ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
 #ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+
+.DarkBlue {
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111));
+}
 
 #vote-content {
 	width: 100%;

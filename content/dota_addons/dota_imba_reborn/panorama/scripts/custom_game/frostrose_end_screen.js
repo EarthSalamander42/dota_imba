@@ -191,22 +191,30 @@ function EndScoreboard(args) {
 		var ply_table = CustomNetTables.GetTableValue("battlepass", player.id.toString());
 
 		var player_xp = ply_table.XP;
+		var player_max_xp_in_level = ply_table.MaxXP
+
+		// temporary, will be fixed with xp system on backend side
+		if (typeof player_xp != "number")
+			player_xp = 0;
+
+		if (typeof player_max_xp_in_level != "number")
+			player_max_xp_in_level = 500;
 
 		// Comment me please
 //		if (Game.IsInToolsMode())
 //			var player_xp = 7800;
 
 		if (ply_table && ply_table.player_xp == 1) {
-			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(ply_table.MaxXP);
+			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(player_max_xp_in_level);
 			values.xp.level.text = $.Localize("#battlepass_level") + ply_table.Lvl;
 			values.xp.rank_name.text = ply_table.title;
 			values.xp.rank_name.style.color = ply_table.title_color;
 			values.xp.booster.style.color = ply_table.donator_color;
 
-//			$.Msg(Math.floor(player_xp) + " / " + Math.floor(ply_table.MaxXP))
-//			$.Msg(Math.floor(player_xp) / Math.floor(ply_table.MaxXP))
+//			$.Msg(Math.floor(player_xp) + " / " + Math.floor(player_max_xp_in_level))
+//			$.Msg(Math.floor(player_xp) / Math.floor(player_max_xp_in_level))
 
-			var progress = Math.round((100.0 * Math.floor(player_xp)) / Math.floor(ply_table.MaxXP));
+			var progress = Math.round((100.0 * Math.floor(player_xp)) / Math.floor(player_max_xp_in_level));
 			values.xp.progress.style.width = progress + "%";
 		} else {			
 			values.xp.rank.text = "N/A";
@@ -225,12 +233,12 @@ function EndScoreboard(args) {
 				values.xp.earned.AddClass("es-text-green");
 
 				if (ply_table && progress) {
-					var progress_diff = Math.round(100.0 * (xpDiff / ply_table.MaxXP));
+					var progress_diff = Math.round(100.0 * (xpDiff / player_max_xp_in_level));
 					values.xp.progress_diff.style.width = progress_diff + "%";
 					values.xp.progress_diff.style.marginLeft = (progress - 1) + "%";
 
 					// This might not show rewards for multi-levelup at once
-					if (Math.floor(player_xp + xpDiff) / Math.floor(ply_table.MaxXP) >= 1) {
+					if (Math.floor(player_xp + xpDiff) / Math.floor(player_max_xp_in_level) >= 1) {
 						values.xp.bar[0].AddClass("level-up");
 
 						if (player == Players.GetLocalPlayer()) {

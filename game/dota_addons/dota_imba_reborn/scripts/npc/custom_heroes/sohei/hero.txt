@@ -9,7 +9,7 @@
 		"HeroID"					"122"
 		"Model"						"models/heroes/sohei/sohei.vmdl"
 		"SoundSet"					"Sohei"
-		"GameSoundsFile"			"soundevents/units/game_sounds_sohei.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		"particle_folder"			"particles/hero/sohei"
 
 		//Picking Screen
