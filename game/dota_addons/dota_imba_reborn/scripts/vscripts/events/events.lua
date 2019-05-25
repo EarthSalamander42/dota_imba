@@ -190,7 +190,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if GameRules:GetCustomGameDifficulty() > 1 then
+			if GameMode:GetCustomGamemode() > 1 then
 				SpawnEasterEgg()
 			end
 

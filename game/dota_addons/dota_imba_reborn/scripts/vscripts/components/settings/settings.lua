@@ -18,6 +18,7 @@ CUSTOM_GAME_TYPE = "IMBA"
 
 GAME_VERSION = "7.14"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
+CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
