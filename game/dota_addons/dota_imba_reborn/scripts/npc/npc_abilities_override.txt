@@ -820,6 +820,7 @@
 		"ItemCost"						"100"
 		"ItemInitialStockTime"			"300.0"
 		"ItemStockTime"					"40.0"
+		"AbilityCooldown"				"0.0"
 
 		"AbilitySpecial"
 		{
@@ -1957,7 +1958,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius_scepter"	"600"
+				"grab_radius_scepter"	"800"
 			}
 			"06"
 			{
@@ -11107,7 +11108,7 @@
 	//=================================================================================================================
 	"dark_willow_bramble_maze"
 	{
-		"AbilityCooldown"				"25 20 15 10"
+		"AbilityCooldown"				"25 23 21 19"
 		
 		"AbilitySpecial"
 		{

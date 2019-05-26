@@ -85,7 +85,7 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 
 			-- #2 Talent: Create a Secondary Blade Fury for better looking fx
 			if self:GetCaster():HasModifier("modifier_juggernaut_arcana") then
-				self.blade_fury_spin_pfx_2 = ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+				self.blade_fury_spin_pfx_2 = ParticleManager:CreateParticle(self:GetCaster().blade_fury_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 				ParticleManager:SetParticleControl(self.blade_fury_spin_pfx_2, 1, Vector(self.radius * 1.2, 0, 0))
 			end
 
@@ -146,7 +146,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 				self.prng = 0
 
 				local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-				if HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+				if Imbattlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
 					ParticleManager:SetParticleControl(crit_pfx, 1, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(crit_pfx, 3, enemy:GetAbsOrigin())
 				end
@@ -1274,7 +1274,7 @@ if IsServer() then
 		if keys.attacker == self:GetParent() then
 			self.critProc = false
 			if RollPseudoRandom(self.chance, self) then
-				self:GetParent():StartGesture(ACT_DOTA_ATTACK_EVENT)
+				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK_EVENT, self:GetParent():GetAttacksPerSecond())
 				local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 				ParticleManager:SetParticleControl(crit_pfx, 0, self:GetParent():GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(crit_pfx)
@@ -1311,7 +1311,7 @@ if IsServer() then
 				local particle = ParticleManager:CreateParticle(self:GetCaster().blade_dance_effect, PATTACH_ABSORIGIN, params.target)
 				ParticleManager:SetParticleControl(particle, 0, params.target:GetAbsOrigin())
 
-				if HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+				if Imbattlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
 					ParticleManager:SetParticleControl(particle, 1, params.target:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle, 3, params.target:GetAbsOrigin())
 				end
@@ -1322,11 +1322,13 @@ if IsServer() then
 				self:GetParent():EmitSound(self:GetCaster().blade_dance_sound)
 				self.critProc = false
 
-				Timers:CreateTimer(FrameTime(), function()
-					if params.target:IsRealHero() and not params.target:IsAlive() then
-						ArcanaKill(self:GetParent())
-					end
-				end)
+				if Imbattlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+					Timers:CreateTimer(FrameTime(), function()
+						if params.target:IsRealHero() and not params.target:IsAlive() then
+							ArcanaKill(self:GetParent())
+						end
+					end)
+				end
 			end
 		end
 	end
@@ -2053,14 +2055,14 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 	if IsServer() then
 		self:GetAbility():SetActivated(true)
 
-		Timers:CreateTimer(0.1, function()
-			if HasJuggernautArcana(self.caster:GetPlayerID()) then
+		if Imbattlepass:HasJuggernautArcana(self.caster:GetPlayerID()) then
+			Timers:CreateTimer(0.1, function()
 				if self.ability.omnislash_kill_count > 0 then
 					ArcanaKill(self.caster, self.ability.omnislash_kill_count)
 					self.ability.omnislash_kill_count = 0
 				end
-			end
-		end)
+			end)
+		end
 
 		-- Re-enable Blade Fury during Omnislash (vanilla)
 		if self.caster:HasAbility("imba_juggernaut_blade_fury") then

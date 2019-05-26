@@ -983,11 +983,11 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 			golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
 
 			-- Armor:
-			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + bonus_armor)
+			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + bonus_armor)
 
 			-- #4 Talent: Chaotic Golem armor increase
 			if caster:HasTalent("special_bonus_imba_warlock_4") then
-				golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + caster:FindTalentValue("special_bonus_imba_warlock_4"))
+				golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + caster:FindTalentValue("special_bonus_imba_warlock_4"))
 			end
 
 			-- Attack speed (needs to be done through a modifier):

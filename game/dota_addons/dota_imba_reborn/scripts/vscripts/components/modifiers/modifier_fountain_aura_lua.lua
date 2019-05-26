@@ -51,16 +51,15 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(0.1)
 
+		local particle_name
+		if self:GetParent():IsCourier() then
+			particle_name = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
+		else
+			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
+		end
+
 		Timers:CreateTimer(1.0, function()
-			local fountain_effect = self:GetParent().fountain_effect
-
-			if self:GetParent():IsClone() then
-				fountain_effect = self:GetParent():GetCloneSource().fountain_effect
-			elseif not self:GetParent():IsRealHero() and self:GetParent():IsControllableByAnyPlayer() and not self:GetParent():IsCourier() then
-				fountain_effect = self:GetParent():GetOwnerEntity().fountain_effect
-			end
-
-			self.pfx = ParticleManager:CreateParticle(fountain_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		end)
 	end
 end

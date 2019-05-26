@@ -920,14 +920,11 @@ function modifier_imba_spellshield_scepter_recharge:RemoveOnDeath() return false
 -------------------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
+	["modifier_imba_mana_void_scepter"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mana_void_stunned"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mana_void_delay_counter"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_mana_void = imba_antimage_mana_void or class({})
-
-function imba_antimage_mana_void:GetAbilityTextureName()
-	return "antimage_mana_void"
-end
 
 function imba_antimage_mana_void:OnAbilityPhaseStart()
 	if IsServer() then
@@ -967,6 +964,10 @@ function imba_antimage_mana_void:OnSpellStart()
 		local mana_void_ministun = ability:GetSpecialValueFor("mana_void_ministun")
 		local damage = 0
 
+		if caster:HasScepter() then
+			mana_void_ministun = ability:GetSpecialValueFor("scepter_ministun")
+		end
+
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(ability) then
@@ -989,6 +990,17 @@ function imba_antimage_mana_void:OnSpellStart()
 			local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
 			target:ReduceMana(target_mana_burn)
 			target:AddNewModifier(caster, ability, modifier_ministun, {duration = mana_void_ministun})
+
+			if caster:HasScepter() then
+				target:AddNewModifier(caster, self, "modifier_imba_mana_void_scepter", {})
+
+				Timers:CreateTimer(mana_void_ministun, function()
+					print("Enemy alive?", target:IsAlive())
+					if target:IsAlive() then
+						target:RemoveModifierByName("modifier_imba_mana_void_scepter")
+					end
+				end)
+			end
 
 			-- Find all enemies in the area of effect
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -1030,6 +1042,26 @@ function imba_antimage_mana_void:OnSpellStart()
 			target:EmitSound("Hero_Antimage.ManaVoid")
 		end)
 	end
+end
+
+modifier_imba_mana_void_scepter = modifier_imba_mana_void_scepter or class({})
+
+function modifier_imba_mana_void_scepter:IsDebuff() return true end
+function modifier_imba_mana_void_scepter:IsHidden() return true end
+function modifier_imba_mana_void_scepter:RemoveOnDeath() return false end
+
+function modifier_imba_mana_void_scepter:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_RESPAWN,
+	}
+end
+
+function modifier_imba_mana_void_scepter:OnRespawn(kv)
+	if self:GetParent():FindAbilityWithHighestCooldown() then
+		self:GetParent():FindAbilityWithHighestCooldown():StartCooldown(self:GetAbility():GetSpecialValueFor("scepter_cooldown_increase"))
+	end
+
+	self:Destroy()
 end
 
 -------------------------------------------

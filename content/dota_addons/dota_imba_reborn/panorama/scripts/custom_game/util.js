@@ -147,11 +147,11 @@ function HideIMR(panel) {
 }
 
 function OverrideTopBarHeroImage(args) {
-	var arcana_level = 0;
+	var arcana_level = undefined;
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
 	if (ply_battlepass && ply_battlepass.arcana) {
-		if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] == 0) {
+		if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] != undefined) {
 			arcana_level = ply_battlepass.arcana["npc_dota_hero_" + args.hero_name];
 		} else {
 			return;
@@ -163,7 +163,7 @@ function OverrideTopBarHeroImage(args) {
 		team = "Dire"
 	}
 
-	if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer())) {
+	if (FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()) && arcana_level != undefined) {
 		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
 		if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
 	}

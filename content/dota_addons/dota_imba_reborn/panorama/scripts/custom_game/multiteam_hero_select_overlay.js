@@ -212,8 +212,10 @@ function UpdateTimer()
 	GameEvents.Subscribe( "dota_player_hero_selection_dirty", OnUpdateHeroSelection );
 	GameEvents.Subscribe( "dota_player_update_hero_selection", OnUpdateHeroSelection );
 
-	if (Game.GetCustomGameDifficulty() == 2)
-		$("#Mutations").style.visibility = "visible";
+	if (CustomNetTables.GetTableValue("game_options", "gamemode")) {
+		if (CustomNetTables.GetTableValue("game_options", "gamemode")[1] == 2)
+			$("#Mutations").style.visibility = "visible";
+	}
 
 	UpdateTimer();
 })();

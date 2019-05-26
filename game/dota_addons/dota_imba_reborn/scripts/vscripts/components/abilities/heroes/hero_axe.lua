@@ -311,14 +311,30 @@ function imba_axe_battle_hunger:GetCastAnimation()
 	return(ACT_DOTA_OVERRIDE_ABILITY_2)
 end
 
+function imba_axe_battle_hunger:GetBehavior()
+	if self:GetCaster():HasScepter() then
+		return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	end
+
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+end
+
+function imba_axe_battle_hunger:GetAOERadius()
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_range")
+	end
+
+	return 0
+end
+
 function imba_axe_battle_hunger:OnSpellStart()
 	local caster                    =       self:GetCaster()
 	local target                    =       self:GetCursorTarget()
 	local ability                   =       self
 	local random_response           =       "axe_axe_ability_battlehunger_0"..math.random(1,3)
 
-	self:GetCaster():EmitSound("Hero_Axe.Battle_Hunger")
-	self:GetCaster():EmitSound(random_response)
+	caster:EmitSound("Hero_Axe.Battle_Hunger")
+	caster:EmitSound(random_response)
 
 	if caster ~= target then
 		-- If the target possesses a ready Linken's Sphere, do nothing
@@ -328,7 +344,14 @@ function imba_axe_battle_hunger:OnSpellStart()
 			end
 		end
 
-		self:ApplyBattleHunger(caster, target)
+		if caster:HasScepter() then
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetAOERadius(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(enemies) do
+				self:ApplyBattleHunger(caster, enemy)
+			end
+		else
+			self:ApplyBattleHunger(caster, target)
+		end
 		-- Self-cast with the talent (the cast permission is checked in CastFilterResultTarget)
 	else
 		local berserkers_call = caster:FindAbilityByName("imba_axe_berserkers_call")
@@ -750,7 +773,7 @@ function modifier_imba_counter_helix_passive:OnAttacked(keys)
 
 			-- Talent : Your armor value is added to Counter Helix damage
 			if self.caster:HasTalent("special_bonus_imba_axe_7") then
-				self.total_damage = self.total_damage + self.caster:GetPhysicalArmorValue() * self.caster:FindTalentValue("special_bonus_imba_axe_7")
+				self.total_damage = self.total_damage + self.caster:GetPhysicalArmorValue(false) * self.caster:FindTalentValue("special_bonus_imba_axe_7")
 			end
 
 			--calculate chance to counter helix
@@ -777,7 +800,7 @@ function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
 
 	-- Talent : Your armor value is added to Counter Helix damage
 	if self.caster:HasTalent("special_bonus_imba_axe_7") then
-		self.total_damage = self.total_damage + self.caster:GetPhysicalArmorValue() * self.caster:FindTalentValue("special_bonus_imba_axe_7")
+		self.total_damage = self.total_damage + self.caster:GetPhysicalArmorValue(false) * self.caster:FindTalentValue("special_bonus_imba_axe_7")
 	end
 
 	--calculate chance to counter helix

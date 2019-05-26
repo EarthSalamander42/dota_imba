@@ -954,7 +954,7 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
 				local damageTable = {
 					victim = target,
 					attacker = attacker,
-					damage = target:GetHealth() * (1 + 0.05 * math.abs(target:GetPhysicalArmorValue())) + 1,
+					damage = target:GetHealth() * (1 + 0.05 * math.abs(target:GetPhysicalArmorValue(false))) + 1,
 					damage_type = DAMAGE_TYPE_PURE,
 					ability = self:GetAbility()
 				}
@@ -1553,7 +1553,7 @@ function modifier_imba_reincarnation_wraith_form:OnTakeDamage( keys )
 
 	if keys.damage_type == DAMAGE_TYPE_PHYSICAL then
 		local source_dmg = keys.original_damage
-		local armor = keys.unit:GetPhysicalArmorValue()
+		local armor = keys.unit:GetPhysicalArmorValue(false)
 		local multiplier = 1 - (0.06 * armor) / (1 + 0.06 * math.abs(armor))
 		local actually_dmg = source_dmg * multiplier
 		self.damage_pool = self.damage_pool + actually_dmg

@@ -105,7 +105,7 @@ end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.players then
---		print("IMBA API not ready! Retry...")
+		print("IMBA API not ready! Retry...")
 		Timers:CreateTimer(1.0, function()
 			GetPlayerInfoIXP()
 		end)
@@ -113,7 +113,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		return
 	end
 
---	print("IMBA API ready!")
+	print("IMBA API ready!")
 
 	local current_xp_in_level = {}
 
@@ -159,6 +159,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		if Imbattlepass then
 			arcana["npc_dota_hero_axe"] = Imbattlepass:HasAxeArcana(i)
 			arcana["npc_dota_hero_juggernaut"] = Imbattlepass:HasJuggernautArcana(i)
+			arcana["npc_dota_hero_lina"] = Imbattlepass:HasLinaArcana(i)
 			arcana["npc_dota_hero_pudge"] = Imbattlepass:HasPudgeArcana(i)
 			arcana["npc_dota_hero_zuus"] = Imbattlepass:HasZuusArcana(i)
 			arcana["npc_dota_hero_wisp"] = Imbattlepass:HasWispArcana(i)
@@ -181,83 +182,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			player_xp = api:GetPlayerXPEnabled(ID),
 			arcana = arcana
 		})
-	end
 
-	-- TODO: fixdishit
---	GetTopPlayersIXP()
---	GetTopPlayersIMR()
-end
-
-function GetTopPlayersIXP()
-	if not api.imba.ready then return end
-
-	for _, top_user in pairs(api.imba.get_rankings_xp()) do
-		local global_xp = top_user.xp
-		local level = GetXPLevelByXp(global_xp)
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #XP_level_table do
-			if global_xp > XP_level_table[i] then
-				if global_xp > XP_level_table[#XP_level_table] then -- if max level
-					level = #XP_level_table
-					current_xp_in_level = XP_level_table[level] - XP_level_table[level]
-					max_xp = XP_level_table[level] - XP_level_table[level]
-				else
-					level = i +1
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - XP_level_table[i]
-					max_xp = XP_level_table[level + 1] - XP_level_table[level]
-				end
-			end
-		end
-
-		CustomNetTables:SetTableValue("top_xp", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level,
-			MaxXP = max_xp,
-			Lvl = level,
-			title = GetTitleIXP(level),
-			title_color = rgbToHex(GetTitleColorIXP(level)),
-			IMR_5v5 = top_user.imr5v5,
-		})
-	end
-end
-
-function GetTopPlayersIMR()
-	if not api.imba.ready then return end
-
-	for _, top_user in pairs(api.imba.get_rankings_imr5v5()) do
-		local global_xp = top_user.xp
-		local level = GetXPLevelByXp(global_xp)
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #XP_level_table do
-			if global_xp > XP_level_table[i] then
-				if global_xp > XP_level_table[#XP_level_table] then -- if max level
-					level = #XP_level_table
-					current_xp_in_level = XP_level_table[level] - XP_level_table[level]
-					max_xp = XP_level_table[level] - XP_level_table[level]
-				else
-					level = i +1 -- transform level 0 into level 1
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - XP_level_table[i]
-					max_xp = XP_level_table[level + 1] - XP_level_table[level]
-				end
-			end
-		end
-
-		CustomNetTables:SetTableValue("top_imr5v5", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level,
-			MaxXP = max_xp,
-			Lvl = level,
-			title = GetTitleIXP(level),
-			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level))),
-			IMR_5v5 = top_user.imr5v5,
-		})
+--		print(CustomNetTables:GetTableValue("battlepass", tostring(ID)))
 	end
 end

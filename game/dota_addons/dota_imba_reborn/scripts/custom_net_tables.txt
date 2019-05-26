@@ -5,7 +5,7 @@
 		"game_options",
 		"player_table",
 		"shared_unit_control",
-		"top_xp",
+		"battlepass_item_effects",
 		"game_state",
 		"hero_selection",
 		"battlepass",

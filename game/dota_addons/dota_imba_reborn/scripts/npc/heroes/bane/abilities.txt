@@ -139,6 +139,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"enfeeble_stack_to_damage"	"80 120 160 200"
 			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"castpoint_scepter"				"0.2"
+			}
 		}
 	}
 

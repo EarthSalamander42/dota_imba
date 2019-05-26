@@ -857,6 +857,21 @@
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range"						"900"
 			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"ally_threshold_scepter"			"525"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"redirect_range_scepter"				"1600"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"5.0 6.0 7.0"
+			}
 		}
 
 		"precache"
@@ -1268,17 +1283,20 @@
 				"var_type"					"FIELD_INTEGER"
 				"pause_time"				"2"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_maddening_duration"	"2"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"maddening_buffer_distance"	"120"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_range"				"400"
 			}
 		}
 	}
@@ -24217,6 +24235,16 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"mana_void_mana_burn_pct"			"10 15 20"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"scepter_cooldown_increase"			"70.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"scepter_ministun"			"1.3"
 			}
 		}
 	}

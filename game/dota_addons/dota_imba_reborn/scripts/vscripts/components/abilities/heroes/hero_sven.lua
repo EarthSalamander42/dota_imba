@@ -267,7 +267,7 @@ end
 function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percentage( params )
 	if IsServer() then
 		if params.target and not params.inflictor then
-			local armor = params.target:GetPhysicalArmorValue()
+			local armor = params.target:GetPhysicalArmorValue(false)
 			local armor_ignore = self:GetAbility():GetTalentSpecialValueFor("armor_ignore")
 			local reduction_feedback
 			if armor < 0 then
@@ -446,7 +446,7 @@ function modifier_imba_warcry:GetModifierTotal_ConstantBlock(keys)
 	
 	-- Block for the smaller value between total current stacks and total damage
 
---	local real_damage = keys.damage - (keys.damage * GetReductionFromArmor(self:GetParent():GetPhysicalArmorValue()))
+--	local real_damage = keys.damage - (keys.damage * GetReductionFromArmor(self:GetParent():GetPhysicalArmorValue(false)))
 
 	if keys.damage_category ~= DOTA_DAMAGE_CATEGORY_ATTACK then return 0 end
 

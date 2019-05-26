@@ -1001,7 +1001,7 @@ function modifier_imba_guardian_angel_shield:OnTakeDamage(keys)
 
             -- Physical damage
             else
-                local armornpc = self.parent:GetPhysicalArmorValue()
+                local armornpc = self.parent:GetPhysicalArmorValue(false)
                 local physical_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
                 physical_reduction = 100 - (physical_reduction * 100)                
                 damage = original_damage * (1 - physical_reduction * 0.01)

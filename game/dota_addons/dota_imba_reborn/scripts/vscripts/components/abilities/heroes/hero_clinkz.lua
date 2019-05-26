@@ -1656,7 +1656,7 @@ function modifier_imba_death_pact_bonus_spirited:OnCreated()
 		self:SetStackCount(self.spirit_damage)
 	end
 
-	self.spirit_armor = self:GetCaster():GetPhysicalArmorValue() 
+	self.spirit_armor = self:GetCaster():GetPhysicalArmorValue(false) 
 end
 
 -- Check if there's any tax to collect.

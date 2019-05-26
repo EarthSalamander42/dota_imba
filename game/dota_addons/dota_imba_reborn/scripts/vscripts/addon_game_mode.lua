@@ -31,6 +31,7 @@ function Precache( context )
 	-- Battlepass precaching
 	Wearables:PrecacheWearables(context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
+	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
 	
 	-- Battlepass Blink effects

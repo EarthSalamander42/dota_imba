@@ -6,7 +6,9 @@ end
 require('addon_init')
 
 require('components/api/init')
-require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
+	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+end
 
 require('libraries/animations')
 require('libraries/keyvalues')
@@ -46,7 +48,7 @@ require('libraries/astar')
 
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
-
+	
 end
 
 function GameMode:OnFirstPlayerLoaded()

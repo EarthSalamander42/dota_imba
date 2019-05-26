@@ -18,8 +18,6 @@
 -- Battlepass
 
 -- to add soon:
--- Maelstrom (particles/econ/events/ti8/maelstorm_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
--- Mjollnir shield (particles/econ/events/ti8/mjollnir_shield_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
 -- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf) -- lifesteal boots use ti8 cosmetic already
 -- add the name of the wearable slot in the reward name to be able to have multiple items on a single hero (or _set to override everything?)
 
@@ -42,6 +40,7 @@ IMBATTLEPASS_LEVEL_REWARD[14]	= {"alchemist_taunt", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[15]	= {"vengefulspirit_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[16]	= {"force_staff", "common"}
 IMBATTLEPASS_LEVEL_REWARD[18]	= {"blink2", "common"}
+IMBATTLEPASS_LEVEL_REWARD[20]	= {"maelstorm", "common"}
 IMBATTLEPASS_LEVEL_REWARD[22]	= {"fountain3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[23]	= {"enigma_taunt", "rare"}
 -- IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
@@ -63,6 +62,7 @@ IMBATTLEPASS_LEVEL_REWARD[48]	= {"force_staff3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[49]	= {"fountain6", "common"}
 -- IMBATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
 -- IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
+IMBATTLEPASS_LEVEL_REWARD[51]	= {"maelstorm2", "common"}
 IMBATTLEPASS_LEVEL_REWARD[52]	= {"enigma_mythical", "mythical"}
 IMBATTLEPASS_LEVEL_REWARD[54]	= {"blink6", "common"}
 IMBATTLEPASS_LEVEL_REWARD[55]	= {"lina_arcana", "arcana"}
@@ -72,9 +72,7 @@ IMBATTLEPASS_LEVEL_REWARD[60]	= {"sheepstick", "common"}
 IMBATTLEPASS_LEVEL_REWARD[62]	= {"dark_willow_taunt", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[63]	= {"blink7", "common"}
 IMBATTLEPASS_LEVEL_REWARD[64]	= {"force_staff4", "common"}
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[65]	= {"juggernaut_arcana", "arcana"}
-end
+IMBATTLEPASS_LEVEL_REWARD[65]	= {"juggernaut_arcana", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[67]	= {"fountain8", "common"}
 IMBATTLEPASS_LEVEL_REWARD[68]	= {"axe_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[70]	= {"mekansm2", "common"}
@@ -85,15 +83,13 @@ IMBATTLEPASS_LEVEL_REWARD[75]	= {"pudge_arcana", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[76]	= {"fountain9", "common"}
 IMBATTLEPASS_LEVEL_REWARD[80]	= {"force_staff5", "common"}
 IMBATTLEPASS_LEVEL_REWARD[81]	= {"blink9", "common"}
+IMBATTLEPASS_LEVEL_REWARD[82]	= {"maelstorm3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[84]	= {"pangolier_taunt", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[85]	= {"fountain10", "common"}
 IMBATTLEPASS_LEVEL_REWARD[88]	= {"radiance2", "common"}
 IMBATTLEPASS_LEVEL_REWARD[90]	= {"blink10", "common"}
 IMBATTLEPASS_LEVEL_REWARD[94]	= {"fountain11", "common"}
 IMBATTLEPASS_LEVEL_REWARD[95]	= {"furion_taunt", "immortal"}
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[95]	= {"juggernaut_arcana2", "arcana"}
-end
 IMBATTLEPASS_LEVEL_REWARD[96]	= {"force_staff6", "common"}
 IMBATTLEPASS_LEVEL_REWARD[97]	= {"life_stealer_immortal", "immortal"}
 -- IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
@@ -105,12 +101,14 @@ IMBATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[108]	= {"blink12", "common"}
 IMBATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[112]	= {"fountain13", "common"}
+IMBATTLEPASS_LEVEL_REWARD[113]	= {"maelstorm4", "common"}
 IMBATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
 IMBATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
 IMBATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
 -- IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
+IMBATTLEPASS_LEVEL_REWARD[125]	= {"juggernaut_arcana2", "arcana"}
 IMBATTLEPASS_LEVEL_REWARD[126]	= {"blink14", "common"}
 IMBATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
@@ -118,8 +116,9 @@ IMBATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 IMBATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
 IMBATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
-IMBATTLEPASS_LEVEL_REWARD[144]	= {"earthshaker_immortal", "immortal"}
+IMBATTLEPASS_LEVEL_REWARD[144]	= {"maelstorm5", "common"}
 IMBATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
+IMBATTLEPASS_LEVEL_REWARD[146]	= {"earthshaker_immortal", "immortal"}
 IMBATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
 IMBATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
 IMBATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
@@ -145,14 +144,30 @@ function Imbattlepass:Init()
 	CustomGameEventManager:RegisterListener("change_battlepass_rewards", Dynamic_Wrap(self, 'BattlepassRewards'))
 	CustomGameEventManager:RegisterListener("change_player_xp", Dynamic_Wrap(self, 'PlayerXP'))
 
-	IMBATTLEPASS_FOUNTAIN = {}
-	IMBATTLEPASS_BLINK = {}
-	IMBATTLEPASS_FORCE_STAFF = {}
-	IMBATTLEPASS_BOTTLE = {}
-	IMBATTLEPASS_MEKANSM = {}
-	IMBATTLEPASS_RADIANCE = {}
-	IMBATTLEPASS_SHEEPSTICK = {}
-	IMBATTLEPASS_SHIVA = {}
+	-- testing
+	IMBATTLEPASS = {}
+	IMBATTLEPASS["fountain"] = {}
+	IMBATTLEPASS["blink"] = {}
+	IMBATTLEPASS["force_staff"] = {}
+--	IMBATTLEPASS["bottle"] = {}
+	IMBATTLEPASS["mekansm"] = {}
+	IMBATTLEPASS["radiance"] = {}
+	IMBATTLEPASS["sheepstick"] = {}
+	IMBATTLEPASS["shiva"] = {}
+	IMBATTLEPASS["maelstorm"] = {}
+
+	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
+		local required_level = k
+		local category = string.gsub(v[1], "%d", "")
+		local reward_level = string.gsub(v[1], "%D", "")
+
+--		print(required_level, category, reward_level)
+		if IMBATTLEPASS[category] then
+			if reward_level == "" then reward_level = 1 end
+			table.insert(IMBATTLEPASS[category], tonumber(reward_level), required_level)
+		end
+	end
+
 	IMBATTLEPASS_PUDGE = {}
 	IMBATTLEPASS_JUGGERNAUT = {}
 	IMBATTLEPASS_ANCIENT_APPARITION = {}
@@ -178,23 +193,7 @@ function Imbattlepass:Init()
 --	IMBATTLEPASS_TIDEHUNTER = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
-		if string.find(v[1], "fountain") then
-			IMBATTLEPASS_FOUNTAIN[v[1]] = k
-		elseif string.find(v[1], "blink") then
-			IMBATTLEPASS_BLINK[v[1]] = k
-		elseif string.find(v[1], "force_staff") then
-			IMBATTLEPASS_FORCE_STAFF[v[1]] = k
-		elseif string.find(v[1], "bottle") then
-			IMBATTLEPASS_BOTTLE[v[1]] = k
-		elseif string.find(v[1], "mekansm") then
-			IMBATTLEPASS_MEKANSM[v[1]] = k
-		elseif string.find(v[1], "radiance") then
-			IMBATTLEPASS_RADIANCE[v[1]] = k
-		elseif string.find(v[1], "sheepstick") then
-			IMBATTLEPASS_SHEEPSTICK[v[1]] = k
-		elseif string.find(v[1], "shiva") then
-			IMBATTLEPASS_SHIVA[v[1]] = k
-		elseif string.find(v[1], "pudge") then
+		if string.find(v[1], "pudge") then
 			IMBATTLEPASS_PUDGE[v[1]] = k
 		elseif string.find(v[1], "juggernaut") then
 			IMBATTLEPASS_JUGGERNAUT[v[1]] = k
@@ -238,8 +237,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_LESHRAC[v[1]] = k
 		elseif string.find(v[1], "death_prophet") then
 			IMBATTLEPASS_DEATH_PROPHET[v[1]] = k
---		elseif string.find(v[1], "tidehunter") then
---			IMBATTLEPASS_TIDEHUNTER[v[1]] = k
+		elseif string.find(v[1], "tidehunter") then
+			IMBATTLEPASS_TIDEHUNTER[v[1]] = k
 		end
 	end
 end
@@ -251,14 +250,7 @@ function Imbattlepass:AddItemEffects(hero)
 
 	if ply_table and ply_table.bp_rewards == 0 then
 	else
-		Imbattlepass:GetBlinkEffect(hero)
-		Imbattlepass:GetForceStaffEffect(hero)
-		Imbattlepass:GetRadianceEffect(hero)
-		Imbattlepass:GetSheepstickEffect(hero)
-		Imbattlepass:GetShivaEffect(hero)
-		Imbattlepass:GetMekansmEffect(hero)
-		Imbattlepass:GetFountainEffect(hero)
---		Imbattlepass:GetBottleEffect(hero)
+		Imbattlepass:SetItemEffects(hero:GetPlayerID())
 	end
 
 	-- some effects override some items effects, need to call it after items setup
@@ -266,7 +258,7 @@ function Imbattlepass:AddItemEffects(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	if IsInToolsMode() then return 100 end
+	if IsInToolsMode() then return 1000 end
 	if CustomNetTables:GetTableValue("battlepass", tostring(ID)) then
 		if CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl then
 			return CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl
@@ -276,315 +268,408 @@ function Imbattlepass:GetRewardUnlocked(ID)
 	return 1
 end
 
-function Imbattlepass:GetBlinkEffect(hero)
-	local effect = "particles/items_fx/blink_dagger_start.vpcf"
-	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
-	local icon = 0
+function Imbattlepass:GetBlinkEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink14"] then
-			effect = "particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
-			effect2 = "particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
-			icon = 14
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink13"] then
-			effect = "particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
-			effect2 = "particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
-			icon = 13
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
-			effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
-			effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
-			icon = 12
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink11"] then
-			effect = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
-			effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
-			icon = 11
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
-			effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-			effect2 = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-			icon = 10
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink9"] then
-			effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-			effect2 = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-			icon = 9
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink8"] then
-			effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-			effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-			icon = 8
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink7"] then
-			effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-			effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
-			icon = 7
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink6"] then
-			effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-			effect = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
-			icon = 6	
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink5"] then
-			effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-			effect2 = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
-			icon = 5
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink4"] then
-			effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-			effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink3"] then
-			effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-			effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink2"] then
-			effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-			effect2 = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink"] then
-			effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-			effect2 = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items_fx/blink_dagger_start.vpcf"
+	effects["effect1"][1] = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+	effects["effect1"][2] = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+	effects["effect1"][5] = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+	effects["effect1"][6] = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+	effects["effect1"][7] = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+	effects["effect1"][8] = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+	effects["effect1"][9] = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+	effects["effect1"][10] = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+	effects["effect1"][11] = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
+	effects["effect1"][12] = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
+	effects["effect1"][13] = "particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
+	effects["effect1"][14] = "particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "particles/items_fx/blink_dagger_end.vpcf"
+	effects["effect2"][1] = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+	effects["effect2"][2] = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+	effects["effect2"][3] = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+	effects["effect2"][4] = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+	effects["effect2"][5] = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+	effects["effect2"][6] = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+	effects["effect2"][7] = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+	effects["effect2"][8] = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+	effects["effect2"][9] = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+	effects["effect2"][10] = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+	effects["effect2"][11] = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+	effects["effect2"][12] = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+	effects["effect2"][13] = "particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
+	effects["effect2"][14] = "particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+		for i = #IMBATTLEPASS["blink"], 1, -1 do
+			if IMBATTLEPASS["blink"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["blink"][i] then
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				break
+			end
 		end
 	end
 
-	hero.blink_effect = effect
-	hero.blink_effect_end = effect2
-	hero.blink_icon = icon
---	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {blink_icon = icon})
+	return hero_item_effects
 end
 
-function Imbattlepass:GetForceStaffEffect(hero) -- still not working yet
-	local effect = "particles/items_fx/force_staff.vpcf"
-	local icon = 0
+function Imbattlepass:GetForceStaffEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff6"] then
-			effect = "particles/econ/events/ti9/force_staff_ti9.vpcf"
-			icon = 6
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff5"] then
-			effect = "particles/econ/events/ti8/force_staff_ti8.vpcf"
-			icon = 5
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
-			effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff3"] then
-			effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff2"] then
-			effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff"] then
-			effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items_fx/force_staff.vpcf"
+	effects["effect1"][1] = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+	effects["effect1"][2] = "particles/econ/events/ti7/force_staff_ti7.vpcf"
+	effects["effect1"][3] = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti6/force_staff_ti6.vpcf"
+	effects["effect1"][5] = "particles/econ/events/ti8/force_staff_ti8.vpcf"
+	effects["effect1"][6] = "particles/econ/events/ti9/force_staff_ti9.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+		for i = #IMBATTLEPASS["force_staff"], 1, -1 do
+			if IMBATTLEPASS["force_staff"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["force_staff"][i] then
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				break
+			end
 		end
 	end
 
-	hero.force_staff_effect = effect
-	hero.force_staff_icon = icon
+	return hero_item_effects
 end
 
-function Imbattlepass:GetRadianceEffect(hero)
-	local effect = "particles/items2_fx/radiance_owner.vpcf"
-	local effect2 = "particles/items2_fx/radiance.vpcf"
-	local icon = 0
+function Imbattlepass:GetRadianceEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance4"] then
-			effect = "particles/econ/events/ti9/radiance_owner_ti9.vpcf"
-			effect2 = "particles/econ/events/ti9/radiance_ti9.vpcf"
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance3"] then
-			effect = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
-			effect2 = "particles/econ/events/ti8/radiance_ti8.vpcf"
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
-			effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
-			effect2 = "particles/econ/events/ti6/radiance_ti6.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance"] then
-			effect = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
-			effect2 = "particles/econ/events/ti7/radiance_ti7.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items2_fx/radiance_owner.vpcf"
+	effects["effect1"][1] = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+	effects["effect1"][2] = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti9/radiance_owner_ti9.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "particles/items2_fx/radiance.vpcf"
+	effects["effect2"][1] = "particles/econ/events/ti7/radiance_ti7.vpcf"
+	effects["effect2"][2] = "particles/econ/events/ti6/radiance_ti6.vpcf"
+	effects["effect2"][3] = "particles/econ/events/ti8/radiance_ti8.vpcf"
+	effects["effect2"][4] = "particles/econ/events/ti9/radiance_ti9.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+		for i = #IMBATTLEPASS["radiance"], 1, -1 do
+			if IMBATTLEPASS["radiance"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["radiance"][i] then
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				break
+			end
 		end
 	end
 
-	hero.radiance_effect_owner = effect
-	hero.radiance_effect = effect2
-	hero.radiance_icon = icon
+	return hero_item_effects
 end
 
-function Imbattlepass:GetSheepstickEffect(hero)
-	local effect = "particles/items_fx/item_sheepstick.vpcf"
-	local model = "models/props_gameplay/pig.vmdl"
-	local icon = 0
+function Imbattlepass:GetSheepstickEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick2"] then
-			effect = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
-			model = "models/props_gameplay/roquelaire/roquelaire.vmdl"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick"] then
-			effect = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
-			model = "models/props_gameplay/pig_blue.vmdl"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items_fx/item_sheepstick.vpcf"
+	effects["effect1"][1] = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+	effects["effect1"][2] = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "models/props_gameplay/pig.vmdl"
+	effects["effect2"][1] = "models/props_gameplay/pig_blue.vmdl"
+	effects["effect2"][2] = "models/props_gameplay/roquelaire/roquelaire.vmdl"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+--		print("reward count:",  #IMBATTLEPASS["sheepstick"])
+--		print("rewards:",  IMBATTLEPASS["sheepstick"])
+		for i = #IMBATTLEPASS["sheepstick"], 1, -1 do
+--			print("Check if level higher than:", IMBATTLEPASS["sheepstick"][i])
+			if IMBATTLEPASS["sheepstick"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["sheepstick"][i] then
+--				print("Item level:", i)
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				break
+			end
 		end
 	end
 
-	hero.sheepstick_effect = effect
-	hero.sheepstick_model = model
-	hero.sheepstick_icon = icon
+	return hero_item_effects
 end
 
-function Imbattlepass:GetShivaEffect(hero)
-	local effect = "particles/items2_fx/shivas_guard_active.vpcf"
-	local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
-	local icon = 0
+function Imbattlepass:GetShivaEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva4"] then
-			effect = "particles/econ/events/ti9/shivas_guard_ti9_active.vpcf"
-			effect2 = "particles/econ/events/ti9/shivas_guard_ti9_impact.vpcf"
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva3"] then
-			effect = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
-			effect2 = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
-			effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
-			effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva"] then
-			effect = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			effect2 = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items2_fx/shivas_guard_active.vpcf"
+	effects["effect1"][1] = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+	effects["effect1"][2] = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti9/shivas_guard_ti9_active.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "particles/items2_fx/shivas_guard_impact.vpcf"
+	effects["effect2"][1] = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+	effects["effect2"][2] = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
+	effects["effect2"][3] = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
+	effects["effect2"][4] = "particles/econ/events/ti9/shivas_guard_ti9_impact.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+--		print("reward count:",  #IMBATTLEPASS["shiva"])
+--		print("rewards:",  IMBATTLEPASS["shiva"])
+		for i = #IMBATTLEPASS["shiva"], 1, -1 do
+--			print("Check if level higher than:", IMBATTLEPASS["shiva"][i])
+			if IMBATTLEPASS["shiva"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["shiva"][i] then
+--				print("Item level:", i)
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				break
+			end
 		end
 	end
 
-	hero.shiva_blast_effect = effect
-	hero.shiva_hit_effect = effect2
-	hero.shiva_icon = icon
+	return hero_item_effects
 end
 
-function Imbattlepass:GetMekansmEffect(hero)
-	local effect = "particles/items2_fx/mekanism.vpcf"
-	local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
-	local effect3 = "particles/items3_fx/warmage.vpcf"
-	local effect4 = "particles/items3_fx/warmage_recipient.vpcf"
-	local effect5 = "particles/items3_fx/warmage_mana_nonhero.vpcf"
-	local icon = 0
+function Imbattlepass:GetMekansmEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm4"] then
-			effect = "particles/econ/events/ti9/mekanism_ti9.vpcf"
-			effect2 = "particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
-			effect3 = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
-			effect4 = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
-			effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm3"] then
-			effect = "particles/econ/events/ti8/mekanism_ti8.vpcf"
-			effect2 = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
-			effect3 = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
-			effect4 = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
-			effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
-			effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
-			effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
-			effect3 = "particles/items3_fx/warmage2.vpcf"
-			effect4 = "particles/items3_fx/warmage2_recipient.vpcf"
-			effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm"] then
-			effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
-			effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
-			effect3 = "particles/items3_fx/warmage1.vpcf"
-			effect4 = "particles/items3_fx/warmage1_recipient.vpcf"
-			effect5 = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items2_fx/mekanism.vpcf"
+	effects["effect1"][1] = "particles/econ/events/ti7/mekanism_ti7.vpcf"
+	effects["effect1"][2] = "particles/econ/events/ti6/mekanism_ti6.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti8/mekanism_ti8.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti9/mekanism_ti9.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "particles/items2_fx/mekanism_recipient.vpcf"
+	effects["effect2"][1] = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+	effects["effect2"][2] = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+	effects["effect2"][3] = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
+	effects["effect2"][4] = "particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
+
+	effects["effect3"] = {}
+	effects["effect3"][0] = "particles/items3_fx/warmage.vpcf"
+	effects["effect3"][1] = "particles/items3_fx/warmage1.vpcf"
+	effects["effect3"][2] = "particles/items3_fx/warmage2.vpcf"
+	effects["effect3"][3] = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
+	effects["effect3"][4] = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
+
+	effects["effect4"] = {}
+	effects["effect4"][0] = "particles/items3_fx/warmage_recipient.vpcf"
+	effects["effect4"][1] = "particles/items3_fx/warmage1_recipient.vpcf"
+	effects["effect4"][2] = "particles/items3_fx/warmage2_recipient.vpcf"
+	effects["effect4"][3] = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
+	effects["effect4"][4] = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
+
+	effects["effect5"] = {}
+	effects["effect5"][0] = "particles/items3_fx/warmage_mana_nonhero.vpcf"
+	effects["effect5"][1] = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
+	effects["effect5"][2] = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
+	effects["effect5"][3] = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
+	effects["effect5"][4] = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+	hero_item_effects["effect3"] = effects["effect3"][0]
+	hero_item_effects["effect4"] = effects["effect4"][0]
+	hero_item_effects["effect5"] = effects["effect5"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+--		print("reward count:",  #IMBATTLEPASS["mekansm"])
+--		print("rewards:",  IMBATTLEPASS["mekansm"])
+		for i = #IMBATTLEPASS["mekansm"], 1, -1 do
+--			print("Check if level higher than:", IMBATTLEPASS["mekansm"][i])
+			if IMBATTLEPASS["mekansm"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["mekansm"][i] then
+--				print("Item level:", i)
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				hero_item_effects["effect3"] = effects["effect3"][i]
+				hero_item_effects["effect4"] = effects["effect4"][i]
+				hero_item_effects["effect5"] = effects["effect5"][i]
+				break
+			end
 		end
 	end
 
-	hero.mekansm_effect = effect
-	hero.mekansm_hit_effect = effect2
-	hero.guardian_greaves_effect = effect3
-	hero.guardian_greaves_hit_effect = effect4
-	hero.guardian_greaves_hit_alt_effect = effect5
-	hero.mekansm_icon = icon
+	return hero_item_effects
 end
 
-function Imbattlepass:GetFountainEffect(hero)
-	local effect = ""
+function Imbattlepass:GetFountainEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain21"] then
-			effect = "particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain20"] then
-			effect = "particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain19"] then
-			effect = "particles/econ/events/ti9/fountain_regen_ti9.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain18"] then
-			effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain17"] then
-			effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain16"] then
-			effect = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
-			effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain14"] then
-			effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain13"] then
-			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain12"] then
-			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain11"] then
-			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain10"] then
-			effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain9"] then
-			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain8"] then
-			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain7"] then
-			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain6"] then
-			effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain5"] then
-			effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain4"] then
-			effect = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain3"] then
-			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain2"] then
-			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain"] then
-			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
+	effects["effect1"][1] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+	effects["effect1"][2] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+	effects["effect1"][3] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+	effects["effect1"][5] = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+	effects["effect1"][6] = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+	effects["effect1"][7] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+	effects["effect1"][8] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+	effects["effect1"][9] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+	effects["effect1"][10] = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+	effects["effect1"][11] = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
+	effects["effect1"][12] = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+	effects["effect1"][13] = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+	effects["effect1"][14] = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+	effects["effect1"][15] = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+	effects["effect1"][16] = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+	effects["effect1"][17] = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+	effects["effect1"][18] = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+	effects["effect1"][19] = "particles/econ/events/ti9/fountain_regen_ti9.vpcf"
+	effects["effect1"][20] = "particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
+	effects["effect1"][21] = "particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+		for i = #IMBATTLEPASS["fountain"], 1, -1 do
+			if IMBATTLEPASS["fountain"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["fountain"][i] then
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				break
+			end
 		end
 	end
 
-	hero.fountain_effect = effect
+	return hero_item_effects
 end
 
-function Imbattlepass:GetBottleEffect(hero)
-	local effect = "particles/items_fx/bottle.vpcf"
-	local icon = 0
+function Imbattlepass:GetBottleEffect(ID)
+	local effects = {}
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle5"] then
-			effect = "particles/econ/events/ti8/bottle_ti8.vpcf"
-			icon = 5
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
-			effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
-			icon = 4
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle3"] then
-			effect = "particles/econ/events/ti6/bottle_ti6.vpcf"
-			icon = 3
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle2"] then
-			effect = "particles/econ/events/ti4/bottle_ti4.vpcf"
-			icon = 2
-		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle"] then
-			effect = "particles/econ/events/ti7/bottle_ti7.vpcf"
-			icon = 1
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items_fx/bottle.vpcf"
+	effects["effect1"][1] = "particles/econ/events/ti7/bottle_ti7.vpcf"
+	effects["effect1"][2] = "particles/econ/events/ti4/bottle_ti4.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti6/bottle_ti6.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti5/bottle_ti5.vpcf"
+	effects["effect1"][5] = "particles/econ/events/ti8/bottle_ti8.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+--		print("reward count:",  #IMBATTLEPASS["bottle"])
+--		print("rewards:",  IMBATTLEPASS["bottle"])
+		for i = #IMBATTLEPASS["bottle"], 1, -1 do
+--			print("Check if level higher than:", IMBATTLEPASS["bottle"][i])
+			if IMBATTLEPASS["bottle"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["bottle"][i] then
+--				print("Item level:", i)
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				break
+			end
 		end
 	end
 
-	hero.bottle_effect = effect
-	hero.bottle_icon = icon
---	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {bottle_icon = icon})
+	return hero_item_effects
+end
+
+function Imbattlepass:GetMaelstormEffect(ID)
+	local effects = {}
+
+	effects["effect1"] = {}
+	effects["effect1"][0] = "particles/items2_fx/mjollnir_shield.vpcf"
+	effects["effect1"][1] = "particles/items2_fx/jarnbjorn_shield.vpcf"
+	effects["effect1"][2] = "particles/econ/events/ti6/mjollnir_shield_ti6.vpcf"
+	effects["effect1"][3] = "particles/econ/events/ti7/mjollnir_shield_ti7.vpcf"
+	effects["effect1"][4] = "particles/econ/events/ti8/mjollnir_shield_ti8.vpcf"
+	effects["effect1"][5] = "particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
+
+	effects["effect2"] = {}
+	effects["effect2"][0] = "particles/item/mjollnir/static_lightning_bolt.vpcf"
+	effects["effect2"][1] = "particles/item/jarnbjorn/static_lightning_bolt.vpcf"
+	effects["effect2"][2] = "particles/econ/events/ti6/maelstorm_ti6.vpcf"
+	effects["effect2"][3] = "particles/econ/events/ti7/maelstorm_ti7.vpcf"
+	effects["effect2"][4] = "particles/econ/events/ti8/maelstorm_ti8.vpcf"
+	effects["effect2"][5] = "particles/econ/events/ti9/maelstorm_ti9.vpcf"
+
+	effects["effect3"] = {}
+	effects["effect3"][0] = "particles/items_fx/chain_lightning.vpcf"
+	effects["effect3"][1] = "particles/items_fx/chain_lightning_jarnbjorn.vpcf"
+	effects["effect3"][2] = "particles/econ/events/ti6/maelstorm_ti6.vpcf"
+	effects["effect3"][3] = "particles/econ/events/ti7/maelstorm_ti7.vpcf"
+	effects["effect3"][4] = "particles/econ/events/ti8/maelstorm_ti8.vpcf"
+	effects["effect3"][5] = "particles/econ/events/ti9/maelstorm_ti9.vpcf"
+
+	local hero_item_effects = {}
+	hero_item_effects["level"] = 0
+	hero_item_effects["effect1"] = effects["effect1"][0]
+	hero_item_effects["effect2"] = effects["effect2"][0]
+	hero_item_effects["effect3"] = effects["effect3"][0]
+
+	if Imbattlepass:GetRewardUnlocked(ID) ~= nil then
+		for i = #IMBATTLEPASS["maelstorm"], 1, -1 do
+			if IMBATTLEPASS["maelstorm"][i] and Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS["maelstorm"][i] then
+				hero_item_effects["level"] = i
+				hero_item_effects["effect1"] = effects["effect1"][i]
+				hero_item_effects["effect2"] = effects["effect2"][i]
+				hero_item_effects["effect3"] = effects["effect3"][i]
+				break
+			end
+		end
+	end
+
+	return hero_item_effects
+end
+
+function Imbattlepass:SetItemEffects(ID)
+	CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
+		blink = Imbattlepass:GetBlinkEffect(ID),
+--		bottle = Imbattlepass:GetBottleEffect(ID),
+		force_staff = Imbattlepass:GetForceStaffEffect(ID),
+		fountain = Imbattlepass:GetFountainEffect(ID),
+		maelstorm = Imbattlepass:GetMaelstormEffect(ID),
+		mekansm = Imbattlepass:GetMekansmEffect(ID),
+		radiance = Imbattlepass:GetRadianceEffect(ID),
+		sheepstick = Imbattlepass:GetSheepstickEffect(ID),
+		shiva = Imbattlepass:GetShivaEffect(ID),
+	})
+
+--	print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
 end
 
 function Imbattlepass:GetHeroEffect(hero)
@@ -792,13 +877,14 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.life_break_icon = 1
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
 				local style = 0
 				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
 					style = 1
 				end
 
 				if style == 0 then
+					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_crit_tgt.vpcf"
 					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_tgt.vpcf"
 					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_trail.vpcf"
@@ -808,6 +894,7 @@ function Imbattlepass:GetHeroEffect(hero)
 					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_trigger.vpcf"
 					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omnislash_light.vpcf"
 				elseif style == 1 then
+					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_blade_fury.vpcf"
 					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_crit_tgt.vpcf"
 					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_tgt.vpcf"
 					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_trail.vpcf"
@@ -993,8 +1080,6 @@ function Imbattlepass:HasPudgeArcana(ID)
 end
 
 function Imbattlepass:HasJuggernautArcana(ID)
-	if next_reward_shown == false then return nil end
-
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
 		return 1
 	elseif Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then

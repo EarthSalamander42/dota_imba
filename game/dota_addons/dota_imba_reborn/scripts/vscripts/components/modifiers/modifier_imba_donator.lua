@@ -23,7 +23,7 @@ function modifier_imba_donator:OnIntervalThink()
 	end
 
 	if self:GetStackCount() == 1 then
-		self.effect_name =  "particles/econ/events/ti8/ti8_hero_effect.vpcf"
+		self.effect_name =  "particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"
 	elseif self:GetStackCount() >= 4 then
 		self.effect_name =  "particles/econ/events/ti7/ti7_hero_effect_1.vpcf"
 	elseif self:GetStackCount() == 7 then

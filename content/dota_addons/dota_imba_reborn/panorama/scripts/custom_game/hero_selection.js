@@ -142,7 +142,7 @@ if (localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && loca
 
 if (currentMap == "ranked_1v1") {
 	Setup1v1();
-} else if (currentMap == 'imba_10v10' || currentMap == 'ranked_10v10' ||  currentMap == 'super_frantic_10v10' || currentMap == 'mutation_10v10') {
+} else if (currentMap == 'imba_10v10') {
 	SetupTopBar();
 } else if (currentMap == 'cavern') {
 	$.GetContextPanel().SetHasClass('Cavern', true);
@@ -597,37 +597,41 @@ function SetupBackgroundImage() {
 }
 
 function SetupTopBar() {
+	$.Msg("10v10 top bar")
 	$.GetContextPanel().SetHasClass('TenVTen', true);
 	var topbar = FindDotaHudElement('topbar');
 	topbar.style.width = '1550px';
 
+	// Nice topbar colors
+	var TopBarRadiantTeamContainer = topbar.FindChildTraverse("TopBarRadiantTeamContainer");
+	var TopBarDireTeamContainer = topbar.FindChildTraverse("TopBarDireTeamContainer");
+
+	TopBarRadiantTeamContainer.style.width = '780px'; // 620px
+	TopBarDireTeamContainer.style.width = '780px'; // 620px
+
 	// Top Bar Radiant
 	var TopBarRadiantTeam = FindDotaHudElement('TopBarRadiantTeam');
-	TopBarRadiantTeam.style.width = '690px';
-
-	var topbarRadiantPlayers = FindDotaHudElement('TopBarRadiantPlayers');
-	topbarRadiantPlayers.style.width = '690px';
-
-	var topbarRadiantPlayersContainer = FindDotaHudElement('TopBarRadiantPlayersContainer');
-	topbarRadiantPlayersContainer.style.width = '630px';
-	FillTopBarPlayer(topbarRadiantPlayersContainer);
-
-	var RadiantTeamContainer = FindDotaHudElement('RadiantTeamContainer');
-	RadiantTeamContainer.style.height = '737px';
+	TopBarRadiantTeam.style.width = '100%'; // 540px
 
 	// Top Bar Dire
 	var TopBarDireTeam = FindDotaHudElement('TopBarDireTeam');
-	TopBarDireTeam.style.width = '690px';
+	TopBarDireTeam.style.width = '100%'; // 540px
 
-	var topbarDirePlayers = FindDotaHudElement('TopBarDirePlayers');
-	topbarDirePlayers.style.width = '690px';
+	for (var tbg of TopBarRadiantTeam.FindChildrenWithClassTraverse("TeamBackground")) {
+		tbg.style.width = "90%";
+		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+			tbbg.style.backgroundSize = '0%';
+			tbbg.style.backgroundColor = '#000000da';
+		}
+	}
 
-	var topbarDirePlayersContainer = FindDotaHudElement('TopBarDirePlayersContainer');
-	topbarDirePlayersContainer.style.width = '630px';
-	FillTopBarPlayer(topbarDirePlayersContainer);
-
-	var DireTeamContainer = FindDotaHudElement('DireTeamContainer');
-	DireTeamContainer.style.height = '737px';
+	for (var tbg of TopBarDireTeam.FindChildrenWithClassTraverse("TeamBackground")) {
+		tbg.style.width = "90%";
+		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+			tbbg.style.backgroundSize = '0%';
+			tbbg.style.backgroundColor = '#000000da';
+		}
+	}
 }
 
 function FillTopBarPlayer(TeamContainer) {

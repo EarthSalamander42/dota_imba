@@ -419,6 +419,13 @@ if Log == nil then
 
 			local args = { ... }
 
+			-- Very rare issue! if this line appears:
+			-- [error][[C]:-1|xpcall] Error occured while executing in safe context: scripts\vscripts\libraries\adv_log.lua:423: attempt to call a nil value
+			-- uncomment prints and check what's wrong
+--			print(mt, name, args)
+--			print(mt[name])
+--			print(mt[name](unpack(args)))
+
 			local status, v = safe(function()
 				return mt[name](unpack(args))
 			end)
@@ -508,5 +515,4 @@ if Log == nil then
 	---------------------------------------------
 	Log:AddTarget(ApiLogTarget)
 	Log:AddTarget(ConsoleLogTarget)
-
 end

@@ -92,11 +92,6 @@ function item_imba_sheepstick:OnSpellStart()
 		-- Play the cast sound
 		target:EmitSound("DOTA_Item.Sheepstick.Activate")
 
-		-- Play the target particle
-		local sheep_pfx = ParticleManager:CreateParticle(caster.sheepstick_effect, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(sheep_pfx, 0, target:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(sheep_pfx)
-
 		-- Kill the target instantly if it is an illusion
 		if target:IsIllusion() then
 			target:ForceKill(true)
@@ -149,11 +144,6 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 end
 
 function modifier_item_imba_sheepstick:OnCreated()
-	if self:GetCaster().sheepstick_model == nil then
-		print("ERROR: NO MODEL STRING RETRIEVED FOR SCYTHE OF VYSE. DEFAULTING TO BASE MODEL.")
-		self:GetCaster().sheepstick_model = "models/props_gameplay/pig.vmdl"
-	end
-	
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end
@@ -161,8 +151,8 @@ end
 function modifier_item_imba_sheepstick:OnIntervalThink()
 	local caster = self:GetCaster()
 	if caster:IsIllusion() then return end
-	if IsServer() and caster.sheepstick_icon ~= nil then
-		self:SetStackCount(caster.sheepstick_icon)
+	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"] ~= nil then
+		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"])
 	end
 	if IsClient() then
 		local icon = self:GetStackCount()
@@ -200,15 +190,39 @@ function modifier_item_imba_sheepstick_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
 		MODIFIER_PROPERTY_MODEL_CHANGE,
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
 	}
 	return funcs
+end
+
+function modifier_item_imba_sheepstick_debuff:OnCreated()
+	if IsServer() then
+		self.sheep_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
+		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"])
+	end
 end
 
 function modifier_item_imba_sheepstick_debuff:GetModifierMoveSpeedOverride()
 	return self:GetAbility():GetSpecialValueFor("enemy_move_speed") end
 
 function modifier_item_imba_sheepstick_debuff:GetModifierModelChange()
-	return self:GetCaster().sheepstick_model
+	-- Yeah, i know...
+	if self:GetStackCount() == 1 then
+		return "models/props_gameplay/pig_blue.vmdl"
+	elseif self:GetStackCount() == 2 then
+		return "models/props_gameplay/roquelaire/roquelaire.vmdl"
+	end
+
+	return "models/props_gameplay/pig.vmdl"
+end
+
+function modifier_item_imba_sheepstick_debuff:GetVisualZDelta()
+	if self:GetStackCount() == 2 then
+		return 220
+	end
+
+	return 0
 end
 
 -- Hexed state
@@ -222,6 +236,15 @@ function modifier_item_imba_sheepstick_debuff:CheckState()
 	return states
 end
 
+function modifier_item_imba_sheepstick_debuff:OnDestroy()
+	if IsServer() then
+		if self.sheep_pfx then
+			ParticleManager:DestroyParticle(self.sheep_pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.sheep_pfx)
+		end
+	end
+end
+
 -----------------------------------------------------------------------------------------------------------
 --	Sheepstick self-buff
 -----------------------------------------------------------------------------------------------------------
@@ -231,11 +254,24 @@ function modifier_item_imba_sheepstick_buff:IsHidden() return false end
 function modifier_item_imba_sheepstick_buff:IsDebuff() return false end
 function modifier_item_imba_sheepstick_buff:IsPurgable() return true end
 
+function modifier_item_imba_sheepstick_buff:OnCreated()
+	if IsServer() then
+		-- Play the target particle
+		self.sheep_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
+	end
+end
+
 -- Destroy trees at the end of the self-buff's duration
 function modifier_item_imba_sheepstick_buff:OnDestroy()
 	if IsServer() then
 		local owner = self:GetParent()
 		GridNav:DestroyTreesAroundPoint(owner:GetAbsOrigin(), self:GetAbility():GetSpecialValueFor("tree_radius"), false)
+
+		if self.sheep_pfx then
+			ParticleManager:DestroyParticle(self.sheep_pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.sheep_pfx)
+		end
 	end
 end
 
