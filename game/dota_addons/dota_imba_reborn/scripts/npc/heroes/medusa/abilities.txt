@@ -88,7 +88,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -191,6 +191,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"myotoxin_stack_cast"	"-1"
 			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"innate_cooldown"		"7"
+			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
