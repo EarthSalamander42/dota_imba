@@ -199,6 +199,8 @@
 	"item_recipe_imba_gungnir"				"REMOVE"
 	"item_imba_gungnir"						"REMOVE" // Goodbye sweet prince
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
+	"item_imba_ultimate_scepter_synth"		"REMOVE"
+	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
 
 
 	//=================================================================================================================
@@ -2166,16 +2168,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"slow_duration"				"4.0"
 			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1000 1150 1300"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"25"
-			}
 		}
 	}
 	
@@ -3111,6 +3103,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_bonus"			"24 36 48 60"
+				"LinkedSpecialBonus"	"special_bonus_unique_chen_5"
 			}
 		}
 	}
@@ -3131,7 +3124,7 @@
 				"health_min"			"1000 2000 3000 4000"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
 			}
-			"04"
+			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"teleport_delay"	"6.0 5.0 4.0 3.0"
@@ -5574,12 +5567,12 @@
 				"mana_restore"			"125 250 375 500"
 				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_2"
 			}			
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_reduction"	"3 5 7 9"
+				"mana_leak_pct"			"4 4.5 5 5.5"
 			}
-			"03"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"20"
@@ -9350,33 +9343,30 @@
 	//=================================================================================================================
 	"treant_natures_guise"
 	{
-		"MaxLevel"							"4"
-		"AbilityCastRange"					"265 310 355 400"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"4.0 3.2 2.4 1.6"
-			}
-			"02"
-			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"265 310 355 400"
 			}
-			"04"
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"grace_time"				"0.75"
+			}
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_speed"			"14 24 34 44"
 			}
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bash_duration"				"1.0 1.6 2.2 2.8"
 				"LinkedSpecialBonus"		"special_bonus_unique_treant_4"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"total_damage"				"60 160 260 360"
@@ -10560,6 +10550,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"2.2 2.8 3.4 4.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_windranger_6"
 			}
 			"03"
 			{
@@ -10656,6 +10647,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"focusfire_damage_reduction"	"-45 -30 -15"
+				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
 			"05"
 			{
@@ -12071,6 +12063,11 @@
 			}
 			"05"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage_percent"	"80 100 120"
+			}
+			"07"
+			{
 				"var_type"			"FIELD_FLOAT"
 				"spawn_interval"	"0.4"
 			}
@@ -12261,7 +12258,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"700"
 			}
-			"09"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage_vs_heroes"	"75"

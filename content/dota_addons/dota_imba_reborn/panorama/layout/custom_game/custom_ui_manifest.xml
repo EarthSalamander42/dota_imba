@@ -251,7 +251,7 @@
 		}
 
 		function SetupTauntKeyBind() {
-			$.Msg("Attempt to gather taunt key for player: " + Players.GetLocalPlayer())
+//			$.Msg("Attempt to gather taunt key for player: " + Players.GetLocalPlayer())
 			if (Players.GetLocalPlayer() != -1) {
 				$.RegisterKeyBind($.GetContextPanel(), 'key_' + GetKeyBind("HeroTaunt").toLowerCase(), function()
 				{
@@ -265,9 +265,9 @@
 				}, "", 0);
 
 				// Test to see if this function actually works and doesn't break vote system
-				$.Msg("Taunt keybind of player ID " + Players.GetLocalPlayer() + ": " + GetKeyBind("HeroTaunt"))
+//				$.Msg("Taunt keybind of player ID " + Players.GetLocalPlayer() + ": " + GetKeyBind("HeroTaunt"))
 			} else {
-				$.Msg("Local player nil, retry taunt key gathering...")
+//				$.Msg("Local player nil, retry taunt key gathering...")
 				$.Schedule(1.0, SetupTauntKeyBind)
 			}
 		}

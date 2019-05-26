@@ -1199,7 +1199,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		BuffInfo.ability:UseResources(false, false, true)
 
 		-- THIS BLOCK FORCES NO CDR FOR """BALANCE""" REASONS IN MUTATION/FRANTIC
-		-- if GameRules:GetCustomGameDifficulty() >= 1 then
+		-- if GameMode:GetCustomGamemode() >= 1 then
 			-- BuffInfo.ability:StartCooldown(BuffInfo.ability:GetCooldown(BuffInfo.ability:GetLevel() - 1))
 		-- end
 
