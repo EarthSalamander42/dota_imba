@@ -79,7 +79,7 @@ function imba_wraith_king_wraithfire_blast:OnSpellStart()
 	LaunchWraithblastProjectile(caster, ability, caster, target, true)
 end
 
-function LaunchWraithblastProjectile(caster, ability, source, target, main)    
+function LaunchWraithblastProjectile(caster, ability, source, target, main, bTalent)
 	-- Ability properties
 	local particle_projectile = "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"    
 
@@ -98,8 +98,12 @@ function LaunchWraithblastProjectile(caster, ability, source, target, main)
 							  bReplaceExisting = false,
 							  bProvidesVision = false,  
 							  iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
-							  ExtraData = {main_blast = main}                           
+							  ExtraData = {main_blast = main, bTalent = bTalent or false}
 	}
+	
+	if bTalent then
+		wraithblast_projectile.iMoveSpeed = 500
+	end
 
 	ProjectileManager:CreateTrackingProjectile(wraithblast_projectile)
 end
@@ -159,20 +163,22 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 		-- Main stun the target
 		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration})
 
-		-- Split to enemies around
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  target:GetAbsOrigin(),
-										  nil,
-										  secondary_targets_radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-										  FIND_ANY_ORDER,
-										  false)
+		if not extra_data.bTalent then
+			-- Split to enemies around
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+											  target:GetAbsOrigin(),
+											  nil,
+											  secondary_targets_radius,
+											  DOTA_UNIT_TARGET_TEAM_ENEMY,
+											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+											  DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+											  FIND_ANY_ORDER,
+											  false)
 
-		for _,enemy in pairs(enemies) do
-			if enemy ~= target then
-				LaunchWraithblastProjectile(caster, ability, target, enemy, false)
+			for _,enemy in pairs(enemies) do
+				if enemy ~= target then
+					LaunchWraithblastProjectile(caster, ability, target, enemy, false)
+				end
 			end
 		end
 
@@ -192,7 +198,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration})
 
 	-- #7 Talent: Wraithfire Blast now summons Wraiths on all targets hit
-	if caster:HasTalent("special_bonus_imba_skeleton_king_7") then
+	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not bTalent then
 		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 		local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 		local summon_point = caster:GetAbsOrigin() + direction * distance - 100
@@ -268,13 +274,16 @@ function modifier_imba_wraithfire_blast_debuff:OnCreated()
 
 	-- Start thinking
 	if IsServer() then
+		self:SetStackCount(self.ms_slow_pct * (1 - self.parent:GetStatusResistance()))
+	
 		self:StartIntervalThink(self.damage_interval)
 	end
 end
 
-function modifier_imba_wraithfire_blast_debuff:IsHidden() return false end
-function modifier_imba_wraithfire_blast_debuff:IsPurgable() return true end
-function modifier_imba_wraithfire_blast_debuff:IsDebuff() return true end
+function modifier_imba_wraithfire_blast_debuff:IsHidden()		return false end
+function modifier_imba_wraithfire_blast_debuff:IsPurgable()		return true end
+function modifier_imba_wraithfire_blast_debuff:IsDebuff() 		return true end
+function modifier_imba_wraithfire_blast_debuff:IgnoreTenacity()	return true end
 
 function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 	if IsServer() then
@@ -300,7 +309,7 @@ function modifier_imba_wraithfire_blast_debuff:DeclareFunctions()
 end
 
 function modifier_imba_wraithfire_blast_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_slow_pct * (-1)
+	return self:GetStackCount() * (-1)
 end
 
 function modifier_imba_wraithfire_blast_debuff:OnAttackLanded(keys)
@@ -550,8 +559,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					return nil
 				end
 
-				-- #3 Talent: Vampiric Aura lifesteal/spellsteal increase
-				local lifesteal_pct = self.lifesteal_pct + self.caster:FindTalentValue("special_bonus_imba_skeleton_king_3")
+				-- #9 Talent: Vampiric Aura lifesteal increase
+				local lifesteal_pct = self.lifesteal_pct + self.caster:FindTalentValue("special_bonus_imba_skeleton_king_9")
 
 				-- Calculate lifesteal and heal the attacker
 				heal_amount = damage * lifesteal_pct * 0.01
@@ -573,11 +582,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					return nil
 				end
 
-				-- #3 Talent: Vampiric Aura lifesteal/spellsteal increase
-				local spellsteal_pct = self.spellsteal_pct + self.caster:FindTalentValue("special_bonus_imba_skeleton_king_3")
-
 				-- Calculate lifesteal and heal the attacker
-				heal_amount = damage * spellsteal_pct * 0.01
+				heal_amount = damage * self.spellsteal_pct * 0.01
 				self.parent:Heal(heal_amount, self.caster)
 			end
 
@@ -1239,6 +1245,19 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 			AddFOWViewer(BuffInfo.caster:GetTeamNumber(), BuffInfo.caster:GetAbsOrigin(), BuffInfo.caster:GetNightTimeVisionRange(), BuffInfo.reincarnate_delay, true)
 		end
 
+		if BuffInfo.caster:HasTalent("special_bonus_imba_skeleton_king_10") then
+			local wraithfire_blast = BuffInfo.caster:FindAbilityByName("imba_wraith_king_wraithfire_blast")
+			
+			if wraithfire_blast and wraithfire_blast:IsTrained() then
+		
+				local enemies = FindUnitsInRadius(BuffInfo.caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+				
+				for _, enemy in pairs(enemies) do
+					LaunchWraithblastProjectile(BuffInfo.caster, wraithfire_blast, unit, enemy, true, true)
+				end
+			end
+		end
+
 		-- Wait for the caster to reincarnate, then play its sound
 		--Timers:CreateTimer(BuffInfo.reincarnate_delay, function()
 		--    EmitSoundOn(BuffInfo.sound_reincarnation, BuffInfo.caster) 
@@ -1397,7 +1416,7 @@ function modifier_imba_reincarnation:GetModifierAura()
 end
 
 function modifier_imba_reincarnation:IsAura()
-	if self.caster:IsRealHero() and self.caster:HasScepter() and self.caster == self:GetParent() then
+	if not self.caster:IsNull() and self.caster:IsRealHero() and self.caster:HasScepter() and self.caster == self:GetParent() then
 		return true        
 	end
 

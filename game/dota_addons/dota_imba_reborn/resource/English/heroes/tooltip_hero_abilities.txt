@@ -2330,12 +2330,12 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast"                "Wraithfire Blast"
-"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Description"                "Sears an enemy unit with spectral fire, dealing damage and stunning it for %main_target_stun_duration% seconds.\n<font color='#FF7800'>Behold The Wraith!:</font> The wraithfire blast splits upon impact, seeking enemies around the main target. Secondary targets take no damage and are stunned for %secondary_target_stun_duration% seconds, but suffer the full debuff effect.\n<font color='#FF7800'>Cursed Wounds:</font> Slows all enemies hit by %ms_slow_pct%%. Enemies take damage per second while under the effect, and Wraith King's allies gains %attacker_lifesteal_pct%%% lifesteal when attacking an enemy affected by Cursed Wounds."
+"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Description"                "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning for  %main_target_stun_duration% seconds, then dealing damage over time and slowing the target by %ms_slow_pct%%%.\n<font color='#FF7800'>Behold The Wraith!:</font> The wraithfire blast splits upon impact, seeking enemies around the main target. Secondary targets take no damage and are stunned for %secondary_target_stun_duration% seconds, but suffer the full debuff effect.\n<font color='#FF7800'>Cursed Wounds:</font> Attacking an enemy under the slow and damage over time effect grants %attacker_lifesteal_pct%%% lifesteal."
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Lore"          "The one true king calls on his damned lineage, laying waste to his opponents."
-"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Note0"          "Lifesteal is granted to all units attacking that target. Based on damage dealt, from any source. Illusions cannot benefit from the lifesteal."
+"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Note0"          "Lifesteal is granted to all units attacking that target. Based on damage dealt, from any source."
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_damage"                     "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_secondary_targets_radius"   "SECONDARY TARGETS RADIUS:"
-"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_debuff_duration"            "CURSED WOUNDS DURATION:"
+"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_debuff_duration"            "SLOW & DAMAGE OVER TIME DURATION:"
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_damage_per_second"          "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_attacker_lifesteal_pct"     "%CURSED WOUNDS LIFESTEAL:"
 
@@ -2421,7 +2421,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation"                  "Reincarnation"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "The One True King's form regroups, allowing him to ressurrect when killed in battle.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>"
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "Wraith King's form regroups after death, allowing him to resurrect when killed in battle. Upon death, enemy units in a 900 radius will be slowed (handled by the Kingdom Come ability).\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"            "Reincarnation will not trigger if its owner hasn't got enough mana for it."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note1"            "Even if Reincarnation is ready, it will trigger Kingdom Come."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Lore"              "Conspirators against the Wraith King wonder why he never stays dead."
@@ -2429,7 +2429,7 @@
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_passive_respawn_haste"         "PASSIVE RESPAWN TIME REDUCTION:"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_scepter_wraith_form_radius"    "WRAITH FORM RADIUS:"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_scepter_wraith_form_duration"  "WRAITH FORM DURATION:"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_aghanim_description"           "When near the Wraith King, allies will enter Wraith Form after being dealt a fatal blow, becoming unkillable for a short duration. When Wraith Form expires, allies will die normally. Taking 15% of your max health as damage reduces your Wraith Form time by one second."
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_aghanim_description"           "If a nearby allied hero is slain, they will be transformed into a wraith and have their death delayed for 7 seconds. <font color='#FF0000'>Taking 30% of your max health as damage reduces your Wraith Form time by one second.</font>"
 
 "DOTA_Tooltip_modifier_imba_reincarnation_wraith_form_buff"            "Wraith Form"
 "DOTA_Tooltip_modifier_imba_reincarnation_wraith_form_buff_Description"             "Dying will transform you into a Wraith for a limited time, extending your life."
@@ -2456,18 +2456,23 @@
 // Wraith King's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_1"       "Healing from attacked allies"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_1_Description" "Whenever an ally in Vampiric Aura's range takes damage, Wraith King is healed for 10% of the damage."
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_2"       "Kingdom Come"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_2_Description" "Allows you to actively cast Kingdom Come. Has a 100 seconds cooldown."
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_3"       "Wraithfire Burn"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_3_Description" "When the main target is hit by Wraithfire Blast, it burns brightly, dealing damage every second to nearby units."
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_4"       "Kingdom Come's Wraith slow enemies on hit"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_5"       "Reincarnation can revive allies"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_5_Description" "Reincarnation can now be set to auto cast, reviving nearby allies. Triggers cooldown."
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_6"       "Reincarnation costs no mana to activate"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_7"       "Wraithfire Blast summons Wraiths on all enemies hit"
-"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_8"       "Mortal Strike criticals grant 10 Strength"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_1"				"Healing from attacked allies"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_1_Description"	"Whenever an ally in Vampiric Aura's range takes damage, Wraith King is healed for 10% of the damage."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_2"				"Kingdom Come Active Cast"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_2_Description"	"Allows you to actively cast Kingdom Come. Has a 1 second cast point and a 100 second cooldown."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_3"				"Wraithfire Burn"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_3_Description"	"When the main target is hit by Wraithfire Blast, it burns brightly, dealing damage every second to nearby units."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_4"				"Kingdom Come's Wraith slow enemies on hit"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_4_Description"	"Reduces move speed by 40% for 2 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_5"				"Reincarnation can revive allies"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_5_Description"	"Reincarnation can now be set to auto cast, activating on a dying ally within 900 radius. Triggers cooldown."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_6"				"No Reincarnation Manacost"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_7"				"Wraithfire Blast summons Wraiths on all enemies hit"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_8"				"Mortal Strike criticals grant 10 Strength"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_9"				"+25% Vampiric Aura Lifesteal"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_9_Description"	"Does not affect 'By Any Measure' or 'For the King' IMBAfications."
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_10"				"Reincarnation Casts Wraithfire Blast"
+"DOTA_Tooltip_ability_special_bonus_imba_skeleton_king_10_Description"	"Wraithfire Blasts do not benefit from the 'Behold the Wraith!' IMBAfication, and do NOT replace the standard slow."
 
 ////===============================================================================================================
 // Wraith King's summoned unit: Wraith

@@ -20782,7 +20782,6 @@
 		"AbilityCooldown"				"26 22 18 14"
 		"AbilityDuration"				"2"
 
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"120 120 120 120"
@@ -20794,23 +20793,23 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"275"
+				"radius"					"400 450 500 550"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"0.25"
+				"tick_interval"				"0.3"
 			}						
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0"
+				"stun_duration"				"0.2"
 			}
 			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"toss_damage_multiplier"	"2"
+				"toss_damage_multiplier"	"3"
 			}
 			
 			"05"
@@ -20841,6 +20840,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks_tooltip"		"25"
 			}
+			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tick_count"				"6"
+			}			
 		}
 	}
 
@@ -20862,7 +20867,7 @@
 		"AbilityTextureName"			"tiny_toss"
 		"MaxLevel"						"4"
 		"FightRecapLevel"				"1"
-		"HasScepterUpgrade"				"1"		
+		// "HasScepterUpgrade"				"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -20870,7 +20875,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"105 110 115 120"
+		"AbilityManaCost"				"90 100 110 120"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -21226,7 +21231,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"7 16 25"
+				"bonus_armor"				"10 18 26"
 			}
 		}
 	}
@@ -21510,7 +21515,36 @@
 			}
 		}
 	}
-		//=================================================================================================================
+
+	//=================================================================================================================
+	// Talent: Xs Avalanche Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_tiny_avalanche_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_tiny_avalanche"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"7"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
 	// Warlock's Fatal Bonds
 	//=================================================================================================================
 	"imba_warlock_fatal_bonds"
@@ -22891,7 +22925,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"damage_per_second"					"8 24 40 56"
+				"damage_per_second"					"10 30 50 70"
 			}
 
 			"08"
@@ -22941,7 +22975,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22950,12 +22984,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
+				"radius"				"1200"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal_pct"			"18 22 26 30"
+				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_9"
 			}
 			"03"
 			{
@@ -23010,19 +23045,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"15"
+				"crit_chance"			"9 11 13 15"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage_heroes"	"150 200 250 300"
+				"crit_damage_heroes"	"300"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage_creeps"    "200 300 400 500"
+				"crit_damage_creeps"    "300 400 500 600"
 			}
 
 			"04"
@@ -23223,7 +23258,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_hp_pct_threhold"	"15"
+				"scepter_hp_pct_threhold"	"30"
 			}
 		}
 	}
@@ -23378,7 +23413,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"ms_slow_pct"	            "25"
+				"ms_slow_pct"	            "40"
 			}
 
 			"02"
@@ -23488,6 +23523,57 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_skeleton_king_9" // +X% Vampiric Aura Lifesteal
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_wraith_king_vampiric_aura"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"			            "25"
+			}
+		}
+	}
+	
+	"special_bonus_imba_skeleton_king_10" // Reincarnation Casts Wraithfire Blast
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_wraith_king_reincarnation"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"			            "1"
+			}
+		}
+	}
+
 
 	//=================================================================================================================
 	// Storegga Arm Slam
