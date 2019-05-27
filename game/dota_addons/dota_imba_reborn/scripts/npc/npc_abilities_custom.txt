@@ -22911,7 +22911,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"damage_per_second"					"8 24 40 56"
+				"damage_per_second"					"10 30 50 70"
 			}
 
 			"08"
@@ -22961,7 +22961,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22970,12 +22970,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
+				"radius"				"1200"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal_pct"			"18 22 26 30"
+				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_9"
 			}
 			"03"
 			{
@@ -23030,19 +23031,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"15"
+				"crit_chance"			"9 11 13 15"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage_heroes"	"150 200 250 300"
+				"crit_damage_heroes"	"300"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage_creeps"    "200 300 400 500"
+				"crit_damage_creeps"    "300 400 500 600"
 			}
 
 			"04"
@@ -23243,7 +23244,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_hp_pct_threhold"	"15"
+				"scepter_hp_pct_threhold"	"30"
 			}
 		}
 	}
@@ -23398,7 +23399,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"ms_slow_pct"	            "25"
+				"ms_slow_pct"	            "40"
 			}
 
 			"02"
@@ -23508,6 +23509,57 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_skeleton_king_9" // +X% Vampiric Aura Lifesteal
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_wraith_king_vampiric_aura"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"			            "25"
+			}
+		}
+	}
+	
+	"special_bonus_imba_skeleton_king_10" // Reincarnation Casts Wraithfire Blast
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_wraith_king_reincarnation"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"			            "1"
+			}
+		}
+	}
+
 
 	//=================================================================================================================
 	// Storegga Arm Slam
