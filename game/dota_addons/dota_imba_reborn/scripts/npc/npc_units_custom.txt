@@ -10162,7 +10162,7 @@
 	// yahnich utilities for illusion system
 	"wearable_dummy"
 	{
-		"BaseClass"     "npc_dota_creature"
+		"BaseClass"     "npc_dota_base_additive"
 	}
 
 	// yahnich utilities for illusion system

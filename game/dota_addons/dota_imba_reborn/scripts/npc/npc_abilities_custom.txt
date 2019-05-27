@@ -3372,49 +3372,41 @@
 				"var_type"								"FIELD_INTEGER"
 				"mana_cost"								"150"
 			}
-
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"5.0"
 			}
-
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"nothl_protection_duration"				"3.0"
 			}
-
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"nothl_protection_cooldown"				"40"
 			}
-
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"800 850 950 1000"
+				"cast_range"							"800 900 1000 1100"
 			}
-			
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"post_grave_duration"					"5"
 			}
-			
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"post_grave_armor_per_hit"				"0.5"
 			}
-			
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"post_grave_resist_per_hit"				"1"
 			}
-			
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -3424,12 +3416,16 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_aura_nothl_duration"			"1.5"
-			}			
-			
+			}
 			"11"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_aura_radius"					"900"
+			}
+			"12"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"scepter_radius"		"500"
 			}
 		}
 	}	
@@ -24592,6 +24588,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"400 500 600 700"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cast_range"	"800 900 1000 1100"
 			}
 		}
 	}

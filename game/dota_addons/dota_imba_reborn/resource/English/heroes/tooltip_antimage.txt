@@ -53,7 +53,8 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_ministun"			"STUN DURATION:"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_aoe_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_mana_burn_pct"		"%MANA BURN:"
-"DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"#{DOTA_Tooltip_ability_antimage_mana_void_aghanim_description}"
+"DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"Mana Void kills cause the enemy's highest cooldown ability to take longer to cool down, and increases stun duration."
+// "DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"#{DOTA_Tooltip_ability_antimage_mana_void_aghanim_description}"
 
 "DOTA_Tooltip_modifier_imba_mana_void_stunned"                        "Mana Void"
 "DOTA_Tooltip_modifier_imba_mana_void_stunned_Description"            "Stunned by Anti-Mage's mana void."

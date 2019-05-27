@@ -49,6 +49,10 @@ end
 
 function modifier_fountain_aura_effect_lua:OnCreated()
 	if IsServer() then
+		if self:GetParent():GetClassname() == "npc_dota_additive" then
+			self:Destroy()
+			return
+		end
 		self:StartIntervalThink(0.1)
 
 		local particle_name

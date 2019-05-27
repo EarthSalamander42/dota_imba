@@ -21,7 +21,7 @@ function imba_clinkz_strafe:GetCooldown(level)
 		local caster = self:GetCaster()
 		local duration = self:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_clinkz_9")
 		local modifier_mount = "modifier_imba_strafe_mount"
-		
+
 		-- Assign correct cooldown. No need to update the UI
 		if self.time_remaining ~= nil then  
 			local time_remaining = self.time_remaining
@@ -938,10 +938,18 @@ end
 
 function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
+		if self:GetCaster():HasScepter() then
+			for i = 1, 2 do
+				-- todo: spawn them on left and right of clinkz pos
+				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)
+				local archer = CreateUnitByName("npc_dota_clinkz_skeleton_archer", pos, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			end
+		end
+
 		-- #6 Talent: Skeleton Walk move speed persists for a small period
 		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_6") then
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_talent_ms, {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_6")})
-		end        
+		end
 
 		-- Only apply if Clinkz wasn't detected before removing modifier
 		if self.detected then
@@ -955,7 +963,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 
 		-- Play cast sound, yes, again
 		EmitSoundOn(self.sound_cast, self:GetParent())
-		
+
 		-- Find nearby enemies
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 										  self:GetParent():GetAbsOrigin(),
