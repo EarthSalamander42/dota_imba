@@ -121,24 +121,6 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	return illusion
 end
 
-function CDOTA_BaseNPC:SetupHealthBarLabel()
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(self:GetPlayerOwnerID()))
-
-	if ply_table and ply_table.in_game_tag == 0 then
-		self:SetCustomHealthLabel("", 0, 0, 0)
-
-		return
-	end
-
---	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
-	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
-		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
-		if donator_level and donator_level > 0 then
-			self:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
-		end
-	end
-end
-
 function CDOTA_BaseNPC:GetNetworth()
 	if not self:IsRealHero() then return 0 end
     local gold = self:GetGold()
@@ -792,22 +774,6 @@ function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, 
 		bRemoveOnDeath = bRemoveOnDeath
 	})
 	return modifier
-end
-
-function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
-	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
-	if iDuration == nil then iDuration = FrameTime() end
-	if iDuration ~= -1 then
-		Timers:CreateTimer(iDuration, function()
-			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			Timers:CreateTimer(FrameTime(), function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-		end)
-	end
 end
 
 function CDOTA_BaseNPC:FindAbilityWithHighestCooldown()

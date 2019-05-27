@@ -12,8 +12,6 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
-require('components/settings/settings_donator')
-
 CUSTOM_GAME_TYPE = "IMBA"
 
 GAME_VERSION = "7.14"
@@ -474,15 +472,6 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 
 STATUS_RESISTANCE_IGNORE_MODIFIERS = {
 	""
-}
-
-SHARED_NODRAW_MODIFIERS = {
-	"modifier_item_shadow_amulet_fade",
-	"modifier_monkey_king_tree_dance_hidden",
-	"modifier_monkey_king_transform",
-	"modifier_pangolier_gyroshell",
-	"modifier_smoke_of_deceit",
-	"modifier_mutation_monkey_business_transform",
 }
 
 UNIT_EQUIPMENT = {}

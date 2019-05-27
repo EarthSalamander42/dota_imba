@@ -812,7 +812,7 @@ end
 function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 	self.helix_pfx_1 = ParticleManager:CreateParticle(self.caster.counter_helix_pfx, PATTACH_ABSORIGIN_FOLLOW, self.caster)
 	ParticleManager:SetParticleControl(self.helix_pfx_1, 0, self.caster:GetAbsOrigin())
-	if Imbattlepass and Imbattlepass:HasAxeArcana(self.caster:GetPlayerID()) then
+	if Battlepass and Battlepass:HasAxeArcana(self.caster:GetPlayerID()) then
 		ParticleManager:SetParticleControlEnt(self.helix_pfx_1, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.helix_pfx_1, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_attack2", self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.helix_pfx_1, 3, self.caster:GetAbsOrigin())
@@ -1307,7 +1307,7 @@ end
 
 function modifier_axe_arcana:OnCreated()
 	if IsServer() then
-		if Imbattlepass and Imbattlepass:HasAxeArcana(self:GetParent():GetPlayerID()) then
+		if Battlepass and Battlepass:HasAxeArcana(self:GetParent():GetPlayerID()) then
 			self:SetStackCount(1)
 		end
 	end

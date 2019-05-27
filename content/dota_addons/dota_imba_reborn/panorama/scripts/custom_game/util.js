@@ -185,7 +185,7 @@ function OverrideHeroImage(arcana_level, panel, hero_name) {
 	}
 
 	if (arcana_level !== false) {
-		// list of heroes wich have arcana implented in imbattlepass
+		// list of heroes wich have arcana implented in battlepass
 		var newheroimage = $.CreatePanel('Panel', panel, '');
 		newheroimage.style.width = "100%";
 		newheroimage.style.height = "100%";

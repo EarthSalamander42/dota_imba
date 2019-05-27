@@ -9,7 +9,7 @@ for i = 1, 1000 do
 	XP_level_table[i] = XP_level_table[i-1] + (500 * (math.floor(i / 25) + 1))
 end
 
-function GetXPLevelByXp(xp)
+function Battlepass:GetXPLevelByXp(xp)
 	if xp <= 0 or xp == nil then return 1 end
 
 	for k, v in pairs(XP_level_table) do
@@ -21,12 +21,12 @@ function GetXPLevelByXp(xp)
 	return 1
 end
 
-function GetXpProgressToNextLevel(xp)
+function Battlepass:GetXpProgressToNextLevel(xp)
 	if xp == nil then return XP_level_table[1] end
 
-	local level = GetXPLevelByXp(xp)
-	local next = level + 1
-	local thisXp = XP_level_table[level]
+	local level = Battlepass:GetXPLevelByXp(xp)
+	local next = level
+	local thisXp = XP_level_table[level - 1]
 	local nextXp = XP_level_table[next]
 	if nextXp == nil then
 		nextXp = 0
@@ -43,7 +43,7 @@ function GetXpProgressToNextLevel(xp)
 	return xp
 end
 
-function GetTitleIXP(level)
+function Battlepass:GetTitleXP(level)
 	if level <= 19 then
 		return "Rookie"
 	elseif level <= 39 then
@@ -73,7 +73,7 @@ function GetTitleIXP(level)
 	end
 end
 
-function GetTitleColorIXP(title)
+function Battlepass:GetTitleColorXP(title)
 	if title == "Rookie" then
 		return {255, 255, 255}
 	elseif title == "Amateur" then
@@ -103,46 +103,30 @@ function GetTitleColorIXP(title)
 	end
 end
 
-function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
+function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.players then
-		print("IMBA API not ready! Retry...")
+		print("API not ready! Retry...")
 		Timers:CreateTimer(1.0, function()
-			GetPlayerInfoIXP()
+			Battlepass:GetPlayerInfoXP()
 		end)
 
 		return
 	end
 
-	print("IMBA API ready!")
+	print("API ready!")
 
 	local current_xp_in_level = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		local global_xp = tonumber(api:GetPlayerXP(ID))
---		print("Player "..ID.." XP: "..global_xp)
-		local level = GetXPLevelByXp(global_xp)
---		print("Battlepass for ID "..ID..": "..level)
-		local previous_xp = XP_level_table[level - 1]
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #XP_level_table do
-			if global_xp >= XP_level_table[i] then
-				if global_xp >= XP_level_table[#XP_level_table] then -- if max level
-					current_xp_in_level = XP_level_table[level] - previous_xp
-					max_xp = XP_level_table[level] - previous_xp
-				else
-					level = i
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - XP_level_table[i]
-					max_xp = XP_level_table[level + 1] - XP_level_table[level]
-				end
-			elseif global_xp == 0 or global_xp == nil then
-				level = 1
-				current_xp_in_level = 0
-				max_xp = XP_level_table[1]
-			end
-		end
+		print("Player "..ID.." XP: "..global_xp)
+		local level = Battlepass:GetXPLevelByXp(global_xp)
+		print("Battlepass level for ID "..ID..": "..level)
+		local progress_to_next_level = Battlepass:GetXpProgressToNextLevel(global_xp)
+		local current_xp_in_level = progress_to_next_level.xp
+		print("Battlepass xp in level for ID "..ID..": "..current_xp_in_level)
+		local max_xp = progress_to_next_level.max_xp
+		print("Battlepass max xp for ID "..ID..": "..max_xp)
 
 		local color = PLAYER_COLORS[ID]
 
@@ -156,7 +140,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 		-- check arcana icon replacement
 		local arcana = {}
-		if Imbattlepass then
+		if Battlepass then
 			arcana["npc_dota_hero_axe"] = Imbattlepass:HasAxeArcana(i)
 			arcana["npc_dota_hero_juggernaut"] = Imbattlepass:HasJuggernautArcana(i)
 			arcana["npc_dota_hero_lina"] = Imbattlepass:HasLinaArcana(i)
@@ -171,8 +155,8 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			MaxXP = max_xp,
 			Lvl = level,
 			ply_color = rgbToHex(color),
-			title = GetTitleIXP(level),
-			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level))),
+			title = Battlepass:GetTitleXP(level),
+			title_color = rgbToHex(Battlepass:GetTitleColorXP(Battlepass:GetTitleXP(level))),
 			XP_change = 0,
 			IMR_5v5_change = 0,
 			donator_level = api:GetDonatorStatus(ID),

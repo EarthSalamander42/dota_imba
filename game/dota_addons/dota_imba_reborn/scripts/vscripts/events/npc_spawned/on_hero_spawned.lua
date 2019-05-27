@@ -15,10 +15,7 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
-	hero:AddNewModifier(hero, nil, "modifier_imba_donator", {})
-
 	if hero:IsIllusion() then
-		hero:SetupHealthBarLabel()
 		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
 	end -- Illusions will not be affected by scripts written under this line
@@ -70,24 +67,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		-- Give players an additional 250 boost in gold if they random
 		if PlayerResource:HasRandomed(hero:GetPlayerID()) then
 			PlayerResource:SetGold(hero:GetPlayerID(), hero:GetGold() + 250, false)
-		end
-	end
-
-	if (IsInToolsMode() or api:IsDonator(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
-		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
-				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
-				hero:CenterCameraOnEntity(hero, -1)
-			else
-				if GetMapName() == "imba_demo" then return end
-				if api:GetDonatorStatus(hero:GetPlayerID()) ~= 6 then
-					Timers:CreateTimer(1.5, function()
-						local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
---						print(api.players[steam_id])
-						DonatorCompanion(hero:GetPlayerID(), nil)
-					end)
-				end
-			end
 		end
 	end
 
@@ -153,10 +132,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 				hero.vengeance_aura_target = nil
 			end
 		end
-
---		if not IsInToolsMode() then
-			hero:SetupHealthBarLabel()
---		end
 
 		-- Refresh TP on first spawn
 		local teleport_scroll = hero:GetItemInSlot(15)
