@@ -3359,7 +3359,7 @@
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"		
-		"AbilityCooldown"								"60 45 30 15"
+		"AbilityCooldown"								"60 46 32 18"
 		"AbilityCastPoint"								"0.4"
 		"MaxLevel"										"4"
 
@@ -3385,7 +3385,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"nothl_protection_cooldown"				"40"
+				"nothl_protection_cooldown"				"60"
 			}
 			"05"
 			{
@@ -20782,6 +20782,7 @@
 		"AbilityCooldown"				"26 22 18 14"
 		"AbilityDuration"				"2"
 
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"120 120 120 120"
@@ -20805,13 +20806,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.2"
 			}
-			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"toss_damage_multiplier"	"3"
 			}
-			
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -20833,19 +20832,17 @@
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks"				"1"
 				"LinkedSpecialBonus"		"special_bonus_imba_tiny_1"											
-			}		
-			
+			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks_tooltip"		"25"
 			}
-			
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"tick_count"				"6"
-			}			
+			}
 		}
 	}
 
@@ -20867,7 +20864,7 @@
 		"AbilityTextureName"			"tiny_toss"
 		"MaxLevel"						"4"
 		"FightRecapLevel"				"1"
-		// "HasScepterUpgrade"				"1"
+//		"HasScepterUpgrade"				"1"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -21542,8 +21539,8 @@
 				"value"				"7"
 			}
 		}
-	}	
-	
+	}
+
 	//=================================================================================================================
 	// Warlock's Fatal Bonds
 	//=================================================================================================================
@@ -21848,128 +21845,107 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"600"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"60"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stun_duration"			"1"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_health"			"1000 2000 3000"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_regen"			"25 75 105"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor"					"6 10 14"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_4"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"magic_resistance"		"33"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_damage"			"100 150 200"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"move_speed"			"320 360 380"
 			}
-
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"xp_bounty"				"100"
 			}
-
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"gold_bounty"			"100 200 250"
 			}
-
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_hp_per_str"		"10"
 			}
-
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bonus_armor_per_agi"	"0.15"
 			}
-
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bonus_aspeed_per_agi"	"1"
 			}
-
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bonus_damage_per_int"	"1.25"
 			}
-
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_bonus_boots"		"1"
 			}
-
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"effect_delay"			"0.5"
 			}
-
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_demon_count"	"5"
 			}
-
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_demon_distance"	"500"
 			}
-
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_demon_hp"			"150 250 350"
 			}
-
 			"19"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_damage_transfer_pct"	"50"
 			}
-
 			"20"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -22004,7 +21980,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"40 60 120"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -22039,13 +22014,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"300"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"30 50 100"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -23047,43 +23020,36 @@
 				"var_type"				"FIELD_INTEGER"
 				"crit_chance"			"9 11 13 15"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage_heroes"	"300"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage_creeps"    "300 400 500 600"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health_pct"	  	"20"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health_duration" "16 18 20 22"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_health_hero_mult" 	"1.5 2 2.5 3"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_value"			 	"10"
 			}
-			
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -23415,7 +23381,6 @@
 				"var_type"                  "FIELD_INTEGER"
 				"ms_slow_pct"	            "40"
 			}
-
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
@@ -23523,7 +23488,7 @@
 			}
 		}
 	}
-	
+
 	"special_bonus_imba_skeleton_king_9" // +X% Vampiric Aura Lifesteal
 	{
 		// General
@@ -23536,7 +23501,7 @@
 		{
 			"01"	"imba_wraith_king_vampiric_aura"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23548,7 +23513,7 @@
 			}
 		}
 	}
-	
+
 	"special_bonus_imba_skeleton_king_10" // Reincarnation Casts Wraithfire Blast
 	{
 		// General
@@ -23561,7 +23526,7 @@
 		{
 			"01"	"imba_wraith_king_reincarnation"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23573,7 +23538,6 @@
 			}
 		}
 	}
-
 
 	//=================================================================================================================
 	// Storegga Arm Slam
@@ -25427,6 +25391,21 @@
 			{
 				"var_type"              "FIELD_FLOAT"
 				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"08"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_bonus"		"30"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_skeleton_count"		"2"
 			}
 		}
 	}

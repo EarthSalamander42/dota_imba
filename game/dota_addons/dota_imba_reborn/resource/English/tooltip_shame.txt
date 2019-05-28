@@ -396,8 +396,6 @@
 
 "DOTA_Tooltip_ability_life_stealer_open_wounds_Note0"							"Open Wounds slows over 8 different steps: 70% / 70% / 60% / 50% / 40% / 30% / 20% / 10%, with the slow decreasing one step per second."
 
-"dota_tooltip_ability_tiny_tree_volley_Description" "Every %interval% seconds a random tree within %tree_grab_radius% range of your hero will be thrown towards the targeted AOE. Deals %splash_pct%%% of your damage to enemies in that area."
-
 //=================================================================================================================
 //=================================================================================================================
 // Vanilla talent overrides

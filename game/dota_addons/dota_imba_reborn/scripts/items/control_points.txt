@@ -30712,6 +30712,130 @@
 			}
 		}
 	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_mane"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_arm_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_loadout_pedestal.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_head_ambient_v2.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_mane"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_loadout_pedestal_v2.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_arm_ambient_v2.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"parent"
+			}
+		}
+	}
 	"particles/econ/items/monkey_king/plus_2018/monkey_king_plus_2018_weapon_ambient.vpcf"
 	{
 		"control_points"
@@ -31802,6 +31926,43 @@
 			}
 		}
 	}
+	"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient_lvl2.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hammer_top"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
 	"particles/econ/items/dazzle/dazzle_ti9_set/dazzle_ti9_head_ambient.vpcf"
 	{
 		"control_points"
@@ -32343,6 +32504,100 @@
 				"attach_type"		"PATTACH_POINT_FOLLOW"
 				"attachment"		"attach_elbow_r"
 				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/courier/courier_babyrosh_alt_ti7/courier_babyrosh_alt_ti7.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"parent"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_1"
+				"attach_entity"		"parent"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_2"
+				"attach_entity"		"parent"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_3"
+				"attach_entity"		"parent"
+			}
+			"5"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/courier/courier_babyrosh_alt_ti8/courier_babyrosh_alt_ti8.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"parent"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_1"
+				"attach_entity"		"parent"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_2"
+				"attach_entity"		"parent"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine_3"
+				"attach_entity"		"parent"
+			}
+			"5"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
 			}
 		}
 	}

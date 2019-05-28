@@ -36,10 +36,6 @@ function imba_alchemist_acid_spray:GetAbilityTextureName()
 	return "alchemist_acid_spray"
 end
 
-function imba_alchemist_acid_spray:GetCastRange(location, target)
-	return self.BaseClass.GetCastRange(self, location, target)
-end
-
 function imba_alchemist_acid_spray:IsHiddenWhenStolen()
 --	local caster = self:GetCaster()
 --	if caster:HasAbility("imba_alchemist_chemical_rage") then

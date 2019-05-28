@@ -33,6 +33,8 @@
 	"battlepass_dark_willow_taunt" "嘲讽：荆棘至上"
 	"battlepass_death_prophet_immortal" "假面之巫"
 	"battlepass_drow_ranger_immortal" "彼岸材枝"
+	"battlepass_earthshaker_arcana" "Planetfall (Celestial Summons)"
+	"battlepass_earthshaker_arcana2" "Planetfall (Burning Descent)"
 	"battlepass_earthshaker_immortal" "天外裁决"
 	"battlepass_enigma_immortal" "世界之渊珍宝"
 	"battlepass_enigma_mythical" "乾坤扭转"

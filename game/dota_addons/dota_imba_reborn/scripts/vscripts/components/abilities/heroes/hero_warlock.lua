@@ -54,7 +54,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 		link_search_radius,
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS,
 		FIND_CLOSEST,
 		false)
 
@@ -144,6 +144,7 @@ end
 function modifier_imba_fatal_bonds:IsHidden() return false end
 function modifier_imba_fatal_bonds:IsPurgable() return true end
 function modifier_imba_fatal_bonds:IsDebuff() return true end
+function modifier_imba_fatal_bonds:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_fatal_bonds:OnIntervalThink()
 	if IsServer() then

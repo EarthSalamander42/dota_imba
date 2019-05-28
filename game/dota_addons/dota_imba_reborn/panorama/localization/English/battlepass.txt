@@ -126,6 +126,8 @@
 "battlepass_maelstorm3"					"Water Maelstorm"
 "battlepass_maelstorm4"					"Emerald Maelstorm"
 "battlepass_maelstorm5"					"Overgrown Maelstorm"
+"battlepass_earthshaker_arcana"			"Planetfall (Celestial Summons)"
+"battlepass_earthshaker_arcana2"		"Planetfall (Burning Descent)"
 
 //Donator Tab
 "donator_companion"				"Companion"

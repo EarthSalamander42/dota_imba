@@ -141,12 +141,13 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 		-- check arcana icon replacement
 		local arcana = {}
 		if Battlepass then
-			arcana["npc_dota_hero_axe"] = Imbattlepass:HasAxeArcana(i)
-			arcana["npc_dota_hero_juggernaut"] = Imbattlepass:HasJuggernautArcana(i)
-			arcana["npc_dota_hero_lina"] = Imbattlepass:HasLinaArcana(i)
-			arcana["npc_dota_hero_pudge"] = Imbattlepass:HasPudgeArcana(i)
-			arcana["npc_dota_hero_zuus"] = Imbattlepass:HasZuusArcana(i)
-			arcana["npc_dota_hero_wisp"] = Imbattlepass:HasWispArcana(i)
+			arcana["npc_dota_hero_axe"] = Battlepass:HasAxeArcana(i)
+			arcana["npc_dota_hero_earthshaker"] = Battlepass:HasEarthshakerArcana(i)
+			arcana["npc_dota_hero_juggernaut"] = Battlepass:HasJuggernautArcana(i)
+			arcana["npc_dota_hero_lina"] = Battlepass:HasLinaArcana(i)
+			arcana["npc_dota_hero_pudge"] = Battlepass:HasPudgeArcana(i)
+			arcana["npc_dota_hero_zuus"] = Battlepass:HasZuusArcana(i)
+			arcana["npc_dota_hero_wisp"] = Battlepass:HasWispArcana(i)
 		end
 
 		CustomNetTables:SetTableValue("battlepass", tostring(ID),

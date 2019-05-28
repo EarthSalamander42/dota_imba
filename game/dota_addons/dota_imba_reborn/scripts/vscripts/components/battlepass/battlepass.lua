@@ -99,8 +99,14 @@ BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
 BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
+--	if IsInToolsMode() then
+--		BATTLEPASS_LEVEL_REWARD[185]	= {"earthshaker_arcana", "arcana"}
+--	end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
+--	if IsInToolsMode() then
+--		BATTLEPASS_LEVEL_REWARD[225]	= {"earthshaker_arcana2", "arcana"}
+--	end
 BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
@@ -658,6 +664,15 @@ function Battlepass:GetHeroEffect(hero)
 		hero.marksmanship_frost_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
 		hero.fissure_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+		hero.enchant_totem_leap_blur = "particles/units/heroes/hero_earthshaker/earthshaker_totem_leap_blur.vpcf"
+		hero.enchant_totem_buff = "particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
+		hero.enchant_totem_cast = "particles/units/heroes/hero_earthshaker/earthshaker_totem_cast.vpcf"
+		-- if earthshaker have ti6 totem + arcana, use this particles
+--		hero.enchant_totem_buff = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_buff.vpcf"
+--		hero.enchant_totem_buff = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff_ti6_combined.vpcf"
+--		hero.enchant_totem_cast = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_cast.vpcf"
+--		hero.enchant_totem_cast = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined.vpcf"
+--		hero.enchant_totem_cast = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined_v2.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
 		hero.life_break_cast_effect = "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
 		hero.life_break_start_effect = "particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf"
@@ -810,6 +825,23 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
+
+--			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
+--				hero.enchant_totem_leap_blur = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap_v2.vpcf"
+--				hero.enchant_totem_buff = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
+--				hero.enchant_totem_cast = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_v2.vpcf"
+
+--				Wearable:_WearProp(hero, "12692", "head" "02")
+--			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
+--				hero.enchant_totem_leap_blur = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap.vpcf"
+--				hero.enchant_totem_buff = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
+--				hero.enchant_totem_cast = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast.vpcf"
+--
+--				Wearable:_WearProp(hero, "12692", "head")
+--				if not hero:HasModifier("modifier_earthshaker_arcana") then
+--					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
+--				end
+--			end
 		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_ENIGMA["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")
@@ -1075,6 +1107,16 @@ function Battlepass:HasAxeArcana(ID)
 	else
 		return nil
 	end
+end
+
+function Battlepass:HasEarthshakerArcana(ID)
+--	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
+--		return 1
+--	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
+--		return 0
+--	else
+		return nil
+--	end
 end
 
 function Battlepass:InitializeTowers()
