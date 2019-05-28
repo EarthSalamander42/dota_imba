@@ -9,7 +9,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
+		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"        
 		"Level"						"1"
 		"ModelScale"				"1.0"

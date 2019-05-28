@@ -15,8 +15,6 @@
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
-		unit:SetupHealthBarLabel()
-
 		-- Give the custom mechanics like damage block and lifesteal
 		unit:AddNewModifier(unit, nil, "modifier_custom_mechanics", {})
 

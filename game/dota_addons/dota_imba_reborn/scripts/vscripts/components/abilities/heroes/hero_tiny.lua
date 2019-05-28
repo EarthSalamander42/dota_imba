@@ -23,8 +23,8 @@ function imba_tiny_tree_grab:OnSpellStart()
 		local tree_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_modifier", {})
 		tree_modifier:SetStackCount(5)
 
-		local ability_slot3 = caster:GetAbilityByIndex(2)
-		local ability_slot4 = caster:GetAbilityByIndex(3)
+		local ability_slot3 = self
+		local ability_slot4 = caster:FindAbilityByName("imba_tiny_tree_throw")
 		ability_slot4:SetLevel(ability_slot3:GetLevel())
 
 		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
@@ -158,7 +158,8 @@ end
 function imba_tiny_tree_modifier:OnAttack(keys)
 	local caster = self:GetCaster()
 	if IsServer() then 
-		if caster == keys.attacker then
+		-- Checking for keys.no_attack_cooldown == false is to prevent Tree Volley (aghs ability) from consuming tree charges
+		if caster == keys.attacker and not keys.no_attack_cooldown then
 			if caster:HasModifier("imba_tiny_tree_building_modifier") then
 				caster:RemoveModifierByName("imba_tiny_tree_building_modifier")
 			end
@@ -213,8 +214,8 @@ end
 function imba_tiny_tree_modifier:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
-		local ability_slot3 = caster:GetAbilityByIndex(2)
-		local ability_slot4 = caster:GetAbilityByIndex(3)
+		local ability_slot3 = caster:FindAbilityByName("imba_tiny_tree_throw")
+		local ability_slot4 = caster:FindAbilityByName("imba_tiny_tree_grab")
 		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
 		-- Trigger cd when last stack is used up
 		self:GetAbility():UseResources(false, false, true)
@@ -601,6 +602,10 @@ function imba_tiny_avalanche:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
+function imba_tiny_avalanche:GetCooldown(nLevel)
+	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_tiny_avalanche_cooldown")
+end
+
 if IsServer() then
 	function imba_tiny_avalanche:OnSpellStart()
 		local vPos = self:GetCursorPosition()
@@ -623,11 +628,11 @@ if IsServer() then
             end
 		end
 
-
-
 		if caster.tree ~= nil then
 			caster.tree:RemoveEffects(EF_NODRAW)
 		end
+
+		caster:StartGesture(ACT_TINY_AVALANCHE)
 
 		local info = {
 			EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
@@ -640,7 +645,7 @@ if IsServer() then
 			Source = self:GetCaster(),
 			iUnitTargetTeam = 0,
 			iUnitTargetType = 0,
-			ExtraData = {ticks = ticks}
+			ExtraData = {ticks = ticks, tick_count = self:GetSpecialValueFor("tick_count")}
 		}
 		ProjectileManager:CreateLinearProjectile( info )
 		EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)
@@ -657,8 +662,6 @@ if IsServer() then
 			radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		end
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")
-		self.repeat_increase = false
 		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(avalanche, 0, vLocation)
 		ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
@@ -680,21 +683,23 @@ if IsServer() then
 		end
 		local hitLoc = vLocation
 		Timers:CreateTimer(function()
+			local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")
 			local enemies_tick = FindUnitsInRadius(caster:GetTeamNumber(), hitLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 			for _,enemy in pairs(enemies_tick) do
-				if enemy:HasModifier("modifier_tiny_toss_movement") and not self.repeat_increase then
+				if enemy:HasModifier("modifier_tiny_toss_movement") then
 					damage = damage * toss_mult
-					self.repeat_increase = true
 				end
+				
 				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
 				
 				if enemy:IsAlive() then
-					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+					-- Not affected by status resistance it seems
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration / (1 - math.min(enemy:GetStatusResistance(), 0.999)) })
 				end
 			end
 			hitLoc = hitLoc + offset / ticks
-			extradata.ticks = extradata.ticks - 1
-			if extradata.ticks > 0 then
+			extradata.tick_count = extradata.tick_count - 1
+			if extradata.tick_count > 0 then
 				return interval
 			else
 				ParticleManager:DestroyParticle(avalanche, false)
@@ -740,7 +745,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 			return nil
 		end
 
-		if params.attacker == self:GetParent() and not self:GetParent():IsIllusion() then
+		if params.attacker == self:GetParent() and not self:GetParent():IsIllusion() then -- and not params.no_attack_cooldown then
 			if RollPseudoRandom(self.chance, self) then
 				local vPos = params.target:GetAbsOrigin()
 				local caster = self:GetCaster()
@@ -764,7 +769,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 					Source = self:GetCaster(),
 					iUnitTargetTeam = 0,
 					iUnitTargetType = 0,
-					ExtraData = {ticks = ticks}
+					ExtraData = {ticks = ticks, tick_count = ticks}
 				}
 				ProjectileManager:CreateLinearProjectile( info )
 				EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)
@@ -794,9 +799,9 @@ function imba_tiny_toss:CastFilterResultTarget( hTarget )
 		if hTarget:IsOpposingTeam(self:GetCaster():GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
 			return UF_FAIL_DISABLE_HELP
 		end
+		
+		return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 	end
-
-	return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 end
 
 function imba_tiny_toss:OnSpellStart()
@@ -1011,18 +1016,18 @@ function modifier_tiny_toss_movement:TossLand()
 			else
 				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 			end
-			if caster:HasScepter() and not victim:IsBuilding() then
-				victim:AddNewModifier(caster, self.ability, "modifier_stunned", {duration = self.ability:GetSpecialValueFor("scepter_stun_duration")})
-			end
+			-- if caster:HasScepter() and not victim:IsBuilding() then
+				-- victim:AddNewModifier(caster, self.ability, "modifier_stunned", {duration = self.ability:GetSpecialValueFor("scepter_stun_duration")})
+			-- end
 		end
 		if self.parent == caster then
 			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self.ability:GetSpecialValueFor("self_dmg_pct") * 0.01, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 		end
 
 		EmitSoundOn("Ability.TossImpact", self.parent)
-		if caster:HasScepter() and self.parent:IsAlive() and self.parent ~= caster then
-			self.parent:AddNewModifier(caster, self.ability, "modifier_tiny_toss_scepter_bounce", {})
-		end
+		-- if caster:HasScepter() and self.parent:IsAlive() and self.parent ~= caster then
+			-- self.parent:AddNewModifier(caster, self.ability, "modifier_tiny_toss_scepter_bounce", {})
+		-- end
 
 		self.parent:SetUnitOnClearGround()
 		Timers:CreateTimer(FrameTime(), function()
@@ -1088,11 +1093,11 @@ end
 
 function modifier_tiny_toss_movement:HorizontalMotion( me, dt )
 	if IsServer() then
-		-- If the unit being tossed died, interrupt motion controllers and remove self
-		if not self.parent:IsAlive() then
-			self.parent:InterruptMotionControllers(true)
-			self:Destroy()
-		end
+		-- If the unit being tossed died, interrupt motion controllers and remove self (nah lul)
+		-- if not self.parent:IsAlive() then
+			-- self.parent:InterruptMotionControllers(true)
+			-- self:Destroy()
+		-- end
 
 		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
 		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
@@ -1522,9 +1527,27 @@ end
 --- Someone forgot to initialize this zzz
 
 LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_avalanche_cooldown", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tiny_8 = class({})
+modifier_special_bonus_imba_tiny_8 			= class({})
+modifier_special_bonus_imba_tiny_avalanche_cooldown	= class({})
 
-function modifier_special_bonus_imba_tiny_8:IsHidden()		return true end
-function modifier_special_bonus_imba_tiny_8:IsPurgable()	return false end
-function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()	return false end
+function modifier_special_bonus_imba_tiny_8:IsHidden()							return true end
+function modifier_special_bonus_imba_tiny_8:IsPurgable()						return false end
+function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()						return false end
+
+function modifier_special_bonus_imba_tiny_avalanche_cooldown:IsHidden()			return true end
+function modifier_special_bonus_imba_tiny_avalanche_cooldown:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_avalanche_cooldown:RemoveOnDeath()	return false end
+
+function imba_tiny_rolling_stone:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_tiny_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tiny_8") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tiny_8"), "modifier_special_bonus_imba_tiny_8", {})
+	end
+end
+
+function imba_tiny_avalanche:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_tiny_avalanche_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tiny_avalanche_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tiny_avalanche_cooldown"), "modifier_special_bonus_imba_tiny_avalanche_cooldown", {})
+	end
+end

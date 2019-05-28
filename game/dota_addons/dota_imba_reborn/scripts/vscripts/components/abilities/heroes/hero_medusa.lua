@@ -256,6 +256,14 @@ end
 -- MYSTIC SNAKE --
 ------------------
 
+function imba_medusa_mystic_snake:GetCooldown(level)
+	if self:GetCaster():GetLevel() >= 20 then
+		return self:GetSpecialValueFor("innate_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_medusa_mystic_snake:OnSpellStart()
 	if not IsServer() then return end
 	
@@ -819,7 +827,7 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 	if not IsServer() then return end
 	
 	if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.vision_cone * 1000 and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.radius and self:GetParent():IsAlive() then
-		if self.play_sound then
+		if self.play_sound and self:GetParent():IsHero() then
 			self:GetParent():EmitSound("Hero_Medusa.StoneGaze.Target")
 			self.play_sound = false
 		end
@@ -831,7 +839,9 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 		self.counter = self.counter + self.tick_interval
 		
 		if self.counter >= self.face_duration then
-			self:GetParent():EmitSound("Hero_Medusa.StoneGaze.Stun")
+			if self:GetParent():IsHero() then
+				self:GetParent():EmitSound("Hero_Medusa.StoneGaze.Stun")
+			end
 		
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stone", 
 			{

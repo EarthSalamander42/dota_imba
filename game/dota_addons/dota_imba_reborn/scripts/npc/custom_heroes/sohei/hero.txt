@@ -11,6 +11,7 @@
 		"SoundSet"					"Sohei"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts"
 		"particle_folder"			"particles/hero/sohei"
+		"GibType"					"default"
 
 		//Picking Screen
 		"IsCustom"					"1"

@@ -10,7 +10,6 @@ function GameMode:_InitGameMode()
 
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
-	CustomGameEventManager:RegisterListener("play_hero_taunt", Dynamic_Wrap(self, "PlayHeroTaunt"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
 	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
@@ -164,7 +163,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 
 		mode:SetHudCombatEventsDisabled(IMBA_COMBAT_EVENTS)
-		mode:SetCustomTerrainWeatherEffect(IMBA_WEATHER_EFFECT[RandomInt(1, #IMBA_WEATHER_EFFECT)])
 
 		self:OnFirstPlayerLoaded()
 	end

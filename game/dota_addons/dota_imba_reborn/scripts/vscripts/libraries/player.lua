@@ -18,7 +18,7 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	illusion:SetMana(self:GetMana())
 
 --	illusion:SetAverageBaseDamage(self:GetAverageBaseDamage(), 15)
---	illusion:SetPhysicalArmorBaseValue(self:GetPhysicalArmorValue())
+--	illusion:SetPhysicalArmorBaseValue(self:GetPhysicalArmorValue(false))
 	illusion:SetBaseAttackTime(self:GetBaseAttackTime())
 	illusion:SetBaseMoveSpeed(self:GetIdealSpeed())
 
@@ -119,24 +119,6 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	illusion:MakeIllusion()
 
 	return illusion
-end
-
-function CDOTA_BaseNPC:SetupHealthBarLabel()
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(self:GetPlayerOwnerID()))
-
-	if ply_table and ply_table.in_game_tag == 0 then
-		self:SetCustomHealthLabel("", 0, 0, 0)
-
-		return
-	end
-
---	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
-	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
-		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
-		if donator_level and donator_level > 0 then
-			self:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
-		end
-	end
 end
 
 function CDOTA_BaseNPC:GetNetworth()
@@ -295,62 +277,11 @@ function CDOTA_BaseNPC:IsHeroOrCreep()
 end
 
 function CDOTA_BaseNPC:GetHeroType()
-	-- default, electric, ethereal, fire, goo, ice, motor, stone, wood
-	local hero_name = string.gsub(self:GetUnitName(), "npc_dota_hero_", "")
-	local effect_type = "default"
-	local hero_effects = {}
-	hero_effects[1] = {"ethereal", "abaddon"}
-	hero_effects[2] = {"ethereal", "arc_warden"}
-	hero_effects[3] = {"ethereal", "bane"}
-	hero_effects[4] = {"ethereal", "chaos_knight"}
-	hero_effects[5] = {"ethereal", "death_prophet"}
-	hero_effects[6] = {"ethereal", "enigma"}
-	hero_effects[7] = {"ethereal", "wisp"}
-	hero_effects[8] = {"ethereal", "morphling"}
-	hero_effects[9] = {"ethereal", "necrolyte"}
-	hero_effects[10] = {"ethereal", "obsidian_destroyer"}
-	hero_effects[11] = {"ethereal", "shadow_demon"}
-	hero_effects[12] = {"ethereal", "nevermore"}
-	hero_effects[13] = {"ethereal", "spectre"}
-	hero_effects[14] = {"ethereal", "spirit_breaker"}
-	hero_effects[15] = {"ethereal", "terrorblade"}
-	hero_effects[16] = {"ethereal", "vengeful_spirit"}
-	hero_effects[17] = {"ethereal", "visage"}
-	hero_effects[18] = {"ethereal", "skeleton_king"}
-	hero_effects[19] = {"goo", "bristleback"}
-	hero_effects[20] = {"goo", "broodmother"}
-	hero_effects[21] = {"goo", "nyx_assassin"}
-	hero_effects[22] = {"goo", "undying"}
-	hero_effects[23] = {"goo", "venomancer"}
-	hero_effects[24] = {"goo", "viper"}
-	hero_effects[25] = {"goo", "weaver"}
-	hero_effects[26] = {"motor", "clockwerk"}
-	hero_effects[27] = {"motor", "gyrocopter"}
-	hero_effects[28] = {"motor", "shredder"}
-	hero_effects[29] = {"motor", "tinker"}
-	hero_effects[30] = {"ice", "ancient_apparition"}
-	hero_effects[31] = {"ice", "crystal_maiden"}
-	hero_effects[32] = {"ice", "lich"}
-	hero_effects[33] = {"ice", "winter_wyvern"}
-	hero_effects[34] = {"fire", "ember_spirit"}
-	hero_effects[35] = {"fire", "lina"}
-	hero_effects[36] = {"fire", "phoenix"}
-	hero_effects[37] = {"electric", "razor"}
-	hero_effects[38] = {"electric", "storm_spirit"}
-	hero_effects[39] = {"electric", "zuus"}
-	hero_effects[40] = {"wood", "furion"}
-	hero_effects[41] = {"wood", "treant"}
-	hero_effects[42] = {"stone", "earth_spirit"}
-	hero_effects[43] = {"stone", "tiny"}
-
-	for _, effect in pairs(hero_effects) do
---		print(hero_name, effect[2], effect[1])
-		if effect[2] == hero_name then
-			effect_type =  effect[1]
-		end
+	if self:GetKeyValue("GibType") then
+		return self:GetKeyValue("GibType")
+	else
+		return "default"
 	end
-
-	return effect_type
 end
 
 function CDOTA_BaseNPC:SetUnitOnClearGround()
@@ -398,7 +329,7 @@ end
 
 function CDOTA_BaseNPC:GetRealDamageDone(hTarget)
 	local base_damage = self:GetAverageTrueAttackDamage(hTarget)
-	local armor_reduction = GetReductionFromArmor(hTarget:GetPhysicalArmorValue())
+	local armor_reduction = GetReductionFromArmor(hTarget:GetPhysicalArmorValue(false))
 	return base_damage - (base_damage * armor_reduction)
 end
 
@@ -845,20 +776,24 @@ function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, 
 	return modifier
 end
 
-function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
-	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
-	if iDuration == nil then iDuration = FrameTime() end
-	if iDuration ~= -1 then
-		Timers:CreateTimer(iDuration, function()
-			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			Timers:CreateTimer(FrameTime(), function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-		end)
+function CDOTA_BaseNPC:FindAbilityWithHighestCooldown()
+	local highest_cd_ability = nil
+
+	for i = 0, 24 do
+		local ability = self:GetAbilityByIndex(i)
+
+		if ability and ability:GetLevel() > 0 then
+			if highest_cd_ability == nil then
+				highest_cd_ability = ability
+			else
+				if ability:GetCooldown(ability:GetLevel()) > highest_cd_ability:GetCooldown(highest_cd_ability:GetLevel()) then
+					highest_cd_ability = ability
+				end
+			end
+		end
 	end
+
+	return highest_cd_ability
 end
 
 -- credits to yahnich for the following
@@ -876,27 +811,29 @@ end
 
 function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
-	local blink_effect = "particles/items_fx/blink_dagger_start.vpcf"
-	local blink_effect_end = "particles/items_fx/blink_dagger_end.vpcf"
+	local blink_effect = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
+	local blink_effect_end = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
 	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
-	if self.blink_effect or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect) then blink_effect = self.blink_effect end
-	if self.blink_effect_end or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect_end) then blink_effect_end = self.blink_effect_end end
 	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end
 	if bPlaySound == true then EmitSoundOn(blink_sound, self) end
+	local blink_pfx
 	if bTeamOnlyParticle == true then
-		local blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
-		ParticleManager:ReleaseParticleIndex(blink_pfx)
+		blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())
+		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		ParticleManager:FireParticle(blink_effect, PATTACH_ABSORIGIN, self, {[0] = self:GetAbsOrigin()})
+		blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
+	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	FindClearSpaceForUnit(self, position, true)
 	ProjectileManager:ProjectileDodge( self )
+	local blink_end_pfx
 	if bTeamOnlyParticle == true then
-		local blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_effect_end, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
-		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
+		blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_effect_end, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
 	else
-		ParticleManager:FireParticle(blink_effect_end, PATTACH_ABSORIGIN, self, {[0] = self:GetAbsOrigin()})
+		blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, self)
 	end
+	ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.NailedIt", self) end
 end
 

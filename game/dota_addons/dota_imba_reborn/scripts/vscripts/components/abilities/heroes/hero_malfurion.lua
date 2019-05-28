@@ -100,16 +100,18 @@ function modifier_imba_rejuvenation:OnCreated()
 end
 
 function modifier_imba_rejuvenation:OnIntervalThink()
-	if self:GetParent():IsBuilding() or string.find("living_tower", self:GetParent():GetUnitName()) then
-		self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
+	local heal_value = self.heal_per_sec
+
+	if self:GetParent():IsBuilding() or string.find(self:GetParent():GetUnitName(), "living_tower") then
+		heal_value = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
 	else
 		if not self:GetParent():IsHero() then
-			self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
+			heal_value = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
 		end
 	end
 
-	self:GetParent():Heal(self.heal_per_sec, self:GetCaster())
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_sec, nil)
+	self:GetParent():Heal(heal_value, self:GetCaster())
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), heal_value, nil)
 end
 
 function modifier_imba_rejuvenation:GetEffectName()
@@ -307,8 +309,6 @@ function modifier_imba_malfurion_living_tower:OnCreated()
 
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(pfx)
-
-	self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_dragon_knight_splash_attack", {})
 
 	self:SetStackCount(self:GetCaster():GetTeamNumber())
 end

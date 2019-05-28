@@ -565,10 +565,15 @@ end
 
 function modifier_imba_chen_holy_persuasion:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_EVENT_ON_DEATH
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
     }
 
     return decFuncs
+end
+
+function modifier_imba_chen_holy_persuasion:GetModifierMoveSpeedBonus_Constant()
+	return self:GetAbility():GetSpecialValueFor("movement_speed_bonus")
 end
 
 -- If the persuaded creep dies, remove the relevant modifier from the caster as well

@@ -986,7 +986,7 @@ end
 
 function modifier_imba_huskar_life_break_charge:OnCreated()
 	if IsServer() then
-		if Imbattlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= IMBATTLEPASS_HUSKAR["huskar_immortal"] then
+		if Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
 			self:SetStackCount(1)
 			self.pfx = ParticleManager:CreateParticle(self:GetCaster().life_break_cast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 --			ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())

@@ -15,6 +15,7 @@
 		"Level"                     "1"
 		"ModelScale"                "1.0"
 		"ConsideredHero"			"1"
+		"IsAncient"					"1"
 		"CanBeDominated"            "0"     
 		"UnitLabel"                 "living_tower"
 

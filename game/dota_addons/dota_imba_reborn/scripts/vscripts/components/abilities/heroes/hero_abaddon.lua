@@ -301,7 +301,7 @@ function modifier_imba_mist_coil_mist_ally:DeclareFunctions()
 end
 
 function modifier_imba_mist_coil_mist_ally:OnTakeDamage(keys)
-	if keys.unit == self.parent then
+	if keys.target == self.parent then
 		self:SetStackCount(self:GetStackCount() + math.floor(keys.damage * self.damage_heal_pct + 0.5))
 	end
 end
@@ -998,7 +998,7 @@ function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if not IsServer() then return end
 	
     if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
-        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
+        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")}):SetStackCount(1)
 		
 		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("reduction_duration"), function()
 			local overchannel_modifier = self:GetParent():FindModifierByName("modifier_over_channel_reduction")
@@ -1060,7 +1060,10 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability_level = self:GetLevel()
-		local buff_duration = self:GetLevelSpecialValueFor("duration", ability_level)
+		local buff_duration = self:GetSpecialValueFor("duration")
+		if caster:HasScepter() then
+			buff_duration = self:GetSpecialValueFor("duration_scepter")
+		end
 		caster:AddNewModifier(caster, self, "modifier_imba_borrowed_time_buff_hot_caster", { duration = buff_duration })
 		local responses = {"abaddon_abad_borrowedtime_02","abaddon_abad_borrowedtime_03","abaddon_abad_borrowedtime_04","abaddon_abad_borrowedtime_05","abaddon_abad_borrowedtime_06","abaddon_abad_borrowedtime_07","abaddon_abad_borrowedtime_08","abaddon_abad_borrowedtime_09","abaddon_abad_borrowedtime_10","abaddon_abad_borrowedtime_11"}
 		if not caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS,nil,nil) then
@@ -1169,7 +1172,8 @@ modifier_imba_borrowed_time_buff_hot_caster = modifier_imba_borrowed_time_buff_h
 
 function modifier_imba_borrowed_time_buff_hot_caster:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 
 	return funcs
@@ -1227,6 +1231,27 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnDestroy()
 			if target:IsAlive() then
 				target:AddNewModifier(target, self:GetAbility(), "modifier_imba_borrowed_time_buff_mist", {duration = self.mist_duration})
 				target:FindModifierByName("modifier_imba_borrowed_time_buff_mist"):SetStackCount(self:GetStackCount())
+			end
+		end
+	end
+end
+
+function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
+	if IsServer() then
+		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() then
+			if not kv.unit.borrowed_time_damage_taken then
+				kv.unit.borrowed_time_damage_taken = 0
+			end
+
+			kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken + kv.damage
+
+			if kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") >= 1 then
+				print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter"))
+				print("Damage stored:", kv.unit.borrowed_time_damage_taken)
+				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") do
+					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken - self:GetAbility():GetSpecialValueFor("ally_threshold_scepter")
+					self:GetCaster():FindAbilityByName("imba_abaddon_mist_coil"):OnSpellStart(kv.unit, true)
+				end
 			end
 		end
 	end

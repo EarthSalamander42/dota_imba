@@ -380,7 +380,7 @@ function modifier_imba_enigma_eidolon:OnCreated( keys )
 end
 
 function modifier_imba_enigma_eidolon:GetModifierExtraHealthBonus() if IsServer() then return self.parent:GetMaxHealth() * self.trans_pct * 0.01 end end
-function modifier_imba_enigma_eidolon:GetModifierPhysicalArmorBonus() return self.parent:GetPhysicalArmorValue() * self.trans_pct * 0.01 end
+function modifier_imba_enigma_eidolon:GetModifierPhysicalArmorBonus() return self.parent:GetPhysicalArmorValue(false) * self.trans_pct * 0.01 end
 function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() return self.parent:GetIdealSpeed() * self.trans_pct * 0.01 end
 function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant()
 	if self.parent:HasModifier("modifier_imba_echo_rapier_haste") and IsServer() then

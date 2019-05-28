@@ -93,20 +93,20 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 	local caster = self:GetCaster()
 	if caster:IsIllusion() then return end
 	if IsServer() then
-		if caster.blink_icon then
-			if caster.blink_icon == "zuus" then caster.blink_icon = 100 end
-			self:SetStackCount(caster.blink_icon)
+		local blink_icon = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["blink"]["level"]
+		if blink_icon then
+			if blink_icon == "zuus" then blink_icon = 100 end
+			self:SetStackCount(blink_icon)
 		end
 	end
 
 	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
+		if self:GetStackCount() == 0 then
 			caster.blink_icon_client = nil
-		elseif icon == 100 then
+		elseif self:GetStackCount() == 100 then
 			caster.blink_icon_client = "zuus"
 		else
-			caster.blink_icon_client = icon
+			caster.blink_icon_client = self:GetStackCount()
 		end
 	end
 end

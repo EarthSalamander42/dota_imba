@@ -25,6 +25,8 @@
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_duration"                "GRAVELY MISTAKEN DURATION:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_armor_per_hit"           "GRAVELY MISTAKEN ARMOR PER INSTANCE:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN MAGIC RESISTANCE PER INSTANCE:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"RADIUS:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"#{DOTA_Tooltip_ability_dazzle_shallow_grave_aghanim_description}"
 
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave_Description"          "Protected from death for the duration."
@@ -78,6 +80,7 @@
 "DOTA_Tooltip_ability_imba_dazzle_bad_juju_armor_reduction"				"ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_dazzle_bad_juju_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dazzle_bad_juju_radius"						"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_aghanim_description"			"Grants access to the <font color='#FF7800'>Ressurection</font> spell, which brings heroes back from the dead."
 
 "DOTA_Tooltip_modifier_imba_dazzle_weave_buff"                          "Weave"
 "DOTA_Tooltip_modifier_imba_dazzle_weave_buff_Description"              "Gaining armor over time"

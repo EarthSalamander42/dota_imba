@@ -12,6 +12,7 @@
 		"Model"						"models/heroes/phantom_lancer/phantom_lancer.vmdl"
 		"ModelScale"				"0.840000"
 		"SoundSet"					"Hero_PhantomLancer"
+		"GibType"					"default"
 
 		//Picking Screen
 		"IsCustom"					"1"

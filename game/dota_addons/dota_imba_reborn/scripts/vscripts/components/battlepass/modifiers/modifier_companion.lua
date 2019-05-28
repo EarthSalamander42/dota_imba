@@ -47,7 +47,7 @@ function modifier_companion:OnCreated()
 		self.is_flying = false
 		self.set_final_pos = false
 
-		if GetMapName() == Map1v1() then
+		if GetMapName() == "imba_1v1" then
 			self:GetParent():ForceKill(false)
 			return
 		else
@@ -114,7 +114,7 @@ function modifier_companion:OnIntervalThink()
 		hero.companion = companion
 		local fountain
 
-		if GetMapName() == MapOverthrow() then
+		if GetMapName() == "imbathrow_3v3v3v3" then
 			fountain = Entities:FindByName(nil, "@overboss")
 		elseif GetMapName() == "imba_demo" then
 			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
@@ -123,6 +123,8 @@ function modifier_companion:OnIntervalThink()
 					break
 				end
 			end
+		elseif GetMapName() == "pudgewars_new" then
+			fountain = _G.rune_spell_caster_good
 		else
 			if hero:GetTeamNumber() == 2 then
 				fountain = GoodCamera

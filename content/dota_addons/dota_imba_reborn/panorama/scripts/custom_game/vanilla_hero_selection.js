@@ -165,6 +165,7 @@ function CheckForBannedHero() {
 (function() {
 	var PreGame = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("PreGame")
 	PreGame.style.opacity = "1";
+	PreGame.style.transitionDuration = "0.0s";
 
 	$.Schedule(1.0, InitHeroSelection);
 //	$.Schedule(1.0, OnUpdateHeroSelection);

@@ -1452,7 +1452,7 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 						params.target:Kill(self:GetAbility(), params.attacker)
 					end
 				else
-					local armor = params.target:GetPhysicalArmorValue()
+					local armor = params.target:GetPhysicalArmorValue(false)
 					local real_damage
 
 					if armor > 0 then

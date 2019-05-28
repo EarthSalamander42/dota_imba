@@ -124,7 +124,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"70 80 90 100"
 
 		"precache"
 		{
@@ -328,7 +328,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"8 9 10"
+				"movement_damage_pct"		"30 45 60"
 			}
 			"03"
 			{

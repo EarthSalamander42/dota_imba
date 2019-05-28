@@ -6,7 +6,9 @@ end
 require('addon_init')
 
 require('components/api/init')
-require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
+	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+end
 
 require('libraries/animations')
 require('libraries/keyvalues')
@@ -46,7 +48,7 @@ require('libraries/astar')
 
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
-
+	
 end
 
 function GameMode:OnFirstPlayerLoaded()
@@ -92,7 +94,7 @@ function GameMode:InitGameMode()
 end
 
 function GameMode:DonatorCompanionJS(event)
-	DonatorCompanion(event.ID, event.unit, event.js)
+	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
 end
 
 function GameMode:DonatorCompanionSkinJS(event)
@@ -226,52 +228,6 @@ function GameMode:SetupFrostivus()
 
 	if Entities:FindByName(nil, "dire_greevil") then
 		local greevil = CreateUnitByName("npc_imba_greevil_dire", Entities:FindByName(nil, "dire_greevil"):GetAbsOrigin(), true, nil, nil, 3)
-	end
-end
-
-function GameMode:PlayHeroTaunt(keys)
-	local hero = PlayerResource:GetSelectedHeroEntity(keys.ID)
-
-	if hero.can_cast_taunt == false then
-		-- Notification: You can cast it again in x seconds
-
-		return
-	end
-
-	if not Imbattlepass or not Imbattlepass.GetRewardUnlocked or not IMBATTLEPASS_LEVEL_REWARD then
-		return
-	end
-
-	local hero_short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-	local taunt_unlocked = false
-
-	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
-		if v[1] == hero_short_name.."_taunt" then
-			if Imbattlepass:GetRewardUnlocked(keys.ID) >= k then
-				taunt_unlocked = true
-
-				break
-			end
-		end
-	end
-
-	if taunt_unlocked == false then
-		-- Notification: you're level is too low or this hero have no taunt!
-
-		return
-	end
-
-	if not hero.can_cast_taunt then
-		hero.can_cast_taunt = true
-	end
-
-	if hero.can_cast_taunt == true then
-		hero.can_cast_taunt = false
-		hero:AddNewModifier(hero, nil, "modifier_imba_taunt", {duration=7.0})
-
-		Timers:CreateTimer(8.0, function()
-			hero.can_cast_taunt = true
-		end)
 	end
 end
 

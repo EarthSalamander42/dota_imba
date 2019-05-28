@@ -65,7 +65,7 @@
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> A %% of the damage taken by Abaddon's nearby allies will be redirected to him when Borrowed Time is active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "Curse of Avernus's Health Hex applies to all allies in Borrowed Pain radius while Borrowed Time is active."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "#{DOTA_Tooltip_ability_abaddon_borrowed_time_aghanim_description} Curse of Avernus's Health Hex applies to all allies in Borrowed Pain radius while Borrowed Time is active."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                 "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."

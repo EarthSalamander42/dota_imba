@@ -13,7 +13,11 @@ MergeTables(LinkedModifiers,{
 imba_bounty_hunter_shuriken_toss = imba_bounty_hunter_shuriken_toss or class({})
 
 function imba_bounty_hunter_shuriken_toss:GetCastRange()
-	return self:GetSpecialValueFor("cast_range")
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cast_range")
+	else
+		return self:GetSpecialValueFor("cast_range")
+	end
 end
 
 function imba_bounty_hunter_shuriken_toss:GetAbilityTextureName()

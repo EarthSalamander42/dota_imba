@@ -1254,7 +1254,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
 
-					if Imbattlepass and Imbattlepass:HasZuusArcana(self:GetCaster():GetPlayerID()) then
+					if Battlepass and Battlepass:HasZuusArcana(self:GetCaster():GetPlayerID()) then
 						Timers:CreateTimer(FrameTime(), function()
 							if not hero:IsAlive() then
 								local thundergod_kill_particle = ParticleManager:CreateParticle("particles/econ/items/zeus/arcana_chariot/zeus_arcana_kill_remnant.vpcf", PATTACH_WORLDORIGIN, nil)
