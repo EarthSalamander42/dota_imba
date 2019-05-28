@@ -135,7 +135,7 @@ end
 function modifier_sand_king_boss_caustic_finale:OnCreated( kv )
 	self.caustic_radius = self:GetAbility():GetSpecialValueFor( "caustic_radius" )
 	self.caustic_damage = self:GetAbility():GetSpecialValueFor( "caustic_damage" )
-	self.nArmorReductionPerStack = math.max( math.floor( self:GetAbility():GetSpecialValueFor( "caustic_armor_reduction_pct" ) * self:GetParent():GetPhysicalArmorValue() / 100 ), 1 )
+	self.nArmorReductionPerStack = math.max( math.floor( self:GetAbility():GetSpecialValueFor( "caustic_armor_reduction_pct" ) * self:GetParent():GetPhysicalArmorValue(false) / 100 ), 1 )
 	if IsServer() then
 		ParticleManager:ReleaseParticleIndex( ParticleManager:CreateParticle( "particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf", PATTACH_ABSORIGIN, self:GetParent() ) )
 	end

@@ -301,11 +301,16 @@ end
 --------------------------------------
 ---------    BRAIN SAP     -----------
 --------------------------------------
+LinkLuaModifier("modifier_imba_bane_brain_sap_buff", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brain_sap_mana", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brain_sap_baby_bane", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Brain Sap casting
 imba_bane_brain_sap = imba_bane_brain_sap or class({})
+
+function imba_bane_brain_sap:GetIntrinsicModifierName()
+	return "modifier_imba_bane_brain_sap_buff"
+end
 
 -- Brain Sap Spell Cast
 function imba_bane_brain_sap:OnSpellStart()
@@ -365,7 +370,12 @@ function imba_bane_brain_sap:OnSpellStart()
 		caster:Heal(sapdamage, caster)
 
 		-- Apply brain sap debuff
-		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration}):SetDuration(sapduration * (1 - target:GetStatusResistance()), true)
+		local real_duration = sapduration
+		if target.GetStatusResistance then
+			real_duration = sapduration * (1 - target:GetStatusResistance())
+		end
+
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = real_duration})
 
 		-- Emit brain sap particle
 		local sapFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN, caster)
@@ -406,6 +416,25 @@ end
 
 function imba_bane_brain_sap:GetAbilityTextureName()
 	return "bane_brain_sap"
+end
+
+modifier_imba_bane_brain_sap_buff = modifier_imba_bane_brain_sap_buff or class({})
+
+function modifier_imba_bane_brain_sap_buff:IsHidden() return true end
+
+function modifier_imba_bane_brain_sap_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
+	}
+	return funcs
+end
+
+function modifier_imba_bane_brain_sap_buff:GetModifierPercentageCasttime()
+	if self:GetCaster():HasScepter() then
+		return -self:GetAbility():GetSpecialValueFor("castpoint_scepter")
+	end
+
+	return 0
 end
 
 -- Brain_sap Debuff

@@ -268,8 +268,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"teleport_delay"	"6.0 5.0 4.0 3.0"
 			}
-			
-			
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -280,7 +278,6 @@
 				"var_type"			"FIELD_INTEGER"
 				"commonwealth_pct"	"22 28 34 40"
 			}
-			
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -290,6 +287,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"immortalize_max_units"	"1 2 3 4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_bonus"	"10 15 20 25"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"

@@ -231,7 +231,7 @@ function modifier_item_imba_vladmir_aura:OnAttackLanded( keys )
 
 		-- Calculate actual lifesteal amount
 		local damage = keys.damage
-		local target_armor = target:GetPhysicalArmorValue()
+		local target_armor = target:GetPhysicalArmorValue(false)
 		local heal = damage * lifesteal_amount * 0.01 * (1 - 0.06 * (target_armor / (1 + 0.06 * target_armor)))
 
 		-- If the attacker is an illusion, only draw the particle
@@ -437,7 +437,7 @@ function modifier_item_imba_vladmir_blood_aura:OnAttackLanded( keys )
 
 		-- Calculate actual lifesteal amount
 		local damage = keys.damage
-		local target_armor = target:GetPhysicalArmorValue()
+		local target_armor = target:GetPhysicalArmorValue(false)
 		local heal = damage * lifesteal_amount * 0.01 * (1 - 0.06 * (target_armor / (1 + 0.06 * target_armor)))
 
 		-- If the attacker is an illusion, only draw the particle

@@ -41,14 +41,7 @@ function item_imba_shivas_guard:OnSpellStart()
 	self:GetCaster():EmitSound("DOTA_Item.ShivasGuard.Activate")
 
 	-- Play particle
-	local blast_pfx
-	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-		blast_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	elseif self:GetCaster().shiva_blast_effect then 
-		blast_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	else
-		blast_pfx = ParticleManager:CreateParticle("particles/items2_fx/shivas_guard_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	end
+	local blast_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
@@ -80,12 +73,7 @@ function item_imba_shivas_guard:OnSpellStart()
 			-- If not, blast it
 			if not enemy_has_been_hit then
 				-- Play hit particle
-				local hit_pfx
-				if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-					hit_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
-				else
-					hit_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
-				end
+				local hit_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(hit_pfx, 1, enemy:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(hit_pfx)
@@ -135,13 +123,9 @@ function modifier_imba_shiva_handler:OnCreated()
 end
 
 function modifier_imba_shiva_handler:OnIntervalThink()
-	if self:GetCaster():IsIllusion() or not self:GetCaster().shiva_icon then return end
+	if self:GetCaster():IsIllusion() or not CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["level"] then return end
 	if IsServer() then
-		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-			self:SetStackCount(self:GetCaster():GetOwnerEntity().shiva_icon)
-		else
-			self:SetStackCount(self:GetCaster().shiva_icon)
-		end
+		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["level"])
 	end
 
 	if IsClient() then

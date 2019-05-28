@@ -1578,12 +1578,17 @@
 
 		"Ability10"					"special_bonus_imba_skeleton_king_1"
 		"Ability11"					"special_bonus_imba_skeleton_king_2"
-		"Ability12"					"special_bonus_imba_skeleton_king_3"
+		"Ability12"					"special_bonus_strength_15"
 		"Ability13"					"special_bonus_imba_skeleton_king_4"
-		"Ability14"					"special_bonus_imba_skeleton_king_5"
-		"Ability15"					"special_bonus_imba_skeleton_king_6"
-		"Ability16"					"special_bonus_imba_skeleton_king_7"
-		"Ability17"					"special_bonus_imba_skeleton_king_8"
+		"Ability14"					"special_bonus_imba_skeleton_king_6"
+		"Ability15"					"special_bonus_imba_skeleton_king_5"
+		"Ability16"					"special_bonus_imba_skeleton_king_9"
+		"Ability17"					"special_bonus_imba_skeleton_king_10"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_skeleton_king_3" // Wraithfire Burn (extremely meh and uncreative talent)
+		// "Ability16"					"special_bonus_imba_skeleton_king_7" // Wraithfire Blast summons Wraiths on all enemies hit
+		// "Ability17"					"special_bonus_imba_skeleton_king_8" // Mortal Strike criticals grant 10 Strength (meh talent)
 	}
 
 	//=================================================================================================================
@@ -1800,19 +1805,28 @@
 
 		"Ability1"					"imba_tiny_avalanche"
 		"Ability2"					"imba_tiny_toss"
-		"Ability3"					"imba_tiny_tree_grab"
-		"Ability4"					"imba_tiny_tree_throw"
+
+
 		"Ability5"					"imba_tiny_rolling_stone"
 		"Ability6"					"imba_tiny_grow"
 
 		"Ability10"					"special_bonus_imba_tiny_1"
 		"Ability11"					"special_bonus_imba_tiny_2"
-		"Ability12"					"special_bonus_imba_tiny_3"
-		"Ability13"					"special_bonus_imba_tiny_4"
-		"Ability14"					"special_bonus_imba_tiny_5"
-		"Ability15"					"special_bonus_imba_tiny_6"
+		"Ability12"					"special_bonus_hp_500"
+		"Ability13"					"special_bonus_imba_tiny_6"
+		"Ability14"					"special_bonus_unique_tiny_4"
+		"Ability15"					"special_bonus_imba_tiny_avalanche_cooldown"
 		"Ability16"					"special_bonus_imba_tiny_7"
 		"Ability17"					"special_bonus_imba_tiny_8"
+		
+		// Removed Abilities
+		//"Ability3"					"imba_tiny_tree_grab" // Buggy and has no IMBAfications
+		//"Ability7"					"imba_tiny_tree_throw" // Replace with vanilla Aghs
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_tiny_3" // Avalanche 400 Unit Projectile (what even is this talent...)
+		// "Ability13"					"special_bonus_imba_tiny_4" // -7s Tree Grab Cooldown (replaced with vanilla talent)
+		// "Ability14"					"special_bonus_imba_tiny_5" // Tree Throw knockbacks enemies on impact (vanilla ability now, plus wtf this talent is dumpster)
 	}
 
 	//=================================================================================================================

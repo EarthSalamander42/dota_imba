@@ -995,7 +995,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 		self.modifier_burrowed = "modifier_nyx_assassin_burrow"
 
 		-- Yes, i know. If you find another way to send a particle name clientside for the status effect i'll take it.
-		if Imbattlepass and IMBATTLEPASS_NYX_ASSASSIN and Imbattlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= IMBATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
+		if Battlepass and BATTLEPASS_NYX_ASSASSIN and Battlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
 			self:SetStackCount(1)
 		end
 

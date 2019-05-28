@@ -249,11 +249,7 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-			self.particle = ParticleManager:CreateParticle(self:GetParent():GetOwnerEntity().radiance_effect_owner, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		else
-			self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect_owner, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		end
+		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
@@ -280,11 +276,9 @@ function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
 
 		-- Particle creation
-		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-			self.particle = ParticleManager:CreateParticle(self:GetParent():GetOwnerEntity().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		else
-			self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		end
+		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["radiance"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 
 		-- Start thinking
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))
@@ -383,11 +377,9 @@ function modifier_imba_radiance_afterburn:OnCreated()
 		self.miss_chance = ability:GetSpecialValueFor("miss_chance")
 
 		-- Particle creation
-		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-			self.particle = ParticleManager:CreateParticle(self:GetParent():GetOwnerEntity().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		else
-			self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		end
+		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 
 		-- Start thinking
 		self:StartIntervalThink(think_interval)

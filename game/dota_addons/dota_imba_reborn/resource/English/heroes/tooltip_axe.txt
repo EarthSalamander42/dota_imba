@@ -1,0 +1,82 @@
+// Axe
+// Axe's Berserker's Call
+"DOTA_Tooltip_ability_imba_axe_berserkers_call"                        "Berserker's Call"
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_Description"            "Axe taunts nearby enemy units, forcing them to attack him, while he gains %bonus_armor% bonus armor during the duration.\n<font color='#FF7800'>Maddening Rage:</font> Enemies taunted by Berserker Call gain increased attack speed for the duration."
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_Note0"                  "Affects invisible and spell immune units, but not invulnerable enemies or towers."
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_Lore"                    "Mogul Khan's warcry taunts opponents into engaging in an unconquerable battle with the Axe."
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_axe_berserkers_call_bonus_as"                "ENEMY BONUS ATTACK SPEED:"
+
+"DOTA_Tooltip_modifier_imba_berserkers_call_buff_armor"                "Berserker's Call"
+"DOTA_Tooltip_modifier_imba_berserkers_call_buff_armor_Description"                 "Gains a huge armor bonus."
+
+"DOTA_Tooltip_modifier_imba_berserkers_call_debuff_cmd"                "Berserker's Call"
+"DOTA_Tooltip_modifier_imba_berserkers_call_debuff_cmd_Description"                 "Taunted, forced to attack your challenger. Attack speed has been increased."
+
+// Axe's Battle Hunger
+"DOTA_Tooltip_ability_imba_axe_battle_hunger"                          "Battle Hunger"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_Description"              "Enrages an enemy unit, causing it to be slowed and take damage over time until it kills <font color='##F7800'>enough</font> units or until it returns to its team's fountain or the debuff expires. Axe gains movement speed for each unit affected with Battle Hunger.\n<font color='#FF7800'>Advancing Hunger:</font> If no harm is done by the target for %pause_time% seconds, the duration is frozen.\n<font color='#FF7800'>Blinding Rage:</font> Every attack the target has a %maddening_chance_pct%% chance to attack another target in its attack range, unless attacking Axe himself.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_Lore"                      "Ordinary heroes cannot withstand Mogul Khan's rage for battle, such that it injures them until it is satisfied."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_Note0"                    "Denies are also counted towards dispelling Battle Hunger."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_slow"                      "%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_damage"                    "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_units"                    "UNITS TO DISPEL:"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_speed_bonus"              "%SPEED BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_scepter_damage_reduction"              "%SCEPTER DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_aghanim_description"                   "#{DOTA_Tooltip_ability_axe_battle_hunger_aghanim_description} Applies Battle Hunger on enemy heroes within a 700 AoE radius after a successful Culling Blade."
+
+"DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot"                  "Battle Hunger"
+"DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot_Description"                   "Slowed and taking damage. Duration will pause if no one is harmed by you for 2 seconds. On attack, you have a chance to attack a random target in range."
+
+"DOTA_Tooltip_modifier_imba_battle_hunger_buff_haste"                  "Battle Hunger"
+"DOTA_Tooltip_modifier_imba_battle_hunger_buff_haste_Description"                   "Gaining speed from enemies affected by Battle Hunger."
+
+// Axe's Counter Helix
+"DOTA_Tooltip_ability_imba_axe_counter_helix"                          "Counter Helix"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Description"              "When attacked, Axe has a chance to perform a helix counter attack, dealing damage to all nearby enemies.\n<font color='#FF7800'>Unceasing Top:</font> Counter Helix has no cooldown.\n<font color='#FF7800'>Brute Force:</font> When an enemy that is taunted by Berserker Call procs Counter Helix, it lets his guard down. Axe uses that chance to pierce through the flesh, dealing bonus damage.\n<font color='#FF7800'>Spin To Win:</font> On successful Counter Helix, you gain a stack of a buff (up to %stack_limit% stacks). Each stack increases radius by %radius_increase_per_stack%. Stacks last %stack_duration% and are refreshed on spin."
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Lore"                      "Axe is the only reinforcement this army needs."
+"DOTA_Tooltip_ability_imba_axe_counter_helix_radius"                    "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_proc_chance"              "%HELIX CHANCE:"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_base_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_taunted_damage_bonus_pct"              "%TAUNTED ENEMY BONUS DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks"                  "Spin To Win"
+"DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks_Description"                  "Each stack increases Counter Helix's radius."
+
+// Axe's Culling Blade
+"DOTA_Tooltip_ability_imba_axe_culling_blade"                          "Culling Blade"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_Description"              "Axe spots a weakness and strikes, instantly killing an enemy unit with low health, or dealing moderate damage otherwise. When an enemy hero is killed with Culling Blade, its cooldown is reset, and Axe and nearby allied units in %speed_aoe% radius gain bonus movement speed and attack speed.\n<font color='#FF7800'>War Spoils:</font> Killing an enemy hero with Culling Blade heals Axe by %max_health_kill_heal_pct%%% of his max health.\n<font color='#FF7800'>Dunkmaster:</font> Successfully killing an enemy with Culling Blade grants a stack of Dunkmaster (up to %stack_limit% stacks). Each stack increases Culling Blade's kill threshold by %threshold_increase%, as well as its max HP kill threshold by %threshold_max_hp_pct_increase%%%. Stacks are refreshed on a successful kill and last %stack_duration% seconds. If Culling Blade fails to kill a hero, all Dunkmaster stacks are lost."
+"DOTA_Tooltip_ability_imba_axe_culling_blade_Note0"                    "Ignores all buffs on the target, including Shallow Grave and False Promise."
+"DOTA_Tooltip_ability_imba_axe_culling_blade_Lore"                      "YOU GET NOTHING. GOOD DAY, SIR!"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_kill_threshold"            "KILL THRESHOLD:"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_kill_threshold_max_hp_pct"             "%HP THRESHOLD:"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_speed_bonus"              "%MOVE SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_as_bonus"                  "ATTACK SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_speed_duration"            "SPEED BONUS DURATION:"
+
+"DOTA_Tooltip_modifier_imba_culling_blade_buff_haste"                  "Culling Blade"
+"DOTA_Tooltip_modifier_imba_culling_blade_buff_haste_Description"                   "CULLED! Axe's manly display of force makes you faster!"
+
+"DOTA_Tooltip_modifier_imba_culling_blade_cull_stacks"                  "Dunkmaster"
+"DOTA_Tooltip_modifier_imba_culling_blade_cull_stacks_Description"                  "Each stack increases HP threshold and Max HP% threshold of Culling Blade."
+
+// Axe's Custom Talents
+"Dota_Tooltip_Ability_special_bonus_imba_axe_1"             "Battle Madness"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_1_Description"             "If a Battle Hungered enemy attacks an ally, ally receives Battle Hunger debuff."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_2"             "One Man Army"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_2_Description"             "Increases Axe's armor by 1 for every hit taken during Berseker's Call. The bonus armor lasts 3 additional seconds after Berserker Call has ended."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_3"             "Berserker's Rage"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_3_Description"             "Self casting Battle Hunger applies it to all targets under effect of Berserker's Call. Can only be self-cast during Berserker's Call."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_4"             "Death Helix"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_4_Description"             "Adds 30% of Axe's current strength to Counter Helix' damage."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_5"             "Tail Spin"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_5_Description"             "Counter Helix chance doubles, but each Counter Helix deals 66% of base damage."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_6"             "Recursive Spin"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_6_Description"             "When Counter Helix procs, it has 25% chance to immediately proc again."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_7"             "Armored Helix"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_7_Description"             "Counter Helix's damage is increased by 1 for each point of Armor Axe has."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_8"            "+500 Culling Blade Cast Range"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_9"				"Attacking Procs Counter Helix"

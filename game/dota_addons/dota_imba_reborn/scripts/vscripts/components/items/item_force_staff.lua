@@ -83,7 +83,7 @@ function modifier_item_imba_force_staff:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
 
 	if IsServer() then
-		self:SetStackCount(self:GetCaster().force_staff_icon)
+		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"])
 	end
 
 	if IsClient() then
@@ -129,12 +129,11 @@ function modifier_item_imba_force_staff_active:IgnoreTenacity()	return true end
 
 function modifier_item_imba_force_staff_active:OnCreated()
 	if not IsServer() then return end
-	self.effect = self:GetCaster().force_staff_effect
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 		return
 	end
-	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -245,7 +244,7 @@ function modifier_item_imba_hurricane_pike:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
 
 	if IsServer() then
-		self:SetStackCount(self:GetCaster().force_staff_icon)
+		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"])
 	end
 
 	if IsClient() then
@@ -328,8 +327,7 @@ function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
 		self:Destroy()
 		return
 	end
-	self.effect = self:GetCaster().force_staff_effect
-	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -375,8 +373,7 @@ function modifier_item_imba_hurricane_pike_force_enemy:IgnoreTenacity()	return t
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
 	if not IsServer() then return end
-	self.effect = self:GetCaster().force_staff_effect
-	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -419,8 +416,7 @@ function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriorit
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
 	if not IsServer() then return end
-	self.effect = self:GetCaster().force_staff_effect
-	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()

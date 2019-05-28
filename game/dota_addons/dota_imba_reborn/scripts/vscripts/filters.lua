@@ -162,7 +162,7 @@ function GameMode:ModifierFilter( keys )
 		if modifier_owner ~= nil then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
-			
+
 			-- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
 			local ignore_frantic = false
 
@@ -1166,7 +1166,7 @@ function GameMode:DamageFilter( keys )
 		
 		-- Another testing trying to remove invinicible 0 hp illusions
 		if attacker:IsIllusion() and attacker:GetHealth() <= 0 then
-			attacker:RemoveSelf()
+--			attacker:RemoveSelf()
 			keys.damage = 0
 		end
 	end

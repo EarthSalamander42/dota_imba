@@ -13,6 +13,7 @@
 		"ModelScale"				"0.87"
 		"SoundSet"					"Hero_Ursa"
 //		"Portrait"					"vgui/hud/heroportraits/portrait_treant"
+		"GibType"					"wood"
 
 		//Picking Screen
 		"IsCustom"					"1"

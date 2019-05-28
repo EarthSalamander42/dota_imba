@@ -22,29 +22,30 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_avalanche"                              "Avalanche"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_Description"                  "Bombards an area with rocks, stunning and damaging enemy land units.\n<font color='#FF7800'>Eruption:</font> Tiny's auto-attacks have a chance to trigger Avalanche passively with reduced power."
-"DOTA_Tooltip_ability_imba_tiny_avalanche_Note0"                        "Units affected by Toss receive Power Surge.\nAvalanche always hits after 0.5 seconds."
+"DOTA_Tooltip_ability_imba_tiny_avalanche_Description"                  "Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units. Avalanche does %toss_damage_multiplier%x damage to units being tossed.\n<font color='#FF7800'>Eruption:</font> Tiny's auto-attacks have a chance to trigger a reduced interval Avalanche passively."
+"DOTA_Tooltip_ability_imba_tiny_avalanche_Note0"                        "You can toss allies, but they don't take damage."
+"DOTA_Tooltip_ability_imba_tiny_avalanche_Note1"                        "Toss deals 33% of its damage to buildings."
 "DOTA_Tooltip_ability_imba_tiny_avalanche_Lore"                        "Inanimate rock becomes animate when called by the Stone Giant."
 "DOTA_Tooltip_ability_imba_tiny_avalanche_radius"                      "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_tiny_avalanche_stun_duration"                "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_tiny_avalanche_avalanche_damage"            "AVALANCHE DAMAGE:"
 "DOTA_Tooltip_ability_imba_tiny_avalanche_passive_chance"              "%PASSIVE CHANCE:"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_passive_ticks_tooltip"                    "%PASSIVE REDUCED DAMAGE:"
+"DOTA_Tooltip_ability_imba_tiny_avalanche_passive_ticks"				"PASSIVE NUMBER OF TICKS:"
 
 ////===============================================================================================================
 // Tiny's Toss
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_toss"                      "Toss"
-"DOTA_Tooltip_ability_imba_tiny_toss_Description"                      "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target <font color='#FF7800'>location</font> to deal damage where they land. If the tossed unit is an enemy, it will take an extra %bonus_damage_pct%%% damage. Toss does more damage with each stack of Rolling Stone. Deals %building_dmg%%% damage to buildings.\n<font color='#FF7800'>Mountain's Strength:</font> If no other units are available, Tiny will toss himself at the cost of %self_dmg_pct%%% of his max health.\n<font color='#FF7800'>Spatial Violation:</font> Can toss spell immune enemies.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_tiny_toss_aghanim_description"              "Tossed units will also bounce upwards, stunning enemies damaged for 1 second. Bounce deals 20% of Toss' damage to units in the landing area."
+"DOTA_Tooltip_ability_imba_tiny_toss_Description"                      "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target <font color='#FF7800'>location</font> to deal damage where they land. If the tossed unit is an enemy, it will take an extra %bonus_damage_pct%%% damage. Toss does more damage with each stack of Rolling Stone. Deals %building_dmg%%% damage to buildings.\n<font color='#FF7800'>Mountain's Strength:</font> If no other units are available, Tiny will toss himself at the cost of %self_dmg_pct%%% of his max health.\n<font color='#FF7800'>Spatial Violation:</font> Can toss spell immune enemies. //\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+//"DOTA_Tooltip_ability_imba_tiny_toss_aghanim_description"              "Tossed units will also bounce upwards, stunning enemies damaged for 1 second. Bounce deals 20% of Toss' damage to units in the landing area."
 "DOTA_Tooltip_ability_imba_tiny_toss_Lore"                              "Tiny's gargantuan stature allows him to catapult even the sturdiest of warriors."
 "DOTA_Tooltip_ability_imba_tiny_toss_radius"                            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_tiny_toss_duration"                          "TOSS DURATION:"
 "DOTA_Tooltip_ability_imba_tiny_toss_cast_range"                        "TOSS RANGE:"
 "DOTA_Tooltip_ability_imba_tiny_toss_toss_damage"                      "TOSS DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_toss_scepter_bounce_duration"          "SCEPTER BOUNCE DURATION:"
-"DOTA_Tooltip_ability_imba_tiny_toss_scepter_stun_duration"            "SCEPTER BOUNCE STUN DURATION:"
+//"DOTA_Tooltip_ability_imba_tiny_toss_scepter_bounce_duration"          "SCEPTER BOUNCE DURATION:"
+//"DOTA_Tooltip_ability_imba_tiny_toss_scepter_stun_duration"            "SCEPTER BOUNCE STUN DURATION:"
 
 ////===============================================================================================================
 // Tiny's Tree Grab
@@ -106,11 +107,15 @@
 // Tiny's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_1"            "+25% Passive Avalanche Damage and Stun Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_tiny_1"            "+1 Avalanche Eruption Tick"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_2"            "+10 Rolling Stone Stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_3"            "Avalanche 400 Unit Projectile"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_4"            "-7s Tree Grab Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_5"            "Tree Throw knockbacks enemies on impact"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_6"            "+200 Bonus Total Avalanche Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_tiny_6"            "+125 Avalanche Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_7"            "Toss Grabs All Units"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attack Speed Penalty Removed"
+"DOTA_Tooltip_ability_special_bonus_imba_tiny_avalanche_cooldown"			"-7s Avalanche Cooldown"
+
+// Vanilla override
+"DOTA_Tooltip_ability_tiny_tree_volley_Description"			"Every %interval% seconds a random tree within %tree_grab_radius% range of your hero will be thrown towards the targeted AOE. Deals %splash_pct%%% of your damage to enemies in that area."

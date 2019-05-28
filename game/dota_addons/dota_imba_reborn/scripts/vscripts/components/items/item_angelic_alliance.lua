@@ -157,7 +157,7 @@ function modifier_imba_angelic_alliance_passive_effect:GetModifierPhysicalArmorB
 	return armor
 end
 
-function modifier_imba_angelic_alliance_passive_effect:GetModifierMoveSpeedBonus_Percentage_Unique()
+function modifier_imba_angelic_alliance_passive_effect:GetModifierMoveSpeedBonus_Constant()
 	local ability = self:GetAbility()
 	local ms = ability:GetSpecialValueFor("movement_speed")
 	return ms

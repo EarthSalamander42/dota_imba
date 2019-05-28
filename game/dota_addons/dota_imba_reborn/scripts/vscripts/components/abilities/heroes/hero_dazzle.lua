@@ -285,8 +285,20 @@ LinkLuaModifier( "modifier_imba_dazzle_post_shallow_grave_buff", "components/abi
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_aura_talent", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_particle", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
 
-function imba_dazzle_shallow_grave:GetAbilityTextureName()
-	return "dazzle_shallow_grave"
+function imba_dazzle_shallow_grave:GetAOERadius()
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_radius")
+	end
+
+	return 0
+end
+
+function imba_dazzle_shallow_grave:GetBehavior()
+	if self:GetCaster():HasScepter() then
+		return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+	end
+
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 end
 
 function imba_dazzle_shallow_grave:GetCastRange()
@@ -304,7 +316,14 @@ function imba_dazzle_shallow_grave:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
 		EmitSoundOn("Hero_Dazzle.Shallow_Grave", target)
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
+		if self:GetCaster():HasScepter() then
+			local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetAOERadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, target in pairs(allies) do
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
+			end
+		else
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
+		end
 	end
 end
 
@@ -1755,6 +1774,29 @@ if imba_dazzle_bad_juju == nil then imba_dazzle_bad_juju = class({}) end
 
 function imba_dazzle_bad_juju:GetIntrinsicModifierName()
 	return "modifier_imba_dazzle_bad_juju"
+end
+
+function imba_dazzle_bad_juju:OnInventoryContentsChanged()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ressurection = caster:FindAbilityByName("imba_dazzle_ressurection")
+
+		if ressurection then
+			if caster:HasScepter() then
+				ressurection:SetLevel(1)
+				ressurection:SetHidden(false)
+				if not caster:HasModifier("modifier_imba_dazzle_ressurection_layout") then
+					caster:AddNewModifier(caster, self, "modifier_imba_dazzle_ressurection_layout", {})
+				end
+			else
+				if ressurection:GetLevel() > 0 then
+					ressurection:SetLevel(0)
+					ressurection:SetHidden(true)
+					caster:RemoveModifierByName("modifier_imba_dazzle_ressurection_layout")
+				end
+			end
+		end
+	end
 end
 
 LinkLuaModifier("modifier_imba_dazzle_bad_juju", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)

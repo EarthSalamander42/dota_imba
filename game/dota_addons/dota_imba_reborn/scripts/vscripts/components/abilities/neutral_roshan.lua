@@ -181,8 +181,26 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
 			end
 		end
-		
+
 		if GAME_ROSHAN_KILLS >= 3 then
+			if RandomInt(1, 100) > 50 then
+				for i = 1, GAME_ROSHAN_KILLS -2 do
+					local item = CreateItem("item_refresher_shard", nil, nil)
+					local drop = CreateItemOnPositionSync(pos, item)
+					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+				end
+			else
+				local item = CreateItem("item_ultimate_scepter_2", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+			end
+		end
+
+		if GAME_ROSHAN_KILLS >= 4 then
+			local item = CreateItem("item_ultimate_scepter_2", nil, nil)
+			local drop = CreateItemOnPositionSync(pos, item)
+			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+
 			for i = 1, GAME_ROSHAN_KILLS -2 do
 				local item = CreateItem("item_refresher_shard", nil, nil)
 				local drop = CreateItemOnPositionSync(pos, item)

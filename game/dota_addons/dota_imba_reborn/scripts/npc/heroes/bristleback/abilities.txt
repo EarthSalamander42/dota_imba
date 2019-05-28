@@ -77,17 +77,12 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"goo_duration_creep"			"10.0"
+				"goo_duration_creep"	"10.0"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"				"800"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"				"800"
+				"radius_scepter"		"900"
 			}
 			"10"
 			{

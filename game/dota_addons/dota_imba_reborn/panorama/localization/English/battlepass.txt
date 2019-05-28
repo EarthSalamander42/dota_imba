@@ -121,6 +121,13 @@
 "battlepass_ursa_immortal"				"#{DOTA_Item_The_Alpine_Stalkers_Set}"
 "battlepass_leshrac_immortal"			"Tormented Crown"
 "battlepass_death_prophet_immortal"		"Mask of Mortis"
+"battlepass_maelstorm"					"Gold Maelstorm"
+"battlepass_maelstorm2"					"Red Maelstorm"
+"battlepass_maelstorm3"					"Water Maelstorm"
+"battlepass_maelstorm4"					"Emerald Maelstorm"
+"battlepass_maelstorm5"					"Overgrown Maelstorm"
+"battlepass_earthshaker_arcana"			"Planetfall (Celestial Summons)"
+"battlepass_earthshaker_arcana2"		"Planetfall (Burning Descent)"
 
 //Donator Tab
 "donator_companion"				"Companion"

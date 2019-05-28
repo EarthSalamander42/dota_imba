@@ -12,11 +12,9 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
-require('components/settings/settings_donator')
-
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.14"
+GAME_VERSION = "7.14b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -35,7 +33,7 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = true
+	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
 end
@@ -310,34 +308,40 @@ CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMa
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 
 USE_CUSTOM_HERO_LEVELS = true	-- Should we allow heroes to have custom levels?
-XP_PER_LEVEL_TABLE = {}			-- XP per level table (only active if custom hero levels are enabled)
 
--- Vanilla
-XP_PER_LEVEL_TABLE[1] =		0		-- +0
-XP_PER_LEVEL_TABLE[2] =		200		-- +200
-XP_PER_LEVEL_TABLE[3] =		600		-- +400
-XP_PER_LEVEL_TABLE[4] =		1080	-- +480
-XP_PER_LEVEL_TABLE[5] =		1680	-- +600
-XP_PER_LEVEL_TABLE[6] =		2300	-- +620
-XP_PER_LEVEL_TABLE[7] =		2940	-- +640
-XP_PER_LEVEL_TABLE[8] =		3600	-- +660
-XP_PER_LEVEL_TABLE[9] =		4280	-- +680
-XP_PER_LEVEL_TABLE[10] =	5080	-- +800
-XP_PER_LEVEL_TABLE[11] =	5900	-- +820
-XP_PER_LEVEL_TABLE[12] =	6740	-- +840
-XP_PER_LEVEL_TABLE[13] =	7640	-- +900
-XP_PER_LEVEL_TABLE[14] =	8865	-- +1225
-XP_PER_LEVEL_TABLE[15] =	10115	-- +1250
-XP_PER_LEVEL_TABLE[16] =	11390	-- +1275
-XP_PER_LEVEL_TABLE[17] =	12690	-- +1300
-XP_PER_LEVEL_TABLE[18] =	14015	-- +1325
-XP_PER_LEVEL_TABLE[19] =	15415	-- +1400
-XP_PER_LEVEL_TABLE[20] =	16905	-- +1490
-XP_PER_LEVEL_TABLE[21] =	18405	-- +1500
-XP_PER_LEVEL_TABLE[22] =	20155	-- +1750
-XP_PER_LEVEL_TABLE[23] =	22155	-- +2000
-XP_PER_LEVEL_TABLE[24] =	24405	-- +2250
-XP_PER_LEVEL_TABLE[25] =	26905	-- +2500
+-- Vanilla xp increase per level
+local vanilla_xp = {}
+vanilla_xp[1]	= 0
+vanilla_xp[2]	= 200
+vanilla_xp[3]	= 400
+vanilla_xp[4]	= 480
+vanilla_xp[5]	= 580
+vanilla_xp[6]	= 600
+vanilla_xp[7]	= 640
+vanilla_xp[8]	= 660
+vanilla_xp[9]	= 680
+vanilla_xp[10]	= 800
+vanilla_xp[11]	= 820
+vanilla_xp[12]	= 840
+vanilla_xp[13]	= 900
+vanilla_xp[14]	= 1225
+vanilla_xp[15]	= 1250
+vanilla_xp[16]	= 1275
+vanilla_xp[17]	= 1300
+vanilla_xp[18]	= 1325
+vanilla_xp[19]	= 1500
+vanilla_xp[20]	= 1590
+vanilla_xp[21]	= 1600
+vanilla_xp[22]	= 1850
+vanilla_xp[23]	= 2100
+vanilla_xp[24]	= 2350
+vanilla_xp[25]	= 2600
+
+XP_PER_LEVEL_TABLE = {}			-- XP per level table (only active if custom hero levels are enabled)
+XP_PER_LEVEL_TABLE[1] = 0
+for i = 2, 25 do
+	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + vanilla_xp[i]
+end
 
 -- Was using GetRespawnTime() but Meepo respawn time is always 3, so let's use static values instead...
 RESPAWN_TIME_VANILLA = {}
@@ -470,15 +474,6 @@ STATUS_RESISTANCE_IGNORE_MODIFIERS = {
 	""
 }
 
-SHARED_NODRAW_MODIFIERS = {
-	"modifier_item_shadow_amulet_fade",
-	"modifier_monkey_king_tree_dance_hidden",
-	"modifier_monkey_king_transform",
-	"modifier_pangolier_gyroshell",
-	"modifier_smoke_of_deceit",
-	"modifier_mutation_monkey_business_transform",
-}
-
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
 	"models/heroes/crystal_maiden/crystal_maiden_staff.vmdl",
@@ -563,9 +558,6 @@ IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_slardar",
 	"npc_dota_hero_spirit_breaker"
 }
-
-IMBA_WEATHER_EFFECT = {}
-IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_ABILITIES_IGNORE_CDR = {
 	"imba_venomancer_plague_ward"

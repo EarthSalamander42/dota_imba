@@ -21,7 +21,7 @@ function imba_clinkz_strafe:GetCooldown(level)
 		local caster = self:GetCaster()
 		local duration = self:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_clinkz_9")
 		local modifier_mount = "modifier_imba_strafe_mount"
-		
+
 		-- Assign correct cooldown. No need to update the UI
 		if self.time_remaining ~= nil then  
 			local time_remaining = self.time_remaining
@@ -780,6 +780,14 @@ function modifier_imba_skeleton_walk_invis:OnCreated()
 	self.spook_distance_inc = self:GetAbility():GetSpecialValueFor("spook_distance_inc")
 	self.spook_added_duration = self:GetAbility():GetSpecialValueFor("spook_added_duration")    
 	self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
+	self.scepter_bonus = 0
+	if self:GetCaster():HasScepter() then
+		self.scepter_bonus = self:GetAbility():GetSpecialValueFor("scepter_bonus")
+
+		if not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
+		end
+	end
 
 	-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.
 	if IsServer() then
@@ -868,8 +876,13 @@ function modifier_imba_skeleton_walk_invis:DeclareFunctions()
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() > 0 then
-		return 700
+--	if self:GetStackCount() > 0 then
+--		return 700
+--	end
+
+	-- Really, still not working?
+	if self:GetParent():HasScepter() then
+		return 5000
 	end
 end
 
@@ -878,7 +891,7 @@ function modifier_imba_skeleton_walk_invis:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_bonus_pct + self:GetStackCount()
+	return self.ms_bonus_pct + self:GetStackCount() + self.scepter_bonus
 end
 
 function modifier_imba_skeleton_walk_invis:OnAbilityExecuted(keys)
@@ -938,10 +951,22 @@ end
 
 function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
+		if self:GetCaster():HasScepter() then
+			for i = 1, self:GetAbility():GetSpecialValueFor("scepter_skeleton_count") do
+				-- todo: spawn them on left and right of clinkz pos
+				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)
+				local archer = CreateUnitByName("npc_dota_clinkz_skeleton_archer", pos, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			end
+
+			if self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+				self:GetParent():RemoveModifierByName("modifier_bloodseeker_thirst")
+			end
+		end
+
 		-- #6 Talent: Skeleton Walk move speed persists for a small period
 		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_6") then
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_talent_ms, {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_6")})
-		end        
+		end
 
 		-- Only apply if Clinkz wasn't detected before removing modifier
 		if self.detected then
@@ -955,7 +980,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 
 		-- Play cast sound, yes, again
 		EmitSoundOn(self.sound_cast, self:GetParent())
-		
+
 		-- Find nearby enemies
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 										  self:GetParent():GetAbsOrigin(),
@@ -1656,7 +1681,7 @@ function modifier_imba_death_pact_bonus_spirited:OnCreated()
 		self:SetStackCount(self.spirit_damage)
 	end
 
-	self.spirit_armor = self:GetCaster():GetPhysicalArmorValue() 
+	self.spirit_armor = self:GetCaster():GetPhysicalArmorValue(false) 
 end
 
 -- Check if there's any tax to collect.

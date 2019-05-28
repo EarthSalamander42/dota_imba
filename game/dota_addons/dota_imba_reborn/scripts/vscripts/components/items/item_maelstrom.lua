@@ -199,18 +199,16 @@ function modifier_item_imba_mjollnir_static:IsHidden() return false end
 function modifier_item_imba_mjollnir_static:IsDebuff() return false end
 function modifier_item_imba_mjollnir_static:IsPurgable() return true end
 
--- Modifier particle
-function modifier_item_imba_mjollnir_static:GetEffectName()
-	return "particles/items2_fx/mjollnir_shield.vpcf" end
-
-function modifier_item_imba_mjollnir_static:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW end
-
 -- Start playing sound and store ability parameters
 function modifier_item_imba_mjollnir_static:OnCreated()
 	if IsServer() then
 		self:GetParent():EmitSound("DOTA_Item.Mjollnir.Loop")
 		self.static_cooldown = false
+
+		if not self.pfx then
+			self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
+		end
 	end
 end
 
@@ -224,6 +222,11 @@ function modifier_item_imba_mjollnir_static:OnDestroy()
 	if IsServer() then
 		StopSoundEvent("DOTA_Item.Mjollnir.Loop", self:GetParent())
 		self:GetParent():RemoveModifierByName("modifier_item_imba_mjollnir_static_counter")
+
+		if self.pfx then
+			ParticleManager:DestroyParticle(self.pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.pfx)
+		end
 	end
 end
 
@@ -266,7 +269,7 @@ function modifier_item_imba_mjollnir_static:OnTakeDamage( keys )
 			for _, enemy in pairs(nearby_enemies) do
 
 				-- Play particle
-				local static_pfx = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, shield_owner)
+				local static_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, shield_owner)
 				ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
 				ParticleManager:ReleaseParticleIndex(static_pfx)
@@ -460,18 +463,16 @@ function modifier_item_imba_jarnbjorn_static:GetTexture()
 	return "modifiers/imba_jarnbjorn"
 end
 
--- Modifier particle
-function modifier_item_imba_jarnbjorn_static:GetEffectName()
-	return "particles/items2_fx/jarnbjorn_shield.vpcf" end
-
-function modifier_item_imba_jarnbjorn_static:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW end
-
 -- Start playing sound and store ability parameters
 function modifier_item_imba_jarnbjorn_static:OnCreated()
 	if IsServer() then
 		self:GetParent():EmitSound("DOTA_Item.Mjollnir.Loop")
 		self.static_cooldown = false
+
+		if not self.pfx then
+			self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
+		end
 	end
 end
 
@@ -485,6 +486,11 @@ function modifier_item_imba_jarnbjorn_static:OnDestroy()
 	if IsServer() then
 		StopSoundEvent("DOTA_Item.Mjollnir.Loop", self:GetParent())
 		self:GetParent():RemoveModifierByName("modifier_item_imba_jarnbjorn_static_counter")
+
+		if self.pfx then
+			ParticleManager:DestroyParticle(self.pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.pfx)
+		end
 	end
 end
 
@@ -526,7 +532,7 @@ function modifier_item_imba_jarnbjorn_static:OnTakeDamage( keys )
 			for _, enemy in pairs(nearby_enemies) do
 
 				-- Play particle
-				local static_pfx = ParticleManager:CreateParticle("particles/item/jarnbjorn/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, shield_owner)
+				local static_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, shield_owner)
 				ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
 				ParticleManager:ReleaseParticleIndex(static_pfx)
@@ -630,13 +636,7 @@ end
 
 -- One bounce. Particle + damage
 function ZapThem(caster, ability, source, target, damage)
-	-- Draw particle
-	local particle = "particles/items_fx/chain_lightning.vpcf"
-	if ability:GetAbilityName() == "item_imba_jarnbjorn" then
-		particle = "particles/items_fx/chain_lightning_jarnbjorn.vpcf"
-	end
-
-	local bounce_pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, source)
+	local bounce_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"], PATTACH_ABSORIGIN_FOLLOW, source)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 1, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(1, 1, 1))

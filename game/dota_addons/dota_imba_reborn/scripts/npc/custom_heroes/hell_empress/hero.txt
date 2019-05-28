@@ -12,6 +12,7 @@
 		"Model"						"models/heroes/abyssal_underlord/abyssal_underlord_v2.vmdl"
 		"ModelScale"				"1.080000"
 		"SoundSet"					"Hero_AbyssalUnderlord"
+		"GibType"					"fire"
 
 		//Picking Screen
 		"IsCustom"					"1"
