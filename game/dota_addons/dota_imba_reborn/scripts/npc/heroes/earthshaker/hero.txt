@@ -12,5 +12,7 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability1"		"earthshaker_fissure_lua"
+//		"Ability2"		"earthshaker_enchant_totem_lua"
+//		"Ability3"		"earthshaker_aftershock_lua"
 	}
 }

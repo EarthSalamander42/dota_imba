@@ -780,6 +780,14 @@ function modifier_imba_skeleton_walk_invis:OnCreated()
 	self.spook_distance_inc = self:GetAbility():GetSpecialValueFor("spook_distance_inc")
 	self.spook_added_duration = self:GetAbility():GetSpecialValueFor("spook_added_duration")    
 	self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
+	self.scepter_bonus = 0
+	if self:GetCaster():HasScepter() then
+		self.scepter_bonus = self:GetAbility():GetSpecialValueFor("scepter_bonus")
+
+		if not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
+		end
+	end
 
 	-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.
 	if IsServer() then
@@ -868,8 +876,13 @@ function modifier_imba_skeleton_walk_invis:DeclareFunctions()
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() > 0 then
-		return 700
+--	if self:GetStackCount() > 0 then
+--		return 700
+--	end
+
+	-- Really, still not working?
+	if self:GetParent():HasScepter() then
+		return 5000
 	end
 end
 
@@ -878,7 +891,7 @@ function modifier_imba_skeleton_walk_invis:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_bonus_pct + self:GetStackCount()
+	return self.ms_bonus_pct + self:GetStackCount() + self.scepter_bonus
 end
 
 function modifier_imba_skeleton_walk_invis:OnAbilityExecuted(keys)
@@ -939,10 +952,14 @@ end
 function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
 		if self:GetCaster():HasScepter() then
-			for i = 1, 2 do
+			for i = 1, self:GetAbility():GetSpecialValueFor("scepter_skeleton_count") do
 				-- todo: spawn them on left and right of clinkz pos
 				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)
 				local archer = CreateUnitByName("npc_dota_clinkz_skeleton_archer", pos, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			end
+
+			if self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+				self:GetParent():RemoveModifierByName("modifier_bloodseeker_thirst")
 			end
 		end
 

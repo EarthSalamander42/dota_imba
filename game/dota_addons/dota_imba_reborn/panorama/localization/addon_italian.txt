@@ -33,6 +33,8 @@
 	"battlepass_dark_willow_taunt" "Provocazione: Lancio del bouquet"
 	"battlepass_death_prophet_immortal" "Mask of Mortis"
 	"battlepass_drow_ranger_immortal" "Reaper's Wreath"
+	"battlepass_earthshaker_arcana" "Planetfall (Celestial Summons)"
+	"battlepass_earthshaker_arcana2" "Planetfall (Burning Descent)"
 	"battlepass_earthshaker_immortal" "Judgement of the Fallen"
 	"battlepass_enigma_immortal" "Manufatto dell'Abisso del Mondo"
 	"battlepass_enigma_mythical" "Il Maelstrom Vorticoso"

@@ -103,6 +103,8 @@
 			<Image src="file://panorama/images/custom_game/battlepass/death_prophet_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_arcana.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_arcana2.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
@@ -118,6 +120,8 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_lina_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_wisp_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_zuus_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana1.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />

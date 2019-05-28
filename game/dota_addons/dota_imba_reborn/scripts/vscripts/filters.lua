@@ -1166,7 +1166,7 @@ function GameMode:DamageFilter( keys )
 		
 		-- Another testing trying to remove invinicible 0 hp illusions
 		if attacker:IsIllusion() and attacker:GetHealth() <= 0 then
-			-- attacker:RemoveSelf() -- Crash source?...
+--			attacker:RemoveSelf()
 			keys.damage = 0
 		end
 	end

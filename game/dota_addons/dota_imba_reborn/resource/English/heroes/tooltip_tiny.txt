@@ -116,3 +116,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_7"            "Toss Grabs All Units"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attack Speed Penalty Removed"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_avalanche_cooldown"			"-7s Avalanche Cooldown"
+
+// Vanilla override
+"DOTA_Tooltip_ability_tiny_tree_volley_Description"			"Every %interval% seconds a random tree within %tree_grab_radius% range of your hero will be thrown towards the targeted AOE. Deals %splash_pct%%% of your damage to enemies in that area."
