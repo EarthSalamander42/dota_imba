@@ -45,6 +45,10 @@ modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy	= class({})
 -- CHARGE OF DARKNESS --
 ------------------------
 
+function imba_spirit_breaker_charge_of_darkness:GetAssociatedSecondaryAbilities()
+	return "imba_spirit_breaker_greater_bash"
+end
+
 function imba_spirit_breaker_charge_of_darkness:GetIntrinsicModifierName()
 	return "modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker"
 end
@@ -135,6 +139,20 @@ end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion( me, dt )
 	if not IsServer() then return end
+	
+	-- Rubick/Morphling stuff I guess
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
+	
+	-- Why is this dispellable
+	if not self:GetParent():FindModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster()) then
+		local movespeed_break_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_bloodseeker_thirst", {})
+		
+		-- Attempts to differentiate it from Bloodseeker's own Thirst modifier for edge case scenarios...
+		movespeed_break_modifier.charge_modifier = 1
+	end
 	
 	-- "If the target dies during the charge, it is transferred to the nearest valid target within 4000 range of the previous target."
 	if not self.target:IsAlive() then
@@ -791,6 +809,10 @@ end
 -------------------
 -- NETHER STRIKE --
 -------------------
+
+function imba_spirit_breaker_nether_strike:GetAssociatedSecondaryAbilities()
+	return "imba_spirit_breaker_greater_bash"
+end
 
 function imba_spirit_breaker_nether_strike:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES + DOTA_ABILITY_BEHAVIOR_AUTOCAST

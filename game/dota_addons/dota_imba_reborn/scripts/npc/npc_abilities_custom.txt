@@ -38549,7 +38549,6 @@
 		"SpellImmunityType"     "SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityTextureName"    "custom/ronin_guard"
 		"ScriptFile"			"components/abilities/heroes/hero_sohei.lua"
-		"MaxLevel"              "6"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
