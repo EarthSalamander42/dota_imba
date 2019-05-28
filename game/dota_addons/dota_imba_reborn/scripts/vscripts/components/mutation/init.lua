@@ -10,7 +10,7 @@ end
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		Timers:CreateTimer(0.5, function()
-			if GameRules:GetCustomGameDifficulty() ~= 2 then return end
+			if GameMode:GetCustomGamemode() ~= 2 then return end
 
 			require('components/mutation/util')
 			require('components/mutation/events')
@@ -24,7 +24,13 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 --				Mutation:ARDM()
 --			end
 		end)
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+	end
+
+	if GameRules:State_Get() > DOTA_GAMERULES_STATE_HERO_SELECTION then
+		if GameMode:GetCustomGamemode() ~= 2 then return end
+	end
+
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		Timers:CreateTimer(function()
 			Mutation:OnThink()
 

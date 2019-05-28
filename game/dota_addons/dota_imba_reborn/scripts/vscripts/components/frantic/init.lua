@@ -3,10 +3,10 @@ LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_fran
 ListenToGameEvent('game_rules_state_change', function(keys)
 	-- Minor delay is required as the "custom game difficulty" is not initialized on the exact frame of game rule state change
 	Timers:CreateTimer(FrameTime(), function()
-		--	print("Gamemode:", GameRules:GetCustomGameDifficulty())
+		--	print("Gamemode:", GameMode:GetCustomGamemode())
 		
 		-- If Super Frantic is not selected, do not run the remaining code
-		if GameRules:GetCustomGameDifficulty() ~= 3 then
+		if GameMode:GetCustomGamemode() ~= 3 then
 			return
 		end
 

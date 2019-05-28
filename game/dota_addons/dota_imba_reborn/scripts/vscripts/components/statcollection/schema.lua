@@ -179,7 +179,7 @@ function GetItemSlotIMBA(hero, slot)
 end
 
 function GetCustomGameVote()
-	local vote = GameRules:GetCustomGameDifficulty()
+	local vote = GameMode:GetCustomGamemode()
 
 	local gamemode = {}
 	gamemode[1] = "All Pick"
