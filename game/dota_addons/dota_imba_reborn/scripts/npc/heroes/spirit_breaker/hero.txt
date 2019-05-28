@@ -1,0 +1,37 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Spirit Breaker
+	//=================================================================================================================
+	"npc_dota_hero_spirit_breaker"
+	{
+		"override_hero"				"npc_dota_hero_spirit_breaker"
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability1"		"imba_spirit_breaker_charge_of_darkness"
+		"Ability2"		"imba_spirit_breaker_bulldoze"
+		"Ability3"		"imba_spirit_breaker_greater_bash"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_spirit_breaker_nether_strike"
+		
+		"Ability10"		"special_bonus_night_vision_600"
+		"Ability11"		"special_bonus_armor_5"
+		"Ability12"		"special_bonus_hp_regen_15"
+		"Ability13"		"special_bonus_attack_damage_40"
+		"Ability14"		"special_bonus_imba_spirit_breaker_charge_speed" // Bonus charge speed
+		"Ability15"		"special_bonus_imba_spirit_breaker_bulldoze_cooldown"
+		"Ability16"		"special_bonus_imba_spirit_breaker_bash_chance"
+		"Ability17"		"special_bonus_imba_spirit_breaker_bonus_health"
+
+		// Removed Talents
+		// "Ability14"		"special_bonus_unique_spirit_breaker_3" // +15% Greater Bash Damage (vanilla to IMBA boost pretty much covers this talent)
+		// "Ability15"		"special_bonus_unique_spirit_breaker_2" // -7s Bulldoze Cooldown (handled by custom talent)
+		// "Ability16"		"special_bonus_unique_spirit_breaker_1" // +25% Greater Bash Chance (handled by custom talent)
+		// "Ability17"		"special_bonus_hp_800" // Doesn't go higher than 800 in vanilla talents, so gotta make a custom one
+	}
+}
