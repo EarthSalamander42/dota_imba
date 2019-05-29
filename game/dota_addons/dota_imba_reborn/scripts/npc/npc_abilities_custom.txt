@@ -28,6 +28,7 @@
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
+#base heroes/tidehunter/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt

@@ -776,6 +776,24 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_spirit_breaker_bonus_health"
 							}
 							upgraded = true
+						elseif string.find(text, 'tide') and hero:GetName() == "npc_dota_hero_tidehunter" then
+							ability_set = {
+								[0] = "imba_tidehunter_gush",
+								[1] = "imba_tidehunter_kraken_shell",
+								[2] = "imba_tidehunter_anchor_smash",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_tidehunter_ravage",
+								[6] = "special_bonus_movement_speed_20",
+								[7] = "special_bonus_unique_tidehunter_2",
+								[8] = "special_bonus_exp_boost_40",
+								[9] = "special_bonus_unique_tidehunter_3",
+								[10] = "special_bonus_unique_tidehunter_4",
+								[11] = "special_bonus_unique_tidehunter",
+								[12] = "special_bonus_cooldown_reduction_25",
+								[13] = "special_bonus_attack_damage_250"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
