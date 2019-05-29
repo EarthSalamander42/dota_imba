@@ -154,7 +154,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		}
 	}
 
-//	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
+	var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
+	if (playerId == Game.GetLocalPlayerID()) {
+		donatorPanel.style.boxShadow = 'inset #c3b9d855 0px 0px 0px 1px';
+	}
 
 	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
 
