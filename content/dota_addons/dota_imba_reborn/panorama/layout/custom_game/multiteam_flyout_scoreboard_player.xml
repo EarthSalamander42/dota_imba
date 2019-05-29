@@ -9,6 +9,7 @@
 	</scripts>
 
 	<Panel class="PlayerRow">
+		<Panel id="DonatorOverlay" />
 		<Panel id="PlayerRowContainer">
 			<Panel class="ScoreCol_DisplayPic ScoreboardPanel">
 				<Panel id="PlayerColorBar" />
@@ -28,14 +29,14 @@
 			</Panel>
 			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel">
 			</Panel>
+			<Panel class="ScoreCol_WinRate ScoreboardPanel">
+				<Label id="Rank" text="N/A" />
+			</Panel>
 			<Panel class="ScoreCol_ImbaImr5v5 ScoreboardPanel">
 				<Label id="TeammateIMRAmount" text="N/A" />
 			</Panel>
 			<Panel class="ScoreCol_ImbaImr10v10 ScoreboardPanel">
 				<Label id="TeammateIMR10v10Amount" text="N/A" />
-			</Panel>
-			<Panel class="ScoreCol_Gold ScoreboardPanel">
-				<Label id="TeammateGoldAmount" text="N/A" />
 			</Panel>
 			<Panel id="KillsContainer" class="ScoreCol_Kills ScoreboardPanel">
 				<Label id="Kills" text="N/A" />
@@ -46,7 +47,6 @@
 			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
 				<Label id="Assists" text="N/A" />
 			</Panel>
-			<Panel id="UltimateIndicator" class="ScoreCol_Ultimate UltimateIndicatorShared" />
 			<Panel class="ScoreCol_Buttons ScoreboardPanel">
 				<Button id="BtnMuteVoice" onactivate="ToggleMute();" onmouseover="ShowToolTipMute();" onmouseout="HideToolTips();"/>
 				<Button id="BtnShareUnit" onactivate="ToggleShareUnit();" onmouseover="ShowToolTipShareUnit();" onmouseout="HideToolTips();"/>

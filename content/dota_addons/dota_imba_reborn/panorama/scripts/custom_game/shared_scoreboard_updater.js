@@ -57,14 +57,23 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		xp: "ImbaXP" + playerId,
 		xpEarned: "ImbaXPEarned" + playerId,
 		level: "ImbaLvl" + playerId,
-		progress_bar: "XPProgressBar" + playerId,
+		progress_bar: "XPProgressBar" + playerId
 	};
 
 	// setup panels
 	ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
 	var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
-	ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
-	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
+
+
+	ImbaXP_Panel.BCreateChildren("<Panel id='LevelContainer'/>");
+
+	var LevelContainer = ImbaXP_Panel.FindChildTraverse("LevelContainer");
+
+	LevelContainer.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
+
+	LevelContainer.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
+	LevelContainer.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
+
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
@@ -92,7 +101,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 */
 
 	// xp shown fix (temporary?)
-	var player_info = CustomNetTables.GetTableValue("battlepass", playerId)
+	var player_info = CustomNetTables.GetTableValue("battlepass", playerId.toString())
 
 	if (!player_info || player_info.player_xp == 0) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "N/A");
@@ -103,11 +112,15 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	} else if (player_info.player_xp == 1) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' -');
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.winrate);
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
+		playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
 	}
 }
+
+var is_donator_set = false;
 
 // =============================================================================
 // =============================================================================
@@ -119,12 +132,16 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		playerPanel.SetAttributeInt("player_id", playerId);
 		playerPanel.BLoadLayout(scoreboardConfig.playerXmlName, false, false);
 
+
+
 		// setup XP and IMR
 		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
 
 		if (ImbaXP_Panel != null) {
+
 			// get player data
-			var plyData = CustomNetTables.GetTableValue("battlepass", playerId);
+			var plyData = CustomNetTables.GetTableValue("battlepass", playerId.toString());
+
 
 			if (plyData != null) {
 				// set xp values
@@ -144,17 +161,24 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	if (player_table && player_table.donator_level && player_table.donator_color) {
 		if (player_table.donator_level < 10 && Game.GetPlayerInfo(playerId).player_steamid != 76561198046078552) {
 			if (player_table.in_game_tag == 1) {
-				playerPanel.style.backgroundColor = player_table.donator_color;
-//				playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
+
+				if (!is_donator_set) {
+					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
+					donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
+					is_donator_set = true;
+				}
+				
+				// playerPanel.style.backgroundColor = player_table.donator_color;
+				// playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
 			} else {
-				playerPanel.style.backgroundColor = "#21272fbb";
+				// playerPanel.style.backgroundColor = "#21272fbb";
 			}
 		}
 	}
 
 	// values > 0 mean on on cooldown for x seconds
-	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN;
-	var goldValue = -1;
+	// var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN;
+	// var goldValue = -1;
 	var isTeammate = false;
 	var isSpectator = false;
 
@@ -162,10 +186,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	if (playerInfo) {
 		isTeammate = (playerInfo.player_team_id == localPlayerTeamId);
 		isSpectator = Players.IsSpectator(Game.GetLocalPlayerID());
-		if (isTeammate || isSpectator) {
-			ultStateOrTime = Game.GetPlayerUltimateStateOrTime(playerId);
-		}
-		goldValue = playerInfo.player_gold;
+		// if (isTeammate || isSpectator) {
+		// 	ultStateOrTime = Game.GetPlayerUltimateStateOrTime(playerId);
+		// }
+		// goldValue = playerInfo.player_gold;
 
 		playerPanel.SetHasClass("player_dead", (playerInfo.player_respawn_seconds >= 0));
 		playerPanel.SetHasClass("local_player_teammate", isTeammate && (playerId != Game.GetLocalPlayerID()));
@@ -278,18 +302,18 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		}
 	}
 
-	if (isTeammate || isSpectator) {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateGoldAmount", goldValue);
-	}
+	// if (isTeammate || isSpectator) {
+	// 	_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateGoldAmount", goldValue);
+	// }
 
-	_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerGoldAmount", goldValue);
+	// _ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerGoldAmount", goldValue);
 
-	playerPanel.SetHasClass("player_ultimate_ready", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_READY));
-	playerPanel.SetHasClass("player_ultimate_no_mana", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NO_MANA));
-	playerPanel.SetHasClass("player_ultimate_not_leveled", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NOT_LEVELED));
-	playerPanel.SetHasClass("player_ultimate_hidden", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN));
-	playerPanel.SetHasClass("player_ultimate_cooldown", (ultStateOrTime > 0));
-	_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerUltimateCooldown", ultStateOrTime);
+	// playerPanel.SetHasClass("player_ultimate_ready", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_READY));
+	// playerPanel.SetHasClass("player_ultimate_no_mana", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NO_MANA));
+	// playerPanel.SetHasClass("player_ultimate_not_leveled", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NOT_LEVELED));
+	// playerPanel.SetHasClass("player_ultimate_hidden", (ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN));
+	// playerPanel.SetHasClass("player_ultimate_cooldown", (ultStateOrTime > 0));
+	// _ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerUltimateCooldown", ultStateOrTime);
 }
 
 // =============================================================================
@@ -359,7 +383,7 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		var teamColor_GradentFromTransparentLeft = teamPanel.FindChildInLayoutFile("TeamColor_GradentFromTransparentLeft");
 		if (teamColor_GradentFromTransparentLeft) {
 			var gradientText = 'gradient( linear, 0% 0%, 800% 0%, from( #00000000 ), to( ' + teamColor + ' ) );';
-			// $.Msg( gradientText );
+			$.Msg( gradientText );
 			teamColor_GradentFromTransparentLeft.style.backgroundColor = gradientText;
 		}
 	}
