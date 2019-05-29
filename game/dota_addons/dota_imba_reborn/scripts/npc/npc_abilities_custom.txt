@@ -26,6 +26,7 @@
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
+#base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/wisp/abilities.txt
@@ -38548,7 +38549,6 @@
 		"SpellImmunityType"     "SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityTextureName"    "custom/ronin_guard"
 		"ScriptFile"			"components/abilities/heroes/hero_sohei.lua"
-		"MaxLevel"              "6"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

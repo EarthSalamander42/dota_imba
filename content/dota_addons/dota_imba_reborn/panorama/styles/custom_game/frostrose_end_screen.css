@@ -185,7 +185,7 @@
 #es-victory-info,
 #es-teams,
 #es-buttons
-#es-player-reward-container {
+.es-player-reward-container {
 	animation-name: fade_in;
 	animation-duration: 1.25s;
 	animation-timing-function: ease-in;
@@ -484,6 +484,10 @@
 	width: 70px;
 	vertical-align: center;
 	text-align: center;
+}
+
+#es-player-xp-booster {
+	color: white;
 }
 
 #es-buttons {
@@ -969,8 +973,16 @@
 	font-size: 22px;
 }
 
+#es-player-reward-panel {
+	width: 100%;
+	height: 40%;
+	align: center center;
+	flow-children: right;
+	z-index: 1;
+}
+
 .es-player-reward {
-	width: 300px;
+	width: 25%;
 	padding: 30px;
 	background-color: #000000da;
 	border-radius: 20px;
@@ -979,30 +991,20 @@
 	flow-children: down;
 }
 
-#es-player-reward-container {
-	width: 500px;
-	padding: 30px;
-	background-color: #000000da;
-	align: center center;
-	flow-children: down;
-	z-index: 10;
-	visibility: collapse;
-}
-
-#es-player-reward-name,
-#es-player-reward-description {
+.es-player-reward-name,
+.es-player-reward-description {
 	width: 100%;
 	color: white;
 	text-align: center;
 	vertical-align: center;
-	font-size: 24px;
+	font-size: 21px;
 }
 
-#es-player-reward-description {
-	font-size: 34px;
+.es-player-reward-description {
+	font-size: 30px;
 }
 
-#es-player-reward-rarity {
+.es-player-reward-rarity {
 	width: 100%;
 	text-align: center;
 	vertical-align: center;
@@ -1018,7 +1020,7 @@
 	background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
 }
 */
-#es-player-reward-image {
+.es-player-reward-image {
 	width: 180px;
 	height: 120px;
 	margin-top: 30px;
@@ -1040,7 +1042,7 @@
 	margin-bottom: 20px;
 }
 
-.es-player-reward-button Label {
+.es-player-reward-button_label {
 	margin-top: 5px;
 	color: darkgrey;
 	align: center center;

@@ -3,20 +3,17 @@
 {
 	horizontal-align: left;
 	vertical-align: top;
-	margin-top: 90px;
+	margin-top: 45px;
 	flow-children: down;
 	
 	transition-property: transform;
 	transition-duration: 0.10s;
 	
 	transform: translate3d( -100%, 0, 0px );
-	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
-	border-top:  1px solid #3a363a;	
-	border-left:  1px solid #3a363a;
-	border-bottom: 1px solid #1d2126;	
-	border-right: 1px solid #1d2126;
-	box-shadow: 0px 0px 12px 0px #000000a5;
-	padding: 4px 4px 4px 0px;
+	/*background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );*/
+	background-image: url("file://{images}/custom_game/flyout/bg.png");
+	padding: 10px 0 10px 0px;
+	background-size: cover;
 }
 
 .ScoreCol_DisplayPic DOTAAvatarImage
@@ -34,9 +31,8 @@
 .Legend
 {
 	flow-children: right;
-/*	background-color : #444b57cc;
-	background-color: #333333ee;*/
 	width: 100%; 
+	color: #dfd7b9;
 }
 
 .LegendPanel
@@ -47,24 +43,25 @@
 
 .Legend Label
 {
-	text-shadow: 0 0 3px 2.0 #000;	
 	text-transform: uppercase;
-	font-size: 16px;
-	font-weight: bold;
-	color: #ccc;
+	font-size: 18px;
+	color: #dfd7b9;
 	padding-top: 8px;
 	height: 32px;
 	text-align: center;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
 
 .ScoreCol_DisplayPic,
 .ScoreCol_HeroPic,
-.ScoreCol_TeamScore,
-#PlayerColorBar
+.ScoreCol_TeamScore
 {
 	margin-right: 6px;
 }
-
+#PlayerColorBar
+{
+	margin-right: 11px;
+}
 #PlayerColorBar
 {
 	align : left center;
@@ -79,7 +76,7 @@
 .ScoreCol_DisplayPic
 {
 	flow-children: right;
-	width: 43px;
+	width: 55px;
 }
 
 .ScoreCol_TeamName
@@ -100,14 +97,23 @@
 
 .ScoreCol_HeroLevel
 {
-	width: 60px;
+	width: 80px;
 }
 
 .ScoreCol_ImbaXP
 {
-	width: 250px;
+	width: 230px;
 }
-
+.ScoreCol_WinRate
+{
+	width: 100px;
+}
+.Legend .ScoreCol_WinRate
+{
+	font-size: 13px;
+	align: center center;
+	line-height: 19px;
+}
 .ScoreCol_Gold
 {
 	width: 70px;
@@ -125,7 +131,8 @@
 .ScoreCol_Deaths,
 .ScoreCol_Assists
 {
-	width: 30px;
+	width: 32px;
+	margin-right: 6px;
 }
 
 .ScoreCol_Ultimate
@@ -135,7 +142,7 @@
 
 .ScoreCol_Buttons
 {
-	width: 110px;
+	width: 140px;
 	vertical-align: center;
 	flow-children: right;
 }
@@ -153,7 +160,7 @@
 
 .FlyoutTeamData
 {
-	margin-top: -30px;
+	margin-top: -28px;
 	flow-children: right;
 	height: 50px;
 	padding-left: 10px;
@@ -168,18 +175,17 @@
 {
 	flow-children: down;
 	padding-bottom: 30px;
+	padding-top: 12px;
 }
 
 #TeamScore,
 #TeamName
 {
-	color: #ccc;
+	color: #dfd7b9;
 	font-size: 18px;
 	padding: 5px 0px;
 	text-transform: uppercase;
-	font-weight: bold;
-	text-shadow: 0 0 3px 2.0 #000;	
-	letter-spacing: 2px;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
 
 #TeamScore,
@@ -190,16 +196,25 @@
 
 .PlayerRow
 {
-	box-shadow: 0px 0px 10px 0px #000000a5 inset;
-	border: 1px solid #222222a5;
-	height: 36px;
+	height: 40px;
 	margin-bottom: 2px;
-	background-color: #21272fbb;
+	background-image: url("file://{images}/custom_game/flyout/rowbg.png");
+	background-size: 100% 100%;
+	margin-bottom: 3.5px;
+	overflow: clip;
+}
+
+#DonatorOverlay {
+	height: 40px;
+	width: 100%;
+	/*background-image: url("file://{images}/custom_game/flyout/output.webm");*/
+	background-size: 100% 100%;
+	opacity: 0.7;
 }
 
 .is_local_player #PlayerRowContainer
 {
-	background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );
+	/*background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );*/
 }
 
 #PlayerRowContainer
@@ -217,7 +232,7 @@
 #HeroIcon
 {
 	vertical-align: middle;
-	border: 1px solid #ffffff22;
+	height: 32px;
 }
 
 #LevelContainer,
@@ -251,15 +266,32 @@
 	background-position: 50% 50%;
 }
 
-#Level
+#Level, #Rank
 {
 	vertical-align: center;
 	horizontal-align: center;
-	color: #acacac;
-	text-shadow: 0 0 5px 2.0 #000;
-	font-weight: bold;
-	font-size: 22px;
+	color: #fefeff;
+	/*text-shadow: 0 0 0.3px 0 #fff;*/
+	font-weight: medium;
+	font-size: 20px;
+	margin-top: 3px;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
+
+#Rank {
+	color: #b5a2de;
+	font-size: 18px;
+	font-weight: normal;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+}
+
+#KillsContainer,
+#DeathsContainer,
+#AssistsContainer
+{
+	margin-right: 6px;
+}
+
 
 #Kills,
 #Deaths,
@@ -267,10 +299,39 @@
 {
 	vertical-align: center;
 	font-size: 18px;
-	margin-top: 3px;
+	margin-top: 0;
 	width: 100%;
-	color: #acacac;
-	text-shadow: 0 0 5px 2.0 #000;
+	color: #ece4ff;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	padding: 3px 2px 0px 2px;
+	background-color: #110921cc;
+	border: 1px solid #2c2144cc;
+	line-height: 18px;
+	height: 30px;
+	/*margin-right: 6px;*/
+	text-align: center;
+	align: center center;
+}
+#AssistsContainer
+{
+	margin-right: 20px;
+}
+
+#PanelImbaXP 
+{
+	padding: 3px 10px 5px;
+	background-color: #0d061d80;
+}
+#LevelContainer
+{
+	flow-children: right;
+	align: center center;
+}
+#LevelLabel
+{
+	color: #c3b9d8;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
 }
 
 #ImbaXPRank0,
@@ -298,13 +359,16 @@
 #ImbaXPRank22,
 #ImbaXPRank23
 {
-	margin-right: 5%;
+
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	/*margin-right: 5%;
 	margin-bottom: 1px;
 	font-size: 16px;
 	font-weight: bold;
 	color: white;
 	text-shadow: 0 0 3px #000000cc;
-	align: center center;
+	align: center center;*/
 }
 
 #ImbaXP0,
@@ -332,13 +396,11 @@
 #ImbaXP22,
 #ImbaXP23
 {
-	margin-top: 2px;
-	margin-right: 5px;
-	font-size: 16px;
-	font-weight: bold;
-	color: white;
-	align: right center;
-	opacity: 0.75;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 13px;
+	color: #fefeff;
+	align: center bottom;
+	margin-bottom: -1px;
 }
 
 #ImbaXPEarned0,
@@ -394,33 +456,45 @@
 #ImbaLvl22,
 #ImbaLvl23
 {
-	font-size: 16px;
+
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	/*font-size: 16px;
 	font-weight: bold;
 	margin-top: 2px;
 	margin-left: 3%;
 	color: white;
 	align: left center;
-	opacity: 0.75;
+	opacity: 0.75;*/
 }
 
 #PlayerAndHeroName
 {
-	padding-top: 1px;
+	padding-top: 5px;
 	padding-bottom: 1px;
 }
 
 #PlayerName
 {
-	color: white;
-	font-size: 14px;
+	color: #fefeff;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 15px;
 	margin-top: 0px;
 	white-space: nowrap;
+	text-align: left;
+	horizontal-align: left;
+	font-weight: medium;
+	/*text-shadow: 0 0 0.2px 0 #fff;
+	letter-spacing: 0.2px;*/
+	margin-bottom: -3px;
 }
 
 #HeroNameAndDescription
 {
-	color: #eee;
+	color: #6a9561;
 	font-size: 13px;
+	text-align: left;
+	horizontal-align: left;
 }
 
 #TeammateGoldAmount
@@ -464,7 +538,7 @@
 {
 	width: 20px;
 	height: 20px;
-	margin-right: 5px;
+	margin-right: 15px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: contain;
@@ -479,19 +553,19 @@
 #BtnShareUnit
 {
 	background-image: url("file://{images}/custom_game/share_unit_off.png");
-	visibility: collapse;
+	visibility: visible;
 }
 
 #BtnShareHero
 {
 	background-image: url("file://{images}/custom_game/share_hero_off.png");
-	visibility: collapse;
+	visibility: visible;
 }
 
 #BtnDisableHelp
 {
 	background-image: url("file://{images}/custom_game/disable_help_off.png");
-	visibility: collapse;
+	visibility: visible;
 }
 
 .local_player_teammate #BtnShareUnit,
@@ -536,7 +610,6 @@
 #PlayerAndHeroName
 {
 	flow-children: down;
-	padding-left: 8px;
 }
 
 .is_local_player #Kills,
@@ -545,8 +618,8 @@
 .is_local_player #Level,
 .is_local_player #HeroName
 {
-	text-shadow: 0 0 5px 2.0 #000;
-	color: white;
+	/*text-shadow: 0 0 5px 2.0 #000;
+	color: white;*/
 }
 
 #XPProgressBar0,
@@ -574,12 +647,10 @@
 #XPProgressBar22,
 #XPProgressBar23
 {
-	width: 100%;
-	background-color: black;
-	height: 24px;
-	vertical-align: middle;
-	horizontal-align: right;
-	box-shadow: 0 0 5px 0 #00000022 inset;
+	width: 90%;
+	height: 14px;
+	vertical-align: bottom;
+	horizontal-align: center;
 	flow-children: right;
 }
 
@@ -608,8 +679,8 @@
 #XPProgressBar22_Left,
 #XPProgressBar23_Left
 {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
-	border-radius: 1px;
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#3e3060), color-stop( 0.5, #58418b ), to(#3e3060));
+	border-radius: 50px 0 0 50px;
 }
 
 #XPProgressBar0_Right,
@@ -637,7 +708,8 @@
 #XPProgressBar22_Right,
 #XPProgressBar23_Right
 {
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+	background-color: #2d2839;
+	border-radius:  0 50px 50px 0;
 }
 
 #XPProgressBarContainer0,

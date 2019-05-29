@@ -13,7 +13,9 @@ ListenToGameEvent('game_rules_state_change', function()
 	elseif state == DOTA_GAMERULES_STATE_PRE_GAME then
 --		SendToServerConsole( "dota_dev forcegamestart" )
 	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
+		if not IsInToolsMode() then
+			Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
+		end
 	end
 end, nil)
 
