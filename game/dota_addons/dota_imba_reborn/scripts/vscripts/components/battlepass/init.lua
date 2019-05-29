@@ -28,6 +28,7 @@ ListenToGameEvent('npc_spawned', function(event)
 			return
 		end
 
+		print("Is donator?", api:IsDonator(npc:GetPlayerID()), api:GetDonatorStatus(npc:GetPlayerID()))
 		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
 			npc:SetupHealthBarLabel()
 
@@ -35,10 +36,11 @@ ListenToGameEvent('npc_spawned', function(event)
 				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				npc:CenterCameraOnEntity(npc, -1)
 			else
-				npc:AddNewModifier(npc, nil, "modifier_patreon_donator", {})
-
-				if GetMapName() == "imba_demo" then return end
 				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
+					npc:AddNewModifier(npc, nil, "modifier_patreon_donator", {})
+
+					if GetMapName() == "imba_demo" then return end
+
 					Timers:CreateTimer(1.5, function()
 						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()))
 					end)
