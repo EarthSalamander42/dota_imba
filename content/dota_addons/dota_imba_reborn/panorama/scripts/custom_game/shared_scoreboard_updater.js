@@ -159,7 +159,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
 
 	if (player_table && player_table.donator_level && player_table.donator_color) {
-		if (player_table.donator_level < 10 && Game.GetPlayerInfo(playerId).player_steamid != 76561198046078552) {
+		if (player_table.donator_level < 10) {
 			if (player_table.in_game_tag == 1) {
 
 				if (!is_donator_set) {
@@ -171,6 +171,11 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 				// playerPanel.style.backgroundColor = player_table.donator_color;
 				// playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
 			} else {
+				if (is_donator_set) {
+					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
+					donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/output.webm")';
+					is_donator_set = undefined;
+				}
 				// playerPanel.style.backgroundColor = "#21272fbb";
 			}
 		}
