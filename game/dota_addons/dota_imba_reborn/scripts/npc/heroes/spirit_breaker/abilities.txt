@@ -75,7 +75,17 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"clothesline_duration"	"3 4 5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"taxi_radius"			"500"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"taxi_distance"			"180"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"

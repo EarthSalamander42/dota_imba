@@ -28,7 +28,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"12 11 10 9"
 		"AbilityDuration"				"4.0 4.0 4.0 4.0"
 
 		// Cost
@@ -42,7 +42,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gush_damage"		"110 160 210 260"
+				"gush_damage"		"120 230 340 450"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_2"
 			}
 			"02"
@@ -58,18 +58,18 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"negative_armor"		"4 5 6 7"
+				"negative_armor"		"4 6 8 10"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed_scepter"		"1500"
+				"speed_scepter"		"1600"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"aoe_scepter"		"260"
+				"aoe_scepter"		"350"
 			}
 			"07"
 			{
@@ -106,13 +106,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"12 24 36 48"
+				"damage_reduction"		"40 60 80 100"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"600 550 500 450"
+				"damage_cleanse"		"550 500 450 400"
 			}
 			"03"
 			{
@@ -143,7 +143,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"375"
+		"AbilityCastRange"				"375 410 445 480"
 		"AbilityCastPoint"				"0.4"
 
 		// Time		
@@ -166,18 +166,18 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"-30 -40 -50 -60"
+				"damage_reduction"		"-45 -55 -65 -75"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"reduction_duration"	"6.0 6.0 6.0 6.0"
+				"reduction_duration"	"6.0 7.0 8.0 9.0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"radius"				"375 410 445 480"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -186,7 +186,7 @@
 	//=================================================================================================================
 	// Tidehunter: Ravage
 	//=================================================================================================================
-	"tidehunter_ravage"
+	"imba_tidehunter_ravage"
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_tidehunter.lua"
@@ -205,20 +205,20 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastPoint"				"0.3 0.2 0.1"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"150.0 150.0 150.0"
+		"AbilityCooldown"				"130.0 115.0 100.0"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"200 300 400"
+		"AbilityDamage"					"200 400 600"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 225 325"
+		"AbilityManaCost"				"150 225 300"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -227,7 +227,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1250"
+				"radius"			"1400 1600 1800"
 			}
 			"02"
 			{
@@ -237,7 +237,7 @@
 			"03"
 			{	
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.4 2.6 2.8"
+				"duration"			"2.5 3.0 3.5"
 			}
 		}
 	}

@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_duration"                "GRAVELY MISTAKEN DURATION:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_armor_per_hit"           "GRAVELY MISTAKEN ARMOR PER INSTANCE:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN MAGIC RESISTANCE PER INSTANCE:"
-"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"RADIUS:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"#{DOTA_Tooltip_ability_dazzle_shallow_grave_aghanim_description}"
 
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"

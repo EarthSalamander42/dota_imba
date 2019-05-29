@@ -3,7 +3,6 @@
 --    AltiV, May 29th, 2019 (true IMBAfication)
 
 LinkLuaModifier("modifier_imba_tidehunter_gush", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tidehunter_gush_tracker", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_gush_surf", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 LinkLuaModifier("modifier_imba_tidehunter_kraken_shell", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
@@ -16,7 +15,6 @@ LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw_movement", "compone
 
 imba_tidehunter_gush									= class({})
 modifier_imba_tidehunter_gush							= class({})
-modifier_imba_tidehunter_gush_tracker					= class({})
 modifier_imba_tidehunter_gush_surf						= class({})
 
 imba_tidehunter_kraken_shell							= class({})
@@ -56,10 +54,10 @@ function imba_tidehunter_gush:GetBehavior()
 end
 
 function imba_tidehunter_gush:OnSpellStart()
+	self:GetCaster():EmitSound("Ability.GushCast")
+
 	-- Standard ability logic
-	if not self:GetCaster():HasScepter() then
-		self:GetCaster():EmitSound("Ability.GushCast")
-	
+	if not self:GetCaster():HasScepter() then	
 		local projectile =
 		{
 			Target 				= self:GetCursorTarget(),
@@ -76,7 +74,7 @@ function imba_tidehunter_gush:OnSpellStart()
 			flExpireTime 		= GameRules:GetGameTime() + 10.0,
 			bProvidesVision 	= false,
 			
-			--iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1 -- Need to put the mouth?
+			iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2, -- Need to put the mouth?
 			
 			ExtraData = {bScepter = 0}
 		}
@@ -84,10 +82,10 @@ function imba_tidehunter_gush:OnSpellStart()
 		ProjectileManager:CreateTrackingProjectile(projectile)
 	
 	-- Scepter ability logic
-	else
-		self:GetCaster():EmitSound("Hero_Tidehunter.Gush.AghsProjectile")
-		
-		--particles/units/heroes/hero_tidehunter/tidehunter_gush_upgrade.vpcf
+	else		
+		-- This "dummy" literally only exists to attach the gush travel sound to
+		local gush_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+		gush_dummy:EmitSound("Hero_Tidehunter.Gush.AghsProjectile")
 		
 		local linear_projectile = {
 			Ability				= self,
@@ -107,7 +105,7 @@ function imba_tidehunter_gush:OnSpellStart()
 			vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed_scepter"),
 			bProvidesVision		= false,
 			
-			ExtraData			= {bScepter = 1}
+			ExtraData			= {bScepter = 1, gush_dummy = gush_dummy:entindex()}
 		}
 		self.projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
 	end
@@ -156,58 +154,43 @@ function imba_tidehunter_gush:OnSpellStart()
 			-- }
 end
 
--- Scepter logic
+-- Make the travel sound follow the Gush
 function imba_tidehunter_gush:OnProjectileThink_ExtraData(location, data)
 	if not IsServer() then return end
 	
-	if data.bScepter == 1 then
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		
-		for _, enemy in pairs(enemies) do
-			enemy:EmitSound("Ability.GushImpact")
-		
-			-- "Gush first applies the debuff, then the damage."
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - enemy:GetStatusResistance()), true)
-
-			-- DOUBLE CHECK TO MAKE SURE THIS ISN'T HITTING PEOPLE EVERY FRAME (will need to do that standard table indexing again if so)
-			local damageTable = {
-				victim 			= enemy,
-				damage 			= self:GetTalentSpecialValueFor("gush_damage"),
-				damage_type		= self:GetAbilityDamageType(),
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetCaster(),
-				ability 		= self
-			}
-		
-			ApplyDamage(damageTable)
-		end
-	end
+	EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
 end
 
--- Base logic
 function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
-	if not IsServer() or not target then return end
+	if not IsServer() then return end
 	
-	-- Trigger spell absorb if applicable
-	if not data.bScepter and target:TriggerSpellAbsorb(self) then
-		return nil
+	-- Gush hit some unit
+	if target then 
+		-- Trigger spell absorb if applicable
+		if data.bScepter == 0 and target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+
+		target:EmitSound("Ability.GushImpact")
+
+		-- "Gush first applies the debuff, then the damage."
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
+
+		local damageTable = {
+			victim 			= target,
+			damage 			= self:GetTalentSpecialValueFor("gush_damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
+
+		ApplyDamage(damageTable)
+	-- Scepter Gush has reached its end location
+	elseif data.gush_dummy then
+		EntIndexToHScript(data.gush_dummy):StopSound("Hero_Tidehunter.Gush.AghsProjectile")
+		EntIndexToHScript(data.gush_dummy):RemoveSelf()
 	end
-
-	target:EmitSound("Ability.GushImpact")
-
-	-- "Gush first applies the debuff, then the damage."
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
-
-	local damageTable = {
-		victim 			= target,
-		damage 			= self:GetTalentSpecialValueFor("gush_damage"),
-		damage_type		= self:GetAbilityDamageType(),
-		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
-		ability 		= self
-	}
-
-	ApplyDamage(damageTable)
 end
 
 
@@ -260,22 +243,6 @@ end
 
 function modifier_imba_tidehunter_gush:GetModifierPhysicalArmorBonus()
 	return self.negative_armor * (-1)
-end
-
----------------------------
--- GUSH TRACKER MODIFIER --
----------------------------
-
-function modifier_imba_tidehunter_gush_tracker:IsHidden()		return true end
-function modifier_imba_tidehunter_gush_tracker:IsPurgable()		return false end
-function modifier_imba_tidehunter_gush_tracker:RemoveOnDeath()	return false end
-function modifier_imba_tidehunter_gush_tracker:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_imba_tidehunter_gush_tracker:OnCreated()
-	if not IsServer() then return end
-
-	-- Initialize empty table to track targets that have been hit by Gush (so they don't get hit a billion times as the projectile passes through)
-	self.targets = {}
 end
 
 ------------------------
@@ -332,7 +299,7 @@ function modifier_imba_tidehunter_kraken_shell:GetModifierIncomingPhysicalDamage
 end
 
 function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
-	if keys.unit == self:GetParent() and not keys.attacker:IsOther() and (keys.attacker:GetOwnerEntity() or keys.attacker:GetPlayerID()) and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() then
+	if keys.unit == self:GetParent() and not keys.attacker:IsOther() and (keys.attacker:GetOwnerEntity() or keys.attacker.GetPlayerID) and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and self:GetAbility():IsTrained() then
 		self:SetStackCount(self:GetStackCount() + keys.damage)
 		self.reset_timer = GameRules:GetDOTATime(true, true)
 		

@@ -3345,6 +3345,7 @@
 		"AbilityTextureName"							"dazzle_shallow_grave"
 		"ScriptFile"				"components/abilities/heroes/hero_dazzle.lua"
 		"FightRecapLevel"								"1"
+		"HasScepterUpgrade"								"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -24234,6 +24235,7 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"antimage_mana_void"
 		"AOERadius"						"%mana_void_aoe_radius%"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
