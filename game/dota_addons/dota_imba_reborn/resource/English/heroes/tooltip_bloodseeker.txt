@@ -33,7 +33,7 @@
 
 // Bloodseeker's Thirst
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst"                          "Thirst"
-"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack speed whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of attack speed and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new bonus is higher."
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack speed whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of attack speed and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new bonus is higher.\n<font color='#FF7800'>Illusionary Thirst:</font> Illusions fully benefit from Thirst's effects."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_Lore"                    "Strygwyr becomes frenzied when blood is spilled."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed"                 "%MAX MOVE SPEED PER HERO:"
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage"            "MAX ATTACK SPEED PER HERO:"
@@ -50,7 +50,7 @@
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note0"                  "Moving more than 1300 units in under 0.25 seconds will cause Rupture to ignore that movement."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note1"                  "Scepter Rupture charges can be fully refreshed by using a Refresher."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_movement_damage_pct"                 "%CURRENT HEALTH AS DAMAGE PER 100 MOVED DISTANCE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_movement_damage_pct"                 "%MOVED DISTANCE AS DAMAGE:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_attack_damage"          "DAMAGE PER ATTACK:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_cast_damage"            "DAMAGE PER CAST:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_aghanim_description"                 "Allows Rupture to store up to 2 charges. A charge is replenished every 40 seconds and can be reduced with cooldown reductions effects."

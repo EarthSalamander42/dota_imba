@@ -740,43 +740,7 @@ function GameMode:OnPlayerChat(keys)
 						local upgraded = false
 						
 						-- Temporary code; update as tests require
-						if string.find(text, 'huskar') and hero:GetName() == "npc_dota_hero_huskar" then
-							ability_set = {
-								[0] = "imba_huskar_inner_fire",
-								[1] = "imba_huskar_burning_spear",
-								[2] = "imba_huskar_berserkers_blood",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_huskar_life_break",
-								[6] = "special_bonus_hp_300",
-								[7] = "special_bonus_attack_damage_20",
-								[8] = "special_bonus_unique_huskar_2",
-								[9] = "special_bonus_lifesteal_25",
-								[10] = "special_bonus_strength_25",
-								[11] = "special_bonus_unique_huskar",
-								[12] = "special_bonus_attack_range_200",
-								[13] = "special_bonus_unique_huskar_5"
-							}
-							upgraded = true
-						elseif string.find(text, 'medusa') and hero:GetName() == "npc_dota_hero_medusa" then
-							ability_set = {
-								[0] = "imba_medusa_split_shot",
-								[1] = "imba_medusa_mystic_snake",
-								[2] = "imba_medusa_mana_shield",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_medusa_stone_gaze",
-								[6] = "special_bonus_attack_damage_15",
-								[7] = "special_bonus_evasion_15",
-								[8] = "special_bonus_attack_speed_50",
-								[9] = "special_bonus_imba_mystic_snake_mana_steal",
-								[10] = "special_bonus_imba_medusa_extra_split_shot_targets",
-								[11] = "special_bonus_imba_medusa_stone_gaze_duration",
-								[12] = "special_bonus_imba_medusa_bonus_mana",
-								[13] = "special_bonus_imba_medusa_split_shot_modifiers"
-							}
-							upgraded = true
-						elseif string.find(text, 'luna') and hero:GetName() == "npc_dota_hero_luna" then
+						if string.find(text, 'luna') and hero:GetName() == "npc_dota_hero_luna" then
 							ability_set = {
 								[0] = "imba_luna_lucent_beam",
 								[1] = "imba_luna_moon_glaive",
@@ -794,9 +758,22 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_unique_luna_5"
 							}
 							upgraded = true
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
+						elseif string.find(text, 'sp') and hero:GetName() == "npc_dota_hero_spirit_breaker" then
 							ability_set = {
-								[2] = "imba_life_stealer_open_wounds"
+								[0] = "imba_spirit_breaker_charge_of_darkness",
+								[1] = "imba_spirit_breaker_bulldoze",
+								[2] = "imba_spirit_breaker_greater_bash",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_spirit_breaker_nether_strike",
+								[6] = "special_bonus_night_vision_600",
+								[7] = "special_bonus_armor_5",
+								[8] = "special_bonus_hp_regen_15",
+								[9] = "special_bonus_attack_damage_40",
+								[10] = "special_bonus_imba_spirit_breaker_charge_speed",
+								[11] = "special_bonus_imba_spirit_breaker_bulldoze_cooldown",
+								[12] = "special_bonus_imba_spirit_breaker_bash_chance",
+								[13] = "special_bonus_imba_spirit_breaker_bonus_health"
 							}
 							upgraded = true
 						end

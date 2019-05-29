@@ -784,7 +784,7 @@ function modifier_imba_skeleton_walk_invis:OnCreated()
 	if self:GetCaster():HasScepter() then
 		self.scepter_bonus = self:GetAbility():GetSpecialValueFor("scepter_bonus")
 
-		if not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+		if IsServer() and not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
 		end
 	end
@@ -851,6 +851,10 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 					break
 				end
 			end
+		end
+		
+		if self:GetCaster():HasScepter() and not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
 		end
 	end    
 end
@@ -951,7 +955,7 @@ end
 
 function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
-		if self:GetCaster():HasScepter() then
+		if self:GetCaster():HasScepter() and self:GetCaster():FindAbilityByName("clinkz_burning_army") and self:GetCaster():FindAbilityByName("clinkz_burning_army"):IsTrained() then
 			for i = 1, self:GetAbility():GetSpecialValueFor("scepter_skeleton_count") do
 				-- todo: spawn them on left and right of clinkz pos
 				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)

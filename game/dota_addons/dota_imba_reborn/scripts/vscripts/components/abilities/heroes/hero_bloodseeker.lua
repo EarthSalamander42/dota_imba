@@ -492,6 +492,13 @@ end
 
 function modifier_imba_thirst_passive:OnIntervalThink()
 	if IsServer() then
+		-- Vanilla modifier for speed cap that is dispellable...keep checking to ensure the modifier stays or not
+		if self:GetParent():PassivesDisabled() then
+			self:GetParent():RemoveModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster())
+		elseif not self:GetParent():HasModifier("modifier_bloodseeker_thirst") and self:GetAbility() then
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_bloodseeker_thirst", {})
+		end
+		
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
 		local hpDeficit = 0
 		for _,enemy in pairs(enemies) do
@@ -529,7 +536,7 @@ function modifier_imba_thirst_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
+		-- MODIFIER_PROPERTY_MOVESPEED_MAX,
 	}
 
 	return funcs
@@ -553,7 +560,7 @@ end
 
 function modifier_imba_thirst_passive:OnTakeDamage(params)
 	if IsServer() then
-		if params.attacker:GetTeam() == self:GetCaster():GetTeam() and params.unit:GetTeam() ~= self:GetCaster():GetTeam() and params.attacker:IsRealHero() and params.unit:IsRealHero() then
+		if params.attacker and params.attacker:GetTeam() == self:GetCaster():GetTeam() and params.unit:GetTeam() ~= self:GetCaster():GetTeam() and params.attacker:IsRealHero() and params.unit:IsRealHero() then
 			local duration = self:GetAbility():GetTalentSpecialValueFor("atk_buff_duration")
 			local attackList = self:GetCaster():FindAllModifiersByName("modifier_imba_thirst_haste")
 			local confirmTheKill = false
