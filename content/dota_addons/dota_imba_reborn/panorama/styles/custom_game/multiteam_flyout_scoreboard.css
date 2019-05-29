@@ -102,7 +102,7 @@
 
 .ScoreCol_ImbaXP
 {
-	width: 230px;
+	width: 300px;
 }
 .ScoreCol_WinRate
 {
@@ -280,7 +280,7 @@
 
 #Rank {
 	color: #b5a2de;
-	font-size: 18px;
+	font-size: 19px;
 	font-weight: normal;
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
@@ -298,12 +298,12 @@
 #Assists
 {
 	vertical-align: center;
-	font-size: 18px;
+	font-size: 21px;
 	margin-top: 0;
 	width: 100%;
 	color: #ece4ff;
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	padding: 3px 2px 0px 2px;
+	padding: 2px 2px 0px 2px;
 	background-color: #110921cc;
 	border: 1px solid #2c2144cc;
 	line-height: 18px;
@@ -325,13 +325,24 @@
 #LevelContainer
 {
 	flow-children: right;
-	align: center center;
+	align: center top;
+	width: 100%;
+	padding: 0 3px;
+}
+#LevelContainerChild {
+	align: left top;
+	flow-children: right;
+	margin-right:  15px;
+}
+#LevelContainerChild2 {
+	align: right top;
 }
 #LevelLabel
 {
 	color: #c3b9d8;
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
+	font-size: 16px;
+	align: center center;
 }
 
 #ImbaXPRank0,
@@ -361,7 +372,8 @@
 {
 
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
+	align: center center;
+	font-size: 16px;
 	/*margin-right: 5%;
 	margin-bottom: 1px;
 	font-size: 16px;
@@ -397,10 +409,10 @@
 #ImbaXP23
 {
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 11.5px;
+	font-size: 16px;
 	color: #fefeff;
-	align: center bottom;
-	margin-bottom: -2.3px;
+	opacity: 0.5;
+	align: center center;
 }
 
 #ImbaXPEarned0,
@@ -458,7 +470,8 @@
 {
 
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
+	font-size: 16px;
+	align: center center;
 	/*font-size: 16px;
 	font-weight: bold;
 	margin-top: 2px;
@@ -470,7 +483,7 @@
 
 #PlayerAndHeroName
 {
-	padding-top: 5px;
+	padding-top: 4px;
 	padding-bottom: 1px;
 }
 
@@ -478,7 +491,7 @@
 {
 	color: #fefeff;
 	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 15px;
+	font-size: 16px;
 	margin-top: 0px;
 	white-space: nowrap;
 	text-align: left;
@@ -486,7 +499,7 @@
 	font-weight: medium;
 	/*text-shadow: 0 0 0.2px 0 #fff;
 	letter-spacing: 0.2px;*/
-	margin-bottom: -3px;
+	margin-bottom: -4px;
 }
 
 #HeroNameAndDescription
@@ -495,6 +508,7 @@
 	font-size: 13px;
 	text-align: left;
 	horizontal-align: left;
+	opacity: 0.7;
 }
 
 #TeammateGoldAmount
@@ -647,8 +661,8 @@
 #XPProgressBar22,
 #XPProgressBar23
 {
-	width: 90%;
-	height: 14px;
+	width: 100%;
+	height: 9px;
 	vertical-align: bottom;
 	horizontal-align: center;
 	flow-children: right;
