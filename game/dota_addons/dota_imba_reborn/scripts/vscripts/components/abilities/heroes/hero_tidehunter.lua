@@ -358,8 +358,7 @@ function imba_tidehunter_anchor_smash:OnSpellStart()
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash", {duration = self:GetSpecialValueFor("reduction_duration")}):SetDuration(self:GetSpecialValueFor("reduction_duration") * (1 - enemy:GetStatusResistance()), true)
 			
 			-- "These instant attacks are allowed to trigger attack modifiers, except cleave, normally. Has True Strike."
-			-- So funny thing about this actually...even though I can't get this to not apply cleaves, the VANILLA ability ignores CUSTOM cleave suppression (ex. Jarnbjorn), which means Anchor Smash still applies custom cleaves anyways...so I'm just not gonna bother and let this thing cleave off everything
-			-- Gonna leave the attempted logic though anyways
+			-- So funny thing about this actually...the VANILLA ability ignores CUSTOM cleave suppression (ex. Jarnbjorn), which means Anchor Smash still applies custom cleaves anyways...so I guess in ways this is actually nerfing the ability but bleh
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash_suppression", {})
 			-- PerformAttack(target: CDOTA_BaseNPC, useCastAttackOrb: bool, processProcs: bool, skipCooldown: bool, ignoreInvis: bool, useProjectile: bool, fakeAttack: bool, neverMiss: bool): nil
 			self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
@@ -422,13 +421,24 @@ end
 
  -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
 function modifier_imba_tidehunter_anchor_smash_suppression:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_SUPPRESS_CLEAVE}
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+	}
 	
 	return decFuncs
 end
 
 function modifier_imba_tidehunter_anchor_smash_suppression:GetSuppressCleave()
 	return 1
+end
+
+-- Hopefully this is enough random information to only suppress cleaves?...
+function modifier_imba_tidehunter_anchor_smash_suppression:GetModifierTotalDamageOutgoing_Percentage(keys)
+	if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+		return -100
+	end
 end
 
 ---------------------------------

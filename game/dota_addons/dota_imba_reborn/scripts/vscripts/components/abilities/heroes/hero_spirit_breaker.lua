@@ -1209,11 +1209,17 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_spirit_breaker_charge_speed					= class({})
 modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown			= class({})
 modifier_special_bonus_imba_spirit_breaker_bonus_health					= class({})
+
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsPurgable() 		return false end
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:IsPurgable() 		return false end
@@ -1241,6 +1247,10 @@ end
 
 function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
 	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_charge_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_charge_speed"), "modifier_special_bonus_imba_spirit_breaker_charge_speed", {})
+	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_bonus_health") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_bonus_health"), "modifier_special_bonus_imba_spirit_breaker_bonus_health", {})
