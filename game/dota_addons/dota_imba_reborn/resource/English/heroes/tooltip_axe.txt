@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_speed_bonus"              "%SPEED BONUS PER STACK:"
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_scepter_damage_reduction"              "%SCEPTER DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_axe_battle_hunger_aghanim_description"                   "#{DOTA_Tooltip_ability_axe_battle_hunger_aghanim_description} Applies Battle Hunger on enemy heroes within a 700 AoE radius after a successful Culling Blade."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_aghanim_description"                   "Battle Hunger reduces enemy damage by 30%, and causes Battle Hunger to be a 400 AoE target ability.\n\n<font color='#FF7800'>IMBA:</font> Applies Battle Hunger on enemy heroes within a 700 AoE radius after a successful Culling Blade."
 
 "DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot"                  "Battle Hunger"
 "DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot_Description"                   "Slowed and taking damage. Duration will pause if no one is harmed by you for 2 seconds. On attack, you have a chance to attack a random target in range."

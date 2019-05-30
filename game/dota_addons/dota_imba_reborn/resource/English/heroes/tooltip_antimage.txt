@@ -46,7 +46,7 @@
 
 // Anti Mage's Mana Void
 "DOTA_Tooltip_ability_imba_antimage_mana_void"								"Mana Void"
-"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"					"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n<font color='#FF7800'>The magic ends here:</font> burns part of the target's mana pool before calculating damage."
+"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"					"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>The Magic Ends Here:</font> Burns part of the target's mana pool before calculating damage."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_Note0"						"Damage is calculated based on the main target's missing mana."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_Lore"							"The magic ends here."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_damage_per_mana"	"DAMAGE PER MANA MISSING:"
@@ -56,8 +56,14 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"Mana Void kills cause the enemy's highest cooldown ability to take longer to cool down, and increases stun duration."
 // "DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"#{DOTA_Tooltip_ability_antimage_mana_void_aghanim_description}"
 
+"DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_cooldown_increase"	"SCEPTER COOLDOWN INCREASE:"
+"DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_ministun"				"SCEPTER STUN DURATION:"
+
 "DOTA_Tooltip_modifier_imba_mana_void_stunned"                        "Mana Void"
 "DOTA_Tooltip_modifier_imba_mana_void_stunned_Description"            "Stunned by Anti-Mage's mana void."
+
+"DOTA_Tooltip_modifier_imba_mana_void_scepter" 							"Sundered Cabal"
+"DOTA_Tooltip_modifier_imba_mana_void_scepter_Description"				"Died while under the effects of Aghanim's Scepter Mana Void. Upon respawn, your highest cooldown ability will incur a further 70 second increased cooldown."
 
 // Anti Mage's Custom Talents
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_1"                    "Blink Stores 2 Charges"

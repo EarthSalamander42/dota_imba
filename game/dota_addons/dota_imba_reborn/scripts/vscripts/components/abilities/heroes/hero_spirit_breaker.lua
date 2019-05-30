@@ -3,6 +3,7 @@
 
 LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness_vision", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness_clothesline", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness_taxi", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness_taxi_counter", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
@@ -22,9 +23,11 @@ LinkLuaModifier("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy",
 imba_spirit_breaker_charge_of_darkness							= class({})
 modifier_imba_spirit_breaker_charge_of_darkness					= class({})
 modifier_imba_spirit_breaker_charge_of_darkness_vision			= class({})
+modifier_imba_spirit_breaker_charge_of_darkness_clothesline		= class({})
 modifier_imba_spirit_breaker_charge_of_darkness_taxi			= class({})
 modifier_imba_spirit_breaker_charge_of_darkness_taxi_counter	= class({})
 modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker	= class({})
+
 
 imba_spirit_breaker_bulldoze									= class({})
 modifier_imba_spirit_breaker_bulldoze							= class({})
@@ -44,6 +47,10 @@ modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy	= class({})
 ------------------------
 -- CHARGE OF DARKNESS --
 ------------------------
+
+function imba_spirit_breaker_charge_of_darkness:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
 
 function imba_spirit_breaker_charge_of_darkness:GetAssociatedSecondaryAbilities()
 	return "imba_spirit_breaker_greater_bash"
@@ -105,8 +112,10 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnCreated(params)
 		-- self.vision_radius		= self:GetAbility():GetSpecialValueFor("vision_radius")
 		-- self.vision_duration	= self:GetAbility():GetSpecialValueFor("vision_duration")
 		
-		self.darkness_speed		= self:GetAbility():GetSpecialValueFor("darkness_speed")
-		self.taxi_radius		= self:GetAbility():GetSpecialValueFor("taxi_radius")
+		self.darkness_speed			= self:GetAbility():GetSpecialValueFor("darkness_speed")
+		self.clothesline_duration	= self:GetAbility():GetSpecialValueFor("clothesline_duration")
+		self.taxi_radius			= self:GetAbility():GetSpecialValueFor("taxi_radius")
+		self.taxi_distance			= self:GetAbility():GetSpecialValueFor("taxi_distance")
 	else
 		return
 	end
@@ -171,10 +180,15 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	-- "The bash radius is offset by 20 units in front of Spirit Breaker, so it can hit units 280 range behind and 320 range in front of him."
 	local greater_bash_ability = self:GetCaster():FindAbilityByName("imba_spirit_breaker_greater_bash")
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin() + (self:GetParent():GetForwardVector() * 20), nil, self.bash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin() + (self:GetParent():GetForwardVector() * 20), nil, self.bash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 	
 	for _, enemy in pairs(enemies) do
-		if greater_bash_ability and greater_bash_ability:IsTrained() and enemy ~= self.target and not self.bashed_enemies[enemy] then
+		-- IMBAfication: Clothesline
+		if self:GetAbility():GetAutoCastState() and not self.clothesline_target and enemy ~= self.target and not enemy:IsRoshan() then
+			self.clothesline_target = enemy
+			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_clothesline", {duration = self.clothesline_duration})
+			self.bashed_enemies[enemy] = true
+		elseif greater_bash_ability and greater_bash_ability:IsTrained() and enemy ~= self.target and not self.bashed_enemies[enemy] then
 			greater_bash_ability:Bash(enemy, me)
 			self.bashed_enemies[enemy] = true
 		end
@@ -190,7 +204,8 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 		if ally ~= self:GetParent() and (self.attempting_to_board[ally] or (taxi_tracker_modifier and taxi_tracker_modifier.attempting_to_board[ally])) then
 			local taxi_modifier = ally:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_taxi", 
 			{
-				passenger_num = 1 -- This will be changed by checking the index of taxi counter modifiers
+				passenger_num	= 1, -- This will be changed by checking the index of taxi counter modifiers
+				taxi_distance	= self.taxi_distance
 			})
 			
 			local taxi_counter_modifier = self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_taxi_counter", 
@@ -425,6 +440,64 @@ function modifier_imba_spirit_breaker_charge_of_darkness_vision:CheckState()
 	return state
 end
 
+---------------------------------------------
+-- CHARGE OF DARKNESS CLOTHESLINE MODIFIER --
+---------------------------------------------
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:OnCreated(params)
+	if not IsServer() then return end
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+		return
+	end
+end
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:UpdateHorizontalMotion( me, dt )
+	if not IsServer() then return end
+	
+	-- "The charge is cancelled when Spirit Breaker gets stunned, cycloned, hexed, rooted, slept, hidden, feared, hypnotized or hit by Forced Movement."
+	if not self:GetCaster():HasModifier("modifier_imba_spirit_breaker_charge_of_darkness") or me:IsOutOfGame() then
+		self:Destroy()
+		return
+	end
+	
+	me:SetOrigin( self:GetCaster():GetOrigin() + (self:GetCaster():GetForwardVector() * 128) )
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveHorizontalMotionController( self )
+	
+	local greater_bash_ability = self:GetCaster():FindAbilityByName("imba_spirit_breaker_greater_bash")
+	
+	if greater_bash_ability and greater_bash_ability:IsTrained() then
+		greater_bash_ability:Bash(self:GetParent(), self:GetCaster())
+	end
+end
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:CheckState()
+	local state = {[MODIFIER_STATE_STUNNED] = true}
+	
+	return state
+end
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	
+	return decFuncs
+end
+
+function modifier_imba_spirit_breaker_charge_of_darkness_clothesline:GetOverrideAnimation()
+	return ACT_DOTA_FLAIL
+end
+
 --------------------------------------
 -- CHARGE OF DARKNESS TAXI MODIFIER --
 --------------------------------------
@@ -443,6 +516,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness_taxi:OnCreated(params)
 	if not IsServer() then return end
 	
 	self.passenger_num	= params.passenger_num
+	self.taxi_distance	= params.taxi_distance
 	
 	self:GetParent():EmitSound("Hero_Spirit_Breaker.ChargeOfDarkness.FP")
 	
@@ -461,7 +535,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness_taxi:UpdateHorizontalMo
 		return
 	end
 	
-	me:SetOrigin( self:GetCaster():GetOrigin() + (self:GetCaster():GetForwardVector() * (-1) * (self.passenger_num * 180)) ) -- Another AbilitySpecial
+	me:SetOrigin( self:GetCaster():GetOrigin() + (self:GetCaster():GetForwardVector() * (-1) * (self.passenger_num * self.taxi_distance)) ) -- Another AbilitySpecial
 end
 
 -- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
@@ -714,7 +788,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 			 center_x 			= parent_loc.x,
 			 center_y 			= parent_loc.y,
 			 center_z 			= parent_loc.z,
-			 duration 			= self:GetSpecialValueFor("knockback_duration"),
+			 duration 			= self:GetSpecialValueFor("duration"),
 			 knockback_duration = self:GetSpecialValueFor("knockback_duration"),
 			 knockback_distance = self:GetSpecialValueFor("knockback_distance"),
 			 knockback_height 	= self:GetSpecialValueFor("knockback_height"),
@@ -725,7 +799,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		end
 		
 		-- Greater Bash first applies the debuff, then the damage, no matter whether it procs on attacks, or is applied by Spirit Breaker's abilities.
-		target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties):SetDuration(self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
 	end
 	
 	local damageTable = {
@@ -771,7 +845,7 @@ end
 function modifier_imba_spirit_breaker_greater_bash:OnAttackLanded(keys)
 	if not IsServer() then return end
 
-	if self:GetAbility() and self:GetAbility():IsTrained() and self:GetAbility():IsCooldownReady() and keys.attacker == self:GetParent() and not keys.attacker:PassivesDisabled() and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+	if self:GetAbility() and self:GetAbility():IsTrained() and self:GetAbility():IsCooldownReady() and keys.attacker == self:GetParent() and not keys.attacker:PassivesDisabled() and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not self:GetParent():IsIllusion() then
 	
 		if RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance_pct"), self) then
 			self:GetAbility():Bash(keys.target, keys.attacker)

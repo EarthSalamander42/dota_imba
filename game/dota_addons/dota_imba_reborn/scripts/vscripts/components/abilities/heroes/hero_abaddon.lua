@@ -111,8 +111,13 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 		end
 
 		-- Use up overchannel
-		self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
-		self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
+		if not special_cast then
+			self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
+			self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
+		else
+			self.overchannel_damage_increase	=	0
+			self.overchannel_mist_increase		=	0
+		end
 
 		-- Create the projectile
 		local info = {
@@ -998,7 +1003,7 @@ function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if not IsServer() then return end
 	
     if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
-        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")}):SetStackCount(1)
+        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
 		
 		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("reduction_duration"), function()
 			local overchannel_modifier = self:GetParent():FindModifierByName("modifier_over_channel_reduction")
@@ -1011,12 +1016,20 @@ end
 
 modifier_over_channel_reduction = modifier_over_channel_reduction or class({
     IsHidden                = function(self) return false end,
-    IsPurgable                  = function(self) return false end,
-    IsDebuff                  = function(self) return true end,
-    RemoveOnDeath            = function(self) return true end
+    IsPurgable				= function(self) return false end,
+    IsDebuff				= function(self) return true end,
+    RemoveOnDeath			= function(self) return true end
 })
 
+function modifier_over_channel_reduction:OnCreated()
+	if not IsServer() then return end
+	
+	self:SetStackCount(1)
+end
+
 function modifier_over_channel_reduction:OnRefresh()
+	if not IsServer() then return end
+
     self:IncrementStackCount()
 end
 
@@ -1238,7 +1251,7 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 	if IsServer() then
-		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() then
+		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() and kv.unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 			if not kv.unit.borrowed_time_damage_taken then
 				kv.unit.borrowed_time_damage_taken = 0
 			end
@@ -1246,8 +1259,8 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 			kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken + kv.damage
 
 			if kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") >= 1 then
-				print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter"))
-				print("Damage stored:", kv.unit.borrowed_time_damage_taken)
+				-- print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter"))
+				-- print("Damage stored:", kv.unit.borrowed_time_damage_taken)
 				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") do
 					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken - self:GetAbility():GetSpecialValueFor("ally_threshold_scepter")
 					self:GetCaster():FindAbilityByName("imba_abaddon_mist_coil"):OnSpellStart(kv.unit, true)
