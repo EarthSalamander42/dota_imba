@@ -21455,7 +21455,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"200"
+				"value"				"125"
 			}
 		}
 	}

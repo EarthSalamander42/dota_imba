@@ -332,14 +332,14 @@ function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
 end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierBonusStats_Strength()
-	if self:GetParent():IsInRiver() and not self:GetParent():PassivesDisabled() then
-		return self:GetSpecialValueFor("aqueous_strength")
+	if self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("aqueous_strength")
 	end
 end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierHealthRegenPercentage()
-	if self:GetParent():IsInRiver() and not self:GetParent():PassivesDisabled() then
-		return self:GetSpecialValueFor("aqueous_heal")
+	if self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("aqueous_heal")
 	end
 end
 

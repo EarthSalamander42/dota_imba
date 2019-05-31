@@ -36,6 +36,10 @@
 
 "DOTA_Tooltip_modifier_imba_tidehunter_gush"					"Gush"
 "DOTA_Tooltip_modifier_imba_tidehunter_gush_Description"		"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell"				"Kraken Shell"
+"DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell_Description"	"Passively blocking a portion of physical attack damage, and removing negative status effects after a damage threshold is reached."
+
 "DOTA_Tooltip_modifier_imba_tidehunter_ravage"				"Ravage"
 "DOTA_Tooltip_modifier_imba_tidehunter_ravage_Description"	"Stunned by Ravage."
 "DOTA_Tooltip_modifier_imba_tidehunter_anchor_smash"			"Anchor Smash"
