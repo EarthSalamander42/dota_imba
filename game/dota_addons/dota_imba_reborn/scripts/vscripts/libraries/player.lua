@@ -813,8 +813,13 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
 	
 	-- Keep the static strings in or else you're going to get potential nils if IMBA BP is disabled
-	local blink_effect = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"] or "particles/items_fx/blink_dagger_start.vpcf"
-	local blink_effect_end = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"] or "particles/items_fx/blink_dagger_end.vpcf"
+	local blink_effect		= "particles/items_fx/blink_dagger_start.vpcf"
+	local blink_effect_end	= "particles/items_fx/blink_dagger_end.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) then
+		blink_effect		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
+		blink_effect_end	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
+	end
 	
 	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
 	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end

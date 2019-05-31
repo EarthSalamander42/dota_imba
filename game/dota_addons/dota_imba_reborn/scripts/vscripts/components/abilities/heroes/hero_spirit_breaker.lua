@@ -167,12 +167,15 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	if not self.target:IsAlive() then
 		local new_targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), nil, 4000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 		
-		if #new_targets >= 1 then
-			self.target = new_targets[1]
-			self.vision_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_vision", {})
-		else
-			self:Destroy()
-			return
+		for _, target in pairs(new_targets) do 
+			if target ~= self.clothesline_target then
+				self.target = target
+				self.vision_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_vision", {})
+				break
+			else
+				self:Destroy()
+				return
+			end
 		end
 	end
 	
@@ -263,12 +266,18 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 		end
 		
 		if not self.target:IsMagicImmune() and self:GetAbility() then
-			self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
+			local stun_modifier = self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
+			end
 		end
 		
-		me:SetAggroTarget(self.target)
-		
-		self:Destroy()
+		-- IMBAfication: Mad Cow
+		if self.target:IsAlive() then
+			me:SetAggroTarget(self.target)
+			self:Destroy()
+		end
 		return
 	elseif me:IsStunned() or me:IsOutOfGame() or me:IsHexed() or me:IsRooted() then
 		self:Destroy()

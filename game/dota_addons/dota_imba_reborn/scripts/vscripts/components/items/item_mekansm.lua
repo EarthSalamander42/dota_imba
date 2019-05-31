@@ -122,7 +122,14 @@ function item_imba_mekansm:OnSpellStart()
 
 		-- Play activation sound and particle
 		self:GetCaster():EmitSound("DOTA_Item.Mekansm.Activate")
-		local mekansm_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		
+		local particle_name = "particles/items2_fx/mekanism.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect1"] then
+			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect1"]
+		end
+		
+		local mekansm_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(mekansm_pfx)
 
 		-- Iterate through nearby allies
@@ -136,7 +143,14 @@ function item_imba_mekansm:OnSpellStart()
 
 			-- Play healing sound & particle
 			ally:EmitSound("DOTA_Item.Mekansm.Target")
-			local mekansm_target_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, ally)
+			
+			local particle_name = "particles/items2_fx/mekanism_recipient.vpcf"
+			
+			if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect2"] then
+				particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect2"]
+			end
+			
+			local mekansm_target_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, ally)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 0, caster_loc)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 1, ally:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(mekansm_target_pfx)
@@ -173,7 +187,7 @@ end
 
 function modifier_item_imba_mekansm:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
-	if IsServer() then
+	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["mekansm"]["level"] then
 		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["mekansm"]["level"])
 	end
 	if IsClient() then
@@ -381,7 +395,7 @@ end
 
 function modifier_item_imba_guardian_greaves:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
-	if IsServer() then
+	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["level"] then
 		local server_icon = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["level"]
 		self:SetStackCount(server_icon)
 	end
@@ -598,7 +612,14 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 
 	-- Play activation sound and particle
 	caster:EmitSound("Item.GuardianGreaves.Activate")
-	local cast_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect3"], PATTACH_ABSORIGIN_FOLLOW, caster)
+
+	local particle_name = "particles/items3_fx/warmage.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect3"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect3"]
+	end
+	
+	local cast_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:ReleaseParticleIndex(cast_pfx)
 
 	-- Iterate through nearby allies
@@ -615,10 +636,18 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 		-- Play target sound
 		ally:EmitSound("Item.GuardianGreaves.Target")
 
+		local particle_name 		= "particles/items3_fx/warmage_mana_nonhero.vpcf"
+		local particle_name_hero	= "particles/items3_fx/warmage_recipient.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect5"] and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect4"] then
+			particle_name		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect5"]
+			particle_name_hero	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect4"]
+		end
+
 		-- Choose target particle
-		local particle_target = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect5"]
+		local particle_target = particle_name
 		if ally:IsHero() then
-			particle_target = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect4"]
+			particle_target = particle_name_hero
 		end
 
 		-- Play target particle

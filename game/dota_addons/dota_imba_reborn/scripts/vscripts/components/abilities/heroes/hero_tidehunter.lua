@@ -10,22 +10,22 @@ LinkLuaModifier("modifier_imba_tidehunter_kraken_shell_backstroke", "components/
 
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_suppression", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw_movement", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_HORIZONTAL)
 
-imba_tidehunter_gush									= class({})
-modifier_imba_tidehunter_gush							= class({})
-modifier_imba_tidehunter_gush_surf						= class({})
+imba_tidehunter_gush								= class({})
+modifier_imba_tidehunter_gush						= class({})
+modifier_imba_tidehunter_gush_surf					= class({})
 
-imba_tidehunter_kraken_shell							= class({})
-modifier_imba_tidehunter_kraken_shell					= class({})
-modifier_imba_tidehunter_kraken_shell_backstroke		= class({})
+imba_tidehunter_kraken_shell						= class({})
+modifier_imba_tidehunter_kraken_shell				= class({})
+modifier_imba_tidehunter_kraken_shell_backstroke	= class({})
 
-imba_tidehunter_anchor_smash							= class({})
-modifier_imba_tidehunter_anchor_smash					= class({})
-modifier_imba_tidehunter_anchor_smash_suppression		= class({})
-modifier_imba_tidehunter_anchor_smash_throw				= class({})
-modifier_imba_tidehunter_anchor_smash_throw_movement	= class({})
+imba_tidehunter_anchor_smash						= class({})
+modifier_imba_tidehunter_anchor_smash				= class({})
+modifier_imba_tidehunter_anchor_smash_suppression	= class({})
+modifier_imba_tidehunter_anchor_smash_handler		= class({})
+modifier_imba_tidehunter_anchor_smash_throw			= class({})
 
  -- Gush
 -- Killing enemy
@@ -158,7 +158,9 @@ end
 function imba_tidehunter_gush:OnProjectileThink_ExtraData(location, data)
 	if not IsServer() then return end
 	
-	EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
+	if data.gush_dummy then
+		EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
+	end
 end
 
 function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
@@ -176,6 +178,11 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 		-- "Gush first applies the debuff, then the damage."
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
 
+		-- "Provides 200 radius ground vision around each hit enemy for 2 seconds."
+		if data.bScepter == 1 then
+			self:CreateVisibilityNode(target:GetAbsOrigin(), 200, 2)
+		end
+
 		local damageTable = {
 			victim 			= target,
 			damage 			= self:GetTalentSpecialValueFor("gush_damage"),
@@ -186,6 +193,7 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 		}
 
 		ApplyDamage(damageTable)
+		
 	-- Scepter Gush has reached its end location
 	elseif data.gush_dummy then
 		EntIndexToHScript(data.gush_dummy):StopSound("Hero_Tidehunter.Gush.AghsProjectile")
@@ -287,8 +295,15 @@ end
 function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
 	local decFuncs = 
 	{
-		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT, -- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK -- GetModifierPhysical_ConstantBlock
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
+		
+		
+		-- MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		-- MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 	}
 	
 	return decFuncs
@@ -316,6 +331,25 @@ function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
 	end
 end
 
+function modifier_imba_tidehunter_kraken_shell:GetModifierBonusStats_Strength()
+	if self:GetParent():IsInRiver() and not self:GetParent():PassivesDisabled() then
+		return self:GetSpecialValueFor("aqueous_strength")
+	end
+end
+
+function modifier_imba_tidehunter_kraken_shell:GetModifierHealthRegenPercentage()
+	if self:GetParent():IsInRiver() and not self:GetParent():PassivesDisabled() then
+		return self:GetSpecialValueFor("aqueous_heal")
+	end
+end
+
+-- function modifier_imba_tidehunter_kraken_shell:GetOverrideAnimation()
+	-- if self:GetParent():GetAbsOrigin().z < 160 then return ACT_DOTA_TAUNT end
+-- end
+
+-- function modifier_imba_tidehunter_kraken_shell:GetActivityTranslationModifiers()
+	-- if self:GetParent():GetAbsOrigin().z < 160 then return "backstroke_gesture" end
+-- end
 
 			-- "01"
 			-- {
@@ -344,49 +378,120 @@ modifier_imba_tidehunter_kraken_shell_backstroke		= class({})
 -- ANCHOR SMASH --
 ------------------
 
+function imba_tidehunter_anchor_smash:GetCastRange(location, target)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("throw_range")
+	end
+end
+
+function imba_tidehunter_anchor_smash:GetBehavior()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
+function imba_tidehunter_anchor_smash:GetAOERadius()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
+		return 0
+	else
+		return 175
+	end
+end
+
+function imba_tidehunter_anchor_smash:GetIntrinsicModifierName()
+	return "modifier_imba_tidehunter_anchor_smash_handler"
+end
+
 function imba_tidehunter_anchor_smash:OnSpellStart()
-	self:GetCaster():EmitSound("Hero_Tidehunter.AnchorSmash")
-	
-	local anchor_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_anchor_hero.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	ParticleManager:ReleaseParticleIndex(anchor_particle)
-	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	for _, enemy in pairs(enemies) do
-		if not enemy:IsRoshan() then
-			-- The smash first applies the debuff, then the instant attack.
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash", {duration = self:GetSpecialValueFor("reduction_duration")}):SetDuration(self:GetSpecialValueFor("reduction_duration") * (1 - enemy:GetStatusResistance()), true)
+	if self:GetAutoCastState() then
+		local anchor_dummy = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash_throw", 
+		{
+			x = self:GetCursorPosition().x,
+			y = self:GetCursorPosition().y,
+			z = self:GetCursorPosition().z
+		}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+		
+		local linear_projectile = {
+			Ability				= self,
+			-- EffectName			= "nil"
+			vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
+			fDistance			= self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()),
+			fStartRadius		= 175,
+			fEndRadius			= 175,
+			Source				= self:GetCaster(),
+			bHasFrontalCone		= false,
+			bReplaceExisting	= false,
+			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime 		= GameRules:GetGameTime() + 10.0,
+			bDeleteOnHit		= true,
+			vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("throw_speed"),
+			bProvidesVision		= false,
 			
-			-- "These instant attacks are allowed to trigger attack modifiers, except cleave, normally. Has True Strike."
-			-- So funny thing about this actually...the VANILLA ability ignores CUSTOM cleave suppression (ex. Jarnbjorn), which means Anchor Smash still applies custom cleaves anyways...so I guess in ways this is actually nerfing the ability but bleh
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash_suppression", {})
-			-- PerformAttack(target: CDOTA_BaseNPC, useCastAttackOrb: bool, processProcs: bool, skipCooldown: bool, ignoreInvis: bool, useProjectile: bool, fakeAttack: bool, neverMiss: bool): nil
-			self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
-			self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_tidehunter_anchor_smash_suppression", self:GetCaster())
+			ExtraData			= {anchor_dummy = anchor_dummy:entindex()}
+		}
+		
+		ProjectileManager:CreateLinearProjectile(linear_projectile)
+	else
+		self:GetCaster():EmitSound("Hero_Tidehunter.AnchorSmash")
+		
+		local anchor_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_anchor_hero.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+		ParticleManager:ReleaseParticleIndex(anchor_particle)
+		
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false) -- IMBAfication: Sheer Force
+		
+		for _, enemy in pairs(enemies) do
+			self:Smash(enemy)
 		end
 	end
+end
+
+function imba_tidehunter_anchor_smash:Smash(enemy, bThrown)
+	if not enemy:IsRoshan() then
+		if bThrown and enemy:IsConsideredHero() then
+			self:GetCaster():EmitSound("Hero_Tidehunter.AnchorSmash")
+		end
+		
+		-- The smash first applies the debuff, then the instant attack.
+		if not enemy:IsMagicImmune() then
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash", {duration = self:GetSpecialValueFor("reduction_duration")}):SetDuration(self:GetSpecialValueFor("reduction_duration") * (1 - enemy:GetStatusResistance()), true)
+		end
+		
+		-- "These instant attacks are allowed to trigger attack modifiers, except cleave, normally. Has True Strike."
+		-- So funny thing about this actually...the VANILLA ability ignores CUSTOM cleave suppression (ex. Jarnbjorn), which means Anchor Smash still applies custom cleaves anyways...so I guess in ways this is actually nerfing the ability but bleh
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash_suppression", {})
+		-- PerformAttack(target: CDOTA_BaseNPC, useCastAttackOrb: bool, processProcs: bool, skipCooldown: bool, ignoreInvis: bool, useProjectile: bool, fakeAttack: bool, neverMiss: bool): nil
+		self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
+		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_tidehunter_anchor_smash_suppression", self:GetCaster())
+		
+		-- IMBAfication: Angled
+		if not bThrown then
+			enemy:SetForwardVector(enemy:GetForwardVector() * (-1))
+			enemy:FaceTowards(enemy:GetAbsOrigin() + enemy:GetForwardVector())
+		end
+	end
+end
+
+function imba_tidehunter_anchor_smash:OnProjectileThink_ExtraData(location, data)
+	if not IsServer() then return end
 	
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "attack_damage"			"45 90 135 180"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "damage_reduction"		"-30 -40 -50 -60"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "reduction_duration"	"6.0 6.0 6.0 6.0"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "radius"				"375"
-			-- }
+	EntIndexToHScript(data.anchor_dummy):SetAbsOrigin(location)
+end
+
+function imba_tidehunter_anchor_smash:OnProjectileHit_ExtraData(target, location, data)
+	if not IsServer() then return end
+	
+	-- Gush hit some unit
+	if target then 
+		self:Smash(target, true)
+	else
+		EntIndexToHScript(data.anchor_dummy):RemoveSelf()
+	end
 end
 
 ---------------------------
@@ -419,15 +524,30 @@ end
 -- ANCHOR SMASH SUPPRESSION MODIFIER --
 ---------------------------------------
 
+-- I guess this will also be used for the bonus attack damage
+
+function modifier_imba_tidehunter_anchor_smash_suppression:OnCreated()
+	if self:GetAbility() then
+		self.attack_damage	= self:GetAbility():GetSpecialValueFor("attack_damage")
+	else
+		self:Destroy()
+	end
+end
+
  -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
 function modifier_imba_tidehunter_anchor_smash_suppression:DeclareFunctions()
 	local decFuncs = 
 	{
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
 	
 	return decFuncs
+end
+
+function modifier_imba_tidehunter_anchor_smash_suppression:GetModifierPreAttack_BonusDamage()
+	return self.attack_damage
 end
 
 function modifier_imba_tidehunter_anchor_smash_suppression:GetSuppressCleave()
@@ -441,20 +561,96 @@ function modifier_imba_tidehunter_anchor_smash_suppression:GetModifierTotalDamag
 	end
 end
 
+--------------------------
+-- ANCHOR SMASH HANDLER --
+--------------------------
+
+function modifier_imba_tidehunter_anchor_smash_handler:IsHidden()	return true end
+
+function modifier_imba_tidehunter_anchor_smash_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_tidehunter_anchor_smash_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+
 ---------------------------------
 -- ANCHOR SMASH THROW MODIFIER --
 ---------------------------------
 
-modifier_imba_tidehunter_anchor_smash_throw				= class({})
+function modifier_imba_tidehunter_anchor_smash_throw:OnCreated(params)
+	if not IsServer() then return end
 
-------------------------------------------
--- ANCHOR SMASH THROW MOVEMENT MODIFIER --
-------------------------------------------
+	local models = {
+		"models/items/tidehunter/tidehunter_fish_skeleton_lod.vmdl",
+		"models/items/tidehunter/tidehunter_mine_lod.vmdl",
+		"models/items/tidehunter/ancient_leviathan_weapon/ancient_leviathan_weapon_fx.vmdl",
+		"models/items/tidehunter/claddish_cudgel/claddish_cudgel.vmdl",
+		"models/items/tidehunter/claddish_cudgel/claddish_cudgel_octopus.vmdl",
+		"models/items/tidehunter/krakens_bane/krakens_bane.vmdl",
+		"models/items/tidehunter/living_iceberg_collection_weapon/living_iceberg_collection_weapon.vmdl",
+		"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_off_hand/ti_9_cache_tide_chelonia_mydas_off_hand.vmdl",
+		"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_weapon/ti_9_cache_tide_chelonia_mydas_weapon.vmdl",
+		"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_off_hand/ti_9_cache_tide_tidal_conqueror_off_hand.vmdl",
+		"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_weapon/ti_9_cache_tide_tidal_conqueror_weapon.vmdl",
+		"models/items/tidehunter/tidebreaker_weapon/tidebreaker_weapon.vmdl"
+	}
+	
+	-- Some models are originally oriented in a different way, so they have to be flipped to look proper
+	local models_rotate = {
+		180,
+		180,
+		180,
+		0,
+		180,
+		0,
+		0,
+		180,
+		0, 
+		180,
+		0,
+		0
+	}
+	
+	local randomSelection	= RandomInt(1, #models)
+	local cursorPosition	= Vector(params.x, params.y, params.z)
+	
+	self.selected_model = models[randomSelection]
+	self:GetParent():SetForwardVector(RotatePosition(Vector(0, 0, 0), QAngle(0, models_rotate[randomSelection], 0), ((cursorPosition - self:GetCaster():GetAbsOrigin()):Normalized())))
+end
 
-modifier_imba_tidehunter_anchor_smash_throw_movement	= class({})
+function modifier_imba_tidehunter_anchor_smash_throw:CheckState()
+	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	
+	return state
+end
 
+function modifier_imba_tidehunter_anchor_smash_throw:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MODEL_CHANGE,
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA
+	}
+	
+	return decFuncs
+end
 
+function modifier_imba_tidehunter_anchor_smash_throw:GetModifierModelChange()
+	return self.selected_model or "models/heroes/tidehunter/tidehunter_anchor.vmdl"
+end
 
+function modifier_imba_tidehunter_anchor_smash_throw:GetVisualZDelta()
+	return 150
+end
 
 -----------------------------
 ------ 	   RAVAGE	  -------

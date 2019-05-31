@@ -206,7 +206,13 @@ function modifier_item_imba_mjollnir_static:OnCreated()
 		self.static_cooldown = false
 
 		if not self.pfx then
-			self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			local particle_name = "particles/items2_fx/mjollnir_shield.vpcf"
+			
+			if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"] then
+				particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"]
+			end
+		
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
 		end
 	end
@@ -269,7 +275,13 @@ function modifier_item_imba_mjollnir_static:OnTakeDamage( keys )
 			for _, enemy in pairs(nearby_enemies) do
 
 				-- Play particle
-				local static_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, shield_owner)
+				local particle_name = "particles/item/mjollnir/static_lightning_bolt.vpcf"
+				
+				if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"] then
+					particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"]
+				end
+				
+				local static_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, shield_owner)
 				ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
 				ParticleManager:ReleaseParticleIndex(static_pfx)
@@ -470,7 +482,13 @@ function modifier_item_imba_jarnbjorn_static:OnCreated()
 		self.static_cooldown = false
 
 		if not self.pfx then
-			self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			local particle_name = "particles/items2_fx/mjollnir_shield.vpcf"
+			
+			if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"] then
+				particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"]
+			end
+		
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
 		end
 	end
@@ -532,7 +550,13 @@ function modifier_item_imba_jarnbjorn_static:OnTakeDamage( keys )
 			for _, enemy in pairs(nearby_enemies) do
 
 				-- Play particle
-				local static_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerID()))["maelstorm"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, shield_owner)
+				local particle_name = "particles/item/mjollnir/static_lightning_bolt.vpcf"
+				
+				if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"] then
+					particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"]
+				end
+				
+				local static_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, shield_owner)
 				ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
 				ParticleManager:ReleaseParticleIndex(static_pfx)
@@ -636,7 +660,13 @@ end
 
 -- One bounce. Particle + damage
 function ZapThem(caster, ability, source, target, damage)
-	local bounce_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"], PATTACH_ABSORIGIN_FOLLOW, source)
+	local particle_name = "particles/items_fx/chain_lightning.vpcf"
+	CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"]
+	end
+
+	local bounce_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, source)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 1, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(1, 1, 1))
