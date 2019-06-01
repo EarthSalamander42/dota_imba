@@ -3,7 +3,7 @@
 --    AltiV, May 29th, 2019 (true IMBAfication)
 
 LinkLuaModifier("modifier_imba_tidehunter_gush", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tidehunter_gush_surf", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_tidehunter_gush_surf", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE) -- Was originally gonna make this a horizontal motion controller, but seeing how those tend to cancel other controllers out, I don't think this warrants that same power so it'll just be standard intervalthink updates
 
 LinkLuaModifier("modifier_imba_tidehunter_kraken_shell", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_kraken_shell_backstroke", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
@@ -27,29 +27,23 @@ modifier_imba_tidehunter_anchor_smash_suppression	= class({})
 modifier_imba_tidehunter_anchor_smash_handler		= class({})
 modifier_imba_tidehunter_anchor_smash_throw			= class({})
 
- -- Gush
--- Killing enemy
--- 25% chance
-
-    -- Think of it as caviar.
-    -- You've got guts.
-
--- Ravage
--- Killing enemy
--- 25% chance
-
-    -- Ravaged!
-    -- You look ravaged.
-
 ----------
 -- GUSH --
 ----------
 
 function imba_tidehunter_gush:GetBehavior()
 	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_POINT
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
-		return self.BaseClass.GetBehavior(self)
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
+function imba_tidehunter_gush:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("cast_range_scepter")
 	end
 end
 
@@ -57,7 +51,9 @@ function imba_tidehunter_gush:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.GushCast")
 
 	-- Standard ability logic
-	if not self:GetCaster():HasScepter() then	
+	if self:GetCursorTarget() then
+		local direction	= (self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+		
 		local projectile =
 		{
 			Target 				= self:GetCursorTarget(),
@@ -76,16 +72,26 @@ function imba_tidehunter_gush:OnSpellStart()
 			
 			iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2, -- Need to put the mouth?
 			
-			ExtraData = {bScepter = 0}
+			ExtraData = {
+				bScepter	= self:GetCaster():HasScepter(),
+				bTargeted	= true,
+				speed		= self:GetSpecialValueFor("projectile_speed"),
+				x			= direction.x,
+				y			= direction.y,
+				z			= direction.z
+			}
 		}
 		
 		ProjectileManager:CreateTrackingProjectile(projectile)
+	end
 	
 	-- Scepter ability logic
-	else		
+	if self:GetCaster():HasScepter() then		
 		-- This "dummy" literally only exists to attach the gush travel sound to
 		local gush_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 		gush_dummy:EmitSound("Hero_Tidehunter.Gush.AghsProjectile")
+		
+		local direction	= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized()
 		
 		local linear_projectile = {
 			Ability				= self,
@@ -97,61 +103,28 @@ function imba_tidehunter_gush:OnSpellStart()
 			Source				= self:GetCaster(),
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_BOTH, -- IMBAfication: Surf's Up!
 			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			fExpireTime 		= GameRules:GetGameTime() + 10.0,
 			bDeleteOnHit		= true,
-			vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed_scepter"),
+			vVelocity			= direction * self:GetSpecialValueFor("speed_scepter"),
 			bProvidesVision		= false,
 			
-			ExtraData			= {bScepter = 1, gush_dummy = gush_dummy:entindex()}
+			ExtraData			= 
+			{
+				bScepter 	= true, 
+				bTargeted	= false,
+				speed		= self:GetSpecialValueFor("speed_scepter"),
+				x			= direction.x,
+				y			= direction.y,
+				z			= direction.z,
+				gush_dummy	= gush_dummy:entindex(),
+			}
 		}
+		
 		self.projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
 	end
-	
-			-- "01"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "gush_damage"		"110 160 210 260"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_tidehunter_2"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "projectile_speed"	"2500"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "movement_speed"	"-40 -40 -40 -40"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"			"FIELD_FLOAT"
-				-- "negative_armor"		"4 5 6 7"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "speed_scepter"		"1500"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "aoe_scepter"		"260"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "cooldown_scepter"		"7"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "cast_range_scepter"		"2200"
-			-- }
 end
 
 -- Make the travel sound follow the Gush
@@ -167,32 +140,58 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 	if not IsServer() then return end
 	
 	-- Gush hit some unit
-	if target then 
-		-- Trigger spell absorb if applicable
-		if data.bScepter == 0 and target:TriggerSpellAbsorb(self) then
-			return nil
+	if target then
+		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+			-- Trigger spell absorb if applicable
+			if data.bTargeted == 1 and target:TriggerSpellAbsorb(self) then
+				target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("shieldbreaker_stun")}):SetDuration(self:GetSpecialValueFor("shieldbreaker_stun") * (1 - target:GetStatusResistance()), true)
+				return nil
+			end
+		
+			target:EmitSound("Ability.GushImpact")
+		
+			-- Make the targeted gush not have any effects except for shield break if scepter (no double damage nuttiness)
+			if not (data.bScepter == 1 and data.bTargeted == 1) then
+				-- "Gush first applies the debuff, then the damage."
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
+
+				-- "Provides 200 radius ground vision around each hit enemy for 2 seconds."
+				if data.bScepter == 1 then
+					self:CreateVisibilityNode(target:GetAbsOrigin(), 200, 2)
+				end
+
+				local damageTable = {
+					victim 			= target,
+					damage 			= self:GetTalentSpecialValueFor("gush_damage"),
+					damage_type		= self:GetAbilityDamageType(),
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self
+				}
+
+				ApplyDamage(damageTable)
+				
+				if self:GetCaster():GetName() == "npc_dota_hero_tidehunter" and target:IsRealHero() and not target:IsAlive() and RollPercentage(25) then
+					self:GetCaster():EmitSound("tidehunter_tide_ability_gush_0"..RandomInt(1, 2))
+				end
+			end
 		end
-
-		target:EmitSound("Ability.GushImpact")
-
-		-- "Gush first applies the debuff, then the damage."
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
-
-		-- "Provides 200 radius ground vision around each hit enemy for 2 seconds."
-		if data.bScepter == 1 then
-			self:CreateVisibilityNode(target:GetAbsOrigin(), 200, 2)
+		
+		-- IMBAfication: Surf's Up!
+		if self:GetAutoCastState() and target ~= self:GetCaster() and (target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or (target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and not PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()))) then
+			local surf_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush_surf", 
+			{
+				duration	= self:GetSpecialValueFor("surf_duration"),
+				speed		= data.speed,
+				x			= data.x,
+				y			= data.y,
+				z			= data.z,
+			})
+			
+			if surf_modifier then
+				surf_modifier:SetDuration(self:GetSpecialValueFor("surf_duration") * (1 - target:GetStatusResistance()), true)
+			end
 		end
-
-		local damageTable = {
-			victim 			= target,
-			damage 			= self:GetTalentSpecialValueFor("gush_damage"),
-			damage_type		= self:GetAbilityDamageType(),
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
-		}
-
-		ApplyDamage(damageTable)
 		
 	-- Scepter Gush has reached its end location
 	elseif data.gush_dummy then
@@ -200,15 +199,6 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 		EntIndexToHScript(data.gush_dummy):RemoveSelf()
 	end
 end
-
-
--- "Ability.GushCast"
--- "Ability.GushImpact"
--- "Hero_Tidehunter.Gush.AghsProjectile"
--- "Hero_Tidehunter.KrakenShell"
--- "Hero_Tidehunter.AnchorSmash"
--- "Ability.Ravage"
--- "Hero_Tidehunter.RavageDamage"
 
 -------------------
 -- GUSH MODIFIER --
@@ -257,7 +247,31 @@ end
 -- GUSH SURF MODIFIER --
 ------------------------
 
-modifier_imba_tidehunter_gush_surf						= class({})
+function modifier_imba_tidehunter_gush_surf:OnCreated(params)
+	if not IsServer() then return end
+	
+	if self:GetAbility() then
+		self.speed			= params.speed
+		self.direction		= Vector(params.x, params.y, params.z)
+		self.surf_speed_pct	= self:GetAbility():GetSpecialValueFor("surf_speed_pct")
+		
+		self:StartIntervalThink(FrameTime())
+	else
+		self:Destroy()
+	end
+end
+
+function modifier_imba_tidehunter_gush_surf:OnRefresh(params)
+	if not IsServer() then return end
+	
+	self:OnCreated(params)
+end
+
+function modifier_imba_tidehunter_gush_surf:OnIntervalThink()
+	if not IsServer() then return end
+	
+	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin() + (self.direction * self.speed * self.surf_speed_pct * 0.01 * FrameTime()), false)
+end
 
 ------------------
 -- KRAKEN SHELL --
@@ -295,7 +309,9 @@ end
 function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
 	local decFuncs = 
 	{
-		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT, -- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK -- GetModifierPhysical_ConstantBlock
+		-- MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT, 
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -309,8 +325,12 @@ function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_tidehunter_kraken_shell:GetModifierIncomingPhysicalDamageConstant()
-	return self:GetAbility():GetTalentSpecialValueFor("damage_reduction") * (-1)
+-- function modifier_imba_tidehunter_kraken_shell:GetModifierIncomingPhysicalDamageConstant()
+	-- return self:GetAbility():GetTalentSpecialValueFor("damage_reduction") * (-1)
+-- end
+
+function modifier_imba_tidehunter_kraken_shell:GetModifierPhysical_ConstantBlock()
+	return self:GetAbility():GetTalentSpecialValueFor("damage_reduction")
 end
 
 function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
@@ -408,6 +428,8 @@ end
 
 function imba_tidehunter_anchor_smash:OnSpellStart()
 	if self:GetAutoCastState() then
+		self:GetCaster():EmitSound("Hero_ChaosKnight.idle_throw")
+		
 		local anchor_dummy = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash_throw", 
 		{
 			x = self:GetCursorPosition().x,
@@ -419,7 +441,7 @@ function imba_tidehunter_anchor_smash:OnSpellStart()
 			Ability				= self,
 			-- EffectName			= "nil"
 			vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
-			fDistance			= self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()),
+			fDistance			= self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster()),
 			fStartRadius		= 175,
 			fEndRadius			= 175,
 			Source				= self:GetCaster(),
@@ -480,7 +502,7 @@ end
 function imba_tidehunter_anchor_smash:OnProjectileThink_ExtraData(location, data)
 	if not IsServer() then return end
 	
-	EntIndexToHScript(data.anchor_dummy):SetAbsOrigin(location)
+	EntIndexToHScript(data.anchor_dummy):SetAbsOrigin(GetGroundPosition(location, nil))
 end
 
 function imba_tidehunter_anchor_smash:OnProjectileHit_ExtraData(target, location, data)
@@ -610,7 +632,7 @@ function modifier_imba_tidehunter_anchor_smash_throw:OnCreated(params)
 	local models_rotate = {
 		180,
 		180,
-		180,
+		0,
 		0,
 		180,
 		0,

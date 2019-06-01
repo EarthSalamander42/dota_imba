@@ -81,6 +81,22 @@
 				"var_type"			"FIELD_INTEGER"
 				"cast_range_scepter"		"2200"
 			}
+			
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shieldbreaker_stun"	"1.5 1.8 2.1 2.4"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"surf_duration"		"0.45 0.60 0.75 0.9"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"surf_speed_pct"	"20"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -98,6 +114,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilitySound"					"Hero_Tidehunter.KrakenShell"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -208,6 +228,11 @@
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+		
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts" // "Anchor" Throw
+		}
 	}
 	
 	//=================================================================================================================
