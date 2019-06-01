@@ -898,7 +898,7 @@
 "DOTA_Tooltip_ability_imba_phoenix_supernova_bird_num"                "FIRE SPIRITS SUMMONED:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_additional_duration"         "SCEPTER DURATION INCREASE:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_cooldown"                    "SCEPTER PASSIVE COOLDOWN:"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has it's own, seperate cooldown from Super Nova."
+"DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n<font color='#FF7800'>IMBA:</font> When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova."
 
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double"            "Sun Form"
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double_Description"             "Burning enemies before being reborn."

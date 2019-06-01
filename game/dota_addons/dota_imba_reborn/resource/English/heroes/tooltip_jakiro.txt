@@ -43,7 +43,7 @@
 
 // Jakiro's Liquid Fire
 "DOTA_Tooltip_ability_imba_jakiro_liquid_fire"                          "Liquid Fire"
-"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Description"              "Jakiro adds fire to his attack, burning all enemies in %radius% radius of the target for %duration% seconds. For the duration, they take damage over time and have their turn rates and attack speed slowed.\n<font color='#FF7800'>Dragon Reach:</font> Gains bonus range on Liquid Fire attacks."
+"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Description"              "Jakiro adds fire to his attack, burning all enemies in %radius% radius of the target for %duration% seconds. For the duration, they take damage over time and have their turn rates and attack speed slowed.\n<font color='#FF7800'>Dragon Reach:</font> Gains bonus range on Liquid Fire attacks.\n<font color='#FF7800'>Collateral Melting:</font> Cannot be disjointed, instead instantly exploding at the target's current position."
 "DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Note0"                    "Can affect buildings and structures."
 "DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Lore"                    "Jakiro spits a fireball from afar, roasting flesh and melting stone."
 "DOTA_Tooltip_ability_imba_jakiro_liquid_fire_damage"                  "DAMAGE PER SECOND:"
