@@ -341,12 +341,15 @@
 // Elder Titan's Echo Stomp
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp"                  "Echo Stomp"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Lore"               "The force of creation still echoes in the stomp of the Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_cast_time"            "CAST TIME:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_stomp_damage"           "STOMP DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_sleep_duration"         "STUN DURATION:"
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
+
+"DOTA_Tooltip_modifier_imba_elder_titan_echo_stomp_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it damaged.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The Ancestral Spirit moves very swiftly, gaining very high movement speed."
@@ -382,7 +385,7 @@
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Lore"             "That which he created, the titan tears asunder."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_width"          "CRACK WIDTH:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_distance"       "CRACK LENGTH:"
@@ -421,6 +424,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_7"               "Echo Stomp can no longer be interrupted"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8"               "Full Natural Order"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8_Description"         "Natural Order reduces both physical and magical resistance."
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_9"               "-35s Earth Splitter Cooldown"
 
 // Magnus
 ////===============================================================================================================

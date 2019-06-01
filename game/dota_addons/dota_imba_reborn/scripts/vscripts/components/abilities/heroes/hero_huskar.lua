@@ -428,9 +428,9 @@ end
 -----------------------
 
 -- IMBAfication: Crimson Priest
-function imba_huskar_berserkers_blood:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
+-- function imba_huskar_berserkers_blood:GetBehavior()
+	-- return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+-- end
 
 -- Crimson Priest IMBAfication will be an "opt-out" add-on
 function imba_huskar_berserkers_blood:OnUpgrade()
@@ -488,7 +488,7 @@ function modifier_imba_huskar_berserkers_blood:OnRefresh()
 	self.maximum_health_regen		= self.ability:GetSpecialValueFor("maximum_health_regen")
 	self.hp_threshold_max 			= self.ability:GetSpecialValueFor("hp_threshold_max")
 	self.maximum_resistance 		= self.ability:GetSpecialValueFor("maximum_resistance")
-	self.crimson_priest_duration	= self.ability:GetSpecialValueFor("crimson_priest_duration")
+	-- self.crimson_priest_duration	= self.ability:GetSpecialValueFor("crimson_priest_duration")
 	
 	self.range 						= 100 - self.hp_threshold_max
 end
@@ -519,8 +519,8 @@ function modifier_imba_huskar_berserkers_blood:DeclareFunctions()
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS, -- IMBAfication: Remnants of Berserker's Blood
-		MODIFIER_PROPERTY_MIN_HEALTH,				-- IMBAfication: Crimson Priest
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		-- MODIFIER_PROPERTY_MIN_HEALTH,				-- IMBAfication: Crimson Priest
+		-- MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
 
 	return funcs
@@ -571,25 +571,25 @@ function modifier_imba_huskar_berserkers_blood:GetModifierMagicalResistanceBonus
 	return self.maximum_resistance * (1 - pct)
 end
 
-function modifier_imba_huskar_berserkers_blood:GetMinHealth()
-	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() and not self:GetCaster():PassivesDisabled() and not self:GetCaster():IsIllusion()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
-		return 1
-	else
-		return 0
-	end
-end
+-- function modifier_imba_huskar_berserkers_blood:GetMinHealth()
+	-- if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() and not self:GetCaster():PassivesDisabled() and not self:GetCaster():IsIllusion()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+		-- return 1
+	-- else
+		-- return 0
+	-- end
+-- end
 
-function modifier_imba_huskar_berserkers_blood:OnTakeDamage(keys)
-	if not IsServer() then return end
+-- function modifier_imba_huskar_berserkers_blood:OnTakeDamage(keys)
+	-- if not IsServer() then return end
 	
-	-- Don't waste it if caster has Shallow Grave or Cheese Death Prevention
-	if keys.unit == self.caster and self.caster:GetHealth() <= 1 and not self.caster:IsIllusion() and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:PassivesDisabled() and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
-		self.ability:UseResources(false, false, true)
+	-- -- Don't waste it if caster has Shallow Grave or Cheese Death Prevention
+	-- if keys.unit == self.caster and self.caster:GetHealth() <= 1 and not self.caster:IsIllusion() and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:PassivesDisabled() and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+		-- self.ability:UseResources(false, false, true)
 	
-		self.caster:EmitSound("Hero_Dazzle.Shallow_Grave")
-		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_berserkers_blood_crimson_priest", {duration = self.crimson_priest_duration})
-	end
-end
+		-- self.caster:EmitSound("Hero_Dazzle.Shallow_Grave")
+		-- self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_berserkers_blood_crimson_priest", {duration = self.crimson_priest_duration})
+	-- end
+-- end
 
 -----------------------------------------------
 -- BERSERKER'S BLOOD CRIMSON PRIEST MODIFIER --

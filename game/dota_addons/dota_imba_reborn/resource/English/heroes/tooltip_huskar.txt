@@ -28,7 +28,11 @@
 "DOTA_Tooltip_ability_imba_huskar_burning_spear_burn_damage"							"BURN DAMAGE:"
 
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood"									"Berserker's Blood"
-"DOTA_Tooltip_ability_imba_huskar_berserkers_blood_Description"						"Huskar's injuries feed his power, giving increased attack speed and health regen based on missing health. Health regen is a percentage of your strength.\n<font color='#FF7800'>Remnants of Berserker's Blood:</font> Also gives increased magic resistance based on missing health, to a max resistance of %maximum_resistance%%%.\n<font color='#FF7800'>Crimson Priest: </font>If Huskar's health would normally drop to 0 while this ability is on auto-cast and off cooldown, Shallow Grave is applied for %crimson_priest_duration% seconds, preventing death and putting the ability on cooldown."
+"DOTA_Tooltip_ability_imba_huskar_berserkers_blood_Description"						"Huskar's injuries feed his power, giving increased attack speed and health regen based on missing health. Health regen is a percentage of your strength.\n<font color='#FF7800'>Remnants of Berserker's Blood:</font> Also gives increased magic resistance based on missing health, to a max resistance of %maximum_resistance%%%."
+
+//\n<font color='#FF7800'>Crimson Priest: </font>If Huskar's health would normally drop to 0 while this ability is on auto-cast and off cooldown, Shallow Grave is applied for %crimson_priest_duration% seconds, preventing death and putting the ability on cooldown."
+
+
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_Lore"								"After losing his birthright, Huskar gained a lethality in physical combat that is only heightened as his own blood is spilled."
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_Note0"							"Maximum bonus is achieved when Huskar has strictly less than 10% of his maximum HP."
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_Note1"							"Bonuses are provided linearly, no bonus at 100% HP and full bonus at 10/12/14/16% HP."

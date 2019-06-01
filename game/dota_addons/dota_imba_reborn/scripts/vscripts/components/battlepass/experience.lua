@@ -105,7 +105,7 @@ end
 
 function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.players then
-		print("API not ready! Retry...")
+		-- print("API not ready! Retry...")
 		Timers:CreateTimer(1.0, function()
 			Battlepass:GetPlayerInfoXP()
 		end)

@@ -608,8 +608,11 @@
 		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
 		"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
-		"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
+		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
 		"Ability17"					"special_bonus_lifesteal_100"
+		
+		// Removed Talents
+		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 	}
 
 	//=================================================================================================================

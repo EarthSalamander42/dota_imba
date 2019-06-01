@@ -4693,6 +4693,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -5234,6 +5235,31 @@
 			{
 				"var_type"		"FIELD_FLOAT"
 				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_9"	// -35s Earth Splitter Cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_earth_splitter"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"35"
 			}
 		}
 	}
@@ -20797,7 +20823,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 350 375 400"
+				"radius"					"400 450 500 550"
 			}
 			"02"
 			{
@@ -26041,7 +26067,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"350"
+				"bonus_attack_range"		"350 350 350 450"
 			}
 			"04"
 			{
@@ -26051,12 +26077,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"corrosive_breath_damage"	"20"
+				"corrosive_breath_damage"	"20 20 20 30"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"corrosive_breath_duration"	"5.0"
+				"corrosive_breath_duration"	"5.0 5.0 5.0"
 			}
 			"07"
 			{
@@ -26066,27 +26092,37 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"splash_damage_percent"		"80"
+				"splash_damage_percent"		"80 80 80 120"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_movement_speed"	"-40"
+				"frost_bonus_movement_speed"	"-40 -40 -40 -60"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_attack_speed"		"-40"
+				"frost_bonus_attack_speed"		"-40 -40 -40 -60"
 			}
 			"11"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"frost_duration"				"3.0"
+				"frost_duration"				"3.0 3.0 3.0"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"frost_aoe"					"300"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance"			"0 0 0 30"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"model_scale"				"0 0 0 30"
 			}
 		}
 	}
