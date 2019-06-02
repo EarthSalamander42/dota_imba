@@ -900,9 +900,15 @@ function modifier_imba_medusa_stone_gaze_stone:GetStatusEffectName()
 end
 
 function modifier_imba_medusa_stone_gaze_stone:OnCreated(params)
-	if not IsServer() then return end
+	if self:GetAbility() then
+		self.bonus_physical_damage = self:GetAbility():GetSpecialValueFor("bonus_physical_damage")
+	else
+		self:Destroy()
+	end
+
+	-- if not IsServer() then return end
 	
-	self.bonus_physical_damage = params.bonus_physical_damage
+	-- self.bonus_physical_damage = params.bonus_physical_damage
 end
 
 function modifier_imba_medusa_stone_gaze_stone:CheckState()
@@ -924,8 +930,6 @@ function modifier_imba_medusa_stone_gaze_stone:DeclareFunctions()
 end
 
 function modifier_imba_medusa_stone_gaze_stone:GetModifierIncomingPhysicalDamage_Percentage(keys)
-	if not IsServer() then return end
-	
 	return self.bonus_physical_damage
 end
 

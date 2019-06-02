@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -67,17 +67,6 @@
 			m_nSequenceMax = 8
 		},
 		{
-			_class = "C_INIT_InitialVelocityNoise"
-			m_bLocalSpace = true
-			m_vecOutputMax = [ 16.0, 16.0, 400.0 ]
-			m_vecOutputMin = [ -16.0, -16.0, 250.0 ]
-			m_flNoiseScaleLoc = 2.0
-			m_flNoiseScale = 2.0
-		},
-		{
-			_class = "C_INIT_RandomYawFlip"
-		},
-		{
 			_class = "C_INIT_CreationNoise"
 			m_flOutputMax = 15.0
 			m_flOutputMin = -15.0
@@ -94,6 +83,22 @@
 			m_bEvenDistribution = true
 		},
 		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMax = 150
+			m_nAlphaMin = 50
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_bLocalSpace = true
+			m_vecOutputMax = [ 16.0, 16.0, 400.0 ]
+			m_vecOutputMin = [ -16.0, -16.0, 250.0 ]
+			m_flNoiseScaleLoc = 2.0
+			m_flNoiseScale = 2.0
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
 			_class = "C_INIT_PositionWarp"
 			m_vecWarpMin = [ 0.25, 0.25, 2.0 ]
 			m_flWarpTime = 0.5
@@ -104,11 +109,6 @@
 			m_flOutputMin = 1.5
 			m_bScaleInitialRange = true
 		},
-		{
-			_class = "C_INIT_RandomAlpha"
-			m_nAlphaMax = 150
-			m_nAlphaMin = 50
-		},
 	]
 	m_Emitters = 
 	[
@@ -116,8 +116,21 @@
 			_class = "C_OP_ContinuousEmitter"
 			m_flOpEndFadeOutTime = 0.5
 			m_flOpStartFadeOutTime = 0.3
-			m_flEmitRate = 200.0
-			m_flEmissionDuration = 0.5
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.5
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 200.0
+			}
 		},
 	]
 	m_Constraints = 
@@ -143,4 +156,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 9
+	m_nFirstMultipleOverride_BackwardCompat = 8
 }

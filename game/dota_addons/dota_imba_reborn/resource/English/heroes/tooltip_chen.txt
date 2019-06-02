@@ -10,11 +10,11 @@
 
 
 "DOTA_Tooltip_ability_imba_chen_divine_favor"							"Divine Favor"
-"DOTA_Tooltip_ability_imba_chen_divine_favor_Description"				"Provides increased health regeneration, amplifies all health restore by a percentage, and boosts damage. Provides <font color='#FF7800'>quintuple</font> bonus damage for non-hero targets.\n<font color='#FF7800'>Pure Devotion:</font> Also provides immunity to any pure damage."
-"DOTA_Tooltip_ability_imba_chen_divine_favor_heal_amp"					"%HEAL INCREASE:"
-"DOTA_Tooltip_ability_imba_chen_divine_favor_heal_rate"					"REGEN PER SEC:"
-"DOTA_Tooltip_ability_imba_chen_divine_favor_damage_bonus"			"ATTACK DAMAGE:"
-"DOTA_Tooltip_ability_imba_chen_divine_favor_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_chen_divine_favor_Description"				"Aura provides increased health regeneration, amplifies all health restore by a percentage, and boosts damage for heroes. Provides double bonus damage for your own non-hero units.\n<font color='#FF7800'>Pure Devotion:</font> Can be cast on friendly units to boost the health regeneration to %heal_rate%, health restore amplication to %heal_amp%%%, and damage bonus to %damage_bonus% for %duration% seconds. The active provides quintuple bonus damage for non-hero targets. Also provides immunity to any pure damage. Active does not stack with the aura."
+"DOTA_Tooltip_ability_imba_chen_divine_favor_heal_amp_aura"				"%HEAL INCREASE:"
+"DOTA_Tooltip_ability_imba_chen_divine_favor_heal_rate_aura"			"REGEN PER SEC:"
+"DOTA_Tooltip_ability_imba_chen_divine_favor_damage_bonus_aura"			"ATTACK DAMAGE:"
+"DOTA_Tooltip_ability_imba_chen_divine_favor_aura_radius"				"AURA RADIUS:"
 
 
 "DOTA_Tooltip_ability_imba_chen_test_of_faith"							"Test of Faith"
@@ -42,7 +42,7 @@
 "DOTA_Tooltip_ability_imba_chen_holy_persuasion_level_req"				"LEVEL REQUIREMENT:"
 "DOTA_Tooltip_ability_imba_chen_holy_persuasion_health_min"				"HEALTH MINIMUM:"
 "DOTA_Tooltip_ability_imba_chen_holy_persuasion_teleport_delay"			"TELEPORT DELAY:"
-"DOTA_Tooltip_ability_imba_chen_holy_persuasion_movement_speed_bonus"	"UNITS BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_chen_holy_persuasion_movement_speed_bonus"	"CREEP MOVE SPEED BONUS:"
 
 
 "DOTA_Tooltip_ability_imba_chen_hand_of_god"								"Hand of God"
@@ -75,7 +75,10 @@
 "DOTA_Tooltip_modifier_imba_chen_hand_of_god_overheal_Description"		"Gaining extra max health from overheal, which decays over time."
 
 "DOTA_Tooltip_modifier_imba_chen_divine_favor"	"Divine Favor"
-"DOTA_Tooltip_modifier_imba_chen_divine_favor_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%%% health regen, amplifying all regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%. Gaining immunity to any pure damage."
+"DOTA_Tooltip_modifier_imba_chen_divine_favor_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%. Gaining immunity to any pure damage."
+
+"DOTA_Tooltip_modifier_imba_chen_divine_favor_aura_buff"	"Divine Favor"
+"DOTA_Tooltip_modifier_imba_chen_divine_favor_aura_buff_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
 
 
 "DOTA_Tooltip_Ability_special_bonus_imba_chen_divine_favor_cd_reduction"						"-8s Divine Favor Cooldown"

@@ -1733,7 +1733,7 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 
 	-- Ability specials
 	local radius = ability:GetSpecialValueFor("radius")
-	local int_multiplier = ability:GetSpecialValueFor("int_multiplier")
+	local int_multiplier = ability:GetTalentSpecialValueFor("int_multiplier")
 	local max_mana_burn_pct = ability:GetSpecialValueFor("max_mana_burn_pct")
 	local int_steal_count = ability:GetSpecialValueFor("int_steal_count")    
 	local int_steal_duration = ability:GetSpecialValueFor("int_steal_duration")
@@ -1889,15 +1889,21 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 end
 
 LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium_active", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium_debuff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_obsidian_destroyer_equilibrium = class({})
-modifier_imba_obsidian_destroyer_equilibrium = class({})
+imba_obsidian_destroyer_equilibrium 				= class({})
+modifier_imba_obsidian_destroyer_equilibrium 		= class({})
+modifier_imba_obsidian_destroyer_equilibrium_active	= class({})
 modifier_imba_obsidian_destroyer_equilibrium_debuff = class({})
 
 -----------------
 -- EQUILIBRIUM --
 -----------------
+
+function imba_obsidian_destroyer_equilibrium:GetIntrinsicModifierName()
+	return "modifier_imba_obsidian_destroyer_equilibrium"
+end
 
 function imba_obsidian_destroyer_equilibrium:OnSpellStart()
 	self.caster	= self:GetCaster()
@@ -1909,39 +1915,65 @@ function imba_obsidian_destroyer_equilibrium:OnSpellStart()
 	
 	self.caster:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Cast")
 	
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_obsidian_destroyer_equilibrium", {duration = self.duration})
+	self.caster:AddNewModifier(self.caster, self, "modifier_imba_obsidian_destroyer_equilibrium_active", {duration = self.duration})
 end
 
 --------------------------
 -- EQUILIBRIUM MODIFIER --
 --------------------------
 
-function modifier_imba_obsidian_destroyer_equilibrium:GetEffectName()
+function modifier_imba_obsidian_destroyer_equilibrium:IsHidden()	return true end
+
+function modifier_imba_obsidian_destroyer_equilibrium:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:OnTakeDamage(keys)
+	if not IsServer() then return end
+
+	if keys.attacker == self:GetParent() and not self:GetParent():HasModifier("modifier_imba_obsidian_destroyer_equilibrium_active") then
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_matter_debuff_mana.vpcf", PATTACH_ABSORIGIN, keys.unit)
+		ParticleManager:ReleaseParticleIndex(particle)
+		
+		self:GetParent():GiveMana(keys.damage * (self:GetAbility():GetSpecialValueFor("mana_steal") / 100))
+	end
+end
+
+---------------------------------
+-- EQUILIBRIUM ACTIVE MODIFIER --
+---------------------------------
+
+function modifier_imba_obsidian_destroyer_equilibrium_active:GetEffectName()
 	return "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_matter_buff.vpcf"
 end
 
-function modifier_imba_obsidian_destroyer_equilibrium:GetEffectAttachType()
+function modifier_imba_obsidian_destroyer_equilibrium_active:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-function modifier_imba_obsidian_destroyer_equilibrium:GetStatusEffectName()
+function modifier_imba_obsidian_destroyer_equilibrium_active:GetStatusEffectName()
 	return "particles/status_fx/status_effect_obsidian_matter.vpcf"
 end
 
-function modifier_imba_obsidian_destroyer_equilibrium:OnCreated()
+function modifier_imba_obsidian_destroyer_equilibrium_active:OnCreated()
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
 	
 	-- AbilitySpecials
-	self.mana_steal			= self.ability:GetSpecialValueFor("mana_steal")
+	-- self.mana_steal			= self.ability:GetSpecialValueFor("mana_steal")
+	self.mana_steal_active	= self.ability:GetSpecialValueFor("mana_steal_active")
 	self.movement_slow		= self.ability:GetSpecialValueFor("movement_slow")
 	self.slow_duration		= self.ability:GetSpecialValueFor("slow_duration")
 	self.duration			= self.ability:GetSpecialValueFor("duration")
 	self.atk_speed_diff		= self.ability:GetSpecialValueFor("atk_speed_diff")
 end
 
-function modifier_imba_obsidian_destroyer_equilibrium:DeclareFunctions()
+function modifier_imba_obsidian_destroyer_equilibrium_active:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
@@ -1950,23 +1982,23 @@ function modifier_imba_obsidian_destroyer_equilibrium:DeclareFunctions()
     return decFuncs
 end
 
-function modifier_imba_obsidian_destroyer_equilibrium:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_obsidian_destroyer_equilibrium_active:GetModifierAttackSpeedBonus_Constant()
 	return self.atk_speed_diff * self:GetStackCount()
 end
 
 --- Enum DamageCategory_t
 -- DOTA_DAMAGE_CATEGORY_ATTACK = 1
 -- DOTA_DAMAGE_CATEGORY_SPELL = 0
-function modifier_imba_obsidian_destroyer_equilibrium:OnTakeDamage(keys)
+function modifier_imba_obsidian_destroyer_equilibrium_active:OnTakeDamage(keys)
 	if not IsServer() then return end
 
-	if keys.attacker == self.caster and keys.damage_category == 0 then
+	if keys.attacker == self.caster then --and keys.damage_category == 0 then
 		keys.unit:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Damage")
 
 		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_loadout.vpcf", PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:ReleaseParticleIndex(self.particle)
 		
-		self.caster:GiveMana(keys.damage * (self.mana_steal / 100))
+		self.caster:GiveMana(keys.damage * (self.mana_steal_active / 100))
 	
 		keys.unit:AddNewModifier(self.caster, self.ability, "modifier_imba_obsidian_destroyer_equilibrium_debuff", {duration = self.slow_duration})
 		

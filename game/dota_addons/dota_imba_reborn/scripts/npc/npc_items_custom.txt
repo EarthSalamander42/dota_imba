@@ -5615,7 +5615,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_ms"					"-35"
+				"slow_ms"					"-45"
 			}
 			"03"
 			{

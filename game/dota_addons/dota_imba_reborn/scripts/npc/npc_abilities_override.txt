@@ -8438,31 +8438,15 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0 4.5 5.0"
-				"LinkedSpecialBonus"		"special_bonus_unique_slark_3"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"30 40 50"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_regen_pct"			"3 6 9"
+				"bonus_movement_speed"		"40 50 60"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"neutral_disable"			"0.25"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_aoe"				"425"
 			}
 		}
 	}

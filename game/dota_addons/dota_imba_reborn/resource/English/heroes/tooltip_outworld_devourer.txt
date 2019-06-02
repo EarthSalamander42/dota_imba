@@ -54,21 +54,22 @@
 
 // Obsidian Destroyer's Equilibrium
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium"					"Equilibrium"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Causes any spell damage you deal to slow enemies and restore mana based on how much damage was dealt.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of spell damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal"		"%SPELL MANA STEAL:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Passively provides %mana_steal%%% Mana Restoration based on damage dealt. When activated, the mana restoration is tripled and enemies damaged by you are slowed.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal"				"%PASSIVE MANA RESTORE:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal_active"		"%ACTIVE MANA RESTORE:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_movement_slow"	"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
-"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium"	"Equilibrium"
-"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_Description"	"Your spell damage steals mana and slows your enemies. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_active"				"Equilibrium"
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_active_Description"	"Your damage steals mana and slows your enemies. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 "DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_debuff"	"Equilibrium"
 "DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%.  Additionally losing %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 // Obsidian Destroyer's Sanity's Eclipse
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse"          "Sanity's Eclipse"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Description"           "Unleashes a psychic blast that removes %mana_drain%%% of the mana from affected heroes, while also damaging them based on the difference between the affected hero's Intelligence and Outworld Devourer's. If an enemy hero has the same or higher Intelligence than Outworld Devourer, Sanity's Eclipse will not cause damage. Sanity's Eclipse can hit units trapped by Astral Imprisonment.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n<font color='#FF7800'>Shattering Sanity:</font> Steals intelligence from heroes that were hit on the blast.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Description"           "Unleashes a psychic blast that removes %max_mana_burn_pct%%% of the mana from affected heroes, while also damaging them based on the difference between the affected hero's Intelligence and Outworld Devourer's. If an enemy hero has the same or higher Intelligence than Outworld Devourer, Sanity's Eclipse will not cause damage. Sanity's Eclipse can hit units trapped by Astral Imprisonment.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n<font color='#FF7800'>Shattering Sanity:</font> Steals intelligence from heroes that were hit on the blast.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note0"                 "The damage is based on the intelligence difference times the intelligence multiplier."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note1"                 "Intelligence steal and Scepter's Astral Imprisonments are applied even if the target wasn't damaged by the spell."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Lore"                  "When an Outworld crystal ruptures, cataclysmic energies are released, and the reverberations of this power are felt interdimensionally."
@@ -94,4 +95,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8"				"Essence Aura Overflow"
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 10 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_9"				"+60s Arcane Orb Int Steal"
-
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_10"				"+2 Sanity's Eclipse Multiplier"

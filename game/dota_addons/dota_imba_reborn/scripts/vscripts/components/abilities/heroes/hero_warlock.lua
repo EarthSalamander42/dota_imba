@@ -62,7 +62,8 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	-- Apply the debuff to enemies from the closest to the farthest
 	for _,enemy in pairs(enemies) do
 		if targets_linked < max_targets then
-			enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
+			local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
+			table.insert(modifier_table, bond_modifier)
 
 			-- Increase the targets linked counter and insert that enemy into a table
 			targets_linked = targets_linked + 1
@@ -85,11 +86,8 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	end
 
 	-- Put the bond table on all enemies' debuff modifiers
-	for _,enemy in pairs(bond_table) do
-		local modifier_bonds_handler = enemy:FindModifierByName(modifier_bonds)
-		if modifier_bonds_handler then
-			modifier_bonds_handler.bond_table = bond_table
-		end
+	for _, modifiers in pairs(modifier_table) do
+		modifiers.bond_table = bond_table
 	end
 end
 
@@ -145,6 +143,7 @@ function modifier_imba_fatal_bonds:IsHidden() return false end
 function modifier_imba_fatal_bonds:IsPurgable() return true end
 function modifier_imba_fatal_bonds:IsDebuff() return true end
 function modifier_imba_fatal_bonds:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_fatal_bonds:ShouldUseOverheadOffset() return true end
 
 function modifier_imba_fatal_bonds:OnIntervalThink()
 	if IsServer() then
@@ -383,7 +382,7 @@ function imba_warlock_shadow_word:OnSpellStart()
 	local target_point = self:GetCursorPosition()
 	local sound_target = "Hero_Warlock.ShadowWord"
 	local sound_explosion = "Imba.WarlockShadowWordExplosion"
-	local particle_aoe = "particles/hero/warlock/warlock_shadow_word_aoe.vpcf"
+	local particle_aoe = "particles/hero/warlock/warlock_shadow_word_aoe_a.vpcf"
 	local modifier_word = "modifier_imba_shadow_word"
 
 	-- Ability specials
@@ -744,7 +743,8 @@ function modifier_imba_upheaval:OnIntervalThink()
 		false)
 
 	for _,unit in pairs(units) do
-		if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") then
+		--if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") then
+		if string.find(unit:GetUnitName(), "warlock_golem") then
 			local modifier_golem_buff_handler = unit:AddNewModifier(self.caster, self.ability, self.modifier_golem_buff, {duration = (self.tick_interval * 2)})
 			if modifier_golem_buff_handler then
 				modifier_golem_buff_handler.radius = self.radius
@@ -884,188 +884,334 @@ function imba_warlock_rain_of_chaos:OnAbilityPhaseInterrupted()
 end
 
 function imba_warlock_rain_of_chaos:OnSpellStart()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local target_point = self:GetCursorPosition()
-	local golem_level = ability:GetLevel()
-	local playerID = caster:GetPlayerID()
-	local cast_response = {"warlock_warl_ability_reign_02", "warlock_warl_ability_reign_03", "warlock_warl_ability_reign_04", "warlock_warl_ability_reign_05", "warlock_warl_ability_reign_06"}
-	local rare_cast_response = "warlock_warl_ability_reign_01"
-	local sound_cast = "Hero_Warlock.RainOfChaos"
-	local particle_start = "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
-	local particle_main = "particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
-	local modifier_stun = "modifier_imba_rain_of_chaos_stun"
-	local modifier_attack_speed = "modifier_imba_rain_of_chaos_golem_as"
-	local modifier_move_speed = "modifier_imba_rain_of_chaos_golem_ms"
-	local modifier_demon_link = "modifier_imba_rain_of_chaos_demon_link"
-	local ability_fists = "imba_warlock_flaming_fists"
-	local ability_immolate = "imba_warlock_permanent_immolation"
-
-	-- Ability specials
-	local radius = ability:GetSpecialValueFor("radius")
-	local duration = ability:GetSpecialValueFor("duration")
-	local stun_duration = ability:GetSpecialValueFor("stun_duration")
-	local bonus_hp_per_str = ability:GetSpecialValueFor("bonus_hp_per_str")
-	local bonus_armor_per_agi = ability:GetSpecialValueFor("bonus_armor_per_agi")
-	local bonus_aspeed_per_agi = ability:GetSpecialValueFor("bonus_aspeed_per_agi")
-	local bonus_damage_per_int = ability:GetSpecialValueFor("bonus_damage_per_int")
-	local ms_bonus_boots = ability:GetSpecialValueFor("ms_bonus_boots")
-	local effect_delay = ability:GetSpecialValueFor("effect_delay")
-	local scepter_demon_count = ability:GetSpecialValueFor("scepter_demon_count")
-	local scepter_demon_distance = ability:GetSpecialValueFor("scepter_demon_distance")
-	local scepter_demon_hp = ability:GetSpecialValueFor("scepter_demon_hp")
-
-	-- Roll for rare cast response, otherwise, play normal cast response
-	if RollPercentage(5) then
-		EmitSoundOn(rare_cast_response, caster)
+	local cursor_position = self:GetCursorPosition()
+	
+	if self:GetCaster():HasScepter() then
+		for golems = 0, self:GetSpecialValueFor("number_of_golems_scepter") - 1 do
+			Timers:CreateTimer(0.4 * golems, function()
+				self:SummonGolem(cursor_position, true, false)
+			end)
+		end
 	else
-		EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+		self:SummonGolem(cursor_position, false, false)
 	end
 
+	-- -- Ability properties
+	-- local caster = self:GetCaster()
+	-- local ability = self
+	-- local target_point = self:GetCursorPosition()
+	-- local golem_level = ability:GetLevel()
+	-- local playerID = caster:GetPlayerID()
+	-- local cast_response = {"warlock_warl_ability_reign_02", "warlock_warl_ability_reign_03", "warlock_warl_ability_reign_04", "warlock_warl_ability_reign_05", "warlock_warl_ability_reign_06"}
+	-- local rare_cast_response = "warlock_warl_ability_reign_01"
+	-- local sound_cast = "Hero_Warlock.RainOfChaos"
+	-- local particle_start = "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+	-- local particle_main = "particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
+	-- local modifier_stun = "modifier_imba_rain_of_chaos_stun"
+	-- local modifier_attack_speed = "modifier_imba_rain_of_chaos_golem_as"
+	-- local modifier_move_speed = "modifier_imba_rain_of_chaos_golem_ms"
+	-- local modifier_demon_link = "modifier_imba_rain_of_chaos_demon_link"
+	-- local ability_fists = "imba_warlock_flaming_fists"
+	-- local ability_immolate = "imba_warlock_permanent_immolation"
+
+	-- -- Ability specials
+	-- local radius = ability:GetSpecialValueFor("radius")
+	-- local duration = ability:GetSpecialValueFor("duration")
+	-- local stun_duration = ability:GetSpecialValueFor("stun_duration")
+	-- local bonus_hp_per_str = ability:GetSpecialValueFor("bonus_hp_per_str")
+	-- local bonus_armor_per_agi = ability:GetSpecialValueFor("bonus_armor_per_agi")
+	-- local bonus_aspeed_per_agi = ability:GetSpecialValueFor("bonus_aspeed_per_agi")
+	-- local bonus_damage_per_int = ability:GetSpecialValueFor("bonus_damage_per_int")
+	-- local ms_bonus_boots = ability:GetSpecialValueFor("ms_bonus_boots")
+	-- local effect_delay = ability:GetSpecialValueFor("effect_delay")
+	-- local scepter_demon_count = ability:GetSpecialValueFor("scepter_demon_count")
+	-- local scepter_demon_distance = ability:GetSpecialValueFor("scepter_demon_distance")
+	-- local scepter_demon_hp = ability:GetSpecialValueFor("scepter_demon_hp")
+
+	-- -- Roll for rare cast response, otherwise, play normal cast response
+	-- if RollPercentage(5) then
+		-- EmitSoundOn(rare_cast_response, caster)
+	-- else
+		-- EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+	-- end
+
+	-- -- Play cast sound
+	-- EmitSoundOn(sound_cast, caster)
+
+	-- -- Add start particle effect
+	-- local particle_start_fx = ParticleManager:CreateParticle(particle_start, PATTACH_ABSORIGIN, caster)
+	-- ParticleManager:SetParticleControl(particle_start_fx, 0, target_point)
+	-- ParticleManager:ReleaseParticleIndex(particle_start_fx)
+
+	-- -- Destroy trees in the radius
+	-- GridNav:DestroyTreesAroundPoint(target_point, radius, false)
+
+	-- -- Wait for the effect delay
+	-- Timers:CreateTimer(effect_delay, function()
+			-- -- Add main particle effect
+			-- local particle_main_fx = ParticleManager:CreateParticle(particle_main, PATTACH_ABSORIGIN, caster)
+			-- ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
+			-- ParticleManager:SetParticleControl(particle_main_fx, 1, Vector(radius, 0, 0))
+			-- ParticleManager:ReleaseParticleIndex(particle_main_fx)
+
+			-- -- Stun nearby enemies, even if they're magic immune
+			-- local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+				-- target_point,
+				-- nil,
+				-- radius,
+				-- DOTA_UNIT_TARGET_TEAM_ENEMY,
+				-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				-- DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+				-- FIND_ANY_ORDER,
+				-- false)
+
+			-- for _,enemy in pairs(enemies) do
+				-- enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+			-- end
+
+			-- -- Summon the appropriate Golem unit based on the skill's level at the target point
+			-- local golem = CreateUnitByName("npc_imba_warlock_golem_"..golem_level, target_point, true, caster, caster, caster:GetTeamNumber())
+
+			-- -- Apply kill modifier on golem to set its duration
+			-- golem:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+
+			-- -- Set the golem to be controllable by Warlock's player
+			-- golem:SetControllableByPlayer(playerID, true)
+
+			-- -- Calculate bonus properties based on Warlock's stats
+			-- local bonus_hp = caster:GetStrength() * bonus_hp_per_str
+			-- local bonus_damage = caster:GetIntellect() * bonus_damage_per_int
+			-- local bonus_armor = caster:GetAgility() * bonus_armor_per_agi
+			-- local bonus_attack_speed = caster:GetAgility() * bonus_aspeed_per_agi
+			-- local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed(), false) - caster:GetBaseMoveSpeed()
+
+			-- -- Set Golem's properties according to the bonus properties
+			-- -- Health:
+			-- golem:SetBaseMaxHealth(golem:GetBaseMaxHealth() + bonus_hp)
+			-- golem:SetMaxHealth(golem:GetMaxHealth() + bonus_hp)
+			-- golem:SetHealth(golem:GetMaxHealth())
+
+			-- -- Damage:
+			-- golem:SetBaseDamageMin(golem:GetBaseDamageMin() + bonus_damage)
+			-- golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
+
+			-- -- Armor:
+			-- golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + bonus_armor)
+
+			-- -- #4 Talent: Chaotic Golem armor increase
+			-- if caster:HasTalent("special_bonus_imba_warlock_4") then
+				-- golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + caster:FindTalentValue("special_bonus_imba_warlock_4"))
+			-- end
+
+			-- -- Attack speed (needs to be done through a modifier):
+			-- local modifier_attackspeed_handler = golem:AddNewModifier(caster, ability, modifier_attack_speed, {})
+			-- if modifier_attackspeed_handler then
+				-- modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
+			-- end
+
+			-- -- Move speed (needs to be done through a modifier):
+			-- local modifier_movespeed_handler = golem:AddNewModifier(caster, ability, modifier_move_speed, {})
+			-- if modifier_movespeed_handler then
+				-- modifier_movespeed_handler:SetStackCount(bonus_move_speed)
+			-- end
+
+			-- -- #8 Talent: Chaotic Golems are now Spell Immune
+			-- if caster:HasTalent("special_bonus_imba_warlock_8") then
+				-- ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
+				-- ability_spell_immunity:SetLevel(1)
+			-- end
+
+			-- -- Level the golem's skills to the appropriate level
+			-- local ability_fists_handler = golem:FindAbilityByName(ability_fists)
+			-- if ability_fists_handler then
+				-- ability_fists_handler:SetLevel(golem_level)
+			-- end
+
+			-- local ability_immolate_handler = golem:FindAbilityByName(ability_immolate)
+			-- if ability_immolate_handler then
+				-- ability_immolate_handler:SetLevel(golem_level)
+			-- end
+
+			-- -- Resolve positions
+			-- ResolveNPCPositions(target_point, 128)
+
+			-- -- If caster has scepter, summon Demonic Ascension
+			-- if caster:HasScepter() then
+				-- -- Assign the golem with the demon link modifier
+				-- local demon_link_modifier = golem:AddNewModifier(caster, ability, modifier_demon_link, {})
+
+				-- -- Decide how to arrange the demons. First one is behind the golem, closest to Warlock's position
+				-- local angle_per_demon = 360 / scepter_demon_count
+				-- local summon_edge_point = target_point + (target_point - caster:GetAbsOrigin()):Normalized() * scepter_demon_distance
+
+				-- for i = 0, (scepter_demon_count -1) do
+					-- -- Spawning point
+					-- local qangle = QAngle(0, i * angle_per_demon, 0)
+					-- local demon_spawn_point = RotatePosition(target_point, qangle, summon_edge_point)
+
+					-- -- Create demon
+					-- local demon = CreateUnitByName("npc_imba_warlock_demonic_ascension", demon_spawn_point, true, caster, caster, caster:GetTeamNumber())
+					-- demon:SetControllableByPlayer(playerID, true)
+					-- demon:StartGesture(ACT_DOTA_IDLE)
+
+					-- -- Forward vector
+					-- local direction = (target_point - demon_spawn_point):Normalized()
+					-- demon:SetForwardVector(direction)
+
+					-- -- Set the demon's health according to level
+					-- demon:SetMaxHealth(scepter_demon_hp)
+					-- demon:SetBaseMaxHealth(scepter_demon_hp)
+					-- demon:SetHealth(scepter_demon_hp)
+
+					-- demon:AddNewModifier(golem, ability, "modifier_imba_rain_of_chaos_demon_visible", {})
+					
+					-- -- Assign the demons to that golem
+					-- if demon_link_modifier then
+						-- if not demon_link_modifier.demon_table then
+							-- demon_link_modifier.demon_table = {}
+						-- else
+							-- table.insert(demon_link_modifier.demon_table, demon)
+						-- end
+					-- end
+				-- end
+
+				-- ResolveNPCPositions(target_point, radius)
+			-- end
+	-- end)
+end
+
+function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOn("Hero_Warlock.RainOfChaos", self:GetCaster())
 
 	-- Add start particle effect
-	local particle_start_fx = ParticleManager:CreateParticle(particle_start, PATTACH_ABSORIGIN, caster)
+	local particle_start_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(particle_start_fx, 0, target_point)
 	ParticleManager:ReleaseParticleIndex(particle_start_fx)
 
-	-- Stun nearby enemies, even if they're magic immune
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		target_point,
-		nil,
-		radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		FIND_ANY_ORDER,
-		false)
-
-	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	local effect_delay = self:GetSpecialValueFor("effect_delay")
+	
+	if bDeath then
+		effect_delay = 0
 	end
-
-	-- Destroy trees in the radius
-	GridNav:DestroyTreesAroundPoint(target_point, radius, false)
-
-	-- Wait for the effect delay
+	
 	Timers:CreateTimer(effect_delay, function()
-			-- Add main particle effect
-			local particle_main_fx = ParticleManager:CreateParticle(particle_main, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
-			ParticleManager:SetParticleControl(particle_main_fx, 1, Vector(radius, 0, 0))
-			ParticleManager:ReleaseParticleIndex(particle_main_fx)
+		-- Destroy trees in the radius
+		GridNav:DestroyTreesAroundPoint(target_point, self:GetSpecialValueFor("radius"), false)
+		
+		-- Add main particle effect
+		local particle_main_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
+		ParticleManager:SetParticleControl(particle_main_fx, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
+		ParticleManager:ReleaseParticleIndex(particle_main_fx)
 
-			-- Summon the appropriate Golem unit based on the skill's level at the target point
-			local golem = CreateUnitByName("npc_imba_warlock_golem_"..golem_level, target_point, true, caster, caster, caster:GetTeamNumber())
+		-- Stun nearby enemies, even if they're magic immune
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+			target_point,
+			nil,
+			self:GetSpecialValueFor("radius"),
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+			FIND_ANY_ORDER,
+			false)
 
-			-- Apply kill modifier on golem to set its duration
-			golem:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+		for _,enemy in pairs(enemies) do
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+		end
 
-			-- Set the golem to be controllable by Warlock's player
-			golem:SetControllableByPlayer(playerID, true)
+		-- Summon the appropriate Golem unit based on the skill's level at the target point
+		-- local golem = CreateUnitByName("npc_imba_warlock_golem_"..self:GetLevel(), target_point, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		
+		local golem = nil
+		
+		if not bScepter or bDeath then
+			golem = CreateUnitByName("npc_dota_warlock_golem_"..self:GetLevel(), target_point, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		else
+			golem = CreateUnitByName("npc_dota_warlock_golem_scepter_"..self:GetLevel(), target_point, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		end
 
-			-- Calculate bonus properties based on Warlock's stats
-			local bonus_hp = caster:GetStrength() * bonus_hp_per_str
-			local bonus_damage = caster:GetIntellect() * bonus_damage_per_int
-			local bonus_armor = caster:GetAgility() * bonus_armor_per_agi
-			local bonus_attack_speed = caster:GetAgility() * bonus_aspeed_per_agi
-			local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed(), false) - caster:GetBaseMoveSpeed()
+		-- Apply kill modifier on golem to set its duration
+		golem:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
 
-			-- Set Golem's properties according to the bonus properties
-			-- Health:
-			golem:SetBaseMaxHealth(golem:GetBaseMaxHealth() + bonus_hp)
-			golem:SetMaxHealth(golem:GetMaxHealth() + bonus_hp)
-			golem:SetHealth(golem:GetMaxHealth())
+		-- Set the golem to be controllable by Warlock's player
+		golem:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
 
-			-- Damage:
-			golem:SetBaseDamageMin(golem:GetBaseDamageMin() + bonus_damage)
-			golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
+		-- Calculate bonus properties based on Warlock's stats
+		local bonus_hp				= self:GetCaster():GetStrength() 	* self:GetSpecialValueFor("bonus_hp_per_str")
+		local bonus_damage			= self:GetCaster():GetIntellect()	* self:GetSpecialValueFor("bonus_damage_per_int")
+		local bonus_armor			= self:GetCaster():GetAgility()		* self:GetSpecialValueFor("bonus_armor_per_agi")
+		local bonus_attack_speed	= self:GetCaster():GetAgility()		* self:GetSpecialValueFor("bonus_aspeed_per_agi")
+		local bonus_move_speed		= self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed(), false) - self:GetCaster():GetBaseMoveSpeed()
 
-			-- Armor:
-			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + bonus_armor)
+		if bScepter and not bDeath then
+			bonus_hp			= bonus_hp				* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
+			bonus_damage		= bonus_damage			* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
+			bonus_armor			= bonus_armor			* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
+			bonus_attack_speed	= bonus_attack_speed	* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
+			bonus_move_speed	= bonus_move_speed		* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
+			
+			-- Also reduce bounty
+			golem:SetMinimumGoldBounty(golem:GetMinimumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
+			golem:SetMaximumGoldBounty(golem:GetMaximumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
+		end
 
-			-- #4 Talent: Chaotic Golem armor increase
-			if caster:HasTalent("special_bonus_imba_warlock_4") then
-				golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + caster:FindTalentValue("special_bonus_imba_warlock_4"))
-			end
+		-- Set Golem's properties according to the bonus properties
+		-- Health:
+		golem:SetBaseMaxHealth(golem:GetBaseMaxHealth() + bonus_hp)
+		golem:SetMaxHealth(golem:GetMaxHealth() + bonus_hp)
+		golem:SetHealth(golem:GetMaxHealth())
 
-			-- Attack speed (needs to be done through a modifier):
-			local modifier_attackspeed_handler = golem:AddNewModifier(caster, ability, modifier_attack_speed, {})
-			if modifier_attackspeed_handler then
-				modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
-			end
+		-- Damage:
+		golem:SetBaseDamageMin(golem:GetBaseDamageMin() + bonus_damage)
+		golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
 
-			-- Move speed (needs to be done through a modifier):
-			local modifier_movespeed_handler = golem:AddNewModifier(caster, ability, modifier_move_speed, {})
-			if modifier_movespeed_handler then
-				modifier_movespeed_handler:SetStackCount(bonus_move_speed)
-			end
+		-- Armor:
+		golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + bonus_armor)
 
-			-- #8 Talent: Chaotic Golems are now Spell Immune
-			if caster:HasTalent("special_bonus_imba_warlock_8") then
-				ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
-				ability_spell_immunity:SetLevel(1)
-			end
+		-- #4 Talent: Chaotic Golem armor increase
+		if self:GetCaster():HasTalent("special_bonus_imba_warlock_4") then
+			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue(false) + self:GetCaster():FindTalentValue("special_bonus_imba_warlock_4"))
+		end
 
-			-- Level the golem's skills to the appropriate level
-			local ability_fists_handler = golem:FindAbilityByName(ability_fists)
-			if ability_fists_handler then
-				ability_fists_handler:SetLevel(golem_level)
-			end
+		-- Attack speed (needs to be done through a modifier):
+		local modifier_attackspeed_handler = golem:AddNewModifier(self:GetCaster(), ability, "modifier_imba_rain_of_chaos_golem_as", {})
+		if modifier_attackspeed_handler then
+			modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
+		end
 
-			local ability_immolate_handler = golem:FindAbilityByName(ability_immolate)
-			if ability_immolate_handler then
-				ability_immolate_handler:SetLevel(golem_level)
-			end
+		-- Move speed (needs to be done through a modifier):
+		local modifier_movespeed_handler = golem:AddNewModifier(self:GetCaster(), ability, "modifier_imba_rain_of_chaos_golem_ms", {})
+		if modifier_movespeed_handler then
+			modifier_movespeed_handler:SetStackCount(bonus_move_speed)
+		end
 
-			-- Resolve positions
-			ResolveNPCPositions(target_point, 128)
+		-- #8 Talent: Chaotic Golems are now Spell Immune
+		if self:GetCaster():HasTalent("special_bonus_imba_warlock_8") then
+			ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
+			ability_spell_immunity:SetLevel(1)
+		end
 
-			-- If caster has scepter, summon Demonic Ascension
-			if caster:HasScepter() then
-				-- Assign the golem with the demon link modifier
-				local demon_link_modifier = golem:AddNewModifier(caster, ability, modifier_demon_link, {})
+		-- Level the golem's skills to the appropriate level
+		local ability_fists_handler = golem:FindAbilityByName("imba_warlock_flaming_fists")
+		if ability_fists_handler then
+			ability_fists_handler:SetLevel(self:GetLevel())
+		end
 
-				-- Decide how to arrange the demons. First one is behind the golem, closest to Warlock's position
-				local angle_per_demon = 360 / scepter_demon_count
-				local summon_edge_point = target_point + (target_point - caster:GetAbsOrigin()):Normalized() * scepter_demon_distance
+		local ability_immolate_handler = golem:FindAbilityByName("imba_warlock_permanent_immolation")
+		if ability_immolate_handler then
+			ability_immolate_handler:SetLevel(self:GetLevel())
+		end
 
-				for i = 0, (scepter_demon_count -1) do
-					-- Spawning point
-					local qangle = QAngle(0, i * angle_per_demon, 0)
-					local demon_spawn_point = RotatePosition(target_point, qangle, summon_edge_point)
-
-					-- Create demon
-					local demon = CreateUnitByName("npc_imba_warlock_demonic_ascension", demon_spawn_point, true, caster, caster, caster:GetTeamNumber())
-					demon:SetControllableByPlayer(playerID, true)
-					demon:StartGesture(ACT_DOTA_IDLE)
-
-					-- Forward vector
-					local direction = (target_point - demon_spawn_point):Normalized()
-					demon:SetForwardVector(direction)
-
-					-- Set the demon's health according to level
-					demon:SetMaxHealth(scepter_demon_hp)
-					demon:SetBaseMaxHealth(scepter_demon_hp)
-					demon:SetHealth(scepter_demon_hp)
-
-					demon:AddNewModifier(golem, ability, "modifier_imba_rain_of_chaos_demon_visible", {})
-					
-					-- Assign the demons to that golem
-					if demon_link_modifier then
-						if not demon_link_modifier.demon_table then
-							demon_link_modifier.demon_table = {}
-						else
-							table.insert(demon_link_modifier.demon_table, demon)
-						end
-					end
-				end
-
-				ResolveNPCPositions(target_point, radius)
-			end
+		-- Resolve positions
+		ResolveNPCPositions(target_point, 128)
 	end)
+end
+
+function imba_warlock_rain_of_chaos:OnOwnerDied()
+	if self:GetCaster():HasTalent("special_bonus_imba_warlock_9") and (not self:GetCaster().IsReincarnating or (self:GetCaster().IsReincarnating and not self:GetCaster():IsReincarnating())) and self:IsTrained() then
+		self:SummonGolem(self:GetCaster():GetAbsOrigin(), self:GetCaster():HasScepter(), true)
+	end
 end
 
 -- Stun modifier
@@ -1581,7 +1727,7 @@ end
 
 function modifier_imba_permanent_immolation_aura:IsAura()
 	-- If caster is disabled, aura is not emitted
-	if self.caster:PassivesDisabled() then
+	if self:GetCaster():PassivesDisabled() then
 		return false
 	end
 
