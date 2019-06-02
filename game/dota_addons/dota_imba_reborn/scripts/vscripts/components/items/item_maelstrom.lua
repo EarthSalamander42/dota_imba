@@ -661,7 +661,11 @@ end
 -- One bounce. Particle + damage
 function ZapThem(caster, ability, source, target, damage)
 	local particle_name = "particles/items_fx/chain_lightning.vpcf"
-	CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))
+	
+	if not caster.GetPlayerID and caster:GetOwner() then
+		caster = caster:GetOwner()
+	end
+	
 	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"] then
 		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"]
 	end

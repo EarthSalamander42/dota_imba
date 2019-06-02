@@ -281,6 +281,19 @@ function imba_tidehunter_kraken_shell:GetIntrinsicModifierName()
 	return "modifier_imba_tidehunter_kraken_shell"
 end
 
+function imba_tidehunter_kraken_shell:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE
+end
+
+function imba_tidehunter_kraken_shell:OnSpellStart()
+	self:GetCaster():Purge(false, true, false, true, true)
+	
+	local kraken_shell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_krakenshell_purge.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(kraken_shell_particle)
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_kraken_shell_backstroke", {duration = 3.6})
+end
+
 ---------------------------
 -- KRAKEN SHELL MODIFIER --
 ---------------------------
@@ -392,7 +405,53 @@ end
 -- KRAKEN SHELL BACKSTROKE MODIFIER --
 --------------------------------------
 
-modifier_imba_tidehunter_kraken_shell_backstroke		= class({})
+function modifier_imba_tidehunter_kraken_shell_backstroke:OnCreated()
+	if self:GetAbility() then
+		self.backstroke_movespeed		= self:GetAbility():GetSpecialValueFor("backstroke_movespeed")
+		self.backstroke_statusresist	= self:GetAbility():GetSpecialValueFor("backstroke_statusresist")
+	else
+		self:Destroy()
+	end
+end
+
+function modifier_imba_tidehunter_kraken_shell_backstroke:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_tidehunter_kraken_shell_backstroke:GetOverrideAnimation()
+	--if self:GetParent():GetAbsOrigin().z < 160 then return ACT_DOTA_TAUNT end
+	return ACT_DOTA_TAUNT
+end
+
+function modifier_imba_tidehunter_kraken_shell_backstroke:GetActivityTranslationModifiers()
+	--if self:GetParent():GetAbsOrigin().z < 160 then return "backstroke_gesture" end
+	return "backstroke_gesture"
+end
+
+function modifier_imba_tidehunter_kraken_shell_backstroke:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent():GetAbsOrigin().z >= 160 then
+		return self.backstroke_movespeed
+	else
+		return self.backstroke_movespeed * 2
+	end
+end
+
+function modifier_imba_tidehunter_kraken_shell_backstroke:GetModifierStatusResistanceStacking()
+	if self:GetParent():GetAbsOrigin().z >= 160 then
+		return self.backstroke_statusresist
+	else
+		return self.backstroke_statusresist * 2
+	end
+end
 
 ------------------
 -- ANCHOR SMASH --

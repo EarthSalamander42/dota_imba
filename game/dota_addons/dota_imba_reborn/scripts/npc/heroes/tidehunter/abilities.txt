@@ -150,6 +150,21 @@
 				"var_type"				"FIELD_FLOAT"
 				"aqueous_heal"			"1.5"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"backstroke_movespeed"			"50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"backstroke_statusresist"		"50"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"backstroke_duration"		"3.6"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
