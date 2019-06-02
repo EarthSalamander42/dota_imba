@@ -609,15 +609,17 @@ end
 --	FROST NOVA DEATH BLOSSOM TALENT		--
 ------------------------------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_lich_11", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
 modifier_special_bonus_imba_lich_11 = class({})
 
-function modifier_special_bonus_imba_lich_11:IsHidden()		return true end
-function modifier_special_bonus_imba_lich_11:IsPurgable() 	return false end
-function modifier_special_bonus_imba_lich_11:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_lich_11:IsHidden()			return true end
+function modifier_special_bonus_imba_lich_11:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_11:RemoveOnDeath()	return false end
 
 function imba_lich_frost_nova:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lich_11") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lich_11", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_lich_11"), "modifier_special_bonus_imba_lich_11", {})
 	end
 end
 

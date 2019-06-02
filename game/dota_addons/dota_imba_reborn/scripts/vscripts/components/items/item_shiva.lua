@@ -41,7 +41,13 @@ function item_imba_shivas_guard:OnSpellStart()
 	self:GetCaster():EmitSound("DOTA_Item.ShivasGuard.Activate")
 
 	-- Play particle
-	local blast_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local particle_name = "particles/items2_fx/shivas_guard_active.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect1"]
+	end
+	
+	local blast_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
@@ -73,7 +79,13 @@ function item_imba_shivas_guard:OnSpellStart()
 			-- If not, blast it
 			if not enemy_has_been_hit then
 				-- Play hit particle
-				local hit_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, enemy)
+				local particle_name = "particles/items2_fx/shivas_guard_impact.vpcf"
+				
+				if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"] then
+					particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"]
+				end
+				
+				local hit_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(hit_pfx, 1, enemy:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(hit_pfx)
@@ -123,9 +135,17 @@ function modifier_imba_shiva_handler:OnCreated()
 end
 
 function modifier_imba_shiva_handler:OnIntervalThink()
-	if self:GetCaster():IsIllusion() or not CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["level"] then return end
+	local particle_name	= "particles/items2_fx/shivas_guard_impact.vpcf"
+	local level			= 0
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"] and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["level"] then
+		particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"]
+		level			= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["level"]
+	end
+
+	if self:GetCaster():IsIllusion() then return end
 	if IsServer() then
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["shiva"]["level"])
+		self:SetStackCount(level)
 	end
 
 	if IsClient() then
@@ -221,9 +241,11 @@ function modifier_imba_shiva_debuff:OnIntervalThink()
 	-- Attack speed formula: 
 	-- Attacks per second = [(100 + IAS) × 0.01] / BAT
 	-- Tooltip Attack Speed ~= (IAS + 100) = Attacks per second * BAT * 100
-	local attack_speed_slow = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * (self:GetAbility():GetSpecialValueFor("aura_as_reduction") / 100)
-	-- Use stack system to display how much attack speed is reduced (also allows this to update tooltip)
-	self:SetStackCount(attack_speed_slow)
+	if self.parent and self:GetAbility() then
+		local attack_speed_slow = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * (self:GetAbility():GetSpecialValueFor("aura_as_reduction") / 100)
+		-- Use stack system to display how much attack speed is reduced (also allows this to update tooltip)
+		self:SetStackCount(attack_speed_slow)
+	end
 end
 
 function modifier_imba_shiva_debuff:DeclareFunctions()

@@ -167,12 +167,15 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	if not self.target:IsAlive() then
 		local new_targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), nil, 4000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 		
-		if #new_targets >= 1 then
-			self.target = new_targets[1]
-			self.vision_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_vision", {})
-		else
-			self:Destroy()
-			return
+		for _, target in pairs(new_targets) do 
+			if target ~= self.clothesline_target then
+				self.target = target
+				self.vision_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_vision", {})
+				break
+			else
+				self:Destroy()
+				return
+			end
 		end
 	end
 	
@@ -263,12 +266,18 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 		end
 		
 		if not self.target:IsMagicImmune() and self:GetAbility() then
-			self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
+			local stun_modifier = self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
+			end
 		end
 		
-		me:SetAggroTarget(self.target)
-		
-		self:Destroy()
+		-- IMBAfication: Mad Cow
+		if self.target:IsAlive() then
+			me:SetAggroTarget(self.target)
+			self:Destroy()
+		end
 		return
 	elseif me:IsStunned() or me:IsOutOfGame() or me:IsHexed() or me:IsRooted() then
 		self:Destroy()
@@ -1209,11 +1218,17 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_spirit_breaker_charge_speed					= class({})
 modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown			= class({})
 modifier_special_bonus_imba_spirit_breaker_bonus_health					= class({})
+
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsPurgable() 		return false end
+function modifier_special_bonus_imba_spirit_breaker_charge_speed:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:IsPurgable() 		return false end
@@ -1241,6 +1256,10 @@ end
 
 function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
 	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_charge_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_charge_speed"), "modifier_special_bonus_imba_spirit_breaker_charge_speed", {})
+	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_bonus_health") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_bonus_health"), "modifier_special_bonus_imba_spirit_breaker_bonus_health", {})

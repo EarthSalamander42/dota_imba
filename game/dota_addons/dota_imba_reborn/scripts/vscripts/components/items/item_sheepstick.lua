@@ -151,7 +151,7 @@ end
 function modifier_item_imba_sheepstick:OnIntervalThink()
 	local caster = self:GetCaster()
 	if caster:IsIllusion() then return end
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"] ~= nil then
+	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"] then
 		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"])
 	end
 	if IsClient() then
@@ -197,9 +197,17 @@ end
 
 function modifier_item_imba_sheepstick_debuff:OnCreated()
 	if IsServer() then
-		self.sheep_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_name = "particles/items_fx/item_sheepstick.vpcf"
+		local level 		= 0
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"] and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"] then
+			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"]
+			level			= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"]
+		end
+	
+		self.sheep_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"])
+		self:SetStackCount(level)
 	end
 end
 
@@ -257,7 +265,13 @@ function modifier_item_imba_sheepstick_buff:IsPurgable() return true end
 function modifier_item_imba_sheepstick_buff:OnCreated()
 	if IsServer() then
 		-- Play the target particle
-		self.sheep_pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_name = "particles/items_fx/item_sheepstick.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"] then
+			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"]
+		end
+		
+		self.sheep_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
 	end
 end

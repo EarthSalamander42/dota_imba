@@ -483,7 +483,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk"                    "+150% Walrus Punch Crit"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk_2"                  "+140 Snowball damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_earth_spirit"            "+300 Rolling Boulder damage"
-"DOTA_Tooltip_Ability_special_bonus_unique_huskar"                  "+550 Life Break Cast Range"
+// "DOTA_Tooltip_Ability_special_bonus_unique_huskar"                  "+550 Life Break Cast Range"
 //"DOTA_Tooltip_Ability_special_bonus_unique_huskar_2"                "+5 Burning Spear DPS"
 //"DOTA_Tooltip_Ability_special_bonus_unique_naga_siren"              "+1 Mirror Image illusion"
 //"DOTA_Tooltip_Ability_special_bonus_unique_naga_siren_2"            "-2s Ensnare cooldown"

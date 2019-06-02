@@ -81,6 +81,22 @@
 				"var_type"			"FIELD_INTEGER"
 				"cast_range_scepter"		"2200"
 			}
+			
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shieldbreaker_stun"	"1.5 1.8 2.1 2.4"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"surf_duration"		"0.45 0.60 0.75 0.9"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"surf_speed_pct"	"20"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -98,6 +114,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilitySound"					"Hero_Tidehunter.KrakenShell"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -119,6 +139,17 @@
 				"var_type"				"FIELD_FLOAT"
 				"damage_reset_interval"	"6.0 6.0 6.0 6.0"
 			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aqueous_strength"		"10 15 20 25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aqueous_heal"			"1.5"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -136,7 +167,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		//"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Tidehunter.AnchorSmash"
@@ -179,8 +210,29 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"375 410 445 480"
 			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"throw_range"			"600 675 750 825"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"throw_speed"			"900"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"throw_radius"			"175"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+		
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts" // "Anchor" Throw
+		}
 	}
 	
 	//=================================================================================================================

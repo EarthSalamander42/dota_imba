@@ -683,7 +683,7 @@ if IsServer() then
 		end
 		local hitLoc = vLocation
 		Timers:CreateTimer(function()
-			local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")
+			local damage = self:GetTalentSpecialValueFor("avalanche_damage") / self:GetSpecialValueFor("tick_count")
 			local enemies_tick = FindUnitsInRadius(caster:GetTeamNumber(), hitLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 			for _,enemy in pairs(enemies_tick) do
 				if enemy:HasModifier("modifier_tiny_toss_movement") then

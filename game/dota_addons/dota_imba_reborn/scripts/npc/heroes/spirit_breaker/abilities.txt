@@ -74,8 +74,8 @@
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"clothesline_duration"	"3 4 5"
+				"var_type"				"FIELD_FLOAT"
+				"clothesline_duration"	"2.2 2.8 3.4 4.0"
 			}
 			"08"
 			{
@@ -368,7 +368,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"125"
+				"value"					"175"
 			}
 		}
 	}	
