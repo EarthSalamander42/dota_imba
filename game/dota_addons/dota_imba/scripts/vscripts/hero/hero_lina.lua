@@ -70,14 +70,14 @@ end
 
 function modifier_imba_blazing_fire:OnIntervalThink( )
 	if IsServer() then
-		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), ability = nil, damage = self.dmg_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), ability = nil, damage = self.dmg_per_tick, damage_type = DAMAGE_TYPE_PURE})
 		self.counter = self.counter - 1
 	end
 end
 
 function modifier_imba_blazing_fire:OnDestroy( params )
 	if IsServer() then
-		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), ability = nil, damage = (self.dmg_per_tick * self.counter), damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), ability = nil, damage = (self.dmg_per_tick * self.counter), damage_type = DAMAGE_TYPE_PURE})
 		ParticleManager:DestroyParticle(self.particle_fx, false)
 		ParticleManager:ReleaseParticleIndex(self.particle_fx)
 	end
@@ -808,6 +808,7 @@ function modifier_imba_fiery_soul_blaze_burn:OnIntervalThink()
 		if fiery_soul_counter then
 			local damage = fiery_soul_counter:GetStackCount() * self.caster:FindTalentValue("special_bonus_imba_lina_5")
 			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = damage, damage_type = self.ability:GetAbilityDamageType()})
+			self.parent:RemoveModifierByName("modifier_imba_blazing_fire")
 		end
 	end
 end
