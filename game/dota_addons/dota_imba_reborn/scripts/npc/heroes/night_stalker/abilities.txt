@@ -51,6 +51,7 @@
 		"AbilityTextureName"			"night_stalker_void"
 		"MaxLevel"						"4"
 		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -126,6 +127,22 @@
 				"vision_reduction"		"100 200 300 400"
 				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_1"
 			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"		"900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_ministun"		"0.6"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_cooldown_reduction"		"2"
+			}			
 		}
 	}
 

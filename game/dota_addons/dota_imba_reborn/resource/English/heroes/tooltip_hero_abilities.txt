@@ -341,12 +341,15 @@
 // Elder Titan's Echo Stomp
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp"                  "Echo Stomp"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Lore"               "The force of creation still echoes in the stomp of the Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_cast_time"            "CAST TIME:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_stomp_damage"           "STOMP DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_sleep_duration"         "STUN DURATION:"
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
+
+"DOTA_Tooltip_modifier_imba_elder_titan_echo_stomp_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it damaged.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The Ancestral Spirit moves very swiftly, gaining very high movement speed."
@@ -382,7 +385,7 @@
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Lore"             "That which he created, the titan tears asunder."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_width"          "CRACK WIDTH:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_distance"       "CRACK LENGTH:"
@@ -421,6 +424,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_7"               "Echo Stomp can no longer be interrupted"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8"               "Full Natural Order"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8_Description"         "Natural Order reduces both physical and magical resistance."
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_9"               "-35s Earth Splitter Cooldown"
 
 // Magnus
 ////===============================================================================================================
@@ -894,7 +898,7 @@
 "DOTA_Tooltip_ability_imba_phoenix_supernova_bird_num"                "FIRE SPIRITS SUMMONED:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_additional_duration"         "SCEPTER DURATION INCREASE:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_cooldown"                    "SCEPTER PASSIVE COOLDOWN:"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has it's own, seperate cooldown from Super Nova."
+"DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n<font color='#FF7800'>IMBA:</font> When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova."
 
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double"            "Sun Form"
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double_Description"             "Burning enemies before being reborn."
@@ -2184,7 +2188,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_shadow_word"                        "Shadow Word"
-"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"            "Applies an incantation on the ground, affecting all nearby units in its range. Allies get a buff that heals them every second, while enemies get a debuff that deals damage to them every second.\n<font color='#FF7800'>Hell Incantations:</font> Chaotic Golems feed from the magical power of the incantation, further enhancing their move and attack speed.\n<font color='#FF7800'>Demonic Whisper:</font> When Shadow Word deals damage to an enemy, the curse spreads to all enemies linked to it through Fatal Bonds, applying a Shadow Word on them. Chaotic Golems also count as Fatal Bonded units and can spread Shadow Word to units that become linked to them through damage taken.\n<font color='#FF7800'>Cursed Links:</font> When a Fatal Bonded unit affected by Shadow Word attacks a Chaotic Golem, it spreads to the golem, applying the positive buff version of Shadow Word."
+"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"				"Applies an incantation on the ground, affecting all nearby units in its range. Allies get a buff that heals them every second, while enemies get a debuff that deals damage to them every second.\n<font color='#FF7800'>Hell Incantations:</font> Chaotic Golems feed from the magical power of the incantation, further enhancing their move and attack speed.\n<font color='#FF7800'>Demonic Whisper:</font> When Shadow Word deals damage to an enemy, the curse spreads to all enemies linked to it through Fatal Bonds, applying a Shadow Word on them.\n<font color='#FF7800'>Cursed Links:</font> When a Fatal Bonded unit affected by Shadow Word attacks a Chaotic Golem, it spreads to the golem, applying the positive buff version of Shadow Word for its remaining duration."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Lore"                    "Warlock arcane arts have a myriad of uses, allowing them to be powerful friendly enchantments or damaging curses."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Note0"                  "If a unit is already affected by Shadow Word, it is ignored from Shadow Words being spread to it."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Note1"                  "Chaotic Golems spread a negative version of Shadow Word, even though they have a positive version of it."
@@ -2224,7 +2228,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos"                      "Chaotic Offering"
-"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Description"          "Summons a powerful golem to do Warlock's bidding, stunning enemies for %stun_duration% second in %radius% radius. The golem lasts for %duration% seconds, and has the Flaming Fists and Permanent Immolation abilities.\n<font color='#FF7800'>Contract of the Black Grimoire:</font> When summoning a Chaotic Golem, Warlock pours its own life force into the summoning spell, enhanching the Chaotic Golem. Increases the Golem's health for every point of strength, armor and attack speed for every point of agility, and its damage for every point of intelligence. Chaotic Golem also benefits from all the move speed Warlock has above his base move speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Description"          "Summons a powerful golem to do Warlock's bidding, stunning enemies for %stun_duration% second in %radius% radius. The golem lasts for %duration% seconds, and has the Flaming Fists and Permanent Immolation abilities.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Contract of the Black Grimoire:</font> When summoning a Chaotic Golem, Warlock pours its own life force into the summoning spell, enhanching the Chaotic Golem. Increases the Golem's health for every point of strength, armor and attack speed for every point of agility, and its damage for every point of intelligence. Chaotic Golem also benefits from all the move speed Warlock has above his base move speed."
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Lore"                  "Hell's strongest marches down the field of battle, blazing destruction in its wake."
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note0"                "Golems are only enhanced based on Warlock's stats at the time of cast."
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note1"                "The Golem's ability levels are based on the level of Chaotic Offering that was used."
@@ -2235,9 +2239,17 @@
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_bonus_aspeed_per_agi"              "ATTACK SPEED PER AGILITY:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_base_damage"          "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_bonus_damage_per_int"              "DAMAGE PER INTELLIGENCE:"
-"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_demon_hp"                  "SCEPTER DEMON HEALTH:"
-"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_damage_transfer_pct"       "%SCEPTER DEMON LINK:"
-"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               "Summons 5 Ascension demons around the target point. Ascension demons link their own life force to the protect the golem. While they live, the golem takes no damage, but everytime it is damaged, a portion of it is applied to a random demon. Each living demon increases the Golem's attack by 10%."
+//"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_demon_hp"                  "SCEPTER DEMON HEALTH:"
+//"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_damage_transfer_pct"       "%SCEPTER DEMON LINK:"
+
+
+//"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               "Summons 5 Ascension demons around the target point. Ascension demons link their own life force to the protect the golem. While they live, the golem takes no damage, but everytime it is damaged, a portion of it is applied to a random demon. Each living demon increases the Golem's attack by 10%."
+
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               	"Calls 2 golems with reduced stats and bounty. <font color='#FF7800'>Contract of the Black Grimoire applies to both golems, but is reduced to 75% efficacy.</font>"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_number_of_golems_scepter"				"SCEPTER NUMBER OF GOLEMS:"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_hp_tooltip_scepter"				"SCEPTER GOLEM HEALTH:"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_dmg_tooltip_scepter"				"SCEPTER GOLEM DAMAGE:"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_bounty_reduction_scepter"				"%SCEPTER BOUNTY REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_rain_of_chaos_stun"                        "Chaos Offering"
 "DOTA_Tooltip_modifier_imba_rain_of_chaos_stun_Description"            "A demon ascends! Stunned."
@@ -2250,7 +2262,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_flaming_fists"                      "Flaming Fists"
-"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Description"          "Deals extra damage to enemies near the target with each attack. When inside Upheaval, Flaming Fists range is increased to the range of the current Upheaval."
+"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Description"          "Deals extra damage to nearby units when attacking.\n<font color='#FF7800'>Chaos Rising:</font> When inside Upheaval, Flaming Fist's range is increased to the range of the current Upheaval."
 "DOTA_Tooltip_ability_imba_warlock_flaming_fists_Lore"                  "Hell hath no fury like a flaming fist to the face."
 "DOTA_Tooltip_ability_imba_warlock_flaming_fists_Note0"                "Flaming Fists' damage is pure, and pierces Spell Immunity."
 "DOTA_Tooltip_ability_imba_warlock_flaming_fists_Note1"                "Flaming Fist range increase inside Upheaval is centered around the target unit, not the Golem or the Upheaval itself."
@@ -2262,7 +2274,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_permanent_immolation"                "Permanent Immolation"
-"DOTA_Tooltip_ability_imba_warlock_permanent_immolation_Description"                "Generates intense heat, continuously dealing damage to enemies near the golem. When inside Upheaval, Permanent Immolation will damage all enemies inside it."
+"DOTA_Tooltip_ability_imba_warlock_permanent_immolation_Description"                "Burns the Golem's nearby enemy units, with damage per second.\n<font color='#FF7800'>Chaos Rising:</font> When inside Upheaval, Permanent Immolation will damage all enemies inside it."
 "DOTA_Tooltip_ability_imba_warlock_permanent_immolation_Lore"          "And as they go out, they will see the dead bodies of those who have rebelled against me. For the worms that devour them will never die, and the fire that burns them will never go out. All who pass by will view them with utter horror."
 "DOTA_Tooltip_ability_imba_warlock_permanent_immolation_Note0"          "Damage is magical, and is dealt every second."
 "DOTA_Tooltip_ability_imba_warlock_permanent_immolation_Note1"          "Permanent Immolation range increase inside Upheaval only applies to units that are being affected by the Upheaval debuff."
@@ -2290,12 +2302,15 @@
 
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_1"                     "+30 Shadow Word attack speed on Golems"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_2"                     "Upheaval also reduces attack speed"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_2_Description"			"Static attack speed reduction is equal to movement speed slow percentage."
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_3"                     "+7% Fatal Bonds shared damage"
-"DOTA_Tooltip_ability_special_bonus_imba_warlock_4"                     "+10 Golem armor"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_4"                     "+30 Chaotic Offering Golems Armor"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_5"                     "+4 Shadow Word duration"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_6"                     "Upheaval is channeled by a demon in steed"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_7"                     "Golems share damage taken to all linked enemies"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_8"                     "Golems gain Spell Immunity"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_9"                     "Summons a Warlock Golem on Death"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_9_Description"			"Contract of the Black Grimoire applies to death golems, but is reduced to 75% efficacy."
 
 ////===============================================================================================================
 // Warlock's summoned units: Chaotic Golem, Ascension Demon, Upheaval Demon

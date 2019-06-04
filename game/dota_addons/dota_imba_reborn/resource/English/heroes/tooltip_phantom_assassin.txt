@@ -1,6 +1,6 @@
 // Phantom Assassin's Stifling Dagger
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger"						"Stifling Dagger"
-"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"            "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Description}\n<font color='#FF7800'>Silent as the grave:</font> Briefly silences enemies, interrupting their spellcasting.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"            "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Description}\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Silent As The Grave:</font> Briefly silences enemies, interrupting their spellcasting."
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Lore"                   "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_move_slow"              "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_move_slow}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"          "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_duration}"
@@ -13,19 +13,19 @@
 
 // Phantom Assassin's Phantom Strike
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike"							"#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"             "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Description}\n<font color='#FF7800'>Dance of Death:</font> Increases Coup de Grace chance for the next 4 attacks.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
+"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"             "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Description}\n<font color='#FF7800'>Dance of Death:</font> Increases Coup de Grace chance for the next %attacks% attacks.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Lore"                    "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_attack_speed"      "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_bonus_attack_speed}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_buff_duration"           "ATTACK SPEED DURATION:"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_tooltip_range"           "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_tooltip_range}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_coup_de_grace"     "BONUS COUP CHANCE:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_coup_de_grace"     "%BONUS COUP CHANCE:"
 
 "DOTA_Tooltip_modifier_imba_phantom_strike"											"#{DOTA_Tooltip_modifier_phantom_assassin_phantom_strike}"
 "DOTA_Tooltip_modifier_imba_phantom_strike_Description"								"#{DOTA_Tooltip_modifier_phantom_assassin_phantom_strike_Description}"
 
 // Phantom Assassin's Blur
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur"						"#{DOTA_Tooltip_ability_phantom_assassin_blur}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack."
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack."
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_Lore"					"#{DOTA_Tooltip_ability_phantom_assassin_blur_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_evasion"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_bonus_evasion}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_radius"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_radius}"
@@ -35,6 +35,8 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_fade_duration"			"VANISH FADE DURATION:"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_duration"				"VANISH DURATION:"
 
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_aghanim_description"	"Causes Blur to have instant cast time and applies a dispel. Anytime you get a hero kill, your abilities are refreshed. Reduces Blur cooldown to 12 seconds."
+
 "DOTA_Tooltip_modifier_imba_blur_speed"									"Swift and Silent"
 "DOTA_Tooltip_modifier_imba_blur_speed_Description"						"Gaining bonus movement speed for a short duration for each stack."
 
@@ -43,7 +45,7 @@
 
 // Phantom Assassin's Coup de Grace
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace"							"#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Description}\n<font color='#FF7800'>Die Hard:</font> After every crit on an enemy hero, Mortred's killing instinct sharpens, increasing her damage.\n<font color='#FF7800'>Fatality:</font> Gives %fatality_chance%% chance to insta-kill the target if it's health is lower than %fatality_threshold%%."
+"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Description}\n<font color='#FF7800'>Die Hard:</font> After every crit on an enemy hero, Mortred's killing instinct sharpens, increasing her damage.\n<font color='#FF7800'>Fatality:</font> Gives a %fatality_chance%%% chance to insta-kill the target if its health is lower than %fatality_threshold%%%."
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Lore"                     "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_bonus"               "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_crit_bonus}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_chance"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_crit_chance}"
@@ -66,4 +68,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_5"            "+100% Coup de Grace crit damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_6"            "+2 Phantom Strike attacks"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_7"            "+8s Coup de Grace's Die Hard duration"
-"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_8"            "Blur now grants a 30% chance to evade any damage"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_8"            "Blur now grants a 25% chance to evade any damage"

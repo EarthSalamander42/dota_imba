@@ -142,9 +142,6 @@
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
-	
-
-	
 	//=================================================================================================================
 	// Chen: Divine Favor
 	//=================================================================================================================
@@ -156,7 +153,7 @@
 		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
@@ -206,6 +203,33 @@
 				"var_type"				"FIELD_INTEGER"			
 				"creep_damage_mult"		"5"
 			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amp_aura"				"8 12 16 20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_rate_aura"					"1 2 3 4"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus_aura"		"4 8 12 16"
+				"LinkedSpecialBonus"	"special_bonus_unique_chen_5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"army_damage_multiplier"		"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"		"1200"
+			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}

@@ -2044,16 +2044,18 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 	else
 		Timers:CreateTimer(FrameTime(), function()
 			-- IMBAfication: Soul Consumption
-			if not self.target:IsAlive() and not self.target:IsReincarnating() then
+			if not self.target:IsAlive() and not self.target:IsReincarnating() and (self.target:IsRealHero() or self.target:IsClone()) then
 				local consumption_health = self.target:GetMaxHealth()
 
 				self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health", {duration = self.soul_consumption_duration}):SetStackCount(consumption_health)
 				
+				self.caster:CalculateStatBonus()
+				
 				-- Sure takes a while to add that max health through the modifier...
-				Timers:CreateTimer(0.5, function()
+				-- Timers:CreateTimer(0.5, function()
 					self.caster:Heal(consumption_health, self.caster)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, consumption_health, nil)
-				end)
+				-- end)
 			
 			-- IMBAfication: Retaliatory Chains
 			elseif not self.caster:IsAlive() and not self.target:IsReincarnating() then

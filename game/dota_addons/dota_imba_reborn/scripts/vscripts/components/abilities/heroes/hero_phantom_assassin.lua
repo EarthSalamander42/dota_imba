@@ -495,9 +495,9 @@ function modifier_imba_phantom_strike_coup_de_grace:OnAttackLanded(keys)
 
 		if stackcount == 1 then
 			self:Destroy()
-			if caster:HasModifier(modifier_speed) then
-				caster:RemoveModifierByName(modifier_speed)
-			end
+			-- if caster:HasModifier(modifier_speed) then
+				-- caster:RemoveModifierByName(modifier_speed)
+			-- end
 		else
 			self:DecrementStackCount()
 		end
@@ -529,10 +529,31 @@ function imba_phantom_assassin_blur:GetIntrinsicModifierName()
 	return "modifier_imba_blur"
 end
 
+function imba_phantom_assassin_blur:GetCastPoint()
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastPoint(self)
+	else
+		return 0
+	end
+end
+
+function imba_phantom_assassin_blur:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return 12
+		-- return self:GetSpecialValueFor("scepter_cooldown")
+	end
+end
+
 function imba_phantom_assassin_blur:OnSpellStart()
 	if IsServer() then
 		ProjectileManager:ProjectileDodge(self:GetCaster())
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_blur_smoke", { duration = self:GetSpecialValueFor("duration")})
+		
+		if self:GetCaster():HasScepter() then
+			self:GetCaster():Purge(false, true, false, false, false)
+		end
 	end
 end
 
@@ -591,7 +612,9 @@ end
 function modifier_imba_blur:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		MODIFIER_EVENT_ON_HERO_KILLED}
 	return funcs
 end
 
@@ -624,6 +647,20 @@ function modifier_imba_blur:OnAttackFail(keys)
 			if modifier_speed_handler then
 				modifier_speed_handler:IncrementStackCount()
 				modifier_speed_handler:ForceRefresh()
+			end
+		end
+	end
+end
+
+function modifier_imba_blur:OnHeroKilled(keys)
+	if not IsServer() then return end
+	
+	if keys.attacker == self:GetParent() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and self:GetAbility():IsTrained() then
+		for abilities = 0, 23 do
+			local ability = self:GetParent():GetAbilityByIndex(abilities)
+		
+			if ability and ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
+				ability:EndCooldown()
 			end
 		end
 	end

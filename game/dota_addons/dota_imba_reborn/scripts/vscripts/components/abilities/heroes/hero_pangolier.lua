@@ -485,7 +485,7 @@ end
 function modifier_imba_swashbuckle_buff:OnAttack(keys)
 	if IsServer() then
 		--Proceed only if the attacker is the caster
-		if keys.attacker == self:GetCaster() then
+		if keys.attacker == self:GetCaster() and not keys.no_attack_cooldown then
 			--increase the attack count
 			self.attacks = self.attacks + 1
 			--decrease stacks on modifier
@@ -582,6 +582,77 @@ function imba_pangolier_shield_crash:OnSpellStart()
 
 	--jump in the faced direction
 	local modifier_movement_handler = caster:AddNewModifier(caster, ability, modifier_movement, {})
+
+	if self:GetCaster():HasScepter() and self:GetCaster():FindAbilityByName("imba_pangolier_swashbuckle") and self:GetCaster():FindAbilityByName("imba_pangolier_swashbuckle"):IsTrained() then
+		local swashbuckle_ability	= self:GetCaster():FindAbilityByName("imba_pangolier_swashbuckle")
+		local swashbuckle_radius	= swashbuckle_ability:GetSpecialValueFor("end_radius") or swashbuckle_ability:GetSpecialValueFor("start_radius")
+		local swashbuckle_range		= swashbuckle_ability:GetSpecialValueFor("range")
+		local swashbuckle_damage	= swashbuckle_ability:GetSpecialValueFor("damage")
+		
+		--Talent #8: Swashbuckle also uses a % of Pangolier attack damage
+		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_8") then
+			swashbuckle_damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
+		end
+		
+		--play slashing particle
+		for pulses = 0, 1 do
+			Timers:CreateTimer(0.1 * pulses, function()
+				-- No, you can't stack 8 hits on someone in one cast
+				local hit_enemies = {}
+			
+				for slash = 1, 4 do
+					local direction = RotatePosition(Vector(0, 0, 0), QAngle(0, 90 * slash, 0), self:GetCaster():GetForwardVector())
+				
+					local slash_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+					ParticleManager:SetParticleControl(slash_particle, 1, direction)
+					
+					EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pangolier.Swashbuckle", self:GetCaster())
+
+					--Check for enemies in the direction set on cast
+					local enemies = FindUnitsInLine(
+						self:GetCaster():GetTeamNumber(),
+						self:GetCaster():GetAbsOrigin(),
+						self:GetCaster():GetAbsOrigin() + (direction * swashbuckle_range),
+						nil,
+						swashbuckle_radius,
+						DOTA_UNIT_TARGET_TEAM_ENEMY,
+						DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+						DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE
+					)
+
+					for _, enemy in pairs(enemies) do
+						if not hit_enemies[enemy] then
+							--Play damage sound effect
+							EmitSoundOn("Hero_Pangolier.Swashbuckle.Damage", enemy)
+
+							--Apply the damage from the slash
+							local damageTable = {
+								victim			= enemy,
+								damage			= swashbuckle_damage,
+								damage_type		= DAMAGE_TYPE_PHYSICAL,
+								damage_flags	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+								attacker		= self:GetCaster(),
+								ability			= swashbuckle_ability
+							}
+
+							ApplyDamage(damageTable)
+
+							--Apply on-hit effects
+							self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)
+							
+							hit_enemies[enemy] = true
+						end
+					end
+					
+					Timers:CreateTimer(0.5, function ()
+						--Remove particles
+						ParticleManager:DestroyParticle(slash_particle, false)
+						ParticleManager:ReleaseParticleIndex(slash_particle)
+					end)
+				end
+			end)
+		end
+	end
 
 	-- Assign the landing point, jump height and duration in the modifier
 	if modifier_movement_handler then
@@ -731,8 +802,9 @@ function modifier_imba_shield_crash_jump:CheckState()
 		state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
 			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_SILENCED] = true,
-			[MODIFIER_STATE_MUTED] = true}
+			--[MODIFIER_STATE_SILENCED] = true,
+			--[MODIFIER_STATE_MUTED] = true
+		}
 	end
 
 	return state
@@ -2107,18 +2179,18 @@ function modifier_imba_pangolier_lucky_shot:OnAttackLanded(keys)
 		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("chance_pct"), self) then
 			
 			-- Apply the same modifiers if they already exist
-			if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") then
+			-- if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") then
 				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-			elseif keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
-				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-			-- If the target doesn't have either of the modifiers, randomly apply one of them
-			else
-				if RollPercentage(50) then
-					keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)				
-				else
-					keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-				end
-			end
+			-- elseif keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
+				-- keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+			-- -- If the target doesn't have either of the modifiers, randomly apply one of them
+			-- else
+				-- if RollPercentage(50) then
+					-- keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)				
+				-- else
+					-- keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+				-- end
+			-- end
 			
 			-- Emit sound
 			if keys.target:IsConsideredHero() then
@@ -2170,6 +2242,7 @@ function modifier_imba_pangolier_lucky_shot_disarm:OnCreated()
 	-- AbilitySpecials
 	self.chance_pct	= self.ability:GetSpecialValueFor("chance_pct")
 	self.slow		= self.ability:GetSpecialValueFor("slow")
+	self.armor		= self.ability:GetSpecialValueFor("aromr")
 end
 
 function modifier_imba_pangolier_lucky_shot_disarm:CheckState()
@@ -2182,7 +2255,8 @@ end
 
 function modifier_imba_pangolier_lucky_shot_disarm:DeclareFunctions()
 	local funcs =	{
-					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 					}
 
 	return funcs
@@ -2190,6 +2264,10 @@ end
 
 function modifier_imba_pangolier_lucky_shot_disarm:GetModifierMoveSpeedBonus_Percentage()
 	return self.slow * (-1)
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:GetModifierPhysicalArmorBonus()
+	return self.armor * (-1)
 end
 
 ---------------------------------

@@ -49,7 +49,7 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_duration"        "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_movement_speed"  "BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_attack_range"    "BONUS ATTACK RANGE:"
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_aghanim_description"   "Elder Dragon Form become permanent."
+"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_aghanim_description"   "Increases the level of your ultimate. Adds a 4th level, Black Dragon. Black Drago has 50% more Corrosive Damage, Splash Damage and Slow amount. Increases attack range to 600 and grants 30% Magic resistance.\n\n<font color='#FF7800'>IMBA:</font> Elder Dragon Form is now freely toggleable, but counts as a passive for being disabled."
 
 "DOTA_Tooltip_modifier_imba_elder_dragon_form_debuff"               "Elder Dragon"
 "DOTA_Tooltip_modifier_imba_elder_dragon_form_debuff_Description"         "Base damage reduced by 20%."

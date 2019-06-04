@@ -701,10 +701,10 @@ function sohei_wholeness_of_body:GetBehavior()
 	local caster = self:GetCaster()
 --	caster:HasTalent(...) will return true on the client only when OnPlayerLearnedAbility event happens
 --	caster:HasModifier(...) will return true on the client only if the talent is leveled up with aghanim scepter
-	if caster:HasTalent("special_bonus_sohei_wholeness_allycast") or caster:HasModifier("modifier_special_bonus_sohei_wholeness_allycast") then
+	if caster:HasTalent("special_bonus_imba_sohei_wholeness_allycast") or caster:HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
 	end
-
+	
 	return DOTA_ABILITY_BEHAVIOR_NO_TARGET
 end
 --------------------------------------------------------------------------------
@@ -813,24 +813,34 @@ function modifier_sohei_wholeness_of_body_status:OnTakeDamage( params )
 	end
 end
 
-if modifier_special_bonus_sohei_wholeness_allycast == nil then
-	modifier_special_bonus_sohei_wholeness_allycast = class({})
+LinkLuaModifier("modifier_special_bonus_imba_sohei_wholeness_allycast", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
+
+if modifier_special_bonus_imba_sohei_wholeness_allycast == nil then
+	modifier_special_bonus_imba_sohei_wholeness_allycast = class({})
 end
 
-function modifier_special_bonus_sohei_wholeness_allycast:IsHidden()
+function modifier_special_bonus_imba_sohei_wholeness_allycast:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_sohei_wholeness_allycast:IsPurgable()
+function modifier_special_bonus_imba_sohei_wholeness_allycast:IsPurgable()
 	return false
 end
 
-function modifier_special_bonus_sohei_wholeness_allycast:AllowIllusionDuplicate()
+function modifier_special_bonus_imba_sohei_wholeness_allycast:AllowIllusionDuplicate()
 	return false
 end
 
-function modifier_special_bonus_sohei_wholeness_allycast:RemoveOnDeath()
+function modifier_special_bonus_imba_sohei_wholeness_allycast:RemoveOnDeath()
 	return false
+end
+
+function sohei_wholeness_of_body:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_sohei_wholeness_allycast") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sohei_wholeness_allycast"), "modifier_special_bonus_imba_sohei_wholeness_allycast", {})
+	end
 end
 
 sohei_momentum = sohei_momentum or class ({})
@@ -1208,9 +1218,13 @@ if IsServer() then
 --------------------------------------------------------------------------------
 
 	function modifier_sohei_momentum_knockback:SlowAndStun( unit, caster, ability )
-		unit:AddNewModifier( caster, ability, "modifier_sohei_momentum_slow", {
+		local slow_modifier = unit:AddNewModifier( caster, ability, "modifier_sohei_momentum_slow", {
 			duration = ability:GetSpecialValueFor( "slow_duration" ),
 		} )
+		
+		if slow_modifier then
+			slow_modifier:SetDuration(ability:GetSpecialValueFor( "slow_duration" ) * (1 - unit:GetStatusResistance()), true)
+		end
 
 		local talent = caster:FindAbilityByName( "special_bonus_sohei_stun" )
 

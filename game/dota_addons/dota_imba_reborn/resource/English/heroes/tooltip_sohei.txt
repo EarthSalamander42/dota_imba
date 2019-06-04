@@ -40,13 +40,15 @@
 "DOTA_Tooltip_modifier_sohei_momentum_passive"              "Momentum"
 "DOTA_Tooltip_modifier_sohei_momentum_passive_description"  "The next attack will deal bonus damage and knockback."
 
+"DOTA_Tooltip_modifier_sohei_momentum_slow"					"Momentum Slow"
+
 // talents
 "DOTA_Tooltip_Ability_special_bonus_sohei_stun"                                 "Momentum Collision Stun"
-"DOTA_Tooltip_Ability_special_bonus_sohei_stun_description"                     "Any unit that receives the slow from Momentum collisions now also receives a %value% second stun."
+"DOTA_Tooltip_Ability_special_bonus_sohei_stun_description"                     "Any unit that receives the slow from Momentum collisions now also receives a 0.2 second stun."
 "DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_knockback"					"Wholeness of Body Pushes Away Enemies"
-"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_knockback_description"		"Whenever Wholeness of Body is activated, push all nearby enemies until they are %value% units away."
-"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_allycast"					"Wholeness of Body can be cast on allies"
-"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge"                        "-%value%s Dash Charge Recovery"
+"DOTA_Tooltip_Ability_special_bonus_sohei_wholeness_knockback_description"		"Whenever Wholeness of Body is activated, all enemies within 500 radius are stunned and pushed away until they are 500 units away."
+"DOTA_Tooltip_Ability_special_bonus_imba_sohei_wholeness_allycast"					"Wholeness of Body can be cast on allies (1200 range)"
+"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge"                        "-3s Dash Charge Recovery"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge_description"            ""
-"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+%value%s Flurry of Blows Radius"
+"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+300 Flurry of Blows Radius"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius_description"               ""

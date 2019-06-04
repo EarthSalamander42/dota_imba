@@ -12,7 +12,7 @@
 
 
 "DOTA_Tooltip_ability_imba_tidehunter_kraken_shell"									"Kraken Shell"
-"DOTA_Tooltip_ability_imba_tidehunter_kraken_shell_Description"						"Thickens Tidehunter's hide to passively block a portion of any incoming physical attack damage. The hide also removes negative status effects if the damage taken crosses a threshold.\n\nDoes not stack with items that provide Damage Block.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Aqueous Leviathan:</font> Gains %aqueous_strength% bonus strength and %aqueous_heal%%% of max health as healing while in the river."
+"DOTA_Tooltip_ability_imba_tidehunter_kraken_shell_Description"						"Thickens Tidehunter's hide to passively block a portion of any incoming physical attack damage. The hide also removes negative status effects if the damage taken crosses a threshold.\n\nDoes not stack with items that provide Damage Block.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Aqueous Leviathan:</font> Gains %aqueous_strength% bonus strength and %aqueous_heal%%% of max health as healing while in the river.\n<font color='#FF7800'>Backstroke:</font> Kraken Shell can be cast (incuding while disabled) to apply a Strong Dispel, increase move speed by %backstroke_movespeed%%%, and increase status resistance by %backstroke_statusresist%%% for %backstroke_duration% seconds. Bonuses are doubled while in the river."
 "DOTA_Tooltip_ability_imba_tidehunter_kraken_shell_Lore"								"Claddish navymen tell tales of a mighty sea-faring beast that suffered spear and sword but continued to lay waste to the fleet."
 "DOTA_Tooltip_ability_imba_tidehunter_kraken_shell_Note0"							"Only damage from player owned sources is counted towards buff removal."
 "DOTA_Tooltip_ability_imba_tidehunter_kraken_shell_Note1"							"The counter will reset if no player owned damage is taken for 6 seconds."
@@ -29,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_tidehunter_anchor_smash_radius"							"RADIUS:"
 "DOTA_Tooltip_ability_imba_tidehunter_anchor_smash_Note0"							"Anchor Smash works on all Ancient creeps except for Roshan."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage"										"Ravage"
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Description"							"Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units."
+"DOTA_Tooltip_ability_imba_tidehunter_ravage_Description"							"Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.\n<font color='#FF7800'>Creeping Wave:</font> Can be set to auto-cast to make Ravage a %creeping_range% range point-target ability. The tentacles are rapidly shot forward in %creeping_radius% radius areas up to the maximum cast range, starting from Tidehunter's position. Fires a total of %creeping_waves% waves, reaching max cast range in 1.38 seconds."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Lore"									"Calling to the abyssal god Maelrawn has resulted in entire armadas being lost at sea."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Note0"									"Ravage will hit invisible units."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Note1"									"Ravage waves move outwards at a speed of 775."
@@ -41,6 +41,9 @@
 
 "DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell"				"Kraken Shell"
 "DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell_Description"	"Passively blocking a portion of physical attack damage, and removing negative status effects after a damage threshold is reached."
+
+"DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell_backstroke"				"Backstroke"
+"DOTA_Tooltip_modifier_imba_tidehunter_kraken_shell_backstroke_Description"	"Enjoying life's pleasures. Move speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_modifier_imba_tidehunter_ravage"				"Ravage"
 "DOTA_Tooltip_modifier_imba_tidehunter_ravage_Description"	"Stunned by Ravage."

@@ -5,6 +5,8 @@ LinkLuaModifier("modifier_imba_chen_penitence", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_chen_penitence_buff", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_chen_divine_favor", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_divine_favor_aura", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_divine_favor_aura_buff", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_chen_holy_persuasion", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chen_holy_persuasion_tracker", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
@@ -22,6 +24,8 @@ modifier_imba_chen_penitence_buff						= class({})
 
 imba_chen_divine_favor									= class({})
 modifier_imba_chen_divine_favor							= class({})
+modifier_imba_chen_divine_favor_aura					= class({})
+modifier_imba_chen_divine_favor_aura_buff				= class({})
 
 imba_chen_holy_persuasion								= class({})
 modifier_imba_chen_holy_persuasion						= class({})
@@ -161,6 +165,14 @@ end
 -- DIVINE FAVOR --
 ------------------
 
+function imba_chen_divine_favor:GetIntrinsicModifierName()
+	return "modifier_imba_chen_divine_favor_aura"
+end
+
+function imba_chen_divine_favor:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_AURA + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+end
+
 function imba_chen_divine_favor:GetCooldown(iLevel)
 	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_chen_divine_favor_cd_reduction")
 end
@@ -245,6 +257,67 @@ end
 
 function modifier_imba_chen_divine_favor:GetAbsoluteNoDamagePure()
 	return 1
+end
+
+--------------------------------
+-- DIVINE FAVOR AURA MODIFIER --
+--------------------------------
+
+function modifier_imba_chen_divine_favor_aura:IsHidden()					return true end
+
+function modifier_imba_chen_divine_favor_aura:IsAura()						return true end
+function modifier_imba_chen_divine_favor_aura:IsAuraActiveOnDeath() 		return false end
+
+function modifier_imba_chen_divine_favor_aura:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_imba_chen_divine_favor_aura:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+
+function modifier_imba_chen_divine_favor_aura:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_chen_divine_favor_aura:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_chen_divine_favor_aura:GetModifierAura()				return "modifier_imba_chen_divine_favor_aura_buff" end
+
+function modifier_imba_chen_divine_favor_aura:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() or (not hTarget.GetPlayerID and not hTarget:GetOwnerEntity()) or hTarget:HasModifier("modifier_imba_chen_divine_favor") end
+
+-------------------------------------
+-- DIVINE FAVOR AURA BUFF MODIFIER --
+-------------------------------------
+
+function modifier_imba_chen_divine_favor_aura_buff:OnCreated()
+	if self:GetAbility() then
+		self.heal_amp_aura			= self:GetAbility():GetSpecialValueFor("heal_amp_aura")
+		self.heal_rate_aura			= self:GetAbility():GetSpecialValueFor("heal_rate_aura")
+		self.damage_bonus_aura		= self:GetAbility():GetSpecialValueFor("damage_bonus_aura")
+		self.army_damage_multiplier	= self:GetAbility():GetSpecialValueFor("army_damage_multiplier")
+	else
+		self:Destroy()
+	end
+end
+
+function modifier_imba_chen_divine_favor_aura_buff:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE -- IMBAfication: Pure Devotion
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_chen_divine_favor_aura_buff:GetModifierHPRegenAmplify_Percentage()
+	return self.heal_amp_aura
+end
+
+function modifier_imba_chen_divine_favor_aura_buff:GetModifierConstantHealthRegen()
+	return self.heal_rate_aura
+end
+
+function modifier_imba_chen_divine_favor_aura_buff:GetModifierPreAttack_BonusDamage()
+	if not self:GetParent():IsHero() then
+		return self.damage_bonus_aura * self.army_damage_multiplier
+	else
+		return self.damage_bonus_aura
+	end
 end
 
 ---------------------

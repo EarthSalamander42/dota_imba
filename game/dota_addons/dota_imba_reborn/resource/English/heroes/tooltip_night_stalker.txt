@@ -11,7 +11,7 @@
 
 // Night Stalker's Void
 "DOTA_Tooltip_ability_imba_night_stalker_void"                          "Void"
-"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\n<font color='#FF7800'>Everlasting Night:</font> When Void is cast on an enemy hero at day, hastens the time of the day by a few seconds, bringing the night faster with each cast. When Void is cast on an enemy hero at night, it extends the night instead. If Darkness is active while casting Void on an enemy hero, Darkness' duration is increased.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
+"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Adaption:</font> Void deals full damage and mini-stuns during the day time.\n<font color='#FF7800'>Everlasting Night:</font> When Void is cast on an enemy hero at day, hastens the time of the day by a few seconds, bringing the night faster with each cast. When Void is cast on an enemy hero at night, it extends the night instead. If Darkness is active while casting Void on an enemy hero, Darkness' duration is increased.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Lore"                    "Balanar creates a vortex of infinite night, tearing opponents violently into the eternal darkness that once was."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Note0"                    "Everlasting Night does not trigger when casting Void on illusions."
 "DOTA_Tooltip_ability_imba_night_stalker_void_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -22,6 +22,11 @@
 "DOTA_Tooltip_ability_imba_night_stalker_void_night_pull"              "DAY HASTE:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_night_extend"            "NIGHT EXTEND:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_vision_reduction"                     "VISION REDUCTION:"
+
+"DOTA_Tooltip_ability_imba_night_stalker_void_aghanim_description"			"Causes Void to be an AoE ability. Increases the ministun duration and reduces cooldown. <font color='#FF7800'>Increased ministun duration does not apply during day time casts, and Everlasting Night will only apply once if multiple heroes are affected by Void.</font>"
+"DOTA_Tooltip_ability_imba_night_stalker_void_radius_scepter"				"SCEPTER AOE:"
+"DOTA_Tooltip_ability_imba_night_stalker_void_scepter_ministun"				"SCEPTER STUN:"
+"DOTA_Tooltip_ability_imba_night_stalker_void_scepter_cooldown_reduction"	"SCEPTER COOLDOWN REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_void_slow"                      "Void"
 "DOTA_Tooltip_modifier_imba_void_slow_Description"                      "Attack and movespeed drastically reduced."

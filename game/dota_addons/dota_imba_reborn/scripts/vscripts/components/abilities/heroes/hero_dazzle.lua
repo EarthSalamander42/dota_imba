@@ -319,7 +319,11 @@ function imba_dazzle_shallow_grave:OnSpellStart()
 		if self:GetCaster():HasScepter() then
 			local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetAOERadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, target in pairs(allies) do
-				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
+				if target == self:GetCursorTarget() then
+					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
+				else
+					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration"), bGravely = false})
+				end
 			end
 		else
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", {duration = self:GetSpecialValueFor("duration")})
@@ -355,11 +359,17 @@ end
 function modifier_imba_dazzle_shallow_grave:GetMinHealth()
 	return 1 end
 
-function modifier_imba_dazzle_shallow_grave:OnCreated()
+function modifier_imba_dazzle_shallow_grave:OnCreated(params)
 	if IsServer() then
 		self.shallowDamage = 0
 		self.shallowDamageInstances = 0		
 		self.shallow_grave_particle = ParticleManager:CreateParticle("particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		
+		self.gravely = true
+		
+		if params.bGravely then
+			self.gravely = params.bGravely
+		end
 	end
 end
 
@@ -370,7 +380,7 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 		ParticleManager:DestroyParticle(self.shallow_grave_particle, true)
 
 		-- Checking if alive for cases of death that don't care for Shallow Grave
-		if parent:IsAlive() and self.shallowDamage > 0 then
+		if parent:IsAlive() and self.shallowDamage > 0 and self.gravely ~= 0 then
 			if self.shallowDamageInstances > 0 then
 				local ability = self:GetAbility()
 				local modifier = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
