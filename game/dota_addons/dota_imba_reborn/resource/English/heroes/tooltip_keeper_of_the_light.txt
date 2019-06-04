@@ -31,7 +31,7 @@
 "DOTA_Tooltip_modifier_imba_keeper_of_the_light_blinding_light_Description" "Blinded, missing %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%% of attacks."
 
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic"					"Chakra Magic"
-"DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic_Description"		"Restores mana to the target unit and reduces cooldowns of all non-ultimate abilities currently on cooldowns by a fixed amount.\nCast Range: %cast_range_tooltip%\n<font color='#FF7800'>Mana Leak: </font>Can be cast on enemies. Weakens an enemy's magical essence for %duration% seconds, causing them to lose mana as they move (%mana_leak_pct%%% of max mana per 100 units). If the enemy loses all of its mana, it will be stunned for %stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic_Description"		"Restores mana to the target unit and reduces cooldowns of all non-ultimate abilities currently on cooldowns by a fixed amount. Can be cast on enemies, placing a debuff for %duration% seconds, that drains <font color='#FF7800'>%mana_leak_pct%%% of max mana per 100 units moved. If the enemy loses all of its mana, it will be stunned for %stun_duration% seconds.</font>"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic_Lore"				"In the same vein, Ezalor bestows and disrupts Primordial harmony."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic_mana_restore"		"MANA RESTORE:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_chakra_magic_cooldown_reduction"	"COOLDOWN REDUCTION:"

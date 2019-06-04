@@ -521,7 +521,7 @@ function imba_dragon_knight_elder_dragon_form:GetAssociatedPrimaryAbilities() re
 -- this makes the ability passive when it has scepter
 function imba_dragon_knight_elder_dragon_form:GetBehavior()
 	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_PASSIVE
+		return DOTA_ABILITY_BEHAVIOR_TOGGLE
 	end
 
 	return self.BaseClass.GetBehavior( self )
@@ -549,21 +549,32 @@ function imba_dragon_knight_elder_dragon_form:OnSpellStart()
 	modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel(), self:GetSpecialValueFor("duration"))
 end
 
+function imba_dragon_knight_elder_dragon_form:OnToggle()
+	if self:GetToggleState() then
+		modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
+	else
+		self:GetCaster():RemoveModifierByName("modifier_dragon_knight_dragon_form")
+		self:GetCaster():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
+		self:GetCaster():RemoveModifierByName("modifier_dragon_knight_splash_attack")
+		self:GetCaster():RemoveModifierByName("modifier_dragon_knight_frost_breath")
+	end
+end
+
 function imba_dragon_knight_elder_dragon_form:GetIntrinsicModifierName()
 	return "modifier_imba_elder_dragon_form"
 end
 
-function imba_dragon_knight_elder_dragon_form:OnUpgrade()
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_dragon_form", {})
+-- function imba_dragon_knight_elder_dragon_form:OnUpgrade()
+	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_dragon_form", {})
 
-	if self:GetCaster():HasScepter() then
-		modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
-	end
-end
+	-- if self:GetCaster():HasScepter() then
+		-- modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
+	-- end
+-- end
 
 function imba_dragon_knight_elder_dragon_form:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() then
-		modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
+		-- modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
 	else
 		if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") and self:GetCaster():FindModifierByName("modifier_dragon_knight_dragon_form"):GetDuration() == -1 then
 			self:GetCaster():RemoveModifierByName("modifier_dragon_knight_dragon_form")
@@ -586,39 +597,39 @@ function modifier_imba_elder_dragon_form:OnCreated( event )
 		self:StartIntervalThink(0.5)
 	
 		-- apply all the edf modifiers on creation if has scepter
-		if self:GetParent():HasScepter() then
-			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
-		end
+		-- if self:GetParent():HasScepter() then
+			-- modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		-- end
 	end
 end
 
 
-function modifier_imba_elder_dragon_form:OnRefresh( event )
-	if IsServer() then
-		-- apply all the edf modifiers on creation if has scepter
-		if self:GetParent():HasScepter() then
-			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
-		end
-	end
-end
+-- function modifier_imba_elder_dragon_form:OnRefresh( event )
+	-- if IsServer() then
+		-- -- apply all the edf modifiers on creation if has scepter
+		-- if self:GetParent():HasScepter() then
+			-- modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		-- end
+	-- end
+-- end
 
 function modifier_imba_elder_dragon_form:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_RESPAWN,
+		-- MODIFIER_EVENT_ON_RESPAWN,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
 
 	return funcs
 end
 
-function modifier_imba_elder_dragon_form:OnRespawn( event )
-	if IsServer() then
-		if event.unit == self:GetParent() and self:GetParent():HasScepter() then
-			-- apply the edf modifiers on respawn
-			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
-		end
-	end
-end
+-- function modifier_imba_elder_dragon_form:OnRespawn( event )
+	-- if IsServer() then
+		-- if event.unit == self:GetParent() and self:GetParent():HasScepter() then
+			-- -- apply the edf modifiers on respawn
+			-- modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		-- end
+	-- end
+-- end
 
 function modifier_imba_elder_dragon_form:OnIntervalThink()
 	if IsServer() then
@@ -639,9 +650,9 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 			end
 		end
 
-		if self:GetParent():HasModifier("modifier_item_ultimate_scepter_consumed") then
-			self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
-		end
+		-- if self:GetParent():HasModifier("modifier_item_ultimate_scepter_consumed") then
+			-- self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		-- end
 
 		if self:GetParent():HasScepter() then
 			if self:GetParent():PassivesDisabled() then
@@ -649,7 +660,7 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
-			else
+			elseif not self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetAbility() and self:GetAbility():GetToggleState() then
 				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end

@@ -5615,7 +5615,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_ms"					"-35"
+				"slow_ms"					"-45"
 			}
 			"03"
 			{
@@ -7237,11 +7237,11 @@
 		"ItemQuality"					"epic"
 		"ItemAliases"					"cheese"
 		"ItemStackable"					"1"
-		"ItemPermanent"					"0"
+		//"ItemPermanent"					"0"
 		"ItemInitialCharges"			"1"
-		"ItemKillable"					"1"
+		//"ItemKillable"					"1"
 		"ItemPurchasable"				"0"
-		"ItemSellable"					"1"
+		//"ItemSellable"					"1"
 		"IsTempestDoubleClonable"		"0"
 	}
 

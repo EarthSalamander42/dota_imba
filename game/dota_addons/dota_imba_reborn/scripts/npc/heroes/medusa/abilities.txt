@@ -49,7 +49,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"serpent_shot_damage_pct"		"40"
+				"serpent_shot_damage_pct"		"60"
 			}
 			"06"
 			{

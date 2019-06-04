@@ -328,7 +328,7 @@
 		"AbilityTextureName"					"custom/ancient_defense"
 		"MaxLevel"								"1"
 		"ScriptFile"							"components/abilities/buildings/ancient_abilities"
-		"AbilityCastRange"						"1200"
+		"AbilityCastRange"						"2400"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -337,7 +337,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
+				"aura_radius"					"2400"
 			}
 			"02"
 			{
@@ -3393,7 +3393,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"800 900 1000 1100"
+				"cast_range"							"550 700 850 1000"
 			}
 			"06"
 			{
@@ -4693,6 +4693,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -5234,6 +5235,31 @@
 			{
 				"var_type"		"FIELD_FLOAT"
 				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_9"	// -35s Earth Splitter Cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_earth_splitter"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"35"
 			}
 		}
 	}
@@ -7493,11 +7519,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "8"
+		"AbilityCooldown"               "7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "140 160 180 200"
+		"AbilityManaCost"               "105 130 155 180"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -7541,7 +7567,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"target_damage"             "50 100 150 200"
+				"target_damage"             "75 125 175 225"
 			}
 
 			"06"
@@ -7731,7 +7757,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"int_armor_pct"			"4"
+				"int_armor_pct"			"5"
 			}
 			"09"
 			{
@@ -7982,12 +8008,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"ms_slow_pct"               "40"
+				"ms_slow_pct"               "65"
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"as_slow"                   "60"
+				"as_slow"                   "65"
 			}
 			"03"
 			{
@@ -8002,7 +8028,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "350 550 750"
+				"damage"                    "325 525 725"
 			}
 			"06"
 			{
@@ -10640,12 +10666,12 @@
 			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_distance"		"1725"
+				"scepter_distance"		"2000"
 			}
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_speed"		"1200"
+				"scepter_speed"		"1500"
 			}
 			"16"
 			{
@@ -12139,25 +12165,31 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_steal"		"65 90 115 140"
+				"mana_steal"		"11 18 25 32"
 			}
 			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_steal_active"	"33 54 75 96"
+			}		
+			
+			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"movement_slow"		"12 22 32 42"
 				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_2"
 			}
-			"03"
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"slow_duration"		"1.75"
 			}
-			"04"
+			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"7"
 			}
-			"05"
+			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"atk_speed_diff"	"3 4 5 6"
@@ -12223,6 +12255,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"int_multiplier"				"11 12 13"
+				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_10"
 			}
 
 			"03"
@@ -12479,6 +12512,31 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"						"60"
+			}
+		}
+	}
+
+	"special_bonus_imba_obsidian_destroyer_10" // +X Sanity's Eclipse Multiplier
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_obsidian_destroyer_sanity_eclipse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"2"
 			}
 		}
 	}
@@ -13454,7 +13512,7 @@
 
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"MaxLevel"						"1"
 		
 		// Casting
@@ -20797,7 +20855,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 450 500 550"
+				"radius"					"325 350 375 400"
 			}
 			"02"
 			{
@@ -20822,7 +20880,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"avalanche_damage"			"100 200 300 400"
+				"avalanche_damage"			"120 200 280 360"
 				"LinkedSpecialBonus"		"special_bonus_imba_tiny_6"
 			}
 			"07"
@@ -20924,7 +20982,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"110 240 370 500"
+				"toss_damage"				"110 220 330 440"
 			}
 
 			"08"
@@ -21455,7 +21513,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"125"
+				"value"				"100"
 			}
 		}
 	}
@@ -21592,13 +21650,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"3 6 9 15"
+				"max_targets"			"6 8 10 12"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"link_damage_share_pct"	"33"
+				"link_damage_share_pct"	"16 20 24 28"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_3"
 			}
 
@@ -21626,6 +21684,7 @@
 				"link_search_radius"	"700"
 			}
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_FATAL_BONDS"
 	}
 
 
@@ -21657,7 +21716,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 130 155 165"
+		"AbilityManaCost"				"120 130 140 150"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -21712,6 +21771,7 @@
 				"cast_range"			"525 675 775 825"
 			}
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -21744,7 +21804,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"70 90 110 130"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -21792,6 +21852,7 @@
 				"max_slow_pct"			"84"
 			}
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 
 	//=================================================================================================================
@@ -21871,7 +21932,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"6 10 14"
+				"armor"					"6 9 12"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_4"
 			}
 			"07"
@@ -21883,6 +21944,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_damage"			"100 150 200"
+				"CalculateSpellDamageTooltip"   "0"
 			}
 			"09"
 			{
@@ -21902,7 +21964,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_hp_per_str"		"10"
+				"bonus_hp_per_str"		"8"
 			}
 			"13"
 			{
@@ -21917,7 +21979,8 @@
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage_per_int"	"1.25"
+				"bonus_damage_per_int"	"0.8"
+				"CalculateSpellDamageTooltip"   "0"
 			}
 			"14"
 			{
@@ -21954,7 +22017,35 @@
 				"var_type"						"FIELD_INTEGER"
 				"scepter_damage_per_demon_pct"	"10"
 			}
+			
+			
+			"21"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"number_of_golems_scepter"	"2"
+			}
+			"22"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"golem_hp_tooltip_scepter"	"750 1500 2250"
+			}
+			"23"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"golem_dmg_tooltip_scepter"	"75 110 150"
+			}
+			"24"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_dmg_reduction_scepter"	"25"
+			}
+			"25"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounty_reduction_scepter"	"50"
+			}			
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	}
 
 	//=================================================================================================================
@@ -21981,7 +22072,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 60 120"
+				"damage"				"60 80 100"
 			}
 			"02"
 			{
@@ -22020,7 +22111,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 50 100"
+				"damage"				"40 60 80"
 			}
 			"03"
 			{
@@ -22146,7 +22237,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "10"
+				"value"	                    "30"
 			}
 		}
 	}
@@ -22227,6 +22318,31 @@
 	}
 
 	"special_bonus_imba_warlock_8" // Chaotic Golems are now Spell Immune
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_warlock_rain_of_chaos"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_warlock_9" // Summons a Warlock Golem on Death
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26041,7 +26157,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"350"
+				"bonus_attack_range"		"350 350 350 450"
 			}
 			"04"
 			{
@@ -26051,12 +26167,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"corrosive_breath_damage"	"20"
+				"corrosive_breath_damage"	"20 20 20 30"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"corrosive_breath_duration"	"5.0"
+				"corrosive_breath_duration"	"5.0 5.0 5.0"
 			}
 			"07"
 			{
@@ -26066,27 +26182,37 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"splash_damage_percent"		"80"
+				"splash_damage_percent"		"80 80 80 120"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_movement_speed"	"-40"
+				"frost_bonus_movement_speed"	"-40 -40 -40 -60"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_attack_speed"		"-40"
+				"frost_bonus_attack_speed"		"-40 -40 -40 -60"
 			}
 			"11"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"frost_duration"				"3.0"
+				"frost_duration"				"3.0 3.0 3.0"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"frost_aoe"					"300"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance"			"0 0 0 30"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"model_scale"				"0 0 0 30"
 			}
 		}
 	}
@@ -30998,7 +31124,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pangolier_shield_crash"
-		"HasScepterUpgrade"				"0"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -31167,6 +31293,11 @@
 				"slow"					"35"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"3 4 5 6"
+			}			
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heartpiercer_chance"	"25"
@@ -31631,8 +31762,8 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"1 2 3 4"
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"1.75 2.5 3.25 4"
 			}
 			"04"
 			{
@@ -31669,6 +31800,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"525 750 975 1200"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage"				"65"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_factor_tooltip"		"25 40 55 70"
 			}
 		}
 	}
@@ -31719,13 +31861,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"130"
+				"bonus_attack_speed"		"100 125 150 175"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_2"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"buff_duration"				"4"
+				"buff_duration"				"3"
 			}
 			"03"
 			{
@@ -31769,6 +31911,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"				"phantom_assassin_blur"
 		"AbilityCastRange"					"600"
+		"HasScepterUpgrade"					"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -31829,6 +31972,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"fade_duration"				"0.75"
 			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_cooldown"			"12"
+			}			
 		}
 	}
 	
@@ -32074,7 +32222,7 @@
 		}
 	}
 
-	"special_bonus_imba_phantom_assassin_8"	// Blur now grants +30% chance to evade any damage
+	"special_bonus_imba_phantom_assassin_8"	// Blur now grants a +X% chance to evade any damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32094,7 +32242,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"30"
+				"value"			"25"
 			}
 		}
 	}
@@ -35583,7 +35731,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scourge_gold"				"18"
+				"scourge_gold"				"25"
 			}
 			"05"
 			{
@@ -38556,7 +38704,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"		"0.0"
-		"AbilityCastRange"		"1800"
+		"AbilityCastRange"		"1200"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -38669,17 +38817,17 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"160 200 240 280"
+				"crit_damage"				"160 180 200 220"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"-15 -25 -35 -45"
+				"movement_slow"				"-50 -60 -70 -80"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0"
+				"slow_duration"				"2.0"
 			}
 		}
 	}
@@ -38880,7 +39028,7 @@
 	//=================================================================================================================
 	// sohei talent 6: Wholeness of Body can be cast on allies, this isn't ready don't use this
 	//=================================================================================================================
-	"special_bonus_sohei_wholeness_allycast"
+	"special_bonus_imba_sohei_wholeness_allycast"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

@@ -534,6 +534,8 @@
 
 "DOTA_Tooltip_modifier_special_bonus_corruption_debuff_description"		"Armor currently corrupted by a talent."
 
+"DOTA_Tooltip_ability_special_bonus_unique_mars_spear_stun_duration"	"+1.5s Spear Stun"										
+
 //=================================================================================================================
 //=================================================================================================================
 // CUSTOM HEROES

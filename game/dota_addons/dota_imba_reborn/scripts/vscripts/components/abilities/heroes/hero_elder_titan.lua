@@ -54,6 +54,10 @@ end
 function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 	if IsServer() then
+		if self:GetCaster():HasModifier("modifier_imba_elder_titan_echo_stomp_magic_immune") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_elder_titan_echo_stomp_magic_immune")
+		end
+	
 		if interrupted then
 			if astral_spirit and not astral_spirit:IsNull() and not astral_spirit.is_returning then
 				astral_spirit:Interrupt()
@@ -84,6 +88,9 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 			-- Find all nearby enemies
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
+			-- Establish variable counting how many heroes were hit for scepter magic immunity duration
+			local heroes_hit = 0
+
 			for _, enemy in pairs(enemies) do
 				-- Deal damage to nearby non-magic immune enemies
 				if not enemy:IsMagicImmune() then
@@ -93,7 +100,15 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 					-- Stun them
 					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+					
+					if enemy:IsRealHero() then
+						heroes_hit = heroes_hit + 1
+					end
 				end
+			end
+			
+			if self:GetCaster():HasScepter() then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = heroes_hit * 2})
 			end
 		end
 	end
@@ -113,6 +128,10 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+	
+	if self:GetCaster():HasScepter() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = self:GetChannelTime()})
+	end
 
 	return true
 end
@@ -164,6 +183,32 @@ function imba_elder_titan_echo_stomp:OnSpellStart()
 		end
 	end
 end
+
+--------------------------------------
+-- ECHO STOMP MAGIC IMMUNE MODIFIER --
+--------------------------------------
+
+LinkLuaModifier("modifier_imba_elder_titan_echo_stomp_magic_immune", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_elder_titan_echo_stomp_magic_immune = class({})
+
+-- IDK what the texture name is called
+-- function modifier_imba_elder_titan_echo_stomp_magic_immune:GetTexture()
+	-- return "spell_immunity"
+-- end
+
+function modifier_imba_elder_titan_echo_stomp_magic_immune:GetEffectName()
+	return "particles/items_fx/black_king_bar_avatar.vpcf"
+end
+
+function modifier_imba_elder_titan_echo_stomp_magic_immune:CheckState()
+	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
+	
+	return state
+end
+
+
+
 
 -- Astral Spirit
 imba_elder_titan_ancestral_spirit = class({})
@@ -725,6 +770,14 @@ function imba_elder_titan_earth_splitter:GetCastRange(location, target)
 	end
 end
 
+function imba_elder_titan_earth_splitter:GetCooldown(level)
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_9") then
+		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_9")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_elder_titan_earth_splitter:OnSpellStart()
     if not IsServer() then return end
     
@@ -821,4 +874,22 @@ function modifier_imba_earth_splitter_scepter:CheckState()
 		[MODIFIER_STATE_DISARMED] = true,
 	}
 	return state
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_9", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_elder_titan_9 = class({})
+
+function modifier_special_bonus_imba_elder_titan_9:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_9:RemoveOnDeath()	return false end
+
+function imba_elder_titan_earth_splitter:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_9"), "modifier_special_bonus_imba_elder_titan_9", {})
+	end
 end

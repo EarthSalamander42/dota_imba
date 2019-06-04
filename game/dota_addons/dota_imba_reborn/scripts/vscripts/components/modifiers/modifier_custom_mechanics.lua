@@ -106,18 +106,18 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 			ParticleManager:SetParticleControl(lifesteal_pfx, 0, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
 			
-			if caster:IsIllusion() or target:IsIllusion() then
-				return
-			end
+			-- if caster:IsIllusion() or target:IsIllusion() then
+				-- return
+			-- end
 			
 			-- If the target is a real hero, heal for the full value
-			if target:IsRealHero() then
+			--if target:IsRealHero() then
 				caster:Heal(damage * lifesteal_amount * 0.01, caster)
 
 			-- else, heal for half of it
-			else
-				caster:Heal(damage * lifesteal_amount * 0.005, caster)
-			end
+			--else
+			--	caster:Heal(damage * lifesteal_amount * 0.005, caster)
+			--end
 		end
 	end
 end
@@ -147,7 +147,7 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		local lifesteal_amount = parent:GetLifesteal()
 		
 		-- If there's no valid target, or lifesteal amount, do nothing
-		if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == attacker:GetTeam()) or lifesteal_amount <= 0 then
+		if target:IsBuilding() or target:IsOther() or (target:GetTeam() == attacker:GetTeam()) or lifesteal_amount <= 0 then
 			return
 		end
 

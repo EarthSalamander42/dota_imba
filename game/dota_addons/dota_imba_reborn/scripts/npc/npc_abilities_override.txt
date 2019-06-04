@@ -4269,35 +4269,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"8000"	// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-
 		"AbilityCastRange"				"1800"
-		"AbilityCastPoint"				"0.8"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
-
 		"AbilityCooldown"				"9 7 5 3"
-		"AbilityManaCost"				"100 110 120 130"
-
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityDamage"					"120 180 240 300"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.5"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"120"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4311,7 +4290,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 180 240 300"
+				"damage"					"140 200 260 320"
 				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
@@ -4330,12 +4309,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"1.5"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"vision_duration"			"2.0"
+				"slow_duration"			"2.0"
 			}
 			"09"
 			{
@@ -4351,51 +4325,18 @@
 	//=================================================================================================================
 	"grimstroke_ink_creature"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"8006"	// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"FightRecapLevel"				"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"24 21 18 15"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
-
-		"AbilityModifierSupportValue"	"0.5"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"spawn_time"				"0.0"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"speed"						"750"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"latch_duration"			"4.0 4.75 5.5 6.25"
+				"speed"						"1000"
 			}
 			"04"
 			{
@@ -4411,27 +4352,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"			"6 9 12 15"
+				"damage_per_tick"			"5 10 15 20"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_tooltip"				"12 18 24 30"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_time"			"4"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"0.5"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"infection_search_radius"	"1000"
+				"dps_tooltip"				"10 20 30 40"
 			}
 			"11"
 			{
@@ -4441,18 +4367,35 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"return_projectile_speed"	"750"
+				"return_projectile_speed"	"1000"
 			}
-			"13"
+		}
+	}
+
+	//=================================================================================================================
+	// Grimstroke: Scepter
+	//=================================================================================================================
+	"grimstroke_scepter"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"latched_unit_offset"		"130"
-			}
-			"14"
+				"var_type"				"FIELD_INTEGER"
+				"illusion_duration"			"20"
+			}	
+			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"latched_unit_offset_short"	"95"
+				"var_type"				"FIELD_INTEGER"
+				"images_take_damage_percent"	"100"
 			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_take_damage_percent_tooltip"			"200"
+			}			
 		}
 	}
 
@@ -4465,16 +4408,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"400 500 600 700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"3.0"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4501,11 +4434,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_tick"		"9 11 13 15"
 			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"0.2"
-			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4520,27 +4448,9 @@
 	//=================================================================================================================
 	"grimstroke_soul_chain"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"6491"	// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"FightRecapLevel"				"1"
-
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"70 55 40"
-		"AbilityCastRange"				"700 800 900"
-		"AbilityCastPoint"				"0.15"
-		"AbilityCastAnimation"			"ACT_INVALID"
-		"AbilityManaCost"				"150 200 250"
-		
-		"AbilityModifierSupportValue"	"0.75"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -4549,42 +4459,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"chain_duration"		"7.0 9.0 12.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chain_latch_radius"	"550"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chain_break_distance"	"700"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"leash_limit_multiplier"	"1.3"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"leash_radius_buffer"		"50"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"creep_duration_pct"		"50.0"
+				"chain_duration"		"7.0 9.5 12.0"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_slow"				"15 30 45"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"700 800 900"
 			}
 		}
 	}
@@ -7131,7 +7011,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"0.5 0.1 0.03125 0.02"
+				"morph_cooldown"		"0.2 0.1 0.03125 0.02"
 			}
 			"03"
 			{
@@ -7141,7 +7021,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_rate_tooltip"	"2 10 32 50"
+				"morph_rate_tooltip"	"5 10 32 50"
 			}
 		}
 	}
@@ -7163,7 +7043,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"0.5 0.1 0.03125 0.02"
+				"morph_cooldown"		"0.2 0.1 0.03125 0.02"
 			}
 			"03"
 			{
@@ -7173,7 +7053,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_rate_tooltip"	"2 10 32 50"
+				"morph_rate_tooltip"	"5 10 32 50"
 			}
 		}
 	}
@@ -7204,24 +7084,24 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-60 -50 -40 -30"
+				"outgoing_damage"						"-60 -55 -50 -45"
 				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"40 50 60 70"
+				"outgoing_damage_tooltip"				"40 45 50 55"
 				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"225 175 125 125"
+				"incoming_damage"						"225 200 175 150"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"325 275 225 225"
+				"tooltip_incoming_damage_total_pct"		"325 300 275 250"
 			}
 			"06"
 			{
@@ -7278,7 +7158,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-3 -6 -9 -12"
+				"armor_reduction"			"-4 -6 -8 -10"
 				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
 			}
 			"03"
@@ -8438,31 +8318,15 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0 4.5 5.0"
-				"LinkedSpecialBonus"		"special_bonus_unique_slark_3"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"30 40 50"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_regen_pct"			"3 6 9"
+				"bonus_movement_speed"		"40 50 60"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"neutral_disable"			"0.25"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_aoe"				"425"
 			}
 		}
 	}
@@ -8656,13 +8520,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"instances"					"4 6 8 10"
+				"instances"					"5 6 7 8"
 				"LinkedSpecialBonus"		"special_bonus_unique_templar_assassin"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"70 110 150 190"
+				"bonus_damage"				"40 70 100 130"
 			}
 		}
 	}
@@ -8677,12 +8541,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage"							"80 150 220 290"
+				"bonus_damage"							"60 120 180 240"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"-4 -7 -10 -13"
+				"bonus_armor"							"-4 -6 -8 -10"
 				"LinkedSpecialBonus"					"special_bonus_unique_templar_assassin_2"
 			}
 		}
@@ -8878,12 +8742,12 @@
 			"04"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage"					"300 225 150 75"
+				"illusion_incoming_damage"					"300 250 200 150"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage_total_tooltip"	"400 325 250 175"
+				"illusion_incoming_damage_total_tooltip"	"400 350 300 250"
 			}		
 		}
 	}
@@ -8902,20 +8766,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"40 48 56 64"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.5 1.46 1.42 1.38"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"30 60 90 120"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_loss"			"30 24 18 12"
 			}
 		}
 	}
@@ -12052,30 +11906,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"range"				"1300"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"20.0"
-			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"count"				"8 10 12"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"1.75 1.6 1.45"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage_percent"	"80 100 120"
+				"count"				"6 7 8"
 			}
 			"07"
 			{
@@ -12232,6 +12066,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"spear_speed"		"1400 1500 1600 1700"
 			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_vision"		"500"
+			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -12327,6 +12166,21 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_mars_spear_stun_duration"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"value"				"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tiny: Craggy Exterior (actually Tree Grab)
 	//=================================================================================================================
 	"tiny_craggy_exterior"
@@ -12367,20 +12221,6 @@
 	//=================================================================================================================
 	"tiny_tree_channel"
 	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"		"1800.0"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"interval"		"0.2"
-			}
-		}
+
 	}
 }

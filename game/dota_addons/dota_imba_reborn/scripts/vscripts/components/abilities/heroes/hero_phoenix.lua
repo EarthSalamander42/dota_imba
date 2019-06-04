@@ -1049,7 +1049,7 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 			ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
 			-- Check the Debuff that can interrupt spell
-			if imba_phoenix_check_for_canceled( caster ) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
+			if (imba_phoenix_check_for_canceled( caster ) and not self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_caster_dummy")) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
 				caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 			end
 
@@ -1762,10 +1762,15 @@ function modifier_imba_phoenix_supernova_caster_dummy:CheckState()
 			[MODIFIER_STATE_DISARMED] = true,
 			[MODIFIER_STATE_ROOTED] = true,
 			[MODIFIER_STATE_MUTED] = true,
-			[MODIFIER_STATE_STUNNED] = true,
+			-- [MODIFIER_STATE_STUNNED] = true,
 			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 			[MODIFIER_STATE_OUT_OF_GAME] = true,
 		}
+	
+	if self:GetCaster() ~= self:GetParent() then
+		state[MODIFIER_STATE_STUNNED] = true
+	end
+		
 	return state
 end
 
@@ -1791,6 +1796,19 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnCreated()
 	if innate then
 		if innate:GetToggleState() then
 			innate:ToggleAbility()
+		end
+	end
+	
+	self.abilities = {}
+	
+	if self:GetCaster() == self:GetParent() then
+		for slot = 0, 10 do
+			local ability = self:GetParent():GetAbilityByIndex(slot)
+			
+			if ability and ability:IsActivated() and (not self:GetParent():HasScepter() or (self:GetParent():HasScepter() and ability:GetName() ~= "imba_phoenix_sun_ray")) then
+				ability:SetActivated(false)
+				table.insert(self.abilities, ability)
+			end
 		end
 	end
 end
@@ -1827,6 +1845,12 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnDestroy()
 	end
 	if self:GetCaster():GetUnitName() == "npc_imba_hero_phoenix" or self:GetCaster():GetUnitName() == "npc_dota_hero_phoenix" then
 		self:GetCaster():StartGesture(ACT_DOTA_INTRO)
+	end
+	
+	if self:GetCaster() == self:GetParent() then
+		for _, ability in pairs(self.abilities) do
+			ability:SetActivated(true)
+		end
 	end
 end
 
@@ -2044,6 +2068,16 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
 	StartSoundEvent( "Hero_Phoenix.SuperNova.Begin", egg)
 	StartSoundEvent( "Hero_Phoenix.SuperNova.Cast", egg)
 
+	self:ResetUnit(caster)
+	caster:SetMana( caster:GetMaxMana() )
+	
+	Timers:CreateTimer(FrameTime() * 2, function()
+		if caster.ally then
+			self:ResetUnit(caster.ally)
+			caster.ally:SetMana( caster.ally:GetMaxMana() )
+		end
+	end)
+
 	local ability = self:GetAbility()
 	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") , false)
 	self:StartIntervalThink(1.0)
@@ -2116,13 +2150,13 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 		ParticleManager:SetParticleControl( pfx, 1, Vector(1.5,1.5,1.5) )
 		ParticleManager:SetParticleControl( pfx, 3, egg:GetAbsOrigin() )
 		ParticleManager:ReleaseParticleIndex(pfx)
-		self:ResetUnit(caster)
+		-- self:ResetUnit(caster)
 		caster:SetHealth( caster:GetMaxHealth() )
-		caster:SetMana( caster:GetMaxMana() )
+		-- caster:SetMana( caster:GetMaxMana() )
 		if caster.ally and not caster.HasDoubleEgg and caster.ally:IsAlive() then
-			self:ResetUnit(caster.ally)
+			-- self:ResetUnit(caster.ally)
 			caster.ally:SetHealth( caster.ally:GetMaxHealth() )
-			caster.ally:SetMana( caster.ally:GetMaxMana() )
+			-- caster.ally:SetMana( caster.ally:GetMaxMana() )
 		end
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			egg:GetAbsOrigin(),
@@ -2147,17 +2181,17 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 				caster.ally:Kill(ability, killer)
 			end
 		elseif caster:IsAlive() then
-			self:ResetUnit(caster)
+			-- self:ResetUnit(caster)
 			caster:SetHealth( caster:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
-			caster:SetMana( caster:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100)
+			-- caster:SetMana( caster:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100)
 			local egg_buff = caster:FindModifierByNameAndCaster("modifier_imba_phoenix_supernova_caster_dummy", caster)
 			if egg_buff then
 				egg_buff:Destroy()
 			end
 			if caster.ally and caster.ally:IsAlive() then
-				self:ResetUnit(caster.ally)
+				-- self:ResetUnit(caster.ally)
 				caster.ally:SetHealth( caster.ally:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
-				caster.ally:SetMana( caster.ally:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
+				-- caster.ally:SetMana( caster.ally:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
 				local egg_buff2 = caster.ally:FindModifierByNameAndCaster("modifier_imba_phoenix_supernova_caster_dummy", caster)
 				if egg_buff2 then
 					egg_buff2:Destroy()

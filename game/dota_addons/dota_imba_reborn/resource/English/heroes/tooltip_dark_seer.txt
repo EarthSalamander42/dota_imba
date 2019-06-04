@@ -45,7 +45,7 @@
 
 
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica"								"Prismatic Bisector"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Description"					"Raises two crossing walls of warping light that slow any enemy hero who crosses it, while also causing them to take equal to their attack damage and attack speed for the slow duration. \n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Description"					"Raises two crossing walls of warping light that slow any enemy hero who crosses it, while also causing them to take damage equal to their attack damage and attack speed for the slow duration. \n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Lore"							"The Dark Seer, while unable to return to his natural realm, can channel part of the prismatic wall with powerful strength of mind, sowing confusion amongst enemy ranks."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Note0"							"Each wall functions separately from the other, allowing two instances of slow and self-attacks at the same time."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_duration"						"WALL DURATION:"

@@ -34,9 +34,9 @@ function imba_enchantress_untouchable:OnSpellStart()
 	
 	for _, enemy in pairs(enemies) do
 		if not enemy:IsCourier() then
-			if not (enemy:GetCurrentActiveAbility() and (enemy:GetCurrentActiveAbility():GetName() == "item_tpscroll" or string.find(enemy:GetCurrentActiveAbility():GetName(), "item_travel_boots"))) then
-				enemy:Stop()
-			end
+			-- if not (enemy:GetCurrentActiveAbility() and (enemy:GetCurrentActiveAbility():GetName() == "item_tpscroll" or string.find(enemy:GetCurrentActiveAbility():GetName(), "item_travel_boots"))) then
+				-- enemy:Stop()
+			-- end
 			
 			enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
 		end

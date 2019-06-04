@@ -149,6 +149,30 @@ function imba_night_stalker_void:GetAbilityTextureName()
    return "night_stalker_void"
 end
 
+function imba_night_stalker_void:GetBehavior()
+	if self:GetCaster():HasScepter() then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	else
+		return self.BaseClass.GetBehavior(self)
+	end
+end
+
+function imba_night_stalker_void:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() or IsClient() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("radius_scepter") - GetCastRangeIncrease(self:GetCaster())
+	end
+end
+
+function imba_night_stalker_void:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self.BaseClass.GetCooldown(self, level) - self:GetSpecialValueFor("scepter_cooldown_reduction")
+	end
+end
+
 function imba_night_stalker_void:IsHiddenWhenStolen()
 	return false
 end
@@ -186,92 +210,190 @@ function imba_night_stalker_void:OnSpellStart()
 	-- Play sound cast
 	EmitSoundOn(sound_cast, caster)    
 
-
-	-- If target has Linken's sphere ready, do nothing
-	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
-	end     
-
-	-- Damage target
-	local damageTable = {victim = target,
-						attacker = caster,
-						damage = damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						ability = ability}
-										
-	ApplyDamage(damageTable)    
-
-	-- Apply ministun on target
-	target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
-
-	-- Set duration variable
-	local duration
-
-	-- If Night Stalker has Darkness active, lengthen it
-	if caster:HasModifier(modifier_darkness) then
-		-- Assign night duration
-		duration = night_duration
-
-		local modifier_darkness_handler = caster:FindModifierByName(modifier_darkness)
-		if modifier_darkness_handler then
-			modifier_darkness_handler:SetDuration(modifier_darkness_handler:GetRemainingTime() + night_extend, true)
-			modifier_darkness_handler:ForceRefresh()
-		end
-	else
-		-- Influence the natural time flow
-		-- Day start time
-		local day_start = 0.25    
-		local minutes_per_day = 8
-		local seconds_per_minute = 60
-
-		-- Convert daytime to seconds
-		local daytime_seconds = (GameRules:GetTimeOfDay() - day_start) * minutes_per_day * seconds_per_minute
-
-		-- Negative value handling
-		if daytime_seconds < 0 then
-			daytime_seconds = daytime_seconds + (minutes_per_day * seconds_per_minute)
-		end
-
-		-- Check current daytime cycle
-		
-		if GameRules:IsDaytime() then
-			-- Assign day duration
-			duration = day_duration
-
-			-- If the target is a real hero, pull the night closer
-			if target:IsRealHero() then
-
-				-- Add seconds to hasten the day
-				daytime_seconds = daytime_seconds + night_pull
-
-				-- Convert daytime back to dota format
-				local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
-
-				-- Set the time of day
-				GameRules:SetTimeOfDay(dota_daytime)
+	if target then
+		-- If target has Linken's sphere ready, do nothing
+		if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+			if target:TriggerSpellAbsorb(ability) then
+				return nil
 			end
-		else        
+		end     		
+
+		-- Damage target
+		local damageTable = {victim = target,
+							attacker = caster,
+							damage = damage,
+							damage_type = DAMAGE_TYPE_MAGICAL,
+							ability = ability}
+											
+		ApplyDamage(damageTable)    
+
+		-- Apply ministun on target
+		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+
+		-- Set duration variable
+		local duration
+
+		-- If Night Stalker has Darkness active, lengthen it
+		if caster:HasModifier(modifier_darkness) then
 			-- Assign night duration
 			duration = night_duration
 
-			-- If the target is a real hero, extend the night
-			if target:IsRealHero() then
-				-- Reduce seconds to extend the night
-				daytime_seconds = daytime_seconds - night_extend
+			local modifier_darkness_handler = caster:FindModifierByName(modifier_darkness)
+			if modifier_darkness_handler then
+				modifier_darkness_handler:SetDuration(modifier_darkness_handler:GetRemainingTime() + night_extend, true)
+				modifier_darkness_handler:ForceRefresh()
+			end
+		else
+			-- Influence the natural time flow
+			-- Day start time
+			local day_start = 0.25    
+			local minutes_per_day = 8
+			local seconds_per_minute = 60
 
-				-- Convert daytime back to dota format
-				local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
+			-- Convert daytime to seconds
+			local daytime_seconds = (GameRules:GetTimeOfDay() - day_start) * minutes_per_day * seconds_per_minute
 
-				-- Set the time of day
-				GameRules:SetTimeOfDay(dota_daytime)
+			-- Negative value handling
+			if daytime_seconds < 0 then
+				daytime_seconds = daytime_seconds + (minutes_per_day * seconds_per_minute)
+			end
+
+			-- Check current daytime cycle
+			
+			if GameRules:IsDaytime() then
+				-- Assign day duration
+				duration = day_duration
+
+				-- If the target is a real hero, pull the night closer
+				if target:IsRealHero() then
+
+					-- Add seconds to hasten the day
+					daytime_seconds = daytime_seconds + night_pull
+
+					-- Convert daytime back to dota format
+					local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
+
+					-- Set the time of day
+					GameRules:SetTimeOfDay(dota_daytime)
+				end
+			else        
+				-- Assign night duration
+				duration = night_duration
+
+				-- If the target is a real hero, extend the night
+				if target:IsRealHero() then
+					-- Reduce seconds to extend the night
+					daytime_seconds = daytime_seconds - night_extend
+
+					-- Convert daytime back to dota format
+					local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
+
+					-- Set the time of day
+					GameRules:SetTimeOfDay(dota_daytime)
+				end
+			end
+		end
+
+		-- Apply Void on the target with the correct duration
+		target:AddNewModifier(caster, ability, modifier_void, {duration = duration})
+	else
+		-- Scepter logic
+		local slow_duration	= day_duration
+		local stun_duration	= ministun_duration
+		
+		if not GameRules:IsDaytime() then
+			slow_duration 	= night_duration
+			stun_duration	= self:GetSpecialValueFor("scepter_ministun")
+		end
+	
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		
+		-- Maybe only let this apply Everlasting Night effect only max of one time?
+		local hit_hero = false
+		
+		for _, enemy in pairs(enemies) do
+			-- "Void first applies the slow debuff, then the damage, then the stun debuff."
+			
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_slow", {duration = slow_duration}):SetDuration(slow_duration * (1 - enemy:GetStatusResistance()), true)
+			
+			local damageTable = 
+			{
+				victim		= enemy,
+				attacker	= self:GetCaster(),
+				damage		= damage,
+				damage_type	= DAMAGE_TYPE_MAGICAL,
+				ability		= self
+			}
+			
+			ApplyDamage(damageTable) 
+			
+			-- Apply ministun on target
+			local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_ministun", {duration = stun_duration})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
+			end
+			
+			if not hit_hero and enemy:IsRealHero() then
+				hit_hero = true
+				-- Set duration variable
+				local duration
+
+				-- If Night Stalker has Darkness active, lengthen it
+				if caster:HasModifier(modifier_darkness) then
+					-- Assign night duration
+					duration = night_duration
+
+					local modifier_darkness_handler = caster:FindModifierByName(modifier_darkness)
+					if modifier_darkness_handler then
+						modifier_darkness_handler:SetDuration(modifier_darkness_handler:GetRemainingTime() + night_extend, true)
+						modifier_darkness_handler:ForceRefresh()
+					end
+				else
+					-- Influence the natural time flow
+					-- Day start time
+					local day_start = 0.25    
+					local minutes_per_day = 8
+					local seconds_per_minute = 60
+
+					-- Convert daytime to seconds
+					local daytime_seconds = (GameRules:GetTimeOfDay() - day_start) * minutes_per_day * seconds_per_minute
+
+					-- Negative value handling
+					if daytime_seconds < 0 then
+						daytime_seconds = daytime_seconds + (minutes_per_day * seconds_per_minute)
+					end
+
+					-- Check current daytime cycle
+					
+					if GameRules:IsDaytime() then
+						-- Assign day duration
+						duration = day_duration
+						-- Add seconds to hasten the day
+						daytime_seconds = daytime_seconds + night_pull
+
+						-- Convert daytime back to dota format
+						local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
+
+						-- Set the time of day
+						GameRules:SetTimeOfDay(dota_daytime)
+					else        
+						-- Assign night duration
+						duration = night_duration
+						
+						-- Reduce seconds to extend the night
+						daytime_seconds = daytime_seconds - night_extend
+
+						-- Convert daytime back to dota format
+						local dota_daytime = (daytime_seconds / seconds_per_minute / minutes_per_day) + day_start
+
+						-- Set the time of day
+						GameRules:SetTimeOfDay(dota_daytime)
+					end
+				end
 			end
 		end
 	end
-
-	-- Apply Void on the target with the correct duration
-	target:AddNewModifier(caster, ability, modifier_void, {duration = duration})    
 end
 
 -- Ministun modifier
