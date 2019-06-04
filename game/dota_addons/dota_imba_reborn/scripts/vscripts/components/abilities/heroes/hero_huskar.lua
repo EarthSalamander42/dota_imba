@@ -433,14 +433,14 @@ end
 -- end
 
 -- Crimson Priest IMBAfication will be an "opt-out" add-on
-function imba_huskar_berserkers_blood:OnUpgrade()
-	if self:GetLevel() == 1 then
-		self:ToggleAutoCast()
-	end
-end
+-- function imba_huskar_berserkers_blood:OnUpgrade()
+	-- if self:GetLevel() == 1 then
+		-- self:ToggleAutoCast()
+	-- end
+-- end
 
 -- Not castable
-function imba_huskar_berserkers_blood:OnAbilityPhaseStart() return false end
+-- function imba_huskar_berserkers_blood:OnAbilityPhaseStart() return false end
 
 function imba_huskar_berserkers_blood:GetIntrinsicModifierName()
 	return "modifier_imba_huskar_berserkers_blood"

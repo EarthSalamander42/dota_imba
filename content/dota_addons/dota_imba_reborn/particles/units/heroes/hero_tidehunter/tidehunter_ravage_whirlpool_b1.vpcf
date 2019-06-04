@@ -1,0 +1,111 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_flOverbrightFactor = 4.0
+			m_flAddSelfAmount = 1.0
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/juggernaut/juggernaut_blade_fury.vtex"
+			m_nOrientationType = 2
+			m_flAnimationRate = 1.5
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_Gravity = [ 0.0, 0.0, -5.0 ]
+		},
+		{
+			_class = "C_OP_FadeAndKill"
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 41, 62, 79, 255 ]
+			m_flFadeEndTime = 0.7
+		},
+		{
+			_class = "C_OP_Spin"
+			m_nSpinRateDegrees = 2
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.8
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 1.0
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.45
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 340.0
+			m_flRadiusMax = 345.0
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_fRadiusMax = 12.0
+			m_vecDistanceBias = [ 1.0, 1.0, 0.0 ]
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 200
+			m_nAlphaMax = 220
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 2.2
+			m_fLifetimeMax = 2.3
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 64, 116, 153, 255 ]
+			m_ColorMax = [ 71, 97, 115, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMin = 1
+			m_nSequenceMax = 1
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, 12.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 12.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.2
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 100.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 7
+}

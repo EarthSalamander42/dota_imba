@@ -46,7 +46,7 @@ end
 -- Apply Searing Chains debuff
 function ApplySearingChains(caster, source, target, ability, duration)
 	target:EmitSound("Hero_EmberSpirit.SearingChains.Target")
-	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration})
+	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	local impact_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_start.vpcf", PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(impact_pfx, 0, source:GetAbsOrigin())
 	ParticleManager:SetParticleControl(impact_pfx, 1, target:GetAbsOrigin())

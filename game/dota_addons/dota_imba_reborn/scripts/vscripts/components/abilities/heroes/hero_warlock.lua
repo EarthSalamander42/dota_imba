@@ -36,6 +36,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	
 	-- Initialize variables
 	local targets_linked = 0
+	local linked_units = {}
 	local bond_table = {}
 
 	local modifier_table = {}
@@ -47,41 +48,51 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 		end
 	end
 
-	-- Find enemies and apply it on them as well, up to the maximum
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		target:GetAbsOrigin(),
-		nil,
-		link_search_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-		FIND_CLOSEST,
-		false)
+	local bond_target = target
 
+	for link = 1, max_targets do
+		-- Find enemies and apply it on them as well, up to the maximum
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+			bond_target:GetAbsOrigin(),
+			nil,
+			link_search_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+			FIND_CLOSEST,
+			false)
+			
+		for _,enemy in pairs(enemies) do
+			if not linked_units[enemy:GetEntityIndex()] then
+				local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
+				table.insert(modifier_table, bond_modifier)
+				
+				table.insert(bond_table, enemy)
+				linked_units[enemy:GetEntityIndex()] = true
 
-	-- Apply the debuff to enemies from the closest to the farthest
-	for _,enemy in pairs(enemies) do
-		if targets_linked < max_targets then
-			local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
-			table.insert(modifier_table, bond_modifier)
+				-- If it was the main target, link from Warlock to it - otherwise, link from the target to them
+				if enemy == target then
+					local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 
-			-- Increase the targets linked counter and insert that enemy into a table
-			targets_linked = targets_linked + 1
-			table.insert(bond_table, enemy)
-
-			-- If it was the main target, link from Warlock to it - otherwise, link from the target to them
-			if enemy == target then
-				local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
-
-			else
-				local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
+				else
+					local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, bond_target, PATTACH_POINT_FOLLOW, "attach_hitloc", bond_target:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
+				end
+				
+				bond_target	= enemy
+				
+				break
 			end
+		end
+		
+		-- Break out of outer loop early if last loop iteration didn't successfully apply another modifier
+		if link > #modifier_table then
+			break
 		end
 	end
 
@@ -91,8 +102,16 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	end
 end
 
-
 modifier_imba_fatal_bonds = class({})
+
+function modifier_imba_fatal_bonds:IsHidden() return false end
+function modifier_imba_fatal_bonds:IsPurgable() return true end
+function modifier_imba_fatal_bonds:IsDebuff() return true end
+function modifier_imba_fatal_bonds:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_fatal_bonds:GetEffectName() return "particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf" end
+function modifier_imba_fatal_bonds:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_fatal_bonds:ShouldUseOverheadOffset() return true end
 
 function modifier_imba_fatal_bonds:OnCreated()
 	-- Ability properties
@@ -106,12 +125,6 @@ function modifier_imba_fatal_bonds:OnCreated()
 	self.modifier_word = "modifier_imba_shadow_word"
 	self.ability_word = "imba_warlock_shadow_word"
 
-	-- The code dealing with this is broken...
-	-- self.fatal_bonds_accumulated_magic_damage = 0
-	-- self.fatal_bonds_accumulated_phys_damage = 0
-	
-	self.accumulated_damage = 0
-
 	-- Ability specials
 	self.link_damage_share_pct = self.ability:GetSpecialValueFor("link_damage_share_pct")
 	self.golem_link_radius = self.ability:GetSpecialValueFor("golem_link_radius")
@@ -123,118 +136,38 @@ function modifier_imba_fatal_bonds:OnCreated()
 	-- #7 Talent: Golems share damage they take to Fatal Bonded units, no range limit
 	self.golem_link_radius = self.golem_link_radius + self.caster:FindTalentValue("special_bonus_imba_warlock_7")
 
-	-- Add particles
-	self.particle_icon_fx = ParticleManager:CreateParticle(self.particle_icon, PATTACH_OVERHEAD_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(self.particle_icon_fx, 0, self.parent:GetAbsOrigin())
-	self:AddParticle(self.particle_icon_fx, false, false, -1, false, true)
-
 	if IsServer() then
 		-- Find the caster's Shadow Word ability, if feasible
 		if self.caster:HasAbility(self.ability_word) then
 			self.ability_word_handler = self.caster:FindAbilityByName(self.ability_word)
 		end
-
-		-- Start thinking (update table)
-		self:StartIntervalThink(FrameTime())
 	end
 end
 
-function modifier_imba_fatal_bonds:IsHidden() return false end
-function modifier_imba_fatal_bonds:IsPurgable() return true end
-function modifier_imba_fatal_bonds:IsDebuff() return true end
-function modifier_imba_fatal_bonds:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_fatal_bonds:ShouldUseOverheadOffset() return true end
-
-function modifier_imba_fatal_bonds:OnIntervalThink()
-	if IsServer() then
-		-- If an entity isn't alive anymore, remove it from the table		
-		--print("bounds: ", self.fatal_bonds_accumulated_phys_damage, self.fatal_bonds_accumulated_magic_damage)
-		-- Cycle through every other enemy in the table and deal damage
-		for _,bonded_enemy in pairs(self.bond_table) do
-			if not bonded_enemy:IsNull() and bonded_enemy:IsAlive() and bonded_enemy ~= self.parent then
-
-				-- if self.fatal_bonds_accumulated_phys_damage > 0 then
-					-- local damageTable = {victim = bonded_enemy,
-						-- damage = self.fatal_bonds_accumulated_phys_damage,
-						-- damage_type = DAMAGE_TYPE_PHYSICAL,
-						-- attacker = self.caster,
-						-- ability = self.ability,
-						-- damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					-- }
-
-					-- ApplyDamage(damageTable)
-				-- end
-
-				-- if self.fatal_bonds_accumulated_magic_damage > 0 then 
-					-- local damageTable = {victim = bonded_enemy,
-						-- damage = self.fatal_bonds_accumulated_magic_damage,
-						-- damage_type = DAMAGE_TYPE_MAGICAL,
-						-- attacker = self.caster,
-						-- ability = self.ability,
-						-- damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					-- }
-
-					-- ApplyDamage(damageTable)
-				-- end
-
-				if self.accumulated_damage > 0 then
-					local damageTable = {victim = bonded_enemy,
-						damage = self.accumulated_damage,
-						damage_type = self.fatal_bonds_damage_type,
-						attacker = self.caster,
-						ability = self.ability,
-						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					}
-
-				ApplyDamage(damageTable)
-				
-					-- Add particle hit effect
-					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
-					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
-					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
-				end
-
-				-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
-				if self.parent:HasModifier(self.modifier_word) and not bonded_enemy:HasModifier(self.modifier_word) then
-
-					-- If Shadow Word is not defined on the caster of Fatal Bonds, do nothing
-					if not self.ability_word_handler then
-						return nil
-					end
-
-					-- If the unit is not magic immune, apply the debuff
-					if not bonded_enemy:IsMagicImmune() then
-						local modifier_word_handler = self.parent:FindModifierByName(self.modifier_word)
-						if modifier_word_handler then
-							local duration_remaining = modifier_word_handler:GetRemainingTime()
-							bonded_enemy:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
-						end
-					end
-				end
-			end
-		end
-
-		-- self.fatal_bonds_accumulated_magic_damage = 0
-		-- self.fatal_bonds_accumulated_phys_damage = 0
+function modifier_imba_fatal_bonds:OnDestroy()
+	if not IsServer() or self:GetParent():IsAlive() then return end
+	
+	-- Check every unit that was linked by this modifier
+	for _, enemy in pairs(self.bond_table) do
+		if enemy ~= self:GetParent() then
 		
-		self.accumulated_damage = 0
-		self.fatal_bonds_damage_type = 0
+			-- Find all link modifiers that that unit has
+			local bond_modifiers = enemy:FindAllModifiersByName("modifier_imba_fatal_bonds")
 
-		--[[
-		-- i dont htink this is needed... but just in case
-		local delete_positions = {}
-		for i = 1, #self.bond_table do
-			if not self.bond_table[i]:IsAlive() then
-				table.insert(delete_positions, i)
+			-- For each link modifier, check its own bond table
+			for _, modifier in pairs(bond_modifiers) do
+
+				-- Do it in descending order so there aren't weird indexing issues when removing entries
+				for num = #(modifier.bond_table), 1, -1 do
+					
+					-- If the parent is found in that table, remove it so they don't keep taking damage after respawning
+					if (modifier.bond_table)[num] == self:GetParent() then
+						table.remove(modifier.bond_table, num)
+						break
+					end
+				end
 			end
 		end
-
-		-- remove enemies that has been garbatecollected on death
-		for i = 1, #delete_positions do
-			table.remove(self.bond_table, delete_positions[i])
-		end
-		]]
 	end
 end
 
@@ -245,79 +178,75 @@ function modifier_imba_fatal_bonds:DeclareFunctions()
 end
 
 function modifier_imba_fatal_bonds:OnTakeDamage(keys)
-	if IsServer() then
+	if IsServer() and bit.band( keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION ) ~= DOTA_DAMAGE_FLAG_REFLECTION then
 		local unit = keys.unit
 		local original_damage = keys.original_damage
 		local damage_type = keys.damage_type
 		local inflictor = keys.inflictor
 
 		-- Only apply if the unit taking damage is the parent
-		if unit == self.parent and unit:IsAlive() then
+		if unit == self:GetParent() and self.bond_table then
+			for _, bonded_enemy in pairs(self.bond_table) do
+				if not bonded_enemy:IsNull() and bonded_enemy ~= self:GetParent() then
+					local damageTable = {
+						victim			= bonded_enemy,
+						damage			= keys.original_damage * self.link_damage_share_pct * 0.01,
+						damage_type		= keys.damage_type,
+						attacker		= self:GetCaster(),
+						ability			= self.ability,
+						damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION
+					}
 
-			-- If the bond table isn't initialized yet, do nothing
-			if not self.bond_table then
-				return nil
+					ApplyDamage(damageTable)
+				
+					-- Add particle hit effect
+					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
+					
+					-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
+					if self.parent:HasModifier(self.modifier_word) and not bonded_enemy:HasModifier(self.modifier_word) then
+
+						-- If Shadow Word is not defined on the caster of Fatal Bonds, do nothing
+						if not self.ability_word_handler then
+							return nil
+						end
+
+						-- If the unit is not magic immune, apply the debuff
+						if not bonded_enemy:IsMagicImmune() then
+							local modifier_word_handler = self.parent:FindModifierByName(self.modifier_word)
+							if modifier_word_handler then
+								local duration_remaining = modifier_word_handler:GetRemainingTime()
+								bonded_enemy:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
+							end
+						end
+					end
+				end
 			end
-
-			-- If the damage came from Fatal Bonds' ability, do nothing
-			if inflictor and inflictor == self.ability then
-				return nil
-			end
-			
-			-- Calculate damage post reductions, but before any other changes (illusions, borrowed time etc)
-			-- This block doesn't even work properly
-			-- if damage_type == DAMAGE_TYPE_PHYSICAL then
-				-- damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
-				-- self.fatal_bonds_accumulated_phys_damage = damage * self.link_damage_share_pct * 0.01
-
-			-- elseif damage_type == DAMAGE_TYPE_MAGICAL then
-				-- damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-				-- self.fatal_bonds_accumulated_magic_damage = damage * self.link_damage_share_pct * 0.01
-			-- end
-			
-			-- Just send the original damage and damage type values over to the IntervalThink function for spreading
-			self.accumulated_damage = original_damage * self.link_damage_share_pct * 0.01
-			self.fatal_bonds_damage_type = keys.damage_type
-		end
-
 		-- Instead, if it was an friendly Chaotic Golem that took damage, check if the debuffed unit is in its range
-		if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") and unit:GetTeamNumber() ~= self.parent:GetTeamNumber() then
-
-			-- Calculate distance
-			local distance = (unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D()
-
+		elseif keys.attacker == self:GetParent() and string.find(keys.unit:GetUnitName(), "warlock_golem") and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			-- Check distance, if it's in range, damage the parent
-			if distance <= self.golem_link_radius then
-
-				-- Adjust damage
-				local damage = original_damage
-				-- if damage_type == DAMAGE_TYPE_PHYSICAL then
-					-- damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
-
-				-- elseif damage_type == DAMAGE_TYPE_MAGICAL then
-					-- damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-				-- end
-
-				-- Calculate damage
-				damage = damage * self.golem_link_damage_pct * 0.01
-
+			if (keys.unit:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.golem_link_radius then
 				-- Apply damage
-				local damageTable = {victim = self.parent,
-					damage = damage,
-					damage_type = damage_type,
-					attacker = self.caster,
-					ability = self.ability,
-					damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+				local damageTable = 
+				{
+					victim			= self:GetParent(),
+					damage			= keys.original_damage * self.golem_link_damage_pct * 0.01,
+					damage_type		= keys.damage_type,
+					attacker		= self:GetCaster(),
+					ability			= self.ability,
+					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION
 				}
 
 				ApplyDamage(damageTable)
-
+				
 				-- Add particle hit effect
 				local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
-
+				
 				-- If Shadow Word is not defined on the caster, do nothing
 				if not self.ability_word_handler then
 					return nil
@@ -464,7 +393,7 @@ function modifier_imba_shadow_word:OnCreated()
 	end
 
 	-- Check if the unit is a friendly Golem
-	if self.good_guy and string.find(self.parent:GetUnitName(), "npc_imba_warlock_golem") then
+	if self.good_guy and string.find(self.parent:GetUnitName(), "warlock_golem") then
 		self.is_golem = true
 	end
 
@@ -1144,7 +1073,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 		local bonus_attack_speed	= self:GetCaster():GetAgility()		* self:GetSpecialValueFor("bonus_aspeed_per_agi")
 		local bonus_move_speed		= self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed(), false) - self:GetCaster():GetBaseMoveSpeed()
 
-		if bScepter and not bDeath then
+		if bScepter or bDeath then
 			bonus_hp			= bonus_hp				* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
 			bonus_damage		= bonus_damage			* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
 			bonus_armor			= bonus_armor			* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
@@ -1152,8 +1081,10 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 			bonus_move_speed	= bonus_move_speed		* (100 - self:GetSpecialValueFor("hp_dmg_reduction_scepter")) * 0.01
 			
 			-- Also reduce bounty
-			golem:SetMinimumGoldBounty(golem:GetMinimumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
-			golem:SetMaximumGoldBounty(golem:GetMaximumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
+			if not bDeath then
+				golem:SetMinimumGoldBounty(golem:GetMinimumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
+				golem:SetMaximumGoldBounty(golem:GetMaximumGoldBounty() * (100 - self:GetSpecialValueFor("bounty_reduction_scepter")) * 0.01)
+			end
 		end
 
 		-- Set Golem's properties according to the bonus properties

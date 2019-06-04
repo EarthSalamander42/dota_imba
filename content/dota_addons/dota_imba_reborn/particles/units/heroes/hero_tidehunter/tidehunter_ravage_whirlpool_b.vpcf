@@ -1,0 +1,27 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 32
+	m_bShouldSort = false
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"/particles/units/heroes/hero_tidehunter/tidehunter_ravage_whirlpool_b0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"/particles/units/heroes/hero_tidehunter/tidehunter_ravage_whirlpool_b2.vpcf"
+		},
+		{
+			m_ChildRef = resource:"/particles/units/heroes/hero_tidehunter/tidehunter_ravage_whirlpool_b3.vpcf"
+		},
+		{
+			m_ChildRef = resource:"/particles/units/heroes/hero_tidehunter/tidehunter_ravage_whirlpool_b4.vpcf"
+		},
+		{
+			m_ChildRef = resource:"/particles/units/heroes/hero_tidehunter/tidehunter_ravage_whirlpool_b1.vpcf"
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 9
+}

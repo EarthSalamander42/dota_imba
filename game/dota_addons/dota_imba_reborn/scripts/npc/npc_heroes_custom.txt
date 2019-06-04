@@ -420,17 +420,20 @@
 		"Ability5"                  "generic_hidden"
 		"Ability6"					"imba_dazzle_bad_juju"
 
-		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
-		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
-		"Ability12"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
+		"Ability10"					"special_bonus_attack_damage_75"
+		"Ability11"					"special_bonus_hp_300"
+		"Ability12"					"special_bonus_cast_range_125"
 		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
-		"Ability14"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
-		"Ability15"					"special_bonus_movement_speed_40"
-		"Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
-		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends
+		"Ability14"					"special_bonus_movement_speed_40"
+		"Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
+		"Ability16"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
+		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage 
+		// "Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
 		// "Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		// "Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
 	}
 
 	//=================================================================================================================

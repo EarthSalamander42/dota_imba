@@ -328,7 +328,7 @@
 		"AbilityTextureName"					"custom/ancient_defense"
 		"MaxLevel"								"1"
 		"ScriptFile"							"components/abilities/buildings/ancient_abilities"
-		"AbilityCastRange"						"1200"
+		"AbilityCastRange"						"2400"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -337,7 +337,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
+				"aura_radius"					"2400"
 			}
 			"02"
 			{
@@ -3393,7 +3393,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"800 900 1000 1100"
+				"cast_range"							"550 700 850 1000"
 			}
 			"06"
 			{
@@ -7519,11 +7519,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "8"
+		"AbilityCooldown"               "7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "140 160 180 200"
+		"AbilityManaCost"               "105 130 155 180"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -7567,7 +7567,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"target_damage"             "50 100 150 200"
+				"target_damage"             "75 125 175 225"
 			}
 
 			"06"
@@ -7757,7 +7757,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"int_armor_pct"			"4"
+				"int_armor_pct"			"5"
 			}
 			"09"
 			{
@@ -8008,12 +8008,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"ms_slow_pct"               "40"
+				"ms_slow_pct"               "65"
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"as_slow"                   "60"
+				"as_slow"                   "65"
 			}
 			"03"
 			{
@@ -8028,7 +8028,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "350 550 750"
+				"damage"                    "325 525 725"
 			}
 			"06"
 			{
@@ -20855,7 +20855,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 450 500 550"
+				"radius"					"325 350 375 400"
 			}
 			"02"
 			{
@@ -20880,7 +20880,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"avalanche_damage"			"100 200 300 400"
+				"avalanche_damage"			"120 200 280 360"
 				"LinkedSpecialBonus"		"special_bonus_imba_tiny_6"
 			}
 			"07"
@@ -21513,7 +21513,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"125"
+				"value"				"100"
 			}
 		}
 	}
@@ -21932,7 +21932,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"6 10 14"
+				"armor"					"6 9 12"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_4"
 			}
 			"07"
@@ -21944,6 +21944,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_damage"			"100 150 200"
+				"CalculateSpellDamageTooltip"   "0"
 			}
 			"09"
 			{
@@ -21963,7 +21964,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_hp_per_str"		"10"
+				"bonus_hp_per_str"		"8"
 			}
 			"13"
 			{
@@ -21978,7 +21979,8 @@
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage_per_int"	"1.25"
+				"bonus_damage_per_int"	"0.8"
+				"CalculateSpellDamageTooltip"   "0"
 			}
 			"14"
 			{

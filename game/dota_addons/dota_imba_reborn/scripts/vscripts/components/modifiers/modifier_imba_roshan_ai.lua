@@ -61,15 +61,61 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 		for i = 1, GAME_ROSHAN_KILLS -1 do
 			local item = CreateItem("item_imba_cheese", nil, nil)
 			local drop = CreateItemOnPositionSync(pos, item)
-			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+			local new_pos = pos + RandomVector(RandomInt(100, 150))
+			
+			if GridNav:IsTraversable(new_pos) then
+				item:LaunchLoot(false, 300, 0.5, new_pos)
+			else
+				self:GetParent():DropItemAtPositionImmediate(item, new_pos)
+			end
 		end
 	end
 
 	if GAME_ROSHAN_KILLS >= 3 then
-		for i = 1, GAME_ROSHAN_KILLS -2 do
-			local item = CreateItem("item_refresher_shard", nil, nil)
+		if GAME_ROSHAN_KILLS == 3 then
+			if RollPercentage(50) then
+				local item = CreateItem("item_refresher_shard", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				local new_pos = pos + RandomVector(RandomInt(100, 150))
+				
+				if GridNav:IsTraversable(new_pos) then
+					item:LaunchLoot(false, 300, 0.5, new_pos)
+				else
+					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
+				end
+			else
+				local item = CreateItem("item_ultimate_scepter_2", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				local new_pos = pos + RandomVector(RandomInt(100, 150))
+				
+				if GridNav:IsTraversable(new_pos) then
+					item:LaunchLoot(false, 300, 0.5, new_pos)
+				else
+					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
+				end
+			end
+		else
+			for i = 1, GAME_ROSHAN_KILLS -2 do
+				local item = CreateItem("item_refresher_shard", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				local new_pos = pos + RandomVector(RandomInt(100, 150))
+				
+				if GridNav:IsTraversable(new_pos) then
+					item:LaunchLoot(false, 300, 0.5, new_pos)
+				else
+					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
+				end
+			end
+			
+			local item = CreateItem("item_ultimate_scepter_2", nil, nil)
 			local drop = CreateItemOnPositionSync(pos, item)
-			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+			local new_pos = pos + RandomVector(RandomInt(100, 150))
+			
+			if GridNav:IsTraversable(new_pos) then
+				item:LaunchLoot(false, 300, 0.5, new_pos)
+			else
+				self:GetParent():DropItemAtPositionImmediate(item, new_pos)
+			end
 		end
 	end
 

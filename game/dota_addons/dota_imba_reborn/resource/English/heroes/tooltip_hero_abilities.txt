@@ -2188,7 +2188,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_shadow_word"                        "Shadow Word"
-"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"            "Applies an incantation on the ground, affecting all nearby units in its range. Allies get a buff that heals them every second, while enemies get a debuff that deals damage to them every second.\n<font color='#FF7800'>Hell Incantations:</font> Chaotic Golems feed from the magical power of the incantation, further enhancing their move and attack speed.\n<font color='#FF7800'>Demonic Whisper:</font> When Shadow Word deals damage to an enemy, the curse spreads to all enemies linked to it through Fatal Bonds, applying a Shadow Word on them. Chaotic Golems also count as Fatal Bonded units and can spread Shadow Word to units that become linked to them through damage taken.\n<font color='#FF7800'>Cursed Links:</font> When a Fatal Bonded unit affected by Shadow Word attacks a Chaotic Golem, it spreads to the golem, applying the positive buff version of Shadow Word."
+"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"				"Applies an incantation on the ground, affecting all nearby units in its range. Allies get a buff that heals them every second, while enemies get a debuff that deals damage to them every second.\n<font color='#FF7800'>Hell Incantations:</font> Chaotic Golems feed from the magical power of the incantation, further enhancing their move and attack speed.\n<font color='#FF7800'>Demonic Whisper:</font> When Shadow Word deals damage to an enemy, the curse spreads to all enemies linked to it through Fatal Bonds, applying a Shadow Word on them.\n<font color='#FF7800'>Cursed Links:</font> When a Fatal Bonded unit affected by Shadow Word attacks a Chaotic Golem, it spreads to the golem, applying the positive buff version of Shadow Word for its remaining duration."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Lore"                    "Warlock arcane arts have a myriad of uses, allowing them to be powerful friendly enchantments or damaging curses."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Note0"                  "If a unit is already affected by Shadow Word, it is ignored from Shadow Words being spread to it."
 "DOTA_Tooltip_ability_imba_warlock_shadow_word_Note1"                  "Chaotic Golems spread a negative version of Shadow Word, even though they have a positive version of it."
@@ -2244,6 +2244,8 @@
 
 
 //"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               "Summons 5 Ascension demons around the target point. Ascension demons link their own life force to the protect the golem. While they live, the golem takes no damage, but everytime it is damaged, a portion of it is applied to a random demon. Each living demon increases the Golem's attack by 10%."
+
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               	"Calls 2 golems with reduced stats and bounty. <font color='#FF7800'>Contract of the Black Grimoire applies to both golems, but is reduced to 75% efficacy.</font>"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_number_of_golems_scepter"				"SCEPTER NUMBER OF GOLEMS:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_hp_tooltip_scepter"				"SCEPTER GOLEM HEALTH:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_dmg_tooltip_scepter"				"SCEPTER GOLEM DAMAGE:"
@@ -2308,6 +2310,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_7"                     "Golems share damage taken to all linked enemies"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_8"                     "Golems gain Spell Immunity"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_9"                     "Summons a Warlock Golem on Death"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_9_Description"			"Contract of the Black Grimoire applies to death golems, but is reduced to 75% efficacy."
 
 ////===============================================================================================================
 // Warlock's summoned units: Chaotic Golem, Ascension Demon, Upheaval Demon

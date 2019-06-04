@@ -13,6 +13,9 @@ LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_suppression", "components
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_tidehunter_ravage_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tidehunter_ravage_creeping_wave", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+
 imba_tidehunter_gush								= class({})
 modifier_imba_tidehunter_gush						= class({})
 modifier_imba_tidehunter_gush_surf					= class({})
@@ -26,6 +29,9 @@ modifier_imba_tidehunter_anchor_smash				= class({})
 modifier_imba_tidehunter_anchor_smash_suppression	= class({})
 modifier_imba_tidehunter_anchor_smash_handler		= class({})
 modifier_imba_tidehunter_anchor_smash_throw			= class({})
+
+modifier_imba_tidehunter_ravage_handler				= class({})
+modifier_imba_tidehunter_ravage_creeping_wave		= class({})
 
 ----------
 -- GUSH --
@@ -329,18 +335,10 @@ function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
-		
-		
-		-- MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		-- MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 	}
 	
 	return decFuncs
 end
-
--- function modifier_imba_tidehunter_kraken_shell:GetModifierIncomingPhysicalDamageConstant()
-	-- return self:GetAbility():GetTalentSpecialValueFor("damage_reduction") * (-1)
--- end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierPhysical_ConstantBlock()
 	return self:GetAbility():GetTalentSpecialValueFor("damage_reduction")
@@ -375,31 +373,6 @@ function modifier_imba_tidehunter_kraken_shell:GetModifierHealthRegenPercentage(
 		return self:GetAbility():GetSpecialValueFor("aqueous_heal")
 	end
 end
-
--- function modifier_imba_tidehunter_kraken_shell:GetOverrideAnimation()
-	-- if self:GetParent():GetAbsOrigin().z < 160 then return ACT_DOTA_TAUNT end
--- end
-
--- function modifier_imba_tidehunter_kraken_shell:GetActivityTranslationModifiers()
-	-- if self:GetParent():GetAbsOrigin().z < 160 then return "backstroke_gesture" end
--- end
-
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "damage_reduction"		"12 24 36 48"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "damage_cleanse"		"600 550 500 450"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "damage_reset_interval"	"6.0 6.0 6.0 6.0"
-			-- }
 
 --------------------------------------
 -- KRAKEN SHELL BACKSTROKE MODIFIER --
@@ -738,106 +711,261 @@ end
 -----------------------------
 imba_tidehunter_ravage = imba_tidehunter_ravage or class({})
 
+function imba_tidehunter_ravage:GetIntrinsicModifierName()
+	return "modifier_imba_tidehunter_ravage_handler"
+end
+
+function imba_tidehunter_ravage:GetAOERadius()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_ravage_handler", self:GetCaster()) == 0 then
+		return self:GetSpecialValueFor("radius")
+	else
+		return self:GetSpecialValueFor("creeping_radius")
+	end
+end
+
+function imba_tidehunter_ravage:GetCastRange(location, target)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_ravage_handler", self:GetCaster()) == 0 then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("creeping_range")
+	end
+end
+
+function imba_tidehunter_ravage:GetBehavior()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_ravage_handler", self:GetCaster()) == 0 then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
 -- TODO: Destroy the knockback modifier after it's done
 -- TODO: add a phased modifier for 0.5 secs
 -- TODO: fix nyx stun animation too
 
 function imba_tidehunter_ravage:OnSpellStart()
-	-- Ability properties
-	local caster			=	self:GetCaster()
-	local caster_pos		=	caster:GetAbsOrigin()
-	local cast_sound		=	"Ability.Ravage"
-	local hit_sound			=	"Hero_Tidehunter.RavageDamage"
-	local kill_responses	=	"tidehunter_tide_ability_ravage_0"
-	local particle 			=	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf"
-	-- Ability parameters
-	local end_radius	=	self:GetSpecialValueFor("radius")
-	local damage		=	self:GetSpecialValueFor("damage")
-	local stun_duration	=	self:GetSpecialValueFor("duration")
+	if not self:GetAutoCastState() then
+		-- Ability properties
+		local caster			=	self:GetCaster()
+		local caster_pos		=	caster:GetAbsOrigin()
+		local cast_sound		=	"Ability.Ravage"
+		local hit_sound			=	"Hero_Tidehunter.RavageDamage"
+		local kill_responses	=	"tidehunter_tide_ability_ravage_0"
+		local particle 			=	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf"
+		-- Ability parameters
+		local end_radius	=	self:GetSpecialValueFor("radius")
+		local damage		=	self:GetSpecialValueFor("damage")
+		local stun_duration	=	self:GetSpecialValueFor("duration")
 
-	-- Emit sound
-	caster:EmitSound(cast_sound)
+		-- Emit sound
+		caster:EmitSound(cast_sound)
 
-	-- Emit particle
-	self.particle_fx	=	ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(self.particle_fx, 0, caster_pos)
-	-- Set each ring in it's position
-	for i=1, 5 do
-		ParticleManager:SetParticleControl(self.particle_fx, i, Vector(end_radius * 0.2 * i, 0 , 0))
-	end
-	ParticleManager:ReleaseParticleIndex(self.particle_fx)
+		-- Emit particle
+		self.particle_fx	=	ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(self.particle_fx, 0, caster_pos)
+		-- Set each ring in it's position
+		for i=1, 5 do
+			ParticleManager:SetParticleControl(self.particle_fx, i, Vector(end_radius * 0.2 * i, 0 , 0))
+		end
+		ParticleManager:ReleaseParticleIndex(self.particle_fx)
 
-	local radius =	end_radius * 0.2
-	local ring	 =	1
-	local ring_width = end_radius * 0.2
-	local hit_units	=	{}
+		local radius =	end_radius * 0.2
+		local ring	 =	1
+		local ring_width = end_radius * 0.2
+		local hit_units	=	{}
 
-	-- Find units in a ring 5 times and hit them with ravage
-	Timers:CreateTimer(function()
-		local enemies =	FindUnitsInRing(caster:GetTeamNumber(),
-			caster_pos,
-			nil,
-			ring * radius,
-			radius,
-			self:GetAbilityTargetTeam(),
-			self:GetAbilityTargetType(),
-			self:GetAbilityTargetFlags(),
-			FIND_ANY_ORDER,
-			false
-		)
+		-- Find units in a ring 5 times and hit them with ravage
+		Timers:CreateTimer(function()
+			local enemies =	FindUnitsInRing(caster:GetTeamNumber(),
+				caster_pos,
+				nil,
+				ring * radius,
+				radius,
+				self:GetAbilityTargetTeam(),
+				self:GetAbilityTargetType(),
+				self:GetAbilityTargetFlags(),
+				FIND_ANY_ORDER,
+				false
+			)
 
-		for _,enemy in pairs(enemies) do
-			-- Custom function, checks if the unit was hit already
-			if not CheckIfInTable(hit_units, enemy) then
-				-- Emit hit sound
-				enemy:EmitSound(hit_sound)
+			for _,enemy in pairs(enemies) do
+				-- Custom function, checks if the unit was hit already
+				if not CheckIfInTable(hit_units, enemy) then
+					-- Emit hit sound
+					enemy:EmitSound(hit_sound)
 
-				-- Apply stun and air time modifiers
-				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
+					-- Apply stun and air time modifiers
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
 
-				-- Knock the enemy into the air
-				local knockback =
-				{
-						knockback_duration = 0.5,
-					duration = 0.5,
-					knockback_distance = 0,
-					knockback_height = 350,
-				}
-				enemy:RemoveModifierByName("modifier_knockback")
-				enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
-
-				Timers:CreateTimer(0.5, function()
-					-- Apply damage
-					local damageTable = {victim = enemy,
-						damage = damage,
-						damage_type = self:GetAbilityDamageType(),
-						attacker = caster,
-						ability = self
+					-- Knock the enemy into the air
+					local knockback =
+					{
+							knockback_duration = 0.5,
+						duration = 0.5,
+						knockback_distance = 0,
+						knockback_height = 350,
 					}
-					ApplyDamage(damageTable)
+					enemy:RemoveModifierByName("modifier_knockback")
+					enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
 
-					-- Check if the enemy is a dead hero, if he is, emit kill response
-					if not enemy:IsAlive() and enemy:IsHero() and RollPercentage(25) and caster:GetName() == "npc_dota_hero_tidehunter" then
-						caster:EmitSound(kill_responses..RandomInt(1, 2))
-					end
+					Timers:CreateTimer(0.5, function()
+						-- Apply damage
+						local damageTable = {victim = enemy,
+							damage = damage,
+							damage_type = self:GetAbilityDamageType(),
+							attacker = caster,
+							ability = self
+						}
+						ApplyDamage(damageTable)
 
-					-- We need to do this because the gesture takes it's fucking time to stop
-					enemy:RemoveGesture(ACT_DOTA_FLAIL)
-				end)
+						-- Check if the enemy is a dead hero, if he is, emit kill response
+						if not enemy:IsAlive() and enemy:IsHero() and RollPercentage(25) and caster:GetName() == "npc_dota_hero_tidehunter" then
+							caster:EmitSound(kill_responses..RandomInt(1, 2))
+						end
 
-				-- Mark the enemy as hit to not get hit again
-				table.insert(hit_units, enemy)
+						-- We need to do this because the gesture takes it's fucking time to stop
+						enemy:RemoveGesture(ACT_DOTA_FLAIL)
+					end)
+
+					-- Mark the enemy as hit to not get hit again
+					table.insert(hit_units, enemy)
+				end
 			end
-		end
 
-		-- Send the next ring
-		if ring < 5 then
-			ring = ring + 1
-			return 0.2
-		end
-	end)
+			-- Send the next ring
+			if ring < 5 then
+				ring = ring + 1
+				return 0.2
+			end
+		end)
+	else
+		local damage			= self:GetSpecialValueFor("damage") or self:GetAbilityDamage()
+		local stun_duration		= self:GetSpecialValueFor("duration")
+	
+		local creeping_range	= self:GetSpecialValueFor("creeping_range")
+		local creeping_radius	= self:GetSpecialValueFor("creeping_radius")
+	
+		local waves = (creeping_range / creeping_radius / 2)
+		local counter = 0
+		local total_time = 1.38 -- This is the duration for the vanilla ability so let's use that too
+		
+		-- Need to save this variable as it's going to be repeatedly used within the timer
+		local caster_pos	= self:GetCaster():GetAbsOrigin()
+		local forward_vec	= (self:GetCursorPosition() - caster_pos):Normalized()
+		
+		Timers:CreateTimer(function()
+			CreateModifierThinker(self:GetCaster(), self, "modifier_imba_tidehunter_ravage_creeping_wave", {
+				duration		=	0.3, -- Kinda arbitrary but only want to show one wave of tentacles and not all five
+				damage			=	damage,
+				stun_duration	=	stun_duration,
+				creeping_radius	=	creeping_radius
+			}, 
+			caster_pos + (forward_vec * counter * creeping_radius * 2 * ((creeping_range + GetCastRangeIncrease(self:GetCaster())) / creeping_range)), self:GetCaster():GetTeamNumber(), false)
+
+			counter = counter + 1
+			
+			if counter <= waves then
+				return total_time / waves
+			end
+		end)
+	end
 end
 
-function imba_tidehunter_ravage:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
+-----------------------------
+-- RAVAGE HANDLER MODIFIER --
+-----------------------------
+
+function modifier_imba_tidehunter_ravage_handler:IsHidden()	return true end
+
+function modifier_imba_tidehunter_ravage_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_tidehunter_ravage_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+
+-----------------------------------
+-- RAVAGE CREEPING WAVE MODIFIER --
+-----------------------------------
+
+function modifier_imba_tidehunter_ravage_creeping_wave:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.stun_duration		= params.stun_duration
+	self.creeping_radius	= params.creeping_radius
+	
+	local ability			= self:GetAbility()
+	local caster			= self:GetCaster()
+	local damage			= params.damage
+	local damage_type		= self:GetAbility():GetAbilityDamageType()
+
+	self:GetParent():EmitSound("Ability.Ravage")
+
+	self.ravage_particle	=	ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.ravage_particle, 0, self:GetParent():GetAbsOrigin())
+	for i= 1, 5 do
+		ParticleManager:SetParticleControl(self.ravage_particle, i, Vector(self.creeping_radius, 0, 0))
+	end
+	
+	local enemies =	FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.creeping_radius, self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+
+	for _, enemy in pairs(enemies) do
+		-- Emit hit sound
+		enemy:EmitSound("Hero_Tidehunter.RavageDamage")
+
+		local hit_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit.vpcf", PATTACH_ABSORIGIN, enemy)
+		ParticleManager:SetParticleControl(hit_particle, 0, GetGroundPosition(enemy:GetAbsOrigin(), nil))
+		ParticleManager:ReleaseParticleIndex(hit_particle)
+
+		-- Apply stun and air time modifiers
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
+
+		-- Knock the enemy into the air
+		local knockback =
+		{
+			knockback_duration	= 0.5,
+			duration 			= 0.5,
+			knockback_distance	= 0,
+			knockback_height 	= 350,
+		}
+		
+		enemy:RemoveModifierByName("modifier_knockback")
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
+		
+		Timers:CreateTimer(0.5, function()
+			-- Apply damage
+			local damageTable = 
+			{
+				victim			= enemy,
+				damage			= damage,
+				damage_type		= damage_type,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker		= caster,
+				ability			= ability
+			}
+			ApplyDamage(damageTable)
+
+			if caster:GetName() == "npc_dota_hero_tidehunter" and not enemy:IsAlive() and enemy:IsRealHero() and RollPercentage(25) then
+				caster:EmitSound("tidehunter_tide_ability_ravage_0"..RandomInt(1, 2))
+			end
+		end)
+	end
+end
+
+function modifier_imba_tidehunter_ravage_creeping_wave:OnDestroy()
+	if not IsServer() then return end
+	
+	ParticleManager:DestroyParticle(self.ravage_particle, false)
+	ParticleManager:ReleaseParticleIndex(self.ravage_particle)
+	self:GetParent():RemoveSelf()
 end
