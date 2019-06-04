@@ -838,6 +838,7 @@ function modifier_imba_fiery_soul_blaze_burn:OnIntervalThink()
 		if fiery_soul_counter then
 			local damage = fiery_soul_counter:GetStackCount() * self.caster:FindTalentValue("special_bonus_imba_lina_5")
 			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = damage, damage_type = self.ability:GetAbilityDamageType()})
+			self.parent:RemoveModifierByName("modifier_imba_blazing_fire")
 		end
 	end
 end
