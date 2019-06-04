@@ -991,17 +991,6 @@ function imba_antimage_mana_void:OnSpellStart()
 			target:ReduceMana(target_mana_burn)
 			target:AddNewModifier(caster, ability, modifier_ministun, {duration = mana_void_ministun})
 
-			if caster:HasScepter() then
-				target:AddNewModifier(caster, self, "modifier_imba_mana_void_scepter", {})
-
-				Timers:CreateTimer(mana_void_ministun, function()
-					print("Enemy alive?", target:IsAlive())
-					if target:IsAlive() then
-						target:RemoveModifierByName("modifier_imba_mana_void_scepter")
-					end
-				end)
-			end
-
 			-- Find all enemies in the area of effect
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(nearby_enemies) do
@@ -1028,6 +1017,16 @@ function imba_antimage_mana_void:OnSpellStart()
 
 			-- Damage all enemies in the area for the total damage tally
 			for _,enemy in pairs(nearby_enemies) do
+				if caster:HasScepter() and enemy:IsHero() then
+					enemy:AddNewModifier(caster, self, "modifier_imba_mana_void_scepter", {})
+
+					Timers:CreateTimer(mana_void_ministun, function()
+						if enemy:IsAlive() then
+							enemy:RemoveModifierByName("modifier_imba_mana_void_scepter")
+						end
+					end)
+				end
+			
 				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 			end
@@ -1047,7 +1046,7 @@ end
 modifier_imba_mana_void_scepter = modifier_imba_mana_void_scepter or class({})
 
 function modifier_imba_mana_void_scepter:IsDebuff() return true end
-function modifier_imba_mana_void_scepter:IsHidden() return true end
+function modifier_imba_mana_void_scepter:IsHidden() return false end
 function modifier_imba_mana_void_scepter:RemoveOnDeath() return false end
 
 function modifier_imba_mana_void_scepter:DeclareFunctions()
@@ -1057,8 +1056,10 @@ function modifier_imba_mana_void_scepter:DeclareFunctions()
 end
 
 function modifier_imba_mana_void_scepter:OnRespawn(kv)
-	if self:GetParent():FindAbilityWithHighestCooldown() then
-		self:GetParent():FindAbilityWithHighestCooldown():StartCooldown(self:GetAbility():GetSpecialValueFor("scepter_cooldown_increase"))
+	if kv.unit == self:GetParent() and self:GetParent():FindAbilityWithHighestCooldown() then
+		local affected_ability = self:GetParent():FindAbilityWithHighestCooldown()
+	
+		affected_ability:StartCooldown(affected_ability:GetCooldownTimeRemaining() + self:GetAbility():GetSpecialValueFor("scepter_cooldown_increase"))
 	end
 
 	self:Destroy()

@@ -782,11 +782,11 @@ function CDOTA_BaseNPC:FindAbilityWithHighestCooldown()
 	for i = 0, 24 do
 		local ability = self:GetAbilityByIndex(i)
 
-		if ability and ability:GetLevel() > 0 then
+		if ability then
 			if highest_cd_ability == nil then
 				highest_cd_ability = ability
-			else
-				if ability:GetCooldown(ability:GetLevel()) > highest_cd_ability:GetCooldown(highest_cd_ability:GetLevel()) then
+			elseif ability:IsTrained() then
+				if ability:GetCooldownTimeRemaining() > highest_cd_ability:GetCooldownTimeRemaining() then
 					highest_cd_ability = ability
 				end
 			end
@@ -811,8 +811,16 @@ end
 
 function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
-	local blink_effect = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
-	local blink_effect_end = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
+	
+	-- Keep the static strings in or else you're going to get potential nils if IMBA BP is disabled
+	local blink_effect		= "particles/items_fx/blink_dagger_start.vpcf"
+	local blink_effect_end	= "particles/items_fx/blink_dagger_end.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) then
+		blink_effect		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
+		blink_effect_end	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
+	end
+	
 	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
 	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end
 	if bPlaySound == true then EmitSoundOn(blink_sound, self) end

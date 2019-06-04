@@ -74,8 +74,18 @@
 			}
 			"07"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"clothesline_duration"	"2.2 2.8 3.4 4.0"
+			}
+			"08"
+			{
 				"var_type"				"FIELD_INTEGER"
 				"taxi_radius"			"500"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"taxi_distance"			"180"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -358,7 +368,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"125"
+				"value"					"175"
 			}
 		}
 	}	

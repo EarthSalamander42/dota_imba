@@ -83,3 +83,11 @@ function IsDaytime()
 
     return true   
 end
+
+function C_DOTA_BaseNPC:IsInRiver()
+	if self:GetAbsOrigin().z < 160 then
+		return true
+	else
+		return false
+	end
+end

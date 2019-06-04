@@ -249,7 +249,13 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_name = "particles/items2_fx/radiance_owner.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
+			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
+		end
+	
+		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
@@ -276,7 +282,13 @@ function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
 
 		-- Particle creation
-		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["radiance"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_name = "particles/items2_fx/radiance_owner.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
+			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
+		end		
+		
+		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 
@@ -377,7 +389,13 @@ function modifier_imba_radiance_afterburn:OnCreated()
 		self.miss_chance = ability:GetSpecialValueFor("miss_chance")
 
 		-- Particle creation
-		self.particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_name = "particles/items2_fx/radiance.vpcf"
+		
+		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"] then
+			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"]
+		end				
+		
+		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 

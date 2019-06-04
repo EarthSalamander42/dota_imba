@@ -28,6 +28,7 @@
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
+#base heroes/tidehunter/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
@@ -3344,6 +3345,7 @@
 		"AbilityTextureName"							"dazzle_shallow_grave"
 		"ScriptFile"				"components/abilities/heroes/hero_dazzle.lua"
 		"FightRecapLevel"								"1"
+		"HasScepterUpgrade"								"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -21453,7 +21455,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"200"
+				"value"				"125"
 			}
 		}
 	}
@@ -24233,6 +24235,7 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"antimage_mana_void"
 		"AOERadius"						"%mana_void_aoe_radius%"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
