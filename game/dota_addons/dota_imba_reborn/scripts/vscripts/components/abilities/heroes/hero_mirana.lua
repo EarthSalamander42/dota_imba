@@ -743,17 +743,17 @@ function imba_mirana_leap:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
 end
 
-function imba_mirana_leap:GetCastRange(location, target)
---	if IsServer() then return end
-	local leap_range = self:GetSpecialValueFor("leap_range")
-	local night_leap_range_bonus = self:GetSpecialValueFor("night_leap_range_bonus")
+-- function imba_mirana_leap:GetCastRange(location, target)
+-- --	if IsServer() then return end
+	-- local leap_range = self:GetSpecialValueFor("leap_range")
+	-- local night_leap_range_bonus = self:GetSpecialValueFor("night_leap_range_bonus")
 
-	if IsDaytime() then
-		return leap_range
-	else
-		return leap_range + night_leap_range_bonus
-	end
-end
+	-- if IsDaytime() then
+		-- return leap_range
+	-- else
+		-- return leap_range + night_leap_range_bonus
+	-- end
+-- end
 
 function imba_mirana_leap:IsHiddenWhenStolen()
 	return false
@@ -783,7 +783,19 @@ function imba_mirana_leap:OnSpellStart()
 			target_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * (self:GetSpecialValueFor("leap_range") + self:GetSpecialValueFor("night_leap_range_bonus")))
 		end
 	else
-		target_point = target_point + caster:GetForwardVector()
+		-- A block to allow proper logic for distance calculations (even with "infinite" cast range now)
+		local selected_distance = (self:GetCaster():GetAbsOrigin() - target_point):Length2D()
+		local leap_range = self:GetSpecialValueFor("leap_range")
+
+		if not IsDaytime() then
+			leap_range = leap_range + self:GetSpecialValueFor("night_leap_range_bonus")
+		end
+	
+		local new_distance = math.min(selected_distance, leap_range + GetCastRangeIncrease(caster))
+	
+		local new_target_point = self:GetCaster():GetAbsOrigin() + (target_point - self:GetCaster():GetAbsOrigin()):Normalized() * new_distance
+	
+		target_point = new_target_point
 	end
 
 	-- Ability specials
