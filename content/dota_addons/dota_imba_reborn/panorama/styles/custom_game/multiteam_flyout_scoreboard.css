@@ -204,77 +204,12 @@
 	overflow: clip;
 }
 
-@keyframes 'bg_move'
-{
-	0%
-	{
-		background-position: 0 0;
-	}
-
-	50%
-	{
-		opacity: 0.9;
-	}
-
-	100%
-	{
-		opacity: 1.0;
-	}
-}
-
-@keyframes 'color_transition'
-{
-	0%
-	{
-		opacity:  0.5;
-	}
-
-	50%
-	{
-		opacity:  1;
-	}
-
-	100%
-	{
-		opacity:  0.5;
-	}
-}
-
 #DonatorOverlay {
 	height: 40px;
 	width: 100%;
 	/*background-image: url("file://{images}/custom_game/flyout/output.webm");*/
-	/*background-size: 100% 100%;*/
-	opacity: 0.5;
-	background-position: 50% 0;
-	animation-name: color_transition;
-	animation-duration: 3.0s;
-	animation-timing-function: ease-in-out;
-	animation-direction: alternate;
-	animation-iteration-count: infinite;
-}
-
-@keyframes 'bubbles' {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-    transform: translate3d(0, 20%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(0, -140%, 0);
-  }
-}
-
-.particle {
-	border-radius: 100%;
-	opacity: 0;
-	animation-name: bubbles;
-	animation-duration: 4.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
+	background-size: 100% 100%;
+	opacity: 0.7;
 }
 
 .is_local_player #PlayerRowContainer
@@ -340,14 +275,14 @@
 	font-weight: medium;
 	font-size: 20px;
 	margin-top: 3px;
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
 
 #Rank {
 	color: #b5a2de;
 	font-size: 19px;
 	font-weight: normal;
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
 
 #KillsContainer,
@@ -398,7 +333,6 @@ align: center top;
 	align: left top;
 	flow-children: right;
 	margin-right:  15px;
-	margin-top: 1px;
 }
 #LevelContainerChild2 {
 	align: right top;
@@ -406,9 +340,9 @@ align: center top;
 #LevelLabel
 {
 	color: #c3b9d8;
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 16px;
-	align: center top;
+	align: center center;
 }
 
 #ImbaXPRank0,
@@ -437,10 +371,8 @@ align: center top;
 #ImbaXPRank23
 {
 
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 16px;
-	align: center top;
-	/*margin-top: 1px;*/
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
 	/*margin-right: 5%;
 	margin-bottom: 1px;
 	font-size: 16px;
@@ -475,7 +407,7 @@ align: center top;
 #ImbaXP22,
 #ImbaXP23
 {
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 16px;
 	color: #fefeff;
 	align: center center;
@@ -536,10 +468,9 @@ align: center top;
 #ImbaLvl23
 {
 
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 16px;
-	align: center bottom;
-	color: #c3b9d8;
+	align: center center;
 	/*font-size: 16px;
 	font-weight: bold;
 	margin-top: 2px;
@@ -558,7 +489,7 @@ align: center top;
 #PlayerName
 {
 	color: #fefeff;
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-family: Radiance-Semibold,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 16px;
 	margin-top: 0px;
 	white-space: nowrap;

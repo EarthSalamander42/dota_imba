@@ -1,39 +1,5 @@
 "use strict";
 
-function LightenDarkenColor(col, amt) {
-  
-    var usePound = false;
-  
-    if (col[0] == "#") {
-        col = col.slice(1);
-        usePound = true;
-    }
- 
-    var num = parseInt(col,16);
- 
-    var r = (num >> 16) + amt;
- 
-    if (r > 255) r = 255;
-    else if  (r < 0) r = 0;
- 
-    var b = ((num >> 8) & 0x00FF) + amt;
- 
-    if (b > 255) b = 255;
-    else if  (b < 0) b = 0;
- 
-    var g = (num & 0x0000FF) + amt;
- 
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
- 
-    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-  
-}
-
-function rnd(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 // =============================================================================
 // =============================================================================
 function _ScoreboardUpdater_SetTextSafe(panel, childName, textValue) {
@@ -155,11 +121,11 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	} else if (player_info.player_xp == 1) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' - ');
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' -');
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
 		_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.winrate);
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
-		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
+		playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
 	}
 }
 
@@ -210,36 +176,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 				if (!is_donator_set) {
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
-					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
+					donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
 					is_donator_set = true;
-					donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), ' +
-					'color-stop( 0.2, ' + LightenDarkenColor(player_table.donator_color, -60) + 'FF ), ' +
-					'color-stop( 0.5, ' + player_table.donator_color + 'FF ), ' +
-					'color-stop( 0.8, ' + LightenDarkenColor(player_table.donator_color, -50) + 'FF ), ' +
-					'to( ' +  player_table.donator_color + ' ) )';
-
-
-
-					var bubblecount = (400) / 50 * 10;
-
-					for (var i = 0; i <= bubblecount; i++) {
-						var size = rnd(50, 80) / 10;
-
-						donatorPanel.BCreateChildren(
-							'<Panel class="particle" style="background-color: ' + LightenDarkenColor(player_table.donator_color, 70) +
-							';x:' +
-							rnd(5, 90) +
-							"%; y:" +
-							rnd(95, 85) +
-							"%;width:" +
-							size +
-							"px; height:" +
-							size +
-							"px;animation-delay: " +
-							rnd(0, 40) / 10 +
-							's;" />'
-						);
-					}
 				}
 				
 				// playerPanel.style.backgroundColor = player_table.donator_color;
@@ -247,7 +185,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 			} else {
 				if (is_donator_set) {
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
-					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/output.webm")';
+					donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/output.webm")';
 					is_donator_set = undefined;
 				}
 				// playerPanel.style.backgroundColor = "#21272fbb";
