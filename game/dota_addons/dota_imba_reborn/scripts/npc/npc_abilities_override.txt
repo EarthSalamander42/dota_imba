@@ -169,6 +169,10 @@
 	"item_ghost"							"REMOVE" 
 	"item_recipe_ethereal_blade"			"REMOVE" 
 	"item_ethereal_blade"					"REMOVE" 
+	"item_recipe_blade_mail"				"REMOVE"
+	"item_blade_mail"						"REMOVE"
+	"item_recipe_nullifier"					"REMOVE" 
+	"item_nullifier"						"REMOVE" 
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -188,8 +192,6 @@
 	"item_imba_haste_boots"					"REMOVE"
 	"item_recipe_imba_haste_boots"			"REMOVE"
 	"item_imba_bottle"						"REMOVE"
-	"item_recipe_imba_blade_mail"			"REMOVE"
-	"item_imba_blade_mail"					"REMOVE"
 	"item_recipe_imba_spell_fencer"			"REMOVE"
 	"item_imba_spell_fencer"				"REMOVE"
 	"item_imba_recipe_manta"				"REMOVE"
@@ -5911,20 +5913,12 @@
 	//=================================================================================================================
 	"life_stealer_rage"
 	{
-		"AbilityDuration"				"3.0 4.5 6.0 7.5"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"40 60 80 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.5 6.0 7.5"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer"
+				"attack_speed_bonus"	"50 80 110 140"
 			}
 		}
 	}
@@ -11665,27 +11659,7 @@
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
-
-	//=================================================================================================================
-	// Nullifier
-	//=================================================================================================================
-	"item_nullifier"
-	{		
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"9"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"900"
-			}
-		}
-	}
-
+	
 	//=================================================================================================================
 	//=================================================================================================================
 	//=================================================================================================================
@@ -11846,23 +11820,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_charges"			"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Blade Mail
-	//=================================================================================================================
-	"item_blade_mail"
-	{
-		"AbilityCooldown"				"20.0"
-		
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"6"
 			}
 		}
 	}

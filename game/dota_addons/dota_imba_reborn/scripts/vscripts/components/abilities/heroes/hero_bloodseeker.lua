@@ -499,7 +499,7 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_bloodseeker_thirst", {})
 		end
 		
-		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
 		local hpDeficit = 0
 		for _,enemy in pairs(enemies) do
 			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then
@@ -508,7 +508,7 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 				if enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
 					if enemy:GetHealthPercent() < self.minhp then
 						local enemyHp = (self.minhp - enemy:GetHealthPercent())
-						if enemyHp > (self.minhp - self.maxhp) then
+						if enemyHp > (self.minhp - self.maxhp) and not enemy:IsMagicImmune() then
 							enemyHp = (self.minhp - self.maxhp)
 							enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thirst_debuff_vision", {})
 						elseif enemy:HasModifier("modifier_imba_thirst_debuff_vision") then
@@ -660,6 +660,10 @@ end
 
 function modifier_imba_thirst_debuff_vision:StatusEffectPriority()
 	return 8
+end
+
+function modifier_imba_thirst_debuff_vision:IsPurgable()
+	return false
 end
 
 -------------------------------------------

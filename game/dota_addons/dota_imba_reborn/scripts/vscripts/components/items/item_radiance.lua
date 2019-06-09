@@ -122,7 +122,7 @@ function modifier_imba_cloak_of_flames_burn:OnCreated()
 end
 
 function modifier_imba_cloak_of_flames_burn:OnIntervalThink()
-	if IsServer() then
+	if IsServer() and not self:GetCaster():HasItemInInventory("item_imba_radiance") then
 		ApplyDamage({
 			victim = self:GetParent(),
 			attacker = self:GetCaster(),

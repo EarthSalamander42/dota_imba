@@ -1703,7 +1703,7 @@
 // Sniper's Take Aim
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sniper_take_aim"                            "Take Aim"
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When the skill is off cooldown and set to auto cast, Sniper's attack range dramatically increases. When he fires his next attack, it deals a guaranteed Perfect Shot. The ability then goes into a cooldown."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When the skill is off cooldown and set to auto cast, Sniper's attack range dramatically increases. When he fires his next attack, it deals guaranteed Perfect Shot critical damage. The ability then goes into a cooldown."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Lore"                        "Kardel always takes it upon himself to stay as far from harm as he can while still performing his role - taking perfect aim."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Note0"                      "A Perfect Shot can only proc if Headshot is leveled. Otherwise, Sniper will only benefit from the bonus range."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Note1"                      "Aimed Assault's range bonus stacks fully with the passive bonus range."
@@ -1721,8 +1721,9 @@
 "DOTA_Tooltip_ability_imba_sniper_assassinate_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_sniper_assassinate_bullet_radius"            "BULLET SEARCH RADIUS:"
 "DOTA_Tooltip_ability_imba_sniper_assassinate_scepter_radius"          "SCEPTER ASSASSINATE RADIUS:"
-"DOTA_Tooltip_ability_imba_sniper_assassinate_aghanim_description"                  "Assassinate is now a ground target skill, launching a powerful bullet on all enemies in the area of effect. All shots fired deal physical damage, are Perfect Shots, and harm every enemy unit in their path."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_aghanim_description"                  "Turns Assassinate into a ground target AoE ability, that after the channel period launches a critical strike and procs headshot on units in the AoE. Initial target selection only affects visible heroes."
 "DOTA_Tooltip_ability_imba_sniper_assassinate_cast_range"              "CAST RANGE:"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_scepter_crit_bonus"		"%SCEPTER CRITICAL DAMAGE:"
 
 "DOTA_Tooltip_modifier_imba_assassinate_cross"                          "Assassinate"
 "DOTA_Tooltip_modifier_imba_assassinate_cross_Description"              "Revealed to the enemy. A devastating shot will come shortly!"
@@ -1745,6 +1746,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_7_Description" 	"Take Aim's Aimed Assault apply 500 vision loss and deal 80 damage per second for 5 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_8"          	"Let it Rain"
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_8_Description" 	"Shrapnel's out of range attacks increase your damage instead of lowering it."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_9"          	"-1.5s Assassinate Cast Time"
 
 ////===============================================================================================================
 ////===============================================================================================================
