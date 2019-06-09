@@ -134,18 +134,23 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"distance_scepter"			"1200"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"					"FIELD_FLOAT"
 				"duration"					"0.50"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"aftershock_range"			"300 350 400 450"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_height"				"700"
 			}
 		}
 	}
@@ -160,8 +165,8 @@
 		// base texture folder	: resource/flash3/images/spellicons
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"lua_abilities/earthshaker_aftershock_lua/earthshaker_aftershock_lua"
-		"AbilityTextureName"			"earthshaker_aftershock_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earthshaker"
+		"AbilityTextureName"			"earthshaker_aftershock"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
 		"precache"

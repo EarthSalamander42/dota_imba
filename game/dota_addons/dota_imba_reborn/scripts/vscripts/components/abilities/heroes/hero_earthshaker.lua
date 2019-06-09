@@ -288,9 +288,22 @@ function earthshaker_enchant_totem_lua:OnSpellStart()
 	end
 
 	if self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetCursorTarget() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua_movement", {duration = self:GetSpecialValueFor("duration")})
+		-- Doesn't seem to work?
+		self:GetCaster():FaceTowards(self:GetCursorPosition())
+	
+		local modifier_movement_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua_movement", {})
+
+		if modifier_movement_handler then
+			modifier_movement_handler.target_point = self:GetCursorPosition()
+		end
 	else
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua", {duration = self:GetDuration()})
+
+		if self:GetCaster():HasScepter() then
+			if self:GetCaster():HasModifier("modifier_earthshaker_aftershock_lua") then
+				self:GetCaster():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
+			end
+		end
 	end
 end
 
@@ -377,7 +390,7 @@ end
 -- Graphics & Animations
 function modifier_earthshaker_enchant_totem_lua:PlayEffects()
 	-- Get Resources
-	local particle_cast = "particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
+	local particle_cast = self:GetParent().enchant_totem_buff_pfx
 
 	-- Create Particle
 	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_POINT_FOLLOW, self:GetParent() )
@@ -404,82 +417,47 @@ function modifier_earthshaker_enchant_totem_lua:PlayEffects()
 		false
 	)
 
+	if self:GetParent().enchant_totem_cast_pfx then
+		local effect_cast = ParticleManager:CreateParticle( self:GetParent().enchant_totem_cast_pfx, PATTACH_ABSORIGIN, self:GetParent() )
+	end
+
 	EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
 end
 
 modifier_earthshaker_enchant_totem_lua_movement = modifier_earthshaker_enchant_totem_lua_movement or class({})
 
-function modifier_earthshaker_enchant_totem_lua_movement:IsDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_earthshaker_enchant_totem_lua_movement:IsStunDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_earthshaker_enchant_totem_lua_movement:RemoveOnDeath()
-	return false
-end
-
-function modifier_earthshaker_enchant_totem_lua_movement:IsHidden()
-	return true
-end
-
-function modifier_earthshaker_enchant_totem_lua_movement:IgnoreTenacity()
-	return true
-end
-
-function modifier_earthshaker_enchant_totem_lua_movement:IsMotionController()
-	return true
-end
-
-function modifier_earthshaker_enchant_totem_lua_movement:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
-end
-
--- Without this Tiny can fly to world origin with Hellblade transfer
-function modifier_earthshaker_enchant_totem_lua_movement:IsPurgable()
-	return false
-end
+function modifier_earthshaker_enchant_totem_lua_movement:IsHidden() return true end
+function modifier_earthshaker_enchant_totem_lua_movement:IsPurgable() return false end
+function modifier_earthshaker_enchant_totem_lua_movement:IsDebuff() return false end
+function modifier_earthshaker_enchant_totem_lua_movement:IgnoreTenacity() return true end
+function modifier_earthshaker_enchant_totem_lua_movement:IsMotionController() return true end
+function modifier_earthshaker_enchant_totem_lua_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_earthshaker_enchant_totem_lua_movement:RemoveOnDeath() return false end
 
 --------------------------------------------------------------------------------
 
 function modifier_earthshaker_enchant_totem_lua_movement:OnCreated()
-	self.enchant_totem_minimum_height_above_lowest = 1000
-	self.enchant_totem_minimum_height_above_highest = 300
-	self.enchant_totem_acceleration_z = 8000
-	self.enchant_totem_max_horizontal_acceleration = 5000
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+
+	-- Ability specials
+	self.max_height = self.ability:GetSpecialValueFor("max_height")
 
 	if IsServer() then
-		self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
-		self.flCurrentTimeHoriz = 0.0
-		self.flCurrentTimeVert = 0.0
+		self.blur_effect = ParticleManager:CreateParticle( self:GetParent().enchant_totem_leap_blur_pfx, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
 
-		self.vLastKnownTargetPos = self:GetAbility():GetCursorPosition()
+		-- Variables
+		self.time_elapsed = 0
+		self.leap_z = 0
 
-		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
-		local flDesiredHeight = self.enchant_totem_minimum_height_above_lowest * duration * duration
-		local flLowZ = math.min( self.vLastKnownTargetPos.z, self.vStartPosition.z )
-		local flHighZ = math.max( self.vLastKnownTargetPos.z, self.vStartPosition.z )
-		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + self.enchant_totem_minimum_height_above_highest )
-
-		local flArcDeltaZ = flArcTopZ - self.vStartPosition.z
-		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * self.enchant_totem_acceleration_z )
-
-		local flDeltaZ = self.vLastKnownTargetPos.z - self.vStartPosition.z
-		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * self.enchant_totem_acceleration_z * flDeltaZ ) )
-		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / self.enchant_totem_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / self.enchant_totem_acceleration_z )
-		print(self.flPredictedTotalTime)
---		self.flPredictedTotalTime = 0.5
-
-		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
-		self.vHorizontalVelocity.z = 0.0
-
-		self:StartIntervalThink(FrameTime())
+		Timers:CreateTimer(FrameTime(), function()
+			self.jump_time = self.ability:GetSpecialValueFor("duration")
+			self.direction = (self.target_point - self.caster:GetAbsOrigin()):Normalized()
+			local distance = (self.caster:GetAbsOrigin() - self.target_point):Length2D()
+			self.jump_speed = distance / self.jump_time
+			self:StartIntervalThink(FrameTime())
+		end)
 	end
 end
 
@@ -506,6 +484,11 @@ function modifier_earthshaker_enchant_totem_lua_movement:EnchantTotemLand()
 			return nil
 		end
 
+		if self.blur_effect then
+			ParticleManager:DestroyParticle(self.blur_effect, false)
+			ParticleManager:ReleaseParticleIndex(self.blur_effect)
+		end
+
 		-- Mark enchant_totem as completed
 		self.enchant_totem_land_commenced = true
 
@@ -514,6 +497,11 @@ function modifier_earthshaker_enchant_totem_lua_movement:EnchantTotemLand()
 
 		self:GetParent():SetUnitOnClearGround()
 		ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 150)
+
+		-- Here it is
+		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") then
+			self:GetParent():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
+		end
 
 --		Timers:CreateTimer(FrameTime(), function()
 --			ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 150)
@@ -539,6 +527,7 @@ function modifier_earthshaker_enchant_totem_lua_movement:DeclareFunctions()
 	return funcs
 end
 
+-- add "ultimate_scepter" + "enchant_totem_leap_from_battle"
 function modifier_earthshaker_enchant_totem_lua_movement:GetActivityTranslationModifiers()
 	return "ultimate_scepter"
 end
@@ -561,44 +550,163 @@ end
 
 function modifier_earthshaker_enchant_totem_lua_movement:HorizontalMotion( me, dt )
 	if IsServer() then
-		-- If the unit being enchant_totemed died, interrupt motion controllers and remove self (nah lul)
-		-- if not self:GetParent():IsAlive() then
-			-- self:GetParent():InterruptMotionControllers(true)
-			-- self:Destroy()
-		-- end
+		-- Check if we're still jumping
+		self.time_elapsed = self.time_elapsed + dt
+		if self.time_elapsed < self.jump_time then
 
-		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
-		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
-		local vStartToTarget = self.vLastKnownTargetPos - self.vStartPosition
-		local vDesiredPos = self.vStartPosition + t * vStartToTarget
-
-		local vOldPos = me:GetOrigin()
-		local vToDesired = vDesiredPos - vOldPos
-		vToDesired.z = 0.0
-		local vDesiredVel = vToDesired / dt
-		local vVelDif = vDesiredVel - self.vHorizontalVelocity
-		local flVelDif = vVelDif:Length2D()
-		vVelDif = vVelDif:Normalized()
-		local flVelDelta = math.min( flVelDif, self.enchant_totem_max_horizontal_acceleration )
-
-		self.vHorizontalVelocity = self.vHorizontalVelocity + vVelDif * flVelDelta * dt
-		local vNewPos = vOldPos + self.vHorizontalVelocity * dt
-		me:SetOrigin( vNewPos )
+			-- Go forward
+			local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
+			self.caster:SetAbsOrigin(new_location)
+		else
+			self:Destroy()
+		end
 	end
 end
 
 function modifier_earthshaker_enchant_totem_lua_movement:VerticalMotion( me, dt )
 	if IsServer() then
-		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
-		local bGoingDown = ( -self.enchant_totem_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
+		-- Check if we're still jumping
+		if self.time_elapsed < self.jump_time then
 
-		local vNewPos = me:GetOrigin()
-		vNewPos.z = self.vStartPosition.z + ( -0.5 * self.enchant_totem_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
+			-- Check if we should be going up or down
+			if self.time_elapsed <= self.jump_time / 2 then
+				-- Going up
+				self.leap_z = self.leap_z + 60
 
-		local flGroundHeight = GetGroundHeight( vNewPos, self:GetParent() )
-
-		me:SetOrigin( vNewPos )
+				self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))
+			else
+				-- Going down
+				self.leap_z = self.leap_z - 60
+				if self.leap_z > 0 then
+					self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))
+				end
+			end
+		end
 	end
+end
+
+earthshaker_aftershock_lua = class({})
+LinkLuaModifier( "modifier_earthshaker_aftershock_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
+
+--------------------------------------------------------------------------------
+-- Passive Modifier
+function earthshaker_aftershock_lua:GetIntrinsicModifierName()
+	return "modifier_earthshaker_aftershock_lua"
+end
+
+modifier_earthshaker_aftershock_lua = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_earthshaker_aftershock_lua:IsHidden()
+	return true
+end
+
+function modifier_earthshaker_aftershock_lua:IsPurgable()
+	return false
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_earthshaker_aftershock_lua:OnCreated( kv )
+	-- references
+	self.radius = self:GetAbility():GetSpecialValueFor( "aftershock_range" ) -- special value
+
+	if IsServer() then
+		local damage = self:GetAbility():GetAbilityDamage() -- special value
+		self.duration = self:GetAbility():GetDuration() -- special value
+
+		-- precache damage
+		self.damageTable = {
+			-- victim = target,
+			attacker = self:GetCaster(),
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self:GetAbility(), --Optional.
+		}
+	end
+end
+
+function modifier_earthshaker_aftershock_lua:OnRefresh( kv )
+	-- references
+	self.radius = self:GetAbility():GetSpecialValueFor( "aftershock_range" ) -- special value
+
+	if IsServer() then
+		local damage = self:GetAbility():GetAbilityDamage() -- special value
+		self.duration = self:GetAbility():GetDuration() -- special value
+
+		self.damageTable.damage = damage
+	end
+end
+
+function modifier_earthshaker_aftershock_lua:OnDestroy( kv )
+
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_earthshaker_aftershock_lua:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+	}
+
+	return funcs
+end
+
+function modifier_earthshaker_aftershock_lua:OnAbilityFullyCast( params )
+	if IsServer() then
+		if params.unit~=self:GetParent() or params.ability:IsItem() then return end
+
+		-- Handle that manually
+		if self:GetParent():HasScepter() and params.ability:GetAbilityName() == "earthshaker_enchant_totem_lua" then
+			return
+		end
+
+		self:CastAftershock()
+	end
+end
+
+function modifier_earthshaker_aftershock_lua:CastAftershock()
+	-- Find enemies in radius
+	local enemies = FindUnitsInRadius(
+		self:GetCaster():GetTeamNumber(),	-- int, your team number
+		self:GetCaster():GetOrigin(),	-- point, center point
+		nil,	-- handle, cacheUnit. (not known)
+		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
+		0,	-- int, flag filter
+		0,	-- int, order filter
+		false	-- bool, can grow cache
+	)
+
+	-- apply stun and damage
+	for _,enemy in pairs(enemies) do
+		enemy:AddNewModifier(
+			self:GetParent(), -- player source
+			self:GetAbility(), -- ability source
+			"modifier_stunned", -- modifier name
+			{ duration = self.duration } -- kv
+		)
+
+		self.damageTable.victim = enemy
+		ApplyDamage(self.damageTable)
+	end
+
+	-- Effects
+	Timers:CreateTimer(FrameTime(), function()
+		self:PlayEffects()
+	end)
+end
+
+function modifier_earthshaker_aftershock_lua:PlayEffects()
+	-- Get Resources
+	local particle_cast = self:GetParent().aftershock_pfx
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	ParticleManager:SetParticleControl( effect_cast, 1, Vector( self.radius, self.radius, self.radius ) )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
 end
 
 LinkLuaModifier( "modifier_earthshaker_arcana", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )

@@ -798,9 +798,6 @@ function imba_mirana_leap:OnSpellStart()
 		target_point = new_target_point
 	end
 
-	-- Ability specials
-	local jump_speed = self:GetSpecialValueFor("jump_speed")
-
 	-- Start gesture
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
 
@@ -823,6 +820,8 @@ function imba_mirana_leap:OnSpellStart()
 
 	-- #6 Talent: Free Sacred Arrow after Leap ends
 	if caster:HasTalent("special_bonus_imba_mirana_6") then
+		local jump_speed = self:GetSpecialValueFor("jump_speed")
+
 		-- Calculate the landing time
 		local distance = (caster:GetAbsOrigin() - target_point):Length2D()
 		local jump_time = distance / jump_speed
