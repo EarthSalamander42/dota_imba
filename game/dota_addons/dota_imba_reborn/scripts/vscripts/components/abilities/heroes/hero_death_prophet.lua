@@ -6,6 +6,10 @@ LinkLuaModifier("modifier_imba_death_prophet_silence", "components/abilities/her
 
 imba_death_prophet_silence = class({})
 
+function imba_death_prophet_silence:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
 function imba_death_prophet_silence:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().arcana_style then return "death_prophet_silence" end
