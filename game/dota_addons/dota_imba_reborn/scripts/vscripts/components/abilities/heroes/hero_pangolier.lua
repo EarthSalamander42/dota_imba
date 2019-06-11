@@ -594,6 +594,16 @@ function imba_pangolier_shield_crash:OnSpellStart()
 			swashbuckle_damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
 		end
 		
+		-- CURRENT ISSUE: PERMANENTLY LINGERING PARTICLES IF YOU SPAM THE ABILITY WHILE IN GYROSHELL
+		if not self.slash_particles then self.slash_particles = {} end
+		
+		for _, particle in pairs(self.slash_particles) do
+			ParticleManager:DestroyParticle(particle, false)
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+		
+		self.slash_particles = {}
+		
 		--play slashing particle
 		for pulses = 0, 1 do
 			Timers:CreateTimer(0.1 * pulses, function()
@@ -605,6 +615,8 @@ function imba_pangolier_shield_crash:OnSpellStart()
 				
 					local slash_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 					ParticleManager:SetParticleControl(slash_particle, 1, direction)
+					
+					table.insert(self.slash_particles, slash_particle)
 					
 					EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pangolier.Swashbuckle", self:GetCaster())
 
@@ -646,8 +658,21 @@ function imba_pangolier_shield_crash:OnSpellStart()
 					
 					Timers:CreateTimer(0.5, function ()
 						--Remove particles
-						ParticleManager:DestroyParticle(slash_particle, false)
-						ParticleManager:ReleaseParticleIndex(slash_particle)
+						-- ParticleManager:DestroyParticle(slash_particle, false)
+						-- ParticleManager:ReleaseParticleIndex(slash_particle)
+						
+						-- Just testing stuff since particles keep lingering if spammed in Gyroshell
+						-- for num = 1, 100000 do 
+							-- ParticleManager:DestroyParticle(num, false)
+							-- ParticleManager:ReleaseParticleIndex(num)
+						-- end
+						
+						for _, particle in pairs(self.slash_particles) do
+							ParticleManager:DestroyParticle(particle, false)
+							ParticleManager:ReleaseParticleIndex(particle)
+						end
+						
+						self.slash_particles = {}
 					end)
 				end
 			end)
@@ -2129,12 +2154,20 @@ function imba_pangolier_gyroshell_stop:IsInnateAbility()				return true end
 function imba_pangolier_gyroshell_stop:IsStealable()					return false end
 function imba_pangolier_gyroshell_stop:GetAssociatedPrimaryAbilities()	return "imba_pangolier_gyroshell" end
 
+-- Attempts to stop this ability from getting bricked?
+function imba_pangolier_gyroshell_stop:OnOwnerSpawned()
+	local gyroshell_ability = self:GetCaster():FindAbilityByName("imba_pangolier_gyroshell")
+	
+	if gyroshell_ability and gyroshell_ability:IsHidden() then
+		self:GetCaster():SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", true, false)
+	end
+end
+
 function imba_pangolier_gyroshell_stop:OnSpellStart()
 	if not IsServer() then return end
 	
 	if self:GetCaster():HasModifier("modifier_pangolier_gyroshell") then
 		self:GetCaster():RemoveModifierByName("modifier_pangolier_gyroshell")
-		--self:GetCaster():SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", true, false)
 	end
 end
 

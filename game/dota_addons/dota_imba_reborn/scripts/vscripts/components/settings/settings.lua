@@ -43,7 +43,7 @@ AUTO_LAUNCH_DELAY = 5.0
 STRATEGY_TIME = 0.0					-- How long should strategy time last?
 SHOWCASE_TIME = 20.0				-- How long should showcase time last?
 AP_BAN_TIME = 10.0
-if IsInToolsMode() then
+if IsInToolsMode() or GetMapName() == "imba_demo" then
 	AP_BAN_TIME = 0.0
 	SHOWCASE_TIME = 0.0
 end

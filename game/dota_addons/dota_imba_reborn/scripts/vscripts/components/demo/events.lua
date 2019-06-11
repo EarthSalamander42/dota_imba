@@ -195,11 +195,12 @@ end
 --------------------------------------------------------------------------------
 function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
-	hPlayerHero:AddExperience( 100000, false, false ) -- for some reason maxing your level this way fixes the bad interaction with OnHeroReplaced
 	if hPlayerHero:GetLevel() == 42 then
 		self:BroadcastMsg( "#MaxLevelAlready_Msg" )
 		return
 	end
+
+	hPlayerHero:AddExperience( 1000000, false, false ) -- for some reason maxing your level this way fixes the bad interaction with OnHeroReplaced
 
 	for i = 0, 24 - 1 do
 		local hAbility = hPlayerHero:GetAbilityByIndex( i )
@@ -273,35 +274,49 @@ end
 -- ButtonEvent: OnSpawnAllyButtonPressed -- deprecated
 --------------------------------------------------------------------------------
 function GameMode:OnSpawnAllyButtonPressed( eventSourceIndex, data )
-	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
-	self.m_nAlliesCount = self.m_nAlliesCount + 1
-	self.m_tAlliesList[ self.m_nAlliesCount ] = CreateUnitByName( "npc_dota_hero_axe", hPlayerHero:GetAbsOrigin(), true, nil, nil, self.m_nALLIES_TEAM )
-	local hUnit = self.m_tAlliesList[ self.m_nAlliesCount ]
-	hUnit:SetControllableByPlayer( self.m_nPlayerID, false )
-	hUnit:SetRespawnPosition( hPlayerHero:GetAbsOrigin() )
-	FindClearSpaceForUnit( hUnit, hPlayerHero:GetAbsOrigin(), false )
-	hUnit:Hold()
-	hUnit:SetIdleAcquire( false )
-	hUnit:SetAcquisitionRange( 0 )
-	self:BroadcastMsg( "#SpawnAlly_Msg" )
+	local hero_name = DOTAGameManager:GetHeroUnitNameByID(tonumber(data.str))
+	local old_hero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
+	PrecacheUnitByNameAsync(hero_name, function()
+		PlayerResource:ReplaceHeroWith(data.PlayerID, hero_name, 0, 0)
+
+		Timers:CreateTimer(1.0, function()
+			if old_hero then
+				UTIL_Remove(old_hero)
+			end
+		end)
+	end)
+end
+
+function GameMode:OnSpawnEnemyButtonPressed( eventSourceIndex, data )
+	self.m_sHeroToSpawn	= DOTAGameManager:GetHeroUnitNameByID( tonumber( data.str ) );
 end
 
 --------------------------------------------------------------------------------
 -- ButtonEvent: SpawnEnemyButtonPressed
 --------------------------------------------------------------------------------
-function GameMode:OnSpawnEnemyButtonPressed( eventSourceIndex, data )
+function GameMode:OnSpawnEnemyButtonPressedAlt( eventSourceIndex, data )
+	if self.m_sHeroToSpawn == nil then
+		self:BroadcastMsg( "#EnemyNotSetup_Msg" )
+		return
+	end
+
 	if #self.m_tEnemiesList >= 50 then
 		self:BroadcastMsg( "#MaxEnemies_Msg" )
 		return
 	end
 
-	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
-	table.insert( self.m_tEnemiesList, CreateUnitByName( "npc_dota_hero_axe", hPlayerHero:GetAbsOrigin(), true, nil, nil, self.m_nENEMIES_TEAM ) )
-	local hEnemyHero = self.m_tEnemiesList[ #self.m_tEnemiesList ]
-	hEnemyHero:Stop()
-	hEnemyHero:SetControllableByPlayer(data.PlayerID, false)
-
-	self:BroadcastMsg( "#SpawnEnemy_Msg" )
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
+	CreateUnitByNameAsync( self.m_sHeroToSpawn, hPlayerHero:GetAbsOrigin(), true, nil, nil, self.m_nENEMIES_TEAM, 
+		function( hEnemy )
+			table.insert( self.m_tEnemiesList, hEnemy )
+			hEnemy:SetControllableByPlayer( self.m_nPlayerID, false )
+			hEnemy:SetRespawnPosition( hPlayerHero:GetAbsOrigin() )
+			FindClearSpaceForUnit( hEnemy, hPlayerHero:GetAbsOrigin(), false )
+			hEnemy:Hold()
+			hEnemy:SetIdleAcquire( false )
+			hEnemy:SetAcquisitionRange( 0 )
+			self:BroadcastMsg( "#SpawnEnemy_Msg" )
+		end )
 end
 
 --------------------------------------------------------------------------------

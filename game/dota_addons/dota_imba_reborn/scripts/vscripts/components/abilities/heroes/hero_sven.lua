@@ -75,9 +75,10 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 		EmitSoundOnLocationWithCaster(location, "Hero_Sven.StormBoltImpact", caster)
 		caster:RemoveModifierByName("modifier_imba_storm_bolt_caster")
 		caster:RemoveNoDraw()
-		if target then
-			-- Teleport the caster to the target
-			local target_pos = target:GetAbsOrigin()
+		
+		if target or location then
+			-- Teleport the caster to the target or location
+			local target_pos = location or target:GetAbsOrigin()
 			local caster_pos = caster:GetAbsOrigin()
 			local blink_pos = target_pos + ( caster_pos - target_pos ):Normalized() * 100
 			FindClearSpaceForUnit(caster, blink_pos, true)
@@ -86,7 +87,9 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 			if (( target_pos - caster_pos ):Length2D() > 600) and (RandomInt(1, 100) <= 20) and (caster:GetName() == "npc_dota_hero_sven") then
 				caster:EmitSound("sven_sven_ability_teleport_0"..math.random(1,3))
 			end
-
+		end
+		
+		if target then
 			-- Start attacking the target + apply crit
 			caster:SetAttacking(target)
 			local crit_max_duration = self:GetSpecialValueFor("crit_max_duration")
