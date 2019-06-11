@@ -26,3 +26,17 @@
 
 "DOTA_Tooltip_modifier_earthshaker_enchant_totem_lua"				"#{DOTA_Tooltip_modifier_earthshaker_enchant_totem}"
 "DOTA_Tooltip_modifier_earthshaker_enchant_totem_lua_Description"	"#{DOTA_Tooltip_modifier_earthshaker_enchant_totem_Description}"
+
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua"						"#{DOTA_Tooltip_ability_earthshaker_aftershock}"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Description"			"#{DOTA_Tooltip_ability_earthshaker_aftershock_Description}"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Lore"					"#{DOTA_Tooltip_ability_earthshaker_aftershock_Lore}"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Note0"					"#{DOTA_Tooltip_ability_earthshaker_aftershock_Note0}"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_aftershock_range"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_aftershock_range}"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_tooltip_duration"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_tooltip_duration}"
+
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua"									"#{DOTA_Tooltip_ability_earthshaker_echo_slam}"
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Description"						"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Description}"
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Lore"								"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Lore}"
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_echo_damage"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_echo_damage}"
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_damage_range"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_damage_range}"
+"DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_initial_damage"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_initial_damage}"
