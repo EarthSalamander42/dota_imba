@@ -199,7 +199,7 @@ function modifier_imba_purification_buff:IsPurgable() return true end
 function modifier_imba_purification_buff:IsDebuff() return false end
 
 function modifier_imba_purification_buff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+    local decFuncs = {MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
                       MODIFIER_EVENT_ON_HEALTH_GAINED}
                 
     return decFuncs
@@ -213,7 +213,7 @@ function modifier_imba_purification_buff:GetEffectAttachType()
     return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_purification_buff:GetModifierHealAmplify_Percentage(keys)            
+function modifier_imba_purification_buff:GetModifierHPRegenAmplify_Percentage(keys)            
     local stacks = self:GetStackCount()
 
     return self.purifiception_heal_amp_pct * stacks

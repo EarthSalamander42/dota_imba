@@ -454,17 +454,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_disruptor_static_storm"
 
-		"Ability10"					"special_bonus_imba_disruptor_1"
-		"Ability11"					"special_bonus_imba_disruptor_2"
-		"Ability12"					"special_bonus_imba_disruptor_3"
-		"Ability13"					"special_bonus_imba_disruptor_4"
+		"Ability10"					"special_bonus_hp_300"
+		"Ability11"					"special_bonus_imba_disruptor_1"
+		"Ability12"					"special_bonus_cast_range_150"
+		"Ability13"					"special_bonus_imba_disruptor_3"
 		"Ability14"					"special_bonus_imba_disruptor_9"
-		"Ability15"					"special_bonus_imba_disruptor_10"
+		"Ability15"					"special_bonus_imba_disruptor_8"
 		"Ability16"					"special_bonus_imba_disruptor_7"
-		"Ability17"					"special_bonus_imba_disruptor_8"
+		"Ability17"					"special_bonus_imba_disruptor_10"
 		
 		// Removed Talents (they're...bad.)
-		//"Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
+		// "Ability11"					"special_bonus_imba_disruptor_2" // Glimpse Storm lingers longer
+		// "Ability13"					"special_bonus_imba_disruptor_4" // Thunder Strike Slow
+		// "Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
 		//"Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
 	}
 
@@ -958,8 +960,11 @@
 		"Ability13"					"special_bonus_imba_lycan_1"
 		"Ability14"					"special_bonus_imba_lycan_2"
 		"Ability15"					"special_bonus_imba_lycan_6"
-		"Ability16"					"special_bonus_imba_lycan_7"
+		"Ability16"					"special_bonus_imba_lycan_9"
 		"Ability17"					"special_bonus_imba_lycan_8"
+
+		// Removed Talents
+		// "Ability16"					"special_bonus_imba_lycan_7" // Shapeshift hasted speed increased to 1200
 	}
 
 	//=================================================================================================================
@@ -1686,17 +1691,20 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_sniper_assassinate"
 
-		"Ability10"					"special_bonus_imba_sniper_1"
-		"Ability11"					"special_bonus_attack_speed_30"
-		"Ability12"					"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
+		"Ability10"					"special_bonus_cooldown_reduction_25"
+		"Ability11"					"special_bonus_attack_damage_25"
+		"Ability12"					"special_bonus_attack_speed_50"
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
-		"Ability14"					"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots
-		"Ability15"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
+		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
+		"Ability15"					"special_bonus_imba_sniper_9"
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_imba_sniper_1" // Shrapnel's cast range is doubled
 		// "Ability11"					"special_bonus_imba_sniper_2" // Infamous Assassinate knockback talent
+		// "Ability12"					"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
+		// "Ability14"					"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots (note that I have completely disabled this ability due to really messy code, so you cannot re-enable it without fixing it yourself)
 	}
 
 	//=================================================================================================================

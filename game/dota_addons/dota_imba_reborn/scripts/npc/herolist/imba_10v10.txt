@@ -74,7 +74,7 @@
 	"npc_dota_hero_oracle" 				"1"
 	"npc_dota_hero_pangolier" 			"1"
 	"npc_dota_hero_phantom_assassin" 	"1"
-	"npc_dota_hero_phantom_lancer" 		"0" // illusions lag
+	"npc_dota_hero_phantom_lancer" 		"1" // illusions lag
 	"npc_dota_hero_phoenix" 			"1"
 	"npc_dota_hero_puck" 				"1"
 	"npc_dota_hero_pudge" 				"1"

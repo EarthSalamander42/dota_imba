@@ -101,10 +101,10 @@
 "DOTA_Tooltip_modifier_imba_haste_rune_aura_Description"			"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_modifier_imba_double_damage_rune"						"Power Surge"
-"DOTA_Tooltip_modifier_imba_double_damage_rune_Description"			"Base damage multiplied by 2. Main attribute multiplied by 2."
+"DOTA_Tooltip_modifier_imba_double_damage_rune_Description"			"Base damage multiplied by 2. Main attribute increased by 10%%."
 
 "DOTA_Tooltip_modifier_imba_rune_doubledamage_aura"					"Power Surge"
-"DOTA_Tooltip_modifier_imba_rune_doubledamage_aura_Description"		"Base damage multiplied by 1.5. Main attribute multiplied by 1.5."
+"DOTA_Tooltip_modifier_imba_rune_doubledamage_aura_Description"		"Base damage multiplied by 1.5. Main attribute increased by 5%%."
 
 "DOTA_Tooltip_modifier_imba_ember_rune"								"Ember Rune"
 "DOTA_Tooltip_modifier_imba_ember_rune_Description"					"Grants immolation, dealing 80 + 2%% of the target's health as damage over time around you. Also adding fire to your attacks, burning targets."
@@ -125,7 +125,7 @@
 "DOTA_Tooltip_rune_arcane"						"Arcane"
 "DOTA_Tooltip_rune_arcane_description"			"Reduces cooldowns and mana costs by <font color='#FF7800'>40%</font> for 50 seconds. <font color='#FF7800'>Also increases spell amplification and cast speed by 30%. 50% of the effect is shared with allies in 1200 radius.</font>"
 "DOTA_Tooltip_rune_doubledamage"				"Double Damage"
-"DOTA_Tooltip_rune_doubledamage_description"	"Increases base damage <font color='#FF7800'>and main attribute</font> by 100%. <font color='#FF7800'>50% of the effect is shared with allies in 1200 radius.</font>"
+"DOTA_Tooltip_rune_doubledamage_description"	"Increases base damage by 100% <font color='#FF7800'>and main attribute by 10%. 50% of the effect is shared with allies in 1200 radius.</font>"
 "DOTA_Tooltip_rune_haste"						"Haste"
 "DOTA_Tooltip_rune_haste_description"			"Increases movement speed <font color='#FF7800'>by 80% and removes the 550 movement speed limit for 22 seconds. Also increases attack speed by 60. 50% of the effect is shared with allies in 1200 radius.</font>"
 "DOTA_Tooltip_rune_illusion"					"Illusion"

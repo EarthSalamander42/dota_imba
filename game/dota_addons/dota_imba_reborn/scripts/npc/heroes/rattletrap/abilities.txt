@@ -101,7 +101,7 @@
 			"12"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"percussive_maint_frag_chance"	"40"
+				"percussive_maint_frag_chance"	"50"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -194,7 +194,7 @@
 			"11"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"charge_coil_duration"	"12"
+				"charge_coil_duration"	"15"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -284,7 +284,7 @@
 			"09"
 			{	
 				"var_type"				"FIELD_INTEGER"
-				"system_min_distance"	"4000"
+				"system_min_distance"	"2500"
 			}
 			"10"
 			{

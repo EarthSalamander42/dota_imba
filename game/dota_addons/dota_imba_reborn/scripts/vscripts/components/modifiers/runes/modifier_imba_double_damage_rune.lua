@@ -43,7 +43,7 @@ end
 
 function modifier_imba_double_damage_rune:OnCreated(keys)
 	self:SetStackCount(100 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier)
-	self.bonus_main_attribute_multiplier = 1 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier
+	self.bonus_main_attribute_multiplier = 1 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier * 0.1
 
 	if not IsServer() then return end
 	if self:GetParent():IsRealHero() then
@@ -115,7 +115,7 @@ end
 function modifier_imba_rune_doubledamage_aura:OnCreated()
 	if not IsServer() then return end
 	self:SetStackCount((100 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier) / 2)
-	self.bonus_main_attribute_multiplier = (1 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier)	/ 2
+	self.bonus_main_attribute_multiplier = (1 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier) * 0.1	/ 2
     
 	-- Don't calculate all this stuff for MK clones cause it can cause lag problems
 	if self:GetParent():IsRealHero() then

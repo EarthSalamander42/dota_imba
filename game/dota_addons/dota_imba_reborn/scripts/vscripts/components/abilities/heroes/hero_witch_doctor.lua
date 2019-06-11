@@ -597,9 +597,10 @@ function modifier_imba_maledict:OnDeath(params)
 	end
 end
 
-function modifier_imba_maledict:GetHealthRegenAmp()
-	return self.heal_reduce_pct
-end
+-- What is this even doing here
+-- function modifier_imba_maledict:GetHealthRegenAmp()
+	-- return self.heal_reduce_pct
+-- end
 
 function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 	self.soundcount = self.soundcount or 0

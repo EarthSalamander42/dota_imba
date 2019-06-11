@@ -10,6 +10,7 @@ LinkLuaModifier("modifier_imba_rattletrap_power_cogs", "components/abilities/her
 LinkLuaModifier("modifier_imba_rattletrap_cog_push", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_rattletrap_power_cogs_charge_coil_counter", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rattletrap_power_cogs_charge_coil_instance", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rattletrap_power_cogs_rotational", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 LinkLuaModifier("modifier_imba_rattletrap_rocket_flare_critical", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
 
@@ -26,6 +27,7 @@ modifier_imba_rattletrap_power_cogs								= class({})
 modifier_imba_rattletrap_cog_push								= class({})
 modifier_imba_rattletrap_power_cogs_charge_coil_counter			= class({})
 modifier_imba_rattletrap_power_cogs_charge_coil_instance		= class({})
+modifier_imba_rattletrap_power_cogs_rotational					= class({})
 
 imba_rattletrap_rocket_flare									= class({})
 modifier_imba_rattletrap_rocket_flare_critical					= class({})
@@ -279,7 +281,7 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 	local cogs_radius		= self:GetSpecialValueFor("cogs_radius")
 	
 	-- Static value cause this is kinda hot-fixing for now
-	local square_dist		= 180
+	local square_dist		= 160
 	
 	local cog_vector 		= GetGroundPosition(caster_pos + Vector(0, cogs_radius, 0), nil)
 	local second_cog_vector	= GetGroundPosition(caster_pos + Vector(0, cogs_radius * 2, 0), nil)
@@ -444,6 +446,12 @@ function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 		-- self:GetParent():SetForwardVector(self:GetParent():GetAbsOrigin() - self.center_loc)
 		-- -- Try to make sure people don't get stuck in-between the cogs if they slip in a gap
 		-- ResolveNPCPositions(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius())
+	-- end
+	
+	-- if self:GetAbility() and self:GetAbility():GetAutoCastState() and not self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
+		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_rotational", {})
+	-- elseif self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
+		-- self:GetParent():RemoveModifierByName("modifier_imba_rattletrap_power_cogs_rotational")
 	-- end
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.trigger_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_CLOSEST, false)
@@ -759,6 +767,59 @@ function modifier_imba_rattletrap_power_cogs_charge_coil_instance:OnDestroy()
 	end
 end
 
+------------------------------------
+-- POWER COGS ROTATIONAL MODIFIER --
+------------------------------------
+
+function modifier_imba_rattletrap_power_cogs_rotational:OnCreated(params)
+	if not IsServer() then return end
+	
+	-- self.duration			= params.duration
+	-- self.damage				= params.damage
+	-- self.mana_burn			= params.mana_burn
+	-- self.push_length		= params.push_length
+	
+	-- -- This is purely for if a cog is destroyed while it is applying a push, so the attacker can be rerouted to the cog owner to properly deal damage
+	-- self.owner				= self:GetCaster():GetOwner() or self:GetCaster()
+	
+	-- -- Calculate speed at which modifier owner will be knocked back
+	-- self.knockback_speed		= self.push_length / self.duration
+	
+	-- -- Get the center of the cog to know which direction to get knocked back
+	-- self.position	= self:GetCaster():GetAbsOrigin()
+	
+	print("ADDED")
+	
+	-- If horizontal motion cannot be applied, remove the modifier
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+		return
+	end
+end
+
+function modifier_imba_rattletrap_power_cogs_rotational:UpdateHorizontalMotion( me, dt )
+	if not IsServer() then return end
+
+	-- local distance = (me:GetOrigin() - self.position):Normalized()
+	
+	-- me:SetOrigin( me:GetOrigin() + distance * self.knockback_speed * dt )
+	
+	me:SetOrigin(me:GetOrigin() + Vector(100, 100, 0) * dt)
+	
+	ResolveNPCPositions(me:GetOrigin(), me:GetHullRadius())
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_rattletrap_power_cogs_rotational:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_rattletrap_power_cogs_rotational:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveHorizontalMotionController( self )
+end
+
 ------------------
 -- ROCKET FLARE --
 ------------------
@@ -939,18 +1000,15 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 		local target_distance	= (enemy:GetAbsOrigin() - vLocation):Length2D()
 		
 		-- IMBAfication: System Critical
-		if travel_distance >= self:GetSpecialValueFor("system_min_distance") and (target_distance <= self:GetSpecialValueFor("system_radius") or (ExtraData.carpet_fire and (target_distance <= enemy:GetHullRadius()))) then
-			-- For every multiple of "self:GetSpecialValueFor("system_min_distance")" (2500 is the original number) that the travel_distance is, the damage is boosted by self:GetSpecialValueFor("system_crit") as a percentage (175% is the original number)
-			
-			-- So if the flare lands true from exactly 2500 range away for example, the damage should be multiplied by 2.75 (175% critical = 275% of base damage)
-			-- flare_damage = damage * (travel_distance / self:GetSpecialValueFor("system_min_distance")) * (self:GetSpecialValueFor("system_crit") + 100) * 0.01
-			
-			-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, enemy, flare_damage, nil)
+		if not ExtraData.carpet_fire and travel_distance >= self:GetSpecialValueFor("system_min_distance") and (target_distance <= self:GetSpecialValueFor("system_radius")) then
+			flare_damage = damage * self:GetSpecialValueFor("system_crit") * 0.01
+				
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, enemy, flare_damage, nil)
 			
 			-- Destroy all their mana (only if not a Carpet Fire shot cause """balance""")
-			if enemy.SetMana and not ExtraData.carpet_fire then
-				enemy:SetMana(0)
-			end
+			-- if enemy.SetMana and not ExtraData.carpet_fire then
+				-- enemy:SetMana(0)
+			-- end
 			
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_rocket_flare_critical", {duration = self:GetSpecialValueFor("system_duration")}):SetDuration(self:GetSpecialValueFor("system_duration") * (1 - enemy:GetStatusResistance()), true)
 		end
@@ -995,8 +1053,22 @@ end
 
 function modifier_imba_rattletrap_rocket_flare_critical:IsPurgable()	return false end
 
+function modifier_imba_rattletrap_rocket_flare_critical:GetStatusEffectName()
+	return "particles/status_fx/status_effect_techies_stasis.vpcf"
+end
+
 function modifier_imba_rattletrap_rocket_flare_critical:OnCreated()
 	self.system_mana_loss_pct	= self:GetAbility():GetSpecialValueFor("system_mana_loss_pct")
+end
+
+function modifier_imba_rattletrap_rocket_flare_critical:CheckState()
+	local state = {
+		[MODIFIER_STATE_FROZEN] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	}
+	
+	return state
 end
 
 function modifier_imba_rattletrap_rocket_flare_critical:DeclareFunctions()

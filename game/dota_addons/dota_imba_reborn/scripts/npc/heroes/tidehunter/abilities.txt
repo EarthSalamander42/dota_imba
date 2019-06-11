@@ -97,6 +97,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"surf_speed_pct"	"20"
 			}
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"casts_before_filtration"	"3"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -272,7 +277,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.3 0.2 0.1"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 		
 		// Time		
@@ -342,15 +347,20 @@
 	}
 
 	//=================================================================================================================
-	// +X Health
+	// Talent: Greater Hardening (increasing magic resistance on Kraken Shell purges)
 	//=================================================================================================================
-	"special_bonus_imba_spirit_breaker_bonus_health" 
+	"special_bonus_imba_tidehunter_greater_hardening" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_undefined"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_tidehunter_kraken_shell"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -359,7 +369,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1000"
+				"value"					"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"6"
 			}
 		}
 	}

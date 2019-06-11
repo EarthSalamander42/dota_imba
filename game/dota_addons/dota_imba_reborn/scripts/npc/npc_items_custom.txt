@@ -6055,12 +6055,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"275"
+				"projectile_radius"		"125"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_length"		"1600"
+				"projectile_length"		"800"
 			}
 			"07"
 			{
@@ -6154,7 +6154,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"12"
+				"armor_reduction"		"10"
 			}
 			"03"
 			{
@@ -6169,12 +6169,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"275"
+				"projectile_radius"		"125"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_length"		"1600"
+				"projectile_length"		"800"
 			}
 			"07"
 			{
@@ -6189,7 +6189,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_amount"		"5"
+				"projectile_amount"		"4"
 			}
 			"10"
 			{
@@ -10393,59 +10393,63 @@
 		"ID"							"2248"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"item_blade_mail"
-		"ScriptFile"					"components/items/item_blademail.lua"
+		"ScriptFile"					"components/items/item_blade_mail"
+
+		// General
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"2200"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					"agi;int;str;armor;damage"
-		"ItemQuality"					"epic"
-		"ItemAliases"					"blade;blademail;"
-		"SideShop" 						"0"
-		"SecretShop" 					"0"
-		"AbilitySharedCooldown"			"blademail"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCooldown"				"20"
 		"AbilityManaCost"				"25"
-
-		// Precache
+		"ItemCost"						"2200"
+		"ItemShopTags"					"damage;armor;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bm;blade mail;blademail"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		"AbilitySharedCooldown"			"blade_mail"
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"1"
+		
+		// Special	
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"						"particles/items_fx/blademail.vpcf"
-			"particle"						"particles/status_fx/status_effect_blademail.vpcf"
-		}
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_int"						"10"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"22"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"22"
-			}	
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"5"
+			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"6"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"return_duration"				"4.5"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.5"
 			}
+			
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"return_damage_pct"				"100"
+				"var_type"				"FIELD_INTEGER"
+				"lacerate_pct"			"40"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lacerate_duration"		"10"
 			}
 		}
 	}
@@ -14695,7 +14699,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1300"
+		"ItemCost"						"1100"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -14727,11 +14731,11 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40.0"
+		"AbilityCooldown"				"34.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"7200"
+		"ItemCost"						"7000"
 		"ItemQuality"					"artifact"
 		
 		"ItemShopTags"					"str;agi;int;regen_health;armor;hard_to_tag"
@@ -15330,7 +15334,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_origin.lua"
-		"AbilityTextureName"			"custom/origin_health"		
+		"AbilityTextureName"			"custom/origin_health"
 		
 		"ID"							"2334"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -15453,6 +15457,587 @@
 				"chaos_dmg_pct"			"130"
 			}
 		}
-	}	
-	//next free ID: 2335
+	}
+
+	//=================================================================================================================
+	// Recipe: Iron Talon
+	//=================================================================================================================
+	"item_recipe_imba_iron_talon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2335"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"125"	
+		"ItemShopTags"					""
+		//"IsObsolete"					"1"
+		//"ItemPurchasable"				"0"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_iron_talon"
+		"ItemRequirements"
+		{
+			"01"						"item_quelling_blade;item_ring_of_protection"
+		}
+	}
+	
+	//=================================================================================================================
+	// Iron Talon
+	//=================================================================================================================
+	"item_imba_iron_talon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_iron_talon.lua"
+		"AbilityTextureName"			"item_iron_talon"
+
+		"ID"							"2336"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_PREFER_ENEMIES"
+
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"20.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"0"
+		"ItemShopTags"					"damage" 
+		"ItemQuality"					"common"
+		"ItemAliases"					"quelling blade"
+		//"IsObsolete"					"1"
+		//"ItemPurchasable"				"0"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"24"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus_ranged"	"7"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quelling_range_tooltip"			"350"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_ward"			"450"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage_pct"			"40"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				//"bonus_health_regen"	"2"
+				"bonus_armor"			"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"alternative_cooldown"	"2.5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"350"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"350"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"350"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hunt_bonus"			"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hunt_bonus_ranged"		"1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hunt_max"				"60"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hunt_max_ranged"		"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Ring of Aquila
+	//=================================================================================================================
+	"item_recipe_imba_ring_of_aquila"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2337"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		//"ItemPurchasable"				"0"
+		//"IsObsolete"					"1"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_ring_of_aquila"
+		"ItemRequirements"
+		{
+			"01"						"item_wraith_band;item_ring_of_basilius"
+		}
+	}
+
+	//=================================================================================================================
+	// Ring of Aquila
+	//=================================================================================================================
+	"item_imba_ring_of_aquila"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_ring_of_aquila.lua"
+		"AbilityTextureName"			"item_ring_of_aquila"
+
+		"ID"							"2338"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityCastRange" 				"1200"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"965"
+		"ItemShopTags"					""
+		"ItemQuality"					"rare"
+		"ItemAliases"					"roa;ring of aquila"
+		"ItemShareability"				""		
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ActiveDescriptionLine"			"2"
+		"ShouldBeSuggested"				"1"
+		//"ItemPurchasable"				"0"
+		//"IsObsolete"					"1"
+
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"1.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_armor"		"2"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_aspd"			"5"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_vision"		"150"
+			}	
+		}		
+	}
+	
+	//=================================================================================================================
+	// Recipe: Nullifier
+	//=================================================================================================================
+	"item_recipe_imba_nullifier"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2339"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_nullifier"
+		"ItemRequirements"
+		{
+			"01"						"item_relic;item_helm_of_iron_will"
+		}
+	}
+	
+	//=================================================================================================================
+	// Nullifier
+	//=================================================================================================================
+	"item_imba_nullifier"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2340"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_nullifier.lua"
+		
+		"AbilityTextureName"			"item_nullifier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCooldown"				"13.0"
+		"AbilityCastRange"				"600"
+		"AbilityManaCost"				"75"
+		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4700"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"nlf;nullifier"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"65"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_regen"			"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mute_duration"			"6.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_interval_duration"	"0.4"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Recipe: Nullifier EX
+	//=================================================================================================================
+	"item_recipe_imba_nullifier_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2341"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_nullifier_2"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_nullifier;item_soul_booster"
+		}
+	}
+	
+	//=================================================================================================================
+	// Nullifier EX
+	//=================================================================================================================
+	"item_imba_nullifier_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_nullifier.lua"
+		"AbilityTextureName"			"custom/item_nullifier_2"
+		
+		"ID"							"2342"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCooldown"				"13.0"
+		"AbilityCastRange"				"600"
+		"AbilityManaCost"				"75"
+		
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"2"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8400"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"nlf 2;nullifier 2"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"65"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_regen"			"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mute_duration"			"6.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_interval_duration"	"0.4"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"625"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"625"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shudder_radius"		"125"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shudder_duration"		"0.8"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Recipe: Bladestorm Mail
+	//=================================================================================================================
+	"item_recipe_imba_bladestorm_mail"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2343"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_bladestorm_mail"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_blade_mail;item_claymore;item_platemail;item_staff_of_wizardry"
+		}
+	}
+	
+	//=================================================================================================================
+	// Bladestorm Mail
+	//=================================================================================================================
+	"item_imba_bladestorm_mail"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_blade_mail"
+		"AbilityTextureName"			"custom/item_bladestorm_mail"
+		
+		"ID"							"2344"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+		"ItemCost"						"6000"
+		"ItemShopTags"					"damage;armor;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bm;bladestorm mail;bladestorm"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		"AbilitySharedCooldown"			"blade_mail"
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"2"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"44"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.5"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lacerate_pct"			"70"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lacerate_duration"		"10"
+			}
+		}
+	}
+	
+	//next free ID: 2345
 }

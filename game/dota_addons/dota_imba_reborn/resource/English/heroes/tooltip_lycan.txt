@@ -116,6 +116,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_7"				"Shapeshift hasted speed increased to %max_movespeed%"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_8"				"Blood Hunt"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_8_Description"	"Acquiring a Wolfsbane stack gives Lycan and his units +%bonus_movespeed_pct%%% move speed, +%bonus_attackspeed% attack speed, and +%bonus_damage_pct%%% bonus damage for %duration% seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_lycan_9"				"+40% Chance Shapeshift Critical Strike"
 
 "DOTA_Tooltip_ability_imba_summoned_wolf_pack_leader"         "Packleader Aura"
 "DOTA_Tooltip_ability_imba_summoned_wolf_pack_leader_Note0"       "Packleader Aura only benefits from base damage."

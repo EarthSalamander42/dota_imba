@@ -786,12 +786,30 @@ function GameMode:OnPlayerChat(keys)
 								[5] = "imba_tidehunter_ravage",
 								[6] = "special_bonus_movement_speed_20",
 								[7] = "special_bonus_unique_tidehunter_2",
-								[8] = "special_bonus_exp_boost_40",
+								[8] = "special_bonus_imba_tidehunter_greater_hardening",
 								[9] = "special_bonus_unique_tidehunter_3",
 								[10] = "special_bonus_unique_tidehunter_4",
 								[11] = "special_bonus_unique_tidehunter",
 								[12] = "special_bonus_cooldown_reduction_25",
 								[13] = "special_bonus_attack_damage_250"
+							}
+							upgraded = true
+						elseif string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
+							ability_set = {
+								[0] = "imba_techies_proximity_mine",
+								[1] = "imba_techies_stasis_trap",
+								[2] = "imba_techies_blast_off",
+								[3] = "imba_techies_focused_detonate",
+								[4] = "imba_techies_minefield_sign",
+								[5] = "imba_techies_remote_mine",
+								[6] = "special_bonus_imba_techies_1",
+								[7] = "special_bonus_imba_techies_2",
+								[8] = "special_bonus_imba_techies_3",
+								[9] = "special_bonus_imba_techies_4",
+								[10] = "special_bonus_imba_techies_5",
+								[11] = "special_bonus_imba_techies_6",
+								[12] = "special_bonus_imba_techies_7",
+								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
 						end
