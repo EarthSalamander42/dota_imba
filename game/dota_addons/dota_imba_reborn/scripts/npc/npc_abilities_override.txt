@@ -712,6 +712,9 @@
 	{
 		"AbilityCastRange"				"800"
 
+		"ItemStockMax"					"15"
+		"ItemStockTime"					"45.0"
+
 		"AbilitySpecial"
 		{
 			"06"
