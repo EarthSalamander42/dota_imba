@@ -169,7 +169,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	}
 }
 
-var is_donator_set = false;
+var is_donator_set = [];
 
 // =============================================================================
 // =============================================================================
@@ -217,13 +217,16 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		if (player_table.donator_level < 10) {
 			if (player_table.in_game_tag == 1) {
 
-				if (!is_donator_set) {
+				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
+					is_donator_set.push( playerId.toString() );
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
-					is_donator_set = true;
+					
 
 					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
-					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_title_" + player_table.donator_level) || "Donator";
+					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
+
+					donatorTitlePanel.style.visibility = "visible";
 
 					var dark_donator_levels = [ 1, 2, 7, 9 ];
 					var donator_color = player_table.donator_color;
@@ -253,7 +256,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
 
+
+
 					var bubblecount = (400) / 50 * 10;
+					bubblecount = -1;
 
 					for (var i = 0; i <= bubblecount; i++) {
 						var size = rnd(50, 80) / 10;
@@ -281,7 +287,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 				if (is_donator_set) {
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/output.webm")';
-					is_donator_set = undefined;
+					// is_donator_set = undefined;
 				}
 				// playerPanel.style.backgroundColor = "#21272fbb";
 			}
