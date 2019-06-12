@@ -226,6 +226,24 @@
 {
 	0%
 	{
+		opacity:  0.2;
+	}
+
+	50%
+	{
+		opacity:  0.4;
+	}
+
+	100%
+	{
+		opacity:  0.2;
+	}
+}
+
+@keyframes 'color_transition_bright'
+{
+	0%
+	{
 		opacity:  0.5;
 	}
 
@@ -252,6 +270,29 @@
 	animation-timing-function: ease-in-out;
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
+}
+
+#DonatorTitleOverlay {
+	height: 40px;
+	width: 100%;
+	background-color: #000000;
+	z-index: 1;
+	align: center center;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out 0.0s;
+}
+
+#DonatorTitleOverlay Label {
+	align: center center;
+	color: #ffffff;
+	font-size: 17px;
+	text-transform: uppercase;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	letter-spacing: 1px;
+}
+
+.PlayerRow:hover #DonatorTitleOverlay  {
+	opacity: 1;
 }
 
 @keyframes 'bubbles' {
@@ -385,7 +426,7 @@
 #PanelImbaXP 
 {
 	padding: 3px 10px 5px;
-	background-color: #0d061d80;
+	background-color: #0d061dcc;
 }
 #LevelContainer
 {

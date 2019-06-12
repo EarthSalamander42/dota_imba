@@ -1,5 +1,18 @@
 "use strict";
 
+var donator_titles = {
+	1: "IMBA Lead Developer",
+	2: "IMBA Developer",
+	3: "Administator",
+	4: "Ember Donator",
+	5: "Golden Donator",
+	6: "Donator",
+	7: "Salamander Donator",
+	8: "Icefrog Donator",
+	9: "Gaben Donator",
+	10: "Banned"
+};
+
 function LightenDarkenColor(col, amt) {
   
     var usePound = false;
@@ -25,10 +38,23 @@ function LightenDarkenColor(col, amt) {
  
     if (g > 255) g = 255;
     else if (g < 0) g = 0;
- 
-    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+ 	
+ 	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
+
+ 	var length = color.length;
+
+ 	if ( length < 6 ) {
+ 		for (var i = 0; i < (6-length); i++) {
+ 			color = "0" + color;
+ 		}
+ 	}
+
+
+    return (usePound?"#":"") + color;
   
 }
+
+
 
 function rnd(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -198,6 +224,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	}
 
 	var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
+	var donatorTitlePanel = playerPanel.FindChildInLayoutFile("DonatorTitleOverlay");
+
 	if (playerId == Game.GetLocalPlayerID()) {
 		donatorPanel.style.boxShadow = 'inset #c3b9d855 0px 0px 0px 1px';
 	}
@@ -212,11 +240,43 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
 					is_donator_set = true;
-					donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), ' +
-					'color-stop( 0.2, ' + LightenDarkenColor(player_table.donator_color, -60) + 'FF ), ' +
-					'color-stop( 0.5, ' + player_table.donator_color + 'FF ), ' +
-					'color-stop( 0.8, ' + LightenDarkenColor(player_table.donator_color, -50) + 'FF ), ' +
-					'to( ' +  player_table.donator_color + ' ) )';
+
+					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
+					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = donator_titles[player_table.donator_level] || "Donator";
+
+					var dark_donator_levels = [ 1, 2, 7, 9 ];
+					var donator_color = player_table.donator_color;
+
+					if ( dark_donator_levels.indexOf( player_table.donator_level ) > -1 ) {
+
+						donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
+						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -60) + 'FF ), ' +
+						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
+						'color-stop( 0.8, ' + LightenDarkenColor(donator_color, -40) + 'FF ), ' +
+						'to( ' +  donator_color + ' ) )';
+
+						donatorPanel.style.animationName = 'color_transition_bright';
+
+					} else {
+
+						if ( player_table.donator_level != 8 ) {
+							donator_color = LightenDarkenColor(donator_color, -30);
+						} else {
+							donator_color = LightenDarkenColor(donator_color, 20);
+						}
+						
+
+						donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
+						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
+						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
+						'color-stop( 0.8, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
+						'to( ' +  donator_color + ' ) )';
+
+					}
+
+					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
+					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
+					
 
 
 
@@ -226,7 +286,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 						var size = rnd(50, 80) / 10;
 
 						donatorPanel.BCreateChildren(
-							'<Panel class="particle" style="background-color: ' + LightenDarkenColor(player_table.donator_color, 70) +
+							'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
 							';x:' +
 							rnd(5, 90) +
 							"%; y:" +
