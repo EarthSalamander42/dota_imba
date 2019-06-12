@@ -333,17 +333,6 @@ function CDOTA_BaseNPC:GetRealDamageDone(hTarget)
 	return base_damage - (base_damage * armor_reduction)
 end
 
--- Health regeneration % amplification
-function CDOTA_BaseNPC:GetHealthRegenAmp()
-	local regen_increase = 0
-	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierHealthRegenAmp then
-			regen_increase = regen_increase + parent_modifier:GetModifierHealthRegenAmp()
-		end
-	end
-	return regen_increase
-end
-
 -- Autoattack lifesteal
 function CDOTA_BaseNPC:GetLifesteal()
 	local lifesteal = 0
@@ -794,6 +783,14 @@ function CDOTA_BaseNPC:FindAbilityWithHighestCooldown()
 	end
 
 	return highest_cd_ability
+end
+
+function CDOTA_BaseNPC:GetTeamRealName()
+	local team = {}
+	team[2] = "Radiant"
+	team[3] = "Dire"
+
+	return team[self:GetTeamNumber()]
 end
 
 -- credits to yahnich for the following

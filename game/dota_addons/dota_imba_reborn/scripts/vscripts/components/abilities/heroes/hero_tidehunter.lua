@@ -3,10 +3,12 @@
 --    AltiV, May 29th, 2019 (true IMBAfication)
 
 LinkLuaModifier("modifier_imba_tidehunter_gush", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tidehunter_gush_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_gush_surf", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE) -- Was originally gonna make this a horizontal motion controller, but seeing how those tend to cancel other controllers out, I don't think this warrants that same power so it'll just be standard intervalthink updates
 
 LinkLuaModifier("modifier_imba_tidehunter_kraken_shell", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_kraken_shell_backstroke", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tidehunter_kraken_shell_greater_hardening", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_suppression", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
@@ -16,26 +18,40 @@ LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw", "components/abili
 LinkLuaModifier("modifier_imba_tidehunter_ravage_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_ravage_creeping_wave", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
-imba_tidehunter_gush								= class({})
-modifier_imba_tidehunter_gush						= class({})
-modifier_imba_tidehunter_gush_surf					= class({})
+imba_tidehunter_gush										= class({})
+modifier_imba_tidehunter_gush								= class({})
+modifier_imba_tidehunter_gush_handler						= class({})
+modifier_imba_tidehunter_gush_surf							= class({})
 
-imba_tidehunter_kraken_shell						= class({})
-modifier_imba_tidehunter_kraken_shell				= class({})
-modifier_imba_tidehunter_kraken_shell_backstroke	= class({})
+imba_tidehunter_kraken_shell								= class({})
+modifier_imba_tidehunter_kraken_shell						= class({})
+modifier_imba_tidehunter_kraken_shell_backstroke			= class({})
+modifier_imba_tidehunter_kraken_shell_greater_hardening	= class({})
 
-imba_tidehunter_anchor_smash						= class({})
-modifier_imba_tidehunter_anchor_smash				= class({})
-modifier_imba_tidehunter_anchor_smash_suppression	= class({})
-modifier_imba_tidehunter_anchor_smash_handler		= class({})
-modifier_imba_tidehunter_anchor_smash_throw			= class({})
+imba_tidehunter_anchor_smash								= class({})
+modifier_imba_tidehunter_anchor_smash						= class({})
+modifier_imba_tidehunter_anchor_smash_suppression			= class({})
+modifier_imba_tidehunter_anchor_smash_handler				= class({})
+modifier_imba_tidehunter_anchor_smash_throw					= class({})
 
-modifier_imba_tidehunter_ravage_handler				= class({})
-modifier_imba_tidehunter_ravage_creeping_wave		= class({})
+modifier_imba_tidehunter_ravage_handler						= class({})
+modifier_imba_tidehunter_ravage_creeping_wave				= class({})
 
 ----------
 -- GUSH --
 ----------
+
+function imba_tidehunter_gush:GetIntrinsicModifierName()
+	return "modifier_imba_tidehunter_gush_handler"
+end
+
+function imba_tidehunter_gush:GetAbilityTextureName()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_gush_handler", self:GetCaster()) < 3 then
+		return "tidehunter_gush"
+	else
+		return "custom/tidehunter_gush_filtration"
+	end
+end
 
 function imba_tidehunter_gush:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -55,6 +71,10 @@ end
 
 function imba_tidehunter_gush:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.GushCast")
+	
+	-- IMBAfication: Filtration System
+	local gush_handler_modifier	= self:GetCaster():FindModifierByNameAndCaster("modifier_imba_tidehunter_gush_handler", self:GetCaster())
+	local filtration_wave		= gush_handler_modifier:GetStackCount() >= self:GetSpecialValueFor("casts_before_filtration")
 
 	-- Standard ability logic
 	if self:GetCursorTarget() then
@@ -84,7 +104,8 @@ function imba_tidehunter_gush:OnSpellStart()
 				speed		= self:GetSpecialValueFor("projectile_speed"),
 				x			= direction.x,
 				y			= direction.y,
-				z			= direction.z
+				z			= direction.z,
+				bFiltrate	= filtration_wave
 			}
 		}
 		
@@ -125,11 +146,18 @@ function imba_tidehunter_gush:OnSpellStart()
 				x			= direction.x,
 				y			= direction.y,
 				z			= direction.z,
+				bFiltrate	= filtration_wave,
 				gush_dummy	= gush_dummy:entindex(),
 			}
 		}
 		
 		self.projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
+	end
+	
+	if not filtration_wave then
+		gush_handler_modifier:IncrementStackCount()
+	else
+		gush_handler_modifier:SetStackCount(0)
 	end
 end
 
@@ -155,6 +183,11 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 			end
 		
 			target:EmitSound("Ability.GushImpact")
+			
+			-- IMBAfication: Filtration System
+			if data.bFiltrate == 1 then
+				target:Purge(true, false, false, false, false)
+			end
 		
 			-- Make the targeted gush not have any effects except for shield break if scepter (no double damage nuttiness)
 			if not (data.bScepter == 1 and data.bTargeted == 1) then
@@ -249,6 +282,12 @@ function modifier_imba_tidehunter_gush:GetModifierPhysicalArmorBonus()
 	return self.negative_armor * (-1)
 end
 
+---------------------------
+-- GUSH HANDLER MODIFIER --
+---------------------------
+
+function modifier_imba_tidehunter_gush_handler:IsHidden() return true end
+
 ------------------------
 -- GUSH SURF MODIFIER --
 ------------------------
@@ -298,6 +337,10 @@ function imba_tidehunter_kraken_shell:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(kraken_shell_particle)
 	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_kraken_shell_backstroke", {duration = 3.6})
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_greater_hardening") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_kraken_shell_greater_hardening", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_tidehunter_greater_hardening", "duration")})
+	end
 end
 
 ---------------------------
@@ -358,6 +401,10 @@ function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
 			self:GetParent():Purge(false, true, false, true, true)
 			
 			self:SetStackCount(0)
+			
+			if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_greater_hardening") then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tidehunter_kraken_shell_greater_hardening", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_tidehunter_greater_hardening", "duration")})
+			end
 		end
 	end
 end
@@ -426,6 +473,32 @@ function modifier_imba_tidehunter_kraken_shell_backstroke:GetModifierStatusResis
 	end
 end
 
+---------------------------------------------
+-- KRAKEN SHELL GREATER HARDENING MODIFIER --
+---------------------------------------------
+
+function modifier_imba_tidehunter_kraken_shell_greater_hardening:OnCreated()
+	self.value	= self:GetCaster():FindTalentValue("special_bonus_imba_tidehunter_greater_hardening")
+	
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_tidehunter_kraken_shell_greater_hardening:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_tidehunter_kraken_shell_greater_hardening:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+	
+	return decFuncs
+end
+
+function modifier_imba_tidehunter_kraken_shell_greater_hardening:GetModifierMagicalResistanceBonus()
+	return self:GetStackCount() * self.value
+end
+
 ------------------
 -- ANCHOR SMASH --
 ------------------
@@ -450,7 +523,7 @@ function imba_tidehunter_anchor_smash:GetAOERadius()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
 		return 0
 	else
-		return 175
+		return self:GetSpecialValueFor("throw_radius")
 	end
 end
 
@@ -474,8 +547,8 @@ function imba_tidehunter_anchor_smash:OnSpellStart()
 			-- EffectName			= "nil"
 			vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
 			fDistance			= self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster()),
-			fStartRadius		= 175,
-			fEndRadius			= 175,
+			fStartRadius		= self:GetSpecialValueFor("throw_radius"),
+			fEndRadius			= self:GetSpecialValueFor("throw_radius"),
 			Source				= self:GetCaster(),
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
@@ -653,10 +726,10 @@ function modifier_imba_tidehunter_anchor_smash_throw:OnCreated(params)
 		"models/items/tidehunter/claddish_cudgel/claddish_cudgel_octopus.vmdl",
 		"models/items/tidehunter/krakens_bane/krakens_bane.vmdl",
 		"models/items/tidehunter/living_iceberg_collection_weapon/living_iceberg_collection_weapon.vmdl",
-		"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_off_hand/ti_9_cache_tide_chelonia_mydas_off_hand.vmdl",
-		"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_weapon/ti_9_cache_tide_chelonia_mydas_weapon.vmdl",
-		"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_off_hand/ti_9_cache_tide_tidal_conqueror_off_hand.vmdl",
-		"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_weapon/ti_9_cache_tide_tidal_conqueror_weapon.vmdl",
+		--"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_off_hand/ti_9_cache_tide_chelonia_mydas_off_hand.vmdl",
+		--"models/items/tidehunter/ti_9_cache_tide_chelonia_mydas_weapon/ti_9_cache_tide_chelonia_mydas_weapon.vmdl",
+		--"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_off_hand/ti_9_cache_tide_tidal_conqueror_off_hand.vmdl",
+		--"models/items/tidehunter/ti_9_cache_tide_tidal_conqueror_weapon/ti_9_cache_tide_tidal_conqueror_weapon.vmdl",
 		"models/items/tidehunter/tidebreaker_weapon/tidebreaker_weapon.vmdl"
 	}
 	
@@ -669,10 +742,10 @@ function modifier_imba_tidehunter_anchor_smash_throw:OnCreated(params)
 		180,
 		0,
 		0,
-		180,
-		0, 
-		180,
-		0,
+		--180,
+		--0, 
+		--180,
+		--0,
 		0
 	}
 	
@@ -754,7 +827,6 @@ function imba_tidehunter_ravage:OnSpellStart()
 		local particle 			=	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf"
 		-- Ability parameters
 		local end_radius	=	self:GetSpecialValueFor("radius")
-		local damage		=	self:GetSpecialValueFor("damage")
 		local stun_duration	=	self:GetSpecialValueFor("duration")
 
 		-- Emit sound
@@ -781,9 +853,9 @@ function imba_tidehunter_ravage:OnSpellStart()
 				nil,
 				ring * radius,
 				radius,
-				self:GetAbilityTargetTeam(),
-				self:GetAbilityTargetType(),
-				self:GetAbilityTargetFlags(),
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+				DOTA_DAMAGE_FLAG_NONE,
 				FIND_ANY_ORDER,
 				false
 			)
@@ -811,7 +883,7 @@ function imba_tidehunter_ravage:OnSpellStart()
 					Timers:CreateTimer(0.5, function()
 						-- Apply damage
 						local damageTable = {victim = enemy,
-							damage = damage,
+							damage = self:GetAbilityDamage(),
 							damage_type = self:GetAbilityDamageType(),
 							attacker = caster,
 							ability = self
@@ -839,7 +911,6 @@ function imba_tidehunter_ravage:OnSpellStart()
 			end
 		end)
 	else
-		local damage			= self:GetSpecialValueFor("damage") or self:GetAbilityDamage()
 		local stun_duration		= self:GetSpecialValueFor("duration")
 	
 		local creeping_range	= self:GetSpecialValueFor("creeping_range")
@@ -856,7 +927,7 @@ function imba_tidehunter_ravage:OnSpellStart()
 		Timers:CreateTimer(function()
 			CreateModifierThinker(self:GetCaster(), self, "modifier_imba_tidehunter_ravage_creeping_wave", {
 				duration		=	0.3, -- Kinda arbitrary but only want to show one wave of tentacles and not all five
-				damage			=	damage,
+				damage			=	self:GetAbilityDamage(),
 				stun_duration	=	stun_duration,
 				creeping_radius	=	creeping_radius
 			}, 
@@ -917,7 +988,7 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnCreated(params)
 		ParticleManager:SetParticleControl(self.ravage_particle, i, Vector(self.creeping_radius, 0, 0))
 	end
 	
-	local enemies =	FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.creeping_radius, self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+	local enemies =	FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.creeping_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
 		-- Emit hit sound
@@ -968,4 +1039,24 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnDestroy()
 	ParticleManager:DestroyParticle(self.ravage_particle, false)
 	ParticleManager:ReleaseParticleIndex(self.ravage_particle)
 	self:GetParent():RemoveSelf()
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_tidehunter_greater_hardening", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_tidehunter_greater_hardening	= class({})
+
+function modifier_special_bonus_imba_tidehunter_greater_hardening:IsHidden() 		return true end
+function modifier_special_bonus_imba_tidehunter_greater_hardening:IsPurgable() 		return false end
+function modifier_special_bonus_imba_tidehunter_greater_hardening:RemoveOnDeath() 	return false end
+
+function imba_tidehunter_kraken_shell:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_greater_hardening") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_greater_hardening") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_greater_hardening"), "modifier_special_bonus_imba_tidehunter_greater_hardening", {})
+	end
 end

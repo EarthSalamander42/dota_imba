@@ -492,7 +492,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 
 	if not target:HasModifier(modifier_debuff) then
 		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})                                                   
-	end            
+	end
 
 	local modifier_debuff_handler = target:FindModifierByName(modifier_debuff)                                 
 	if modifier_debuff_handler then                
@@ -508,7 +508,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 
 	-- Apply int steal buff on caster        
 	if not caster:HasModifier(modifier_buff) then
-		caster:AddNewModifier(caster, ability, modifier_buff, {duration = duration})                                   
+		caster:AddNewModifier(caster, ability, modifier_buff, {duration = duration})
 	end
 
 	local modifier_buff_handler = caster:FindModifierByName(modifier_buff)                     
@@ -556,7 +556,7 @@ function modifier_imba_arcane_orb_buff:OnCreated()
 		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_9")
 
 		-- Initialize table
-		self.stacks_table = {}        
+		self.stacks_table = {}
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)
@@ -572,7 +572,7 @@ function modifier_imba_arcane_orb_buff:OnIntervalThink()
 			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
 			for i = #self.stacks_table, 1, -1 do
 				if self.stacks_table[i] + self.int_steal_duration < GameRules:GetGameTime() then
-					table.remove(self.stacks_table, i)                          
+					table.remove(self.stacks_table, i)
 				end
 			end
 			
@@ -670,7 +670,9 @@ function modifier_imba_arcane_orb_debuff:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			if self:GetParent().CalculateStatBonus then
+				self:GetParent():CalculateStatBonus()
+			end
 
 		-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -949,9 +951,9 @@ function modifier_imba_astral_imprisonment:OnCreated()
 
 		-- Ability specials
 		self.radius = self.ability:GetSpecialValueFor("radius")
-		self.damage = self.ability:GetSpecialValueFor("damage")        
+		self.damage = self.ability:GetSpecialValueFor("damage")
 		self.scepter_int_steal_count = self.ability:GetSpecialValueFor("scepter_int_steal_count")
-		self.scepter_int_steal_duration = self.ability:GetSpecialValueFor("scepter_int_steal_duration")
+		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") -- Scepter only
 
 		-- Play astral prison loop sound
 		EmitSoundOn(self.sound_astral, self.parent)
@@ -960,8 +962,8 @@ function modifier_imba_astral_imprisonment:OnCreated()
 		self.parent:AddNoDraw()
 
 		-- If the caster has scepter, steal intelligence if it is an enemy
-		if self.scepter and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() then        
-			ApplyIntelligenceSteal(self.caster, self.ability, self.parent, self.scepter_int_steal_count, self.scepter_int_steal_duration)
+		if self.scepter and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and ((self.parent:IsRealHero() and not self.parent:IsClone()) or self.parent:IsTempestDouble()) then        
+			ApplyIntelligenceSteal(self.caster, self.ability, self.parent, self.scepter_int_steal_count, self.int_steal_duration)
 		end
 
 		-- Wait one frame. If the caster doesn't have the self buff, it means it's been triggered from Sanity Eclipse

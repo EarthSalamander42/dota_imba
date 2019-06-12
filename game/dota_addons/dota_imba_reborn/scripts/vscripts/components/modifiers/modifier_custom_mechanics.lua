@@ -22,7 +22,6 @@ function modifier_custom_mechanics:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 --		MODIFIER_PROPERTY_RESPAWNTIME,
 --		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
@@ -34,14 +33,6 @@ function modifier_custom_mechanics:OnIntervalThink()
 	if IsServer() then
 		-- Calculate current regen before this modifier
 		local parent = self:GetParent()
-		local base_health_regen = parent:GetHealthRegen() - self:GetStackCount()
-
-		-- Update health regen amp bonus
-		self:SetStackCount(self:GetStackCount() * parent:GetHealthRegenAmp() * 0.01)
---		print(parent:GetHealthRegen(), self:GetStackCount(), (-1) * parent:GetHealthRegen() - 300)
---		if parent:GetHealthRegen() > 300 then
---			self:SetStackCount((-1) * parent:GetHealthRegen() - 300)
---		end
 
 		CustomNetTables:SetTableValue( "status_resistance", string.format("%d", self:GetParent():GetEntityIndex()) , { status_resistance = self:GetParent():GetStatusResistance() } )
 		
@@ -52,11 +43,6 @@ function modifier_custom_mechanics:OnIntervalThink()
 			FindClearSpaceForUnit(parent, GetGroundPosition(Vector(-7500, parent:GetAbsOrigin().y, parent:GetAbsOrigin().z), nil), true)
 		end
 	end
-end
-
--- Health regeneration amplification handler
-function modifier_custom_mechanics:GetModifierConstantHealthRegen()
-	return self:GetStackCount()
 end
 
 -- Damage block handler

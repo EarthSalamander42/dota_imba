@@ -1090,7 +1090,7 @@ function modifier_imba_shapeshift:OnCreated()
     -- Ability specials
     self.night_vision_bonus = self.ability:GetSpecialValueFor("night_vision_bonus")
     self.absolute_speed = self.ability:GetSpecialValueFor("absolute_speed")
-    self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")
+    self.crit_chance = self.ability:GetTalentSpecialValueFor("crit_chance")
     self.crit_damage = self.ability:GetSpecialValueFor("crit_damage")       
     self.certain_crit_cooldown = self.ability:GetSpecialValueFor("certain_crit_cooldown")
 		

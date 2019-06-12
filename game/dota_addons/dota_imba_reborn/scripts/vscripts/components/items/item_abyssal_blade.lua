@@ -101,7 +101,7 @@ end
 function modifier_imba_abyssal_blade:OnDestroy()
 	if IsServer() then
 		-- If there are no more skull bashers in inventory, remove the skull basher unique modifier altogether
-		if not self.caster:HasModifier(self.modifier_self) then
+		if self.caster and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.modifier_unique)
 		end
 	end

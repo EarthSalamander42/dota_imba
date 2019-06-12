@@ -4024,7 +4024,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"40 70 100 130"
+				"damage"			"60 90 120 150"
 			}
 
 			"04"
@@ -4470,7 +4470,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"25"
+				"value"					"40"
 			}
 			"02"
 			{
@@ -10147,6 +10147,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_chance"				"40"
+				"LinkedSpecialBonus"		"special_bonus_imba_lycan_9"
 			}
 			"05"
 			{
@@ -10542,6 +10543,34 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// +X% Chance Shapeshift Critical Strike
+	//=================================================================================================================
+	"special_bonus_imba_lycan_9"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_shapeshift"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"40"
 			}
 		}
 	}
@@ -11509,7 +11538,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"healing_amp_pct"		"75 90 105 120"
+				"healing_amp_pct"		"75 80 85 90"
 			}
 			"05"
 			{
@@ -11519,7 +11548,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"healing_amp_tooltip"	"37.5 45 52.5 60"
+				"healing_amp_tooltip"	"37.5 40 42.5 45"
 			}
 		}
 	}
@@ -11625,11 +11654,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 80 65"
+		"AbilityCooldown"				"120 100 80"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 500 600"
+		"AbilityManaCost"				"200 350 500"
 
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
@@ -11642,7 +11671,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"0.7 0.9 1.1"
+				"damage"					"0.7 0.85 1.0"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -11653,7 +11682,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_increase"			"10 20 30"
+				"respawn_increase"			"15 25 35"
 			}
 			"04"
 			{
@@ -12055,7 +12084,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_int_steal_duration"	"80"
+				"int_steal_duration"	"80"
 			}
 			"07"
 			{
@@ -12616,7 +12645,7 @@
 			"05"
 			{
 				"var_type"					 "FIELD_INTEGER"
-				"purifiception_heal_amp_pct" "25"
+				"purifiception_heal_amp_pct" "20"
 			}
 
 			"06"
@@ -12785,7 +12814,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 250 300"
+		"AbilityManaCost"					"125 175 225"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -20693,70 +20722,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tidehunter: Ravage
-	//=================================================================================================================
-	"imba_tidehunter_ravage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_tidehunter.lua"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"AbilityTextureName"			"tidehunter_ravage"
-		"FightRecapLevel"				"2"
-		"LevelsBetweenUpgrades"			"6"
-		"MaxLevel"						"3"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.2 0.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130.0 115.0 100.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 225 300"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_tidehunter.vsndevts"
-			"particle"					"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1400 1600 1800"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 400 600"
-			}
-			"04"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.5 3.0 3.5"
 			}
 		}
 	}
@@ -32927,7 +32892,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
+		"AbilityCastRange"				"1800 1900 2000 2100"
 		"AbilityCastPoint"				"0.3"		
 
 		// Cost
@@ -32957,13 +32922,13 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"15 35 55 75"
+				"damage"					"25 45 65 85"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_slow_pct"				"15 20 25 30"
+				"ms_slow_pct"				"20 25 30 35"
 			}
 
 			"04"
@@ -33077,7 +33042,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"proc_chance"					"40" // DO NOT CHANGE THIS UNLESS YOU ALSO CHANGE THE PRNG NUMBER IN LUA
+				"proc_chance"					"40"
 			}
 			
 			"09"
@@ -33193,7 +33158,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bullet_radius"				"200 300 400"
+				"bullet_radius"				"200 250 300"
 			}
 
 			"04"
@@ -33230,6 +33195,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectiles"				"1"
+			}
+			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_crit_bonus"		"280"
 			}
 		}
 	}
@@ -33475,6 +33446,31 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"value"	                    "1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_sniper_9" // -1.5s Assassinate Cast Time
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sniper_assassinate"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "1.5"
 			}
 		}
 	}
@@ -39724,7 +39720,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_ms"			"2.5"
+				"melee_ms"			"3.0"
 			}
 			"06"
 			{

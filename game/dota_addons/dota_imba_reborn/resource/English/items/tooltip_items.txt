@@ -73,7 +73,7 @@
 
 // Arcane Boots
 "DOTA_Tooltip_Ability_item_imba_arcane_boots"                  "Arcane Boots"
-"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"		"<h1>Active: Replenish Mana</h1>Replenishes the mana of allies in %replenish_radius% radius by %base_replenish_mana% + %replenish_mana_pct%%% of your own maximum mana."
+"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"		"<h1>Active: Replenish Mana</h1>Replenishes the mana of allies in %replenish_radius% radius by <font color='#FF7800'>%base_replenish_mana% + %replenish_mana_pct%%%</font> of your own maximum mana."
 "DOTA_Tooltip_ability_item_imba_arcane_boots_Lore"              "Magi equipped with these boots are valued in battle."
 "DOTA_Tooltip_ability_item_imba_arcane_boots_Note0"            "Does not work on Meepo clones."
 "DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_ms"          "%+$move_speed"
@@ -143,20 +143,6 @@
 
 "DOTA_Tooltip_modifier_imba_black_queen_cape_active_bkb"                    "Decree of Protection"
 "DOTA_Tooltip_modifier_imba_black_queen_cape_active_bkb_Description"        "Immune to magic."
-
-// Blade Mail
-"DOTA_Tooltip_Ability_item_imba_blade_mail"                    "Blade Mail"
-"DOTA_Tooltip_ability_item_imba_blade_mail_Description"                     "<h1>Active: Damage Return</h1> Reflects any damage taken back to the unit that dealt the damage. Lasts %return_duration% seconds."
-"DOTA_Tooltip_ability_item_imba_blade_mail_Lore"                "A razor-sharp coat of mail, it is the choice of selfless martyrs in combat."
-"DOTA_Tooltip_ability_item_imba_blade_mail_Note0"              "Deals the original damage to the attacker, before reductions."
-"DOTA_Tooltip_ability_item_imba_blade_mail_Note1"              "Reflects the same damage type that the wielder was damaged with."
-"DOTA_Tooltip_ability_item_imba_blade_mail_return_damage_pct"               "%DAMAGE REFLECTION:"
-"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_int"          "+$int"
-"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_damage"                    "+$damage"
-"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_armor"                     "+$armor"
-
-"DOTA_Tooltip_modifier_imba_blade_mail_active"					"Blade Mail Reflection"
-"DOTA_Tooltip_modifier_imba_blade_mail_active_Description"		"Returning damage to attacking units."
 
 // Blight Stone
 "DOTA_Tooltip_Ability_item_imba_blight_stone"                  "Blight Stone"
@@ -707,7 +693,7 @@
 
 // Mekansm
 "DOTA_Tooltip_Ability_item_imba_mekansm"                        "Mekansm"
-"DOTA_Tooltip_ability_item_imba_mekansm_Description"            "<h1>Active: Restore</h1> Heals allies in %heal_radius% radius for %heal_amount% HP immediately, then grants them %heal_percentage%%% health regeneration and %heal_bonus_armor% armor for %heal_duration% seconds.\n<h1>Passive: Tranquility Aura </h1> Grants nearby allies %aura_health_regen% bonus HP regen per second."
+"DOTA_Tooltip_ability_item_imba_mekansm_Description"            "<h1>Active: Restore</h1> Heals allies in %heal_radius% radius for %heal_amount% HP immediately, <font color='#FF7800'>then grants them %heal_percentage%%% health regeneration and %heal_bonus_armor% armor for %heal_duration% seconds</font>.\n<h1>Passive: Tranquility Aura </h1> Grants nearby allies %aura_health_regen% bonus HP regen per second."
 "DOTA_Tooltip_ability_item_imba_mekansm_Lore"                  "A glowing jewel formed out of assorted parts that somehow fit together perfectly."
 "DOTA_Tooltip_ability_item_imba_mekansm_Note0"                  "The initial heal scales with spell amp."
 "DOTA_Tooltip_ability_item_imba_mekansm_bonus_all_stats"                    "+$all"
