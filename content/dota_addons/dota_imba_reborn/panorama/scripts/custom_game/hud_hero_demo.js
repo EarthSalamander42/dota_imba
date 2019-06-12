@@ -672,24 +672,6 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 		}
 		ZoomInCamera();
 	}
-
-}
-
-function CreateRespawnTooltip() {
-	var RespawnTooltip = $.CreatePanel("Panel", $.GetContextPanel(), "RespawnTooltip");
-	RespawnTooltip.BLoadLayout("file://{resources}/layout/custom_game/respawn_tooltip.xml", false, false);
-	RespawnTooltip.SetHasClass("Hidden", true);
-}
-
-function ToggleTutorial() {
-	if ($("#TutorialPanel").BHasClass("TutorialVisible")) {
-		Game.EmitSound('panorama.logo_rollover');
-		$("#TutorialVideo").SetURL("about:blank");
-	} else {
-		Game.EmitSound('panorama.logo_rolloff');
-		$("#TutorialVideo").SetURL("https://www.bilibili.com/video/av48342518/");
-	}
-	$("#TutorialPanel").ToggleClass("TutorialVisible");
 }
 
 (function () {
@@ -701,8 +683,6 @@ function ToggleTutorial() {
 	GameEvents.Subscribe('AllySpawned', AllySpawned);
 	GameEvents.Subscribe('AllyRemoved', AllyRemoved);
 	GameEvents.Subscribe('RespawnWear', RespawnWear);
-
-	CreateRespawnTooltip()
 
 	ID_Map = {};
 

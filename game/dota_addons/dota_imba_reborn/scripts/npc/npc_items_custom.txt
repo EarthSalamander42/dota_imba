@@ -13628,7 +13628,15 @@
 
 		"MaxUpgradeLevel"				"2"
 		"ItemBaseLevel"					"1"
-		
+
+		"precache"
+		{
+			"particle"	"particles/items2_fx/rod_of_atos.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack_radiant.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack_dire.vpcf"
+		}
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"

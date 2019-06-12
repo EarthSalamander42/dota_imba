@@ -1,7 +1,6 @@
 "use strict";
 
 function LightenDarkenColor(col, amt) {
-  
     var usePound = false;
   
     if (col[0] == "#") {
@@ -36,12 +35,8 @@ function LightenDarkenColor(col, amt) {
  		}
  	}
 
-
     return (usePound?"#":"") + color;
-  
 }
-
-
 
 function rnd(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -71,7 +66,6 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 }
 
 function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
-
 //	$.Msg("Updating player imr panel");
 
 	// set labels
@@ -96,7 +90,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
 }
 
 function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Panel) {
-
 //	$.Msg("Updating player xp panel");
 
 	var ids = {
@@ -183,6 +176,7 @@ var is_donator_set = false;
 function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer, playerId, localPlayerTeamId) {
 	var playerPanelName = "_dynamic_player_" + playerId;
 	var playerPanel = playersContainer.FindChild(playerPanelName);
+
 	if (playerPanel === null) {
 		playerPanel = $.CreatePanel("Panel", playersContainer, playerPanelName);
 		playerPanel.SetAttributeInt("player_id", playerId);
@@ -235,7 +229,6 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					var donator_color = player_table.donator_color;
 
 					if ( dark_donator_levels.indexOf( player_table.donator_level ) > -1 ) {
-
 						donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
 						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -60) + 'FF ), ' +
 						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
@@ -243,29 +236,22 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 						'to( ' +  donator_color + ' ) )';
 
 						donatorPanel.style.animationName = 'color_transition_bright';
-
 					} else {
-
 						if ( player_table.donator_level != 8 ) {
 							donator_color = LightenDarkenColor(donator_color, -30);
 						} else {
 							donator_color = LightenDarkenColor(donator_color, 20);
 						}
-						
 
 						donatorPanel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
 						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
 						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
 						'color-stop( 0.8, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
 						'to( ' +  donator_color + ' ) )';
-
 					}
 
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
-					
-
-
 
 					var bubblecount = (400) / 50 * 10;
 

@@ -9,7 +9,7 @@ if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 60 -- %
 
 	-- Double Damage
-	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 2 -- 300% damage, attribute x3
+	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 2 -- 300% damage, attribute 20%
 
 	-- Frost
 	IMBA_RUNE_FROST_ATTACK_SPEED_SLOW = -200
@@ -44,7 +44,7 @@ else
 	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 30 -- %
 
 	-- Double Damage
-	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 1 -- 200% damage, attribute x2
+	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 1 -- 200% damage, attribute 20%
 
 	-- Frost
 	IMBA_RUNE_FROST_ATTACK_SPEED_SLOW = -100
