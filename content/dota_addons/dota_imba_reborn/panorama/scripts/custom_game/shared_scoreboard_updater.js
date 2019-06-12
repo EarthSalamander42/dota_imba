@@ -1,18 +1,5 @@
 "use strict";
 
-var donator_titles = {
-	1: "IMBA Lead Developer",
-	2: "IMBA Developer",
-	3: "Administator",
-	4: "Ember Donator",
-	5: "Golden Donator",
-	6: "Donator",
-	7: "Salamander Donator",
-	8: "Icefrog Donator",
-	9: "Gaben Donator",
-	10: "Banned"
-};
-
 function LightenDarkenColor(col, amt) {
   
     var usePound = false;
@@ -242,7 +229,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					is_donator_set = true;
 
 					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
-					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = donator_titles[player_table.donator_level] || "Donator";
+					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_title_" + player_table.donator_level) || "Donator";
 
 					var dark_donator_levels = [ 1, 2, 7, 9 ];
 					var donator_color = player_table.donator_color;
