@@ -1660,6 +1660,11 @@ function imba_phoenix_supernova:OnSpellStart()
 
 	local max_attack = self:GetSpecialValueFor("max_hero_attacks")
 
+	-- Remove any existing Sun Rays that may be mid-cast
+	if not caster:HasScepter() then
+		caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
+	end
+
 	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration })
 	caster:AddNoDraw()
 

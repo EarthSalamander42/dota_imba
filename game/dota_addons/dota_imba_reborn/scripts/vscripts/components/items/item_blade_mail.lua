@@ -166,6 +166,10 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 				if keys.attacker.CalculateStatBonus then
 					keys.attacker:CalculateStatBonus()
 				end
+				
+				if keys.attacker:GetMaxHealth() <= 0 then
+					lacerate_modifier:Destroy()
+				end
 			end
 		end
 		
@@ -193,14 +197,12 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 				if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
 					keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus()
 				end
+				
+				if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
+					lacerate_modifier:Destroy()
+				end
 			end
 		end
-		
-		-- Unbricking
-		-- if keys.attacker:GetHealth() <= 0 then
-			-- keys.attacker:SetMaxHealth(1000)
-			-- keys.attacker:SetHealth(1000)
-		-- end
 	end
 end
 
@@ -210,6 +212,16 @@ end
 
 function modifier_item_imba_blade_mail_lacerate:GetEffectName()
 	return "particles/econ/items/bloodseeker/bloodseeker_ti7/bloodseeker_ti7_thirst_owner_smoke_dark.vpcf"
+end
+
+-- Unbricking
+function modifier_item_imba_blade_mail_lacerate:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():GetMaxHealth() <= 0 then
+		self:GetParent():SetMaxHealth(self:GetParent():GetBaseMaxHealth())
+		self:GetParent():SetHealth(1)
+	end
 end
 
 function modifier_item_imba_blade_mail_lacerate:DeclareFunctions()
