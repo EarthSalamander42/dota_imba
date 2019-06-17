@@ -169,7 +169,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	}
 }
 
-var is_donator_set = false;
+var is_donator_set = [];
 
 // =============================================================================
 // =============================================================================
@@ -217,13 +217,16 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		if (player_table.donator_level < 10) {
 			if (player_table.in_game_tag == 1) {
 
-				if (!is_donator_set) {
+				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
+					is_donator_set.push( playerId.toString() );
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
-					is_donator_set = true;
+					
 
 					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
-					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_title_" + player_table.donator_level) || "Donator";
+					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
+
+					donatorTitlePanel.style.visibility = "visible";
 
 					var dark_donator_levels = [ 1, 2, 7, 9 ];
 					var donator_color = player_table.donator_color;
@@ -253,37 +256,42 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
 
-					var bubblecount = (400) / 50 * 10;
+					if (!donatorPanel.FindChildTraverse("particle-holder")) {
+						donatorPanel.BCreateChildren('<Panel id="particle-holder" />');
+						var holder = donatorPanel.FindChildTraverse("particle-holder");
+						var bubblecount = 30;
+					
+						for (var i = 0; i <= bubblecount; i++) {
+							var size = rnd(50, 80) / 10;
 
-					for (var i = 0; i <= bubblecount; i++) {
-						var size = rnd(50, 80) / 10;
-
-						donatorPanel.BCreateChildren(
-							'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
-							';x:' +
-							rnd(5, 90) +
-							"%; y:" +
-							rnd(95, 85) +
-							"%;width:" +
-							size +
-							"px; height:" +
-							size +
-							"px;animation-delay: " +
-							rnd(0, 40) / 10 +
-							's;" />'
-						);
+							holder.BCreateChildren(
+								'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
+								';x:' +
+								rnd(5, 90) +
+								"%; y:" +
+								rnd(95, 85) +
+								"%;width:" +
+								size +
+								"px; height:" +
+								size +
+								"px;animation-delay: " +
+								rnd(0, 40) / 10 +
+								's;" />'
+							);
+						}
 					}
+					
 				}
-				
-				// playerPanel.style.backgroundColor = player_table.donator_color;
-				// playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
 			} else {
-				if (is_donator_set) {
+				if (is_donator_set.indexOf( playerId.toString() ) != -1) {
 					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
-					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/output.webm")';
-					is_donator_set = undefined;
+
+					var index = is_donator_set.indexOf( playerId.toString() );
+					is_donator_set.splice( index, 1 );
+					donatorTitlePanel.style.visibility = "collapse";
+					donatorPanel.FindChildTraverse("particle-holder").DeleteAsync(1);
+					donatorPanel.style.backgroundColor = "transparent";
 				}
-				// playerPanel.style.backgroundColor = "#21272fbb";
 			}
 		}
 	}
