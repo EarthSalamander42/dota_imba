@@ -3,6 +3,114 @@
 	"Version"	"1"
 
 	//=================================================================================
+	// Creeps: Good Tower 1 TOP
+	//=================================================================================
+	"npc_dota_goodguys_tower1_top"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}	
+
+	//=================================================================================
+	// Creeps: Good Tower 1 MID
+	//=================================================================================
+	"npc_dota_goodguys_tower1_mid"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}	
+
+	//=================================================================================
+	// Creeps: Good Tower 1 BOT
+	//=================================================================================
+	"npc_dota_goodguys_tower1_bot"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}
+	
+	
+	//=================================================================================
+	// Creeps: Bad Tower 1 TOP
+	//=================================================================================
+	"npc_dota_badguys_tower1_top"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}	
+
+	//=================================================================================
+	// Creeps: Bad Tower 1 MID
+	//=================================================================================
+	"npc_dota_badguys_tower1_mid"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}	
+	//=================================================================================
+	// Creeps: Bad Tower 1 BOT
+	//=================================================================================
+	"npc_dota_badguys_tower1_bot"
+	{
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"		// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackRate"				"0.9"			// Speed of attack.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2200"		// Base health.
+	}	
+
+	//=================================================================================
 	// Creeps: Good Tower 2 TOP
 	//=================================================================================
 	"npc_dota_goodguys_tower2_top"
@@ -76,7 +184,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -168,7 +276,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -260,7 +368,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -720,7 +828,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -812,7 +920,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -904,7 +1012,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2400"		// Base health.
+		"StatusHealth"				"2800"		// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.

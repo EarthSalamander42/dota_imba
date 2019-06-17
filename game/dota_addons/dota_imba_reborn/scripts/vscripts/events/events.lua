@@ -837,6 +837,34 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-dark_seer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			-- Quick entity check to see if there's too many on the map (can't do anything about it with this, but at least to provide diagnosis)
+			elseif str == "-count" then
+				local hero_count = 0
+				local creep_count = 0
+				local thinker_count = 0
+
+				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					if string.find(ent:GetName(), "hero") then
+						hero_count = hero_count + 1
+					end
+					
+					if string.find(ent:GetName(), "creep") then
+						creep_count = creep_count + 1
+					end
+					
+					if string.find(ent:GetName(), "thinker") then
+						thinker_count = thinker_count + 1
+					end
+				end
+				
+				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map.", true)
+				Say(PlayerResource:GetPlayer(keys.playerid), "From these entities, it is estimated that "..hero_count.." of them are heroes, "..creep_count.." of them are creeps, and "..thinker_count.." of them are thinkers.", true)
+			-- Yeah best not to call this ever but if you really think lag is bad or something...
+			elseif str == "-destroyparticles" then
+				for particle = 0, 99999 do
+					ParticleManager:DestroyParticle(particle, true)
+					ParticleManager:ReleaseParticleIndex(particle)
+				end
 			end
 		end
 	end
@@ -924,7 +952,7 @@ function GameMode:OnThink()
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- End the game if one team completely abandoned
-		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() then
+		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
 			if not TEAM_ABANDON then
 				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 				TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }

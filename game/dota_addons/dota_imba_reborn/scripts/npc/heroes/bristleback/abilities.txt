@@ -104,6 +104,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"disgust_duration_per_stack"		"0.02"
 			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"disgust_radius"		"250"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
