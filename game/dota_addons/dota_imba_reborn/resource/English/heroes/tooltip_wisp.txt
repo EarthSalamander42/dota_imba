@@ -33,7 +33,7 @@
 // Wisp's Spirits
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_spirits"						"Spirits"
-"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging and slowing all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode. \n<font color='#FF7800'>Synergy</font color='#FF7800'>: Spirits disarm or silence on hit, toggle Swap Spirits ability to change the effect."
+"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging <font color='#FF7800'>and slowing</font> all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode. \n<font color='#FF7800'>Synergy</font color='#FF7800'>: Spirits disarm or silence on hit, toggle Swap Spirits ability to change the effect."
 "DOTA_Tooltip_ability_imba_wisp_spirits_lore" 					"Io twists the particles of the universe with his unimaginable capabilities."
 "DOTA_Tooltip_ability_imba_wisp_spirits_creep_damage"          	"COLLISION DAMAGE:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_explosion_damage"		"EXPLOSION DAMAGE:"

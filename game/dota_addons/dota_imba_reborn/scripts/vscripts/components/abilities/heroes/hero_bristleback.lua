@@ -66,6 +66,7 @@ function imba_bristleback_viscous_nasal_goo:OnSpellStart()
 	self.disgust_knockup 			= self:GetSpecialValueFor("disgust_knockup")
 	self.base_disgust_duration 		= self:GetSpecialValueFor("base_disgust_duration")
 	self.disgust_duration_per_stack	= self:GetSpecialValueFor("disgust_duration_per_stack")
+	self.disgust_radius				= self:GetSpecialValueFor("disgust_radius")
 	
 	if not IsServer() then return end
 	
@@ -136,7 +137,7 @@ function imba_bristleback_viscous_nasal_goo:OnProjectileHit(hTarget, vLocation)
 		hTarget:EmitSound("Hero_Bristleback.ViscousGoo.Target")
 		
 		-- IMBAfication: Disgust
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, self.radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, self.disgust_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		
 		for	_, enemy in pairs(enemies) do
 			if enemy ~= hTarget then
