@@ -5654,7 +5654,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"interrupt_manual_loss_pct"		"40"			
+				"interrupt_manual_loss_pct"		"25"
 			}
 			"14"
 			{
@@ -5670,6 +5670,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"min_cd_cap"					"15"
+			}
+			
+			"17"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ms_reduction"					"30 40 50"
 			}
 		}
 	}
@@ -8494,7 +8500,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"100 115 130 145"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8616,7 +8622,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"100 110 120 130"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8781,11 +8787,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70 50 40"
+		"AbilityCooldown"				"70 55 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"280 680 800"
+		"AbilityManaCost"				"280 420 680"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8794,7 +8800,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"450 850 1050"
+				"damage"				"450 750 1050"
 			}
 			"02"
 			{
@@ -12628,6 +12634,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"260"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_9"
 			}
 
 			"03"
@@ -12736,6 +12743,108 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Omniknight's Heavenly Grace
+	//=================================================================================================================
+	"imba_omniknight_heavenly_grace"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"omniknight_repel"
+		"ScriptFile"					"components/abilities/heroes/hero_omniknight.lua"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Omniknight.Repel"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.25"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"17 16 15 14"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 90 100 110"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_omniknight.vsndevts"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+			"particle"					"particles/auras/aura_degen.vpcf"
+		}
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"status_resistance"		"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_str"		"7 14 21 28"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen"		"8 12 16 20"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"300"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"10 20 30 40"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_3"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"as_slow"				"10 20 30 40"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_3"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linger_duration"		"1.25 1.5 1.75 2.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
 
 	//=================================================================================================================
 	// Omniknight's Hammer of Virtue
@@ -12808,9 +12917,9 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"160 140 120"
+		"AbilityCooldown"					"160 150 140"
 		"AbilityCastPoint"					"0.5"
-		"AbilityCastRange"					"600"
+		"AbilityCastRange"					"1200"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -12851,7 +12960,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
+				"radius"					"1200"
 			}
 			"05"
 			{
@@ -12943,7 +13052,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"                  	"10"
+				"value"                  	"12"
 			}
 		}
 	}
@@ -13074,10 +13183,60 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"230"
+				"value"						"200"
 			}
 		}
 	}
+	
+	"special_bonus_imba_omniknight_9" // +X Purification AoE
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_omniknight_purification"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
+	
+	"special_bonus_imba_omniknight_10" // -Xs Heavenly Grace Cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_omniknight_heavenly_grace"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"8"
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Phoenix: Icarus Dive
@@ -13227,7 +13386,7 @@
 		
 		"AbilityCooldown"			"40.0 35.0 30.0 25.0"
 
-		"AbilityManaCost"			"125"
+		"AbilityManaCost"			"80 90 100 110"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13441,12 +13600,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_heal"					"8 12 16 20"
+				"base_heal"					"7 10 13 16"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hp_perc_heal"				"0.75 1.5 2.25 3"
+				"hp_perc_heal"				"0.625 1.25 1.875 2.5"
 			}			
 			"06"
 			{
@@ -13578,11 +13737,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.01"
-		"AbilityManaCost"				"200 100 0"
+		"AbilityManaCost"				"200"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"110 85 60"
+		"AbilityCooldown"				"110 100 90"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13661,7 +13820,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_cooldown"				"60"
+				"scepter_cooldown"				"90"
 			}
 		}
 	}
@@ -20747,7 +20906,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"4"
+				"bonus_damage"				"3"
 			}
 			"02"
 			{
@@ -37449,7 +37608,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"13 11 9 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37491,7 +37650,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"10 20 30 40"
+				"dps"						"20 30 40 50"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -37522,7 +37681,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"13 11 9 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37556,7 +37715,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_duration"			"1.5 2.0 2.5 3.0"
+				"root_duration"			"1.6 2.0 2.4 2.8"
 			}
 			"04"
 			{
@@ -37714,7 +37873,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"2.25 3.25 4.0 4.5"
+				"slow_duration"				"2.5 3.25 4 4.75"
 			}
 			"06"
 			{
@@ -37724,7 +37883,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_duration"			"4.0"
+				"damage_duration"			"5.0"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
@@ -37784,7 +37943,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rush_distance"				"600 700 800 1000"
+				"rush_distance"				"700 800 900 1000"
 			}
 			"02"
 			{
@@ -37814,7 +37973,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_duration"			"4.0"
+				"damage_duration"			"5.0"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
@@ -37851,7 +38010,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22.0 20.0 18.0 16.0"
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37928,7 +38087,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80 60 30"
+		"AbilityCooldown"				"70 50 30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37959,7 +38118,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"20 40 60"
+				"dps"						"30 45 60"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -37993,11 +38152,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80 60 30"
+		"AbilityCooldown"				"70 50 30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 225 275 325"
+		"AbilityManaCost"				"175 225 275"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------

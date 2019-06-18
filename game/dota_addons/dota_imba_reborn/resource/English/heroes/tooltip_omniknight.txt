@@ -32,8 +32,18 @@
 "DOTA_Tooltip_modifier_imba_repel"										"Repel"
 "DOTA_Tooltip_modifier_imba_repel_Description"							"Grants Spell Immunity and 100% Magic Resistance."
 
-"DOTA_Tooltip_modifier_imba_degen_debuff"								"Degen Aura Slow"
-"DOTA_Tooltip_modifier_imba_degen_debuff_Description"					"Slowed. Attack and move speed decreased."
+"DOTA_Tooltip_modifier_imba_degen_debuff"								"Degen Aura"
+"DOTA_Tooltip_modifier_imba_degen_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace"											"Heavenly Grace"
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_Description"								"Creates a divine barrier around an ally which grants them increased Status Resistance and Health Regeneration.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement (%ms_slow_pct%%%) and attack speed (%as_slow%) capabilities of enemy units that stray too near (%aura_radius% radius). Additionally, the aura's linger duration is increased to %linger_duration% seconds.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Aura does not stack with itself."
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_Lore"									"When faced with the pit of sacrifice, Purist's resilience to magic was tested and affirmed."
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_status_resistance"						"STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_hp_regen"								"HP REGEN:"
+
+"DOTA_Tooltip_modifier_imba_omniknight_heavenly_grace"						"Heavenly Grace"
+"DOTA_Tooltip_modifier_imba_omniknight_heavenly_grace_Description"			"Status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%, strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%, and health regen increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
 
 // Omniknight's Hammer of Virtue
 "DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue"                "Hammer of Virtue"
@@ -64,10 +74,13 @@
 
 // Omniknight's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_1"                  "+75% Hammer of Virtue damage to heal"
-"DOTA_Tooltip_ability_special_bonus_imba_omniknight_2"                  "Purification autocasts when in below 20% health"
-"DOTA_Tooltip_ability_special_bonus_imba_omniknight_3"                  "+10/10% Degen Aura attackspeed/movespeed"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_2"                  "Purification Self Auto-Cast"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_2_Description"		"Automatically applies on self when dropping below 20% health. Has an innate 30 second cooldown, independent of the standard ability."
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_3"                  "-12%/12 Degen Aura"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_4"                  "Purification automatically applies on a second target"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_5"                  "+15% Guardian Angel shield health"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_6"                  "Repel affects all nearby allies in 600 AoE"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_7"                  "-40s Guardian Angel cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_omniknight_8"                  "+230 Purification heal/damage increase"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_8"                  "+200 Purification Damage/Heal"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_9"                  "+75 Purification AoE"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_10"                  "-8s Heavenly Grace Cooldown"
