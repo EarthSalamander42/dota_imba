@@ -3388,7 +3388,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"nothl_protection_cooldown"				"60"
+				"nothl_protection_cooldown"				"90"
 			}
 			"05"
 			{
@@ -3622,7 +3622,7 @@
 			"01"
 			{	
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_reduction"		"20 35 50"
+				"cooldown_reduction"		"26 38 50"
 			}
 			"02"
 			{	
@@ -4833,7 +4833,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 100 120 140"
+		"AbilityManaCost"				"80 90 100 110"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4873,7 +4873,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"move_pct_heroes"				"5"
+				"move_pct_heroes"				"7"
 			}
 			"08"
 			{
@@ -4884,7 +4884,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_heroes"					"15 45 75 105"
+				"damage_heroes"					"20 50 80 110"
 				"CalculateSpellDamageTooltip"	"0"
 			}	
 		}
@@ -4944,12 +4944,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction_pct"	    "-40 -80 -120 -160"
+				"armor_reduction_pct"	    "-40 =70 -100 -130"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"-40 -80 -120 -160"
+				"magic_resistance_pct"		"-40 -70 -100 -130"
 			}
 		}
 	}
@@ -7793,7 +7793,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		//"AbilityChannelTime"			"1.6 1.9 2.2 2.5"	// Logic in Lua to deal with status resistance
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"30 28 26 24"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -13403,7 +13403,7 @@
 		"MaxLevel"						"4"
 		"FightRecapLevel"				"1"
 
-		"AbilityCastRange"					"1200 1400 1600 1800"
+		"AbilityCastRange"					"1250"
 
 		"AbilityCooldown"					"26 24 22 20"
 		"AbilityManaCost"					"100"
@@ -13466,7 +13466,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beam_range"				"1200 1400 1600 1800"
+				"beam_range"				"1250"
 			}
 			"10"
 			{
@@ -13706,7 +13706,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_cost_per_sec"		"6"
+				"hp_cost_per_sec"		"8"
 			}
 			"03"
 			{
@@ -18134,7 +18134,7 @@
 			"02"
 			{
 				"var_type" 				"FIELD_INTEGER"
-				"damage"				"100 190 280 370"
+				"damage"				"100 180 260 340"
 			}
 
 			"03"
@@ -18321,7 +18321,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"300 800 1000"
+		"AbilityManaCost"				"300 550 800"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21615,20 +21615,20 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"6 8 10 12"
+				"max_targets"			"6"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"link_damage_share_pct"	"16 20 24 28"
+				"link_damage_share_pct"	"12 16 20 24"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_3"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"
+				"duration"				"25"
 			}
 
 			"04"
@@ -21640,7 +21640,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"golem_link_damage_pct"	"25"
+				"golem_link_damage_pct"	"12 16 20 24"
 			}
 
 			"06"
@@ -21764,7 +21764,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50 45 40 30"
+		"AbilityCooldown"				"45 40 35 30"
 		"AbilityChannelTime"			"16"
 
 		// Cost
@@ -21847,11 +21847,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"170 135 100"
+		"AbilityCooldown"				"170 155 140"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"250 500 550"
+		"AbilityManaCost"				"250 375 500"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -21924,7 +21924,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_bounty"			"100 200 250"
+				"gold_bounty"			"100 150 200"
 			}
 			"12"
 			{
@@ -27342,7 +27342,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chance_pct"			"10 14 18 22"
+				"chance_pct"			"12 16 20 24"
 			}
 			"04"
 			{
@@ -27437,7 +27437,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"base_radius"						"425"
+				"base_radius"						"450"
 			}
 
 			"03"
@@ -28600,7 +28600,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.4"
 		"AbilityCastRange"				"650"
 
 		// Time
@@ -28609,7 +28609,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"80 105 130 155"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -30463,7 +30463,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"reflect_duration"			"2.25"
+				"reflect_duration"			"2.0"
 			}
 
 			"02"
@@ -31684,6 +31684,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
 		"HasScepterUpgrade"				"1"

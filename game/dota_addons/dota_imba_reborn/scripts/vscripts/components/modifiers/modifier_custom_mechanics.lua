@@ -109,14 +109,14 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 end
 
 -- Test fix for invincible 0 HP illusions
-function modifier_custom_mechanics:OnAttackStart( keys )
-	if not IsServer() then return end
+-- function modifier_custom_mechanics:OnAttackStart( keys )
+	-- if not IsServer() then return end
 	
-	-- Don't know if this is going to work but might as well try something to remedy the illusion issue
-	if self:GetParent() == keys.attacker and not self:GetParent():IsRealHero() and self:GetParent():GetHealth() <= 0 then
-		UTIL_Remove(self:GetParent())
-	end
-end
+	-- -- Don't know if this is going to work but might as well try something to remedy the illusion issue
+	-- if self:GetParent() == keys.attacker and not self:GetParent():IsRealHero() and self:GetParent():GetHealth() <= 0 then
+		-- UTIL_Remove(self:GetParent())
+	-- end
+-- end
 
 -- Regular lifesteal handler
 function modifier_custom_mechanics:OnAttackLanded( keys )
@@ -128,6 +128,12 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		if parent ~= attacker then
 			return end
 
+		-- Attempted fixing of invulnerable 0 hp illusions...again
+		if not attacker:IsRealHero() and (attacker:GetMaxHealth() <= 0 or attacker:GetHealth() <= 0) then
+			attacker:SetMaxHealth(attacker:GetBaseMaxHealth())
+			attacker:SetHealth(1)
+		end
+		
 		-- Else, keep going
 		local target = keys.target
 		local lifesteal_amount = parent:GetLifesteal()

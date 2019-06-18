@@ -99,14 +99,14 @@ BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
 BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
-if IsInToolsMode() then
-	BATTLEPASS_LEVEL_REWARD[185]	= {"earthshaker_arcana", "arcana"}
-end
+-- if IsInToolsMode() then
+-- 	BATTLEPASS_LEVEL_REWARD[185]	= {"earthshaker_arcana", "arcana"}
+-- end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
-if IsInToolsMode() then
-	BATTLEPASS_LEVEL_REWARD[2250]	= {"earthshaker_arcana2", "arcana"}
-end
+-- if IsInToolsMode() then
+-- 	BATTLEPASS_LEVEL_REWARD[2250]	= {"earthshaker_arcana2", "arcana"}
+-- end
 BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
@@ -199,8 +199,8 @@ function Battlepass:Init()
 			BATTLEPASS_CENTAUR[v[1]] = k
 		elseif string.find(v[1], "drow_ranger") then
 			BATTLEPASS_DROW_RANGER[v[1]] = k
-		elseif string.find(v[1], "earthshaker") then
-			BATTLEPASS_EARTHSHAKER[v[1]] = k
+		-- elseif string.find(v[1], "earthshaker") then
+		-- 	BATTLEPASS_EARTHSHAKER[v[1]] = k
 		elseif string.find(v[1], "life_stealer") then
 			BATTLEPASS_LIFE_STEALER[v[1]] = k
 		elseif string.find(v[1], "ursa") then
@@ -819,7 +819,7 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
+		elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" and false then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_immortal"] then
 				hero.fissure_pfx = "particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
 
@@ -1119,13 +1119,17 @@ function Battlepass:HasAxeArcana(ID)
 end
 
 function Battlepass:HasEarthshakerArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
-		return 1
-	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
-		return 0
-	else
-		return nil
-	end
+
+	return nil
+
+	-- if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
+	-- 	return 1
+	-- elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
+	-- 	return 0
+	-- else
+	-- 	return nil
+	-- end
+	
 end
 
 function Battlepass:InitializeTowers()

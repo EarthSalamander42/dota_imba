@@ -707,22 +707,6 @@ function modifier_special_bonus_imba_luna_lucent_beam_cooldown:IsHidden() 		retu
 function modifier_special_bonus_imba_luna_lucent_beam_cooldown:IsPurgable() 	return false end
 function modifier_special_bonus_imba_luna_lucent_beam_cooldown:RemoveOnDeath() 	return false end
 
--- function modifier_special_bonus_imba_luna_lucent_beam_cooldown:OnCreated()
-	-- self.bonus_mana	= self:GetParent():FindTalentValue("special_bonus_imba_medusa_bonus_mana")
--- end
-
--- function modifier_special_bonus_imba_luna_lucent_beam_cooldown:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MANA_BONUS
-    -- }
-
-    -- return decFuncs
--- end
-
--- function modifier_special_bonus_imba_medusa_bonus_mana:GetModifierManaBonus()
-	-- return self.bonus_mana
--- end
-
 function imba_luna_lucent_beam:OnOwnerSpawned()
 	if not IsServer() then return end
 
