@@ -99,7 +99,7 @@ function Purification(caster, ability, target)
 
     -- Ability specials
     local heal_amount = ability:GetSpecialValueFor("heal_amount")
-    local radius = ability:GetSpecialValueFor("radius")
+    local radius = ability:GetTalentSpecialValueFor("radius")
     local purifiception_duration = ability:GetSpecialValueFor("purifiception_duration")    
 
     -- #8 Talent: Purification heal/damage increase
@@ -596,9 +596,77 @@ function modifier_imba_degen_debuff:GetTexture()
     return "omniknight_degen_aura"
 end
 
+--------------------
+-- HEAVENLY GRACE --
+--------------------
 
+LinkLuaModifier("modifier_imba_omniknight_heavenly_grace", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 
+imba_omniknight_heavenly_grace				= class({})
+modifier_imba_omniknight_heavenly_grace		= class({})
 
+function imba_omniknight_heavenly_grace:GetIntrinsicModifierName()
+    return "modifier_imba_degen_aura"
+end
+
+function imba_omniknight_heavenly_grace:GetCooldown(level)
+    return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_omniknight_10")
+end
+
+function imba_omniknight_heavenly_grace:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Omniknight.Repel")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_omniknight" then
+		if self:GetCursorTarget() ~= self:GetCaster() then
+			self:GetCaster():EmitSound("omniknight_omni_ability_repel_0"..math.random(1,6))
+		else
+			local responses = {"omniknight_omni_ability_repel_01", "omniknight_omni_ability_repel_05", "omniknight_omni_ability_repel_06"}
+			
+			self:GetCaster():EmitSound(responses[RandomInt(1, #responses)])
+		end
+	end
+
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_omniknight_heavenly_grace", {duration = self:GetSpecialValueFor("duration")})
+	
+	-- "Applies a strong dispel on the target upon cast."
+	self:GetCaster():Purge(false, true, false, true, true)
+end
+
+-----------------------------
+-- HEAVENLY GRACE MODIFIER --
+-----------------------------
+
+function modifier_imba_omniknight_heavenly_grace:GetEffectName()
+	return "particles/units/heroes/hero_omniknight/omniknight_heavenly_grace_buff.vpcf"
+end
+
+function modifier_imba_omniknight_heavenly_grace:OnCreated()
+	self.status_resistance	= self:GetAbility():GetSpecialValueFor("status_resistance")
+	self.bonus_str			= self:GetAbility():GetSpecialValueFor("bonus_str")
+	self.hp_regen			= self:GetAbility():GetSpecialValueFor("hp_regen")
+end
+
+function modifier_imba_omniknight_heavenly_grace:DeclareFunctions()
+    local decFuncs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
+
+    return decFuncs
+end
+
+function modifier_imba_omniknight_heavenly_grace:GetModifierStatusResistanceStacking()
+	return self.status_resistance
+end
+
+function modifier_imba_omniknight_heavenly_grace:GetModifierBonusStats_Strength()
+	return self.bonus_str
+end
+
+function modifier_imba_omniknight_heavenly_grace:GetModifierConstantHealthRegen()
+	return self.hp_regen
+end
 
 -----------------------------------
 --       HAMMER OF VIRTUE        --
@@ -1041,6 +1109,7 @@ function modifier_imba_guardian_angel_shield:IsDebuff() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_6", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_7", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_10", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_omniknight_6 = class({})
 function modifier_special_bonus_imba_omniknight_6:IsHidden() 		return true end
@@ -1052,14 +1121,25 @@ function modifier_special_bonus_imba_omniknight_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_omniknight_7:IsPurgable() 		return false end
 function modifier_special_bonus_imba_omniknight_7:RemoveOnDeath() 	return false end
 
+modifier_special_bonus_imba_omniknight_10 = class({})
+function modifier_special_bonus_imba_omniknight_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_10:RemoveOnDeath() 	return false end
+
 function imba_omniknight_repel:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_omniknight_6") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_omniknight_6", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_omniknight_6"), "modifier_special_bonus_imba_omniknight_6", {})
+	end
+end
+
+function imba_omniknight_heavenly_grace:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_omniknight_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_omniknight_10"), "modifier_special_bonus_imba_omniknight_10", {})
 	end
 end
 
 function imba_omniknight_guardian_angel:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_omniknight_7") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_omniknight_7", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_omniknight_7"), "modifier_special_bonus_imba_omniknight_7", {})
 	end
 end
