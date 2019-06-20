@@ -226,9 +226,9 @@ function modifier_item_imba_sheepstick_debuff:GetModifierModelChange()
 end
 
 function modifier_item_imba_sheepstick_debuff:GetVisualZDelta()
-	if self:GetStackCount() == 2 then
-		return 220
-	end
+	-- if self:GetStackCount() == 2 then
+		-- return 220
+	-- end
 
 	return 0
 end
@@ -240,6 +240,7 @@ function modifier_item_imba_sheepstick_debuff:CheckState()
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
 		[MODIFIER_STATE_MUTED] = true,
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true,
 	}
 	return states
 end

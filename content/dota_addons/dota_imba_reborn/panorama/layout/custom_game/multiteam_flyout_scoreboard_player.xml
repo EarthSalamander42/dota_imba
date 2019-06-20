@@ -10,6 +10,9 @@
 
 	<Panel class="PlayerRow">
 		<Panel id="DonatorOverlay" />
+		<Panel id="DonatorTitleOverlay">
+			<Label id="DonatorTitle" text="Donator" />
+		</Panel>
 		<Panel id="PlayerRowContainer">
 			<Panel class="ScoreCol_DisplayPic ScoreboardPanel">
 				<Panel id="PlayerColorBar" />

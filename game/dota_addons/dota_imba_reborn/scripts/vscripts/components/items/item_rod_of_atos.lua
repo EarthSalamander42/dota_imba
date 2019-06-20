@@ -161,7 +161,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 		
 			local linear_projectile = {
 				Ability				= self,
-				EffectName			= "particles/hero/scaldris/ice_spell_projectile.vpcf", -- Borrowing pre-made projectile...
+				EffectName			= "particles/items2_fx/rod_of_atos_attack_"..string.lower(self.caster:GetTeamRealName())..".vpcf", -- Borrowing pre-made projectile...
 				vSpawnOrigin		= random_spawn_location,
 				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius_second,
 				fStartRadius		= 70,

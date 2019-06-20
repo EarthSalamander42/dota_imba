@@ -785,6 +785,14 @@ function CDOTA_BaseNPC:FindAbilityWithHighestCooldown()
 	return highest_cd_ability
 end
 
+function CDOTA_BaseNPC:GetTeamRealName()
+	local team = {}
+	team[2] = "Radiant"
+	team[3] = "Dire"
+
+	return team[self:GetTeamNumber()]
+end
+
 -- credits to yahnich for the following
 function CDOTA_BaseNPC:IsFakeHero()
 	if self:IsIllusion() or (self:HasModifier("modifier_monkey_king_fur_army_soldier") or self:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")) or self:IsTempestDouble() or self:IsClone() then

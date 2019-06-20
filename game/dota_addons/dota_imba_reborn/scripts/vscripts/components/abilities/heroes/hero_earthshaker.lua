@@ -687,7 +687,7 @@ function modifier_earthshaker_aftershock_lua:CastAftershock()
 			self:GetAbility(), -- ability source
 			"modifier_stunned", -- modifier name
 			{ duration = self.duration } -- kv
-		)
+		):SetDuration(self.duration * (1 - enemy:GetStatusResistance()), true)
 
 		self.damageTable.victim = enemy
 		ApplyDamage(self.damageTable)

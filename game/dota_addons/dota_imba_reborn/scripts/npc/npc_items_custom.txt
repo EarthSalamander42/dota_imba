@@ -1088,7 +1088,7 @@
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"22"
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"250"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9947,6 +9947,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastRange"				"950"
 		"AbilityCooldown"				"7"
+		"AbilitySharedCooldown"			"urn"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13628,7 +13629,15 @@
 
 		"MaxUpgradeLevel"				"2"
 		"ItemBaseLevel"					"1"
-		
+
+		"precache"
+		{
+			"particle"	"particles/items2_fx/rod_of_atos.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack_radiant.vpcf"
+			"particle"	"particles/items2_fx/rod_of_atos_attack_dire.vpcf"
+		}
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"

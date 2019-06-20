@@ -638,7 +638,7 @@ function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
 		local singularity = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 		if not singularity then return end
 		
-		if self:GetCaster():IsRooted() or self:GetCaster():IsSilenced() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or not self:GetCaster():IsAlive() then
+		if self:GetCaster():IsRooted() or self:GetCaster():IsSilenced() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or self:GetCaster():IsCommandRestricted() or not self:GetCaster():IsAlive() then
 			singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - self:GetSpecialValueFor("interrupt_disable_loss_pct")) * 0.01))
 		else
 			singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - self:GetSpecialValueFor("interrupt_manual_loss_pct")) * 0.01))
@@ -906,6 +906,8 @@ function modifier_imba_enigma_black_hole_pull:IsMotionController()  return true 
 function modifier_imba_enigma_black_hole_pull:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_LOWEST end
 
 function modifier_imba_enigma_black_hole_pull:OnCreated()
+	self.ms_reduction	= self:GetAbility():GetSpecialValueFor("ms_reduction")
+
 	if not IsServer() then return end
 	if self:GetParent():IsRoshan() then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
@@ -926,23 +928,31 @@ function modifier_imba_enigma_black_hole_pull:OnIntervalThink()
 			self:Destroy()
 		end
 	end
-	self:HorizontalMotion(self:GetParent(), FrameTime())
+	-- self:HorizontalMotion(self:GetParent(), FrameTime())
 end
 
-function modifier_imba_enigma_black_hole_pull:HorizontalMotion(unit, time)
-	self.pull_distance =  CalculatePullLength(self:GetCaster(), self:GetParent(), self.base_pull_distance) / (1.0 / FrameTime())
-	local thinker = self:GetAbility().thinker
-	local pos = unit:GetAbsOrigin()
-	if thinker and not thinker:IsNull() and self:GetAbility():IsChanneling() and not self:GetParent():HasModifier("modifier_imba_enigma_black_hole") then
-		local thinker_pos = thinker:GetAbsOrigin()
-		local next_pos = GetGroundPosition((pos + (thinker_pos - pos):Normalized() * self.pull_distance), unit)
-		unit:SetAbsOrigin(next_pos)
-	end
-end
+-- function modifier_imba_enigma_black_hole_pull:HorizontalMotion(unit, time)
+	-- self.pull_distance =  CalculatePullLength(self:GetCaster(), self:GetParent(), self.base_pull_distance) / (1.0 / FrameTime())
+	-- local thinker = self:GetAbility().thinker
+	-- local pos = unit:GetAbsOrigin()
+	-- if thinker and not thinker:IsNull() and self:GetAbility():IsChanneling() and not self:GetParent():HasModifier("modifier_imba_enigma_black_hole") then
+		-- local thinker_pos = thinker:GetAbsOrigin()
+		-- local next_pos = GetGroundPosition((pos + (thinker_pos - pos):Normalized() * self.pull_distance), unit)
+		-- unit:SetAbsOrigin(next_pos)
+	-- end
+-- end
 
 function modifier_imba_enigma_black_hole_pull:OnDestroy()
 	if not IsServer() then return end
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
+end
+
+function modifier_imba_enigma_black_hole_pull:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+end
+
+function modifier_imba_enigma_black_hole_pull:GetModifierMoveSpeedBonus_Percentage()
+	return self.ms_reduction * (-1)
 end
 
 modifier_imba_singularity = modifier_imba_singularity or class({})

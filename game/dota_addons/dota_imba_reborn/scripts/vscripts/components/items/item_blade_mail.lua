@@ -142,7 +142,7 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 
 	if keys.unit == self:GetParent() and not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then	
 		if not keys.unit:IsOther() then
-			keys.attacker:EmitSound("DOTA_Item.BladeMail.Damage")
+			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", keys.attacker:GetPlayerOwner())
 		
 			local damageTable = {
 				victim			= keys.attacker,
@@ -166,11 +166,17 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 				if keys.attacker.CalculateStatBonus then
 					keys.attacker:CalculateStatBonus()
 				end
+				
+				if keys.attacker:GetMaxHealth() <= 0 then
+					lacerate_modifier:Destroy()
+				end
 			end
 		end
 		
 		-- IMBAfication: Justice
 		if ((self:GetAbility() and self:GetAbility():GetLevel() >= 2) or self.level >= 2) and keys.attacker:GetPlayerOwner() and keys.attacker:GetPlayerOwner():GetAssignedHero() and keys.attacker ~= keys.attacker:GetPlayerOwner():GetAssignedHero() then
+			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", keys.attacker:GetPlayerOwner())
+			
 			local damageTable = {
 				victim			= keys.attacker:GetPlayerOwner():GetAssignedHero(),
 				damage			= keys.original_damage,
@@ -193,14 +199,12 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 				if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
 					keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus()
 				end
+				
+				if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
+					lacerate_modifier:Destroy()
+				end
 			end
 		end
-		
-		-- Unbricking
-		-- if keys.attacker:GetHealth() <= 0 then
-			-- keys.attacker:SetMaxHealth(1000)
-			-- keys.attacker:SetHealth(1000)
-		-- end
 	end
 end
 
@@ -210,6 +214,16 @@ end
 
 function modifier_item_imba_blade_mail_lacerate:GetEffectName()
 	return "particles/econ/items/bloodseeker/bloodseeker_ti7/bloodseeker_ti7_thirst_owner_smoke_dark.vpcf"
+end
+
+-- Unbricking
+function modifier_item_imba_blade_mail_lacerate:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():GetMaxHealth() <= 0 then
+		self:GetParent():SetMaxHealth(self:GetParent():GetBaseMaxHealth())
+		self:GetParent():SetHealth(1)
+	end
 end
 
 function modifier_item_imba_blade_mail_lacerate:DeclareFunctions()

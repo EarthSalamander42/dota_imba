@@ -172,7 +172,9 @@
 	"item_recipe_blade_mail"				"REMOVE"
 	"item_blade_mail"						"REMOVE"
 	"item_recipe_nullifier"					"REMOVE" 
-	"item_nullifier"						"REMOVE" 
+	"item_nullifier"						"REMOVE"
+	
+	"item_black_king_bar"					"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared bkb cooldown thing to work
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -203,6 +205,7 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
+	"item_imba_initiate_robe"				"REMOVE" // OP as hell for a super small subset of heroes
 
 
 	//=================================================================================================================
@@ -1316,8 +1319,29 @@
 	//=================================================================================================================
 	"item_black_king_bar"
 	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"116"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"				"2"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"65 60 55 50 45 40"
 
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4050"
+		"ItemShopTags"					"str;damage;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bkb;black king bar"
+		"ItemSellable"					"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		"AbilitySharedCooldown"			"bkb"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -1332,8 +1356,8 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"11 10 9 8 7 6"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"11.0 10.0 9.0 8.0 7.0 6.0"
 			}
 			"04"
 			{
@@ -1343,7 +1367,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"model_scale"			"60 58 56 52 50"
+				"model_scale"			"60 58 56 52 50"     // Percentage over model scale
 			}
 		}
 	}
@@ -7565,12 +7589,7 @@
 	//=================================================================================================================
 	"treant_overgrowth"
 	{
-		"MaxLevel"						"3"
-
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100 80 60"
-		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -8727,9 +8746,6 @@
 	//=================================================================================================================
 	"windrunner_focusfire"
 	{
-		"AbilityCooldown"				"60 50 40"
-		"AbilityCastRange"				"1200"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -8743,11 +8759,6 @@
 				"focusfire_damage_reduction"	"-45 -30 -15"
 				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"focusfire_damage_reduction_scepter"	"0 0 0"
-			}	
 		}
 	}
 
