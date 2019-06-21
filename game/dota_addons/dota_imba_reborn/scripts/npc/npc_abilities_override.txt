@@ -205,6 +205,7 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
+	"item_imba_initiate_robe"				"REMOVE" // OP as hell for a super small subset of heroes
 
 
 	//=================================================================================================================
