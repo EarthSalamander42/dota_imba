@@ -10617,7 +10617,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1150"
+		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
@@ -10671,7 +10671,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"150"
+				"radius"					"200"
 			}
 			"09"
 			{
@@ -10681,7 +10681,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"1150"
+				"cast_range"				"1200"
 			}
 			
 			"11"
@@ -10732,7 +10732,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"magnataur_empower"

@@ -233,55 +233,6 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-------------------------------------------------------------------------------------------------
-		-- Silencer Arcane Supremacy silence duration reduction
-		-------------------------------------------------------------------------------------------------
-		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
-			if not modifier_owner:PassivesDisabled() then
-
-				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-				local silence_reduction_pct
-				if arcane_supremacy then
-					silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct() * 0.01
-				end
-
-				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then
-						-- if reduction is 1 (or more), the modifier is completely ignored
-						if silence_reduction_pct >= 1 then
-							SendOverheadEventMessage(nil, OVERHEAD_ALERT_LAST_HIT_MISS, modifier_owner, 0, nil)
-							return false
-						else
-							keys.duration = keys.duration * (1 - silence_reduction_pct)
-						end
-					elseif IsSilentSilence(modifier_name) then
-						if silence_reduction_pct >= 1 then
-							return false
-						else
-							keys.duration = keys.duration * (1 - silence_reduction_pct)
-						end
-					end
-				end
-			end
-		end
-
-		-------------------------------------------------------------------------------------------------
-		-- Silencer Arcane Supremacy silence duration increase for Silencer's applied silences
-		-------------------------------------------------------------------------------------------------
-		if modifier_caster:HasModifier("modifier_imba_silencer_arcane_supremacy") and not modifier_owner:PassivesDisabled() then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-
-				durationIncreasePcnt = modifier_caster:FindTalentValue("special_bonus_imba_silencer_3") * 0.01
-				if durationIncreasePcnt > 0 then
-
-					-- If the modifier is a vanilla one, increase duration directly
-					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then
-						keys.duration = keys.duration * (1 + durationIncreasePcnt)
-					end
-				end
-			end
-		end
-
 		-- add particle or sound playing to notify
 		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
 			for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do

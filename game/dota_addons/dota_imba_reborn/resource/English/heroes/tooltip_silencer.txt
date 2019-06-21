@@ -18,7 +18,7 @@
 // Silencer's Glaives of Wisdom
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom"                  "Glaives of Wisdom"
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"                  "Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds.\n<font color='#FF7800'>Debate Me:</font> Each glaive hit on enemy heroes increases the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%%% for %int_reduction_duration% seconds, up to a minimum of 1 intelligence point. Stacks and refreshes the duration each hit.\n\n<font color='#00FF40'>Glaives of Wisdom is not a unique attack modifier and stacks with any other attack modifier.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"                  "Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds.\n<font color='#FF7800'>Debate Me:</font> Each glaive hit on enemy heroes increases the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%%% for %int_reduction_duration% seconds, up to a minimum of 1 intelligence point. Stacks and refreshes the duration each hit.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Note0"            "Target must be hit within 10 seconds from the last hit for the hit to count towards the silence requirement."
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Lore"            "Although lacking in traditional incantations, Nortrom's pedigree of the Aeol Drias gives him uncanny wisdom, which he applies to debates with his opponents."
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_intellect_damage_pct"         "%INT TO DAMAGE:"
@@ -59,7 +59,7 @@
 // Silencer's Arcane Supremacy
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_arcane_supremacy"                  "Arcane Supremacy"
-"DOTA_Tooltip_ability_imba_silencer_arcane_supremacy_Description"                   "Steals intelligence from enemy heroes if they die in %int_steal_range% range or Silencer deals the last hit on them.\n<font color='#FF7800'>Galaxy Brain: </font> Can steal intelligence while dead.\n<font color='#FF7800'>Global Dumbification: </font> If an enemy hero dies by any means while under the effects of Global Silence, Silencer also steals intelligence, at a reduced value.\n<font color='#FF7800'>But who silences the Silencer? :</font> Passively reduces the duration of all silences."
+"DOTA_Tooltip_ability_imba_silencer_arcane_supremacy_Description"                   "Steals intelligence from enemy heroes if they die in %int_steal_range% range or Silencer deals the last hit on them.\n<font color='#FF7800'>Galaxy Brain: </font> Can steal intelligence while dead.\n<font color='#FF7800'>Global Dumbification: </font> If an enemy hero dies by any means while under the effects of Global Silence, Silencer also steals intelligence, at a reduced value."
 "DOTA_Tooltip_ability_imba_silencer_arcane_supremacy_Lore"              "As the child of prophecy, Nortrom possesses a innate aura that dampens the effects of silences, in addition to sapping the magical strength of the units that die nearby."
 
 
@@ -89,6 +89,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_2"                    "Arcane Curse spreads in 900 radius on target death"
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_3"                    "+25% Silence duration"
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_4"                    "Arcane Supremacy now grants silence immunity"
+"DOTA_Tooltip_ability_special_bonus_imba_silencer_4_Description"		"Does not work if passives are disabled."
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_5"                    "Global Silence Glaive Extension"
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_5_Description"		"Glaives increase Global Silence debuff duration by 0.2 seconds per hit"
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_6"                    "Overrides Debate Me with a stronger effect"
