@@ -812,6 +812,24 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
+						elseif string.find(text, 'puck') and hero:GetName() == "npc_dota_hero_puck" then
+							ability_set = {
+								[0] = "imba_puck_illusory_orb",
+								[1] = "imba_puck_waning_rift",
+								[2] = "imba_puck_phase_shift",
+								[3] = "imba_puck_ethereal_jaunt",
+								[4] = "generic_hidden",
+								[5] = "imba_puck_dream_coil",
+								[6] = "special_bonus_all_stats_8",
+								[7] = "special_bonus_cast_range_175",
+								[8] = "special_bonus_spell_amplify_15",
+								[9] = "special_bonus_attack_damage_90",
+								[10] = "special_bonus_imba_puck_waning_rift_cooldown",
+								[11] = "special_bonus_imba_puck_illusory_orb_speed",
+								[12] = "special_bonus_gold_income_70",
+								[13] = "special_bonus_imba_puck_dream_coil_targets"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do

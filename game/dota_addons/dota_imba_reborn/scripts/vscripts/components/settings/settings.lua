@@ -41,7 +41,7 @@ end
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
 STRATEGY_TIME = 0.0					-- How long should strategy time last?
-SHOWCASE_TIME = 0.0				-- How long should showcase time last?
+SHOWCASE_TIME = 0.0					-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() or GetMapName() == "imba_demo" then
 	AP_BAN_TIME = 0.0
