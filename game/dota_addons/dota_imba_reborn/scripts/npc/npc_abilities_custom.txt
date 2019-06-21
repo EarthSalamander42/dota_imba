@@ -22,6 +22,7 @@
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/medusa/abilities.txt
 #base heroes/night_stalker/abilities.txt
+#base heroes/puck/abilities.txt
 #base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
