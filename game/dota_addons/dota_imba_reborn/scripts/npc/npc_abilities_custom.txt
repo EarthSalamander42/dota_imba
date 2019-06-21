@@ -11976,7 +11976,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 120 140 160"
+		"AbilityManaCost"					"110 140 170 200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12254,7 +12254,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"700 1000 1300"
+		"AbilityCastRange"						"700"
 		"AbilityCastPoint"						"0.25"
 
 		// Precache
@@ -12283,13 +12283,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"400 700 1000"
+				"radius"						"400 600 800"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"int_multiplier"				"11 12 13"
+				"int_multiplier"				"10 11 12"
 				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_10"
 			}
 
@@ -32588,7 +32588,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 12 8 4"
+		"AbilityCooldown"				"10 8 6 4"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -32612,7 +32612,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"
+				"damage"				"75 90 105 120"
 			}
 			"02"
 			{
@@ -37148,15 +37148,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange" 				"700 900 1050 1150"
+		"AbilityCastRange" 				"675 850 1025 1200"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 16 12 8"
+		"AbilityCooldown"				"13 12 11 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"110 120 130 140"
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
@@ -37186,7 +37186,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"75 175 275 375" 	
+				"damage"					"120 205 290 375" 	
 			}
 			"04"
 			{
@@ -37196,7 +37196,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"travel_distance"			"700 800 900 1000"
+				"travel_distance"			"675 850 1025 1200"
 			}
 			"06"
 			{
@@ -37234,7 +37234,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 120 150 170"
+		"AbilityManaCost"				"80 100 120 140"
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
@@ -37398,7 +37398,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"int_per_health_pct_loss"	"0.3 0.5 0.7 0.9"
+				"int_per_health_pct_loss"	"0.35 0.55 0.75 0.95"
 				"LinkedSpecialBonus"     	 "special_bonus_imba_unique_sly_king_1"
 			}
 			"02"
@@ -37427,15 +37427,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.8"
-		"AbilityCastRange" 				"500"
+		"AbilityCastRange" 				"600"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 80 60"
+		"AbilityCooldown"				"80 70 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 180 220"
+		"AbilityManaCost"				"200 250 300"
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
@@ -37466,12 +37466,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
+				"radius"					"600"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_speed"				"25"
+				"pull_speed"				"20"
 			}
 			"05"
 			{
@@ -37488,7 +37488,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_slow"					"200"
+				"as_slow"					"120 180 240"
 			}
 			"08"
 			{

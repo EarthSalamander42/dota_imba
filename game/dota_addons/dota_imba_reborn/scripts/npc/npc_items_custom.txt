@@ -1241,7 +1241,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_mana_regen"			"2.5"
+				"bonus_mana_regen"			"5.5"
 			}
 			"05"
 			{
@@ -7152,7 +7152,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_damage"			"70"
+				"blast_damage"			"80"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -7226,7 +7226,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"6.0"
+		"AbilityCooldown"				"20.0"
 		"AbilityManaCost"				"0"
 
 		// Item Info
@@ -7918,7 +7918,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"10.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
@@ -8014,7 +8014,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"10.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
@@ -10067,7 +10067,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastRange"				"950"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"26"
 		"AbilitySharedCooldown"			"bkb"
 
 		// Precache
@@ -13819,6 +13819,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"initial_charges"		"2"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_projectile_radius"		"60"
 			}
 		}
 	}

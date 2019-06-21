@@ -365,11 +365,11 @@
 "DOTA_Tooltip_ability_gyrocopter_rocket_barrage_Description"            "Launches a salvo of rockets at nearby enemy units in a radius around the Gyrocopter. Lasts 3/3.3/3.6/4 seconds."
 "DOTA_Tooltip_ability_gyrocopter_call_down_aghanim_description"                     "Adds a Side Gunner that at random attacks enemy units within a 1000 radius every 0.7 seconds."
 
-"DOTA_Tooltip_ability_invoker_alacrity_Description"                    "Invoker infuses an ally with an immense surge of energy, increasing their attack speed based on the level of <font color='#d671a9'>Wex</font> and their damage based on the level of <font color='#cabe68'>Exort</font>.\n<font color='#FF7800'>Stone Enchanter:</font> can be used on buildings."
-"DOTA_Tooltip_ability_invoker_invoke_Description"                      "Combines the properties of the elements currently being manipulated to create a new spell for Invoker to use.\n<font color='#FF7800'>Invocation Mastery:</font> Invoke grants several extra passive bonuses as it is leveled.\nAutomatically level up on level 6, 12 and 18.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_invoker_alacrity_Description"                    "Invoker infuses an ally with an immense surge of energy, increasing their attack speed based on the level of <font color='#d671a9'>Wex</font> and their damage based on the level of <font color='#cabe68'>Exort</font>.\n<font color='#FF7800'>Stone Enchanter:</font> Can be used on buildings."
+"DOTA_Tooltip_ability_invoker_invoke_Description"                      "Combines the properties of the elements currently being manipulated to create a new spell for Invoker to use.\n<font color='#FF7800'>Invocation Mastery:</font> Invoke grants several extra passive bonuses as it is leveled.\nAutomatically levels up on level 6, 12 and 18.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_invoker_invoke_bonus_intellect"                  "BONUS INTELLIGENCE:"
 "DOTA_Tooltip_ability_invoker_invoke_magic_resistance_pct"              "%MAGIC RESISTANCE:"
-"DOTA_Tooltip_ability_invoker_invoke_bonus_spellpower"                  "%spell amp:"
+"DOTA_Tooltip_ability_invoker_invoke_bonus_spellpower"                  "%SPELL AMPLIFICATION:"
 "DOTA_Tooltip_ability_invoker_invoke_spell_lifesteal"                  "%SPELL LIFESTEAL:"
 "DOTA_Tooltip_ability_invoker_invoke_cooldown_reduction_pct"            "%COOLDOWN REDUCTION:"
 
@@ -415,7 +415,7 @@
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_2"				"+120 Familiar Movement Speed"
 "DOTA_Tooltip_Ability_special_bonus_unique_earthshaker"             "-2s Enchant Totem Cooldown"
 //"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_2"           "+100 Echo Damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_3"           "+500 Fissure range"
+"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_3"           "+500 Fissure Range"
 //"DOTA_Tooltip_Ability_special_bonus_unique_rubick"                  "+400 Telekinesis Land Distance"
 //"DOTA_Tooltip_Ability_special_bonus_unique_dark_seer"               "+80 Ion Shell Damage"
 "DOTA_Tooltip_Ability_special_bonus_unique_dark_seer_2"             "+150 Vacuum AOE"

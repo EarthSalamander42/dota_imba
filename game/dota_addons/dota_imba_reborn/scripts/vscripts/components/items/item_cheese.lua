@@ -25,7 +25,7 @@ local function ConsumeCheese(parent, item)
 	if item:GetCurrentCharges() == 0 then
 		parent:RemoveItem(item)
 	else -- starting the cooldown manually is required for the auto-use
-		item:StartCooldown(item:GetCooldown(item:GetLevel()))
+		item:UseResources(false, false, true)
 	end
 end
 

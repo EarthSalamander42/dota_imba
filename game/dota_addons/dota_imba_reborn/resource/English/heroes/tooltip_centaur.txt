@@ -60,7 +60,7 @@
 
 // Centaur Warrunner's Stampede
 "DOTA_Tooltip_ability_imba_centaur_stampede"                            "Stampede"
-"DOTA_Tooltip_ability_imba_centaur_stampede_Description"                "Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede, then slows them afterwards.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_centaur_stampede_Description"                "Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede, then slows them afterwards.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_centaur_stampede_Lore"                      "rumblerumbleRUMBLERUMBLE"
 "DOTA_Tooltip_ability_imba_centaur_stampede_Note0"                      "If Nether Ward steals this spell, it makes every trample deal fixed damage instead of being based on strength."
 "DOTA_Tooltip_ability_imba_centaur_stampede_strength_damage"            "%CENTAUR'S STRENGTH AS DAMAGE:"
