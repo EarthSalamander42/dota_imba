@@ -830,6 +830,24 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_puck_dream_coil_targets"
 							}
 							upgraded = true
+						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
+							ability_set = {
+								[0] = "imba_grimstroke_dark_artistry",
+								[1] = "imba_grimstroke_ink_creature",
+								[2] = "imba_grimstroke_spirit_walk",
+								[3] = "grimstroke_scepter",
+								[4] = "generic_hidden",
+								[5] = "imba_grimstroke_soul_chain",
+								[6] = "special_bonus_movement_speed_30",
+								[7] = "special_bonus_gold_income_15",
+								[8] = "special_bonus_spell_amplify_12",
+								[9] = "special_bonus_cast_range_125",
+								[10] = "special_bonus_unique_grimstroke_3",
+								[11] = "special_bonus_unique_grimstroke_4",
+								[12] = "special_bonus_unique_grimstroke_1",
+								[13] = "special_bonus_unique_grimstroke_2"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
