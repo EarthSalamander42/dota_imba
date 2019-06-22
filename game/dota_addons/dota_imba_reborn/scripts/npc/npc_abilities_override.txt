@@ -4208,7 +4208,7 @@
 	//=================================================================================================================
 	"leshrac_split_earth"
 	{
-		"AbilityDamage"					"120 200 280 360"
+		"AbilityDamage"					"140 240 340 440"
 
 		"AbilitySpecial"
 		{
@@ -4220,7 +4220,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"150 200 250 300"
+				"radius"				"180 240 300 360"
 			}
 			"03"
 			{
@@ -4236,7 +4236,7 @@
 	"leshrac_lightning_storm"
 	{
 		"AbilityCastRange"				"800 900 1000 1100"
-		"AbilityDamage"					"80 140 200 260"
+		"AbilityDamage"					"100 180 260 340"
 			
 		"AbilitySpecial"
 		{
@@ -4289,7 +4289,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_per_second"	"20 45 70"
+				"mana_cost_per_second"	"20 40 60"
 			}
 			"02"
 			{
