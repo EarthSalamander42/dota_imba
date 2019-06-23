@@ -807,7 +807,11 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 					should_stun = 0
 				}
 
-				target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback):SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
+				local knockback_modifier = target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback)
+
+				if knockback_modifier then
+					knockback_modifier:SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
+				end
 
 				if self.attacks > self.perfectshot_attacks then
 					self.attacks = 0
@@ -839,7 +843,11 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 					should_stun = 0
 				}
 
-				target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback):SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
+				local knockback_modifier = target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback)
+
+				if knockback_modifier then
+					knockback_modifier:SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
+				end
 
 				-- Remove particles when they end
 				Timers:CreateTimer(self.headshot_duration, function()

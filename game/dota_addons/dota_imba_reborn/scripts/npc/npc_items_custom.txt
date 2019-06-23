@@ -10445,7 +10445,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lacerate_pct"			"40"
+				"lacerate_pct"			"20"
 			}
 			"06"
 			{
@@ -16043,7 +16043,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lacerate_pct"			"70"
+				"lacerate_pct"			"50"
 			}
 			"06"
 			{

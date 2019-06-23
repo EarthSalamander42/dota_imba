@@ -37,6 +37,10 @@
 "DOTA_Tooltip_Ability_imba_fountain_danger_zone_damage_pct"				"%DAMAGE:"
 "DOTA_Tooltip_Ability_imba_fountain_danger_zone_kill_radius"			"KILL RADIUS:"
 
+// Cursed Fountain
+"DOTA_Tooltip_modifier_imba_cursed_fountain"							"Cursed Fountain"
+"DOTA_Tooltip_modifier_imba_cursed_fountain_Description"				"Killing a hero while inside the fountain area increments a stack. If this reaches 2 or more stacks, attack damage, spell amplification, and stats are reverted to base as retaliation. Dying or getting a kill while not under the fountain's effect removes the debuff."
+
 //=================================================================================================================
 // Tier 1 tower abilities
 //=================================================================================================================
