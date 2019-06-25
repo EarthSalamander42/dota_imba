@@ -1071,7 +1071,7 @@ end
 
 function modifier_imba_stampede_haste:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
@@ -1079,7 +1079,7 @@ function modifier_imba_stampede_haste:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_stampede_haste:GetModifierMoveSpeed_Absolute()
+function modifier_imba_stampede_haste:GetModifierMoveSpeed_AbsoluteMin()
 	return self.absolute_move_speed
 end
 

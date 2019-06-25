@@ -212,8 +212,6 @@ function modifier_item_imba_lance_of_longinus_force_ally:IsMotionController()  r
 function modifier_item_imba_lance_of_longinus_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
-	
-	
 	if not IsServer() then return end
 	
 	-- This doesn't seem like a proper way to do things but w/e MouJiao's legacy code
@@ -236,7 +234,7 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 	self.attacked_target = {}
 	
 	self.god_piercing_radius	= self:GetAbility():GetSpecialValueFor("god_piercing_radius")
-	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent())
+	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * self:GetAbilty():GetSpecialValueFor("god_piercing_pure_pct") * 0.01
 end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnDestroy()

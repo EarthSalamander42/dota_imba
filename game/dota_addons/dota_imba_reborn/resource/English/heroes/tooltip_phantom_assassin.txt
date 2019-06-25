@@ -13,7 +13,7 @@
 
 // Phantom Assassin's Phantom Strike
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike"							"#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"             "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Description}\n<font color='#FF7800'>Dance of Death:</font> Increases Coup de Grace chance for the next %attacks% attacks.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
+"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"             "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Description}\n<font color='#FF7800'>Blink Of An Eye:</font> Disjoints projectiles.\n<font color='#FF7800'>Dance of Death:</font> Increases Coup de Grace chance for the next %attacks% attacks.\n<font color='#FF7800'>Nothin Personnel:</font> Performs instant attacks on all enemies in %projectile_width% width between Phantom Assassin and the target."
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Lore"                    "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_attack_speed"      "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_bonus_attack_speed}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_buff_duration"           "ATTACK SPEED DURATION:"

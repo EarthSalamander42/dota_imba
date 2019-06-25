@@ -78,3 +78,4 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_surge_cast_range"							"+400 Surge Cast Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_vacuum_increased_duration"					"+0.6s Vacuum/Wormhole Pull/Push Duration"
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"		"+1.5s Prismatic Bisector Slow Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_dark_seer_ion_shell_damage"							"+150 Ion Shell Damage"

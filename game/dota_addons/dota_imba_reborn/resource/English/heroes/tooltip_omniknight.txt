@@ -36,10 +36,11 @@
 "DOTA_Tooltip_modifier_imba_degen_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_ability_imba_omniknight_heavenly_grace"											"Heavenly Grace"
-"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_Description"								"Creates a divine barrier around an ally which grants them increased Status Resistance and Health Regeneration.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement (%ms_slow_pct%%%) and attack speed (%as_slow%) capabilities of enemy units that stray too near (%aura_radius% radius). Additionally, the aura's linger duration is increased to %linger_duration% seconds.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Aura does not stack with itself."
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_Description"								"Creates a divine barrier around an ally which grants them increased Strength, Status Resistance and Health Regeneration.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement (%ms_slow_pct%%%) and attack speed (%as_slow%) capabilities of enemy units that stray too near (%aura_radius% radius). Additionally, the aura's linger duration is increased to %linger_duration% seconds.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Aura does not stack with itself."
 "DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_Lore"									"When faced with the pit of sacrifice, Purist's resilience to magic was tested and affirmed."
 "DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_duration"								"DURATION:"
-"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_status_resistance"						"STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_bonus_str"								"BONUS STRENGTH:"
+"DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_status_resistance"						"%STATUS RESISTANCE:"
 "DOTA_Tooltip_ability_imba_omniknight_heavenly_grace_hp_regen"								"HP REGEN:"
 
 "DOTA_Tooltip_modifier_imba_omniknight_heavenly_grace"						"Heavenly Grace"

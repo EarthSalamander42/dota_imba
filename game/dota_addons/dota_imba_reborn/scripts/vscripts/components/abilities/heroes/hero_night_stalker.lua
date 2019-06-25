@@ -846,11 +846,29 @@ function modifier_imba_hunter_in_the_night:OnCreated()
 			self.caster:SetOriginalModel(self.night_model)
 		end
 
+		-- IMBAfication: Encroaching Terror
+		-- Yup, using Bloodseeker modifier for movement speed break again...
+		if not self:GetCaster():HasModifier("modifier_bloodseeker_thirst") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
+		end
+		
+		self:StartIntervalThink(0.5)
 	end
 end
 
 function modifier_imba_hunter_in_the_night:OnRefresh()
 	self:OnCreated()
+end
+
+function modifier_imba_hunter_in_the_night:OnIntervalThink()
+	if not IsServer() then return end
+	
+	-- Vanilla modifier for speed cap that is dispellable...keep checking to ensure the modifier stays or not
+	if self:GetParent():PassivesDisabled() then
+		self:GetParent():RemoveModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster())
+	elseif not self:GetParent():HasModifier("modifier_bloodseeker_thirst") and self:GetAbility() then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_bloodseeker_thirst", {})
+	end
 end
 
 function modifier_imba_hunter_in_the_night:IsHidden() return false end

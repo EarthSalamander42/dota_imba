@@ -205,7 +205,6 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
-	"item_imba_initiate_robe"				"REMOVE" // OP as hell for a super small subset of heroes
 
 
 	//=================================================================================================================
@@ -715,7 +714,7 @@
 	{
 		"AbilityCastRange"				"800"
 
-		"ItemStockMax"					"15"
+		"ItemStockMax"					"99"
 		"ItemStockTime"					"45.0"
 
 		"AbilitySpecial"
@@ -829,6 +828,8 @@
 		"ItemInitialStockTime"			"300.0"
 		"ItemStockTime"					"40.0"
 		"AbilityCooldown"				"0.0"
+
+		"ItemStackable"					"1"
 
 		"AbilitySpecial"
 		{
@@ -1407,21 +1408,6 @@
 		"ItemRequirements"
 		{
 			"01"						"item_chainmail;item_sobi_mask;item_imba_blight_stone"
-		}
-	}
-
-	//=================================================================================================================
-	// Rod of Atos
-	//=================================================================================================================
-	"item_rod_of_atos"
-	{
-		"AbilitySpecial"
-		{		
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
-			}
 		}
 	}
 
@@ -2253,19 +2239,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_slow"			"25 40 55 70"
-			}			
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
-				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_creeps"			"8.0 8.0 8.0 8.0"
-				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_3"
-			}			
+			}		
 		}
 	}
 
@@ -2316,7 +2290,6 @@
 	"brewmaster_primal_split"
 	{
 		"AbilityCooldown"				"100"
-		"AbilityCastPoint"				"0.65"
 		"AbilityManaCost"				"100 125 150"
 
 		// Special
@@ -2328,11 +2301,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"16 20 24"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"split_duration"			"0.6"
 			}
 		}
 	}
@@ -2347,11 +2315,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"5 4.5 4 3.5"
-		"AbilityCastPoint"				"0.25"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2361,16 +2324,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"150 300 450"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"2.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"800"
 			}
 		}
 	}
@@ -2399,16 +2352,7 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}
+
 		}
 	}
 
@@ -2512,36 +2456,6 @@
 	}
 
 	//=================================================================================================================
-	//	Broodmother: bonus Spawn Spiderling damage
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Broodmother: bonus Spiderling damage
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"22"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Broodmother: Poison Sting
 	//=================================================================================================================
 	"broodmother_poison_sting"
@@ -2563,11 +2477,6 @@
 			{		
 				"var_type"				"FIELD_FLOAT"
 				"duration_hero"			"2.5"
-			}			
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0"
 			}
 		}
 	}
@@ -2579,11 +2488,6 @@
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"spiderite_duration"			"60"
-			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -2628,21 +2532,6 @@
 	}
 
 	//=================================================================================================================
-	//	Broodmother: bonus maximum Web count
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Broodmother: Incapacitating Bite
 	//=================================================================================================================
 	"broodmother_incapacitating_bite"
@@ -2653,11 +2542,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"miss_chance"			"30 45 60 75"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-16 -26 -36 -46"
 			}
 			"03"
 			{
@@ -2715,12 +2599,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_min"				"1.0 1.66 2.33 3.0"
+				"stun_min"				"1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_max"				"2.0 3.33 4.66 6"
+				"stun_max"				"2.5 3.5 4.5 5.5"
 				"LinkedSpecialBonus"	"special_bonus_unique_chaos_knight_3"
 			}
 			"04"
@@ -2742,7 +2626,6 @@
 	"chaos_knight_reality_rift"
 	{
 		"AbilityCastRange"				"500 750 1000 1250"
-		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -2853,9 +2736,9 @@
 	//=================================================================================================================
 	"death_prophet_carrion_swarm"
 	{
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"600 690 780 870"
 		"AbilityCooldown"				"8 6 5 4"
-		"AbilityDamage"					"100 250 340 370"
+		"AbilityDamage"					"100 200 300 400"
 
 		"AbilitySpecial"
 		{
@@ -3081,6 +2964,23 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Special Bonus (+X Fissure Range)
+	//=================================================================================================================
+	"special_bonus_unique_earthshaker_3"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	//  Earthshaker: Enchant Totem
 	//=================================================================================================================
 	"earthshaker_enchant_totem"
@@ -3093,22 +2993,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"200 350 500 650"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_duration"			"14"
+				"totem_damage_percentage"	"175 275 375 475"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"distance_scepter"			"1200"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"0.5"
 			}
 			"05"
 			{
@@ -3137,7 +3027,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"0.5 1.0 1.5 2.0"
+				"tooltip_duration"		"0.8 1.2 1.6 2.0"
 			}
 		}
 	}
@@ -3169,28 +3059,13 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_damage"			"100 170 240"
+				"echo_slam_echo_damage"			"100 135 170"
 				"LinkedSpecialBonus"			"special_bonus_unique_earthshaker_2"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_initial_damage"		"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Earthshaker: bonus Echo Slam echo damage
-	//=================================================================================================================
-	"special_bonus_unique_earthshaker_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
+				"echo_slam_initial_damage"		"200"
 			}
 		}
 	}
@@ -4317,7 +4192,7 @@
 	//=================================================================================================================
 	"leshrac_split_earth"
 	{
-		"AbilityDamage"					"120 200 280 360"
+		"AbilityDamage"					"140 240 340 440"
 
 		"AbilitySpecial"
 		{
@@ -4329,7 +4204,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"150 200 250 300"
+				"radius"				"180 240 300 360"
 			}
 			"03"
 			{
@@ -4345,7 +4220,7 @@
 	"leshrac_lightning_storm"
 	{
 		"AbilityCastRange"				"800 900 1000 1100"
-		"AbilityDamage"					"80 140 200 260"
+		"AbilityDamage"					"100 180 260 340"
 			
 		"AbilitySpecial"
 		{
@@ -4398,7 +4273,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_per_second"	"20 45 70"
+				"mana_cost_per_second"	"20 40 60"
 			}
 			"02"
 			{
@@ -5470,9 +5345,7 @@
 	//=================================================================================================================
 	"furion_sprout"
 	{
-		"MaxLevel"						"4"
-		"AbilityCooldown"				"11 10 9 8"
-		"AbilityCastRange"				"625 775 1000 1300"
+		"AbilityCastRange"				"650 850 1050 1250"
 		
 		"AbilitySpecial"
 		{
@@ -5484,12 +5357,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 5.0 6.5 7.5"
+				"duration"				"3.5 4.5 5.5 6.5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"625 775 1000 1300"
+				"cast_range_tooltip"	"650 850 1050 1250"
 			}
 		}
 	}
@@ -5499,11 +5372,7 @@
 	//=================================================================================================================
 	"furion_teleportation"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastPoint"				"3.0 2.75 2.5 2.25"
-
-		"AbilityCooldown"				"50 40 30 20"
 	}
 	
 	//=================================================================================================================
@@ -5511,7 +5380,6 @@
 	//=================================================================================================================
 	"furion_force_of_nature"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastRange"				"2500"
 		"AbilityCooldown"				"37 33 29 25"
 
@@ -5520,7 +5388,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"175 325 425 475"
+				"area_of_effect"			"200 280 360 440"
 			}
 			"02"
 			{
@@ -5546,7 +5414,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 180 220"
+				"damage"					"120 170 220"
 			}
 			"05"
 			{
@@ -6089,21 +5957,6 @@
 	}
 
 	//=================================================================================================================
-	// Puck: illusory orb travel range/speed increase
-	//=================================================================================================================
-	"special_bonus_unique_puck"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Puck: Waning Rift
 	//=================================================================================================================
 	"puck_waning_rift"
@@ -6128,21 +5981,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"120 240 360 480"
 				"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Puck: Waning Rift cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_puck_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"3"
 			}
 		}
 	}
@@ -7372,6 +7210,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration_hero"			"3.5 4.0 4.5 5.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker_4"
 			}	
 			"04"	
 			{
@@ -7797,7 +7636,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"400 500 600"
+				"crit_multiplier"			"450"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"02"
@@ -7808,17 +7647,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"4.0"
+				"slow_duration"				"3.0 4.0 5.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"40 50 60"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"push_length"				"1000"
 			}
 		}
 	}
@@ -8304,7 +8138,11 @@
 	{
 		"AbilitySpecial"
 		{
-
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"45 60 75 90"
+			}
 		}
 	}
 

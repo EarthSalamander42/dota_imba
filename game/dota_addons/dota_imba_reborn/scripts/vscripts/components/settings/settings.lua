@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.14e"
+GAME_VERSION = "7.15"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -41,7 +41,7 @@ end
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
 STRATEGY_TIME = 0.0					-- How long should strategy time last?
-SHOWCASE_TIME = 20.0				-- How long should showcase time last?
+SHOWCASE_TIME = 0.0					-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() or GetMapName() == "imba_demo" then
 	AP_BAN_TIME = 0.0
@@ -594,7 +594,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = true -- Should we use vanilla couriers?
+USE_TEAM_COURIER = false -- Should we use vanilla couriers?
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

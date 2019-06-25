@@ -26,11 +26,12 @@
 		"Ability14"		"special_bonus_cooldown_reduction_15"
 		"Ability15"		"special_bonus_imba_dark_seer_vacuum_increased_duration"
 		"Ability16"		"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
-		"Ability17"		"special_bonus_unique_dark_seer"
+		"Ability17"		"special_bonus_imba_dark_seer_ion_shell_damage"
 		
 		// Removed Talents
 		// "Ability13"		"special_bonus_unique_dark_seer_2" // Increased Vacuum AoE
 		// "Ability15"		"special_bonus_unique_dark_seer_3" // AoE Surge
 		// "Ability16"		"special_bonus_unique_dark_seer_4" // Parallel Wall
+		// "Ability17"		"special_bonus_unique_dark_seer" // +X Ion Shell Damage (using custom to deal with this)
 	}
 }

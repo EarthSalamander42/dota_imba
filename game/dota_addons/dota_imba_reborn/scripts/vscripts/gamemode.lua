@@ -18,7 +18,7 @@ require('libraries/player')
 require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
--- require('libraries/selection')
+require('libraries/selection') -- For Turbo Couriers
 require('libraries/timers')
 require('libraries/wearables')
 require('libraries/wearables_warmful_ancient')

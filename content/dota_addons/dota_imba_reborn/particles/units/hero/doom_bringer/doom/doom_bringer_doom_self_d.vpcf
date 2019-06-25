@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf21:version{7a150ecc-d865-438f-ad53-5963fe1a2720} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -20,6 +20,7 @@
 			m_flTextureVWorldSize = 2500.0
 			m_nMaxTesselation = 4
 			m_nMinTesselation = 4
+			m_ColorScale = [ 255, 255, 255 ]
 		},
 	]
 	m_Operators = 
@@ -60,8 +61,8 @@
 			m_flInitialRadius = 30.0
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 38.0
-			m_flInitialSpeedMin = 160.0
-			m_flInitialSpeedMax = 160.0
+			m_flInitialSpeedMin = 900.0
+			m_flInitialSpeedMax = 900.0
 		},
 		{
 			_class = "C_INIT_RandomRadius"
@@ -69,29 +70,29 @@
 			m_flRadiusMax = 60.0
 		},
 		{
+			_class = "C_INIT_RandomAlpha"
+		},
+		{
 			_class = "C_INIT_InitialVelocityNoise"
 			m_vecOutputMin = [ 0.0, 0.0, 35.0 ]
 			m_vecOutputMax = [ 0.0, 0.0, 35.0 ]
 		},
 		{
-			_class = "C_INIT_RandomAlpha"
-		},
-		{
 			_class = "C_INIT_RemapParticleCountToScalar"
-			m_bScaleInitialRange = true
 			m_nInputMax = 1
-			m_nFieldOutput = 7
+			m_nFieldOutput = "7"
 			m_bActiveRange = true
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
 		},
 		{
 			_class = "C_INIT_RemapParticleCountToScalar"
-			m_bScaleInitialRange = true
 			m_nInputMin = 38
 			m_nInputMax = 39
-			m_nFieldOutput = 7
+			m_nFieldOutput = "7"
 			m_flOutputMin = 1.0
 			m_flOutputMax = 0.0
 			m_bActiveRange = true
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
 		},
 		{
 			_class = "C_INIT_PositionOffset"
@@ -103,7 +104,11 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 40
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 40.0
+			}
 		},
 	]
 	m_ForceGenerators = 
@@ -111,7 +116,11 @@
 		{
 			_class = "C_OP_AttractToControlPoint"
 			m_nOpEndCapState = 1
-			m_fForceAmount = 800.0
+			m_fForceAmount = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 800.0
+			}
 			m_fFalloffPower = 0.0
 		},
 	]
@@ -155,4 +164,6 @@
 			]
 		},
 	]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 3
 }

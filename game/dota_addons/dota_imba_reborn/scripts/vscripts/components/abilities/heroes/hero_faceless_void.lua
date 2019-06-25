@@ -132,7 +132,7 @@ function imba_faceless_void_time_walk:OnSpellStart()
 
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
-		caster:SetHealth(caster:GetHealth() + caster.time_walk_damage_taken)
+		caster:Heal(caster.time_walk_damage_taken, self:GetCaster())
 	end
 
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)

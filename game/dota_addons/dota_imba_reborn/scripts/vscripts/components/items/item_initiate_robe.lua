@@ -45,6 +45,8 @@ function modifier_imba_initiate_robe_passive:RemoveOnDeath() 	return false end
 function modifier_imba_initiate_robe_passive:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_initiate_robe_passive:DeclareFunctions()
 	local decFuns = {
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
@@ -54,14 +56,17 @@ function modifier_imba_initiate_robe_passive:DeclareFunctions()
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
+	self.bonus_health			= self:GetAbility():GetSpecialValueFor("bonus_health")
+	self.bonus_mana				= self:GetAbility():GetSpecialValueFor("bonus_mana")
+	self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("mana_regen")
+	self.bonus_magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resist")
+	self.mana_conversion_rate 	= self:GetAbility():GetSpecialValueFor("mana_conversion_rate")
+	self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
+
 	if IsServer() then 
 		local item = self:GetAbility()
 		self.parent = self:GetParent()
 		if self.parent:IsHero() and item then
-			self.bonus_mana_regen = item:GetSpecialValueFor("mana_regen")
-			self.bonus_magic_resistance = item:GetSpecialValueFor("magic_resist")
-			self.mana_conversion_rate = item:GetSpecialValueFor("mana_conversion_rate")
-			self.max_stacks = item:GetSpecialValueFor("max_stacks")
 			self.shield_pfx = nil
 			self:CheckUnique(true)
 			
@@ -71,9 +76,6 @@ function modifier_imba_initiate_robe_passive:OnCreated()
 			
 			self:StartIntervalThink(0.03)
 		end
-	else 
-		self.bonus_magic_resistance = 20
-		self.bonus_mana_regen = 1.0
 	end
 end
 
@@ -87,6 +89,14 @@ function modifier_imba_initiate_robe_passive:OnIntervalThink()
 
 	self.mana_raw = self:GetParent():GetMana()
 	self.mana_pct = self:GetParent():GetManaPercent()
+end
+
+function modifier_imba_initiate_robe_passive:GetModifierHealthBonus()
+	return self.bonus_health
+end
+
+function modifier_imba_initiate_robe_passive:GetModifierManaBonus()
+	return self.bonus_mana
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierConstantManaRegen()

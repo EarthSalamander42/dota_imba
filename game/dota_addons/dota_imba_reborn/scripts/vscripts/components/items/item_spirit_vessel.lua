@@ -67,7 +67,7 @@ function item_imba_spirit_vessel:OnSpellStart()
 				victim 			= self.caster,
 				damage 			= self.caster:GetMaxHealth() * (self.soul_sacrifice_max_health_pct / 100),
 				damage_type		= DAMAGE_TYPE_PURE,
-				damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NON_LETHAL,
 				attacker 		= fountain,
 				ability 		= self.ability
 			}
@@ -249,6 +249,7 @@ function modifier_item_imba_spirit_vessel_damage:OnCreated(params)
 	-- Field m_flHealthThinkRegen tried to quantize an out-of-range value (-101287.726563, range is -100.000000->1000.000000), clamping.
 	self.hp_regen_reduction_enemy	= self.ability:GetSpecialValueFor("hp_regen_reduction_enemy") * self.debuff_multiplier
 	self.enemy_hp_drain				= self.ability:GetSpecialValueFor("enemy_hp_drain") * self.debuff_multiplier
+	self.curse_activation_reduction	= self.ability:GetSpecialValueFor("curse_activation_reduction")
 	
 	if not IsServer() then return end
 	
@@ -287,7 +288,7 @@ function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	if not IsServer() then return end
 	
 	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 then
-		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = math.max(self:GetRemainingTime() - 1, 0), curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
+		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = math.max(self:GetRemainingTime() - self.curse_activation_reduction, 0), curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
 	end
 end
 
