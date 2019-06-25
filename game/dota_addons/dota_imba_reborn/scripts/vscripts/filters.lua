@@ -468,7 +468,7 @@ function GameMode:OrderFilter( keys )
 				return true
 			end
 
-			local rightful_courier = self.COURIER_PLAYER[player_id]
+			local rightful_courier = TurboCourier.COURIER_PLAYER[player_id]
 
 --			print(self.COURIER_PLAYER)
 
@@ -518,10 +518,12 @@ function GameMode:OrderFilter( keys )
 							rightful_courier:FindAbilityByName(ability:GetName()):CastAbility()
 						end
 
-						if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
+						-- print("main ent: ", PlayerResource:GetMainSelectedEntity(player_id))
+
+						-- if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
 --							print("Select rightful courier!")
 							PlayerResource:NewSelection(player_id, rightful_courier)
-						end
+						-- end
 
 --						print("Return false 1")
 						return false
@@ -1161,6 +1163,11 @@ function GameMode:BountyRuneFilter(keys)
 	-- Base gold and EXP; if the hero does not have Greevil's Greed this is basically the end
 	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
 	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+	
+	-- Testing first bounty runes giving bonus gold
+	if GameRules:GetDOTATime(false, false) < 120 then -- less than 2 min = first bounty rune
+		keys.gold_bounty = keys.gold_bounty * 1.5
+	end
 	
 	-- Greevil's Greed  logic
 	local target = self.allies[self.player_counter]

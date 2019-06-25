@@ -24191,7 +24191,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_doom_bringer.lua"
 		"AbilityTextureName"			"doom_bringer_doom"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AURA + DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
@@ -24200,12 +24200,12 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"0"
+		"HasScepterUpgrade"				"1"
 		"MaxLevel"						"3"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.45"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -24223,12 +24223,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"13.0"
+				"duration"				"16.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 70 110"
+				"damage"				"40 60 80"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
 			}
 //			"03"
@@ -24255,6 +24255,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor_bonus"			"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_duration"			"13.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_radius"			"400"
 			}
 		}
 	}
@@ -32013,7 +32023,7 @@
 			"06"
 			{
 				"var_type"					    "FIELD_INTEGER"
-				"bonus_coup_de_grace"			"1 4 7 10"
+				"bonus_coup_de_grace"			"4 6 8 10"
 				"LinkedSpecialBonus"			"special_bonus_imba_phantom_assassin_4"
 			}
 			"07"
@@ -32138,13 +32148,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"230 340 450"
+				"crit_bonus"				"230 355 480"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"15"
+				"crit_chance"				"17"
 			}
 			"03"
 			{

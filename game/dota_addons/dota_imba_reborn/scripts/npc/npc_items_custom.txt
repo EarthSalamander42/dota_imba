@@ -8268,7 +8268,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"80"
+				"bonus_damage"			"60"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
@@ -8307,29 +8307,29 @@
 	//=================================================================================================================
 	// Recipe: Initiate's Robe
 	//=================================================================================================================
-//	"item_recipe_imba_initiate_robe"
-//	{
-//		// General
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ID"							"2158"
-//		"BaseClass"						"item_datadriven"
-//		"AbilityTextureName" 			"custom/imba_recipe"
-//		"Model"							"models/props_gameplay/recipe.mdl"
-//
-//		// Item Info
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ItemCost"						"325"
-//		"ItemShopTags"					""
-//
-//		// Recipe
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ItemRecipe"					"1"
-//		"ItemResult"					"item_imba_initiate_robe"
-//		"ItemRequirements"
-//		{
-//			"01"						"item_cloak;item_infused_raindrop"
-//		}
-//	}
+	"item_recipe_imba_initiate_robe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2158"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"400"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_initiate_robe"
+		"ItemRequirements"
+		{
+			"01"						"item_point_booster;item_void_stone;item_cloak"
+		}
+	}
 
 	//=================================================================================================================
 	// Initiate's Robe
@@ -8354,9 +8354,9 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1100"
+		"ItemCost"						"3000"
 		"ItemShopTags"					"magic_resist;regen_mana"
-		"ItemQuality"					"common"
+		"ItemQuality"					"rare"
 		"ItemAliases"					"initiate robe;robe"
 
 		// Special
@@ -8366,22 +8366,34 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"1.0"
+				"mana_regen"			"2.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"magic_resist"			"20"
 			}
+			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_conversion_rate"	"100"
+				"bonus_health"			"300"			
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"250"
+				"bonus_mana"			"300"			
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_conversion_rate"	"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"300"
 			}
 		}
 	}
@@ -11126,7 +11138,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"80"
+				"bonus_as"				"60"
 			}
 			"03"
 			{
@@ -11188,7 +11200,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"7"
+				"bonus_hp_regen"		"8"
 			}
 			"17"
 			{
@@ -13553,12 +13565,17 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_sacrifice_max_health_pct"		"50"
+				"soul_sacrifice_max_health_pct"		"33"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"curse_activation_mult"		"2"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"curse_activation_reduction"		"0.5"
 			}
 		}
 	}
@@ -15308,6 +15325,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_attack_range_melee"	"90"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"god_piercing_pure_pct"	"50"
 			}
 		}
 	}

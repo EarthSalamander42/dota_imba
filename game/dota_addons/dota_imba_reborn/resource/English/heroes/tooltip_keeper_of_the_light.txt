@@ -44,6 +44,17 @@
 "DOTA_Tooltip_modifier_imba_keeper_of_the_light_mana_leak"						"Mana Leak"
 "DOTA_Tooltip_modifier_imba_keeper_of_the_light_mana_leak_Description"			"Losing mana as you move."
 
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall"						"Recall"
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Description"			"After a short delay, teleports the targeted friendly hero to your location.  If the targeted friendly hero takes player based damage during this time, the ability is interrupted."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Lore"					"Walk towards the light."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Note0"					"If Keeper of the Light dies, the spell effect is interrupted."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Note1"					"Recall will interrupt channeling spells."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Note2"					"You can disable help to prevent Keeper from casting this spell on you."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_recall_Note3"					"Can be cast through the minimap, choosing the nearest friendly hero."
+
+"DOTA_Tooltip_modifier_imba_keeper_of_the_light_recall"								"Recall"
+"DOTA_Tooltip_modifier_imba_keeper_of_the_light_recall_Description"					"Being teleported to Keeper of the Light's location."
+
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights"						"Spotlights"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_Description"			"Whenever Keeper of the Light attacks or is damaged by another unit and this ability is off cooldown, their location is marked by flying vision for a brief period of time. Spotlights also affects most of Keeper of the Light's other abilities independent of this ability's cooldown:\n<font color='#FFFFFF'>Illuminate:</font> Marks location of affected enemies for %attack_duration% second (radius equal to Illuminate's width).\n<font color='#FFFFFF'>Blinding Light:</font> Marks location for %attack_duration% second (radius equal to Blinding Light's radius).\n<font color='#FFFFFF'>Mana Leak:</font> Marks location of affected enemy for %damaged_duration% seconds any time they issue a move command (radius equal to Spotlights' passive radius).\n"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_Lore"					"The essence of Ignis Fatuus lingers far beyond the physical realm, and provides an all-seeing aid anywhere on the battlefield."

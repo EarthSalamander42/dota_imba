@@ -30,9 +30,23 @@
 "DOTA_Tooltip_ability_earthshaker_aftershock_lua_aftershock_range"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_aftershock_range}"
 "DOTA_Tooltip_ability_earthshaker_aftershock_lua_tooltip_duration"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_tooltip_duration}"
 
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua"									"Aftershock"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Description"						"Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Lore"								"The earth trembles beneath the mighty footsteps of Raigor."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Note0"								"Using items does not trigger Aftershock."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_aftershock_range"					"RADIUS:"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_tooltip_duration"					"DURATION:"
+
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua"									"#{DOTA_Tooltip_ability_earthshaker_echo_slam}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Description"						"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Description}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Lore"								"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Lore}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_echo_damage"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_echo_damage}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_damage_range"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_damage_range}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_initial_damage"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_initial_damage}"
+
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam"									"Echo Slam"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_Description"						"Shockwaves travel through the ground, damaging enemy units.  Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes."
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_Lore"								"Tectonic plates crack, mountains fold, and foes are crushed by the Echo Slam."
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_echo_damage"				"ECHO DAMAGE:"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_damage_range"				"RADIUS:"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_initial_damage"			"INITIAL DAMAGE:"

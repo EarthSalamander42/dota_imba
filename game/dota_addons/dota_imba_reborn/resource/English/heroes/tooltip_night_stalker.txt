@@ -66,7 +66,7 @@
 
 // Night Stalker's Hunter in the Night
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night"						"Hunter in the Night"
-"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Description"           "Night Stalker is in his element at night, attacking and moving with great swiftness. Can be activated during night to grant Night Stalker flying movement for %flying_duration% seconds.\n<font color='#FF7800'>Empowering Nights:</font> Hunter in the Night's bonuses increase based on the stacks of Stalker in the Night.\n<font color='#FF7800'>See Into The Night:</font> Gains bonus night vision when Hunter in the Night is active."
+"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Description"           "Night Stalker is in his element at night, attacking and moving with great swiftness. Can be activated during night to grant Night Stalker flying movement for %flying_duration% seconds.\n<font color='#FF7800'>Empowering Nights:</font> Hunter in the Night's bonuses increase based on the stacks of Stalker in the Night.\n<font color='#FF7800'>See Into The Night:</font> Gains bonus night vision when Hunter in the Night is active.\n<font color='#FF7800'>Encroaching Terror:</font> No move speed limit while Hunter in the Night is active."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Lore"                  "The hunting prowess of Balanar improves as the night beckons."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Note0"                 "While the bonus gives percentage bonus, stacks of Stalker in the Night actually give a constant increase."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_base_bonus_ms_pct"     "%MOVE SPEED BONUS:"

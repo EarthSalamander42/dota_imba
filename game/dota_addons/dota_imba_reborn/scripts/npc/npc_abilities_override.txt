@@ -205,7 +205,6 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
-	"item_imba_initiate_robe"				"REMOVE" // OP as hell for a super small subset of heroes
 
 
 	//=================================================================================================================
@@ -715,7 +714,7 @@
 	{
 		"AbilityCastRange"				"800"
 
-		"ItemStockMax"					"15"
+		"ItemStockMax"					"99"
 		"ItemStockTime"					"45.0"
 
 		"AbilitySpecial"
@@ -3060,7 +3059,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_damage"			"90 120 150"
+				"echo_slam_echo_damage"			"100 135 170"
 				"LinkedSpecialBonus"			"special_bonus_unique_earthshaker_2"
 			}
 			"05"
@@ -7211,6 +7210,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration_hero"			"3.5 4.0 4.5 5.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker_4"
 			}	
 			"04"	
 			{
@@ -7636,7 +7636,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"400 500 600"
+				"crit_multiplier"			"450"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"02"
@@ -7647,17 +7647,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"4.0"
+				"slow_duration"				"3.0 4.0 5.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"40 50 60"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"push_length"				"1000"
 			}
 		}
 	}
@@ -8143,7 +8138,11 @@
 	{
 		"AbilitySpecial"
 		{
-
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"45 60 75 90"
+			}
 		}
 	}
 

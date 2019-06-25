@@ -318,16 +318,12 @@
 // Doom Bringer's DOOM
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_doom_bringer_doom"             "Doom"
-//    "DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse that prevents an enemy Hero from casting spells or using items, while taking damage over time.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Basic Dispel"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse to any enemy Hero within range around Doombringer, from casting spells or using items, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel"
+"DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse that prevents an enemy Hero from casting spells or using items, while taking damage over time.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Death To Your Kin:</font> Doom also affects all enemies %aoe_radius% radius around the target.\n<font color='#FF7800'>Inner Hell:</font> Can be set to auto-cast to make Doom a self-targeted, %aura_radius% radius aura for %self_duration% seconds which applies Doom to nearby enemies. Casting in this fashion also gives Doombringer %armor_bonus% bonus armor for the aura's duration."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_Lore"            "When a name is tolled from the bell of Vashundol, doom is sure to follow."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_Note0"           "Units afflicted by Doom can be denied when their HP drops below 25%."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_aura_radius"       "AURA RADIUS:"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_armor_bonus"       "BONUS ARMOR:"
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_damage"          "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_duration_scepter"      "SCEPTER DURATION:"
-//    "DOTA_Tooltip_ability_imba_doom_bringer_doom_aghanim_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active."
+"DOTA_Tooltip_ability_imba_doom_bringer_doom_aghanim_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active. Duration is not increased with Inner Hell."
 
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom"            "Doomer"
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom_Description"      "All enemies around you get silenced, cannot use items, and are burned for %dMODIFIER_PROPERTY_TOOLTIP% damage per second."

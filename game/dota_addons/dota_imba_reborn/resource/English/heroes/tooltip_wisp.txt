@@ -99,7 +99,7 @@
 // Wisp's Relocate
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_relocate"          				"Relocate"
-"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain."
+"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain.\n<font color='#FF7800'>Eject!:</font> Can recast Relocate before the return time runs out to return early. However, doing so adds %eject_cooldown_mult%x the remaining timer to Relocate's cooldown."
 
 // Removed IMBAfication: <font color='#FF7800'>Castling</font color='#FF7800'>: While relocated, Io can choose to break Relocate at any given moment. When breaking Relocate, both Io and any tethered ally will return to Io's original location.
 

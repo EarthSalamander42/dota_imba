@@ -9,7 +9,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
-		"AbilityTextureName"			"puck_illusory_orb"	
+		"AbilityTextureName"			"puck_illusory_orb"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
@@ -28,7 +28,7 @@
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"110 220 330 440"
+		"AbilityDamage"					"120 235 350 465"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

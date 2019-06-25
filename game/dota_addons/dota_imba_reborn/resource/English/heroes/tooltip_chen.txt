@@ -65,8 +65,8 @@
 "DOTA_Tooltip_modifier_imba_chen_holy_persuasion_immortalized_counter"	"Immortalized Counter"
 "DOTA_Tooltip_modifier_imba_chen_holy_persuasion_immortalized_counter_Description"	"Number of creeps currently immortalized by Holy Persuasion. Immortalizing any additional creeps beyond the max number kills the oldest immortalized creep, while dying kills all immortalized creeps."
 
-"DOTA_Tooltip_modifier_imba_chen_test_of_faith_teleport"					"Rapture"
-"DOTA_Tooltip_modifier_imba_chen_test_of_faith_teleport_Description"		"Teleporting."
+"DOTA_Tooltip_modifier_imba_chen_holy_persuasion_teleport"				"Rapture"
+"DOTA_Tooltip_modifier_imba_chen_holy_persuasion_teleport_Description"	"Teleporting."
 
 "DOTA_Tooltip_modifier_imba_chen_penitence_attack_speed_buff"	"Penitence"
 "DOTA_Tooltip_modifier_imba_chen_penitence_attack_speed_buff_Description"	"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%%% attack speed."

@@ -198,6 +198,16 @@ function modifier_imba_cursed_fountain:OnIntervalThink()
 	self:GetParent():CalculateStatBonus()
 end
 
+function modifier_imba_cursed_fountain:CheckState()
+	local state = {}
+	
+	if self:GetStackCount() >= 2 then
+		state[MODIFIER_STATE_PROVIDES_VISION] = true
+	end
+	
+	return state
+end
+
 function modifier_imba_cursed_fountain:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,

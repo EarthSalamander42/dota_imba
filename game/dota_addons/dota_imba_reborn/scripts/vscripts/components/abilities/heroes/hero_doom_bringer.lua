@@ -14,12 +14,14 @@
 --
 -- Editors:
 --     EarthSalamander #42, 03.02.2018
+--	   AltiV, 23.06.2019
 
 ------------------------------
 --			DOOM
 ------------------------------
 
 LinkLuaModifier("modifier_imba_doom_bringer_doom", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_doom_bringer_doom_handler", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_doom_bringer_doom_enemies", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
 
 imba_doom_bringer_doom = class({})
@@ -32,11 +34,55 @@ function imba_doom_bringer_doom:GetAbilityTextureName()
 	return "doom_bringer_doom"
 end
 
+function imba_doom_bringer_doom:GetAOERadius()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_doom_bringer_doom_handler", self:GetCaster()) == 0 then
+		return self:GetSpecialValueFor("aoe_radius")
+	else
+		return 0
+	end
+end
+
+function imba_doom_bringer_doom:GetCastRange(location, target)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_doom_bringer_doom_handler", self:GetCaster()) == 0 then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("aura_radius")
+	end
+end
+
+function imba_doom_bringer_doom:GetBehavior()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_doom_bringer_doom_handler", self:GetCaster()) == 0 then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AURA + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
+function imba_doom_bringer_doom:GetIntrinsicModifierName()
+	return "modifier_imba_doom_bringer_doom_handler"
+end
+
 function imba_doom_bringer_doom:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local duration = self:GetSpecialValueFor("duration")
-		caster:AddNewModifier(caster, self, "modifier_imba_doom_bringer_doom", {duration = duration})
+	local caster = self:GetCaster()
+	
+	if self:GetAutoCastState() then
+		caster:AddNewModifier(caster, self, "modifier_imba_doom_bringer_doom", {duration = self:GetSpecialValueFor("self_duration")})
+	else
+		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_ANY_ORDER, false)
+		
+			for _, enemy in pairs(enemies) do
+				local doom_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = self:GetSpecialValueFor("duration")})
+				
+				if doom_modifier then
+					if not self:GetCaster():HasScepter() then
+						doom_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+					else
+						doom_modifier:SetDuration(self:GetSpecialValueFor("duration"), true)
+					end
+				end
+			end
+		end
 	end
 end
 -------------------------------------------
@@ -71,6 +117,10 @@ end
 
 function modifier_imba_doom_bringer_doom:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius")
+end
+
+function modifier_imba_doom_bringer_doom:GetAuraDuration()
+	return 0.25
 end
 
 function modifier_imba_doom_bringer_doom:GetAuraEntityReject(target)
@@ -119,18 +169,61 @@ function modifier_imba_doom_bringer_doom:OnDestroy()
 end
 
 -------------------------------------------
+modifier_imba_doom_bringer_doom_handler = class({})
+function modifier_imba_doom_bringer_doom_handler:IsHidden() return false end
+
+function modifier_imba_doom_bringer_doom_handler:IsHidden()	return true end
+
+function modifier_imba_doom_bringer_doom_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_doom_bringer_doom_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+-------------------------------------------
 modifier_imba_doom_bringer_doom_enemies = class({})
-function modifier_imba_doom_bringer_doom_enemies:IsDebuff() return false end
+function modifier_imba_doom_bringer_doom_enemies:IsDebuff() return true end
 function modifier_imba_doom_bringer_doom_enemies:IsHidden() return false end
 function modifier_imba_doom_bringer_doom_enemies:IsPurgable() return false end
 function modifier_imba_doom_bringer_doom_enemies:IsPurgeException() return false end
 function modifier_imba_doom_bringer_doom_enemies:IsStunDebuff() return false end
 function modifier_imba_doom_bringer_doom_enemies:RemoveOnDeath() return true end
+function modifier_imba_doom_bringer_doom_enemies:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 -------------------------------------------
 
 function modifier_imba_doom_bringer_doom_enemies:OnCreated()
-	--	self:GetParent():Purge(true, false, false, false, false)
-	self:StartIntervalThink(1.0)
+	if self:GetAbility() then
+		self.deniable_pct	= self:GetAbility():GetSpecialValueFor("deniable_pct")
+		self.duration		= self:GetAbility():GetSpecialValueFor("duration")
+		self.damage			= self:GetAbility():GetSpecialValueFor("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_5")
+	else
+		self.deniable_pct	= 25
+		self.duration		= self:GetAbility():GetSpecialValueFor(16)
+		self.damage			= 0
+	end
+	
+	if not IsServer() then return end
+	
+	-- This is to track Aghanim's Scepter duration and tick mechanics 
+	self.reentered = nil
+	
+	if self:GetAbility() and self:GetCaster():HasScepter() and not self:GetAbility():GetAutoCastState() then
+		self:GetParent():Purge(true, false, false, false, false)
+	end
+	
+	self:OnIntervalThink()
+	
+	self:StartIntervalThink(1.0 * (1 - self:GetParent():GetStatusResistance()))
 end
 
 function modifier_imba_doom_bringer_doom_enemies:GetEffectName()
@@ -155,17 +248,42 @@ end
 
 function modifier_imba_doom_bringer_doom_enemies:CheckState()
 	local state = {}
+	
 	state = {
 		[MODIFIER_STATE_MUTED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
-		[MODIFIER_STATE_PASSIVES_DISABLED] = true,
 	}
-
+	
+	if self:GetCaster():HasScepter() then
+		state[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	end
+	
+	if self:GetParent():GetHealthPercent() <= self.deniable_pct then
+		state[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
+	end
+	
 	return state
 end
 
 function modifier_imba_doom_bringer_doom_enemies:OnIntervalThink()
 	if IsServer() then
-		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetAbility():GetSpecialValueFor("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_5"), damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
+		
+		if self:GetAbility() and not self:GetAbility():GetAutoCastState() and self:GetCaster():HasScepter() and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 900 then
+			if self.reentered == nil then
+				self.reentered = true
+			end
+			
+			if self.reentered and self:GetElapsedTime() >= self.duration * (1 - self:GetParent():GetStatusResistance()) then
+				self:Destroy()
+			else
+				self.reentered = nil
+				self:SetDuration(self:GetRemainingTime() + 1.0, true)
+				self:StartIntervalThink(1.0)
+			end
+		else
+			self.reentered = false
+			self:StartIntervalThink(1.0 * (1 - self:GetParent():GetStatusResistance()))
+		end
 	end
 end
