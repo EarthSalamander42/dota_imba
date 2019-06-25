@@ -318,16 +318,12 @@
 // Doom Bringer's DOOM
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_doom_bringer_doom"             "Doom"
-//    "DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse that prevents an enemy Hero from casting spells or using items, while taking damage over time.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Basic Dispel"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse to any enemy Hero within range around Doombringer, from casting spells or using items, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel"
+"DOTA_Tooltip_ability_imba_doom_bringer_doom_Description"       "Inflicts a curse that prevents an enemy Hero from casting spells or using items, while taking damage over time.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Death To Your Kin:</font> Doom also affects all enemies %aoe_radius% radius around the target.\n<font color='#FF7800'>Inner Hell:</font> Can be set to auto-cast to make Doom a self-targeted, %aura_radius% radius aura for %self_duration% seconds which applies Doom to nearby enemies. Casting in this fashion also gives Doombringer %armor_bonus% bonus armor for the aura's duration."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_Lore"            "When a name is tolled from the bell of Vashundol, doom is sure to follow."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_Note0"           "Units afflicted by Doom can be denied when their HP drops below 25%."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_aura_radius"       "AURA RADIUS:"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_armor_bonus"       "BONUS ARMOR:"
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_damage"          "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_doom_bringer_doom_duration_scepter"      "SCEPTER DURATION:"
-//    "DOTA_Tooltip_ability_imba_doom_bringer_doom_aghanim_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active."
+"DOTA_Tooltip_ability_imba_doom_bringer_doom_aghanim_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active. Duration is not increased with Inner Hell."
 
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom"            "Doomer"
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom_Description"      "All enemies around you get silenced, cannot use items, and are burned for %dMODIFIER_PROPERTY_TOOLTIP% damage per second."
@@ -425,117 +421,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8"               "Full Natural Order"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8_Description"         "Natural Order reduces both physical and magical resistance."
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_9"               "-35s Earth Splitter Cooldown"
-
-// Magnus
-////===============================================================================================================
-// Magnus's Shockwave
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_magnataur_shockwave"                        "Shockwave"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_Description"            "Magnus sends out a wave of force, damaging enemy units in a line.\n<font color='#FF7800'>Polarize:</font> Polarizes any enemy heroes hit. Stacks with, but does not refresh, itself. Polarize debuff is unpurgable.\n<font color='#FF7800'>Resonate:</font> Up to %secondary_occurance% polarized enemies hit by shockwave will spawn %secondary_amount% secondary shockwaves diagonally, each dealing %secondary_damage% damage, and reaching up to half of the length of the Shockwave.\n<font color='#FF7800'>Magnetize:</font> Each shockwave applies a Magnetize stack on its targets. Magnetize stacks are depleted once every 3 seconds, and it continue until no more stacks are left. When a Magnetize stack is depleted, the target emits a Shockwave towards the nearest enemy. Shockwaves emitted from Magnetize only deal 25% of the Shockwave's damage."
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_Note0"                  "Units take primary damage on their first shockwave hit, then secondary damage on all other instances based on the same cast of the ability."
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_Lore"                    "Mt. Joerlak was a somewhat unstable mass, and Magnus has learnt to channel its reverbations."
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_damage"                  "SHOCKWAVE DAMAGE:"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"          "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_polarize_duration"                   "POLARIZE DURATION:"
-
-"DOTA_Tooltip_modifier_imba_magnetize_debuff"                          "Magnetized"
-"DOTA_Tooltip_modifier_imba_magnetize_debuff_Description"              "Releasing a Mini-shockwave every 3 seconds."
-
-////===============================================================================================================
-// Magnus's Empower
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_magnataur_empower"                          "Empower"
-"DOTA_Tooltip_ability_imba_magnataur_empower_Description"              "Gives an allied unit bonus damage and cleave on attack for %empower_duration% seconds.\n<font color='#FF7800'>Overpowered:</font> Empower is always active on Magnus, is not dispelled by Spell Immunity, and works on ranged allies (at reduced potency).\n<font color='#FF7800'>Empolarizer:</font> Empowered units will always grants Polarized debuff to nearby enemies within 900 radius from the unit. Polarized debuff granted from Empolarizer lasts 5 seconds. If the target is within the range of Empolarizer, the duration is refreshed every second.\n<font color='#FF7800'>Supercharge:</font> When using Empower on an already empowered ally, they will gain %supercharge_ms%%% movement and %supercharge_as% attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_magnataur_empower_Note0"                    "Empower's ranged splash damage is centered on the enemy target."
-"DOTA_Tooltip_ability_imba_magnataur_empower_Lore"                      "With a deep bellow, Magnus displays his true power."
-"DOTA_Tooltip_ability_imba_magnataur_empower_aghanim_description"                   "Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius."
-"DOTA_Tooltip_ability_imba_magnataur_empower_bonus_damage_pct"          "%BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_cleave_damage_pct"                     "%MELEE CLEAVE:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_cleave_damage_ranged"                  "%RANGED SPLASH:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_cleave_radius_start"                   "CLEAVE STARTING RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_cleave_radius_end"                     "CLEAVE END RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_cleave_distance"          "CLEAVE DISTANCE:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_splash_radius"            "SPLASH RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_supercharge_duration"                  "SUPERCHARGE DURATION:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_super_cleave_start"                    "SUPERCHARGE CLEAVE STARTING RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_super_cleave_end"          "SUPERCHARGE CLEAVE END RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_super_cleave_distance"                 "SUPERCHARGE CLEAVE DISTANCE:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_super_splash_radius"                   "SUPERCHARGE SPLASH RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_empower_radius_scepter"            "SCEPTER AURA RADIUS:"
-
-"DOTA_Tooltip_modifier_imba_empower"                        "Empower"
-"DOTA_Tooltip_modifier_imba_empower_Description"                        "Attacks will cleave and deal %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%% increased damage."
-
-"DOTA_Tooltip_modifier_imba_supercharged"                              "Overcharge"
-"DOTA_Tooltip_modifier_imba_supercharged_Description"                  "Hastened by Empower."
-
-"DOTA_Tooltip_modifier_imba_ubercharged"                    "Ubercharge"
-"DOTA_Tooltip_modifier_imba_ubercharged_Description"                    "Create Mini-shockwaves on landing an attack."
-
-"DOTA_Tooltip_modifier_imba_ubercharged_indicator"                      "Ubercharge Cooldown"
-"DOTA_Tooltip_modifier_imba_ubercharged_indicator_Description"          "Ubercharge has a 1 second cooldown interval when applying Mini-shockwaves."
-
-////===============================================================================================================
-// Magnus's Skewer
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_magnataur_skewer"                            "Skewer"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_Description"                "Magnus rushes forward, goring enemy units on his massive tusk. Heroes hit on the way will be dragged to the destination, then damaged and slowed.\n<font color='#FF7800'>Quantum Entanglement:</font> If more than one polarized enemy is caught in Skewer, all of them become temporarily entangled together, stuck inside each other.\n<font color='#FF7800'>Beg my pardon... And my horn:</font> Skewer can be re-activated mid-movement. If triggered in this manner, it ends instantly, launching affected targets %pardon_min_range% units away from Magnus, dealing bonus damage and slow."
-"DOTA_Tooltip_ability_imba_magnataur_skewer_Note0"                      "Magnus charges at %speed% speed."
-"DOTA_Tooltip_ability_imba_magnataur_skewer_Lore"                      "Magnoceros horns are valuable in direct proportion to their danger to prospective merchants."
-"DOTA_Tooltip_ability_imba_magnataur_skewer_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_range"                      "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_slow"                      "%SLOW:"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_slow"                "%BONUS SLOW:"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_slow_duration"              "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_entangle_dur"              "ENTANGLE DURATION:"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_extra_dmg"          "BONUS DAMAGE:"
-
-"DOTA_Tooltip_modifier_imba_skewer_slow"                    "Skewered"
-"DOTA_Tooltip_modifier_imba_skewer_slow_Description"                    "Slowed by Skewer. Ouch...ouch...ouch..."
-
-"DOTA_Tooltip_modifier_imba_skewer_entangle"                            "Entangled"
-"DOTA_Tooltip_modifier_imba_skewer_entangle_Description"                "Entangled inside another unit and unable to move."
-
-////===============================================================================================================
-// Magnus's Reverse Polarity
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity"                  "Reverse Polarity"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Description"                  "Magnus changes properties of matter, pulling enemies towards him. Enemies which are near enough will also be damaged and stunned.\n<font color='#FF7800'>Polarize:</font> Polarizes enemy heroes hit for %polarize_duration% seconds. Stacks with, but does not refresh, itself.\n<font color='#FF7800'>Shake the world:</font> Pulls all enemy heroes on the map.\n<font color='#FF7800'>Non-reverse Polarity:</font> Polarized enemies are pulled from much longer. This extra pull increases even further with more Polarize stacks."
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Note0"            "Movement, slow and stun all pierce Magic Immunity."
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Note1"            "Breaks trees around the targets' trajectory."
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Lore"            "Look at my horn, my horn is amazing..."
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_main_radius"                  "STUN RADIUS:"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_hero_stun_duration"           "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_pull_per_stack"               "PULL PER POLARIZE STACK:"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_global_pull"                  "GLOBAL PULL DISTANCE:"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_polarize_duration"            "POLARIZE DURATION:"
-
-"DOTA_Tooltip_modifier_imba_polarize_debuff"                            "Polarized"
-"DOTA_Tooltip_modifier_imba_polarize_debuff_Description"                "Makes you more susceptible to Magnus' abilities."
-
-"DOTA_Tooltip_modifier_imba_reverse_polarity_slow"                      "Tackling Polarity"
-"DOTA_Tooltip_modifier_imba_reverse_polarity_slow_Description"          "Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
-
-
-////===============================================================================================================
-// Magnus's Custom Talents
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_1"                   "Shockwave now always spawn secondary shockwaves halfway through"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_2"                   "Polarized enemies pulled by Reverse Polarity but didn't get stunned are slowed by 60% for 3 seconds"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_3"                   "Supercharge grants the target's 30% main attribute as bonus damage"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_4"                   "Skewer causes a Mini-Reverse Polarity on cast"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_5"                   "Shockwave roots the target briefly for 1 second, secondary Shockwave roots for 0.5 seconds"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_6"                   "Empower grants melee targets 360 degrees cleave radius"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_7"                   "Polarized enemies are constantly pulled towards their closest ally"
-"DOTA_Tooltip_ability_special_bonus_imba_magnataur_8"                   "Applying Empower on an already Supercharged target makes it Ubercharged"
-
 
 // Necrophos / Necrolyte
 ////===============================================================================================================
@@ -1212,7 +1097,7 @@
 // Riki's Tricks of the Trade
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -2020,25 +1905,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_tinker_6"          "Rearm grants shield equal to 25% of max HP"
 "DOTA_Tooltip_ability_special_bonus_imba_tinker_7"          "Reduces all cast animations by 70%"
 "DOTA_Tooltip_ability_special_bonus_imba_tinker_8"          "Rearm's channel time converted to cooldown"
-
-////===============================================================================================================
-////===============================================================================================================
-//// Tidehunter
-////===============================================================================================================
-////===============================================================================================================
-
-////===============================================================================================================
-// Tidehunter's Ravage
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tidehunter_ravage"                           "Ravage"
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Description"               "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units."
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Lore"                       "Calling to the abyssal god Maelrawn has resulted in entire armadas being lost at sea."
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Note0"                     "Ravage will hit invisible units."
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Note1"                     "Ravage waves move outwards at a speed of 775/775/775/900/1050/1150."
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_damage"                     "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_radius"                     "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_duration"                   "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 // Troll Warlord
 ////===============================================================================================================

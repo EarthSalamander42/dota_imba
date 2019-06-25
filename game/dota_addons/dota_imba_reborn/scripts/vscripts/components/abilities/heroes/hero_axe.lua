@@ -44,7 +44,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 	local ability                   =       self
 
 	-- Ability specials
-	local radius                    =      ability:GetSpecialValueFor("radius") + caster:FindTalentValue("special_bonus_imba_axe_1")
+	local radius                    =      ability:GetSpecialValueFor("radius")
 	self:GetCaster():EmitSound("Hero_Axe.Berserkers_Call")
 
 	-- On cast, hit 1 or more units
@@ -389,9 +389,9 @@ function imba_axe_battle_hunger:ApplyBattleHunger(caster, target)
 	-- Roshan Battle Hunger doesn't pause due to no damage done, sorry, no cheesing
 	-- feel free to cast on creeps, though
 	if target:IsRoshan() then
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = true})
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = true}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	else
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = false})
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = false}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	end
 end
 -------------------------------------------
@@ -437,13 +437,6 @@ function modifier_imba_battle_hunger_debuff_dot:OnCreated( params )
 		self.maddening_chance_pct = self:GetAbility():GetSpecialValueFor("maddening_chance_pct")
 		self.max_maddening_duration = self:GetAbility():GetSpecialValueFor("max_maddening_duration")
 		self.maddening_buffer_distance = self:GetAbility():GetSpecialValueFor("maddening_buffer_distance")
-
-		-- Talent : If Battle Hunger'ed target attacks an ally, cast Battle Hunger on them (with original duration)
-		if self.caster:HasTalent("special_bonus_imba_axe_1") then
-			self.spread_enabled = true
-		else
-			self.spread_enabled = false
-		end
 
 		self.no_pause = params.no_pause
 		self.pause_time = self:GetAbility():GetSpecialValueFor("pause_time")
@@ -616,8 +609,8 @@ function modifier_imba_battle_hunger_debuff_dot:OnAttack(keys)
 				self.deny_modifier:Destroy()
 			end
 
-			-- If we have talent, target gets Battle Hunger'ed
-			if self.spread_enabled and keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
+			-- Target gets Battle Hunger'ed
+			if keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
 				if self:GetAbility() and self:GetAbility().ApplyBattleHunger then
 					self:GetAbility():ApplyBattleHunger(self.caster, keys.target)
 				end

@@ -181,17 +181,16 @@
 
 // Bloodthorn
 "DOTA_Tooltip_Ability_item_imba_bloodthorn"                    "Bloodthorn"
-"DOTA_Tooltip_ability_item_imba_bloodthorn_Description"                     "<h1>Active: Soul Scourge</h1> Silences a target for %silence_duration% seconds. When the silence ends, the target will take magical damage equal to %silence_damage_percent%%% of all the damage taken while silenced. All attacks on the silenced target will have True Strike and land a %target_crit_multiplier%%% damage crit on impact.\n<h1><font color='#FF7800'>Passive: Pile On!</font></h1> Each attack landed on a silenced target increases the next attacks' crit multiplier by %crit_mult_increase%%%.\n<h1><font color='#FF7800'>Passive: Malevolent Mastery</font></h1> Grants +%spell_power% spell amp, and a %crit_chance%%% chance to crit for %crit_damage%%% damage with your regular attacks."
+"DOTA_Tooltip_ability_item_imba_bloodthorn_Description"                     "<h1>Active: Soul Rend</h1> Silences a target for %silence_duration% seconds. At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.<br><br>All attacks on the silenced target will have True Strike and 100% chance to crit for %target_crit_multiplier%%% damage.\n<h1>Passive: Critical Strike</h1> Grants a %crit_chance%%% chance for attacks to inflict %crit_damage%%% damage.\n<h1><font color='#FF7800'>Active: Pile On!</font></h1> Each attack landed on a Soul Rended target increases the next attack's crit multiplier by %crit_mult_increase%%%.\n<h1><font color='#FF7800'>Passive: Malevolent Mastery</font></h1> Grants +%spell_power%%% Spell Amplification."
 "DOTA_Tooltip_ability_item_imba_bloodthorn_Lore"                "Lucifer's favorite sword, this blade applies not one, but eleven different curses to its target, causing it to feel increased pain from any source of injury."
-"DOTA_Tooltip_ability_item_imba_bloodthorn_Note0"              "spell amp from Orchid-based items does not stack with itself."
+"DOTA_Tooltip_ability_item_imba_bloodthorn_Note0"              				"Spell Amplification from multiple Orchid-based items do not stack."
 "DOTA_Tooltip_ability_item_imba_bloodthorn_bonus_intellect"                 "+$int"
 "DOTA_Tooltip_ability_item_imba_bloodthorn_bonus_attack_speed"              "+$attack"
 "DOTA_Tooltip_ability_item_imba_bloodthorn_bonus_damage"                    "+$damage"
 "DOTA_Tooltip_ability_item_imba_bloodthorn_bonus_mana_regen"                "+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_bloodthorn_spell_power"                     "%spell amp:"
 
-"DOTA_Tooltip_modifier_item_imba_bloodthorn_debuff"            "Soul Scourge"
-"DOTA_Tooltip_modifier_item_imba_bloodthorn_debuff_Description"             "Silenced and unable to dodge. Incoming attacks are sure to crit."
+"DOTA_Tooltip_modifier_item_imba_bloodthorn_debuff"            				"Soul Rend"
+"DOTA_Tooltip_modifier_item_imba_bloodthorn_debuff_Description"             "Silenced, unable to evade attacks, and taking 30%% increased damage, dealt at the end of the duration of the debuff as magic damage.\nCauses all incoming attacks to crit for 145%% damage."
 
 // Boots of Travel
 "DOTA_Tooltip_ability_item_imba_travel_boots"                   "Boots of Travel"
@@ -407,7 +406,7 @@
 
 // Echo Sabre
 "DOTA_Tooltip_Ability_item_imba_echo_sabre"                    "Echo Sabre"
-"DOTA_Tooltip_ability_item_imba_echo_sabre_Description"                     "<h1>Passive: Echo Strike</h1> When off-cooldown, causes your attacks to hit twice in quick succession. Double attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#00FF40'>Does not work on ranged heroes.</font>"
+"DOTA_Tooltip_ability_item_imba_echo_sabre_Description"                     "<h1>Passive: Echo Strike</h1> When off-cooldown, causes your attacks to hit twice in quick succession. Double attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#FF0000'>Does not work on ranged heroes.</font>"
 "DOTA_Tooltip_ability_item_imba_echo_sabre_Lore"                "A deceptively swift blade, imbued with Resonant magic."
 "DOTA_Tooltip_ability_item_imba_echo_sabre_Note0"              "Upon proccing, grants the user 490 attack speed or doubles your current bonus, whichever is higher, until the next attack."
 "DOTA_Tooltip_ability_item_imba_echo_sabre_bonus_intellect"                 "+$int"
@@ -438,13 +437,9 @@
 
 // Eye of Skadi
 "DOTA_Tooltip_Ability_item_imba_skadi"                          "Eye of Skadi"
-"DOTA_Tooltip_ability_item_imba_skadi_Description"              "<h1><font color='#FF7800'>Active: Dead Winter Reigns</font></h1> Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Effect radius, damage and root duration are based on your attributes:<br>Every 100 <font color='#FF0000'>strength</font> adds %radius_tooltip% range.<br>Every 100 <font color='#00FF00'>agility</font> adds %damage_tooltip% damage.<Br>Every 100 <font color='#4060FF'>intelligence</font> adds %duration_tooltip% seconds duration.\n<h1><font color='#FF7800'>Passive: Wintergrasp</font></h1> Damaging enemies will slow them. The slow lasts longer on enemies closer to you."
+"DOTA_Tooltip_ability_item_imba_skadi_Description"              "<h1><font color='#FF7800'>Active: Dead Winter Reigns</font></h1> Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Effect radius, damage and root duration are based on your attributes:<br>Every 100 <font color='#FF0000'>strength</font> adds %radius_tooltip% range.<br>Every 100 <font color='#00FF00'>agility</font> adds %damage_tooltip% damage.<Br>Every 100 <font color='#4060FF'>intelligence</font> adds %duration_tooltip% seconds duration.\n<h1>Passive: Cold Attack</h1> <font color='#FF7800'>Any types of sourced damage</font> lower enemy attack speed by %slow_as% and movement speed by %slow_ms%%%. <font color='#FF7800'>The slow lasts longer on enemies closer to you (linear scaling from to %max_duration% seconds at minimum range to %min_duration% second at %slow_range_cap%, with no affect beyond %max_distance% range), and is not affected by melee or ranged usage.</font>"
 "DOTA_Tooltip_ability_item_imba_skadi_Lore"                    "Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
-"DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Slow lasts at most 5, at least 1 second."
-"DOTA_Tooltip_ability_item_imba_skadi_Note1"                    "Minimum slow duration happens beyond 1000 range."
-"DOTA_Tooltip_ability_item_imba_skadi_Note2"                    "Activation grants flying vision in the same radius as the effect."
-"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"                  "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_item_imba_skadi_slow_as"                  "ATTACK SLOW:"
+"DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Activation grants flying vision in the same radius as the effect."
 "DOTA_Tooltip_ability_item_imba_skadi_base_radius"              "BASE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_duration"            "BASE DURATION:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_damage"              "BASE DAMAGE:"
@@ -584,13 +579,14 @@
 
 // Initiate's Robe
 "DOTA_Tooltip_Ability_item_imba_initiate_robe"                  "Initiate's Robe"
-"DOTA_Tooltip_ability_item_imba_initiate_robe_Description"                  "<h1>Passive: Equivalent exchange </h1> Converts %mana_conversion_rate%%% of any mana you spend or lose into a magic shield, which absorbs all incoming damage. The magic shield can only stack up to 250, but can be recharged infinitely. Each stack absorbs one point of damage."
+"DOTA_Tooltip_ability_item_imba_initiate_robe_Description"                  "<h1>Passive: Equivalent Exchange </h1> Converts %mana_conversion_rate%%% of any mana you spend or lose into a magic shield, which absorbs all incoming damage. The magic shield can only stack up to %max_stacks%, but can be recharged infinitely. Each stack absorbs one point of damage."
 "DOTA_Tooltip_ability_item_imba_initiate_robe_Lore"            "The secret to all elder mages' longevity, this robe protects its wearer from minor blows and bruises, as long as it is constantly supplied with arcane essences."
 "DOTA_Tooltip_ability_item_imba_initiate_robe_Note0"            "Damage absorption is calculated after all other reductions."
 "DOTA_Tooltip_ability_item_imba_initiate_robe_Note1"            "Mana burned or lost through other means also feeds the magic shield."
+"DOTA_Tooltip_ability_item_imba_initiate_robe_bonus_health"                 "+$health"
+"DOTA_Tooltip_ability_item_imba_initiate_robe_bonus_mana"					"+$mana"
 "DOTA_Tooltip_ability_item_imba_initiate_robe_magic_resist"                 "%+$spell_resist"
 "DOTA_Tooltip_ability_item_imba_initiate_robe_mana_regen"                   "+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_initiate_robe_max_stacks"                   "MAGIC SHIELD CAP:"
 
 "DOTA_Tooltip_modifier_imba_initiate_robe_passive"                  "Magic Shield"
 "DOTA_Tooltip_modifier_imba_initiate_robe_passive_Description"      "Absorbing incoming damage based on stacks."
@@ -846,7 +842,7 @@
 
 // Octarine Core
 "DOTA_Tooltip_Ability_item_imba_octarine_core"                  "Octarine Core"
-"DOTA_Tooltip_ability_item_imba_octarine_core_Description"                  "<h1>Passive: Magus Supremacy </h1> Reduces the cooldown of all spells and items by %bonus_cooldown%%%. <font color='#FF0000'>Cooldown Reduction does not stack with Frantic.</font>\n<h1>Passive: Magus' will</h1> Grants %spell_lifesteal%%% spell lifesteal.\n<h1><font color='#FF7800'>Toggle: Magus Presence</font></h1> When off-cooldown, your next spell cast deals damage to nearby enemies based on its mana cost."
+"DOTA_Tooltip_ability_item_imba_octarine_core_Description"                  "<h1><font color='#FF7800'>Toggle: Magus Presence</font></h1> When off cooldown and toggled on, your next spell cast also unleashes a %blast_radius% radius magical blast, dealing %blast_damage%%% of its mana cost as damage.\n<h1>Passive: Cooldown Reduction</h1> Reduces the cooldown of all spells and items by %bonus_cooldown%%%.<br><br><font color='#FF0000'>Cooldown Reduction does not stack with Frantic.</font>\n<h1>Passive: Spell Lifesteal</h1> %spell_lifesteal%%% of spell damage dealt to enemy heroes is returned to the caster as health, regardless of spell damage type.<br><br><font color='#FF7800'>Lifesteal is not reduced against creeps.</font>"
 "DOTA_Tooltip_ability_item_imba_octarine_core_Lore"            "Masterful spellcraft, performed by incredibly talented Magi, can be both beautiful and terrifying to behold."
 "DOTA_Tooltip_ability_item_imba_octarine_core_Note0"            "Magus Presence deals magical damage. Despite the animation, enemies will be damaged instantly."
 "DOTA_Tooltip_Ability_item_imba_octarine_core_Note1"            "Cooldown reduction does not stack with Kaya and Arcane Nexus cooldown reduction."
@@ -854,9 +850,6 @@
 "DOTA_Tooltip_ability_item_imba_octarine_core_bonus_health"                 "+$health"
 "DOTA_Tooltip_ability_item_imba_octarine_core_bonus_mana"                   "+$mana"
 "DOTA_Tooltip_ability_item_imba_octarine_core_bonus_health_regen"           "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_cooldown"               "%COOLDOWN REDUCTION:"
-"DOTA_Tooltip_ability_item_imba_octarine_core_spell_lifesteal"              "%SPELL LIFESTEAL:"
-"DOTA_Tooltip_ability_item_imba_octarine_core_blast_damage"                 "%MAGUS' PRESENCE DAMAGE:"
 
 // Orb of Venom
 "DOTA_Tooltip_Ability_item_imba_orb_of_venom"                  "Orb of Venom"
@@ -869,14 +862,13 @@
 
 // Orchid Malevolence
 "DOTA_Tooltip_Ability_item_imba_orchid"                        "Orchid Malevolence"
-"DOTA_Tooltip_ability_item_imba_orchid_Description"            "<h1>Active: Soul Burn</h1> Silences an enemy for %silence_duration% seconds. When the silence ends, the target will take magical damage equal to %silence_damage_percent%%% of all the damage taken while silenced.\n<h1><font color='#FF7800'>Passive: Malevolent Power </font></h1> Grants +%spell_power% spell amp."
+"DOTA_Tooltip_ability_item_imba_orchid_Description"            "<h1>Active: Soul Burn</h1> Silences an enemy for %silence_duration% seconds. When the silence ends, the target will take magical damage equal to %silence_damage_percent%%% of all the damage taken while silenced.\n<h1><font color='#FF7800'>Passive: Malevolent Power </font></h1> Grants +%spell_power%%% Spell Amplification."
 "DOTA_Tooltip_ability_item_imba_orchid_Lore"                    "A garnet rod constructed from the essence of a fire demon."
-"DOTA_Tooltip_ability_item_imba_orchid_Note0"                  "spell amp from Orchid-based items does not stack with itself."
+"DOTA_Tooltip_ability_item_imba_orchid_Note0"                  "Spell Amplification from multiple Orchid-based items do not stack."
 "DOTA_Tooltip_ability_item_imba_orchid_bonus_intellect"                     "+$int"
 "DOTA_Tooltip_ability_item_imba_orchid_bonus_attack_speed"                  "+$attack"
 "DOTA_Tooltip_ability_item_imba_orchid_bonus_damage"            "+$damage"
 "DOTA_Tooltip_ability_item_imba_orchid_bonus_mana_regen"                    "+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_orchid_spell_power"            "%spell amp:"
 
 "DOTA_Tooltip_modifier_item_imba_orchid_debuff"                "Soul Burn"
 "DOTA_Tooltip_modifier_item_imba_orchid_debuff_Description"                 "Silenced. Will suffer magical damage at the end of the duration"
@@ -951,7 +943,7 @@
 
 // Reverb Sabre
 "DOTA_Tooltip_Ability_item_imba_reverb_rapier"                  "Reverb Sabre"
-"DOTA_Tooltip_ability_item_imba_reverb_rapier_Description"        "<h1>Passive: Superb Reverb</h1> When off-cooldown, causes your attacks to hit <font color='#FF7800'>three</font> times in quick succession. Tri-attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#00FF40'>Does not work on ranged heroes.</font>"
+"DOTA_Tooltip_ability_item_imba_reverb_rapier_Description"        "<h1>Passive: Superb Reverb</h1> When off-cooldown, causes your attacks to hit <font color='#FF7800'>three</font> times in quick succession. Tri-attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#FF0000'>Does not work on ranged heroes.</font>"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Lore"           "Faced with the challenge of combining two Echo Sabres' magic into a single blade, the runesmiths of the Ruined City asked themselves only if they could - never if they should."
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Note0"          "Upon proccing, grants the user 720 attack speed or triples your current bonus, whichever is higher, until the next attack."
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_bonus_intellect"      "+$int"

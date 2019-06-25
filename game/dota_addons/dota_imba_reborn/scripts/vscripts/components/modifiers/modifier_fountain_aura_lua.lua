@@ -1,5 +1,6 @@
 LinkLuaModifier("modifier_fountain_aura_effect_lua", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_fountain_invulnerable", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cursed_fountain", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE)
 
 modifier_fountain_aura_lua = class({})
 
@@ -32,12 +33,16 @@ end
 
 modifier_fountain_aura_effect_lua = class({})
 
+function modifier_fountain_aura_effect_lua:IsHidden()	return true end
 function modifier_fountain_aura_effect_lua:IsPurgable() return false end
 
 function modifier_fountain_aura_effect_lua:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE,
+		
+		-- Testing fountain invuln camping prevention system
+		MODIFIER_EVENT_ON_HERO_KILLED
 	}
 
 	return funcs
@@ -72,7 +77,7 @@ function modifier_fountain_aura_effect_lua:OnIntervalThink()
 	if GetMapName() == MapDiretide() then return end
 
 	if IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
-		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
+		-- self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
 
 		if self:GetParent():HasItemInInventory("item_bottle") then
 			local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
@@ -94,6 +99,14 @@ end
 
 function modifier_fountain_aura_effect_lua:GetModifierTotalPercentageManaRegen(params)
 	return 6
+end
+
+function modifier_fountain_aura_effect_lua:OnHeroKilled(params)
+	if not IsServer() then return end
+
+	if params.attacker == self:GetParent() then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_cursed_fountain", {})
+	end
 end
 
 function modifier_fountain_aura_effect_lua:OnDestroy()
@@ -134,4 +147,115 @@ end
 
 function modifier_fountain_invulnerable:GetAbsoluteNoDamagePure()
 	return 1
+end
+
+------------------------------
+-- CURSED FOUNTAIN MODIFIER --
+------------------------------
+
+modifier_imba_cursed_fountain = class({})
+
+function modifier_imba_cursed_fountain:IsDebuff()	return true end
+function modifier_imba_cursed_fountain:IsPurgable()	return false end
+function modifier_imba_cursed_fountain:GetTexture()	return "custom/tower_rot" end
+
+function modifier_imba_cursed_fountain:OnCreated()
+	if not IsServer() then return end
+	
+	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
+	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
+	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	
+	self:SetStackCount(1)
+	
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_cursed_fountain:OnRefresh()
+	if not IsServer() then return end
+
+	self:IncrementStackCount()
+end
+
+function modifier_imba_cursed_fountain:OnIntervalThink()
+	if not IsServer() then return end
+
+	-- Resetting variables to 0 first before recalculating (otherwise you'll end up with stacking negative values)
+	self.damage		= 0
+	self.spell_amp	= 0
+	self.strength	= 0
+	self.agility	= 0
+	self.intellect	= 0
+	
+	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
+	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
+	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	
+	self:GetParent():CalculateStatBonus()
+end
+
+function modifier_imba_cursed_fountain:CheckState()
+	local state = {}
+	
+	if self:GetStackCount() >= 2 then
+		state[MODIFIER_STATE_PROVIDES_VISION] = true
+	end
+	
+	return state
+end
+
+function modifier_imba_cursed_fountain:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS, 
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+
+		MODIFIER_EVENT_ON_HERO_KILLED
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_cursed_fountain:GetModifierPreAttack_BonusDamage()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.damage * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierSpellAmplify_Percentage()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.spell_amp * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierBonusStats_Strength()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.strength * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierBonusStats_Agility()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.agility * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierBonusStats_Intellect()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.intellect* (-1)
+end
+
+function modifier_imba_cursed_fountain:OnHeroKilled(params)
+	if not IsServer() then return end
+
+	if params.attacker == self:GetParent() and self:GetStackCount() >= 2 and not self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
+		self:Destroy()
+	end
 end

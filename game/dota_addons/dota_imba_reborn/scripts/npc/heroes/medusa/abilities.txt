@@ -56,6 +56,22 @@
 				"var_type"						"FIELD_INTEGER"
 				"serpent_shot_mana_burn_pct"	"30"
 			}
+			
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"enchanted_aim_mana_loss_pct"	"50"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"enchanted_aim_bonus_attack_range"	"750"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"enchanted_aim_duration"		"10"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -195,7 +211,17 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"innate_cooldown"		"7"
-			}			
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_thief_steal"		"5"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quick_snake_speed"		"400"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -238,6 +264,16 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"meditate_mana_acquire_pct"		"2 4 6 8"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"initiates_shield_mana_conversion"	"100"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"initiates_shield_max_stacks"	"125 250 375 500"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"

@@ -167,6 +167,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	if not self.target:IsAlive() then
 		local new_targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), nil, 4000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 		
+		if #new_targets == 0 then
+			self:Destroy()
+			return
+		end
+		
 		for _, target in pairs(new_targets) do 
 			if target ~= self.clothesline_target then
 				self.target = target
@@ -808,7 +813,11 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		end
 		
 		-- Greater Bash first applies the debuff, then the damage, no matter whether it procs on attacks, or is applied by Spirit Breaker's abilities.
-		target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+		local knockback_modifier = target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties)
+		
+		if knockback_modifier then
+			knockback_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+		end
 	end
 	
 	local damageTable = {

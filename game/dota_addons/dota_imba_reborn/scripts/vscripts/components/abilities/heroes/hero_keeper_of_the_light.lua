@@ -8,6 +8,7 @@ LinkLuaModifier("modifier_imba_keeper_of_the_light_blinding_light", "components/
 LinkLuaModifier("modifier_imba_blinding_light_knockback", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_chakra_magic", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_mana_leak", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_recall", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_spotlights", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
@@ -28,6 +29,9 @@ imba_keeper_of_the_light_chakra_magic						= class({})
 modifier_imba_keeper_of_the_light_chakra_magic				= class({})
 
 modifier_imba_keeper_of_the_light_mana_leak					= class({})
+
+imba_keeper_of_the_light_recall								= class({})
+modifier_imba_keeper_of_the_light_recall					= class({})
 
 imba_keeper_of_the_light_spotlights							= class({})
 modifier_imba_keeper_of_the_light_spotlights				= class({})
@@ -633,6 +637,8 @@ function modifier_imba_blinding_light_knockback:OnDestroy()
 	self.parent:FadeGesture(ACT_DOTA_FLAIL)
 	
 	self.parent:RemoveHorizontalMotionController( self )
+	
+	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 end
 
 function modifier_imba_blinding_light_knockback:DeclareFunctions()
@@ -861,6 +867,110 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnOrder(keys)
 	end
 end
 
+------------
+-- RECALL --
+------------
+
+function imba_keeper_of_the_light_recall:OnInventoryContentsChanged()
+	if self:GetCaster():HasScepter() then
+		self:SetHidden(false)
+	else
+		self:SetHidden(true)
+	end
+end
+
+function imba_keeper_of_the_light_recall:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
+function imba_keeper_of_the_light_recall:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_KeeperOfTheLight.Recall.Cast")
+	
+	if not self:GetCursorTarget() or self:GetCursorTarget() == self:GetCaster() then
+		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		
+		for _, ally in pairs(allies) do
+			if ally ~= self:GetCaster() and not PlayerResource:IsDisableHelpSetForPlayerID(ally:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then
+				self:GetCaster():SetCursorCastTarget(ally)
+				break
+			end
+		end
+	end
+	
+	if self:GetCursorTarget() and self:GetCursorTarget() ~= self:GetCaster() then
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_keeper_of_the_light_recall", {duration = self:GetSpecialValueFor("teleport_delay")})
+	end
+end
+
+---------------------
+-- RECALL MODIFIER --
+---------------------
+
+function modifier_imba_keeper_of_the_light_recall:GetEffectName()
+	return "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+end
+
+function modifier_imba_keeper_of_the_light_recall:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_KeeperOfTheLight.Recall.Target")
+end
+
+function modifier_imba_keeper_of_the_light_recall:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_KeeperOfTheLight.Recall.Target")
+	
+	-- The full duration has passed, and the teleport has succeeded
+	if self:GetRemainingTime() <= 0 then
+		local caster_position	= self:GetCaster():GetAbsOrigin()
+		
+		if self:GetAbility() and self:GetCaster() and self:GetCaster():IsAlive() then
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, self:GetParent())
+			ParticleManager:ReleaseParticleIndex(particle)
+			
+			-- Teleport the parent to the caster's position
+			FindClearSpaceForUnit(self:GetParent(), self:GetCaster():GetAbsOrigin(), false)
+			
+			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_KeeperOfTheLight.Recall.End", self:GetCaster())
+			
+			local parent	= self:GetParent()
+			
+			Timers:CreateTimer(FrameTime(), function()
+				if parent then
+					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, parent)
+					ParticleManager:ReleaseParticleIndex(particle)
+				end
+			end)
+			
+			-- Send a stop command
+			self:GetParent():Stop()
+		end
+	end
+end
+
+function modifier_imba_keeper_of_the_light_recall:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+    }
+
+    return decFuncs
+end
+
+-- "Damage is checked before any sort of reduction. This means that it gets canceled even when the damage is fully blocked. Has no minimum damage threshold."
+function modifier_imba_keeper_of_the_light_recall:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	if keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and (keys.attacker:IsRealHero() or keys.attacker:IsRoshan()) and keys.original_damage > 0 then
+		self:GetParent():EmitSound("Hero_KeeperOfTheLight.Recall.Fail")
+		
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_failure.vpcf", PATTACH_POINT, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(particle)
+		
+		self:Destroy()
+	end
+end
+
 ----------------
 -- SPOTLIGHTS --
 ----------------
@@ -938,6 +1048,16 @@ end
 function imba_keeper_of_the_light_will_o_wisp:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
+
+function imba_keeper_of_the_light_will_o_wisp:OnUpgrade()
+	local recall_ability = self:GetCaster():FindAbilityByName("imba_keeper_of_the_light_recall")
+	
+	if recall_ability then
+		recall_ability:SetLevel(self:GetLevel())
+	end
+end
+
+
 
 function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 	self.caster		= self:GetCaster()

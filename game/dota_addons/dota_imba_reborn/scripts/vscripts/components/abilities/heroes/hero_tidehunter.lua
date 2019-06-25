@@ -513,7 +513,7 @@ end
 
 function imba_tidehunter_anchor_smash:GetBehavior()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
-		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
 		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	end
@@ -949,7 +949,10 @@ end
 function modifier_imba_tidehunter_ravage_handler:IsHidden()	return true end
 
 function modifier_imba_tidehunter_ravage_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	local decFuncs = {
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+	}
 	
 	return decFuncs
 end
@@ -962,6 +965,12 @@ function modifier_imba_tidehunter_ravage_handler:OnOrder(keys)
 		self:SetStackCount(0)
 	else
 		self:SetStackCount(1)
+	end
+end
+
+function modifier_imba_tidehunter_ravage_handler:GetActivityTranslationModifiers()
+	if RollPercentage(50) then
+		return "belly_flop"
 	end
 end
 

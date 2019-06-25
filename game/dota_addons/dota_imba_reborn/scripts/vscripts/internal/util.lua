@@ -548,55 +548,6 @@ function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_
 	return false
 end
 
-function IsVanillaSilence(modifier_name)
-	local vanilla_silences = 
-	{["modifier_silence"] = true,
-	["modifier_earth_spirit_geomagnetic_grip"] = true}
-
-	if vanilla_silences[modifier_name] then
-		return true
-	end
-
-	return false
-end
-
-function IsImbaSilence(modifier_name)
-	local silence_modifiers = 		
-		{["modifier_imba_blood_bath_debuff_silence"] = true,							 
-		 ["modifier_imba_gust_silence"] = true,
-		 ["modifier_imba_crippling_fear_silence"] = true,
-		 ["modifier_imba_stifling_dagger_silence"] = true,		 
-		 ["modifier_imba_silencer_last_word_repeat_thinker"] = true,
-		 ["modifier_imba_silencer_global_silence"] = true,
-		 ["modifier_imba_ancient_seal_main"] = true,				 		 
-		 ["modifier_imba_blast_off_silence"] = true,
-		 ["modifier_item_imba_orchid_debuff"] = true,
-		 ["modifier_item_imba_bloodthorn_debuff"] = true,
-		 ["modifier_item_imba_kaya_silence"] = true,
-		 ["modifier_item_imba_sange_kaya_proc"] = true,
-		 ["modifier_item_imba_kaya_yasha_silence"] = true,
-		 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
-
-
-	if silence_modifiers[modifier_name] then
-		return true
-	end
-
-	return false
-end
-
-function IsSilentSilence(modifier_name)
-	local silence_modifiers = 		
-		{["modifier_imba_ancient_seal_secondary"] = true}
-
-
-	if silence_modifiers[modifier_name] then
-		return true
-	end
-
-	return false
-end
-
 function IsVanillaDebuff(modifier_name)		
 local vanilla_debuffs = 
 	{["modifier_cold_feet"] = true,

@@ -114,7 +114,9 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
 					item:UseResources(false,false,true)
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					if not keys.target:IsBuilding() and not keys.target:IsOther() then
+						keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					end
 				end
 			end
 		end
@@ -226,7 +228,9 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 				if self:CheckUniqueValue(1,nil) == 1 then
 					item:UseResources(false,false,true)
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					if not keys.target:IsBuilding() and not keys.target:IsOther() then
+						keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					end
 				end
 			end
 		end

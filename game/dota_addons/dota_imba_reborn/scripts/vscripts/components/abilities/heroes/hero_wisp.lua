@@ -1654,13 +1654,13 @@ function imba_wisp_relocate:OnSpellStart()
 					GridNav:DestroyTreesAroundPoint(self.relocate_target_point, destroy_tree_radius, false)
 
 					-- Here we go again (Rubick)
-					-- if not self:GetCaster():HasAbility("imba_wisp_relocate_break") then
-						-- self:GetCaster():AddAbility("imba_wisp_relocate_break")
-					-- end
+					if not self:GetCaster():HasAbility("imba_wisp_relocate_break") then
+						self:GetCaster():AddAbility("imba_wisp_relocate_break")
+					end
 					
-					-- self:GetCaster():SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
-					-- local break_ability = self:GetCaster():FindAbilityByName("imba_wisp_relocate_break")
-					-- break_ability:SetLevel(1)
+					self:GetCaster():SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
+					local break_ability = self:GetCaster():FindAbilityByName("imba_wisp_relocate_break")
+					break_ability:SetLevel(1)
 				
 					if self:GetCaster():HasModifier("modifier_imba_wisp_tether") and tether_ability.target:IsHero() then
 						self.ally 		= tether_ability.target 
@@ -1713,6 +1713,8 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 
 		self.return_time	= params.return_time
 		self.return_point	= self:GetCaster():GetAbsOrigin()
+
+		self.eject_cooldown_mult	= self:GetAbility():GetSpecialValueFor("eject_cooldown_mult")
 
 		-- Create marker at origin
 		self.caster_origin_pfx = ParticleManager:CreateParticle(caster.relocate_marker_effect, PATTACH_WORLDORIGIN, caster)
@@ -1778,7 +1780,13 @@ function modifier_imba_wisp_relocate:OnRemoved()
 			tether_ability.target:Interrupt()
 		end
 
-		--self:GetCaster():SwapAbilities("imba_wisp_relocate_break", "imba_wisp_relocate", false, true)
+		self:GetCaster():SwapAbilities("imba_wisp_relocate_break", "imba_wisp_relocate", false, true)
+		
+		if self:GetRemainingTime() >= 0 then
+			local relocate_ability = self:GetCaster():FindAbilityByName("imba_wisp_relocate")
+			
+			relocate_ability:StartCooldown(relocate_ability:GetCooldownTimeRemaining() + (self:GetRemainingTime() * self.eject_cooldown_mult))
+		end
 	end
 end
 

@@ -57,6 +57,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 	self.curtain_fire_activation_charge	=	self:GetSpecialValueFor("curtain_fire_activation_charge")
 	
 	self.curtain_fire_radius_second		=	self:GetSpecialValueFor("curtain_fire_radius_second")
+	self.curtain_fire_projectile_radius	=	self:GetSpecialValueFor("curtain_fire_projectile_radius")
 	
 	if not IsServer() then return end
 	
@@ -164,8 +165,8 @@ function item_imba_rod_of_atos:OnSpellStart()
 				EffectName			= "particles/items2_fx/rod_of_atos_attack_"..string.lower(self.caster:GetTeamRealName())..".vpcf", -- Borrowing pre-made projectile...
 				vSpawnOrigin		= random_spawn_location,
 				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius_second,
-				fStartRadius		= 70,
-				fEndRadius			= 70,
+				fStartRadius		= self.curtain_fire_projectile_radius,
+				fEndRadius			= self.curtain_fire_projectile_radius,
 				Source				= self.caster,
 				bHasFrontalCone		= true,
 				bReplaceExisting	= false,
