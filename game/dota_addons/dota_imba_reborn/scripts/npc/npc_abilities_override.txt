@@ -2626,6 +2626,7 @@
 	"chaos_knight_reality_rift"
 	{
 		"AbilityCastRange"				"500 750 1000 1250"
+		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{

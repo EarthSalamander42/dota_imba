@@ -12,7 +12,14 @@ LinkLuaModifier( "modifier_earthshaker_fissure_lua_prevent_movement", "component
 function earthshaker_fissure_lua:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().arcana_style then return "earthshaker_fissure" end
-	return "earthshaker_fissure_ti9"
+--	print(self:GetCaster().arcana_style)
+	if self:GetCaster().arcana_style == 0 then
+		return "earthshaker_fissure_ti9"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_fissure"
+	elseif self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_fissure_alt2"
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -208,15 +215,17 @@ end
 -- Initializations
 function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 	if IsServer() then
-		self.movement_capability = 0
+		if not self:GetParent():IsHero() then
+			self.movement_capability = 0
 
-		if self:GetParent():HasGroundMovementCapability() then
-			self.movement_capability = 1
-		elseif self:GetParent():HasFlyMovementCapability() then
-			self.movement_capability = 2
+			if self:GetParent():HasGroundMovementCapability() then
+				self.movement_capability = 1
+			elseif self:GetParent():HasFlyMovementCapability() then
+				self.movement_capability = 2
+			end
+
+			self:GetParent():SetMoveCapability(0)
 		end
-
-		self:GetParent():SetMoveCapability(0)
 	end
 end
 
@@ -232,6 +241,16 @@ LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_movement", "components/
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_BOTH )
 
 --------------------------------------------------------------------------------
+
+function earthshaker_enchant_totem_lua:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_enchant_totem" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem"
+	end
+end
 
 function earthshaker_enchant_totem_lua:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -686,6 +705,16 @@ end
 earthshaker_aftershock_lua = class({})
 LinkLuaModifier( "modifier_earthshaker_aftershock_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 
+function earthshaker_aftershock_lua:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_aftershock" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_aftershock_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_aftershock"
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Passive Modifier
 function earthshaker_aftershock_lua:GetIntrinsicModifierName()
@@ -813,6 +842,16 @@ end
 
 imba_earthshaker_echo_slam	= class({})
 
+function imba_earthshaker_echo_slam:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_echo_slam" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam"
+	end
+end
+
 function imba_earthshaker_echo_slam:OnSpellStart()
 	-- First part checks for how many heroes are around for appropriate sounds/responses
 	local hero_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("echo_slam_damage_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -845,7 +884,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 	
 	local effect_counter = #enemies + 1
 
-	local echo_slam_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx, PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(echo_slam_particle, 1, Vector(effect_counter, 0, 0 ))
 	ParticleManager:ReleaseParticleIndex(echo_slam_particle)
 
@@ -872,7 +911,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 					Target 				= echo_enemy,
 					Source 				= enemy,
 					Ability 			= self,
-					EffectName 			= "particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf",
+					EffectName 			= self:GetCaster().echo_slam_pfx,
 					iMoveSpeed			= 600,
 					vSourceLoc 			= enemy:GetAbsOrigin(),
 					bDrawsOnMinimap 	= false,

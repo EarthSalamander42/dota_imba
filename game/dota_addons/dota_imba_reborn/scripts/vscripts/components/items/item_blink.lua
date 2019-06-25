@@ -95,8 +95,19 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 	if IsServer() and self:GetParent() and not self:GetParent():IsNull() then
 		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) then
 			local blink_icon = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["blink"]["level"]
-		
-			if blink_icon == "zuus" then blink_icon = 100 end
+
+			-- temporary
+			if caster.blink_icon then
+				blink_icon = caster.blink_icon
+			end
+
+			if blink_icon == "zuus" then
+				blink_icon = 100
+			elseif blink_icon == "earthshaker" then
+				blink_icon = 101
+			elseif blink_icon == "earthshaker2" then
+				blink_icon = 102
+			end
 			self:SetStackCount(blink_icon)
 		end
 	end
@@ -106,6 +117,10 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 			caster.blink_icon_client = nil
 		elseif self:GetStackCount() == 100 then
 			caster.blink_icon_client = "zuus"
+		elseif self:GetStackCount() == 101 then
+			caster.blink_icon_client = "earthshaker"
+		elseif self:GetStackCount() == 102 then
+			caster.blink_icon_client = "earthshaker2"
 		else
 			caster.blink_icon_client = self:GetStackCount()
 		end
