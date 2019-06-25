@@ -818,9 +818,16 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 		blink_effect_end	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
 	end
 	
+--	print(blink_effect, blink_effect_end, blink_sound)
+
 	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
+	if self.blink_effect or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect) then blink_effect = self.blink_effect end
+	if self.blink_effect_end or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect_end) then blink_effect_end = self.blink_effect_end end
 	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end
 	if bPlaySound == true then EmitSoundOn(blink_sound, self) end
+
+--	print(self.blink_effect, self.blink_effect_end, self.blink_sound)
+
 	local blink_pfx
 	if bTeamOnlyParticle == true then
 		blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())

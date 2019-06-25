@@ -125,7 +125,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"175 275 375 475"
+				"totem_damage_percentage"	"200 300 400 500"
 			}
 			"02"
 			{
