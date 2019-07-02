@@ -10,11 +10,13 @@
 #base heroes/life_stealer/hero.txt
 #base heroes/luna/hero.txt
 #base heroes/medusa/hero.txt
+#base heroes/phantom_lancer/hero.txt
 #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
+#base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/tidehunter/hero.txt
 #base custom_heroes/vardor/hero.txt
@@ -271,9 +273,12 @@
 		"Ability12"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
 		"Ability13"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
 		"Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit
-		"Ability15"					"special_bonus_imba_bounty_hunter_5" //Global Shuriken bounce range on all Tracked targets
+		"Ability15"					"special_bonus_imba_bounty_hunter_9" // +X Jinada Gold Steal
 		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
 		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
+		
+		// Removed Talents
+		// "Ability15"					"special_bonus_imba_bounty_hunter_5" // Global Shuriken bounce range on all Tracked target
 	}
 
 	//=================================================================================================================
@@ -364,7 +369,7 @@
 		"Ability11"					"special_bonus_armor_6"
 		"Ability12"					"special_bonus_imba_clinkz_8"
 		"Ability13"					"special_bonus_strength_15"
-		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+		"Ability14"					"special_bonus_attack_range_125"
 		"Ability15"					"special_bonus_hp_regen_16"
 		"Ability16"					"special_bonus_imba_clinkz_9"
 		"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
@@ -374,6 +379,7 @@
 		//"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
 		//"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
 		// "Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		// "Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
 		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 	}
 
@@ -426,7 +432,7 @@
 
 		"Ability10"					"special_bonus_attack_damage_75"
 		"Ability11"					"special_bonus_hp_300"
-		"Ability12"					"special_bonus_cast_range_125"
+		"Ability12"					"special_bonus_cast_range_200"
 		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
 		"Ability14"					"special_bonus_movement_speed_40"
 		"Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
@@ -1374,14 +1380,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Phantom Lancer
-	//=================================================================================================================
-	"npc_dota_hero_phantom_lancer"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-	}
-
-	//=================================================================================================================
 	// HERO: Phoenix
 	//=================================================================================================================
 	"npc_dota_hero_phoenix"
@@ -1715,20 +1713,6 @@
 		// "Ability11"					"special_bonus_imba_sniper_2" // Infamous Assassinate knockback talent
 		// "Ability12"					"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
 		// "Ability14"					"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots (note that I have completely disabled this ability due to really messy code, so you cannot re-enable it without fixing it yourself)
-	}
-
-	//=================================================================================================================
-	// HERO: Spectre
-	//=================================================================================================================
-	"npc_dota_hero_spectre"
-	{
-		"override_hero"				"npc_dota_hero_spectre"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		//"Ability4"					"imba_spectre_reality"
-		//"Ability6"					"imba_spectre_haunt"
 	}
 
 	//=================================================================================================================

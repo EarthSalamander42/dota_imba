@@ -631,9 +631,10 @@ function modifier_imba_zuus_static_field:Apply(target)
 	ApplyDamage(damage_table)
 
 	-- Add a static charge 
-	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
-	if static_charge_modifier ~= nil then
-		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
+	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+	if static_charge_modifier then
+		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
+		static_charge_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	end
 end
 

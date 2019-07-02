@@ -104,7 +104,7 @@ end
 function modifier_fountain_aura_effect_lua:OnHeroKilled(params)
 	if not IsServer() then return end
 
-	if params.attacker == self:GetParent() then
+	if params.attacker == self:GetParent() and IsNearFountain(self:GetParent():GetAbsOrigin(), 1800) then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_cursed_fountain", {})
 	end
 end
@@ -255,7 +255,7 @@ end
 function modifier_imba_cursed_fountain:OnHeroKilled(params)
 	if not IsServer() then return end
 
-	if params.attacker == self:GetParent() and self:GetStackCount() >= 2 and not self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
+	if params.attacker == self:GetParent() and not self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
 		self:Destroy()
 	end
 end

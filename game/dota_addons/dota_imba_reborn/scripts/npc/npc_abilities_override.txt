@@ -1801,7 +1801,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"10 17.5 25 32.5"
+				"damage"						"12 18 24 30"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"02"
@@ -1812,7 +1812,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-3 -7 -10 -12"
+				"movement_speed_pct"	"-4 -6 -8 -10"
 			}
 			"06"
 			{
@@ -4779,9 +4779,8 @@
 	//=================================================================================================================
 	"monkey_king_boundless_strike"
 	{
-		"MaxLevel"							"4"
 		"AbilityCastRange"					"1200 1300 1400 1500"
-		"AbilityCooldown"					"25 22 19 16"
+		"AbilityCooldown"					"22 20 18 16"
 
 		"AbilitySpecial"
 		{
@@ -4844,9 +4843,7 @@
 	//=================================================================================================================
 	"monkey_king_tree_dance"
 	{
-		"MaxLevel"								"4"
 		"AbilityCastRange"						"1000 1100 1200 1300"
-		"AbilityCooldown"						"1.2"
 
 		"AbilitySpecial"
 		{
@@ -4885,13 +4882,13 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"impact_damage_tooltip"			"100 260 370 430"
+				"impact_damage_tooltip"			"150 250 350 450"
 				"LinkedSpecialBonus"			"special_bonus_unique_monkey_king_3"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"impact_movement_slow_tooltip"	"20 60 95 125"
+				"impact_movement_slow_tooltip"	"30 60 90 120"
 			}
 		}
 	}
@@ -4901,21 +4898,20 @@
 	//=================================================================================================================
 	"monkey_king_primal_spring"
 	{
-		"MaxLevel"						"4"
-		"AbilityCooldown"				"19 15 12 10"
+		"AbilityCooldown"				"19 16 13 10"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"impact_damage"			"100 260 370 430"
+				"impact_damage"			"150 250 350 450"
 				"LinkedSpecialBonus"	"special_bonus_unique_monkey_king_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"impact_movement_slow"	"20 60 95 125"
+				"impact_movement_slow"	"30 60 90 120"
 			}
 			"04"
 			{
@@ -6834,12 +6830,12 @@
 			"04"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage"					"300 250 200 150"
+				"illusion_incoming_damage"					"240 210 180 150"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage_total_tooltip"	"400 350 300 250"
+				"illusion_incoming_damage_total_tooltip"	"340 310 280 250"
 			}		
 		}
 	}
@@ -7308,15 +7304,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"265 310 355 400"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"grace_time"				"0.75"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"14 24 34 44"
+				"movement_speed"			"25 30 35 40"
 			}
 			"04"
 			{
@@ -7654,21 +7645,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"40 50 60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Tusk: bonus Walrus Punch damage multiplier
-	//=================================================================================================================
-	"special_bonus_unique_tusk"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
 			}
 		}
 	}
@@ -8251,7 +8227,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"soul_charge_damage"		"65 80 95 110"
+				"soul_charge_damage"		"80 90 100 110"
 				"LinkedSpecialBonus"		"special_bonus_unique_visage_4"
 			}
 			"05"
@@ -9051,8 +9027,6 @@
 	//=================================================================================================================
 	"dark_willow_bramble_maze"
 	{
-		"AbilityCooldown"				"25 23 21 19"
-		
 		"AbilitySpecial"
 		{
 			"04"

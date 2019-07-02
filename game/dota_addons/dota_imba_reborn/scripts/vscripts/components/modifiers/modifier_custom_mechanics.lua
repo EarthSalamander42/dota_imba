@@ -15,20 +15,6 @@ function modifier_custom_mechanics:OnCreated()
 	end
 end
 
-function modifier_custom_mechanics:DeclareFunctions()
-	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_EVENT_ON_ATTACK_START,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
---		MODIFIER_PROPERTY_RESPAWNTIME,
---		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
-	}
-	return funcs
-end
-
 function modifier_custom_mechanics:OnIntervalThink()
 	if IsServer() then
 		-- Calculate current regen before this modifier
@@ -45,6 +31,7 @@ function modifier_custom_mechanics:OnIntervalThink()
 	end
 end
 
+
 -- Damage block handler
 function modifier_custom_mechanics:GetModifierPhysical_ConstantBlock()
 	if IsServer() then
@@ -57,6 +44,26 @@ function modifier_custom_mechanics:GetModifierIncomingDamage_Percentage()
 	if IsServer() then
 		return self:GetParent():GetIncomingDamagePct()
 	end
+end
+
+function modifier_custom_mechanics:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+	
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+--		MODIFIER_PROPERTY_RESPAWNTIME,
+--		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
+	}
+	return funcs
+end
+
+function modifier_custom_mechanics:GetModifierHealthBonus()
+	return 300
 end
 
 -- Spell lifesteal handler

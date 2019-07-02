@@ -1464,7 +1464,7 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 					-- Technically this isn't "correct" because the extra damage is supposed to be an "attack" but I can't be assed to figure out how to replicate it properly along with the armor piercing
 					local damageTable = {
 						victim 			= params.target,
-						damage 			= 120,
+						damage 			= self:GetAbility():GetSpecialValueFor("bonus_damage"),
 						damage_type		= DAMAGE_TYPE_PHYSICAL,
 						damage_flags 	= DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
 						attacker 		= self.caster,

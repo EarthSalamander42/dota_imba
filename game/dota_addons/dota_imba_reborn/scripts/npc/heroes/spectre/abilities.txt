@@ -1,0 +1,183 @@
+"DOTAAbilities"
+{	
+	//=================================================================================================================
+	// Spectre: Haunt
+	//=================================================================================================================
+	"imba_spectre_haunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spectre"
+		"AbilityTextureName"			"spectre_haunt"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Spectre.Haunt"
+        "HasScepterUpgrade"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180 150 120"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 200 250"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0 6.0 7.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_outgoing"	"-60 -40 -20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_outgoing"	"40 60 80"
+				"LinkedSpecialBonus"		"special_bonus_unique_spectre_4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_incoming"	"100 100 100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_total_damage_incoming"	"200 200 200"
+			}			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"attack_delay"				"1.0 1.0 1.0"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spawn_distance"			"200"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"travel_speed"				"300"
+			}
+		}
+
+		"AbilityDraftPreAbility"		"spectre_reality"
+	}
+
+	//=================================================================================================================
+	// Spectre: Haunt Single
+	//=================================================================================================================
+	"imba_spectre_haunt_single"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spectre"
+		"AbilityTextureName"			"spectre_haunt_single"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"MaxLevel"						"3"
+		"AbilitySound"					"Hero_Spectre.Haunt"
+		"IsGrantedByScepter"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"180"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0 6.0 7.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_outgoing"	"-60 -40 -20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_outgoing"	"40 60 80"
+				"LinkedSpecialBonus"		"special_bonus_unique_spectre_4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_incoming"	"100 100 100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_total_damage_incoming"	"200 200 200"
+			}			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"attack_delay"				"1.0 1.0 1.0"
+			}			
+		}
+
+		"AbilityDraftPreAbility"		"spectre_reality"
+	}
+
+	//=================================================================================================================
+	// Spectre: Reality
+	//=================================================================================================================
+	"imba_spectre_reality"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spectre"
+		"AbilityTextureName"			"spectre_reality"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	}
+}

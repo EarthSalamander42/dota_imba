@@ -1079,6 +1079,7 @@
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Lore"                  "The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_fade_time"							"FADE TIME:"
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier"			"AGILITY MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_hp_regen"							"HEALTH REGEN BONUS:"
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier_smoke"	"SMOKE AGILITY MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_riki_invisibility"                          "Invisible"
@@ -1632,29 +1633,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_8"          	"Let it Rain"
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_8_Description" 	"Shrapnel's out of range attacks increase your damage instead of lowering it."
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_9"          	"-1.5s Assassinate Cast Time"
-
-////===============================================================================================================
-////===============================================================================================================
-////    Spectre
-////===============================================================================================================
-////===============================================================================================================
-
-////===============================================================================================================
-// Spectre's Reality
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_spectre_reality"           "Reality"
-"DOTA_Tooltip_ability_imba_spectre_reality_Description"     "Spectre exchanges places with a chosen Haunt."
-"DOTA_Tooltip_ability_imba_spectre_reality_Lore"        "The scattered shadows unite into the one true Spectre."
-
-////===============================================================================================================
-// Spectre's Haunt
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_spectre_haunt"           "Haunt"
-"DOTA_Tooltip_ability_imba_spectre_haunt_Description"     "Creates a spectral nemesis to attack each enemy hero after a short delay. At any moment during the duration, Spectre can use Reality to exchange places of a given haunt.\nHaunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself. They move at %illusion_base_speed% base movement speed and ignore terrain."
-"DOTA_Tooltip_ability_imba_spectre_haunt_Lore"          "At the height of combat, Mercurial's physical manifestation shatters, and the shadowy pieces haunt those who still cling to life."
-"DOTA_Tooltip_ability_imba_spectre_haunt_duration"        "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_spectre_haunt_illusion_dmg_dealt"  "%DAMAGE DEALT:"
-"DOTA_Tooltip_ability_imba_spectre_haunt_illusion_dmg_received" "%DAMAGE RECEIVED:"
 
 // Techies
 ////===============================================================================================================

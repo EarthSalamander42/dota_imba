@@ -1034,28 +1034,37 @@ function modifier_imba_kinetic_field_check_position:IsHidden()	return true end
 function modifier_imba_kinetic_field_check_position:OnCreated(keys)
 	--fuck you vectors
 	self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+	
+	-- I feel like this would be less laggy AND more precise than MODIFIER_EVENT_ON_UNIT_MOVED
+	self:StartIntervalThink(FrameTime())
 end
-function modifier_imba_kinetic_field_check_position:DeclareFunctions()
-  local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
-  return funcs
-end
+-- function modifier_imba_kinetic_field_check_position:DeclareFunctions()
+  -- local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
+  -- return funcs
+-- end
 
-function modifier_imba_kinetic_field_check_position:OnUnitMoved(keys)
-	if IsServer() then
-		local parent = self:GetParent()
-		local caster =  self:GetCaster()
-		local ability = self:GetAbility()
-		--OnUnitMoved actually responds to ALL units. Return immediately if not the modifier's parent.
-		if keys.unit then
-			if keys.unit:GetEntityIndex() ~= parent:GetEntityIndex() then
-				return
-			else
-				self:kineticize(caster, parent, ability)
-			end
-		else
-			return
-		end
-	end
+-- function modifier_imba_kinetic_field_check_position:OnUnitMoved(keys)
+	-- if IsServer() then
+		-- local parent = self:GetParent()
+		-- local caster =  self:GetCaster()
+		-- local ability = self:GetAbility()
+		-- --OnUnitMoved actually responds to ALL units. Return immediately if not the modifier's parent.
+		-- if keys.unit then
+			-- if keys.unit:GetEntityIndex() ~= parent:GetEntityIndex() then
+				-- return
+			-- else
+				-- self:kineticize(caster, parent, ability)
+			-- end
+		-- else
+			-- return
+		-- end
+	-- end
+-- end
+
+function modifier_imba_kinetic_field_check_position:OnIntervalThink()
+	if not IsServer() then return end
+
+	self:kineticize(self:GetCaster(), self:GetParent(), self:GetAbility())
 end
 
 function modifier_imba_kinetic_field_check_position:kineticize(caster, target, ability)
@@ -1081,12 +1090,17 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	-- Makes angle "0 to 360 degrees" as opposed to "-180 to 180 degrees" aka standard dota angles.
 	angle_from_center = angle_from_center + 180.0	
 	-- Checks if the target is inside the field
-	if distance_from_border < 0 and math.abs(distance_from_border) <= 50 then
+	if distance_from_border <= 0 and math.abs(distance_from_border) <= math.max(target:GetHullRadius(), 50) then
+	
+		target:InterruptMotionControllers(true)
+	
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
-
 	-- Checks if the target is outside the field,
-	elseif distance_from_border > 0 and math.abs(distance_from_border) <= 60 then
+	elseif distance_from_border > 0 and math.abs(distance_from_border) <= math.max(target:GetHullRadius(), 60) then
+	
+		target:InterruptMotionControllers(true)
+	
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 
 		--check if caster has scepter

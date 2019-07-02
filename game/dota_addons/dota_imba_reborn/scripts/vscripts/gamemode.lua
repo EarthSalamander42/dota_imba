@@ -111,7 +111,7 @@ function GameMode:SetupAncients()
 			ancient:AddAbility("imba_ancient_defense"):SetLevel(1)
 		end
 
-		ancient:AddAbility("imba_tower_regeneration"):SetLevel(4)
+		-- ancient:AddAbility("imba_tower_regeneration"):SetLevel(4)
 	end
 end
 
