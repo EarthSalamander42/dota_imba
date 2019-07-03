@@ -192,7 +192,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	
 	for _, enemy in pairs(enemies) do
 		-- IMBAfication: Clothesline
-		if self:GetAbility():GetAutoCastState() and not self.clothesline_target and enemy ~= self.target and not enemy:IsRoshan() then
+		if self:GetAbility():GetAutoCastState() and not self.clothesline_target and enemy ~= self.target and not enemy:IsRoshan() and enemy:IsHero() then
 			self.clothesline_target = enemy
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_clothesline", {duration = self.clothesline_duration})
 			self.bashed_enemies[enemy] = true
@@ -1055,8 +1055,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 	local start_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_begin.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 
 	-- "Nether Strike instantly moves Spirit Breaker on the opposite side of the target, 54 range away from it."
-	self:GetCaster():SetAbsOrigin(self:GetCursorTarget():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (54)))
-	ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
+	FindClearSpaceForUnit(self:GetCaster(), self:GetCursorTarget():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (54)), false)
 	
 	-- IMBAfication: Warp Beast
 	ProjectileManager:ProjectileDodge(self:GetCaster())

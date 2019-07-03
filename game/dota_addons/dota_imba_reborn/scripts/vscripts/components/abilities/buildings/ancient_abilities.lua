@@ -178,76 +178,92 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 	if IsServer() then
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
-		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		if #nearby_enemies == 0 then return end
-		local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill, 3 = remove.
 
 		for _, enemy in pairs(nearby_enemies) do
-			-- do this before the ignore fountain units to prevent killing units that shouldn't be killed!
-			if not enemy:IsConsideredHero() then
-				act_on_target = 3
+			local damage = (enemy:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("damage_pct") / 100) * self.interval
+			local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
+
+			if enemy:IsInvulnerable() then
+				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+			else
+				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
 			end
 
-			-- Ignore a list of units
-			for _, unit_name in pairs(IGNORE_FOUNTAIN_UNITS) do
-				if unit_name == enemy:GetUnitName() then
-					act_on_target = 0
-					break
-				end
-			end
-
-			-- Ignore roshan(s)
-			if string.find(enemy:GetUnitName(), "roshan") then
-				act_on_target = 0
-			end
-
-			if enemy:IsIllusion() then
-				act_on_target = 2
-			end
-
-			for _, unit_name in pairs(RESTRICT_FOUNTAIN_UNITS) do
-				if unit_name == enemy:GetUnitName() then
-					act_on_target = 2
-					break
-				end
-			end
-
-			-- Potential fix to another unidentified bug
-			if enemy:IsCourier() then
-				act_on_target = 2
-			end
-
-			if act_on_target == 1 then
-				local damage = (enemy:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("damage_pct") / 100) * self.interval
-				local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
---				print("Damage:", damage)
-
-				if enemy:IsInvulnerable() then
-					enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
-				else
-					ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
-				end
-
---				local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
---				ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
---				ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
---				ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
---				ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
---				ParticleManager:ReleaseParticleIndex(damage_pfx)
-				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
-				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
-			elseif act_on_target == 2 then
-				enemy:ForceKill(false)
-			elseif act_on_target == 3 then
-				-- Potential fix for a bug not clearly identified (it's everyday bro)
-				if not enemy:IsRealHero() then
-					-- Can we like not use this remove thing cause it's causing stupid errors with deleted entities
-					--UTIL_Remove(enemy)
-					
-					enemy:ForceKill(false)
-				end
-			end
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 		end
+	
+		-- All this forcekill nonsense is kinda causing problems but I'll leave the whole block here for reference
+		-- local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill, 3 = remove.
+
+		-- for _, enemy in pairs(nearby_enemies) do
+			-- -- do this before the ignore fountain units to prevent killing units that shouldn't be killed!
+			-- if not enemy:IsConsideredHero() then
+				-- act_on_target = 3
+			-- end
+
+			-- -- Ignore a list of units
+			-- for _, unit_name in pairs(IGNORE_FOUNTAIN_UNITS) do
+				-- if unit_name == enemy:GetUnitName() then
+					-- act_on_target = 0
+					-- break
+				-- end
+			-- end
+
+			-- -- Ignore roshan(s)
+			-- if string.find(enemy:GetUnitName(), "roshan") then
+				-- act_on_target = 0
+			-- end
+
+			-- if enemy:IsIllusion() then
+				-- act_on_target = 2
+			-- end
+
+			-- for _, unit_name in pairs(RESTRICT_FOUNTAIN_UNITS) do
+				-- if unit_name == enemy:GetUnitName() then
+					-- act_on_target = 2
+					-- break
+				-- end
+			-- end
+
+			-- -- Potential fix to another unidentified bug
+			-- if enemy:IsCourier() then
+				-- act_on_target = 2
+			-- end
+
+			-- if act_on_target == 1 then
+				-- local damage = (enemy:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("damage_pct") / 100) * self.interval
+				-- local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
+-- --				print("Damage:", damage)
+
+				-- if enemy:IsInvulnerable() then
+					-- enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+				-- else
+					-- ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+				-- end
+
+-- --				local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+-- --				ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+-- --				ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+-- --				ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+-- --				ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+-- --				ParticleManager:ReleaseParticleIndex(damage_pfx)
+				-- enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
+				-- enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
+			-- elseif act_on_target == 2 then
+				-- enemy:ForceKill(false)
+			-- elseif act_on_target == 3 then
+				-- -- Potential fix for a bug not clearly identified (it's everyday bro)
+				-- if not enemy:IsRealHero() then
+					-- -- Can we like not use this remove thing cause it's causing stupid errors with deleted entities
+					-- --UTIL_Remove(enemy)
+					
+					-- enemy:ForceKill(false)
+				-- end
+			-- end
+		-- end
 	end
 end
 

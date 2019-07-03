@@ -549,7 +549,7 @@ function GameMode:OrderFilter( keys )
 					return true
 				end
 
-				if (ability and ability.GetName and ability:GetName() ~= "") then
+				if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
 --					print("Valid Ability")
 					if unit:HasAbility(ability:GetName()) then
 						return true

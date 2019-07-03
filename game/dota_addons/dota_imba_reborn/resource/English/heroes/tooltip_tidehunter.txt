@@ -31,7 +31,7 @@
 
 
 "DOTA_Tooltip_ability_imba_tidehunter_ravage"										"Ravage"
-"DOTA_Tooltip_ability_imba_tidehunter_ravage_Description"							"Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.\n<font color='#FF7800'>Creeping Wave:</font> Can be set to auto-cast to make Ravage a %creeping_range% range point-target ability. The tentacles are rapidly shot forward in %creeping_radius% radius areas up to the maximum cast range, starting from Tidehunter's position. Fires a total of %creeping_waves% waves, reaching max cast range in 1.38 seconds."
+"DOTA_Tooltip_ability_imba_tidehunter_ravage_Description"							"Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.\n<font color='#FF7800'>Release the Kraken:</font> Can be set to auto-cast to make Ravage a %creeping_range% range point-target ability. The tentacles are rapidly shot forward in %creeping_radius% radius areas up to the maximum cast range, starting from Tidehunter's position. Fires a total of %creeping_waves% waves, reaching max cast range in 1.38 seconds."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Lore"									"Calling to the abyssal god Maelrawn has resulted in entire armadas being lost at sea."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Note0"									"Ravage will hit invisible units."
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_Note1"									"Ravage waves move outwards at a speed of 775."
@@ -59,4 +59,4 @@
 "DOTA_Tooltip_modifier_imba_tidehunter_anchor_smash_Description" "Damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%"
 
 "DOTA_Tooltip_ability_special_bonus_imba_tidehunter_greater_hardening"				"Kraken Shell Greater Hardening"
-"DOTA_Tooltip_ability_special_bonus_imba_tidehunter_greater_hardening_Description"	"Every time Kraken Shell removes negative status effects, Tidehunter gains 10% magic resistance for 6 seconds. This effect can stack and refresh itself."
+"DOTA_Tooltip_ability_special_bonus_imba_tidehunter_greater_hardening_Description"	"Every time Kraken Shell removes negative status effects, Tidehunter gains 10% magic resistance for 3 seconds. This effect can stack and refresh itself."

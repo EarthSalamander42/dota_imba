@@ -876,8 +876,18 @@ function modifier_imba_riki_cloak_and_dagger:IsDebuff() return false end
 function modifier_imba_riki_cloak_and_dagger:IsHidden()	return true end
 
 function modifier_imba_riki_cloak_and_dagger:DeclareFunctions()
-	local funcs = { MODIFIER_EVENT_ON_ATTACK_LANDED,}
+	local funcs = {
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	
 	return funcs
+end
+
+function modifier_imba_riki_cloak_and_dagger:GetModifierConstantHealthRegen()
+	if not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("hp_regen")
+	end
 end
 
 function modifier_imba_riki_cloak_and_dagger:CheckState()

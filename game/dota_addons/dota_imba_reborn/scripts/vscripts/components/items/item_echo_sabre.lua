@@ -110,7 +110,7 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	
 	if keys.attacker == parent and item and not parent:IsIllusion() then
 		if not parent:IsRangedAttacker() then 
-			if item:IsCooldownReady() then
+			if item:IsCooldownReady() and not keys.no_attack_cooldown then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
 					item:UseResources(false,false,true)
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
@@ -224,7 +224,7 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	
 	if keys.attacker == parent and item and not parent:IsIllusion() then
 		if not parent:IsRangedAttacker() then 
-			if item:IsCooldownReady() then
+			if item:IsCooldownReady() and not keys.no_attack_cooldown then
 				if self:CheckUniqueValue(1,nil) == 1 then
 					item:UseResources(false,false,true)
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})

@@ -162,9 +162,10 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			if jinada_ability and jinada_ability:GetLevel() > 0 then
 				-- Get Jinada's critical rate and maim duration
 				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
+				local bonus_damage = jinada_ability:GetSpecialValueFor("bonus_damage")
 				local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
 
-				damage = damage * crit_damage * 0.01
+				damage = (damage + bonus_damage) * crit_damage * 0.01
 
 				-- Get a critical overhead alert
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
@@ -629,8 +630,43 @@ function modifier_imba_jinada_buff_crit:DeclareFunctions()
 	}
 end
 
-function modifier_imba_jinada_buff_crit:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+function modifier_imba_jinada_buff_crit:GetModifierPreAttack_BonusDamage(keys)
+	if keys.target and not keys.target:IsBuilding() and not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
+end
+
+
+function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys)
+	local attacker = keys.attacker
+	local target = keys.target
+
+	-- If this is an illusion, do nothing
+	if not self.parent:IsRealHero() then
+		return nil
+	end
+
+	-- If caster has break, do nothing
+	if attacker:PassivesDisabled() then
+		return nil
+	end
+
+	-- If the target is a building, do nothing
+	if target:IsBuilding() then
+		return nil
+	end
+
+	-- If an attack was already fired (ranged heroes), disable further critical strikes
+	if self.crit_attack_fired then
+		return nil
+	end
+
+	-- Prevent critical attacks on allies
+	if self.parent:GetTeamNumber() == target:GetTeamNumber() then
+		return nil
+	end
+
+	return self.crit_damage
 end
 
 function modifier_imba_jinada_buff_crit:OnAttack(keys)
@@ -695,48 +731,17 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 			end
 
 			-- transfer gold from target to caster
-			if target:IsRealHero() then
-				target:ModifyGold(-self:GetAbility():GetSpecialValueFor("bonus_gold"), false, 0)
-				attacker:ModifyGold(self:GetAbility():GetSpecialValueFor("bonus_gold"), false, 0)
-				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, self:GetAbility():GetSpecialValueFor("bonus_gold"), nil)
+			if target:IsRealHero() and target:GetPlayerID() then
+				local actual_gold_to_steal = math.min(self:GetAbility():GetTalentSpecialValueFor("bonus_gold"), PlayerResource:GetUnreliableGold(target:GetPlayerID()))
+				target:ModifyGold(-actual_gold_to_steal, false, 0)
+				attacker:ModifyGold(actual_gold_to_steal, false, 0)
+				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)
 			end
 
 			-- Remove the critical strike modifier from the caster
 			self:Destroy()
 		end
 	end
-end
-
-function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys)
-	local attacker = keys.attacker
-	local target = keys.target
-
-	-- If this is an illusion, do nothing
-	if not self.parent:IsRealHero() then
-		return nil
-	end
-
-	-- If caster has break, do nothing
-	if attacker:PassivesDisabled() then
-		return nil
-	end
-
-	-- If the target is a building, do nothing
-	if target:IsBuilding() then
-		return nil
-	end
-
-	-- If an attack was already fired (ranged heroes), disable further critical strikes
-	if self.crit_attack_fired then
-		return nil
-	end
-
-	-- Prevent critical attacks on allies
-	if self.parent:GetTeamNumber() == target:GetTeamNumber() then
-		return nil
-	end
-
-	return self.crit_damage
 end
 
 function modifier_imba_jinada_buff_crit:IsHidden()

@@ -830,14 +830,14 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_puck_dream_coil_targets"
 							}
 							upgraded = true
-						elseif string.find(text, 'earthshaker') and hero:GetName() == "npc_dota_hero_earthshaker" then
+						elseif string.find(text, 'spectre') and hero:GetName() == "npc_dota_hero_spectre" then
 							ability_set = {
-								[0] = "earthshaker_fissure_lua",
-								[1] = "earthshaker_enchant_totem_lua",
-								[2] = "earthshaker_aftershock_lua",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_earthshaker_echo_slam",
+								-- [0] = "earthshaker_fissure_lua",
+								-- [1] = "earthshaker_enchant_totem_lua",
+								-- [2] = "earthshaker_aftershock_lua",
+								[3] = "imba_spectre_reality",
+								[4] = "imba_spectre_haunt_single",
+								[5] = "imba_spectre_haunt",
 								-- [6] = "special_bonus_all_stats_8",
 								-- [7] = "special_bonus_cast_range_175",
 								-- [8] = "special_bonus_spell_amplify_15",

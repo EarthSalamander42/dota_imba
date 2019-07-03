@@ -55,10 +55,7 @@ function GameMode:OnUnitFirstSpawn(unit)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if hero:GetUnitName() == "npc_dota_hero_clinkz" then
-				if hero:HasTalent("special_bonus_imba_clinkz_8") then
-					unit:AddNewModifier(unit, nil, "modifier_imba_burning_army", {mana_burn=hero:FindTalentValue("special_bonus_imba_clinkz_8")})
-				end
-
+				unit:AddNewModifier(hero, nil, "modifier_imba_burning_army", {})
 				break
 			end
 		end
