@@ -740,61 +740,7 @@ function GameMode:OnPlayerChat(keys)
 						local upgraded = false
 						
 						-- Temporary code; update as tests require
-						if string.find(text, 'luna') and hero:GetName() == "npc_dota_hero_luna" then
-							ability_set = {
-								[0] = "imba_luna_lucent_beam",
-								[1] = "imba_luna_moon_glaive",
-								[2] = "imba_luna_lunar_blessing",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_luna_eclipse",
-								[6] = "special_bonus_attack_speed_15",
-								[7] = "special_bonus_cast_range_300",
-								[8] = "special_bonus_unique_luna_2",
-								[9] = "special_bonus_movement_speed_30",
-								[10] = "special_bonus_all_stats_8",
-								[11] = "special_bonus_unique_luna_1",
-								[12] = "special_bonus_lifesteal_25",
-								[13] = "special_bonus_unique_luna_5"
-							}
-							upgraded = true
-						elseif string.find(text, 'sp') and hero:GetName() == "npc_dota_hero_spirit_breaker" then
-							ability_set = {
-								[0] = "imba_spirit_breaker_charge_of_darkness",
-								[1] = "imba_spirit_breaker_bulldoze",
-								[2] = "imba_spirit_breaker_greater_bash",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_spirit_breaker_nether_strike",
-								[6] = "special_bonus_night_vision_600",
-								[7] = "special_bonus_armor_5",
-								[8] = "special_bonus_hp_regen_15",
-								[9] = "special_bonus_attack_damage_40",
-								[10] = "special_bonus_imba_spirit_breaker_charge_speed",
-								[11] = "special_bonus_imba_spirit_breaker_bulldoze_cooldown",
-								[12] = "special_bonus_imba_spirit_breaker_bash_chance",
-								[13] = "special_bonus_imba_spirit_breaker_bonus_health"
-							}
-							upgraded = true
-						elseif string.find(text, 'tide') and hero:GetName() == "npc_dota_hero_tidehunter" then
-							ability_set = {
-								[0] = "imba_tidehunter_gush",
-								[1] = "imba_tidehunter_kraken_shell",
-								[2] = "imba_tidehunter_anchor_smash",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_tidehunter_ravage",
-								[6] = "special_bonus_movement_speed_20",
-								[7] = "special_bonus_unique_tidehunter_2",
-								[8] = "special_bonus_imba_tidehunter_greater_hardening",
-								[9] = "special_bonus_unique_tidehunter_3",
-								[10] = "special_bonus_unique_tidehunter_4",
-								[11] = "special_bonus_unique_tidehunter",
-								[12] = "special_bonus_cooldown_reduction_25",
-								[13] = "special_bonus_attack_damage_250"
-							}
-							upgraded = true
-						elseif string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
+						if string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
 							ability_set = {
 								[0] = "imba_techies_proximity_mine",
 								[1] = "imba_techies_stasis_trap",
@@ -830,22 +776,40 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_puck_dream_coil_targets"
 							}
 							upgraded = true
-						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
+						elseif string.find(text, 'spectre') and hero:GetName() == "npc_dota_hero_spectre" then
 							ability_set = {
-								[0] = "imba_grimstroke_dark_artistry",
-								[1] = "imba_grimstroke_ink_creature",
-								[2] = "imba_grimstroke_spirit_walk",
-								[3] = "grimstroke_scepter",
-								[4] = "generic_hidden",
-								[5] = "imba_grimstroke_soul_chain",
-								[6] = "special_bonus_movement_speed_30",
-								[7] = "special_bonus_gold_income_15",
-								[8] = "special_bonus_spell_amplify_12",
-								[9] = "special_bonus_cast_range_125",
-								[10] = "special_bonus_unique_grimstroke_3",
-								[11] = "special_bonus_unique_grimstroke_4",
-								[12] = "special_bonus_unique_grimstroke_1",
-								[13] = "special_bonus_unique_grimstroke_2"
+								-- [0] = "earthshaker_fissure_lua",
+								-- [1] = "earthshaker_enchant_totem_lua",
+								-- [2] = "earthshaker_aftershock_lua",
+								[3] = "imba_spectre_reality",
+								[4] = "imba_spectre_haunt_single",
+								[5] = "imba_spectre_haunt",
+								-- [6] = "special_bonus_all_stats_8",
+								-- [7] = "special_bonus_cast_range_175",
+								-- [8] = "special_bonus_spell_amplify_15",
+								-- [9] = "special_bonus_attack_damage_90",
+								-- [10] = "special_bonus_imba_puck_waning_rift_cooldown",
+								-- [11] = "special_bonus_imba_puck_illusory_orb_speed",
+								-- [12] = "special_bonus_gold_income_70",
+								-- [13] = "special_bonus_imba_puck_dream_coil_targets"
+							}
+							upgraded = true
+						elseif string.find(text, 'shaman') and hero:GetName() == "npc_dota_hero_shadow_shaman" then
+							ability_set = {
+								[0] = "imba_shadow_shaman_ether_shock",
+								[1] = "imba_shadow_shaman_voodoo",
+								[2] = "imba_shadow_shaman_shackles",
+								-- [3] = "imba_puck_ethereal_jaunt",
+								-- [4] = "generic_hidden",
+								-- [5] = "imba_puck_dream_coil",
+								-- [6] = "special_bonus_all_stats_8",
+								-- [7] = "special_bonus_cast_range_175",
+								-- [8] = "special_bonus_spell_amplify_15",
+								[9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
+								-- [10] = "special_bonus_imba_puck_waning_rift_cooldown",
+								[11] = "special_bonus_imba_shadow_shaman_wards_movement",
+								-- [12] = "special_bonus_gold_income_70",
+								[13] = "special_bonus_imba_shadow_shaman_3"
 							}
 							upgraded = true
 						end

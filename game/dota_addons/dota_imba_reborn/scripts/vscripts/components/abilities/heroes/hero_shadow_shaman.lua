@@ -4,6 +4,578 @@
 -- Editors:
 --     Fudge
 --     naowin, 10.07.2018
+--     AltiV - July 3rd, 2019 (actual IMBAfication)
+
+LinkLuaModifier("modifier_imba_shadow_shaman_voodoo",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_voodoo_deprecation",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_shadow_shaman_shackles_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_shackles",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_shackles_chariot",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_shadow_shaman_parlor_tricks_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+imba_shadow_shaman_ether_shock							= class({})
+
+imba_shadow_shaman_voodoo								= class({})
+modifier_imba_shadow_shaman_voodoo						= class({})
+modifier_imba_shadow_shaman_voodoo_deprecation			= class({})
+
+imba_shadow_shaman_shackles								= class({})
+modifier_imba_shadow_shaman_shackles_handler			= class({})
+modifier_imba_shadow_shaman_shackles					= class({})
+modifier_imba_shadow_shaman_shackles_chariot			= class({})
+
+imba_shadow_shaman_parlor_tricks						= class({})
+modifier_imba_shadow_shaman_parlor_tricks_handler		= class({})
+
+-----------------
+-- ETHER SHOCK --
+-----------------
+
+function imba_shadow_shaman_ether_shock:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_ShadowShaman.EtherShock")
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
+		self:GetCaster():EmitSound("shadowshaman_shad_ability_ether_0"..RandomInt(1, 4))
+	end
+
+	-- Helper function in vscripts\internal\util.lua
+	local enemies = FindUnitsInBicycleChain(
+		self:GetCaster():GetTeamNumber(),
+		self:GetCursorTarget():GetAbsOrigin(),
+		self:GetCaster():GetAbsOrigin(),
+		self:GetCaster():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("end_distance")),
+		self:GetSpecialValueFor("start_radius"),
+		self:GetSpecialValueFor("end_radius"),
+		nil,
+		self:GetAbilityTargetTeam(),
+		self:GetAbilityTargetType(),
+		self:GetAbilityTargetFlags(),
+		FIND_CLOSEST,
+		false
+	)
+	
+	local enemies_hit = 0
+	local attachment
+	
+	for _, enemy in pairs(enemies) do
+		if enemies_hit < self:GetSpecialValueFor("targets") then
+			enemy:EmitSound("Hero_ShadowShaman.EtherShock.Target")
+			
+			local ether_shock_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_ether_shock.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+			
+			-- When hitting multiple targets, the shocks from Shaman's weapons are spread amongst the two wands
+			if enemies_hit % 2 == 1 then
+				attachment = "attach_attack1"
+			else
+				attachment = "attach_attack2"
+			end
+			
+			ParticleManager:SetParticleControlEnt(ether_shock_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, attachment, self:GetCaster():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(ether_shock_particle, 1, enemy:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(ether_shock_particle)
+			
+			local damageTable = {
+				victim 			= enemy,
+				damage 			= self:GetTalentSpecialValueFor("damage"),
+				damage_type		= self:GetAbilityDamageType(),
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			}
+
+			ApplyDamage(damageTable)		
+		
+			enemies_hit = enemies_hit + 1
+		end
+	end
+end
+
+------------------
+-- VOODOO (HEX) --
+------------------
+
+function imba_shadow_shaman_voodoo:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_shadow_shaman_voodoo:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_cooldown")
+end
+
+function imba_shadow_shaman_voodoo:CastFilterResultTarget(target)
+	if not IsServer() then return end
+
+	-- IMBAfication: Cucco
+	if self:GetAutoCastState() and target == self:GetCaster() then
+		return UF_SUCCESS
+	end
+
+	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	
+	return nResult
+end
+
+function imba_shadow_shaman_voodoo:OnSpellStart()
+	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+			-- "Hex instantly destroys illusions."
+			if self:GetCursorTarget():IsIllusion() then
+				self:GetCursorTarget():Kill(self:GetCursorTarget(), self:GetCaster())
+			else	
+				if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
+					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
+				end
+				
+				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
+			end
+		end
+	else
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
+	end
+	
+	self:GetCursorTarget():EmitSound("Hero_ShadowShaman.Hex.Target")
+	self:GetCursorTarget():EmitSound("General.Illusion.Create")
+		
+	local chicken_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+	ParticleManager:ReleaseParticleIndex(chicken_particle)
+end
+
+---------------------
+-- VOODOO MODIFIER --
+---------------------
+
+function modifier_imba_shadow_shaman_voodoo:IsDebuff()	return self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() end
+
+function modifier_imba_shadow_shaman_voodoo:OnCreated()
+	self.movespeed				= self:GetAbility():GetSpecialValueFor("movespeed")
+
+	self.base_movespeed			= 285
+	
+	if self:GetParent().GetBaseMoveSpeed then
+		self.base_movespeed		= self:GetParent():GetBaseMoveSpeed()
+	end
+	
+	self.base_attackrange		= 400
+	
+	if self:GetParent().Script_GetAttackRange then
+		self.base_attackrange	= self:GetParent():Script_GetAttackRange()
+	end
+	
+	self.base_attacktime		= 1.7
+
+	if self:GetParent().GetBaseAttackTime then
+		self.base_attacktime	= self:GetParent():GetBaseAttackTime()
+	end
+
+	self.deprecation_radius		= self:GetAbility():GetSpecialValueFor("deprecation_radius")
+	self.deprecation_angle		= self:GetAbility():GetSpecialValueFor("deprecation_angle")
+	self.cucco_move_speed		= self:GetAbility():GetSpecialValueFor("cucco_move_speed")	
+	self.cucco_attack_range		= self:GetAbility():GetSpecialValueFor("cucco_attack_range")
+	self.cucco_attack_speed		= self:GetAbility():GetSpecialValueFor("cucco_attack_speed")
+	self.cucco_base_attack_time	= self:GetAbility():GetSpecialValueFor("cucco_base_attack_time")
+
+	if not IsServer() then return end
+
+	-- IMBAfication: Deprecation
+	-- Create a table to hold units that have been broken out of the deprecation hypnosis (aka if they take damage they won't be stunned by the aura modifier again)
+	self.targets = {}
+
+	-- IMBAfication: Cucco
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		self.attack_capability = self:GetParent():GetAttackCapability()
+		
+		self:GetParent():SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("General.Illusion.Destroy")
+	
+	if self.attack_capability then
+		self:GetParent():SetAttackCapability(self.attack_capability)
+	end
+end
+
+-- "Applies a hex on the target, setting its base movement speed to 100, silencing, muting, and disarming it. "
+function modifier_imba_shadow_shaman_voodoo:CheckState()
+	local state = 
+	{
+		[MODIFIER_STATE_SILENCED]			= true,
+		[MODIFIER_STATE_MUTED]				= true
+	}
+	
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		state = {
+			[MODIFIER_STATE_DISARMED]		= true,
+			[MODIFIER_STATE_BLOCK_DISABLED]	= true
+		}
+	end
+	
+	-- Calling this last so it shows as the forefront state on the UI
+	state[MODIFIER_STATE_HEXED]				= true
+	
+	return state
+end
+
+function modifier_imba_shadow_shaman_voodoo:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
+		MODIFIER_PROPERTY_MODEL_CHANGE,
+		
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetModifierMoveSpeedOverride()
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		return self.movespeed
+	else
+		if self.cucco_move_speed and self.base_movespeed and self.cucco_move_speed > self.base_movespeed then
+			return self.cucco_move_speed
+		end
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetModifierModelChange()
+	return "models/props_gameplay/chicken.vmdl"
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetModifierAttackRangeBonus()
+	if self.base_attackrange and self.cucco_attack_range and self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return -self.base_attackrange + self.cucco_attack_range
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetModifierAttackSpeedBonus_Constant()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.cucco_attack_speed
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetModifierBaseAttackTimeConstant()
+	if self.cucco_base_attack_time and self.base_attacktime and self.cucco_base_attack_time < self.base_attacktime then
+		return self.cucco_base_attack_time
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetAttackSound()
+	return "tutorial_smallfence_smash"
+end
+
+function modifier_imba_shadow_shaman_voodoo:IsAura()						return true end
+function modifier_imba_shadow_shaman_voodoo:IsAuraActiveOnDeath() 			return false end
+
+function modifier_imba_shadow_shaman_voodoo:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("deprecation_radius") or 500 end
+function modifier_imba_shadow_shaman_voodoo:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_shadow_shaman_voodoo:GetAuraSearchTeam()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return DOTA_UNIT_TARGET_TEAM_ENEMY
+	else
+		return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_shadow_shaman_voodoo:GetModifierAura()				return "modifier_imba_shadow_shaman_voodoo_deprecation" end
+function modifier_imba_shadow_shaman_voodoo:GetAuraEntityReject(hTarget)	
+	if not IsServer() then return end
+	
+	return hTarget == self:GetParent() or (math.abs(AngleDiff(VectorToAngles(hTarget:GetForwardVector()).y, VectorToAngles(self:GetParent():GetAbsOrigin() - hTarget:GetAbsOrigin()).y)) > (self:GetAbility():GetSpecialValueFor("deprecation_angle") or 45)) or self.targets[hTarget:GetEntityIndex()] or not hTarget:CanEntityBeSeenByMyTeam(self:GetParent())
+end
+
+---------------------------------
+-- VOODOO DEPRECATION MODIFIER --
+---------------------------------
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:OnCreated()
+	self.deprecation_threshold	= self:GetAbility():GetSpecialValueFor("deprecation_threshold")
+
+	if not IsServer() then return end
+	
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:OnIntervalThink()
+	if not IsServer() then return end
+	
+	self:GetParent():SetForwardVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized())
+	self:GetParent():FaceTowards(self:GetCaster():GetAbsOrigin())
+end
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:CheckState()
+	local state = {[MODIFIER_STATE_STUNNED] = true}
+	
+	return state
+end
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:GetOverrideAnimation()
+	return ACT_DOTA_VICTORY 
+end
+
+function modifier_imba_shadow_shaman_voodoo_deprecation:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	if keys.unit == self:GetParent() and keys.damage >= self:GetParent():GetMaxHealth() * self.deprecation_threshold * 0.01 then
+		local voodoo_modifier = self:GetCaster():FindModifierByName("modifier_imba_shadow_shaman_voodoo")
+		
+		if voodoo_modifier and voodoo_modifier.targets then
+			voodoo_modifier.targets[self:GetParent():GetEntityIndex()] = true
+			self:Destroy()
+		end
+	end
+end
+
+--------------
+-- SHACKLES --
+--------------
+
+function imba_shadow_shaman_shackles:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_shadow_shaman_shackles:GetIntrinsicModifierName()
+	return "modifier_imba_shadow_shaman_shackles_handler"
+end
+
+function imba_shadow_shaman_shackles:CastFilterResultTarget(target)
+	if not IsServer() then return end
+
+	-- IMBAfication: Chariot
+	if self:GetAutoCastState() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target ~= self:GetCaster() then
+		return UF_SUCCESS
+	end
+
+	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	
+	return nResult
+end
+
+function imba_shadow_shaman_shackles:GetChannelTime()
+	return self:GetCaster():GetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster()) * 0.01
+end
+
+function imba_shadow_shaman_shackles:OnSpellStart()
+	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+			self:GetCaster():EmitSound("Hero_ShadowShaman.Shackles.Cast")
+			
+			if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
+				local responses = {
+					"shadowshaman_shad_ability_shackle_01",
+					"shadowshaman_shad_ability_shackle_02",
+					"shadowshaman_shad_ability_shackle_03",
+					"shadowshaman_shad_ability_shackle_04",
+					"shadowshaman_shad_ability_shackle_05",
+					"shadowshaman_shad_ability_shackle_06",
+					"shadowshaman_shad_ability_shackle_08",
+					"shadowshaman_shad_ability_entrap_02",
+					"shadowshaman_shad_ability_entrap_03",
+				}
+				
+				self:GetCaster():EmitSound(responses[RandomInt(1, #responses)])
+			end
+			
+			-- IMBAfication: Stronghold
+			local enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), self:GetCursorTarget():GetAbsOrigin(), nil, self:GetSpecialValueFor("stronghold_width"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS)
+			
+			for _, enemy in pairs(enemies) do
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles", {duration = self:GetChannelTime()})
+			end
+		end
+	else
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
+	end
+	
+	self:GetCursorTarget():EmitSound("Hero_ShadowShaman.Shackles.Cast")
+end
+
+function imba_shadow_shaman_shackles:OnChannelFinish(bInterrupted)
+	if not IsServer() then return end
+	
+	self:GetCursorTarget():StopSound("Hero_ShadowShaman.Shackles.Cast")
+
+	if self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster()) then
+		self:GetCursorTarget():RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster())
+	elseif self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster()) then
+		self:GetCursorTarget():RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster())
+	end
+end
+
+-------------------------------
+-- SHACKLES HANDLER MODIFIER --
+-------------------------------
+
+function modifier_imba_shadow_shaman_shackles_handler:IsHidden()	return true end
+
+function modifier_imba_shadow_shaman_shackles_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}
+	
+	return decFuncs
+end
+
+-- Going to use this hacky method to determine channel time on UI
+-- During the brief time before the ability actually casts, record the target's status resistance * 100 into its intrinsic modifier, then use that divided by 100 as the channel time
+function modifier_imba_shadow_shaman_shackles_handler:OnAbilityExecuted(keys)
+	if not IsServer() then return end
+	
+	if keys.ability == self:GetAbility() then
+		if keys.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * (1 - keys.target:GetStatusResistance()) * 100)
+		else
+			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * 100)
+		end
+	end
+end
+
+-----------------------
+-- SHACKLES MODIFIER --
+-----------------------
+
+-- Doesn't actually ignore status resist, but this is handled in the channel time function
+function modifier_imba_shadow_shaman_shackles:IgnoreTenacity()		return true end
+function modifier_imba_shadow_shaman_shackles:IsPurgable()			return false end
+function modifier_imba_shadow_shaman_shackles:IsPurgeException()	return true end
+function modifier_imba_shadow_shaman_shackles:GetAttributes() 		return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_shadow_shaman_shackles:OnCreated()
+	if not IsServer() then return end
+	
+	-- Create shackle particle (yeah this is like 100% wrong but I can't be assed to figure out what exactly goes where)
+	local shackle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(shackle_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 5, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetCaster():GetAbsOrigin(), true)
+	self:AddParticle(shackle_particle, true, false, -1, true, false)
+	
+	self.tick_interval			= self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.total_damage			= self:GetAbility():GetSpecialValueFor("total_damage")
+	self.channel_time			= self:GetAbility():GetSpecialValueFor("channel_time")
+	
+	self.swindle_gold_per_tick	= self:GetAbility():GetSpecialValueFor("swindle_gold_per_tick")
+	
+	-- "The damage per tick is based on the total damage divided by its duration and then divided by 10. The talent bonus is ignored."
+	self.damage_per_tick	= self.total_damage / (self.channel_time / self.tick_interval)
+	
+	self:StartIntervalThink(self.tick_interval * (1 - self:GetParent():GetStatusResistance()))
+end
+
+function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
+	if not IsServer() then return end
+	
+	if not self:GetAbility():IsChanneling() then
+		self:Destroy()
+	else
+		local damageTable = {
+			victim 			= self:GetParent(),
+			damage 			= self.damage_per_tick,
+			damage_type		= self:GetAbility():GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		}
+
+		ApplyDamage(damageTable)
+		
+		-- IMBAfication: Swindle
+		-- Transfer gold from target to caster
+		if self:GetParent():IsRealHero() and self:GetParent():GetPlayerID() then
+			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
+			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
+			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)
+			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+		end
+	end
+end
+
+function modifier_imba_shadow_shaman_shackles:CheckState()
+	local state = {[MODIFIER_STATE_STUNNED] = true}
+	
+	return state
+end
+
+function modifier_imba_shadow_shaman_shackles:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	
+	return decFuncs
+end
+
+function modifier_imba_shadow_shaman_shackles:GetOverrideAnimation()
+	return ACT_DOTA_DISABLED
+end
+
+-------------------------------
+-- SHACKLES CHARIOT MODIFIER --
+-------------------------------
+
+function modifier_imba_shadow_shaman_shackles_chariot:GetAttributes() 		return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_shadow_shaman_shackles_chariot:OnCreated()
+	self.chariot_break_distance	= self:GetAbility():GetSpecialValueFor("chariot_break_distance")
+
+	if not IsServer() then return end
+	
+	-- Create shackle particle (yeah this is like 100% wrong but I can't be assed to figure out what exactly goes where)
+	local shackle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(shackle_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 5, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetCaster():GetAbsOrigin(), true)
+	self:AddParticle(shackle_particle, true, false, -1, true, false)
+	
+	self.chariot_max_length	= self:GetAbility():GetCastRange(self:GetParent():GetAbsOrigin(), self:GetParent())
+	self.vector				= self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
+	self.current_position	= self:GetParent():GetAbsOrigin()
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_shadow_shaman_shackles_chariot:OnIntervalThink()
+	if not IsServer() then return end
+	
+	if not self:GetAbility():IsChanneling() or (self:GetParent():GetAbsOrigin() - self.current_position):Length2D() > self.chariot_break_distance then
+		self:GetAbility():SetChanneling(false)
+		self:Destroy()
+	else
+		-- This variable gets updated every frame because the cast range can change at any time technically
+		self.chariot_max_length = self:GetAbility():GetCastRange(self:GetParent():GetAbsOrigin(), self:GetParent())
+		self.vector				= self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()
+		self.current_position	= self:GetParent():GetAbsOrigin()
+		
+		if (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() > self.chariot_max_length then
+			FindClearSpaceForUnit(self:GetCaster(), self:GetParent():GetAbsOrigin() + self.vector:Normalized() * self.chariot_max_length, false)
+		end
+	end
+end
+
+-------------------
+-- PARLOR TRICKS --
+-------------------
+
+----------------------------
+-- PARLOR TRICKS MODIFIER --
+----------------------------
 
 --------------------------------
 ------ MASS SERPENT WARD -------
@@ -17,7 +589,8 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	local caster            =   self:GetCaster()
 	local target_point      =   self:GetCursorPosition()
 	local ward_level        =   self:GetLevel()
-	local ward_name         =   "npc_imba_dota_shadow_shaman_ward_"
+	-- local ward_name         =   "npc_imba_dota_shadow_shaman_ward_"
+	local ward_name         =   "npc_dota_shadow_shaman_ward_" 
 	local response          =   "shadowshaman_shad_ability_ward_"
 	local spawn_particle    =   "particles/units/heroes/hero_shadowshaman/shadowshaman_ward_spawn.vpcf"
 	-- Ability parameters
@@ -92,6 +665,10 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 			ward:SetBaseDamageMin(ward:GetBaseDamageMin() + bonus_dmg)
 			ward:SetBaseDamageMax(ward:GetBaseDamageMax() + bonus_dmg)
 		end
+		
+		if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
+			ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+		end
 	end
 
 end
@@ -114,6 +691,12 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	end
 	-- Prevent some recursion with the scepter effect
 	self.main_attack    =   true
+	
+	if not IsServer() then return end
+	-- These things still get stuck sometimes (important for...reasons) so reassess the space again
+	Timers:CreateTimer(FrameTime(), function()
+		FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
+	end)
 end
 
 function modifier_imba_mass_serpent_ward:DeclareFunctions()
@@ -123,6 +706,8 @@ function modifier_imba_mass_serpent_ward:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
+		
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE
 	}
 	return funcs
 end
@@ -226,6 +811,13 @@ function modifier_imba_mass_serpent_ward:OnTakeDamage(params)
 	end
 end
 
+
+function modifier_imba_mass_serpent_ward:GetModifierMoveSpeed_Absolute()
+	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_wards_movement")
+	end
+end
+
 function modifier_imba_mass_serpent_ward:OnDestroy()
 	if IsServer() then
 		local particle  =   "particles/units/heroes/hero_shadowshaman/shadowshaman_ward_death.vpcf"
@@ -234,5 +826,39 @@ function modifier_imba_mass_serpent_ward:OnDestroy()
 		local spawn_particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl( spawn_particle_fx, 0, self:GetParent():GetAbsOrigin() )
 		ParticleManager:ReleaseParticleIndex(spawn_particle_fx)
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_shadow_shaman_hex_cooldown				= class({})
+modifier_special_bonus_imba_shadow_shaman_wards_movement			= class({})
+
+function modifier_special_bonus_imba_shadow_shaman_hex_cooldown:IsHidden() 			return true end
+function modifier_special_bonus_imba_shadow_shaman_hex_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_shadow_shaman_hex_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_wards_movement:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_wards_movement:IsPurgable() 		return false end
+function modifier_special_bonus_imba_shadow_shaman_wards_movement:RemoveOnDeath() 	return false end
+
+function imba_shadow_shaman_voodoo:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_hex_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_hex_cooldown"), "modifier_special_bonus_imba_shadow_shaman_hex_cooldown", {})
+	end
+end
+
+function imba_shadow_shaman_voodoo:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_wards_movement"), "modifier_special_bonus_imba_shadow_shaman_wards_movement", {})
 	end
 end

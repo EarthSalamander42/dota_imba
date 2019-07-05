@@ -650,7 +650,7 @@ function modifier_earthshaker_enchant_totem_lua_leap:UpdateHorizontalMotion( me,
 	self:GetParent():SetOrigin( self:GetParent():GetOrigin() + (self.direction * self.speed * dt) )
 end
 
-function modifier_earthshaker_enchant_totem_lua_leap:OnHorizontalMotionInterrupted()
+function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
 	if IsServer() then
 		self:Destroy()
 	end

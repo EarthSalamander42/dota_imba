@@ -19,7 +19,11 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
 
-		"Ability15"					"special_bonus_imba_shadow_shaman_2"
+		"Ability13"					"special_bonus_imba_shadow_shaman_hex_cooldown"
+		"Ability15"					"special_bonus_imba_shadow_shaman_wards_movement"
 		"Ability17"					"special_bonus_imba_shadow_shaman_3"
+		
+		// Removed Talents
+		"Ability15"					"special_bonus_imba_shadow_shaman_2" // +2 Mass Serpent Wards health
 	}
 }
