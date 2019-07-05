@@ -15,6 +15,10 @@ function modifier_battlepass_wearable_spellicons:OnCreated(keys)
 	self:StartIntervalThink(1.0)
 end
 
+function modifier_battlepass_wearable_spellicons:OnRefresh(keys)
+	self:OnCreated(keys)
+end
+
 function modifier_battlepass_wearable_spellicons:OnIntervalThink()
 	if IsServer() then
 		self:SetStackCount(self.arcana_style + 1)

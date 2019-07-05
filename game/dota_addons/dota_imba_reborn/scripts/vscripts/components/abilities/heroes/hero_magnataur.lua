@@ -904,7 +904,7 @@ function modifier_imba_empower_aura:GetAuraSearchTeam()
 end
 
 function modifier_imba_empower_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING
 end
 
 function modifier_imba_empower_aura:GetModifierAura()
@@ -1288,7 +1288,7 @@ end
 
 -- #3 Talent: Supercharge grants the target's 30% main attribute as bonus damage
 function modifier_imba_supercharged:GetModifierBaseAttack_BonusDamage()
-	if self:GetCaster():HasTalent("special_bonus_imba_magnataur_3") then
+	if self:GetCaster():HasTalent("special_bonus_imba_magnataur_3") and self:GetParent().GetPrimaryStatValue and self:GetParent():GetPrimaryStatValue() then
 		local bonus_damage = self:GetParent():GetPrimaryStatValue() * self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3") * 0.01
 		return bonus_damage
 	end

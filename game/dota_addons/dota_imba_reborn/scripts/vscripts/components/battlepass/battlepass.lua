@@ -93,21 +93,17 @@ BATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
 BATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
 BATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[157]	= {"fountain18", "common"}
+BATTLEPASS_LEVEL_REWARD[165]	= {"earthshaker_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[166]	= {"fountain19", "common"}
 BATTLEPASS_LEVEL_REWARD[170]	= {"enigma_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
 BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
--- if IsInToolsMode() then
--- 	BATTLEPASS_LEVEL_REWARD[185]	= {"earthshaker_arcana", "arcana"}
--- end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
--- if IsInToolsMode() then
--- 	BATTLEPASS_LEVEL_REWARD[2250]	= {"earthshaker_arcana2", "arcana"}
--- end
 BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
+BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
@@ -668,6 +664,9 @@ function Battlepass:GetHeroEffect(hero)
 		hero.enchant_totem_buff_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
 		hero.enchant_totem_cast_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_totem_cast.vpcf"
 		hero.aftershock_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_aftershock.vpcf"
+		hero.echo_slam_start_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf"
+		hero.echo_slam_tgt_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_tgt.vpcf"
+		hero.echo_slam_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf"
 
 		-- if earthshaker have ti6 totem + arcana, use this particles
 --		hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_buff.vpcf"
@@ -824,33 +823,46 @@ function Battlepass:GetHeroEffect(hero)
 				hero.fissure_pfx = "particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
 
 				Wearable:_WearProp(hero, "12969", "weapon")
-
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
---[[
+
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
 				hero.enchant_totem_leap_blur_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap_v2.vpcf"
 				hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
 				hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_v2.vpcf"
 				hero.aftershock_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_aftershock_v2.vpcf"
+				hero.echo_slam_start_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_start_v2.vpcf"
+				hero.echo_slam_tgt_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_ground_v2.vpcf"
+				hero.echo_slam_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_proj_v2.vpcf"
+
+				hero.blink_effect = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_blink_start_v2.vpcf"
+				hero.blink_effect_end = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_blink_end_v2.vpcf"
+				hero.blink_icon = "earthshaker2"
+				hero.blink_sound = "Hero_Earthshaker.BlinkDagger.Arcana"
 
 				Wearable:_WearProp(hero, "12692", "head", "02")
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 2})
 			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
 				hero.enchant_totem_leap_blur_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap.vpcf"
 				hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
 				hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast.vpcf"
 				hero.aftershock_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_aftershock.vpcf"
+				hero.echo_slam_start_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_start.vpcf"
+				hero.echo_slam_tgt_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_ground.vpcf"
+				hero.echo_slam_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_echoslam_proj.vpcf"
 
---				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
---				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
---				hero.blink_icon = "zuus"
---				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
+				hero.blink_effect = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_blink_start.vpcf"
+				hero.blink_effect_end = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_blink_end.vpcf"
+				hero.blink_icon = "earthshaker"
+				hero.blink_sound = "Hero_Earthshaker.BlinkDagger.Arcana"
 
 				Wearable:_WearProp(hero, "12692", "head")
-				if not hero:HasModifier("modifier_earthshaker_arcana") then
-					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
-				end
-			end --]]
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
+				-- not used atm
+--				if not hero:HasModifier("modifier_earthshaker_arcana") then -- need to change name, this is the vanilla modifier name
+--					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
+--				end
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_ENIGMA["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")

@@ -1989,22 +1989,13 @@ function modifier_imba_burning_army:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
 end
-
-function modifier_imba_burning_army:OnCreated(params)
-	if IsServer() then
-		self.mana_burn = params.mana_burn
-	end
-end
-
 function modifier_imba_burning_army:OnAttackLanded(params)
-	if IsServer() then
-		if params.attacker == self:GetParent() then
-			-- Apply mana burn particle effect
-			local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, params.target)
-			ParticleManager:SetParticleControl(particle_manaburn_fx, 0, params.target:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
+	if IsServer() and params.attacker == self:GetParent() and self:GetCaster():HasTalent("special_bonus_imba_clinkz_8") then
+		-- Apply mana burn particle effect
+		local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, params.target)
+		ParticleManager:SetParticleControl(particle_manaburn_fx, 0, params.target:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
 
-			params.target:ReduceMana(self.mana_burn)
-		end
+		params.target:ReduceMana(self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_8"))
 	end
 end

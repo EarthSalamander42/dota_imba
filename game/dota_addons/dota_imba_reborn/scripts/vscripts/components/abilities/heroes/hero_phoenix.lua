@@ -1049,7 +1049,7 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 			ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
 			-- Check the Debuff that can interrupt spell
-			if (imba_phoenix_check_for_canceled( caster ) and not self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_caster_dummy")) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
+			if (imba_phoenix_check_for_canceled( caster ) and ((not self:GetCaster():HasScepter()) or (self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_caster_dummy")))) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
 				caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 			end
 

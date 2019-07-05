@@ -13,8 +13,8 @@
 		"Ability1"			"imba_keeper_of_the_light_illuminate"
 		"Ability2"			"imba_keeper_of_the_light_blinding_light"
 		"Ability3"			"imba_keeper_of_the_light_chakra_magic"
-		"Ability4"			"imba_keeper_of_the_light_spotlights"
-		"Ability5"			"generic_hidden"
+		"Ability4"			"imba_keeper_of_the_light_recall"
+		"Ability5"			"imba_keeper_of_the_light_spotlights"
 		"Ability6"			"imba_keeper_of_the_light_will_o_wisp"
 		"Ability7"			"imba_keeper_of_the_light_illuminate_end"
 		

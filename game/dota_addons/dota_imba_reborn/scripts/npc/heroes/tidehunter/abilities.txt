@@ -90,7 +90,7 @@
 			"10"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"surf_duration"		"0.45 0.60 0.75 0.9"
+				"surf_duration"		"0.45 0.6 0.75 0.9"
 			}
 			"11"
 			{
@@ -374,7 +374,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"6"
+				"duration"				"3"
 			}
 		}
 	}

@@ -3,6 +3,7 @@
 
 LinkLuaModifier("modifier_imba_medusa_split_shot", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_medusa_serpent_shot", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_medusa_enchanted_aim", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_medusa_mystic_snake_tracker", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
@@ -19,6 +20,7 @@ LinkLuaModifier("modifier_imba_medusa_stone_gaze_stiff_joints", "components/abil
 imba_medusa_split_shot							= class({})
 modifier_imba_medusa_split_shot					= class({})
 modifier_imba_medusa_serpent_shot				= class({})
+modifier_imba_medusa_enchanted_aim				= class({})
 
 imba_medusa_mystic_snake						= class({})
 modifier_imba_medusa_mystic_snake_tracker		= class({})
@@ -39,8 +41,45 @@ modifier_imba_medusa_stone_gaze_stiff_joints	= class({})
 -- SPLIT SHOT --
 ----------------
 
+function imba_medusa_split_shot:CastFilterResult()
+	if not IsServer() then return end
+	
+	if #self:GetCaster():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim") >= self:GetSpecialValueFor("enchanted_aim_stack_limit") then
+		return UF_FAIL_CUSTOM
+	else
+		return UF_SUCCESS
+	end
+end
+
+function imba_medusa_split_shot:GetCustomCastError()
+	if not IsServer() then return end
+	
+	return "#dota_hud_error_medusa_enchanted_aim_limit"
+end
+
+function imba_medusa_split_shot:OnAbilityPhaseStart()
+	if #self:GetCaster():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim") >= self:GetSpecialValueFor("enchanted_aim_stack_limit") then
+		DisplayError(self:GetCaster():GetPlayerID(), "Cannot exceed "..self:GetSpecialValueFor("enchanted_aim_stack_limit").." stacks of Enchanted Aim.")
+		return false
+	else
+		return true
+	end
+end
+
 function imba_medusa_split_shot:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
+	if self:GetCaster():GetModifierStackCount("modifier_imba_medusa_split_shot", self:GetCaster()) == 0 then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
+function imba_medusa_split_shot:GetManaCost(level)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_medusa_split_shot", self:GetCaster()) == 0 then
+		return 0
+	else
+		return self:GetCaster():GetMaxMana() * self:GetSpecialValueFor("enchanted_aim_mana_loss_pct") * 0.01
+	end
 end
 
 function imba_medusa_split_shot:ResetToggleOnRespawn() -- Doesn't seem like this works, so gonna handle logic in OnOwnerSpawned()/OnOwnerDied()
@@ -78,6 +117,13 @@ function imba_medusa_split_shot:OnToggle()
 	end
 end
 
+-- IMBAfication: Enchanted Aim
+function imba_medusa_split_shot:OnSpellStart()
+	if self:GetAutoCastState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_enchanted_aim", {duration = self:GetSpecialValueFor("enchanted_aim_duration")})
+	end
+end
+
 -------------------------
 -- SPLIT SHOT MODIFIER --
 -------------------------
@@ -89,6 +135,8 @@ function modifier_imba_medusa_split_shot:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		
+		MODIFIER_EVENT_ON_ORDER
     }
 
     return decFuncs
@@ -136,6 +184,17 @@ end
 
 function modifier_imba_medusa_split_shot:GetActivityTranslationModifiers()
 	return "split_shot"
+end
+
+function modifier_imba_medusa_split_shot:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
 end
 
 ---------------------------
@@ -252,6 +311,28 @@ function modifier_imba_medusa_serpent_shot:OnTakeDamage(keys)
 	end
 end
 
+---------------------------------------
+-- SPLIT SHOT ENCHANTED AIM MODIFIER --
+---------------------------------------
+
+function modifier_imba_medusa_enchanted_aim:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_medusa_enchanted_aim:OnCreated()
+	-- Technically it would be better to use self:GetParent():Script_GetAttackRange(), but this is heavily abusable stacking with both itself as well as Hurricane Pike variants (infinite attack range for 10 seconds seemsgood)
+	self.attack_range = self:GetAbility():GetSpecialValueFor("enchanted_aim_bonus_attack_range")
+	
+end
+
+function modifier_imba_medusa_enchanted_aim:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+	
+	return decFuncs
+end
+
+function modifier_imba_medusa_enchanted_aim:GetModifierAttackRangeBonus()
+	return self.attack_range
+end
+
 ------------------
 -- MYSTIC SNAKE --
 ------------------
@@ -312,6 +393,7 @@ function imba_medusa_mystic_snake:OnSpellStart()
 				mana_stolen		= 0,
 				damage			= self:GetSpecialValueFor("snake_damage"),
 				particle_snake	= particle_snake,
+				speed			= self:GetSpecialValueFor("initial_speed")
 			}
 		}
 
@@ -354,7 +436,7 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 			if hTarget:GetMana() and hTarget:GetMaxMana() and not hTarget:IsIllusion() then 
 				-- Store amount of mana before stealing some
 				local target_mana 	= hTarget:GetMana()
-				local mana_to_steal	= hTarget:GetMaxMana() * self:GetTalentSpecialValueFor("snake_mana_steal") * 0.01
+				local mana_to_steal	= hTarget:GetMaxMana() * (self:GetTalentSpecialValueFor("snake_mana_steal") + (self:GetSpecialValueFor("mana_thief_steal") * ExtraData.bounces)) * 0.01
 				
 				hTarget:ReduceMana(mana_to_steal)
 				
@@ -441,7 +523,7 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 								Target 				= enemy,
 								Source 				= hTarget,
 								Ability 			= self,
-								iMoveSpeed			= self:GetSpecialValueFor("initial_speed"),
+								iMoveSpeed			= ExtraData.speed + self:GetSpecialValueFor("quick_snake_speed"),
 								bDrawsOnMinimap 	= false,
 								bDodgeable 			= false,
 								bIsAttack 			= false,
@@ -457,12 +539,14 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 									mana_stolen		= ExtraData.mana_stolen,
 									damage			= ExtraData.damage + self:GetSpecialValueFor("snake_damage") * self:GetSpecialValueFor("snake_scale") * 0.01,
 									particle_snake	= ExtraData.particle_snake,
+									speed			= ExtraData.speed + self:GetSpecialValueFor("quick_snake_speed")
 								}
 							}
 
 						ProjectileManager:CreateTrackingProjectile(snake)
 						
 						ParticleManager:SetParticleControl(ExtraData.particle_snake, 1, enemy:GetAbsOrigin())
+						ParticleManager:SetParticleControl(ExtraData.particle_snake, 2, Vector(ExtraData.speed + self:GetSpecialValueFor("quick_snake_speed"), 0, 0))
 						break
 					end
 				end
@@ -643,8 +727,11 @@ function modifier_imba_medusa_mana_shield_meditate:OnAttackLanded(keys)
 		local meditate_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/meditate.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(meditate_particle)
 		
-		if not keys.attacker:IsIllusion() then		
-			self:GetParent():GiveMana(math.max(keys.damage * self:GetAbility():GetSpecialValueFor("meditate_mana_acquire_pct") * 0.01, 0))
+		if not keys.attacker:IsIllusion() then
+			local enchanted_aim_modifiers	= #self:GetParent():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim")
+			local efficacy_reduction		= (100 - (self:GetAbility():GetSpecialValueFor("meditate_enchanted_reduction") * enchanted_aim_modifiers)) * 0.01
+
+			self:GetParent():GiveMana(keys.damage * self:GetAbility():GetSpecialValueFor("meditate_mana_acquire_pct") * 0.01 * efficacy_reduction)
 		end
 	end
 end
@@ -661,13 +748,36 @@ function modifier_imba_medusa_mana_shield:IsPurgable() 		return false end
 function modifier_imba_medusa_mana_shield:RemoveOnDeath()	return false end
 
 function modifier_imba_medusa_mana_shield:OnCreated()
-	self.damage_per_mana	= self:GetAbility():GetSpecialValueFor("damage_per_mana")
-	self.absorption_tooltip	= self:GetAbility():GetSpecialValueFor("absorption_tooltip")
+	self.damage_per_mana					= self:GetAbility():GetSpecialValueFor("damage_per_mana")
+	self.absorption_tooltip					= self:GetAbility():GetSpecialValueFor("absorption_tooltip")
+	-- self.initiates_shield_mana_conversion	= self:GetAbility():GetSpecialValueFor("initiates_shield_mana_conversion")
+	-- self.initiates_shield_max_stacks		= self:GetAbility():GetSpecialValueFor("initiates_shield_max_stacks")
+	
+	if not IsServer() then return end
+
+	-- Start tracking mana percentages and mana values to determine if mana was lost
+	self.mana_raw = self:GetParent():GetMana()
+	self.mana_pct = self:GetParent():GetManaPercent()
+	
+	-- self:StartIntervalThink(FrameTime())
 end
+
+-- function modifier_imba_medusa_mana_shield:OnIntervalThink()
+	-- if not IsServer() then return end
+	
+	-- -- If mana percentage at any frame is lower than the frame before it, set stacks
+	-- if self:GetParent():GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
+		-- self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self.initiates_shield_mana_conversion * 0.01), self.initiates_shield_max_stacks))
+	-- end
+
+	-- self.mana_raw = self:GetParent():GetMana()
+	-- self.mana_pct = self:GetParent():GetManaPercent()
+-- end
 
 function modifier_imba_medusa_mana_shield:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
     }
 
     return decFuncs
@@ -689,11 +799,26 @@ function modifier_imba_medusa_mana_shield:GetModifierIncomingDamage_Percentage(k
 			ParticleManager:ReleaseParticleIndex(shield_particle)
 		end			
 
+		local mana_before = self:GetParent():GetMana()
 		self:GetParent():ReduceMana(mana_to_block)
+		local mana_after = self:GetParent():GetMana()
 		
 		return math.min(self.absorption_tooltip, self.absorption_tooltip * self:GetParent():GetMana() / math.max(mana_to_block, 1)) * (-1)
 	end
 end
+
+-- IMBAfication: Initiate's Shield
+-- function modifier_imba_medusa_mana_shield:GetModifierTotal_ConstantBlock(keys)
+	-- local blocked = self:GetStackCount()
+	
+	-- -- Block for the smaller value between total current stacks and total damage
+	-- if blocked > 0 then 
+		-- SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())
+		-- self:SetStackCount(max(self:GetStackCount() - keys.damage, 0))
+	-- end
+
+	-- return blocked
+-- end
 
 ----------------
 -- STONE GAZE --

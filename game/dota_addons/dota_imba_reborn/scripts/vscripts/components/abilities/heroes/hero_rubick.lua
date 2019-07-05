@@ -1047,7 +1047,18 @@ LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroe
 --	BANNED ABILITIES
 -------------------------------------------
 
-imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move", "imba_rubick_spellsteal", "shredder_chakram", "shredder_chakram_2", "shredder_return_chakram", "shredder_return_chakram_2"}
+imba_rubick_spellsteal.banned_abilities = 
+{
+	"imba_sniper_headshot",
+	"imba_phoenix_sun_ray",
+	"imba_phoenix_sun_ray_toggle_move",
+	"imba_rubick_spellsteal",
+	"shredder_chakram",
+	"shredder_chakram_2",
+	"shredder_return_chakram",
+	"shredder_return_chakram_2",
+	"monkey_king_wukongs_command"
+}
 
 --------------------------------------------------------------------------------
 -- Passive Modifier

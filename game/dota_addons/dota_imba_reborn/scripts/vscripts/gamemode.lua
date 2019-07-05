@@ -18,7 +18,7 @@ require('libraries/player')
 require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
--- require('libraries/selection')
+require('libraries/selection') -- For Turbo Couriers
 require('libraries/timers')
 require('libraries/wearables')
 require('libraries/wearables_warmful_ancient')
@@ -111,7 +111,7 @@ function GameMode:SetupAncients()
 			ancient:AddAbility("imba_ancient_defense"):SetLevel(1)
 		end
 
-		ancient:AddAbility("imba_tower_regeneration"):SetLevel(4)
+		-- ancient:AddAbility("imba_tower_regeneration"):SetLevel(4)
 	end
 end
 

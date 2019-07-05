@@ -371,7 +371,7 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 		end
 
 		-- Trajectory calculations
-		self.caster_pos = self.target:GetAbsOrigin()
+		self.caster_pos = self.caster:GetAbsOrigin()
 		self.target_pos = self.target:GetAbsOrigin()
 		self.direction	= ( self.target_pos - self.caster_pos ):Normalized()
 		self.distance = ( self.target_pos - self.caster_pos ):Length2D()
@@ -383,6 +383,7 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 			end
 		end
 
+		-- I'm guessing this was used for attacking enemies in between initial position and the target but was removed so...let's bring it back
 		self.blink_projectile = {
 			Ability				= self,
 			vSpawnOrigin		= self.caster_pos,
@@ -446,6 +447,12 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 			-- If cast on an enemy, immediately start attacking it
 			self.caster:MoveToTargetToAttack(self.target)
 		end
+	end
+end
+
+function imba_phantom_assassin_phantom_strike:OnProjectileHit(hTarget, vLocation)
+	if hTarget and hTarget ~= self.target then
+		self:GetCaster():PerformAttack(hTarget, true, true, true, true, false, false, false)
 	end
 end
 
@@ -969,8 +976,8 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 			-- Roll for fatality
 			if RandomInt(1, 100) <= fatality then
 				if target:GetHealthPercent() >= self:GetAbility():GetSpecialValueFor("fatality_threshold") then
-					target:EmitSound("Hero_Pangolier.TailThump.Shield")
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, 999999, nil)
+					-- target:EmitSound("Hero_Pangolier.TailThump.Shield")
+					-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, 999999, nil)
 					return
 				end
 
@@ -994,9 +1001,9 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 
 			if self.crit_strike then
 				-- If that attack was marked as a critical strike, apply the particles
-				local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, attacker)
+				local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 				ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlForward(coup_pfx, 1, (self:GetParent():GetOrigin() - target:GetOrigin()):Normalized())
 				ParticleManager:ReleaseParticleIndex(coup_pfx)
 			end
 		end

@@ -12,7 +12,14 @@ LinkLuaModifier( "modifier_earthshaker_fissure_lua_prevent_movement", "component
 function earthshaker_fissure_lua:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().arcana_style then return "earthshaker_fissure" end
-	return "earthshaker_fissure_ti9"
+--	print(self:GetCaster().arcana_style)
+	if self:GetCaster().arcana_style == 0 then
+		return "earthshaker_fissure_ti9"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_fissure"
+	elseif self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_fissure_alt2"
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -208,15 +215,17 @@ end
 -- Initializations
 function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 	if IsServer() then
-		self.movement_capability = 0
+		if not self:GetParent():IsHero() then
+			self.movement_capability = 0
 
-		if self:GetParent():HasGroundMovementCapability() then
-			self.movement_capability = 1
-		elseif self:GetParent():HasFlyMovementCapability() then
-			self.movement_capability = 2
+			if self:GetParent():HasGroundMovementCapability() then
+				self.movement_capability = 1
+			elseif self:GetParent():HasFlyMovementCapability() then
+				self.movement_capability = 2
+			end
+
+			self:GetParent():SetMoveCapability(0)
 		end
-
-		self:GetParent():SetMoveCapability(0)
 	end
 end
 
@@ -229,8 +238,19 @@ end
 earthshaker_enchant_totem_lua = class({})
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_movement", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_BOTH )
 
 --------------------------------------------------------------------------------
+
+function earthshaker_enchant_totem_lua:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_enchant_totem" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem"
+	end
+end
 
 function earthshaker_enchant_totem_lua:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -252,24 +272,20 @@ function earthshaker_enchant_totem_lua:GetCooldown(nLevel)
 	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_unique_earthshaker")
 end
 
-function earthshaker_enchant_totem_lua:CastFilterResultTarget( target )
-	if IsServer() then
-		if self:GetCaster():HasScepter() then
-			if target ~= nil then
-				if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() and self:GetCaster() ~= target then
-					return UF_FAIL_FRIENDLY				
-				end
-			end
-		end
+-- function earthshaker_enchant_totem_lua:CastFilterResultTarget( target )
+	-- if IsServer() then
+		-- if self:GetCaster():HasScepter() and target == self:GetCaster() then
+			-- return UF_SUCCESS
+		-- end
 
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
-end
+		-- local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		-- return nResult
+	-- end
+-- end
 
-function earthshaker_enchant_totem_lua:GetCustomCastErrorTarget(target)
-	return "dota_hud_error_cant_cast_on_ally"
-end
+-- function earthshaker_enchant_totem_lua:GetCustomCastErrorTarget(target)
+	-- return "dota_hud_error_cant_cast_on_ally"
+-- end
 
 function earthshaker_enchant_totem_lua:OnAbilityPhaseStart()
 	if self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetCursorTarget() then
@@ -291,12 +307,21 @@ function earthshaker_enchant_totem_lua:OnSpellStart()
 		-- Doesn't seem to work?
 		self:GetCaster():FaceTowards(self:GetCursorPosition())
 	
-		local modifier_movement_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua_movement", {})
+		-- local modifier_movement_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua_movement", {})
+		local modifier_movement_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua_leap",
+			{
+				duration	= 1,
+				x			= self:GetCursorPosition().x,
+				y			= self:GetCursorPosition().y,
+				z			= self:GetCursorPosition().z,
+			})
 
 		if modifier_movement_handler then
 			modifier_movement_handler.target_point = self:GetCursorPosition()
 		end
 	else
+		EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
+	
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_earthshaker_enchant_totem_lua", {duration = self:GetDuration()})
 
 		if self:GetCaster():HasScepter() then
@@ -420,8 +445,6 @@ function modifier_earthshaker_enchant_totem_lua:PlayEffects()
 	if self:GetParent().enchant_totem_cast_pfx then
 		local effect_cast = ParticleManager:CreateParticle( self:GetParent().enchant_totem_cast_pfx, PATTACH_ABSORIGIN, self:GetParent() )
 	end
-
-	EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
 end
 
 modifier_earthshaker_enchant_totem_lua_movement = modifier_earthshaker_enchant_totem_lua_movement or class({})
@@ -442,7 +465,7 @@ function modifier_earthshaker_enchant_totem_lua_movement:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.max_height = self.ability:GetSpecialValueFor("max_height")
+	self.scepter_height = self.ability:GetSpecialValueFor("scepter_height")
 
 	if IsServer() then
 		self.blur_effect = ParticleManager:CreateParticle( self:GetParent().enchant_totem_leap_blur_pfx, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
@@ -585,8 +608,112 @@ function modifier_earthshaker_enchant_totem_lua_movement:VerticalMotion( me, dt 
 	end
 end
 
+--------------------------------------------------------------------------------
+-- This still needs a LOT of ironing out (w.r.t proper vertical orientation and proper movement interrupt logic), but at its core it's passable
+modifier_earthshaker_enchant_totem_lua_leap	= class({})
+
+function modifier_earthshaker_enchant_totem_lua_leap:IsHidden()	return true end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnCreated( params )
+	if not IsServer() then return end
+
+	self.destination	= Vector(params.x, params.y, params.z)
+	self.vector			= (self.destination - self:GetParent():GetAbsOrigin())
+	self.direction		= self.vector:Normalized()
+	self.speed			= self.vector:Length2D() / self:GetDuration()
+
+	if self:ApplyVerticalMotionController() == false then 
+		self:Destroy()
+	end
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+	end
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnDestroy( kv )
+	if not IsServer() then return end
+	
+	EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
+	
+	self:GetParent():InterruptMotionControllers( true )
+	
+	if self:GetRemainingTime() <= 0 then
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_earthshaker_enchant_totem_lua", {duration = self:GetAbility():GetDuration()})
+		
+		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") then
+			self:GetParent():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
+		end
+	end
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:UpdateHorizontalMotion( me, dt )
+	self:GetParent():SetOrigin( self:GetParent():GetOrigin() + (self.direction * self.speed * dt) )
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnHorizontalMotionInterrupted()
+	if IsServer() then
+		self:Destroy()
+	end
+end
+
+-- "The leap duration is always the same, so the speed adapts based on the targeted distance. The leap height is always 562 range."
+-- I'm forgetting all my parabola math, but multiplying height by 4 here sets it as the max height at mid-point; there's obviously a formula for this
+function modifier_earthshaker_enchant_totem_lua_leap:UpdateVerticalMotion( me, dt )
+	local z_axis = (-1) * self:GetElapsedTime() * (self:GetElapsedTime() - self:GetDuration()) * 562 * 4
+	
+	self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
+	if IsServer() then
+		self:Destroy()
+	end
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	}
+
+	return funcs
+end
+
+-- add "ultimate_scepter" + "enchant_totem_leap_from_battle"
+function modifier_earthshaker_enchant_totem_lua_leap:GetActivityTranslationModifiers()
+	return "ultimate_scepter"
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:GetOverrideAnimation()
+	return ACT_DOTA_OVERRIDE_ABILITY_2
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:GetEffectName()
+	return "particles/units/heroes/hero_tiny/tiny_toss_blur.vpcf"
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:CheckState()
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
+end
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+
 earthshaker_aftershock_lua = class({})
 LinkLuaModifier( "modifier_earthshaker_aftershock_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
+
+function earthshaker_aftershock_lua:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_aftershock" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_aftershock_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_aftershock"
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -709,6 +836,127 @@ function modifier_earthshaker_aftershock_lua:PlayEffects()
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 end
 
+---------------
+-- ECHO SLAM --
+---------------
+
+imba_earthshaker_echo_slam	= class({})
+
+function imba_earthshaker_echo_slam:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "earthshaker_echo_slam" end
+	if self:GetCaster().arcana_style == 2 then
+		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam_alt2"
+	elseif self:GetCaster().arcana_style == 1 then
+		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam"
+	end
+end
+
+function imba_earthshaker_echo_slam:OnSpellStart()
+	-- First part checks for how many heroes are around for appropriate sounds/responses
+	local hero_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("echo_slam_damage_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+	if #hero_enemies > 0 then
+		self:GetCaster():EmitSound("Hero_EarthShaker.EchoSlam")
+	else
+		self:GetCaster():EmitSound("Hero_EarthShaker.EchoSlamSmall")
+	end
+
+	-- The hero response is a bit delayed
+	Timers:CreateTimer(0.5, function()
+		if self:GetCaster():GetName() == "npc_dota_hero_earthshaker" then
+			if #hero_enemies == 2 then
+				local random_response	= RandomInt(1, 4)
+				
+				-- Plays lines 1-2 or lines 4-5
+				if random_response >= 3 then random_response = random_response + 1 end
+				
+				self:GetCaster():EmitSound("earthshaker_erth_ability_echo_0"..random_response)
+			elseif #hero_enemies >= 3 then
+				self:GetCaster():EmitSound("earthshaker_erth_ability_echo_03")
+			elseif #hero_enemies == 0 then
+				self:GetCaster():EmitSound("earthshaker_erth_ability_echo_0"..(RandomInt(6, 7)))
+			end
+		end
+	end)
+
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("echo_slam_damage_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	
+	local effect_counter = #enemies + 1
+
+	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx, PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(echo_slam_particle, 1, Vector(effect_counter, 0, 0 ))
+	ParticleManager:ReleaseParticleIndex(echo_slam_particle)
+
+	for _, enemy in pairs(enemies) do		
+		local damageTable = {
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("echo_slam_initial_damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
+		
+		ApplyDamage(damageTable)
+		
+		local echo_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), enemy:GetAbsOrigin(), nil, self:GetSpecialValueFor("echo_slam_echo_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		
+		for _, echo_enemy in pairs(echo_enemies) do
+			if echo_enemy ~= enemy then
+				echo_enemy:EmitSound("Hero_EarthShaker.EchoSlamEcho")
+			
+				local projectile =
+				{
+					Target 				= echo_enemy,
+					Source 				= enemy,
+					Ability 			= self,
+					EffectName 			= self:GetCaster().echo_slam_pfx,
+					iMoveSpeed			= 600,
+					vSourceLoc 			= enemy:GetAbsOrigin(),
+					bDrawsOnMinimap 	= false,
+					bDodgeable 			= true,
+					bIsAttack 			= false,
+					bVisibleToEnemies 	= true,
+					bReplaceExisting 	= false,
+					flExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bProvidesVision 	= false,
+
+					ExtraData = {
+						damage = self:GetTalentSpecialValueFor("echo_slam_echo_damage")
+					}
+				}
+				
+				ProjectileManager:CreateTrackingProjectile(projectile)
+				
+				-- Real heroes make two echoes
+				if echo_enemy:IsRealHero() then
+					ProjectileManager:CreateTrackingProjectile(projectile)
+				end
+			end
+		end
+	end
+end
+
+function imba_earthshaker_echo_slam:OnProjectileHit_ExtraData(target, location, data)
+	if not IsServer() then return end
+	
+	if target and not target:IsMagicImmune() then
+		local damageTable = {
+			victim 			= target,
+			damage 			= data.damage,
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
+		
+		ApplyDamage(damageTable)
+	end
+end
+
+--------------------------------------------------------------------------------
+
 LinkLuaModifier( "modifier_earthshaker_arcana", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 
 -- Arcana animation handler
@@ -725,5 +973,25 @@ end
 function modifier_earthshaker_arcana:OnCreated()
 	if IsServer() then
 		
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_unique_earthshaker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_unique_earthshaker			= class({})
+
+function modifier_special_bonus_unique_earthshaker:IsHidden() 		return true end
+function modifier_special_bonus_unique_earthshaker:IsPurgable() 	return false end
+function modifier_special_bonus_unique_earthshaker:RemoveOnDeath() 	return false end
+
+function earthshaker_enchant_totem_lua:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_unique_earthshaker") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_earthshaker") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_earthshaker"), "modifier_special_bonus_unique_earthshaker", {})
 	end
 end

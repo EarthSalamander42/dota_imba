@@ -1036,9 +1036,14 @@ function modifier_imba_silencer_arcane_supremacy:OnIntervalThink()
 	end
 end
 
-function modifier_imba_silencer_arcane_supremacy:GetSilenceReductionPct()
-	local reduction = self.silence_reduction_pct + self.caster:FindTalentValue("special_bonus_imba_silencer_4")
-	return reduction
+function modifier_imba_silencer_arcane_supremacy:CheckState()
+	local state = {}
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_silencer_4") and not self:GetCaster():PassivesDisabled() then
+		state[MODIFIER_STATE_SILENCED] = false
+	end
+
+	return state
 end
 
 function modifier_imba_silencer_arcane_supremacy:DeclareFunctions()
@@ -1150,12 +1155,20 @@ function imba_silencer_global_silence:OnSpellStart()
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
 		EmitSoundOn("Hero_Silencer.GlobalSilence.Cast", caster)
+		
+		-- Would prefer if this worked in the client one below because enemies can't really hear this one
+		if USE_MEME_SOUNDS and RollPercentage(30) then
+			EmitSoundOn("Hero_Silencer.Penn", caster)
+		end
 
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration()})
 			if enemy:IsRealHero() then
 				EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
+				
+				-- This one doesn't work...
+				-- EmitSoundOnClient("Hero_Silencer.Penn", enemy:GetPlayerOwner())
 			end
 		end
 	end
@@ -1301,5 +1314,25 @@ function modifier_imba_silencer_global_silence:LastWord()
 				end
 			end
 		end
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_silencer_4", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_silencer_4	= class({})
+
+function modifier_special_bonus_imba_silencer_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_4:IsPurgable() 	return false end
+function modifier_special_bonus_imba_silencer_4:RemoveOnDeath() 	return false end
+
+function imba_silencer_arcane_supremacy:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_silencer_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_4"), "modifier_special_bonus_imba_silencer_4", {})
 	end
 end

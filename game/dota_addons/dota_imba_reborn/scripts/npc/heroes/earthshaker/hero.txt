@@ -12,7 +12,8 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability1"		"earthshaker_fissure_lua"
-		//"Ability2"		"earthshaker_enchant_totem_lua" // Seriously, program this properly before implementing it
-		//"Ability3"		"earthshaker_aftershock_lua"
+		"Ability2"		"earthshaker_enchant_totem_lua"
+		"Ability3"		"earthshaker_aftershock_lua"
+		"Ability6"		"imba_earthshaker_echo_slam"
 	}
 }

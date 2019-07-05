@@ -167,7 +167,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"dmg_to_overheal"				"25"
+				"dmg_to_overheal"				"40"
 			}
 			"07"
 			{
@@ -328,7 +328,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"30 45 60"
+				"movement_damage_pct"		"33 66 99"
 			}
 			"03"
 			{

@@ -189,7 +189,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_second"		"30 60 90 120"
-				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
+				//"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
+				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_damage"
 			}
 			"03"
 			{
@@ -460,6 +461,34 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"value"						"1.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_dark_seer_ion_shell_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dark_seer_ion_shell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"150"
 			}
 		}
 	}

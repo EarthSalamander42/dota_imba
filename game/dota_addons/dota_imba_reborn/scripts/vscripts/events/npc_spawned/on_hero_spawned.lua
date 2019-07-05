@@ -145,11 +145,11 @@ end
 -- everytime a real hero respawn
 function GameMode:OnHeroSpawned(hero)
 	-- Testing putting fountain invulnerability application here such that it will only apply on respawns in the fountain
---	Timers:CreateTimer(0.1, function()
---		if hero:HasModifier("modifier_fountain_aura_effect_lua") and IsNearFountain(hero:GetAbsOrigin(), 1200) then
---			hero:AddNewModifier(hero, nil, "modifier_fountain_invulnerable", {})
---		end
---	end)
+	Timers:CreateTimer(0.1, function()
+		if hero:HasModifier("modifier_fountain_aura_effect_lua") and IsNearFountain(hero:GetAbsOrigin(), 1200) then
+			hero:AddNewModifier(hero, nil, "modifier_fountain_invulnerable", {})
+		end
+	end)
 
 	if IsMutationMap() then
 		Mutation:OnHeroSpawn(hero)

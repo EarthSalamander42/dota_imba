@@ -36,7 +36,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"5 10 15 20"
+				"movespeed"					"5 15 25 35"
 			}
 			"03"
 			{
@@ -370,7 +370,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_cast_speed"			"20 25 30 35"
+				"bonus_cast_speed"			"30 50 70 90"
 			}
 			"06"
 			{
@@ -473,8 +473,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"extra_tether_duration"		"2.0"
+				"var_type"					"FIELD_INTEGER"
+				"eject_cooldown_mult"		"2"
 			}
 		}
 	}

@@ -201,13 +201,13 @@
 			"02"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"damage_health_pct"         "5 7 9 11"
+				"damage_health_pct"         "6 8 10 12"
 				"LinkedSpecialBonus"        "special_bonus_unique_zeus"
 			}
 			"03"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"reduced_magic_resistance"  "1.75 2.50 3.25 4"
+				"reduced_magic_resistance"  "1.2 1.8 2.4 3.0"
 				"LinkedSpecialBonus"		"special_bonus_imba_zuus_3"
 			}
 			"04"

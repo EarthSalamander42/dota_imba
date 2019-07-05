@@ -9,10 +9,6 @@
 
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_aghanim_description"		"Enchant Totem becomes a %distance_scepter% range ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping."
 
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker"		"-%value%s Enchant Totem Cooldown"
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker_2"	"+%value% Echo Damage"
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker_3"	"+%value% Fissure Range"
-
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua"							"#{DOTA_Tooltip_ability_earthshaker_enchant_totem}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_aghanim_description"		"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_aghanim_description}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Description"				"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Description}"
@@ -34,9 +30,23 @@
 "DOTA_Tooltip_ability_earthshaker_aftershock_lua_aftershock_range"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_aftershock_range}"
 "DOTA_Tooltip_ability_earthshaker_aftershock_lua_tooltip_duration"		"#{DOTA_Tooltip_ability_earthshaker_aftershock_tooltip_duration}"
 
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua"									"Aftershock"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Description"						"Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Lore"								"The earth trembles beneath the mighty footsteps of Raigor."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_Note0"								"Using items does not trigger Aftershock."
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_aftershock_range"					"RADIUS:"
+"DOTA_Tooltip_ability_earthshaker_aftershock_lua_tooltip_duration"					"DURATION:"
+
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua"									"#{DOTA_Tooltip_ability_earthshaker_echo_slam}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Description"						"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Description}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_Lore"								"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Lore}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_echo_damage"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_echo_damage}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_damage_range"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_damage_range}"
 "DOTA_Tooltip_ability_earthshaker_echo_slam_lua_echo_slam_initial_damage"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_initial_damage}"
+
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam"									"#{DOTA_Tooltip_ability_earthshaker_echo_slam}"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_Description"						"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Description}"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_Lore"								"#{DOTA_Tooltip_ability_earthshaker_echo_slam_Lore}"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_echo_damage"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_echo_damage}"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_damage_range"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_damage_range}"
+"DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_initial_damage"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_initial_damage}"

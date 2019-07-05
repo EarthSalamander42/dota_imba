@@ -27,6 +27,10 @@ function imba_slardar_guardian_sprint:GetAbilityTextureName()
 	end
 end
 
+function imba_slardar_guardian_sprint:GetIntrinsicModifierName()
+	return "modifier_imba_guardian_sprint_river"
+end
+
 function imba_slardar_guardian_sprint:GetCooldown()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -154,17 +158,6 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, {duration = 0.3})
 			end
 		end
-		
-		-- Level 4 River Haste 
-		if self.ability:GetLevel() >= 4 and self:GetParent():GetAbsOrigin().z < 160 and (self:GetParent():HasGroundMovementCapability() or self:GetParent():HasModifier("modifier_item_imba_shadow_blade_invis") or self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis")) then
-			if not self:GetParent():HasModifier("modifier_imba_guardian_sprint_river") then
-				self:GetParent():AddNewModifier(self:GetParent(), self.ability, "modifier_imba_guardian_sprint_river", {})
-			end
-		else
-			if self:GetParent():HasModifier("modifier_imba_guardian_sprint_river") then
-				self:GetParent():RemoveModifierByName("modifier_imba_guardian_sprint_river")
-			end
-		end
 	end
 end
 
@@ -231,25 +224,64 @@ function modifier_imba_guardian_sprint_buff:OnDestroy()
 		end
 
 		self.ability:StartCooldown(cooldown_start)
-		
-		-- Remove river haste modifier if still active
-		if self:GetParent():HasModifier("modifier_imba_guardian_sprint_river") then
-			self:GetParent():RemoveModifierByName("modifier_imba_guardian_sprint_river")
-		end
 	end
 end
 
--- Level 4 river haste modifier
+------------------------------------
+-- GUARDIAN SPRINT RIVER MODIFIER --
+------------------------------------
+
 modifier_imba_guardian_sprint_river = class ({})
 
-function modifier_imba_guardian_sprint_river:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN}
+function modifier_imba_guardian_sprint_river:IsHidden()	return not (self:GetParent():GetAbsOrigin().z < 160 and (self:GetParent():HasGroundMovementCapability() or self:GetParent():HasModifier("modifier_item_imba_shadow_blade_invis") or self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis")) or self:GetParent():HasModifier("modifier_imba_slithereen_crush_puddle")) end
 
+function modifier_imba_guardian_sprint_river:GetEffectName()
+	if not self:IsHidden() then return "particles/units/heroes/hero_slardar/slardar_sprint_river.vpcf" end
+end
+
+function modifier_imba_guardian_sprint_river:OnCreated()
+	if not IsServer() then return end
+	
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_guardian_sprint_river:OnIntervalThink()
+	if not IsServer() then return end
+	
+	if not self:IsHidden() and not self:GetCaster():HasModifier("modifier_bloodseeker_thirst") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
+	elseif self:IsHidden() and self:GetParent():FindModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster()) then
+		self:GetParent():RemoveModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster())
+	end
+end
+
+function modifier_imba_guardian_sprint_river:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+	
 	return decFuncs
 end
 
-function modifier_imba_guardian_sprint_river:GetModifierMoveSpeed_AbsoluteMin()
-	return self:GetAbility():GetSpecialValueFor("river_speed")
+function modifier_imba_guardian_sprint_river:GetModifierConstantHealthRegen()
+	if not self:IsHidden() and self:GetCaster():HasScepter() then return self:GetAbility():GetSpecialValueFor("scepter_puddle_regen") end
+end
+
+function modifier_imba_guardian_sprint_river:GetModifierPhysicalArmorBonus()
+	if not self:IsHidden() and self:GetCaster():HasScepter() then return self:GetAbility():GetSpecialValueFor("scepter_puddle_armor") end
+end
+
+function modifier_imba_guardian_sprint_river:GetModifierStatusResistanceStacking()
+	if not self:IsHidden() and self:GetCaster():HasScepter() then return self:GetAbility():GetSpecialValueFor("scepter_puddle_status_resistance") end
+end
+
+function modifier_imba_guardian_sprint_river:GetModifierMoveSpeedBonus_Percentage()
+	if not self:IsHidden() then return self:GetAbility():GetSpecialValueFor("river_speed") end
 end
 
 -- Rip current movement modifier
@@ -516,6 +548,12 @@ imba_slardar_slithereen_crush = class({})
 LinkLuaModifier("modifier_imba_slithereen_crush_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slithereen_crush_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slithereen_crush_royal_break", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slithereen_crush_puddle", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slithereen_crush_puddle_aura", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+
+function imba_slardar_slithereen_crush:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) * (math.max((100 + self:GetCaster():FindTalentValue("special_bonus_imba_slardar_6", "cdr_mult")) * 0.01, 1))
+end
 
 function imba_slardar_slithereen_crush:GetAbilityTextureName()
 	return "slardar_slithereen_crush"
@@ -583,6 +621,19 @@ function SlithereenCrush(self)
 	local particle_splash_fx = ParticleManager:CreateParticle(particle_splash, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_splash_fx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_splash_fx, 1, Vector(1, 1, radius+100))
+
+	-- Add puddle if scepter
+	if self:GetCaster():HasScepter() then
+		local puddle_thinker = CreateModifierThinker(
+			self:GetCaster(),
+			self,
+			"modifier_imba_slithereen_crush_puddle_aura",
+			{duration = self:GetSpecialValueFor("scepter_puddle_duration")},
+			self:GetCaster():GetOrigin(),
+			self:GetCaster():GetTeamNumber(),
+			false		
+		)
+	end
 
 	-- Find all nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -743,6 +794,47 @@ function modifier_imba_slithereen_crush_stun:IsPurgable()
 	return true
 end
 
+
+--------------------------------------
+-- SLITHEREEN CRUSH PUDDLE MODIFIER --
+--------------------------------------
+
+modifier_imba_slithereen_crush_puddle_aura = class ({})
+
+function modifier_imba_slithereen_crush_puddle_aura:IsHidden()					return true end
+
+function modifier_imba_slithereen_crush_puddle_aura:IsAura()					return true end
+function modifier_imba_slithereen_crush_puddle_aura:IsAuraActiveOnDeath() 		return false end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("scepter_puddle_radius") end
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_slithereen_crush_puddle_aura:GetModifierAura()			return "modifier_imba_slithereen_crush_puddle" end
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraEntityReject(hTarget)	return hTarget ~= self:GetCaster() end
+
+function modifier_imba_slithereen_crush_puddle_aura:OnCreated()
+	if not IsServer() then return end
+	
+	local puddle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slardar/slardar_water_puddle.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(puddle_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(puddle_particle, 1, Vector(self:GetAbility():GetSpecialValueFor("scepter_puddle_radius"), 0, 0))
+	self:AddParticle(puddle_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_slithereen_crush_puddle_aura:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveSelf()
+end
+
+-------------------------------------------
+-- SLITHEREEN CRUSH PUDDLE AURA MODIFIER --
+-------------------------------------------
+
+modifier_imba_slithereen_crush_puddle = class({})
+
+function modifier_imba_slithereen_crush_puddle:IsHidden()	return true end
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1639,8 +1731,8 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 				
 				-- Apply enemies attack speed slow modifier
 				for _,enemy in pairs(enemies) do
-					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", {duration = caster:FindAbilityByName("imba_slardar_slithereen_crush"):GetSpecialValueFor("slow_duration")})
-					enemy:AddNewModifier(caster,  caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", {duration = caster:FindAbilityByName("imba_slardar_corrosive_haze"):GetSpecialValueFor("duration") / 4})
+					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", {duration = 1})
+					enemy:AddNewModifier(caster,  caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", {duration = 1})
 				end
 			end
 		end
@@ -1736,4 +1828,24 @@ end
 
 function modifier_imba_rain_cloud_buff:GetStatusEffectName()
 	return "particles/hero/slardar/slardar_rain_cloud_status_effect.vpcf"
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_slardar_6", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_slardar_6	= class({})
+
+function modifier_special_bonus_imba_slardar_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_slardar_6:IsPurgable() 	return false end
+function modifier_special_bonus_imba_slardar_6:RemoveOnDeath() 	return false end
+
+function imba_slardar_slithereen_crush:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_slardar_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_slardar_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_slardar_6"), "modifier_special_bonus_imba_slardar_6", {})
+	end
 end
