@@ -66,6 +66,16 @@ function imba_puck_illusory_orb:OnSpellStart()
 		self.orbs = {}
 	end
 
+	self.talent_cast_range_increases = 0
+	
+	for ability = 0, 23 do
+		local found_ability = self:GetCaster():GetAbilityByIndex(ability)
+	
+		if found_ability and string.find(found_ability:GetName(), "cast_range") and self:GetCaster():HasTalent(found_ability:GetName()) then
+			self.talent_cast_range_increases = self.talent_cast_range_increases + self:GetCaster():FindTalentValue(found_ability:GetName())
+		end
+	end
+
 	-- IMBAfication: Dichotomous
 	-- Reverse Orb
 	self:FireOrb(self:GetCaster():GetAbsOrigin() - self:GetCursorPosition())
@@ -77,7 +87,7 @@ function imba_puck_illusory_orb:OnSpellStart()
 	end
 	
 	-- IMBAfication: Eternal Jaunt
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_illusory_orb", {duration = (self:GetTalentSpecialValueFor("max_distance") + GetCastRangeIncrease(self:GetCaster())) / self:GetTalentSpecialValueFor("orb_speed")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_illusory_orb", {duration = ((self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases) / (self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1))})
 end
 
 function imba_puck_illusory_orb:OnProjectileThink_ExtraData(location, data)
@@ -118,10 +128,10 @@ function imba_puck_illusory_orb:FireOrb(position)
 	    iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 	    
 	    EffectName 			= "particles/units/heroes/hero_puck/puck_illusory_orb.vpcf",
-	    fDistance 			= self:GetTalentSpecialValueFor("max_distance") + GetCastRangeIncrease(self:GetCaster()),
+	    fDistance 			= (self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases,
 	    fStartRadius 		= self:GetSpecialValueFor("radius"),
 	    fEndRadius 			= self:GetSpecialValueFor("radius"),
-		vVelocity 			= position:Normalized() * self:GetTalentSpecialValueFor("orb_speed"),
+		vVelocity 			= position:Normalized() * self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1),
 	
 		bReplaceExisting 	= false,
 		
@@ -333,7 +343,17 @@ function imba_puck_phase_shift:GetCastRange(location, target)
 	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 or IsClient() then
 		return self.BaseClass.GetCastRange(self, location, target)
 	else
-		return self:GetSpecialValueFor("sinusoid_cast_range") - GetCastRangeIncrease(self:GetCaster()) -- AbilitySpecial
+		self.talent_cast_range_increases = 0
+		
+		for ability = 0, 23 do
+			local found_ability = self:GetCaster():GetAbilityByIndex(ability)
+		
+			if found_ability and string.find(found_ability:GetName(), "cast_range") and self:GetCaster():HasTalent(found_ability:GetName()) then
+				self.talent_cast_range_increases = self.talent_cast_range_increases + self:GetCaster():FindTalentValue(found_ability:GetName())
+			end
+		end	
+	
+		return self:GetSpecialValueFor("sinusoid_cast_range") - GetCastRangeIncrease(self:GetCaster()) - self.talent_cast_range_increases
 	end
 end
 
@@ -687,8 +707,6 @@ function modifier_imba_puck_dream_coil:OnIntervalThink()
 			stun_duration	= self.coil_stun_duration_scepter
 			break_damage	= self.coil_break_damage_scepter
 		end
-		
-		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
 
 		local damageTable = {
 			victim 			= self:GetParent(),
@@ -706,6 +724,9 @@ function modifier_imba_puck_dream_coil:OnIntervalThink()
 			self:GetCaster():SetCursorPosition(self:GetParent():GetAbsOrigin())
 			self:GetAbility():OnSpellStart(self:GetRemainingTime() + (stun_duration * (1 - self:GetParent():GetStatusResistance())))
 		end
+		
+		-- Putting the break stun modifier after the IMBAfication because it was getting overwritten by the basic lower duration stun
+		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
 		
 		self:Destroy()
 	end

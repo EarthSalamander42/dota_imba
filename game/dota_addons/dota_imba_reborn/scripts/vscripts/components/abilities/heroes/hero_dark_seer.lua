@@ -824,7 +824,9 @@ end
 function modifier_imba_dark_seer_wall_of_replica_slow:OnIntervalThink()
 	if not IsServer() then return end
 
-	self:GetParent():PerformAttack(self:GetParent(), true, true, true, true, true, false, false)
+	if not self:GetParent():IsInvulnerable() then
+		self:GetParent():PerformAttack(self:GetParent(), true, true, true, true, true, false, false)
+	end
 	
 	self.attack_speed	= self:GetParent():GetAttackSpeed()
 	

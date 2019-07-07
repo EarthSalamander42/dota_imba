@@ -1794,7 +1794,7 @@
 	"batrider_sticky_napalm"
 	{
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"2.5 2.125 1.875 1.5"
+		"AbilityCooldown"				"3.0 2.8 2.6 2.4"
 		
 		"AbilitySpecial"
 		{
