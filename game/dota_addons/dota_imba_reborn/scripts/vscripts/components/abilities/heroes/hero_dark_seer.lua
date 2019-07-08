@@ -164,6 +164,10 @@ function modifier_imba_dark_seer_vacuum:OnDestroy()
 
 	self:GetParent():RemoveHorizontalMotionController( self )
 	
+	-- These two lines are literally just to let people stack a billion creeps onto a cliff for...reasons -_-
+	self:GetParent():SetAbsOrigin(self.vacuum_pos)
+	ResolveNPCPositions(self.vacuum_pos, 128)
+	
 	-- Apply vacuum damage
 	local damageTable = {
 		victim 			= self:GetParent(),

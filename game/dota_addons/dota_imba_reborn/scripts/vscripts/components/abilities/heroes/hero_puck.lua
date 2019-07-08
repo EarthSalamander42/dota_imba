@@ -457,7 +457,8 @@ function modifier_imba_puck_phase_shift:CheckState()
 	local state =
 	{
 		[MODIFIER_STATE_INVULNERABLE] 	= true,
-		[MODIFIER_STATE_OUT_OF_GAME]	= true
+		[MODIFIER_STATE_OUT_OF_GAME]	= true,
+		[MODIFIER_STATE_UNSELECTABLE]	= true
 	}
 	
 	if self:GetParent() ~= self:GetCaster() then
