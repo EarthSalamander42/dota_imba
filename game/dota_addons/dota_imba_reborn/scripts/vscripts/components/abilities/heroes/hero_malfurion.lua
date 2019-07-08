@@ -245,7 +245,13 @@ function imba_malfurion_living_tower:OnSpellStart()
 		self.living_tower = CreateUnitByName("npc_imba_malfurion_living_tower_"..tower_name[self:GetCaster():GetTeamNumber()], self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeam())
 		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_kill", {duration=self:GetSpecialValueFor("duration")})
 		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_imba_malfurion_living_tower", {})
-		self.living_tower:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
+		
+		if self:GetCaster().GetPlayerID then
+			self.living_tower:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
+		elseif self:GetCaster().GetOwner and self:GetCaster():GetOwner().GetPlayerID then
+			self.living_tower:SetControllableByPlayer(self:GetCaster():GetOwner():GetPlayerID(), false)
+		end
+		
 		self.living_tower:SetMaxHealth(self:GetSpecialValueFor("health"))
 		self.living_tower:SetHealth(self:GetSpecialValueFor("health"))
 		self.living_tower:SetBaseMaxHealth(self:GetSpecialValueFor("health"))

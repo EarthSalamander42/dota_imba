@@ -7714,7 +7714,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"wave_duration"				"4.8 5.25 5.6 5.85"
+				"wave_duration"				"6.4 6.3 6.0 5.5"
 			}		
 			"03"
 			{
@@ -7748,11 +7748,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"burn_duration"				"3 4 5 6"
 			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"first_wave_delay"			"0.0"
-			}
 		}
 	}
 
@@ -7761,29 +7756,19 @@
 	//=================================================================================================================
 	"abyssal_underlord_pit_of_malice"
 	{
-		"AbilityCooldown"					"32 24 18 14"
+		"AbilityCooldown"					"26 22 18 14"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 450 500 550"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pit_duration"				"12"
-			}		
+				"radius"					"450 500 550 600"
+			}	
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"pit_interval"				"3.6 3.5 3.4 3.3"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pit_damage"				"0"
 			}
 			"05"
 			{
@@ -7799,15 +7784,8 @@
 	//=================================================================================================================
 	"abyssal_underlord_atrophy_aura"
 	{
-		"AbilityCastRange"						"900 1000 1100 1200"
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"900 1000 1100 1200"
-			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -7832,7 +7810,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_duration_scepter"	"60 80 100 120"
+				"bonus_damage_duration_scepter"	"75 90 105 120"
 			}
 		}
 	}
@@ -7864,7 +7842,6 @@
 	//=================================================================================================================
 	"undying_decay"
 	{
-		"AbilityCooldown"					"10 8 6 4"
 		"AbilityDuration"					"45"
 
 		"AbilitySpecial"
@@ -7908,14 +7885,12 @@
 	//=================================================================================================================
 	"undying_soul_rip"
 	{
-		"AbilityCooldown"				"24 18 12 6"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"15 25 35 45"
+				"damage_per_unit"		"26 34 42 50"
 			}			
 			"02"
 			{
@@ -7930,7 +7905,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tombstone_heal"		"14"
+				"tombstone_heal"		"8 12 16 20"
 			}
 		}
 	}	
@@ -7953,11 +7928,6 @@
 				"hits_to_destroy_tooltip"	"5 7 9 11"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"30"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7972,11 +7942,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"health_threshold_pct_tooltip"	"40"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"zombie_interval"			"4.5 4.0 3.5 3.0"
 			}
 		}
 	}
@@ -8020,11 +7985,6 @@
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"-7"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -8034,16 +7994,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"health_threshold_pct"	"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_move_speed"		"50"
 			}
 			"06"
 			{
