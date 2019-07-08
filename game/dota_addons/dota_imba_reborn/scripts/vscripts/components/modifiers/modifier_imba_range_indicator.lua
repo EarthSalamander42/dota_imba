@@ -36,7 +36,6 @@ function modifier_imba_range_indicator:OnDestroy()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.range_pfx, true)
 		ParticleManager:ReleaseParticleIndex(self.range_pfx)
-		self:Destroy()
 	end
 end
 
