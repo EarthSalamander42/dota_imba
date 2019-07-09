@@ -6,6 +6,10 @@
 --     naowin, 10.07.2018
 --     AltiV - July 3rd, 2019 (actual IMBAfication)
 
+LinkLuaModifier("modifier_imba_shadow_shaman_ether_shock_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_ether_shock_joy_buzzer",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_ether_shock_mute",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_shadow_shaman_voodoo",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_shaman_voodoo_deprecation",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
@@ -16,6 +20,9 @@ LinkLuaModifier("modifier_imba_shadow_shaman_shackles_chariot",  "components/abi
 LinkLuaModifier("modifier_imba_shadow_shaman_parlor_tricks_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
 imba_shadow_shaman_ether_shock							= class({})
+modifier_imba_shadow_shaman_ether_shock_handler			= class({})
+modifier_imba_shadow_shaman_ether_shock_joy_buzzer		= class({})
+modifier_imba_shadow_shaman_ether_shock_mute			= class({})
 
 imba_shadow_shaman_voodoo								= class({})
 modifier_imba_shadow_shaman_voodoo						= class({})
@@ -32,6 +39,10 @@ modifier_imba_shadow_shaman_parlor_tricks_handler		= class({})
 -----------------
 -- ETHER SHOCK --
 -----------------
+
+function imba_shadow_shaman_ether_shock:GetIntrinsicModifierName()
+	return "modifier_imba_shadow_shaman_ether_shock_handler"
+end
 
 function imba_shadow_shaman_ether_shock:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_ShadowShaman.EtherShock")
@@ -58,6 +69,9 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 	
 	local enemies_hit = 0
 	local attachment
+	
+	-- IMBAfication: Dramatic Entrance
+	local dramatic_passive_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_shadow_shaman_ether_shock_handler", self:GetCaster())
 	
 	for _, enemy in pairs(enemies) do
 		if enemies_hit < self:GetSpecialValueFor("targets") then
@@ -86,10 +100,116 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 			}
 
 			ApplyDamage(damageTable)		
+			
+			-- IMBAfication: Joy Buzzer
+			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = (self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")})
+			
+			if dramatic_passive_modifier and dramatic_passive_modifier.dramatic and dramatic_passive_modifier.dramatic == true then
+				local dramatic_entrance_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration")})
+				
+				if dramatic_entrance_modifier then
+					dramatic_entrance_modifier:SetDuration(self:GetSpecialValueFor("dramatic_mute_duration") * (1 - enemy:GetStatusResistance()), true)
+				end
+			end
 		
 			enemies_hit = enemies_hit + 1
 		end
 	end
+end
+
+----------------------------------
+-- ETHER SHOCK HANDLER MODIFIER --
+----------------------------------
+
+-- This is to manage fog vision tracking for the Dramatic Entrance IMBAfication
+function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()	return true end
+
+function modifier_imba_shadow_shaman_ether_shock_handler:OnCreated()
+	self.dramatic_fog_duration	= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration")
+	self.interval 				= 0.1
+
+	if self:GetParent():GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+		self.enemy_team			= DOTA_TEAM_BADGUYS
+	else
+		self.enemy_team			= DOTA_TEAM_GOODGUYS
+	end
+	
+	if not IsServer() then return end
+	
+	self.counter				= self.dramatic_fog_duration
+	self.dramatic				= true
+	
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_shadow_shaman_ether_shock_handler:OnRefresh()
+	self.dramatic_fog_duration	= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration")
+end
+
+function modifier_imba_shadow_shaman_ether_shock_handler:OnIntervalThink()
+	if not IsServer() then return end
+	
+	if not IsLocationVisible(self.enemy_team, self:GetParent():GetAbsOrigin()) then
+		self.counter = math.min(self.counter + self.interval, self.dramatic_fog_duration)
+	else
+		self.counter = math.max(self.counter - self.interval, 0)
+	end
+	
+	if self.counter >= self.dramatic_fog_duration then
+		self.dramatic	= true
+	elseif self.counter <= 0 then
+		self.dramatic	= false
+	end
+end
+
+-------------------------------------
+-- ETHER SHOCK JOY BUZZER MODIFIER --
+-------------------------------------
+
+function modifier_imba_shadow_shaman_ether_shock_joy_buzzer:IgnoreTenacity()	return true end
+
+function modifier_imba_shadow_shaman_ether_shock_joy_buzzer:OnCreated()
+	self.joy_buzzer_stun_duration		= self:GetAbility():GetSpecialValueFor("joy_buzzer_stun_duration")
+	self.joy_buzzer_off_duration		= self:GetAbility():GetSpecialValueFor("joy_buzzer_off_duration")
+	self.joy_buzzer_instances			= self:GetAbility():GetSpecialValueFor("joy_buzzer_instances")
+	
+	self.joy_buzzer_instance_duration	= self.joy_buzzer_stun_duration + self.joy_buzzer_off_duration
+	
+	if not IsServer() then return end
+end
+
+function modifier_imba_shadow_shaman_ether_shock_joy_buzzer:CheckState()
+	local state = {}
+	
+	if self:GetElapsedTime() % self.joy_buzzer_instance_duration >= 0 and self:GetElapsedTime() % self.joy_buzzer_instance_duration <= self.joy_buzzer_stun_duration then
+		state[MODIFIER_STATE_STUNNED] = true
+	end
+
+	return state
+end
+
+-------------------------------
+-- ETHER SHOCK MUTE MODIFIER --
+-------------------------------
+
+function modifier_imba_shadow_shaman_ether_shock_mute:GetEffectName()
+	return "particles/items4_fx/nullifier_mute_2.vpcf"
+end
+
+function modifier_imba_shadow_shaman_ether_shock_mute:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_shadow_shaman_ether_shock_mute:OnCreated()
+	
+end
+
+function modifier_imba_shadow_shaman_ether_shock_mute:CheckState()
+	local state = {
+		[MODIFIER_STATE_MUTED] = true
+	}
+
+	return state
 end
 
 ------------------
@@ -128,7 +248,7 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end
 				
-				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
+				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
 			end
 		end
 	else
@@ -569,20 +689,27 @@ function modifier_imba_shadow_shaman_shackles_chariot:OnIntervalThink()
 	end
 end
 
--------------------
--- PARLOR TRICKS --
--------------------
-
-----------------------------
--- PARLOR TRICKS MODIFIER --
-----------------------------
-
 --------------------------------
 ------ MASS SERPENT WARD -------
 --------------------------------
 imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or class({})
 
 LinkLuaModifier("modifier_imba_mass_serpent_ward",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+function imba_shadow_shaman_mass_serpent_ward:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_shadow_shaman_mass_serpent_ward:GetAOERadius()
+	return 150
+end
+
+-- Snake Charmer IMBAfication will be an "opt-out" add-on
+function imba_shadow_shaman_mass_serpent_ward:OnUpgrade()
+	if self:GetLevel() == 1 then
+		self:ToggleAutoCast()
+	end
+end
 
 function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	-- Ability properties
@@ -647,30 +774,56 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	local unit_owner 		= caster
 
 	for i = 1, ward_count do
-		local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
-		ward:SetForwardVector(caster:GetForwardVector())
-		ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
-		ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
-		ward:SetControllableByPlayer(caster:GetPlayerID(), true)
-		-- Update Health
-		local new_hp = base_hp + bonus_hp
+		-- local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
+		-- ward:SetForwardVector(caster:GetForwardVector())
+		-- ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
+		-- ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
+		-- ward:SetControllableByPlayer(caster:GetPlayerID(), true)
+		-- -- Update Health
+		-- local new_hp = base_hp + bonus_hp
 		
-		-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
-		ward:SetBaseMaxHealth(new_hp)
-		ward:SetMaxHealth(new_hp)
-		ward:SetHealth(new_hp)
+		-- -- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
+		-- ward:SetBaseMaxHealth(new_hp)
+		-- ward:SetMaxHealth(new_hp)
+		-- ward:SetHealth(new_hp)
 		
-		-- Update Damage
-		if bonus_dmg > 0 then
-			ward:SetBaseDamageMin(ward:GetBaseDamageMin() + bonus_dmg)
-			ward:SetBaseDamageMax(ward:GetBaseDamageMax() + bonus_dmg)
-		end
+		-- -- Update Damage
+		-- if bonus_dmg > 0 then
+			-- ward:SetBaseDamageMin(ward:GetBaseDamageMin() + bonus_dmg)
+			-- ward:SetBaseDamageMax(ward:GetBaseDamageMax() + bonus_dmg)
+		-- end
 		
-		if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
-			ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
-		end
+		-- if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
+			-- ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+		-- end
+		
+		self:SummonWard(target_point + formation_vectors[i])
 	end
 
+end
+
+function imba_shadow_shaman_mass_serpent_ward:SummonWard(position)
+	local ward = CreateUnitByName("npc_dota_shadow_shaman_ward_"..math.min(self:GetLevel(), 3), position, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+	ward:SetForwardVector(self:GetCaster():GetForwardVector())
+	ward:AddNewModifier(self:GetCaster(), self, "modifier_imba_mass_serpent_ward", {})
+	ward:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
+	ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	
+	-- Update Health
+	local new_hp = self:GetSpecialValueFor("ward_hp") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_2")
+	
+	-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
+	ward:SetBaseMaxHealth(new_hp)
+	ward:SetMaxHealth(new_hp)
+	ward:SetHealth(new_hp)
+	
+	-- Update Damage
+	ward:SetBaseDamageMin(ward:GetBaseDamageMin() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	ward:SetBaseDamageMax(ward:GetBaseDamageMax() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	
+	if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
+		ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+	end
 end
 
 --- SERPENT WARD MODIFIER
@@ -684,6 +837,9 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	local caster    =   self:GetCaster()
 	local ability   =   self:GetAbility()
 	local parent    =   self:GetParent()
+
+	self.snake_charmer_creep_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_count")
+	self.snake_charmer_hero_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_count")
 
 	-- AGHANIM'S SCEPTER: Wards have more attack range
 	if caster:HasScepter() then
@@ -707,7 +863,8 @@ function modifier_imba_mass_serpent_ward:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_EVENT_ON_DEATH
 	}
 	return funcs
 end
@@ -815,6 +972,24 @@ end
 function modifier_imba_mass_serpent_ward:GetModifierMoveSpeed_Absolute()
 	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_wards_movement")
+	end
+end
+
+function modifier_imba_mass_serpent_ward:OnDeath(keys)
+	if not IsServer() then return end
+	
+	if keys.attacker == self:GetParent() and self:GetAbility() and self:GetAbility():GetAutoCastState() then
+		
+		-- Screw patterns, let's just clump them together xd
+		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
+			for ward = 1, self.snake_charmer_creep_count do
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin())
+			end
+		else
+			for ward = 1, self.snake_charmer_hero_count do
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin())
+			end
+		end
 	end
 end
 

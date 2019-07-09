@@ -3,9 +3,11 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock"								"Ether Shock"
-"DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Description"					"Creates a cone of ethereal energy that strikes multiple enemy units."
+"DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Description"					"Creates a cone of ethereal energy that strikes multiple enemy units.\n<font color='#FF7800'>Joy Buzzer:</font> Mini-stuns enemies for %joy_buzzer_stun_duration% seconds %joy_buzzer_instances% times, with a %joy_buzzer_off_duration% second delay between each buzz.\n<font color='#FF7800'>Dramatic Entrance:</font> If lingering in and cast within %dramatic_fog_duration% seconds of leaving the fog of war, also mutes targets for %dramatic_mute_duration% seconds."
 "DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Lore"							"Originally used to open shows with the travelling con-man, Rhasta's lightning display shocks adversaries in more ways than one."
 "DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Note0"							"Can hit secondary targets up to 1000 distance away."
+"DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Note1"							"Joy Buzzer ignores status resistance."
+"DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_Note2"							"Dramatic Entrance checks if the caster is on Radiant on Dire, and designates fog of war with respect to the opposite team."
 "DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_targets"						"TARGETS:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_ether_shock_damage"							"DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_voodoo"										"Hex"
@@ -22,6 +24,10 @@
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles_total_damage"						"TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles_channel_time"						"MAX DURATION:"
 
+"DOTA_Tooltip_modifier_imba_shadow_shaman_ether_shock_joy_buzzer"					"Joy Buzzer"
+"DOTA_Tooltip_modifier_imba_shadow_shaman_ether_shock_joy_buzzer_Description"		"Periodically mini-stunned."
+"DOTA_Tooltip_modifier_imba_shadow_shaman_ether_shock_mute"							"Dramatic Entrance"
+"DOTA_Tooltip_modifier_imba_shadow_shaman_ether_shock_mute_Description"				"The sudden surprise leaves you muted."
 "DOTA_Tooltip_modifier_imba_shadow_shaman_voodoo"				"Voodoo"
 "DOTA_Tooltip_modifier_imba_shadow_shaman_voodoo_Description"	"You are a chicken. Cannot attack (unless self-cast) or cast spells."
 "DOTA_Tooltip_modifier_imba_shadow_shaman_voodoo_deprecation"				"Hex Deprecation"
@@ -33,12 +39,15 @@
 
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_hex_cooldown"				"-5s Hex Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_wards_movement"				"+75 Mass Serpent Ward Movement Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_shackles_duration"			"+2.5s Shackles Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_ether_shock_damage"			"+400 Ether Shock Damage"
+
 
 ////===============================================================================================================
 // Shadow Shaman's Mass Serpent Ward
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward"             "MASS SERPENT WARD"
-"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Description"              "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. It takes %ward_hp_tooltip% hits to destroy a single Ward.\n\n Upgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Description"              "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. It takes %ward_hp_tooltip% hits to destroy a single Ward.\n\n Upgradable by Aghanim's Scepter.\n<font color='#FF7800'>Snake Charmer:</font> If auto-cast is on, if a serpent ward kills a unit, %snake_charmer_creep_count% ward is spawned at the unit's location. Real heroes and buildings spawn %snake_charmer_hero_count% wards."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Lore"                     "Snake charming was a big part of the Shadow Shaman's act; now Rhasta can empower the Snakes to do his bidding."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_damage_tooltip"           "ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_duration"                 "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -54,5 +63,3 @@
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_1"                   "+4 Mass Serpent Wards"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_2"                   "+2 Mass Serpent Wards health"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_3"                   "+50 Serpent Wards Damage"
-
-

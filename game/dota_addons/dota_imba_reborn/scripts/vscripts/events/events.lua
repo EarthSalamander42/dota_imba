@@ -802,13 +802,13 @@ function GameMode:OnPlayerChat(keys)
 								-- [3] = "imba_puck_ethereal_jaunt",
 								-- [4] = "generic_hidden",
 								-- [5] = "imba_puck_dream_coil",
-								-- [6] = "special_bonus_all_stats_8",
-								-- [7] = "special_bonus_cast_range_175",
-								-- [8] = "special_bonus_spell_amplify_15",
+								[6] = "special_bonus_hp_300",
+								[7] = "special_bonus_exp_boost_30",
+								[8] = "special_bonus_cast_range_125",
 								[9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
-								-- [10] = "special_bonus_imba_puck_waning_rift_cooldown",
+								[10] = "special_bonus_imba_shadow_shaman_shackles_duration",
 								[11] = "special_bonus_imba_shadow_shaman_wards_movement",
-								-- [12] = "special_bonus_gold_income_70",
+								[12] = "special_bonus_imba_shadow_shaman_ether_shock_damage",
 								[13] = "special_bonus_imba_shadow_shaman_3"
 							}
 							upgraded = true
