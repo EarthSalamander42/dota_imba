@@ -688,15 +688,6 @@ function imba_sly_king_winterbringer:OnSpellStart()
 			-- return nil
 		-- end
 	-- end)
-
-	-- Nether Ward handling
-	if string.find(self:GetCaster():GetUnitName(), "npc_imba_pugna_nether_ward") then
-		-- Wait two seconds, then apply it like it had succeeded
-		Timers:CreateTimer(2, function()
-			-- Start pulsing
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {})
-		end)
-	end
 end
 
 ---------------------------------------------------

@@ -45,17 +45,20 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"					"FIELD_FLOAT"
 				"max_distance"				"1950 2100 2250 2400"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck"
 				"LinkedSpecialBonus"		"special_bonus_imba_puck_illusory_orb_speed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"					"FIELD_FLOAT"
 				"orb_speed"					"651 701 751 801"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck"
 				"LinkedSpecialBonus"		"special_bonus_imba_puck_illusory_orb_speed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 			"04"
 			{
@@ -314,7 +317,8 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"rapid_fire_interval"		"1.1 0.85 0.6"
+				"rapid_fire_interval"		"1.05 0.8 0.55"
+				"LinkedSpecialBonus"		"special_bonus_imba_puck_dream_coil_targets"
 			}
 			"11"
 			{
@@ -346,8 +350,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"40"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.4"
 			}
 		}
 	}	
@@ -402,8 +406,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-0.15"
 			}
 		}
 	}

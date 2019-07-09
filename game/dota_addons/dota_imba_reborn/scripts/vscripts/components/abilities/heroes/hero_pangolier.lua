@@ -2353,9 +2353,13 @@ end
 function modifier_imba_pangolier_lucky_shot_heartpiercer:OnCreated()
 	if not IsServer() then return end
 	
+	-- if self:GetCaster():HasTalent("special_bonus_imba_pangolier_lucky_shot_status_resist") then
+		-- -- Multiplier by 10000 and dividing by 100 later to preserve two decimal places
+		-- self:SetStackCount(((1 / (1 - self:GetParent():GetStatusResistance())) - 1) * 10000)
+	-- end
+	
 	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_lucky_shot_status_resist") then
-		-- Multiplier by 10000 and dividing by 100 later to preserve two decimal places
-		self:SetStackCount(((1 / (1 - self:GetParent():GetStatusResistance())) - 1) * 10000)
+		self:SetStackCount(self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_lucky_shot_status_resist"))
 	end
 end
 
@@ -2386,5 +2390,6 @@ function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierIgnorePhysic
 end
 
 function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierStatusResistanceStacking()
-	return self:GetStackCount() / (-100)
+	--return self:GetStackCount() / (-100)
+	return self:GetStackCount() * (-1)
 end

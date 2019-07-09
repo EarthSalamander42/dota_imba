@@ -36,12 +36,17 @@ function modifier_imba_range_indicator:OnDestroy()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.range_pfx, true)
 		ParticleManager:ReleaseParticleIndex(self.range_pfx)
-		self:Destroy()
 	end
 end
 
 function modifier_imba_range_indicator:OnIntervalThink()
 	if IsServer() then
+		if not self:GetAbility() or self:GetAbility():IsNull() then
+			self:StartIntervalThink(-1)
+			self:Destroy()
+			return
+		end
+		
 		local caster = self:GetCaster()
 		if (caster:IsAlive() or (self.bShowAlways == 1)) and self.hAbility then
 			if (self.hAbility:IsCooldownReady() or (self.bShowOnCooldown == 1)) and (not caster.norange) then

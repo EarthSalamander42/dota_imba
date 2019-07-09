@@ -1129,7 +1129,7 @@
 
 // Starfury
 "DOTA_Tooltip_Ability_item_imba_starfury"                      "Starfury"
-"DOTA_Tooltip_ability_item_imba_starfury_Description"          "<h1>Passive: Lightspeed</h1> Grants a %proc_chance%%% chance per attack to increase your agility by %proc_bonus%%% for a short duration. Does not stack with itself, but can refresh itself when procced again.\n<h1>Passive: Fury of the Stars</h1> When Starfury is off cooldown, each attack launches shooting stars towards all enemies in %range% range of the original target. Each star deals %agility_pct%%% of your current agility to its target."
+"DOTA_Tooltip_ability_item_imba_starfury_Description"          "<h1>Passive: Fury of the Stars</h1> When Starfury is off cooldown, each attack launches shooting stars towards all enemies in %range% range of the original target. Each star deals %agility_pct%%% of your current agility to its target.\n<h1>Passive: Lightspeed</h1> Grants a %proc_chance%%% chance per attack to increase your agility by %proc_bonus%%% for %proc_duration% seconds. Does not stack with itself, but can refresh itself when procced again."
 "DOTA_Tooltip_ability_item_imba_starfury_Lore"                  "Thori'dal, the Stars' Fury is an ancient, enchanted bow, which grants its owner unparalleled swiftness in combat."
 "DOTA_Tooltip_ability_item_imba_starfury_Note0"                "Does not proc on-hit effects."
 "DOTA_Tooltip_ability_item_imba_starfury_Note1"                "When proccing both Lightspeed and Fury of the Stars on the same attack, Lightspeed's bonus agility will still be added as damage to the star projectiles."
@@ -1138,8 +1138,8 @@
 "DOTA_Tooltip_ability_item_imba_starfury_bonus_as"              "+$attack"
 "DOTA_Tooltip_ability_item_imba_starfury_bonus_agi"            "+$agi"
 
-"DOTA_Tooltip_modifier_item_imba_starfury_buff_dummy"          "Lightspeed"
-"DOTA_Tooltip_modifier_item_imba_starfury_buff_dummy_Description"           "Temporarily increased agility"
+"DOTA_Tooltip_modifier_imba_starfury_buff_increase"          		"Lightspeed"
+"DOTA_Tooltip_modifier_imba_starfury_buff_increase_Description"		"Temporarily increased agility"
 
 // Stout Shield
 "DOTA_Tooltip_Ability_item_imba_stout_shield"                  "Stout Shield"

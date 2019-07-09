@@ -640,7 +640,8 @@ function modifier_earthshaker_enchant_totem_lua_leap:OnDestroy( kv )
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_earthshaker_enchant_totem_lua", {duration = self:GetAbility():GetDuration()})
 		
-		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") then
+		-- "However, getting hit by forced movement causes the ability to not apply Aftershock or the totem buff upon landing."
+		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") and not self.aftershock_interrupt then
 			self:GetParent():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
 		end
 	end
@@ -648,6 +649,12 @@ end
 
 function modifier_earthshaker_enchant_totem_lua_leap:UpdateHorizontalMotion( me, dt )
 	self:GetParent():SetOrigin( self:GetParent():GetOrigin() + (self.direction * self.speed * dt) )
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnHorizontalMotionInterrupted()
+	if IsServer() and self:GetRemainingTime() > 0 then
+		self.aftershock_interrupt = true
+	end
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
