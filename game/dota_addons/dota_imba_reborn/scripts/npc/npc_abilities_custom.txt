@@ -215,7 +215,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed"				"10000"
+				"movespeed"				"3000"
 			}
 		}
 	}
