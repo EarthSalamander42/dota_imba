@@ -1301,7 +1301,7 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 
 		-- Create Modifier Thinker
 		ability.territorial_aura_modifier = CreateModifierThinker(caster, ability, aura, {}, ability.territorial_tree:GetAbsOrigin(), caster:GetTeamNumber(), false)
-		ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
+		ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, false, false, true)
 	end
 end
 
@@ -1351,6 +1351,10 @@ end
 
 function modifier_terrorital_hunter_aura:OnDestroy()
 	self:StartIntervalThink(-1)
+	
+	if IsServer() then
+		self:GetParent():RemoveSelf()
+	end
 end
 
 function modifier_terrorital_hunter_aura:GetAuraRadius()
@@ -1432,11 +1436,11 @@ end
 
 -- Invis particle handling
 function modifier_terrorital_hunter_fogvision:OnStateChanged()
-	if self:GetParent():IsImbaInvisible() and not self.applied_particle then
+	if self:GetParent():IsInvisible() and not self.applied_particle then
 		self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 		self.applied_particle = true
-	elseif not self:GetParent():IsImbaInvisible() and self.invis_particle_fx then
+	elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
 		ParticleManager:DestroyParticle(self.invis_particle_fx, false)
 		ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
 		self.applied_particle = false
@@ -1449,7 +1453,7 @@ function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
 		local target = keys.target
 
 		-- Only apply if the attacker is Ursa and it killed the parent of this modifier
-		if attacker == self:GetCaster() and target == self:GetParent() then
+		if attacker == self:GetCaster() and target == self:GetParent() and self:GetCaster():HasTalent("special_bonus_imba_ursa_3") then
 
 			-- Refresh the Territorial Hunter ability's cooldown
 			self:GetAbility():EndCooldown()

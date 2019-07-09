@@ -360,8 +360,17 @@ function GameMode:ItemAddedFilter( keys )
 			item.x_pfx = nil
 		end
 		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
-			item:SetPurchaser(nil)
-			item:SetPurchaseTime(0)
+			if item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
+				item.free = true
+			end
+			
+			-- If the rapier is picked up by an enemy after it was dropped, then it is no longer droppable
+			if item.free then
+				item:SetPurchaser(nil)
+				item:SetPurchaseTime(0)
+				item:SetDroppable(false)
+			end
+			
 			local rapier_amount = 0
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0

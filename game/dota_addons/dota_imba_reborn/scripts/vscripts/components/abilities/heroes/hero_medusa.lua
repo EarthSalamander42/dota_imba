@@ -951,7 +951,7 @@ end
 function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 	if not IsServer() then return end
 	
-	if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.vision_cone * 1000 and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.radius and self:GetParent():IsAlive() then
+	if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.vision_cone * 1000 and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.radius and self:GetCaster():IsAlive() then
 		if self.play_sound and self:GetParent():IsHero() then
 			self:GetParent():EmitSound("Hero_Medusa.StoneGaze.Target")
 			self.play_sound = false
@@ -990,7 +990,7 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 		ParticleManager:SetParticleControlEnt(self.particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 		
 		-- "Stone Gaze ends when Medusa dies . . ."
-		if not self:GetParent():IsAlive() then
+		if not self:GetCaster():IsAlive() then
 			self:StartIntervalThink(-1)
 			self:Destroy()
 		end

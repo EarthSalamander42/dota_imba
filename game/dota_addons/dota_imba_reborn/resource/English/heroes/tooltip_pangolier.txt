@@ -110,4 +110,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_8"				"Swashbuckle now uses 40% of Pangolier's attack damage"
 
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist"				"Pierce Resistance"
-"DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist_description"	"Lucky Shot's Heartpiercer also reduces the enemy's status resistance to zero. Calculation is only done once on modifier application."
+"DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist_description"	"Lucky Shot's Heartpiercer also reduces the enemy's status resistance by 20%. Calculation is only done once on modifier application."

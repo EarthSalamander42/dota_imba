@@ -1,6 +1,6 @@
 // Rubick's Telekinesis
 "DOTA_Tooltip_ability_imba_rubick_telekinesis"							"Telekinesis"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"				"Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind the drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be %ally_cooldown%x that of standard. Allies are rooted instead of stunned, and can be hurled a greater distance away."
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"				"Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind The Drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be %ally_cooldown%x that of standard. Allies are rooted instead of stunned, and can be hurled a greater distance away."
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_Lore"						"All living beings are Rubick's playthings."
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_lift_duration"		"ENEMY LIFT TIME:"
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_lift_duration"		"ALLY LIFT TIME:"
