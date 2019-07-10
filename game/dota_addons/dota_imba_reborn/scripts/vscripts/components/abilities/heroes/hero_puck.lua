@@ -76,6 +76,11 @@ function imba_puck_illusory_orb:OnSpellStart()
 		end
 	end
 
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- IMBAfication: Dichotomous
 	-- Reverse Orb
 	self:FireOrb(self:GetCaster():GetAbsOrigin() - self:GetCursorPosition())

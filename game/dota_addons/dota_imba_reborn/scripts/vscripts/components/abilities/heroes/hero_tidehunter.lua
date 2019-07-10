@@ -118,6 +118,11 @@ function imba_tidehunter_gush:OnSpellStart()
 		local gush_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 		gush_dummy:EmitSound("Hero_Tidehunter.Gush.AghsProjectile")
 		
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+		
 		local direction	= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized()
 		
 		local linear_projectile = {

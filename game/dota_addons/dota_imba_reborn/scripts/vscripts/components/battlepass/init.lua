@@ -31,7 +31,8 @@ ListenToGameEvent('npc_spawned', function(event)
 		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
 			npc:SetupHealthBarLabel()
 
-			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 then
+			-- The "(IMBA_PUNISHED and npc.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(npc:GetPlayerID())])" line is for "banning" units without going into the database (or I guess if it goes down?)
+			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 or (IMBA_PUNISHED and npc.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(npc:GetPlayerID())]) then
 				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				npc:CenterCameraOnEntity(npc, -1)
 			else
