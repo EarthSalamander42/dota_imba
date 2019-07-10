@@ -136,7 +136,7 @@
 "npc_dota_hero_sand_king"                                  "Sand King (IMBA)"
 "npc_dota_hero_shadow_demon"                                "Shadow Demon"
 "npc_dota_hero_nevermore"                                  "Shadow Fiend (IMBA)"
-"npc_dota_hero_shadow_shaman"                              "Shadow Shaman"
+"npc_dota_hero_shadow_shaman"                              "Shadow Shaman (IMBA)"
 "npc_dota_hero_skywrath_mage"                              "Skywrath Mage (IMBA)"
 "npc_dota_hero_slardar"                                    "Slardar (IMBA)"
 "npc_dota_hero_slark"                                      "Slark"
