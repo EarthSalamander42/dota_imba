@@ -1,9 +1,10 @@
 "DOTA_Tooltip_ability_imba_spectre_haunt"								"Haunt (Variant)"
-"DOTA_Tooltip_ability_imba_spectre_haunt_Description"					"<font color='#FF7800'>Creates spectral dimensions at random positions %spawn_distance% distance away from every enemy hero, reducing their vision by 100% for %attack_delay% second.</font>\n<font color='#FF7800'>Afterwards, these dimensions allow Spectre to apply instant attacks after a %attack_delay% second delay, should the dimension overlap the target. At any moment during the duration, Spectre can use Reality to substitute herself in place of a given haunt.</font>\n<font color='#FF7800'>These dimensions move up to %travel_speed% distance every interval, and will continously attempt to move on top of their target.</font>"
+"DOTA_Tooltip_ability_imba_spectre_haunt_Description"					"<font color='#FF7800'>Creates spectral dimensions at random positions %spawn_distance% distance away from every enemy hero, reducing their vision by 100% for %attack_delay% second.</font>\n<font color='#FF7800'>Afterwards, these dimensions allow Spectre to apply instant attacks after a %attack_delay% second delay, should the dimension overlap the target. At any moment during the duration, Spectre can use Reality to substitute herself in place of a given haunt.</font>\n<font color='#FF7800'>These dimensions move up to %travel_speed% distance every interval, and will continously attempt to move on top of their target.</font>\n<font color='#FF0000'>Does not attempt to attack units within 1200 units of a fountain.</font>"
 "DOTA_Tooltip_ability_imba_spectre_haunt_Lore"							"At the height of combat, Mercurial's physical manifestation shatters, and the shadowy pieces haunt those who still cling to life."
 "DOTA_Tooltip_ability_imba_spectre_haunt_Note0"							"The instant attacks, should they apply, cannot miss."
 "DOTA_Tooltip_ability_imba_spectre_haunt_Note1"							"Will not apply instant attacks to targets that are the current target of Reality, or if Spectre is dead."
-"DOTA_Tooltip_ability_imba_spectre_haunt_Note2"							"Reality warps Spectre to a random position 256 distance away from the targeted enemy."
+"DOTA_Tooltip_ability_imba_spectre_haunt_Note2"							"Haunt attacks cannot cleave."
+"DOTA_Tooltip_ability_imba_spectre_haunt_Note3"							"Reality warps Spectre to a random position 256 distance away from the targeted enemy."
 "DOTA_Tooltip_ability_imba_spectre_haunt_duration"						"HAUNT DURATION:"
 "DOTA_Tooltip_ability_imba_spectre_haunt_tooltip_outgoing"				"%HAUNT DAMAGE:"
 

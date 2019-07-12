@@ -691,6 +691,12 @@ function imba_drow_ranger_gust:OnSpellStart()
 	local ability = self
 	local target = self:GetCursorTarget() --selfcast with #1 talent
 	local target_point = self:GetCursorPosition()
+
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if target_point == self:GetCaster():GetAbsOrigin() then
+		target_point = self:GetCursorPosition() + self:GetCaster():GetForwardVector()
+	end
+
 	local modifier_movement = "modifier_imba_gust_movement" --for talent #1
 	local sound_cast = "Hero_DrowRanger.Silence"
 	local particle_gust = "particles/units/heroes/hero_drow/drow_silence_wave.vpcf"

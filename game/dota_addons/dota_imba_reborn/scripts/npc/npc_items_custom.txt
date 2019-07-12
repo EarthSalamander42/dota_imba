@@ -12946,7 +12946,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13097,7 +13097,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13248,7 +13248,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13398,7 +13398,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{

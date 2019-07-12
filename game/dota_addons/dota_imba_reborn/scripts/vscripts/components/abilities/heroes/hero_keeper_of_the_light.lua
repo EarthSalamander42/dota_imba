@@ -61,13 +61,16 @@ function imba_keeper_of_the_light_illuminate:OnUpgrade()
 end
 
 function imba_keeper_of_the_light_illuminate:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	self.caster		= self:GetCaster()
 
 	-- Get the position of where Illuminate was cast towards
 	self.position	= self:GetCursorPosition()
-	
-	if not IsServer() then return end
-	
+
 	-- Emit casting sound
 	self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Charge")
 	
@@ -732,6 +735,8 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		end
 	-- Enemy logic
 	else
+		if self.target:TriggerSpellAbsorb(self) then return end
+	
 		-- Emit cast sound
 		self.caster:EmitSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Cast")
 		self.target:EmitSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Target")

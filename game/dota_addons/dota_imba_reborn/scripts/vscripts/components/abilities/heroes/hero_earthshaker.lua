@@ -25,6 +25,11 @@ end
 --------------------------------------------------------------------------------
 -- Ability Start
 function earthshaker_fissure_lua:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
