@@ -831,13 +831,14 @@
 }
 
 .BattlepassRewardLabelLocked {
-	width: 92%;
+	width: 100%;
 	horizontal-align: left;
 	font-size: 10px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
 	text-transform: uppercase;
+	text-overflow: shrink;
 	text-align: center center;
 	text-shadow: 0px 0px 3px 3 #000000a5;
 	color: red;
@@ -857,6 +858,7 @@
 	padding: 0 5px;
 	align: center center;
 	text-transform: uppercase;
+	text-overflow: shrink;
 	text-align: center center;
 	text-shadow: 0px 0px 4px 4 #000000a5;
 	color: #b8c5ca;
