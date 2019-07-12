@@ -698,7 +698,11 @@ local function SpellReflect(parent, params)
 	return false
 end
 
-local function SpellAbsorb(parent)
+local function SpellAbsorb(parent, params)
+	if params.ability:GetCaster():GetTeamNumber() == parent:GetTeamNumber() then
+		return nil
+	end
+
 	local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
 	ParticleManager:SetParticleControlEnt(reflect_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(reflect_pfx)
@@ -847,7 +851,7 @@ end
 function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
 	if IsServer() then
 		if not self:GetParent():PassivesDisabled() then
-			return SpellAbsorb(self:GetParent())
+			return SpellAbsorb(self:GetParent(), params)
 		end
 	end
 end
