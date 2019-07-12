@@ -52,6 +52,10 @@ function imba_grimstroke_dark_artistry:OnAbilityPhaseInterrupted()
 end
 
 function imba_grimstroke_dark_artistry:OnSpellStart()
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	self:GetCaster():StopSound("Hero_Grimstroke.DarkArtistry.PreCastPoint")
 	
 	self:GetCaster():EmitSound("Hero_Grimstroke.DarkArtistry.Cast")
@@ -226,6 +230,7 @@ function imba_grimstroke_ink_creature:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
+-- Probably need to switch projectile out for a horizontal mover later since it needs to latch at 130 distance rather than actual overlap
 function imba_grimstroke_ink_creature:OnSpellStart()
 	if self:GetCursorTarget():TriggerSpellAbsorb(self) then return end
 	
@@ -240,9 +245,21 @@ function imba_grimstroke_ink_creature:OnSpellStart()
 	local latch_unit_offset_short	= self:GetSpecialValueFor("latched_unit_offset_short")
 	
 	Timers:CreateTimer(self:GetSpecialValueFor("spawn_time"), function()
+		caster:EmitSound("Hero_Grimstroke.InkCreature.Cast")
+		
 		local ink_unit = CreateUnitByName("npc_dota_grimstroke_ink_creature", self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("latched_unit_offset_short"), false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 		
-		ink_unit:AddNewModifier(caster, ability, "modifier_imba_grimstroke_ink_creature_thinker", {})
+		ink_unit:EmitSound("Hero_Grimstroke.InkCreature.Cast")
+		ink_unit:AddNewModifier(caster, ability, "modifier_imba_grimstroke_ink_creature_thinker", 
+		{
+			destroy_attacks			= self:GetSpecialValueFor("destroy_attacks"),
+			hero_attack_multiplier	= self:GetSpecialValueFor("hero_attack_multiplier"),
+			target_entindex			= target:entindex()
+		})
+		ink_unit:SetForwardVector((target:GetAbsOrigin() - ink_unit:GetAbsOrigin()):Normalized())
+		
+			
+		local phantoms_embrace_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_grimstroke/grimstroke_phantom_marker.vpcf", PATTACH_OVERHEAD_FOLLOW, target, self:GetCaster():GetTeamNumber())
 		
 		local projectile =
 		{
@@ -253,7 +270,7 @@ function imba_grimstroke_ink_creature:OnSpellStart()
 			iMoveSpeed			= speed,
 			vSourceLoc 			= caster:GetAbsOrigin() + caster:GetForwardVector() * latch_unit_offset_short,
 			bDrawsOnMinimap 	= false,
-			bDodgeable 			= true,
+			bDodgeable 			= false,
 			bIsAttack 			= false,
 			bVisibleToEnemies 	= true,
 			bReplaceExisting 	= false,
@@ -263,7 +280,9 @@ function imba_grimstroke_ink_creature:OnSpellStart()
 			iVisionTeamNumber 	= caster:GetTeamNumber(),
 			
 			ExtraData = {
-				ink_unit_entindex	= ink_unit:entindex()
+				ink_unit_entindex			= ink_unit:entindex(),
+				target_entindex				= target:entindex(),
+				phantoms_embrace_particle	= phantoms_embrace_particle
 			}
 		}
 		
@@ -274,27 +293,34 @@ end
 function imba_grimstroke_ink_creature:OnProjectileThink_ExtraData(location, data)
 	if not IsServer() then return end
 	
-	if not data.returning and data.ink_unit_entindex and EntIndexToHScript(data.ink_unit_entindex) and EntIndexToHScript(data.ink_unit_entindex):IsAlive() then
-		EntIndexToHScript(data.ink_unit_entindex):SetAbsOrigin(location)
+	if not data.returning and data.ink_unit_entindex and EntIndexToHScript(data.ink_unit_entindex) then
+		if EntIndexToHScript(data.ink_unit_entindex):IsAlive() then
+			EntIndexToHScript(data.ink_unit_entindex):SetAbsOrigin(location)
+			EntIndexToHScript(data.ink_unit_entindex):FaceTowards(EntIndexToHScript(data.target_entindex):GetAbsOrigin())
+		else
+			-- Destroy the vision particle early if the phantom is killed mid-air while moving towards target
+			ParticleManager:DestroyParticle(data.phantoms_embrace_particle, false)
+			ParticleManager:ReleaseParticleIndex(data.phantoms_embrace_particle)
+		end
 	end
-	
+
 	-- ChangeTrackingProjectileSpeed(arg1: handle, arg2: int): nil
 end
 
 function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location, data)
 	if not IsServer() then return end
+
+	if data.phantoms_embrace_particle then
+		ParticleManager:DestroyParticle(data.phantoms_embrace_particle, false)
+		ParticleManager:ReleaseParticleIndex(data.phantoms_embrace_particle)
+	end
 	
 	if target then
 		if target ~= self:GetCaster() and data.ink_unit_entindex and EntIndexToHScript(data.ink_unit_entindex) and EntIndexToHScript(data.ink_unit_entindex):IsAlive() and not target:IsInvulnerable() and not target:IsOutOfGame() then
-			local ink_modifier	= EntIndexToHScript(data.ink_unit_entindex):FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster())
-			
-			if ink_modifier then
-				-- This seems pretty sketch, but it's to switch animations while retaining a modifier (although two modifiers would have been fine I guess...)
-				ink_modifier:Destroy()
-				EntIndexToHScript(data.ink_unit_entindex):AddNewModifier(caster, ability, "modifier_imba_grimstroke_ink_creature_thinker", {latched = true})
-			end
-			
-			local individual_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_ink_creature", 
+			target:EmitSound("Hero_Grimstroke.InkCreature.Attach")
+
+			-- Apply the silence modifier
+			local individual_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature", 
 				{
 					duration 			= self:GetSpecialValueFor("latch_duration"),
 					latched_unit_offset	= self:GetSpecialValueFor("latched_unit_offset"),
@@ -304,8 +330,17 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 			if individual_modifier then
 				individual_modifier:SetDuration(self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()), true)
 			end
-
-			local counter_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_ink_creature_debuff", 
+			
+			-- Check the ink creature's own handler modifier
+			local ink_modifier	= EntIndexToHScript(data.ink_unit_entindex):FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster())
+			
+			if ink_modifier then
+				-- This seems pretty sketch, but it's to switch animations while retaining a modifier (although two modifiers would have been fine I guess...)
+				ink_modifier:SetStackCount(0)
+			end
+			
+			-- Apply the silence counting modifier
+			local counter_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature_debuff", 
 				{
 					duration 			= self:GetSpecialValueFor("latch_duration"),
 				})
@@ -315,6 +350,7 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 			end
 		else
 			-- Refresh cooldown
+			self:GetCaster():EmitSound("Hero_Grimstroke.InkCreature.Returned")
 		end
 	else
 
@@ -404,18 +440,50 @@ function modifier_imba_grimstroke_ink_creature_thinker:IsPurgable()	return false
 function modifier_imba_grimstroke_ink_creature_thinker:OnCreated(params)
 	if not IsServer() then return end
 
-	-- This is handled on the projectilehit function
-	self.latched = params.latched
+	self.destroy_attacks			= params.destroy_attacks
+	self.hero_attack_multiplier		= params.hero_attack_multiplier
+	self.target						= EntIndexToHScript(params.target_entindex)
+
+	-- Calculate health chunks that the unit will lose on getting attacked
+	self.health_increments		= self:GetParent():GetMaxHealth() / self.destroy_attacks
 	
 	if self:GetAbility() and self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(2)
+	else
 		self:SetStackCount(1)
 	end
+	
+	local phantoms_embrace_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_phantom_ambient.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(phantoms_embrace_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(phantoms_embrace_particle, false, false, -1, false, false)
+
+function modifier_imba_grimstroke_ink_creature_thinker:GetEffectName()
+	return "particles/units/heroes/hero_grimstroke/grimstroke_phantom_ambient.vpcf"
+end	
+end
+
+function modifier_imba_grimstroke_ink_creature_thinker:OnDestroy()
+	if not IsServer() then return end
+	
+	if self.target and self.target:FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature", self:GetParent()) then
+		self.target:RemoveModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature", self:GetParent())
+	end
+	
+	if self.target and self.target:FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_vision", self:GetCaster()) then
+		self.target:RemoveModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_vision", self:GetCaster())
+	end	
 end
 
 function modifier_imba_grimstroke_ink_creature_thinker:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+		
+		MODIFIER_EVENT_ON_ATTACKED
     }
 
     return decFuncs
@@ -423,7 +491,7 @@ end
 
 -- These aren't working right now
 function modifier_imba_grimstroke_ink_creature_thinker:GetOverrideAnimation()
-	if self.latched then
+	if self:GetStackCount() == 0 then
 		return ACT_DOTA_ATTACK
 	else
 		return ACT_DOTA_RUN
@@ -431,8 +499,40 @@ function modifier_imba_grimstroke_ink_creature_thinker:GetOverrideAnimation()
 end
 
 function modifier_imba_grimstroke_ink_creature_thinker:GetActivityTranslationModifiers()
-	if self.latched then
+	if self:GetStackCount() == 0 then
 		return "ink_creature_latched"
+	end
+end
+
+function modifier_imba_grimstroke_ink_creature_thinker:GetAbsoluteNoDamageMagical()
+    return 1
+end
+
+function modifier_imba_grimstroke_ink_creature_thinker:GetAbsoluteNoDamagePhysical()
+    return 1
+end
+
+function modifier_imba_grimstroke_ink_creature_thinker:GetAbsoluteNoDamagePure()
+    return 1
+end
+
+function modifier_imba_grimstroke_ink_creature_thinker:OnAttacked(keys)
+    if not IsServer() then return end
+	
+	if keys.target == self:GetParent() then
+		
+		if keys.attacker:IsHero() then
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - (self.health_increments * self.hero_attack_multiplier))
+		else
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - self.health_increments)
+		end
+		
+		if self:GetParent():GetHealth() <= 0 then
+			self:GetParent():EmitSound("Hero_Grimstroke.InkCreature.Death")
+		
+			self:GetParent():Kill(nil, keys.attacker)
+			self:Destroy()
+		end
 	end
 end
 
@@ -442,6 +542,11 @@ end
 
 function modifier_imba_grimstroke_ink_creature_vision:IsHidden()	return true end
 function modifier_imba_grimstroke_ink_creature_vision:IsPurgable()	return false end
+function modifier_imba_grimstroke_ink_creature_vision:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_grimstroke_ink_creature_vision:OnCreated()
+	if not IsServer() then return end
+end
 
 function modifier_imba_grimstroke_ink_creature_vision:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
@@ -470,8 +575,8 @@ function modifier_imba_grimstroke_ink_creature:OnCreated(params)
 	self.latched_unit_offset	= params.latched_unit_offset
 	self.ink_unit				= EntIndexToHScript(params.ink_unit_entindex)
 	
-	if self.ink_unit and self.ink_unit:FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster()) then
-		self:SetStackCount(self.ink_unit:GetModifierStackCount("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster()))
+	if self.ink_unit and self.ink_unit:FindModifierByName("modifier_imba_grimstroke_ink_creature_thinker") then
+		self:SetStackCount(self.ink_unit:FindModifierByName("modifier_imba_grimstroke_ink_creature_thinker"):GetStackCount())
 	end
 	
 	self:StartIntervalThink(FrameTime())
@@ -489,10 +594,14 @@ end
 function modifier_imba_grimstroke_ink_creature:OnDestroy()
 	if not IsServer() then return end
 
-	local ink_creature_counter = self:GetParent():FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_debuff", self:GetCaster())
+	local ink_creature_counter = self:GetParent():FindModifierByName("modifier_imba_grimstroke_ink_creature_debuff")
 	
 	if ink_creature_counter then
 		ink_creature_counter:DecrementStackCount()
+		
+		if ink_creature_counter:GetStackCount() == 0 then
+			ink_creature_counter:Destroy()
+		end
 	end
 
 	-- IMBAfication
@@ -501,6 +610,8 @@ function modifier_imba_grimstroke_ink_creature:OnDestroy()
 	end
 	
 	if self:GetRemainingTime() <= 0 then
+		self:GetParent():EmitSound("Hero_Grimstroke.InkCreature.Damage")
+	
 		-- "The phantom returns to Grimstroke upon expiring, or when its target dies. It does not return when it gets killed."
 		local damageTable = {
 			victim 			= self:GetParent(),
@@ -516,10 +627,10 @@ function modifier_imba_grimstroke_ink_creature:OnDestroy()
 end
 
 function modifier_imba_grimstroke_ink_creature:Return()
-	if self.ink_unit and self.ink_unit:IsAlive() then
+	if self.ink_unit and self.ink_unit:IsAlive() and self:GetCaster():GetOwner() then
 		local projectile =
 		{
-			Target 				= self:GetCaster(),
+			Target 				= self:GetCaster():GetOwner(),
 			Source 				= self.ink_unit,
 			Ability 			= self:GetAbility(),
 			EffectName 			= "particles/units/heroes/hero_grimstroke/grimstroke_phantom_return.vpcf",
@@ -537,13 +648,13 @@ function modifier_imba_grimstroke_ink_creature:Return()
 				returning		= true
 			}
 		}	
-	
+
+		ProjectileManager:CreateTrackingProjectile(projectile)
+		
 		-- The unit doesn't actually get deleted in vanilla so...
 		self.ink_unit:ForceKill(false)
 		self.ink_unit:AddNoDraw()
 		-- self.ink_unit:RemoveSelf()
-		
-		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
 
@@ -587,6 +698,8 @@ end
 function modifier_imba_grimstroke_ink_creature_debuff:OnIntervalThink()
 	if not IsServer() then return end
 	
+	self:GetParent():EmitSound("Hero_Grimstroke.InkCreature.Attack")
+	
 	local damageTable = {
 		victim 			= self:GetParent(),
 		damage 			= self.damage_per_tick * self:GetStackCount(),
@@ -614,6 +727,62 @@ end
 ---------------
 
 function imba_grimstroke_spirit_walk:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Grimstroke.InkSwell.Cast")
+
+	local ink_swell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_cast_ink_swell.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(ink_swell_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(ink_swell_particle)
+
+	if self:GetCaster():GetName() == "npc_dota_hero_grimstroke" and RollPercentage(50) then
+		if not self.responses_target or not self.responses_self then
+			self.responses_target = 
+			{
+				["grimstroke_grimstroke_ability2_01"] = 0,
+				["grimstroke_grimstroke_ability2_02"] = 0,
+				["grimstroke_grimstroke_ability2_04"] = 0,
+				["grimstroke_grimstroke_ability2_06"] = 0,
+				["grimstroke_grimstroke_ability2_07"] = 0,
+				["grimstroke_grimstroke_ability2_11"] = 0,
+				["grimstroke_grimstroke_ability3_03"] = 0,
+				
+				["grimstroke_grimstroke_ability2_08"] = 0,
+			}
+			
+			self.responses_self = 
+			{
+				["grimstroke_grimstroke_ability2_01"] = 0,
+				["grimstroke_grimstroke_ability2_02"] = 0,
+				["grimstroke_grimstroke_ability2_04"] = 0,
+				["grimstroke_grimstroke_ability2_06"] = 0,
+				["grimstroke_grimstroke_ability2_07"] = 0,
+				["grimstroke_grimstroke_ability2_11"] = 0,
+				["grimstroke_grimstroke_ability3_03"] = 0,
+				
+				["grimstroke_grimstroke_ability2_03"] = 0,
+				["grimstroke_grimstroke_ability2_09"] = 0,
+				["grimstroke_grimstroke_ability2_10"] = 0,
+			}
+		end
+
+		if self:GetCursorTarget() ~= self:GetCaster() then
+			for response, timer in pairs(self.responses_target) do
+				if GameRules:GetDOTATime(true, true) - timer >= 120 then
+					self:GetCaster():EmitSound(response)
+					self.responses_target[response] = GameRules:GetDOTATime(true, true)
+					break
+				end
+			end
+		else
+			for response, timer in pairs(self.responses_self) do
+				if GameRules:GetDOTATime(true, true) - timer >= 120 then
+					self:GetCaster():EmitSound(response)
+					self.responses_self[response] = GameRules:GetDOTATime(true, true)
+					break
+				end
+			end
+		end
+	end
+
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_spirit_walk_buff", {duration = self:GetSpecialValueFor("buff_duration")})
 end
 
@@ -672,7 +841,16 @@ end
 function modifier_imba_grimstroke_spirit_walk_buff:IgnoreTenacity()	return true end
 
 function modifier_imba_grimstroke_spirit_walk_buff:GetEffectName()
+	return "particles/units/heroes/hero_grimstroke/grimstroke_ink_swell_buff.vpcf"
+end
 
+function modifier_imba_grimstroke_spirit_walk_buff:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+-- Not working?
+function modifier_imba_grimstroke_spirit_walk_buff:GetStatusEffectName()
+	return "particles/status_fx/status_effect_grimstroke_ink_swell.vpcf"
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:OnCreated()
@@ -697,9 +875,21 @@ function modifier_imba_grimstroke_spirit_walk_buff:OnCreated()
 	-- if self:GetCaster():FindModifierByNameAndCaster("", self:GetCaster())
 		-- self.total_ticks	= self.incarnation_buff_duration / self.tick_rate
 	-- end
-	
+
+	local ink_swell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_swell_buff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(ink_swell_particle, 2, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:SetParticleControlEnt(ink_swell_particle, 3, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(ink_swell_particle, 6, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+	self:AddParticle(ink_swell_particle, false, false, -1, false, false)
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(self.tick_rate)
+end
+
+function modifier_imba_grimstroke_spirit_walk_buff:OnRefresh()
+	if not IsServer() then return end
+	
+	self.ticks					= 0
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:OnIntervalThink()
@@ -708,21 +898,29 @@ function modifier_imba_grimstroke_spirit_walk_buff:OnIntervalThink()
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
-		local damageTable = {
-			victim 			= enemy,
-			damage 			= damage,
-			damage_type		= DAMAGE_TYPE_MAGICAL,
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self:GetAbility()
-		}
-		
-		ApplyDamage(damageTable)
+		if self:GetParent() ~= enemy then
+			enemy:EmitSound("Hero_Grimstroke.InkSwell.Damage")
+			
+			local ink_swell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_swell_tick_damage.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(ink_swell_particle, 1, enemy:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(ink_swell_particle)
+			
+			local damageTable = {
+				victim 			= enemy,
+				damage 			= self.damage_per_tick,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			}
+			
+			ApplyDamage(damageTable)
+		end
 	end
 	
 	-- "The damage and stun upon losing the buff is based on the amount of damage instances the tendrils applied to a single enemy hero."
 	if #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false) >= 1 then
-		self.counter	= self.counter + 1
+		self.counter	= math.min(self.counter + 1, self.total_ticks)
 	end
 	
 	self.ticks	= self.ticks + 1
@@ -731,31 +929,42 @@ end
 -- "When the debuff is lost prematurely, it still applies the area expire damage and stun, based on the damage instances it dealt up to that point."
 function modifier_imba_grimstroke_spirit_walk_buff:OnDestroy()
 	if not IsServer() then return end
+
+	self:GetParent():EmitSound("Hero_Grimstroke.InkSwell.Stun")
+	
+	local ink_swell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_swell_aoe.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(ink_swell_particle, 1, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:ReleaseParticleIndex(ink_swell_particle)
 	
 	-- "The expire damage and stun only apply when there is at least one enemy hero within the area."
 	if #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false) >= 1 then
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	for _, enemy in pairs(enemies) do
-		-- "Ink Swell first applies the damage, then the debuff."
-		local damageTable = {
-			victim 			= enemy,
-			damage 			= (self.max_damage / self.total_ticks) * self.counter,
-			damage_type		= DAMAGE_TYPE_MAGICAL,
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self:GetAbility()
-		}
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		
-		ApplyDamage(damageTable)
-		
-		local debuff_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = (self.max_stun / self.total_ticks) * self.counter})
-		
-		if debuff_modifier then
-			debuff_modifier:SetDuration(((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance()), true)
+		for _, enemy in pairs(enemies) do
+			if self:GetParent() ~= enemy then
+				enemy:EmitSound("Hero_Grimstroke.InkSwell.Target")
+			
+				-- "Ink Swell first applies the damage, then the debuff."
+				local damageTable = {
+					victim 			= enemy,
+					damage 			= (self.max_damage / self.total_ticks) * self.counter,
+					damage_type		= DAMAGE_TYPE_MAGICAL,
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self:GetAbility()
+				}
+				
+				ApplyDamage(damageTable)
+				
+				local debuff_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = (self.max_stun / self.total_ticks) * self.counter})
+				
+				if debuff_modifier then
+					debuff_modifier:SetDuration(((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance()), true)
+				end
+			end
 		end
-	end	
+	end
 end
 
 -- IMBAfication: Unburdened
@@ -771,10 +980,19 @@ end
 
 function modifier_imba_grimstroke_spirit_walk_buff:DeclareFunctions()
 	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
 	
 	return decFuncs
+end
+
+function modifier_imba_grimstroke_spirit_walk_buff:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.movespeed_bonus_pct
+	else
+		return self.movespeed_bonus_pct * (-1)
+	end
 end
 
 -- IMBAfication: Coat of Armor
@@ -796,6 +1014,20 @@ function modifier_imba_grimstroke_spirit_walk_debuff:CheckState()
 	return state
 end
 
+function modifier_imba_grimstroke_spirit_walk_debuff:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_grimstroke_spirit_walk_debuff:GetOverrideAnimation()
+	 return ACT_DOTA_DISABLED
+end
+
+-- sounds/ui/stingers/enc/grimstroke_takeover.vsnd
+
 --------------
 -- SOULBIND --
 --------------
@@ -804,6 +1036,11 @@ function imba_grimstroke_soul_chain:OnSpellStart()
 	if self:GetCursorTarget():TriggerSpellAbsorb(self) then return end
 	
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_soul_chain", {duration = self:GetSpecialValueFor("chain_duration")})
+	
+	--Hero_Grimstroke.SoulChain.Cast
+	--Hero_Grimstroke.SoulChain.Target
+	--Hero_Grimstroke.SoulChain.Partner
+	--Hero_Grimstroke.SoulChain.Leash
 end
 
 -----------------------
