@@ -367,11 +367,11 @@ function imba_alchemist_unstable_concoction:GetAbilityTextureName()
 end
 
 function imba_alchemist_unstable_concoction:GetCastRange(location, target)
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
+	-- local caster = self:GetCaster()
+	
+	-- if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
 		return self.BaseClass.GetCastRange(self, location, target)
-	end
-	return 0
+	-- end
 end
 
 function imba_alchemist_unstable_concoction:IsHiddenWhenStolen()

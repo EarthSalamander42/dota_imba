@@ -9,9 +9,9 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_base_range"				"BASE RANGE:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_base_speed"				"BASE SPEED:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_base_damage"				"BASE DAMAGE:"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_hook_stacks"				"SHARP/LIGHT STACKS:"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_hook_stacks"		"SCEPTER BONUS SHARP/LIGHT STACKS:"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"Increase sharp and light stack count by %scepter_hook_stacks%."
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_hook_stacks"				"POWER/SWIFT STACKS:"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_hook_stacks"		"SCEPTER BONUS POWER/SWIFT STACKS:"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"Increase Power and Swift Hook stack count."
 
 "DOTA_Tooltip_ability_imba_pudge_rot"					"#{DOTA_Tooltip_ability_pudge_rot}"
 "DOTA_Tooltip_ability_imba_pudge_rot_Description"		"#{DOTA_Tooltip_ability_pudge_rot_description}\n<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius_tooltip%."
@@ -60,8 +60,8 @@
 "DOTA_Tooltip_ability_imba_pudge_dismember_strength_damage"				"%STRENGTH DAMAGE BONUS:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_spell_lifesteal"				"%SPELL LIFESTEAL:"
 
-"DOTA_Tooltip_modifier_dismember"								"Dismember"
-"DOTA_Tooltip_modifier_dismember_Description"					"FRESH MEAT!!!"
+"DOTA_Tooltip_modifier_imba_dismember"								"Dismember"
+"DOTA_Tooltip_modifier_imba_dismember_Description"					"FRESH MEAT!!!"
 
 "DOTA_Tooltip_modifier_imba_pudge_dismember_pull"				"Dismember Pull"
 "DOTA_Tooltip_modifier_imba_pudge_dismember_pull_Description"	"Being sucked in by a large mass..."

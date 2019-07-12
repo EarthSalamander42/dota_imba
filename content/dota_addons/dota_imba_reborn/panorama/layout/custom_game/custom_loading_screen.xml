@@ -30,9 +30,9 @@
 					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
 						<Label text="Frostrose Workshop" />
 					</Button>
-					<Button id="ImbaLoadingSocialSteamChat" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');">
-						<Label text="Official Steam Chat" />
-					</Button>
+					<!-- <Button id="ImbaLoadingSocialSteamChat" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');"> -->
+						<!-- <Label text="Official Steam Chat" /> -->
+					<!-- </Button> -->
 					<Button id="ImbaLoadingSocialFacebook" class="SocialButtons" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
 						<Label text="Facebook" />
 					</Button>

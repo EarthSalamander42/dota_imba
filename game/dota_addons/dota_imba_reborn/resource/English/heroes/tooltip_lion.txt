@@ -43,7 +43,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_lion_mana_drain"								"Mana Drain"
-"DOTA_Tooltip_ability_imba_lion_mana_drain_Description"					"Absorbs the magical energies of a target enemy unit by taking mana from it every second.\n<font color='#FF7800'>Drain Aura:</font> Passively drains mana from every enemy in %aura_radius% radius. Drains a portion of the all targets' mana pool per second.\n<font color='#FF7800'>Essence Rip:</font> Targeted enemies take damage equal to the mana drained from them.\n<font color='#FF7800'>Mana Pump:</font> Lion can target an ally, feeding him his own mana for the same values."
+"DOTA_Tooltip_ability_imba_lion_mana_drain_Description"					"Absorbs the magical energies of a target enemy unit by taking mana from it every second.\n<font color='#FF7800'>Potent Suction:</font> Unaffected by status resistance.\n<font color='#FF7800'>Drain Aura:</font> Passively drains mana from every enemy in %aura_radius% radius. Drains a portion of the all targets' mana pool per second.\n<font color='#FF7800'>Essence Rip:</font> Targeted enemies take damage equal to the mana drained from them.\n<font color='#FF7800'>Mana Pump:</font> Lion can target an ally, feeding him his own mana for the same values."
 "DOTA_Tooltip_ability_imba_lion_mana_drain_Lore"						"Lesser magi are nothing more than a source of magical restoration for the Demon Witch."
 "DOTA_Tooltip_ability_imba_lion_mana_drain_mana_drain_sec"				"DRAIN PER SECOND:"
 "DOTA_Tooltip_ability_imba_lion_mana_drain_movespeed"					"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"

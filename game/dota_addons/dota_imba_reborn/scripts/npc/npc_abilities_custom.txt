@@ -761,7 +761,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"4"
 
@@ -9424,7 +9424,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"			"150 90 30"
-		"AbilityManaCost"			"200 650 750"
+		"AbilityManaCost"			"200 420 650"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9433,7 +9433,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"600 850 1000"
+				"damage"					"600 800 1000"
 				"LinkedSpecialBonus"		"special_bonus_imba_lion_7"
 			}
 
@@ -14172,6 +14172,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_range"			"1300 1400 1500 1600"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_5"
 			}
 			"05"
 			{
