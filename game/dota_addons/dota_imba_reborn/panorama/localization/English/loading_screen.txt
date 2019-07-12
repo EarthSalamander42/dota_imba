@@ -3,7 +3,7 @@
 "loading_screen_button"					"Dota 2 IMBA Website"
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
-"loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forgot to request your Discord role! (English Discord only)"
+"loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role! (English Discord only)"
 "loading_screen_promote_button"			"Click here to redirect to Transifex!"
 
 "loading_screen_patreon"						"Patreon"
