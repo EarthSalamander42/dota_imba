@@ -583,7 +583,6 @@ IMBA_DISARM_IMMUNITY = {
 }
 
 IMBA_PUNISHED = {
-	[159342234] = true,
 	[925061111] = false,
 }
 
