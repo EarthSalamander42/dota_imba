@@ -35,7 +35,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_arc_warden"
 	{
-		"override_hero"				"npc_dota_hero_arc_warden"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
@@ -48,7 +48,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_abaddon"
 	{
-		"override_hero"				"npc_dota_hero_abaddon"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -76,7 +76,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_alchemist"
 	{
-		"override_hero"				"npc_dota_hero_alchemist"	
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -109,7 +109,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_antimage"
 	{
-		"override_hero"				"npc_dota_hero_antimage"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -140,7 +140,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_axe"
 	{
-		"override_hero"				"npc_dota_hero_axe"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -172,7 +172,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_bane"
 	{
-		"override_hero"				"npc_dota_hero_bane"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -200,7 +200,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_batrider"
 	{
-		"override_hero"				"npc_dota_hero_batrider"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
@@ -211,7 +211,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_beastmaster"
 	{
-		"override_hero"				"npc_dota_hero_beastmaster"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -225,7 +225,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_bloodseeker"
 	{
-		"override_hero"				"npc_dota_hero_bloodseeker"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -256,7 +256,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_bounty_hunter"
 	{
-		"override_hero"				"npc_dota_hero_bounty_hunter"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -287,7 +287,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_brewmaster"
 	{
-		"override_hero"				"npc_dota_hero_brewmaster"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -314,7 +314,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_centaur"
 	{
-		"override_hero"				"npc_dota_hero_centaur"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -342,7 +342,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_chaos_knight"
 	{
-		"override_hero"				"npc_dota_hero_chaos_knight"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -353,7 +353,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_clinkz"
 	{
-		"override_hero"				"npc_dota_hero_clinkz"		
+	
 		
 		//Picking Screen
 		"IsImba"					"1"
@@ -389,7 +389,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_crystal_maiden"
 	{
-		"override_hero"				"npc_dota_hero_crystal_maiden"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -418,7 +418,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_dazzle"
 	{
-		"override_hero"				"npc_dota_hero_dazzle"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -452,7 +452,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_disruptor"
 	{
-		"override_hero"				"npc_dota_hero_disruptor"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -486,7 +486,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_doom_bringer"
 	{
-		"override_hero"				"npc_dota_hero_doom_bringer"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -513,7 +513,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_dragon_knight"
 	{
-		"override_hero"				"npc_dota_hero_dragon_knight"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -541,7 +541,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_drow_ranger"
 	{
-		"override_hero"				"npc_dota_hero_drow_ranger"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -576,7 +576,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_earth_spirit"
 	{
-		"override_hero"				"npc_dota_hero_earth_spirit"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -604,7 +604,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_elder_titan"
 	{
-		"override_hero"				"npc_dota_hero_elder_titan"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -636,7 +636,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_ember_spirit"
 	{
-		"override_hero"				"npc_dota_hero_ember_spirit"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -665,7 +665,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_enigma"
 	{
-		"override_hero"				"npc_dota_hero_enigma"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -696,7 +696,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_faceless_void"
 	{
-		"override_hero"				"npc_dota_hero_faceless_void"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -732,7 +732,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_gyrocopter"
 	{
-		"override_hero"				"npc_dota_hero_gyrocopter"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
@@ -767,7 +767,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_jakiro"
 	{
-		"override_hero"				"npc_dota_hero_jakiro"
+	
 		"AttackRange"				"500"
 
 		//Picking Screen
@@ -796,7 +796,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_juggernaut"
 	{
-		"override_hero"				"npc_dota_hero_juggernaut"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -827,7 +827,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_kunkka"
 	{
-		"override_hero"				"npc_dota_hero_kunkka"
+	
 		"MovementTurnRate"			"5.0"
 
 		//Picking Screen
@@ -856,7 +856,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_lich"
 	{
-		"override_hero"				"npc_dota_hero_lich"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -891,7 +891,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_lina"
 	{
-		"override_hero"				"npc_dota_hero_lina"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -919,7 +919,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_lion"
 	{
-		"override_hero"				"npc_dota_hero_lion"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -952,7 +952,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_lycan"
 	{
-		"override_hero"				"npc_dota_hero_lycan"	
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -983,7 +983,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_magnataur"
 	{
-		"override_hero"				"npc_dota_hero_magnataur"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1019,7 +1019,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_meepo"
 	{
-		"override_hero"				"npc_dota_hero_meepo"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
@@ -1055,7 +1055,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_mirana"
 	{
-		"override_hero"				"npc_dota_hero_mirana"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1089,7 +1089,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_monkey_king"
 	{
-		"override_hero"				"npc_dota_hero_monkey_king"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
@@ -1142,7 +1142,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_necrolyte"
 	{
-		"override_hero"				"npc_dota_hero_necrolyte"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1170,7 +1170,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_night_stalker"
 	{
-		"override_hero" 			"npc_dota_hero_night_stalker"    	
+	
 		
 		//Picking Screen
 		"IsImba"					"1"
@@ -1205,7 +1205,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_nyx_assassin"
 	{
-		"override_hero"				"npc_dota_hero_nyx_assassin"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1249,7 +1249,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_obsidian_destroyer"
 	{
-		"override_hero"				"npc_dota_hero_obsidian_destroyer"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1286,7 +1286,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_omniknight"
 	{
-		"override_hero"				"npc_dota_hero_omniknight"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1320,7 +1320,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_pangolier"
 	{
-		"override_hero"				"npc_dota_hero_pangolier"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1352,7 +1352,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_assassin"
 	{
-		"override_hero"				"npc_dota_hero_phantom_assassin"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1385,7 +1385,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_phoenix"
 	{
-		"override_hero"				"npc_dota_hero_phoenix"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1416,7 +1416,7 @@
 	//========================================================================================================
 	"npc_dota_hero_pudge"
 	{
-		"override_hero"				"npc_dota_hero_pudge"
+	
 		
 		//Picking Screen
 		"IsImba"					"1"
@@ -1444,7 +1444,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_pugna"
 	{
-		"override_hero"				"npc_dota_hero_pugna"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1472,7 +1472,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_queenofpain"
 	{
-		"override_hero"				"npc_dota_hero_queenofpain"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1500,7 +1500,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_riki"
 	{
-		"override_hero"				"npc_dota_hero_riki"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1528,7 +1528,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_sand_king"
 	{
-		"override_hero"				"npc_dota_hero_sand_king"	
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1561,7 +1561,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_nevermore"
 	{
-		"override_hero"				"npc_dota_hero_nevermore"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1589,7 +1589,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_skeleton_king"
 	{
-		"override_hero"				"npc_dota_hero_skeleton_king"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1622,7 +1622,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_skywrath_mage"
 	{
-		"override_hero"				"npc_dota_hero_skywrath_mage"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1650,7 +1650,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_slardar"
 	{
-		"override_hero"				"npc_dota_hero_slardar"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1687,7 +1687,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_sniper"
 	{
-		"override_hero"				"npc_dota_hero_sniper"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1721,7 +1721,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_storm_spirit"
 	{
-		"override_hero"				"npc_dota_hero_storm_spirit"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1753,7 +1753,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_sven"
 	{
-		"override_hero"				"npc_dota_hero_sven"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1781,7 +1781,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_tidehunter"
 	{
-		"override_hero"				"npc_dota_hero_tidehunter"
+	
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
@@ -1793,7 +1793,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_tinker"
 	{
-		"override_hero"				"npc_dota_hero_tinker"
+	
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
@@ -1811,7 +1811,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_tiny"
 	{
-		"override_hero"				"npc_dota_hero_tiny"		
+	
 
 //		"Model"						"models/creeps/ice_biome/storegga/storegga.vmdl"
 //		"ModelScale"				"0.5"
@@ -1851,7 +1851,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_troll_warlord"
 	{
-		"override_hero"				"npc_dota_hero_troll_warlord"		
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1883,7 +1883,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_tusk"
 	{
-		"override_hero"	"npc_dota_hero_tusk"	
+	
 	
 		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 	
@@ -1918,7 +1918,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_ursa"
 	{
-		"override_hero"				"npc_dota_hero_ursa"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1946,7 +1946,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_vengefulspirit"
 	{
-		"override_hero"				"npc_dota_hero_vengefulspirit"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1974,7 +1974,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_venomancer"
 	{
-		"override_hero"				"npc_dota_hero_venomancer"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -2002,7 +2002,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_warlock"
 	{
-		"override_hero"				"npc_dota_hero_warlock"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -2034,7 +2034,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_witch_doctor"
 	{
-		"override_hero"				"npc_dota_hero_witch_doctor"
+	
 
 		//Picking Screen
 		"IsImba"					"1"

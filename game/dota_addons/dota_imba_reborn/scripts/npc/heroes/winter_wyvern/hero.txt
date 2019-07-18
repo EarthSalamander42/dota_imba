@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_winter_wyvern"
 	{
-		"override_hero"				"npc_dota_hero_winter_wyvern"
+	
 		"IsImba"					"1"
 
 		//Picking Screen
