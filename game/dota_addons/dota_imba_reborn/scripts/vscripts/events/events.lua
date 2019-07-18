@@ -879,28 +879,57 @@ function GameMode:OnPlayerChat(keys)
 				local hero_count = 0
 				local creep_count = 0
 				local thinker_count = 0
+				local wearable_count = 0
 
 				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
-					if string.find(ent:GetName(), "hero") then
+					if string.find(ent:GetDebugName(), "hero") then
 						hero_count = hero_count + 1
 					end
 					
-					if string.find(ent:GetName(), "creep") then
+					if string.find(ent:GetDebugName(), "creep") then
 						creep_count = creep_count + 1
 					end
 					
-					if string.find(ent:GetName(), "thinker") then
+					if string.find(ent:GetDebugName(), "thinker") then
 						thinker_count = thinker_count + 1
 					end
+				
+					if string.find(ent:GetDebugName(), "wearable") then
+						wearable_count = wearable_count + 1
+					end
+					
+					-- print(ent:GetDebugName())
 				end
 				
-				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map.", true)
-				Say(PlayerResource:GetPlayer(keys.playerid), "From these entities, it is estimated that "..hero_count.." of them are heroes, "..creep_count.." of them are creeps, and "..thinker_count.." of them are thinkers.", true)
+				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
+				Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
 					ParticleManager:DestroyParticle(particle, true)
 					ParticleManager:ReleaseParticleIndex(particle)
+				end
+			-- NUKE THE WORLD
+			-- elseif str == "-destroy" then
+				-- text = string.gsub(text, str, "")
+				-- text = string.gsub(text, " ", "")
+
+				-- for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					-- if string.find(ent:GetDebugName(), text) then
+						-- ent:RemoveSelf()
+					-- end
+				-- end
+			elseif str == "-destroylights" then
+				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					if string.find(ent:GetDebugName(), "env_deferred_light") then
+						ent:RemoveSelf()
+					end
+				end
+			elseif str == "-destroywearables" then
+				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					if string.find(ent:GetDebugName(), "dota_item_wearable") then
+						ent:RemoveSelf()
+					end
 				end
 			-- Input a playerID as a parameter (ex. 0 to 19)
 			elseif str == "-getname" then
