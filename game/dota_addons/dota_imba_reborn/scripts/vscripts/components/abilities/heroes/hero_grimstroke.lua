@@ -1032,27 +1032,259 @@ end
 -- SOULBIND --
 --------------
 
+-- function imba_grimstroke_soul_chain:OnSpellStart()
+	-- --Hero_Grimstroke.SoulChain.Cast
+	-- --Hero_Grimstroke.SoulChain.Target
+	-- --Hero_Grimstroke.SoulChain.Partner
+	-- --Hero_Grimstroke.SoulChain.Leash
+-- end
+
+function imba_grimstroke_soul_chain:GetAOERadius()
+	return self:GetSpecialValueFor("chain_latch_radius")
+end
+
 function imba_grimstroke_soul_chain:OnSpellStart()
-	if self:GetCursorTarget():TriggerSpellAbsorb(self) then return end
+	if self:GetCursorTarget() and not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+		self:GetCursorTarget():EmitSound("Hero_Grimstroke.SoulChain.Cast")
+
+		local soulbind_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_cast_soulchain.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControl(soulbind_particle, 1, self:GetCursorTarget():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(soulbind_particle)
 	
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_soul_chain", {duration = self:GetSpecialValueFor("chain_duration")})
-	
-	--Hero_Grimstroke.SoulChain.Cast
-	--Hero_Grimstroke.SoulChain.Target
-	--Hero_Grimstroke.SoulChain.Partner
-	--Hero_Grimstroke.SoulChain.Leash
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(),	self, "modifier_imba_grimstroke_soul_chain",
+		{ 
+			duration	= self:GetSpecialValueFor("chain_duration"),
+			primary		= true -- Designate this as the cast modifier, which will then apply non-primary modifiers to nearby targets
+		 })
+	end
 end
 
 -----------------------
 -- SOULBIND MODIFIER --
 -----------------------
 
-function modifier_imba_grimstroke_soul_chain:GetEffectName()
+function modifier_imba_grimstroke_soul_chain:IgnoreTenacity()	return true end
+function modifier_imba_grimstroke_soul_chain:IsPurgable()		return false end
 
+function modifier_imba_grimstroke_soul_chain:OnCreated( kv )
+	self.chain_latch_radius		= self:GetAbility():GetSpecialValueFor("chain_latch_radius")
+	self.chain_break_distance	= self:GetAbility():GetSpecialValueFor("chain_break_distance")
+	self.leash_radius_buffer	= self:GetAbility():GetSpecialValueFor("leash_radius_buffer")
+	self.movement_slow			= self:GetAbility():GetSpecialValueFor("movement_slow")
+
+	self.leash_radius_buffer_radius		= self.chain_latch_radius - self.leash_radius_buffer
+	self.normal_ms_limit				= 550
+	self.limit							= self.normal_ms_limit	
+	
+	if not IsServer() then return end
+	
+	-- Designate if the modifier was directly from Grimstroke's cast or not (this is the one that typically chains to others)
+	self.primary = (kv.primary == 1)
+	
+	-- Determine who chained the modifier to this unit, if applicable
+	if kv.source then
+		self.source		= EntIndexToHScript(kv.source)
+	end
+	
+	-- Might let this hit more than two targets later...
+	-- Initialize table to hold other latched targets
+	self.latched_targets = {}
+	
+	self:GetParent():EmitSound("Hero_Grimstroke.SoulChain.Target")
+
+	local soulbind_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_soulchain_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(soulbind_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(soulbind_particle, false, false, -1, false, false)
+	
+	-- The overhead particle only displays on the primary target of Soulbind
+	if self.primary then
+		local soulbind_marker = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_soulchain_marker.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		self:AddParticle(soulbind_marker, false, false, -1, false, true)
+	end
+
+	self:StartIntervalThink(0.1)
+	self:OnIntervalThink()
 end
 
-function modifier_imba_grimstroke_soul_chain:OnCreated()
+function modifier_imba_grimstroke_soul_chain:OnRefresh( kv )
+	if not IsServer() then return end
+	
+	self.movement_slow = self:GetAbility():GetSpecialValueFor("movement_slow")
 
+	-- check if non-primary being refreshed as primary
+	if (kv.primary == 1) and (not self.primary) then
+		self.primary = true
+		
+		-- If refreshed while there is already a latched pair target, remove that other unit's primary status (might cause issues otherwise)
+		if self.pair then
+			self.pair.primary = false
+			self.pair:SetDuration(kv.duration, true)
+		end
+	end
+end
+
+-- This constantly checks for latching or movement speed manipulation on stretching chain
+function modifier_imba_grimstroke_soul_chain:OnIntervalThink()
+	if not IsServer() then return end
+
+	-- If there aren't any bounded targets yet, continue searching for nearby potential victims
+	if self.primary and not self.pair then
+		self:FindPair()
+	-- Otherwise if there is a bound target, ensure that they cannot stray too far from each other
+	elseif self.pair then
+		self:Bind()
+	end
+end
+
+function modifier_imba_grimstroke_soul_chain:FindPair()
+	-- "Only binds the primary target to heroes (excluding illusions, including clones) or creep-heroes. The primary target can be an illusion though."
+	-- "Does not bind to nearby invisible or invulnerable heroes."
+	
+	-- TODO: Check if this works on creep-heroes (it's supposed to)
+	local heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(),	nil, self.chain_latch_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
+
+	for _, hero in pairs(heroes) do
+		if hero ~= self:GetParent() and not hero:FindModifierByNameAndCaster("modifier_imba_grimstroke_soul_chain", self:GetCaster()) then
+			self.latched_targets[hero] = true
+			
+			hero:EmitSound("Hero_Grimstroke.SoulChain.Partner")
+
+			self.pair = hero:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_soul_chain",
+			{
+				primary = false,
+				source	= self:GetParent():entindex()
+			})
+			
+			if self.pair then
+				self.pair.pair = self
+			end
+
+			self.soulbind_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_soulchain.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControlEnt(self.soulbind_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", Vector(0, 0, 0), true)
+			ParticleManager:SetParticleControlEnt(self.soulbind_particle, 1, self.pair:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", Vector(0, 0, 0), true)	
+
+			break
+		end
+	end
+end
+
+function modifier_imba_grimstroke_soul_chain:Bind()
+	-- get info
+	local vectorToPair = self.pair:GetParent():GetOrigin() - self:GetParent():GetOrigin()
+	local facingAngle = self:GetParent():GetAnglesAsVector().y
+
+	-- calculate facing angle
+	local angleToPair = VectorToAngles(vectorToPair).y
+	local angleDifference = math.abs(AngleDiff( angleToPair, facingAngle ))
+
+	-- calculate distance
+	local distanceToPair = vectorToPair:Length2D()
+
+	-- check if it is within boundaries
+	if distanceToPair < self.leash_radius_buffer_radius then
+		-- within limit
+		self.limit = nil
+
+	elseif distanceToPair < self.chain_break_distance then
+		-- slowed if facing away
+		if angleDifference > 90 then
+			-- slow interpolates linearly between buffer radius and chain radius
+			local interpolate = math.min((distanceToPair - self.leash_radius_buffer_radius) / self.leash_radius_buffer, 1)
+
+			-- slow inversely related with interpolation
+			self.limit = (1 - interpolate) * self.normal_ms_limit
+
+			-- 0 limit means no limit
+			if self.limit < 1 then
+				self.limit = 0.01
+			end
+		else
+			-- not slowed if facing towards pair
+			self.limit = nil
+		end
+
+		-- -- interrupts weak motion controllers
+		-- self:GetParent():InterruptMotionControllers( true )
+	else
+		-- outside, break
+		if self.primary then
+			ParticleManager:DestroyParticle(self.soulbind_particle, false)
+			ParticleManager:ReleaseParticleIndex(self.soulbind_particle)
+			self.pair:Destroy()
+			self.pair = nil
+		end
+	end
+end
+
+function modifier_imba_grimstroke_soul_chain:OnRemoved()
+	if not IsServer() then return end
+	
+	if self.primary and self.pair and (not self.pair:IsNull()) then
+		ParticleManager:DestroyParticle( self.soulbind_particle, false )
+		ParticleManager:ReleaseParticleIndex( self.soulbind_particle )
+	end
+end
+
+function modifier_imba_grimstroke_soul_chain:OnDestroy()
+	if not IsServer() then return end
+
+	if self.primary and self.pair and (not self.pair:IsNull()) then
+		self.pair:Destroy()
+	end
+end
+
+function modifier_imba_grimstroke_soul_chain:DeclareFunctions()
+	local decFuncs = {
+		-- This thing does not duplicate spells that do not trigger Linken's, so I guess it makes sense to use MODIFIER_PROPERTY_ABSORB_SPELL for the duplication logic
+		MODIFIER_PROPERTY_ABSORB_SPELL,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_grimstroke_soul_chain:GetAbsorbSpell(keys)
+		print(keys.record)
+	
+	if self.casted then return end
+	if not self.pair then return end
+	if keys.ability == self:GetAbility() then return end
+	
+	-- for _, key in pairs(keys) do
+		-- print(_, " ", key)
+	-- end
+
+
+
+	-- Create main proc particle
+	local soulbind_paritcle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_soulchain_proc_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(soulbind_paritcle_1)
+
+	-- Create chain proc particle
+	local soulbind_particle_2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_grimstroke/grimstroke_soulchain_proc.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(soulbind_particle_2, 1, self.pair:GetParent():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(soulbind_particle_2)
+
+	-- Create pair proc particle
+	local soulbind_paritcle_3 = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_soulchain_proc_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.pair:GetParent())
+	ParticleManager:ReleaseParticleIndex(soulbind_paritcle_3)
+
+	self:GetCaster():SetCursorCastTarget(self.pair:GetParent())
+
+	self.casted = true
+	keys.ability:OnSpellStart()
+	self.casted = nil
+end
+
+function modifier_imba_grimstroke_soul_chain:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_slow * (-1)
+end
+
+function modifier_imba_grimstroke_soul_chain:GetModifierMoveSpeed_Limit()
+	if not IsServer() or not self.limit then return end
+
+	return self.limit
 end
 
 -- ----------
