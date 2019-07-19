@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_lancer"
 	{
-		// "override_hero"				"npc_dota_hero_phantom_lancer"
+		//
 		// "IsImba"					"0"
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
