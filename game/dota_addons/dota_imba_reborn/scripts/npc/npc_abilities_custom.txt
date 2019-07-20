@@ -357,6 +357,17 @@
 				"var_type"						"FIELD_FLOAT"
 				"incoming_damage_tooltip"		"25 40"
 			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"min_before_instability"		"42"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"instability_hp_reduce_per_min"		"3"
+			}
 		}
 	}
 

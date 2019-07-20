@@ -205,7 +205,7 @@ function modifier_imba_abyssal_blade_unique:OnAttack(keys)
 			end
 
 			-- If the target is a building, do nothing
-			if target:IsBuilding() then
+			if target:IsBuilding() or target:IsOther() then
 				return nil                
 			end
 			

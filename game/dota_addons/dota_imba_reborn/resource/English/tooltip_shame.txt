@@ -310,6 +310,9 @@
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject"				"Relief Aura Cooldown"
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject_Description"	"Recently dealt damage to an enemy, causing tension. You cannot gain Relief Aura's buff again for a few seconds."
 
+"DOTA_Tooltip_modifier_fountain_passive"								"Fountain"
+"DOTA_Tooltip_modifier_fountain_passive_Description"					"I have no idea what this modifier is for."
+
 //=================================================================================================================
 // Developers
 //=================================================================================================================
