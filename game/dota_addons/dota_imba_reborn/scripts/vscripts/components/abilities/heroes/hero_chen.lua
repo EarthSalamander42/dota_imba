@@ -976,36 +976,40 @@ end
 function imba_chen_test_of_faith:OnSpellStart()
 	if not IsServer() then return end
 	
-	self:GetCursorTarget():EmitSound("Hero_Chen.Test_of_Faith")
+	local target = self:GetCursorTarget()
 	
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and target:TriggerSpellAbsorb(self) then return end
+	
+	target:EmitSound("Hero_Chen.Test_of_Faith")
+	
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(particle)
 	
-	if self:GetCursorTarget():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		
 		local heal_value = self:GetSpecialValueFor("heal_max")
 		
 		-- If the cast target isn't the caster themselves, get a random number between the min and max value
-		if self:GetCursorTarget() ~= self:GetCaster() then
+		if target ~= self:GetCaster() then
 			heal_value = RandomInt(self:GetSpecialValueFor("heal_min"), self:GetSpecialValueFor("heal_max"))
 		end
 	
 		-- IMBAfication: For the Faithful
-		if self:GetCursorTarget().GetPlayerID and self:GetCursorTarget():GetPlayerID() then
-			heal_value	= heal_value + (PlayerResource:GetAssists(self:GetCursorTarget():GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
+		if target.GetPlayerID and target:GetPlayerID() then
+			heal_value	= heal_value + (PlayerResource:GetAssists(target:GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
 		end
 	
-		self:GetCursorTarget():Heal(heal_value, self:GetCaster())
+		target:Heal(heal_value, self:GetCaster())
 		
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCursorTarget(), heal_value, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal_value, nil)
 	else
 		local damage_min	= self:GetSpecialValueFor("damage_min")
 		local damage_max	= self:GetSpecialValueFor("damage_max")
 	
 		-- IMBAfication: For the Unfaithful	
-		if self:GetCaster().GetPlayerID and self:GetCursorTarget().GetPlayerID and self:GetCaster():GetPlayerID() and self:GetCursorTarget():GetPlayerID() then
+		if self:GetCaster().GetPlayerID and target.GetPlayerID and self:GetCaster():GetPlayerID() and target:GetPlayerID() then
 			local caster_assists	= PlayerResource:GetAssists(self:GetCaster():GetPlayerID())
-			local target_assists	= PlayerResource:GetAssists(self:GetCursorTarget():GetPlayerID())
+			local target_assists	= PlayerResource:GetAssists(target:GetPlayerID())
 			
 			damage_max		= damage_max + math.max((caster_assists - target_assists) * self:GetSpecialValueFor("unfaithful_assist_mult"), 0)
 		end
@@ -1013,7 +1017,7 @@ function imba_chen_test_of_faith:OnSpellStart()
 		local damage_value	= RandomInt(damage_min, damage_max)
 	
 		local damageTable = {
-			victim 			= self:GetCursorTarget(),
+			victim 			= target,
 			damage 			= damage_value,
 			damage_type		= DAMAGE_TYPE_PURE,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
@@ -1023,7 +1027,7 @@ function imba_chen_test_of_faith:OnSpellStart()
 		
 		ApplyDamage(damageTable)
 		
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetCursorTarget(), damage_value, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage_value, nil)
 	end
 end
 

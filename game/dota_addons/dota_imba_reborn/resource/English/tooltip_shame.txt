@@ -399,6 +399,8 @@
 
 "DOTA_Tooltip_ability_life_stealer_open_wounds_Note0"							"Open Wounds slows over 8 different steps: 70% / 70% / 60% / 50% / 40% / 30% / 20% / 10%, with the slow decreasing one step per second."
 
+"DOTA_Tooltip_ability_doom_bringer_devour_Description"				"Consumes an enemy or neutral creep, acquiring any special abilities that it possessed.\nIf auto-cast is turned off, Doom will not acquire the consumed creep's abilities."
+
 //=================================================================================================================
 //=================================================================================================================
 // Vanilla talent overrides

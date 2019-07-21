@@ -718,7 +718,8 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 			damage_table = ({victim = enemy,
 						 attacker = self.caster,
 						 ability = self.ability,
-						 damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick,
+						 -- damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick, -- WTF is this broken garbage no
+						 damage = self.flat_damage_per_tick,
 						 damage_type = DAMAGE_TYPE_MAGICAL})
 
 			ApplyDamage(damage_table)

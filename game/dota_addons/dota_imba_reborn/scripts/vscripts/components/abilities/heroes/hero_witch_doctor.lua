@@ -393,7 +393,7 @@ function modifier_imba_voodoo_restoration:OnIntervalThink()
 	-- #6 TALENT: Voodo restoration doesn't cost mana to maintain.
 	if not self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
 		if self:GetCaster():GetMana() >= hAbility:GetManaCost(-1) then
-			self:GetCaster():SpendMana(self.manacost, hAbility)
+			self:GetCaster():ReduceMana(self.manacost)
 		else
 			hAbility:ToggleAbility()
 		end

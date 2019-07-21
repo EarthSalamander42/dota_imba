@@ -927,7 +927,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 					iMoveSpeed			= 600,
 					vSourceLoc 			= enemy:GetAbsOrigin(),
 					bDrawsOnMinimap 	= false,
-					bDodgeable 			= true,
+					bDodgeable 			= false,
 					bIsAttack 			= false,
 					bVisibleToEnemies 	= true,
 					bReplaceExisting 	= false,

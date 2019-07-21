@@ -123,6 +123,7 @@ function modifier_item_imba_blade_mail_active:OnCreated()
 	
 	self.lacerate_pct		= self:GetAbility():GetSpecialValueFor("lacerate_pct")
 	self.lacerate_duration	= self:GetAbility():GetSpecialValueFor("lacerate_duration")
+	self.justice_pct		= self:GetAbility():GetSpecialValueFor("justice_pct")
 end
 
 function modifier_item_imba_blade_mail_active:OnDestroy()
@@ -179,7 +180,7 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 			
 			local damageTable = {
 				victim			= keys.attacker:GetPlayerOwner():GetAssignedHero(),
-				damage			= keys.original_damage,
+				damage			= keys.original_damage * self.justice_pct * 0.01,
 				damage_type		= keys.damage_type,
 				damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 				attacker		= self:GetParent(),

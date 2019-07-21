@@ -678,6 +678,35 @@ function GameMode:OnPlayerChat(keys)
 			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
 		end
 		
+		-- Quick entity check to see if there's too many on the map (can't do anything about it with this, but at least to provide diagnosis)
+		if str == "-count" then
+			local hero_count = 0
+			local creep_count = 0
+			local thinker_count = 0
+			local wearable_count = 0
+
+			for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+				if string.find(ent:GetDebugName(), "hero") then
+					hero_count = hero_count + 1
+				end
+				
+				if string.find(ent:GetDebugName(), "creep") then
+					creep_count = creep_count + 1
+				end
+				
+				if string.find(ent:GetDebugName(), "thinker") then
+					thinker_count = thinker_count + 1
+				end
+			
+				if string.find(ent:GetDebugName(), "wearable") then
+					wearable_count = wearable_count + 1
+				end
+			end
+			
+			Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
+			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
+		end
+		
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			
@@ -874,35 +903,6 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-dark_seer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
-			-- Quick entity check to see if there's too many on the map (can't do anything about it with this, but at least to provide diagnosis)
-			elseif str == "-count" then
-				local hero_count = 0
-				local creep_count = 0
-				local thinker_count = 0
-				local wearable_count = 0
-
-				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
-					if string.find(ent:GetDebugName(), "hero") then
-						hero_count = hero_count + 1
-					end
-					
-					if string.find(ent:GetDebugName(), "creep") then
-						creep_count = creep_count + 1
-					end
-					
-					if string.find(ent:GetDebugName(), "thinker") then
-						thinker_count = thinker_count + 1
-					end
-				
-					if string.find(ent:GetDebugName(), "wearable") then
-						wearable_count = wearable_count + 1
-					end
-					
-					-- print(ent:GetDebugName())
-				end
-				
-				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
-				Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do

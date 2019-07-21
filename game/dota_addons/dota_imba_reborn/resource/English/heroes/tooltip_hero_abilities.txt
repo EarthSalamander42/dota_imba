@@ -478,7 +478,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura"                "Heartstopper Aura"
-"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Description"                 "Necrophos stills the hearts of his opponents. Enemies in %radius% radius lose a percentage of their maximum health over time.\n<font color='#FF7800'>Can't Stop the Rot:</font> Decreases affected enemies' received healing."
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Description"                 "Necrophos stills the hearts of his opponents. Enemies in %radius% radius lose a percentage of their maximum health over time.\n<font color='#FF7800'>Heart Attack:</font> Deals pure damage.\n<font color='#FF7800'>Can't Stop the Rot:</font> Decreases affected enemies' received healing."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Note0"          "Damage is dealt as HP removal, and cannot be prevented or reduced."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Lore"            "Those who come within a short distance of Necrolyte can feel pestilence and plague in the air."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_damage_pct"                  "%HEALTH LOSS PER SECOND:"
