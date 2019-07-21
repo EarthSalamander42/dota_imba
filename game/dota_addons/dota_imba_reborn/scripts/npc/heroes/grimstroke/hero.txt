@@ -16,18 +16,24 @@
 		"Ability2"				"imba_grimstroke_ink_creature"
 		"Ability3"				"imba_grimstroke_spirit_walk"
 		"Ability4"				"grimstroke_scepter"
-		"Ability5"				"generic_hidden"
-		"Ability6"				"imba_grimstroke_soul_chain"
+		"Ability5"				"imba_grimstroke_ink_gods_incarnation"
+		//"Ability6"				"imba_grimstroke_soul_chain"
+		"Ability6"				"grimstroke_soul_chain"
+		"Ability7"				"imba_grimstroke_soul_chain_vanilla_enhancer"
 		
 		"Ability10"				"special_bonus_movement_speed_30"
 		"Ability11"				"special_bonus_gold_income_15"
 		"Ability12"				"special_bonus_spell_amplify_12"
 		"Ability13"				"special_bonus_cast_range_125"
-		"Ability14"				"special_bonus_unique_grimstroke_3"
-		"Ability15"				"special_bonus_unique_grimstroke_4"
-		"Ability16"				"special_bonus_unique_grimstroke_1"
-		"Ability17"				"special_bonus_unique_grimstroke_2"
+		"Ability14"				"special_bonus_imba_grimstroke_stroke_of_fate_cast_range"
+		"Ability15"				"special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"
+		"Ability16"				"special_bonus_imba_grimstroke_ink_swell_radius"
+		"Ability17"				"special_bonus_imba_grimstroke_stroke_of_fate_damage"
 		
 		// Removed Talents
+		//"Ability14"				"special_bonus_unique_grimstroke_3"
+		//"Ability15"				"special_bonus_unique_grimstroke_4"
+		//"Ability16"				"special_bonus_unique_grimstroke_1"
+		//"Ability17"				"special_bonus_unique_grimstroke_2"
 	}
 }

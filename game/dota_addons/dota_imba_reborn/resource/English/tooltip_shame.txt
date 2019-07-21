@@ -93,6 +93,7 @@
 "npc_dota_hero_ember_spirit"                                "Ember Spirit (IMBA)"
 "npc_dota_hero_faceless_void"                              "Faceless Void (IMBA)"
 "npc_dota_hero_furion"                                      "Nature's Prophet"
+"npc_dota_hero_grimstroke"                             		"Grimstroke (IMBA)"
 "npc_dota_hero_gyrocopter"                                  "Gyrocopter"
 "npc_dota_hero_huskar"                                      "Huskar (IMBA)"
 "npc_dota_hero_invoker"                                    "Invoker"

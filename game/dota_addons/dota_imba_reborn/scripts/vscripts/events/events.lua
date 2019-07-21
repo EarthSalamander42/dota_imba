@@ -776,24 +776,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_shadow_shaman_3"
 							}
 							upgraded = true
-						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
-							ability_set = {
-								[0] = "imba_grimstroke_dark_artistry",
-								[1] = "imba_grimstroke_ink_creature",
-								[2] = "imba_grimstroke_spirit_walk",
-								[3] = "grimstroke_scepter",
-								[4] = "generic_hidden",
-								[5] = "imba_grimstroke_soul_chain",
-								-- [6] = "special_bonus_hp_300",
-								-- [7] = "special_bonus_exp_boost_30",
-								-- [8] = "special_bonus_cast_range_125",
-								-- [9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
-								-- [10] = "special_bonus_imba_shadow_shaman_shackles_duration",
-								-- [11] = "special_bonus_imba_shadow_shaman_wards_movement",
-								-- [12] = "special_bonus_imba_shadow_shaman_ether_shock_damage",
-								-- [13] = "special_bonus_imba_shadow_shaman_3"
-							}
-							upgraded = true
 						end
 							
 						for ability = 0, 23 do
