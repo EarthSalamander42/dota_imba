@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_zuus"
 	{
-		"override_hero"				"npc_dota_hero_zuus"
+	
 		"IsImba"					"1"
 
 		//Picking Screen
@@ -36,7 +36,10 @@
 		"Ability13"					"special_bonus_armor_12"
 		"Ability14"					"special_bonus_imba_zuus_9"
 		"Ability15"					"special_bonus_cooldown_reduction_15"
-		"Ability16"					"special_bonus_imba_zuus_7"
+		"Ability16"					"special_bonus_cast_range_275"
 		"Ability17"					"special_bonus_imba_zuus_8"
+		
+		// Removed Talents
+		// "Ability16"					"special_bonus_imba_zuus_7"
 	}
 }

@@ -5,7 +5,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_bristleback"
 	{
-		"override_hero"				"npc_dota_hero_bristleback"
+	
 		"IsImba"					"1"
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"

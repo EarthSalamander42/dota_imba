@@ -57,6 +57,9 @@ function item_imba_power_treads_2:OnSpellStart()
 			if mod then caster:RemoveModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i) end
 		end
 		caster:CalculateStatBonus()
+		
+		-- This is in attempts to reserve the Mega Treads item state if dropped and picked back up
+		self.type = self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())
 	end
 end
 
@@ -136,6 +139,11 @@ function modifier_imba_power_treads_2:OnCreated()
 						self:StartIntervalThink(0.2)
 					end)
 			end
+		end
+		
+		-- Get back state of which item was dropped
+		if self:GetAbility() and self:GetAbility().type then
+			self:SetStackCount(self:GetAbility().type)
 		end
 	end
 	if IsClient() then

@@ -23,10 +23,12 @@
 #base heroes/medusa/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
+// #base heroes/phantom_lancer/abilities.txt
 #base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
+#base heroes/spectre/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
 #base heroes/tidehunter/abilities.txt
@@ -213,7 +215,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed"				"2500"
+				"movespeed"				"3000"
 			}
 		}
 	}
@@ -759,7 +761,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"4"
 
@@ -7800,7 +7802,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		//"AbilityChannelTime"			"1.6 1.9 2.2 2.5"	// Logic in Lua to deal with status resistance
-		"AbilityCooldown"				"30 28 26 24"
+		"AbilityCooldown"				"30 27 24 21"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -9422,7 +9424,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"			"150 90 30"
-		"AbilityManaCost"			"200 650 750"
+		"AbilityManaCost"			"200 420 650"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9431,7 +9433,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"600 850 1000"
+				"damage"					"600 800 1000"
 				"LinkedSpecialBonus"		"special_bonus_imba_lion_7"
 			}
 
@@ -14170,6 +14172,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_range"			"1300 1400 1500 1600"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_5"
 			}
 			"05"
 			{
@@ -14762,7 +14765,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 110 140 170"
+		"AbilityManaCost"				"85 105 125 145"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -15156,7 +15159,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 225 255"
+		"AbilityManaCost"					"125 175 225"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -15174,7 +15177,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_drain"				"150 250 310"
+				"health_drain"				"150 250 350"
 			}
 
 			"02"
@@ -17723,7 +17726,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 100 90"		
+		"AbilityCooldown"				"120 105 90"		
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17807,7 +17810,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"75"
+				"pull_speed"			"40"
 			}
 
 			"12"
@@ -18781,7 +18784,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"river_speed"			"700"
+				"river_speed"			"5 20 35 50"
 			}
 			
 			"04"
@@ -18859,6 +18862,27 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction_rain"	"10"
 			}
+			
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_puddle_regen"				"35"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_puddle_armor"				"12"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_puddle_status_resistance"			"40"
+			}
+            "19"
+            {
+                "var_type"					"FIELD_INTEGER"
+                "river_speed_tooltip"		"25 48 66 94"
+            }			
 		}
 	}
 
@@ -18947,7 +18971,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300"
+				"damage"				"80 155 230 305"
 			}
 
 			"08"
@@ -18961,6 +18985,23 @@
 				"var_type"				"FIELD_INTEGER"
 				"royal_break_attacks"	"3 4 5 6"
 			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"royal_break_attacks"	"3 4 5 6"
+			}
+
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"scepter_puddle_duration"		"25"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_puddle_radius"		"550"
+			}			
 		}
 	}
 
@@ -19340,6 +19381,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"value"					"1"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cdr_mult"				"25"
+			}			
 		}
 	}
 
@@ -24822,7 +24868,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"9"
+		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"120 130 140 150"
 
 		// Special
@@ -24945,7 +24991,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"150 175 200 225"
+				"crit_damage"			"150"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -25439,6 +25485,31 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_bounty_hunter_9"	// +X Jinada Gold Steal
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bounty_hunter_jinada"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"90"
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Clinkz's Strafe
@@ -26934,7 +27005,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_damage"						"120"
+				"bonus_damage"						"120 130 140"
 			}
 		}
 	}
@@ -31479,12 +31550,12 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50 45 40"
+		"AbilityCooldown"				"60"
 		"AbilityDuration"				"9.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 150 200"
+		"AbilityManaCost"				"100"
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
@@ -31836,7 +31907,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"1"
+				"value"						"20"
 			}
 		}
 	}
@@ -32725,6 +32796,11 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier_side"	"0.2 0.3 0.4 0.5"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_regen"					"2 3 4 5"
 			}
 		}
 	}
@@ -33646,95 +33722,95 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Spectre's Reality
-	//=================================================================================================================
-	"imba_spectre_reality"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_spectre"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"1"
-
-		// Time 
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
-		}
-	}
-
-	//=================================================================================================================
-	// Spectre's Haunt
-	//=================================================================================================================
-	"imba_spectre_haunt"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_spectre"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"180 150 120"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-		
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"duration" 							"5 6 7"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_dmg_received"				"200"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_dmg_dealt"				"40"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_base_speed"				"400"
-			}
-		}
-	}
+//	//=================================================================================================================
+//	// Spectre's Reality
+//	//=================================================================================================================
+//	"imba_spectre_reality"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"						"ability_lua"
+//		"ScriptFile"				"components/abilities/heroes/hero_spectre"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+//		"FightRecapLevel"				"1"
+//		"MaxLevel"						"1"
+//
+//		// Time 
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCooldown"				"0"
+//		
+//		// Cost
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityManaCost"				"0"
+//		
+//		// Precache
+//		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+//		}
+//	}
+//
+//	//=================================================================================================================
+//	// Spectre's Haunt
+//	//=================================================================================================================
+//	"imba_spectre_haunt"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"						"ability_lua"
+//		"ScriptFile"				"components/abilities/heroes/hero_spectre"
+//		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+//		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+//		"FightRecapLevel"				"1"
+//
+//		// Time
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCooldown"				"180 150 120"
+//		
+//		// Cost
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityManaCost"				"150"
+//		
+//		// Precache
+//		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+//		}
+//		
+//		// Special
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilitySpecial"
+//		{
+//		
+//			"01"
+//			{
+//				"var_type"							"FIELD_FLOAT"
+//				"duration" 							"5 6 7"
+//			}
+//			"02"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_dmg_received"				"200"
+//			}
+//			"03"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_dmg_dealt"				"40"
+//			}
+//			"04"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_base_speed"				"400"
+//			}
+//		}
+//	}
 
 	//=================================================================================================================
 	// Troll Warlord's Berserker's Rage

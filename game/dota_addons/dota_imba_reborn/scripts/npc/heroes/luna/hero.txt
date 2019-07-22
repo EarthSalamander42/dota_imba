@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_luna"
 	{
-		"override_hero"				"npc_dota_hero_luna"
+	
 		"IsImba"					"1"
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
@@ -20,12 +20,12 @@
 		"Ability6"		"imba_luna_eclipse"
 		
 		"Ability10"		"special_bonus_attack_speed_25"
-		"Ability11"		"special_bonus_cast_range_300"
+		"Ability11"		"special_bonus_cast_range_400"
 		"Ability12"		"special_bonus_imba_luna_lucent_beam_cooldown"
 		"Ability13"		"special_bonus_movement_speed_35"
 		"Ability14"		"special_bonus_all_stats_8"
 		"Ability15"		"special_bonus_unique_luna_1"
-		"Ability16"		"special_bonus_lifesteal_25"
+		"Ability16"		"special_bonus_lifesteal_30"
 		"Ability17"		"special_bonus_unique_luna_5"
 		
 		// Removed Talents

@@ -8877,7 +8877,7 @@
 		"ItemAliases"							"divine rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		//"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -8921,7 +8921,7 @@
 		"ItemAliases"							"divine rapier;trinity rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		//"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -8965,7 +8965,7 @@
 		"ItemAliases"							"divine rapier;arcane rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		//"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -9008,7 +9008,7 @@
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		//"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -9051,7 +9051,7 @@
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		//"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -12946,7 +12946,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13097,7 +13097,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13248,7 +13248,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{
@@ -13398,7 +13398,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_duration"		"1.5"
+				"max_duration"		"2.0"
 			}
 			"13"
 			{

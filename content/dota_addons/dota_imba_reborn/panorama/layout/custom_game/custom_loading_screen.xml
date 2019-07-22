@@ -30,9 +30,9 @@
 					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
 						<Label text="Frostrose Workshop" />
 					</Button>
-					<Button id="ImbaLoadingSocialSteamChat" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');">
-						<Label text="Official Steam Chat" />
-					</Button>
+					<!-- <Button id="ImbaLoadingSocialSteamChat" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');"> -->
+						<!-- <Label text="Official Steam Chat" /> -->
+					<!-- </Button> -->
 					<Button id="ImbaLoadingSocialFacebook" class="SocialButtons" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
 						<Label text="Facebook" />
 					</Button>
@@ -72,7 +72,7 @@
 				<Panel class="down">
 					<Label id="loading-title-text-promote" text="#loading_screen_promote"/>
 					<Label id="loading-content-text-promote" html="true" text="#loading_screen_promote_description" />
-					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/dota-imba/dota-imba/dashboard/');">
+					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/frostrose-studio/dota-imba/dashboard/');">
 						<Label id="loading-link-text-promote" text="#loading_screen_promote_button" />
 					</Button>
 				</Panel>

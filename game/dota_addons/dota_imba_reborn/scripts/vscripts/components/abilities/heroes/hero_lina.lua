@@ -106,6 +106,11 @@ end
 
 function imba_lina_dragon_slave:OnSpellStart()
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+	
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
@@ -838,6 +843,7 @@ function modifier_imba_fiery_soul_blaze_burn:OnIntervalThink()
 		if fiery_soul_counter then
 			local damage = fiery_soul_counter:GetStackCount() * self.caster:FindTalentValue("special_bonus_imba_lina_5")
 			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = damage, damage_type = self.ability:GetAbilityDamageType()})
+			self.parent:RemoveModifierByName("modifier_imba_blazing_fire")
 		end
 	end
 end

@@ -810,7 +810,8 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 	EmitSoundOn("Hero_ElderTitan.EarthSplitter.Cast", caster)
 
 	-- Add start particle effect
-	local particle_start_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter.vpcf", PATTACH_ABSORIGIN, caster)
+	local particle_start_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter.vpcf", PATTACH_WORLDORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_start_fx, 0, caster_position)
 	ParticleManager:SetParticleControl(particle_start_fx, 1, crack_ending)
 	ParticleManager:SetParticleControl(particle_start_fx, 3, Vector(0, effect_delay, 0))
 

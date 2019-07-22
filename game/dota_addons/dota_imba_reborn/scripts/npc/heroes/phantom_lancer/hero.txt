@@ -1,0 +1,23 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Phantom Lancer
+	//=================================================================================================================
+	"npc_dota_hero_phantom_lancer"
+	{
+		//
+		// "IsImba"					"0"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		
+		// "Ability4"		"imba_phantom_lancer_spirit_lance_passive"
+		// "Ability6"		"imba_phantom_lancer_juxtapose"
+
+		// Removed Abilities
+		// "Ability6"		"phantom_lancer_juxtapose"
+
+		// Removed Talents
+	}
+}

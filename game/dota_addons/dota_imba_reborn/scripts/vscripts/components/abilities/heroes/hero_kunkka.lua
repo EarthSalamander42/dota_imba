@@ -355,6 +355,13 @@ function imba_kunkka_torrent:OnSpellStart()
 					torrent_height = torrent_height}, target, caster:GetTeamNumber(), false)
 		end
 
+		-- Setting these as variables due to Rubick error stuff
+		local target_team			= self:GetAbilityTargetTeam()
+		local target_type			= self:GetAbilityTargetType()
+		local target_flags			= self:GetAbilityTargetFlags()
+		local damage_type			= self:GetAbilityDamageType()
+		local sec_torrent_radius	= self:GetSpecialValueFor("sec_torrent_radius")
+
 		-- Cast for each count
 		for torrent_count = 0, sec_torrent_count, 1
 		do
@@ -366,7 +373,7 @@ function imba_kunkka_torrent:OnSpellStart()
 						damage_tick = sec_torrent_damage / tick_count
 						stun_duration = sec_torrent_stun
 						torrent_height = torrent_height / 1.5
-						radius = self:GetSpecialValueFor("sec_torrent_radius")
+						radius = sec_torrent_radius
 					end
 
 					-- Destroy initial bubble-particle & create secoundary visible for both teams
@@ -385,7 +392,7 @@ function imba_kunkka_torrent:OnSpellStart()
 					end
 
 					-- Finds affected enemies
-					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, target_team, target_type, target_flags, 0, false)
 
 					-- Torrent response if an enemy was hit 30%
 					if (#enemies > 0) and (caster:GetName() == "npc_dota_hero_kunkka") then
@@ -397,7 +404,7 @@ function imba_kunkka_torrent:OnSpellStart()
 					for _,enemy in pairs(enemies) do
 
 						-- Deals the initial damage
-						ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+						ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = damage_type})
 						local current_ticks = 0
 						local randomness_x = 0
 						local randomness_y = 0
@@ -434,7 +441,7 @@ function imba_kunkka_torrent:OnSpellStart()
 						-- Deals tick damage tick_count times
 						Timers:CreateTimer(function()
 								if current_ticks < tick_count then
-									ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+									ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = damage_type})
 									current_ticks = current_ticks + 1
 									return tick_interval
 								end
@@ -1525,6 +1532,11 @@ end
 
 function imba_kunkka_ghostship:OnSpellStart()
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+	
 		local caster = self:GetCaster()
 		local target = self:GetCursorPosition()
 

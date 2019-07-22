@@ -26,6 +26,11 @@ function imba_sly_king_burrow_blast:GetCastRange(location, target)
 end
 --]]
 function imba_sly_king_burrow_blast:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -688,15 +693,6 @@ function imba_sly_king_winterbringer:OnSpellStart()
 			-- return nil
 		-- end
 	-- end)
-
-	-- Nether Ward handling
-	if string.find(self:GetCaster():GetUnitName(), "npc_imba_pugna_nether_ward") then
-		-- Wait two seconds, then apply it like it had succeeded
-		Timers:CreateTimer(2, function()
-			-- Start pulsing
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {})
-		end)
-	end
 end
 
 ---------------------------------------------------

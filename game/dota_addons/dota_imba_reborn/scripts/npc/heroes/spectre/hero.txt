@@ -1,0 +1,26 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Spectre
+	//=================================================================================================================
+	"npc_dota_hero_spectre"
+	{
+	
+		"IsImba"					"0"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		
+		"Ability4"		"imba_spectre_reality"
+		"Ability5"		"imba_spectre_haunt_single"
+		"Ability6"		"imba_spectre_haunt"
+
+		// Removed Abilities
+		// "Ability4"		"spectre_reality"
+		// "Ability5"		"spectre_haunt_single"
+		// "Ability6"		"spectre_haunt"
+
+		// Removed Talents
+	}
+}

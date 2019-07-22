@@ -691,6 +691,12 @@ function imba_drow_ranger_gust:OnSpellStart()
 	local ability = self
 	local target = self:GetCursorTarget() --selfcast with #1 talent
 	local target_point = self:GetCursorPosition()
+
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if target_point == self:GetCaster():GetAbsOrigin() then
+		target_point = self:GetCursorPosition() + self:GetCaster():GetForwardVector()
+	end
+
 	local modifier_movement = "modifier_imba_gust_movement" --for talent #1
 	local sound_cast = "Hero_DrowRanger.Silence"
 	local particle_gust = "particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
@@ -1464,7 +1470,7 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 					-- Technically this isn't "correct" because the extra damage is supposed to be an "attack" but I can't be assed to figure out how to replicate it properly along with the armor piercing
 					local damageTable = {
 						victim 			= params.target,
-						damage 			= 120,
+						damage 			= self:GetAbility():GetSpecialValueFor("bonus_damage"),
 						damage_type		= DAMAGE_TYPE_PHYSICAL,
 						damage_flags 	= DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
 						attacker 		= self.caster,

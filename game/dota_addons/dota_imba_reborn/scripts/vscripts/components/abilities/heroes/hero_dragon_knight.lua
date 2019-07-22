@@ -30,10 +30,15 @@ function imba_dragon_knight_breathe_fire:GetAbilityTextureName()
 end
 
 function imba_dragon_knight_breathe_fire:OnSpellStart()
-local ability = self
-local target = self:GetCursorTarget()
-local target_point = self:GetCursorPosition()
-local speed = self:GetSpecialValueFor("speed")
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end	
+
+	local ability = self
+	local target = self:GetCursorTarget()
+	local target_point = self:GetCursorPosition()
+	local speed = self:GetSpecialValueFor("speed")
 
 	EmitSoundOn("Hero_DragonKnight.BreathFire", self:GetCaster())
 

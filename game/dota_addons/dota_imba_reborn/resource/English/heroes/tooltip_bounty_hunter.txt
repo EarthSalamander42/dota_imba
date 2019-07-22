@@ -22,7 +22,7 @@
 // Bounty Hunter's Jinada
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada"								"Jinada"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next attack, passively adding a critical strike and maim to it.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.\n<font color='#FF7800'>Critical Strike:</font> Jinada deals critical damage instead of flat bonus damage."
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next hit, dealing bonus damage and stealing some unreliable gold.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.\n<font color='#FF7800'>Critical Strike:</font> Jinada also adds a critical strike and maim, reducing move and attack speed."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note0"							"Activating Jinada requires mana, but the passive does not."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Lore"							"Whispering an enchantment he learned from Soruq to his faithful blades, Gondar targets vital tendons and joints to disable his opponents."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_crit_damage"					"%CRITICAL DAMAGE:"
@@ -43,7 +43,7 @@
 // Bounty Hunter's Shadow Walk
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk"							"Shadow Walk"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Description"				"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains %invis_ms_bonus%%% bonus movement speed while invisible.\n<font color='#FF7800'>Shadow Stalker:</font> Casting Track or Jinada does not dispel invisibility.\n<font color='#FF7800'>Shadow Hunting Shadows:</font> While invisible, Bounty Hunter can detect and reveal invisible units in his vicinity."
+"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Description"				"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains %invis_ms_bonus%%% bonus movement speed while invisible.\n<font color='#FF7800'>Shadow Hunting Shadows:</font> While invisible, Bounty Hunter can detect and reveal invisible units in his vicinity."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Note0"						"Bonus damage is a separate instance and does not multiply Jinada's critical damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Lore"						"The court jesters present during King Goff's assassination can recount no other image than a dancing shadow."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -96,11 +96,12 @@
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_2"				"Tracked enemies grant 450 normal vision around them"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_3"				"Jinada can now be cast on allies"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_3_Description"	"Grants the allied target the ensured Jinada buff for 20 seconds (lasts for one attack)."
-"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_4"				"Shuriken Toss procs Jinada on all targets it bounces on"
-"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_4_Description"	"Multiplies Shuriken Toss's damage by Jinada's critical damage multiplier."
+"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_4"				"Shuriken Toss procs Jinada damage on bounced targets"
+"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_4_Description"	"Adds Jinada's bonus damage multiplier to Shuriken Toss's damage, and multiplies the result by Jinada's critical damage multiplier."
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_5"				"Global Shuriken Toss bounce"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_6"				"Moving constantly in Shadow Walk increases move speed"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_6_Description"	"If movement has occured within 1 second, a stack is gaied, adding to Shadow Sprint's bonus movement speed values. Otherwise, stacks are reset."
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_7"				"Inescapable"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_7_Description"	"Jinada's Shadow Jaunt can be cast on Headhunter's contract targets from 3500 range."
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_8"				"Track is hidden and unpurgable"
+"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_9"				"+90 Jinada Gold Steal"

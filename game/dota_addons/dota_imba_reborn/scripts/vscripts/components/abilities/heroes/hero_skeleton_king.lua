@@ -1857,7 +1857,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 			ResolveNPCPositions(self.parent:GetAbsOrigin(), 164)
 		-- If it is a creep or an illusion, instantly kill it
 		else
-			if (self.parent:IsCreep() and not self.parent:IsAncient()) or self.parent:IsIllusion() then
+			if (self.parent:IsCreep() and not self.parent:IsAncient()) then
 				self.parent:Kill(self.ability, self.caster)
 			end
 		end

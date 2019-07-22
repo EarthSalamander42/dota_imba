@@ -475,23 +475,24 @@ function GameMode:OnEntityKilled(keys)
 	end
 end
 
-function GameMode:OnAbilityUsed(keys)
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local abilityname = keys.abilityname
+-- This block won't work anymore because I changed the "IMBA_ABILITIES_IGNORE_CDR" variable and changed the logic in modifier_frantic
+-- function GameMode:OnAbilityUsed(keys)
+	-- local player = PlayerResource:GetPlayer(keys.PlayerID)
+	-- local abilityname = keys.abilityname
 
-	for _, ability in pairs(IMBA_ABILITIES_IGNORE_CDR) do
-		if ability == abilityname then
-			if player:GetAssignedHero() then
-				if player:GetAssignedHero():FindAbilityByName(ability) then
-					local ab = player:GetAssignedHero():FindAbilityByName(ability)
-					ab:StartCooldown(ab:GetCooldown(ab:GetLevel()))
-				end
-			end
+	-- for _, ability in pairs(IMBA_ABILITIES_IGNORE_CDR) do
+		-- if ability == abilityname then
+			-- if player:GetAssignedHero() then
+				-- if player:GetAssignedHero():FindAbilityByName(ability) then
+					-- local ab = player:GetAssignedHero():FindAbilityByName(ability)
+					-- ab:StartCooldown(ab:GetCooldown(ab:GetLevel()))
+				-- end
+			-- end
 
-			break
-		end
-	end
-end
+			-- break
+		-- end
+	-- end
+-- end
 
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
@@ -830,14 +831,14 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_puck_dream_coil_targets"
 							}
 							upgraded = true
-						elseif string.find(text, 'earthshaker') and hero:GetName() == "npc_dota_hero_earthshaker" then
+						elseif string.find(text, 'spectre') and hero:GetName() == "npc_dota_hero_spectre" then
 							ability_set = {
-								[0] = "earthshaker_fissure_lua",
-								[1] = "earthshaker_enchant_totem_lua",
-								[2] = "earthshaker_aftershock_lua",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_earthshaker_echo_slam",
+								-- [0] = "earthshaker_fissure_lua",
+								-- [1] = "earthshaker_enchant_totem_lua",
+								-- [2] = "earthshaker_aftershock_lua",
+								[3] = "imba_spectre_reality",
+								[4] = "imba_spectre_haunt_single",
+								[5] = "imba_spectre_haunt",
 								-- [6] = "special_bonus_all_stats_8",
 								-- [7] = "special_bonus_cast_range_175",
 								-- [8] = "special_bonus_spell_amplify_15",
@@ -878,28 +879,91 @@ function GameMode:OnPlayerChat(keys)
 				local hero_count = 0
 				local creep_count = 0
 				local thinker_count = 0
+				local wearable_count = 0
 
 				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
-					if string.find(ent:GetName(), "hero") then
+					if string.find(ent:GetDebugName(), "hero") then
 						hero_count = hero_count + 1
 					end
 					
-					if string.find(ent:GetName(), "creep") then
+					if string.find(ent:GetDebugName(), "creep") then
 						creep_count = creep_count + 1
 					end
 					
-					if string.find(ent:GetName(), "thinker") then
+					if string.find(ent:GetDebugName(), "thinker") then
 						thinker_count = thinker_count + 1
 					end
+				
+					if string.find(ent:GetDebugName(), "wearable") then
+						wearable_count = wearable_count + 1
+					end
+					
+					-- print(ent:GetDebugName())
 				end
 				
-				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map.", true)
-				Say(PlayerResource:GetPlayer(keys.playerid), "From these entities, it is estimated that "..hero_count.." of them are heroes, "..creep_count.." of them are creeps, and "..thinker_count.." of them are thinkers.", true)
+				Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
+				Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
 					ParticleManager:DestroyParticle(particle, true)
 					ParticleManager:ReleaseParticleIndex(particle)
+				end
+			-- NUKE THE WORLD
+			-- elseif str == "-destroy" then
+				-- text = string.gsub(text, str, "")
+				-- text = string.gsub(text, " ", "")
+
+				-- for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					-- if string.find(ent:GetDebugName(), text) then
+						-- ent:RemoveSelf()
+					-- end
+				-- end
+			elseif str == "-destroylights" then
+				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					if string.find(ent:GetDebugName(), "env_deferred_light") then
+						ent:RemoveSelf()
+					end
+				end
+			elseif str == "-destroywearables" then
+				for _, ent in pairs(Entities:FindAllInSphere(Vector(0, 0, 0), 25000)) do
+					if string.find(ent:GetDebugName(), "dota_item_wearable") then
+						ent:RemoveSelf()
+					end
+				end
+			-- Input a playerID as a parameter (ex. 0 to 19)
+			elseif str == "-getname" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				text = tonumber(text)
+				
+				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() then
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetPlayerName(text))
+				else
+					DisplayError(caster:GetPlayerID(), "Invalid PlayerID")
+				end
+			elseif str == "-freeze" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				text = tonumber(text)
+				
+				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() and IMBA_PUNISHED then
+					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(text)] = true
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(text).." is now frozen.")
+				else
+					DisplayError(caster:GetPlayerID(), "Invalid Freeze Target")
+				end
+			elseif str == "-unfreeze" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				text = tonumber(text)
+				
+				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() and IMBA_PUNISHED then
+					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(text)] = nil
+					PlayerResource:GetPlayer(text):GetAssignedHero():SetCustomHealthLabel("", 0, 0, 0)
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(text).." is now unfrozen.")
+				else
+					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
 			end
 		end
@@ -916,13 +980,22 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
+		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 or (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
-				local pos = Vector(-6700, -7165, 1509)
+				local pos = GetGroundPosition(Vector(-6700, -7165, 1509), nil)
 				if hero:GetTeamNumber() == 3 then
-					pos = Vector(7168, 5750, 1431)
+					pos = GetGroundPosition(Vector(7168, 6050, 1431), nil)
 				end
-				hero:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(hero, pos, false)
+				
+				hero:Interrupt()
+			end
+			
+			-- The "(IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())])" line is for "banning" units without going into the database (or I guess if it goes down?)
+			if (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
+				local donator_level = 10
+			
+				hero:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
 			end
 		end
 

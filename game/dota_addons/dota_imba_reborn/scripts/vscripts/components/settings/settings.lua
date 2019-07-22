@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.15"
+GAME_VERSION = "7.15c"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -199,7 +199,7 @@ CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
-CUSTOM_GOLD_BONUS["imba_10v10"] = global_gold
+CUSTOM_GOLD_BONUS[Map10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
@@ -212,7 +212,7 @@ CUSTOM_XP_BONUS[Map1v1()] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp
 CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
 CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
-CUSTOM_XP_BONUS["imba_10v10"] = global_xp
+CUSTOM_XP_BONUS[Map10v10()] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS[MapDiretide()] = global_xp
@@ -224,7 +224,7 @@ HERO_STARTING_LEVEL[Map1v1()] = 1
 HERO_STARTING_LEVEL["imba_5v5"] = 5
 HERO_STARTING_LEVEL[MapRanked5v5()] = 5
 HERO_STARTING_LEVEL[MapRanked10v10()] = 5
-HERO_STARTING_LEVEL["imba_10v10"] = 5
+HERO_STARTING_LEVEL[Map10v10()] = 5
 HERO_STARTING_LEVEL[MapTournament()] = 5
 HERO_STARTING_LEVEL[MapOverthrow()] = 5
 HERO_STARTING_LEVEL[MapDiretide()] = 5
@@ -235,7 +235,7 @@ MAX_LEVEL[Map1v1()] = 42
 MAX_LEVEL["imba_5v5"] = 42
 MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
-MAX_LEVEL["imba_10v10"] = 42
+MAX_LEVEL[Map10v10()] = 42
 MAX_LEVEL[MapTournament()] = 42
 MAX_LEVEL[MapOverthrow()] = 42
 MAX_LEVEL[MapDiretide()] = 42
@@ -246,7 +246,7 @@ HERO_INITIAL_GOLD[Map1v1()] = 1400
 HERO_INITIAL_GOLD["imba_5v5"] = 1400
 HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
-HERO_INITIAL_GOLD["imba_10v10"] = 2500
+HERO_INITIAL_GOLD[Map10v10()] = 2500
 HERO_INITIAL_GOLD[MapTournament()] = 1400
 HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 HERO_INITIAL_GOLD[MapDiretide()] = 2500
@@ -257,7 +257,7 @@ GOLD_TICK_TIME[Map1v1()] = 0.6
 GOLD_TICK_TIME["imba_5v5"] = 0.6
 GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
-GOLD_TICK_TIME["imba_10v10"] = 0.4
+GOLD_TICK_TIME[Map10v10()] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
 GOLD_TICK_TIME[MapOverthrow()] = 0.4
 GOLD_TICK_TIME[MapDiretide()] = 0.4
@@ -559,10 +559,6 @@ IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_spirit_breaker"
 }
 
-IMBA_ABILITIES_IGNORE_CDR = {
-	"imba_venomancer_plague_ward"
-}
-
 IMBA_MODIFIER_IGNORE_FRANTIC = {
 	"modifier_legion_commander_duel"
 }
@@ -586,6 +582,10 @@ IMBA_DISARM_IMMUNITY = {
 --	"modifier_bashed",
 }
 
+IMBA_PUNISHED = {
+	[925061111] = false,
+}
+
 IMBA_FIRST_BLOOD = false
 
 -- files requirements
@@ -594,7 +594,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = false -- Should we use vanilla couriers?
+USE_TEAM_COURIER = true -- Should we use vanilla couriers?
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

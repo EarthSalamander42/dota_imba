@@ -502,6 +502,11 @@ end
 -- Shits handled in the phase start because there might not be a remnant to work with
 function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end		
+
 		local pointTarget = self:GetCursorPosition()
 		local target = self:GetCursorTarget()
 		local caster = self:GetCaster()

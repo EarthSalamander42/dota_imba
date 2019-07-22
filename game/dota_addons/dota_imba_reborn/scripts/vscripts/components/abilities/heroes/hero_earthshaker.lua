@@ -25,6 +25,11 @@ end
 --------------------------------------------------------------------------------
 -- Ability Start
 function earthshaker_fissure_lua:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
@@ -640,7 +645,8 @@ function modifier_earthshaker_enchant_totem_lua_leap:OnDestroy( kv )
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_earthshaker_enchant_totem_lua", {duration = self:GetAbility():GetDuration()})
 		
-		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") then
+		-- "However, getting hit by forced movement causes the ability to not apply Aftershock or the totem buff upon landing."
+		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") and not self.aftershock_interrupt then
 			self:GetParent():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
 		end
 	end
@@ -651,6 +657,12 @@ function modifier_earthshaker_enchant_totem_lua_leap:UpdateHorizontalMotion( me,
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnHorizontalMotionInterrupted()
+	if IsServer() and self:GetRemainingTime() > 0 then
+		self.aftershock_interrupt = true
+	end
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
 	if IsServer() then
 		self:Destroy()
 	end

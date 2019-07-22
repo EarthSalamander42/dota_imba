@@ -5,9 +5,15 @@
 
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"			"%BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_puddle_regen"					"SCEPTER HP REGEN:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_puddle_armor"					"SCEPTER BONUS ARMOR:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_puddle_status_resistance"		"%SCEPTER STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_river_speed_tooltip"						"%BONUS MOVE SPEED IN RIVER:"
+
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_radius"					"RIP CURRENT RADIUS:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"					"RIP CURRENT DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"		"While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%."
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"		"Gains 25 HP regen, 12 armor and 40% status resistance while in a puddle or in the river.\n\n<font color='#FF7800'>IMBA:</font> While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%."
 
 "DOTA_Tooltip_modifier_imba_guardian_sprint_buff"							"Guardian Sprint"
 "DOTA_Tooltip_modifier_imba_guardian_sprint_buff_Description"				"Phased and gaining bonus move speed."
@@ -24,7 +30,7 @@
 // Slardar's Slithereen Crush
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush"						"Slithereen Crush"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"			"Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> Enemies hit by Slithereen Crush are affected by Royal Break for %royal_break_duration% seconds, becoming unable to block or evade the next %royal_break_attacks% attacks.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"	"While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%."
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"	"Creates a puddle of water that is considered a river for bonuses.\n\n<font color='#FF7800'>IMBA:</font> While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%."
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"					"A swift crush of might and water breaks even the toughest of defenses."
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"			"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
@@ -32,6 +38,9 @@
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_stun_duration"			"STUN DURATION:"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_scepter_puddle_duration"			"SCEPTER PUDDLE DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_scepter_puddle_duration_radius"		"SCEPTER PUDDLE AOE:"
 
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun"                      "Slithereen Crush"
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun_Description"          "Stunned."
@@ -98,12 +107,13 @@
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_3"                     "+0.25 Forceful Smack duration"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_4"                     "10% Slipstream miss/trigger chance"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_5"                     "Rip Current can always be cast when sprinting"
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_6"                     "Casts a second free Slithereen Crush"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_6"                     "Dual Crusher"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_6_Description"			"Increases cooldown of Slithereen Crush by 50%. Casting Slithereen Crush casts another one after a 1 second delay."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_7"                     "Corrosive Haze applies in AoE for half armor"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_8"                     "-3 armor per physical damage on Corrosive Haze"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_9"						"Bash of the Deep affects buildings"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_10"                    "Depression"
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_10_Description" 		"Rain Cloud (requires Aghanim's Scepter) moves twice as fast, and passively applies Slithereen Crush's slow and Corrosive Haze (at 1/4 the duration)."
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_10_Description" 		"Rain Cloud (requires Aghanim's Scepter) moves twice as fast, and continuously applies Slithereen Crush's slow and Corrosive Haze debuffs for 1 second."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_11"                    "Corrosive Haze Armor Transfer"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_11_Description" 		"Each instance of physical damage on affected enemy heroes temporarily transfers one armor to the caster, up to the original reduction value."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_12"                    "Corrosive Haze Undispellable"

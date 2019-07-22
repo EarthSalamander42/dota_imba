@@ -60,6 +60,11 @@ end
 function base_ability_dual_breath:OnSpellStart()
 
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+	
 		local caster = self:GetCaster()
 
 		caster:EmitSound("Hero_Jakiro.DualBreath")
@@ -484,6 +489,11 @@ end
 
 function imba_jakiro_ice_path:OnSpellStart()
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+	
 		local caster = self:GetCaster()
 		-- Create thinker to apply modifiers to enemies on path
 		CreateModifierThinker( caster, self, "modifier_imba_ice_path_thinker", kv, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
@@ -985,6 +995,11 @@ end
 
 function imba_jakiro_macropyre:OnSpellStart()
 	if IsServer() then
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+	
 		local caster = self:GetCaster()
 		CreateModifierThinker( caster, self, "modifier_imba_macropyre_thinker", {}, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
 	end

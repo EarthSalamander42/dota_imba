@@ -1,0 +1,176 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Ability: Phantom Lancer's Juxtapose
+	//=================================================================================================================
+	"imba_phantom_lancer_juxtapose"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_phantom_lancer"
+		"AbilityTextureName"			"phantom_lancer_juxtapose"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_illusions"			"6 8 10"
+				"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer_3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance_pct"		"40 45 50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_proc_chance_pct"		"8"
+			}			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_duration"			"8"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"-82"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_damage"	"18"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"550"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_total_illusion_damage_in_pct"	"650"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_from_illusion_duration"	"4"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Phantom Lancer's Spirit Lance (passive)
+	//=================================================================================================================
+	"imba_phantom_lancer_spirit_lance_passive"
+	{
+		"BaseClass"						"phantom_lancer_spirit_lance"
+		"AbilityTextureName"			"phantom_lancer_spirit_lance"
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
+		"AbilitySound"					"Hero_PhantomLancer.SpiritLance.Throw"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"				
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lance_damage"				"0"
+				//"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer_2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lance_speed"				"4000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_pct"		"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"8.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"-80"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_damage"	"20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"300 300 300 300"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_total_damage_in_pct"	"400 400 400 400"
+			}			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fake_lance_distance"		"675"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius"		"400"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_jumps"		"5"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lance_speed_bounces"		"4000"
+			}
+		}
+	}
+}

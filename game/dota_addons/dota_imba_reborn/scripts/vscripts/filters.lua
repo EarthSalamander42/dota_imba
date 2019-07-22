@@ -360,8 +360,17 @@ function GameMode:ItemAddedFilter( keys )
 			item.x_pfx = nil
 		end
 		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
-			item:SetPurchaser(nil)
-			item:SetPurchaseTime(0)
+			if item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
+				item.free = true
+			end
+			
+			-- If the rapier is picked up by an enemy after it was dropped, then it is no longer droppable
+			if item.free then
+				item:SetPurchaser(nil)
+				item:SetPurchaseTime(0)
+				item:SetDroppable(false)
+			end
+			
 			local rapier_amount = 0
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0
@@ -449,7 +458,8 @@ function GameMode:OrderFilter( keys )
 	--		end
 	--	end
 
-	if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 then
+	-- The "(IMBA_PUNISHED and unit.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(unit:GetPlayerID())])" line is for "banning" units without going into the database (or I guess if it goes down?)
+	if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 or (IMBA_PUNISHED and unit.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(unit:GetPlayerID())]) then
 		return false
 	end
 
@@ -549,7 +559,7 @@ function GameMode:OrderFilter( keys )
 					return true
 				end
 
-				if (ability and ability.GetName and ability:GetName() ~= "") then
+				if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
 --					print("Valid Ability")
 					if unit:HasAbility(ability:GetName()) then
 						return true

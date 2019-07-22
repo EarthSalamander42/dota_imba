@@ -41,6 +41,31 @@ modifier_imba_medusa_stone_gaze_stiff_joints	= class({})
 -- SPLIT SHOT --
 ----------------
 
+function imba_medusa_split_shot:CastFilterResult()
+	if not IsServer() then return end
+	
+	if #self:GetCaster():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim") >= self:GetSpecialValueFor("enchanted_aim_stack_limit") then
+		return UF_FAIL_CUSTOM
+	else
+		return UF_SUCCESS
+	end
+end
+
+function imba_medusa_split_shot:GetCustomCastError()
+	if not IsServer() then return end
+	
+	return "#dota_hud_error_medusa_enchanted_aim_limit"
+end
+
+function imba_medusa_split_shot:OnAbilityPhaseStart()
+	if #self:GetCaster():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim") >= self:GetSpecialValueFor("enchanted_aim_stack_limit") then
+		DisplayError(self:GetCaster():GetPlayerID(), "Cannot exceed "..self:GetSpecialValueFor("enchanted_aim_stack_limit").." stacks of Enchanted Aim.")
+		return false
+	else
+		return true
+	end
+end
+
 function imba_medusa_split_shot:GetBehavior()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_medusa_split_shot", self:GetCaster()) == 0 then
 		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
@@ -702,8 +727,11 @@ function modifier_imba_medusa_mana_shield_meditate:OnAttackLanded(keys)
 		local meditate_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/meditate.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(meditate_particle)
 		
-		if not keys.attacker:IsIllusion() then		
-			self:GetParent():GiveMana(math.max(keys.damage * self:GetAbility():GetSpecialValueFor("meditate_mana_acquire_pct") * 0.01, 0))
+		if not keys.attacker:IsIllusion() then
+			local enchanted_aim_modifiers	= #self:GetParent():FindAllModifiersByName("modifier_imba_medusa_enchanted_aim")
+			local efficacy_reduction		= (100 - (self:GetAbility():GetSpecialValueFor("meditate_enchanted_reduction") * enchanted_aim_modifiers)) * 0.01
+
+			self:GetParent():GiveMana(keys.damage * self:GetAbility():GetSpecialValueFor("meditate_mana_acquire_pct") * 0.01 * efficacy_reduction)
 		end
 	end
 end
@@ -737,7 +765,7 @@ end
 -- function modifier_imba_medusa_mana_shield:OnIntervalThink()
 	-- if not IsServer() then return end
 	
-	If mana percentage at any frame is lower than the frame before it, set stacks
+	-- -- If mana percentage at any frame is lower than the frame before it, set stacks
 	-- if self:GetParent():GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
 		-- self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self.initiates_shield_mana_conversion * 0.01), self.initiates_shield_max_stacks))
 	-- end
@@ -923,7 +951,7 @@ end
 function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 	if not IsServer() then return end
 	
-	if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.vision_cone * 1000 and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.radius and self:GetParent():IsAlive() then
+	if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.vision_cone * 1000 and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.radius and self:GetCaster():IsAlive() then
 		if self.play_sound and self:GetParent():IsHero() then
 			self:GetParent():EmitSound("Hero_Medusa.StoneGaze.Target")
 			self.play_sound = false
@@ -962,7 +990,7 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 		ParticleManager:SetParticleControlEnt(self.particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 		
 		-- "Stone Gaze ends when Medusa dies . . ."
-		if not self:GetParent():IsAlive() then
+		if not self:GetCaster():IsAlive() then
 			self:StartIntervalThink(-1)
 			self:Destroy()
 		end
