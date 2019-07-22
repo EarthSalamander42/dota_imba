@@ -1110,6 +1110,11 @@ end
 function imba_rattletrap_hookshot:OnSpellStart()
 	if not IsServer() then return end
 
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	self:GetCaster():EmitSound("Hero_Rattletrap.Hookshot.Fire")
 	
 	-- Direction the hook is facing

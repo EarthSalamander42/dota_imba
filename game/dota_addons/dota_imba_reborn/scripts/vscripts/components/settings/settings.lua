@@ -559,10 +559,6 @@ IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_spirit_breaker"
 }
 
-IMBA_ABILITIES_IGNORE_CDR = {
-	"imba_venomancer_plague_ward"
-}
-
 IMBA_MODIFIER_IGNORE_FRANTIC = {
 	"modifier_legion_commander_duel"
 }
@@ -584,6 +580,10 @@ IMBA_DISARM_IMMUNITY = {
 
 --	"modifier_imba_faceless_void_time_lock_stun",
 --	"modifier_bashed",
+}
+
+IMBA_PUNISHED = {
+	[925061111] = false,
 }
 
 IMBA_FIRST_BLOOD = false

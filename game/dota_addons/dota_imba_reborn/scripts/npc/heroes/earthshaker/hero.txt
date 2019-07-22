@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_earthshaker"
 	{
-		"override_hero"				"npc_dota_hero_earthshaker"
+	
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		

@@ -380,6 +380,11 @@ function imba_mirana_arrow:IsHiddenWhenStolen()
 end
 
 function imba_mirana_arrow:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1336,6 +1341,11 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)
+		
+		-- This ability is programmed kind of messed up...but at least have this block so units don't keep getting their attacks interrupted when this activates
+		if self:GetParent():GetAggroTarget() then
+			self:GetParent():MoveToTargetToAttack(self:GetParent():GetAggroTarget())
+		end
 	end
 end
 

@@ -18,6 +18,10 @@
 		//Picking Screen
 		"IsCustom"					"1"
 
+		"Role"			"Carry,Support,Disabler,Jungler,Durable,Initiator"
+		"Rolelevels"	"1,2,1,2,1,1"
+		"Complexity"	"1"
+		
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
 		"ArmorPhysical"				"2.1"									// Physical protection.

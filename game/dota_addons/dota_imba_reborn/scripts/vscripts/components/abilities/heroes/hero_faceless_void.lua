@@ -1026,7 +1026,6 @@ function modifier_imba_faceless_void_chronosphere_aura:IsAura() return true end
 function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() return false end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
-	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return FrameTime() end
 	return 0.1
 end
 
@@ -1164,13 +1163,6 @@ function modifier_imba_faceless_void_chronosphere_handler:OnCreated()
 			self:SetStackCount(2)
 		end
 
-		-- #3 TALENT: Void dodges projectiles in Chrono
-		if self:GetStackCount() == 1 then
-			if self.caster:HasTalent("special_bonus_imba_faceless_void_3") then
-				ProjectileManager:ProjectileDodge(self.parent)
-			end
-		end
-
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -1195,6 +1187,13 @@ function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 						modifier:Destroy()
 					end
 				end
+			end
+		end
+		
+		-- #3 TALENT: Void dodges projectiles in Chrono
+		if self:GetStackCount() == 1 then
+			if self.caster:HasTalent("special_bonus_imba_faceless_void_3") then
+				ProjectileManager:ProjectileDodge(self.parent)
 			end
 		end
 	end

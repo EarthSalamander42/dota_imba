@@ -17,6 +17,10 @@
 		//Picking Screen
 		"IsCustom"					"1"
 
+		"Role"			"Nuker,Disabler,Durable"
+		"Rolelevels"	"3,1,1"
+		"Complexity"	"1"
+
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
 		"ArmorPhysical"				"-1"									// Physical protection.
@@ -96,5 +100,17 @@
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_hell_empress.vsndevts"
+		
+		"AttackSpeedActivityModifiers"
+		{
+			"fast"		"170"
+			"faster"	"275"
+			"fastest"	"350"
+		}
+		"MovementSpeedActivityModifiers"
+		{
+			"walk"		"0"
+			"run"		"395"
+		}
 	}
 }

@@ -1958,17 +1958,20 @@ end
 
 imba_lich_sinister_gaze = class({})
 
+LinkLuaModifier("modifier_imba_lich_sinister_gaze_handler", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lich_sinister_gaze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lich_sinister_gaze_bonus_health", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lich_sinister_gaze:GetIntrinsicModifierName()
+	return "modifier_imba_lich_sinister_gaze_handler"
+end
 
 function imba_lich_sinister_gaze:GetAbilityTextureName()
 	return "lich_sinister_gaze"
 end
 
 function imba_lich_sinister_gaze:GetChannelTime()
-	-- Need to find a way to properly reduce channel bar to match status resistance whilst showing changes on client-side
-	--return self:GetSpecialValueFor("duration") * CustomNetTables:GetTableValue( "status_resistance", string.format("%d", self:GetCursorTarget():GetEntityIndex())).status_resistance / 100
-	return self:GetSpecialValueFor("duration")
+	return self:GetCaster():GetModifierStackCount("modifier_imba_lich_sinister_gaze_handler", self:GetCaster()) * 0.01
 end
 
 function imba_lich_sinister_gaze:CastFilterResultTarget(target)
@@ -2007,8 +2010,8 @@ function imba_lich_sinister_gaze:OnSpellStart()
 	self.caster:EmitSound("Hero_Lich.SinisterGaze.Cast")
 	self.target:EmitSound("Hero_Lich.SinisterGaze.Target")
 
-	self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self.duration})
-	self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self.duration})
+	self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
+	self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
 
 	IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
 
@@ -2098,6 +2101,34 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 
 	if self.target:HasModifier("modifier_imba_lich_sinister_gaze") then
 		self.target:RemoveModifierByName("modifier_imba_lich_sinister_gaze")
+	end
+end
+
+------------------------------------
+-- SINISTER GAZE HANDLER MODIFIER --
+------------------------------------
+
+modifier_imba_lich_sinister_gaze_handler = class({})
+
+function modifier_imba_lich_sinister_gaze_handler:IsHidden()	return true end
+
+function modifier_imba_lich_sinister_gaze_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}
+	
+	return decFuncs
+end
+
+-- Going to use this hacky method to determine channel time on UI
+-- During the brief time before the ability actually casts, record the target's status resistance * 100 into its intrinsic modifier, then use that divided by 100 as the channel time
+function modifier_imba_lich_sinister_gaze_handler:OnAbilityExecuted(keys)
+	if not IsServer() then return end
+	
+	if keys.ability == self:GetAbility() then
+		if keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+			self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()) * 100)
+		else
+			self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration"))
+		end
 	end
 end
 

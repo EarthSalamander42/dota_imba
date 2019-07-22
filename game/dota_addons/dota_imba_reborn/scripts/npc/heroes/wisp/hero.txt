@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_wisp"
 	{
-		"override_hero"				"npc_dota_hero_wisp"
+	
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -26,7 +26,7 @@
 
 		"Ability10"					"special_bonus_attack_damage_50"
 		"Ability11"					"special_bonus_imba_wisp_2"
-		"Ability12"					"special_bonus_imba_wisp_5"
+		"Ability12"					"special_bonus_imba_wisp_11"
 		"Ability13"					"special_bonus_hp_regen_10"
 		"Ability14"					"special_bonus_imba_wisp_4"
 		"Ability15"					"special_bonus_imba_wisp_10"
@@ -36,6 +36,7 @@
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_wisp_3" // Spirits Truesight
 		//"Ability12"					"special_bonus_imba_wisp_1"	// Overcharge Bonus
+		//"Ability12"					"special_bonus_imba_wisp_5" // +X Tether cast range, and max distance
 		//"Ability16"					"special_bonus_imba_wisp_7" // Relocate grants spell immunity
 		// Ability15"					"special_bonus_imba_wisp_8" // Overcharge grants max mana
 	}

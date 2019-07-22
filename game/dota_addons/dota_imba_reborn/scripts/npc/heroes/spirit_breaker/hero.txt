@@ -7,7 +7,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_spirit_breaker"
 	{
-		"override_hero"				"npc_dota_hero_spirit_breaker"
+	
 		"IsImba"					"1"
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"

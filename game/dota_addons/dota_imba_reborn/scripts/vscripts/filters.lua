@@ -360,7 +360,7 @@ function GameMode:ItemAddedFilter( keys )
 			item.x_pfx = nil
 		end
 		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
-			if item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
+			if not item:GetPurchaser() or item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end
 			
@@ -458,7 +458,8 @@ function GameMode:OrderFilter( keys )
 	--		end
 	--	end
 
-	if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 then
+	-- The "(IMBA_PUNISHED and unit.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(unit:GetPlayerID())])" line is for "banning" units without going into the database (or I guess if it goes down?)
+	if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 or (IMBA_PUNISHED and unit.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(unit:GetPlayerID())]) then
 		return false
 	end
 

@@ -955,15 +955,11 @@ imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 	GetAbilityTextureName	= function(self) return "custom/abaddon_over_channel" end,
 })
 
-function imba_abaddon_over_channel:OnSpellStart()
-	if IsServer() then
-		local caster 		= self:GetCaster()
-		local modifier_name = "modifier_over_channel_handler"
-		if not caster:HasModifier(modifier_name) then
-			caster:AddNewModifier(caster, self, modifier_name, {})
-		else
-			caster:RemoveModifierByName("modifier_over_channel_handler")
-		end
+function imba_abaddon_over_channel:OnToggle()
+	if self:GetToggleState() and not self:GetCaster():HasModifier("modifier_over_channel_handler") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_over_channel_handler", {})
+	elseif not self:GetToggleState() and self:GetCaster():HasModifier("modifier_over_channel_handler") then
+		self:GetCaster():RemoveModifierByName("modifier_over_channel_handler")
 	end
 end
 

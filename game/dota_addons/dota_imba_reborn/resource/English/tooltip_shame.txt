@@ -311,6 +311,9 @@
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject"				"Relief Aura Cooldown"
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject_Description"	"Recently dealt damage to an enemy, causing tension. You cannot gain Relief Aura's buff again for a few seconds."
 
+"DOTA_Tooltip_modifier_fountain_passive"								"Fountain"
+"DOTA_Tooltip_modifier_fountain_passive_Description"					"I have no idea what this modifier is for."
+
 //=================================================================================================================
 // Developers
 //=================================================================================================================
@@ -396,6 +399,8 @@
 "DOTA_Tooltip_ability_mars_arena_of_blood_Note0"					"Mars grows to double his size while in the arena. This is primarily for intimidation purposes, and has no other effects."
 
 "DOTA_Tooltip_ability_life_stealer_open_wounds_Note0"							"Open Wounds slows over 8 different steps: 70% / 70% / 60% / 50% / 40% / 30% / 20% / 10%, with the slow decreasing one step per second."
+
+"DOTA_Tooltip_ability_doom_bringer_devour_Description"				"Consumes an enemy or neutral creep, acquiring any special abilities that it possessed.\nIf auto-cast is turned off, Doom will not acquire the consumed creep's abilities."
 
 //=================================================================================================================
 //=================================================================================================================

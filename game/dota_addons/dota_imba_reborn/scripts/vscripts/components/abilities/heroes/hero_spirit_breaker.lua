@@ -61,7 +61,9 @@ function imba_spirit_breaker_charge_of_darkness:GetIntrinsicModifierName()
 end
 
 function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
-	if self:GetCursorTarget():TriggerSpellAbsorb(self) then
+	local target = self:GetCursorTarget()
+
+	if target:TriggerSpellAbsorb(self) then
 		return nil
 	end
 
@@ -75,7 +77,7 @@ function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_spirit_breaker_charge_of_darkness", 
 	{
-		ent_index = self:GetCursorTarget():GetEntityIndex()
+		ent_index = target:GetEntityIndex()
 	})
 	
 	-- ...yeah we're using this to remove the movespeed cap cause all the other built in stuff doesn't work
@@ -1021,6 +1023,8 @@ end
 function imba_spirit_breaker_nether_strike:OnSpellStart()
 	if not IsServer() then return end
 	
+	local target = self:GetCursorTarget()
+	
 	if self.vision_modifier and not self.vision_modifier:IsNull() then
 		self.vision_modifier:Destroy()
 	end
@@ -1029,7 +1033,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		self.energy_modifier:Destroy()
 	end
 	
-	if self:GetCursorTarget():TriggerSpellAbsorb(self) then
+	if target:TriggerSpellAbsorb(self) then
 		return nil
 	end
 	
@@ -1055,7 +1059,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 	local start_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_begin.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 
 	-- "Nether Strike instantly moves Spirit Breaker on the opposite side of the target, 54 range away from it."
-	FindClearSpaceForUnit(self:GetCaster(), self:GetCursorTarget():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (54)), false)
+	FindClearSpaceForUnit(self:GetCaster(), target:GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (54)), false)
 	
 	-- IMBAfication: Warp Beast
 	ProjectileManager:ProjectileDodge(self:GetCaster())
@@ -1072,11 +1076,11 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("bash_radius_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 	if greater_bash_ability and greater_bash_ability:IsTrained() then
-		greater_bash_ability:Bash(self:GetCursorTarget(), self:GetCaster(), true)
+		greater_bash_ability:Bash(target, self:GetCaster(), true)
 	end
 	
 	local damageTable = {
-		victim 			= self:GetCursorTarget(),
+		victim 			= target,
 		damage 			= self:GetSpecialValueFor("damage"),
 		damage_type		= self:GetAbilityDamageType(),
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
@@ -1088,13 +1092,13 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 
 	if self:GetCaster():HasScepter() then
 		for _, enemy in pairs(enemies) do
-			if enemy ~= self:GetCursorTarget() then
+			if enemy ~= target then
 				if greater_bash_ability and greater_bash_ability:IsTrained() then
 					greater_bash_ability:Bash(enemy, self:GetCaster())
 				end
 				
 				local damageTable = {
-					victim 			= self:GetCursorTarget(),
+					victim 			= target,
 					damage 			= self:GetSpecialValueFor("damage"),
 					damage_type		= self:GetAbilityDamageType(),
 					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
@@ -1115,12 +1119,12 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			
 			for _, enemy in pairs(enemies) do
-				if enemy ~= self:GetCursorTarget() and not self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster()) then
+				if enemy ~= target and not target:FindModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster()) then
 					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", {duration = self:GetSpecialValueFor("planeswalker_duration")})
 				end
 			end		
-		elseif self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster()) then
-			self:GetCursorTarget():RemoveModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster())
+		elseif target:FindModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster()) then
+			target:RemoveModifierByNameAndCaster("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", self:GetCaster())
 		end
 		
 		-- Mostly QOL for testing purposes so I don't have to keep refreshing the ability manually

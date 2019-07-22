@@ -54,6 +54,12 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
 	local caster		= self:GetCaster()
 	local ability		= self
 	local target_point  = self:GetCursorPosition()
@@ -989,6 +995,11 @@ function imba_phoenix_sun_ray:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end	
 
 	local caster	= self:GetCaster()
 	local ability	= self

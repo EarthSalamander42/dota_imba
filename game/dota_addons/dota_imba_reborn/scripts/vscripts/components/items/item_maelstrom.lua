@@ -59,10 +59,10 @@ function modifier_item_imba_maelstrom:DeclareFunctions()
 end
 
 function modifier_item_imba_maelstrom:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	if self:GetAbility() then return self:GetAbility():GetSpecialValueFor("bonus_damage") end end
 
 function modifier_item_imba_maelstrom:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_as") end
+	if self:GetAbility() then return self:GetAbility():GetSpecialValueFor("bonus_as") end end
 
 -- On attack landed, roll for proc and apply stacks
 function modifier_item_imba_maelstrom:OnAttackLanded( keys )
@@ -346,16 +346,23 @@ function item_imba_jarnbjorn:GetAbilityTextureName()
 	return "custom/imba_jarnbjorn"
 end
 
+function item_imba_jarnbjorn:GetCooldown(level)
+	if IsClient() then
+		return self.BaseClass.GetCooldown(self, level)
+	elseif self:GetCursorTarget() and (self:GetCursorTarget().CutDown or self:GetCursorTarget():IsOther()) then
+		return self:GetSpecialValueFor("tree_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
-		local tree_cooldown = self:GetSpecialValueFor("tree_cooldown")
 
 		if target.GetUnitName == nil then
 			self:RefundManaCost()
 			target:CutDown(-1)
-			self:EndCooldown()
-			self:StartCooldown(tree_cooldown)
 		else
 			-- Play cast sound
 			target:EmitSound("DOTA_Item.Mjollnir.Activate")

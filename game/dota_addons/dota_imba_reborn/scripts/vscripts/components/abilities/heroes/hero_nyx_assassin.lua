@@ -65,6 +65,11 @@ function imba_nyx_assassin_impale:GetCooldown(level)
 end
 
 function imba_nyx_assassin_impale:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self

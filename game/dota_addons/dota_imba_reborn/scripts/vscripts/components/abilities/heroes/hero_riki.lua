@@ -354,6 +354,11 @@ function imba_riki_blink_strike:OnAbilityPhaseStart()
 			end
 			self.thinker = nil
 		end
+		
+		if hTarget == self:GetCaster() then
+			return false
+		end
+		
 		local jump_interval_frames = self:GetSpecialValueFor("jump_interval_frames")
 		local cast_range = self.BaseClass.GetCastRange(self,hCaster:GetAbsOrigin(),hTarget) + GetCastRangeIncrease(hCaster)
 		local current_distance = CalcDistanceBetweenEntityOBB(hCaster, hTarget)
@@ -589,7 +594,7 @@ end
 -------------------------------------------
 modifier_imba_blink_strike_thinker = modifier_imba_blink_strike_thinker or class({})
 function modifier_imba_blink_strike_thinker:IsDebuff() return false end
-function modifier_imba_blink_strike_thinker:IsHidden() return false end
+function modifier_imba_blink_strike_thinker:IsHidden() return true end
 function modifier_imba_blink_strike_thinker:IsPurgable() return false end
 function modifier_imba_blink_strike_thinker:IsPurgeException() return false end
 function modifier_imba_blink_strike_thinker:IsStunDebuff() return false end
@@ -992,7 +997,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 				end
 
 				-- #8 Talent: Riki gains a chance to attack an opponent's back
-				if parent:HasTalent("special_bonus_imba_riki_8") and back_chance_success then
+				if parent:HasTalent("special_bonus_imba_riki_8") and back_chance_success and target ~= self:GetParent() then
 
 					-- Get the Blink Strike ability for the debuff duration. If it doesn't have it, no debuff for you!
 					blink_strike_ability = parent:FindAbilityByName("imba_riki_blink_strike")

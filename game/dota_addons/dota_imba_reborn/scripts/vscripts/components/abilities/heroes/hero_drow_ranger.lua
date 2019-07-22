@@ -52,7 +52,7 @@ function imba_drow_ranger_frost_arrows:OnSpellStart()
 		-- Force attack the target
 		caster:MoveToTargetToAttack(target)
 
-		-- Replenish mana cost (since it's spent on the OnAttack function)
+		-- Replenish mana cost (since it's spent on the OnAttack function) (note that this basically gives free mana if WTF mode is on and you continuously cancel the cast but I guess that's not a normal issue?...)
 		ability:RefundManaCost()
 	end
 end
@@ -127,7 +127,12 @@ function modifier_imba_frost_arrows_thinker:OnAttackStart(keys)
 			end
 
 			-- If there isn't enough mana to cast a Frost Arrow, assign as a non-frost arrow
-			if self.current_mana < self.mana_cost then
+			-- (This one does not respect mana loss reductions so I'm commenting it out and using the IsFullyCastable function below instead)
+			-- if self.current_mana < self.mana_cost then
+				-- frost_attack = false
+			-- end
+			
+			if not self.ability:IsFullyCastable() then
 				frost_attack = false
 			end
 
@@ -164,7 +169,7 @@ function modifier_imba_frost_arrows_thinker:OnAttack(keys)
 			EmitSoundOn(self.sound_cast, self.caster)
 
 			-- Spend mana
-			self.caster:SpendMana(self.mana_cost, self.ability)
+			self.ability:UseResources(true, false, false)
 		end
 	end
 end
@@ -691,6 +696,12 @@ function imba_drow_ranger_gust:OnSpellStart()
 	local ability = self
 	local target = self:GetCursorTarget() --selfcast with #1 talent
 	local target_point = self:GetCursorPosition()
+
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if target_point == self:GetCaster():GetAbsOrigin() then
+		target_point = self:GetCursorPosition() + self:GetCaster():GetForwardVector()
+	end
+
 	local modifier_movement = "modifier_imba_gust_movement" --for talent #1
 	local sound_cast = "Hero_DrowRanger.Silence"
 	local particle_gust = "particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
