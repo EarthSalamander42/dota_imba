@@ -132,13 +132,13 @@ function imba_grimstroke_dark_artistry:OnSpellStart()
 				["grimstroke_grimstroke_ability3_10"] = 0,
 				["grimstroke_grimstroke_ability3_11"] = 0
 			}
+		end
 
-			for response, timer in pairs(self.responses) do
-				if GameRules:GetDOTATime(true, true) - timer >= 120 then
-					self:GetCaster():EmitSound(response)
-					self.responses[response] = GameRules:GetDOTATime(true, true)
-					break
-				end
+		for response, timer in pairs(self.responses) do
+			if GameRules:GetDOTATime(true, true) - timer >= 120 then
+				self:GetCaster():EmitSound(response)
+				self.responses[response] = GameRules:GetDOTATime(true, true)
+				break
 			end
 		end
 	end
@@ -381,6 +381,34 @@ function imba_grimstroke_ink_creature:OnSpellStart()
 	if target:TriggerSpellAbsorb(self) then return end
 	
 	local vision_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_ink_creature_vision", {})
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_grimstroke" and RollPercentage(50) then
+		if not self.responses then
+			self.responses = 
+			{
+				["grimstroke_grimstroke_ability1_01"] = 0,
+				["grimstroke_grimstroke_ability1_02"] = 0,
+				["grimstroke_grimstroke_ability1_03"] = 0,
+				["grimstroke_grimstroke_ability1_04"] = 0,
+				["grimstroke_grimstroke_ability1_05"] = 0,
+				["grimstroke_grimstroke_ability1_06"] = 0,
+				["grimstroke_grimstroke_ability1_07"] = 0,
+				["grimstroke_grimstroke_ability1_08"] = 0,
+				["grimstroke_grimstroke_ability1_09"] = 0,
+				["grimstroke_grimstroke_ability1_10"] = 0,
+				["grimstroke_grimstroke_ability1_11"] = 0,
+				["grimstroke_grimstroke_ability1_12"] = 0
+			}
+		end
+
+		for response, timer in pairs(self.responses) do
+			if GameRules:GetDOTATime(true, true) - timer >= 120 then
+				self:GetCaster():EmitSound(response)
+				self.responses[response] = GameRules:GetDOTATime(true, true)
+				break
+			end
+		end
+	end
 	
 	-- Need these variables due to using a timer
 	local ability					= self
@@ -1115,7 +1143,11 @@ function imba_grimstroke_ink_gods_incarnation:OnHeroLevelUp()
 end
 
 function imba_grimstroke_ink_gods_incarnation:OnSpellStart()
-	self:GetCaster():EmitSound("grimstroke_takeover_stinger")
+	self:GetCaster():EmitSound("Hero_Grimstroke.Stinger")
+
+	local ink_swell_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_swell_aoe.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControl(ink_swell_particle, 2, Vector(250, 250, 250))
+	ParticleManager:ReleaseParticleIndex(ink_swell_particle)
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_ink_gods_incarnation", {duration = self:GetSpecialValueFor("duration")})
 end
@@ -1123,6 +1155,8 @@ end
 ------------------------------------
 -- INK GOD'S INCARNATION MODIFIER --
 ------------------------------------
+
+function modifier_imba_grimstroke_ink_gods_incarnation:IsPurgable()	return false end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:GetStatusEffectName()
 	return "particles/status_fx/status_effect_phantom_assassin_active_blur.vpcf"
@@ -1145,6 +1179,10 @@ function modifier_imba_grimstroke_ink_gods_incarnation:OnCreated()
 	end
 end
 
+function modifier_imba_grimstroke_ink_gods_incarnation:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_grimstroke_ink_gods_incarnation:OnIntervalThink()
 	if not IsServer() or self:GetRemainingTime() <= 0.1 then return end
 	
@@ -1156,7 +1194,7 @@ end
 function modifier_imba_grimstroke_ink_gods_incarnation:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetCaster():StopSound("grimstroke_takeover_stinger")
+	self:GetCaster():StopSound("Hero_Grimstroke.Stinger")
 end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:DeclareFunctions()
@@ -1451,6 +1489,10 @@ function imba_grimstroke_soul_chain_vanilla_enhancer:GetIntrinsicModifierName()
 	return "modifier_imba_grimstroke_soul_chain_vanilla_enhancer"
 end
 
+function imba_grimstroke_soul_chain_vanilla_enhancer:OnHeroLevelUp()
+	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 6), 3))
+end
+
 ----------------------------------------
 -- SOULBIND VANILLA ENHANCER MODIFIER --
 ----------------------------------------
@@ -1467,15 +1509,14 @@ function modifier_imba_grimstroke_soul_chain_vanilla_enhancer:OnModifierAdded(ke
 	if keys.unit:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) and not keys.unit:FindModifierByNameAndCaster("modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow", self:GetCaster()) and keys.unit:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()):GetElapsedTime() <= FrameTime() then
 		local soulbind_modifier = keys.unit:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster())
 		
-		if self:GetAbility():GetLevel() ~= soulbind_modifier:GetAbility():GetLevel() then
-			self:GetAbility():SetLevel(soulbind_modifier:GetAbility():GetLevel())	
+		-- IMBAfication: Tenacity Nullification
+		-- The if statement here should make it so this only affects the primary target, and not further chained units (cause their duration is based on the primary duration)
+		if keys.unit == soulbind_modifier:GetAbility():GetCursorTarget() then
+			soulbind_modifier:SetDuration(soulbind_modifier:GetAbility():GetSpecialValueFor("chain_duration"), true)
 		end
 		
-		-- IMBAfication: Tenacity Nullification
-		soulbind_modifier:SetDuration(soulbind_modifier:GetAbility():GetSpecialValueFor("chain_duration"), true)
-
 		-- IMBAfication: Historical Viscosity
-		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow", {duration = keys.unit:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()):GetRemainingTime()})
+		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow", {duration = soulbind_modifier:GetRemainingTime()})
 	end
 end
 

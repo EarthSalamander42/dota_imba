@@ -45,6 +45,10 @@ function imba_shadow_shaman_ether_shock:GetIntrinsicModifierName()
 end
 
 function imba_shadow_shaman_ether_shock:OnSpellStart()
+	local target = self:GetCursorTarget()
+	
+	if target:TriggerSpellAbsorb(self) then return end
+
 	self:GetCaster():EmitSound("Hero_ShadowShaman.EtherShock")
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
@@ -54,9 +58,9 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 	-- Helper function in vscripts\internal\util.lua
 	local enemies = FindUnitsInBicycleChain(
 		self:GetCaster():GetTeamNumber(),
-		self:GetCursorTarget():GetAbsOrigin(),
+		target:GetAbsOrigin(),
 		self:GetCaster():GetAbsOrigin(),
-		self:GetCaster():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("end_distance")),
+		self:GetCaster():GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("end_distance")),
 		self:GetSpecialValueFor("start_radius"),
 		self:GetSpecialValueFor("end_radius"),
 		nil,
@@ -104,7 +108,8 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 			-- IMBAfication: Joy Buzzer
 			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = (self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")})
 			
-			if dramatic_passive_modifier and dramatic_passive_modifier.dramatic and dramatic_passive_modifier.dramatic == true then
+			-- IMBAfication: Dramatic Entrance
+			if self == self:GetCaster():FindAbilityByName(self:GetName()) and dramatic_passive_modifier and dramatic_passive_modifier.dramatic and dramatic_passive_modifier.dramatic == true then
 				local dramatic_entrance_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration")})
 				
 				if dramatic_entrance_modifier then
@@ -122,7 +127,9 @@ end
 ----------------------------------
 
 -- This is to manage fog vision tracking for the Dramatic Entrance IMBAfication
-function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()	return true end
+function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()			return true end
+-- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
+function modifier_imba_shadow_shaman_ether_shock_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_ether_shock_handler:OnCreated()
 	self.dramatic_fog_duration	= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration")

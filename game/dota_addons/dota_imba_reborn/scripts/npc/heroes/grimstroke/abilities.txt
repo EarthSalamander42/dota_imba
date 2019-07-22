@@ -527,7 +527,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_grimstroke"
 		
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel"						"1"
+		"MaxLevel"						"3"
 		
 		// Special
 		"AbilitySpecial"
