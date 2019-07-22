@@ -1341,6 +1341,11 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)
+		
+		-- This ability is programmed kind of messed up...but at least have this block so units don't keep getting their attacks interrupted when this activates
+		if self:GetParent():GetAggroTarget() then
+			self:GetParent():MoveToTargetToAttack(self:GetParent():GetAggroTarget())
+		end
 	end
 end
 
