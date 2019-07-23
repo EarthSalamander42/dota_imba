@@ -108,3 +108,5 @@
 * %2fMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% move speed<br>
 * %2fMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% health<br>
 * %2fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regeneration"
+
+"DOTA_Tooltip_modifier_generic_motion_controller"				"Motion Controller"
