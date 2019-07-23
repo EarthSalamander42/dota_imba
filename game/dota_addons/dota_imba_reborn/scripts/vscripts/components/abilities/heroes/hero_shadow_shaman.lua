@@ -132,7 +132,6 @@ function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()			return tru
 function modifier_imba_shadow_shaman_ether_shock_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_ether_shock_handler:OnCreated()
-	self.dramatic_fog_duration	= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration")
 	self.interval 				= 0.1
 
 	if self:GetParent():GetTeamNumber() == DOTA_TEAM_GOODGUYS then
@@ -143,26 +142,25 @@ function modifier_imba_shadow_shaman_ether_shock_handler:OnCreated()
 	
 	if not IsServer() then return end
 	
-	self.counter				= self.dramatic_fog_duration
-	self.dramatic				= true
+	self.counter				= 0
+	self.dramatic				= false
 	
 	self:StartIntervalThink(self.interval)
-end
-
-function modifier_imba_shadow_shaman_ether_shock_handler:OnRefresh()
-	self.dramatic_fog_duration	= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration")
 end
 
 function modifier_imba_shadow_shaman_ether_shock_handler:OnIntervalThink()
 	if not IsServer() then return end
 	
 	if not IsLocationVisible(self.enemy_team, self:GetParent():GetAbsOrigin()) then
-		self.counter = math.min(self.counter + self.interval, self.dramatic_fog_duration)
+		self.counter = math.min(self.counter + self.interval, self:GetAbility():GetSpecialValueFor("dramatic_fog_duration"))
 	else
 		self.counter = math.max(self.counter - self.interval, 0)
 	end
 	
-	if self.counter >= self.dramatic_fog_duration then
+	-- Just testing stuff
+	self:SetStackCount(self.counter * 10)
+	
+	if self.counter >= self:GetAbility():GetSpecialValueFor("dramatic_fog_duration") then
 		self.dramatic	= true
 	elseif self.counter <= 0 then
 		self.dramatic	= false

@@ -66,7 +66,7 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_Description"		"Bound to another unit."
 
 // Vanilla override
-"DOTA_Tooltip_ability_grimstroke_soul_chain_Description"			"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.\n<font color='#FF7800'>Tenacity Nullification:</font> Ignores status resistance.\n<font color='#FF7800'>Historical Viscosity:</font> Reduces movement speed by 15% / 25% / 35%."
+// "DOTA_Tooltip_ability_grimstroke_soul_chain_Description"			"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.\n<font color='#FF7800'>Tenacity Nullification:</font> Ignores status resistance.\n<font color='#FF7800'>Historical Viscosity:</font> Reduces movement speed by 15% / 25% / 35%."
 //
 
 "DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow"				"Soulbind Slow"

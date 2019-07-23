@@ -806,6 +806,28 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_shadow_shaman_3"
 							}
 							upgraded = true
+						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
+							ability_set = {
+								[0] = "imba_grimstroke_dark_artistry",
+								[1] = "imba_grimstroke_ink_creature",
+								[2] = "imba_grimstroke_spirit_walk",
+								[3] = "grimstroke_scepter",
+								[4] = "imba_grimstroke_ink_gods_incarnation",
+								-- [5] = "imba_grimstroke_soul_chain", -- not working do not enable this
+								[6] = "special_bonus_movement_speed_30",
+								[7] = "special_bonus_gold_income_15",
+								[8] = "special_bonus_spell_amplify_12",
+								[9] = "special_bonus_cast_range_125",
+								[10] = "special_bonus_imba_grimstroke_stroke_of_fate_cast_range",
+								[11] = "special_bonus_imba_grimstroke_phantoms_embrace_extra_hits",
+								[12] = "special_bonus_imba_grimstroke_ink_swell_radius",
+								[13] = "special_bonus_imba_grimstroke_stroke_of_fate_damage"
+							}
+							upgraded = true
+							
+							local soulbind_vanilla_enahncer_ability = hero:AddAbility("imba_grimstroke_soul_chain_vanilla_enhancer")
+							soulbind_vanilla_enahncer_ability:SetAbilityIndex(6)
+							soulbind_vanilla_enahncer_ability:OnHeroLevelUp()
 						end
 							
 						for ability = 0, 23 do
