@@ -7,7 +7,7 @@
 
 -- <<insert modifier_name here>> = modifier_generic_motion_controller -- for overrides
 -- OR
--- <<target_unit>>:AddNewModifier(<<caster>>, <<ability>>, "modifier_generic_motion_controller", {distance = <<>> , direction_x = <<>> , direction_y = <<>> , direction_z = <<>> , duration = <<>> , height = <<>> , bStun = <<>> , bGroundStop = <<>> , bDecelerate = <<>> }) -- for standard usage
+-- <<target_unit>>:AddNewModifier(<<caster>>, <<ability>>, "modifier_generic_motion_controller", {distance = <<>> , direction_x = <<>> , direction_y = <<>> , direction_z = <<>> , duration = <<>> , height = <<>> , bGroundStop = <<>> , bDecelerate = <<>> }) -- for standard usage
 
 -- Example:
 -- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", {distance = 1000, direction_x = self:GetCaster():GetForwardVector().x, direction_y = self:GetCaster():GetForwardVector().y, direction_z = self:GetCaster():GetForwardVector().z, duration = 0.6, height = 250 , bGroundStop = true, bDecelerate = true})
