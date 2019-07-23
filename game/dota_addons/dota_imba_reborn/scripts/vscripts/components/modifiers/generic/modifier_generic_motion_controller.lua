@@ -7,7 +7,7 @@
 
 -- <<insert modifier_name here>> = modifier_generic_motion_controller -- for overrides
 -- OR
--- <<target_unit>>:AddNewModifier(<<caster>>, <<ability>>, "modifier_generic_motion_controller", {distance = <<>> , direction_x = <<>> , direction_y = <<>> , direction_z = <<>> , duration = <<>> , height = <<>> , bGroundStop = <<>> , bDecelerate = <<>> }) -- for standard usage
+-- <<target_unit>>:AddNewModifier(<<caster>>, <<ability>>, "modifier_generic_motion_controller", {distance = <<>> , direction_x = <<>> , direction_y = <<>> , direction_z = <<>> , duration = <<>> , height = <<>> , bInterruptible = <<>> , bGroundStop = <<>> , bDecelerate = <<>> }) -- for standard usage
 
 -- Example:
 -- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", {distance = 1000, direction_x = self:GetCaster():GetForwardVector().x, direction_y = self:GetCaster():GetForwardVector().y, direction_z = self:GetCaster():GetForwardVector().z, duration = 0.6, height = 250 , bGroundStop = true, bDecelerate = true})
@@ -31,6 +31,7 @@ function modifier_generic_motion_controller:OnCreated(params)
 	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
 	self.duration		= params.duration
 	self.height			= params.height
+	self.bInterruptible	= params.bInterruptible
 	self.bGroundStop	= params.bGroundStop
 	self.bDecelerate	= params.bDecelerate
 	
@@ -121,6 +122,10 @@ function modifier_generic_motion_controller:UpdateHorizontalMotion(me, dt)
 	else
 		me:SetOrigin( me:GetOrigin() + (self.horizontal_velocity * dt) )
 		self.horizontal_velocity = self.horizontal_velocity + (self.direction * self.horizontal_acceleration * dt)
+	end
+	
+	if self.bInterruptible == 1 and self:GetParent():IsStunned() then
+		self:Destroy()
 	end
 end
 
