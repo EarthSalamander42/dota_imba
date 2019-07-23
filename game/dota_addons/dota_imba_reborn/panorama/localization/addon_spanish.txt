@@ -398,7 +398,7 @@
 	"loading_screen_patreon_modlist6" "Diretide (unofficial)"
 	"loading_screen_promote" "¡Traduce Dota IMBA a tu lenguaje nativo!"
 	"loading_screen_promote_button" "¡Haz click para ser redireccionado a Transifex!"
-	"loading_screen_promote_description" "Puedes traducir Dota IMBA en la página de Transifex, ¡Es facil! solo debes crearte una cuenta y suscribirte a tu lenguaje! ¡Dale un intento! ¡No te olvides de pedir tu Rol en Discord! (Solo en el Discord Inglés)"
+	"loading_screen_promote_description" "You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role! (English Discord only)"
 	"maxenemies_msg" "Can't spawn more enemies"
 	"maxlevel_button" "Level to Max"
 	"maxlevel_msg" "Hero Maxed Out"
