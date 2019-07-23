@@ -243,27 +243,29 @@ function imba_shadow_shaman_voodoo:CastFilterResultTarget(target)
 end
 
 function imba_shadow_shaman_voodoo:OnSpellStart()
-	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+	local target = self:GetCursorTarget()
+
+	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		if not target:TriggerSpellAbsorb(self) then
 			-- "Hex instantly destroys illusions."
-			if self:GetCursorTarget():IsIllusion() then
-				self:GetCursorTarget():Kill(self:GetCursorTarget(), self:GetCaster())
+			if target:IsIllusion() then
+				target:Kill(target, self:GetCaster())
 			else	
 				if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end
 				
-				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
 			end
 		end
 	else
-		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
 	end
 	
-	self:GetCursorTarget():EmitSound("Hero_ShadowShaman.Hex.Target")
-	self:GetCursorTarget():EmitSound("General.Illusion.Create")
+	target:EmitSound("Hero_ShadowShaman.Hex.Target")
+	target:EmitSound("General.Illusion.Create")
 		
-	local chicken_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+	local chicken_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(chicken_particle)
 end
 
@@ -499,8 +501,10 @@ function imba_shadow_shaman_shackles:GetChannelTime()
 end
 
 function imba_shadow_shaman_shackles:OnSpellStart()
-	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
+	local target = self:GetCursorTarget()
+
+	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		if not target:TriggerSpellAbsorb(self) then
 			self:GetCaster():EmitSound("Hero_ShadowShaman.Shackles.Cast")
 			
 			if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
@@ -520,28 +524,32 @@ function imba_shadow_shaman_shackles:OnSpellStart()
 			end
 			
 			-- IMBAfication: Stronghold
-			local enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), self:GetCursorTarget():GetAbsOrigin(), nil, self:GetSpecialValueFor("stronghold_width"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS)
+			local enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("stronghold_width"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS)
 			
 			for _, enemy in pairs(enemies) do
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles", {duration = self:GetChannelTime()})
 			end
 		end
 	else
-		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
 	end
 	
-	self:GetCursorTarget():EmitSound("Hero_ShadowShaman.Shackles.Cast")
+	target:EmitSound("Hero_ShadowShaman.Shackles.Cast")
 end
 
 function imba_shadow_shaman_shackles:OnChannelFinish(bInterrupted)
 	if not IsServer() then return end
 	
-	self:GetCursorTarget():StopSound("Hero_ShadowShaman.Shackles.Cast")
+	local target = self:GetCursorTarget()
+	
+	if target then
+		target:StopSound("Hero_ShadowShaman.Shackles.Cast")
 
-	if self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster()) then
-		self:GetCursorTarget():RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster())
-	elseif self:GetCursorTarget():FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster()) then
-		self:GetCursorTarget():RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster())
+		if target:FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster()) then
+			target:RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles", self:GetCaster())
+		elseif target:FindModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster()) then
+			target:RemoveModifierByNameAndCaster("modifier_imba_shadow_shaman_shackles_chariot", self:GetCaster())
+		end
 	end
 end
 
@@ -549,7 +557,8 @@ end
 -- SHACKLES HANDLER MODIFIER --
 -------------------------------
 
-function modifier_imba_shadow_shaman_shackles_handler:IsHidden()	return true end
+function modifier_imba_shadow_shaman_shackles_handler:IsHidden()		return true end
+function modifier_imba_shadow_shaman_shackles_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_handler:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}
@@ -587,10 +596,10 @@ function modifier_imba_shadow_shaman_shackles:OnCreated()
 	-- Create shackle particle (yeah this is like 100% wrong but I can't be assed to figure out what exactly goes where)
 	local shackle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(shackle_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(shackle_particle, 5, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 	self:AddParticle(shackle_particle, true, false, -1, true, false)
 	
 	self.tick_interval			= self:GetAbility():GetSpecialValueFor("tick_interval")
@@ -663,10 +672,10 @@ function modifier_imba_shadow_shaman_shackles_chariot:OnCreated()
 	-- Create shackle particle (yeah this is like 100% wrong but I can't be assed to figure out what exactly goes where)
 	local shackle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(shackle_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(shackle_particle, 5, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(shackle_particle, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 	self:AddParticle(shackle_particle, true, false, -1, true, false)
 	
 	self.chariot_max_length	= self:GetAbility():GetCastRange(self:GetParent():GetAbsOrigin(), self:GetParent())
