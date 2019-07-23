@@ -103,8 +103,10 @@ function modifier_imba_divine_rapier:OnCreated()
 	end
 end
 
-function modifier_imba_divine_rapier:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+function modifier_imba_divine_rapier:GetModifierPreAttack_BonusDamage(keys)
+	if not keys.target or (IsServer() and (keys.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF) then
+		return self.bonus_damage
+	end
 end
 -------------------------------------------
 --			  TRINITY RAPIER
@@ -148,8 +150,10 @@ function modifier_imba_divine_rapier_2:OnCreated()
 	end
 end
 
-function modifier_imba_divine_rapier_2:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+function modifier_imba_divine_rapier_2:GetModifierPreAttack_BonusDamage(keys)
+	if not keys.target or (IsServer() and (keys.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF) then
+		return self.bonus_damage
+	end
 end
 
 function modifier_imba_divine_rapier_2:GetEffectName()
@@ -312,8 +316,10 @@ function modifier_imba_rapier_cursed:GetModifierSpellAmplify_Percentage()
 	return self.spell_power
 end
 
-function modifier_imba_rapier_cursed:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+function modifier_imba_rapier_cursed:GetModifierPreAttack_BonusDamage(keys)
+	if not keys.target or (IsServer() and (keys.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF) then
+		return self.bonus_damage
+	end
 end
 
 function modifier_imba_rapier_cursed:GetModifierProvidesFOWVision()

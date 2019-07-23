@@ -59,9 +59,17 @@ end
 
 function modifier_imba_ancient_defense:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
 	}
 	return funcs
+end
+
+function modifier_imba_ancient_defense:GetModifierConstantHealthRegen()
+	if (GameRules:GetDOTATime(false, false) / 60) > self:GetAbility():GetSpecialValueFor("min_before_instability") then
+		return ((GameRules:GetDOTATime(false, false) / 60) - self:GetAbility():GetSpecialValueFor("min_before_instability")) * self:GetAbility():GetSpecialValueFor("instability_hp_reduce_per_min") * (-1)
+	end
 end
 
 function modifier_imba_ancient_defense:GetModifierIncomingDamage_Percentage()

@@ -30,7 +30,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900 1000 1100 1200"
+				"radius"					"900"
 				"LinkedSpecialBonus"		"special_bonus_imba_wisp_5"
 			}
 			"02"
@@ -145,6 +145,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"explosion_damage"			"35 60 85 110"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_11"
 			}
 			"04"
 			{
@@ -830,6 +831,34 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cdr_mult"				"1.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Wisp Talent 11: +X Spirits Hero Damage
+	//=================================================================================================================
+	"special_bonus_imba_wisp_11"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"75"
 			}
 		}
 	}

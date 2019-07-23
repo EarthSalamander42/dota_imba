@@ -1,0 +1,78 @@
+// GRIMSTROKE
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry"							"Stroke of Fate"
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_Description"				"Grimstroke paints a path of ink with his brush, damaging and slowing enemies. The damage is increased with each enemy the ink hits.\n<font color='#FF7800'>Your Stain Spreads:</font> The first unit hit by Stroke of Fate (if applicable) launches an additional stroke towards up to %stain_spread_max_units% nearby heroes between %stain_spread_min_distance% and %stain_spread_max_distance% distance, targeting farther units first. Also launches towards Soulbound units within range without counting towards the minimum range or %stain_spread_max_units% hero check.\n<font color='#FF7800'>My Brush Extends:</font> Hitting a real enemy hero or clone with the primary Stroke of Fate permanently increases its cast range by %brush_extend_range_per_hero%.\n<font color='#FF7800'> The Ink Lines Flow:</font> Can be set to auto-cast to allow Grimstroke to teleport to the end of the primary Stroke of Fate's cast location. Casting in this fashion increases Stroke of Fate's cooldown by %ink_lines_cd_increase% seconds."
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_Lore"					"The corruptive force of Grimstroke's ink, drawn from the reservoir of his fallen people, consumes any enemy caught in its path."
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_damage"					"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_bonus_damage_per_target"	"BONUS DMG PER TARGET:"
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_movement_slow_pct"		"%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_slow_duration"			"SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_grimstroke_dark_artistry_range_tooltip"			"RANGE:"
+
+"DOTA_Tooltip_modifier_imba_grimstroke_dark_artistry_extend"				"My Brush Extends"
+"DOTA_Tooltip_modifier_imba_grimstroke_dark_artistry_extend_Description"	"Stroke of Fate cast range increased by stack count."
+
+"DOTA_Tooltip_modifier_imba_grimstroke_dark_artistry_slow"					"Stroke of Fate"
+"DOTA_Tooltip_modifier_imba_grimstroke_dark_artistry_slow_Description"		"This unit has slowed movement speed."
+
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature"							"Phantom's Embrace"
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_Description"				"Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences. If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown.\n\nHero attacks against the phantom count as 3 attacks each.\n<font color='#FF7800'>Sentient Bond: </font>Can properly latch onto and damage invisible units, and will return to the caster if the target becomes invulnerable or spell immune, without being destroyed.\n<font color='#FF7800'>Alter Dye:</font> Can be set to auto-cast to make the phantom mute instead of silence."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_Note0"					"The phantom will return if the target dies during the latch."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_Lore"						"Grimstroke holds no sorrow for the downfall of his people. Only for Yaovhi, she who was most dear to him, does he feel even a semblance of longing."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_latch_duration"			"LATCH DURATION:"
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_dps_tooltip"				"PHANTOM DPS:"
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_pop_damage"				"REND DAMAGE:"
+"DOTA_Tooltip_ability_imba_grimstroke_ink_creature_destroy_attacks"			"ATTACKS TO DESTROY:"
+
+"DOTA_Tooltip_modifier_imba_grimstroke_ink_creature_debuff"				"Phantom's Embrace"
+"DOTA_Tooltip_modifier_imba_grimstroke_ink_creature_debuff_Description"	"A phantom is silencing and damaging this unit."
+
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk"						"Ink Swell"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_Description"			"Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After %buff_duration% seconds it triggers, applying damage and stun in an area around the unit in proportion to how how long ink tendril was near any hero.\n<font color='#FF7800'>A Coat of Armor:</font> Increases armor by %coat_of_armor_amount%.\n<font color='#FF7800'>Unburdened:</font> Provides flying movement. Does not provide flying vision.\n<font color='#FF7800'>Indiscriminate Encasement:</font> Can also be cast on enemies, instead reducing movement speed and armor by similar values. Does not damage the Ink Swelled unit."
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_Lore"			"Now that the rise of the ink tide no longer threatens to overwhelm Grimstroke, its tendrils of power are never far from his hand."
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_buff_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_movespeed_bonus_pct"	"%MOVESPEED BONUS:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_radius"				"RADIUS:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_max_damage"			"MAX DAMAGE:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_max_stun"				"MAX STUN DURATION:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_tick_dps_tooltip"		"INK TENDRILS DPS:"
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_cast_range_tooltip"	"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_grimstroke_spirit_walk_buff"					"Ink Swell"
+"DOTA_Tooltip_modifier_imba_grimstroke_spirit_walk_buff_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%. Gains flying movement if this is a buff, while movement speed and armor values are reversed if this is a debuff."
+
+"DOTA_Tooltip_modifier_imba_grimstroke_spirit_walk_debuff"				"Ink Swell"
+"DOTA_Tooltip_modifier_imba_grimstroke_spirit_walk_debuff_Description"	"This unit is stunned."
+
+"DOTA_Tooltip_ability_imba_grimstroke_ink_gods_incarnation"					"Ink God's Incarnation"
+"DOTA_Tooltip_ability_imba_grimstroke_ink_gods_incarnation_Description"		"Transcends into a demigod state for %duration% seconds, upgrading Stroke of Fate casts to shoot out in four directions, and continuously applying Ink Swell on self for its standard buff duration.\nInk God's Incarnation Ink Swells can charge damage and stun durations off of any enemy instead of only heroes, and can stun all units, but cannot stun the same unit on two consecutive Ink Swells."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_gods_incarnation_Lore"			"Fully embracing the corrupted ink flow once again, Grimstroke reinstates the bond of the Ascended One."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_gods_incarnation_Note0"			"Automatically upgrades at hero levels 6, 12, and 18."
+"DOTA_Tooltip_ability_imba_grimstroke_ink_gods_incarnation_Note1"			"Does not stack with other Ink Swell casts."
+
+"DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation"				"Ink God's Incarnation"
+"DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation_Description"	"Strokes of Fate cast in a cross pattern, and constantly applying Ink Swell on self."
+
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain"					"Soulbind"
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Description"		"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius."
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Note0"				"Blinking or teleporting can break the ink bind."
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Note1"				"Provides vision of both leashed units."
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Lore"				"The Ascended were chosen sons of Ashkavor, granted immense power by the bonds forged between their own souls and those they were charged with protecting. In the years that followed the ruination of his kin, Grimstroke discovered much more sinister applications for the binding rituals..."
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_chain_duration"		"DURATION:"
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_movement_slow"		"%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_chain_latch_radius"	"BIND RADIUS:"
+"DOTA_Tooltip_ability_imba_grimstroke_soul_chain_cast_range_tooltip"	"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_grimstroke_soul_chain"					"Soulbind"
+"DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_Description"		"Bound to another unit."
+
+// Vanilla override
+// "DOTA_Tooltip_ability_grimstroke_soul_chain_Description"			"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.\n<font color='#FF7800'>Tenacity Nullification:</font> Ignores status resistance.\n<font color='#FF7800'>Historical Viscosity:</font> Reduces movement speed by 15% / 25% / 35%."
+//
+
+"DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow"				"Soulbind Slow"
+"DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow_Description"	"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_cast_range"			"+600 Stroke of Fate Cast Range"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"		"+1 Hits to Kill Phantom"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_radius"					"+200 Ink Swell Radius"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_damage"				"+50% Stroke of Fate Damage"

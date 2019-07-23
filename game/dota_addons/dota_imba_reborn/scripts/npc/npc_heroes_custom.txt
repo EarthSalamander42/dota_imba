@@ -4,6 +4,7 @@
 #base heroes/death_prophet/hero.txt
 #base heroes/earthshaker/hero.txt
 #base heroes/enchantress/hero.txt
+//#base heroes/grimstroke/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
 #base heroes/leshrac/hero.txt

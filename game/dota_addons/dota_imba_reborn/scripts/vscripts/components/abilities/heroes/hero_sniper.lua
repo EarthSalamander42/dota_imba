@@ -1260,6 +1260,16 @@ function imba_sniper_assassinate:GetCastPoint()
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
 		cast_point = cast_point + self:GetCaster():FindTalentValue("special_bonus_imba_sniper_6", "cast_point_increase")
+		
+		-- What is this balancing in my IMBA game
+		-- (Make Overcharge not boost this speed cause it gets way too crazy)
+		if IsServer() == true and self:GetCaster():HasModifier("modifier_imba_wisp_overcharge_721_aura") or self:GetCaster():HasModifier("modifier_imba_wisp_overcharge_721") and self:GetCaster().FindModifierByName then
+			local overcharge_modifier = self:GetCaster():FindModifierByName("modifier_imba_wisp_overcharge_721") or self:GetCaster():FindModifierByName("modifier_imba_wisp_overcharge_721_aura")
+		
+			if overcharge_modifier.bonus_cast_speed then
+				cast_point = cast_point / ((100 - math.min(overcharge_modifier.bonus_cast_speed, 99.99)) * 0.01)
+			end
+		end
 	end
 	
 	-- #6 Talent: Assassination's cast point decreases.

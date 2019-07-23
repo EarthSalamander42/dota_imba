@@ -278,8 +278,8 @@
 
 // Cursed Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier_cursed"                  "Cursed Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer.\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
-"DOTA_Tooltip_Ability_item_imba_rapier_cursed_Note0"            "Spell amp stops working when dealing damage to units over 2500 range away from you."
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer.\n<font color='#FF0000'>Bonus damage and spell amp does not work if the target is over 2500 range away.</font>"
+"DOTA_Tooltip_Ability_item_imba_rapier_cursed_Note0"            "Bonus damage and spell amp stops working when dealing damage to units over 2500 range away from you."
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_Lore"            "So powerful, it hasn't ever accepted a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"                 "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_spell_power"                  "%SPELL AMP:"
@@ -391,7 +391,7 @@
 
 // Divine Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier"                        "Divine Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>"
+"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font>"
 "DOTA_Tooltip_ability_item_imba_rapier_Lore"                    "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_bonus_damage"            "+$damage"
 
@@ -1177,7 +1177,7 @@
 // Trinity Rapier
 
 "DOTA_Tooltip_Ability_item_imba_rapier_2"                      "Trinity Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times."
+"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font>"
 "DOTA_Tooltip_ability_item_imba_rapier_2_Lore"                  "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_2_bonus_damage"          "+$damage"
 

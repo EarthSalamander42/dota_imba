@@ -10413,7 +10413,7 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22.0"
+		"AbilityCooldown"				"25.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -13535,7 +13535,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_heal_amount"		"40"
+				"soul_heal_amount"		"50"
 			}			
 			"10"
 			{
@@ -13560,7 +13560,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"enemy_hp_drain"		"5.5"
+				"enemy_hp_drain"		"5"
 			}
 			"15"
 			{
@@ -15992,7 +15992,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"1000"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -16021,12 +16021,12 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22.0"
+		"AbilityCooldown"				"25.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"25"
-		"ItemCost"						"6000"
+		"ItemCost"						"7000"
 		"ItemShopTags"					"damage;armor;int;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bm;bladestorm mail;bladestorm"
@@ -16065,12 +16065,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lacerate_pct"			"50"
+				"lacerate_pct"			"40"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lacerate_duration"		"10"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"justice_pct"			"50"
 			}
 		}
 	}

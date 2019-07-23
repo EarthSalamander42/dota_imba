@@ -159,5 +159,14 @@ function HeroSelection:Attachments(hero)
 		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
 		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
 		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
+	elseif hero:GetUnitName() == "npc_dota_hero_hell_empress" then
+		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/underlord/ti8_underlord_petrifying_smith_weapon_v4/ti8_underlord_petrifying_smith_weapon_v4.vmdl"})
+		hero.weapon:FollowEntity(hero, true)
+		hero.actual_head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/abyssal_underlord/mesh/underlord_head.vmdl"})
+		hero.actual_head:FollowEntity(hero, true)
+		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/underlord/ti8_underlord_petrifying_smith_overlord_head/ti8_underlord_petrifying_smith_overlord_head.vmdl"})
+		hero.head:FollowEntity(hero, true)
+		hero.armor = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/underlord/ti8_underlord_petrifying_smith_overlord_armor/ti8_underlord_petrifying_smith_overlord_armor.vmdl"})
+		hero.armor:FollowEntity(hero, true)
 	end
 end

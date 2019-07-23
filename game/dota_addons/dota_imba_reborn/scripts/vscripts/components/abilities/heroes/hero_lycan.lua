@@ -1156,7 +1156,7 @@ function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
 		end
 		
 		-- Roll a random for critical		
-		if RollPercentage(self.crit_chance) then		
+		if RollPseudoRandom(self.crit_chance, self) then		
 			return self.crit_damage
 		end
 		

@@ -14,6 +14,7 @@
 #base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
+#base heroes/grimstroke/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
 #base heroes/leshrac/abilities.txt
@@ -356,6 +357,17 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"incoming_damage_tooltip"		"25 40"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"min_before_instability"		"42"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"instability_hp_reduce_per_min"		"2"
 			}
 		}
 	}
@@ -7802,7 +7814,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		//"AbilityChannelTime"			"1.6 1.9 2.2 2.5"	// Logic in Lua to deal with status resistance
-		"AbilityCooldown"				"30 27 24 21"
+		"AbilityCooldown"				"24 22 20 18"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11604,7 +11616,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_pct"				"0.5 1.1 1.7 2.3"
+				"damage_pct"				"0.6 1.2 1.8 2.4"
 				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_8"
 				"CalculateSpellDamageTooltip"	"0"
 			}
@@ -19097,8 +19109,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.35"
-		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"700 800 900"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -28952,7 +28964,7 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"base_damage"						"50 140 230 320"
+				"base_damage"						"80 160 240 320"
 			}
 			"02"
 			{
@@ -29129,7 +29141,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
@@ -30238,7 +30250,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"flat_dmg_per_sec"			"80"
+				"flat_dmg_per_sec"			"100"
 			}
 
 			"04"
@@ -39418,7 +39430,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_lua"
 		"AbilityType"				"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
