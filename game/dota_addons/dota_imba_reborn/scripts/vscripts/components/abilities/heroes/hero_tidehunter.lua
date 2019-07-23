@@ -292,6 +292,8 @@ end
 ---------------------------
 
 function modifier_imba_tidehunter_gush_handler:IsHidden() return true end
+-- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
+function modifier_imba_tidehunter_gush_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 ------------------------
 -- GUSH SURF MODIFIER --

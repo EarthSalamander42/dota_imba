@@ -360,7 +360,7 @@ function GameMode:ItemAddedFilter( keys )
 			item.x_pfx = nil
 		end
 		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
-			if item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
+			if not item:GetPurchaser() or item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end
 			

@@ -398,7 +398,7 @@
 	"loading_screen_patreon_modlist6" "Diretide（非官方）"
 	"loading_screen_promote" "将Dota IMBA翻译为中文！"
 	"loading_screen_promote_button" "点击这里跳转至Transifex"
-	"loading_screen_promote_description" "你可以在Transifex网站上进行Dota Imba的翻译。注册并加入Imba翻译团队，每个人的贡献都会使Dota Imba变的更好。（不要忘记加入discord一起讨论）"
+	"loading_screen_promote_description" "You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role! (English Discord only)"
 	"maxenemies_msg" "无法生成更多的敌方英雄"
 	"maxlevel_button" "升至满级"
 	"maxlevel_msg" "英雄满级"

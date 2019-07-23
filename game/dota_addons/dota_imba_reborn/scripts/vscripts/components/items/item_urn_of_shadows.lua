@@ -42,9 +42,9 @@ function item_imba_urn_of_shadows:CastFilterResultTarget(target)
 end
 
 function item_imba_urn_of_shadows:OnSpellStart()
-	if not IsServer() then
-		return nil
-	end
+	-- This is to prevent Ogre Magi's vanilla Multicast from working with vessel
+	if self:GetPurchaseTime() == -1 then return end
+	
 	-- Particles + Modifier names--
 	local urn_particle = "particles/items2_fx/urn_of_shadows.vpcf"
 	local heal_modifier = "modifier_imba_urn_of_shadows_active_ally"

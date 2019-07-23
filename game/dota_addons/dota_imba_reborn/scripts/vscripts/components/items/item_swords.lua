@@ -123,7 +123,7 @@ function item_imba_heavens_halberd:GetIntrinsicModifierName()
 end
 
 function item_imba_heavens_halberd:OnSpellStart(keys)
-	if IsServer() then
+	if IsServer() and not self:GetCursorTarget():TriggerSpellAbsorb(self) then
 
 		-- Parameters
 		local caster = self:GetCaster()

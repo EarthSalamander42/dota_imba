@@ -142,7 +142,7 @@ function modifier_imba_skull_basher_unique:OnAttack(keys)
 			end
 
 			-- If the target is a building, do nothing
-			if target:IsBuilding() then
+			if target:IsBuilding() or target:IsOther() then
 				return nil
 			end
 			

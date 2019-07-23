@@ -23,6 +23,9 @@ function item_imba_spirit_vessel:GetIntrinsicModifierName()
 end
 
 function item_imba_spirit_vessel:OnSpellStart()
+	-- This is to prevent Ogre Magi's vanilla Multicast from working with vessel
+	if self:GetPurchaseTime() == -1 then return end
+
 	self.caster		= self:GetCaster()
 	
 	-- AbilitySpecials
@@ -46,8 +49,6 @@ function item_imba_spirit_vessel:OnSpellStart()
 	-- if self:GetLevel() >= 2 then
 
 	-- end
-
-	if not IsServer() then return end
 	
 	-- Don't reduce charges in WTF mode (there might be some edge case where some other modifier immediately reduces this item's CD to 0 in which case it also won't lose charges but that will be addressed if it ever comes...maybe.
 	if self:GetCooldownTimeRemaining() > 0 then
