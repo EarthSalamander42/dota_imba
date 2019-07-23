@@ -1096,6 +1096,8 @@ end
 modifier_imba_pudge_dismember_handler	= class({})
 
 function modifier_imba_pudge_dismember_handler:IsHidden()	return true end
+-- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
+function modifier_imba_pudge_dismember_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_pudge_dismember_handler:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}
@@ -1131,7 +1133,7 @@ function modifier_imba_dismember:OnCreated()
 
 	if IsServer() then
 		-- Add the pull towards modifier
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {duration = self:GetAbility():GetChannelTime()})
 	
 		self:GetParent():StartGesture(ACT_DOTA_DISABLED)
 	end

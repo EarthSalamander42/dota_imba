@@ -367,7 +367,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"instability_hp_reduce_per_min"		"3"
+				"instability_hp_reduce_per_min"		"2"
 			}
 		}
 	}
