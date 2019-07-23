@@ -15,7 +15,7 @@
 
 // Witch Doctor's Voodoo Restoration
 "DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration"            "Voodoo Restoration"
-"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_Description"             "Witch Doctor focuses his magic to heal nearby allied units.\n<font color='#FF7800'>Witch PhD:</font> Healing per second is increased by a percantage of Witch Doctor's intelligence.\n<font color='#FF7800'>Feelsgoodman:</font> The heal is also amplified by spell amp.\n<font color='#FF7800'>Practiced Malpractice:</font>  After being continuously healed for %cleanse_interval% seconds, allies will have a basic dispel applied to them."
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_Description"             "Witch Doctor focuses his magic to heal nearby allied units.\n<font color='#FF7800'>Witch PhD:</font> Healing per second is increased by a percantage of Witch Doctor's intelligence.\n<font color='#FF7800'>FeelsGoodMan:</font> The total heal is also amplified by %heal_spell_amp_pct%%% of Witch Doctor's spell amplification value.\n<font color='#FF7800'>Practiced Malpractice:</font>  After being continuously healed for %cleanse_interval% seconds, allies will have a basic dispel applied to them."
 "DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_note0"                   "Does not interrupt channeling spells upon toggling."
 "DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_note1"                   "The heal is provided by an aura. Its buff lingers for 0.5 seconds."
 "DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_Lore"                    "Zharvakko's hocus pocus is not limited only hexing his opponents and is quite adept at curing ailments."
