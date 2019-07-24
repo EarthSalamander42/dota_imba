@@ -992,7 +992,7 @@ end
 function modifier_imba_mass_serpent_ward:OnDeath(keys)
 	if not IsServer() then return end
 	
-	if keys.attacker == self:GetParent() and self:GetAbility() and self:GetAbility():GetAutoCastState() then
+	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() then
 		
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
