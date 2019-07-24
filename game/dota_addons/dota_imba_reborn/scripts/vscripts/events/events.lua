@@ -1060,7 +1060,7 @@ function GameMode:OnThink()
 	local entities = Entities:FindAllInSphere(GetGroundPosition(Vector(0, 0, 0), nil), 25000)
 
 	for _, entity in pairs(entities) do
-		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 then
+		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 and entity:GetHealth() <= 0 then
 			entity:RemoveSelf()
 		end
 	end
