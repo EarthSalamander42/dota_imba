@@ -22,6 +22,7 @@
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/medusa/abilities.txt
+#base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
 // #base heroes/phantom_lancer/abilities.txt

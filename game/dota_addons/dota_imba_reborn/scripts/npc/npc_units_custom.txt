@@ -1,6 +1,7 @@
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
 #base custom_heroes/malfurion/units.txt
+#base custom_heroes/nian/hero.txt
 #base custom_heroes/sohei/hero.txt
 #base custom_heroes/vardor/hero.txt
 #base custom_heroes/vardor/units.txt

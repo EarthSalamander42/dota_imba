@@ -1,0 +1,2 @@
+"npc_dota_hero_nian"			"Nian"
+"npc_dota_hero_nian_hype"		""

@@ -1,0 +1,106 @@
+"DOTAHeroes"
+{
+	//=================================================================================
+	// HERO: Nian
+	//=================================================================================
+	"npc_dota_hero_nian"
+	{
+		// General
+		//
+		"BaseClass"					"npc_dota_hero_mirana"	// Class of entity of link to.
+		"HeroID"					"125"
+		"Model"						"models/creeps/nian/nian_creep.vmdl"	// Model.
+		"SoundSet"					"cny_beast"
+		"MinimapIcon"				"minimap_nian"
+		"MinimapIconSize"			"500"
+		"ModelScale" 				"0.4"
+	
+		//Picking Screen
+		"IsCustom"					"1"
+
+		"Role"			"Carry,Nuker,Disabler,Durable,Escape,Initiator"
+		"Rolelevels"	"1,3,2,1,2,2"
+		"Complexity"	"2"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"imba_spirit_breaker_charge_of_darkness"			// Ability 1
+		"Ability2"					"imba_spirit_breaker_bulldoze"			// Ability 2
+		"Ability3"					"imba_spirit_breaker_greater_bash"			// Ability 3.
+		"Ability4"					"generic_hidden"			// Ability 4.
+		"Ability5"					"generic_hidden"			// Ability 5.
+		"Ability6"					"imba_spirit_breaker_nether_strike"			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+		
+		"Ability10"					"special_bonus_strength_20"
+		"Ability11"					"special_bonus_strength_20"
+		"Ability12"					"special_bonus_strength_20"
+		"Ability13"					"special_bonus_strength_20"
+		"Ability14"					"special_bonus_strength_20"
+		"Ability15"					"special_bonus_strength_20"
+		"Ability16"					"special_bonus_strength_20"
+		"Ability17"					"special_bonus_strength_20"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"			// Physical protection.
+		"MagicalResistance"				"25"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"		// Damage range min.
+		"AttackDamageMax"			"30"		// Damage range max.	
+		"AttackRate"				"1.5"		// Speed of attack.
+		"AttackAnimationPoint"		"0.3"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"175"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"		"24"			// Base strength
+		"AttributeStrengthGain"		"2.4"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"24"			// Base intelligence
+		"AttributeIntelligenceGain"	"2.4"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"24"			// Base agility
+		"AttributeAgilityGain"		"2.4"			// Agility bonus per level.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"300"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"		// Base health.
+		"StatusHealthRegen"			"5.0"			// Health regeneration rate.
+		"StatusMana"				"75"		// Base mana.
+		"StatusManaRegen"			"1.0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+
+		//----------------------------------------------------------------
+		"particle_folder"				"particles/units/heroes/hero_chen"
+
+		// Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+	}
+}

@@ -27,6 +27,7 @@
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
+#base custom_heroes/nian/hero.txt
 #base custom_heroes/sohei/hero.txt
 
 "DOTAHeroes"
@@ -2384,5 +2385,5 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability4"		"imba_mars_arena_of_blood_enhance"
-	}
+	}		
 }
