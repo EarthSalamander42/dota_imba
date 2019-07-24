@@ -379,6 +379,16 @@ function imba_chen_holy_persuasion:OnUpgrade()
 	end
 end
 
+-- function imba_chen_holy_persuasion:OnOwnerDied()
+	-- for ability = 0, 23 do
+		-- if self:GetCaster():GetAbilityByIndex(ability) and self:GetCaster():GetAbilityByIndex(ability).immortalized == true then
+			-- self:GetCaster():RemoveAbility(self:GetCaster():GetAbilityByIndex(ability):GetName())
+		-- end
+	-- end
+	
+	-- self.auras = {}
+-- end
+
 function imba_chen_holy_persuasion:OnSpellStart()
 	if not IsServer() then return end
 	
@@ -390,9 +400,7 @@ function imba_chen_holy_persuasion:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(weapon_particle)
 	
 	-- Enemy logic
-	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-	-- if (not target:IsConsideredHero() and not target:IsRoshan() then	
-		
+	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then			
 		-- Play the standard Holy Persuasion sounds
 		self:GetCaster():EmitSound("Hero_Chen.HolyPersuasionCast")
 		target:EmitSound("Hero_Chen.HolyPersuasionEnemy")
@@ -437,7 +445,7 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		target:SetOwner(self:GetCaster())
 		target:SetTeam(self:GetCaster():GetTeam())
 		target:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
-		
+	
 		-- Base ability logic
 		if not self:GetAutoCastState() then
 			-- Add the persuasion modifiers (assign the creep as a variable to the caster's own tracking modifier to handle deaths/max count)
@@ -489,6 +497,33 @@ function imba_chen_holy_persuasion:OnSpellStart()
 			end
 		else
 			-- IMBAfication: Immortalized
+			-- if not self.auras then
+				-- self.auras = {}
+			-- end
+			
+			-- for ability = 0, 23 do
+				-- if target:GetAbilityByIndex(ability) and target:GetAbilityByIndex(ability):GetIntrinsicModifierName() and target:FindModifierByNameAndCaster(target:GetAbilityByIndex(ability):GetIntrinsicModifierName(), target) and string.find(target:FindModifierByNameAndCaster(target:GetAbilityByIndex(ability):GetIntrinsicModifierName(), target):GetName(), "aura") then
+					-- if #self.auras >= self:GetTalentSpecialValueFor("immortalize_max_units") then
+						-- for index = 1, #self.auras do
+							-- if not self.auras[index]:IsNull() then
+								-- self:GetCaster():RemoveAbility(self.auras[index]:GetName())
+								-- table.remove(self.auras, index)
+								-- break
+							-- end
+						-- end
+					-- end
+				
+					-- local aura_ability = self:GetCaster():AddAbility(target:GetAbilityByIndex(ability):GetName())
+					-- aura_ability:SetLevel(target:GetAbilityByIndex(ability):GetLevel())
+					-- self:GetCaster():FindModifierByNameAndCaster(aura_ability:GetIntrinsicModifierName(), self:GetCaster()):ForceRefresh()
+					-- aura_ability.immortalized = true
+					-- table.insert(self.auras, aura_ability)
+				-- end
+			-- end
+			
+			-- target:ForceKill(false)
+			
+			-- Sigh...this one was cool but it's potentially too laggy so I tried the basic one above that just adds auras and it doesn't even work properly
 			
 			-- Add the immortalized modifiers (assign the creep as a variable to the caster's own tracking modifier to handle deaths/max count)
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_immortalized", {})

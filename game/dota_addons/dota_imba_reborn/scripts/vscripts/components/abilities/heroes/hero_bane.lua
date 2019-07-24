@@ -1127,6 +1127,11 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 				end
 			end
 		end
+		
+		-- Stop channeling if the modifier doesn't exist anymore early (aka from dispels)
+		if ability:IsChanneling() and parent == ability:GetCursorTarget() then
+			caster:Interrupt()
+		end
 	end
 end
 

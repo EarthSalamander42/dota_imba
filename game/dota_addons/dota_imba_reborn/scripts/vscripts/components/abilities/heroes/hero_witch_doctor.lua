@@ -446,8 +446,6 @@ function modifier_imba_voodoo_restoration_heal:OnCreated()
 		self.interval = self:GetAbility():GetSpecialValueFor("heal_interval")
 		self:StartIntervalThink( self.interval )
 	end
-	
-	self:GetParent():SetHealth(1)
 end
 
 function modifier_imba_voodoo_restoration_heal:OnIntervalThink()
