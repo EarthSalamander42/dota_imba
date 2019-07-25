@@ -842,8 +842,6 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnCreated()
 	if not IsServer() then return end
 	
 	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetAbility() and self:GetParent():IsAlive() and self:GetCaster():IsAlive() then
-		--self:GetParent():MoveToNPC(self:GetCaster())
-		
 		-- If the initial immortalize vector for the ability hasn't been set yet, do so now (starts North-East)
 		if not self:GetAbility().immortalize_vector then
 			self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, 45, 0), Vector(self.distance * 2, 0, 0))
@@ -853,29 +851,37 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnCreated()
 		self.immortalize_vector	= self:GetAbility().immortalize_vector
 		
 		self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
-		self:GetParent():SetForwardVector(self.immortalize_vector)
-		self:GetParent():Stop()
-
+		self:GetParent():MoveToNPC(self:GetCaster())
+		
 		-- Rotate the immortalize vector 90 degrees clockwise to use for the next unit that gets ported
 		self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, -90, 0), self:GetAbility().immortalize_vector)
 		
-		self:StartIntervalThink(FrameTime())
+		-- self:GetParent():SetForwardVector(self.immortalize_vector)
+		-- self:GetParent():Stop()
+		-- self:StartIntervalThink(FrameTime())
+		self:StartIntervalThink(0.1)
 	else
 		self:GetParent():ForceKill(false)
 	end
 end
 
+-- function modifier_imba_chen_holy_persuasion_immortalized:OnIntervalThink()
+	-- if not IsServer() then return end
+	
+	-- if self:GetCaster() and not self:GetCaster():IsNull() and self:GetAbility() and self:GetParent():IsAlive() and self:GetCaster():IsAlive() then
+		-- self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+		-- self:GetParent():SetForwardVector(self.immortalize_vector)
+	-- else
+		-- self:GetParent():ForceKill(false)
+		-- self:StartIntervalThink(-1)
+		-- self:Destroy()
+	-- end
+-- end
+
 function modifier_imba_chen_holy_persuasion_immortalized:OnIntervalThink()
 	if not IsServer() then return end
 	
-	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetAbility() and self:GetParent():IsAlive() and self:GetCaster():IsAlive() then
-		self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
-		self:GetParent():SetForwardVector(self.immortalize_vector)
-	else
-		self:GetParent():ForceKill(false)
-		self:StartIntervalThink(-1)
-		self:Destroy()
-	end
+	self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
 end
 
 -- Perhaps a bit overkill?
@@ -908,8 +914,8 @@ end
 function modifier_imba_chen_holy_persuasion_immortalized:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
-		-- MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		-- MODIFIER_PROPERTY_MODEL_SCALE,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_MODEL_SCALE,
 		
 		MODIFIER_EVENT_ON_DEATH
     }
@@ -921,13 +927,13 @@ function modifier_imba_chen_holy_persuasion_immortalized:GetBonusVisionPercentag
 	return -100
 end
 
--- function modifier_imba_chen_holy_persuasion_immortalized:GetModifierMoveSpeed_Absolute()
-	-- return 10000
--- end
+function modifier_imba_chen_holy_persuasion_immortalized:GetModifierMoveSpeed_Absolute()
+	return 10000
+end
 
--- function modifier_imba_chen_holy_persuasion_immortalized:GetModifierModelScale()
-	-- return -20
--- end
+function modifier_imba_chen_holy_persuasion_immortalized:GetModifierModelScale()
+	return -20
+end
 
 -- If the immortalized creep dies (how, I don't know) or the caster dies, remove the relevant modifier from the caster as well (also make sure the creep dies)
 function modifier_imba_chen_holy_persuasion_immortalized:OnDeath(keys)
