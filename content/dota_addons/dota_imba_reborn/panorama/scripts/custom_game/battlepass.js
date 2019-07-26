@@ -18,9 +18,9 @@ var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"
 var api = {
 	base : "http://api.dota2imba.fr/",
 	urls : {
-		statues : "imba/statues",
 		modifyCompanion : "imba/modify-companion",
 		modifyStatue : "imba/modify-statue",
+		modifyEmblem : "imba/modify-emblem",
 //		rankingsImr5v5 : "imba/meta/rankings/imr-5v5",
 //		rankingsImr10v10 : "imba/meta/rankings/imr-10v10",
 		rankingsXp : "website/statistics/ranking/xp",
@@ -51,25 +51,6 @@ var api = {
 			}
 		});
 	},
-	loadStatues : function(callback) {
-		$.AsyncWebRequest(api.base + api.urls.statues, {
-			type : "GET",
-			dataType : "json",
-			timeout : 5000,
-			headers : {'X-Dota-Server-Key' : secret_key},
-			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.ingame_statues) {
-//					$.Msg("Error Loading Statues! " + JSON.stringify(obj.message));
-				} else {
-//					$.Msg("Loaded " + obj.data.ingame_statues.length + " statues.");
-					callback(obj.data.ingame_statues);
-				}
-			},
-			error : function(err) {
-//				$.Msg("Error Loading Statues! " + JSON.stringify(err));
-			}
-		});
-	},
 	updateStatue : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyStatue, {
 			type : "POST",
@@ -88,6 +69,28 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error updating statue " + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+	updateEmblem : function(data, success_callback, error_callback) {
+		$.AsyncWebRequest(api.base + api.urls.modifyEmblem, {
+			type : "POST",
+			dataType : "json",
+			data : data,
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error) {
+					$.Msg("Error updating emblem");
+					error_callback();
+				} else {
+					$.Msg("Updated emblem");
+					success_callback();
+				}
+			},
+			error : function(err) {
+				$.Msg("Error updating emblem " + JSON.stringify(err));
 				error_callback();
 			}
 		});
@@ -238,8 +241,8 @@ function RefreshBattlepass(bRewardsDisabled) {
 		e.DeleteAsync(0);
 	});
 
-	var donator_childrens = $("#StatueTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
-	donator_childrens.forEach(function(e) {
+	var emblem_childrens = $("#EmblemTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
+	emblem_childrens.forEach(function(e) {
 		e.DeleteAsync(0);
 	});
 
@@ -281,9 +284,11 @@ function SwitchDonatorWrapper(type) {
 //	$("#PatreonTableWrapper").style.visibility = "collapse";
 	$("#CompanionTableWrapper").style.visibility = "collapse";
 	$("#StatueTableWrapper").style.visibility = "collapse";
+	$("#EmblemTableWrapper").style.visibility = "collapse";
 //	$("#PatreonTabButton").RemoveClass('active');
 	$("#CompanionTabButton").RemoveClass('active');
 	$("#StatueTabButton").RemoveClass('active');
+	$("#EmblemTabButton").RemoveClass('active');
 
 	$("#" + type + "TableWrapper").style.visibility = "visible";
 	$("#" + type + "TabButton").AddClass('active');
@@ -296,11 +301,6 @@ var top_xp = [];
 function Battlepass(retainSubTab, bRewardsDisabled) {
 	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
-
-	api.loadStatues(function(statues) {
-//		$.Msg("Statues and Battlepass information available");
-		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue", retainSubTab);
-	});
 
 	api.getTopPlayerXP(function(players) {
 		for (player in players) {
@@ -315,6 +315,14 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
 	if (companions != undefined)
 		GenerateCompanionPanel(companions["1"], Players.GetLocalPlayer(), "Companion", retainSubTab);
+
+	var statues = CustomNetTables.GetTableValue("battlepass", "statues");
+	if (statues != undefined)
+		GenerateCompanionPanel(statues["1"], Players.GetLocalPlayer(), "Statue", retainSubTab);
+
+	var emblems = CustomNetTables.GetTableValue("battlepass", "emblems");
+	if (emblems != undefined)
+		GenerateCompanionPanel(emblems["1"], Players.GetLocalPlayer(), "Emblem", retainSubTab);
 
 	SetupPanel();
 }
@@ -394,6 +402,49 @@ function SetStatue(statue, name, id) {
 		GameEvents.SendCustomGameEventToServer("change_statue", {
 			ID : Players.GetLocalPlayer(),
 			unit : statue
+		});
+		$.Schedule(6.0, function() {
+			$("#CompanionNotification").RemoveClass("success");
+			companion_changed = false;
+		});
+	}, function() {
+		$("#CompanionNotification").AddClass("failure");
+		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+		$.Schedule(6.0, function() {
+			$("#CompanionNotification").RemoveClass("failure");
+			companion_changed = false;
+		});
+	});
+
+	companion_changed = true;
+}
+
+function SetEmblem(emblem, name, id) {
+	if (companion_changed === true) {
+//		$.Msg("SLOW DOWN BUDDY!");
+		return;
+	}
+
+	if ($("#CompanionNotification").BHasClass("not_donator")) {
+		$("#CompanionNotification").RemoveClass("not_donator");
+	}
+
+	if (IsDonator(Game.GetLocalPlayerID()) === false) {
+		$("#CompanionNotification").AddClass("not_donator");
+		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	api.updateEmblem({
+		ingame_emblem_id : id,
+		steamid : Game.GetLocalPlayerInfo().player_steamid,
+		ingame_emblem_enabled : true
+	}, function() {
+		$("#CompanionNotification").AddClass("success");
+		$("#CompanionNotificationLabel").text = $.Localize("emblem_success") + $.Localize(name) + "!";
+		GameEvents.SendCustomGameEventToServer("change_emblem", {
+			ID : Players.GetLocalPlayer(),
+			unit : emblem
 		});
 		$.Schedule(6.0, function() {
 			$("#CompanionNotification").RemoveClass("success");
@@ -576,6 +627,8 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	var i_count = 0;
 	var class_option_count = 1;
 
+	$.Msg(companions)
+
 	var donator_row = $.CreatePanel("Panel", $('#' + panel + 'TableWrapper'), "DonatorRow" + class_option_count + "_" + player);
 	donator_row.AddClass("DonatorRow");
 
@@ -605,13 +658,14 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		var vip = false;
 		i_count = i_count + 1;
 		if (companions[i] != undefined) {
-			companion_unit[i] = companions[i];
+			companion_unit[i] = companions[i]["file"];
 			companion_id[i] = i;
 
-			if (i == 0)
+			if (i == 0) {
 				companion_name[i] = "Disabled";
+			}
 			else
-				companion_name[i] = $.Localize(companion_unit[i]);
+				companion_name[i] = companions[i]["name"];
 
 			if (companion_unit[i] == "npc_donator_companion_sappling")
 				companion_skin[i] = 3;
@@ -650,8 +704,13 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
-		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+
+		if (panel == "Emblem") {
+			companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
+		} else {
+			companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		}
 /*
 		var companionskin = $.CreatePanel("Panel", companionpreview, "CompanionSkinPanel_" + i);
 		companionskin.style.width = "100%";
@@ -711,6 +770,12 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 			var event = function(ev, name, id) {
 				return function() {
 					SetStatue(ev, name, id);
+				}
+			};
+		} else if (panel == "Emblem") {
+			var event = function(ev, name, id) {
+				return function() {
+					SetEmblem(ev, name, id);
 				}
 			};
 		}

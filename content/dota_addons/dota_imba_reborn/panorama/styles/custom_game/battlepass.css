@@ -868,7 +868,8 @@
 
 #PatreonTableWrapper,
 #CompanionTableWrapper,
-#StatueTableWrapper {
+#StatueTableWrapper,
+#EmblemTableWrapper {
 	overflow: squish scroll;
 	flow-children: down;
 	height: 470px;
@@ -1207,7 +1208,7 @@
 	align: center center;
 	color: #eaebeb;
 	text-align: center center;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: normal;
 	letter-spacing: 2px;
 	margin-top: 2px;

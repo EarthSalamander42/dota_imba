@@ -103,7 +103,7 @@ function DonatorCompanionSkin(id, unit, skin)
 end
 
 function Battlepass:DonatorStatue(ID, statue_unit)
-	if UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))] then 
+	if UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))] and not js then 
 		statue_unit = UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
