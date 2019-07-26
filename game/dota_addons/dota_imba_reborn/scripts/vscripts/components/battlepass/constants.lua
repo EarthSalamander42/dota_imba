@@ -23,7 +23,10 @@ UNIQUE_DONATOR_COMPANION["76561197970766309"] = "npc_donator_companion_hamahe"
 UNIQUE_DONATOR_COMPANION["76561193687456266"] = "npc_donator_companion_exzas"
 UNIQUE_DONATOR_COMPANION["76561198095342815"] = "npc_donator_companion_the_blind_dog"
 UNIQUE_DONATOR_COMPANION["76561198009727790"] = "npc_donator_companion_acalia"
-UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_conjurist"
+
+-- UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_conjurist"
+UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_suthernfriend" -- Conjurist wants a special Roshan
+
 UNIQUE_DONATOR_COMPANION["76561198109559236"] = "npc_donator_companion_gordon_ramsay"
 UNIQUE_DONATOR_COMPANION["76561198081698794"] = "npc_donator_companion_rayzone"
 UNIQUE_DONATOR_COMPANION["76561198148311002"] = "npc_donator_companion_rubick_arcana" -- Carry Me Senpai

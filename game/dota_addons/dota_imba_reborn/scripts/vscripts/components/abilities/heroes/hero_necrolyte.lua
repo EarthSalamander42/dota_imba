@@ -770,7 +770,7 @@ function imba_necrolyte_reapers_scythe:OnSpellStart()
 		local damage = self:GetSpecialValueFor("damage")
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
 
-		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration+FrameTime()})
+		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration})
 	end
 end
 
@@ -866,6 +866,10 @@ function modifier_imba_reapers_scythe:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetParent()
+		
+		-- I don't know why this thing allows a frame for enemies to activate magic immunity before receiving damage but only if Reaper's Scythe would have been fatal...so let's just stun them for another frame
+		target:AddNewModifier(caster, self:GetAbility(), "modifier_stunned", {duration=FrameTime()})
+		
 		if target:IsAlive() and self.ability then
 			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
 			-- If this very rough formula for damage exceeds that of the target's health, apply the respawn modifier that increases respawn time of target...

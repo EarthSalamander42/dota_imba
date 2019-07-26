@@ -674,6 +674,11 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 	}
 }
 
+function ShowDemoPanel() {
+	$.Msg("Enter Function ShowDemoPanel");
+	$.GetContextPanel().AddClass("visible");
+}
+
 (function () {
 	MAX_SLOT = 10;
 
@@ -683,6 +688,8 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 	GameEvents.Subscribe('AllySpawned', AllySpawned);
 	GameEvents.Subscribe('AllyRemoved', AllyRemoved);
 	GameEvents.Subscribe('RespawnWear', RespawnWear);
+	
+	GameEvents.Subscribe('ShowDemoPanel', ShowDemoPanel);
 
 	ID_Map = {};
 

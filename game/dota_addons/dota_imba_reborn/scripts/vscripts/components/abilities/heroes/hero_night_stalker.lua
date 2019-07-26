@@ -1080,6 +1080,8 @@ function modifier_imba_darkness_night:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()       
 
+	self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage")
+
 	-- Start a Night Stalker night
 	if IsServer() then        
 		self.game_mode = GameRules:GetGameModeEntity()
@@ -1132,9 +1134,16 @@ function modifier_imba_darkness_night:IsAuraActiveOnDeath()
 end
 
 function modifier_imba_darkness_night:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_MAX}
+	local decFuncs = {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	MODIFIER_PROPERTY_MOVESPEED_MAX
+	}
 
 	return decFuncs
+end
+
+function modifier_imba_darkness_night:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage
 end
 
 function modifier_imba_darkness_night:GetModifierMoveSpeed_Max()
@@ -1193,19 +1202,29 @@ function modifier_imba_darkness_fogvision:GetModifierProvidesFOWVision()
 end
 
 LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_720_handler", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_positive_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_aura_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_aura_positive_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 imba_night_stalker_crippling_fear_720							= class({})
+modifier_imba_night_stalker_crippling_fear_720_handler			= class({})
 modifier_imba_night_stalker_crippling_fear_aura_720				= class({})
 modifier_imba_night_stalker_crippling_fear_aura_positive_720	= class({})
 modifier_imba_night_stalker_crippling_fear_720					= class({})
 modifier_imba_night_stalker_crippling_fear_positive_720			= class({})
 
+function imba_night_stalker_crippling_fear_720:GetIntrinsicModifierName()
+	return "modifier_imba_night_stalker_crippling_fear_720_handler"
+end
+
 function imba_night_stalker_crippling_fear_720:GetBehavior()
 	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+		if self:GetCaster():GetModifierStackCount("modifier_imba_night_stalker_crippling_fear_720_handler", self:GetCaster()) == 0 then
+			return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		else
+			return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		end
 	else
 		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
 	end
@@ -1228,10 +1247,18 @@ function imba_night_stalker_crippling_fear_720:GetAbilityTargetType()
 end
 
 function imba_night_stalker_crippling_fear_720:GetCastRange(location, target)
-	if self:GetCaster():HasScepter() then
+	if self:GetCaster():HasScepter() and self:GetCaster():GetModifierStackCount("modifier_imba_night_stalker_crippling_fear_720_handler", self:GetCaster()) == 1 then
 		return self:GetSpecialValueFor("scepter_cast_range")
 	else
 		return self.BaseClass.GetCastRange(self, location, target)
+	end
+end
+
+function imba_night_stalker_crippling_fear_720:GetAOERadius()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_night_stalker_crippling_fear_720_handler", self:GetCaster()) == 0 then
+		return 0
+	else
+		return self:GetSpecialValueFor("radius")
 	end
 end
 
@@ -1269,6 +1296,29 @@ function imba_night_stalker_crippling_fear_720:OnSpellStart()
 			self.target:StopSound("Hero_Nightstalker.Trickling_Fear_lp")
 		end
 	end)
+end
+
+-----------------------------------------
+-- CRIPPLING FEAR MODIFIER AURA (7.20) --
+-----------------------------------------
+
+function modifier_imba_night_stalker_crippling_fear_720_handler:IsHidden()	return true end
+
+function modifier_imba_night_stalker_crippling_fear_720_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_night_stalker_crippling_fear_720_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
 end
 
 -----------------------------------------
@@ -1319,7 +1369,10 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), add base radius to radius and add base duration to remaining amount
 	if keys.target:GetTeam() ~= self.parent:GetTeam() and (keys.target:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius and self.parent:IsAlive() then
 		self.radius = self.radius + self.radius
-		self:IncrementStackCount()
+		
+		if self:GetStackCount() == 1 then
+			self:IncrementStackCount()
+		end
 		
 		if GameRules:IsDaytime() then
 			self:SetDuration(self:GetRemainingTime() + self.duration_day, true)
