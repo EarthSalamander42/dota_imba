@@ -33,6 +33,9 @@ IMBA_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
 IMBA_DONATOR_COMPANION["76561198065838676"] = "npc_donator_companion_miku"
 IMBA_DONATOR_COMPANION["76561198124080528"] = "npc_donator_companion_hastur"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
+IMBA_DONATOR_COMPANION["76561198054347194"] = "npc_donator_companion_vivi"
+IMBA_DONATOR_COMPANION["76561198046078552"] = "npc_donator_companion_altivu"
+IMBA_DONATOR_COMPANION["76561198885326839"] = "npc_donator_companion_altivu"	-- test string
 
 IMBA_DONATOR_STATUE = {}
 IMBA_DONATOR_STATUE["76561198015161808"] = "npc_donator_statue_cookies"
