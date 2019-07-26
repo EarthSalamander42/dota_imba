@@ -12,7 +12,7 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 	end
 
 	-- set mini doom as default companion if something goes wrong
-	if unit_name == nil then
+	if unit_name == nil or unit_name == false then
 		unit_name = "npc_donator_companion_demi_doom"
 	end
 
@@ -78,7 +78,7 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 		companion:SetMaterialGroup("1")
 	end
 
-	companion:SetModelScale(model_scale)
+	companion:SetModelScale(model_scale or 100)
 
 	if DONATOR_COMPANION_ADDITIONAL_INFO[model] and DONATOR_COMPANION_ADDITIONAL_INFO[model][1] then
 		local particle = ParticleManager:CreateParticle(DONATOR_COMPANION_ADDITIONAL_INFO[model][1], PATTACH_ABSORIGIN_FOLLOW, companion)
