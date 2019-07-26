@@ -1,6 +1,282 @@
 -- Editors:
 --    AltiV, July 23rd, 2019
 
+LinkLuaModifier("modifier_imba_nian_frenzy_swipes", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nian_frenzy_swipes_suppression", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+
+-- LinkLuaModifier("modifier_imba_nian_crushing_leap_movement", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_nian_crushing_leap_movement", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nian_crushing_leap", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
+imba_nian_frenzy_swipes							= class({})
+modifier_imba_nian_frenzy_swipes				= class({})
+modifier_imba_nian_frenzy_swipes_suppression	= class({})
+
+imba_nian_crushing_leap							= class({})
+-- modifier_imba_nian_crushing_leap_movement		= modifier_generic_motion_controller -- Why doesn't this work
+modifier_imba_nian_crushing_leap_movement		= class({})
+modifier_imba_nian_crushing_leap				= class({})
+
+imba_nian_tail_spin								= class({})
+modifier_imba_nian_tail_spin					= class({})
+
+imba_nian_tail_stomp							= class({})
+modifier_imba_nian_tail_stomp					= class({})
+
+imba_nian_impasse_clamor						= class({})
+modifier_imba_nian_impasse_clamor				= class({})
+
+imba_nian_volcanic_burster						= class({})
+modifier_imba_nian_volcanic_burster				= class({})
+
+-------------------
+-- FRENZY SWIPES --
+-------------------
+
+function imba_nian_frenzy_swipes:OnToggle()
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_frenzy_swipes", {})
+	else
+		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
+	end
+end
+
+----------------------------
+-- FRENZY SWIPES MODIFIER --
+----------------------------
+
+function modifier_imba_nian_frenzy_swipes:OnCreated()
+	self.attack_damage_multiplier	= self:GetAbility():GetSpecialValueFor("attack_damage_multiplier")
+	self.attack_speed_multiplier	= self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")
+	self.mana_per_attack			= self:GetAbility():GetSpecialValueFor("mana_per_attack")
+	self.attack_angle				= self:GetAbility():GetSpecialValueFor("attack_angle")
+	self.bonus_attack_range			= self:GetAbility():GetSpecialValueFor("bonus_attack_range")
+	
+	if not IsServer() then return end
+	
+	self.attack_point	= self:GetParent():GetAttackAnimationPoint() / (1 + self:GetParent():GetIncreasedAttackSpeed())
+	self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
+	
+	self.wind_up = true
+	
+	self:OnIntervalThink()
+end
+
+function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
+	if not IsServer() then return end
+
+	if self.wind_up then
+		-- Does not properly account for mana loss reduction abilities right now
+		if self:GetParent():GetMana() >= self.mana_per_attack and self:GetAbility() then
+		
+			if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
+				self:GetCaster():ReduceMana(self.mana_per_attack)
+			
+				self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
+				self:GetParent():StartGesture(ACT_DOTA_ATTACK)
+			end
+			
+			self.wind_up = false
+			
+			self:StartIntervalThink(self.slash_rate - self.attack_point)
+		else
+			self:StartIntervalThink(-1)
+			if self:GetAbility() and self:GetAbility():GetToggleState() then
+				self:GetAbility():ToggleAbility()
+			end
+			
+			self:Destroy()
+		end
+	else
+		if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
+			local frenzy_swipe_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:ReleaseParticleIndex(frenzy_swipe_particle)
+			
+			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange() + self.bonus_attack_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+			for _, enemy in pairs(enemies) do
+				if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.attack_angle then
+					self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_suppression", {})
+					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
+					self:GetParent():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes_suppression", self:GetCaster())
+				end
+			end
+		end
+		
+		self.wind_up = true
+		
+		self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
+		self:StartIntervalThink(self.attack_point)
+	end
+end
+
+function modifier_imba_nian_frenzy_swipes:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
+end
+
+function modifier_imba_nian_frenzy_swipes:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED]	= true,
+		[MODIFIER_STATE_MUTED]		= true,
+		[MODIFIER_STATE_ROOTED]		= true
+	}
+	
+	return state
+end
+
+function modifier_imba_nian_frenzy_swipes:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_DISABLE_TURNING
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_nian_frenzy_swipes:GetModifierDisableTurning()
+	return 1
+end
+
+----------------------------------------
+-- FRENZY SWIPES SUPPRESSION MODIFIER --
+----------------------------------------
+
+-- I guess this will also be used for the bonus attack damage
+function modifier_imba_nian_frenzy_swipes_suppression:OnCreated()
+	if self:GetAbility() then
+		self.attack_damage_multiplier	= self:GetAbility():GetSpecialValueFor("attack_damage_multiplier")
+	else
+		self:Destroy()
+	end
+end
+
+ -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
+function modifier_imba_nian_frenzy_swipes_suppression:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
+		
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_nian_frenzy_swipes_suppression:GetModifierDamageOutgoing_Percentage()
+	return (self.attack_damage_multiplier - 1) * 100
+end
+
+function modifier_imba_nian_frenzy_swipes_suppression:GetSuppressCleave()
+	return 1
+end
+
+-- Hopefully this is enough random information to only suppress cleaves?...
+function modifier_imba_nian_frenzy_swipes_suppression:GetModifierTotalDamageOutgoing_Percentage(keys)
+	if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+		return -100
+	end
+end
+
+-------------------
+-- CRUSHING LEAP --
+-------------------
+
+function imba_nian_crushing_leap:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_nian_crushing_leap:GetCastAnimation()
+	return ACT_DOTA_LEAP_STUN
+end
+
+function imba_nian_crushing_leap:GetPlaybackRateOverride()
+	return 0.8
+end
+
+function imba_nian_crushing_leap:OnSpellStart()
+	local direction_vector = self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+	{
+		distance		= direction_vector:Length2D(),
+		direction_x 	= direction_vector.x,
+		direction_y 	= direction_vector.y,
+		direction_z 	= direction_vector.z,
+		duration 		= self:GetSpecialValueFor("duration"),
+		height 			= self:GetSpecialValueFor("min_height") + ((self:GetSpecialValueFor("max_height") - self:GetSpecialValueFor("min_height")) * (1 - direction_vector:Length2D() / (self:GetCastRange(self:GetCursorPosition(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster())))),
+		bGroundStop 	= true,
+		bDecelerate 	= false,
+		bInterruptible 	= false
+	})
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_crushing_leap_movement", 
+	{
+		duration 		= self:GetSpecialValueFor("duration"),
+	})
+end
+
+-------------------------------------
+-- CRUSHING LEAP MOVEMENT MODIFIER --
+-------------------------------------
+
+function modifier_imba_nian_crushing_leap_movement:IsPurgable()	return false end
+
+function modifier_imba_nian_crushing_leap_movement:OnCreated()
+	self.radius			= self:GetAbility():GetSpecialValueFor("radius")
+	self.damage			= self:GetAbility():GetSpecialValueFor("damage")
+	self.stun_duration	= self:GetAbility():GetSpecialValueFor("stun_duration")
+	
+	if not IsServer() then return end
+	
+	self.damage_type	= self:GetAbility():GetAbilityDamageType()
+end
+
+function modifier_imba_nian_crushing_leap_movement:OnDestroy()
+	if not IsServer() or self:GetRemainingTime() > 0 then return end
+
+	self:GetParent():EmitSound("Roshan.Slam")
+
+	local slam_particle = ParticleManager:CreateParticle("particles/neutral_fx/roshan_slam.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(slam_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(slam_particle, 1, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:ReleaseParticleIndex(slam_particle)
+	
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+	for _, enemy in pairs(enemies) do
+		local damageTable = {
+			victim 			= enemy,
+			damage 			= self.damage,
+			damage_type		= self.damage_type,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetParent(),
+			ability 		= self:GetAbility()
+		}
+
+		ApplyDamage(damageTable)
+	
+		if not enemy:IsMagicImmune() then
+			local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
+			end
+		end
+	end
+end
+
+----------------------------
+-- CRUSHING LEAP MODIFIER --
+----------------------------
+
+function modifier_imba_nian_crushing_leap:OnCreated()
+
+end
+
 -- LinkLuaModifier("modifier_imba_grimstroke_dark_artistry_extend", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_grimstroke_dark_artistry_slow", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_grimstroke_dark_artistry_ink_line", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)

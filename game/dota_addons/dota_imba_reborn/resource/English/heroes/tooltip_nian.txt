@@ -1,2 +1,12 @@
 "npc_dota_hero_nian"			"Nian"
 "npc_dota_hero_nian_hype"		""
+
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes"											"Frenzy Swipes"
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Description"								"Nian bares down and savagely tears at the space in front of it, performing attacks on all units within its attack range + %bonus_attack_range% at boosted attack speed and damage. Nian cannot turn while this ability is active."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Lore"										""
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note0"									"Nian is disarmed, muted, and rooted while Frenzy Swipes is active."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note1"									"The attack arc is within 60 degrees of the front of Nian."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note2"									"The attacks will not occur if Nian is banished or stunned."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_attack_damage_multiplier"					"ATTACK DAMAGE MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_attack_speed_multiplier"					"ATTACK SPEED MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_mana_per_attack"							"MANA COST PER ATTACK:"

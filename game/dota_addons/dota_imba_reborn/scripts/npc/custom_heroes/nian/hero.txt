@@ -25,14 +25,14 @@
 		// Abilities
 		//----------------------------------------------------------------
 		
-		"Ability1"					"imba_spirit_breaker_charge_of_darkness"			// Ability 1
-		"Ability2"					"imba_spirit_breaker_bulldoze"			// Ability 2
-		"Ability3"					"imba_spirit_breaker_greater_bash"			// Ability 3.
-		"Ability4"					"generic_hidden"			// Ability 4.
-		"Ability5"					"generic_hidden"			// Ability 5.
-		"Ability6"					"imba_spirit_breaker_nether_strike"			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
+		"Ability1"					"imba_nian_frenzy_swipes"
+		"Ability2"					"imba_nian_crushing_leap"
+		"Ability3"					"imba_nian_tail_spin"
+		"Ability4"					"imba_nian_tail_stomp"
+		"Ability5"					"imba_nian_impasse_clamor"
+		"Ability6"					"imba_nian_volcanic_burster"
+		"Ability7"					""
+		"Ability8"					""
 		
 		"Ability10"					"special_bonus_strength_20"
 		"Ability11"					"special_bonus_strength_20"

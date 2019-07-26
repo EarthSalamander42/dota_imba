@@ -16,6 +16,7 @@
 
 modifier_generic_motion_controller = class({})
 
+function modifier_generic_motion_controller:IsPurgable()	return self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() end
 function modifier_generic_motion_controller:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end -- This seems to allow proper interruption of stacking modifiers or something
 
 -- Function parameters:
@@ -140,7 +141,7 @@ function modifier_generic_motion_controller:UpdateVerticalMotion(me, dt)
 	if self.height then
 		me:SetOrigin( me:GetOrigin() + Vector(0, 0, self.vertical_velocity) * dt )
 		
-		if not self.bGroundStop or self.bGroundStop == 0 or (self.bGroundStop == 1 and GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z) then
+		if self.bGroundStop == 1 and GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z then
 			self:Destroy()
 		else
 			self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)

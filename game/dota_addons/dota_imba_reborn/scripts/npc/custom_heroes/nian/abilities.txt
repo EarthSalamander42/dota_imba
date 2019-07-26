@@ -1,40 +1,151 @@
 "DOTAAbilities"
 {
-//=================================================================================================================
-	// Spirit Breaker: Charge of Darkness
 	//=================================================================================================================
-	"imba_spirit_breaker_charge_of_darkness"
+	// Nian: Frenzy Swipes
+	//=================================================================================================================
+	"imba_nian_frenzy_swipes"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
-		"AbilityTextureName"			"spirit_breaker_charge_of_darkness"		
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""		
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Spirit_Breaker.ChargeOfDarkness"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.47 0.47 0.47 0.47"
-		"AbilityCastRange"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11.0 10.5 10 9.5"
+		"AbilityCooldown"				"28 24 20 16"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 80 90 100"
+		"AbilityManaCost"				"100"
 
-		// Stats
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	".30" // applies multiple modifiers
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_damage_multiplier"		"1.4"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_speed_multiplier"			"1.4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_attack"			"30 25 20 15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_angle"			"60"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_range"			"75"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Nian: Crushing Leap
+	//=================================================================================================================
+	"imba_nian_crushing_leap"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"FightRecapLevel"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900 1000 1100 1200"
+		"AbilityCastPoint"				"0.5"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 14 13 12"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"							"0.6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"325 350 375 400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_height"			"600"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_height"			"300"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 200 300 400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.7 1.8 1.9 2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nian: Tail Spin
+	//=================================================================================================================
+	"imba_nian_tail_spin"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 14 13 12"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -43,79 +154,184 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"325 375 420 475"
-				"LinkedSpecialBonus"	"special_bonus_imba_spirit_breaker_charge_speed"
+				"radius"				"400"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.2 1.6 2.0 2.4"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"130 240 350 460"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_radius"			"375"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.7"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"400 400 400 400"
+				"var_type"				"FIELD_FLOAT"
+				"knockback_distance"	"400"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"0.94 0.94 0.94 0.94"
-			}
-			
-			"06"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"darkness_speed"		"20"
+				"knockback_height"		"250"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"clothesline_duration"	"2.2 2.8 3.4 4.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"taxi_radius"			"500"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"taxi_distance"			"180"
+				"stun_duration"			"1.9 2.1 2.3 2.5" // Separate modifier from knockback 
 			}
 		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
-	
+
 	//=================================================================================================================
-	// Ability: Bulldoze
+	// Nian: Tail Stomp
 	//=================================================================================================================
-	"imba_spirit_breaker_bulldoze"
+	"imba_nian_tail_stomp"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
-		"AbilityTextureName"			"spirit_breaker_bulldoze"	
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Spirit_Breaker.EmpoweringHaste.Cast"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 14 13 12"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"				"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"125"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"130 240 350 460"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vuln_pct"				"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nian: Impasse Clamor
+	//=================================================================================================================
+	"imba_nian_impasse_clamor"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""
+		
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"
+		"IsGrantedByScepter"			"1"
+        "HasScepterUpgrade"				"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.5"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22"
+		"AbilityCooldown"				"15"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25 30 35 40"
+		"AbilityManaCost"				"100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"speed"							"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_distance"			"250"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"knockback_height"			"250"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"knockback_duration"			"0.7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nian: Volcanic Burster
+	//=================================================================================================================
+	"imba_nian_volcanic_burster"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_nian"
+		"AbilityTextureName"			""
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"FightRecapLevel"				"2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"4200"
+		"AbilityCastPoint"				"0.5"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80 70 60"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 350 450"
 
 		
 		"AbilitySpecial"
@@ -123,198 +339,49 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed"				"16 22 28 34"
+				"projectile_speed"				"400"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"status_resistance"			"35 50 65 80"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"	"8"
-			}
-			
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"empowering_aura_radius"	"1200"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"empowering_aura_move_speed"	"4 6 8 10"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityCastGestureSlot"		"DEFAULT"
-	}
-
-	//=================================================================================================================
-	// Spirit Breaker: Greater Bash
-	//=================================================================================================================
-	"imba_spirit_breaker_greater_bash"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
-		"AbilityTextureName"			"spirit_breaker_greater_bash"	
-	
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"AbilitySound"					"Hero_Spirit_Breaker.GreaterBash"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.5 1.5 1.5 1.5"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportBonus"	"40"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chance_pct"			"17 17 17 17"
-				// "LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_1"
-				"LinkedSpecialBonus"	"special_bonus_imba_spirit_breaker_bash_chance"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"24.0 32.0 40.0 48.0"
-				// "LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
+				"radius"				"275"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.3 1.5 1.7 1.9"
+				"stun_on"				"0.1"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.5 0.5 0.5 0.5"
+				"stun_off"				"0.15"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"143 152 158 162"
+				"damage_per_tick"		"300 425 550"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"knockback_height"		"50 50 50 50"
+				"projectiles_per_tick"		"4 5 6"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed_pct"	"17"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"movespeed_duration"	"3.0 3.0 3.0 3.0"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	}
-
-	//=================================================================================================================
-	// Spirit Breaker: Nether Strike
-	//=================================================================================================================
-	"imba_spirit_breaker_nether_strike"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
-		"AbilityTextureName"			"spirit_breaker_nether_strike"	
-	
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"			"1"
-		"AbilitySound"					"Hero_Spirit_Breaker.NetherStrike.Begin"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
-		"AbilityCastRange"				"700 1200 1700"
-		"AbilityCastRangeBuffer"		"3500"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time			
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 50 40"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 150 175"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 350 500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"1.0 1.0 1.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"700 1200 1700"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"4242"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_radius_scepter"	"375"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"20.0 20.0 20.0"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"big_dmg_reduction"		"-50"
+				"burn_damage"			"30 40 50"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"planeswalker_duration"		"3 4 5"
+				"burn_tick_rate"			"1"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"planeswalker_reduction"	"50"
+				"burn_duration"			"5"
 			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
