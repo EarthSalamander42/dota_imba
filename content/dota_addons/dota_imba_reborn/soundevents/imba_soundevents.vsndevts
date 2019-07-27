@@ -3728,3 +3728,159 @@
 		}
 	}
 }
+
+"Hero_Nian.Frenzy_Swipes_Cast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/items/mask_of_madness.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "0.400000"  }
+                    "pitch_rand_min"    {   "value"     "-0.250000"  }
+                    "pitch_rand_max"    {   "value"     "-0.150000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Nian.Tail_Spin_Swoosh"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/misc/idles/idle_ck_throw_01.vsnd"
+							"value1"	"sounds/misc/idles/idle_ck_throw_02.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "3.000000"  }
+                    "pitch_rand_min"    {   "value"     "-1.25000"  }
+                    "pitch_rand_max"    {   "value"     "-0.90000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "81.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Nian.Tail_Spin_Impact"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/pangolier/gyro_stun.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "81.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Nian.Volcanic_Burster_Cast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/npc/cny_beast/cast_ability03.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Nian.Volcanic_Burster_Flight"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/items/meteor_hammer_channel.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.350000"  }
+                    "pitch_rand_max"    {   "value"     "-0.250000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}

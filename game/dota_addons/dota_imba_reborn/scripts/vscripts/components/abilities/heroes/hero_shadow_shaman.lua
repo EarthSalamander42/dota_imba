@@ -816,15 +816,24 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 
 end
 
-function imba_shadow_shaman_mass_serpent_ward:SummonWard(position)
+function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild)
+	local new_hp
+	local duration
+	
+	if not bChild then
+		new_hp		= self:GetSpecialValueFor("ward_hp") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_2")
+		duration	= self:GetSpecialValueFor("duration")
+	else
+		new_hp 		= self:GetSpecialValueFor("snake_charmer_health")
+		duration	= self:GetSpecialValueFor("snake_charmer_duration")
+	end
+	
 	local ward = CreateUnitByName("npc_dota_shadow_shaman_ward_"..math.min(self:GetLevel(), 3), position, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 	ward:SetForwardVector(self:GetCaster():GetForwardVector())
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_imba_mass_serpent_ward", {})
-	ward:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
+	ward:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = duration})
 	ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
-	
-	-- Update Health
-	local new_hp = self:GetSpecialValueFor("ward_hp") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_2")
+
 	
 	-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
 	ward:SetBaseMaxHealth(new_hp)
@@ -834,6 +843,11 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position)
 	-- Update Damage
 	ward:SetBaseDamageMin(ward:GetBaseDamageMin() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
 	ward:SetBaseDamageMax(ward:GetBaseDamageMax() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+
+	-- Differentiate snake charmer wards
+	if bChild then
+		ward:SetRenderColor(0,0,0)
+	end
 	
 	if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
 		ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
@@ -997,11 +1011,11 @@ function modifier_imba_mass_serpent_ward:OnDeath(keys)
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
 			for ward = 1, self.snake_charmer_creep_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin())
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true)
 			end
 		else
 			for ward = 1, self.snake_charmer_hero_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin())
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true)
 			end
 		end
 	end
