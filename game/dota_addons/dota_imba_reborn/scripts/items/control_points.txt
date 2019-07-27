@@ -9919,24 +9919,6 @@
 				"attach_type"		"point_follow"
 				"attachment"		"attach_attack1"
 			}
-			"1"
-			{
-				"control_point_index"		"60"
-				"attach_type"		"PATTACH_WORLDORIGIN"
-				"attach_entity"		"self"
-			}
-			"2"
-			{
-				"control_point_index"		"61"
-				"attach_type"		"PATTACH_WORLDORIGIN"
-				"attach_entity"		"self"
-			}
-			"3"
-			{
-				"control_point_index"		"62"
-				"attach_type"		"PATTACH_WORLDORIGIN"
-				"attach_entity"		"self"
-			}
 		}
 	}
 	"particles/units/heroes/hero_enigma/enigma_eidolon_ambient.vpcf"
@@ -19979,6 +19961,37 @@
 				"attach_type"		"PATTACH_POINT_FOLLOW"
 				"attachment"		"attach_staff_ambient"
 				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/units/heroes/hero_rattletrap/rattletrap_cog_ambient_loadout.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_attack1"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"60"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"61"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"62"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
 			}
 		}
 	}
@@ -30467,6 +30480,133 @@
 			}
 		}
 	}
+	"particles/econ/items/venomancer/veno_chomper/veno_chomper_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_mouth"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_mouth"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_fangs_top"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_fangs_top"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_fangs_top"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/venomancer/veno_chomper/veno_chomper_spitter_mouth_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_left"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_left"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_right"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_right"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_left"
+				"attach_entity"		"self_with_wearables"
+			}
+			"5"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_right"
+				"attach_entity"		"self_with_wearables"
+			}
+			"6"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_left"
+				"attach_entity"		"self_with_wearables"
+			}
+			"7"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_snake_right"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/venomancer/veno_ti8_chomper/veno_ti8_chomper_shoulder_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/venomancer/veno_ti8_chomper/veno_ti8_chomper_tail_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
 	"particles/econ/items/centaur/centaur_plus_2018/centaur_plus_2018_ambient_belt_trace.vpcf"
 	{
 		"control_points"
@@ -31377,6 +31517,65 @@
 			}
 		}
 	}
+	"particles/econ/items/dazzle/dazzle_ti9/dazzle_ti9_immortal_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_gem"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_l"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_r"
+				"attach_entity"		"self"
+			}
+			"7"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
 	"particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_ambient.vpcf"
 	{
 		"control_points"
@@ -31493,6 +31692,65 @@
 			}
 		}
 	}
+	"particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_blade_center"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_wire_a"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_wire_b"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_tesla"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_meter"
+				"attach_entity"		"self"
+			}
+			"7"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
 	"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_ambient_hair_ti9.vpcf"
 	{
 		"control_points"
@@ -31595,6 +31853,39 @@
 				"attach_type"		"PATTACH_POINT_FOLLOW"
 				"attachment"		"attach_elbow_r"
 				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/grimstroke/ti9_immortal/gs_ti9_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brush_tip_end"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brush_tip"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brush_tail"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
 			}
 		}
 	}
@@ -31708,6 +31999,32 @@
 				"control_point_index"		"7"
 				"attach_type"		"PATTACH_POINT_FOLLOW"
 				"attachment"		"attach_center_offset"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pugna/pugna_ti9_immortal/pugna_ti9_immortal_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_attack1"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/items/warlock/warlock_ti9/warlock_ti9_lantern_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_core"
 				"attach_entity"		"self"
 			}
 		}
@@ -32507,6 +32824,2089 @@
 			}
 		}
 	}
+	"particles/econ/items/luna/luna_ti9_weapon/luna_ti9_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_center"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/items/ember_spirit/ember_ti9/ember_ti9_shoulders_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_sun"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_scarf_l"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_scarf_r"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/enigma/ti9_cache_enigma_lord_head/ti9_cache_enigma_lord_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/enigma/ti9_cache_enigma_lord_armor/ti9_cache_enigma_lord_armor_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_ball"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_back"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_front"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/units/heroes/hero_invoker_kid/invoker_kid_orbs_loadout.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_ABSORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brush_light"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_R"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_belt_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_chain_front_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_chain_front_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"62"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_egg"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_blade_tip"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_ambient_head.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_shoulder_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dark_willow/ti9_cache_willow_allure_head/ti9_cache_willow_allure_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/dark_willow/ti9_cache_willow_allure_belt/ti9_cache_willow_allure_belt_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/dark_willow/ti9_cache_willow_allure_armor/ti9_cache_willow_allure_armor_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_tail"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/tuskarr/ti9_tusk_jungle_weapon/ti9_tusk_jungle_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"11"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/tuskarr/ti9_tusk_jungle_back/ti9_tusk_jungle_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/tuskarr/ti9_tusk_jungle_arms/ti9_tusk_jungle_arms_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"11"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"20"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gemL"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"21"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gemMid"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"22"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gemR"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/tuskarr/ti9_tusk_jungle_neck/ti9_tusk_jungle_neck_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"pipe"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/death_prophet/death_prophet_peacock/death_prophet_peacock_armor_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/death_prophet/death_prophet_peacock/death_prophet_peacock_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT"
+				"attachment"		"attach_gem_a"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_b"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_legs_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"left_elec"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"right_elec"
+				"attach_entity"		"parent"
+			}
+			"2"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_a"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"8"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"atach_gem_b"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"9"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_c"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"20"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/tidehunter/ti9_cache_tide_chelonia_arms/ti9_cache_tide_chelonia_arms_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/chen/ti9_emperor_of_the_sun/chen_ti9_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"head_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/chen/ti9_emperor_of_the_sun/chen_ti9_mount_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"head_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_R"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_mount_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l_btm"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l_top"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r_btm"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r_top"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/rubick/rubick_ti9_cache_magus_back/rubick_ti9_cache_magus_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/rubick/rubick_ti9_cache_magus_weapon/rubick_ti9_cache_magus_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_core"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/rubick/rubick_ti9_cache_magus_head/rubick_ti9_cache_magus_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_l_outer"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_r_outer"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/broodmother/brood_ti9/brood_ti9_legs_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/broodmother/brood_ti9/brood_ti9_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/broodmother/brood_ti9/brood_ti9_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_tribal_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_lantern_eyes_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_back_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_back_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_front_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eye_front_L"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_tribal_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_rocket_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"rocket_end"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_gem"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_gem"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_forehead"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_R"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_armor_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_chest_gem_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_chest_gem_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_back_eye_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_back_eye_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hand_gem_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"5"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hand_gem_R"
+				"attach_entity"		"self_with_wearables"
+			}
+			"6"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_gem"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/slark/slark_ti9_jungle_rule/slark_ti9_jungle_rule_ambient_head.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"head_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/slark/slark_ti9_jungle_rule/slark_ti9_jungle_rule_ambient_ring.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"index_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/huskar/ti9_cache_huskar_baptism_off_hand/ti9_cache_huskar_baptism_off_hand_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/huskar/ti9_cache_huskar_baptism_shoulder/ti9_cache_huskar_baptism_shoulder_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/huskar/ti9_cache_huskar_baptism_weapon/ti9_cache_huskar_baptism_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/huskar/ti9_cache_huskar_baptism_head/ti9_cache_huskar_baptism_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_shield_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_feather_a"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_feather_b"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_feather_c"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shield"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_sword_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_sword"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_sword"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_sword"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_sword"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_chest_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_l"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem_r"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/batrider/ti9_batrider_explorer_mount/ti9_batrider_explorer_mount_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"11"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"root"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/batrider/ti9_batrider_explorer_head/ti9_batrider_explorer_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gem"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/drow/drow_runic/drow_runic_misc.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_top"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/drow/drow_runic/drow_runic_weapon.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"bow_bot"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"bow_mid"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"bow_top"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_front"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_goatee"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_lip_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_lip_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_side_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"5"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_side_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"6"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hair_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"7"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hair_m"
+				"attach_entity"		"self_with_wearables"
+			}
+			"8"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hair_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"9"
+			{
+				"control_point_index"		"8"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brow_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"10"
+			{
+				"control_point_index"		"9"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_brow_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"11"
+			{
+				"control_point_index"		"11"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_topknot"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_ambient_eyes.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"ti9_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"ti9_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_belt_glow.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"belt_attachment"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL_front"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR_down"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL_down"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR_front"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/ti9_cache_oracle_ambient_weapon_weapon.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_attack1"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/ti9_cache_oracle_grand_hierophant_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_L"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_R"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/oracle_hierophant_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_offhand_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_off_hand/ti9_bloodseeker_blood_off_hand_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"fire_attach"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"offhand_wheel"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_weapon/ti9_bloodseeker_blood_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"fire_attach"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"weapon_wheel"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_shoulders/ti9_bs_boiling_blood_shoulders_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_head/ti9_bloodseeker_blood_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeL"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"eyeR"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"mouth"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"8"
+				"attach_type"		"PATTACH_ABSORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_shoulder_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_b_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_b_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_c_l"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_a_l"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_a_r"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_bone_c_r"
+				"attach_entity"		"self"
+			}
+			"7"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_spine"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_horse_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_neck_01"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_neck_02"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_neck_03"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_tail"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_cauldron"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_goo"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_ambient_eyes.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head"
+				"attach_entity"		"parent"
+			}
+			"2"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_forehead"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_arms_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_potion"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/lion/lion_ti9/lion_ti9_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head_gem"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hair"
+				"attach_entity"		"self"
+			}
+		}
+	}
 	"particles/econ/courier/courier_babyrosh_alt_ti7/courier_babyrosh_alt_ti7.vpcf"
 	{
 		"control_points"
@@ -32554,6 +34954,104 @@
 			}
 		}
 	}
+	"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_weapon/ti9_cache_pa_gothic_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_head/ti9_cache_pa_gothic_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_ribbon"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_belt/ti9_cache_pa_gothic_belt_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_lamp_1"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_lamp_2"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_back/ti9_cache_pa_gothic_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_cape_1"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"20"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_cape_2"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_cape_3"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
 	"particles/econ/courier/courier_babyrosh_alt_ti8/courier_babyrosh_alt_ti8.vpcf"
 	{
 		"control_points"
@@ -32598,6 +35096,471 @@
 				"control_point_index"		"5"
 				"attach_type"		"PATTACH_WORLDORIGIN"
 				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_arms_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_armor.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_armor"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_head.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_golem_carnivorous_parasitism.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_arms_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_head"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_back_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_banner1"
+				"attach_entity"		"self_with_wearables"
+			}
+		}
+	}
+	"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_legs_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/wraith_king/ti9_tyrant_armor/ti9_tyrant_armor_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"chest"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"hips"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/wraith_king/ti9_tyrant_weapon/ti9_tyrant_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gem_top"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gem_bot"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"gem_bot"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/shadow_fiend/sf_souls_tyrant/sf_souls_tyrant_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_center"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/shadow_fiend/sf_souls_tyrant/sf_souls_tyrant_shoulder_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_shoulder_l"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_l"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_eye_r"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_offhand_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_hat"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_weapon_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_offhand_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"parent"
+			}
+			"1"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_head_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_gem"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_feather"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_ambient_gold.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_blade_center"
+				"attach_entity"		"self_with_wearables"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_wire_a"
+				"attach_entity"		"self_with_wearables"
+			}
+			"3"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_wire_b"
+				"attach_entity"		"self_with_wearables"
+			}
+			"4"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"4"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_tesla"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_meter"
+				"attach_entity"		"self"
+			}
+			"7"
+			{
+				"control_point_index"		"7"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+		}
+	}
+	"particles/econ/items/luna/luna_ti9_weapon_gold/luna_ti9_weapon_ambient_gold.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"self_with_wearables"
+			}
+			"1"
+			{
+				"control_point_index"		"1"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_weapon_center"
+				"attach_entity"		"self"
+			}
+			"2"
+			{
+				"control_point_index"		"2"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"3"
+			{
+				"control_point_index"		"5"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"4"
+			{
+				"control_point_index"		"3"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"5"
+			{
+				"control_point_index"		"6"
+				"attach_type"		"PATTACH_WORLDORIGIN"
+				"attach_entity"		"self"
+			}
+			"6"
+			{
+				"control_point_index"		"10"
+				"attach_type"		"PATTACH_ABSORIGIN_FOLLOW"
+				"attach_entity"		"parent"
 			}
 		}
 	}
@@ -32710,7 +35673,7 @@
 			{
 				"control_point_index"		"4"
 				"attach_type"		"vector"
-				"cp_position"		"31 0 0"
+				"cp_position"		"30 0 0"
 			}
 		}
 	}
@@ -32893,6 +35856,19 @@
 		}
 	}
 	"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
+	{
+		"control_points"
+		{
+			"0"
+			{
+				"control_point_index"		"0"
+				"attach_type"		"PATTACH_POINT_FOLLOW"
+				"attachment"		"attach_particle"
+				"attach_entity"		"parent"
+			}
+		}
+	}
+	"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
 	{
 		"control_points"
 		{

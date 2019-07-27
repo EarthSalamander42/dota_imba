@@ -68,6 +68,7 @@
 	"battlepass_fountain21" "Overgrown Fountain 3"
 	"battlepass_furion_taunt" "Taunt: Make It Rain"
 	"battlepass_huskar_immortal" "Searing Dominator"
+	"battlepass_invoker_legendary" "Acolyte of the Lost Arts"
 	"battlepass_invoker_taunt" "Taunt: The Master Juggles"
 	"battlepass_juggernaut_arcana" "Bladeform Legacy"
 	"battlepass_juggernaut_arcana2" "Bladeform Legacy (Origins)"

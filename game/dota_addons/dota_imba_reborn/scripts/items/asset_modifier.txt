@@ -1348,6 +1348,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/ti8_hero_effect_loadout.vpcf"
 		}
+		"asset_modifier3"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"1"
+		}
 	}
 	"664"
 	{
@@ -1405,6 +1411,15 @@
 	"676"
 	{
 		"skip_model_combine"		"0"
+	}
+	"684"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_venomancer/ward_ambient.vpcf"
+			"destroy_immediately"		"false"
+		}
 	}
 	"4004"
 	{
@@ -1683,6 +1698,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_juggernaut_healing_ward"
 			"modifier"		"models/items/juggernaut/ward_foo.vmdl"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"juggernaut_healing_ward"
+			"scale_size"		"0.666000"
 		}
 	}
 	"4104"
@@ -5455,6 +5476,13 @@
 			"asset"		"ACT_DOTA_CAST_ABILITY_3"
 			"modifier"		"loda"
 		}
+		"asset_modifier6"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_SPAWN"
+			"modifier"		"loda"
+			"style"		"0"
+		}
 	}
 	"5675"
 	{
@@ -6148,6 +6176,12 @@
 			"asset"		"npc_dota_furion_treant"
 			"modifier"		"models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl"
 		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_furion_treant"
+			"scale_size"		"0.650000"
+		}
 	}
 	"5810"
 	{
@@ -6340,6 +6374,12 @@
 			"asset"		"npc_dota_invoker_forged_spirit"
 			"modifier"		"models/items/invoker/forge_spirit/iceforged_spirit/iceforged_spirit.vmdl"
 		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_invoker_forged_spirit"
+			"scale_size"		"0.900000"
+		}
 	}
 	"5872"
 	{
@@ -6501,6 +6541,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_invoker_forged_spirit"
 			"modifier"		"models/items/invoker/forge_spirit/grievous_ingots/grievous_ingots.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_invoker_forged_spirit"
+			"scale_size"		"0.800000"
 		}
 	}
 	"5919"
@@ -7681,6 +7727,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_invoker_forged_spirit"
 			"modifier"		"models/items/invoker/forge_spirit/arsenal_magus_forged_spirit/arsenal_magus_forged_spirit.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_invoker_forged_spirit"
+			"scale_size"		"0.900000"
 		}
 	}
 	"6201"
@@ -12736,6 +12788,12 @@
 			"asset"		"npc_dota_visage_familiar3"
 			"modifier"		"models/items/visage/immortal_familiar/immortal_familiar.vmdl"
 		}
+		"asset_modifier3"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_visage_familiar"
+			"scale_size"		"0.700000"
+		}
 	}
 	"7465"
 	{
@@ -13205,6 +13263,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_juggernaut_healing_ward"
 			"modifier"		"models/items/juggernaut/ward/fortunes_tout/fortunes_tout.vmdl"
+		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_juggernaut_healing_ward"
+			"scale_size"		"0.850000"
 		}
 	}
 	"7594"
@@ -14572,6 +14636,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_juggernaut_healing_ward"
 			"modifier"		"models/items/juggernaut/ward/fortunes_tout/fortunes_tout.vmdl"
+		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_juggernaut_healing_ward"
+			"scale_size"		"0.850000"
 		}
 		"skin"		"1"
 	}
@@ -18786,7 +18856,7 @@
 		{
 			"type"		"particle_create"
 			"spawn_in_loadout_only"		"1"
-			"modifier"		"particles/units/heroes/hero_rattletrap/rattletrap_cog_ambient.vpcf"
+			"modifier"		"particles/units/heroes/hero_rattletrap/rattletrap_cog_ambient_loadout.vpcf"
 			"destroy_immediately"		"false"
 		}
 	}
@@ -21992,6 +22062,18 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_broodmother_spiderite"
 			"modifier"		"models/items/broodmother/spiderling/lycosidae_spiderling/lycosidae_spiderling.vmdl"
+		}
+		"asset_modifier"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_broodmother_spiderling"
+			"scale_size"		"0.245000"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_broodmother_spiderite"
+			"scale_size"		"0.205000"
 		}
 	}
 	"9093"
@@ -32681,6 +32763,12 @@
 			"asset"		"dire"
 			"frequency"		"1"
 		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_furion_treant"
+			"scale_size"		"1.100000"
+		}
 		"asset_modifier5"
 		{
 			"type"		"particle_create"
@@ -32815,6 +32903,12 @@
 			"type"		"courier_flying"
 			"modifier"		"models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"
 			"asset"		"dire"
+		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_furion_treant"
+			"scale_size"		"0.850000"
 		}
 		"asset_modifier5"
 		{
@@ -32957,6 +33051,12 @@
 			"modifier"		"models/courier/doom_demihero_courier/doom_demihero_courier_flying.vmdl"
 			"asset"		"dire"
 			"frequency"		"1"
+		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_furion_treant"
+			"scale_size"		"1.100000"
 		}
 		"skin"		"1"
 		"asset_modifier5"
@@ -36437,6 +36537,18 @@
 			"frequency"		"1"
 			"style"		"0"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_observer_wards"
+			"scale_size"		"1.350000"
+		}
+		"asset_modifier3"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_sentry_wards"
+			"scale_size"		"1.350000"
+		}
 		"asset_modifier4"
 		{
 			"type"		"entity_model"
@@ -37949,6 +38061,12 @@
 			"spawn_in_loadout_only"		"0"
 		}
 		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"entity_scale"
+			"scale_size"		"0.700000"
+			"style"		"0"
+		}
 	}
 	"11521"
 	{
@@ -39422,6 +39540,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"models/props_gameplay/treasure_chest_gold.vmdl"
 		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 		"asset_modifier2"
 		{
 			"type"		"particle_create"
@@ -39436,6 +39560,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"models/props_gameplay/treasure_chest_gold.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 		"asset_modifier2"
 		{
@@ -39472,6 +39602,12 @@
 			"modifier"		"models/courier/donkey_ti7/donkey_ti7_flying.vmdl"
 			"asset"		"dire"
 		}
+		"asset_modifier4"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_furion_treant"
+			"scale_size"		"0.850000"
+		}
 		"asset_modifier5"
 		{
 			"type"		"particle_create"
@@ -39486,6 +39622,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"models/props_gameplay/treasure_chest_gold.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 		"asset_modifier2"
 		{
@@ -40105,6 +40247,10 @@
 		}
 	}
 	"12282"
+	{
+		"skip_model_combine"		"1"
+	}
+	"12283"
 	{
 		"skip_model_combine"		"1"
 	}
@@ -41370,6 +41516,55 @@
 			"modifier"		"models/items/visage/soul_reaper_familiar_of_soul_reaper/soul_reaper_familiar_of_soul_reaper.vmdl"
 		}
 	}
+	"12504"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/venomancer/veno_chomper/veno_chomper_head_ambient.vpcf"
+		}
+	}
+	"12505"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/venomancer/veno_chomper/veno_chomper_spitter_mouth_ambient.vpcf"
+		}
+	}
+	"12506"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/venomancer/veno_ti8_chomper/veno_ti8_chomper_shoulder_ambient.vpcf"
+		}
+	}
+	"12507"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/venomancer/veno_ti8_chomper/veno_ti8_chomper_tail_ambient.vpcf"
+		}
+	}
+	"12508"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_venomancer_plague_ward"
+			"modifier"		"models/items/venomancer/ward/chomper_ward/chomper_ward.vmdl"
+		}
+	}
 	"12524"
 	{
 		"asset_modifier1"
@@ -41917,6 +42112,12 @@
 			"asset"		"npc_dota_invoker_forged_spirit"
 			"modifier"		"models/items/invoker/forge_spirit/frostivus2018_invoker_keeper_of_magic_spirit/frostivus2018_invoker_keeper_of_magic_spirit.vmdl"
 		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_invoker_forged_spirit"
+			"scale_size"		"0.900000"
+		}
 	}
 	"12765"
 	{
@@ -42044,6 +42245,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_techies_remote_mine"
 			"modifier"		"models/items/techies/frostivus2018_techies_squad_penguins_bomb/frostivus2018_techies_squad_penguins_bomb.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_techies_remote_mine"
+			"scale_size"		"0.900000"
 		}
 	}
 	"12836"
@@ -42369,6 +42576,16 @@
 			"gesture"		"1"
 		}
 	}
+	"12925"
+	{
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9/dazzle_ti9_immortal_head_ambient.vpcf"
+			"style"		"0"
+		}
+		"skip_model_combine"		"1"
+	}
 	"12926"
 	{
 		"asset_modifier2"
@@ -42385,6 +42602,22 @@
 			"style"		"0"
 		}
 		"skip_model_combine"		"1"
+	}
+	"12927"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_ambient.vpcf"
+		}
 	}
 	"12931"
 	{
@@ -42424,6 +42657,21 @@
 			"asset"		"ALL"
 			"modifier"		"ti9_arms"
 			"style"		"0"
+		}
+	}
+	"12939"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/grimstroke/ti9_immortal/gs_ti9_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
 		}
 	}
 	"12940"
@@ -42493,6 +42741,32 @@
 			"asset"		"ACT_DOTA_TAUNT"
 			"modifier"		"lich_ballplay"
 			"gesture"		"1"
+		}
+	}
+	"12955"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_replace"
+			"asset"		"particles/units/heroes/hero_pugna/pugna_weapon_glow.vpcf"
+			"modifier"		"particles/econ/items/pugna/pugna_ti9_immortal/pugna_ti9_immortal_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"12956"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/warlock/warlock_ti9/warlock_ti9_lantern_ambient.vpcf"
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier2"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
 		}
 	}
 	"12957"
@@ -42853,6 +43127,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_hero_axe"
 			"modifier"		"models/items/axe/ti9_jungle_axe/axe_bare.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_hero_axe"
+			"scale_size"		"1.030000"
 		}
 		"asset_modifier2"
 		{
@@ -43589,6 +43869,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"
 		}
+		"asset_modifier3"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"1"
+		}
 	}
 	"12998"
 	{
@@ -43607,6 +43893,1043 @@
 		}
 		"skin"		"1"
 		"skip_model_combine"		"0"
+	}
+	"13000"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/luna/luna_ti9_weapon/luna_ti9_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/luna_ti9_weapon/luna_ti9_base_attack.vpcf"
+			"style"		"0"
+		}
+	}
+	"13007"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ember_spirit/ember_ti9/ember_ti9_shoulders_ambient.vpcf"
+		}
+	}
+	"13020"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_eidolon"
+			"modifier"		"models/items/enigma/eidolon/ti9_cache_enigma_lord_of_luminaries_eidolons/ti9_cache_enigma_lord_of_luminaries_eidolons.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_dire_eidolon"
+			"modifier"		"models/items/enigma/eidolon/ti9_cache_enigma_lord_of_luminaries_eidolons/ti9_cache_enigma_lord_of_luminaries_eidolons.vmdl"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_greater_eidolon"
+			"modifier"		"models/items/enigma/eidolon/ti9_cache_enigma_lord_of_luminaries_eidolons/ti9_cache_enigma_lord_of_luminaries_eidolons.vmdl"
+		}
+		"asset_modifier3"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_lesser_eidolon"
+			"modifier"		"models/items/enigma/eidolon/ti9_cache_enigma_lord_of_luminaries_eidolons/ti9_cache_enigma_lord_of_luminaries_eidolons.vmdl"
+		}
+	}
+	"13021"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/enigma/ti9_cache_enigma_lord_head/ti9_cache_enigma_lord_head_ambient.vpcf"
+		}
+	}
+	"13023"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/enigma/ti9_cache_enigma_lord_armor/ti9_cache_enigma_lord_armor_ambient.vpcf"
+		}
+	}
+	"13024"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13042"
+	{
+		"asset_modifier"
+		{
+			"type"		"persona"
+			"persona"		"1"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_hero_invoker"
+			"modifier"		"models/heroes/invoker_kid/invoker_kid.vmdl"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_hero_invoker"
+			"scale_size"		"1"
+		}
+	}
+	"13043"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_orbs_loadout.vpcf"
+			"spawn_in_loadout_only"		"1"
+		}
+	}
+	"13045"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13047"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_invoker_forged_spirit"
+			"modifier"		"models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl"
+		}
+	}
+	"13060"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_grimstroke/grimstroke_brush_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13061"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13062"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/grimstroke/ti9_cache_grimstroke_ink_dragon_poet/ti9_cache_grimstroke_belt_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13064"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13065"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_back_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_DIE"
+			"modifier"		"egg"
+		}
+	}
+	"13066"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_weapon_ambient.vpcf"
+		}
+	}
+	"13067"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13068"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/necrolyte/necro_ti9_cache/necro_ti9_cache_ambient_head.vpcf"
+		}
+	}
+	"13070"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_drow/drow_bowstring.vpcf"
+		}
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13071"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_shoulder_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13072"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13073"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13074"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_ti9_cache/drow_ti9_cache_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13075"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13076"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13085"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dark_willow/ti9_cache_willow_allure_head/ti9_cache_willow_allure_head_ambient.vpcf"
+		}
+	}
+	"13086"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13087"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dark_willow/ti9_cache_willow_allure_belt/ti9_cache_willow_allure_belt_ambient.vpcf"
+		}
+	}
+	"13088"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dark_willow/ti9_cache_willow_allure_armor/ti9_cache_willow_allure_armor_ambient.vpcf"
+		}
+	}
+	"13089"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13090"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/tuskarr/ti9_tusk_jungle_weapon/ti9_tusk_jungle_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13091"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/tuskarr/ti9_tusk_jungle_back/ti9_tusk_jungle_back_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13092"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/tuskarr/ti9_tusk_jungle_arms/ti9_tusk_jungle_arms_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13094"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/tuskarr/ti9_tusk_jungle_neck/ti9_tusk_jungle_neck_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13099"
+	{
+		"asset_modifier"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/death_prophet/ti9_cache_dp_peacock_priest_skirt/ti9_cache_dp_peacock_priest_skirt_vortex.vmdl"
+		}
+	}
+	"13101"
+	{
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"dota_death_prophet_exorcism_spirit"
+			"modifier"		"models/items/death_prophet/exorcism/ti9_cache_dp_peacock_priest_spirit/ti9_cache_dp_peacock_priest_spirit.vmdl"
+		}
+	}
+	"13102"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/death_prophet/death_prophet_peacock/death_prophet_peacock_armor_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13104"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_death_prophet/death_prophet_ambient_hair.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/death_prophet/death_prophet_peacock/death_prophet_peacock_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13199"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13201"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_legs_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13203"
+	{
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/disruptor/disruptor_temple_defender/disruptor_temple_defender_back_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_replace"
+			"asset"		"particles/units/heroes/hero_disruptor/disruptor_ambient_glow.vpcf"
+			"modifier"		"particles/econ/items/disruptor/disruptor_resistive_pinfold/disruptor_ambient_empty.vpcf"
+			"style"		"0"
+		}
+	}
+	"13235"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_weapon_ambient.vpcf"
+		}
+	}
+	"13244"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/tidehunter/ti9_cache_tide_chelonia_arms/ti9_cache_tide_chelonia_arms_ambient.vpcf"
+		}
+	}
+	"13250"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/chen/ti9_emperor_of_the_sun/chen_ti9_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13252"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/chen/ti9_emperor_of_the_sun/chen_ti9_mount_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13262"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_back_ambient.vpcf"
+		}
+	}
+	"13264"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_endless/abaddon_endless_mount_ambient.vpcf"
+		}
+	}
+	"13265"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/rubick/rubick_ti9_cache_magus_back/rubick_ti9_cache_magus_back_ambient.vpcf"
+		}
+	}
+	"13266"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/rubick/rubick_ti9_cache_magus_weapon/rubick_ti9_cache_magus_weapon_ambient.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_replace"
+			"asset"		"particles/units/heroes/hero_rubick/rubick_staff_ambient.vpcf"
+			"modifier"		"particles/error/null.vpcf"
+			"style"		"0"
+		}
+	}
+	"13267"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/rubick/rubick_ti9_cache_magus_head/rubick_ti9_cache_magus_head_ambient.vpcf"
+		}
+	}
+	"13269"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_broodmother_spiderling"
+			"modifier"		"models/items/broodmother/spiderling/ti9_cache_brood_mother_of_thousands_spiderling/ti9_cache_brood_mother_of_thousands_spiderling.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_broodmother_spiderite"
+			"modifier"		"models/items/broodmother/spiderling/ti9_cache_brood_mother_of_thousands_spiderling/ti9_cache_brood_mother_of_thousands_spiderling.vmdl"
+		}
+	}
+	"13271"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/broodmother/brood_ti9/brood_ti9_legs_ambient.vpcf"
+		}
+	}
+	"13272"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/broodmother/brood_ti9/brood_ti9_head_ambient.vpcf"
+		}
+	}
+	"13273"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/broodmother/brood_ti9/brood_ti9_back_ambient.vpcf"
+		}
+	}
+	"13274"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_warlock/warlock_ambient_staff.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_tribal_weapon_ambient.vpcf"
+		}
+	}
+	"13277"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_warlock/warlock_ambient_smoke.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_lantern_eyes_ambient.vpcf"
+		}
+	}
+	"13278"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/warlock/warlock_ti9_cache_tribal/warlock_ti9_tribal_head_ambient.vpcf"
+		}
+	}
+	"13279"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_warlock_golem"
+			"modifier"		"models/items/warlock/golem/ti9_cache_warlock_tribal_warlock_golem/ti9_cache_warlock_tribal_golem_alt.vmdl"
+		}
+	}
+	"13292"
+	{
+		"asset_modifier"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_rattletrap_cog"
+			"modifier"		"models/items/rattletrap/ti9_cache_clock_living_calendar_sun_idol/ti9_cache_clock_living_calendar_sun_idol.vmdl"
+		}
+	}
+	"13293"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_rocket_ambient.vpcf"
+		}
+	}
+	"13294"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_weapon_ambient.vpcf"
+		}
+	}
+	"13295"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_head_ambient.vpcf"
+		}
+	}
+	"13296"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/clockwerk/ti9_cache_clockwerk_calendar/ti9_cache_clockwerk_calendar_armor_ambient.vpcf"
+		}
+	}
+	"13314"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/slark/slark_ti9_jungle_rule/slark_ti9_jungle_rule_ambient_head.vpcf"
+			"style"		"0"
+		}
+	}
+	"13317"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/slark/slark_ti9_jungle_rule/slark_ti9_jungle_rule_ambient_ring.vpcf"
+			"style"		"0"
+		}
+	}
+	"13318"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/huskar/ti9_cache_huskar_baptism_off_hand/ti9_cache_huskar_baptism_off_hand_ambient.vpcf"
+		}
+	}
+	"13319"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/huskar/ti9_cache_huskar_baptism_shoulder/ti9_cache_huskar_baptism_shoulder_ambient.vpcf"
+		}
+	}
+	"13320"
+	{
+		"asset_modifier0"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"spear"
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/huskar/ti9_cache_huskar_baptism_weapon/ti9_cache_huskar_baptism_weapon_ambient.vpcf"
+		}
+	}
+	"13321"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/huskar/ti9_cache_huskar_baptism_head/ti9_cache_huskar_baptism_head_ambient.vpcf"
+		}
+	}
+	"13326"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_shield_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13327"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_sword_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13328"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13329"
+	{
+		"asset_modifier0"
+		{
+			"type"		"hero_model_change"
+			"asset"		"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+			"modifier"		"models/items/dragon_knight/ti9_cache_dk_scorching_amber_dragoon_form/ti9_cache_dk_scorching_amber_dragoon_form.vmdl"
+		}
+	}
+	"13330"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dragon_knight/dk_scorching_amber/dk_scorching_chest_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13331"
+	{
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/batrider/ti9_batrider_explorer_mount/ti9_batrider_explorer_mount_ambient.vpcf"
+			"style"		"0"
+		}
+		"skip_model_combine"		"1"
+	}
+	"13334"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/batrider/ti9_batrider_explorer_head/ti9_batrider_explorer_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13337"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_runic/drow_runic_misc.vpcf"
+		}
+	}
+	"13338"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/drow/drow_runic/drow_runic_weapon.vpcf"
+		}
+		"skip_model_combine"		"0"
+	}
+	"13339"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13377"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13378"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13379"
+	{
+		"skip_model_combine"		"1"
+	}
+	"13380"
+	{
+		"skip_model_combine"		"1"
+	}
+	"13381"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_ember_spirit/ember_spirit_ambient_head.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_ember_spirit/ember_spirit_ambient_eyes.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_head_ambient.vpcf"
+		}
+	}
+	"13382"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_weapon_ambient.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+	}
+	"13383"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_ember_spirit/ember_spirit_ambient_shoulder_glow.vpcf"
+		}
+	}
+	"13389"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_ambient_eyes.vpcf"
+			"style"		"0"
+		}
+	}
+	"13391"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_belt_glow.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_cache"
+			"style"		"0"
+		}
+	}
+	"13393"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_earth_spirit/espirit_ambient_weapon.vpcf"
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/earth_spirit/earth_spirit_ti9_turquoise_giant/earth_spirit_ti9_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13422"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/ti9_cache_oracle_ambient_weapon_weapon.vpcf"
+		}
+	}
+	"13423"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_oracle/oracle_ambient_armor.vpcf"
+		}
+	}
+	"13424"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/ti9_cache_oracle_grand_hierophant_head_ambient.vpcf"
+		}
+	}
+	"13425"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/oracle/ti9_cache_oracle_grand_hierophant/oracle_hierophant_back_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13440"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/ember_spirit/ember_sindur/ember_sindur_offhand_ambient.vpcf"
+		}
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_off"
+		}
+	}
+	"13441"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_ember_spirit/ember_spirit_ambient_armor_glow.vpcf"
+		}
+	}
+	"13443"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_off_hand/ti9_bloodseeker_blood_off_hand_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13444"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_weapon/ti9_bloodseeker_blood_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13445"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_shoulders/ti9_bs_boiling_blood_shoulders_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13446"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/bloodseeker/ti9_bs_boiling_blood_head/ti9_bloodseeker_blood_head_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13457"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_abaddon/abaddon_blade.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"activity"
+			"asset"		"ACT_DOTA_ATTACK"
+			"modifier"		"everblack"
+			"style"		"0"
+		}
+	}
+	"13459"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_shoulder_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13461"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/abaddon/abaddon_everblack/abaddon_everblack_horse_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13467"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13469"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_ambient_eyes.vpcf"
+			"style"		"0"
+		}
+	}
+	"13471"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/dazzle/dazzle_ti9_forbidden/dazzle_ti9_forbidden_arms_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13474"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier3"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/lion/lion_ti9/lion_ti9_head_ambient.vpcf"
+		}
+		"asset_modifier4"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
 	}
 	"13475"
 	{
@@ -43643,6 +44966,46 @@
 			"style"		"0"
 		}
 	}
+	"13476"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_weapon/ti9_cache_pa_gothic_weapon_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9_cache"
+			"style"		"0"
+		}
+	}
+	"13478"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_head/ti9_cache_pa_gothic_head_ambient.vpcf"
+		}
+	}
+	"13479"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_belt/ti9_cache_pa_gothic_belt_ambient.vpcf"
+		}
+		"skip_model_combine"		"1"
+	}
+	"13480"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/phantom_assassin/ti9_cache_pa_gothic_hunter_back/ti9_cache_pa_gothic_back_ambient.vpcf"
+		}
+	}
 	"13481"
 	{
 		"asset_modifier2"
@@ -43675,6 +45038,236 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/courier/courier_babyrosh_alt_ti8/courier_babyrosh_alt_ti8.vpcf"
+			"style"		"0"
+		}
+	}
+	"13482"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_arms_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13483"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_armor.vpcf"
+			"style"		"0"
+		}
+		"skip_model_combine"		"1"
+	}
+	"13484"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_carnivorous_parasitism_head.vpcf"
+			"style"		"0"
+		}
+	}
+	"13485"
+	{
+		"asset_modifier0"
+		{
+			"type"		"hero_model_change"
+			"asset"		"models/heroes/undying/undying_flesh_golem.vmdl"
+			"modifier"		"models/items/undying/flesh_golem/ti9_cache_undying_carnivorous_parasitism_golem/ti9_cache_undying_carnivorous_parasitism_golem.vmdl"
+		}
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/undying/ti9_cache_undying_carnivorous_parasitism/ti9_cache_undying_golem_carnivorous_parasitism.vpcf"
+			"style"		"0"
+		}
+	}
+	"13491"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_arms_ambient.vpcf"
+		}
+	}
+	"13492"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_head_ambient.vpcf"
+		}
+	}
+	"13494"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_weapon_ambient.vpcf"
+		}
+	}
+	"13495"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_back_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+		}
+	}
+	"13496"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/juggernaut/jugg_slayer/jugg_slayer_legs_ambient.vpcf"
+		}
+	}
+	"13498"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/wraith_king/ti9_tyrant_armor/ti9_tyrant_armor_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13500"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/wraith_king/ti9_tyrant_weapon/ti9_tyrant_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+	}
+	"13505"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/shadow_fiend/sf_souls_tyrant/sf_souls_tyrant_head_ambient.vpcf"
+		}
+	}
+	"13507"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/shadow_fiend/sf_souls_tyrant/sf_souls_tyrant_shoulder_ambient.vpcf"
+		}
+	}
+	"13508"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_weapon_ambient.vpcf"
+		}
+	}
+	"13509"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_offhand_ambient.vpcf"
+		}
+	}
+	"13513"
+	{
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pudge/pudge_ti9_cache/pudge_ti9_cache_head_ambient.vpcf"
+		}
+	}
+	"13516"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/units/heroes/hero_pangolier/pangolier_weapon_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_weapon_ambient.vpcf"
+		}
+	}
+	"13518"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_offhand_ambient.vpcf"
+		}
+	}
+	"13519"
+	{
+		"skip_model_combine"		"0"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/pangolier/pangolier_ti9_cache/pangolier_ti9_cache_head_ambient.vpcf"
+		}
+	}
+	"13520"
+	{
+		"skip_model_combine"		"0"
+	}
+	"13523"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_ambient_gold.vpcf"
+		}
+		"skin"		"1"
+	}
+	"13524"
+	{
+		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/luna/luna_ti9_weapon_gold/luna_ti9_weapon_ambient_gold.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"ti9"
+			"style"		"0"
+		}
+		"skin"		"1"
+		"asset_modifier3"
+		{
+			"type"		"particle_projectile"
+			"asset"		"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+			"modifier"		"particles/econ/items/luna/luna_ti9_weapon_gold/luna_ti9_gold_base_attack.vpcf"
 			"style"		"0"
 		}
 	}
@@ -44319,6 +45912,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/fall_major_2015/compendium_points_fall_ambient_2015.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"16725"
 	{
@@ -44333,6 +45932,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/fall_major_2015/compendium_points_fall_ambient_2015.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2"
 		}
 	}
 	"16726"
@@ -44349,6 +45954,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/fall_major_2015/compendium_points_fall_ambient_2015.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"1.500000"
+		}
 	}
 	"16735"
 	{
@@ -44363,6 +45974,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/fall_major_2015/infuser_fall_ambient_2015.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"4"
 		}
 	}
 	"16845"
@@ -44379,6 +45996,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/infuser_winter_ambient_2016.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"4"
+		}
 	}
 	"16859"
 	{
@@ -44394,6 +46017,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/compendium_points_winter_ambient_2016.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17100"
@@ -44452,6 +46081,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/compendium_points_ti6_ambient_2016.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17253"
@@ -44788,6 +46423,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/compendium_points_winter_ambient_2016.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"17339"
 	{
@@ -44803,6 +46444,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/compendium_points_winter_ambient_2016.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17397"
@@ -44820,6 +46467,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/winter_major_2016/compendium_points_winter_ambient_2016.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"17420"
 	{
@@ -44835,6 +46488,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17444"
@@ -44852,6 +46511,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"17446"
 	{
@@ -44867,6 +46532,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17456"
@@ -44884,6 +46555,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"17459"
 	{
@@ -44899,6 +46576,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17466"
@@ -44916,6 +46599,12 @@
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
 		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
 	}
 	"17467"
 	{
@@ -44931,6 +46620,12 @@
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"particles/econ/events/ti8/compendium_points_ti8_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17480"
@@ -44961,7 +46656,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17484"
@@ -44977,7 +46678,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17486"
@@ -44993,7 +46700,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17511"
@@ -45009,7 +46722,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17512"
@@ -45025,7 +46744,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17513"
@@ -45041,7 +46766,13 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"17514"
@@ -45057,7 +46788,35 @@
 		{
 			"type"		"particle_create"
 			"asset"		"npc_dota_loadout_generic"
-			"modifier"		"particles/econ/events/ti8/compendium_points_ti9_ambient.vpcf"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
+		}
+	}
+	"17515"
+	{
+		"skin"		"2"
+		"asset_modifier0"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"models/ui/compendium_points/compendium_points_24levels.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"asset"		"npc_dota_loadout_generic"
+			"modifier"		"particles/econ/events/ti9/compendium_points_ti9_ambient.vpcf"
+		}
+		"asset_modifier2"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2.500000"
 		}
 	}
 	"20129"
@@ -45132,6 +46891,12 @@
 			"type"		"entity_model"
 			"asset"		"npc_dota_loadout_generic"
 			"modifier"		"models/items/courier/frostivus2018_courier_serac_the_seal/frostivus2018_courier_serac_the_seal_flying.vmdl"
+		}
+		"asset_modifier1"
+		{
+			"type"		"entity_scale"
+			"asset"		"npc_dota_loadout_generic"
+			"scale_size"		"2"
 		}
 	}
 	"21326"

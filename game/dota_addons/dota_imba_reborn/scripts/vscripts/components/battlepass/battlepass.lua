@@ -102,6 +102,7 @@ BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
+BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
 BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
 BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
@@ -158,6 +159,7 @@ function Battlepass:Init()
 	BATTLEPASS_URSA = {}
 	BATTLEPASS_LESHRAC = {}
 	BATTLEPASS_DEATH_PROPHET = {}
+	BATTLEPASS_INVOKER = {}
 --	BATTLEPASS_TIDEHUNTER = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
@@ -207,6 +209,8 @@ function Battlepass:Init()
 			BATTLEPASS_DEATH_PROPHET[v[1]] = k
 		elseif string.find(v[1], "tidehunter") then
 			BATTLEPASS_TIDEHUNTER[v[1]] = k
+		elseif string.find(v[1], "invoker") then
+			BATTLEPASS_INVOKER[v[1]] = k
 		end
 	end
 end
@@ -883,6 +887,10 @@ function Battlepass:GetHeroEffect(hero)
 				hero.life_break_start_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_spellstart.vpcf"
 				hero.life_break_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
 				hero.life_break_icon = 1
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_INVOKER["invoker_legendary"] then
+				Wearable:_WearProp(hero, "13042", "persona_selector")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
