@@ -31,7 +31,7 @@ ListenToGameEvent('npc_spawned', function(event)
 		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
 			npc:SetupHealthBarLabel()
 
-			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 or (IMBA_PUNISHED and npc.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(npc:GetPlayerID())]) then
+			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 then
 				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				npc:CenterCameraOnEntity(npc, -1)
 			else
@@ -40,7 +40,7 @@ ListenToGameEvent('npc_spawned', function(event)
 				if GetMapName() == "imba_demo" then return end
 				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
 					Timers:CreateTimer(1.5, function()
-						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()))
+						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
 					end)
 				end
 			end

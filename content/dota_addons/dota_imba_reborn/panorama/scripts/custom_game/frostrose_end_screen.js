@@ -245,7 +245,6 @@ function EndScoreboard(args) {
 						values.xp.progress_diff.style.marginLeft = (progress - 1) + "%";
 					}
 
-					// This might not show rewards for multi-levelup at once
 					var levelup_count = Math.floor(player_xp + xpDiff) / Math.floor(player_max_xp_in_level);
 
 					if (levelup_count >= 1) {

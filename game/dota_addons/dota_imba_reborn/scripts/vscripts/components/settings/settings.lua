@@ -498,7 +498,7 @@ UNIT_EQUIPMENT["models/heroes/shredder/shredder.vmdl"] = {
 	"models/heroes/shredder/shredder_hook.vmdl",
 	"models/heroes/shredder/shredder_shoulders.vmdl",
 }
-UNIT_EQUIPMENT["models/items/pudge/arcana/pudge_arcana_base.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_zonnoz"] = {
 	"models/items/pudge/blackdeath_offhand/blackdeath_offhand.vmdl",
 	"models/items/pudge/blackdeath_head_s3/blackdeath_head_s3.vmdl",
 	"models/items/pudge/immortal_arm/immortal_arm.vmdl",
@@ -521,18 +521,18 @@ UNIT_EQUIPMENT["models/heroes/rubick/rubick.vmdl"] = {
 	"models/items/rubick/kuroky_rubick_weapon/kuroky_rubick_weapon.vmdl",
 	"models/items/rubick/rubick_kuroky_head/rubick_kuroky_head.vmdl",
 }
-UNIT_EQUIPMENT["models/heroes/enchantress/enchantress.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_acalia"] = {
 	"models/items/enchantress/rainbow_spear/mesh/rainbow_spear_model.vmdl",
 	"models/items/enchantress/anuxi_summer_head/anuxi_summer_head.vmdl",
 	"models/items/enchantress/amberlight_belt/amberlight_belt.vmdl",
 	"models/items/enchantress/anuxi_summer_shoulder/anuxi_summer_shoulder.vmdl",
 	"models/items/enchantress/anuxi_wildkin_arm/anuxi_wildkin_arm.vmdl",
 }
-UNIT_EQUIPMENT["models/heroes/bristleback/bristleback_back.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_gordon_ramsay"] = {
 	"models/heroes/phoenix/phoenix_wings.vmdl",
 	"models/heroes/phoenix/phoenix_bird_head.vmdl",
 }
-UNIT_EQUIPMENT["models/heroes/bristleback/bristleback.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_rayzone"] = {
 	"models/heroes/bristleback/bristleback_back.vmdl",
 	"models/heroes/bristleback/bristleback_bracer.vmdl",
 	"models/heroes/bristleback/bristleback_head.vmdl",
@@ -540,17 +540,23 @@ UNIT_EQUIPMENT["models/heroes/bristleback/bristleback.vmdl"] = {
 	"models/heroes/bristleback/bristleback_weapon.vmdl",
 --	"models/heroes/bristleback/bristleback_offhand_weapon.vmdl",
 }
-UNIT_EQUIPMENT["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_rubick_arcana"] = {
 	"models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl",
 	"models/heroes/rubick/rubick_head.vmdl",
 	"models/heroes/rubick/rubick_staff.vmdl",
 	"models/heroes/rubick/shoulder.vmdl",
 }
-UNIT_EQUIPMENT["models/heroes/juggernaut/juggernaut_arcana.vmdl"] = {
+UNIT_EQUIPMENT["npc_donator_companion_juggernaut_arcana"] = {
 	"models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl",
 	"models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl",
 	"models/heroes/juggernaut/jugg_cape.vmdl",
 	"models/heroes/juggernaut/juggernaut_pants.vmdl",
+}
+UNIT_EQUIPMENT["npc_donator_companion_terrorblade_arcana"] = {
+	{"5957", "arcana"},
+	{"306", "back"},
+	{"307", "weapon"},
+	{"476", "armor"},
 }
 
 IMBA_DISABLED_SKULL_BASHER = {

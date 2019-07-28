@@ -967,11 +967,13 @@
 }
 
 #CompanionNotificationLabel {
-	align: center center;
+	padding: 10% 0% 10% 0%;
+	width: 100%;
+	height: 100%;
 	color: white;
 	text-align: center center;
 	font-size: 18px;
-	text-transform: uppercase;
+	text-overflow: shrink;
 }
 
 .CompanionNew {

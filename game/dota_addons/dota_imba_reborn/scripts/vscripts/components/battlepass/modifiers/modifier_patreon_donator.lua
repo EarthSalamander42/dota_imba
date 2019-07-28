@@ -8,7 +8,7 @@ function modifier_patreon_donator:OnCreated()
 		self:SetStackCount(api:GetDonatorStatus(self:GetParent():GetPlayerID()))
 		self:StartIntervalThink(0.2)
 		self.current_effect_name = ""
-		self.effect_name = api:GetPlayerEmblem(self:GetParent():GetPlayerID()) or ""
+		self.effect_name = api:GetPlayerEmblem(self:GetParent():GetPlayerID()).file
 	end
 end
 

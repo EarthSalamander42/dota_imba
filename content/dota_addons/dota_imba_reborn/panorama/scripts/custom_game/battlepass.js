@@ -24,6 +24,7 @@ var api = {
 //		rankingsImr5v5 : "imba/meta/rankings/imr-5v5",
 //		rankingsImr10v10 : "imba/meta/rankings/imr-10v10",
 		rankingsXp : "website/statistics/ranking/xp",
+		rankingsWinrate : "website/statistics/ranking/winrate",
 //		rankingsLevel1v1 : "imba/meta/rankings/level-1v1",
 		toggleIngameTag : "imba/toggle-ingame-tag",
 		toggleBPRewards : "imba/toggle-bp-rewards",
@@ -110,6 +111,24 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error finding top xp " + JSON.stringify(err));
+			}
+		});
+	},
+	getTopPlayerWinrate : function(callback) {
+		$.AsyncWebRequest(api.base + api.urls.rankingsWinrate, {
+			type : "GET",
+			dataType : "json",
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error || !obj.data || !obj.data)
+					$.Msg("Error finding top winrate");
+				else {
+					callback(obj.data);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error finding top winrate " + JSON.stringify(err));
 			}
 		});
 	},
@@ -297,6 +316,7 @@ function SwitchDonatorWrapper(type) {
 }
 
 var top_xp = [];
+var top_winrate = [];
 
 function Battlepass(retainSubTab, bRewardsDisabled) {
 	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
@@ -308,6 +328,12 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 		}
 
 		HallOfFame("XP");
+	});
+
+	api.getTopPlayerWinrate(function(players) {
+		for (player in players) {
+			top_winrate[player] = players[player];
+		}
 	});
 
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
@@ -329,7 +355,7 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 
 var companion_changed = false;
 
-function SetCompanion(companion, name, id) {
+function SetCompanion(companion, name, id, required_status) {
 	if (companion_changed === true) {
 //		$.Msg("SLOW DOWN BUDDY!");
 		return;
@@ -339,9 +365,22 @@ function SetCompanion(companion, name, id) {
 		$("#CompanionNotification").RemoveClass("not_donator");
 	}
 
+	var donator_status = IsDonator(Game.GetLocalPlayerID());
+
+	if (IsDonator(Game.GetLocalPlayerID()) == 6)
+		donator_status = 1;
+
 	if (IsDonator(Game.GetLocalPlayerID()) === false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	$.Msg(DonatorStatusConverter(donator_status))
+	$.Msg(required_status)
+	if (DonatorStatusConverter(donator_status) < required_status) {
+		$("#CompanionNotification").AddClass("not_donator");
+		$("#CompanionNotificationLabel").text = "Your donator status is too low. Required status: (" + $.Localize("donator_label_" + DonatorStatusConverterReverse(required_status)) + ")";
 		return;
 	}
 
@@ -393,9 +432,8 @@ function SetStatue(statue, name, id) {
 	}
 
 	api.updateStatue({
-		ingame_statue_id : id,
+		statue_id : id,
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
-		ingame_statue_enabled : true
 	}, function() {
 		$("#CompanionNotification").AddClass("success");
 		$("#CompanionNotificationLabel").text = $.Localize("statue_success") + $.Localize(name) + "!";
@@ -436,9 +474,8 @@ function SetEmblem(emblem, name, id) {
 	}
 
 	api.updateEmblem({
-		ingame_emblem_id : id,
+		emblem_id : id,
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
-		ingame_emblem_enabled : true
 	}, function() {
 		$("#CompanionNotification").AddClass("success");
 		$("#CompanionNotificationLabel").text = $.Localize("emblem_success") + $.Localize(name) + "!";
@@ -472,17 +509,20 @@ function HallOfFame(type) {
 
 	current_type = type;
 
-	for (var i = 1; i <= 25; i++) {
-//		if (type == "XP") {
-//			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
-//		} else if (type == "IMR") {
-//			var top_users = CustomNetTables.GetTableValue("top_imr5v5", i.toString());
-//		}
+	for (var i = 1; i <= 100; i++) {
+		if (type == "XP") {
+			var top_users = top_xp;
+		} else if (type == "IMR") {
+			var top_users = top_winrate;
+		}
 
-		if (top_xp === undefined) {
-//			$.Msg("Top Players not defined...")
+		if (top_users === undefined) {
+			$.Msg("Top Players not defined...")
 			return;
 		}
+
+		if (!top_users[i - 1])
+			return;
 
 		if ($("#player_" + i)) {
 			$("#player_" + i).DeleteAsync(0);
@@ -496,7 +536,7 @@ function HallOfFame(type) {
 
 		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar");
-		steam_id.steamid = top_xp[i - 1].steamid;
+		steam_id.steamid = top_users[i - 1].steamid;
 		steam_id.style.width = "38px";
 		steam_id.style.height = "38px";
 		steam_id.style.marginLeft = "40px";
@@ -514,7 +554,7 @@ function HallOfFame(type) {
 		leaderboard_border[8] = "dodgerblue"
 		leaderboard_border[9] = "brown"
 
-//		if (top_xp[i - 1].donator_level)
+//		if (top_users[i - 1].donator_level)
 //			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
 //			steam_id.style.border = "2px solid " + leaderboard_border[i];
 //		else
@@ -524,11 +564,11 @@ function HallOfFame(type) {
 		imbar_container.AddClass("LeaderboardXP");
 		var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
 		imbar.AddClass("imbar-progress-bar");
-		imbar.value = parseFloat(top_xp[i - 1].next_level_progress) / 100;
+		imbar.value = parseFloat(top_users[i - 1].next_level_progress) / 100;
 
 		var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
 		imbar_lvl.AddClass("imbar-lvl");
-		imbar_lvl.text = "Level: " + top_xp[i - 1].xp_level;
+		imbar_lvl.text = "Level: " + top_users[i - 1].xp_level;
 
 		var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank" + i);
 		imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
@@ -540,7 +580,7 @@ function HallOfFame(type) {
 
 		var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
 		imbar_rank.AddClass("imbar-rank");
-		imbar_rank.text = top_xp[i - 1].rank_title;
+		imbar_rank.text = top_users[i - 1].rank_title;
 
 //		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
 //		imbar_xp.AddClass("imbar-xp");
@@ -548,7 +588,13 @@ function HallOfFame(type) {
 
 		var imr = $.CreatePanel("Label", player, "rank_" + i);
 		imr.AddClass("LeaderboardIMR");
-		imr.text = 0;
+
+		// temporary
+		if (type == "IMR") {
+			imr.text = top_users[i - 1].win_percentage;
+		} else {
+			imr.text = 0;
+		}
 	}
 }
 
@@ -627,7 +673,8 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	var i_count = 0;
 	var class_option_count = 1;
 
-	$.Msg(companions)
+//	$.Msg("List of available companions:")
+//	$.Msg(companions)
 
 	var donator_row = $.CreatePanel("Panel", $('#' + panel + 'TableWrapper'), "DonatorRow" + class_option_count + "_" + player);
 	donator_row.AddClass("DonatorRow");
@@ -660,6 +707,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		if (companions[i] != undefined) {
 			companion_unit[i] = companions[i]["file"];
 			companion_id[i] = i;
+			required_status = companions[i]["required_status"];
 
 			if (i == 0) {
 				companion_name[i] = "Disabled";
@@ -669,33 +717,13 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 
 			if (companion_unit[i] == "npc_donator_companion_sappling")
 				companion_skin[i] = 3;
-//		} else {
-//			var steamId = Game.GetLocalPlayerInfo().player_steamid;
-//			if (steamId == "76561198015161808") {
-//				companion_unit[i] = "npc_donator_companion_cookies";
-//				vip = true;
-//			} else if (steamId == "76561198003571172") {
-//				companion_unit[i] = "npc_donator_companion_baumi";
-//				vip = true;
-//			} else if (steamId == "76561198014254115") {
-//				companion_unit[i] = "npc_donator_companion_icefrog";
-//				vip = true;
-//			} else if (steamId == "76561198003571172") {
-//				companion_unit[i] = "npc_donator_companion_admiral_bulldog";
-//				vip = true;
-//			} else if (steamId == "76561198021465788") {
-//				companion_unit[i] = "npc_donator_companion_suthernfriend";
-//				vip = true;
-//			} else {
-//				return;
-//			}
 		}
 
 		if (i_count > 5) {
 			class_option_count = class_option_count + 1;
 			var donator_row = $.CreatePanel("Panel", $('#' + panel + 'TableWrapper'), panel + "Row" + class_option_count + "_" + player);
 			donator_row.AddClass("DonatorRow");
-			i_count = 0;
+			i_count = 1;
 		}
 
 		var companion = $.CreatePanel("Panel", donator_row, companion_name[i]);
@@ -705,52 +733,9 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
 
-		if (panel == "Emblem") {
-			companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
-		} else {
-			companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
-		}
-/*
-		var companionskin = $.CreatePanel("Panel", companionpreview, "CompanionSkinPanel_" + i);
-		companionskin.style.width = "100%";
-		companionskin.style.height = "25px";
-		companionskin.style.align = "center bottom";
-		companionskin.style.flowChildren = "right";
-
-		for (var j = 0; j <= companion_skin[i]; j++) {
-			var companionskinbutton = $.CreatePanel("Button", companionskin, "CompanionSkin_" + i + "_" + j);
-			companionskinbutton.style.width = "20%";
-			companionskinbutton.style.height = "25px";
-			companionskinbutton.style.margin = "1px";
-			companionskinbutton.style.align = "center bottom";
-			companionskinbutton.style.zIndex = "100";
-			companionskinbutton.style.backgroundColor = "grey";
-			var event = function(unit, j) {
-				return function() {
-					CompanionSkin(unit, j);
-				}
-			};
-			companionskinbutton.SetPanelEvent("onactivate", event(companion_unit_name, j));
-
-			var label = $.CreatePanel("Label", companionskinbutton, companion_name[i] + "_label");
-			label.text = j + 1;
-
-			label.style.horizontalAlign = "left";
-			label.style.fontSize = "12px";
-			label.style.verticalAlign = "top";
-			label.style.letterSpacing = "1px";
-			label.style.align = "center center";
-			label.style.textTransform = "uppercase";
-			label.style.textAlign = "center center";
-			label.style.textShadow = "0px 0px 3px 3 #00000070";
-			label.style.color = "#99a8ad";
-			label.style.width = "100%";
-		}
-*/
-//		if (vip == true) {
-//			companionpreview.AddClass("CompanionUnique");
-//		}
+		companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
+		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
 		var companion_unit_name = companion_unit[i];
 
@@ -761,30 +746,34 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		 */
 
 		if (panel == "Companion") {
-			var event = function(ev, name, id) {
+			var event = function(ev, name, id, required_status) {
 				return function() {
-					SetCompanion(ev, name, id);
+					SetCompanion(ev, name, id, required_status);
 				}
 			};
 		} else if (panel == "Statue") {
 			var event = function(ev, name, id) {
 				return function() {
-					SetStatue(ev, name, id);
+					SetStatue(ev, name, id, required_status);
 				}
 			};
 		} else if (panel == "Emblem") {
 			var event = function(ev, name, id) {
 				return function() {
-					SetEmblem(ev, name, id);
+					SetEmblem(ev, name, id, required_status);
 				}
 			};
 		}
 
-		companionpreview.SetPanelEvent("onactivate", event(companion_unit_name, companion_name[i], companion_id[i]));
+		companionpreview.SetPanelEvent("onactivate", event(companion_unit_name, companion_name[i], companion_id[i], required_status));
 
 		var reward_label = $.CreatePanel("Label", companion, companion_name[i] + "_label");
 		reward_label.AddClass("BattlepassRewardLabel");
 		reward_label.text = companion_name[i];
+
+		if (required_status != undefined && required_status != 0) {
+			reward_label.style.color = GetDonatorColor(required_status);
+		}
 
 		if (!retainSubTab) {
 			SwitchDonatorWrapper(panel);

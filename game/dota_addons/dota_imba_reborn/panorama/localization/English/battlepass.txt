@@ -147,6 +147,8 @@
 
 "statue_success"				"Statue changed with: "
 
+"emblem_success"				"Emblem changed with: "
+
 //Leaderboard
 "leaderboard"					"Leaderboard"
 "leaderboard_loading"			"Loading leaderboard, please wait"

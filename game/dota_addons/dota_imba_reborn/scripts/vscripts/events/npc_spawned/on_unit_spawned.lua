@@ -71,29 +71,9 @@ function GameMode:OnUnitFirstSpawn(unit)
 
 	-- Unit cosmetics
 	Timers:CreateTimer(FrameTime(), function()
-		if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
+		if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetUnitName()] then
 			for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
-				local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
-				cosmetic:FollowEntity(unit, true)
-				if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
-					local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-					ParticleManager:ReleaseParticleIndex(particle)
-				elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
-					cosmetic:SetMaterialGroup("1")
-				elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
-					unit:SetMaterialGroup("1") -- zonnoz pet
-					cosmetic:SetMaterialGroup("1") -- zonnoz pet
-
-					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-				elseif wearable == "models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl" then
-					ParticleManager:CreateParticle("particles/econ/items/rubick/rubick_arcana/rubick_arc_ambient_default.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
---				elseif wearable == "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl" then
---					ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-				elseif wearable == "models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl" then
-					ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_ti8_sword/jugg_ti8_crimson_sword_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-				end
+				Wearable:_WearProp(unit, wearable[0], wearable[1], wearable[2])
 			end
 		end
 	end)

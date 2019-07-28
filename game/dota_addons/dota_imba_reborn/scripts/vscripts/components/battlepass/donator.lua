@@ -76,20 +76,19 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 		end
 	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
+	elseif unit_name == "npc_donator_companion_golden_venoling" then
+		companion:SetMaterialGroup("1")
 	end
 
 	companion:SetModelScale(model_scale or 100)
 
 	if DONATOR_COMPANION_ADDITIONAL_INFO[model] and DONATOR_COMPANION_ADDITIONAL_INFO[model][1] then
 		local particle = ParticleManager:CreateParticle(DONATOR_COMPANION_ADDITIONAL_INFO[model][1], PATTACH_ABSORIGIN_FOLLOW, companion)
+		if DONATOR_COMPANION_ADDITIONAL_INFO[model][3] then
+			ParticleManager:SetParticleControlEnt(particle, 0, companion, PATTACH_POINT_FOLLOW, DONATOR_COMPANION_ADDITIONAL_INFO[model][3], companion:GetAbsOrigin(), true)
+		end
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
-
---	if super_donator then
---		local ab = companion:FindAbilityByName("companion_morph")
---		ab:SetLevel(1)
---		ab:CastAbility()		
---	end
 end
 
 function DonatorCompanionSkin(id, unit, skin)

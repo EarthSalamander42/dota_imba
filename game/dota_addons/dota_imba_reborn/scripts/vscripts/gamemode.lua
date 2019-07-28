@@ -103,7 +103,6 @@ function GameMode:DonatorStatueJS(event)
 end
 
 function GameMode:DonatorEmblemJS(event)
-	print(event)
 	local hero = PlayerResource:GetSelectedHeroEntity(event.ID)
 
 	if hero:HasModifier("modifier_patreon_donator") then
