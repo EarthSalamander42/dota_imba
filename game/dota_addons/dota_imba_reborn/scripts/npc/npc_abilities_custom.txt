@@ -22611,7 +22611,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_damage"			"50"
+				"hero_damage"			"75"
 			}
 			"04"
 			{
@@ -22626,7 +22626,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces"				"2 6 8 12"
+				"bounces"				"3 6 9 12"
 			}
 			"07"
 			{
@@ -22801,7 +22801,8 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_reduce_pct"			"15 30 45 60"
+				"heal_reduce_pct"			"10 20 30 40"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_9"
 			}
 		}
 	}
@@ -23118,6 +23119,34 @@
 			}
 		}
 	}	
+
+	//=================================================================================================================
+	// Witch Doctor Talent 9: +X% Maledict FeelsBadMan Heal/Regeneration Reduction
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"60"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Wraith King's Wraithfire Blast
@@ -27611,7 +27640,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"moment_cd_increase"		"0.3 0.7 1.1 1.5"
+				"moment_cd_increase"		"0.3 0.45 0.6 0.75"
 			}
 		}
 	}
@@ -29186,7 +29215,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"truesight_immunity_radius"	"1050 900 750"
+				"truesight_immunity_radius"	"1800 1400 1000"
 			}
 
 			"02"

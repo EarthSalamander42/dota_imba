@@ -12,7 +12,7 @@
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_damage_reduction_percent"				"%DAMAGE REDUCTION PER BOUNCE:"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing"										"Lunar Blessing"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_Lore"									"The Goddess of the Moon smiles upon her kin."
-"DOTA_Tooltip_ability_imba_luna_lunar_blessing_Description"							"Increases the primary attribute for Luna and nearby allied heroes. Luna is also blessed with increased vision range at night.\n<font color='#FF7800'>Full Moon:</font> Can be activated at any time when off cooldown to boost all attributes and grant the bonus night vision to all affected allies for %full_moon_duration% seconds."
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_Description"							"Increases the primary attribute for Luna and nearby allied heroes. Luna is also blessed with increased vision range at night.\n<font color='#FF7800'>Full Moon:</font> Can be activated at any time when off cooldown to boost all attributes and grant the bonus night vision to all affected allies for %full_moon_duration% seconds.\n<font color='#FF7800'>Ultimate Blessing:</font> If Eclipse is cast on a unit, that unit gains %eclipse_pure_damage% bonus pure attack damage for its duration."
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_Note0"								"Lunar Blessing can be cast while silenced."
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_radius"								"BLESSING RADIUS:"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_primary_attribute"					"BONUS PRIMARY ATTRIBUTE:"

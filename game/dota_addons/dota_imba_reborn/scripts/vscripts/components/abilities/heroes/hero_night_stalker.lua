@@ -1367,9 +1367,7 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 	if not IsServer() then return end
 
 	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), add base radius to radius and add base duration to remaining amount
-	if keys.target:GetTeam() ~= self.parent:GetTeam() and (keys.target:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius and self.parent:IsAlive() then
-		self.radius = self.radius + self.radius
-		
+	if keys.target:GetTeam() ~= self.parent:GetTeam() and (keys.target:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius * self:GetStackCount() and self.parent:IsAlive() then
 		if self:GetStackCount() == 1 then
 			self:IncrementStackCount()
 		end
@@ -1385,13 +1383,13 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 		ParticleManager:ReleaseParticleIndex(self.particle)
 
 		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControl(self.particle, 2, Vector(self.radius, self.radius, self.radius))
+		ParticleManager:SetParticleControl(self.particle, 2, Vector(self.radius * self:GetStackCount(), self.radius * self:GetStackCount(), self.radius * self:GetStackCount()))
 		self:AddParticle(self.particle, false, false, -1, false, false)
 	end
 end
 
 function modifier_imba_night_stalker_crippling_fear_aura_720:OnTooltip()
-	return self:GetAbility():GetSpecialValueFor("radius") * self:GetStackCount()
+	return self.radius * self:GetStackCount()
 end
 
 function modifier_imba_night_stalker_crippling_fear_aura_720:OnDestroy()

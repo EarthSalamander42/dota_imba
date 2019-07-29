@@ -166,6 +166,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"full_moon_duration"		"12"
 			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"eclipse_pure_damage"		"20 30 40 50"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
@@ -239,7 +244,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"675 765 855"
+				"radius"					"675 750 825"
 			}	
 			"07"
 			{

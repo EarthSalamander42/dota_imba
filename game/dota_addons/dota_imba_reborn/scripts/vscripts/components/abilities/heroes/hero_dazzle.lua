@@ -1696,6 +1696,8 @@ end
 -------------------------	Ressurection		-------------------------
 -------------------------------------------------------------------------
 
+LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )
+
 if imba_dazzle_ressurection == nil then imba_dazzle_ressurection = class({}) end
 
 function imba_dazzle_ressurection:GetCastAnimation()
@@ -1715,6 +1717,8 @@ function imba_dazzle_ressurection:OnAbilityPhaseStart()
 			end
 		end
 
+		DisplayError(caster:GetPlayerID(), "#dota_hud_error_ressurection_no_targets")
+		
 		return false
 	end
 end
@@ -1725,36 +1729,38 @@ function imba_dazzle_ressurection:OnSpellStart()
 		local caster = self:GetCaster()
 		local delay = self:GetSpecialValueFor("delay")
 
-		self:SetActivated(false)
+		if target and target:GetPlayerID() then
+			self:SetActivated(false)
 
-		local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:ReleaseParticleIndex(castParticle)
+			local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:ReleaseParticleIndex(castParticle)
+		
+			local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
+		
+			Timers:CreateTimer(delay, function()
+				if target:IsAlive() then
+					self:SetActivated(true)
+					EmitSoundOn("Imba.DazzleRessurectionFail", target)
 
-		local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
+					ParticleManager:DestroyParticle(screenParticle, true)
+					ParticleManager:ReleaseParticleIndex(screenParticle)
 
-		Timers:CreateTimer(delay, function()
-			if target:IsAlive() then
-				self:SetActivated(true)
-				EmitSoundOn("Imba.DazzleRessurectionFail", target)
+					self:EndCooldown()
+					self:RefundManaCost()
+				else
+					self:SetActivated(true)
+					target:RespawnHero(false, false)
+					FindClearSpaceForUnit(target, caster:GetAbsOrigin(), true)
 
-				ParticleManager:DestroyParticle(screenParticle, true)
-				ParticleManager:ReleaseParticleIndex(screenParticle)
+					ParticleManager:DestroyParticle(screenParticle, true)
+					ParticleManager:ReleaseParticleIndex(screenParticle)
 
-				self:EndCooldown()
-				self:RefundManaCost()
-			else
-				self:SetActivated(true)
-				target:RespawnHero(false, false)
-				FindClearSpaceForUnit(target, caster:GetAbsOrigin(), true)
-
-				ParticleManager:DestroyParticle(screenParticle, true)
-				ParticleManager:ReleaseParticleIndex(screenParticle)
-
-				local targetParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-				ParticleManager:ReleaseParticleIndex(targetParticle)
-				EmitGlobalSound("Imba.reincarnationGlobal")
-			end
-		end)
+					local targetParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+					ParticleManager:ReleaseParticleIndex(targetParticle)
+					EmitGlobalSound("Imba.reincarnationGlobal")
+				end
+			end)
+		end
 	end
 end
 

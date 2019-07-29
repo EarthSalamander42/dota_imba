@@ -83,5 +83,5 @@
 "DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_travelling_light"				"Illuminate Transient Form Free Pathing Movement"
 "DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_luminous_burster"				"Luminous Burster"
 "DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_luminous_burster_Description"	"Increases Blinding Light cooldown by 50%. Blinding Light shoots ten additional pulses in a straight line with a 0.08 second delay each."
-"DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_flow_inhibition"				"Chakra Magic Reverse Effect on Enemies (50% Efficacy)"
+"DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_flow_inhibition"				"Chakra Magic Reverse Effect on Enemies (60% Efficacy)"
 "DOTA_Tooltip_ability_special_bonus_imba_keeper_of_the_light_pure_illuminate"				"Illuminate Pure Damage"

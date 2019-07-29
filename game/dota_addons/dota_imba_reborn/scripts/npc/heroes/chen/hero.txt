@@ -25,11 +25,12 @@
 		"Ability13"		"special_bonus_imba_chen_divine_favor_cd_reduction"
 		"Ability14"		"special_bonus_gold_income_50"
 		"Ability15"		"special_bonus_imba_chen_test_of_faith_cd_reduction"
-		"Ability16"		"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
+		"Ability16"		"special_bonus_all_stats_15"
 		"Ability17"		"special_bonus_imba_chen_remnants_of_penitence"
 		
 		// Removed Talents
 		//"Ability16"		"special_bonus_unique_chen_1"
-		//"Ability17"		"special_bonus_unique_chen_2"
+		//"Ability16"		"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
+		//"Ability17"		"special_bonus_unique_chen_2"		
 	}
 }

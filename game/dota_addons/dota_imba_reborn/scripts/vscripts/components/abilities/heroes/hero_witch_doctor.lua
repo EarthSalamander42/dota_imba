@@ -513,7 +513,7 @@ function modifier_imba_maledict:OnCreated()
 	self.bonus_damage_pct = hAbility:GetSpecialValueFor("bonus_damage_pct") * 0.01
 	self.tick_time_sec = hAbility:GetSpecialValueFor("tick_time_sec")
 	self.tick_time_main = hAbility:GetSpecialValueFor("tick_time_main")
-	self.heal_reduce_pct = hAbility:GetSpecialValueFor("heal_reduce_pct") * (-1)
+	self.heal_reduce_pct = hAbility:GetTalentSpecialValueFor("heal_reduce_pct") * (-1)
 	self.counter = 0
 	self.burstParticle = ParticleManager:CreateParticle("particles/hero/witch_doctor/imba_witchdoctor_maledict.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.burstParticle, 0, hParent, PATTACH_POINT_FOLLOW, "attach_hitloc", hParent:GetAbsOrigin(), true)
@@ -538,7 +538,7 @@ function modifier_imba_maledict:OnRefresh()
 	self.bonus_damage_pct = hAbility:GetSpecialValueFor("bonus_damage_pct") * 0.01
 	self.tick_time_sec = hAbility:GetSpecialValueFor("tick_time_sec")
 	self.tick_time_main = hAbility:GetSpecialValueFor("tick_time_main")
-	self.heal_reduce_pct = hAbility:GetSpecialValueFor("heal_reduce_pct") * (-1)
+	self.heal_reduce_pct = hAbility:GetTalentSpecialValueFor("heal_reduce_pct") * (-1)
 end
 
 function modifier_imba_maledict:OnDestroy()
@@ -581,13 +581,13 @@ end
 function modifier_imba_maledict:DeclareFunctions()
 	local funcs =
 		{
-			MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 			MODIFIER_EVENT_ON_DEATH
 		}
 	return funcs
 end
 
-function modifier_imba_maledict:GetModifierHealAmplify_Percentage()
+function modifier_imba_maledict:GetModifierHPRegenAmplify_Percentage()
 	return self.heal_reduce_pct
 end
 
@@ -668,12 +668,12 @@ function modifier_imba_maledict_talent:IsPurgable() return false end
 
 function modifier_imba_maledict_talent:DeclareFunctions()
 	local funcs ={
-		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
 	}
 	return funcs
 end
 
-function modifier_imba_maledict_talent:GetModifierHealAmplify_Percentage()
+function modifier_imba_maledict_talent:GetModifierHPRegenAmplify_Percentage()
 	return -100
 end
 
@@ -992,4 +992,24 @@ function modifier_imba_death_ward:CheckState()
 		[MODIFIER_STATE_MUTED] = true,
 	}
 	return state
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_9", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_witch_doctor_9	= class({})
+
+function modifier_special_bonus_imba_witch_doctor_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_witch_doctor_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_witch_doctor_9:RemoveOnDeath() 	return false end
+
+function imba_witch_doctor_maledict:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_witch_doctor_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_witch_doctor_9"), "modifier_special_bonus_imba_witch_doctor_9", {})
+	end
 end

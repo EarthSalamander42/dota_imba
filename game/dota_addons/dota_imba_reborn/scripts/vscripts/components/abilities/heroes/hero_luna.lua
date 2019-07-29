@@ -551,6 +551,13 @@ function modifier_imba_luna_eclipse:OnCreated(params)
 	self.cast_pos 		= self.target_position or self:GetParent():GetAbsOrigin()
 	self.refraction_pos = self.cast_pos + RandomVector(self.radius)
 	
+	-- IMBAfication: Ultimate Blessing (description attached to Lunar Blessing)
+	if not self.target_position and self:GetCaster():HasAbility("imba_luna_lunar_blessing") and self:GetCaster():FindAbilityByName("imba_luna_lunar_blessing"):IsTrained() then
+		local ultimate_blessing_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_ultimate_blessing.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(ultimate_blessing_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(ultimate_blessing_particle, false, false, -1, true, false)
+	end
+	
 	self:OnIntervalThink()
 	
 	if self:GetCaster():HasScepter() then
@@ -692,6 +699,20 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 		self:SetStackCount(math.max(self.beams_scepter - self.beams_elapsed, 0))
 	else
 		self:SetStackCount(math.max(self.beams - self.beams_elapsed, 0))
+	end
+end
+
+function modifier_imba_luna_eclipse:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_luna_eclipse:GetModifierProcAttack_BonusDamage_Pure()
+	if IsServer() and not self.target_position and self:GetCaster():HasAbility("imba_luna_lunar_blessing") then
+		return self:GetCaster():FindAbilityByName("imba_luna_lunar_blessing"):GetSpecialValueFor("eclipse_pure_damage")
 	end
 end
 

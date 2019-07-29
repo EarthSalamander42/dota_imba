@@ -7112,6 +7112,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"targets"			"2 2 2 3"
 			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1000"
+			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -7136,6 +7141,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"2000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"machines_per_sec"		"36"
 			}
 		}
 	}
