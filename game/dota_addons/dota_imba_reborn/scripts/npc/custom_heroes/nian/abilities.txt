@@ -192,7 +192,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.9 2.1 2.3 2.5" // Separate modifier from knockback 
+				"stun_duration"			"1.6 1.7 1.8 1.9" // Separate modifier from knockback 
 			}
 			"08"
 			{
