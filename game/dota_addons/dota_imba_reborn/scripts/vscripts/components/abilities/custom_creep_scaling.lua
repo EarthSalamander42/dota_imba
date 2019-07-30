@@ -135,7 +135,7 @@ function modifier_custom_creep_scaling:GetModifierPhysicalArmorBonus()
 		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
 	end
 
-    return math.max(self:GetAbility():GetSpecialValueFor("melee_armor") * (math.floor(GameRules:GetDOTATime(false, false) / 60) - self:GetAbility():GetSpecialValueFor("min_before_instability"))	* multiplier, 0)
+    return self:GetAbility():GetSpecialValueFor("melee_armor") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierMagicalResistanceBonus()
@@ -149,7 +149,7 @@ function modifier_custom_creep_scaling:GetModifierMagicalResistanceBonus()
 		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
 	end
 
-    return math.max(self:GetAbility():GetSpecialValueFor("melee_mres") * (math.floor(GameRules:GetDOTATime(false, false) / 60) - self:GetAbility():GetSpecialValueFor("min_before_instability"))	* multiplier, 0)
+    return self:GetAbility():GetSpecialValueFor("melee_mres") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierMoveSpeedBonus_Constant()
