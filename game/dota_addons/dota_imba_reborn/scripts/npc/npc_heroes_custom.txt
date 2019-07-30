@@ -24,6 +24,7 @@
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
+#base heroes/invoker/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
@@ -753,14 +754,6 @@
 		"Ability15"					"special_bonus_unique_gyrocopter_4"
 		"Ability16"					"special_bonus_unique_gyrocopter_1"
 		"Ability17"					"special_bonus_unique_gyrocopter_5"
-	}
-	
-	//=================================================================================================================
-	// HERO: Invoker
-	//=================================================================================================================
-	"npc_dota_hero_invoker"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 	}
 
 	//=================================================================================================================

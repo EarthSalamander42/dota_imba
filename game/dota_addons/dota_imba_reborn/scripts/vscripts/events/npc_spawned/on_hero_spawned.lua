@@ -42,7 +42,10 @@ function GameMode:OnHeroFirstSpawn(hero)
 	-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
 	if hero:HasAbility("invoker_invoke") then
 		LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
+		LinkLuaModifier("modifier_imba_invoker_spelloverride", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE )
+
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
+		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoker_spelloverride", {})
 	end
 
 	HeroSelection:Attachments(hero)
