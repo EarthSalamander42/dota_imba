@@ -114,6 +114,9 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_nian.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_vardor.png" hittest="false" />
+
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana1.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
@@ -161,7 +164,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
-		-->
 		</Panel>
 	</Panel>
+	-->
 </root>

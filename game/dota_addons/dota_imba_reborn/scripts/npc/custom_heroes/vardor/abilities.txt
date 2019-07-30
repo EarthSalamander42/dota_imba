@@ -26,10 +26,9 @@
 	    }
 	
 	    "AbilityManaCost"               "100 150 200"
-	
+
 	    //Special
 	    //-------------------------------------------------------------------------------------------------------------
-	
 	    "AbilitySpecial"
 	    {
 	        "01"
@@ -59,8 +58,7 @@
 	            "Function"      "InitYari"
 	        }
 	    }
-	
-	
+
 	    "OnSpellStart"
 	    {
 	        "RunScript"
@@ -69,7 +67,7 @@
 	            "Function"      "AddYari"
 	        }
 	    }
-	
+
 	    "OnUpgrade"
 	    {
 	        "RunScript"
@@ -78,7 +76,7 @@
 	            "Function"      "ChangeSpear"
 	        }
 	    }
-	
+
 	    "Modifiers"
 	    {
 	        "modifier_celestial_yari_bonus"
@@ -106,20 +104,22 @@
 	        }
 	    }
 	}
-	
+
 	"vardor_graceful_jump"
 	{
 		"BaseClass"     					"ability_lua"
 		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+//		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"    				"1"
 		"AbilityTextureName" 				"slark_pounce"
 		"AbilityCastPoint"   				"0.0"
-		"AbilityCooldown"    				"20.0 20.0 15.0 8.0"
-		"AbilityManaCost"    				"80 100 120 140"
+		"AbilityCooldown"    				"10.0 9.0 8.0 7.0"
+		"AbilityManaCost"    				"75"
 		"AbilityCastRange"   				"%range"
 		"AbilityDamage" 					"%damage"
 		//Precache
@@ -158,6 +158,11 @@
 			{
 				"var_type"    					"FIELD_INTEGER"
 				"damage_radius"     			"300"
+			}
+			"06"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"jump_speed"					"1500"
 			}
 		}
 	}
@@ -255,6 +260,7 @@
 			}
 		}
 	}
+
 	"vardor_piercing_shot"
 	{
 		"BaseClass"     					"ability_lua"
@@ -269,10 +275,9 @@
 		"AbilityCastPoint"   				"0.3 0.3 0.3 0.3"
 		"AbilityCooldown"    				"18 16 14 12"
 		"AbilityDamage" 					"%damage"
-		"AbilityManaCost"    				"125 130 135 140"
+		"AbilityManaCost"    				"70 80 90 100"
 		"AOERadius"     					"%AOE"
-	
-	
+
 		//Precache
 		//-------------------------------------------------------------------------------
 		"precache"
@@ -284,6 +289,7 @@
 			"model"							"models/items/phantom_lancer/immortal_ti6/mesh/phantom_lancer_immortal_spear_mdoel.vmdl"
 			"model"							"models/spear.vmdl"
 		}
+
 		//AbilitySpecial
 		//-------------------------------------------------------------------------------
 		"AbilitySpecial"

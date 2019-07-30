@@ -460,7 +460,7 @@ function SetStatue(statue, name, id) {
 	companion_changed = true;
 }
 
-function SetEmblem(emblem, name, id) {
+function SetEmblem(emblem, name, id, required_status) {
 	if (companion_changed === true) {
 //		$.Msg("SLOW DOWN BUDDY!");
 		return;
@@ -478,6 +478,8 @@ function SetEmblem(emblem, name, id) {
 		return;
 	}
 
+//	$.Msg(DonatorStatusConverter(donator_status))
+//	$.Msg(required_status)
 	if (DonatorStatusConverter(donator_status) < required_status) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = "Your donator status is too low. Required status: (" + $.Localize("donator_label_" + DonatorStatusConverterReverse(required_status)) + ")";
@@ -819,13 +821,13 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 				}
 			};
 		} else if (panel == "Statue") {
-			var event = function(ev, name, id) {
+			var event = function(ev, name, id, required_status) {
 				return function() {
 					SetStatue(ev, name, id, required_status);
 				}
 			};
 		} else if (panel == "Emblem") {
-			var event = function(ev, name, id) {
+			var event = function(ev, name, id, required_status) {
 				return function() {
 					SetEmblem(ev, name, id, required_status);
 				}
@@ -984,46 +986,6 @@ function SetupPanel() {
 	}
 }
 
-/*
-function ToggleCompanion() {
-	if ($("#CompanionNotification").BHasClass("not_donator")) {
-		$("#CompanionNotification").RemoveClass("not_donator");
-	}
-
-	// check if player is donator; otherwise show advertisement
-	if (IsDonator(Game.GetLocalPlayerID()) == false) {
-		$("#CompanionNotification").AddClass("not_donator");
-		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
-		return;
-	}
-
-	$.AsyncWebRequest(url, {
-		type : 'POST',
-		success : function(d) {
-			companions = d.data;
-			$.Msg("Companion Api Good: " + JSON.stringify(d));
-			$("#CompanionNotification").AddClass("success");
-			$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
-			GameEvents.SendCustomGameEventToServer("change_companion", {
-				ID : Players.GetLocalPlayer(),
-				unit : companion
-			});
-			$.Schedule(6.0, function() {
-				$("#CompanionNotification").RemoveClass("success");
-			});
-		},
-		data : data,
-		error : function(err) {
-			$.Msg("Companion Api Error: " + JSON.stringify(err));
-			$("#CompanionNotification").AddClass("failure");
-			$("#CompanionNotificationLabel").text = $.Localize("companion_error");
-			$.Schedule(6.0, function() {
-				$("#CompanionNotification").RemoveClass("failure");
-			});
-		}
-	});
-}
-*/
 (function() {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
