@@ -17,6 +17,12 @@ require('events/npc_spawned/on_hero_spawned')
 require('events/npc_spawned/on_unit_spawned')
 require('events/on_entity_killed/on_hero_killed')
 
+-- Used for checking memory usage
+function comma_value(n) -- credit http://richard.warburton.it
+	local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
+	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+end
+
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
@@ -942,6 +948,9 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
+			elseif str == "-memory" then
+				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+				-- print(package.loaded) -- This lags everything to absolute death
 			end
 		end
 	end
