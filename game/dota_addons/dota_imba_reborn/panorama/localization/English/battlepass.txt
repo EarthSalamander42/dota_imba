@@ -19,6 +19,7 @@
 "donator_Patreon_wrapper_label"		"Become a Patron"
 "donator_Companion_wrapper_label"	"Select a Companion"
 "donator_Statue_wrapper_label"		"Select a Statue"
+"donator_Emblem_wrapper_label"		"Select a Hero Emblem"
 
 "battlepass_blink"						"Nature Blink"
 "battlepass_blink2"						"Light Blue Blink"
@@ -128,10 +129,12 @@
 "battlepass_maelstorm5"					"Overgrown Maelstorm"
 "battlepass_earthshaker_arcana"			"Planetfall (Celestial Summons)"
 "battlepass_earthshaker_arcana2"		"Planetfall (Burning Descent)"
+"battlepass_invoker_legendary"			"Acolyte of the Lost Arts"
 
 //Donator Tab
 "donator_companion"				"Companion"
 "donator_statue"				"Statue"
+"donator_emblem"				"Hero Emblem"
 "donator_info"					"Select a Companion"
 "companion_enabled"				"Companion enabled."
 "companion_disabled"			"Companion disabled."
@@ -143,6 +146,8 @@
 "toggle_companion"				"Toggle Companion"
 
 "statue_success"				"Statue changed with: "
+
+"emblem_success"				"Emblem changed with: "
 
 //Leaderboard
 "leaderboard"					"Leaderboard"

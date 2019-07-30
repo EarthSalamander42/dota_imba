@@ -3,6 +3,7 @@
 		<Panel id="container" style="visibility:collapse;">
 			<!-- Those selection icons are not used, but Valve calls them, increasing loading time if they don't exist. -->
 
+			<!--
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sohei.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -159,6 +160,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/zuus_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

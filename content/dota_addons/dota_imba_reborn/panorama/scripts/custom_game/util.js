@@ -90,12 +90,12 @@ function IsDonator(ID) {
 
 	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
 	var donators = CustomNetTables.GetTableValue("game_options", "donators");
-//	$.Msg(donators)
 
 	for (var key in donators) {
-		var steamid = donators[key];
-		if (local_steamid === steamid)
-			return true;
+		var steamid = key;
+		var status = donators[key];
+		if (local_steamid === steamid && status != 1 || status != 2)
+			return status;
 	}
 
 	return false;
@@ -103,16 +103,17 @@ function IsDonator(ID) {
 
 function IsDeveloper(ID) {
 	var i = 0
-	if (CustomNetTables.GetTableValue("game_options", "developers") == undefined) {
+	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
 		return false;
 	}
 
 	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
-	var developers = CustomNetTables.GetTableValue("game_options", "developers");
+	var developers = CustomNetTables.GetTableValue("game_options", "donators");
 		
 	for (var key in developers) {
-		var steamid = developers[key];
-		if (local_steamid === steamid)
+		var steamid = developers[key].steamid;
+		var status = developers[key].status;
+		if (local_steamid === steamid && status == 1 || status == 2)
 			return true;
 	}
 
@@ -256,3 +257,60 @@ function SetMutationTooltip(j) {
 }
 
 GameEvents.Subscribe("send_mutations", Mutation);
+
+// temporary
+function DonatorStatusConverter(new_status) {
+	if (new_status == 6)
+		return 1;
+	else if (new_status == 5)
+		return 2;
+	else if (new_status == 4)
+		return 3;
+	else if (new_status == 7)
+		return 4;
+	else if (new_status == 8)
+		return 5;
+	else if (new_status == 1)
+		return 102;
+	else if (new_status == 2)
+		return 101;
+	else if (new_status == 3)
+		return 100;
+}
+
+function DonatorStatusConverterReverse(new_status) {
+	if (new_status == 1)
+		return 6;
+	else if (new_status == 2)
+		return 5;
+	else if (new_status == 3)
+		return 4;
+	else if (new_status == 4)
+		return 7;
+	else if (new_status == 5)
+		return 8;
+	else if (new_status == 100)
+		return 3;
+	else if (new_status == 101)
+		return 2;
+	else if (new_status == 102)
+		return 1;
+}
+
+function GetDonatorColor(status) {
+	// return undefined for some reason
+//	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
+//	$.Msg(donator_colors)
+
+	var donator_colors = [];
+	donator_colors[1] = "#00CC00";
+	donator_colors[2] = "#DAA520";
+	donator_colors[3] = "#DC2828";
+	donator_colors[4] = "#993399";
+	donator_colors[5] = "#2F5B97";
+	donator_colors[100] = "#0066FF";
+	donator_colors[101] = "#641414";
+	donator_colors[102] = "#871414";
+
+	return donator_colors[status];
+}

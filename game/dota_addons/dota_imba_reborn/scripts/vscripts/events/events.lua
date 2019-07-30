@@ -160,6 +160,11 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+			
+			-- ONLY SHOW THE DEMO PANEL IF IT'S ACTUALLY DEMO MODE (lest people get the wrong idea with thinking other players can use these "hacks")
+			if IsInToolsMode() or GetMapName() == "imba_demo" then
+				CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
+			end
 		end)
 
 		Timers:CreateTimer(5.0, function()
@@ -1060,7 +1065,7 @@ function GameMode:OnThink()
 	local entities = Entities:FindAllInSphere(GetGroundPosition(Vector(0, 0, 0), nil), 25000)
 
 	for _, entity in pairs(entities) do
-		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 then
+		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 and entity:GetHealth() <= 0 then
 			entity:RemoveSelf()
 		end
 	end

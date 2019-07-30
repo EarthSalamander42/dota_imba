@@ -438,6 +438,10 @@ function modifier_imba_voodoo_restoration_heal:RemoveOnDeath() return true end
 -- function modifier_imba_voodoo_restoration_heal:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end -- Why was this made to stack
 -------------------------------------------
 function modifier_imba_voodoo_restoration_heal:OnCreated()
+	self.heal				= self:GetAbility():GetSpecialValueFor("heal")
+	self.heal_spell_amp_pct	= self:GetAbility():GetSpecialValueFor("heal_spell_amp_pct")
+	self.int_to_heal		= self:GetAbility():GetSpecialValueFor("int_to_heal")
+	
 	if IsServer() then
 		self.interval = self:GetAbility():GetSpecialValueFor("heal_interval")
 		self:StartIntervalThink( self.interval )
@@ -446,8 +450,8 @@ end
 
 function modifier_imba_voodoo_restoration_heal:OnIntervalThink()
 	local hParent = self:GetParent()
-	local heal_amp = 1 + (self:GetCaster():GetSpellAmplification(false) * 0.01)
-	local heal = (self:GetAbility():GetSpecialValueFor("heal") + (self:GetCaster():GetIntellect() * self:GetAbility():GetSpecialValueFor("int_to_heal") * 0.01)) * heal_amp * self.interval
+	local heal_amp = 1 + (self:GetCaster():GetSpellAmplification(false) * self.heal_spell_amp_pct * 0.01)
+	local heal = (self.heal + (self:GetCaster():GetIntellect() * self.int_to_heal * 0.01)) * heal_amp * self.interval
 
 	hParent:Heal(heal, self:GetCaster())
 	SendOverheadEventMessage(hParent, OVERHEAD_ALERT_HEAL, hParent, heal, hParent)

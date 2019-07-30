@@ -22705,9 +22705,14 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleanse_interval"			"5"
+				"heal_spell_amp_pct"		"50"
 			}
 			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleanse_interval"			"5"
+			}
+			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"heal_interval"				"0.25"		//0.33 is vanilla, but this is for better synching for cleanse

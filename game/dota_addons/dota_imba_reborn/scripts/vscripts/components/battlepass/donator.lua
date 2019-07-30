@@ -12,7 +12,7 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 	end
 
 	-- set mini doom as default companion if something goes wrong
-	if unit_name == nil then
+	if unit_name == nil or unit_name == false then
 		unit_name = "npc_donator_companion_demi_doom"
 	end
 
@@ -76,20 +76,19 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 		end
 	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
+	elseif unit_name == "npc_donator_companion_golden_venoling" then
+		companion:SetMaterialGroup("1")
 	end
 
-	companion:SetModelScale(model_scale)
+	companion:SetModelScale(model_scale or 100)
 
 	if DONATOR_COMPANION_ADDITIONAL_INFO[model] and DONATOR_COMPANION_ADDITIONAL_INFO[model][1] then
 		local particle = ParticleManager:CreateParticle(DONATOR_COMPANION_ADDITIONAL_INFO[model][1], PATTACH_ABSORIGIN_FOLLOW, companion)
+		if DONATOR_COMPANION_ADDITIONAL_INFO[model][3] then
+			ParticleManager:SetParticleControlEnt(particle, 0, companion, PATTACH_POINT_FOLLOW, DONATOR_COMPANION_ADDITIONAL_INFO[model][3], companion:GetAbsOrigin(), true)
+		end
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
-
---	if super_donator then
---		local ab = companion:FindAbilityByName("companion_morph")
---		ab:SetLevel(1)
---		ab:CastAbility()		
---	end
 end
 
 function DonatorCompanionSkin(id, unit, skin)
@@ -103,7 +102,7 @@ function DonatorCompanionSkin(id, unit, skin)
 end
 
 function Battlepass:DonatorStatue(ID, statue_unit)
-	if UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))] then 
+	if UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))] and not js then 
 		statue_unit = UNIQUE_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))]
 	end
 

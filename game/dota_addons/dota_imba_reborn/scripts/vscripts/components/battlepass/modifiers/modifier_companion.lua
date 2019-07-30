@@ -143,17 +143,25 @@ function modifier_companion:OnIntervalThink()
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 70)
 		end
 
-		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
-			if not hero:HasModifier(v) then
-				if companion:HasModifier(v) then
-					companion:RemoveModifierByName(v)
-				end
-			else
-				if not companion:HasModifier(v) then
-					companion:AddNewModifier(companion, nil, v, {})
-					break -- remove this break if you want to add multiple modifiers at the same time
-				end
-			end
+		-- This thing crashes with Treant's Nature's Guise
+		-- Also using static lists for invisibltiy modifiers is just asking for trouble
+		-- for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
+			-- if not hero:HasModifier(v) then
+				-- if companion:HasModifier(v) then
+					-- companion:RemoveModifierByName(v)
+				-- end
+			-- else
+				-- if not companion:HasModifier(v) then
+					-- companion:AddNewModifier(companion, nil, v, {})
+					-- break -- remove this break if you want to add multiple modifiers at the same time
+				-- end
+			-- end
+		-- end
+
+		if hero:IsInvisible() then
+			companion:AddNewModifier(companion, nil, "modifier_invisible", {})
+		else
+			companion:RemoveModifierByNameAndCaster("modifier_invisible", companion)
 		end
 
 		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do

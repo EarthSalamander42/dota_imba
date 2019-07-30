@@ -97,6 +97,21 @@ function GameMode:DonatorCompanionJS(event)
 	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
 end
 
+function GameMode:DonatorStatueJS(event)
+	-- need to update the current statue with the new one
+--	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
+end
+
+function GameMode:DonatorEmblemJS(event)
+	local hero = PlayerResource:GetSelectedHeroEntity(event.ID)
+
+	if hero:HasModifier("modifier_patreon_donator") then
+		local modifier = hero:FindModifierByName("modifier_patreon_donator")
+
+		modifier.effect_name = event.unit
+	end
+end
+
 function GameMode:DonatorCompanionSkinJS(event)
 	DonatorCompanionSkin(event.ID, event.unit, event.skin)
 end
