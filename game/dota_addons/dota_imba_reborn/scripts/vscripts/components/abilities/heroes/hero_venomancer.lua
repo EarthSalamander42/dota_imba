@@ -116,7 +116,9 @@ function modifier_imba_toxicity_debuff:DeclareFunctions()
 end
 
 function modifier_imba_toxicity_debuff:GetModifierMagicalResistanceBonus()
-	return (self:GetAbility():GetTalentSpecialValueFor("magic_amp_pct") * self:GetStackCount()) * (-1)
+	if self:GetAbility() then
+		return (self:GetAbility():GetTalentSpecialValueFor("magic_amp_pct") * self:GetStackCount()) * (-1)
+	end
 end
 
 -------------------------------------------

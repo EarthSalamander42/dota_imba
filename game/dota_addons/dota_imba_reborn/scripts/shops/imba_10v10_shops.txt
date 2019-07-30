@@ -31,7 +31,6 @@
 		"item"		"item_ogre_axe"
 		"item"		"item_blade_of_alacrity"
 		"item" 		"item_staff_of_wizardry"
-		"item"		"item_imba_initiate_robe"
 		"item"		"item_imba_cloak_of_flames"
 		"item"		"item_imba_white_queen_cape"
 	}
