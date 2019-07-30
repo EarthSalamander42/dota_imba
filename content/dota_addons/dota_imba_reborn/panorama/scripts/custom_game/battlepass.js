@@ -28,7 +28,7 @@ var api = {
 //		rankingsLevel1v1 : "imba/meta/rankings/level-1v1",
 		toggleIngameTag : "imba/toggle-ingame-tag",
 		toggleBPRewards : "imba/toggle-bp-rewards",
-		togglePlayerXP : "imba/toggle-player-xp"
+		togglePlayerXP : "imba/toggle-player-xp",
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
@@ -188,15 +188,15 @@ var api = {
 			success : function(obj) {
 //				$.Msg(obj)
 				if (obj.error) {
-					$.Msg("Error updating bp rewards");
+					$.Msg("Error updating ply xp");
 					error_callback();
 				} else {
-					$.Msg("Updated bp rewards");
+					$.Msg("Updated ply xp");
 					success_callback();
 				}
 			},
 			error : function(err) {
-				$.Msg("Error bp rewards " + JSON.stringify(err));
+				$.Msg("Error ply xp " + JSON.stringify(err));
 				error_callback();
 			}
 		});
@@ -267,14 +267,12 @@ function RefreshBattlepass(bRewardsDisabled) {
 
 	$("#RefreshBattlepass").AddClass("Active");
 
-	$.Schedule(1.0, function() {
-		$("#RefreshBattlepass").RemoveClass("Active");
-		if (current_sub_tab != "") {
-			Battlepass(true, bRewardsDisabled);
-		} else {
-			Battlepass(false, bRewardsDisabled);
-		}		
-	});
+	$("#RefreshBattlepass").RemoveClass("Active");
+	if (current_sub_tab != "") {
+		Battlepass(true, bRewardsDisabled);
+	} else {
+		Battlepass(false, bRewardsDisabled);
+	}		
 }
 
 function SwitchTab(tab) {
@@ -367,17 +365,14 @@ function SetCompanion(companion, name, id, required_status) {
 
 	var donator_status = IsDonator(Game.GetLocalPlayerID());
 
-	if (IsDonator(Game.GetLocalPlayerID()) == 6)
-		donator_status = 1;
-
 	if (IsDonator(Game.GetLocalPlayerID()) === false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
 		return;
 	}
 
-	$.Msg(DonatorStatusConverter(donator_status))
-	$.Msg(required_status)
+//	$.Msg(DonatorStatusConverter(donator_status))
+//	$.Msg(required_status)
 	if (DonatorStatusConverter(donator_status) < required_status) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = "Your donator status is too low. Required status: (" + $.Localize("donator_label_" + DonatorStatusConverterReverse(required_status)) + ")";
@@ -425,9 +420,17 @@ function SetStatue(statue, name, id) {
 		$("#CompanionNotification").RemoveClass("not_donator");
 	}
 
+	var donator_status = IsDonator(Game.GetLocalPlayerID());
+
 	if (IsDonator(Game.GetLocalPlayerID()) === false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	if (DonatorStatusConverter(donator_status) < required_status) {
+		$("#CompanionNotification").AddClass("not_donator");
+		$("#CompanionNotificationLabel").text = "Your donator status is too low. Required status: (" + $.Localize("donator_label_" + DonatorStatusConverterReverse(required_status)) + ")";
 		return;
 	}
 
@@ -467,9 +470,17 @@ function SetEmblem(emblem, name, id) {
 		$("#CompanionNotification").RemoveClass("not_donator");
 	}
 
+	var donator_status = IsDonator(Game.GetLocalPlayerID());
+
 	if (IsDonator(Game.GetLocalPlayerID()) === false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	if (DonatorStatusConverter(donator_status) < required_status) {
+		$("#CompanionNotification").AddClass("not_donator");
+		$("#CompanionNotificationLabel").text = "Your donator status is too low. Required status: (" + $.Localize("donator_label_" + DonatorStatusConverterReverse(required_status)) + ")";
 		return;
 	}
 
@@ -508,6 +519,62 @@ function HallOfFame(type) {
 	}
 
 	current_type = type;
+
+	// temporary, implement in the for loop later
+	// local player stats
+	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
+	$.Msg(plyData)
+
+	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");
+	player.AddClass("LeaderboardGames");
+	var rank = $.CreatePanel("Label", player, "rank_local");
+	rank.AddClass("LeaderboardRank");
+	rank.text = "--"; // add winrate rank oaeide!
+
+	var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
+	steam_id.AddClass("LeaderboardAvatar");
+	steam_id.steamid = Game.GetLocalPlayerInfo().player_steamid;
+	steam_id.style.width = "38px";
+	steam_id.style.height = "38px";
+	steam_id.style.marginLeft = "40px";
+	steam_id.style.marginRight = "40px";
+	steam_id.style.align = "center center";
+
+	var imbar_container = $.CreatePanel("Panel", player, "imbar_container_local");
+	imbar_container.AddClass("LeaderboardXP");
+	var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_local");
+	imbar.AddClass("imbar-progress-bar");
+	imbar.value = parseFloat(plyData.XP / plyData.MaxXP);
+
+	var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl_local");
+	imbar_lvl.AddClass("imbar-lvl");
+	imbar_lvl.text = "Level: " + plyData.Lvl;
+
+	var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank_local");
+	imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
+
+	var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
+	imbar_rank_circle.AddClass("imbar-rank-cicle");
+	imbar_rank_circle.style.backgroundColor = "white";
+//	imbar_rank_circle.style.backgroundColor = top_users.title_color;
+
+	var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
+	imbar_rank.AddClass("imbar-rank");
+	imbar_rank.text = plyData.title;
+
+//	var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+//	imbar_xp.AddClass("imbar-xp");
+//	imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
+
+	var imr = $.CreatePanel("Label", player, "rank_local");
+	imr.AddClass("LeaderboardIMR");
+
+	// temporary
+	if (type == "IMR") {
+		imr.text = plyData.win_percentage;
+	} else {
+		imr.text = 0;
+	}
 
 	for (var i = 1; i <= 100; i++) {
 		if (type == "XP") {
@@ -772,7 +839,10 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		reward_label.text = companion_name[i];
 
 		if (required_status != undefined && required_status != 0) {
-			reward_label.style.color = GetDonatorColor(required_status);
+			if (GetDonatorColor(required_status))
+				reward_label.style.color = GetDonatorColor(required_status);
+			else
+				$.Msg("Failed to give color for status " + required_status);
 		}
 
 		if (!retainSubTab) {

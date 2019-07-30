@@ -234,15 +234,30 @@
 	padding: 5px;
 }
 
+#LeaderboardInfoContainer {
+	height: 550px;
+}
+
+#LocalPlayerInfoContainer {
+	width: 100%;
+	height: 60px;
+}
+
+#LocalPlayerInfo {
+	align: center bottom;
+}
+
 #BattlepassInfoContainer {
 	overflow:  squish scroll;
 }
 
-#LeaderboardInfoContainer {
+#LeaderboardMainContainer {
+	width: 100%;
 	background-color: #040c1850;
-	height: fit-children;
+	height: 490px;
 	padding-bottom: 10px;
 	overflow:  squish scroll;
+	flow-children: down;
 }
 
 #BattlepassButtons {
@@ -307,13 +322,13 @@
 	background-color: #303848;
 }
 
-
 .LeaderboardRank,
 .LeaderboardXP,
 .LeaderboardIMR,
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
+	height: 100%;
 	text-align: center;
 	font-size: 19px;
 	color:#daebff;
