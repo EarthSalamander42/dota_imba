@@ -363,7 +363,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"min_before_instability"		"90"
+				"min_before_instability"		"42"
 			}
 			"06"
 			{
@@ -40004,12 +40004,12 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_armor"		"0"
+				"melee_armor"		"5"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_mres"		"0"
+				"melee_mres"		"2"
 			}
 			"05"
 			{
@@ -40116,6 +40116,12 @@
 				"var_type"			"FIELD_FLOAT"
 				"jungle_bounty"		"1.5"
 			}
+			
+			"26"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"min_before_instability"		"42"
+			}			
 		}
 	}
 	
