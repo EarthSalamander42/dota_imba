@@ -13560,7 +13560,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"enemy_hp_drain"		"5"
+				"enemy_hp_drain"		"4"
 			}
 			"15"
 			{
@@ -14823,6 +14823,17 @@
 				"var_type"							"FIELD_INTEGER"
 				"tooltip_prism_bonus_magic_dmg"		"40"
 			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"luminate_radius"		"600"		
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}			
 		}
 	}
 	

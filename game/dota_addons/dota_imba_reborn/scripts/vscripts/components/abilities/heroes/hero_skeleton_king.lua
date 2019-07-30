@@ -484,7 +484,7 @@ end
 
 function modifier_imba_vampiric_aura:IsAura()
 	-- If caster is broken, no aura is emitted
-	if self.caster:PassivesDisabled() then
+	if not self.caster or self.caster:IsNull() or self.caster:PassivesDisabled() then
 		return false
 	end
 
@@ -544,6 +544,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 			-- If the target is a building, a courier or a ward, do nothing
 			if target:IsBuilding() or target:IsOther() then
+				return nil
+			end
+
+			-- Don't heal off of reflection damage
+			if bit.band( keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION ) == DOTA_DAMAGE_FLAG_REFLECTION then
 				return nil
 			end
 

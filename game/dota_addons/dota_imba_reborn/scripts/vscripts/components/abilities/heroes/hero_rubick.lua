@@ -1109,15 +1109,15 @@ end
 -- Ability Start
 --------------------------------------------------------------------------------
 
-function imba_rubick_spellsteal:OnAbilityPhaseStart()
-	-- Has Talent not working in CastFilterResultTarget for whatever reasons, ez fix
-	if self:GetCursorTarget():IsCreep() and self:GetCaster():HasTalent("special_bonus_imba_rubick_1") == false then
-		DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_cant_cast_on_creep")
-		return false
-	end
+-- function imba_rubick_spellsteal:OnAbilityPhaseStart()
+	-- -- Has Talent not working in CastFilterResultTarget for whatever reasons, ez fix
+	-- if self:GetCursorTarget():IsCreep() and self:GetCaster():HasTalent("special_bonus_imba_rubick_1") == false then
+		-- DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_cant_cast_on_creep")
+		-- return false
+	-- end
 
-	return true
-end
+	-- return true
+-- end
 
 function imba_rubick_spellsteal:GetCastRange( vLocation, hTarget )
 	if self:GetCaster():HasScepter() then 

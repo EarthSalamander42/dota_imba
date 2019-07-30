@@ -121,7 +121,11 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 		local ab = astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
 
 		if ab:IsInAbilityPhase() == false then
-			astral_spirit:CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+			local caster = self:GetCaster()
+		
+			Timers:CreateTimer(FrameTime(), function()
+				astral_spirit:CastAbilityNoTarget(ab, caster:GetOwner():GetPlayerID())
+			end)
 		end
 
 		astral_spirit:CastAbilityNoTarget(ab, astral_spirit:GetPlayerOwnerID())
@@ -304,7 +308,7 @@ function imba_elder_titan_return_spirit:GetAssociatedPrimaryAbilities()
 end
 
 function imba_elder_titan_return_spirit:OnSpellStart()
-	if not astral_spirit.is_returning then
+	if astral_spirit and not astral_spirit.is_returning then
 		astral_spirit:MoveToNPC(astral_spirit:GetOwner())
 		astral_spirit.is_returning = true
 		astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
@@ -546,7 +550,9 @@ end
 
 -- On the edge case where Juggernaut's Omnislash jumps to the Astral Spirit and kills it...give Elder Titan back the skill immediately
 function modifier_imba_elder_titan_ancestral_spirit_self:OnDestroy (keys)
-	self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+	if self:GetParent().GetOwner then
+		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+	end
 end
 
 -- Natural Order
@@ -673,8 +679,18 @@ function imba_elder_titan_echo_stomp_spirit:GetAbilityTextureName()
 	return "custom/imba_elder_titan_echo_stomp"
 end
 
+function imba_elder_titan_echo_stomp_spirit:GetPlaybackRateOverride()
+	-- 1.7 is the standard channel speed for that animation
+	return 1.7 / self:GetSpecialValueFor("cast_time")
+end
+
 function imba_elder_titan_echo_stomp_spirit:IsHiddenWhenStolen()
 	return false
+end
+
+-- The subtraction of FrameTimes somewhat helps syncing up when trying to immediately cast Echo Stomp after Astral Spirit spawning
+function imba_elder_titan_echo_stomp_spirit:GetCastPoint()
+	return self.BaseClass.GetCastPoint(self) - (FrameTime())
 end
 
 function imba_elder_titan_echo_stomp_spirit:GetCastRange(location, target)
