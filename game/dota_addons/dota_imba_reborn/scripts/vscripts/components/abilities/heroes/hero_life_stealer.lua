@@ -1,12 +1,105 @@
 -- Creator:
 --	   AltiV, May 11th, 2019
 
+
+
 -- This file currently only contains "Lua-fication" for Open Wounds (for cosmetic related interactions), and has no IMBAfications.
+
+LinkLuaModifier("modifier_imba_life_stealer_rage", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_life_stealer_rage_insanity", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_life_stealer_feast", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_life_stealer_feast_engorge", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_life_stealer_feast_engorge_counter", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_life_stealer_open_wounds", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 
-imba_life_stealer_open_wounds 			= class({})
-modifier_imba_life_stealer_open_wounds 	= class({})
+LinkLuaModifier("modifier_imba_life_stealer_infest", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_life_stealer_control", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_life_stealer_consume", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_life_stealer_assimilate", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_life_stealer_eject", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
+
+imba_life_stealer_rage								= class({})
+modifier_imba_life_stealer_rage						= class({})
+modifier_imba_life_stealer_rage_insanity			= class({})
+
+imba_life_stealer_feast								= class({})
+modifier_imba_life_stealer_feast					= class({})
+modifier_imba_life_stealer_feast_engorge			= class({})
+modifier_imba_life_stealer_feast_engorge_counter	= class({})
+
+imba_life_stealer_open_wounds						= class({})
+modifier_imba_life_stealer_open_wounds				= class({})
+
+imba_life_stealer_infest 							= class({})
+modifier_imba_life_stealer_infest 					= class({})
+
+imba_life_stealer_control 							= class({})
+modifier_imba_life_stealer_control	 				= class({})
+
+imba_life_stealer_consume 							= class({})
+modifier_imba_life_stealer_consume 					= class({})
+
+imba_life_stealer_assimilate 						= class({})
+modifier_imba_life_stealer_assimilate 				= class({})
+
+imba_life_stealer_assimilate_eject 					= class({})
+modifier_imba_life_stealer_assimilate_eject 		= class({})
+
+----------
+-- RAGE --
+----------
+
+function imba_life_stealer_rage:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_LifeStealer.Rage")
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_rage", {duration = self:GetTalentSpecialValueFor("duration")})
+end
+
+-------------------
+-- RAGE MODIFIER --
+-------------------
+
+function modifier_imba_life_stealer_rage:GetStatusEffectName()
+	return "particles/status_fx/status_effect_life_stealer_rage.vpcf"
+end
+
+function modifier_imba_life_stealer_rage:OnCreated()
+	self.attack_speed_bonus	= self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
+	
+	if not IsServer() then return end
+	
+	local rage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(rage_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	self:AddParticle(rage_particle, false, false, -1, true, false)
+end
+
+function imba_life_stealer_rage:CheckState()
+	local state = {
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true
+	}
+	
+	return state
+end
+
+function imba_life_stealer_rage:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
+end
+
+function imba_life_stealer_rage:GetModifierAttackSpeedBonus_Constant()
+	return self.attack_speed_bonus
+end
+
+----------------------------
+-- RAGE INSANITY MODIFIER --
+----------------------------
 
 -----------------
 -- OPEN WOUNDS --
