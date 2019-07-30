@@ -48,8 +48,8 @@
 "DOTA_Tooltip_ability_imba_nian_tail_spin_radius"										"RADIUS:"
 "DOTA_Tooltip_ability_imba_nian_tail_spin_damage"										"DAMAGE:"
 "DOTA_Tooltip_ability_imba_nian_tail_spin_duration"										"KNOCKBACK DURATION:"
-"DOTA_Tooltip_ability_imba_nian_knockback_distance"										"KNOCKBACK DISTANCE:"
-"DOTA_Tooltip_ability_imba_nian_stun_duration"											"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_nian_tail_spin_knockback_distance"							"KNOCKBACK DISTANCE:"
+"DOTA_Tooltip_ability_imba_nian_tail_spin_stun_duration"								"STUN DURATION:"
 
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster"											"Volcanic Burster"
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster_Description"								"Fires a massive orb of destructive energy, dealing heavy damage, mini-stunning, applying a burn, and knocking enemies back and towards the orb's center. Every %secondary_interval_tooltip% seconds, an additional %projectiles_per_tick% fireballs are released from the orb, which only apply burn on impact."

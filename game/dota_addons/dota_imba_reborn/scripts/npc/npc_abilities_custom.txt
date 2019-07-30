@@ -363,7 +363,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"min_before_instability"		"1"
+				"min_before_instability"		"42"
 			}
 			"06"
 			{
