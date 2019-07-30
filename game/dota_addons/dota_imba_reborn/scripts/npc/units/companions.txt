@@ -303,7 +303,7 @@
 		"ModelScale"				"0.6"
 	}
 
-	"npc_donator_companion_cookies_2" // no walk animation (use a modifier with animation translation?)
+	"npc_donator_companion_juggernaut_arcana" // no walk animation (use a modifier with animation translation?)
 	{
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/heroes/juggernaut/juggernaut_arcana.vmdl"
@@ -331,10 +331,115 @@
 		"ModelScale"				"0.65"
 	}
 
-	"npc_donator_companion_hastur"
+	"npc_donator_companion_pine_tree"
 	{
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/props_tree/tree_pinestatic_02.vmdl"
-		"ModelScale"				"0.5"
+		"ModelScale"				"0.45"
+	}
+
+	"npc_donator_companion_terrorblade_arcana"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/terrorblade/terrorblade_arcana.vmdl"
+		"ModelScale"				"0.45"
+	}
+
+	"npc_donator_companion_tinkbot"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/tinkbot/tinkbot.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_deathripper"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/deathripper/deathripper.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_butch"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/butch_pudge_dog/butch_pudge_dog.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_tory"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/tory_the_sky_guardian/tory_the_sky_guardian.vmdl"
+		"ModelScale"				"0.85"
+	}
+
+	"npc_donator_companion_hollow_jack"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/pumpkin_courier/pumpkin_courier.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_amphibian_kid"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/amphibian_kid/amphibian_kid.vmdl"
+		"ModelScale"				"0.85"
+	}
+
+	"npc_donator_companion_vigilante_fox"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/vigilante_fox_green/vigilante_fox_green.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_golden_venoling"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/venoling/venoling.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_raiq"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/raiq/raiq.vmdl"
+		"ModelScale"				"0.85"
+	}
+
+	"npc_donator_companion_chocobo"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/chocobo/chocobo.vmdl"
+		"ModelScale"				"0.85"
+	}
+
+	"npc_donator_companion_mega_greevil"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/mega_greevil_courier/mega_greevil_courier.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_snelfret"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/snail/courier_snail.vmdl"
+		"ModelScale"				"0.8"
+	}
+
+	"npc_donator_companion_chuckles"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/mighty_chicken/mighty_chicken.vmdl"
+		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_frog"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/frog/frog.vmdl"
+		"ModelScale"				"0.75"
 	}
 }

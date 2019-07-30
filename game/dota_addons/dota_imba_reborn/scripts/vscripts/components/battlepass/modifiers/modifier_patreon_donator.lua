@@ -8,7 +8,7 @@ function modifier_patreon_donator:OnCreated()
 		self:SetStackCount(api:GetDonatorStatus(self:GetParent():GetPlayerID()))
 		self:StartIntervalThink(0.2)
 		self.current_effect_name = ""
-		self.effect_name = ""
+		self.effect_name = api:GetPlayerEmblem(self:GetParent():GetPlayerID()).file
 	end
 end
 
@@ -20,16 +20,6 @@ function modifier_patreon_donator:OnIntervalThink()
 			self:RefreshEffect()
 			return
 		end
-	end
-
-	if self:GetStackCount() == 1 then
-		self.effect_name =  "particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"
-	elseif self:GetStackCount() >= 4 then
-		self.effect_name =  "particles/econ/events/ti7/ti7_hero_effect_1.vpcf"
-	elseif self:GetStackCount() == 7 then
-		self.effect_name =  "particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"
-	elseif self:GetStackCount() == 8 then
-		self.effect_name =  "particles/econ/events/ti7/ti7_hero_effect.vpcf"
 	end
 
 --	print(self.effect_name)

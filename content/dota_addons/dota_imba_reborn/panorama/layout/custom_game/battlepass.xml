@@ -97,6 +97,14 @@
 						<Button class="sub_nav_tab" id="StatueTabButton" onactivate="SwitchDonatorWrapper('Statue');">
 							<Label class="text" text="#donator_statue" />
 						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="EmblemTabButton" onactivate="SwitchDonatorWrapper('Emblem');">
+							<Label class="text" text="#donator_emblem" />
+						</Button>
 					</Panel>
 				</Panel>
 				
@@ -182,18 +190,23 @@
 				<Panel id="StatueTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
+				<Panel id="EmblemTableWrapper" hittest="false">
+					<!-- JS Inserts records here -->
+				</Panel>
 			</Panel>
 
 			<Panel id="LeaderboardInfoContainer" hittest="false">
-				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-					<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-					<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
-					<Button id="XP" class="LeaderboardXP" onactivate="HallOfFame('XP');">
-						<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
-					</Button>
-					<Button id="IMR" class="LeaderboardIMR" onactivate="HallOfFame('IMR');">
-						<Label class="LeaderboardButtonLabel" text="#custom_end_screen_legend_imr" />
-					</Button>
+				<Panel id="LeaderboardMainContainer" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate="HallOfFame('XP');">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate="HallOfFame('IMR');">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
 				</Panel>
 
 				<Panel id="Tops" hittest="false">
