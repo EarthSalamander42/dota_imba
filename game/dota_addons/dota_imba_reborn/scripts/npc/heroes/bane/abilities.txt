@@ -283,7 +283,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_duration"					"9"
+				"fiends_grip_duration"					"7.5"
 			}
 
 			"02"

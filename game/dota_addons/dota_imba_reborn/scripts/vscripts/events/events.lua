@@ -17,6 +17,12 @@ require('events/npc_spawned/on_hero_spawned')
 require('events/npc_spawned/on_unit_spawned')
 require('events/on_entity_killed/on_hero_killed')
 
+-- Used for checking memory usage
+function comma_value(n) -- credit http://richard.warburton.it
+	local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
+	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+end
+
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
@@ -833,6 +839,28 @@ function GameMode:OnPlayerChat(keys)
 							local soulbind_vanilla_enahncer_ability = hero:AddAbility("imba_grimstroke_soul_chain_vanilla_enhancer")
 							soulbind_vanilla_enahncer_ability:SetAbilityIndex(6)
 							soulbind_vanilla_enahncer_ability:OnHeroLevelUp()
+						
+						-- elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
+							-- ability_set = {
+								-- [0] = "imba_life_stealer_rage",
+								-- [1] = "imba_life_stealer_feast",
+								-- [2] = "imba_life_stealer_open_wounds",
+								-- [3] = "imba_life_stealer_assimilate",
+								-- [4] = "generic_hidden",
+								-- [5] = "imba_life_stealer_infest",
+								-- [6] = "imba_life_stealer_control",
+								-- [7] = "imba_life_stealer_consume",
+								-- [8] = "imba_life_stealer_assimilate_eject",
+								-- [9] = "special_bonus_hp_200",
+								-- [10] = "special_bonus_attack_speed_20",
+								-- [11] = "special_bonus_attack_damage_30",
+								-- [12] = "special_bonus_movement_speed_25",
+								-- [13] = "special_bonus_evasion_20",
+								-- [14] = "special_bonus_unique_lifestealer_2",
+								-- [15] = "special_bonus_unique_lifestealer_3",
+								-- [16] = "special_bonus_unique_lifestealer"
+							-- }
+							-- upgraded = true
 						end
 							
 						for ability = 0, 23 do
@@ -920,6 +948,9 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
+			elseif str == "-memory" then
+				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+				-- print(package.loaded) -- This lags everything to absolute death
 			end
 		end
 	end

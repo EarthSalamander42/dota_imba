@@ -36,7 +36,7 @@
 
 // Storm Spirit's Overload
 "DOTA_Tooltip_ability_imba_storm_spirit_overload"							"#{DOTA_Tooltip_ability_storm_spirit_overload}"
-"DOTA_Tooltip_ability_imba_storm_spirit_overload_Description"				"#{DOTA_Tooltip_ability_storm_spirit_overload_Description}\n<font color='#FF7800'>Fiery Overload:</font> Overload can be stacked to increase damage and AoE. Capped at 5 stacks."
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_Description"				"#{DOTA_Tooltip_ability_storm_spirit_overload_Description}\n<font color='#FF7800'>Fiery Overload:</font> Overload can be stacked to increase damage and AoE. Caps at %max_stacks% stacks."
 "DOTA_Tooltip_ability_imba_storm_spirit_overload_Lore"						"#{DOTA_Tooltip_ability_storm_spirit_overload_Lore}"
 "DOTA_Tooltip_ability_imba_storm_spirit_overload_Note0"						"#{DOTA_Tooltip_ability_storm_spirit_overload_Note0}"
 "DOTA_Tooltip_ability_imba_storm_spirit_overload_aoe"						"#{DOTA_Tooltip_ability_storm_spirit_overload_overload_aoe}"

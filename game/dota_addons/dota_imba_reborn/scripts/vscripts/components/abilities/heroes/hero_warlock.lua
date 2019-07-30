@@ -550,7 +550,8 @@ function imba_warlock_upheaval:OnSpellStart()
 		local playerID = caster:GetPlayerID()
 		local demon = CreateUnitByName("npc_imba_warlock_upheaval_demon", target_point, true, caster, caster, caster:GetTeamNumber())
 		demon:SetControllableByPlayer(playerID, true)
-
+		demon:AddNewModifier(demon, self, "modifier_kill", {duration = 20})
+		
 		Timers:CreateTimer(FrameTime(), function()
 			-- Resolve positions
 			ResolveNPCPositions(target_point, 64)

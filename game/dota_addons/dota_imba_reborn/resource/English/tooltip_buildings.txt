@@ -4,7 +4,7 @@
 
 // Ancient Defense
 "DOTA_Tooltip_Ability_imba_ancient_defense"									"Ancient Defense"
-"DOTA_Tooltip_Ability_imba_ancient_defense_description"						"Reduces incoming damage by %incoming_damage_tooltip%%  (5v5/10v10). Each enemy hero in %aura_radius% radius reduces this protection by %defense_stack%%%.\nAfter %min_before_instability% minutes of game-time, the Ancients themselves begin to experience the instabilities of the servers, linearly reducing their health regeneration by %instability_hp_reduce_per_min% for every additional minute past the instability time."
+"DOTA_Tooltip_Ability_imba_ancient_defense_description"						"Reduces incoming damage by %incoming_damage_tooltip%%  (5v5/10v10). Each enemy hero in %aura_radius% radius reduces this protection by %defense_stack%%%.\nAfter %min_before_instability% minutes of game-time, the Ancients themselves begin to experience the instabilities of the servers, linearly reducing their health regeneration by %instability_hp_reduce_per_min% for every additional minute past the instability time, down to 0 base regeneration."
 //"DOTA_Tooltip_Ability_imba_ancient_defense_Note0"							""
 //"DOTA_Tooltip_Ability_imba_ancient_defense_Lore"							""
 "DOTA_Tooltip_Ability_imba_ancient_defense_defense_stack"					"%ENEMY HERO INCOMING DAMAGE REDUCTION:"

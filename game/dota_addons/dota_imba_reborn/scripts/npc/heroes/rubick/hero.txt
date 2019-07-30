@@ -22,7 +22,7 @@
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
 
-		"Ability11"					"special_bonus_imba_rubick_1"	// Can steal creeps spells
+		"Ability11"					"special_bonus_hp_300"
 		"Ability12"					"special_bonus_attack_damage_60"
 		"Ability13"					"special_bonus_cast_range_125"
 		"Ability14"					"special_bonus_imba_rubick_2"	// Reduce telekinesis ally lift time
@@ -35,6 +35,7 @@
 		// "Ability3"					"imba_rubick_null_field"
 		
 		// Removed Talents
+		// "Ability11"					"special_bonus_imba_rubick_1"	// Can steal creeps spells (is now innate)
 		// "Ability12"					"special_bonus_imba_rubick_4"	// Telekinesis Cast Range is Longer & Further
 		// "Ability14"					"special_bonus_imba_rubick_6"	// +300 radius for Null Field
 	}

@@ -435,6 +435,16 @@
 				"var_type"						"FIELD_INTEGER"
 				"snake_charmer_hero_count"		"4"
 			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"snake_charmer_health"		"1 1 2"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"snake_charmer_duration"	"30.0 35.0 40.0"
+			}
 		}
 	}
 	
@@ -579,7 +589,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"75"
+				"value"						"60"
 			}
 		}
 	}

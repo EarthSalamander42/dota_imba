@@ -38,7 +38,7 @@
 "DOTA_Tooltip_modifier_imba_shadow_shaman_shackles_chariot_Description"	"You are now a horse."
 
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_hex_cooldown"				"-5s Hex Cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_wards_movement"				"+75 Mass Serpent Ward Movement Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_wards_movement"				"+60 Mass Serpent Ward Movement Speed"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_shackles_duration"			"+2.5s Shackles Duration"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_ether_shock_damage"			"+400 Ether Shock Damage"
 
@@ -47,7 +47,7 @@
 // Shadow Shaman's Mass Serpent Ward
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward"             "MASS SERPENT WARD"
-"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Description"              "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. It takes %ward_hp_tooltip% hits to destroy a single Ward.\n\n Upgradable by Aghanim's Scepter.\n<font color='#FF7800'>Snake Charmer:</font> If auto-cast is on, if a serpent ward kills a unit, %snake_charmer_creep_count% ward is spawned at the unit's location. Real heroes and buildings spawn %snake_charmer_hero_count% wards."
+"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Description"              "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. It takes %ward_hp_tooltip% hits to destroy a single Ward.\n\n Upgradable by Aghanim's Scepter.\n<font color='#FF7800'>Snake Charmer:</font> If auto-cast is on, if a serpent ward kills a unit, %snake_charmer_creep_count% ward is spawned at the unit's location at reduced health (%snake_charmer_health%) and duration (%snake_charmer_duration% seconds). Real heroes and buildings spawn %snake_charmer_hero_count% wards."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Lore"                     "Snake charming was a big part of the Shadow Shaman's act; now Rhasta can empower the Snakes to do his bidding."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_damage_tooltip"           "ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_duration"                 "#{DOTA_Tooltip_ability_fountain_glyph_duration}"

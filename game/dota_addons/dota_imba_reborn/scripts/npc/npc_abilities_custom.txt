@@ -22,6 +22,7 @@
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/medusa/abilities.txt
+#base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
 // #base heroes/phantom_lancer/abilities.txt
@@ -4715,7 +4716,7 @@
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"85 90 95 100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4959,7 +4960,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction_pct"	    "-40 =70 -100 -130"
+				"armor_reduction_pct"	    "-40 -70 -100 -130"
 			}
 			"03"
 			{
@@ -10032,7 +10033,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"hp_regen"			"4 8 12 16"
+				"hp_regen"			"6 10 14 18"
 			}
 			"05"
 			{
@@ -10074,7 +10075,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_bonus_damage_perc"	"24 32 40 48"
+				"base_bonus_damage_perc"	"26 34 42 50"
 			}
 
 			"02"
@@ -11447,7 +11448,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"		
+		"AbilityCastRange"				"500"		
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
@@ -11465,7 +11466,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"475"
+				"radius"				"500"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_1"
 			}
 			"02"
@@ -22611,7 +22612,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_damage"			"50"
+				"hero_damage"			"75"
 			}
 			"04"
 			{
@@ -22626,7 +22627,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces"				"2 6 8 12"
+				"bounces"				"3 6 9 12"
 			}
 			"07"
 			{
@@ -22801,7 +22802,8 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_reduce_pct"			"15 30 45 60"
+				"heal_reduce_pct"			"10 20 30 40"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_9"
 			}
 		}
 	}
@@ -23118,6 +23120,34 @@
 			}
 		}
 	}	
+
+	//=================================================================================================================
+	// Witch Doctor Talent 9: +X% Maledict FeelsBadMan Heal/Regeneration Reduction
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"60"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Wraith King's Wraithfire Blast
@@ -24886,7 +24916,7 @@
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8"
-		"AbilityManaCost"				"120 130 140 150"
+		"AbilityManaCost"				"120 125 130 135"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26430,7 +26460,7 @@
 			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance"			"0 0 0 30"
+				"magic_resistance"			"0 0 0 40"
 			}
 			"14"
 			{
@@ -27611,7 +27641,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"moment_cd_increase"		"0.3 0.7 1.1 1.5"
+				"moment_cd_increase"		"0.3 0.45 0.6 0.75"
 			}
 		}
 	}
@@ -29186,7 +29216,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"truesight_immunity_radius"	"1050 900 750"
+				"truesight_immunity_radius"	"1800 1400 1000"
 			}
 
 			"02"
@@ -32682,7 +32712,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 600 700 800"
+		"AbilityCastRange"				"600 700 800 900"
 		"AbilityCastPoint"				"0.3"		
 
 		// Time
@@ -35169,7 +35199,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"100 110 120 130"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -35461,7 +35491,7 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"range"								""
+				"range"								"900 1200 1500"
 			}
 			"02"
 			{

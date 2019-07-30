@@ -7,15 +7,15 @@
 	//=================================================================================================================
 	"npc_dota_hero_shadow_shaman"
 	{
-		//"IsImba"					"1"
+		"IsImba"					"1"
 		
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		//"Ability1"					"imba_shadow_shaman_ether_shock"
-		//"Ability2"					"imba_shadow_shaman_voodoo"
-		//"Ability3"					"imba_shadow_shaman_shackles"
+		"Ability1"					"imba_shadow_shaman_ether_shock"
+		"Ability2"					"imba_shadow_shaman_voodoo"
+		"Ability3"					"imba_shadow_shaman_shackles"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
@@ -23,10 +23,10 @@
 		"Ability10"					"special_bonus_hp_300"
 		"Ability11"					"special_bonus_exp_boost_30"
 		"Ability12"					"special_bonus_cast_range_125"
-		//"Ability13"					"special_bonus_imba_shadow_shaman_hex_cooldown"
-		//"Ability14"					"special_bonus_imba_shadow_shaman_shackles_duration"
+		"Ability13"					"special_bonus_imba_shadow_shaman_hex_cooldown"
+		"Ability14"					"special_bonus_imba_shadow_shaman_shackles_duration"
 		"Ability15"					"special_bonus_imba_shadow_shaman_wards_movement"
-		//"Ability16"					"special_bonus_imba_shadow_shaman_ether_shock_damage"
+		"Ability16"					"special_bonus_imba_shadow_shaman_ether_shock_damage"
 		"Ability17"					"special_bonus_imba_shadow_shaman_3"
 		
 		// Removed Talents

@@ -1916,6 +1916,13 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 		order,
 		false
 	)
+	
+	for count = #self.nearby_enemies, 1, -1 do
+		-- "Cannot jump on units in the Fog of War, invisible or hidden units, Tombstone Zombies and on Astral Spirits."
+		if self.nearby_enemies[count] and (self.nearby_enemies[count]:GetName() == "npc_dota_unit_undying_zombie" or self.nearby_enemies[count]:GetName() == "npc_dota_elder_titan_ancestral_spirit") then
+			table.remove(self.nearby_enemies, count)
+		end
+	end
 
 	if #self.nearby_enemies >= 1 then
 		for _,enemy in pairs(self.nearby_enemies) do

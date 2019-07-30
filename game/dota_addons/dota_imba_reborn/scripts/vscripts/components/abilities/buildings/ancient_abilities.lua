@@ -68,7 +68,7 @@ end
 
 function modifier_imba_ancient_defense:GetModifierConstantHealthRegen()
 	if (GameRules:GetDOTATime(false, false) / 60) > self:GetAbility():GetSpecialValueFor("min_before_instability") then
-		return ((GameRules:GetDOTATime(false, false) / 60) - self:GetAbility():GetSpecialValueFor("min_before_instability")) * self:GetAbility():GetSpecialValueFor("instability_hp_reduce_per_min") * (-1)
+		return math.min(((GameRules:GetDOTATime(false, false) / 60) - self:GetAbility():GetSpecialValueFor("min_before_instability")) * self:GetAbility():GetSpecialValueFor("instability_hp_reduce_per_min"), 12) * (-1)
 	end
 end
 
