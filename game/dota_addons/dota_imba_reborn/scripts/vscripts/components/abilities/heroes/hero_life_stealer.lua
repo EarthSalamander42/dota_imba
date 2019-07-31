@@ -58,6 +58,8 @@ modifier_imba_life_stealer_assimilate_eject 		= class({})
 function imba_life_stealer_rage:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_LifeStealer.Rage")
 	
+	self:GetCaster():StartGesture(ACT_DOTA_LIFESTEALER_RAGE)
+	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_rage", {duration = self:GetTalentSpecialValueFor("duration")})
 end
 
@@ -79,6 +81,10 @@ function modifier_imba_life_stealer_rage:OnCreated()
 	self:AddParticle(rage_particle, false, false, -1, true, false)
 end
 
+function modifier_imba_life_stealer_rage:OnRefresh()
+	self:OnCreated()
+end
+
 function imba_life_stealer_rage:CheckState()
 	local state = {
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true
@@ -91,6 +97,8 @@ function imba_life_stealer_rage:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
+	
+	return decFuncs
 end
 
 function imba_life_stealer_rage:GetModifierAttackSpeedBonus_Constant()
@@ -100,6 +108,44 @@ end
 ----------------------------
 -- RAGE INSANITY MODIFIER --
 ----------------------------
+
+-----------
+-- FEAST --
+-----------
+
+function imba_life_stealer_feast:GetIntrinsicModifierName()
+	return "modifier_imba_life_stealer_feast"
+end
+
+--------------------
+-- FEAST MODIFIER --
+--------------------
+
+function modifier_imba_life_stealer_feast:OnCreated()
+	--print("OnCreated")
+end
+
+function modifier_imba_life_stealer_feast:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Physical(keys)
+	-- "Cannot damage and lifesteal off of wards, buildings, Roshan and allied units."
+	if keys.target and not keys.target:IsOther() and not keys.target:IsBuilding() and not keys.target:IsRoshan() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		local heal_amount = keys.target:GetMaxHealth() * self:GetAbility():GetTalentSpecialValueFor("hp_leech_percent") * 0.01
+		
+		local lifesteal_particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(lifesteal_particle)
+		
+		self:GetParent():Heal(heal_amount, self:GetCaster())
+		
+		return heal_amount
+	end
+end
 
 -----------------
 -- OPEN WOUNDS --
@@ -219,3 +265,36 @@ function modifier_imba_life_stealer_open_wounds:OnTakeDamage(keys)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, keys.attacker, heal_amount, nil)
 	end
 end
+
+------------
+-- INFEST --
+------------
+
+function imba_life_stealer_infest:OnSpellStart()
+
+end
+
+---------------------
+-- INFEST MODIFIER --
+---------------------
+
+function modifier_imba_life_stealer_infest:OnCreated()
+
+end
+
+
+imba_life_stealer_infest 							= class({})
+modifier_imba_life_stealer_infest 					= class({})
+
+imba_life_stealer_control 							= class({})
+modifier_imba_life_stealer_control	 				= class({})
+
+imba_life_stealer_consume 							= class({})
+modifier_imba_life_stealer_consume 					= class({})
+
+imba_life_stealer_assimilate 						= class({})
+modifier_imba_life_stealer_assimilate 				= class({})
+
+imba_life_stealer_assimilate_eject 					= class({})
+modifier_imba_life_stealer_assimilate_eject 		= class({})
+
