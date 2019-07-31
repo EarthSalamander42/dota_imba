@@ -156,10 +156,10 @@ function GameMode:OnHeroSpawned(hero)
 	end
 
 	-- Let's try to make Meepo a bit more playable
-	if npc:GetUnitName() == "npc_dota_hero_meepo" then
-		local caster = npc
-		if npc:IsClone() then caster = npc:GetCloneSource() end
-		npc:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
+	if hero:GetUnitName() == "npc_dota_hero_meepo" then
+		local caster = hero
+		if hero:IsClone() then caster = hero:GetCloneSource() end
+		hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
 	elseif hero:IsTempestDouble() then
 		local clone_shared_buffs = {
 			"modifier_frantic",
