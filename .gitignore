@@ -10,7 +10,6 @@
 *.vmesh_c
 
 # Map files
-*.vpk
 
 # Map overviews
 resource/overviews/*

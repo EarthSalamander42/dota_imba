@@ -183,7 +183,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cardio_threshold"		"900"
+				"cardio_threshold"		"1200"
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 #base heroes/death_prophet/hero.txt
 #base heroes/earthshaker/hero.txt
 #base heroes/enchantress/hero.txt
-//#base heroes/grimstroke/hero.txt
+#base heroes/grimstroke/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
 #base heroes/leshrac/hero.txt
@@ -20,14 +20,15 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/tidehunter/hero.txt
-#base custom_heroes/vardor/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
+#base custom_heroes/nian/hero.txt
 #base custom_heroes/sohei/hero.txt
+#base custom_heroes/vardor/hero.txt
 
 "DOTAHeroes"
 {
@@ -36,8 +37,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_arc_warden"
 	{
-	
-
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -77,8 +76,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_alchemist"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -89,6 +86,7 @@
 		"Ability4"					"imba_alchemist_mammonite"	
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_alchemist_chemical_rage"
+		"Ability7"					"generic_hidden" // This is Unstable concoction vanilla ability slot, remove it
 
 		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains +150% gold (additive) from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
@@ -98,7 +96,7 @@
 		"Ability15"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
 		"Ability16"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
 		"Ability17"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
-		
+
 		// Removed Talents
 		// "Ability12"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
 		// "Ability13"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
@@ -2048,14 +2046,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_witch_doctor_death_ward"
 
-		"Ability10"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
-		"Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
+		"Ability10"					"special_bonus_attack_damage_75"
+		"Ability11"					"special_bonus_armor_8"
 		"Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
 		"Ability13"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
-		"Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.		
-		"Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
-		"Ability16"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
+		"Ability14"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
+		"Ability15"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability16"					"special_bonus_imba_witch_doctor_9" //+X% Maledict FeelsBadMan Heal/Regen Reduction
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
+		// "Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
+		// "Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
 	}
 
 	//=================================================================================================================
@@ -2384,5 +2387,5 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability4"		"imba_mars_arena_of_blood_enhance"
-	}
+	}		
 }

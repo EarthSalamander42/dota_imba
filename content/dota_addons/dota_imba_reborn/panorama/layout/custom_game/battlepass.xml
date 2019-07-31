@@ -6,6 +6,7 @@
 
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/api.js" />
 		<include src="file://{resources}/scripts/custom_game/battlepass.js" />
 	</scripts>
 
@@ -134,19 +135,8 @@
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
 						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 					</Button>
-<!--
-					<DOTASettingsCheckbox class="BattlepassButton" onactivate="ToggleCompanion();">
-						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
-					</DOTASettingsCheckbox>
--->
 				</Panel>
-<!--
-				<Panel id="DonatorOptions" hittest="false">
-					<Button id="DonatorOptionsToggle" onactivate="">
-						<Label id="DonatorOptionsToggleLabel"/>
-					</Button>
-				</Panel>
--->
+
 				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
@@ -207,10 +197,15 @@
 							<Label class="LeaderboardButtonLabel" text="Winrate" />
 						</Button>
 					</Panel>
+
+					<Panel id="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
 				</Panel>
 
-				<Panel id="Tops" hittest="false">
-					<!-- JS Inserts records here -->
+				<Panel id="LocalPlayerInfoContainer" hittest="false">
+					<Panel id="LocalPlayerInfo" class="LeaderboardGames" hittest="false">
+					</Panel>
 				</Panel>
 			</Panel>
 

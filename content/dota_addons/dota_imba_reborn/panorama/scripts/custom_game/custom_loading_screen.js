@@ -45,7 +45,8 @@ function fetch() {
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
-	view.title.text = $.Localize("#addon_game_name") + " " + game_version + " - " + $.Localize("#game_version_name");
+//	view.title.text = $.Localize("#addon_game_name") + " " + game_version + " - " + $.Localize("#game_version_name");
+	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
 	view.text.text = $.Localize("#loading_screen_description");
 	view.link_text.text = $.Localize("#loading_screen_button");
 

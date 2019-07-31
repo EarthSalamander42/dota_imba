@@ -5,35 +5,37 @@
 
 -- LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
--- <<insert modifier_name here>> = modifier_generic_motion_controller -- for overrides
--- OR
 -- <<target_unit>>:AddNewModifier(<<caster>>, <<ability>>, "modifier_generic_motion_controller", {distance = <<>> , direction_x = <<>> , direction_y = <<>> , direction_z = <<>> , duration = <<>> , height = <<>> , bInterruptible = <<>> , bGroundStop = <<>> , bDecelerate = <<>> }) -- for standard usage
 
 -- Example:
 -- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", {distance = 1000, direction_x = self:GetCaster():GetForwardVector().x, direction_y = self:GetCaster():GetForwardVector().y, direction_z = self:GetCaster():GetForwardVector().z, duration = 0.6, height = 250 , bGroundStop = true, bDecelerate = true})
 
--- Generally I would recommend the override though cause you'll probably need to account for extra stuff like state checking, DeclareFunctions values, particles, being purgable or not, etc.
-
 modifier_generic_motion_controller = class({})
 
-function modifier_generic_motion_controller:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end -- This seems to allow proper interruption of stacking modifiers or something
+function modifier_generic_motion_controller:IgnoreTenacity()	return self.bIgnoreTenacity == 1 end
+function modifier_generic_motion_controller:IsPurgable()		return self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() end
+function modifier_generic_motion_controller:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end -- This seems to allow proper interruption of stacking modifiers or something
 
 -- Function parameters:
--- distance, direction_x, direction_y, direction_z, duration, height, bGroundStop, bDecelerate
+-- distance, direction_x, direction_y, direction_z, duration, height, bGroundStop, bDecelerate, bIgnoreTenacity, treeRadius, bStun
 
 -- bGroundStop makes the motion controller if the parent's vertical position would otherwise be lower than the ground position (similar to Techies' Blast Off!)
 -- bDecelerate makes the horizontal portion decelerate towards the destination rather than having constant velocity
+-- treeRadius will destroy trees at the end of the motion controller equal to radius provided
 
 function modifier_generic_motion_controller:OnCreated(params)
 	if not IsServer() then return end
 	
-	self.distance		= params.distance
-	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
-	self.duration		= params.duration
-	self.height			= params.height
-	self.bInterruptible	= params.bInterruptible
-	self.bGroundStop	= params.bGroundStop
-	self.bDecelerate	= params.bDecelerate
+	self.distance			= params.distance
+	self.direction			= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
+	self.duration			= params.duration
+	self.height				= params.height
+	self.bInterruptible		= params.bInterruptible
+	self.bGroundStop		= params.bGroundStop
+	self.bDecelerate		= params.bDecelerate
+	self.bIgnoreTenacity	= params.bIgnoreTenacity
+	self.treeRadius			= params.treeRadius
+	self.bStun				= params.bStun
 	
 	-- Velocity = Displacement/Time
 	self.velocity		= self.direction * self.distance / self.duration
@@ -112,6 +114,10 @@ function modifier_generic_motion_controller:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetParent():InterruptMotionControllers(true)
+	
+	if self:GetRemainingTime() <= 0 and self.treeRadius then
+		GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self.treeRadius, true )
+	end
 end
 
 function modifier_generic_motion_controller:UpdateHorizontalMotion(me, dt)
@@ -140,7 +146,7 @@ function modifier_generic_motion_controller:UpdateVerticalMotion(me, dt)
 	if self.height then
 		me:SetOrigin( me:GetOrigin() + Vector(0, 0, self.vertical_velocity) * dt )
 		
-		if not self.bGroundStop or self.bGroundStop == 0 or (self.bGroundStop == 1 and GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z) then
+		if self.bGroundStop == 1 and GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z then
 			self:Destroy()
 		else
 			self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
@@ -153,6 +159,16 @@ end
 -- -- This typically gets called if the caster uses a position breaking tool (ex. Earth Spike) while in mid-motion
 function modifier_generic_motion_controller:OnVerticalMotionInterrupted()
 	self:Destroy()
+end
+
+function modifier_generic_motion_controller:CheckState()
+	local state = {}
+	
+	if self.bStun and self.bStun == 1 then
+		state[MODIFIER_STATE_STUNNED] = true
+	end
+	
+	return state
 end
 
 function modifier_generic_motion_controller:DeclareFunctions()

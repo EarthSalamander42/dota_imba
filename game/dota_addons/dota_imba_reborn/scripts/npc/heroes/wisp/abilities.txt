@@ -30,7 +30,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"
+				"radius"					"900 1000 1100 1200"
 				"LinkedSpecialBonus"		"special_bonus_imba_wisp_5"
 			}
 			"02"

@@ -1,5 +1,5 @@
-"game_version_name"						"Mythic Beings"
-"loading_screen_description"			"Patch 7.15 brings forth the newfound powers of Puck, Spirit Breaker, and Tidehunter, and also sees a larger scale of balance and quality of life changes throughout. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+"game_version_name"						""
+"loading_screen_description"			"7.16 introduces another series of destructive beasts, including IMBAfications for Grimstroke and Shadow Shaman, as well as brand new custom heroes in Nian and Vardor! The IMBApass has also received expansions, which include implementations for Earthshaker's Planetfall and Invoker's Acolyte of the Lost Arts. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"					"Dota 2 IMBA Website"
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"

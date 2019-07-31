@@ -2110,7 +2110,9 @@ end
 
 modifier_imba_lich_sinister_gaze_handler = class({})
 
-function modifier_imba_lich_sinister_gaze_handler:IsHidden()	return true end
+function modifier_imba_lich_sinister_gaze_handler:IsHidden()		return true end
+-- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
+function modifier_imba_lich_sinister_gaze_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_lich_sinister_gaze_handler:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}

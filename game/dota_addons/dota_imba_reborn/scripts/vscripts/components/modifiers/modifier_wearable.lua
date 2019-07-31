@@ -47,6 +47,9 @@ function modifier_wearable:OnIntervalThink()
 		elseif Battlepass:HasJuggernautArcana(self:GetParent():GetOwnerEntity():GetPlayerID()) == 1 then
 			self.render_color = true
 			self:GetParent():SetRenderColor(255, 220, 220)
+		elseif self:GetParent():GetOwnerEntity():GetUnitName() == "npc_dota_hero_vardor" then
+			self.render_color = true
+			self:GetParent():SetRenderColor(255, 0, 0) -- not turning to red somehow :(
 		end
 	end
 

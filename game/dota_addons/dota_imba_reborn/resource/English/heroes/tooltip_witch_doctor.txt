@@ -73,6 +73,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7_Description"	"Maledict disables health regen for 1 second after each tick."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8"                "Death Zone"
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_9"                "+60% Maledict FeelsBadMan Heal/Regen Reduction"
 
 // Witch Doctor's summoned unit: Death Ward
 "imba_witch_doctor_death_ward"                              "Death Ward"

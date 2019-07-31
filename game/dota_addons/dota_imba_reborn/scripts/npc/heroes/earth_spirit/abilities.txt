@@ -252,7 +252,7 @@
 				"var_type"						"FIELD_INTEGER"
 				"opposite_to_enemy_distance"	"80"				
 			}
-			"1"
+			"11"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"earths_mark_duration"			"5"
@@ -528,10 +528,6 @@
 		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial" { }
 	}
 	
 	//=================================================================================================================
@@ -637,10 +633,6 @@
 		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial" { }
 	}
 
 	//=================================================================================================================
@@ -653,9 +645,5 @@
 		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial" { }
 	}
 }

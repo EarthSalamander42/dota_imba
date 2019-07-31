@@ -20,6 +20,8 @@ function item_imba_glimmerdark_shield:OnSpellStart()
 		local hCaster = self:GetCaster()
 		hCaster:AddNewModifier( hCaster, self, "modifier_item_imba_glimmerdark_shield_prism", { duration = self.prism_duration } )
 
+		hCaster:AddNewModifier( hCaster, self, "modifier_item_gem_of_true_sight", { duration = self.prism_duration } ) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+
 		EmitSoundOn( "DOTA_Item.GhostScepter.Activate", self:GetCaster() )
 	end
 end
@@ -99,12 +101,24 @@ end
 
 function modifier_item_imba_glimmerdark_shield_prism:OnCreated( kv )
 	self.prism_bonus_magic_dmg = self:GetAbility():GetSpecialValueFor( "prism_bonus_magic_dmg" )
-
+	
+	self.luminate_radius = self:GetAbility():GetSpecialValueFor( "luminate_radius" )
+	
 	if IsServer() then
 		self.nFXIndex = ParticleManager:CreateParticle( "particles/item/glimmerdark_shield/gleam.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
 		ParticleManager:SetParticleControlEnt( self.nFXIndex, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetOrigin(), true )
 		--ParticleManager:SetParticleControlEnt( self.nFXIndex, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, nil, self:GetParent():GetOrigin(), true )
 		ParticleManager:SetParticleControl( self.nFXIndex, 3, Vector( 100, 100, 100 ) )
+		
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_item_imba_glimmerdark_shield_prism:OnIntervalThink()
+	if IsServer() then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.luminate_radius, FrameTime(), false)
 	end
 end
 
@@ -123,6 +137,9 @@ function modifier_item_imba_glimmerdark_shield_prism:DeclareFunctions()
 	{
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE,
+		
+		-- IMBAfication: Extrasensory
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 	}
 	return funcs
 end
@@ -140,6 +157,14 @@ end
 function modifier_item_imba_glimmerdark_shield_prism:GetModifierMagicalResistanceDecrepifyUnique( params )
 	return self.prism_bonus_magic_dmg
 end 
+
+--------------------------------------------------------------------------------
+
+function modifier_item_imba_glimmerdark_shield_prism:GetModifierIgnoreCastAngle()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return 1
+	end
+end
 
 --------------------------------------------------------------------------------
 

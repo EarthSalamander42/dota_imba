@@ -1233,7 +1233,10 @@ function imba_mirana_moonlight_shadow:OnSpellStart()
 				false)
 
 			for _, ally in pairs(allies) do
-				ally:AddNewModifier(caster, starstorm_ability, modifier_talent_starstorm, {duration = duration})
+				-- Monkey King exception
+				if not ally:HasModifier("modifier_monkey_king_fur_army_soldier") and not ally:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+					ally:AddNewModifier(caster, starstorm_ability, modifier_talent_starstorm, {duration = duration})
+				end
 			end
 		end
 	end
@@ -1276,7 +1279,7 @@ function modifier_imba_moonlight_shadow:OnIntervalThink()
 
 		-- If they don't have invisibility modifiers, give it to them
 		for _,ally in pairs(allies) do
-			if not ally:HasModifier(self.modifier_invis) then
+			if not ally:HasModifier(self.modifier_invis) and not ally:HasModifier("modifier_monkey_king_fur_army_soldier") and not ally:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
 				ally:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = duration})
 				ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})
 				if self:GetDuration() < (duration + self.fade_delay) then

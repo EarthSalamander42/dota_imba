@@ -270,6 +270,8 @@ function DonatorStatusConverter(new_status) {
 		return 4;
 	else if (new_status == 8)
 		return 5;
+	else if (new_status == 9)
+		return 6;
 	else if (new_status == 1)
 		return 102;
 	else if (new_status == 2)
@@ -289,6 +291,8 @@ function DonatorStatusConverterReverse(new_status) {
 		return 7;
 	else if (new_status == 5)
 		return 8;
+	else if (new_status == 6)
+		return 9;
 	else if (new_status == 100)
 		return 3;
 	else if (new_status == 101)
@@ -298,16 +302,19 @@ function DonatorStatusConverterReverse(new_status) {
 }
 
 function GetDonatorColor(status) {
-	// return undefined for some reason
+	// lua donator status are still using old numbers
 //	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
+//	$.Msg("Donator colors:")
 //	$.Msg(donator_colors)
 
+	// Placeholder
 	var donator_colors = [];
 	donator_colors[1] = "#00CC00";
 	donator_colors[2] = "#DAA520";
 	donator_colors[3] = "#DC2828";
 	donator_colors[4] = "#993399";
 	donator_colors[5] = "#2F5B97";
+	donator_colors[6] = "#BB4B0A";
 	donator_colors[100] = "#0066FF";
 	donator_colors[101] = "#641414";
 	donator_colors[102] = "#871414";

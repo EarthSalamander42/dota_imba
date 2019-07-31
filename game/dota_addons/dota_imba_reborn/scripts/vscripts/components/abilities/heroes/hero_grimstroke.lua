@@ -154,7 +154,7 @@ function imba_grimstroke_dark_artistry:OnSpellStart()
 	local projectile_start_location = self:GetCaster():GetAbsOrigin() + offset_start_vector
 	
 	-- Start Location, End Location, Primary Projectile
-	self:Stroke(projectile_start_location, self:GetCursorPosition(), true)
+	self:Stroke(projectile_start_location, self:GetCursorPosition(), true, self:GetAutoCastState())
 	
 	if self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_gods_incarnation", self:GetCaster()) then
 		for extra_strokes = 1, 3 do
@@ -166,7 +166,7 @@ function imba_grimstroke_dark_artistry:OnSpellStart()
 	end
 end
 
-function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPrimary)
+function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPrimary, bMain)
 	if start_location == end_position then
 		end_position = end_position + self:GetCaster():GetForwardVector()
 	end
@@ -175,6 +175,8 @@ function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPri
 	local stroke_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	stroke_dummy:EmitSound("Hero_Grimstroke.DarkArtistry.Projectile")
 	stroke_dummy.hit_units = 0
+	
+	local velocity = (end_position - start_location):Normalized() * self:GetSpecialValueFor("projectile_speed")
 	
 	local info = {
 		Ability				= self,
@@ -191,7 +193,7 @@ function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPri
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		fExpireTime 		= GameRules:GetGameTime() + 10.0,
 		bDeleteOnHit		= false,
-		vVelocity			= (end_position - start_location):Normalized() * self:GetSpecialValueFor("projectile_speed"),
+		vVelocity			= Vector(velocity.x, velocity.y, 0),
 		bProvidesVision		= true,
 		iVisionRadius 		= self:GetSpecialValueFor("end_radius"),
 		iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
@@ -199,10 +201,10 @@ function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPri
 		ExtraData			= 
 		{
 			stroke_dummy	= stroke_dummy:entindex(),
-			bPrimary		= bPrimary
+			bPrimary		= bPrimary,
+			bMain			= bMain
 		}
 	}
-	
 	
 	local projectile = ProjectileManager:CreateLinearProjectile(info)
 end
@@ -291,7 +293,7 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		EntIndexToHScript(data.stroke_dummy):RemoveSelf()
 		
 		-- IMBAfication: The Ink Lines Flow
-		if location and self:GetAutoCastState() and data.bPrimary == 1 and self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_dark_artistry_ink_line", self:GetCaster()) then
+		if location and data.bMain == 1 then
 			local warp_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_lines_warp.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 			ParticleManager:SetParticleControl(warp_particle, 0, self:GetCaster():GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(warp_particle)
@@ -302,7 +304,11 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 			ParticleManager:SetParticleControl(warp_particle, 0, self:GetCaster():GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(warp_particle)
 			
-			self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_dark_artistry_ink_line", self:GetCaster()):Destroy()
+			local ink_line_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_dark_artistry_ink_line", self:GetCaster())
+			
+			if ink_line_modifier then
+				ink_line_modifier:Destroy()
+			end
 		end
 	end
 end

@@ -96,9 +96,11 @@
 
 // Dazzle's Ressurection
 "DOTA_Tooltip_ability_imba_dazzle_ressurection"                        "Ressurection"
-"DOTA_Tooltip_ability_imba_dazzle_ressurection_Description"            "After a %delay% second delay, brings the targeted hero back from the dead, and places them near Dazzle.\nShould the target be alive before the ressurection delay ends, the ressurection will fail, the cooldown will reset, the mana refunded."
-"DOTA_Tooltip_ability_imba_dazzle_ressurection_Note0"                  "To target a hero, click on their portrait on the top bar, or target in their approximate point of death. The spell will search for a corpse in a 300 unit radius of the cast point."
+"DOTA_Tooltip_ability_imba_dazzle_ressurection_Description"            "Can only be cast on the area where a hero has fallen. After a %delay% second delay, brings the targeted hero back from the dead, and places them near Dazzle.\nShould the target be alive before the ressurection delay ends, the ressurection will fail, the cooldown will reset, the mana refunded."
+"DOTA_Tooltip_ability_imba_dazzle_ressurection_Note0"                  "To target a hero, click on their portrait on the top bar (does NOT work with quick cast), or target in their approximate point of death. The spell will search for a corpse in a 300 unit radius of the cast point."
 "DOTA_Tooltip_ability_imba_dazzle_ressurection_Lore"                    "To keep someone alive is childs play. But to bring someone back from the dead, is truly a master feat."
+
+"dota_hud_error_ressurection_no_targets"							"No valid resurrection targets within selected area."
 
 // Dazzle's Custom Talents
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_1"         		"Shadow Wave now bounces with a 1 second delay"
