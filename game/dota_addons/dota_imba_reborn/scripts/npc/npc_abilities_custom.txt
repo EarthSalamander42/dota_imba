@@ -549,7 +549,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -638,7 +638,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"

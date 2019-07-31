@@ -15,6 +15,8 @@ var api = {
 			game_info: "game-info",
 			loading_screen: "loading-screen",
 			resolve_map_name: "resolve-map-name",
+			player_armory: "armory",
+			modify_player_armory: "modify-armory",
 		}
 	},
 
@@ -50,14 +52,20 @@ var api = {
 		return this.request(this.get_url(this.endpoints.meta.game_info));
 	},
 
-	request: function (url, data) {
+	get_player_armory: function (data) {
+		return this.request(this.get_url(this.endpoints.meta.player_armory, data));
+	},
 
+	update_player_armory: function (data) {
+		return this.request(this.get_url(this.endpoints.meta.modify_player_armory, data, "POST"));
+	},
+
+	request: function (url, data, type) {
 		var self = this;
 
-		var type = "GET";
-		if (data !== undefined)
-			type = "POST";
-		else
+		if (type == undefined)
+			type = "GET";
+		if (data == undefined)
 			data = {};
 
 		$.Msg("Performing request to " + url + " with method " + type);
@@ -93,3 +101,32 @@ var api = {
 		})
 	},
 };
+
+if (Game.IsInToolsMode()) {
+	var info = {
+		steamid: "76561198057206770",
+		hero: "npc_hero_gafu",
+	};
+
+	api.get_player_armory(info).then(function (data) {
+		$.Msg(data);
+	}).catch(function (err) {
+		$.Msg(err)
+	});
+
+/*
+	var info = {
+		steamid: "76561198057206770",
+		item_id: "13042",
+		slot_id: "persona_selector",
+		hero: "npc_dota_hero_invoker",
+		isEquipped: 1,
+	};
+
+	api.update_player_armory(info).then(function (data) {
+		$.Msg(data);
+	}).catch(function (err) {
+		$.Msg(err)
+	});
+*/
+}

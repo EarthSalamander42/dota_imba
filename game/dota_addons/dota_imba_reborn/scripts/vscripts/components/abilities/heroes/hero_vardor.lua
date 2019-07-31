@@ -15,11 +15,18 @@ ListenToGameEvent("npc_spawned", function(keys)
 		Timers:CreateTimer(0.2, function()
 			if npc.yari == nil then
 				print("[Yari] Init Yari...")
+				Wearable:_WearProp(npc, "127", "body_head")
+				Wearable:_WearProp(npc, "7749", "shoulder")
+				Wearable:_WearProp(npc, "9460", "head")
+				Wearable:_WearProp(npc, "7747", "belt")
+				Wearable:_WearProp(npc, "7746", "arms")
+				npc:SetRenderColor(255, 0, 0)
+
 				npc.yari = {}
 				npc.yari.count = 1
 				npc.yari.targets = {}
 				npc.yari.targetCount = 0
-				
+
 				if not npc:HasModifier("modifier_yari_count") then
 					npc:AddNewModifier(npc, self, "modifier_yari_count", nil)
 				end
@@ -32,15 +39,18 @@ ListenToGameEvent("npc_spawned", function(keys)
 	end
 end, nil)
 
+--[[
 function FindActiveSpears(caster)
 	local remnants = Entities:FindAllByModel("models/spear.vmdl")
 
 	for key, remnant in pairs(remnants) do
 		--if caster == remnant or caster ~= remnant:GetOwner() or remnant:IsIllusion() or (not remnant:IsAlive()) then	
-		if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_imba_fire_remnant_state") then
+		if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_graceful_jump_dummy") then
 			table.remove(remnants, key)
 		end
 	end
+
+	print(remnants, #remnants)
 
 	if #remnants > 0 then
 		local available_remnants = {}
@@ -54,8 +64,10 @@ function FindActiveSpears(caster)
 	else
 		return nil
 	end
-end
 
+	return Entities:FindAllByModel("models/spear.vmdl")
+end
+--]]
 
 function AddYari( keys )
 	local caster = keys.caster
@@ -365,10 +377,6 @@ LinkLuaModifier("modifier_graceful_jump_count_hidden", "components/abilities/her
 
 vardor_graceful_jump = class({})
 
-function vardor_graceful_jump:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
-end
-
 function vardor_graceful_jump:OnUpgrade()
 	local caster = self:GetCaster()
 	if not caster:HasModifier("modifier_graceful_jump_count_hidden") and not caster:HasModifier("modifier_graceful_jump_count") then
@@ -419,28 +427,45 @@ function vardor_graceful_jump:OnSpellStart()
 	if target then
 		self.target = target
 		if target:HasModifier("modifier_piercing_shot_stuck") or target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
-			print("Teleport")
 			Teleport(self)
 		else
-			print("Jump")
 			Jump(self)
 		end
 
 		return
 	end
 
-	local active_remnants = FindActiveSpears(caster)
+	local active_remnants = Entities:FindAllByModel("models/spear.vmdl")
 
-	if active_remnants then
+	if active_remnants[1] then
 		local closest_remnant_position = active_remnants[1]:GetAbsOrigin()
 		local closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
-		for _, spear in pairs(active_remnants) do
-			if (spear:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < closest_distance then
-				self.target = spear
-				closest_remnant_position = spear:GetAbsOrigin()
-				closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
+
+		if closest_distance <= self:GetSpecialValueFor("max_range") then
+			self.target = active_remnants[1]
+
+			for _, spear in pairs(active_remnants) do
+				if (spear:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < closest_distance then
+					self.target = spear
+					closest_remnant_position = spear:GetAbsOrigin()
+					closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
+				end
 			end
+
+			if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
+				Teleport(self)
+			else
+				Jump(self)
+			end
+		else
+			DisplayError(caster:GetPlayerID(), "Spear is too far away!")
+			self:RefundManaCost()
+			self:EndCooldown()
 		end
+	else
+		DisplayError(caster:GetPlayerID(), "No active spear.")
+		self:RefundManaCost()
+		self:EndCooldown()
 	end
 end
 
@@ -464,7 +489,7 @@ function Teleport(self)
 	local targetLoc = self.target:GetAbsOrigin()
 	local targetLocG = GetGroundPosition(targetLoc, self.target)
 
-	local projectileSpeed = 2000
+	local projectileSpeed = self:GetSpecialValueFor("jump_speed")
 
 	local endTinker = CreateUnitByName("npc_dota_vardor_spear_dummy", targetLocG, false, caster, caster, caster:GetTeam())
 	endTinker:SetAbsOrigin(targetLocG)
@@ -992,9 +1017,11 @@ function AddMindBleeding(caster, target, count)
 			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration })
 			target:SetModifierStackCount( modifierReduction, ability, count )
 		end
-		target:CalculateStatBonus()
-	end
 
+		if target:IsRealHero() then
+			target:CalculateStatBonus()
+		end
+	end
 end
 
 --===================================

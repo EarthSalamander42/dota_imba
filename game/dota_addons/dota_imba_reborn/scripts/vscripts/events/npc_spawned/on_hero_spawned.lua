@@ -154,8 +154,13 @@ function GameMode:OnHeroSpawned(hero)
 	if IsMutationMap() then
 		Mutation:OnHeroSpawn(hero)
 	end
-	
-	if hero:IsTempestDouble() then
+
+	-- Let's try to make Meepo a bit more playable
+	if npc:GetUnitName() == "npc_dota_hero_meepo" then
+		local caster = npc
+		if npc:IsClone() then caster = npc:GetCloneSource() end
+		npc:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
+	elseif hero:IsTempestDouble() then
 		local clone_shared_buffs = {
 			"modifier_frantic",
 			"modifier_item_imba_moon_shard_active",

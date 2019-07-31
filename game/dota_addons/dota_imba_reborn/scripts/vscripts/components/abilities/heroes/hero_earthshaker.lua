@@ -894,11 +894,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("echo_slam_damage_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
-	local effect_counter = #enemies + 1
-
-	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx, PATTACH_ABSORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(echo_slam_particle, 1, Vector(effect_counter, 0, 0 ))
-	ParticleManager:ReleaseParticleIndex(echo_slam_particle)
+	local effect_counter = 0
 
 	for _, enemy in pairs(enemies) do		
 		local damageTable = {
@@ -938,16 +934,29 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 						damage = self:GetTalentSpecialValueFor("echo_slam_echo_damage")
 					}
 				}
-				
+
 				ProjectileManager:CreateTrackingProjectile(projectile)
-				
+
 				-- Real heroes make two echoes
 				if echo_enemy:IsRealHero() then
+					effect_counter = effect_counter + 1
 					ProjectileManager:CreateTrackingProjectile(projectile)
+
+					Timers:CreateTimer(0.1, function()
+						local echo_slam_death_pfx = ParticleManager:CreateParticle(self:GetCaster().echo_slam_tgt_pfx, PATTACH_ABSORIGIN, echo_enemy)
+						ParticleManager:SetParticleControl(echo_slam_death_pfx, 6, Vector(math.min(effect_counter, 1), math.min(effect_counter, 1), math.min(effect_counter, 1)))
+						ParticleManager:SetParticleControl(echo_slam_death_pfx, 10, Vector(4, 0, 0)) -- earth particle duration
+						ParticleManager:ReleaseParticleIndex(echo_slam_death_pfx)
+					end)
 				end
 			end
 		end
 	end
+
+	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx, PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(echo_slam_particle, 10, Vector(4, 0, 0)) -- earth particle duration
+	ParticleManager:SetParticleControl(echo_slam_particle, 11, Vector(math.min(effect_counter, 1), math.min(effect_counter, 1), 0 )) -- enable ring with symbols
+	ParticleManager:ReleaseParticleIndex(echo_slam_particle)
 end
 
 function imba_earthshaker_echo_slam:OnProjectileHit_ExtraData(target, location, data)

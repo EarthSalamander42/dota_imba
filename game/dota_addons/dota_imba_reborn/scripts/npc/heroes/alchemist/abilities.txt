@@ -299,7 +299,7 @@
 	"imba_alchemist_chemical_rage"
 	{
 		"BaseClass"             		"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_alchemist"
+		"ScriptFile"					"components/abilities/heroes/hero_alchemist"
 		"AbilityTextureName"			"alchemist_chemical_rage"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
