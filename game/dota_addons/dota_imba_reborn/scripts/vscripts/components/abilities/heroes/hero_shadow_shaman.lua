@@ -336,10 +336,8 @@ function modifier_imba_shadow_shaman_voodoo:CheckState()
 	}
 	
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		state = {
-			[MODIFIER_STATE_DISARMED]		= true,
-			[MODIFIER_STATE_BLOCK_DISABLED]	= true
-		}
+		state[MODIFIER_STATE_DISARMED]			= true
+		state[MODIFIER_STATE_BLOCK_DISABLED]	= true
 	end
 	
 	-- Calling this last so it shows as the forefront state on the UI
