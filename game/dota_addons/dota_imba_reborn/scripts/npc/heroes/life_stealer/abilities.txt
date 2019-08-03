@@ -37,13 +37,44 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"40 50 60 70"
+				"attack_speed_bonus"	"50 80 110 140"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"3.0 4.0 5.0 6.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_attack_stacks"	"4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_other_stacks"		"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_stack_duration"	"30"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_stack_activation"		"100"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_active_range"		"600"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"insanity_active_duration"		"6"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_LIFESTEALER_RAGE"
@@ -70,8 +101,44 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"1.5 2.25 3.0 3.75"
+				"hp_leech_percent"		"2.0 3.0 4.0 5.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"engorge_pct"			"50"
+			}			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"engorge_duration"		"60"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banquet_base_health"	"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"destroy_attacks"		"16"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_attack_multiplier"		"4"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banquet_cast_range"	"225"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banquet_cooldown"		"60"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -143,6 +210,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_range"			"225 350 475 600"
 			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cross_contamination_pct"			"5"
+			}
 		}
 	}
 	
@@ -201,7 +274,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 275 400"
+				"damage"				"180 360 540"
 			}
 			"03"
 			{
@@ -222,6 +295,67 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_scepter"	"25"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_tick_up_rate"	"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_orders_to_tick_up"	"4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_orders_to_tick_down"	"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_ticks_per_damage"	"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_fail_knockback_distance"	"200"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_fail_knockback_height"	"75"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chestburster_fail_knockback_duration"	"0.5"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_fail_stun_duration"	"6"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_starting_stacks"	"50"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_success_stacks"	"100"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_failure_stacks"	"0"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chestburster_min_eject_time"	"5"
 			}
 		}
 	}
@@ -253,12 +387,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_LIFESTEALER_ASSIMILATE"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCastRange"				"150"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50"
+		"AbilityCooldown"				"30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,130 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf21:version{7a150ecc-d865-438f-ad53-5963fe1a2720} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 160
+	m_flConstantRadius = 160.0
+	m_ConstantColor = [ 226, 0, 0, 60 ]
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flRadiusScaleMin = 0.5
+				m_flInputMax = 0.1
+				m_flProxyRadius = 32.0
+				m_nCPin = 0
+			}
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_ALPHA_FROM0_RGB_FROM_1"
+			m_flZoomAmount1 = 4.0
+			m_bDisableZBuffering = true
+			m_hTexture = resource:"materials/particle/vistasmokev1/vistasmokev1_gray.vtex"
+			m_flAnimationRate = 1.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.2
+			m_Gravity = [ 0.0, 0.0, -500.0 ]
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_bLockRot = true
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeIn"
+			m_bProportional = false
+			m_flFadeInTimeMax = 1.0
+			m_flFadeInTimeMin = 1.0
+		},
+		{
+			_class = "C_OP_FadeOut"
+			m_bEaseInAndOut = false
+			m_bProportional = false
+			m_flFadeOutTimeMax = 0.5
+			m_flFadeOutTimeMin = 0.5
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 71, 2, 2, 255 ]
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.1
+			m_flBias = 0.2
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 2.0
+			m_fLifetimeMin = 2.0
+		},
+		{
+			_class = "C_INIT_CreateWithinBox"
+			m_vecMax = [ 0.0, 0.0, 60.0 ]
+			m_vecMin = [ 0.0, 0.0, 60.0 ]
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMin = 50.0
+			m_flDegreesMax = 70.0
+			m_bRandomlyFlipDirection = false
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 1
+			m_nSequenceMin = 1
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 52, 18, 18, 25 ]
+			m_ColorMax = [ 18, 7, 7, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 30
+			m_nAlphaMax = 160
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_vecOutputMax = [ 15.0, 15.0, 0.0 ]
+			m_vecOutputMin = [ -15.0, -15.0, 0.0 ]
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.8
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 4.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 6
+}
