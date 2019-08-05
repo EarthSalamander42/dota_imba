@@ -233,15 +233,15 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-- add particle or sound playing to notify
-		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
-			for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
-				if modifier_name == modifier then
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
-					return false
-				end
-			end
-		end
+		-- -- add particle or sound playing to notify
+		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
+			-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
+				-- if modifier_name == modifier then
+					-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+					-- return false
+				-- end
+			-- end
+		-- end
 
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
