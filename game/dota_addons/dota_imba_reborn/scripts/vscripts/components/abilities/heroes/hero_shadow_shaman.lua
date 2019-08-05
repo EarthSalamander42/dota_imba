@@ -573,7 +573,7 @@ function modifier_imba_shadow_shaman_shackles_handler:OnAbilityExecuted(keys)
 		if keys.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * (1 - keys.target:GetStatusResistance()) * 100)
 		else
-			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * 100)
+			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * self:GetAbility():GetSpecialValueFor("chariot_channel_multiplier") * 100)
 		end
 	end
 end
@@ -701,6 +701,14 @@ function modifier_imba_shadow_shaman_shackles_chariot:OnIntervalThink()
 	end
 end
 
+function modifier_imba_shadow_shaman_shackles_chariot:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetAbility() and self:GetAbility():IsChanneling() then
+		self:GetAbility():SetChanneling(false)
+	end
+end
+
 --------------------------------
 ------ MASS SERPENT WARD -------
 --------------------------------
@@ -814,7 +822,7 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 
 end
 
-function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild)
+function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elapsedTime)
 	local new_hp
 	local duration
 	
@@ -823,7 +831,8 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild)
 		duration	= self:GetSpecialValueFor("duration")
 	else
 		new_hp 		= self:GetSpecialValueFor("snake_charmer_health")
-		duration	= self:GetSpecialValueFor("snake_charmer_duration")
+		--duration	= self:GetSpecialValueFor("snake_charmer_duration")
+		duration	= math.max(self:GetSpecialValueFor("duration") - elapsedTime + self:GetSpecialValueFor("snake_charmer_bonus_duration"), self:GetSpecialValueFor("snake_charmer_bonus_duration"))
 	end
 	
 	local ward = CreateUnitByName("npc_dota_shadow_shaman_ward_"..math.min(self:GetLevel(), 3), position, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
@@ -1009,11 +1018,11 @@ function modifier_imba_mass_serpent_ward:OnDeath(keys)
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
 			for ward = 1, self.snake_charmer_creep_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true)
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
 			end
 		else
 			for ward = 1, self.snake_charmer_hero_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true)
+				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
 			end
 		end
 	end

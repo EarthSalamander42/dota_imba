@@ -71,6 +71,9 @@ function Dagon( keys )
 	
 	-- Dagonize the main target
 	DagonizeIt(caster, ability, caster, target, damage, particle_hit, dagon_colors[ability:GetAbilityName()])
+	
+	-- This is to prevent Ogre Magi's vanilla Multicast from working with Dagon's AoE
+	if keys.ability:GetPurchaseTime() == -1 then return end
 
 	-- While there are potential sources, keep looping
 	while #search_sources > 0 do

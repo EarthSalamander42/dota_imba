@@ -133,8 +133,8 @@
 			m_flInitialRadius = 1.0
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 200.0
-			m_flInitialSpeedMin = 3000.0
-			m_flInitialSpeedMax = 3000.0
+			m_flInitialSpeedMin = 3200.0
+			m_flInitialSpeedMax = 3200.0
 			m_flYaw = 315.0
 		},
 		{

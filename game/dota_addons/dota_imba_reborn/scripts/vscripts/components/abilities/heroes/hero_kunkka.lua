@@ -994,7 +994,7 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 				self:TidebringerEffects( target, ability )
                 
                 -- Calculate bonus damage to be used for cleave
-                local cleaveDamage = params.damage * (ability:GetSpecialValueFor("cleave_damage") / 100)
+                local cleaveDamage = params.damage * (ability:GetTalentSpecialValueFor("cleave_damage") / 100)
                 
 				local enemies_to_cleave = FindUnitsInCone(self:GetParent():GetTeamNumber(),CalculateDirection(params.target, self:GetParent()),self:GetParent():GetAbsOrigin(), radius_start, radius_end, range, nil, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
 

@@ -31,7 +31,9 @@ end
 
 function item_imba_force_staff:CastFilterResultTarget(target)
 	if IsServer() then
-		if self:GetCaster():GetTeam() == target:GetTeam() and self:GetCaster() ~= target and target:IsMagicImmune() then
+		if PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
+			return UF_FAIL_DISABLE_HELP
+		elseif self:GetCaster():GetTeam() == target:GetTeam() and self:GetCaster() ~= target and target:IsMagicImmune() then
 			return UF_FAIL_MAGIC_IMMUNE_ALLY
 		elseif self:GetCaster():GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
@@ -193,6 +195,16 @@ end
 
 function item_imba_hurricane_pike:GetIntrinsicModifierName()
 	return "modifier_item_imba_hurricane_pike"
+end
+
+function item_imba_hurricane_pike:CastFilterResultTarget(target)
+	if IsServer() then
+		if PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
+			return UF_FAIL_DISABLE_HELP
+		end
+
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	end
 end
 
 function item_imba_hurricane_pike:OnSpellStart()

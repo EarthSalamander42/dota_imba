@@ -826,9 +826,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_kunkka"
 	{
-	
-		"MovementTurnRate"			"5.0"
-
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -842,12 +839,17 @@
 
 		"Ability10"					"special_bonus_imba_kunkka_1"
 		"Ability11"					"special_bonus_imba_kunkka_2"
-		"Ability12"					"special_bonus_imba_kunkka_3"
+		"Ability12"					"special_bonus_hp_regen_15"
 		"Ability13"					"special_bonus_imba_kunkka_4"
-		"Ability14"					"special_bonus_imba_kunkka_5"
-		"Ability15"					"special_bonus_imba_kunkka_6"
-		"Ability16"					"special_bonus_imba_kunkka_7"
-		"Ability17"					"special_bonus_imba_kunkka_8"
+		"Ability14"					"special_bonus_imba_kunkka_6"
+		"Ability15"					"special_bonus_strength_25"
+		"Ability16"					"special_bonus_imba_kunkka_8"
+		"Ability17"					"special_bonus_imba_kunkka_9"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_kunkka_3" // X Marks bonus movespeed effect (hilariously bad)
+		// "Ability14"					"special_bonus_imba_kunkka_5" // X marks the spot now marks all enemies in 275 AoE (way too situational to be useful)
+		// "Ability16"					"special_bonus_imba_kunkka_7" // Tidebringer now hits all enemies affected by Torrent (really bad compared to other talent)
 	}
 
 	//=================================================================================================================

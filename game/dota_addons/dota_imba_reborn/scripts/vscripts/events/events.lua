@@ -944,6 +944,12 @@ function GameMode:OnPlayerChat(keys)
 			elseif str == "-memory" then
 				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
 				-- print(package.loaded) -- This lags everything to absolute death
+			elseif str == "-die" then
+				local pos = caster:GetAbsOrigin()
+			
+				caster:ForceKill(true)
+				caster:RespawnHero(false, false)
+				caster:SetAbsOrigin(pos)
 			end
 		end
 	end

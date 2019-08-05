@@ -162,7 +162,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"raze_land_strength_pct"	"20"
+				"raze_land_strength_pct"	"25"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -250,7 +250,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"200 260 320 380"
+				"maximum_attack_speed"			"220 280 340 400"
 			}
 			"02"
 			{
@@ -266,7 +266,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_resistance"			"20 30 40 50"
+				"maximum_resistance"			"25 35 45 55"
 			}
 			"05"
 			{
