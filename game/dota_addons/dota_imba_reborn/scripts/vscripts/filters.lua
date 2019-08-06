@@ -602,14 +602,6 @@ function GameMode:OrderFilter( keys )
 	end
 
 	------------------------------------------------------------------------------------
-	-- Invoker Spell Override
-	------------------------------------------------------------------------------------
-	if unit:HasModifier("modifier_imba_invoker_spelloverride") then
-		local spelloverride = unit:FindModifierByName("modifier_imba_invoker_spelloverride")
-		return spelloverride:CastSpell(keys)
-	end
-
-	------------------------------------------------------------------------------------
 	-- Witch Doctor Death Ward handler
 	------------------------------------------------------------------------------------
 	if unit:HasModifier("modifier_imba_death_ward") then
