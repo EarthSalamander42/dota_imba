@@ -233,15 +233,15 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-- add particle or sound playing to notify
-		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
-			for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
-				if modifier_name == modifier then
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
-					return false
-				end
-			end
-		end
+		-- -- add particle or sound playing to notify
+		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
+			-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
+				-- if modifier_name == modifier then
+					-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+					-- return false
+				-- end
+			-- end
+		-- end
 
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
@@ -360,7 +360,14 @@ function GameMode:ItemAddedFilter( keys )
 			item.x_pfx = nil
 		end
 		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
-			if not item:GetPurchaser() or item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
+			-- If the rapier has a purchaser (WARNING: if the courier buys it, item:GetPurchaser() is nil), and someone from the opposite team picks it up, then it becomes a free rapier
+			-- Gonna make a pretty bold assumption here; there is the edge case where someone's inventory is full, they buy rapiers from courier which then drop the rapiers, and then someone from the enemy team picks it up; this code would then make THEM the original purchaser
+			-- ...well I'm just trying to make rapiers not disappear first
+			if not item:GetPurchaser() then
+				item:SetPurchaser(unit)
+			end
+			
+			if item:GetPurchaser() and item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end
 			
@@ -375,7 +382,8 @@ function GameMode:ItemAddedFilter( keys )
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0
 			local rapier_magic_2_amount = 0
-			for i = DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_6 do
+			
+			for i = DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_9 do
 				local current_item = unit:GetItemInSlot(i)
 				if not current_item then
 					return true
@@ -389,6 +397,8 @@ function GameMode:ItemAddedFilter( keys )
 					rapier_magic_2_amount = rapier_magic_2_amount + 1
 				end
 			end
+			
+			-- This handles combining rapiers or soemthing
 			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or
 			((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
 			((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
@@ -398,11 +408,13 @@ function GameMode:ItemAddedFilter( keys )
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
 			end
 		end
+		
 		if unit:IsIllusion() or unit:IsTempestDouble() or unit:IsHero() then
 			return true
 		else
 			unit:DropRapier(nil, item_name)
 		end
+		
 		return false
 	end
 

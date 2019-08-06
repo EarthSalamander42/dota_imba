@@ -366,15 +366,19 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 		self:GetCaster():EmitSound(responses[RandomInt(1, #responses)])
 	end		
 	
-	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cogs_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cogs_radius") + 80, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 	-- Set everyone nearby to get "sucked" into cogs, otherwise you sometimes have people stuck in-between cogs
 	for _, unit in pairs(units) do
-		-- Friendly units won't get displaced towards caster, while enemies do
-		if unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), false)
+		if (unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetSpecialValueFor("cogs_radius") then
+			-- Friendly units won't get displaced towards caster, while enemies do
+			if unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+				FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), false)
+			else
+				FindClearSpaceForUnit(unit, self:GetCaster():GetAbsOrigin() + RandomVector(self:GetSpecialValueFor("extra_pull_buffer")), false)
+			end
 		else
-			FindClearSpaceForUnit(unit, self:GetCaster():GetAbsOrigin() + RandomVector(self:GetSpecialValueFor("extra_pull_buffer")), false)
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), false)
 		end
 	end
 end

@@ -435,7 +435,8 @@ end
 -- CHARGE OF DARKNESS VISION MODIFIER --
 ----------------------------------------
 
-function modifier_imba_spirit_breaker_charge_of_darkness_vision:IsHidden()	return true end
+function modifier_imba_spirit_breaker_charge_of_darkness_vision:IsHidden()		return true end
+function modifier_imba_spirit_breaker_charge_of_darkness_vision:IsPurgable()	return false end
 
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnCreated()
 	if not IsServer() then return end

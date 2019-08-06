@@ -10,7 +10,7 @@
 
 
 "DOTA_Tooltip_ability_imba_chen_divine_favor"							"Divine Favor"
-"DOTA_Tooltip_ability_imba_chen_divine_favor_Description"				"Aura provides increased health regeneration, amplifies all health restore by a percentage, and boosts damage for heroes. Provides double bonus damage for your own non-hero units.\n<font color='#FF7800'>Pure Devotion:</font> Can be cast on friendly units to boost the health regeneration to %heal_rate%, health restore amplication to %heal_amp%%%, and damage bonus to %damage_bonus% for %duration% seconds. The active provides quintuple bonus damage for non-hero targets. Also provides immunity to any pure damage. Active does not stack with the aura."
+"DOTA_Tooltip_ability_imba_chen_divine_favor_Description"				"Aura provides increased health regeneration, amplifies all health restore by a percentage, and boosts damage for heroes. Provides double bonus damage for your own non-hero units.\n<font color='#FF7800'>Pure Devotion:</font> Can be cast on friendly units to boost the health regeneration to %heal_rate%, health restore amplication to %heal_amp%%%, and damage bonus to %damage_bonus% for %duration% seconds. The active provides triple bonus damage for non-hero targets. Also provides immunity to any pure damage. Active does not stack with the aura."
 "DOTA_Tooltip_ability_imba_chen_divine_favor_heal_amp_aura"				"%HEAL INCREASE:"
 "DOTA_Tooltip_ability_imba_chen_divine_favor_heal_rate_aura"			"REGEN PER SEC:"
 "DOTA_Tooltip_ability_imba_chen_divine_favor_damage_bonus_aura"			"ATTACK DAMAGE:"

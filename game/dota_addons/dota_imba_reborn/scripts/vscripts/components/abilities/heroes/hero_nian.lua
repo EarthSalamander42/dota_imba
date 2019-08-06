@@ -3,6 +3,7 @@
 
 LinkLuaModifier("modifier_imba_nian_frenzy_swipes", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_nian_frenzy_swipes_suppression", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nian_frenzy_swipes_slow", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_nian_frenzy_swipes_armor_reduction", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_nian_crushing_leap_movement", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_BOTH)
@@ -19,6 +20,7 @@ LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/gene
 imba_nian_frenzy_swipes								= class({})
 modifier_imba_nian_frenzy_swipes					= class({})
 modifier_imba_nian_frenzy_swipes_suppression		= class({})
+modifier_imba_nian_frenzy_swipes_slow				= class({})
 modifier_imba_nian_frenzy_swipes_armor_reduction	= class({})
 
 imba_nian_crushing_leap								= class({})
@@ -63,6 +65,7 @@ function modifier_imba_nian_frenzy_swipes:OnCreated()
 	self.mana_per_attack			= self:GetAbility():GetSpecialValueFor("mana_per_attack")
 	self.attack_angle				= self:GetAbility():GetSpecialValueFor("attack_angle")
 	self.bonus_attack_range			= self:GetAbility():GetSpecialValueFor("bonus_attack_range")
+	self.move_speed_slow_duration	= self:GetAbility():GetSpecialValueFor("move_speed_slow_duration")
 	
 	if not IsServer() then return end
 	
@@ -120,6 +123,12 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
 					self:GetParent():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes_suppression", self:GetCaster())
 					
+					local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_slow", {duration = self.move_speed_slow_duration})
+					
+					if slow_modifier then
+						slow_modifier:SetDuration(self.move_speed_slow_duration * (1 - enemy:GetStatusResistance()), true)
+					end
+					
 					if self:GetCaster():HasTalent("special_bonus_imba_nian_frenzy_swipes_upgrade") then
 						local armor_reduction_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_armor_reduction", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration")})
 						
@@ -147,24 +156,11 @@ end
 function modifier_imba_nian_frenzy_swipes:CheckState()
 	local state = {
 		[MODIFIER_STATE_DISARMED]	= true,
-		[MODIFIER_STATE_MUTED]		= true,
 		[MODIFIER_STATE_ROOTED]		= true
 	}
 	
 	return state
 end
-
--- function modifier_imba_nian_frenzy_swipes:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_DISABLE_TURNING
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_frenzy_swipes:GetModifierDisableTurning()
-	-- return 1
--- end
 
 ----------------------------------------
 -- FRENZY SWIPES SUPPRESSION MODIFIER --
@@ -205,6 +201,27 @@ function modifier_imba_nian_frenzy_swipes_suppression:GetModifierTotalDamageOutg
 	if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
 		return -100
 	end
+end
+
+---------------------------------
+-- FRENZY SWIPES SLOW MODIFIER --
+---------------------------------
+
+function modifier_imba_nian_frenzy_swipes_slow:OnCreated()
+	self.move_speed_slow_pct	= self:GetAbility():GetSpecialValueFor("move_speed_slow_pct")
+end
+
+function modifier_imba_nian_frenzy_swipes_slow:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_nian_frenzy_swipes_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.move_speed_slow_pct * (-1)
 end
 
 --------------------------------------------
@@ -552,6 +569,10 @@ function imba_nian_tail_spin:GetPlaybackRateOverride()
 	return 2
 end
 
+function imba_nian_tail_spin:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
 function imba_nian_tail_spin:OnSpellStart()
 	local spin_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/tail_spin.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(spin_particle)
@@ -590,7 +611,11 @@ function imba_nian_tail_spin:OnSpellStart()
 			stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
 		end
 		
-		local direction_vector = enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
+		local direction_vector = Vector(0, 0, 0)
+		
+		if self:GetAutoCastState() then
+			direction_vector = enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
+		end
 		
 		local knockback_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 		{

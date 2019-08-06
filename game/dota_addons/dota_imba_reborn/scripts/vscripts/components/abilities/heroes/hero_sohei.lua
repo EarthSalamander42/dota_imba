@@ -192,10 +192,6 @@ function modifier_sohei_dash_charges:IsDebuff()
 	return false
 end
 
-function modifier_sohei_dash_charges:IsDebuff()
-	return false
-end
-
 function modifier_sohei_dash_charges:IsHidden()
 	return false
 end
@@ -233,6 +229,12 @@ if IsServer() then
 --------------------------------------------------------------------------------
 
 	function modifier_sohei_dash_charges:OnIntervalThink()
+		if self:GetParent():FindAbilityByName(self:GetAbility():GetName()) == nil then
+			self:StartIntervalThink(-1)
+			self:Destroy()
+			return
+		end
+		
 		if self:GetRemainingTime() <= 0 then
 			self:OnExpire()
 		end
@@ -289,7 +291,7 @@ if IsServer() then
 
 				local spellPalm = self:GetParent():FindAbilityByName( "sohei_palm_of_life" )
 
-				if remainingTime > spellPalm:GetCooldownTimeRemaining() then
+				if spellPalm and remainingTime > spellPalm:GetCooldownTimeRemaining() then
 					spellPalm:EndCooldown()
 					spellPalm:StartCooldown( remainingTime )
 				end

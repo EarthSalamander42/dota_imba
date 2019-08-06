@@ -50,6 +50,16 @@ function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	return "modifier_item_imba_lance_of_longinus"
 end
 
+function item_imba_lance_of_longinus:CastFilterResultTarget(target)
+	if IsServer() then
+		if PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
+			return UF_FAIL_DISABLE_HELP
+		end
+
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	end
+end
+
 function item_imba_lance_of_longinus:OnSpellStart()
 	if not IsServer() then return end
 	
@@ -234,7 +244,7 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 	self.attacked_target = {}
 	
 	self.god_piercing_radius	= self:GetAbility():GetSpecialValueFor("god_piercing_radius")
-	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * self:GetAbilty():GetSpecialValueFor("god_piercing_pure_pct") * 0.01
+	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * self:GetAbility():GetSpecialValueFor("god_piercing_pure_pct") * 0.01
 end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnDestroy()

@@ -13,6 +13,6 @@
 		"mutation_info",
 		"status_resistance",
 		"hero_wearables",
-		"other_available_items"
+		"other_available_items",
 	]
 }

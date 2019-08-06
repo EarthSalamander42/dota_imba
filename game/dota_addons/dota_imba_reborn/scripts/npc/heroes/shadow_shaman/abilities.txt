@@ -247,6 +247,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"chariot_break_distance"	"425"
 			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chariot_channel_multiplier"	"3"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
@@ -444,6 +449,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"snake_charmer_duration"	"30.0 35.0 40.0"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"snake_charmer_bonus_duration"	"8"
 			}
 		}
 	}

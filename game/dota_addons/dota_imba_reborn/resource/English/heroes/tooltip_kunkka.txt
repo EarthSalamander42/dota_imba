@@ -49,6 +49,7 @@
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_Description"		"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_Description}\n<font color='#FF7800'>Back so soon?:</font> If the returned target is an enemy it will be returned once more again after %sec_duration% seconds. This secondary effect cannot be triggered early with Return."
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_Lore"			"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_Lore}"
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_tooltip_range"	"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_tooltip_range}"
+"DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_duration"		"ENEMY DURATION:"
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_sec_duration"	"SECONDARY DURATION:"
 
 "DOTA_Tooltip_modifier_imba_x_marks_the_spot"						"#{DOTA_Tooltip_modifier_kunkka_x_marks_the_spot}"
@@ -92,3 +93,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_6"					"Ghostship now drags Kunkka along to its destination"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_7"					"Tidebringer now hits all enemies affected by Torrent"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_8"					"Rum absorbs damage instead of delaying it"
+"DOTA_Tooltip_ability_special_bonus_imba_kunkka_9"					"+60% Tidebringer Cleave"

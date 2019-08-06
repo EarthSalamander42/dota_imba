@@ -2,9 +2,9 @@
 "npc_dota_hero_nian_hype"		"Emerging from its slumber, the Year Beast is unrivalled in its destructive powers. Freely leaping to and from its foes, Nian sweeps away attackers with its tail and claws, and vaporizes them with its volcanic blast, sowing chaos and confusion amongst the ranks."
 
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes"											"Frenzy Swipes"
-"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Description"								"Bares down and savagely tears at the space in front of it, performing attacks on all units within its attack range + %bonus_attack_range% at boosted attack speed and damage."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Description"								"Bares down and savagely tears at the space in front of it, performing attacks on all units within its attack range + %bonus_attack_range% at boosted attack speed and damage. Enemies hit by Frenzy Swipes have their movement speed reduced by %move_speed_slow_pct%%% for %move_speed_slow_duration% seconds."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Lore"										"The Year Beast takes form to bellow its savagery and its hunger."
-"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note0"									"Nian is disarmed, muted, and rooted while Frenzy Swipes is active."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note0"									"Nian is disarmed and rooted while Frenzy Swipes is active."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note1"									"The attack arc is within 60 degrees of the front of Nian."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note2"									"The attacks will not occur if Nian is banished or stunned."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note2"									"These attacks cannot apply cleave."
@@ -14,6 +14,9 @@
 
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes"											"Frenzy Swipes"
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_Description"								"Tearing at the area in front, unable to move or turn."
+
+"DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_slow"									"Frenzy Swipes Slow"
+"DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_slow_Description"						"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_armor_reduction"							"Frenzy Swipes"
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_armor_reduction_Description"				"Armor reduced by %dMODIFIER_PROPERTY_TOOLTIP%."
@@ -41,7 +44,7 @@
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_scepter_duration"							"REDUCTION DURATION:"
 
 "DOTA_Tooltip_ability_imba_nian_tail_spin"												"Tail Spin"
-"DOTA_Tooltip_ability_imba_nian_tail_spin_Description"									"Spins around, dealing damage and stunning all enemies around, while also destroying all trees within radius."
+"DOTA_Tooltip_ability_imba_nian_tail_spin_Description"									"Spins around, dealing damage, knocking enemies up, and stunning them, while also destroying all trees within radius. Can be set to auto-cast to instead knock the enemies %knockback_distance% distance away."
 "DOTA_Tooltip_ability_imba_nian_tail_spin_Lore"											"With no particular fondness towards others, Nian is quick to violently deter any encroaching troublemakers."
 "DOTA_Tooltip_ability_imba_nian_tail_spin_Note0"										"The knockback is not affected by status resistance, while the stun is."
 "DOTA_Tooltip_ability_imba_nian_tail_spin_Note1"										"The knockback also destroys trees within a 150 radius."

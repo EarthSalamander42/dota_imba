@@ -6962,7 +6962,8 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_damage"				"180"
+				"cleave_damage"				"175"
+				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_9"
 			}
 		}
 	}
@@ -7454,6 +7455,34 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Kunkka Talent 9: +X% Tidebringer Cleave
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_kunkka_tidebringer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"60"
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Lich's Cold Front
@@ -7712,6 +7741,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_lich.lua"
+		"AbilityTextureName"            "lich_frost_shield"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -7730,7 +7760,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"25 20 15 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7797,6 +7827,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_lich.lua"
+		"AbilityTextureName"            "lich_sinister_gaze"
 		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -7866,6 +7897,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"cold_front_stacks"	"2"
 			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"creep_channel_reduction"	"50"
+			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	}
@@ -9525,7 +9561,7 @@
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"triggerfinger_cooldown"		"1"	
+				"triggerfinger_cooldown"		"5 3 1"	
 			}
 		}
 	}
@@ -28366,7 +28402,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"200 220 240 260"
+				"crit_damage"			"200"
 			}
 			"03"
 			{

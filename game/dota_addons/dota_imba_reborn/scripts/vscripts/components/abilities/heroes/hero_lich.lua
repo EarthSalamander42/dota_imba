@@ -2127,9 +2127,17 @@ function modifier_imba_lich_sinister_gaze_handler:OnAbilityExecuted(keys)
 	
 	if keys.ability == self:GetAbility() then
 		if keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-			self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()) * 100)
+			if not keys.target:IsCreep() then
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()) * 100)
+			else
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")) * 0.01 * (1 - keys.target:GetStatusResistance()) * 100)
+			end
 		else
-			self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration"))
+			if not keys.target:IsCreep() then
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * 100)
+			else
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")))
+			end
 		end
 	end
 end
