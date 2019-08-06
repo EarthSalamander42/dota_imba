@@ -14,4 +14,4 @@
 "DOTA_Tooltip_ability_item_imba_iron_talon_Lore"							"A simple but effective weapon devised to quell a great Hellbear uprising."
 
 "DOTA_Tooltip_modifier_item_imba_iron_talon"								"The Hunt"
-"DOTA_Tooltip_modifier_item_imba_iron_talon_Description"					"Gaining bonus attack damage (%dMODIFIER_PROPERTY_TOOLTIP% for melee attackers, %dMODIFIER_PROPERTY_TOOLTIP2% for ranged attackers) against creeps."
+"DOTA_Tooltip_modifier_item_imba_iron_talon_Description"					"Gaining bonus attack damage against creeps."

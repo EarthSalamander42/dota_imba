@@ -676,7 +676,7 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 
 function ShowDemoPanel() {
 	$.Msg("Enter Function ShowDemoPanel");
-	$.GetContextPanel().AddClass("visible");
+	$.GetContextPanel().FindChildTraverse('ControlPanel').AddClass("visible");
 }
 
 (function () {

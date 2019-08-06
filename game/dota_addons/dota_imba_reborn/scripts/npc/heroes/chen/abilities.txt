@@ -53,7 +53,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"60 120 180 240"
+				"bonus_attack_speed"	"50 100 150 200"
 			}
 
 			"05"
@@ -180,7 +180,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amp"				"50"
+				"heal_amp"				"30"
 			}
 			"02"
 			{
@@ -201,7 +201,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"			
-				"creep_damage_mult"		"5"
+				"creep_damage_mult"		"3"
 			}
 			
 			"06"

@@ -1001,8 +1001,10 @@ function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
         self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
 		
+		local parent = self:GetParent()
+		
 		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("reduction_duration"), function()
-			local overchannel_modifier = self:GetParent():FindModifierByName("modifier_over_channel_reduction")
+			local overchannel_modifier = parent:FindModifierByName("modifier_over_channel_reduction")
 			if overchannel_modifier then
 				overchannel_modifier:DecrementStackCount()
 			end
@@ -1247,7 +1249,7 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 	if IsServer() then
-		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() and kv.unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() and kv.unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() and not kv.unit:IsBuilding() then
 			if not kv.unit.borrowed_time_damage_taken then
 				kv.unit.borrowed_time_damage_taken = 0
 			end

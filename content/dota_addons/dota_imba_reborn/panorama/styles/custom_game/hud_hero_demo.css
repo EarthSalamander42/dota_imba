@@ -28,6 +28,12 @@
     transition-property: background-color, transform;
 	transition-duration: 0.35s;
 	transition-timing-function: ease-in-out;
+	visibility: collapse;
+}
+
+.ControlPanel.visible
+{
+    visibility: visible;
 }
 
 .ControlPanelContainer

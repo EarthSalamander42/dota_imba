@@ -265,7 +265,10 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 
 				for _, enemy in pairs(enemies) do
 					-- Using vanilla Soulbind modifier name for now
-					if target ~= enemy and ((target:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() >= self:GetSpecialValueFor("stain_spread_min_distance") or (target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()))) then
+					-- if target ~= enemy and ((target:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() >= self:GetSpecialValueFor("stain_spread_min_distance") or (target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()))) then
+					
+					if target ~= enemy and target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
+					
 						self:Stroke(target:GetAbsOrigin(), enemy:GetAbsOrigin(), false)
 						
 						if not target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
@@ -497,7 +500,7 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 	
 	if target then
 		if target ~= self:GetCaster() and data.ink_unit_entindex and EntIndexToHScript(data.ink_unit_entindex) and EntIndexToHScript(data.ink_unit_entindex):IsAlive() then
-			if target:IsInvulnerable() or target:IsOutOfGame() then
+			if target:IsInvulnerable() or target:IsOutOfGame() or not target:IsAlive() then
 				local projectile =
 				{
 					Target 				= self:GetCaster(),

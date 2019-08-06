@@ -18,11 +18,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"28 24 20 16"
+		"AbilityCooldown"				"22 18 14 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"60"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -51,7 +51,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_range"			"75"
+				"bonus_attack_range"			"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed_slow_pct"			"25"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed_slow_duration"			"2"
 			}
 		}
 	}
@@ -67,7 +77,7 @@
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -154,7 +164,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 14 13 12"
+		"AbilityCooldown"				"17 16 15 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -192,7 +202,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.6 1.7 1.8 1.9" // Separate modifier from knockback 
+				"stun_duration"			"1.4 1.5 1.6 1.7" // Separate modifier from knockback 
 			}
 			"08"
 			{
@@ -222,7 +232,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"4200"
+		"AbilityCastRange"				"3950"
 		"AbilityCastPoint"				"0.5"
 		
 		// Time		
@@ -239,7 +249,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"400"
+				"projectile_speed"				"375"
 			}
 			"02"
 			{
@@ -259,7 +269,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_tick"		"250 400 550"
+				"damage_per_tick"		"200 350 500"
 			}
 			"06"
 			{
