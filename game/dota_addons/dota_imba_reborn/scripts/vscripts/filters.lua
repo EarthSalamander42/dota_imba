@@ -478,7 +478,8 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CombatEvents("generic", "glyph", unit)
 	end
-
+	
+	-- Turbo Courier filters
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
 			local player_id = keys.issuer_player_id_const
@@ -561,6 +562,7 @@ function GameMode:OrderFilter( keys )
 --			print("Return false 3")
 			return false
 		end
+	-- "Vanilla" courier filters
 	else
 		if unit:IsCourier() then
 			local ability = EntIndexToHScript(keys["entindex_ability"])
