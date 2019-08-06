@@ -179,7 +179,7 @@
 			</Panel>
 		</Panel>
 
-		<Panel class="ControlPanel LeftRightFlow">
+		<Panel id="ControlPanel" class="ControlPanel LeftRightFlow">
 
 			<Panel class="ControlPanelContainer">
 				<Panel id="Maximized">
