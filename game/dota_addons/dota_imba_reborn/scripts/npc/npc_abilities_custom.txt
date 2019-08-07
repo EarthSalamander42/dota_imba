@@ -35,9 +35,10 @@
 #base heroes/sven/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base custom_heroes/vardor/abilities.txt
+#base heroes/visage/abilities.txt
+#base heroes/winter_wyvern/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
-#base heroes/winter_wyvern/abilities.txt
 
 "DOTAAbilities"
 {

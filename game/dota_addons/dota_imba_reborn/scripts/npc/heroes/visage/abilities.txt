@@ -1,0 +1,420 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Visage: Grave Chill
+	//=================================================================================================================
+	"imba_visage_grave_chill"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_grave_chill"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Visage.GraveChill.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 14 12 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90"		
+
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"chill_duration"			"6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"				"17 23 29 35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackspeed_bonus"				"34 46 58 70"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"deaths_enticement_bonus_per_sec"				"0.8"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}	
+
+	//=================================================================================================================
+	// Visage: Soul Assumption
+	//=================================================================================================================
+	"imba_visage_soul_assumption"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_soul_assumption"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Visage.SoulAssumption.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4.0 4.0 4.0 4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"170 160 150 140"		
+
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900 900 900 900"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bolt_speed"				"1000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_base_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_charge_damage"		"75"
+				"LinkedSpecialBonus"		"special_bonus_unique_visage_4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_limit"				"3 4 5 6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stack_duration"			"6.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_limit"				"110"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1375"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_min"				"2.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_max"				"3000.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}	
+
+	//=================================================================================================================
+	// Visage: Gravekeeper's Cloak
+	//=================================================================================================================
+	"imba_visage_gravekeepers_cloak"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_gravekeepers_cloak"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_layers"						"4"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"damage_reduction"					"8 12 16 20"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"recovery_time"						"6 5 4 3"
+				"LinkedSpecialBonus"	"special_bonus_unique_visage_5"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"minimum_damage"					"40"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"radius"							"1200"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Visage: Summon Familiars
+	//=================================================================================================================
+	"imba_visage_summon_familiars"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_summon_familiars"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"HasScepterUpgrade"			"1"
+		"AbilitySound"					"Hero_Visage.SummonFamiliars.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0 0 0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"130"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 150 150"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_hp"				"500 600 700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_armor"			"0 1 2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_speed"			"430"
+				"LinkedSpecialBonus"		"special_bonus_unique_visage_2"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_attack_damage"	"20 40 60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Visage: Summon Familiars Stone Form Self Cast
+	//=================================================================================================================
+	"imba_visage_stone_form_self_cast"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_summon_familiars_stone_form"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"MaxLevel"						"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stun_radius"						"350"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stun_delay"						"0.55"
+			}			
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stun_damage"						"60 100 140"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stun_duration"						"1.0 1.25 1.5"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stone_duration"					"6.0"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"hp_regen"							"150 175 200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Visage: Summon Familiars Stone Form
+	//=================================================================================================================
+	"imba_visage_summon_familiars_stone_form"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
+		"AbilityTextureName"			"visage_summon_familiars_stone_form"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityCastRange"				"160"
+		"AbilityCastPoint"				"0.0"
+		"MaxLevel"						"3"
+		"AbilitySound"					"Visage_Familiar.StoneForm.Cast"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stun_radius"						"350"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stun_delay"						"0.55"
+			}			
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stun_damage"						"60 100 140"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stun_duration"						"1.0 1.25 1.5"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stone_duration"					"6.0"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"hp_regen"							"150 175 200"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Talent: Greater Hardening (increasing magic resistance on Kraken Shell purges)
+	//=================================================================================================================
+	"special_bonus_imba_tidehunter_greater_hardening" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_tidehunter_kraken_shell"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"3"
+			}
+		}
+	}
+}

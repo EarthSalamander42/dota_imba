@@ -792,47 +792,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'shaman') and hero:GetName() == "npc_dota_hero_shadow_shaman" then
-							ability_set = {
-								[0] = "imba_shadow_shaman_ether_shock",
-								[1] = "imba_shadow_shaman_voodoo",
-								[2] = "imba_shadow_shaman_shackles",
-								-- [3] = "imba_puck_ethereal_jaunt",
-								-- [4] = "generic_hidden",
-								-- [5] = "imba_puck_dream_coil",
-								[6] = "special_bonus_hp_300",
-								[7] = "special_bonus_exp_boost_30",
-								[8] = "special_bonus_cast_range_125",
-								[9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
-								[10] = "special_bonus_imba_shadow_shaman_shackles_duration",
-								[11] = "special_bonus_imba_shadow_shaman_wards_movement",
-								[12] = "special_bonus_imba_shadow_shaman_ether_shock_damage",
-								[13] = "special_bonus_imba_shadow_shaman_3"
-							}
-							upgraded = true
-						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
-							ability_set = {
-								[0] = "imba_grimstroke_dark_artistry",
-								[1] = "imba_grimstroke_ink_creature",
-								[2] = "imba_grimstroke_spirit_walk",
-								[3] = "grimstroke_scepter",
-								[4] = "imba_grimstroke_ink_gods_incarnation",
-								-- [5] = "imba_grimstroke_soul_chain", -- not working do not enable this
-								[6] = "special_bonus_movement_speed_30",
-								[7] = "special_bonus_gold_income_15",
-								[8] = "special_bonus_spell_amplify_12",
-								[9] = "special_bonus_cast_range_125",
-								[10] = "special_bonus_imba_grimstroke_stroke_of_fate_cast_range",
-								[11] = "special_bonus_imba_grimstroke_phantoms_embrace_extra_hits",
-								[12] = "special_bonus_imba_grimstroke_ink_swell_radius",
-								[13] = "special_bonus_imba_grimstroke_stroke_of_fate_damage"
-							}
-							upgraded = true
-							
-							local soulbind_vanilla_enahncer_ability = hero:AddAbility("imba_grimstroke_soul_chain_vanilla_enhancer")
-							soulbind_vanilla_enahncer_ability:SetAbilityIndex(6)
-							soulbind_vanilla_enahncer_ability:OnHeroLevelUp()
-						
 						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" and (hero == caster) then
 							ability_set = {
 								[0] = "imba_life_stealer_rage",
@@ -852,6 +811,27 @@ function GameMode:OnPlayerChat(keys)
 								[14] = "special_bonus_unique_lifestealer_2",
 								[15] = "special_bonus_unique_lifestealer_3",
 								[16] = "special_bonus_unique_lifestealer"
+							}
+							upgraded = true
+						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" and (hero == caster) then
+							ability_set = {
+								[0] = "imba_visage_grave_chill",
+								[1] = "imba_visage_soul_assumption",
+								[2] = "imba_visage_gravekeepers_cloak",
+								[3] = "imba_visage_stone_form_self_cast",
+								[4] = "generic_hidden",
+								[5] = "imba_visage_summon_familiars",
+								-- [6] = "imba_life_stealer_control",
+								-- [7] = "imba_life_stealer_consume",
+								-- [8] = "generic_hidden",
+								-- [9] = "special_bonus_hp_200",
+								-- [10] = "special_bonus_attack_speed_20",
+								-- [11] = "special_bonus_attack_damage_30",
+								-- [12] = "special_bonus_movement_speed_25",
+								-- [13] = "special_bonus_evasion_20",
+								-- [14] = "special_bonus_unique_lifestealer_2",
+								-- [15] = "special_bonus_unique_lifestealer_3",
+								-- [16] = "special_bonus_unique_lifestealer"
 							}
 							upgraded = true
 						end
