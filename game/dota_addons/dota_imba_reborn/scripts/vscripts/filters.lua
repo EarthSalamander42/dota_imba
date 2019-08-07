@@ -545,7 +545,12 @@ function GameMode:OrderFilter( keys )
 
 						-- if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
 --							print("Select rightful courier!")
-							PlayerResource:NewSelection(player_id, rightful_courier)
+
+							-- Don't new selection the courier if someone presses F3
+							if ability:GetName() ~= "courier_take_stash_and_transfer_items" then
+								PlayerResource:NewSelection(player_id, rightful_courier)
+							end
+							
 						-- end
 
 --						print("Return false 1")
