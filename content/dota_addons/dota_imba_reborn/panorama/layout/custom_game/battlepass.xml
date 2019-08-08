@@ -176,9 +176,11 @@
 				<Panel id="CompanionTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
+
 				<Panel id="StatueTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
+
 				<Panel id="EmblemTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
