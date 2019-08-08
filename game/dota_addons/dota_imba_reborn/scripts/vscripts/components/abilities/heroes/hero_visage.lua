@@ -7,6 +7,8 @@ LinkLuaModifier("modifier_imba_visage_grave_chill_aura", "components/abilities/h
 LinkLuaModifier("modifier_imba_visage_grave_chill_aura_modifier", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_visage_soul_assumption", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_visage_soul_assumption_stacks", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_visage_soul_assumption_counter", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
@@ -24,15 +26,21 @@ modifier_imba_visage_grave_chill_aura_modifier			= class({})
 
 imba_visage_soul_assumption								= class({})
 modifier_imba_visage_soul_assumption					= class({})
+modifier_imba_visage_soul_assumption_stacks				= class({})
+modifier_imba_visage_soul_assumption_counter			= class({})
 
 imba_visage_gravekeepers_cloak							= class({})
 modifier_imba_visage_gravekeepers_cloak					= class({})
 modifier_imba_visage_gravekeepers_cloak_secondary		= class({})
 modifier_imba_visage_gravekeepers_cloak_secondary_ally	= class({})
 
-imba_visage_stone_form_self_cast				= class({})
-imba_visage_summon_familiars					= class({})
-imba_visage_summon_familiars_stone_form			= class({})
+imba_visage_stone_form_self_cast						= class({})
+
+imba_visage_summon_familiars							= class({})
+modifier_imba_visage_summon_familiars					= class({})
+
+imba_visage_summon_familiars_stone_form					= class({})
+modifier_imba_visage_summon_familiars_stone_form		= class({})
 
 -----------------
 -- GRAVE CHILL --
@@ -190,17 +198,50 @@ end
 -- SOUL ASSUMPTION --
 ---------------------
 
+function imba_visage_soul_assumption:GetIntrinsicModifierName()
+	return "modifier_imba_visage_soul_assumption"
+end
+
+function imba_visage_soul_assumption:OnUpgrade()
+	if not IsServer() then return end
+	
+	if self:GetLevel() >= 1 and self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()) and not self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle then
+		self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+		self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()):AddParticle(self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle, false, false, -1, false, false)
+	end
+end
+
 function imba_visage_soul_assumption:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
 	self:GetCaster():EmitSound("Hero_Visage.SoulAssumption.Cast")
+	
+	local assumption_counter_modifier	= self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
+	local damage_bars					= 0
+	local effect_name					= "particles/units/heroes/hero_visage/visage_soul_assumption_bolt.vpcf"
+	
+	if assumption_counter_modifier then	
+		damage_bars = math.min(math.floor(assumption_counter_modifier:GetStackCount() / self:GetSpecialValueFor("damage_limit")), self:GetSpecialValueFor("stack_limit"))
+		
+		if damage_bars > 0 then
+			effect_name	="particles/units/heroes/hero_visage/visage_soul_assumption_bolt"..damage_bars..".vpcf"
+		end
+		
+		local assumption_stack_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_visage_soul_assumption_stacks")
+		
+		for _, mod in pairs(assumption_stack_modifiers) do
+			mod:Destroy()
+		end
+		
+		assumption_counter_modifier:Destroy()
+	end
 	
 	local projectile =
 	{
 		Target 				= target,
 		Source 				= self:GetCaster(),
 		Ability 			= self,
-		EffectName 			= "particles/units/heroes/hero_visage/visage_soul_assumption_bolt.vpcf", -- TODO: change to visage
+		EffectName 			= effect_name,
 		iMoveSpeed			= self:GetSpecialValueFor("bolt_speed"),
 		vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
 		bDrawsOnMinimap 	= false,
@@ -214,7 +255,7 @@ function imba_visage_soul_assumption:OnSpellStart()
 		iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
 		
 		ExtraData = {
-			charges			= nil -- TODO: Calculate this
+			charges			= damage_bars
 		}
 	}
 	
@@ -277,14 +318,13 @@ function imba_visage_soul_assumption:OnSpellStart()
 end
 
 function imba_visage_soul_assumption:OnProjectileHit_ExtraData(target, location, data)
-	-- Gush hit some unit
 	if target and not target:TriggerSpellAbsorb(self) then
 		target:EmitSound("Hero_Visage.SoulAssumption.Target")
 	
 		-- TODO: play sound and particles if applicable
 		local damageTable = {
 			victim 			= target,
-			damage 			= self:GetSpecialValueFor("soul_base_damage") + self:GetTalentSpecialValueFor("soul_charge_damage") * 1, -- TODO: Calculate amount of charges...
+			damage 			= self:GetSpecialValueFor("soul_base_damage") + (self:GetTalentSpecialValueFor("soul_charge_damage") * data.charges),
 			damage_type		= self:GetAbilityDamageType(),
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self:GetCaster(),
@@ -301,11 +341,21 @@ end
 
 function modifier_imba_visage_soul_assumption:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+-- This shouldn't really happen but in case it gets ported in already leveled
 function modifier_imba_visage_soul_assumption:OnCreated()
 	if not IsServer() then return end
 	
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-	self:AddParticle(self.particle, false, false, -1, false, false)
+	if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and not self.particle then
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		self:AddParticle(self.particle, false, false, -1, false, false)
+	end
+end
+
+function modifier_imba_visage_soul_assumption:OnDestroy()
+	if IsServer() and self.particle then
+		ParticleManager:DestroyParticle(self.particle, true)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+	end
 end
 
 function modifier_imba_visage_soul_assumption:DeclareFunctions()
@@ -317,8 +367,81 @@ function modifier_imba_visage_soul_assumption:DeclareFunctions()
 end
 
 function modifier_imba_visage_soul_assumption:OnTakeDamage(keys)
+	-- "Only counts damage dealt by players (including their summons) and Roshan."
+	-- "Only counts when the damage was dealt to a hero (excluding illusions and creep-heroes)."
+	-- "Does not count self-inflicted damage, or damage less than 2 or greater than 3000 (after reductions)."
 	
+	if (keys.unit:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("radius") and
+	((keys.attacker.GetPlayerID and keys.attacker:GetPlayerID()) or keys.attacker:IsRoshan()) and
+	keys.unit:IsRealHero() and
+	keys.unit ~= keys.attacker and
+	keys.damage >= self:GetAbility():GetSpecialValueFor("damage_min") and
+	keys.damage <= self:GetAbility():GetSpecialValueFor("damage_max") and
+	-- Seems like Soul Assumption damage doesn't feed into its own stacks
+	keys.inflictor ~= self:GetAbility() then	
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_counter", 
+		{
+			duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
+			stacks		= keys.damage
+		})
+	
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_stacks", 
+		{
+			duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
+			stacks		= keys.damage
+		})
+	end
 end
+
+-------------------------------------
+-- SOUL ASSUMPTION STACKS MODIFIER --
+-------------------------------------
+
+function modifier_imba_visage_soul_assumption_stacks:IsHidden()				return true end
+function modifier_imba_visage_soul_assumption_stacks:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_visage_soul_assumption_stacks:OnCreated(params)
+	if not IsServer() then return end
+
+	self.damage_limit	= self:GetAbility():GetSpecialValueFor("damage_limit")
+	self.stack_limit	= self:GetAbility():GetSpecialValueFor("stack_limit")
+
+	self:SetStackCount(params.stacks)
+
+	local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
+	local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
+	
+	if assumption_modifier and assumption_modifier.particle and assumption_counter_modifier then
+		assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() + params.stacks)
+	
+		for bar = 1, self.stack_limit do
+			ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
+		end
+	end
+end
+
+function modifier_imba_visage_soul_assumption_stacks:OnDestroy()
+	if not IsServer() then return end
+	
+	local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
+	local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
+	
+	if assumption_counter_modifier then
+		assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() - self:GetStackCount())
+		
+		if assumption_modifier and assumption_modifier.particle then
+			for bar = 1, 6 do
+				ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
+			end
+		end
+	end
+end
+
+------------------------------------
+-- SOUL ASSUMPTION COUNT MODIFIER --
+------------------------------------
+
+function modifier_imba_visage_soul_assumption_counter:IsPurgable()	return false end
 
 -------------------------
 -- GRAVEKEEPER'S CLOAK --
@@ -440,17 +563,34 @@ end
 -- SUMMON FAMILIARS --
 ----------------------
 --familiars take 4 hp damage if all the damage is blocked by a right click (but still does 0 from magic???)
+
+function imba_visage_summon_familiars:OnSpellStart()
+
+end
+
 -------------------------------
 -- SUMMON FAMILIARS MODIFIER --
 -------------------------------
+
+function modifier_imba_visage_summon_familiars:OnCreated()
+
+end
 
 ---------------------------------
 -- SUMMON FAMILIARS STONE FORM --
 ---------------------------------
 
+function imba_visage_summon_familiars_stone_form:OnSpellStart()
+
+end
+
 ------------------------------------------
 -- SUMMON FAMILIARS STONE FORM MODIFIER --
 ------------------------------------------
+
+function modifier_imba_visage_summon_familiars_stone_form:OnCreated()
+
+end
 
 -- LinkLuaModifier("modifier_imba_puck_illusory_orb", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
