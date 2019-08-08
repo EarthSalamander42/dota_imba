@@ -478,7 +478,8 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CombatEvents("generic", "glyph", unit)
 	end
-
+	
+	-- Turbo Courier filters
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
 			local player_id = keys.issuer_player_id_const
@@ -544,7 +545,12 @@ function GameMode:OrderFilter( keys )
 
 						-- if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
 --							print("Select rightful courier!")
-							PlayerResource:NewSelection(player_id, rightful_courier)
+
+							-- Don't new selection the courier if someone presses F3
+							if ability:GetName() ~= "courier_take_stash_and_transfer_items" then
+								PlayerResource:NewSelection(player_id, rightful_courier)
+							end
+							
 						-- end
 
 --						print("Return false 1")
@@ -561,6 +567,7 @@ function GameMode:OrderFilter( keys )
 --			print("Return false 3")
 			return false
 		end
+	-- "Vanilla" courier filters
 	else
 		if unit:IsCourier() then
 			local ability = EntIndexToHScript(keys["entindex_ability"])

@@ -1582,6 +1582,9 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	self.minimum_damage = self:GetSpecialValueFor("min_damage")
 	self.previous_position = self.caster:GetAbsOrigin()
 	
+	-- ". . . and applies a basic dispel on cast."
+	self.caster:Purge(false, true, false, false, false)
+	
 	-- #7 Talent: Omnislash sends an image to commit the slashes, Juggernaut is free to continue as normal
 	-- Senbonzakura Kageyoshi
 	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") and not self:IsStolen() then
