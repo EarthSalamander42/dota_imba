@@ -379,6 +379,7 @@ function modifier_imba_visage_soul_assumption:OnTakeDamage(keys)
 	keys.damage <= self:GetAbility():GetSpecialValueFor("damage_max") and
 	-- Seems like Soul Assumption damage doesn't feed into its own stacks
 	keys.inflictor ~= self:GetAbility() then	
+
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_counter", 
 		{
 			duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
@@ -441,6 +442,7 @@ end
 -- SOUL ASSUMPTION COUNT MODIFIER --
 ------------------------------------
 
+function modifier_imba_visage_soul_assumption_counter:IsHidden()	return true end
 function modifier_imba_visage_soul_assumption_counter:IsPurgable()	return false end
 
 -------------------------
@@ -449,6 +451,14 @@ function modifier_imba_visage_soul_assumption_counter:IsPurgable()	return false 
 
 function imba_visage_gravekeepers_cloak:GetIntrinsicModifierName()
 	return "modifier_imba_visage_gravekeepers_cloak"
+end
+
+function imba_visage_gravekeepers_cloak:OnUpgrade()
+	local cloak_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak", self:GetCaster())
+	
+	if cloak_modifier and self:GetLevel() == 1 then
+		cloak_modifier:SetStackCount(self:GetSpecialValueFor("max_layers")
+	end
 end
 
 -- Hmm...
