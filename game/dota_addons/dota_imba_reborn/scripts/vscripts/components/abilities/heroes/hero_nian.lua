@@ -59,6 +59,8 @@ end
 -- FRENZY SWIPES MODIFIER --
 ----------------------------
 
+function modifier_imba_nian_frenzy_swipes:IsPurgable()	return false end
+
 function modifier_imba_nian_frenzy_swipes:OnCreated()
 	self.attack_damage_multiplier	= self:GetAbility():GetSpecialValueFor("attack_damage_multiplier")
 	self.attack_speed_multiplier	= self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")

@@ -60,7 +60,7 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 		self:GetCaster():GetTeamNumber(),
 		target:GetAbsOrigin(),
 		self:GetCaster():GetAbsOrigin(),
-		self:GetCaster():GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("end_distance")),
+		self:GetCaster():GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("end_distance") + GetCastRangeIncrease(self:GetCaster()))),
 		self:GetSpecialValueFor("start_radius"),
 		self:GetSpecialValueFor("end_radius"),
 		nil,
