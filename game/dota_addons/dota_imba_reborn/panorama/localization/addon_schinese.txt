@@ -389,7 +389,7 @@
 	"loading_heroes_button" "载入英雄数据"
 	"loading_pre_game" "载入英雄数据，请稍候..."
 	"loading_screen_button" "Dota 2 IMBA Website"
-	"loading_screen_description" "7.16 introduces another series of destructive beasts, including IMBAfications for Grimstroke and Shadow Shaman, as well as brand new custom heroes in Nian and Vardor! The IMBApass has also received expansions, which include implementations for Earthshaker's Planetfall and Invoker's Acolyte of the Lost Arts. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+	"loading_screen_description" "7.16 introduces another series of destructive beasts, including IMBAfications for Grimstroke and Shadow Shaman, as well a brand new custom hero in Nian! (Vardor will be undergoing some fixes in preparations for a later release). The IMBApass has also received expansions, which include implementations for Earthshaker's Planetfall and Invoker's Acolyte of the Lost Arts. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 	"loading_screen_patreon" "Patreon捐赠"
 	"loading_screen_patreon_description" "在Patreon上支持Frostrose工作室并获得游戏内奖励，包括勇士令状经验加成，跟随宠物以及更多精彩内容！"
 	"loading_screen_patreon_description_bottom" "捐赠会支持以下地图的开发："
