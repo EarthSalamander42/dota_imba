@@ -79,14 +79,14 @@
 					</Panel>
 
 					<Panel id="MiniTabButtonContainer" hittest="false">
-<!--						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
+<!--					<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
 							<Label class="text" text="#donator_patreon" />
 						</Button>
 
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
-						</Panel> -->
-
+						</Panel>
+-->
 						<Button class="sub_nav_tab" id="CompanionTabButton" onactivate="SwitchDonatorWrapper('Companion');">
 							<Label class="text" text="#donator_companion" />
 						</Button>
@@ -108,7 +108,6 @@
 						</Button>
 					</Panel>
 				</Panel>
-				
 			</Panel>
 
 			<Panel id="BattlepassInfoContainer" hittest="false">

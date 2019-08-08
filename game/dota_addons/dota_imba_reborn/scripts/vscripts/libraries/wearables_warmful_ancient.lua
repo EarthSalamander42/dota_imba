@@ -463,7 +463,7 @@ function Wearable:GetSlotIndex(hUnit, sItemDef)
 end
 
 function Wearable:IsDisplayInLoadout(sHeroName, sSlotName)
-	print("IsDisplayInLoadout: sHeroName", sHeroName)
+--	print("IsDisplayInLoadout: sHeroName", sHeroName)
 	if sHeroName == "npc_dota_hero_vardor" then
 		return false
 	end
@@ -775,7 +775,10 @@ end
 
 -- 通过生成prop_dynamic来换装
 function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
-	Wearable:SetHeroWearablesTable(hUnit, sSlotName)
+	if not hUnit.Slots then
+		hUnit.Slots = {}
+		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
+	end
 
 	if type(sItemDef) ~= "string" then
 		sItemDef = tostring(sItemDef)
@@ -983,6 +986,7 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	end
 
 	hUnit.Slots[sSlotName] = hWear
+	Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 
 	if DefaultPrismatic[sItemDef] and not hUnit.prismatic then
 		local sPrismaticName = DefaultPrismatic[sItemDef]
@@ -1661,10 +1665,6 @@ end
 -- IMBA magic shit
 function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 --	print("SetHeroWearablesTable")
-	if not hUnit.Slots then
-		hUnit.Slots = {}
-		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
-	end
 
 --	print("Default Wearables:")
 	for i, child in ipairs(hUnit:GetChildren()) do
@@ -1690,7 +1690,7 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 --							print("Remove wearable:", child:GetModelName())
 							UTIL_Remove(child)
 
---							Wearable:_WearProp(hUnit, tonumber(key), item_slot)
+							Wearable:_WearProp(hUnit, tonumber(key), item_slot)
 						end
 
 						break

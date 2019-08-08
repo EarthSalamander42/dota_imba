@@ -36,15 +36,42 @@ function Battlepass:GetRewardUnlocked(ID)
 	return 1
 end
 
---[[ need to rework bp hero tables from BATTLEPASS_PUDGE to BATTLEPASS["pudge"]!
-function Battlepass:HasArcana(ID, hero_name)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS[hero_name][hero_name.."_arcana"] then
-		return 0
+-- global functions shared across Frostrose Studio custom games
+
+function Battlepass:AddItemEffects(hero)
+	if hero.GetPlayerID == nil then return end
+
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+
+	if ply_table and ply_table.bp_rewards == 0 then
 	else
-		return nil
+		Battlepass:SetItemEffects(hero:GetPlayerID())
 	end
+
+	-- some effects override some items effects, need to call it after items setup
+	Battlepass:GetHeroEffect(hero)
 end
---]]
+
+function Battlepass:HasArcana(ID, hero_name)
+	if not Battlepass.GetRewardUnlocked or not BattlepassHeroes[hero_name] then return nil end
+
+	if BattlepassHeroes[hero_name][hero_name.."_arcana2"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name][hero_name.."_arcana2"] then
+			return 1
+		end
+	elseif BattlepassHeroes[hero_name][hero_name.."_arcana"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name][hero_name.."_arcana"] then
+			return 0
+		end
+	-- axe immortal topbar icon handling
+	elseif BattlepassHeroes[hero_name][hero_name.."_immortal"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name][hero_name.."_immortal"] then
+			return 0
+		end
+	end
+
+	return nil
+end
 
 -- vanilla extension
 function CDOTA_BaseNPC:SetupHealthBarLabel()
