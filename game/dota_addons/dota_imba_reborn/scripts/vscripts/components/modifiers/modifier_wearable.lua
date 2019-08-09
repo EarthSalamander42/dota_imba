@@ -41,10 +41,10 @@ function modifier_wearable:OnIntervalThink()
 	if hero == nil then return end
 
 	if self.render_color == nil then
-		if Battlepass:HasJuggernautArcana(self:GetParent():GetOwnerEntity():GetPlayerID()) == 0 then
+		if Battlepass:HasArcana(self:GetParent():GetOwnerEntity():GetPlayerID(), "juggernaut") == 0 then
 			self.render_color = true
 			self:GetParent():SetRenderColor(50, 50, 70)
-		elseif Battlepass:HasJuggernautArcana(self:GetParent():GetOwnerEntity():GetPlayerID()) == 1 then
+		elseif Battlepass:HasArcana(self:GetParent():GetOwnerEntity():GetPlayerID(), "juggernaut") == 1 then
 			self.render_color = true
 			self:GetParent():SetRenderColor(255, 220, 220)
 		elseif self:GetParent():GetOwnerEntity():GetUnitName() == "npc_dota_hero_vardor" then

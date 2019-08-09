@@ -1,13 +1,15 @@
-if Battlepass == nil then Battlepass = class({}) end
-
-require('components/battlepass/constants')
-require('components/battlepass/util')
-require('components/battlepass/battlepass')
-require('components/battlepass/donator')
-require('components/battlepass/experience')
-
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		if _G.Battlepass == nil then
+			_G.Battlepass = class({})
+			require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+			require('components/battlepass/constants')
+			require('components/battlepass/util')
+			require('components/battlepass/donator_settings')
+			require('components/battlepass/donator')
+			require('components/battlepass/experience')
+		end
+
 		Battlepass:Init()
 		Battlepass:GetPlayerInfoXP()
 	end

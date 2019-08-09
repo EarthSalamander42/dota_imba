@@ -113,121 +113,78 @@ BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
 function Battlepass:Init()
-	-- testing
-	BATTLEPASS = {}
-	BATTLEPASS["fountain"] = {}
-	BATTLEPASS["blink"] = {}
-	BATTLEPASS["force_staff"] = {}
---	BATTLEPASS["bottle"] = {}
-	BATTLEPASS["mekansm"] = {}
-	BATTLEPASS["radiance"] = {}
-	BATTLEPASS["sheepstick"] = {}
-	BATTLEPASS["shiva"] = {}
-	BATTLEPASS["maelstorm"] = {}
+	BattlepassHeroes = {}
+	BattlepassHeroes["ancient_apparition"] = {}
+	BattlepassHeroes["axe"] = {}
+	BattlepassHeroes["bristleback"] = {}
+	BattlepassHeroes["centaur"] = {}
+	BattlepassHeroes["chen"] = {}
+	BattlepassHeroes["dark_seer"] = {}
+	BattlepassHeroes["death_prophet"] = {}
+	BattlepassHeroes["drow_ranger"] = {}
+	BattlepassHeroes["earthshaker"] = {}
+	BattlepassHeroes["enigma"] = {}
+	BattlepassHeroes["huskar"] = {}
+	BattlepassHeroes["invoker"] = {}
+	BattlepassHeroes["juggernaut"] = {}
+	BattlepassHeroes["leshrac"] = {}
+	BattlepassHeroes["life_stealer"] = {}
+	BattlepassHeroes["lina"] = {}
+	BattlepassHeroes["nyx_assassin"] = {}
+	BattlepassHeroes["pudge"] = {}
+	BattlepassHeroes["skywrath_mage"] = {}
+--	BattlepassHeroes["tidehunter"] = {}
+	BattlepassHeroes["ursa"] = {}
+	BattlepassHeroes["vengefulspirit"] = {}
+	BattlepassHeroes["wisp"] = {}
+	BattlepassHeroes["zuus"] = {}
+
+	BattlepassItems = {}
+	BattlepassItems["blink"] = {}
+--	BattlepassItems["bottle"] = {}
+	BattlepassItems["force_staff"] = {}
+	BattlepassItems["fountain"] = {}
+	BattlepassItems["maelstorm"] = {}
+	BattlepassItems["mekansm"] = {}
+	BattlepassItems["radiance"] = {}
+	BattlepassItems["sheepstick"] = {}
+	BattlepassItems["shiva"] = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
 		local required_level = k
-		local category = string.gsub(v[1], "%d", "")
-		local reward_level = string.gsub(v[1], "%D", "")
+		local reward_name = v[1]
+		local category = string.gsub(reward_name, "%d", "")
+		local reward_level = string.gsub(reward_name, "%D", "")
+
+		for i, j in pairs(BattlepassHeroes) do
+			local hero_name = i
+
+			if string.find(reward_name, hero_name) then
+				BattlepassHeroes[hero_name][reward_name] = required_level
+				break
+			end
+		end
 
 --		print(required_level, category, reward_level)
-		if BATTLEPASS[category] then
+		if BattlepassItems[category] then
 			if reward_level == "" then reward_level = 1 end
-			table.insert(BATTLEPASS[category], tonumber(reward_level), required_level)
-		end
-	end
-
-	BATTLEPASS_PUDGE = {}
-	BATTLEPASS_JUGGERNAUT = {}
-	BATTLEPASS_ANCIENT_APPARITION = {}
-	BATTLEPASS_VENGEFULSPIRIT = {}
-	BATTLEPASS_ZUUS = {}
-	BATTLEPASS_LINA = {}
-	BATTLEPASS_WISP = {}
-	BATTLEPASS_ENIGMA = {}
-	BATTLEPASS_CHEN = {}
-	BATTLEPASS_DARK_SEER = {}
-	BATTLEPASS_HUSKAR = {}
-	BATTLEPASS_BRISTLEBACK = {}
-	BATTLEPASS_AXE = {}
-	BATTLEPASS_NYX_ASSASSIN = {}
-	BATTLEPASS_SKYWRATH_MAGE = {}
-	BATTLEPASS_CENTAUR = {}
-	BATTLEPASS_DROW_RANGER = {}
-	BATTLEPASS_EARTHSHAKER = {}
-	BATTLEPASS_LIFE_STEALER = {}
-	BATTLEPASS_URSA = {}
-	BATTLEPASS_LESHRAC = {}
-	BATTLEPASS_DEATH_PROPHET = {}
-	BATTLEPASS_INVOKER = {}
---	BATTLEPASS_TIDEHUNTER = {}
-
-	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
-		if string.find(v[1], "pudge") then
-			BATTLEPASS_PUDGE[v[1]] = k
-		elseif string.find(v[1], "juggernaut") then
-			BATTLEPASS_JUGGERNAUT[v[1]] = k
-		elseif string.find(v[1], "ancient_apparition") then
-			BATTLEPASS_ANCIENT_APPARITION[v[1]] = k
-		elseif string.find(v[1], "vengefulspirit") then
-			BATTLEPASS_VENGEFULSPIRIT[v[1]] = k
-		elseif string.find(v[1], "zuus") then
-			BATTLEPASS_ZUUS[v[1]] = k
-		elseif string.find(v[1], "lina") then
-			BATTLEPASS_LINA[v[1]] = k
-		elseif string.find(v[1], "wisp") then
-			BATTLEPASS_WISP[v[1]] = k
-		elseif string.find(v[1], "enigma") then
-			BATTLEPASS_ENIGMA[v[1]] = k
-		elseif string.find(v[1], "chen") then
-			BATTLEPASS_CHEN[v[1]] = k
-		elseif string.find(v[1], "dark_seer") then
-			BATTLEPASS_DARK_SEER[v[1]] = k
-		elseif string.find(v[1], "huskar") then
-			BATTLEPASS_HUSKAR[v[1]] = k
-		elseif string.find(v[1], "bristleback") then
-			BATTLEPASS_BRISTLEBACK[v[1]] = k
-		elseif string.find(v[1], "axe") then
-			BATTLEPASS_AXE[v[1]] = k
-		elseif string.find(v[1], "nyx_assassin") then
-			BATTLEPASS_NYX_ASSASSIN[v[1]] = k
-		elseif string.find(v[1], "skywrath_mage") then
-			BATTLEPASS_SKYWRATH_MAGE[v[1]] = k
-		elseif string.find(v[1], "centaur") then
-			BATTLEPASS_CENTAUR[v[1]] = k
-		elseif string.find(v[1], "drow_ranger") then
-			BATTLEPASS_DROW_RANGER[v[1]] = k
-		elseif string.find(v[1], "earthshaker") then
-			BATTLEPASS_EARTHSHAKER[v[1]] = k
-		elseif string.find(v[1], "life_stealer") then
-			BATTLEPASS_LIFE_STEALER[v[1]] = k
-		elseif string.find(v[1], "ursa") then
-			BATTLEPASS_URSA[v[1]] = k
-		elseif string.find(v[1], "leshrac") then
-			BATTLEPASS_LESHRAC[v[1]] = k
-		elseif string.find(v[1], "death_prophet") then
-			BATTLEPASS_DEATH_PROPHET[v[1]] = k
-		elseif string.find(v[1], "tidehunter") then
-			BATTLEPASS_TIDEHUNTER[v[1]] = k
-		elseif string.find(v[1], "invoker") then
-			BATTLEPASS_INVOKER[v[1]] = k
+			table.insert(BattlepassItems[category], tonumber(reward_level), required_level)
 		end
 	end
 end
 
-function Battlepass:AddItemEffects(hero)
-	if hero.GetPlayerID == nil then return end
+--[[ -- instead of a flat BattlepassHeroes[hero_name] value, generate it by finding if there's a hero name in all reward names
+function Battlepass:IsHeroName(hero_name)
+	local herolist = LoadKeyValues("scripts/npc/herolist.txt")
 
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
-
-	if ply_table and ply_table.bp_rewards == 0 then
-	else
-		Battlepass:SetItemEffects(hero:GetPlayerID())
+	print(herolist[hero_name])
+	if herolist[hero_name] then
+		return true
 	end
 
-	-- some effects override some items effects, need to call it after items setup
-	Battlepass:GetHeroEffect(hero)
+	return false
 end
+--]]
 
 function Battlepass:GetBlinkEffect(ID)
 	local effects = {}
@@ -272,8 +229,8 @@ function Battlepass:GetBlinkEffect(ID)
 	hero_item_effects["effect2"] = effects["effect2"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BATTLEPASS["blink"], 1, -1 do
-			if BATTLEPASS["blink"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["blink"][i] then
+		for i = #BattlepassItems["blink"], 1, -1 do
+			if BattlepassItems["blink"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["blink"][i] then
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
 				hero_item_effects["effect2"] = effects["effect2"][i]
@@ -302,8 +259,8 @@ function Battlepass:GetForceStaffEffect(ID)
 	hero_item_effects["effect1"] = effects["effect1"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BATTLEPASS["force_staff"], 1, -1 do
-			if BATTLEPASS["force_staff"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["force_staff"][i] then
+		for i = #BattlepassItems["force_staff"], 1, -1 do
+			if BattlepassItems["force_staff"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["force_staff"][i] then
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
 				break
@@ -337,8 +294,8 @@ function Battlepass:GetRadianceEffect(ID)
 	hero_item_effects["effect2"] = effects["effect2"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BATTLEPASS["radiance"], 1, -1 do
-			if BATTLEPASS["radiance"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["radiance"][i] then
+		for i = #BattlepassItems["radiance"], 1, -1 do
+			if BattlepassItems["radiance"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["radiance"][i] then
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
 				hero_item_effects["effect2"] = effects["effect2"][i]
@@ -369,11 +326,11 @@ function Battlepass:GetSheepstickEffect(ID)
 	hero_item_effects["effect2"] = effects["effect2"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BATTLEPASS["sheepstick"])
---		print("rewards:",  BATTLEPASS["sheepstick"])
-		for i = #BATTLEPASS["sheepstick"], 1, -1 do
---			print("Check if level higher than:", BATTLEPASS["sheepstick"][i])
-			if BATTLEPASS["sheepstick"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["sheepstick"][i] then
+--		print("reward count:",  #BattlepassItems["sheepstick"])
+--		print("rewards:",  BattlepassItems["sheepstick"])
+		for i = #BattlepassItems["sheepstick"], 1, -1 do
+--			print("Check if level higher than:", BattlepassItems["sheepstick"][i])
+			if BattlepassItems["sheepstick"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["sheepstick"][i] then
 --				print("Item level:", i)
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
@@ -409,11 +366,11 @@ function Battlepass:GetShivaEffect(ID)
 	hero_item_effects["effect2"] = effects["effect2"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BATTLEPASS["shiva"])
---		print("rewards:",  BATTLEPASS["shiva"])
-		for i = #BATTLEPASS["shiva"], 1, -1 do
---			print("Check if level higher than:", BATTLEPASS["shiva"][i])
-			if BATTLEPASS["shiva"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["shiva"][i] then
+--		print("reward count:",  #BattlepassItems["shiva"])
+--		print("rewards:",  BattlepassItems["shiva"])
+		for i = #BattlepassItems["shiva"], 1, -1 do
+--			print("Check if level higher than:", BattlepassItems["shiva"][i])
+			if BattlepassItems["shiva"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["shiva"][i] then
 --				print("Item level:", i)
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
@@ -473,11 +430,11 @@ function Battlepass:GetMekansmEffect(ID)
 	hero_item_effects["effect5"] = effects["effect5"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BATTLEPASS["mekansm"])
---		print("rewards:",  BATTLEPASS["mekansm"])
-		for i = #BATTLEPASS["mekansm"], 1, -1 do
---			print("Check if level higher than:", BATTLEPASS["mekansm"][i])
-			if BATTLEPASS["mekansm"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["mekansm"][i] then
+--		print("reward count:",  #BattlepassItems["mekansm"])
+--		print("rewards:",  BattlepassItems["mekansm"])
+		for i = #BattlepassItems["mekansm"], 1, -1 do
+--			print("Check if level higher than:", BattlepassItems["mekansm"][i])
+			if BattlepassItems["mekansm"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["mekansm"][i] then
 --				print("Item level:", i)
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
@@ -525,8 +482,8 @@ function Battlepass:GetFountainEffect(ID)
 	hero_item_effects["effect1"] = effects["effect1"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BATTLEPASS["fountain"], 1, -1 do
-			if BATTLEPASS["fountain"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["fountain"][i] then
+		for i = #BattlepassItems["fountain"], 1, -1 do
+			if BattlepassItems["fountain"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["fountain"][i] then
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
 				break
@@ -553,11 +510,11 @@ function Battlepass:GetBottleEffect(ID)
 	hero_item_effects["effect1"] = effects["effect1"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BATTLEPASS["bottle"])
---		print("rewards:",  BATTLEPASS["bottle"])
-		for i = #BATTLEPASS["bottle"], 1, -1 do
---			print("Check if level higher than:", BATTLEPASS["bottle"][i])
-			if BATTLEPASS["bottle"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["bottle"][i] then
+--		print("reward count:",  #BattlepassItems["bottle"])
+--		print("rewards:",  BattlepassItems["bottle"])
+		for i = #BattlepassItems["bottle"], 1, -1 do
+--			print("Check if level higher than:", BattlepassItems["bottle"][i])
+			if BattlepassItems["bottle"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["bottle"][i] then
 --				print("Item level:", i)
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
@@ -603,8 +560,8 @@ function Battlepass:GetMaelstormEffect(ID)
 	hero_item_effects["effect3"] = effects["effect3"][0]
 
 	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BATTLEPASS["maelstorm"], 1, -1 do
-			if BATTLEPASS["maelstorm"][i] and Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS["maelstorm"][i] then
+		for i = #BattlepassItems["maelstorm"], 1, -1 do
+			if BattlepassItems["maelstorm"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["maelstorm"][i] then
 				hero_item_effects["level"] = i
 				hero_item_effects["effect1"] = effects["effect1"][i]
 				hero_item_effects["effect2"] = effects["effect2"][i]
@@ -633,6 +590,7 @@ function Battlepass:SetItemEffects(ID)
 --	print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
 end
 
+-- todo: use values in items_game.txt instead
 function Battlepass:GetHeroEffect(hero)
 	if hero:GetUnitName() == "npc_dota_hero_axe" then
 		hero.pre_attack_sound = "Hero_Axe.PreAttack"
@@ -732,8 +690,10 @@ function Battlepass:GetHeroEffect(hero)
 	end
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+
 		if hero:GetUnitName() == "npc_dota_hero_axe" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_AXE["axe_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["axe_immortal"] then
 				Wearable:_WearProp(hero, "12964", "weapon")
 				Wearable:_WearProp(hero, "12965", "armor")
 				Wearable:_WearProp(hero, "12966", "belt")
@@ -750,13 +710,13 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_bristleback" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_BRISTLEBACK["bristleback_rare2"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["bristleback_rare2"] then
 				Wearable:_WearProp(hero, "9786", "back", "1")
 				Wearable:_WearProp(hero, "9787", "arms", "1")
 				Wearable:_WearProp(hero, "9788", "head", "1")
 				Wearable:_WearProp(hero, "9789", "neck", "1")
 				Wearable:_WearProp(hero, "9790", "weapon", "1")
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_BRISTLEBACK["bristleback_rare"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["bristleback_rare"] then
 				Wearable:_WearProp(hero, "9786", "back", "0")
 				Wearable:_WearProp(hero, "9787", "arms", "0")
 				Wearable:_WearProp(hero, "9788", "head", "0")
@@ -782,14 +742,14 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "9954", "arms")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_dark_seer" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_DARK_SEER["dark_seer_immortal2"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["dark_seer_immortal2"] then
 				Wearable:_WearProp(hero, "12299", "arms")
 				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_golden.vpcf"
 				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg_golden.vpcf"
 				hero.ion_shell_icon = 2
 				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
 				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_DARK_SEER["dark_seer_immortal"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["dark_seer_immortal"] then
 				Wearable:_WearProp(hero, "9740", "arms")
 				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell.vpcf"
 				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg.vpcf"
@@ -798,7 +758,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_death_prophet" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_DEATH_PROPHET["death_prophet_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["death_prophet_immortal"] then
 				CustomNetTables:SetTableValue("battlepass", "death_prophet", {
 					silence = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_ti9.vpcf",
 					silence_impact = "particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_impact_ti9.vpcf",
@@ -823,14 +783,14 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["earthshaker_immortal"] then
 				hero.fissure_pfx = "particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
 
 				Wearable:_WearProp(hero, "12969", "weapon")
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["earthshaker_arcana2"] then
 				hero.enchant_totem_leap_blur_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap_v2.vpcf"
 				hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
 				hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_v2.vpcf"
@@ -846,7 +806,7 @@ function Battlepass:GetHeroEffect(hero)
 
 				Wearable:_WearProp(hero, "12692", "head", "02")
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 2})
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["earthshaker_arcana"] then
 				hero.enchant_totem_leap_blur_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap.vpcf"
 				hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
 				hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast.vpcf"
@@ -868,13 +828,13 @@ function Battlepass:GetHeroEffect(hero)
 --				end
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_ENIGMA["enigma_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")
 
 				hero.black_hole_effect = "particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
 				hero.black_hole_sound = "Imba.EnigmaBlackHoleTi5"
 				hero.black_hole_icon = 1
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_ENIGMA["enigma_mythical"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["enigma_mythical"] then
 				Wearable:_WearProp(hero, "12329", "arms")
 				Wearable:_WearProp(hero, "12330", "armor")
 				Wearable:_WearProp(hero, "12332", "head")
@@ -889,13 +849,13 @@ function Battlepass:GetHeroEffect(hero)
 				hero.life_break_icon = 1
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_INVOKER["invoker_legendary"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["invoker_legendary"] then
 				Wearable:_WearProp(hero, "13042", "persona_selector")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then
 				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
+				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana2"] then
 					style = 1
 				end
 
@@ -928,7 +888,7 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "9059", "head", style)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_LESHRAC["leshrac_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["leshrac_immortal"] then
 				CustomNetTables:SetTableValue("battlepass", "leshrac", {
 					diabolic_edict = "particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_edict.vpcf",
 				})
@@ -938,7 +898,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_life_stealer" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_LIFE_STEALER["life_stealer_immortal2"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["life_stealer_immortal2"] then
 				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
 					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold_impact.vpcf",
 					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold.vpcf",
@@ -948,7 +908,7 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "12998", "weapon")
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_LIFE_STEALER["life_stealer_immortal"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["life_stealer_immortal"] then
 				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
 					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf",
 					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf",
@@ -960,14 +920,14 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_LINA["lina_arcana"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["lina_arcana"] then
 				Wearable:_WearProp(hero, "4794", "head")
 
 				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nyx_assassin_immortal"] then
 				hero.spiked_carapace_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace.vpcf"
 				hero.spiked_carapace_debuff_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace_hit.vpcf"
 
@@ -977,9 +937,9 @@ function Battlepass:GetHeroEffect(hero)
 			-- custom icons
 			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_PUDGE["pudge_arcana"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana"] then
 				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_PUDGE["pudge_arcana2"] then
+				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana2"] then
 					style = 1
 				end
 
@@ -991,19 +951,19 @@ function Battlepass:GetHeroEffect(hero)
 
 			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_PUDGE["pudge_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_immortal"] then
 				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
 				Wearable:_WearProp(hero, "4007", "weapon")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_SKYWRATH_MAGE["skywrath_mage_immortal2"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal2"] then
 				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt_golden.vpcf"
 
 				Wearable:_WearProp(hero, "12993", "back")
 
 				-- custom icons
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_SKYWRATH_MAGE["skywrath_mage_immortal"] then
+			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal"] then
 				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt.vpcf"
 
 				Wearable:_WearProp(hero, "12926", "back")
@@ -1029,7 +989,7 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "4215", "arms")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["vengefulspirit_immortal"] then
 				Wearable:_WearProp(hero, "9749", "back")
 				hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
 				hero.magic_missile_icon = 1
@@ -1037,7 +997,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_WISP["wisp_arcana"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["wisp_arcana"] then
 				Wearable:_WearProp(hero, "9235", "head")
 
 				hero.tether_effect = "particles/econ/items/wisp/wisp_tether_ti7.vpcf"
@@ -1063,7 +1023,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_ZUUS["zuus_arcana"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["zuus_arcana"] then
 				Wearable:_WearProp(hero, "6914", "head")
 				Wearable:_WearProp(hero, "8692", "arms")
 				Wearable:_WearProp(hero, "8693", "back")
@@ -1083,69 +1043,6 @@ function Battlepass:GetHeroEffect(hero)
 			end
 		end
 	end
-end
-
-function Battlepass:HasPudgeArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana2"] then
-		return 1
-	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana"] then
-		return 0
-	else
-		return nil
-	end
-end
-
-function Battlepass:HasJuggernautArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
-		return 1
-	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
-		return 0
-	else
-		return nil
-	end
-end
-
-function Battlepass:HasZuusArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_ZUUS["zuus_arcana"] then
-		return 0
-	else
-		return nil
-	end
-end
-
-function Battlepass:HasLinaArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_LINA["lina_arcana"] then
-		return 0
-	else
-		return nil
-	end
-end
-
-function Battlepass:HasWispArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_LINA["lina_arcana"] then
-		return 0
-	else
-		return nil
-	end
-end
-
--- not an arcana, but this is used for replacing top bar icon (FORMAT ME PLEASE)
-function Battlepass:HasAxeArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_AXE["axe_immortal"] then
-		return 0
-	else
-		return nil
-	end
-end
-
-function Battlepass:HasEarthshakerArcana(ID)
---	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana2"] then
---		return 1
---	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_EARTHSHAKER["earthshaker_arcana"] then
---		return 0
---	else
-		return nil
---	end
 end
 
 function Battlepass:InitializeTowers()

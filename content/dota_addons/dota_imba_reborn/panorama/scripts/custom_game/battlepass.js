@@ -339,7 +339,7 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
 	if (companions != undefined)
 		GenerateCompanionPanel(companions["1"], Players.GetLocalPlayer(), "Companion", retainSubTab);
-
+/* weird whitespace issue, need investigation
 	var statues = CustomNetTables.GetTableValue("battlepass", "statues");
 	if (statues != undefined)
 		GenerateCompanionPanel(statues["1"], Players.GetLocalPlayer(), "Statue", retainSubTab);
@@ -347,7 +347,7 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	var emblems = CustomNetTables.GetTableValue("battlepass", "emblems");
 	if (emblems != undefined)
 		GenerateCompanionPanel(emblems["1"], Players.GetLocalPlayer(), "Emblem", retainSubTab);
-
+*/
 	SetupPanel();
 }
 
