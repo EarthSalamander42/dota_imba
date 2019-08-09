@@ -23,6 +23,385 @@ imba_invoker = imba_invoker or class({})
 ---------------------------------------------------------------------------------------------------------------------
 
 	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: QUAS
+	---------------------------------------------------------------------------------------------------------------------
+	imba_invoker_quas = class({})
+	LinkLuaModifier("modifier_imba_invoker_quas", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+	function imba_invoker_quas:GetAbilityTextureName()
+		return "invoker_quas"
+	end
+
+	function imba_invoker_quas:OnSpellStart()
+		if IsServer() then
+			local caster = self:GetCaster()
+
+			if math.random(0, 100) >= 50 then
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+			else
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+			end
+
+			imba_invoker:update_orbs(caster, self, "imba_invoker_quas", "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf")
+		end
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: Quas Orb modifier
+	---------------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
+	function modifier_imba_invoker_quas:IsBuff() return true end
+	function modifier_imba_invoker_quas:IsHidden() return false end
+	function modifier_imba_invoker_quas:IsDebuff() return false end
+	function modifier_imba_invoker_quas:IsPurgable() return false end
+	function modifier_imba_invoker_quas:DeclareFunctions()
+		local funcs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+		return funcs
+	end
+
+	function modifier_imba_invoker_quas:GetAbilityTextureName()
+		return "invoker_quas"
+	end
+
+	function modifier_imba_invoker_quas:GetTexture()
+		return "invoker_quas"
+	end
+
+	function modifier_imba_invoker_quas:OnCreated(kv)
+		if IsServer() then 
+		 	self.bonus_strength = kv.bonus_strength
+		 	self.health_regen_per_instance = kv.health_regen_per_instance
+		else
+			local net_table = CustomNetTables:GetTableValue("player_table", "quas"..self:GetParent():GetPlayerOwnerID()) or {}
+			self.bonus_strength = net_table.quas_bonus_strength
+		 	self.health_regen_per_instance = net_table.quas_health_regen_per_instance
+		end
+	end
+
+	function modifier_imba_invoker_quas:GetModifierBonusStats_Strength()
+		return self.bonus_strength
+	end
+
+	function modifier_imba_invoker_quas:GetModifierConstantHealthRegen() 
+		return self.health_regen_per_instance
+	end
+
+	function modifier_imba_invoker_quas:GetAttributes()
+	 	return MODIFIER_ATTRIBUTE_MULTIPLE
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: WEX
+	---------------------------------------------------------------------------------------------------------------------
+	imba_invoker_wex = class({})
+	LinkLuaModifier("modifier_imba_invoker_wex", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+	function imba_invoker_wex:GetAbilityTextureName()
+		return "invoker_wex"
+	end
+
+	function imba_invoker_wex:OnSpellStart()
+		if IsServer() then
+			local caster = self:GetCaster()
+
+			if math.random(0, 100) >= 50 then
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+			else
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+			end
+
+			imba_invoker:update_orbs(caster, self, "imba_invoker_wex", "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf")
+		end
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: EXORT
+	---------------------------------------------------------------------------------------------------------------------
+	imba_invoker_exort = class({})
+	LinkLuaModifier("modifier_imba_invoker_exort", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+	function imba_invoker_exort:GetAbilityTextureName()
+		return "invoker_exort"
+	end
+
+	function imba_invoker_exort:OnSpellStart()
+		if IsServer() then
+			local caster = self:GetCaster()
+
+			if math.random(0, 100) >= 50 then
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+			else
+				caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+			end
+
+			imba_invoker:update_orbs(caster, self, "imba_invoker_exort", "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf")
+		end
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: Quas Orb modifier
+	---------------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
+	function modifier_imba_invoker_quas:IsBuff() return true end
+	function modifier_imba_invoker_quas:IsHidden() return false end
+	function modifier_imba_invoker_quas:IsDebuff() return false end
+	function modifier_imba_invoker_quas:IsPurgable() return false end
+	function modifier_imba_invoker_quas:DeclareFunctions()
+		local funcs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+		return funcs
+	end
+
+	function modifier_imba_invoker_quas:GetAbilityTextureName()
+		return "invoker_quas"
+	end
+
+	function modifier_imba_invoker_quas:GetTexture()
+		return "invoker_quas"
+	end
+
+	function modifier_imba_invoker_quas:OnCreated(kv)
+		if IsServer() then 
+		 	self.bonus_strength = kv.bonus_strength
+		 	self.health_regen_per_instance = kv.health_regen_per_instance
+		else
+			local net_table = CustomNetTables:GetTableValue("player_table", "quas"..self:GetParent():GetPlayerOwnerID()) or {}
+			self.bonus_strength = net_table.quas_bonus_strength
+		 	self.health_regen_per_instance = net_table.quas_health_regen_per_instance
+		end
+	end
+
+	function modifier_imba_invoker_quas:GetModifierBonusStats_Strength()
+		return self.bonus_strength
+	end
+
+	function modifier_imba_invoker_quas:GetModifierConstantHealthRegen() 
+		return self.health_regen_per_instance
+	end
+
+	function modifier_imba_invoker_quas:GetAttributes()
+	 	return MODIFIER_ATTRIBUTE_MULTIPLE
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: Wex Orb modifier
+	---------------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_wex = modifier_imba_invoker_wex or class({})
+	function modifier_imba_invoker_wex:IsBuff() return true end
+	function modifier_imba_invoker_wex:IsHidden() return false end
+	function modifier_imba_invoker_wex:IsDebuff() return false end
+	function modifier_imba_invoker_wex:IsPurgable() return false end
+	function modifier_imba_invoker_wex:DeclareFunctions()
+		local funcs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+		return funcs
+	end
+
+
+	function modifier_imba_invoker_wex:GetAbilityTextureName()
+		return "invoker_wex"
+	end
+
+	function modifier_imba_invoker_wex:GetTexture()
+		return "invoker_wex"
+	end
+
+	function modifier_imba_invoker_wex:OnCreated(kv)
+		if IsServer() then 
+			self.bonus_agility 				= kv.bonus_agility
+		 	self.move_speed_per_instance 	= kv.move_speed_per_instance
+		 	self.attack_speed_per_instance 	= kv.attack_speed_per_instance
+		else
+			local net_table 				= CustomNetTables:GetTableValue("player_table", "wex"..self:GetParent():GetPlayerOwnerID()) or {}
+			self.bonus_agility 				= net_table.wex_bonus_agility
+			self.move_speed_per_instance 	= net_table.wex_move_speed_per_instance
+		 	self.attack_speed_per_instance 	= net_table.wex_attack_speed_per_instance
+		end
+	end
+
+	function modifier_imba_invoker_wex:GetModifierBonusStats_Agility()
+		return self.bonus_agility
+	end
+
+	-- Movement speed buff is working but dosent show up in hero stats
+	function modifier_imba_invoker_wex:GetModifierMoveSpeedBonus_Percentage() 
+		return self.move_speed_per_instance
+	end
+
+	function modifier_imba_invoker_wex:GetModifierAttackSpeedBonus_Constant() 
+		return self.attack_speed_per_instance
+	end
+
+	function modifier_imba_invoker_wex:GetAttributes()
+	 	return MODIFIER_ATTRIBUTE_MULTIPLE
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Invoker: Exort Orb modifier
+	---------------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_exort = modifier_imba_invoker_exort or class({})
+	function modifier_imba_invoker_exort:IsBuff() return true end
+	function modifier_imba_invoker_exort:IsHidden() return false end
+	function modifier_imba_invoker_exort:IsDebuff() return false end
+	function modifier_imba_invoker_exort:IsPurgable() return false end
+	function modifier_imba_invoker_exort:DeclareFunctions()
+		local funcs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+			MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+		return funcs
+	end
+
+	function modifier_imba_invoker_exort:GetAbilityTextureName()
+		return "invoker_exort"
+	end
+
+	function modifier_imba_invoker_exort:GetTexture()
+		return "invoker_exort"
+	end
+
+	function modifier_imba_invoker_exort:OnCreated(kv)
+		if IsServer() then 
+		 	self.bonus_intelligence = kv.bonus_intelligence
+		 	self.bonus_damage_per_instance = kv.bonus_damage_per_instance
+		else
+			local net_table = CustomNetTables:GetTableValue("player_table", "exort"..self:GetParent():GetPlayerOwnerID()) or {}
+			self.bonus_intelligence = net_table.exort_bonus_intelligence
+		 	self.bonus_damage_per_instance = net_table.exort_bonus_damage_per_instance
+		end
+	end
+
+	function modifier_imba_invoker_exort:GetModifierBonusStats_Intellect()
+		return self.bonus_intelligence
+	end
+
+	function modifier_imba_invoker_exort:GetModifierBaseAttack_BonusDamage() 
+		return self.bonus_damage_per_instance
+	end
+
+	function modifier_imba_invoker_exort:GetAttributes()
+	  	return MODIFIER_ATTRIBUTE_MULTIPLE
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Help function, update orbs
+	---------------------------------------------------------------------------------------------------------------------
+	function imba_invoker:update_orbs(caster, ability, invoked_orb, particle_path)
+		if IsServer() then 
+			-- need to make sure we dont mess up orb order
+			imba_invoker.orb_sync = false
+
+			-- Instantiate objects
+			if caster.invoked_orbs == nil then 
+				caster.invoked_orbs = {}
+			end
+
+			if caster.invoked_orbs_particle == nil then
+					caster.invoked_orbs_particle = {}
+			end
+
+			if caster.invoked_orbs_particle_attach == nil then
+				caster.invoked_orbs_particle_attach = {}
+				caster.invoked_orbs_particle_attach[1] = "attach_orb1"
+				caster.invoked_orbs_particle_attach[2] = "attach_orb2"
+				caster.invoked_orbs_particle_attach[3] = "attach_orb3"
+			end
+
+			-- Invoker can only have three orbs active at any given time.  Each time an orb is activated, its hscript is
+			-- placed into caster.invoked_orbs[3], the old [3] is moved into [2], and the old [2] is moved into [1].
+			-- Therefore, the oldest orb is located in [1], and the newest is located in [3].
+			-- Now, shift the ordered list of currently summoned orbs down, and add the newest orb to the queue.
+			local remove_orb = caster.invoked_orbs[1]
+			caster.invoked_orbs[1] = caster.invoked_orbs[2]
+			caster.invoked_orbs[2] = caster.invoked_orbs[3]
+			caster.invoked_orbs[3] = ability
+
+			-- Remove the oldest orb's particle effect.
+			if caster.invoked_orbs_particle[1] ~= nil then
+				ParticleManager:DestroyParticle(caster.invoked_orbs_particle[1], false)
+				caster.invoked_orbs_particle[1] = nil
+			end
+
+			--Shift the ordered list of currently summoned orb particle effects down, and create the new particle.
+			caster.invoked_orbs_particle[1] = caster.invoked_orbs_particle[2]
+			caster.invoked_orbs_particle[2] = caster.invoked_orbs_particle[3]
+			caster.invoked_orbs_particle[3] = ParticleManager:CreateParticle(particle_path, PATTACH_OVERHEAD_FOLLOW, caster)
+			ParticleManager:SetParticleControlEnt(caster.invoked_orbs_particle[3], 1, caster, PATTACH_POINT_FOLLOW, caster.invoked_orbs_particle_attach[1], caster:GetAbsOrigin(), false)
+			
+			-- Shift the ordered list of currently summoned orb particle effect attach locations down.
+			local temp_attachment_point = caster.invoked_orbs_particle_attach[1]
+			caster.invoked_orbs_particle_attach[1] = caster.invoked_orbs_particle_attach[2]
+			caster.invoked_orbs_particle_attach[2] = caster.invoked_orbs_particle_attach[3]
+			caster.invoked_orbs_particle_attach[3] = temp_attachment_point
+
+			-- Update orb modifiers
+			imba_invoker:update_orb_modifiers(caster, ability, remove_orb)
+		end
+	end
+
+	---------------------------------------------------------------------------------------------------------------------
+	--	Help function, update orb modifier
+	---------------------------------------------------------------------------------------------------------------------
+	function imba_invoker:update_orb_modifiers(caster, ability, orb_to_remove)	
+		-- Find modifier to remove...
+		local orb_modifier = nil
+		if orb_to_remove ~= nil then
+			if orb_to_remove:GetName() == "imba_invoker_quas" then
+				orb_modifier = "modifier_imba_invoker_quas"
+			elseif orb_to_remove:GetName() == "imba_invoker_wex" then
+				orb_modifier = "modifier_imba_invoker_wex"
+			elseif orb_to_remove:GetName() == "imba_invoker_exort" then
+				orb_modifier = "modifier_imba_invoker_exort"
+			end
+		end
+
+		if orb_modifier ~= nil then 
+			local modifiers = caster:FindAllModifiersByName(orb_modifier)
+			local oldest
+			for i = 0, 2, 1 do
+				if oldest == nil then 
+					oldest = modifiers[i]
+				elseif modifiers[i] ~= nil and modifiers[i]:GetCreationTime() > oldest:GetCreationTime() then
+	 				oldest = modifiers[i]
+	 			end
+			end
+
+			-- turns out this removes the oldest running modifier by name
+			caster:RemoveModifierByName(oldest:GetName())
+		end
+		
+		local new_orb = ability:GetName()
+		if new_orb == "imba_invoker_quas" then
+			local bonus_strength 					= ability:GetSpecialValueFor("bonus_strength")
+				local health_regen_per_instance 	= ability:GetSpecialValueFor("health_regen_per_instance")
+			caster:AddNewModifier(caster, ability, "modifier_imba_invoker_quas", { 	duration = -1, 
+																					bonus_strength = bonus_strength, 
+																					health_regen_per_instance = health_regen_per_instance})
+
+			CustomNetTables:SetTableValue("player_table", "quas"..caster:GetPlayerOwnerID(), { 	quas_bonus_strength = bonus_strength, 
+																								quas_health_regen_per_instance = health_regen_per_instance})
+		elseif new_orb == "imba_invoker_wex" then
+			local bonus_agility 					= ability:GetSpecialValueFor("bonus_agility")
+			local move_speed_per_instance 			= ability:GetSpecialValueFor("move_speed_per_instance")
+				local attack_speed_per_instance 	= ability:GetSpecialValueFor("attack_speed_per_instance")
+			caster:AddNewModifier(caster, ability, "modifier_imba_invoker_wex", {	duration = -1, 
+																						bonus_agility = bonus_agility, 
+																						move_speed_per_instance = move_speed_per_instance,
+																						attack_speed_per_instance = attack_speed_per_instance})
+
+			CustomNetTables:SetTableValue("player_table", "wex"..caster:GetPlayerOwnerID(), { 	wex_bonus_agility = bonus_agility, 
+																											wex_move_speed_per_instance = move_speed_per_instance, 
+																											wex_attack_speed_per_instance = attack_speed_per_instance})
+		elseif new_orb == "imba_invoker_exort" then
+			local bonus_intelligence 			= ability:GetSpecialValueFor("bonus_intelligence")
+			local bonus_damage_per_instance 	= ability:GetSpecialValueFor("bonus_damage_per_instance")
+			caster:AddNewModifier(caster, ability, "modifier_imba_invoker_exort", {	duration = -1, 
+																							bonus_intelligence = bonus_intelligence, 
+																							bonus_damage_per_instance = bonus_damage_per_instance})
+
+			CustomNetTables:SetTableValue("player_table", "exort"..caster:GetPlayerOwnerID(), { 	exort_bonus_intelligence = bonus_intelligence, 
+																									exort_bonus_damage_per_instance = bonus_damage_per_instance})
+		end
+	end	
+
+	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's empty slo1 
 	---------------------------------------------------------------------------------------------------------------------
 	imba_invoker_empty1 = class({})
@@ -48,9 +427,150 @@ imba_invoker = imba_invoker or class({})
 
 
 ---------------------------------------------------------------------------------------------------------------------
---	Invoker's Fake Invoke
+--	Invoker's Invoke
 ---------------------------------------------------------------------------------------------------------------------
 imba_invoker_invoke = class({})
+LinkLuaModifier("modifier_imba_invoker_invoke_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+function imba_invoker_invoke:IsInnateAbility() return true end
+
+function imba_invoker_invoke:OnSpellStart()
+	if IsServer() then
+		local caster 				= self:GetCaster()
+		local ability 				= self
+		local ability_level 		= ability:GetLevel() -1
+		local max_invoked_spells 	= ability:GetLevelSpecialValueFor("max_invoked_spells", ability_level)
+		local invoker_empty1 		= "imba_invoker_empty1"
+		local invoker_empty2 		= "imba_invoker_empty2"
+		local spell_to_be_invoked
+
+		local quas_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_quas")
+		local wex_orbs 			= caster:FindAllModifiersByName("modifier_imba_invoker_wex")
+		local exort_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_exort")
+		local num_quas_orbs 	= table.getn(quas_orbs)
+		local num_wex_orbs 		= table.getn(wex_orbs)
+		local num_exort_orbs 	= table.getn(exort_orbs)
+
+		-- If we have 3 invoked orbs then we can invoke spells!
+		if num_quas_orbs + num_wex_orbs + num_exort_orbs == 3 then
+
+			-- Change the Invoke particle effect color depending on invoked orbs.
+			local quas_particle_effect_color 	= Vector(0, 153, 204)
+			local wex_particle_effect_color 	= Vector(204, 0, 153)
+			local exort_particle_effect_color 	= Vector(255, 102, 0)
+
+			-- Create the Invoke particle effect's with general color.
+			local invoke_particle_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_invoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+
+			-- Change the Invoke particle effect's color depending on which orbs are invoked.
+			ParticleManager:SetParticleControl(invoke_particle_effect, 2, ((quas_particle_effect_color * num_quas_orbs) + (wex_particle_effect_color * num_wex_orbs) + (exort_particle_effect_color * num_exort_orbs)) / 3)
+
+			-- Determine the spell depending on invoked orbs.
+			if num_quas_orbs == 3 then
+				spell_to_be_invoked = "imba_invoker_cold_snap"
+			elseif num_quas_orbs == 2 and num_wex_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_ghost_walk"
+			elseif num_quas_orbs == 2 and num_exort_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_ice_wall"
+			elseif num_wex_orbs == 3 then
+				spell_to_be_invoked = "imba_invoker_emp"
+			elseif num_wex_orbs == 2 and num_quas_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_tornado"
+			elseif num_wex_orbs == 2 and num_exort_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_alacrity"
+			elseif num_exort_orbs == 3 then
+				spell_to_be_invoked = "imba_invoker_sun_strike"
+			elseif num_exort_orbs == 2 and num_quas_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_forge_spirit"
+			elseif num_exort_orbs == 2 and num_wex_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_chaos_meteor"
+			elseif num_quas_orbs == 1 and num_wex_orbs == 1 and num_exort_orbs == 1 then
+				spell_to_be_invoked = "imba_invoker_deafening_blast"
+			end
+
+			-- This is 4th ability slot i.e the first Invoked Spell
+			local invoker_slot1 = caster:GetAbilityByIndex(3):GetAbilityName() 
+			
+			-- If we only have 1 max invoke spell then just swap abilityes in the same slot
+			if max_invoked_spells == 1 and invoker_slot1 ~= spell_to_be_invoked then
+				caster:SwapAbilities(invoker_slot1, spell_to_be_invoked, false, true)
+				caster:FindAbilityByName(spell_to_be_invoked):SetLevel(1)
+			-- Otherwise reset the slots and then place the abilities in the proper slots
+			elseif max_invoked_spells == 2 and invoker_slot1 ~= spell_to_be_invoked then
+
+				if invoker_slot1 ~= invoker_empty1 then
+					caster:SwapAbilities(invoker_empty1, invoker_slot1, true, false) 
+				end
+
+				-- This is the 5th ablity slot i.e the second invoked spell
+				local invoker_slot2 = caster:GetAbilityByIndex(4):GetAbilityName()			
+				if invoker_slot2 ~= invoker_empty2 then
+					caster:SwapAbilities(invoker_empty2, invoker_slot2, true, false) 
+				end
+
+				caster:SwapAbilities(spell_to_be_invoked, invoker_empty1, true, false) 
+				caster:SwapAbilities(invoker_slot1, invoker_empty2, true, false)
+				local invoked_spell = caster:FindAbilityByName(spell_to_be_invoked)
+				if invoked_spell ~= nil then
+					--print("Invoke: " .. invoked_spell:GetAbilityName())
+					invoked_spell:SetLevel(1)
+				else 
+					--print("Could not find spell to invoke!")
+				end
+
+				-- if we invoked same spell again... then dont trigger cooldown
+				if spell_to_be_invoked == invoker_slot1 and invoker_slot2 == invoker_empty2 then
+					ability:EndCooldown()
+					caster:GiveMana(ability:GetManaCost(-1))
+				end
+
+				-- if we just switched spells... then dont trigger cooldown
+				if spell_to_be_invoked == invoker_slot2 then
+					ability:EndCooldown()
+					caster:GiveMana(ability:GetManaCost(-1))
+				end
+
+
+			else
+				-- if we invoked same spell again... then dont trigger cooldown
+				ability:EndCooldown()
+				caster:GiveMana(ability:GetManaCost(-1))
+
+				-- all this is becuz we want to be able to run around and invoke stuff for flashy cosmetics... oh and wand abuse.
+			end
+		else
+			-- in case someone stupid enought invokes with no orb out...
+				ability:EndCooldown()
+				caster:GiveMana(ability:GetManaCost(-1))
+		end
+	end 
+end
+
+---------------------------------------------------------------------------------------------------------------------
+-- This method is run each time "invoke" reaches a new lvl. Invoker's Invoke ability is abit speciall and gets auto-leveled 
+-- by a call from events.lua/OnPlayerLevelUp() at lvl 6, 12 and 18.
+---------------------------------------------------------------------------------------------------------------------
+function imba_invoker_invoke:OnUpgrade() 
+	if IsServer() then
+		if self.caster == nil then
+			self.caster = self:GetCaster()
+		end
+		if self.ability == nil then
+			self.ability = self.caster:FindAbilityByName("imba_invoker_invoke")
+		end
+
+		-- Remove old instance and create new...
+		if self.caster:HasModifier("modifier_imba_invoker_invoke_buff") then
+			self.caster:RemoveModifierByName("modifier_imba_invoker_invoke_buff")
+		end
+
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_invoke_buff", {duration = -1})
+	end
+end
+
+--[[
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker's Fake Invoke
+---------------------------------------------------------------------------------------------------------------------
 LinkLuaModifier("modifier_imba_invoker_invoke_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_invoker_invoke:Invoke(caster)
 	if IsServer() then 
@@ -132,6 +652,7 @@ function imba_invoker_invoke:Invoke(caster)
 		end
 	end
 end
+]]
 
 ---------------------------------------------------------------------------------------------------------------------
 -- Invoker's Invoke buff modifier (moved from hero_selection.lua).
@@ -209,96 +730,102 @@ end
 	-----------------------------------------------------------------------------------------------------------------
 	imba_invoker_emp = class({})
 	LinkLuaModifier("modifier_imba_invoker_emp", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_invoker_emp_overload", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 	function imba_invoker_emp:GetAbilityTextureName()
 		return "invoker_emp"
 	end
 
 	function imba_invoker_emp:OnSpellStart()
 		 if IsServer() then 
-		 	local ability 			= self
-			local caster 			= self:GetCaster()
-			local target_point 		= self:GetCursorPosition()
-			local invoker_wex 	= caster:FindAbilityByName("invoker_wex")
+		 	local target_point = self:GetCursorPosition()
 
-			if invoker_wex ~= nil then
-				local wex_level = invoker_wex:GetLevel() - 1
-
-				-- Get the Skills stats
-				local mana_burned 				= ability:GetLevelSpecialValueFor("mana_burned", wex_level)
-				local delay 					= ability:GetSpecialValueFor("delay")
-				local after_shock_duration		= ability:GetSpecialValueFor("after_shock_duration")
-				local area_of_effect 			= ability:GetSpecialValueFor("area_of_effect")
-				local damage_per_mana_pct 		= ability:GetSpecialValueFor("damage_per_mana_pct")
-				local mana_gain_per_mana_pct 	= ability:GetSpecialValueFor("mana_gain_per_mana_pct")
-				local emp_recharge_threshold 	= 0
-				local emp_effect_reduction 		= 0
-				local emp_charges				= 0
-
-				-- Check if we have emp talent?
-				if caster:HasTalent("imba_special_bonus_unique_invoker_1") then
-					-- Get talent values
-					emp_recharge_threshold 		= caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "threshold")
-					emp_effect_reduction 		= caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "effect_reduction")
-					emp_total_charges 			= caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "charges")
-				end
-
-				-- Cast the emp 
-				imba_invoker_emp:CastEMP(
-				{	
-					caster 						= caster, 
-					target_point 				= target_point, 
-					mana_burned 				= mana_burned,
-					delay 						= delay, 
-					after_shock_duration		= after_shock_duration,
-					area_of_effect 				= area_of_effect,
-					damage_per_mana_pct 		= damage_per_mana_pct,
-					mana_gain_per_mana_pct 		= mana_gain_per_mana_pct,
-					emp_recharge_threshold 		= emp_recharge_threshold,
-					emp_effect_reduction 		= emp_effect_reduction,
-					emp_total_charges 			= emp_total_charges,
-					current_charge				= 1
-				})
-			end
+			imba_invoker_emp:CastEMP(
+			{	
+				caster 			= self:GetCaster(), 
+				ability 		= self,
+				target_point 	= target_point, 
+				current_charge	= 1
+			})
 		end
 	end
 
 	function imba_invoker_emp:CastEMP(kv)	
-		local caster 					= kv.caster
-		local target_point 				= kv.target_point
-		local mana_burned 				= kv.mana_burned
-		local delay 					= kv.delay
-		local after_shock_duration		= kv.after_shock_duration
-		local area_of_effect 			= kv.area_of_effect
-		local damage_per_mana_pct 		= kv.damage_per_mana_pct
-		local mana_gain_per_mana_pct 	= kv.mana_gain_per_mana_pct
-		local emp_recharge_threshold 	= kv.emp_recharge_threshold
-		local emp_effect_reduction 		= kv.emp_effect_reduction
-		local emp_total_charges			= kv.emp_total_charges
-		local current_charge	 		= kv.current_charge
+		local caster 			= kv.caster
+		local ability 			= kv.ability
+		local target_point 		= kv.target_point
+		local current_charge	= kv.current_charge
+		local delay 			= ability:GetSpecialValueFor("delay")
+			
+		CreateModifierThinker(
+					caster, 
+					ability, 
+					"modifier_imba_invoker_emp", 	
+					{
+						duration 				= delay,
+						current_charge 			= current_charge
+					}, target_point, caster:GetTeamNumber(), false)
+	end
 
-		-- Play EMP Sound!
-		EmitSoundOnLocationWithCaster(target_point, "Hero_Invoker.EMP.Cast", caster)
-		
-		-- Create EMP Effect
-		local emp_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp.vpcf", PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(emp_effect, 0, target_point)
-		ParticleManager:SetParticleControl(emp_effect, 1, Vector(area_of_effect, 0, 0))
+	function imba_invoker_emp:GetAOERadius()
+		return self:GetSpecialValueFor("area_of_effect")
+	end 
 
-		-- Explode EMP after the delay has passed.
-		Timers:CreateTimer(delay, function()
-			-- Remove EMP charge
-			ParticleManager:DestroyParticle(emp_effect, false)
+	-----------------------------------------------------------------------------------------------------------------
+	--	EMP ThinkerModifier
+	-----------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_emp = class({})
+	function modifier_imba_invoker_emp:OnCreated(kv)
+		if IsServer() then 
+			self.caster 					= self:GetCaster()
+			self.ability 					= self:GetAbility()
+			self.target_point 				= self:GetParent():GetAbsOrigin()
+			self.current_charge	 			= kv.current_charge
+			
+			local invoker_wex 				= self.caster:FindAbilityByName("imba_invoker_wex")
+			local wex_level 				= invoker_wex:GetLevel() - 1
+
+			-- Get the Skills stats
+			self.mana_burned 				= self.ability:GetLevelSpecialValueFor("mana_burned", wex_level)
+			self.after_shock_duration		= self.ability:GetSpecialValueFor("after_shock_duration")
+			self.area_of_effect 			= self.ability:GetSpecialValueFor("area_of_effect")
+			self.damage_per_mana_pct 		= self.ability:GetSpecialValueFor("damage_per_mana_pct")
+			self.mana_gain_per_mana_pct 	= self.ability:GetSpecialValueFor("mana_gain_per_mana_pct")
+			self.emp_recharge_threshold 	= 0
+			self.emp_effect_reduction 		= 0
+			self.emp_total_charges			= 0
+
+			-- Check if we have emp talent?
+			if self.caster:HasTalent("imba_special_bonus_unique_invoker_1") then
+				-- Get talent values
+				self.emp_recharge_threshold = self.caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "threshold")
+				self.emp_effect_reduction 	= self.caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "effect_reduction")
+				self.emp_total_charges 		= self.caster:FindTalentValue("imba_special_bonus_unique_invoker_1", "charges")
+			end
+
+			-- Play EMP Sound!
+			EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.EMP.Cast", self.caster)
+
+			-- Create EMP Effect
+			self.emp_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
+			ParticleManager:SetParticleControl(self.emp_effect, 0, self.target_point)
+			ParticleManager:SetParticleControl(self.emp_effect, 1, Vector(self.area_of_effect, 0, 0))
+		end
+	end
+
+	function modifier_imba_invoker_emp:OnRemoved()
+		if IsServer() then
+			ParticleManager:DestroyParticle(self.emp_effect, false)
 			-- Create EMP explosion
-			local emp_explosion_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf",  PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(emp_explosion_effect, 0, target_point)
-			ParticleManager:SetParticleControl(emp_explosion_effect, 1, Vector(area_of_effect, 0, 0))
+			local emp_explosion_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf",  PATTACH_ABSORIGIN, self.caster)
+			ParticleManager:SetParticleControl(emp_explosion_effect, 0, self.target_point)
+			ParticleManager:SetParticleControl(emp_explosion_effect, 1, Vector(self.area_of_effect, 0, 0))
 			-- Play EMP Discharge sound
-			EmitSoundOnLocationWithCaster(target_point, "Hero_Invoker.EMP.Discharge", caster)
+			EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.EMP.Discharge", self.caster)
 			
 			-- Check if we hit stuff
 			local nearby_enemy_units = FindUnitsInRadius(
-				caster:GetTeam(), 
-				target_point, nil, area_of_effect, 
+				self.caster:GetTeam(), 
+				self.target_point, nil, self.area_of_effect, 
 				DOTA_UNIT_TARGET_TEAM_ENEMY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 				DOTA_UNIT_TARGET_FLAG_MANA_ONLY, 
@@ -308,46 +835,33 @@ end
 			local enemy_heroes_hit = 0
 			for i, individual_enemy in ipairs(nearby_enemy_units) do
 				-- Apply damage, drain mana, gain mana to caster, and return true/false if we drained full amount of mana from enemy
-				if imba_invoker_emp:OnHit(caster, individual_enemy, mana_burned, after_shock_duration, damage_per_mana_pct, mana_gain_per_mana_pct) and individual_enemy:IsHero() then
+				if modifier_imba_invoker_emp:OnHit(self.caster, self.ability, individual_enemy, self.mana_burned, self.after_shock_duration, self.damage_per_mana_pct, self.mana_gain_per_mana_pct) and individual_enemy:IsHero() then
 					enemy_heroes_hit = enemy_heroes_hit + 1
 				end
 			end
 
 			-- if there is enough charges left
-			if current_charge < emp_total_charges then
+			if self.current_charge < self.emp_total_charges then
 				-- and hit enough enemyheroes
-				if emp_recharge_threshold > 0 and emp_recharge_threshold <= enemy_heroes_hit then
+				if self.emp_recharge_threshold > 0 and self.emp_recharge_threshold <= enemy_heroes_hit then
 					-- Apply emp talent damage efficiency effect
-					mana_burned = mana_burned * ((emp_effect_reduction - 100) / 100)
+					self.mana_burned = self.mana_burned * ((self.emp_effect_reduction - 100) / 100)
 
 					-- Cast Emp again!
-					current_charge = current_charge + 1
+					local next_charge = self.current_charge + 1	
 					imba_invoker_emp:CastEMP(
 					{	
-						caster 						= caster, 
-						target_point 				= target_point, 
-						mana_burned 				= mana_burned,
-						delay 						= delay, 
-						after_shock_duration		= after_shock_duration,
-						area_of_effect 				= area_of_effect,
-						damage_per_mana_pct 		= damage_per_mana_pct,
-						mana_gain_per_mana_pct 		= mana_gain_per_mana_pct,
-						emp_recharge_threshold 		= emp_recharge_threshold,
-						emp_effect_reduction 		= emp_effect_reduction,
-						emp_total_charges 			= emp_total_charges,
-						current_charge 				= current_charge
+						caster 			= self.caster, 
+						ability 		= self.ability,
+						target_point 	= self.target_point, 
+						current_charge	= next_charge
 					})
 				end
 			end
-
-			-- Cleanup
-			Timers:CreateTimer(3, function()
-				ParticleManager:DestroyParticle(emp_explosion_effect, false)
-			end)
-		end)
+		end
 	end
 
-	function imba_invoker_emp:OnHit(caster, enemy, mana_to_burn, after_shock_duration, damage_per_mana_pct, mana_gain_per_mana_pct)
+	function modifier_imba_invoker_emp:OnHit(caster, ability, enemy, mana_to_burn, after_shock_duration, damage_per_mana_pct, mana_gain_per_mana_pct)
 		local full_mana_burn = false
 		-- Calculate mana to burn. If amount of mana burned is greater then amount of mana remaning then we remove what remains. 
 		local enemy_mana_to_burn = enemy:GetMana()
@@ -368,44 +882,48 @@ end
 		
 		-- Restore some of the burnt mana to Invoker if the affected unit is a real hero.
 		if enemy:IsRealHero() then
-			enemy:AddNewModifier(caster, self, "modifier_imba_invoker_emp", {duration = after_shock_duration}) 
+			enemy:AddNewModifier(caster, ability, "modifier_imba_invoker_emp_overload", {duration = after_shock_duration}) 
 			caster:GiveMana(enemy_mana_to_burn * (mana_gain_per_mana_pct / 100))
 		end
 
 		return full_mana_burn
 	end	
 
-	function imba_invoker_emp:GetAOERadius()
-		return self:GetSpecialValueFor("area_of_effect")
-	end 
-
-	modifier_imba_invoker_emp = class({})
-	function modifier_imba_invoker_emp:IsPassive() return false end
-	function modifier_imba_invoker_emp:IsBuff() return false end
-	function modifier_imba_invoker_emp:IsDebuff() return true end
-	function modifier_imba_invoker_emp:IsPurgable() return true end
-	function modifier_imba_invoker_emp:IsHidden() return false end
-	function modifier_imba_invoker_emp:DeclareFunctions()
+	-----------------------------------------------------------------------------------------------------------------
+	--	EMP overload. No mana gain for 5sec.
+	-----------------------------------------------------------------------------------------------------------------
+	modifier_imba_invoker_emp_overload = class({})
+	function modifier_imba_invoker_emp_overload:IsPassive() return false end
+	function modifier_imba_invoker_emp_overload:IsBuff() return false end
+	function modifier_imba_invoker_emp_overload:IsDebuff() return true end
+	function modifier_imba_invoker_emp_overload:IsPurgable() return true end
+	function modifier_imba_invoker_emp_overload:IsHidden() return false end
+	function modifier_imba_invoker_emp_overload:DeclareFunctions()
 		local funcs = {MODIFIER_EVENT_ON_MANA_GAINED}
 		return funcs
 	end
 
-	function modifier_imba_invoker_emp:OnManaGained(kv) 
+	function modifier_imba_invoker_emp_overload:OnManaGained(kv) 
 		if kv.unit == self:GetParent() then
 			local current_mana = kv.unit:GetMana();
 			kv.unit:SetMana(current_mana - kv.gain);
 		end
 	end
 
-	function modifier_imba_invoker_emp:GetAbilityTextureName()
+	function modifier_imba_invoker_emp_overload:GetAbilityTextureName()
 		return "invoker_emp"
 	end
+
+
 
 ---------------------------------------------------------------------------------------------------------------------
 --	Invoker's Sun Strike
 ---------------------------------------------------------------------------------------------------------------------
 imba_invoker_sun_strike = class({})
-
+LinkLuaModifier("modifier_imba_invoker_sun_strike", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_sun_strike_cataclysm", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_sun_strike_beam_only", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_sun_strike_incinerate", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_invoker_sun_strike:GetBehavior()
 	if self:GetCaster():HasTalent("imba_special_bonus_unique_invoker_5") then 
 		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
@@ -427,13 +945,10 @@ function imba_invoker_sun_strike:OnSpellStart()
 		local target_point 			= self:GetCursorPosition()
 		local target 				= self:GetCursorTarget()
 		local ability 				= caster:FindAbilityByName("imba_invoker_sun_strike")
-		local invoker_exort 		= caster:FindAbilityByName("invoker_exort")
-		local exort_level 			= invoker_exort:GetLevel() - 1
-
+		
 		-- Get the skill Stats
 		local delay 				= self:GetSpecialValueFor("delay")
 		local area_of_effect 		= self:GetSpecialValueFor("area_of_effect")
-		local damage 				= self:GetLevelSpecialValueFor("damage", exort_level)
 		local vision_distance 		= self:GetSpecialValueFor("vision_distance")
 		local vision_duration 		= self:GetSpecialValueFor("vision_duration")
 		local all_heroes 			= HeroList:GetAllHeroes()
@@ -441,27 +956,32 @@ function imba_invoker_sun_strike:OnSpellStart()
 		-- Check if we have Cataclysm talent
 		if double_tap then
 			if caster:HasTalent("imba_special_bonus_unique_invoker_5") then 
-				local cooldown 			=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "cooldown")
-				local minimum_range 	=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "minimum_range")
-				local maximum_range 	=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "maximum_range")
+				local bonus_area_of_effect 	=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "bonus_area_of_effect")
+				local cooldown 				=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "cooldown")
+				local minimum_range 		=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "minimum_range")
+				local maximum_range 		=  caster:FindTalentValue("imba_special_bonus_unique_invoker_5", "maximum_range")
+				area_of_effect 				= area_of_effect + bonus_area_of_effect
 
-				-- Cast Cataclysm SunS trike...
+				-- Cast Cataclysm SunStrike...
 				imba_invoker_sun_strike:CastCataclysmSunStrike({
-					caster 				= caster,
-					caster_team 		= caster_team,
-					ability 			= ability,
-					target_point		= target_point,
-					delay 				= delay,
-					area_of_effect 		= area_of_effect,
-					damage 				= damage,
-					vision_distance 	= vision_distance,
-					vision_duration 	= vision_duration,
-					all_heroes 			= all_heroes,
-					cooldown 			= cooldown,
-					minimum_range 		= minimum_range,
-					maximum_range 		= maximum_range
+					caster 					= caster,
+					caster_team 			= caster_team,
+					ability 				= ability,
+					target_point			= target_point,
+					delay 					= delay,
+					area_of_effect 			= area_of_effect,
+					damage 					= damage,
+					vision_distance 		= vision_distance,
+					vision_duration 		= vision_duration,
+					all_heroes 				= all_heroes,
+					cooldown 				= cooldown,
+					minimum_range 			= minimum_range,
+					maximum_range 			= maximum_range
 				})
-			end 
+			else
+				-- This should not be possible.
+				ability:EndCooldown()
+			end
 		else
 			-- Cast Normal SunStrike
 			imba_invoker_sun_strike:CastSunStrike(
@@ -488,7 +1008,6 @@ function imba_invoker_sun_strike:CastSunStrike(kv)
 	local ability 				= kv.ability
 	local delay 				= kv.delay
 	local area_of_effect 		= kv.area_of_effect
-	local damage 				= kv.damage
 	local vision_distance 		= kv.vision_distance
 	local vision_duration 		= kv.vision_duration
 	local all_heroes 			= kv.all_heroes
@@ -499,50 +1018,60 @@ function imba_invoker_sun_strike:CastSunStrike(kv)
 
 	-- Play SunStrike Sound!
 	caster:EmitSound("Hero_Invoker.SunStrike.Charge")
-
-	-- For each hero...
-	for _,hero in pairs(all_heroes) do
-		-- That is on your team
-		if hero:GetPlayerID() and hero:GetTeam() == caster_team then
-			-- Show the sun strike beam
-			local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, hero, PlayerResource:GetPlayer(hero:GetPlayerID()))
-			ParticleManager:SetParticleControl(sun_strike_beam, 0, target_point) 
-			ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(area_of_effect,0, 0))
 	
-			-- Create crater after the delay
-			Timers:CreateTimer(delay, function()
-				ParticleManager:DestroyParticle(sun_strike_beam, false)
-				local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, hero, PlayerResource:GetPlayer(hero:GetPlayerID()))
-				ParticleManager:SetParticleControl(sun_strike_crater, 0, target_point)
-				ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(area_of_effect,0, 0))
-
-				-- Check if we hit stuff
-				local nearby_enemy_units = FindUnitsInRadius(caster:GetTeam(),
-												target_point, 
-												nil, 
-												area_of_effect, 
-												DOTA_UNIT_TARGET_TEAM_ENEMY,
-												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-												DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-												FIND_ANY_ORDER, 
-												false)
-
-				if nearby_enemy_units ~= nil then
-					-- Damage is shared between all units hit
-					imba_invoker_sun_strike:OnHit(caster, nearby_enemy_units, damage)
+	for _,hero in pairs(all_heroes) do
+		-- For each real hero
+		if hero:IsRealHero() then 
+			-- That is on your team
+			if hero:GetTeam() == caster_team then
+				-- This is the only SunStrike dealing dmg
+				if hero:GetPlayerID() == caster:GetPlayerID() then 
+					CreateModifierThinker(
+						caster, 
+						ability, 
+						"modifier_imba_invoker_sun_strike", 	
+						{
+					 		duration 			= delay,
+							area_of_effect 		= area_of_effect,
+							target 				= hero:entindex()
+						}, 
+						target_point, 
+						caster:GetTeamNumber(), false)
+				-- Only show particle effects
+				else
+					CreateModifierThinker(
+						caster, 
+						ability, 
+						"modifier_imba_invoker_sun_strike_beam_only", 	
+						{
+					 		duration 			= delay,
+							area_of_effect 		= area_of_effect,
+							target 				= hero:entindex(),
+							show_beam			= "true",
+							show_crater 		= "true"
+						}, 
+						target_point, 
+						caster:GetTeamNumber(), false)
 				end
-
-				-- Cleanup 
-				Timers:CreateTimer(1, function()
-					ParticleManager:DestroyParticle(sun_strike_crater, false)
-				end)
-			end)
+			-- Only show 2nd particle effect
+			else
+				CreateModifierThinker(
+						caster, 
+						ability, 
+						"modifier_imba_invoker_sun_strike_beam_only", 	
+						{
+					 		duration 			= delay,
+							area_of_effect 		= area_of_effect,
+							target 				= hero:entindex(),
+							show_crater 		= "true"
+						}, 
+						target_point, 
+						caster:GetTeamNumber(), false)
+			end
 		end
 	end
 end
 
--- Since valve wont let us auto-cast custom abilities i had to go for a compromice... we blend both abilities. 
--- Sun Strike is still triggered manually... but it will also cast 2 additional Sun Strikes on all enemy heroes. 
 function imba_invoker_sun_strike:CastCataclysmSunStrike(kv)
 	local caster 				= kv.caster
 	local caster_team		 	= kv.caster_team
@@ -557,11 +1086,7 @@ function imba_invoker_sun_strike:CastCataclysmSunStrike(kv)
 	local cooldown 				= kv.cooldown
 	local minimum_range 		= kv.minimum_range
 	local maximum_range 		= kv.maximum_range
-
-	-- Create vision on target location
-	local duration = delay + vision_duration
-	ability:CreateVisibilityNode(target_point, vision_distance, vision_duration)
-
+	
 	-- Set Cooldown, account for cooldown reductions
 	local current_cooldown 			= ability:GetCooldownTime()
 	local unaltered_cooldown 		= ability:GetCooldown(1)
@@ -569,131 +1094,86 @@ function imba_invoker_sun_strike:CastCataclysmSunStrike(kv)
 	ability:StartCooldown(cooldown * cooldown_reduction_pct)
 
 	-- Play SunStrike Sound!
-	caster:EmitSound("Hero_Invoker.Cataclysm.Charge")
-
-	for _,hero in pairs(all_heroes) do
-		-- This is copied from normal targeted Sun-strike
-		if hero:GetPlayerID() and hero:GetTeam() == caster_team then
-			local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, hero, PlayerResource:GetPlayer(hero:GetPlayerID()))
-			ParticleManager:SetParticleControl(sun_strike_beam, 0, target_point) 
-			ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(area_of_effect,0, 0))
-		
-			Timers:CreateTimer(delay, function()
-				ParticleManager:DestroyParticle(sun_strike_beam, false)
-				local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, hero, PlayerResource:GetPlayer(hero:GetPlayerID()))
-				ParticleManager:SetParticleControl(sun_strike_crater, 0, target_point)
-				ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(area_of_effect,0, 0))
-
-				-- Check if we hit stuff
-				local nearby_enemy_units = FindUnitsInRadius(caster:GetTeam(),
-												target_point, 
-												nil, 
-												area_of_effect, 
-												DOTA_UNIT_TARGET_TEAM_ENEMY,
-												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-												DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-												FIND_ANY_ORDER, 
-												false)
-
-				if nearby_enemy_units ~= nil then
-					imba_invoker_sun_strike:OnHit(caster, nearby_enemy_units, damage)
-				end
-
-				-- Cleanup 
-				Timers:CreateTimer(1, function()
-					ParticleManager:DestroyParticle(sun_strike_crater, false)
-				end)
-			end)
-		end
-
-		-- Cataclysm effect! For each hero that is not on our team...
-		if hero:GetPlayerID() and hero:GetTeam() ~= caster:GetTeam() and hero:IsAlive() then
-			-- Create 2 random sunstrike locations
-		 	local target_point1 = hero:GetAbsOrigin()  + RandomVector(math.random(minimum_range, maximum_range))
-			local target_point2 = hero:GetAbsOrigin()  - RandomVector(math.random(minimum_range, maximum_range))
-
-			ability:CreateVisibilityNode(target_point1, vision_distance, vision_duration)
-			ability:CreateVisibilityNode(target_point2, vision_distance, vision_duration)
-
+	caster:EmitSound("Hero_Invoker.SunStrike.Charge")
 	
-			EmitSoundOnLocationWithCaster(target_point1, "Hero_Invoker.Cataclysm.Ignite", caster)
-			EmitSoundOnLocationWithCaster(target_point2, "Hero_Invoker.Cataclysm.Ignite", caster)
+	for _,hero in pairs(all_heroes) do
+		-- For each real hero
+		if hero:IsRealHero() then 
+			-- That is not on our team...
+			if hero:GetPlayerID() and hero:GetTeam() ~= caster:GetTeam() and hero:IsAlive() then
+				-- Create 2 random sunstrike locations
+			 	local target_point1 = hero:GetAbsOrigin()  + RandomVector(math.random(minimum_range, maximum_range))
+				local target_point2 = hero:GetAbsOrigin()  - RandomVector(math.random(minimum_range, maximum_range))
 
-			-- For each hero...
-			for _,hero2 in pairs(all_heroes) do
-				-- Create sun strike beam 1
-				local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, hero2, PlayerResource:GetPlayer(hero2:GetPlayerID()))
-				ParticleManager:SetParticleControl(sun_strike_beam, 0, target_point1) 
-				ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(area_of_effect,0, 0))
+				ability:CreateVisibilityNode(target_point1, vision_distance, vision_duration)
+				ability:CreateVisibilityNode(target_point2, vision_distance, vision_duration)
+		
+				EmitSoundOnLocationWithCaster(target_point1, "Hero_Invoker.Cataclysm.Ignite", caster)
+				EmitSoundOnLocationWithCaster(target_point2, "Hero_Invoker.Cataclysm.Ignite", caster)
 
-				-- Create sun strike beam 2
-				local sun_strike_beam2 = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, hero2, PlayerResource:GetPlayer(hero2:GetPlayerID()))
-				ParticleManager:SetParticleControl(sun_strike_beam2, 0, target_point2) 
-				ParticleManager:SetParticleControl(sun_strike_beam2, 1, Vector(area_of_effect,0, 0))
-				
-				Timers:CreateTimer(delay, function()
-					ParticleManager:DestroyParticle(sun_strike_beam, false)
-					ParticleManager:DestroyParticle(sun_strike_beam2, false)
-
-					-- Create sun strike crater 1
-					local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, hero2, PlayerResource:GetPlayer(hero2:GetPlayerID()))
-					ParticleManager:SetParticleControl(sun_strike_crater, 0, target_point1)
-					ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(area_of_effect,0, 0))
-
-					-- Create sun strike crater 2
-					local sun_strike_crater2 = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, hero2, PlayerResource:GetPlayer(hero2:GetPlayerID()))
-					ParticleManager:SetParticleControl(sun_strike_crater2, 0, target_point2)
-					ParticleManager:SetParticleControl(sun_strike_crater2, 1, Vector(area_of_effect,0, 0))
-
+				-- For each hero...
+				for _,hero2 in pairs(all_heroes) do
 					-- If hero and cater is both invoker...
 					if hero2:GetPlayerID() == caster:GetPlayerID() then
-						
-						-- Check if we hit stuff with sun strike 1
-						local nearby_enemy_units = FindUnitsInRadius(
-							caster:GetTeam(),
+						CreateModifierThinker(
+							caster, 
+							ability, 
+							"modifier_imba_invoker_sun_strike_cataclysm", 	
+							{
+						 		duration 			= delay,
+								area_of_effect 		= area_of_effect,
+								target 				= hero2:entindex()
+							}, 
 							target_point1, 
-							nil, 
-							area_of_effect, 
-							DOTA_UNIT_TARGET_TEAM_ENEMY,
-							DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-							DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-							FIND_ANY_ORDER, 
-							false)
+							caster:GetTeamNumber(), false)
 
-						if nearby_enemy_units ~= nil then
-							imba_invoker_sun_strike:OnHit(caster, nearby_enemy_units, damage)
-						end
-
-						-- Check if we hit stuff with sun strike 2
-						nearby_enemy_units = FindUnitsInRadius(
-							caster:GetTeam(),
+						CreateModifierThinker(
+							caster, 
+							ability, 
+							"modifier_imba_invoker_sun_strike_cataclysm", 	
+							{
+						 		duration 			= delay,
+								area_of_effect 		= area_of_effect,
+								target 				= hero2:entindex()
+							}, 
 							target_point2, 
-							nil, 
-							area_of_effect, 
-							DOTA_UNIT_TARGET_TEAM_ENEMY,
-							DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-							DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-							FIND_ANY_ORDER, 
-							false)
+							caster:GetTeamNumber(), false)
+					else
+						CreateModifierThinker(
+							caster, 
+							ability, 
+							"modifier_imba_invoker_sun_strike_beam_only", 	
+							{
+						 		duration 			= delay,
+								area_of_effect 		= area_of_effect,
+								target 				= hero2:entindex(),
+								show_beam			= "true",
+								show_crater 		= "true"
+							}, 
+							target_point1, 
+							caster:GetTeamNumber(), false)
 
-						if nearby_enemy_units ~= nil then
-							imba_invoker_sun_strike:OnHit(caster, nearby_enemy_units, damage)
-						end
+						CreateModifierThinker(
+							caster, 
+							ability, 
+							"modifier_imba_invoker_sun_strike_beam_only", 	
+							{
+						 		duration 			= delay,
+								area_of_effect 		= area_of_effect,
+								target 				= hero2:entindex(),
+								show_beam			= "true",
+								show_crater 		= "true"
+							}, 
+							target_point2, 
+							caster:GetTeamNumber(), false)
 					end
-
-					-- Cleanup 
-					Timers:CreateTimer(1, function()
-						ParticleManager:DestroyParticle(sun_strike_crater, false)
-						ParticleManager:DestroyParticle(sun_strike_crater2, false)
-					end)
-				end)
+				end
 			end
 		end
 	end
 end
 
-function imba_invoker_sun_strike:OnHit(caster, enemies_hit, damage) 
-	local ability = caster:FindAbilityByName("imba_invoker_sun_strike") 
+function imba_invoker_sun_strike:OnHit(caster, ability, enemies_hit, damage) 
 
 	-- Initialize damage table
 	local damage_table 			= {}
@@ -704,6 +1184,11 @@ function imba_invoker_sun_strike:OnHit(caster, enemies_hit, damage)
 
 	-- Deal damage to each enemy hero
 	for _,hero in pairs(enemies_hit) do
+		local incinerate = hero:FindModifierByName("modifier_imba_invoker_sun_strike_incinerate")
+		if incinerate ~= nil then
+			damage_table.damage = (damage / #enemies_hit) * ((incinerate:GetStackCount() + 100) / 100)
+		end
+
 		damage_table.victim = hero
 		ApplyDamage(damage_table)
 	end
@@ -712,6 +1197,202 @@ end
 function imba_invoker_sun_strike:GetAOERadius()
 	return self:GetSpecialValueFor("area_of_effect")
 end 
+
+modifier_imba_invoker_sun_strike = class({})
+function modifier_imba_invoker_sun_strike:OnCreated(kv)
+	if IsServer() then
+		self.caster 			= self:GetCaster()
+		self.target_point 		= self:GetParent():GetAbsOrigin()
+		self.direction 			= (self.target_point - self.caster:GetAbsOrigin()):Normalized()
+		self.target 			= EntIndexToHScript(kv.target)
+		-- make sure direction is horizontal
+		self.direction.z 		= 0
+
+		local invoker_exort 		= self.caster:FindAbilityByName("imba_invoker_exort")
+		local exort_level 			= invoker_exort:GetLevel() - 1
+		self.ability 				= self:GetAbility()
+		self.damage 				= self.ability:GetLevelSpecialValueFor("damage", exort_level)
+		self.incinerate_duration 	= self.ability:GetSpecialValueFor("incinerate_duration")
+		self.mini_beam_radius 		= self.ability:GetSpecialValueFor("mini_beam_radius")
+
+		self.area_of_effect 		= kv.area_of_effect
+		self.degrees 				= 180 / 6
+
+		-- Show the sun strike beam
+		local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
+		ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect,0, 0))
+
+		self.fierd_sunstrikes = 0
+		self:StartIntervalThink(0.1)
+	end
+end
+
+function modifier_imba_invoker_sun_strike:OnIntervalThink()
+	if IsServer() then
+		self.caster:EmitSound("Hero_Invoker.SunStrike.Charge")
+		
+		-- upper beam
+		local small_target_point = self.target_point + (self.direction * self.mini_beam_radius)
+		local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/hero/invoker/invoker_sun_strike_outer_beam.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_beam, 0, small_target_point) 
+		ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(50,0, 0))
+
+		-- mirrored bottom beam
+		local small_target_point2 = self.target_point - (self.direction * self.mini_beam_radius)
+		local sun_strike_beam2 = ParticleManager:CreateParticleForPlayer("particles/hero/invoker/invoker_sun_strike_outer_beam.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_beam2, 0, small_target_point2) 
+		ParticleManager:SetParticleControl(sun_strike_beam2, 1, Vector(50,0, 0))
+		
+		self.fierd_sunstrikes = self.fierd_sunstrikes + 2
+		self.direction = RotatePosition(Vector(0,0,0), QAngle(0, self.degrees, 0), self.direction)
+
+		if self.fierd_sunstrikes == 12 then 
+			self:StartIntervalThink(-1)
+
+			local nearby_enemy_units = FindUnitsInRadius(
+				self.caster:GetTeam(),
+				self.target_point, 
+				nil, 
+				self.area_of_effect, 
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+				FIND_ANY_ORDER, 
+				false)
+
+			if nearby_enemy_units ~= nil then
+				-- Deal damage to each enemy hero
+				for _,hero in pairs(nearby_enemy_units) do
+					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration})
+				end				
+			end
+		end
+	end
+end
+
+function modifier_imba_invoker_sun_strike:OnRemoved()
+	if IsServer() then
+		--ParticleManager:DestroyParticle(sun_strike_beam3, false)
+		local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
+		ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
+
+		-- Check if we hit stuff
+		local nearby_enemy_units = FindUnitsInRadius(
+			self.caster:GetTeam(),
+			self.target_point, 
+			nil, 
+			self.area_of_effect, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+			FIND_ANY_ORDER, 
+			false)
+
+		if nearby_enemy_units ~= nil then
+			-- Damage is shared between all units hit
+			imba_invoker_sun_strike:OnHit(self.caster, self.ability, nearby_enemy_units, self.damage)
+		end
+	end
+end
+
+modifier_imba_invoker_sun_strike_cataclysm = class({})
+function modifier_imba_invoker_sun_strike_cataclysm:OnCreated(kv)
+	if IsServer() then
+		self.caster 				= self:GetCaster()
+		self.target_point 			= self:GetParent():GetAbsOrigin()
+		self.target 				= EntIndexToHScript(kv.target)
+
+		local invoker_exort 		= self.caster:FindAbilityByName("imba_invoker_exort")
+		local exort_level 			= invoker_exort:GetLevel() - 1
+		self.ability 				= self:GetAbility()
+		self.damage 				= self.ability:GetLevelSpecialValueFor("damage", exort_level)
+		self.incinerate_duration 	= self.ability:GetSpecialValueFor("incinerate_duration")
+		self.area_of_effect 		= kv.area_of_effect
+
+		-- Show the sun strike beam
+		local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
+		ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect,0, 0))
+	end
+end
+
+function modifier_imba_invoker_sun_strike_cataclysm:OnRemoved()
+	if IsServer() then
+		--ParticleManager:DestroyParticle(sun_strike_beam3, false)
+		local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+		ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
+		ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
+
+		-- Check if we hit stuff
+		local nearby_enemy_units = FindUnitsInRadius(
+			self.caster:GetTeam(),
+			self.target_point, 
+			nil, 
+			self.area_of_effect, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+			FIND_ANY_ORDER, 
+			false)
+
+		if nearby_enemy_units ~= nil then
+			-- Add incinerate to enemies hit
+			for _,hero in pairs(nearby_enemy_units) do
+				hero:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration})
+			end	
+			-- Damage is shared between all units hit
+			imba_invoker_sun_strike:OnHit(self.caster, self.ability, nearby_enemy_units, self.damage)
+		end
+	end
+end
+
+modifier_imba_invoker_sun_strike_incinerate = class({})
+function modifier_imba_invoker_sun_strike_incinerate:IsHidden() return true end
+function modifier_imba_invoker_sun_strike_incinerate:OnCreated()
+	if IsServer() then 
+		self.ability 		= self:GetAbility()
+		self.incinerate_dmg = self.ability:GetSpecialValueFor("incinerate_dmg")
+		self:SetStackCount(self:GetStackCount() + self.incinerate_dmg)
+	end
+end
+
+function modifier_imba_invoker_sun_strike_incinerate:OnRefresh()
+	if IsServer() then 
+		self:SetStackCount(self:GetStackCount() + self.incinerate_dmg)
+	end
+end
+
+modifier_imba_invoker_sun_strike_beam_only = class({})
+function modifier_imba_invoker_sun_strike_beam_only:OnCreated(kv)
+	if IsServer() then
+		self.caster 			= self:GetCaster()
+		self.target_point 		= self:GetParent():GetAbsOrigin()
+		self.show_beam			= kv.show_beam
+		self.show_crater 		= kv.show_crater
+		self.target 			= EntIndexToHScript(kv.target)
+		self.area_of_effect 	= kv.area_of_effect
+
+		if self.show_beam ~= nil then 
+			-- Show the sun strike beam
+			local sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+			ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
+			ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect,0, 0))
+		end
+	end
+end
+
+function modifier_imba_invoker_sun_strike_beam_only:OnRemoved()
+	if IsServer() then
+		if self.show_crater ~= nil then
+			--ParticleManager:DestroyParticle(sun_strike_beam3, false)
+			local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+			ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
+			ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
+		end
+	end
+end
 
 ---------------------------------------------------------------------------------------------------------------------
 --	Invoker's Cold Snap
@@ -725,7 +1406,7 @@ function imba_invoker_cold_snap:OnSpellStart()
 		local caster 				= self:GetCaster()
 		local target 				= self:GetCursorTarget()
 		local ability 				= caster:FindAbilityByName("imba_invoker_cold_snap") 
-		local quas_level 			= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
+		local quas_level 			= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
 
 		-- Get skill stats
 		local cold_snap_duration 	= ability:GetLevelSpecialValueFor("duration", quas_level) 
@@ -742,10 +1423,7 @@ function imba_invoker_cold_snap:OnSpellStart()
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
-
-		-- Create pacticle effect
-		local cold_snap_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-
+		
 		-- Apply cold snap to target
 		target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap", {duration = cold_snap_duration})
 		target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration}) 
@@ -759,11 +1437,6 @@ function imba_invoker_cold_snap:OnSpellStart()
 		damage_table.damage_type = ability:GetAbilityDamageType() 
 		damage_table.damage = freeze_damage
 		ApplyDamage(damage_table)
-
-		-- Cleanup
-		Timers:CreateTimer(cold_snap_duration, function()
-			ParticleManager:DestroyParticle(cold_snap_effect, false)
-		end)
 	end
 end
 
@@ -782,6 +1455,19 @@ function modifier_imba_invoker_cold_snap:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_invoker_cold_snap:OnCreated()
+	if IsServer() then
+		-- Create pacticle effect
+		self.cold_snap_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	end
+end
+
+function modifier_imba_invoker_cold_snap:OnRemoved()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.cold_snap_effect, false)
+	end
+end
+
 function modifier_imba_invoker_cold_snap:GetAbilityTextureName()
 	return "invoker_cold_snap"
 end
@@ -795,7 +1481,7 @@ function modifier_imba_invoker_cold_snap:OnTakeDamage(kv)
 		local caster 			= self:GetCaster()
 		local target 			= kv.unit
 		local ability 			= caster:FindAbilityByName("imba_invoker_cold_snap") 
-		local quas_level 		= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
+		local quas_level 		= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
 
 		-- Only proc cold_snap if the target still have cold_snap debuff and the attacker is not the taret itself
 		if caster ~= target and target:HasModifier("modifier_imba_invoker_cold_snap") then
@@ -805,10 +1491,8 @@ function modifier_imba_invoker_cold_snap:OnTakeDamage(kv)
 			local damage_trigger 			= ability:GetSpecialValueFor("damage_trigger")
 
 			-- If target is dealt enought damage to trigger cold_snap and the effect is not on cooldown...
-			if kv.damage >= damage_trigger and not target:HasModifier("modifier_imba_invoker_cold_snap_cooldown") then
-				local cold_snap_effect 		= ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-				local stun_effect 			= ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-				target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration}) 
+			if kv.damage >= damage_trigger and not target:HasModifier("modifier_imba_invoker_cold_snap_cooldown") and target:IsAlive() then
+				target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration, cold_snap_effect = cold_snap_effect, stun_effect = stun_effect}) 
 				target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_cooldown", {duration = freeze_cooldown})
 
 				-- Apply damage
@@ -819,12 +1503,6 @@ function modifier_imba_invoker_cold_snap:OnTakeDamage(kv)
 				damage_table.damage_type 	= ability:GetAbilityDamageType() 
 				damage_table.damage 		= freeze_damage
 				ApplyDamage(damage_table)
-
-				-- Cleanup
-				Timers:CreateTimer(freeze_cooldown, function()
-						ParticleManager:DestroyParticle(cold_snap_effect, false)
-						ParticleManager:DestroyParticle(stun_effect, false)
-				end)
 			end
 		end
 	end
@@ -844,9 +1522,12 @@ modifier_imba_invoker_cold_snap_stun_duration = class({})
 function modifier_imba_invoker_cold_snap_stun_duration:IsDebuff() return true end
 function modifier_imba_invoker_cold_snap_stun_duration:IsPurgable() return false end
 function modifier_imba_invoker_cold_snap_stun_duration:IsHidden() return true end
-function modifier_imba_invoker_cold_snap_stun_duration:OnCreated() 
+function modifier_imba_invoker_cold_snap_stun_duration:OnCreated(kv) 
 	if IsServer() then
 		local target = self:GetParent()
+		
+		self.cold_snap_effect 		= ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		self.stun_effect 			= ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 
 		-- Play ColdSnap Freeze sound
 		target:EmitSound("Hero_Invoker.ColdSnap.Freeze")
@@ -860,6 +1541,18 @@ function modifier_imba_invoker_cold_snap_stun_duration:CheckState()
 	}
 	return state
 end
+
+function modifier_imba_invoker_cold_snap_stun_duration:OnRemoved()
+	if IsServer() then
+		if self.cold_snap_effect ~= nil then
+			ParticleManager:DestroyParticle(self.cold_snap_effect, false)
+		end
+		if self.stun_effect ~= nil then
+			ParticleManager:DestroyParticle(self.stun_effect, false)
+		end
+	end
+end
+
 
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -877,8 +1570,8 @@ function imba_invoker_ghost_walk:OnSpellStart()
 		local area_of_effect 				= ability:GetSpecialValueFor("area_of_effect") 
 		local aura_fade_time 				= ability:GetSpecialValueFor("aura_fade_time")
 		local invis_fade_time 				= ability:GetSpecialValueFor("invis_fade_time")
-		local quas_level 					= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
-		local wex_level 					= caster:FindAbilityByName("invoker_wex"):GetLevel() - 1
+		local quas_level 					= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local wex_level 					= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 		local self_slow 					= ability:GetLevelSpecialValueFor("self_slow", wex_level)
 		local enemy_slow 					= ability:GetLevelSpecialValueFor("enemy_slow", quas_level)
 		local aura_think_interval 			= ability:GetSpecialValueFor("aura_update_interval")		
@@ -984,15 +1677,16 @@ end
 
 function modifier_imba_invoker_ghost_walk:OnIntervalThink()
 	if IsServer() then
-		local nearby_enemy_units = FindUnitsInRadius(	self.caster:GetTeam(), 
-														self.caster:GetAbsOrigin(), 
-														nil, 
-														self.area_of_effect, 
-														DOTA_UNIT_TARGET_TEAM_ENEMY,
-														DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-														DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, 
-														FIND_ANY_ORDER, 
-														false)
+		local nearby_enemy_units = FindUnitsInRadius(	
+			self.caster:GetTeam(), 
+			self.caster:GetAbsOrigin(), 
+			nil, 
+			self.area_of_effect, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, 
+			FIND_ANY_ORDER, 
+			false)
 
 		if nearby_enemy_units ~= nil then
 			for _,enemy in pairs(nearby_enemy_units) do
@@ -1133,6 +1827,8 @@ function modifier_imba_invoker_ghost_walk_aura:GetModifierMoveSpeedBonus_Percent
 	return self.enemy_slow
 end
 
+
+
 --------------------------------------------------------------------------------------------------------------------
 --	Invoker's Alacrity
 --------------------------------------------------------------------------------------------------------------------
@@ -1147,8 +1843,8 @@ function imba_invoker_alacrity:OnSpellStart()
 		local ability 				= self
 
 		-- Get skill stats
-		local wex_level 			= caster:FindAbilityByName("invoker_wex"):GetLevel() - 1
-		local exort_level 			= caster:FindAbilityByName("invoker_exort"):GetLevel() - 1
+		local wex_level 			= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
+		local exort_level 			= caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
 		local alacrity_duration 	= ability:GetSpecialValueFor("duration")
 		local bonus_attack_speed 	= ability:GetLevelSpecialValueFor("bonus_attack_speed", wex_level)
 		local bonus_damage 			= ability:GetLevelSpecialValueFor("bonus_damage", exort_level)
@@ -1175,15 +1871,17 @@ function imba_invoker_alacrity:OnSpellStart()
 
 		if caster:HasTalent("imba_special_bonus_unique_invoker_6") then 
 
-			local nearby_friendly_units = FindUnitsInRadius(caster:GetTeam(),
-															target:GetAbsOrigin(), 
-															nil, 
-															area_of_effect, 
-															DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-															DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-															DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-															FIND_ANY_ORDER, 
-															false)
+			local nearby_friendly_units = FindUnitsInRadius(
+				caster:GetTeam(),
+				target:GetAbsOrigin(), 
+				nil, 
+				area_of_effect, 
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+				FIND_ANY_ORDER, 
+				false)
+
 			local added_to_invoker = false 
 			for _,unit in pairs(nearby_friendly_units) do
 				if unit == caster then 
@@ -1281,6 +1979,8 @@ function modifier_imba_invoker_alacrity:GetModifierBaseAttack_BonusDamage()
 	return self.bonus_damage
 end
 
+
+
 --------------------------------------------------------------------------------------------------------------------
 --	Invoker's Forge Spirit
 --------------------------------------------------------------------------------------------------------------------
@@ -1294,8 +1994,8 @@ function imba_invoker_forge_spirit:OnSpellStart()
 	if IsServer() then
 		local caster 		= self:GetCaster()
 		local ability 		= caster:FindAbilityByName("imba_invoker_forge_spirit")
-		local quas_level 	= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
-		local exort_level 	= caster:FindAbilityByName("invoker_exort"):GetLevel() - 1
+		local quas_level 	= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local exort_level 	= caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
 		local spirit_name 	= "npc_dota_invoker_forged_spirit"
 		local spirit_level 	= 3;
 
@@ -1361,12 +2061,18 @@ function imba_invoker_forge_spirit:OnSpellStart()
 			local melt_armor_removed 	= forged_spirit:FindAbilityByName("imba_forged_spirit_melting_strike"):GetSpecialValueFor("armor_removed") 
 			local melt_strike_mana_cost = forged_spirit:FindAbilityByName("imba_forged_spirit_melting_strike"):GetManaCost(1)
 
-			forged_spirit:AddNewModifier(caster, self, "modifier_imba_invoker_forge_spirit", {	duration = spirit_duration, 
-																								melt_duration = melt_duration, 
-																								melt_armor_removed = melt_armor_removed,
-																								melt_strike_mana_cost = melt_strike_mana_cost, 
-																								max_armor_removed = max_armor_removed})
-
+			forged_spirit:AddNewModifier(
+				caster, 
+				self, 
+				"modifier_imba_invoker_forge_spirit", 
+				{	
+					duration = spirit_duration, 
+					melt_duration = melt_duration, 
+					melt_armor_removed = melt_armor_removed,
+					melt_strike_mana_cost = melt_strike_mana_cost, 
+					max_armor_removed = max_armor_removed
+				}
+			)
 
 			forged_spirit:AddNewModifier(caster, self, "modifier_kill", {duration = spirit_duration})
 			forged_spirit:AddNewModifier(caster, self, "modifier_phased", {duration = 0.03})
@@ -1407,7 +2113,7 @@ function modifier_imba_invoker_forge_spirit:OnCreated(kv)
 		self.caster					= self:GetCaster()
 		self.ability 				= self:GetAbility()
 		self.parent 				= self:GetParent()
-		local quas_level 			= self.caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
+		local quas_level 			= self.caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
 		self.spirit_attack_range 	= self.ability:GetLevelSpecialValueFor("spirit_attack_range", quas_level) 
 		self.melt_duration 			= kv.melt_duration
 		self.melt_strike_mana_cost  = kv.melt_strike_mana_cost
@@ -1431,10 +2137,16 @@ function modifier_imba_invoker_forge_spirit:OnAttackLanded(kv)
 					end
 				end
 
-				target:AddNewModifier(self.parent, self.ability, "modifier_imba_forged_spirit_melting_strike", {duration = self.melt_duration, 
-																												max_armor_removed = self.max_armor_removed,
-																												melt_strike_mana_cost = self.melt_strike_mana_cost,
-																												melt_armor_removed = self.melt_armor_removed})
+				target:AddNewModifier(
+					self.parent, 
+					self.ability, 
+					"modifier_imba_forged_spirit_melting_strike", 
+					{
+						duration = self.melt_duration, 
+						max_armor_removed = self.max_armor_removed,
+						melt_strike_mana_cost = self.melt_strike_mana_cost,
+						melt_armor_removed = self.melt_armor_removed
+					})
 
 			end
 		end
@@ -1491,6 +2203,8 @@ function modifier_imba_forged_spirit_melting_strike:GetModifierPhysicalArmorBonu
 	return self:GetStackCount() * -1
 end	
 
+
+
 --------------------------------------------------------------------------------------------------------------------
 --	Invoker's: Tornado
 --------------------------------------------------------------------------------------------------------------------
@@ -1507,8 +2221,8 @@ function imba_invoker_tornado:OnSpellStart()
 		local caster_location 			= caster:GetAbsOrigin() 
 
 		-- Get skill stats
-		local quas_level 				= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
-		local wex_level 				= caster:FindAbilityByName("invoker_wex"):GetLevel() - 1
+		local quas_level 				= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local wex_level 				= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 		local tornado_travel_distance 	= ability:GetLevelSpecialValueFor("travel_distance", wex_level)
 		local wex_land_damage 			= ability:GetLevelSpecialValueFor("wex_damage", wex_level)
 		local tornado_lift_duration  	= ability:GetLevelSpecialValueFor("lift_duration", quas_level)
@@ -1536,14 +2250,9 @@ function imba_invoker_tornado:OnSpellStart()
 		end
 
 		-- Create a dummy unit that will follow the path of the tornado, providing flying vision and sound.
-		local tornado_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_location, false, nil, nil, caster:GetTeam())
-
+		local tornado_dummy_unit =  CreateModifierThinker(caster, self, nil, {},caster_location, caster:GetTeamNumber(), false)
 		-- Play tornado sound 
 		tornado_dummy_unit:EmitSound("Hero_Invoker.Tornado")
-
-		-- Set tornado vision
-		tornado_dummy_unit:SetDayTimeVisionRange(vision_distance)
-		tornado_dummy_unit:SetNightTimeVisionRange(vision_distance)
 
 		-- Create tornado projectile object
 		local tornado_projectile_table =  
@@ -1575,15 +2284,15 @@ function imba_invoker_tornado:OnSpellStart()
 										cyclone_min_height		= cyclone_min_height,
 										cyclone_max_height 		= cyclone_max_height,
 										land_disarm_duration 	= land_disarm_duration,
-										cyclone_effect_path 	= imba_invoker_tornado.ability_effect_cyclone_path
+										cyclone_effect_path 	= imba_invoker_tornado.ability_effect_cyclone_path,
+										vision_distance 		= vision_distance,
+										tornado_dummy_unit 		= tornado_dummy_unit:entindex()
 								  	}
 		}
 
 		-- Get cast and target-points and make sure they are at ground level.
 		local target_point 					= self:GetCursorPosition()
-		target_point.z 						= 0
 		local caster_point 					= caster_location 
-		caster_point.z 						= 0
 
 		-- Normalize the vector for the difference between the points.
 		local point_difference_normalized 	= (target_point - caster_point):Normalized()
@@ -1592,44 +2301,15 @@ function imba_invoker_tornado:OnSpellStart()
 		local projectile_vvelocity 			= point_difference_normalized * travel_speed
 		tornado_projectile_table.vVelocity 	= projectile_vvelocity
 		
-		-- For debugging... i mean this contains maths... ofc we have to check it
-		-- local tornado_final_position 		= caster_location + (projectile_vvelocity * tornado_duration)
-		-- DebugDrawCircle(tornado_final_position, Vector(255,0,255), 255, 64, true, 20)
-
-		--Calculate where and when the Tornado projectile will end up.
-		local number_of_loops 				= math.floor(tornado_duration / imba_invoker_tornado.loop_interval)
-		local rounding_error				= math.fmod((tornado_duration / imba_invoker_tornado.loop_interval), 1)
-		local rounding_error_vector			= projectile_vvelocity / rounding_error / number_of_loops
-		local tornado_velocity_per_frame 	= (projectile_vvelocity + rounding_error_vector) * imba_invoker_tornado.loop_interval
- 		local tornado_dummy_position 		= caster_location + (tornado_velocity_per_frame * 2)
-
 		-- Crate the acctual projectile
 		local tornado_projectile = ProjectileManager:CreateLinearProjectile(tornado_projectile_table)
 
-		--Adjust the dummy unit's position each frame to match that of the tornado particle effect.
-		local endTime = GameRules:GetGameTime() + tornado_duration
-		Timers:CreateTimer({
-			endTime = imba_invoker_tornado.loop_interval,
-			callback = function()
-				tornado_dummy_position = tornado_dummy_position + tornado_velocity_per_frame
-				tornado_dummy_unit:SetAbsOrigin(tornado_dummy_position)
-				if GameRules:GetGameTime() > endTime then
-					tornado_dummy_unit:StopSound("Hero_Invoker.Tornado")
-					
-					--Have the dummy unit linger in the position the tornado ended up in, in order to provide vision.
-					Timers:CreateTimer({
-						endTime = end_vision_duration,
-						callback = function()
-							tornado_dummy_unit:RemoveSelf()
-						end
-					})	
-						
-					return  
-				else 
-					return imba_invoker_tornado.loop_interval
-				end
-			end
-		})
+	end
+end
+
+function imba_invoker_tornado:OnProjectileThink_ExtraData(vLocation, ExtraData)
+	if IsServer() then 
+		EntIndexToHScript(ExtraData.tornado_dummy_unit):SetAbsOrigin(vLocation)
 	end
 end
 
@@ -1647,6 +2327,7 @@ function imba_invoker_tornado:OnProjectileHit_ExtraData(target, location, ExtraD
 			local cyclone_min_height 		= ExtraData.cyclone_min_height
 			local cyclone_max_height 		= ExtraData.cyclone_max_height
 			local tornado_start 			= GameRules:GetGameTime()
+			local vision_distance 			= ExtraData.vision_distance
 			local end_vision_duration 		= ExtraData.end_vision_duration
 			
 			if tornado_lift_duration ~= nil then
@@ -1757,6 +2438,10 @@ function imba_invoker_tornado:OnProjectileHit_ExtraData(target, location, ExtraD
 						end
 				end)		
 			end
+		else 
+			EntIndexToHScript(ExtraData.tornado_dummy_unit):StopSound("Hero_Invoker.Tornado")
+    		EntIndexToHScript(ExtraData.tornado_dummy_unit):RemoveSelf()
+    		self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.end_vision_duration)
 		end
 	end
 end
@@ -1863,6 +2548,8 @@ function modifier_imba_invoker_tornado_cyclone:OnRemoved(kv)
 	self:SetStackCount(0)
 end
 
+
+
 --------------------------------------------------------------------------------------------------------------------
 --	Invoker's: Ice Wall
 --------------------------------------------------------------------------------------------------------------------
@@ -1875,8 +2562,8 @@ function imba_invoker_ice_wall:OnSpellStart()
 		local caster_point 					= caster:GetAbsOrigin() 
 		local caster_direction 				= caster:GetForwardVector()
 		local ability 						= caster:FindAbilityByName("imba_invoker_ice_wall")
-		local quas_level 					= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
-		local exort_level 					= caster:FindAbilityByName("invoker_exort"):GetLevel() - 1
+		local quas_level 					= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local exort_level 					= caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
 		local cast_direction 				= Vector(-caster_direction.y, caster_direction.x, caster_direction.z)
 
 		-- Get the Skills stats
@@ -1919,30 +2606,22 @@ function imba_invoker_ice_wall:OnSpellStart()
 			ParticleManager:SetParticleControl(ice_wall_particle_effect_spikes, 0, target_point - ability.endpoint_distance_from_center)
 			ParticleManager:SetParticleControl(ice_wall_particle_effect_spikes, 1, target_point + ability.endpoint_distance_from_center)
 
-			-- Only create thinker for first and last wall to save some preformance
-			if i == 0 or i == (ice_walls -1) then
-				CreateModifierThinker(
-					caster, 
-					ability, 
-					"modifier_imba_invoker_ice_wall", 	
-					{
-				 		duration 							= ice_wall_duration,
-						ice_wall_damage_interval 			= ice_wall_damage_interval,
-						ice_wall_slow_duration 				= ice_wall_slow_duration,
-						ice_wall_slow 						= ice_wall_slow,
-						ice_wall_damage_per_second 			= ice_wall_damage_per_second,
-						ice_wall_area_of_effect 			= ice_wall_area_of_effect,
-						ice_wall_length 					= ice_wall_length,
-						ice_wall_particle_effect 			= ice_wall_particle_effect,
-						ice_wall_particle_effect_spikes 	= ice_wall_particle_effect_spikes
-					}, target_point, caster:GetTeamNumber(), false)
-			else
-				-- Cleanup middle wall
-				Timers:CreateTimer(ice_wall_duration, function()
-						ParticleManager:DestroyParticle(ice_wall_particle_effect, false)
-						ParticleManager:DestroyParticle(ice_wall_particle_effect_spikes, false)
-				end)
-			end
+
+			CreateModifierThinker(
+				caster, 
+				ability, 
+				"modifier_imba_invoker_ice_wall", 	
+				{
+			 		duration 							= ice_wall_duration,
+					ice_wall_damage_interval 			= ice_wall_damage_interval,
+					ice_wall_slow_duration 				= ice_wall_slow_duration,
+					ice_wall_slow 						= ice_wall_slow,
+					ice_wall_damage_per_second 			= ice_wall_damage_per_second,
+					ice_wall_area_of_effect 			= ice_wall_area_of_effect,
+					ice_wall_length 					= ice_wall_length,
+					ice_wall_particle_effect 			= ice_wall_particle_effect,
+					ice_wall_particle_effect_spikes 	= ice_wall_particle_effect_spikes
+				}, target_point, caster:GetTeamNumber(), false)
 		end
 	end
 end
@@ -1978,19 +2657,19 @@ end
 function modifier_imba_invoker_ice_wall:OnIntervalThink()
 	if IsServer() then
 		local nearby_enemy_units = FindUnitsInRadius(
-												self.GetTeam, 
-												self.origin, 
-												nil, 
-												self.search_area, 
-												DOTA_UNIT_TARGET_TEAM_ENEMY,
-												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-												DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 
-												FIND_ANY_ORDER, 
-												false)
+			self.GetTeam, 
+			self.origin, 
+			nil, 
+			self.search_area, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 
+			FIND_ANY_ORDER, 
+			false)
 
 
 		for _,enemy in pairs(nearby_enemy_units) do
-			if enemy ~= nil then
+			if enemy ~= nil and enemy:IsAlive() then
 				local target_position = enemy:GetAbsOrigin()
 				if self:IsUnitInProximity(self.ice_wall_start_point, self.ice_wall_end_point, target_position, self.ice_wall_area_of_effect) then
 					enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_slow", {duration = self.slow_duration, enemy_slow = self.ice_wall_slow})
@@ -2094,24 +2773,28 @@ function modifier_imba_invoker_ice_wall_slow:GetModifierMoveSpeedBonus_Percentag
 	return self:GetStackCount()
 end
 
+
+
 --------------------------------------------------------------------------------------------------------------------
---	Invoker's: Choas Meteor
+--	Invoker's: Chaos Meteor
 --------------------------------------------------------------------------------------------------------------------
 imba_invoker_chaos_meteor = class({})
 imba_invoker_chaos_meteor.loop_interval = 0.03
 LinkLuaModifier("modifier_imba_invoker_chaos_meteor", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_chaos_meteor_burn", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_chaos_meteor_aura", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_invoker_chaos_meteor:OnSpellStart()
 	if IsServer() then
-		local caster = self:GetCaster()
-		local target_point = self:GetCursorPosition()
+		local caster 			= self:GetCaster()
+		local ability 			= self
+		local target_point 		= self:GetCursorPosition()
 		local number_of_meteors = 1
 
 		if caster:HasTalent("imba_special_bonus_unique_invoker_2") then
 			number_of_meteors = caster:FindTalentValue("imba_special_bonus_unique_invoker_2","number_of_meteors")
 		end
 
-		imba_invoker_chaos_meteor:CastMeteor(caster, target_point, number_of_meteors)
+		imba_invoker_chaos_meteor:CastMeteor(caster, ability, target_point, number_of_meteors)
 		
 		if number_of_meteors > 1 then 
 			local fiered_meteors = 1
@@ -2122,8 +2805,7 @@ function imba_invoker_chaos_meteor:OnSpellStart()
 					fiered_meteors = fiered_meteors + 1
 					
 					local new_target_point = target_point + RandomVector(math.random(150, 300) - 150)
-					imba_invoker_chaos_meteor:CastMeteor(caster, new_target_point, number_of_meteors)
-
+					imba_invoker_chaos_meteor:CastMeteor(caster, ability, new_target_point, number_of_meteors)
 
 					if fiered_meteors == number_of_meteors then
 						return  
@@ -2138,199 +2820,141 @@ function imba_invoker_chaos_meteor:OnSpellStart()
 	end
 end
 
-function imba_invoker_chaos_meteor:CastMeteor(caster, target_point, number_of_meteors)
-	local ability 							= caster:FindAbilityByName("imba_invoker_chaos_meteor")
-	local caster_location 					= caster:GetAbsOrigin()
-	local target_point 						= target_point
+function imba_invoker_chaos_meteor:CastMeteor(caster, ability, target_point, number_of_meteors)
+	if IsServer() then 
+		local chaos_meteor_land_time 			= ability:GetSpecialValueFor("land_time")
 
-	local caster_location_ground 			= Vector(caster_location.x, caster_location.y, 0)
-	local target_point_ground 				= Vector(target_point.x, target_point.y, 0)
+		CreateModifierThinker(	
+			caster, 
+			ability, 
+			"modifier_imba_invoker_chaos_meteor", 	
+			{
+		 		duration = chaos_meteor_land_time
+			}, 
+			target_point, 
+			caster:GetTeamNumber(), 
+			false
+		)
+	end
+end
 
-	local wex_level 						= caster:FindAbilityByName("invoker_wex"):GetLevel() - 1
-	local exort_level 						= caster:FindAbilityByName("invoker_exort"):GetLevel() - 1
+modifier_imba_invoker_chaos_meteor = class({})
+function modifier_imba_invoker_chaos_meteor:OnCreated(kv)
+	if IsServer() then
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.target_point = self:GetParent():GetAbsOrigin()
+		self.caster_location 					= self.caster:GetAbsOrigin()
+		self.caster_location_ground 			= GetGroundPosition(self.caster:GetAbsOrigin(), self.caster)
+		self.wex_level 							= self.caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
+		self.exort_level 						= self.caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
+		self.chaos_meteor_travel_distance 		= self.ability:GetLevelSpecialValueFor("travel_distance", self.wex_level)
+		self.chaos_meteor_main_dmg				= self.ability:GetLevelSpecialValueFor("main_damage", self.exort_level)
+		self.chaos_meteor_burn_dps				= self.ability:GetLevelSpecialValueFor("burn_dps", self.exort_level)
+		self.chaos_meteor_travel_speed 			= self.ability:GetSpecialValueFor("travel_speed")
+		self.chaos_meteor_burn_duration 		= self.ability:GetSpecialValueFor("burn_duration")
+		self.chaos_meteor_burn_dps_inverval		= self.ability:GetSpecialValueFor("burn_dps_inverval")
+		self.chaos_meteor_damage_interval		= self.ability:GetSpecialValueFor("damage_interval")
+		self.chaos_meteor_vision_distance 		= self.ability:GetSpecialValueFor("vision_distance")
+		self.chaos_meteor_end_vision_duration 	= self.ability:GetSpecialValueFor("end_vision_duration")
+		self.chaos_meteor_area_of_effect 		= self.ability:GetSpecialValueFor("area_of_effect")		
+		self.location_difference_normalized 	= (self.target_point - self.caster_location_ground):Normalized()
+		self.chaos_meteor_land_time 			= self.ability:GetSpecialValueFor("land_time")
+		self.chaos_meteor_velocity 				= self.location_difference_normalized * self.chaos_meteor_travel_speed
+		self.chaos_meteor_duration 				= self.chaos_meteor_travel_distance / self.chaos_meteor_travel_speed
 
-	local chaos_meteor_travel_distance 		= ability:GetLevelSpecialValueFor("travel_distance", wex_level)
-	local chaos_meteor_main_dmg				= ability:GetLevelSpecialValueFor("main_damage", exort_level)
-	local chaos_meteor_burn_dps				= ability:GetLevelSpecialValueFor("burn_dps", exort_level)
-
-	local chaos_meteor_travel_speed 		= ability:GetSpecialValueFor("travel_speed")
-	local chaos_meteor_land_time 			= ability:GetSpecialValueFor("land_time")
-	local chaos_meteor_burn_duration 		= ability:GetSpecialValueFor("burn_duration")
-	local chaos_meteor_burn_dps_inverval	= ability:GetSpecialValueFor("burn_dps_inverval")
-	local chaos_meteor_damage_interval		= ability:GetSpecialValueFor("damage_interval")
-	local chaos_meteor_vision_distance 		= ability:GetSpecialValueFor("vision_distance")
-	local chaos_meteor_end_vision_duration 	= ability:GetSpecialValueFor("end_vision_duration")
-	local chaos_meteor_area_of_effect 		= ability:GetSpecialValueFor("area_of_effect")
-	
-	local location_difference_normalized 	= ( target_point_ground - caster_location_ground):Normalized()
-	local chaos_meteor_velocity 			= location_difference_normalized * chaos_meteor_travel_speed
-	local chaos_meteor_velocity_per_frame 	= chaos_meteor_velocity * .03
-	local chaos_meteor_duration 			= chaos_meteor_travel_distance / chaos_meteor_travel_speed
-
-	-- Check if we have chaos meteor talent
-	if caster:HasTalent("imba_special_bonus_unique_invoker_2") then
-		local damage_increase = caster:FindTalentValue("imba_special_bonus_unique_invoker_2","damage_increase")
+		-- Play Chaos Meteor Sounds
+		self.caster:EmitSound("Hero_Invoker.ChaosMeteor.Cast")
 		
-		-- Spawning X additional meteors. Damage value is divided by number of meteors to not be totaly broken... 
-		-- Added small dmg increase as this is talent IS intended to buff meteor dmg.
-		chaos_meteor_main_dmg = chaos_meteor_main_dmg / (number_of_meteors - damage_increase)
-		chaos_meteor_burn_dps = chaos_meteor_burn_dps / (number_of_meteors - damage_increase)
+		self.meteor_dummy = CreateModifierThinker(self.caster, self.ability, nil, {}, self.target_point, self.caster:GetTeamNumber(), false)
+		
+		-- Create start_point of the meteor 1000z up in the air! Meteors velocity is same while falling through the air as it is rolling on the ground.
+		local chaos_meteor_fly_original_point = (self.target_point - (self.chaos_meteor_velocity * self.chaos_meteor_land_time)) + Vector(0, 0, 1000)
+		--Create the particle effect consisting of the meteor falling from the sky and landing at the target point.
+		self.chaos_meteor_fly_particle_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf", PATTACH_ABSORIGIN, self.caster)
+		ParticleManager:SetParticleControl(self.chaos_meteor_fly_particle_effect, 0, chaos_meteor_fly_original_point)
+		ParticleManager:SetParticleControl(self.chaos_meteor_fly_particle_effect, 1, self.target_point)
+		ParticleManager:SetParticleControl(self.chaos_meteor_fly_particle_effect, 2, Vector(self.chaos_meteor_land_time, 0, 0))
 	end
+end
 
-	-- Play Chaos Meteor Sounds
-	caster:EmitSound("Hero_Invoker.ChaosMeteor.Cast")
-	caster:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
+function modifier_imba_invoker_chaos_meteor:OnRemoved()
+	if IsServer() then 
 
-	-- Create start_point of the meteor 1000z up in the air! Meteors velocity is same while falling through the air as it is rolling on the ground.
-	local chaos_meteor_fly_original_point = (target_point - (chaos_meteor_velocity * chaos_meteor_land_time)) + Vector (0, 0, 1000)
-	--Create the particle effect consisting of the meteor falling from the sky and landing at the target point.
-	local chaos_meteor_fly_particle_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf", PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 0, chaos_meteor_fly_original_point)
-	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 1, target_point)
-	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 2, Vector(chaos_meteor_land_time, 0, 0))
+		self.meteor_dummy:EmitSound("Hero_Invoker.ChaosMeteor.Impact")
+		self.meteor_dummy:AddNewModifier(	
+			self.caster, 
+			self.ability, 
+			"modifier_imba_invoker_chaos_meteor_aura", 
+			{
+				duration 				= -1,
+				chaos_meteor_duration 	= self.chaos_meteor_duration,
+				burn_duration 			= self.chaos_meteor_burn_duration,
+				main_dmg 				= self.chaos_meteor_main_dmg,
+				burn_dps 				= self.chaos_meteor_burn_dps,
+				burn_dps_inverval 		= self.chaos_meteor_burn_dps_inverval,
+				damage_interval 		= self.chaos_meteor_damage_interval,
+				area_of_effect 			= self.chaos_meteor_area_of_effect
+			}
+		)
 
-	local chaos_meteor_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_location, false, nil, nil, caster:GetTeam())
-	chaos_meteor_dummy_unit:AddAbility("imba_invoker_chaos_meteor")
+		-- Meteor Projectile object
+		local meteor_projectile_obj =  
+		{
+			EffectName 					= "particles/units/heroes/hero_invoker/invoker_chaos_meteor.vpcf",
+			Ability 					= self.ability,
+			vSpawnOrigin 				= self.target_point,
+			fDistance 					= self.chaos_meteor_travel_distance,
+			fStartRadius 				= self.chaos_meteor_area_of_effect,
+			fEndRadius 					= self.chaos_meteor_area_of_effect,
+			Source 						= self.chaos_meteor_dummy_unit,
+			bHasFrontalCone 			= false,
+			iMoveSpeed 					= self.chaos_meteor_travel_speed,                              
+			bReplaceExisting 			= false,
+			bProvidesVision 			= true,
+			iVisionTeamNumber 			= self.caster:GetTeam(),
+			iVisionRadius 				= self.chaos_meteor_vision_distance,
+			bDrawsOnMinimap 			= false,
+			bVisibleToEnemies 			= true, 
+			iUnitTargetTeam 			= DOTA_UNIT_TARGET_NONE,
+			iUnitTargetFlags 			= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType 			= DOTA_UNIT_TARGET_NONE,
+			fExpireTime 				= GameRules:GetGameTime() + self.chaos_meteor_land_time + self.chaos_meteor_duration + self.chaos_meteor_end_vision_duration,
+			ExtraData 					= {
+				meteor_dummy 			= self.meteor_dummy:entindex(),
+				vision_distance 		= self.chaos_meteor_vision_distance,
+				vision_duration 		= self.chaos_meteor_end_vision_duration
+			}
+		}
+		meteor_projectile_obj.vVelocity = self.chaos_meteor_velocity
+		meteor_projectile_obj.vVelocity.z = 0
+		ProjectileManager:CreateLinearProjectile(meteor_projectile_obj)
 
-	local chaos_meteor_unit_ability = chaos_meteor_dummy_unit:FindAbilityByName("imba_invoker_chaos_meteor")
-	if chaos_meteor_unit_ability ~= nil then
-		chaos_meteor_unit_ability:SetLevel(1)
-		-- Would be bad if the game engine decided to interract with the meteor dummy... We hide it with modifier!
-		chaos_meteor_dummy_unit:AddNewModifier(	caster, 
-												chaos_meteor_unit_ability, 
-												"modifier_imba_invoker_chaos_meteor", 
-												{
-													duration 				= -1,
-													chaos_meteor_duration 	= chaos_meteor_duration,
-													burn_duration 			= chaos_meteor_burn_duration,
-													main_dmg 				= chaos_meteor_main_dmg,
-													burn_dps 				= chaos_meteor_burn_dps,
-													burn_dps_inverval 		= chaos_meteor_burn_dps_inverval,
-													damage_interval 		= chaos_meteor_damage_interval,
-													area_of_effect 			= chaos_meteor_area_of_effect 
-												})
+		-- Cleanup
+		ParticleManager:DestroyParticle(self.chaos_meteor_fly_particle_effect, false)
 	end
+end
 
-	-- Set meteor vision
-	chaos_meteor_dummy_unit:SetDayTimeVisionRange(chaos_meteor_vision_distance)
-	chaos_meteor_dummy_unit:SetNightTimeVisionRange(chaos_meteor_vision_distance)
+function imba_invoker_chaos_meteor:OnProjectileThink_ExtraData(location, ExtraData)
+	if IsServer() then
+		 EntIndexToHScript(ExtraData.meteor_dummy):SetAbsOrigin(location)
+	end
+end
 
-	-- Meteor Projectile object
-	local meteor_projectile_obj =  
-	{
-		EffectName 					= "particles/units/heroes/hero_invoker/invoker_chaos_meteor.vpcf",
-		Ability 					= chaos_meteor_unit_ability,
-		vSpawnOrigin 				= target_point,
-		fDistance 					= chaos_meteor_travel_distance,
-		fStartRadius 				= chaos_meteor_area_of_effect,
-		fEndRadius 					= chaos_meteor_area_of_effect,
-		Source 						= chaos_meteor_dummy_unit,
-		bHasFrontalCone 			= false,
-		iMoveSpeed 					= chaos_meteor_travel_speed,
-		bReplaceExisting 			= false,
-		bProvidesVision 			= true,
-		iVisionTeamNumber 			= caster:GetTeam(),
-		iVisionRadius 				= chaos_meteor_vision_distance,
-		bDrawsOnMinimap 			= false,
-		bVisibleToEnemies 			= true, 
-		iUnitTargetTeam 			= DOTA_UNIT_TARGET_NONE,
-		iUnitTargetFlags 			= DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType 			= DOTA_UNIT_TARGET_NONE,
-		fExpireTime 				= GameRules:GetGameTime() + chaos_meteor_land_time + chaos_meteor_duration + chaos_meteor_end_vision_duration,
-	}
-
-	meteor_projectile_obj.vVelocity 			= chaos_meteor_velocity
-
-	local number_of_loops 						= math.floor(chaos_meteor_duration / 0.03)
-	local rounding_error						= math.fmod((chaos_meteor_duration / 0.03), 1)
-	local rounding_error_vector					= chaos_meteor_velocity / rounding_error / number_of_loops
-	local chaos_meteor_velocity_per_frame 		= (chaos_meteor_velocity + rounding_error_vector) * 0.03
-		local chaos_meteor_dummy_position 			= target_point-- + chaos_meteor_velocity_per_frame + chaos_meteor_velocity_per_frame+ chaos_meteor_velocity_per_frame
-
-	-- Run stuff after meteor lands
-	Timers:CreateTimer({
-		endTime = chaos_meteor_land_time,
-		callback = function()
-			-- once meteor lands we move the sound source to the meteor instead
-			caster:StopSound("Hero_Invoker.ChaosMeteor.Loop")
-			-- Play meteor sound 
-			chaos_meteor_dummy_unit:EmitSound("Hero_Invoker.ChaosMeteor.Impact")
-			chaos_meteor_dummy_unit:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
-
-			local chaos_meteor_projectile = ProjectileManager:CreateLinearProjectile(meteor_projectile_obj)
-
-			-- Adjust the dummy unit's position each frame to match that of the meteor's particle effect.
-			local endTime = GameRules:GetGameTime() + chaos_meteor_duration
-			Timers:CreateTimer({
-				endTime = imba_invoker_chaos_meteor.loop_interval,
-				callback = function()				
-					chaos_meteor_dummy_position = chaos_meteor_dummy_position + chaos_meteor_velocity_per_frame
-					chaos_meteor_dummy_unit:SetAbsOrigin(chaos_meteor_dummy_position)
-					-- For debug purpose, shows where the dummy ends in relation to the effect
-					-- DebugDrawCircle(chaos_meteor_dummy_position, Vector(255,0,255), 255, 64, true, 5)
-					if GameRules:GetGameTime() > endTime then
-						-- Stop / Play meteor sounds 
-						chaos_meteor_dummy_unit:StopSound("Hero_Invoker.ChaosMeteor.Loop")
-						chaos_meteor_dummy_unit:EmitSound("Hero_Invoker.ChaosMeteor.Destroy")
-
-						-- The dummy is slightly behind the actual meteor. Move it forward abit to provide more accurate vision of the final location.
-						chaos_meteor_dummy_position = chaos_meteor_dummy_position + (chaos_meteor_velocity * (chaos_meteor_vision_distance/chaos_meteor_travel_speed))
-						
-						-- For debug purpose, shows where the dummy ends in relation to the effect
-						-- DebugDrawCircle(chaos_meteor_dummy_position, Vector(255,0,255), 255, 64, true, 20)
-						chaos_meteor_dummy_unit:SetAbsOrigin(chaos_meteor_dummy_position)
-						--Have the dummy unit linger in the position the meteor ended up in, in order to provide vision.
-						Timers:CreateTimer({
-							endTime = chaos_meteor_end_vision_duration,
-							callback = function()
-								-- Remove the dummy unit after the burn damage modifiers are guaranteed to have expired.
-								Timers:CreateTimer({
-									endTime = chaos_meteor_burn_duration,
-									callback = function()
-										chaos_meteor_dummy_unit:RemoveSelf()
-									end
-								})
-							end
-						})
-						return 
-					else 
-						return imba_invoker_chaos_meteor.loop_interval
-					end
-				end
-			})
+function imba_invoker_chaos_meteor:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if IsServer() then 
+		if target == nil then 
+		    EntIndexToHScript(ExtraData.meteor_dummy):RemoveSelf()
+		    self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.vision_duration)
 		end
-	})
+	end 
 end
 
 --------------------------------------------------------------------------------------------------------------------
 -- Chaos Meteor modifier - applies burn debuff and damage. also hides dummy unit from game 
 --------------------------------------------------------------------------------------------------------------------
-modifier_imba_invoker_chaos_meteor = class({})
-modifier_imba_invoker_chaos_meteor.loop_interval = 0.03
-function modifier_imba_invoker_chaos_meteor:IsHidden() return false end
-function modifier_imba_invoker_chaos_meteor:IsBuff() return false end
-function modifier_imba_invoker_chaos_meteor:IsDebuff() return false end
-function modifier_imba_invoker_chaos_meteor:IsPassive() return false end
-function modifier_imba_invoker_chaos_meteor:IsPurgable() return false end
-function modifier_imba_invoker_chaos_meteor:CheckState()
-	local state = {
-		[MODIFIER_STATE_NO_UNIT_COLLISION] 	= true,
-		[MODIFIER_STATE_NO_TEAM_MOVE_TO]	= true,
-		[MODIFIER_STATE_NO_TEAM_SELECT] 	= true,
-		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
-		[MODIFIER_STATE_ATTACK_IMMUNE] 		= true,
-		[MODIFIER_STATE_MAGIC_IMMUNE] 		= true,
-		[MODIFIER_STATE_INVULNERABLE] 		= true,
-		[MODIFIER_STATE_NOT_ON_MINIMAP]		= true,
-		[MODIFIER_STATE_UNSELECTABLE] 		= true,
-		[MODIFIER_STATE_OUT_OF_GAME]		= true,
-		[MODIFIER_STATE_NO_HEALTH_BAR]		= true,
-		[MODIFIER_STATE_ROOTED] 			= true,
-	}
-	return state
-end
-
-function modifier_imba_invoker_chaos_meteor:OnCreated(kv)
+modifier_imba_invoker_chaos_meteor_aura = class({})
+function modifier_imba_invoker_chaos_meteor_aura:OnCreated(kv)
 	if IsServer() then
 		self.caster 				= self:GetCaster()
 		self.ability 				= self:GetAbility()
@@ -2343,32 +2967,47 @@ function modifier_imba_invoker_chaos_meteor:OnCreated(kv)
 		self.burn_dps_inverval		= kv.burn_dps_inverval 
 		self.area_of_effect 		= kv.area_of_effect
 
+		if self.caster:HasTalent("imba_special_bonus_unique_invoker_2") then
+			local number_of_meteors = self.caster:FindTalentValue("imba_special_bonus_unique_invoker_2","number_of_meteors")
+			local damage_increase 	= self.caster:FindTalentValue("imba_special_bonus_unique_invoker_2","damage_increase")
+			-- reduce damage by number of meteors... cuz this would be broken
+			self.burn_dps 			= self.burn_dps / (number_of_meteors - damage_increase)
+			self.main_dmg 			= self.main_dmg / (number_of_meteors - damage_increase)
+		end
+
 		self:StartIntervalThink(kv.damage_interval)
 	end
 end
 
-function modifier_imba_invoker_chaos_meteor:OnIntervalThink()
+function modifier_imba_invoker_chaos_meteor_aura:OnIntervalThink()
 	if IsServer() then
+		--DebugDrawCircle(self:GetParent():GetAbsOrigin(), Vector(255,0,255), 255, 64, true, 5)
 		-- Find enemies close enought to be affected by the meteor
 		local nearby_enemy_units = FindUnitsInRadius(
-												self.GetTeam, 
-												self:GetParent():GetAbsOrigin(), 
-												nil, 
-												self.area_of_effect, 
-												DOTA_UNIT_TARGET_TEAM_ENEMY,
-												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-												DOTA_UNIT_TARGET_FLAG_NONE, 
-												FIND_ANY_ORDER, 
-												false)
+			self.GetTeam, 
+			self:GetParent():GetAbsOrigin(), 
+			nil, 
+			self.area_of_effect, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_NONE, 
+			FIND_ANY_ORDER, 
+			false)
 
 		for _,enemy in pairs(nearby_enemy_units) do
 			if enemy ~= nil then
 				-- Add burn debuff
-				enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_chaos_meteor_burn", {
-																												duration 			= self.burn_duration,
-																												burn_dps 			= self.burn_dps,
-																												burn_dps_inverval 	= self.burn_dps_inverval
-																											})
+				enemy:AddNewModifier(	
+					self.caster, 
+					self.ability, 
+					"modifier_imba_invoker_chaos_meteor_burn", 
+					{
+						duration 			= self.burn_duration,
+						burn_dps 			= self.burn_dps,
+						burn_dps_inverval 	= self.burn_dps_inverval
+					}
+				)
+
 				-- Apply meteor main dmg
 				local damage_table 			= {}
 				damage_table.attacker 		= self.caster
@@ -2417,6 +3056,8 @@ function modifier_imba_invoker_chaos_meteor_burn:OnIntervalThink()
 	end
 end
 
+
+
 --------------------------------------------------------------------------------------------------------------------
 -- Invoker's Deafening Blast
 --------------------------------------------------------------------------------------------------------------------
@@ -2426,6 +3067,7 @@ imba_invoker_deafening_blast.ability_effect_path 			= "particles/units/heroes/he
 imba_invoker_deafening_blast.ability_disarm_effect_path 	= "particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
 imba_invoker_deafening_blast.ability_knockback_effect_path 	= "particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
 LinkLuaModifier("modifier_imba_invoker_deafening_blast", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_deafening_blast_frozen", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_deafening_blast_knockback", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_deafening_blast_disarm", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_invoker_deafening_blast:OnSpellStart()
@@ -2434,9 +3076,41 @@ function imba_invoker_deafening_blast:OnSpellStart()
 		local ability 			= self
 		local caster_location 	= caster:GetAbsOrigin()
 		local target_point 		= ability:GetCursorPosition()
-		local quas_level 		= caster:FindAbilityByName("invoker_quas"):GetLevel() - 1
-		local exort_level 		= caster:FindAbilityByName("invoker_exort"):GetLevel() - 1
-		local wex_level 		= caster:FindAbilityByName("invoker_wex"):GetLevel() - 1
+		local direction 		= (target_point - caster_location):Normalized()
+		-- make sure direction is horizontal
+		direction.z 			= 0
+
+		-- Play Deafening Blast sound 
+		EmitSoundOnLocationWithCaster(caster_location, "Hero_Invoker.DeafeningBlast", caster)
+
+		ability.hit_table = {}
+		
+		-- Cast spiral
+		if caster:HasTalent("imba_special_bonus_unique_invoker_7") then
+			local num_deafening_blasts		= caster:FindTalentValue("imba_special_bonus_unique_invoker_7","number_of_blasts")
+
+			CreateModifierThinker(
+					caster, 
+					ability, 
+					"modifier_imba_invoker_deafening_blast", 	
+					{
+						num_deafening_blasts = num_deafening_blasts
+					}, 
+					target_point, 
+					caster:GetTeamNumber(), false)	
+		-- Cast normal
+		else
+			imba_invoker_deafening_blast:CastDeafeningBlast(caster, ability, target_point)
+		end
+	end
+end
+
+function imba_invoker_deafening_blast:CastDeafeningBlast(caster, ability, target_point)
+	if IsServer() then
+		local caster_location 	= caster:GetAbsOrigin()
+		local quas_level 		= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local exort_level 		= caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
+		local wex_level 		= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 
 		-- Get skill stats
 		local deafening_blast_damage 				= ability:GetLevelSpecialValueFor("damage", exort_level)
@@ -2446,104 +3120,95 @@ function imba_invoker_deafening_blast:OnSpellStart()
 		local deafening_blast_travel_speed 			= ability:GetSpecialValueFor("travel_speed")
 		local deafening_blast_radius_start 			= ability:GetSpecialValueFor("radius_start")
 		local deafening_blast_radius_end 			= ability:GetSpecialValueFor("radius_end")
-		local deafening_blast_end_vision_duration 	= ability:GetSpecialValueFor("end_vision_duration")
 
 		local direction = (target_point - caster_location):Normalized()
-		-- make sure direction is horizontal
-		direction.z = 0
+		direction.z 	= 0
+
+		-- Create projectile
+		local deafening_blast_projectile_table = 
+		{
+			EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
+			Ability 				= ability,
+			vSpawnOrigin 			= caster:GetAbsOrigin(),
+			vVelocity 				= direction * deafening_blast_travel_speed,
+			fDistance 				= deafening_blast_travel_distance,
+			fStartRadius 			= deafening_blast_radius_start,
+			fEndRadius 				= deafening_blast_radius_end,
+			Source 					= caster,
+			bHasFrontalCone 		= true,
+			bReplaceExisting 		= false,
+			iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			ExtraData = {
+				deafening_blast_damage 				= deafening_blast_damage, 
+				deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
+				deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+				deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
+				disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
+				knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
+			}
+		}
+
+		ProjectileManager:CreateLinearProjectile(deafening_blast_projectile_table)
+	end
+end
+
+function imba_invoker_deafening_blast:RadialDeafeningBlast(caster, ability, target_point, num_blasts)
+	if IsServer() then 
+		local caster_location 	= caster:GetAbsOrigin()
+		local quas_level 		= caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		local exort_level 		= caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
+		local wex_level 		= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
+
+		-- Get skill stats
+		local deafening_blast_damage 				= ability:GetLevelSpecialValueFor("damage", exort_level)
+		local deafening_blast_knockback_duration 	= ability:GetLevelSpecialValueFor("knockback_duration", quas_level) + 0.1
+		local deafening_blast_disarm_duration 		= ability:GetLevelSpecialValueFor("disarm_duration", wex_level)
+		local deafening_blast_travel_distance 		= ability:GetSpecialValueFor("travel_distance")
+		local deafening_blast_travel_speed 			= ability:GetSpecialValueFor("travel_speed")
+		local deafening_blast_radius_start 			= ability:GetSpecialValueFor("radius_start")
+		local deafening_blast_radius_end 			= ability:GetSpecialValueFor("radius_end")
+
+		local direction = (target_point - caster_location):Normalized()
+		direction.z 	= 0
+
+		local degrees = 360 / num_blasts
 
 		-- Play Deafening Blast sound 
 		EmitSoundOnLocationWithCaster(caster_location, "Hero_Invoker.DeafeningBlast", caster)
 
-		local deafening_blast = caster
-		local num_blasts = 1
-		-- Check if we have deafening blast talent
-		if caster:HasTalent("imba_special_bonus_unique_invoker_7") then
-			local num_deafening_blasts		= caster:FindTalentValue("imba_special_bonus_unique_invoker_7","number_of_blasts")
-			num_blasts 						= num_blasts + num_deafening_blasts
-		end
-
-		ability.hit_table = {}
-		local degrees = 360 / num_blasts
-		local endTime = GameRules:GetGameTime() + (num_blasts * 0.05)
-		Timers:CreateTimer({
-			endTime = 0.05,
-			callback = function()
-				-- Create projectile
-				local deafening_blast_projectile_table = 
-				{
-					EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
-					Ability 				= ability,
-					vSpawnOrigin 			= caster:GetAbsOrigin(),
-					vVelocity 				= direction * deafening_blast_travel_speed,
-					fDistance 				= deafening_blast_travel_distance,
-					fStartRadius 			= deafening_blast_radius_start,
-					fEndRadius 				= deafening_blast_radius_end,
-					Source 					= caster,
-					bHasFrontalCone 		= true,
-					bReplaceExisting 		= false,
-					iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-					iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
-					iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					ExtraData = {
-						deafening_blast_damage 				= deafening_blast_damage, 
-						deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-						deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
-						deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
-						disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
-						knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
-					}
+		for index = 1, num_blasts, 1 do
+			-- Create projectile
+			local deafening_blast_projectile_table = 
+			{
+				EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
+				Ability 				= ability,
+				vSpawnOrigin 			= caster:GetAbsOrigin(),
+				vVelocity 				= direction * deafening_blast_travel_speed,
+				fDistance 				= deafening_blast_travel_distance,
+				fStartRadius 			= deafening_blast_radius_start,
+				fEndRadius 				= deafening_blast_radius_end,
+				Source 					= caster,
+				bHasFrontalCone 		= true,
+				bReplaceExisting 		= false,
+				iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				ExtraData = {
+					deafening_blast_damage 				= deafening_blast_damage, 
+					deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
+					deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+					deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
+					disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
+					knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
 				}
+			}
 
-				ProjectileManager:CreateLinearProjectile(deafening_blast_projectile_table)
-				-- Rotate direciton for 360/num_blasts degrees
-				direction = RotatePosition(Vector(0,0,0), QAngle(0, degrees, 0), direction)
-
-				if caster:HasTalent("imba_special_bonus_unique_invoker_7") == false then 
-					return 
-				end
-
-				if GameRules:GetGameTime() > endTime then	
-					for index = 1, num_blasts, 1 do
-						-- Create projectile
-						local deafening_blast_projectile_table = 
-						{
-							EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
-							Ability 				= ability_ref,
-							vSpawnOrigin 			= caster:GetAbsOrigin(),
-							vVelocity 				= direction * deafening_blast_travel_speed,
-							fDistance 				= deafening_blast_travel_distance,
-							fStartRadius 			= deafening_blast_radius_start,
-							fEndRadius 				= deafening_blast_radius_end,
-							Source 					= caster,
-							bHasFrontalCone 		= true,
-							bReplaceExisting 		= false,
-							iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-							iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
-							iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-							ExtraData = {
-								deafening_blast_damage 				= deafening_blast_damage, 
-								deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-								deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
-								deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
-								disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
-								knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
-							}
-						}
-
-						ProjectileManager:CreateLinearProjectile(deafening_blast_projectile_table)
-						-- Rotate direciton for 360/num_blasts degrees
-						direction = RotatePosition(Vector(0,0,0), QAngle(0, degrees, 0), direction)
-					end
-
-					return  
-				else 
-					return 0.05
-				end
-			end
-		})
-
-
+			ProjectileManager:CreateLinearProjectile(deafening_blast_projectile_table)
+			-- Rotate direciton for 360/num_blasts degrees
+			direction = RotatePosition(Vector(0,0,0), QAngle(0, degrees, 0), direction)
+		end
 	end
 end
 
@@ -2582,65 +3247,113 @@ function imba_invoker_deafening_blast:CheckHitList(target_entity_id)
 end
 
 function imba_invoker_deafening_blast:KnockBackAndDisarm(caster, target, knockback_duration, disarm_duration, disarm_effect_path, knockback_effect_path)
-	local knockback_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized() 
-	local knockback_speed = 6
-
 	-- Add knockback and frozen modifier
 	target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_knockback", {duration = knockback_duration, knockback_effect_path = knockback_effect_path})
-	target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast", {duration = knockback_duration + disarm_duration})
+	target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_frozen", {duration = knockback_duration + disarm_duration})
+end
 
-	local endTime = GameRules:GetGameTime() + knockback_duration
-	Timers:CreateTimer({
-		endTime = imba_invoker_deafening_blast.knockback_interval,
-		callback = function()	
-			-- Apply knockback 			
-			local new_location = target:GetAbsOrigin() + knockback_direction * knockback_speed
-			target:SetAbsOrigin(GetGroundPosition(new_location, target))
+modifier_imba_invoker_deafening_blast = class({})
+function modifier_imba_invoker_deafening_blast:OnCreated(kv)
+	if IsServer() then
+		self.target_point 			= self:GetParent():GetAbsOrigin()
+		self.caster_location 		= self:GetCaster():GetAbsOrigin()
+		self.caster 				= self:GetCaster()
+		self.ability 				= self:GetAbility()
 
-			if GameRules:GetGameTime() > endTime then
-				-- After knockback apply disarm
-				target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_disarm", {duration = disarm_duration})
-				local disarm_effect = ParticleManager:CreateParticle(disarm_effect_path, PATTACH_ABSORIGIN_FOLLOW, target)
-				Timers:CreateTimer({
-					endTime = disarm_duration,
-					callback = function()
-						ParticleManager:DestroyParticle(disarm_effect, false)
-					end
-				})
-				return 
-			else 
-				return imba_invoker_deafening_blast.knockback_interval
-			end
+		self.quas_level 			= self.caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		self.exort_level 			= self.caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
+		self.wex_level 				= self.caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
+
+		self.deafening_blast_damage 				= self.ability:GetLevelSpecialValueFor("damage", self.exort_level)
+		self.deafening_blast_knockback_duration 	= self.ability:GetLevelSpecialValueFor("knockback_duration", self.quas_level) + 0.1
+		self.deafening_blast_disarm_duration 		= self.ability:GetLevelSpecialValueFor("disarm_duration", self.wex_level)
+		self.deafening_blast_travel_distance 		= self.ability:GetSpecialValueFor("travel_distance")
+		self.deafening_blast_travel_speed 			= self.ability:GetSpecialValueFor("travel_speed")
+		self.deafening_blast_radius_start 			= self.ability:GetSpecialValueFor("radius_start")
+		self.deafening_blast_radius_end 			= self.ability:GetSpecialValueFor("radius_end")
+
+		self.num_deafening_blasts 		= kv.num_deafening_blasts
+		self.remaining_deafening_blast 	= kv.num_deafening_blasts
+		self.direction 					= (self.target_point - self.caster_location):Normalized() 
+		self.direction.z 				= 0
+		self.degrees 					= 360 / self.num_deafening_blasts
+	
+		self:StartIntervalThink(0.05)
+	end
+end
+
+function modifier_imba_invoker_deafening_blast:OnIntervalThink()
+	if IsServer() then 
+		-- Create projectile
+		local deafening_blast_projectile_table = 
+		{
+			EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
+			Ability 				= self.ability,
+			vSpawnOrigin 			= self.caster:GetAbsOrigin(),
+			vVelocity 				= self.direction * self.deafening_blast_travel_speed,
+			fDistance 				= self.deafening_blast_travel_distance,
+			fStartRadius 			= self.deafening_blast_radius_start,
+			fEndRadius 				= self.deafening_blast_radius_end,
+			Source 					= self.caster,
+			bHasFrontalCone 		= true,
+			bReplaceExisting 		= false,
+			iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			ExtraData = {
+				deafening_blast_damage 				= self.deafening_blast_damage, 
+				deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration, 
+				deafening_blast_knockback_distance  = self.deafening_blast_knockback_distance,
+				deafening_blast_disarm_duration 	= self.deafening_blast_disarm_duration,
+				disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
+				knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
+			}
+		}
+
+		ProjectileManager:CreateLinearProjectile(deafening_blast_projectile_table)
+		-- Rotate direciton for 360/num_blasts degrees
+		self.direction = RotatePosition(Vector(0,0,0), QAngle(0, self.degrees, 0), self.direction)
+
+		self.remaining_deafening_blast = self.remaining_deafening_blast - 1
+		
+		if self.remaining_deafening_blast == 0 then 
+			self:GetParent():RemoveModifierByName("modifier_imba_invoker_deafening_blast")
+			imba_invoker_deafening_blast:RadialDeafeningBlast(
+				self.caster, 
+				self.ability,
+				self.target_point,
+				self.num_deafening_blasts
+			)
 		end
-	})
+	end
 end
 --------------------------------------------------------------------------------------------------------------------
 -- Invoker's Deafening Blast modifier - provides knockback for a short duration
 --------------------------------------------------------------------------------------------------------------------
-modifier_imba_invoker_deafening_blast = class({})
-function modifier_imba_invoker_deafening_blast:IsHidden() return false end
-function modifier_imba_invoker_deafening_blast:IsDebuff() return true end
-function modifier_imba_invoker_deafening_blast:IsPurgable() return false end
-function modifier_imba_invoker_deafening_blast:CheckState()
+modifier_imba_invoker_deafening_blast_frozen = class({})
+function modifier_imba_invoker_deafening_blast_frozen:IsHidden() return false end
+function modifier_imba_invoker_deafening_blast_frozen:IsDebuff() return true end
+function modifier_imba_invoker_deafening_blast_frozen:IsPurgable() return false end
+function modifier_imba_invoker_deafening_blast_frozen:CheckState()
 	local state = {
 		[MODIFIER_STATE_FROZEN] = true
 	}
 	return state
 end
 
-function modifier_imba_invoker_deafening_blast:OnCreated()
+function modifier_imba_invoker_deafening_blast_frozen:OnCreated()
 	if IsServer() then
 		self.frost_effect = ParticleManager:CreateParticle("particles/status_fx/status_effect_frost.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())	
 	end
 end
 
-function modifier_imba_invoker_deafening_blast:OnRemoved() 
+function modifier_imba_invoker_deafening_blast_frozen:OnRemoved() 
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.frost_effect, false)
 	end
 end
 --------------------------------------------------------------------------------------------------------------------
--- Invoker's Deafening Blast 2nd modifier - enemies are frozen during knockback
+-- Invoker's Deafening Blast 2nd modifier - enemies are rooted during knockback
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_deafening_blast_knockback = class({})
 function modifier_imba_invoker_deafening_blast_knockback:IsHidden() return false end
@@ -2660,12 +3373,24 @@ end
 function modifier_imba_invoker_deafening_blast_knockback:OnCreated(kv)
 	if IsServer() then 
 		self.knockback_effect = ParticleManager:CreateParticle(kv.knockback_effect_path, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.knockback_direction = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() 
+		self.knockback_speed = 6
+
+		self:StartIntervalThink(imba_invoker_deafening_blast.knockback_interval)
+	end
+end
+
+function modifier_imba_invoker_deafening_blast_knockback:OnIntervalThink()
+	if IsServer() then
+		local new_location = self:GetParent():GetAbsOrigin() + self.knockback_direction * self.knockback_speed
+		self:GetParent():SetAbsOrigin(GetGroundPosition(new_location, self:GetParent()))
 	end
 end
 
 function modifier_imba_invoker_deafening_blast_knockback:OnRemoved()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.knockback_effect, false)
+		FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), true)
 	end
 end
 
