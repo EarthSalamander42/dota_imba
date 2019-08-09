@@ -239,6 +239,7 @@
 	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
 }
 
+#es-3-team,
 #es-6-team,
 #es-7-team,
 #es-8-team {
@@ -413,7 +414,6 @@
 	width: 60px;
 	vertical-align: center;
 	text-align: center;
-	visibility: collapse;
 	margin-right: 15px;
 	visibility: collapse;
 }
