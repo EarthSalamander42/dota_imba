@@ -456,8 +456,11 @@ end
 function imba_visage_gravekeepers_cloak:OnUpgrade()
 	local cloak_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak", self:GetCaster())
 	
-	if cloak_modifier and self:GetLevel() == 1 then
-		cloak_modifier:SetStackCount(self:GetSpecialValueFor("max_layers")
+	if cloak_modifier then
+		if self:GetLevel() >= 1 and not cloak_modifier.initialized then
+			cloak_modifier:SetStackCount(self:GetSpecialValueFor("max_layers"))
+			cloak_modifier.initialized	= true
+		end	
 	end
 end
 
@@ -470,26 +473,15 @@ end
 -- GRAVEKEEPER'S CLOAK MODIFIER --
 ----------------------------------
 
-function modifier_imba_visage_gravekeepers_cloak:OnCreated()
-	if not IsServer() then return end
-
-	self.max_layers			= self:GetAbility():GetSpecialValueFor("max_layers")
-	self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
-	self.minimum_damage		= self:GetAbility():GetSpecialValueFor("minimum_damage")
-	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
-
-	self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
-end
-
-function modifier_imba_visage_gravekeepers_cloak:OnRefresh()
-	if not IsServer() or not self:GetAbility() then return end
-	
-	self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
-end
+function modifier_imba_visage_gravekeepers_cloak:IsHidden()	return not self:GetAbility():GetLevel() >= 1 end
 
 function modifier_imba_visage_gravekeepers_cloak:OnIntervalThink()
-	if self:GetStackCount() < self.max_layers then
+	if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
 		self:IncrementStackCount()
+		
+		if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_layers") then
+			self:StartIntervalThink(-1)
+		end
 	end
 end
 
@@ -500,9 +492,10 @@ function modifier_imba_visage_gravekeepers_cloak:DeclareFunctions()
 end
 
 function modifier_imba_visage_gravekeepers_cloak:GetModifierIncomingDamage_Percentage(keys)
-	if not self:GetParent():PassivesDisabled() and keys.attacker.GetPlayerID and keys.attacker:GetPlayerID() and keys.damage > self.minimum_damage and self:GetStackCount() > 0 then
+	if not self:GetParent():PassivesDisabled() and keys.attacker.GetPlayerID and keys.attacker:GetPlayerID() and keys.damage > self:GetAbility():GetSpecialValueFor("minimum_damage") and self:GetStackCount() > 0 then
 		self:DecrementStackCount()
-		return self.damage_reduction * (self:GetStackCount() + 1) * (-1)
+		self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
+		return self:GetAbility():GetSpecialValueFor("damage_reduction") * (self:GetStackCount() + 1) * (-1)
 	else
 		return 0
 	end
@@ -575,7 +568,7 @@ end
 --familiars take 4 hp damage if all the damage is blocked by a right click (but still does 0 from magic???)
 
 function imba_visage_summon_familiars:OnSpellStart()
-
+	self:GetCaster():EmitSound("Hero_Visage.SummonFamiliars.Cast")
 end
 
 -------------------------------
