@@ -463,7 +463,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
 
-				if Battlepass and Battlepass:HasPudgeArcana(self:GetCaster()) then -- error for reasons, maybe because target is dead
+				if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then -- error for reasons, maybe because target is dead
 					if hTarget:IsRealHero() then
 						self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
 					else
@@ -473,7 +473,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 					if self:GetCaster().successful_hooks >= 2 then
 						EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
 						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
-						if Battlepass and Battlepass:HasPudgeArcana(self:GetCaster()) == 1 then
+						if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") == 1 then
 							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
 						end
 
@@ -488,12 +488,12 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
 			else
-				if Battlepass and Battlepass:HasPudgeArcana(self:GetCaster()) then
+				if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
 					self:GetCaster().successful_hooks = 0
 				end
 			end
 		else
-			if Battlepass and Battlepass:HasPudgeArcana(self:GetCaster()) then
+			if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
 				self:GetCaster().successful_hooks = 0
 			end
 		end
@@ -1052,7 +1052,7 @@ function imba_pudge_dismember:OnSpellStart()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self:GetChannelTime()})
 
-	if Battlepass and Battlepass:HasPudgeArcana(self:GetCaster()) then
+	if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
 		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
 		ParticleManager:SetParticleControl(self.pfx, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.pfx, 8, Vector(1, 1, 1))

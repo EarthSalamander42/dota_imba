@@ -146,7 +146,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 				self.prng = 0
 
 				local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-				if Battlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+				if Battlepass:HasArcana(self:GetCaster():GetPlayerID(), "juggernaut") then
 					ParticleManager:SetParticleControl(crit_pfx, 1, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(crit_pfx, 3, enemy:GetAbsOrigin())
 				end
@@ -1311,7 +1311,7 @@ if IsServer() then
 				local particle = ParticleManager:CreateParticle(self:GetCaster().blade_dance_effect, PATTACH_ABSORIGIN, params.target)
 				ParticleManager:SetParticleControl(particle, 0, params.target:GetAbsOrigin())
 
-				if Battlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+				if Battlepass:HasArcana(self:GetCaster():GetPlayerID(), "juggernaut") then
 					ParticleManager:SetParticleControl(particle, 1, params.target:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle, 3, params.target:GetAbsOrigin())
 				end
@@ -1322,7 +1322,7 @@ if IsServer() then
 				self:GetParent():EmitSound(self:GetCaster().blade_dance_sound)
 				self.critProc = false
 
-				if Battlepass:HasJuggernautArcana(self:GetCaster():GetPlayerID()) then
+				if Battlepass:HasArcana(self:GetCaster():GetPlayerID(), "juggernaut") then
 					Timers:CreateTimer(FrameTime(), function()
 						if params.target:IsRealHero() and not params.target:IsAlive() then
 							ArcanaKill(self:GetParent())
@@ -2065,7 +2065,7 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 	if IsServer() then
 		self:GetAbility():SetActivated(true)
 
-		if Battlepass:HasJuggernautArcana(self.caster:GetPlayerID()) then
+		if Battlepass:HasArcana(self.caster:GetPlayerID(), "juggernaut") then
 			Timers:CreateTimer(0.1, function()
 				if self.ability.omnislash_kill_count > 0 then
 					ArcanaKill(self.caster, self.ability.omnislash_kill_count)
