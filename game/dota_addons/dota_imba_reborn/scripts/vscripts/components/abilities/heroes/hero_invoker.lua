@@ -49,10 +49,10 @@ imba_invoker = imba_invoker or class({})
 	--	Invoker: Quas Orb modifier
 	---------------------------------------------------------------------------------------------------------------------
 	modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
-	function modifier_imba_invoker_quas:IsBuff() return true end
-	function modifier_imba_invoker_quas:IsHidden() return false end
-	function modifier_imba_invoker_quas:IsDebuff() return false end
-	function modifier_imba_invoker_quas:IsPurgable() return false end
+	function modifier_imba_invoker_quas:IsBuff() 		return true  end
+	function modifier_imba_invoker_quas:IsHidden() 		return false end
+	function modifier_imba_invoker_quas:IsDebuff() 		return false end
+	function modifier_imba_invoker_quas:IsPurgable() 	return false end
 	function modifier_imba_invoker_quas:DeclareFunctions()
 		local funcs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
@@ -140,10 +140,10 @@ imba_invoker = imba_invoker or class({})
 	--	Invoker: Quas Orb modifier
 	---------------------------------------------------------------------------------------------------------------------
 	modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
-	function modifier_imba_invoker_quas:IsBuff() return true end
-	function modifier_imba_invoker_quas:IsHidden() return false end
-	function modifier_imba_invoker_quas:IsDebuff() return false end
-	function modifier_imba_invoker_quas:IsPurgable() return false end
+	function modifier_imba_invoker_quas:IsBuff() 		return true  end
+	function modifier_imba_invoker_quas:IsHidden() 		return false end
+	function modifier_imba_invoker_quas:IsDebuff() 		return false end
+	function modifier_imba_invoker_quas:IsPurgable() 	return false end
 	function modifier_imba_invoker_quas:DeclareFunctions()
 		local funcs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
@@ -185,9 +185,9 @@ imba_invoker = imba_invoker or class({})
 	--	Invoker: Wex Orb modifier
 	---------------------------------------------------------------------------------------------------------------------
 	modifier_imba_invoker_wex = modifier_imba_invoker_wex or class({})
-	function modifier_imba_invoker_wex:IsBuff() return true end
-	function modifier_imba_invoker_wex:IsHidden() return false end
-	function modifier_imba_invoker_wex:IsDebuff() return false end
+	function modifier_imba_invoker_wex:IsBuff() 	return true  end
+	function modifier_imba_invoker_wex:IsHidden() 	return false end
+	function modifier_imba_invoker_wex:IsDebuff() 	return false end
 	function modifier_imba_invoker_wex:IsPurgable() return false end
 	function modifier_imba_invoker_wex:DeclareFunctions()
 		local funcs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -239,10 +239,10 @@ imba_invoker = imba_invoker or class({})
 	--	Invoker: Exort Orb modifier
 	---------------------------------------------------------------------------------------------------------------------
 	modifier_imba_invoker_exort = modifier_imba_invoker_exort or class({})
-	function modifier_imba_invoker_exort:IsBuff() return true end
-	function modifier_imba_invoker_exort:IsHidden() return false end
-	function modifier_imba_invoker_exort:IsDebuff() return false end
-	function modifier_imba_invoker_exort:IsPurgable() return false end
+	function modifier_imba_invoker_exort:IsBuff() 		return true  end
+	function modifier_imba_invoker_exort:IsHidden() 	return false end
+	function modifier_imba_invoker_exort:IsDebuff() 	return false end
+	function modifier_imba_invoker_exort:IsPurgable() 	return false end
 	function modifier_imba_invoker_exort:DeclareFunctions()
 		local funcs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 			MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
@@ -454,8 +454,8 @@ function imba_invoker_invoke:OnSpellStart()
 		if num_quas_orbs + num_wex_orbs + num_exort_orbs == 3 then
 
 			-- Change the Invoke particle effect color depending on invoked orbs.
-			local quas_particle_effect_color 	= Vector(0, 153, 204)
-			local wex_particle_effect_color 	= Vector(204, 0, 153)
+			local quas_particle_effect_color 	= Vector(0, 0, 255)
+			local wex_particle_effect_color 	= Vector(255, 0, 255)
 			local exort_particle_effect_color 	= Vector(255, 102, 0)
 
 			-- Create the Invoke particle effect's with general color.
@@ -528,8 +528,6 @@ function imba_invoker_invoke:OnSpellStart()
 					ability:EndCooldown()
 					caster:GiveMana(ability:GetManaCost(-1))
 				end
-
-
 			else
 				-- if we invoked same spell again... then dont trigger cooldown
 				ability:EndCooldown()
@@ -659,9 +657,9 @@ end
 -- I keept it as this is a power players are expecting from invoker. But not sure if this is needed...
 ---------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_invoke_buff = class({})
-function modifier_imba_invoker_invoke_buff:IsPurgable()	return false end
-function modifier_imba_invoker_invoke_buff:IsHidden() return true end
-function modifier_imba_invoker_invoke_buff:IsPermanent() return true end
+function modifier_imba_invoker_invoke_buff:IsPurgable()		return false end
+function modifier_imba_invoker_invoke_buff:IsHidden() 		return true  end
+function modifier_imba_invoker_invoke_buff:IsPermanent() 	return true  end
 function modifier_imba_invoker_invoke_buff:OnCreated()
 	if IsServer() then
 		self.caster 	= self:GetCaster()
@@ -893,11 +891,11 @@ end
 	--	EMP overload. No mana gain for 5sec.
 	-----------------------------------------------------------------------------------------------------------------
 	modifier_imba_invoker_emp_overload = class({})
-	function modifier_imba_invoker_emp_overload:IsPassive() return false end
-	function modifier_imba_invoker_emp_overload:IsBuff() return false end
-	function modifier_imba_invoker_emp_overload:IsDebuff() return true end
-	function modifier_imba_invoker_emp_overload:IsPurgable() return true end
-	function modifier_imba_invoker_emp_overload:IsHidden() return false end
+	function modifier_imba_invoker_emp_overload:IsPassive() 	return false end
+	function modifier_imba_invoker_emp_overload:IsBuff() 		return false end
+	function modifier_imba_invoker_emp_overload:IsDebuff() 		return true  end
+	function modifier_imba_invoker_emp_overload:IsPurgable() 	return true  end
+	function modifier_imba_invoker_emp_overload:IsHidden() 		return false end
 	function modifier_imba_invoker_emp_overload:DeclareFunctions()
 		local funcs = {MODIFIER_EVENT_ON_MANA_GAINED}
 		return funcs
@@ -1249,8 +1247,13 @@ function modifier_imba_invoker_sun_strike:OnIntervalThink()
 
 		if self.fierd_sunstrikes == 12 then 
 			self:StartIntervalThink(-1)
+		end
+	end
+end
 
-			local nearby_enemy_units = FindUnitsInRadius(
+function modifier_imba_invoker_sun_strike:OnRemoved()
+	if IsServer() then
+		local nearby_enemy_units = FindUnitsInRadius(
 				self.caster:GetTeam(),
 				self.target_point, 
 				nil, 
@@ -1267,13 +1270,7 @@ function modifier_imba_invoker_sun_strike:OnIntervalThink()
 					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration})
 				end				
 			end
-		end
-	end
-end
 
-function modifier_imba_invoker_sun_strike:OnRemoved()
-	if IsServer() then
-		--ParticleManager:DestroyParticle(sun_strike_beam3, false)
 		local sun_strike_crater = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
 		ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
 		ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
@@ -1349,7 +1346,9 @@ function modifier_imba_invoker_sun_strike_cataclysm:OnRemoved()
 end
 
 modifier_imba_invoker_sun_strike_incinerate = class({})
-function modifier_imba_invoker_sun_strike_incinerate:IsHidden() return true end
+function modifier_imba_invoker_sun_strike_incinerate:IsDebuff() 		return true end
+function modifier_imba_invoker_sun_strike_incinerate:IsHidden() 		return true end
+function modifier_imba_invoker_sun_strike_incinerate:GetEffectName() 	return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
 function modifier_imba_invoker_sun_strike_incinerate:OnCreated()
 	if IsServer() then 
 		self.ability 		= self:GetAbility()
@@ -1446,26 +1445,14 @@ end
 modifier_imba_invoker_cold_snap = class({})
 LinkLuaModifier("modifier_imba_invoker_cold_snap_stun_duration", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_cold_snap_cooldown", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
-function modifier_imba_invoker_cold_snap:IsBuff() return false end
-function modifier_imba_invoker_cold_snap:IsHidden() return false end
-function modifier_imba_invoker_cold_snap:IsDebuff() return true end
-function modifier_imba_invoker_cold_snap:IsPurgable() return false end
+function modifier_imba_invoker_cold_snap:IsBuff() 			return false end
+function modifier_imba_invoker_cold_snap:IsHidden() 		return false end
+function modifier_imba_invoker_cold_snap:IsDebuff() 		return true  end
+function modifier_imba_invoker_cold_snap:IsPurgable() 		return false end
+function modifier_imba_invoker_cold_snap:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf" end
 function modifier_imba_invoker_cold_snap:DeclareFunctions()
 	local funcs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
 	return funcs
-end
-
-function modifier_imba_invoker_cold_snap:OnCreated()
-	if IsServer() then
-		-- Create pacticle effect
-		self.cold_snap_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	end
-end
-
-function modifier_imba_invoker_cold_snap:OnRemoved()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.cold_snap_effect, false)
-	end
 end
 
 function modifier_imba_invoker_cold_snap:GetAbilityTextureName()
@@ -1512,22 +1499,21 @@ end
 --	Cold Snap cooldown modifier - dummy modifier, used to check if coldsnap proc is on cooldown
 ---------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_cold_snap_cooldown = class({})
-function modifier_imba_invoker_cold_snap_cooldown:IsHidden() return true end
-function modifier_imba_invoker_cold_snap_cooldown:IsPurgable() return false end
+function modifier_imba_invoker_cold_snap_cooldown:IsHidden() 	return true  end
+function modifier_imba_invoker_cold_snap_cooldown:IsPurgable() 	return false end
 
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Snap stun modifier
 ---------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_cold_snap_stun_duration = class({})
-function modifier_imba_invoker_cold_snap_stun_duration:IsDebuff() return true end
-function modifier_imba_invoker_cold_snap_stun_duration:IsPurgable() return false end
-function modifier_imba_invoker_cold_snap_stun_duration:IsHidden() return true end
+function modifier_imba_invoker_cold_snap_stun_duration:IsDebuff() 		return true  end
+function modifier_imba_invoker_cold_snap_stun_duration:IsPurgable() 	return false end
+function modifier_imba_invoker_cold_snap_stun_duration:IsHidden() 		return true  end
+function modifier_imba_invoker_cold_snap_stun_duration:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf" end
 function modifier_imba_invoker_cold_snap_stun_duration:OnCreated(kv) 
 	if IsServer() then
-		local target = self:GetParent()
-		
-		self.cold_snap_effect 		= ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-		self.stun_effect 			= ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
+		local target 	 = self:GetParent()		
+		self.stun_effect = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 
 		-- Play ColdSnap Freeze sound
 		target:EmitSound("Hero_Invoker.ColdSnap.Freeze")
@@ -1544,9 +1530,6 @@ end
 
 function modifier_imba_invoker_cold_snap_stun_duration:OnRemoved()
 	if IsServer() then
-		if self.cold_snap_effect ~= nil then
-			ParticleManager:DestroyParticle(self.cold_snap_effect, false)
-		end
 		if self.stun_effect ~= nil then
 			ParticleManager:DestroyParticle(self.stun_effect, false)
 		end
@@ -1601,9 +1584,10 @@ end
 modifier_imba_invoker_ghost_walk = class({})
 LinkLuaModifier("modifier_invis_fade_ghost_walk", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_ghost_walk_aura", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
-function modifier_imba_invoker_ghost_walk:IsHidden() return false end
-function modifier_imba_invoker_ghost_walk:IsPurgable() return false end
-function modifier_imba_invoker_ghost_walk:IsDebuff() return false end
+function modifier_imba_invoker_ghost_walk:IsHidden() 		return false end
+function modifier_imba_invoker_ghost_walk:IsPurgable() 		return false end
+function modifier_imba_invoker_ghost_walk:IsDebuff() 		return false end
+function modifier_imba_invoker_ghost_walk:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf" end
 function modifier_imba_invoker_ghost_walk:DeclareFunctions()
 	local funcs = {
 	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
@@ -1652,12 +1636,8 @@ function modifier_imba_invoker_ghost_walk:OnCreated(kv)
 		self.self_slow 				= kv.self_slow
 		self.ghost_walk_fade_time 	= kv.invis_fade_time
 		self.max_movement_speed 	= kv.max_movement_speed
-		local aura_think_interval 	= kv.aura_think_interval	
 
-		-- Add ghost walk effect
-		local ghost_walk_effect 	= ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
-
-		self:StartIntervalThink(aura_think_interval)
+		self:StartIntervalThink(kv.aura_think_interval)
 	else
 		-- Set client-value for self_slow
 		local net_table = CustomNetTables:GetTableValue("player_table", tostring(self:GetParent():GetPlayerOwnerID())) or {}
@@ -1716,8 +1696,8 @@ function modifier_imba_invoker_ghost_walk:OnAbilityExecuted(kv)
 		if self.parent == caster then 
 			if caster:HasModifier("modifier_imba_invoker_ghost_walk") then
 				self.caster:RemoveModifierByName("modifier_imba_invoker_ghost_walk")
-				-- Becuz IMBA is OP! The intended functionality here is to be able to cast a spell and immediatly reapply ghost walk (without beeing noticed).
-				-- This will also let us invoke another spell before we are visible... letting us cast more spells before we are noticed.
+				-- Becuz it's OP! The intended functionality here is to be able to cast a spell and immediatly reapply ghost walk.
+				-- This will also let us invoke another spell before we are visible... rat-doto engaged!
 				caster:AddNewModifier(self.caster, self, "modifier_invis_fade_ghost_walk", {duration = self.ghost_walk_fade_time})
 			end
 		end
@@ -1732,9 +1712,9 @@ end
 --	Ghost Walk - fade-invis-modifier
 --------------------------------------------------------------------------------------------------------------------
 modifier_invis_fade_ghost_walk = class({})
-function modifier_invis_fade_ghost_walk:IsHidden() return false end
-function modifier_invis_fade_ghost_walk:IsPurgable() return false end
-function modifier_invis_fade_ghost_walk:IsDebuff() return false end
+function modifier_invis_fade_ghost_walk:IsHidden() 		return false end
+function modifier_invis_fade_ghost_walk:IsPurgable() 	return false end
+function modifier_invis_fade_ghost_walk:IsDebuff() 		return false end
 function modifier_invis_fade_ghost_walk:DeclareFunctions()
 	local funcs = {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
 	return funcs
@@ -1767,8 +1747,10 @@ end
 --	Ghost Walk - SlowAura
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_ghost_walk_aura = class({})
-function modifier_imba_invoker_ghost_walk_aura:IsHidden() return false end
-function modifier_imba_invoker_ghost_walk_aura:IsPurgable() return false end
+function modifier_imba_invoker_ghost_walk_aura:IsHidden() 		return false end
+function modifier_imba_invoker_ghost_walk_aura:IsPurgable() 	return false end
+function modifier_imba_invoker_ghost_walk_aura:IsDebuff() 		return true  end
+function modifier_imba_invoker_ghost_walk_aura:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_ghost_walk_debuff.vpcf" end
 function modifier_imba_invoker_ghost_walk_aura:DeclareFunctions()
 	local funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 	return funcs
@@ -1791,7 +1773,6 @@ function modifier_imba_invoker_ghost_walk_aura:OnCreated(kv)
 		-- Check that target is not invoker himself.
 		if self.caster ~= self.parent then
 			-- Apply Ghost Walk aura effect
-			self.ghost_walk_effect_aura  = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ghost_walk_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 			self.ghost_walk_effect_frost = ParticleManager:CreateParticle("particles/status_fx/status_effect_frost.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		end
 	else
@@ -1811,12 +1792,7 @@ function modifier_imba_invoker_ghost_walk_aura:OnRefresh(kv)
 end
 
 function modifier_imba_invoker_ghost_walk_aura:OnRemoved()
-	if IsServer() then
-		-- Cleanup ghost_walk effects
-		if self.ghost_walk_effect_aura ~= nil then
-			ParticleManager:DestroyParticle(self.ghost_walk_effect_aura, false)
-		end
-		
+	if IsServer() then	
 		if self.ghost_walk_effect_frost ~= nil then
 			ParticleManager:DestroyParticle(self.ghost_walk_effect_frost, false)
 		end
@@ -1922,9 +1898,9 @@ end
 --	Invoker's Alacrity modifier
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_alacrity = class({})
-function modifier_imba_invoker_alacrity:IsHidden() return false end
-function modifier_imba_invoker_alacrity:IsPurgable() return false end
-function modifier_imba_invoker_alacrity:IsBuff() return true end
+function modifier_imba_invoker_alacrity:IsHidden() 		return false end
+function modifier_imba_invoker_alacrity:IsPurgable() 	return false end
+function modifier_imba_invoker_alacrity:IsBuff() 		return true  end
 function modifier_imba_invoker_alacrity:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
@@ -2099,7 +2075,7 @@ end
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_forge_spirit = class({})
 LinkLuaModifier("modifier_imba_forged_spirit_melting_strike", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
-function modifier_imba_invoker_forge_spirit:IsHidden() return true end
+function modifier_imba_invoker_forge_spirit:IsHidden() 	return true end
 function modifier_imba_invoker_forge_spirit:IsPassive() return true end
 function modifier_imba_invoker_forge_spirit:DeclareFunctions()
 	local funcs = {
@@ -2166,7 +2142,7 @@ end
 
 modifier_imba_forged_spirit_melting_strike = class({})
 function modifier_imba_forged_spirit_melting_strike:IsHidden() return false end
-function modifier_imba_forged_spirit_melting_strike:IsDebuff() return true end
+function modifier_imba_forged_spirit_melting_strike:IsDebuff() return true  end
 function modifier_imba_forged_spirit_melting_strike:DeclareFunctions()
 	local funcs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 	return funcs
@@ -2486,10 +2462,10 @@ end
 -- Tornado help modifier - hide dummy unit from game
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_tornado = class({})
-function modifier_imba_invoker_tornado:IsHidden() return false end
-function modifier_imba_invoker_tornado:IsBuff() return false end
-function modifier_imba_invoker_tornado:IsDebuff() return false end
-function modifier_imba_invoker_tornado:IsPassive() return false end
+function modifier_imba_invoker_tornado:IsHidden() 	return false end
+function modifier_imba_invoker_tornado:IsBuff() 	return false end
+function modifier_imba_invoker_tornado:IsDebuff() 	return false end
+function modifier_imba_invoker_tornado:IsPassive() 	return false end
 function modifier_imba_invoker_tornado:IsPurgable() return false end
 function modifier_imba_invoker_tornado:CheckState()
 	local state = {
@@ -2513,10 +2489,10 @@ end
 --	Invoker's: Tornado modifier
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_tornado_cyclone = class({})
-function modifier_imba_invoker_tornado_cyclone:IsHidden() return true end
-function modifier_imba_invoker_tornado_cyclone:IsBuff() return false end
-function modifier_imba_invoker_tornado_cyclone:IsDebuff() return false end
-function modifier_imba_invoker_tornado_cyclone:IsPassive() return false end
+function modifier_imba_invoker_tornado_cyclone:IsHidden() 	return true  end
+function modifier_imba_invoker_tornado_cyclone:IsBuff() 	return false end
+function modifier_imba_invoker_tornado_cyclone:IsDebuff() 	return false end
+function modifier_imba_invoker_tornado_cyclone:IsPassive() 	return false end
 function modifier_imba_invoker_tornado_cyclone:IsPurgable() return false end
 function modifier_imba_invoker_tornado_cyclone:CheckState()
 	local state = {
@@ -2556,6 +2532,7 @@ end
 imba_invoker_ice_wall = class({})
 LinkLuaModifier("modifier_imba_invoker_ice_wall", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invoker_ice_wall_slow", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invoker_ice_wall_attack_slow", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_invoker_ice_wall:OnSpellStart()
 	if IsServer() then
 		local caster				 		= self:GetCaster()
@@ -2673,6 +2650,7 @@ function modifier_imba_invoker_ice_wall:OnIntervalThink()
 				local target_position = enemy:GetAbsOrigin()
 				if self:IsUnitInProximity(self.ice_wall_start_point, self.ice_wall_end_point, target_position, self.ice_wall_area_of_effect) then
 					enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_slow", {duration = self.slow_duration, enemy_slow = self.ice_wall_slow})
+					enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_attack_slow", {duration = self.slow_duration, enemy_slow = 25})
 
 					-- Apply damage
 					local damage_table 			= {}
@@ -2734,14 +2712,19 @@ end
 --	Invoker's: Ice Wall slow aura 
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_ice_wall_slow = class({})
-function modifier_imba_invoker_ice_wall_slow:IsPassive() return false end
-function modifier_imba_invoker_ice_wall_slow:IsBuff() return false end
-function modifier_imba_invoker_ice_wall_slow:IsDebuff() return true end
-function modifier_imba_invoker_ice_wall_slow:IsPurgable() return false end
-function modifier_imba_invoker_ice_wall_slow:IsHidden() return false end
+function modifier_imba_invoker_ice_wall_slow:IsPassive() 		return false end
+function modifier_imba_invoker_ice_wall_slow:IsBuff() 			return false end
+function modifier_imba_invoker_ice_wall_slow:IsDebuff() 		return true  end
+function modifier_imba_invoker_ice_wall_slow:IsPurgable() 		return false end
+function modifier_imba_invoker_ice_wall_slow:IsHidden() 		return false end
+function modifier_imba_invoker_ice_wall_slow:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf" end
 function modifier_imba_invoker_ice_wall_slow:DeclareFunctions()
 	local funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 	return funcs
+end
+
+function modifier_imba_invoker_ice_wall_slow:GetTexture()
+	return "invoker_ice_wall"
 end
 
 function modifier_imba_invoker_ice_wall_slow:OnCreated(kv)
@@ -2751,7 +2734,7 @@ function modifier_imba_invoker_ice_wall_slow:OnCreated(kv)
 		self:SetStackCount(kv.enemy_slow)
 
 		-- Apply Ice wall slow effect
-		self.ice_wall_effect_aura = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		--self.ice_wall_effect_aura = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	end
 end
 
@@ -2764,12 +2747,49 @@ end
 function modifier_imba_invoker_ice_wall_slow:OnRemoved()
 	if IsServer() then
 		if self.ice_wall_effect_aura ~= nil then
-			ParticleManager:DestroyParticle(self.ice_wall_effect_aura, false)
+			--ParticleManager:DestroyParticle(self.ice_wall_effect_aura, false)
 		end
 	end
 end
 
 function modifier_imba_invoker_ice_wall_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount()
+end
+
+--------------------------------------------------------------------------------------------------------------------
+--	Invoker's: Ice Wall slow attack 
+--------------------------------------------------------------------------------------------------------------------
+modifier_imba_invoker_ice_wall_attack_slow = class({})
+function modifier_imba_invoker_ice_wall_attack_slow:IsDebuff()			return true  end
+function modifier_imba_invoker_ice_wall_attack_slow:IsHidden() 			return true  end
+function modifier_imba_invoker_ice_wall_attack_slow:IsPurgable() 		return true  end
+function modifier_imba_invoker_ice_wall_attack_slow:IsPurgeException() 	return true  end
+function modifier_imba_invoker_ice_wall_attack_slow:IsStunDebuff() 		return false end
+function modifier_imba_invoker_ice_wall_attack_slow:RemoveOnDeath() 	return true  end
+function modifier_imba_invoker_ice_wall_attack_slow:DeclareFunctions()
+	local funcs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	return funcs
+end
+
+function modifier_imba_invoker_ice_wall_attack_slow:GetTexture()
+	return "invoker_ice_wall"
+end
+
+function modifier_imba_invoker_ice_wall_attack_slow:OnCreated(kv)
+	if IsServer() then
+		self.caster = self:GetCaster()
+		self.parent = self:GetParent()
+		self:SetStackCount(kv.enemy_slow)
+	end
+end
+
+function modifier_imba_invoker_ice_wall_attack_slow:OnRefresh(kv) 
+	if IsServer() then
+		self:SetStackCount(kv.enemy_slow)
+	end
+end
+
+function modifier_imba_invoker_ice_wall_attack_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetStackCount()
 end
 
@@ -2822,7 +2842,7 @@ end
 
 function imba_invoker_chaos_meteor:CastMeteor(caster, ability, target_point, number_of_meteors)
 	if IsServer() then 
-		local chaos_meteor_land_time 			= ability:GetSpecialValueFor("land_time")
+		local chaos_meteor_land_time = ability:GetSpecialValueFor("land_time")
 
 		CreateModifierThinker(	
 			caster, 
@@ -2901,7 +2921,7 @@ function modifier_imba_invoker_chaos_meteor:OnRemoved()
 		-- Meteor Projectile object
 		local meteor_projectile_obj =  
 		{
-			EffectName 					= "particles/units/heroes/hero_invoker/invoker_chaos_meteor.vpcf",
+			EffectName 					= "particles/hero/invoker/imba_invoker_chaos_meteor.vpcf",
 			Ability 					= self.ability,
 			vSpawnOrigin 				= self.target_point,
 			fDistance 					= self.chaos_meteor_travel_distance,
@@ -2969,11 +2989,15 @@ function modifier_imba_invoker_chaos_meteor_aura:OnCreated(kv)
 
 		if self.caster:HasTalent("imba_special_bonus_unique_invoker_2") then
 			local number_of_meteors = self.caster:FindTalentValue("imba_special_bonus_unique_invoker_2","number_of_meteors")
-			local damage_increase 	= self.caster:FindTalentValue("imba_special_bonus_unique_invoker_2","damage_increase")
 			-- reduce damage by number of meteors... cuz this would be broken
-			self.burn_dps 			= self.burn_dps / (number_of_meteors - damage_increase)
-			self.main_dmg 			= self.main_dmg / (number_of_meteors - damage_increase)
+			self.burn_dps 			= self.burn_dps / number_of_meteors
+			self.main_dmg 			= self.main_dmg / number_of_meteors
 		end
+
+		self.direction = (self:GetParent():GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+		self.direction.z = 0
+
+		self.hit_table = {}
 
 		self:StartIntervalThink(kv.damage_interval)
 	end
@@ -2981,7 +3005,19 @@ end
 
 function modifier_imba_invoker_chaos_meteor_aura:OnIntervalThink()
 	if IsServer() then
-		--DebugDrawCircle(self:GetParent():GetAbsOrigin(), Vector(255,0,255), 255, 64, true, 5)
+		local start_point 	= self:GetParent():GetAbsOrigin()
+		local end_point 	= start_point - (self.direction * 500)
+		for _,enemy in pairs(self.hit_table) do 
+			if enemy:IsNull() == false and enemy:HasModifier("modifier_imba_invoker_chaos_meteor_burn") then 
+				if modifier_imba_invoker_ice_wall:IsUnitInProximity(start_point, end_point, enemy:GetAbsOrigin(), 300) then
+					local burn_modifiers = enemy:FindAllModifiersByName("modifier_imba_invoker_chaos_meteor_burn")
+					for _,modifier in pairs(burn_modifiers) do
+						modifier:ForceRefresh()
+					end
+				end
+			end
+		end
+
 		-- Find enemies close enought to be affected by the meteor
 		local nearby_enemy_units = FindUnitsInRadius(
 			self.GetTeam, 
@@ -2995,6 +3031,10 @@ function modifier_imba_invoker_chaos_meteor_aura:OnIntervalThink()
 			false)
 
 		for _,enemy in pairs(nearby_enemy_units) do
+			if self.hit_table[enemy:GetName()] == nil then
+				self.hit_table[enemy:GetName()] = enemy
+			end
+
 			if enemy ~= nil then
 				-- Add burn debuff
 				enemy:AddNewModifier(	
@@ -3044,6 +3084,7 @@ function modifier_imba_invoker_chaos_meteor_burn:OnCreated(kv)
 end
 
 function modifier_imba_invoker_chaos_meteor_burn:OnIntervalThink()
+
 	if IsServer() then
 		-- Apply meteor debuff burn dmg
 		local damage_table 			= {}
@@ -3055,8 +3096,6 @@ function modifier_imba_invoker_chaos_meteor_burn:OnIntervalThink()
 		ApplyDamage(damage_table)
 	end
 end
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 -- Invoker's Deafening Blast
@@ -3127,19 +3166,19 @@ function imba_invoker_deafening_blast:CastDeafeningBlast(caster, ability, target
 		-- Create projectile
 		local deafening_blast_projectile_table = 
 		{
-			EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
-			Ability 				= ability,
-			vSpawnOrigin 			= caster:GetAbsOrigin(),
-			vVelocity 				= direction * deafening_blast_travel_speed,
-			fDistance 				= deafening_blast_travel_distance,
-			fStartRadius 			= deafening_blast_radius_start,
-			fEndRadius 				= deafening_blast_radius_end,
-			Source 					= caster,
-			bHasFrontalCone 		= true,
-			bReplaceExisting 		= false,
-			iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			EffectName 			= imba_invoker_deafening_blast.ability_effect_path,
+			Ability 			= ability,
+			vSpawnOrigin 		= caster:GetAbsOrigin(),
+			vVelocity 			= direction * deafening_blast_travel_speed,
+			fDistance 			= deafening_blast_travel_distance,
+			fStartRadius 		= deafening_blast_radius_start,
+			fEndRadius 			= deafening_blast_radius_end,
+			Source 				= caster,
+			bHasFrontalCone 	= true,
+			bReplaceExisting 	= false,
+			iUnitTargetTeam 	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags 	= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			ExtraData = {
 				deafening_blast_damage 				= deafening_blast_damage, 
 				deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
@@ -3182,19 +3221,19 @@ function imba_invoker_deafening_blast:RadialDeafeningBlast(caster, ability, targ
 			-- Create projectile
 			local deafening_blast_projectile_table = 
 			{
-				EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
-				Ability 				= ability,
-				vSpawnOrigin 			= caster:GetAbsOrigin(),
-				vVelocity 				= direction * deafening_blast_travel_speed,
-				fDistance 				= deafening_blast_travel_distance,
-				fStartRadius 			= deafening_blast_radius_start,
-				fEndRadius 				= deafening_blast_radius_end,
-				Source 					= caster,
-				bHasFrontalCone 		= true,
-				bReplaceExisting 		= false,
-				iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
-				iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				EffectName 			= imba_invoker_deafening_blast.ability_effect_path,
+				Ability 			= ability,
+				vSpawnOrigin 		= caster:GetAbsOrigin(),
+				vVelocity 			= direction * deafening_blast_travel_speed,
+				fDistance 			= deafening_blast_travel_distance,
+				fStartRadius 		= deafening_blast_radius_start,
+				fEndRadius 			= deafening_blast_radius_end,
+				Source 				= caster,
+				bHasFrontalCone 	= true,
+				bReplaceExisting 	= false,
+				iUnitTargetTeam 	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags 	= DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 				ExtraData = {
 					deafening_blast_damage 				= deafening_blast_damage, 
 					deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
@@ -3255,14 +3294,14 @@ end
 modifier_imba_invoker_deafening_blast = class({})
 function modifier_imba_invoker_deafening_blast:OnCreated(kv)
 	if IsServer() then
-		self.target_point 			= self:GetParent():GetAbsOrigin()
-		self.caster_location 		= self:GetCaster():GetAbsOrigin()
-		self.caster 				= self:GetCaster()
-		self.ability 				= self:GetAbility()
+		self.target_point 		= self:GetParent():GetAbsOrigin()
+		self.caster_location 	= self:GetCaster():GetAbsOrigin()
+		self.caster 			= self:GetCaster()
+		self.ability 			= self:GetAbility()
 
-		self.quas_level 			= self.caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
-		self.exort_level 			= self.caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
-		self.wex_level 				= self.caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
+		self.quas_level 		= self.caster:FindAbilityByName("imba_invoker_quas"):GetLevel() - 1
+		self.exort_level 		= self.caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1
+		self.wex_level 			= self.caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 
 		self.deafening_blast_damage 				= self.ability:GetLevelSpecialValueFor("damage", self.exort_level)
 		self.deafening_blast_knockback_duration 	= self.ability:GetLevelSpecialValueFor("knockback_duration", self.quas_level) + 0.1
@@ -3287,19 +3326,19 @@ function modifier_imba_invoker_deafening_blast:OnIntervalThink()
 		-- Create projectile
 		local deafening_blast_projectile_table = 
 		{
-			EffectName 				= imba_invoker_deafening_blast.ability_effect_path,
-			Ability 				= self.ability,
-			vSpawnOrigin 			= self.caster:GetAbsOrigin(),
-			vVelocity 				= self.direction * self.deafening_blast_travel_speed,
-			fDistance 				= self.deafening_blast_travel_distance,
-			fStartRadius 			= self.deafening_blast_radius_start,
-			fEndRadius 				= self.deafening_blast_radius_end,
-			Source 					= self.caster,
-			bHasFrontalCone 		= true,
-			bReplaceExisting 		= false,
-			iUnitTargetTeam 		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags 		= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType 		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			EffectName 			= imba_invoker_deafening_blast.ability_effect_path,
+			Ability 			= self.ability,
+			vSpawnOrigin 		= self.caster:GetAbsOrigin(),
+			vVelocity 			= self.direction * self.deafening_blast_travel_speed,
+			fDistance 			= self.deafening_blast_travel_distance,
+			fStartRadius 		= self.deafening_blast_radius_start,
+			fEndRadius 			= self.deafening_blast_radius_end,
+			Source 				= self.caster,
+			bHasFrontalCone 	= true,
+			bReplaceExisting 	= false,
+			iUnitTargetTeam 	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags 	= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			ExtraData = {
 				deafening_blast_damage 				= self.deafening_blast_damage, 
 				deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration, 
@@ -3331,9 +3370,10 @@ end
 -- Invoker's Deafening Blast modifier - provides knockback for a short duration
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_deafening_blast_frozen = class({})
-function modifier_imba_invoker_deafening_blast_frozen:IsHidden() return false end
-function modifier_imba_invoker_deafening_blast_frozen:IsDebuff() return true end
-function modifier_imba_invoker_deafening_blast_frozen:IsPurgable() return false end
+function modifier_imba_invoker_deafening_blast_frozen:IsHidden() 		return false end
+function modifier_imba_invoker_deafening_blast_frozen:IsDebuff() 		return true  end
+function modifier_imba_invoker_deafening_blast_frozen:IsPurgable() 		return false end
+function modifier_imba_invoker_deafening_blast_frozen:GetEffectName() 	return "particles/status_fx/status_effect_frost.vpcf" end
 function modifier_imba_invoker_deafening_blast_frozen:CheckState()
 	local state = {
 		[MODIFIER_STATE_FROZEN] = true
@@ -3341,24 +3381,13 @@ function modifier_imba_invoker_deafening_blast_frozen:CheckState()
 	return state
 end
 
-function modifier_imba_invoker_deafening_blast_frozen:OnCreated()
-	if IsServer() then
-		self.frost_effect = ParticleManager:CreateParticle("particles/status_fx/status_effect_frost.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())	
-	end
-end
-
-function modifier_imba_invoker_deafening_blast_frozen:OnRemoved() 
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.frost_effect, false)
-	end
-end
 --------------------------------------------------------------------------------------------------------------------
 -- Invoker's Deafening Blast 2nd modifier - enemies are rooted during knockback
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_deafening_blast_knockback = class({})
-function modifier_imba_invoker_deafening_blast_knockback:IsHidden() return false end
-function modifier_imba_invoker_deafening_blast_knockback:IsDebuff() return true end
-function modifier_imba_invoker_deafening_blast_knockback:IsPurgable() return false end
+function modifier_imba_invoker_deafening_blast_knockback:IsHidden() 	return false end
+function modifier_imba_invoker_deafening_blast_knockback:IsDebuff() 	return true  end
+function modifier_imba_invoker_deafening_blast_knockback:IsPurgable() 	return false end
 function modifier_imba_invoker_deafening_blast_knockback:CheckState()
 local state = {
 		[MODIFIER_STATE_ROOTED] = true,
@@ -3398,9 +3427,9 @@ end
 -- Invoker's Deafening Blast 3rd modifier - provides disarm for a short duration
 --------------------------------------------------------------------------------------------------------------------
 modifier_imba_invoker_deafening_blast_disarm = class({})
-function modifier_imba_invoker_deafening_blast_disarm:IsHidden() return true end
-function modifier_imba_invoker_deafening_blast_disarm:IsDebuff() return true end
-function modifier_imba_invoker_deafening_blast_disarm:IsPurgable() return false end
+function modifier_imba_invoker_deafening_blast_disarm:IsHidden() 	return true end
+function modifier_imba_invoker_deafening_blast_disarm:IsDebuff() 	return true end
+function modifier_imba_invoker_deafening_blast_disarm:IsPurgable() 	return false end
 function modifier_imba_invoker_deafening_blast_disarm:StatusEffectPriority() return 15 end
 function modifier_imba_invoker_deafening_blast_disarm:CheckState()
 	local state = {
