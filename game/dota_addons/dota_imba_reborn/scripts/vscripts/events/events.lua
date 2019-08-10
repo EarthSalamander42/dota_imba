@@ -819,19 +819,16 @@ function GameMode:OnPlayerChat(keys)
 								[1] = "imba_visage_soul_assumption",
 								[2] = "imba_visage_gravekeepers_cloak",
 								[3] = "imba_visage_stone_form_self_cast",
-								[4] = "generic_hidden",
+								[4] = "imba_visage_become_familiar",
 								[5] = "imba_visage_summon_familiars",
-								-- [6] = "imba_life_stealer_control",
-								-- [7] = "imba_life_stealer_consume",
-								-- [8] = "generic_hidden",
-								-- [9] = "special_bonus_hp_200",
-								-- [10] = "special_bonus_attack_speed_20",
-								-- [11] = "special_bonus_attack_damage_30",
-								-- [12] = "special_bonus_movement_speed_25",
-								-- [13] = "special_bonus_evasion_20",
-								-- [14] = "special_bonus_unique_lifestealer_2",
-								-- [15] = "special_bonus_unique_lifestealer_3",
-								-- [16] = "special_bonus_unique_lifestealer"
+								[6] = "special_bonus_cast_range_100",
+								[7] = "special_bonus_attack_damage_30",
+								[8] = "special_bonus_exp_boost_60",
+								[9] = "special_bonus_imba_visage_soul_assumption_extra_targets",
+								[10] = "special_bonus_imba_visage_soul_assumption_charge_damage",
+								[11] = "special_bonus_imba_visage_summon_familiars_bonus_move_speed",
+								[12] = "special_bonus_imba_visage_gravekeepers_cloak_cd_reduction",
+								[13] = "special_bonus_spell_amplify_20"
 							}
 							upgraded = true
 						end
