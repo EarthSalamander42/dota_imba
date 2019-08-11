@@ -1,0 +1,449 @@
+<root>
+  <styles>
+	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+
+	<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+	<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
+	  
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/hud_main.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/quests.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/party_portraits.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/party_arrows.css" />
+
+  </styles>
+  
+  <scripts>
+	<include src="s2r://panorama/scripts/custom_game/siltbreaker/hud_main.js" />
+	<include src="s2r://panorama/scripts/custom_game/siltbreaker/quests.js" />
+	<include src="s2r://panorama/scripts/custom_game/siltbreaker/party_health_bars.js" />
+	<include src="s2r://panorama/scripts/custom_game/siltbreaker/party_arrows.js" />
+	<include src="s2r://panorama/scripts/custom_game/siltbreaker/relic_courier.js" />
+  </scripts>
+  
+  <script>
+		$.Msg("Hide hud parts")
+  		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );
+//		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, true );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, true );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_QUICK_STATS, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );
+//		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_PREGAME_STRATEGYUI, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_KILLCAM, false );
+
+  		Game.SetDotaRefractHeroes( true );
+
+		var g_bLargeOverlayMap = false;
+		var k_flMapScaleFactor = 2.4;
+		var onToggleOverlayMapSize = function()
+		{
+			g_bLargeOverlayMap = !g_bLargeOverlayMap;
+			$( '#OverlayMapContainer' ).SetHasClass( 'LargeOverlayMap', g_bLargeOverlayMap );
+			
+			// Fix the scale based on whether we are big or small now.
+			if ( !g_bLargeOverlayMap )
+			{
+				$.Schedule( 0.2, ScaleDownOverlayMap );
+			}
+			else
+			{
+				$( '#OverlayMap' ).mapscale = ( $( '#OverlayMap' ).mapscale / k_flMapScaleFactor );
+			}
+			
+			$.Msg( "New Map Scale: " + $( '#OverlayMap' ).mapscale );
+		};
+
+
+		(function() 
+		{
+			Game.AddCommand( "ToggleOverlayMapSize", onToggleOverlayMapSize, "", 0 );
+			var szName = "materials/overviews/" + Game.GetMapInfo().map_display_name + ".vtex";
+			$.Msg( szName );
+			$( '#OverlayMap' ).maptexture = szName;
+		})();
+
+		
+		var ScaleDownOverlayMap = function(){
+			$( '#OverlayMap' ).mapscale = ( $( '#OverlayMap' ).mapscale * k_flMapScaleFactor )
+		}		
+		
+		var ScrollHover = function(){
+			var scenePanel = $( '#TPScroll' );
+			var offscreenPanel = scenePanel.GetPanoramaSurfacePanel();					
+			
+			offscreenPanel.AddClass( "ScrollHovered" ); 
+			$.DispatchEvent( 'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'hoverFX', 'start', 0 );
+		}
+		
+		var ScrollUnHover = function(){
+			var scenePanel = $( '#TPScroll' );
+			var offscreenPanel = scenePanel.GetPanoramaSurfacePanel();					
+			offscreenPanel.RemoveClass( "ScrollHovered" ); 
+			$.DispatchEvent( 'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'hoverFX', 'stop', 0 );
+		}		
+		
+		var ScrollActivate = function()
+		{
+			var scenePanel = $( '#TPScroll' );
+			var scenePanelContainer = $( '#TPScrollContainer' );
+			var offscreenPanel = scenePanel.GetPanoramaSurfacePanel();					
+			offscreenPanel.AddClass( "ScrollActivated" );
+			var hitBoxPanel = $( '#TPScrollHitbox' );
+			hitBoxPanel.RemoveClass( "MakeVisible" );			
+			var clickHint = $( '#ClickHint' );
+			clickHint.AddClass( "QuickHide" );
+			scenePanelContainer.AddClass( "TransitionToGame" );
+
+			$.DispatchEvent( 'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'hoverFX', 'stop', 0 );
+			$.DispatchEvent( 'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'activateFX', 'start', 0 );
+			$.DispatchEventAsync( 2.5,  'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'scroll', 'SetAnimation', 'scroll_activate' );
+			$.DispatchEventAsync( 2.6,  'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'rain_impact', 'stop', 0 );
+			$.DispatchEvent( 'DOTAGlobalSceneSetRootEntity', 'TPScroll', 'rootend' ); 
+			$.Schedule( 5.0, KillScrollPanel );	
+			
+
+			GameEvents.SendCustomGameEventToServer( "scroll_clicked", { ent_index : Players.GetPlayerHeroEntityIndex( Game.GetLocalPlayerID() ) } )
+		}				
+		
+		var g_ClickCount = 0;
+		
+		var KillScrollPanel = function()
+		{
+			var scenePanelContainer = $( '#TPScrollContainer' );
+			scenePanelContainer.AddClass( "CollapsePanel" );
+      
+			var scenePanel = $( '#TPScroll' );
+			scenePanel.SetReadyForDisplay( false );
+		}
+		
+		var ImpatientClicks = function()
+		{
+			g_ClickCount = g_ClickCount + 1;
+			
+			if ( g_ClickCount > 4 )
+			{
+				var clickHint = $( '#ClickHint' );
+				clickHint.AddClass( "GiveHint" );
+			}
+
+		}		
+
+		// If more than a minute has passed already in the game, don't show the TP
+		// Scroll at all. This works for spectators joining the game later as well
+		// as players reconnecting to the game.
+		if ( Game.GetDOTATime( false, true ) >= 60.0 || Game.GetMapInfo().map_display_name == "ep_2" )
+		{
+			$.Schedule( 0.5, KillScrollPanel );	
+			if ( Game.GetMapInfo().map_display_name == "ep_2" )
+			{
+				$( '#DungeonHUDContents' ).SetHasClass( "ShowAct2Intro", true );
+			}
+		}
+		else
+		{
+			// Otherwise, schedule the button to be active and stuff.
+
+			$.Schedule( 3.6, function()
+			{
+				var hitBoxPanel = $( '#TPScrollHitbox' );
+				hitBoxPanel.AddClass( "MakeVisible" );
+
+				$( '#TPScroll' ).SetDialogVariable( "hero_name", Players.GetPlayerSelectedHero( Game.GetLocalPlayerID() ) );
+			});
+		
+			$.Schedule( 20, function()
+			{
+				var clickHint = $( '#ClickHint' );
+				clickHint.AddClass( "GiveHint" );
+			});
+		}
+		
+		// If a user skips around in the DVR, just kill the TP scroll
+		GameEvents.Subscribe( "demo_skip", KillScrollPanel );
+
+  </script>
+
+  <Panel hittest="false" class="CustomHudRoot">
+	<Panel id="OverlayMapContainer" hittest="false" hittestchildren="false">
+		<DOTAHUDOverlayMap id="OverlayMap" mapscale="6" hittest="false" hittestchildren="false" class="VisGroup_Top" maptexture="materials/overviews/ep_1.vtex"/>
+		<Panel id="RadarAOE"/>
+	</Panel>
+	
+	<Panel id="DungeonHUDContents" hittest="false" class="CustomHudContents">
+		<Panel hittest="false" id="PartyPortraits" class="LeftRightFlow"/>
+		<Panel hittest="false" id="PartyArrows"/>
+	
+		<Panel hittest="false" id="ZoneToastPanel" always-cache-composition-layer="true" require-composition-layer="true" >
+		  <Label hittest="false" id="ZoneNameLabel" text="" class="TitleFont"/>
+		</Panel>
+		<Panel id="DungeonHUD" hittest="false">
+			<Panel id="lower_hud" hittest="false" disallowedstyleflags="hover,descendantfocus">
+				<Panel id="StatBranchDrawer" hittest="false">
+					<DOTAStatBranch id="statbranchdialog" hittest="false" />
+				</Panel>
+				<Panel id="PortraitContainerDungeon" hittest="false">
+					<Panel id="PortraitBacker" hittest="flase"/>
+					<Panel id="PortraitBackerColor" hittest="false"/>
+					<Panel id="PortraitContainer" hittest="false">
+						<DOTAPortrait id="portraitHUD" class="PortraitLocation" />
+						<DOTAPortrait id="portraitHUDOverlay" class="PortraitLocation"/>
+						<Panel id="SilenceIcon" hittest="false" always-cache-composition-layer="true" />
+						<Panel id="DeathGradient"/>
+					</Panel>  
+					<Panel id="stats_container" hittest="false" >
+						<Panel id="stats_container_bg" hittest="false" />
+						<DOTAStatsRegion id="stats" class="ShowSplitLabels" hittest="false" />	
+						<DOTAHUDStrAgiInt id="stragiint" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" />
+						<DOTAPortraitStatsClickRegion id="stats_tooltip_region" acceptsinput="true" onmouseover="DOTAHUDShowDamageArmorTooltip();" onmouseout="DOTAHUDHideDamageArmorTooltip();" />
+					</Panel>
+					<Panel hittest="false" id="RecommendedUpgradeOverlay" >
+						<Panel hittest="false" class="BorderEdge BorderTop" />
+						<Panel hittest="false" class="BorderEdge BorderRight" />
+						<Panel hittest="false" class="BorderEdge BorderBottom" />
+						<Panel hittest="false" class="BorderEdge BorderLeft" />
+					</Panel> 
+					<DOTAUnitName id="unitname" hittest="false" />				
+				</Panel>
+				
+				<Panel id="BuffsLine" class="LeftRightFlow" hittest="false">
+					<DOTABuffList id="debuffs" showbuffs="false" />
+					<DOTABuffList id="buffs" showdebuffs="false" />
+				</Panel>
+
+				
+				<DOTASpellCard id="InvokerSpellCard" hittest="false"/>
+				<Panel id="center_with_stats" hittest="false" disallowedstyleflags="hover,descendantfocus" >
+					<Panel id="center_block" hittest="false" disallowedstyleflags="hover,descendantfocus" >
+						<Panel id="center_bg" />
+						<DOTAHUDLevelStatsFrame id="level_stats_frame" hittest="false" onmouseover="DOTAHUDMouseOverTalentTree();" onmouseout="DOTAHUDMouseOutTalentTree()" />						
+						<DOTALevelUpButton id="levelup" hittest="false" />
+						<Panel id="HUDSkinAbilityContainerBG" hittest="false" />
+						<Panel class="AbilityInsetShadowLeft"/>
+						<DOTAXP id="xp" hittest="false" always-cache-composition-layer="true" require-composition-layer="true" />						
+						<Panel id="LifeRemainingContainer" require-composition-layer="true" always-cache-composition-layer="true" onmouseover="UIShowTextTooltip( #DOTA_Siltbreaker_hud_respawn_remcount )" onmouseout="UIHideTextTooltip();" >
+							<Panel id="LifeIconsContainer0">
+								<DOTAHeroImage id="Life0" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+								<Image id="Tombstone0" hittest="false" class="MiniTombstone" src="s2r://panorama/images/interface/mini_tombstone_psd.vtex"/>
+							</Panel>
+							<Panel id="LifeIconsContainer1">
+								<DOTAHeroImage id="Life1" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+								<Image id="Tombstone1" hittest="false" class="MiniTombstone" src="s2r://panorama/images/interface/mini_tombstone_psd.vtex"/>
+							</Panel>
+							<Panel id="LifeIconsContainer2">
+								<DOTAHeroImage id="Life2" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+								<Image id="Tombstone2" hittest="false" class="MiniTombstone" src="s2r://panorama/images/interface/mini_tombstone_psd.vtex"/>
+							</Panel>
+							<Panel id="LifeIconsContainer3">
+								<DOTAHeroImage id="Life3" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+								<Image id="Tombstone3" hittest="false" class="MiniTombstone" src="s2r://panorama/images/interface/mini_tombstone_psd.vtex"/>
+							</Panel>
+							<Panel id="LifeIconsContainer4">
+								<DOTAHeroImage id="Life4" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+								<Image id="Tombstone4" hittest="false" class="MiniTombstone" src="s2r://panorama/images/interface/mini_tombstone_psd.vtex"/>
+							</Panel>
+							<Label id="NoResLeft" class="ResLabel" text="#DOTA_Siltbreaker_NoResurrections"/>							
+						</Panel>
+						<Panel id="AbilitiesAndStatBranch" hittest="false">
+							<DOTAHealthMana id="health_mana" />
+							<DOTATalentDisplay id="StatBranch"/>
+							<DOTAAbilityList id="abilities" hittest="false"/>
+						</Panel>
+						<DOTAHUDDeathPanel id="death_panel_buyback" class="">
+							<DOTAHeroImage id="BuybackLifeCost" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon" scaling="stretch-to-cover-preserve-aspect" />							
+							<Panel id="ResLabelContainer">
+								<Label id="ResMain" class="ResLabel" text="#DOTA_Siltbreaker_Resurrect"/>
+								<Label id="NoResLeftDesc" class="ResLabel RezLabelDesc" text="#DOTA_Siltbreaker_RespawnNearest"/>
+							</Panel>
+						</DOTAHUDDeathPanel>
+						<Panel class="AbilityInsetShadowRight" require-composition-layer="true" always-cache-composition-layer="true"/>
+						<ProgressBar id="MorphProgress" min="0" max="1" value="0.5" />
+						<DOTAUnitEconItem id="econ_item"/>
+						<DOTAInventory id="inventory" slotsDraggable="true" />
+						<Panel id="right_flare" />
+					</Panel>
+				</Panel>
+			</Panel>
+	
+	  </Panel>
+		<Panel id="TPScrollContainer" onactivate="ImpatientClicks()">
+			<DOTAScenePanel id="TPScroll" hittest="false" map="scenes/tpscroll" antialias="true" particleonly="false" camera="scrollcamera" light="scrolllight" renderdeferred="true" deferredalpha="false" rotateonmousemove="true" yawmin="-30" yawmax="9" pitchmin="-8" pitchmax="15" acceleration="0.5" panoramasurfacexml="file://{resources}/layout/custom_game/siltbreaker/tpscroll_texture.xml" panoramasurfacewidth="1024" panoramasurfaceheight="2048"/>
+			<Panel id="TPScrollHitbox" acceptsinput="true" onmouseover="ScrollHover()" onmouseout="ScrollUnHover()" onactivate="ScrollActivate()"/>
+			<Panel id="ClickHint">
+				<Label text="#DOTA_Siltbreaker_WhirlpoolSigilHelp"/>
+			</Panel>
+		</Panel>	
+		
+	  <Panel id="DialogPanel" hittest="false">
+
+		<Panel id="DialogPanelBackground" hittest="false"/>
+		<DOTAScenePanel id="DialogPortrait" unit="npc_dota_hero_pudge" environment="default" particleonly="false" hittest="false"/>
+		<Panel id="GlassBallOverlay" hittest="false"/>
+		<Label id="DialogTitle" class="DialogPanelTitle TitleFont" text="" hittest="false"/>		
+
+		<Panel id="DialogPanelContent" hittest="false">
+			<Panel class="SpeechBubble" hittest="false">
+				<Panel id="SpeechBubbleContainer" hittest="false">
+					<Panel class="SpeechBubbleBackgroundOutline" hittest="false"/>
+					<Panel class="SpeechBubbleCalloutSquash" hittest="false">
+						<Panel class="SpeechBubbleCallout" hittest="false"/>
+					</Panel>
+					<Panel class="SpeechBubbleBackground" hittest="false"/>
+				</Panel>
+				<Panel id="JournalPageBackground"/>
+				<Label id="DialogLabelSizer" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+				<Label id="DialogLabel" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+	
+			</Panel>
+			<Panel id="DialogPlayerConfirm">
+				<Panel id="Player0Confirm" class="PlayerConfirm"><Label text="{g:dota_player_name:nc:nh:player_id_0}" html="true"/><DOTAHeroImage id="Player0ConfirmIcon" class="ConfirmHeroIcon" heroid="1" hittest="false" scaling="stretch-to-fit-y-preserve-aspect"/></Panel>
+				<Panel id="Player1Confirm" class="PlayerConfirm"><Label text="{g:dota_player_name:nc:nh:player_id_1}" html="true"/><DOTAHeroImage id="Player1ConfirmIcon" class="ConfirmHeroIcon" heroid="2" hittest="false" scaling="stretch-to-fit-y-preserve-aspect"/></Panel>
+				<Panel id="Player2Confirm" class="PlayerConfirm"><Label text="{g:dota_player_name:nc:nh:player_id_2}" html="true"/><DOTAHeroImage id="Player2ConfirmIcon" class="ConfirmHeroIcon" heroid="3" hittest="false" scaling="stretch-to-fit-y-preserve-aspect"/></Panel>
+				<Panel id="Player3Confirm" class="PlayerConfirm"><Label text="{g:dota_player_name:nc:nh:player_id_3}" html="true"/><DOTAHeroImage id="Player3ConfirmIcon" class="ConfirmHeroIcon" heroid="4" hittest="false" scaling="stretch-to-fit-y-preserve-aspect"/></Panel>
+			</Panel>
+			<Button id="ConfirmButton" class="ButtonBevel" onactivate="OnConfirmButtonPressed()"><Panel class="CheckMark"/><Label text="#DOTA_Siltbreaker_ContinueSpeechText"/></Button>			
+			<Panel class="DialogButtonContainer LeftRightFlow">
+				<Button id="ContinueDialogButton" class="ButtonBevel CloseButton"  onactivate="OnAdvanceDialogButtonPressed()" hittest="true"/>
+				<Button id="CloseDialogButton" class="ButtonBevel CloseButton" onactivate="OnCloseDialogButtonPressed()" hittest="true"/>		
+			</Panel>	
+		</Panel>
+	</Panel>
+	<Panel id="QuestLog" class="TopBottomFlow" hittest="false" require-composition-layer="true" always-cache-composition-layer="true">
+		<Label hittest="false" text="#DOTA_Siltbreaker_Quests" class="QuestLogHeader"/>
+		<Panel id="QuestsContainer" class="TopBottomFlow"/>
+	</Panel>	
+	<Panel id="1UpPopup" hittest="false" hittestchildren="false">
+		<Panel class="1UpIcon"/>
+		<DOTAHeroImage id="1UpHeroIconOutline" heroname="npc_dota_hero_lycan" heroimagestyle="icon" hittest="false"/>
+		<DOTAHeroImage id="1UpHeroIcon" heroname="npc_dota_hero_lycan" heroimagestyle="icon" hittest="false"/>
+	</Panel>
+	  <Panel id="BossHP" hittest="false">
+		  <Label id="BossLabel" class="HoldoutLabelSmall" hittest="false" text=""/>
+		  <Panel id="BossProgressBarContainer" hittest="false">
+			<Panel id="BossIcon"/>
+			<ProgressBar hittest="false" id="BossProgressBar" value="0"/>
+		  </Panel>
+	  </Panel>
+
+	  <Panel id="FloatingDialogPanel" hittest="false">
+		<Panel id="Floating	Background" hittest="false"/>
+		<Panel id="FloatingDialogPanelContent" hittest="false">
+			<Panel class="SpeechBubble" hittest="false">
+				<Panel id="SpeechBubbleContainer" hittest="false">
+					<Panel class="SpeechBubbleBackgroundOutline" hittest="false"/>
+					<Panel class="SpeechBubbleCalloutSquash" hittest="false">
+						<Panel class="SpeechBubbleCallout" hittest="false"/>
+					</Panel>
+					<Panel class="SpeechBubbleBackground" hittest="false"/>
+				</Panel>
+				<Label id="FloatingDialogLabelSizer" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+				<Label id="FloatingDialogLabel" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+			</Panel>
+			<Panel class="DialogButtonContainer LeftRightFlow">
+				<Button id="ContinueFloatingDialogButton" class="ButtonBevel CloseButton" onactivate="OnAdvanceDialogButtonPressed()" hittest="true"/>
+				<Button id="CloseFloatingDialogButton" class="ButtonBevel CloseButton" onactivate="OnCloseDialogButtonPressed()" hittest="true"/>	
+			</Panel>
+					
+		</Panel>
+	  </Panel>
+
+	  <ProgressBar id="CryptHoldoutWest" class="CryptHoldoutProgressBar"/>
+	  <ProgressBar id="CryptHoldoutNorth" class="CryptHoldoutProgressBar"/>
+	  <ProgressBar id="CryptHoldoutEast" class="CryptHoldoutProgressBar"/>
+	  <ProgressBar id="CryptHoldoutSouth" class="CryptHoldoutProgressBar"/>
+
+	  <Panel id="RelicCourier" hittest="false">
+	  	<Button id="RelicsButton" class="ButtonBevel" onactivate="OnRelicButtonClicked()" hittest="true">	
+	  		
+	  		<Label id="RelicButtonText" text="#DOTA_Siltbreaker_RelicsButton"/>
+			
+	  	</Button>
+
+		<Panel id="ArtifactCurrencyContainer" class="LeftRightFlow">
+			<Label id="ArtifactCurrency" text="0"/>
+			<Panel id="ArtifactCoinIcon"/>
+		</Panel>
+	  	<Label id="RelicCountViolator" text="30"/>	
+
+
+		<Panel id="RelicsContainerBackground">
+			<Panel id="RelicsContainer" hittest="false" class="TopBottomFlow">
+			</Panel>	
+	  	</Panel>
+	  </Panel>
+
+	  <Panel hittest="false" id="ImageCache">
+         <Image src="s2r://panorama/images/interface/npc_dota_forest_camp_chief_png.vtex"/>
+         <Image src="s2r://panorama/images/interface/npc_dota_friendly_bristleback_son_png.vtex"/>
+         <Image src="s2r://panorama/images/items/book_of_strength_png.vtex"/>
+         <Image src="s2r://panorama/images/items/book_of_agility_png.vtex"/>
+         <Image src="s2r://panorama/images/items/book_of_intelligence_png.vtex"/>
+         <Image src="s2r://panorama/images/items/creed_of_omniscience_png.vtex"/>
+         <Image src="raw://resource/flash3/images/items/bogduggs_baldric.png"/>
+         <Image src="raw://resource/flash3/images/items/bogduggs_lucky_femur.png"/>
+         <Image src="raw://resource/flash3/images/items/book_of_agility.png"/>
+         <Image src="raw://resource/flash3/images/items/book_of_intelligence.png"/>
+         <Image src="raw://resource/flash3/images/items/book_of_strength.png"/>
+         <Image src="raw://resource/flash3/images/items/carapace_of_qaldin.png"/>
+         <Image src="raw://resource/flash3/images/items/creed_of_omniscience.png"/>
+         <Image src="raw://resource/flash3/images/items/guardian_shell.png"/>
+         <Image src="raw://resource/flash3/images/items/longclaws_amulet.png"/>
+         <Image src="raw://resource/flash3/images/items/oblivions_locket.png"/>
+         <Image src="raw://resource/flash3/images/items/orb_of_passage.png"/>
+         <Image src="raw://resource/flash3/images/items/paw_of_lucius.png"/>
+         <Image src="raw://resource/flash3/images/items/pelt_of_the_old_wolf.png"/>
+         <Image src="raw://resource/flash3/images/items/preserved_skull.png"/>
+         <Image src="raw://resource/flash3/images/items/rhyziks_eye.png"/>
+         <Image src="raw://resource/flash3/images/items/sign_of_the_arachnid.png"/>
+         <Image src="raw://resource/flash3/images/items/the_caustic_finale.png"/>
+         <Image src="raw://resource/flash3/images/items/treads_of_ermacor.png"/>
+         <Image src="raw://resource/flash3/images/items/treasure_box.png"/>
+         <Image src="raw://resource/flash3/images/items/unhallowed_icon.png"/>
+         <Image src="raw://resource/flash3/images/items/watchers_gaze.png"/>
+      </Panel>
+		<Panel id="Act2IntroPanel">
+			<DOTAScenePanel id="IntroScene" map="scenes/winstate" camera="herocamera" light="hero_light" renderdeferred="true" rotateonmousemove="true" yawmin="-5" yawmax="5" pitchmin="-1" pitchmax="0" antialias="false" particleonly="false"/>
+			<DOTAScenePanel id="IntroSceneSnowy" map="scenes/act2_intro_snowy" camera="herocamera" light="hero_light" renderdeferred="true" rotateonmousemove="true" yawmin="-3" yawmax="3" pitchmin="-1" pitchmax="0" antialias="false" particleonly="false" />
+			<Label id="LoreLabel1" html="true" class="LoreLabel" text="#siltbreaker_actii_intro_02" />
+			<Label id="LoreLabel2" html="true" class="LoreLabel" text="#siltbreaker_actii_intro_01" />
+			<TextButton id="ContinueButton" text="#DOTA_Siltbreaker_Act2_Intro_Continue" onactivate="RemoveStyle( DungeonHUDContents, ShowAct2Intro )"/>
+		</Panel>  
+
+	    <Panel id="DungeonQuestCompleteRoot" hittest="false">
+			<Panel id="QuestCompleteContainer" class="TopBottomFlow">
+				<Label id="DungeonQuestCompleteZoneName" class="DungeonQuestCompleteHeader TitleFont" text="{s:zone_name}"/>
+				<Panel class="LeftRightFlow">
+					<Panel id="QuestCompleteIcon"/>
+					<Label id="DungeonQuestCompleteQuestName" class="DungeonQuestCompleteHeader" text="{s:quest_name}"/>
+					<Label class="DungeonQuestCompleteReward CompletedNumber" text="{d:completed} / {d:complete_limit}"/>
+				</Panel>
+				<Panel id="XPGoldContainer" class="LeftRightFlow">
+					<Panel class="RewardBox LeftRightFlow">
+						<Panel class="BoxStuff LeftRightFlow">
+							<Panel id="DungeonCompleteGoldReward" />
+							<Label class="DungeonQuestCompleteReward GoldEarned" text="{d:gold_reward}"/>
+						</Panel>
+					</Panel>
+					<Panel class="RewardBox LeftRightFlow">
+						<Panel class="BoxStuff LeftRightFlow">
+							<Panel id="DungeonCompleteXPReward" />
+							<Label class="DungeonQuestCompleteReward XPEarned" text="{d:xp_reward}"/>
+						</Panel>
+					 </Panel>
+				</Panel>
+	    	</Panel>	
+			<Panel id="QuestCompleteTitleContainer">
+				<Label class="QuestCompleteTitle Highlight" text="#DOTA_QuestCompleted"/>
+				<Label class="QuestCompleteTitle Shadow" text="#DOTA_QuestCompleted"/>
+				<Label class="QuestCompleteTitle" text="#DOTA_QuestCompleted"/>
+			</Panel>
+		</Panel>
+	</Panel>
+  </Panel>
+</root>

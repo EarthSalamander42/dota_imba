@@ -1,0 +1,33 @@
+<root>
+  <styles>
+	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+	<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+	<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
+	  
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/hud_main.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/quests.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/party_portraits.css" />
+	<include src="s2r://panorama/styles/custom_game/siltbreaker/party_arrows.css" />
+  </styles>
+  <script>
+  	function OnRelicClicked()
+	{
+		if ( $.GetContextPanel().BHasClass( "CanAffordArtifact" ) )
+		{
+			Game.EmitSound( "General.Buy" );
+			var RelicName = $( "#ItemImage" ).itemname;
+			GameEvents.SendCustomGameEventToServer( "relic_claimed", { PlayerID : Players.GetLocalPlayer(), ClaimedRelicName : RelicName } );
+		}
+		
+	}
+  </script>
+
+  <Panel hittest="true" oncontextmenu="OnRelicClicked()" class="TopBottomFlow">
+  	
+  	<DOTAItemImage id="ItemImage" class="RelicList"/>
+  	<Panel id="ArtifactCoinCostContainer" class="LeftRightFlow">
+  		<Label id="ArtifactCoinCost" text="30"/>
+  		<Panel id="ArtifactCoinIcon"/>
+  	</Panel>
+  </Panel>
+</root>

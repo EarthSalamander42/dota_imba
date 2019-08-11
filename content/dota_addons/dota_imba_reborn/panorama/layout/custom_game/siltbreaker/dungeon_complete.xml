@@ -1,0 +1,90 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+<!--	<include src="s2r://panorama/styles/dashboard_page_controlslibrary.vcss_c" /> -->
+
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/hud_main.css"/>
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/dungeon_complete.css"/>
+	</styles>
+
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/siltbreaker/dungeon_complete.js" />
+	</scripts>
+
+	<script>
+	</script>
+
+	<Panel class="DungeonCompleteRoot" hittest="true">
+		<Panel id="DungeonCompleteContainerAct1" hittest="false">
+			<Panel id="DungeonCompleteSuccess" hittest="false">
+				<DOTAScenePanel id="OutroScene" map="scenes/winstate" camera="herocamera" light="hero_light" renderdeferred="true" rotateonmousemove="true" yawmin="-5" yawmax="5" pitchmin="-6" pitchmax="1" antialias="false" particleonly="false" hittest="false"/>
+				<DOTAScenePanel id="OutroSceneSnowy" map="scenes/winstate_snowy" camera="herocamera" light="hero_light" renderdeferred="true" rotateonmousemove="true" yawmin="-3" yawmax="3" pitchmin="-6" pitchmax="1" antialias="false" particleonly="false" hittest="false"/>
+				<Panel class="CompleteTextContainer" always-cache-composition-layer="true" require-composition-layer="true" hittest="false">
+					<Label id="FailedLabelDepth6" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>				
+					<Label id="FailedLabelDepth5" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth4" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth3" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth2" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth1" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabel" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success"  html="true" hittest="false"/>
+				</Panel>				
+				<Label id="LoreLabel1" class="LoreLabel" text="#siltbreaker_acti_outro_02" hittest="false"/>
+				<Label id="LoreLabel2" class="LoreLabel" text="#siltbreaker_acti_outro_01" hittest="false"/>
+				
+				
+			</Panel>
+			<Panel id="DungeonCompleteFailure" hittest="false">
+				<DOTAScenePanel id="DeathFX" hittest="false" map="scenes/deathfx" camera="shot_camera" antialias="true" particleonly="false" light="scrolllight" renderdeferred="true" deferredalpha="true" always-cache-composition-layer="true" require-composition-layer="true" />		
+				<Panel class="CompleteTextContainer" always-cache-composition-layer="true" require-composition-layer="true" hittest="false">
+					<Label id="FailedLabelDepth6" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>				
+					<Label id="FailedLabelDepth5" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth4" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth3" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth2" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth1" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabel" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure"  hittest="false"/>
+				</Panel>
+			</Panel>
+			<TextButton id="ContinueButton" text="#DOTA_Siltbreaker_Continue" onactivate="AddStyle( DungeonCompleteContainerAct1, ShowOutro )"/>
+			<TextButton id="DisconnectButton" text="#DOTA_Siltbreaker_Disconnect" onactivate="Game.FinishGame();"/>
+		</Panel>
+		<Panel id="DungeonCompleteContainerAct2" class="OutroPage1Active" hittest="false">
+			<Panel id="DungeonCompleteSuccess" hittest="false">
+				<Panel class="CompleteTextContainer" always-cache-composition-layer="true" require-composition-layer="true" hittest="false">
+					<Label id="FailedLabelDepth6" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>				
+					<Label id="FailedLabelDepth5" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth4" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth3" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth2" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabelDepth1" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" html="true"/>
+					<Label id="FailedLabel" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Success_actii"  html="true" hittest="false"/>
+				</Panel>				
+				<Panel id="OutroPage1" class="OutroPage">
+					<DOTAScenePanel id="SiltScene" map="scenes/outroscene" camera="herocamera" light="hero_light" renderdeferred="true" rotateonmousemove="true" yawmin="-5" yawmax="5" pitchmin="-1" pitchmax="0" antialias="false" particleonly="false"/>
+					<Panel class="Vignette"/>
+					<TextButton id="NextOutroPage" text="#DOTA_Siltbreaker_Continue" onactivate="RemoveStyle( DungeonCompleteContainerAct2, OutroPage1Active )"/>
+				</Panel>
+				<Panel id="OutroPage2" class="OutroPage"/>
+				<Label id="LoreLabel1" class="LoreLabel" text="#siltbreaker_actii_outro_02" hittest="false"/>
+				<Label id="LoreLabel2" class="LoreLabel" text="#siltbreaker_actii_outro_01" hittest="false"/>
+				
+				
+			</Panel>
+			<Panel id="DungeonCompleteFailure" hittest="false">
+				<DOTAScenePanel id="DeathFX" hittest="false" map="scenes/deathfx" camera="shot_camera" antialias="true" particleonly="false" light="scrolllight" renderdeferred="true" deferredalpha="true" always-cache-composition-layer="true" require-composition-layer="true" />		
+				<Panel class="CompleteTextContainer" always-cache-composition-layer="true" require-composition-layer="true" hittest="false">
+					<Label id="FailedLabelDepth6" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>				
+					<Label id="FailedLabelDepth5" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth4" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth3" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth2" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabelDepth1" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure" always-cache-composition-layer="true" require-composition-layer="true" hittest="false"/>
+					<Label id="FailedLabel" class="CompleteMainText TitleFont" text="#DOTA_Siltbreaker_Failure"  hittest="false"/>
+				</Panel>
+			</Panel>
+			<TextButton id="ContinueButton" text="#DOTA_Siltbreaker_Continue" onactivate="AddStyle( DungeonCompleteContainerAct2, ShowOutro )"/>
+			<TextButton id="DisconnectButton" text="#DOTA_Siltbreaker_Disconnect" onactivate="Game.FinishGame();"/>
+		</Panel>
+	</Panel>   	
+</root>

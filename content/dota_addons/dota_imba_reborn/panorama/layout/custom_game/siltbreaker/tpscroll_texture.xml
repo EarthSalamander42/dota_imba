@@ -1,0 +1,38 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/tpscroll.css" />
+	</styles>
+
+	<script>
+		$.Schedule( 2.2, function()
+		{
+			$( '#TPScrollTexture' ).SetDialogVariable( "hero_name", $.Localize( Players.GetPlayerSelectedHero( Game.GetLocalPlayerID() ) ) );
+		});
+	</script>
+
+	<DOTAReferencePage class="DashboardPage BGDark">
+		<Panel id="TPScrollTexture">
+			<Panel id="FrontPage">
+				<Panel class="PageTexture"/>
+				<Panel id="Header" class="LineArt"/>
+				<Panel id="HeroNameContainer">
+					<Label id="HeroName" class="TitleFont" text="{s:hero_name}"/>
+				</Panel>
+				<Panel id="HeroNameContainerBlur">
+					<Label id="HeroNameBlur" class="TitleFont" text="{s:hero_name}"/>
+				</Panel>				
+				<Label id="Title" class="TitleFont" html="true" text="#TPScroll_Quest_Label"/>
+				<Label id="TextBlur1" class="TitleFont Rain" html="true" text="#TPScroll_Quest_Label"/>
+				<Panel id="Sigil" class="LineArt"/>
+				<Panel id="SigilGlowContainer">	
+					<Panel id="SigilGlow" class="LineArt"/>
+				</Panel>
+			</Panel>
+			<Panel id="BackPage">
+				<Panel class="PageTexture"/>
+			</Panel>
+		</Panel>
+	</DOTAReferencePage>
+</root>
+

@@ -1,0 +1,794 @@
+#DungeonScoreboard
+{
+	background-color: #000000da;
+	
+	flow-children: down;
+	
+	transition-property: box-shadow, height;
+	transition-duration: .36s, .18s;
+	transition-delay: .16s, 0s;
+	transition-timing-function: ease-in-out;
+	box-shadow: #000000f5 -4px -4px 8px 8px;
+	height: 696px;
+	width: 100%;
+}
+
+.FlyoutScoreboardRoot
+{
+    transform: translatex( -800px );
+    transition-property: transform;
+    transition-duration: 0.1s;
+    height: 100%;
+	width: 600px;
+
+	horizontal-align: left;
+	margin-top: 180px;
+}
+
+.FlyoutScoreboardRoot.flyout_scoreboard_visible,
+.FlyoutScoreboardRoot.ZoneComplete
+{
+    transform: translatey( 0px );
+}
+
+.ScoreboardHeaderContainer
+{
+	width: 100%;
+	padding: 16px;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #000 ), color-stop ( .6, #0D244D ), to( #183269 ) );	
+	height: 170px;
+	padding-bottom: 0px;
+
+	transition-property: background-image;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+
+	background-image: url("s2r://panorama/images/interface/zoneheader_01_psd.vtex");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;	
+}
+
+.ZoneSelected_forest 				.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_01_psd.vtex"); }
+.ZoneSelected_forest_holdout 		.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_02_psd.vtex"); }
+.ZoneSelected_darkforest_rescue 	.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_03_psd.vtex"); }
+.ZoneSelected_darkforest_death_maze .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_04_psd.vtex"); }
+.ZoneSelected_darkforest_pass 		.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_05_psd.vtex"); }
+.ZoneSelected_underground_temple 	.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_06_psd.vtex"); }
+.ZoneSelected_desert_start 			.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_07_psd.vtex"); }
+.ZoneSelected_desert_town 			.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_08_psd.vtex"); }
+.ZoneSelected_desert_expanse 		.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_09_psd.vtex"); }
+.ZoneSelected_desert_chasm 			.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_10_psd.vtex"); }
+.ZoneSelected_desert_fortress 		.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_11_psd.vtex"); }
+
+.ZoneSelected_ep_2_start	.ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_00_psd.vtex"); }
+
+.ZoneSelected_tundra        .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_01_psd.vtex"); }
+.ZoneSelected_ice_lake      .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_02_psd.vtex"); }
+.ZoneSelected_aerie         .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_03_psd.vtex"); }
+.ZoneSelected_clifftop      .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_overlook_psd.vtex"); }
+
+.ZoneSelected_plateau       .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_04_psd.vtex"); }
+.ZoneSelected_crag          .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_05_psd.vtex"); }
+.ZoneSelected_crypt         .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_06_psd.vtex"); }
+.ZoneSelected_crypt_holdout .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_07_psd.vtex"); }
+.ZoneSelected_reefs_edge    .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_08_psd.vtex"); }
+.ZoneSelected_shoal         .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_09_psd.vtex"); }
+.ZoneSelected_dark_reef_b   .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_10_psd.vtex"); }
+.ZoneSelected_silt_arena    .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_11_psd.vtex"); }
+
+.ZoneSelected_tusktown      .ScoreboardHeaderContainer { background-image: url("s2r://panorama/images/interface/zoneheader_act2_tusktown_psd.vtex"); }
+
+
+.OldBest.ZoneSubtitle,
+.NewBest.ZoneSubtitle
+{
+	color: #0f0;
+	font-size: 12px;
+	font-weight: thin;
+	letter-spacing: 1px;
+	horizontal-align: right;
+	text-shadow: 0px 1px 1px 2 black;	
+}
+
+.OldBest.ZoneSubtitle
+{
+	color: #43658B;
+
+}
+
+.ZoneTimeContainer
+{
+	
+	margin-top: 6px;
+	horizontal-align: right;
+}
+
+.HeaderZoneDetailsContainer
+{
+	horizontal-align: right;
+	flow-children: down;
+	height: 100%;
+	width: 100%;
+}
+
+.ZoneArrow
+{
+	width: 32px;
+	height: 32px;
+	transition-property: width, opacity;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;
+}
+
+.ZoneArrow:disabled
+{
+	//width: 0px;
+	opacity: .1;
+}
+
+#PrevZoneButton
+{
+	transform: rotateZ(180deg);
+	horizontal-align: left;
+}
+
+#NextZoneButton
+{
+	horizontal-align: right;
+	
+}
+
+.BestRecordIcon
+{
+	opacity: 1;
+	tooltip-position: left;
+	width: 12px;
+	height: 26px;
+	margin-top: -4px;
+	background-image: url("s2r://panorama/images/status_icons/previousbest_icon_psd.vtex");
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	wash-color: #0f6;
+	margin-right: 4px;
+}
+
+#StarInfoContainer
+{
+	width: 100%;
+	height: 120px;
+	border: 1px solid red;
+}
+
+.ZoneTitle,
+.ZoneTimeLabel,
+.ZoneSubtitle
+{
+	color: #7CB8F6;
+	font-size: 18px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	text-align: left;
+	horizontal-align: right;
+	text-shadow: 1px 1px 0px 2 black;	
+}
+
+.ZoneColumn
+{
+	margin-right: 40px;
+}
+
+#ZoneStarContainer
+{
+	flow-children: right;
+}
+
+#DisplayedZoneStarContainer
+{
+	flow-children: right;
+	margin-left: 8px;
+	margin-right: 18px;
+}
+
+#ScoreboardZoneTimeLabel
+{
+	width: 40px;
+	text-align: right;
+	text-overflow: shrink;
+}
+
+
+.ZoneTitle
+{
+	font-size: 34px;
+	color:white;
+	margin-top: -6px;
+	color: gradient( linear, 0% 0%, 0% 100%, from( #555 ), to( #aaa ) );
+	text-shadow: 0px 2px 2px 4 black;	
+}
+
+.ActiveZone .ZoneTitle
+{
+	color: gradient( linear, 0% 0%, 0% 100%, from( #E7D291 ), to( #965D01 ) );
+}
+
+#ForwardBackward
+{
+	width: 100%;
+	horizontal-align: right;
+}
+
+.ScoreboardForwardBackButton
+{
+	transition-property: opacity, width;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.ScoreboardForwardBackButton:hover
+{
+ brightness: 2;	
+}
+
+.ScoreboardForwardBackButton:disabled
+{
+	opacity: 0;
+}
+
+.ScoreboardForwardBackButton Label
+{
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	
+	opacity: 1;
+	
+	transition-property: opacity;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;
+}
+
+#NextZoneButton
+{
+	horizontal-align: right;
+}
+
+.ZoneDescription
+{
+	max-height: 64px;
+	margin-top: 0px;
+	margin-right: 40px;
+	horizontal-align: right;
+	font-style: italic;
+	max-width: 400px;
+	text-align: right;
+	font-size: 14px;
+	color: #5E7EBD;
+	text-shadow: 1px 1px 0px 2 black;	
+	
+}
+
+.NewBestContainer
+{
+	margin-top: -4px;
+	horizontal-align: right;
+}
+
+.ZoneTimeLabel
+{
+	color: white;
+	padding-left: 4px;
+}
+
+#ScoreboardTeamContainer
+{
+	height: 450px;
+	vertical-align: bottom;
+	width: 100%;
+	padding-top: 8px;
+}
+
+#RatioBarsContainer
+{
+	height: 95%;
+	width: 95%;
+	horizontal-align: center;
+	vertical-align: top;
+	border: 1px solid red;
+	visibility: collapse;
+}
+
+.HeroRow
+{
+	width: 100%;
+	height: fit-children;
+	horizontal-align: left;
+	vertical-align: top;
+}
+
+.HeroRow.CurrentPlayer
+{
+	background-color: #444;
+}
+
+#HeroImageDataContainer
+{
+
+	flow-children: down;
+}
+
+.HeroTotalLabel
+{
+	width: 96px;
+	horizontal-align: left;
+	vertical-align: bottom;
+	text-transform: uppercase;
+	text-align: right;
+}
+
+.HeroImagePanel
+{
+	width: 96px;
+	height: 64px;
+
+}
+
+#PlayerImagePanel
+{
+	margin-top: 0px;
+}
+
+.HeroImagesOtherPlayers
+{
+	width: fit-children;
+	flow-children: down;
+	//horizontal-align: right;
+}
+
+
+#HeroImagePanel0
+{
+	margin-left: 20px;
+}
+
+.HeroColorBar
+{
+	width: 4px;
+	height: 56px;
+	horizontal-align: center;
+	color: white;
+}
+
+.RatioBarStack
+{
+	width: 85%;
+	height: 40px;
+	horizontal-align: left;
+	vertical-align: center;
+}
+
+.RatioBar
+{
+	width: 100%;
+	height: 24px;
+	flow-children: right;
+	horizontal-align: left;
+	vertical-align: top;
+}
+
+.CategoryLabelContainer Label
+{
+	width: 96px;
+	//border: 1px solid red;
+	text-align: right;
+}
+
+.CategoryLabelContainer
+{
+	width: 15%;
+	horizontal-align: right;
+	vertical-align: center;
+}
+
+.RatioBarContainer
+{
+	width: 100%;
+	height: fit-children;
+}
+
+.RatioBarSegment
+{
+	border-radius: 4px;
+	border: 0px solid red;
+	height: 4px;
+	width: 25%;
+	vertical-align: center;
+}
+
+.RatioBarSegment .ProgressBarRight
+{
+	visibility: collapse;
+}
+
+.RatioBarSegment.Hero0 { border-color: #0000ff; background-color: #0000ff;}
+.RatioBarSegment.Hero1 { border-color: #66FFBF; background-color: #66FFBF; opacity: .5;}
+.RatioBarSegment.Hero2 { border-color: #BF00BF; background-color: #BF00BF; opacity: .5;}
+.RatioBarSegment.Hero3 { border-color: #F3F00B; background-color: #F3F00B; opacity: .5;}
+
+
+.RatioBarSegment.LocalPlayer
+{
+	height: 24px;
+	border-width: 1px;
+	opacity: 1;
+}
+
+.RatioBar Label
+{
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+.RatioBarCount
+{
+	font-size: 24px;	
+	horizontal-align: left;
+	margin-left: 20px;
+}
+
+.RatioBarCategory
+{
+	font-size: 14px;
+	text-transform: uppercase;
+	horizontal-align: left;
+	margin-left: 20px;
+}
+
+.RatioBarUnderCategory
+{
+	font-size: 14px;
+	text-transform: uppercase;
+	horizontal-align: left;
+	margin-left: 4px;
+	text-align: left;
+}
+
+.RatioBarPlayerValue
+{
+	vertical-align: center;
+	horizontal-align: left;
+	margin-left: 4px;
+//	border: 1px solid red;
+}
+
+#Stat1 #Hero0 { width: fill-parent-flow( 0.58 ); 	}
+#Stat1 #Hero1 { width: fill-parent-flow( 0.4 ); 	}
+#Stat1 #Hero2 { width: fill-parent-flow( 0.36 ); 	}
+#Stat1 #Hero3 { width: fill-parent-flow( 0.16 );	}
+
+#Stat2 #Hero0 { width: fill-parent-flow( 0.18 ); 	}
+#Stat2 #Hero1 { width: fill-parent-flow( 0.4 ); 	}
+#Stat2 #Hero2 { width: fill-parent-flow( 0.6 ); 	}
+#Stat2 #Hero3 { width: fill-parent-flow( 0.2 );	}
+
+
+#Stat3 #Hero0 { width: fill-parent-flow( 0.2 ); 	}
+#Stat3 #Hero1 { width: fill-parent-flow( 0.004 ); 	}
+#Stat3 #Hero2 { width: fill-parent-flow( 0.4 ); 	}
+#Stat3 #Hero3 { width: fill-parent-flow( 0.004 );	}
+
+#Stat4 #Hero0 { width: fill-parent-flow( 0.28 ); 	}
+#Stat4 #Hero1 { width: fill-parent-flow( 0.24 ); 	}
+#Stat4 #Hero2 { width: fill-parent-flow( 0.26 ); 	}
+#Stat4 #Hero3 { width: fill-parent-flow( 0.26 );	}
+
+#Stat5 #Hero0 { width: fill-parent-flow( 0.32 ); 	}
+#Stat5 #Hero1 { width: fill-parent-flow( 0.31 ); 	}
+#Stat5 #Hero2 { width: fill-parent-flow( 0.21 ); 	}
+#Stat5 #Hero3 { width: fill-parent-flow( 0.004 );	}
+
+#Stat6 #Hero0 { width: fill-parent-flow( 0.58 ); 	}
+#Stat6 #Hero1 { width: fill-parent-flow( 0.2 ); 	}
+#Stat6 #Hero2 { width: fill-parent-flow( 0.6 ); 	}
+#Stat6 #Hero3 { width: fill-parent-flow( 0.20 );	}
+
+
+#Stat7 #Hero0 { width: fill-parent-flow( 0.1 ); 	}
+#Stat7 #Hero1 { width: fill-parent-flow( 0.4 ); 	}
+#Stat7 #Hero2 { width: fill-parent-flow( 0.6 ); 	}
+#Stat7 #Hero3 { width: fill-parent-flow( 0.1 );	}
+
+
+#ScoreLabelsContainer
+{
+	width: 100%;
+	vertical-align: middle;
+}
+
+.ScoreLabel,
+.ScoreLabelValue,
+.ScoreLabelsWidth
+{
+	width: fill-parent-flow(1);
+	vertical-align: middle;
+	text-align: center;
+	font-size: 24px;
+	color: #888;
+}
+
+.ScoreLabel
+{
+	text-transform: uppercase;
+	font-size: 16px;
+}
+
+.CurrentPlayer .ScoreLabelValue
+{
+	color: white;
+}
+
+.Hidden
+{
+	visibility: collapse;
+	
+}
+
+#ScoreboardZone
+{
+	horizontal-align: center;
+	text-overflow: shrink;
+	height: 42px;
+	max-width: 480px;
+}
+
+
+#ZoneRequirementsTab
+{
+	width: 360px;
+}
+
+.ReqTab
+{
+	width: fill-parent-flow(1);
+	border: 1px solid black;
+	
+	padding-top: 4px;
+	padding-bottom: 2px;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	background-color: #26735411;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #26735411 ), color-stop( .8, #26735411 ), to( #00000044 ) );
+	border: 0px solid transparent;
+}
+
+#3StarReq,
+#2StarReq
+{
+	margin-left: 3px;
+
+}
+
+#1StarReq,
+#2StarReq
+{
+	margin-right: 3px;
+
+}
+
+
+.ReqTab:hover
+{
+	brightness: 2;
+}
+
+.ReqTab:hover:selected,
+.ReqTab:selected
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #19513Dff ), color-stop( .8, #0D3027ff ), to( #0D3027ff ) );
+	brightness: 1;
+}
+
+
+.ReqTab .RadioBox
+{
+	visibility: collapse;
+	width: fit-children(1);
+}
+
+.ReqTab #StarContainerReplays
+{
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.ReqTab #StarContainerReplays #ZoneStar1,
+.ReqTab #StarContainerReplays #ZoneStar1,
+.ReqTab #StarContainerReplays #ZoneStar2,
+.ReqTab #StarContainerReplays #ZoneStar1,
+.ReqTab #StarContainerReplays #ZoneStar2,
+.ReqTab #StarContainerReplays #ZoneStar3
+{
+	wash-color: #850;
+}
+
+.HasStars1.ReqTab #StarContainerReplays #ZoneStar1,
+.HasStars2.ReqTab #StarContainerReplays #ZoneStar1,
+.HasStars2.ReqTab #StarContainerReplays #ZoneStar2,
+.HasStars3.ReqTab #StarContainerReplays #ZoneStar1,
+.HasStars3.ReqTab #StarContainerReplays #ZoneStar2,
+.HasStars3.ReqTab #StarContainerReplays #ZoneStar3
+{
+	wash-color: #fa0;
+	background-image: url("s2r://panorama/images/status_icons/star_raised_filled_psd.vtex");	
+}
+
+.Stars1 #ZoneStar1,
+.Stars2 #ZoneStar1,
+.Stars2 #ZoneStar2,
+.Stars3 #ZoneStar1,
+.Stars3 #ZoneStar2,
+.Stars3 #ZoneStar3
+{
+	wash-color: #fa0;
+	background-image: url("s2r://panorama/images/status_icons/star_raised_filled_psd.vtex");	
+}
+
+#ZoneRequirementContainer
+{
+	width: 100%;
+	height: 165px;
+	margin-bottom: 0px;
+	background-color: black;
+}
+
+.ReqTitle
+{
+	text-transform: uppercase;
+	margin-left: 16px;
+	color: #5E7EBD;
+	margin-top: 4px;
+	letter-spacing: 2px;
+}
+
+#ZoneStarRequirementsDesc
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #0D3027 ), color-stop( .4, #0D302744 ), to( #0D302700 ) );		
+	padding: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.ZoneReqLabel
+{
+	font-size: 16px;
+	font-weight: light;
+	color: #fff3;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.ZoneSelected_forest .Tab1Selected #Zone01_1_Desc,
+.ZoneSelected_forest .Tab2Selected #Zone01_2_Desc,
+.ZoneSelected_forest .Tab3Selected #Zone01_3_Desc,
+
+.ZoneSelected_forest_holdout .Tab1Selected #Zone02_1_Desc,
+.ZoneSelected_forest_holdout .Tab2Selected #Zone02_2_Desc,
+.ZoneSelected_forest_holdout .Tab3Selected #Zone02_3_Desc,
+
+.ZoneSelected_darkforest_rescue .Tab1Selected #Zone03_1_Desc,
+.ZoneSelected_darkforest_rescue .Tab2Selected #Zone03_2_Desc,
+.ZoneSelected_darkforest_rescue .Tab3Selected #Zone03_3_Desc,
+
+.ZoneSelected_darkforest_death_maze .Tab1Selected #Zone04_1_Desc,
+.ZoneSelected_darkforest_death_maze .Tab2Selected #Zone04_2_Desc,
+.ZoneSelected_darkforest_death_maze .Tab3Selected #Zone04_3_Desc,
+
+.ZoneSelected_darkforest_pass .Tab1Selected #Zone05_1_Desc,
+.ZoneSelected_darkforest_pass .Tab2Selected #Zone05_2_Desc,
+.ZoneSelected_darkforest_pass .Tab3Selected #Zone05_3_Desc,
+
+.ZoneSelected_underground_temple .Tab1Selected #Zone06_1_Desc,
+.ZoneSelected_underground_temple .Tab2Selected #Zone06_2_Desc,
+.ZoneSelected_underground_temple .Tab3Selected #Zone06_3_Desc,
+
+.ZoneSelected_desert_start .Tab1Selected #Zone07_1_Desc,
+.ZoneSelected_desert_start .Tab2Selected #Zone07_2_Desc,
+.ZoneSelected_desert_start .Tab3Selected #Zone07_3_Desc,
+
+.ZoneSelected_desert_expanse .Tab1Selected #Zone08_1_Desc,
+.ZoneSelected_desert_expanse .Tab2Selected #Zone08_2_Desc,
+.ZoneSelected_desert_expanse .Tab3Selected #Zone08_3_Desc,
+
+.ZoneSelected_desert_chasm .Tab1Selected #Zone09_1_Desc,
+.ZoneSelected_desert_chasm .Tab2Selected #Zone09_2_Desc,
+.ZoneSelected_desert_chasm .Tab3Selected #Zone09_3_Desc,
+
+.ZoneSelected_desert_fortress .Tab1Selected #Zone10_1_Desc,
+.ZoneSelected_desert_fortress .Tab2Selected #Zone10_2_Desc,
+.ZoneSelected_desert_fortress .Tab3Selected #Zone10_3_Desc
+{
+	opacity: 1;
+}
+
+
+.ZoneSelected_tundra .Tab1Selected #Act2_Zone01_1_Desc,
+.ZoneSelected_tundra .Tab2Selected #Act2_Zone01_2_Desc,
+.ZoneSelected_tundra .Tab3Selected #Act2_Zone01_3_Desc,
+
+.ZoneSelected_ice_lake .Tab1Selected #Act2_Zone02_1_Desc,
+.ZoneSelected_ice_lake .Tab2Selected #Act2_Zone02_2_Desc,
+.ZoneSelected_ice_lake .Tab3Selected #Act2_Zone02_3_Desc,
+
+.ZoneSelected_aerie .Tab1Selected #Act2_Zone03_1_Desc,
+.ZoneSelected_aerie .Tab2Selected #Act2_Zone03_2_Desc,
+.ZoneSelected_aerie .Tab3Selected #Act2_Zone03_3_Desc,
+
+.ZoneSelected_plateau .Tab1Selected #Act2_Zone04_1_Desc,
+.ZoneSelected_plateau .Tab2Selected #Act2_Zone04_2_Desc,
+.ZoneSelected_plateau .Tab3Selected #Act2_Zone04_3_Desc,
+
+.ZoneSelected_crag .Tab1Selected #Act2_Zone05_1_Desc,
+.ZoneSelected_crag .Tab2Selected #Act2_Zone05_2_Desc,
+.ZoneSelected_crag .Tab3Selected #Act2_Zone05_3_Desc,
+
+.ZoneSelected_crypt .Tab1Selected #Act2_Zone06_1_Desc,
+.ZoneSelected_crypt .Tab2Selected #Act2_Zone06_2_Desc,
+.ZoneSelected_crypt .Tab3Selected #Act2_Zone06_3_Desc,
+
+.ZoneSelected_crypt_holdout .Tab1Selected #Act2_Zone07_1_Desc,
+.ZoneSelected_crypt_holdout .Tab2Selected #Act2_Zone07_2_Desc,
+.ZoneSelected_crypt_holdout .Tab3Selected #Act2_Zone07_3_Desc,
+
+.ZoneSelected_reefs_edge .Tab1Selected #Act2_Zone08_1_Desc,
+.ZoneSelected_reefs_edge .Tab2Selected #Act2_Zone08_2_Desc,
+.ZoneSelected_reefs_edge .Tab3Selected #Act2_Zone08_3_Desc,
+
+.ZoneSelected_shoal .Tab1Selected #Act2_Zone09_1_Desc,
+.ZoneSelected_shoal .Tab2Selected #Act2_Zone09_2_Desc,
+.ZoneSelected_shoal .Tab3Selected #Act2_Zone09_3_Desc,
+
+.ZoneSelected_dark_reef_b .Tab1Selected #Act2_Zone10_1_Desc,
+.ZoneSelected_dark_reef_b .Tab2Selected #Act2_Zone10_2_Desc,
+.ZoneSelected_dark_reef_b .Tab3Selected #Act2_Zone10_3_Desc,
+
+.ZoneSelected_silt_arena .Tab1Selected #Act2_Zone11_1_Desc,
+.ZoneSelected_silt_arena .Tab2Selected #Act2_Zone11_2_Desc,
+.ZoneSelected_silt_arena .Tab3Selected #Act2_Zone11_3_Desc
+{
+	opacity: 1;
+}
+
+
+.MuteButton
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 32px;
+	height: 32px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("s2r://panorama/images/custom_game/button_audio_on_psd.vtex");
+	visibility: visible;
+	opacity: 0.8;
+	margin-right: -32px;
+}
+
+.MuteButton:hover
+{
+	opacity: 1;
+}
+
+.MuteButton.player_muted 
+{
+    background-image: url("s2r://panorama/images/custom_game/button_audio_off_psd.vtex");
+}
+
+.local_player .MuteButton
+{
+	visibility: collapse;
+}

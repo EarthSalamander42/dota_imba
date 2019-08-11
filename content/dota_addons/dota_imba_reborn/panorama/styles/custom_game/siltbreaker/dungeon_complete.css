@@ -1,0 +1,523 @@
+.DungeonCompleteRoot
+{
+	width: 100%;
+	height: 100%;
+}
+
+#DungeonCompleteContainerAct1,
+#DungeonCompleteContainerAct2
+{
+	width: 100%;
+	height: 100%;
+ 	opacity: 0;
+}
+
+.ep_1 #DungeonCompleteContainerAct1,
+.ep_2 #DungeonCompleteContainerAct2
+{
+	opacity: 1;
+}
+
+#DungeonCompleteRoot.ShowVictory
+{
+	visibility: visible;
+}
+
+#DungeonCompleteSuccess, 
+#DungeonCompleteFailure
+{
+	width: fit-children;
+	height: fit-children;
+	horizontal-align: center;
+	vertical-align: center;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 2s;
+	transition-timing-function: ease-in-out;
+}
+
+#DungeonCompleteSuccess
+{
+	transition-delay: 3s;
+} 
+
+.GameOverWin #DungeonCompleteSuccess,
+.GameOverLoss #DungeonCompleteFailure
+{
+	opacity: 1;
+}
+
+#DungeonCompleteFailure
+{
+	opacity: 0.001;
+	width: 100%;
+	height: 100%;
+	background-color: #300a;
+	background-color: gradient( radial, 50% 50%, 0% 0%, 200% 200%, from( #400c ), color-stop( .4, #100a ), to( #000 ) );
+
+
+}
+
+#DeathFX
+{
+	width: 25%;
+	height: 25%;
+
+	horizontal-align: center;
+	vertical-align: middle;
+	pre-transform-scale2d: 3;
+	opacity-mask: url("s2r://panorama/images/masks/softedge_box_png.vtex");	
+	transition-property: opacity;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+#DeathFX.SceneLoaded
+{
+	opacity: 1;
+}
+
+
+.CompleteTextContainer
+{
+	horizontal-align: center;
+	vertical-align: middle;
+	margin-bottom: 160px;
+	transition-property: transform, opacity, pre-transform-scale2d;
+	transition-duration: 3s;
+	transition-timing-function: ease-in;
+	transition-delay: 1s;	
+	opacity: 0.001;
+	pre-transform-scale2d: 0.5;	
+
+}
+
+
+.GameOverWin .CompleteTextContainer,
+.GameOverLoss .CompleteTextContainer
+{
+	opacity: 1;
+	pre-transform-scale2d: 1;	
+	transition-delay: 0s;	
+}
+	
+
+.CompleteMainText
+{
+	horizontal-align: center;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 96px;
+	transform: rotateX(60deg) translateY(0px) translateZ(3px);	
+	color: gradient( radial, 50% 50%, 0% 0%, 200% 200%, from( #f30 ), color-stop( .3, #630 ), to( #110 ) );
+	text-align: center;
+	padding: 16px;
+	
+	transition-property: transform, opacity;
+	transition-duration: 3s;
+	transition-delay: 1s;
+	transition-timing-function: ease-in;
+}
+
+.GameOverWin .CompleteMainText
+{
+	font-size: 56px;
+	width: 1024px;
+	
+}
+
+.ShowOutro .CompleteTextContainer
+{
+	opacity: 0;
+}
+
+#WinLabel
+{
+	horizontal-align: center;
+	vertical-align: middle;
+	font-size: 82px;
+	color: #0f0;
+}
+
+#FailedLabel
+{
+		opacity-mask: url("s2r://panorama/images/masks/scratches_horizontal_psd.vtex")0.5;
+}
+
+#FailedLabelDepth1
+{
+	transform: rotateX(61deg) translateY(1px) translateZ(-1px);	
+	color: gradient( radial, 50% 50%, 0% 0%, 300% 300%, from( #f85 ), color-stop( .3, #630 ), to( #110 ) );
+	wash-color: #0000;
+}
+
+#FailedLabelDepth2
+{
+	transform: rotateX(61deg) translateY(2px) translateZ(-3px);	
+	wash-color: #0008;
+	
+}
+
+#FailedLabelDepth3
+{
+	transform: rotateX(61deg) translateY(4px) translateZ(-5px);	
+	wash-color: #000a;
+}
+
+#FailedLabelDepth4
+{
+	transform: rotateX(61deg) translateY(6px) translateZ(-7px);	
+	wash-color: #000c;
+}
+
+#FailedLabelDepth5
+{
+	transform: rotateX(61deg) translateY(8px) translateZ(-9px);	
+	wash-color: #000e;
+}
+
+#FailedLabelDepth6
+{
+	transform: rotateX(61deg) translateY(10px) translateZ(-10px);	
+	wash-color: #000f;
+	text-shadow: 0px 2px 8px 2 #000000;
+}
+
+
+.GameOverWin .CompleteMainText,
+.GameOverLoss .CompleteMainText
+{
+	transform: rotateX(10deg) translateY(0px) translateZ(3px);	
+}
+
+.GameOverWin #FailedLabelDepth1,
+.GameOverLoss #FailedLabelDepth1
+{
+	transform: rotateX(11deg) translateY(1px) translateZ(-1px);	
+}
+
+.GameOverWin #FailedLabelDepth2,
+.GameOverLoss #FailedLabelDepth2
+{
+	transform: rotateX(11deg) translateY(2px) translateZ(-2px);	
+}
+
+.GameOverWin #FailedLabelDepth3,
+.GameOverLoss #FailedLabelDepth3
+{
+	transform: rotateX(11deg) translateY(3px) translateZ(-3px);	
+}
+
+.GameOverWin #FailedLabelDepth4,
+.GameOverLoss #FailedLabelDepth4
+{
+	transform: rotateX(11deg) translateY(4px) translateZ(-4px);	
+}
+
+.GameOverWin #FailedLabelDepth5,
+.GameOverLoss #FailedLabelDepth5
+{
+	transform: rotateX(11deg) translateY(5px) translateZ(-5px);	
+}
+
+.GameOverWin #FailedLabelDepth6,
+.GameOverLoss #FailedLabelDepth6
+{
+	transform: rotateX(11deg) translateY(6px) translateZ(-6px);	
+}
+
+.ShowOutro #ContinueButton
+{
+	opacity: 0;
+}
+
+.ShowOutro:not(.OutroPage1Active) #DisconnectButton
+{
+	opacity: 1;
+}
+
+#ContinueButton,
+#DisconnectButton
+{
+	horizontal-align: center;
+	vertical-align: middle;
+	
+	padding: 12px 16px 10px 16px;
+	margin-top: 200px;
+	background-color: #22000077;
+	border: 1px solid #893751;
+	opacity: 0;
+	z-index: 3;
+	
+	transition-property: opacity, brightness, background-color;
+	transition-duration: .5s, .34s;
+	transition-delay: 3.5s, 0s;
+	transition-timing-function: ease-in-out;
+}
+
+.GameOverWin #DisconnectButton
+{
+	transition-delay: 0s, 0s;
+	vertical-align: bottom;
+	margin-bottom: 150px;
+	min-width: 230px;
+	background-color: #5D8B8Be7;
+	border: 1px solid white;
+}
+
+.GameOverWin #ContinueButton,
+.GameOverLoss #DisconnectButton
+{
+	opacity: 1;
+	transition-delay: 0s;
+}
+
+#ContinueButton:hover,
+#DisconnectButton:hover
+{
+	brightness: 2;
+	border-color: white;
+}
+
+.GameOverWin .ShowOutro #ContinueButton
+{
+	opacity: 0;
+}
+
+#ContinueButton Label,
+#DisconnectButton Label
+{
+	horizontal-align: center;
+	text-align: center;
+	font-size: 24px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	color: #CD6A37;
+	text-shadow: 0px 2px 0px 3 #000000;
+}
+
+#DungeonCompleteContainerAct2 #DisconnectButton Label
+{
+	color: white;
+}
+
+#ContinueButton Label
+{
+	color: white;
+	text-shadow: 0px 2px 0px 2 #000000;
+}
+
+#DisconnectButton:hover
+{
+	brightness: 2;
+	background-color: black;
+}
+
+#DisconnectButton:active
+{
+	border-color: #F45E33;
+}
+
+
+
+#DungeonCompleteSuccess
+{
+	width: 100%;
+	height: 100%;
+	opacity: 0.001;	
+//	visibility: collapse;
+}
+
+#WinLabel
+{
+	vertical-align: top;
+	horizontal-align: center;
+	font-size: 42px;
+	color: #0f0;
+	text-shadow: 0px 2px 1px 3 black;
+	margin-top: 100px;
+}
+
+#OutroSceneSnowy
+{
+
+	width: 35%;
+	height: 82%;	
+	horizontal-align: center;
+	vertical-align: middle;
+	margin-bottom: 160px;
+	margin-left: 30px;
+	opacity-mask: url("s2r://panorama/images/masks/softedge_circle_sharper_png.vtex") 1;		
+	opacity: 0;
+	
+	transition-property: opacity;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+.ep_2 #OutroSceneSnowy,
+.ep_2 #OutroScene
+{
+	visibility: collapse;
+}
+
+#OutroScene
+{
+	width: 100%;
+	height: 100%;	
+	opacity: 0;
+	
+	transition-property: opacity;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+.ShowOutro #OutroScene,
+.ShowOutro #OutroSceneSnowy
+{
+	opacity: 1;
+}
+
+
+/* 
+#OutroSceneSnowy.SceneLoaded,
+#OutroScene.SceneLoaded
+{
+	opacity: 1;
+}
+ */
+
+.LoreLabel
+{
+	width: 400px;
+	horizontal-align: center;
+	vertical-align: middle;
+	background-color: #000e;
+	opacity: 0;
+	
+	padding: 16px;
+	color: black;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6F93A0 ), to( #E0F36A ) );	
+	border: 2px solid #6C2756;
+	
+	
+	
+	transition-property: opacity;
+	transition-duration: .8s;
+	transition-delay: .32s;
+	transition-timing-function: ease-in-out;
+	
+}
+
+#DungeonCompleteContainerAct2 .LoreLabel
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #567786 ), to( #765219 ) );	
+	border: 2px solid #567786;
+	color: white;
+}
+
+#LoreLabel1
+{
+	margin-left: 1000px;
+	margin-top: 300px;
+}
+
+.ShowOutro.OutroPage1Active #LoreLabel2
+{
+	opacity: 1;
+}
+
+
+.ShowOutro:not(.OutroPage1Active) #LoreLabel1
+{
+	opacity: 1;
+}
+
+#LoreLabel2
+{
+	margin-bottom: 600px;
+	margin-right: 1000px;
+}
+
+
+.OutroPage
+{
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;		
+	
+	transition-property: opacity;
+	transition-duration: .8s;
+	transition-timing-function: ease-in-out;	
+}
+
+#OutroPage1
+{
+	background-color: black;
+}
+
+.OutroPage1Active.ShowOutro #OutroPage1
+{
+	opacity: 1;
+}
+
+
+.ShowOutro:not(.OutroPage1Active) #OutroPage2
+{
+	opacity: 1;
+}
+
+#NextOutroPage
+{
+	horizontal-align: center;
+	vertical-align: middle;
+	
+	padding: 12px 16px 10px 16px;
+	margin-top: 600px;
+	margin-left: 900px;
+	
+	background-color: #22000077;
+	border: 1px solid #D4CCDE;
+	opacity: 1;
+	z-index: 3;
+	
+	transition-property: opacity, brightness, background-color;
+	transition-duration: .5s, .34s;
+	transition-delay: 3.5s, 0s;
+	transition-timing-function: ease-in-out;	
+}
+
+#NextOutroPage Label
+{
+	horizontal-align: center;
+	text-align: center;
+	font-size: 24px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	color: #D4CCDE;
+	text-shadow: 0px 2px 0px 3 #000000;
+}
+
+#NextOutroPage:hover
+{
+	border-color: white;
+	brightness: 2;
+}
+
+#OutroPage2
+{
+	background-image: url("s2r://panorama/images/comic/outro2_png.vtex");
+}
+
+#SiltScene
+{
+	width: 100%;
+	height: 100%;
+}

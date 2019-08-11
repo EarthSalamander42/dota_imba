@@ -151,7 +151,7 @@ function Mutation:PeriodicSpellcast()
 	local caster
 
 	-- initialize to negative
-	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {0})
+	CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {0})
 
 	Timers:CreateTimer(55.0, function()
 		varSwap = (counter % 2) + 1
@@ -162,7 +162,7 @@ function Mutation:PeriodicSpellcast()
 	end)
 
 	Timers:CreateTimer(60.0, function()
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {varSwap})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {varSwap})
 		if bad_fountain == nil or good_fountain == nil then
 			print("nao cucekd up!!! ")
 			return 60.0 
@@ -250,7 +250,7 @@ function Mutation:TugOfWar()
 
 	-- Initial logic
 	golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(1)
-	FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
+	--FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
 	golem:SetDeathXP(50)
 	golem:SetMinimumGoldBounty(50)
 	golem:SetMaximumGoldBounty(50)
@@ -301,7 +301,7 @@ function Mutation:Wormhole()
 						end)
 					end
 					unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
-					FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
+					--FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
 					if unit.GetPlayerID and unit:GetPlayerID() then
 						unit:CenterCameraOnEntity(unit)
 					end

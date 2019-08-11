@@ -1,0 +1,176 @@
+#QuestLog
+{
+    horizontal-align: left;
+    vertical-align: top;
+    margin-top: 180px;
+    margin-left: 20px;
+
+    max-height: 500px;
+}
+
+
+.Zone
+{
+    transform: translatex( 0px );
+    transition-property: transform;
+    transition-duration: 0.2s;
+    transition-delay: 10.0s;
+}
+
+
+.QuestLogHeader
+{
+    color: #97B1EC22;
+    font-weight: thin;
+    text-align: center;
+    text-shadow: 1px 1px 2px 2.0 #00000011;
+
+    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    font-size: 16px;
+	letter-spacing: 3px;
+}
+
+.QuestZoneName
+{
+    color: gradient( linear, 0% 0%, 0% 100%, from( #E7D291 ), to( #965D01 ) );
+	text-shadow: 0px 2px 2px 4 black;
+	
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 0px 2.0 #000000;
+
+    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    font-size: 20px;
+	
+	margin-bottom: 4px;
+}
+
+.QuestText,
+.RewardText
+{
+    color: #B79358;
+    text-align: center;
+    text-shadow: 1px 1px 2px 2.0 #000000ff;
+
+    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-weight: thin;
+    font-size: 16px;
+	letter-spacing: 0px;
+    horizontal-align: left;
+    vertical-align: center;
+}
+
+.QuestText
+{
+    color: gradient( linear, 0% 0%, 0% 100%, from( #E7D291 ), to( #965D01 ) );
+	color: #A5ACCB;
+	max-width: 250px;
+	text-align: left;
+	margin-left: 4px;
+	
+	transition-property: opacity, color;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;
+}
+
+.desert_outpost .QuestText,
+.desert_expanse .QuestText,
+.desert_start .QuestText,
+.desert_town .QuestText
+{
+	color: #FAD2A1;
+}
+
+#QuestReward
+{
+	visibility: collapse;
+}
+
+.RewardText
+{
+    font-size: 26px;
+}
+
+.Completed .QuestText
+{
+	opacity: .1;
+}
+
+.Quest.HideOutOfZone 
+{
+    visibility: collapse;
+}
+
+.QuestIcon
+{
+    width: 32px;
+    height: 32px;
+    background-size: 100%;
+}
+
+#ZoneQuestsContainer
+{
+	flow-children: up;
+}
+
+.Completed .QuestIcon
+{
+    visibility: collapse;
+}
+
+.QuestIcon.Explore
+{
+    background-image: url("s2r://panorama/images/interface/quest_pip_empty_psd.vtex");
+    wash-color: white;
+}
+
+.QuestIcon.Holdout
+{
+    background-image: url("s2r://panorama/images/interface/quest_holdout_empty_psd.vtex");
+}
+
+
+.QuestIconCheckMark
+{
+    width: 32px;
+    height: 32px;
+    background-image: url("s2r://panorama/images/interface/quest_pip_complete_psd.vtex");
+
+    background-size: 100%;
+    visibility: collapse;
+}
+
+.Completed .QuestIconCheckMark
+{
+    visibility: visible;
+}
+
+#QuestNumbers
+{
+    visibility: collapse;
+}
+
+.ShowNumbers #QuestNumbers
+{
+    visibility: visible;
+}
+
+.Zone.Completed,
+.Zone.NotInZone
+{
+    transform: translatex( -500px );
+    visibility: collapse;
+}
+
+#XPReward,
+#GoldReward
+{
+    visibility: collapse;
+}
+
+.XPReward #XPReward,
+.GoldReward #GoldReward
+{
+    visibility: visible;
+}
+

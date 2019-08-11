@@ -1,0 +1,74 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+<!--	<include src="s2r://panorama/styles/dashboard_page_controlslibrary.vcss_c" /> -->
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/party_portraits.css" />
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/hud_main.css" />
+	</styles>
+
+	<script>
+		var OnHeroIconClicked = function()
+		{
+			var entIndex = $( '#HeroIconContainer').GetAttributeInt( "ent_index", -1 );
+			if ( entIndex !== -1 )
+			{
+				ProcessClick( entIndex );
+			}
+		} 
+
+		var OnVIPIconClicked = function()
+		{
+			var entIndex = $( '#VIPImage').GetAttributeInt( "ent_index", -1 );
+			if ( entIndex !== -1 )
+			{
+				ProcessClick( entIndex );
+			}
+		} 
+
+		var ProcessClick = function( entIndex )
+		{
+				if ( entIndex === -1 )
+					return;
+
+				var clickbehaviors = GameUI.GetClickBehaviors();
+				if ( clickbehaviors === CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_CAST )
+				{
+					var abilityIndex = Abilities.GetLocalPlayerActiveAbility();
+					var abilityBehavior = Abilities.GetBehavior( abilityIndex );
+					if ( abilityBehavior & DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET )
+					{
+						var order = {
+							AbilityIndex : abilityIndex,
+							QueueBehavior : OrderQueueBehavior_t.DOTA_ORDER_QUEUE_NEVER,
+							ShowEffects : false,
+							OrderType : dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET,
+							TargetIndex : entIndex,
+						};
+						Game.PrepareUnitOrders( order );  
+						return;  
+					}
+				}
+				
+			GameUI.SelectUnit( entIndex, false );
+			return;  
+		}
+	</script>
+
+	<Panel hittest="false" class="PartyPortraitContainer TopBottomFlow">
+		<Label hittest="false" id="PlayerName" class="PartyPortraitName" text="" html="true"/>	
+		<Panel id="HeroIconContainer" onactivate="OnHeroIconClicked()">
+			<DOTAHeroImage hittest="false" id="HeroImage" class="PartyPortraitImage" scaling="stretch-to-cover-preserve-aspect" />
+			<Panel id="DisconnectIcon" hittest="false"/>
+		</Panel>
+		<Image id="VIPImage" class="VIPPortraitImage" scaling="stretch-to-cover-preserve-aspect" onactivate="OnVIPIconClicked()"/>
+		<ProgressBar hittest="false" id="HealthBar" class="PartyPortraitHealthBar" min="0" max="100" value="100"/>
+		<ProgressBar hittest="false" id="ManaBar" class="PartyPortraitManaBar" min="0" max="100" value="100"/>
+		<Panel id="PartyLifeRemainingContainer" class="PartyPortaitLivesContainer" require-composition-layer="true" always-cache-composition-layer="true">
+			<DOTAHeroImage id="PartyLife0" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+			<DOTAHeroImage id="PartyLife1" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+			<DOTAHeroImage id="PartyLife2" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+			<DOTAHeroImage id="PartyLife3" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />
+			<DOTAHeroImage id="PartyLife4" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon LifeUsed" scaling="stretch-to-cover-preserve-aspect" />           
+		</Panel>
+	</Panel>	
+</root>

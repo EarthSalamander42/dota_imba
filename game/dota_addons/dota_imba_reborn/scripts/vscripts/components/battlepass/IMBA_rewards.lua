@@ -724,7 +724,7 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "9790", "weapon", "0")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_centaur" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_CENTAUR["centaur_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["centaur_immortal"] then
 				hero.double_edge_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9.vpcf"
 				hero.double_edge_body_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_body_ti9.vpcf"
 				hero.double_edge_phase_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_phase_ti9.vpcf"
@@ -734,7 +734,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_chen" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_CHEN["chen_mythical"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["chen_mythical"] then
 				Wearable:_WearProp(hero, "9950", "head")
 				Wearable:_WearProp(hero, "9951", "weapon")
 				Wearable:_WearProp(hero, "9952", "mount")
@@ -771,7 +771,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_drow_ranger" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_DROW_RANGER["drow_ranger_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["drow_ranger_immortal"] then
 				hero.base_attack_projectile = "particles/econ/items/drow/drow_ti9_immortal/drow_ti9_base_attack.vpcf"
 				hero.frost_arrows_debuff_pfx = "particles/econ/items/drow/drow_ti9_immortal/drow_ti9_frost_arrow_debuff.vpcf"
 				hero.marksmanship_arrow_pfx = "particles/econ/items/drow/drow_ti9_immortal/drow_ti9_marksman.vpcf"
@@ -841,7 +841,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero.eidolon_model = "models/items/enigma/eidolon/absolute_zero_updated_eidolon/absolute_zero_updated_eidolon.vmdl"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["huskar_immortal"] then
 				Wearable:_WearProp(hero, "8188", "head")
 				hero.life_break_cast_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_cast.vpcf"
 				hero.life_break_start_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_spellstart.vpcf"
@@ -972,7 +972,7 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 --		elseif hero:GetUnitName() == "npc_dota_hero_tidehunter" then
---			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_TIDEHUNTER["tidehunter_ancient"] then
+--			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["tidehunter_ancient"] then
 --				Wearable:RemoveWearables(hero)
 --				hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_arms_wh/tidehunter_arms_wh.vmdl"})
 --				hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_back_wh/tidehunter_back_wh.vmdl"})
@@ -982,7 +982,7 @@ function Battlepass:GetHeroEffect(hero)
 --				hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_weapon_wh/tidehunter_weapon_wh.vmdl"})
 --			end
 		elseif hero:GetUnitName() == "npc_dota_hero_ursa" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BATTLEPASS_URSA["ursa_immortal"] then
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["ursa_immortal"] then
 				Wearable:_WearProp(hero, "4212", "head")
 				Wearable:_WearProp(hero, "4213", "back")
 				Wearable:_WearProp(hero, "4214", "belt")

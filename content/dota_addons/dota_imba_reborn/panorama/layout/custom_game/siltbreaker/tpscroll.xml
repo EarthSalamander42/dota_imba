@@ -1,0 +1,16 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/tpscroll.css" />
+	</styles>
+
+  <script>
+  </script>
+
+	<DOTAReferencePage class="DashboardPage BGDark">
+		<Panel id="SceneContainer" >
+			<DOTAScenePanel id="TPScroll" map="scenes/tpscroll" antialias="true" particleonly="false" camera="scrollcamera" light="scrolllight" renderdeferred="false" rotateonhover="true" yawmin="-32" yawmax="32" pitchmin="-8" pitchmax="12" acceleration="0.5" panoramasurfacexml="file://{resources}/layout/custom_games/tpscroll_texture.xml" panoramasurfacewidth="1024" panoramasurfaceheight="1024"/>
+		</Panel>
+	</DOTAReferencePage>
+</root>
+

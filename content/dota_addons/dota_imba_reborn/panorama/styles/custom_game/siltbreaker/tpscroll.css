@@ -1,0 +1,250 @@
+#SceneContainer
+{
+	width: 1600px;
+	height: 1080px;
+	//border: 1px solid red;
+}
+
+#TPScroll
+{
+	width: 100%;
+	height: 100%;
+}
+
+#TPScrollTexture
+{
+	width: 512px;
+	height: 1024px;
+
+	background-color: #001e;
+	flow-children: down;
+	
+
+}
+
+.TitleFont.Rain,
+#Title
+{
+	font-size: 20px;
+	//transform: scaleY(.25);
+	color: #1D322D00;
+	
+	padding: 64px;
+	
+	text-shadow: 0px 0px 0px 1.5 #000;
+	
+	text-align: center;
+	padding-top: 154px;
+	line-height: 26px;
+	letter-spacing: 1px;
+	opacity-mask: url("s2r://panorama/images/interface/text_scroll_blur_mask_invert_psd.vtex").5;
+	
+	transition-property: color, text-shadow, background-color;
+	transition-duration: 2s, ;
+	transition-timing-function: ease-in-out;
+}
+
+.TitleFont.Rain
+{
+	color: #0000;
+	
+	text-shadow: 0px 0px 16px 5.0 #000;
+	height: 100%;
+	width: 100%;
+	background-color: #243A5085;
+	opacity-mask: url("s2r://panorama/images/interface/text_scroll_blur_mask_psd.vtex");
+	
+}
+
+#HeroNameContainerBlur,
+#HeroNameContainer
+{
+	width: 100%;
+	height: 100%;
+	opacity-mask: url("s2r://panorama/images/interface/text_scroll_blur_mask_invert_psd.vtex").8;
+}
+
+#HeroNameContainerBlur
+{
+	opacity-mask: url("s2r://panorama/images/interface/text_scroll_blur_mask_psd.vtex");		
+}
+
+#HeroNameBlur,
+#HeroName
+{
+	height: 160px;
+	width: 90%;
+	horizontal-align: center;
+	font-size: 40px;
+	text-align: center;
+	
+	padding-top: 102px;
+	color: #5D323D;
+	letter-spacing: 4px;
+	text-overflow: shrink;
+	
+	transition-property: color, text-shadow, background-color;
+	transition-duration: 2s, ;
+	transition-timing-function: ease-in-out;
+	
+	text-shadow: 1px 1px 0px 1.5 #000;	
+}
+
+#HeroNameBlur
+{
+	color: #0000;
+	
+	text-shadow: 0px 0px 16px 8.0 #503;
+
+	background-color: #243A5000;
+
+}
+
+
+#FrontPage
+{
+	width: 100%;
+	height: 772px;
+}
+
+#BackPage
+{
+	background-color: green;
+	width: 100%;
+	height: fill-parent-flow( 1);
+}
+
+.PageTexture
+{
+	width: 100%;
+	height: 100%;
+	background-image: url("s2r://panorama/images/interface/paper_texture_psd.vtex");
+	background-size: 100%;
+
+	transition-property: wash-color;
+	transition-duration: 1s;
+	transition-delay: 1s;
+	transition-timing-function: ease-in-out;		
+	
+}
+
+#BackPage .PageTexture
+{
+	wash-color: #17747Cee;
+}
+
+
+
+.LineArt
+{
+	background-image: url("s2r://panorama/images/interface/scroll_header_psd.vtex");
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 60%;
+	margin-top: 32px;
+	height: 200px;
+	horizontal-align: center;
+}
+
+#Header
+{
+	background-image: url("s2r://panorama/images/interface/scroll_header_psd.vtex");
+}
+
+#Sigil
+{
+	background-image: url("s2r://panorama/images/interface/scroll_sigil_psd.vtex");
+	width: 90%;
+	vertical-align: bottom;
+	margin-bottom: 32px;
+}
+
+#SigilGlowContainer
+{
+	width: 70%;
+	height: 230px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-bottom: 64px;
+	opacity: .2;
+	transition-property: opacity, brightness;
+	transition-duration: 0.26s, 0.2s;
+	transition-timing-function: ease-in-out;	
+}
+
+#SigilGlow
+{
+	background-image: url("s2r://panorama/images/interface/scroll_sigil_glow_psd.vtex");
+	background-position: 8px -18px;
+	background-size: 328px 290px;
+	width: 100%;
+	height: 100%;
+
+	opacity: 1;
+	
+	transition-property: opacity, brightness;
+	transition-duration: 0.46s, 1s;
+	
+	animation-name: SigilGlowAnimation;
+	animation-duration: 1.52s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	
+}
+
+
+@keyframes 'SigilGlowAnimation'
+{
+	0%
+	{
+		opacity: 1;
+	}
+
+	50%
+	{
+		opacity: 0.42;
+	}
+	
+	100%
+	{
+		opacity: 1;
+	}
+}
+
+
+
+
+.ScrollHovered #SigilGlowContainer
+{
+	opacity: 1;
+	transition-duration: 1.2s;
+	animation-name: none;
+}
+
+
+.ScrollActivated #SigilGlowContainer
+{
+	opacity: 1;
+	brightness: 23;
+	transition-duration: .8s;
+}
+
+.ScrollActivated #HeroName,
+.ScrollActivated #Title
+{
+	color: #B4FFFF80;
+	text-shadow: 0px 0px 16px 5.0 #B4FFFF22;
+}
+
+.ScrollActivated #HeroNameBlur,
+.ScrollActivated .TitleFont.Rain
+{
+	background-color: #0000; 
+	color: #B4FFFF;
+	text-shadow: 0px 0px 16px 5.0 #B4FFFF;
+}
+
+.ScrollActivated .PageTexture
+{
+	wash-color: black;
+}

@@ -1,0 +1,20 @@
+<root>
+  <styles>
+  	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+
+    <include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+  
+    <include src="s2r://panorama/styles/custom_game/siltbreaker/quests.css" />
+  </styles>
+
+   <Panel class="Quest LeftRightFlow" hittest="false">
+	    <Panel id="QuestIcon" class="QuestIcon Explore" hittest="false"/>
+	    <Panel id="QuestIconCheckMark" class="QuestIconCheckMark" hittest="false"/>
+	    <Label id="QuestText" class="QuestText" text="" hittest="false"/>
+      <Label id="QuestNumbers" class="QuestText" text="({d:completed} / {d:complete_limit})" hittest="false"/>
+      <Panel id="QuestReward" class="LeftRightFlow">
+        <Label id="XPReward" class="RewardText"  text="+{d:xp_reward} XP" hittest="false"/>
+        <Label id="GoldReward" class="RewardText"  text="+{d:gold_reward} Gold" hittest="false" />
+      </Panel>
+	 </Panel>
+ </root>

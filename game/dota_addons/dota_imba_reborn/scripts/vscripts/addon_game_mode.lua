@@ -9,7 +9,6 @@ function Precache( context )
 	LinkLuaModifier("modifier_custom_mechanics", "components/modifiers/modifier_custom_mechanics.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_dummy_dummy", "components/modifiers/modifier_dummy_dummy.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_fountain_aura_lua", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_contributor_statue", "components/modifiers/modifier_contributor_statue.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_0", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_1", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_2", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
@@ -27,7 +26,6 @@ function Precache( context )
 	-- Battlepass precaching
 	Wearables:PrecacheWearables(context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
-	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
 	
 	-- Battlepass Blink effects
@@ -109,6 +107,39 @@ function Precache( context )
 	if IMBA_DIRETIDE == true then
 		PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
 	end
+
+	-- CDungeon nil
+--	if string.find(GetMapName(), "ep_") then
+--		CDungeon:Precache(context)
+--	end
+
+
+	-- temorary
+--	function Precache( context )
+		for _,Item in pairs( g_ItemPrecache ) do
+			PrecacheItemByNameSync( Item, context )
+		end
+
+		for _,Unit in pairs( g_UnitPrecache ) do
+			PrecacheUnitByNameAsync( Unit, function( unit ) end )
+		end
+
+		for _,Model in pairs( g_ModelPrecache ) do
+			PrecacheResource( "model", Model, context  )
+		end
+
+		for _,Particle in pairs( g_ParticlePrecache ) do
+			PrecacheResource( "particle", Particle, context  )
+		end
+
+		for _,ParticleFolder in pairs( g_ParticleFolderPrecache ) do
+			PrecacheResource( "particle_folder", ParticleFolder, context )
+		end
+
+		for _,Sound in pairs( g_SoundPrecache ) do
+			PrecacheResource( "soundfile", Sound, context )
+		end
+--	end
 end
 
 function Activate()

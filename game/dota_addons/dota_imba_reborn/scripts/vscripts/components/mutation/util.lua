@@ -63,41 +63,41 @@ function Mutation:UpdatePanorama()
 
 	-- unique update
 --	if IMBA_MUTATION["imba"] == "frantic" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {IMBA_FRANTIC_VALUE, "%"})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["imba"], {IMBA_FRANTIC_VALUE, "%"})
 --	end
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_KILLSTREAK_POWER, "%"})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_KILLSTREAK_POWER, "%"})
 	elseif IMBA_MUTATION["positive"] == "slark_mode" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_SLARK_MODE_HEALTH_REGEN, _G.IMBA_MUTATION_SLARK_MODE_MANA_REGEN})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_SLARK_MODE_HEALTH_REGEN, _G.IMBA_MUTATION_SLARK_MODE_MANA_REGEN})
 	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {IMBA_MUTATION_ULTIMATE_LEVEL})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["positive"], {IMBA_MUTATION_ULTIMATE_LEVEL})
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE})
 	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEFENSE_OF_THE_ANTS_SCALE, "%"})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEFENSE_OF_THE_ANTS_SCALE, "%"})
 	elseif IMBA_MUTATION["negative"] == "monkey_business" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, "s"})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, "s"})
 	elseif IMBA_MUTATION["negative"] == "all_random_deathmatch" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
 	end
 
 	-- shows undefined on panorama for reasons
 --	if IMBA_MUTATION["terrain"] == "airdrop" then
---		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_AIRDROP_TIMER})
+--		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {IMBA_MUTATION_AIRDROP_TIMER})
 --	elseif IMBA_MUTATION["terrain"] == "danger_zone" then
---		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_DANGER_ZONE_TIMER})
+--		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {IMBA_MUTATION_DANGER_ZONE_TIMER})
 --	elseif IMBA_MUTATION["terrain"] == "fast_runes" then
 	if IMBA_MUTATION["terrain"] == "fast_runes" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME})
 	elseif IMBA_MUTATION["terrain"] == "river_flows" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_RIVER_FLOWS_MOVESPEED})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_RIVER_FLOWS_MOVESPEED})
 	elseif IMBA_MUTATION["terrain"] == "speed_freaks" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, "%"})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, "%"})
 	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
 	end
 
 	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
@@ -108,7 +108,7 @@ function Mutation:DeathExplosionDamage()
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, _G.IMBA_MUTATION_DEATH_EXPLOSION_MAX_MINUTES)
 
 	game_time = game_time * _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE_INCREASE_PER_MIN
-	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {damage + game_time})
+	CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {damage + game_time})
 	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 end
 
@@ -151,6 +151,6 @@ function Mutation:MutationTimer()
 		timer_second_01 = s01,
 	}
 
-	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], broadcast_gametimer)
+	CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], broadcast_gametimer)
 	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 end

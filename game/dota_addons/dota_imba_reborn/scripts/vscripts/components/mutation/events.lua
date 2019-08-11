@@ -133,7 +133,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		if IMBA_MUTATION["terrain"] == "tug_of_war" then
 			if killed_unit:GetUnitName() == "npc_dota_mutation_golem" then
 				IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT = IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT + 1
-				CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
+				CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
 				CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 			end
 		end
@@ -158,7 +158,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		local tombstone = SpawnEntityFromTableSynchronous("dota_item_tombstone_drop", {})
 		tombstone:SetContainedItem(newItem)
 		tombstone:SetAngles(0, RandomFloat(0, 360), 0)
-		FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
+		--FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
 
 		hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
 
@@ -206,7 +206,7 @@ ListenToGameEvent('entity_killed', function(keys)
 			end)
 		end
 
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
+		CustomNetTables:SetTableValue("mutations", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
 		CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 	end
 

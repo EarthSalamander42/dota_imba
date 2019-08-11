@@ -1,0 +1,320 @@
+<root>
+   <styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+
+		<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+<!--	<include src="s2r://panorama/styles/dashboard_page_controlslibrary.vcss_c" /> -->
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/hud_main.css"/>
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/dungeon_scoreboard.css"/>
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/party_portraits.css"/>
+	</styles>
+
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/siltbreaker/dungeon_scoreboard.js" />
+	</scripts>
+
+	<Panel hittest="false" class="FlyoutScoreboardRoot">
+		<Panel hittest="true" acceptsinput="true" acceptsfocus="true" id="DungeonScoreboard">
+			<Panel class="ScoreboardHeaderContainer">
+				<Panel class="HeaderZoneDetailsContainer">
+					<Panel id="ForwardBackward">
+						<Button id="PrevZoneButton" class="Arrow ZoneArrow" onactivate="DOTACustomUI_SetFlyoutScoreboardChangeZone(-1)"/>					
+						<Panel class="LeftRightFlow RightAlign">
+							<Label class="ZoneTitle TitleFont" id="ScoreboardZone"/>
+							<Button id="NextZoneButton" class="Arrow ZoneArrow" onactivate="DOTACustomUI_SetFlyoutScoreboardChangeZone(1)"/>
+						</Panel>
+					</Panel>
+					<Panel class="ZoneTimeContainer LeftRightFlow">
+						<Panel class="ZoneColumn TopBottomFlow">
+							<Panel id="ZoneStars" class="LeftRightFlow">
+								<Label text="Zone Stars" class="ZoneSubtitle"/>
+								<Panel id="ZoneStarContainer">
+									<Panel id="ZoneStar1" class="Star"/>
+									<Panel id="ZoneStar2" class="Star"/>
+									<Panel id="ZoneStar3" class="Star"/>
+								</Panel>
+							</Panel>
+							<Panel id="NewBestPanelStars" class="NewBestContainer Hidden LeftRightFlow">
+								<Panel id="BestTimeIcon" class="BestRecordIcon"/>
+								<Label class="NewBest ZoneSubtitle" text="#DOTA_Siltbreaker_PersonalBest"/>
+							</Panel>
+							<Label id="ScoreboardZoneBestStars" class="OldBest ZoneSubtitle" text="Previous Best: {i:best_stars}"/>
+						</Panel>
+						<Panel class="ZoneColumn TopBottomFlow">
+							<Panel id="ZoneTime" class="LeftRightFlow">
+								<Label text="#Dungeon_ZoneTime" class="ZoneSubtitle"/>
+								<Label id="ScoreboardZoneTimeLabel" text="{s:time_of_day}" class="ZoneTimeLabel MonoNumbersFont"/>
+							</Panel>
+							<Panel id="NewBestPanelTime" class="NewBestContainer Hidden LeftRightFlow">
+								<Panel id="BestTimeIcon" class="BestRecordIcon"/>
+								<Label class="NewBest ZoneSubtitle" text="#DOTA_Siltbreaker_PersonalBest"/>
+							</Panel>
+							<Label id="OldBestTime" class="OldBest ZoneSubtitle" text="#DOTA_Siltbreaker_PersonalBestTime"/>
+						</Panel>
+					</Panel>
+					<Label class="ZoneDescription" id="ScoreboardDescription"/>
+
+				</Panel>
+			</Panel>
+			<Panel id="ZoneRequirementContainer" class="TopBottomFlow">
+				<Label class="ReqTitle" text="Zone Star Requirements"/>
+				<Panel id="ZoneRequirementsTab" class="LeftRightFlow">
+					<RadioButton id="1StarReq" class="ReqTab HasStars1" selected="true" onactivate="SwitchStyle( ZoneRequirementContainer, TabSlot, Tab1Selected )"  >
+						<Panel id="StarContainerReplays">
+							<Panel id="ZoneStar1" class="Star"/>
+							<Panel id="ZoneStar2" class="Star"/>
+							<Panel id="ZoneStar3" class="Star"/>
+						</Panel>
+					</RadioButton>
+					<RadioButton id="2StarReq" class="ReqTab HasStars2" onactivate="SwitchStyle( ZoneRequirementContainer, TabSlot, Tab2Selected )" >
+						<Panel id="StarContainerReplays">
+							<Panel id="ZoneStar1" class="Star"/>
+							<Panel id="ZoneStar2" class="Star"/>
+							<Panel id="ZoneStar3" class="Star"/>
+						</Panel>
+					</RadioButton>
+					<RadioButton id="3StarReq" class="ReqTab HasStars3" onactivate="SwitchStyle( ZoneRequirementContainer, TabSlot, Tab3Selected )" >
+						<Panel id="StarContainerReplays">
+							<Panel id="ZoneStar1" class="Star"/>
+							<Panel id="ZoneStar2" class="Star"/>
+							<Panel id="ZoneStar3" class="Star"/>
+						</Panel>
+					</RadioButton>
+				</Panel>
+				<Panel id="ZoneStarRequirementsDesc">
+					<Label id="Zone01_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone01_1_Req"/>
+					<Label id="Zone01_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone01_2_Req"/>
+					<Label id="Zone01_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone01_3_Req"/>
+
+					<Label id="Zone02_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone02_1_Req"/>
+					<Label id="Zone02_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone02_2_Req"/>
+					<Label id="Zone02_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone02_3_Req"/>
+
+					<Label id="Zone03_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone03_1_Req"/>
+					<Label id="Zone03_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone03_2_Req"/>
+					<Label id="Zone03_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone03_3_Req"/>
+
+					<Label id="Zone04_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone04_1_Req"/>
+					<Label id="Zone04_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone04_2_Req"/>
+					<Label id="Zone04_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone04_3_Req"/>
+
+					<Label id="Zone05_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone05_1_Req"/>
+					<Label id="Zone05_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone05_2_Req"/>
+					<Label id="Zone05_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone05_3_Req"/>
+
+					<Label id="Zone06_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone06_1_Req"/>
+					<Label id="Zone06_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone06_2_Req"/>
+					<Label id="Zone06_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone06_3_Req"/>
+
+					<Label id="Zone07_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone07_1_Req"/>
+					<Label id="Zone07_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone07_2_Req"/>
+					<Label id="Zone07_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone07_3_Req"/>
+
+					<Label id="Zone08_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone08_1_Req"/>
+					<Label id="Zone08_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone08_2_Req"/>
+					<Label id="Zone08_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone08_3_Req"/>
+
+					<Label id="Zone09_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone09_1_Req"/>
+					<Label id="Zone09_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone09_2_Req"/>
+					<Label id="Zone09_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone09_3_Req"/>
+
+					<Label id="Zone10_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone10_1_Req"/>
+					<Label id="Zone10_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone10_2_Req"/>
+					<Label id="Zone10_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Zone10_3_Req"/>
+					
+					<Label id="Act2_Zone01_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone01_1_Req"/>
+					<Label id="Act2_Zone01_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone01_2_Req"/>
+					<Label id="Act2_Zone01_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone01_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone02_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone02_1_Req"/>
+					<Label id="Act2_Zone02_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone02_2_Req"/>
+					<Label id="Act2_Zone02_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone02_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone03_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone03_1_Req"/>
+					<Label id="Act2_Zone03_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone03_2_Req"/>
+					<Label id="Act2_Zone03_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone03_3_Req"/>
+                                                                                                              
+					<Label id="Act2_Zone04_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone04_1_Req"/>
+					<Label id="Act2_Zone04_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone04_2_Req"/>
+					<Label id="Act2_Zone04_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone04_3_Req"/>
+                                                                                                             
+					<Label id="Act2_Zone05_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone05_1_Req"/>
+					<Label id="Act2_Zone05_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone05_2_Req"/>
+					<Label id="Act2_Zone05_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone05_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone06_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone06_1_Req"/>
+					<Label id="Act2_Zone06_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone06_2_Req"/>
+					<Label id="Act2_Zone06_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone06_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone07_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone07_1_Req"/>
+					<Label id="Act2_Zone07_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone07_2_Req"/>
+					<Label id="Act2_Zone07_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone07_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone08_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone08_1_Req"/>
+					<Label id="Act2_Zone08_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone08_2_Req"/>
+					<Label id="Act2_Zone08_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone08_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone09_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone09_1_Req"/>
+					<Label id="Act2_Zone09_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone09_2_Req"/>
+					<Label id="Act2_Zone09_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone09_3_Req"/>
+                                                                                                               
+					<Label id="Act2_Zone10_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone10_1_Req"/>
+					<Label id="Act2_Zone10_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone10_2_Req"/>
+					<Label id="Act2_Zone10_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone10_3_Req"/>					
+					                                                                                           
+					<Label id="Act2_Zone11_1_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone11_1_Req"/>
+					<Label id="Act2_Zone11_2_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone11_2_Req"/>
+					<Label id="Act2_Zone11_3_Desc" class="ZoneReqLabel" html="true" text="#DOTA_TI7_CampaignDetails_Act2_Zone11_3_Req"/>
+				</Panel>
+			</Panel>		
+			<Panel id="ScoreboardTeamContainer" class="TopBottomFlow">
+				<Panel class="HeroRow LeftRightFlow">
+					<Label class="HeroTotalLabel" text=""/>				
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="#Dungeon_Scoreboard_Kills" class="ScoreLabel"/>
+						<Label text="#Dungeon_Scoreboard_Deaths" class="ScoreLabel"/>	
+						<Label text="#Dungeon_Scoreboard_GoldBags" class="ScoreLabel"/>
+						<Label text="#Dungeon_Scoreboard_Potions" class="ScoreLabel"/>
+					</Panel>
+				</Panel>				
+				<Panel class="HeroRow CurrentPlayer LeftRightFlow">
+					<Panel id="PlayerImagePanel" class="HeroImagePanel LeftRightFlow">
+						<Panel id="PlayerColorBar" class="HeroColorBar"/>
+						<DOTAHeroImage hittest="false" id="PlayerImage" class="PartyPortraitImage" scaling="stretch-to-cover-preserve-aspect" />
+					</Panel>
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="{d:player_kills}" class="ScoreLabelValue"/>
+						<Label text="{d:player_deaths}" class="ScoreLabelValue"/>	
+						<Label text="{d:player_goldbags}" class="ScoreLabelValue"/>
+						<Label text="{d:player_potions}" class="ScoreLabelValue"/>
+					</Panel>
+				</Panel>
+				<Panel class="HeroRow LeftRightFlow">
+					
+					<Panel id="PlayerImagePanel" class="HeroImagePanel LeftRightFlow">
+						<Panel id="HeroColorBar1" class="HeroColorBar"/>
+						<DOTAHeroImage hittest="false" id="HeroImage1" class="PartyPortraitImage" scaling="stretch-to-cover-preserve-aspect" />
+					</Panel>
+					<Button id="PlayerMuteButton1" class="MuteButton" onactivate="ToggleMute( 1 );" />
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="{d:ally_kills1}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_deaths1}" class="ScoreLabelValue"/>	
+						<Label text="{d:ally_goldbags1}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_potions1}" class="ScoreLabelValue"/>
+					</Panel>
+				</Panel>
+				<Panel class="HeroRow LeftRightFlow">
+					<Panel id="PlayerImagePanel" class="HeroImagePanel LeftRightFlow">
+						<Panel id="HeroColorBar2" class="HeroColorBar"/>
+						<DOTAHeroImage hittest="false" id="HeroImage2" class="PartyPortraitImage" scaling="stretch-to-cover-preserve-aspect" />
+					</Panel>
+					<Button id="PlayerMuteButton2" class="MuteButton" onactivate="ToggleMute( 2 );" />
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="{d:ally_kills2}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_deaths2}" class="ScoreLabelValue"/>	
+						<Label text="{d:ally_goldbags2}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_potions2}" class="ScoreLabelValue"/>
+					</Panel>
+				</Panel>
+				<Panel class="HeroRow LeftRightFlow">	
+					<Panel id="PlayerImagePanel" class="HeroImagePanel LeftRightFlow">
+						<Panel id="HeroColorBar3" class="HeroColorBar"/>
+						<DOTAHeroImage hittest="false" id="HeroImage3" class="PartyPortraitImage" scaling="stretch-to-cover-preserve-aspect" />
+					</Panel>
+					<Button id="PlayerMuteButton3" class="MuteButton" onactivate="ToggleMute( 3 );" />
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="{d:ally_kills3}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_deaths3}" class="ScoreLabelValue"/>	
+						<Label text="{d:ally_goldbags3}" class="ScoreLabelValue"/>
+						<Label text="{d:ally_potions3}" class="ScoreLabelValue"/>
+					</Panel>
+				</Panel>
+				<Panel class="HeroRow LeftRightFlow">
+					<Label class="HeroTotalLabel" text="#Dungeon_Scoreboard_Total"/>				
+					<Panel id="ScoreLabelsContainer" class="LeftRightFlow">
+						<Label text="{d:kills}" class="ScoreLabelValue"/>
+						<Label text="{d:deaths}" class="ScoreLabelValue"/>	
+						<Label text="{d:goldbags}" class="ScoreLabelValue"/>
+						<Label text="{d:potions}" class="ScoreLabelValue"/>
+					</Panel>
+				</Panel>				
+					
+					<Panel id="ScoreHeaderLabels" class="ScoreLabelsWidth"/>				
+				<Panel id="RatioBarsContainer" class="LeftRightFlow">
+					<!-- NOTE: id for scoreboard panels should be RationBar<name>X where <name> is the name of the field in the server table 
+						and X is the 0 based index of the child.  The dialog variable will always be a lowercase version of <name>.
+						player data should be text="d:player_<name>"
+					-->
+					<Panel id="Kills" class="RatioBarContainer">
+						<Panel class="RatioBarStack TopBottomFlow">
+							<Panel class="RatioBar">
+								<Panel id="RatioBarKills0" class="RatioBarSegment LocalPlayer Hero0">
+									<Label text="{d:player_kills}" class="RatioBarPlayerValue"/>
+								</Panel>
+								<Panel id="RatioBarKills1" class="RatioBarSegment"/>
+								<Panel id="RatioBarKills2" class="RatioBarSegment"/>
+								<Panel id="RatioBarKills3" class="RatioBarSegment"/>
+							</Panel>
+							<Label text="#Dungeon_Scoreboard_Kills" class="RatioBarUnderCategory"/>
+					  	</Panel>
+						<Panel class="CategoryLabelContainer TopBottomFlow">
+							<Label text="{d:kills}" class="RatioBarCount"/>
+							<Label text="#Dungeon_Scoreboard_Kills" class="RatioBarCategory"/>
+						</Panel>
+					</Panel>
+					<Panel id="Deaths" class="RatioBarContainer">
+						<Panel class="RatioBarStack TopBottomFlow">
+							<Panel class="RatioBar">
+								<Panel id="RatioBarDeaths0" class="RatioBarSegment LocalPlayer Hero0">
+									<Label text="{d:player_deaths}" class="RatioBarPlayerValue"/>
+								</Panel>
+								<Panel id="RatioBarDeaths1" class="RatioBarSegment"/>
+								<Panel id="RatioBarDeaths2" class="RatioBarSegment"/>
+								<Panel id="RatioBarDeaths3" class="RatioBarSegment"/>
+							</Panel>
+							<Label text="#Dungeon_Scoreboard_Deaths" class="RatioBarUnderCategory"/>
+					  	</Panel>
+						<Panel class="CategoryLabelContainer TopBottomFlow">
+							<Label text="{d:deaths}" class="RatioBarCount"/>
+							<Label text="#Dungeon_Scoreboard_Deaths" class="RatioBarCategory"/>
+						</Panel>
+					</Panel>
+					<Panel id="GoldBags" class="RatioBarContainer">
+						<Panel class="RatioBarStack TopBottomFlow">
+							<Panel class="RatioBar">
+								<Panel id="RatioBarGoldBags0" class="RatioBarSegment LocalPlayer Hero0">
+									<Label text="{d:player_goldbags}" class="RatioBarPlayerValue"/>
+								</Panel>
+								<Panel id="RatioBarGoldBags1" class="RatioBarSegment"/>
+								<Panel id="RatioBarGoldBags2" class="RatioBarSegment"/>
+								<Panel id="RatioBarGoldBags3" class="RatioBarSegment"/>
+							</Panel>
+							<Label text="#Dungeon_Scoreboard_GoldBags" class="RatioBarUnderCategory"/>
+					  	</Panel>
+						<Panel class="CategoryLabelContainer TopBottomFlow">
+							<Label text="{d:goldbags}" class="RatioBarCount"/>
+							<Label text="#Dungeon_Scoreboard_GoldBags" class="RatioBarCategory"/>
+						</Panel>
+					</Panel>
+					<Panel id="Potions" class="RatioBarContainer">
+						<Panel class="RatioBarStack TopBottomFlow">
+							<Panel class="RatioBar">
+								<Panel id="RatioBarPotions0" class="RatioBarSegment LocalPlayer Hero0">
+									<Label text="{d:player_potions}" class="RatioBarPlayerValue"/>
+								</Panel>
+								<Panel id="RatioBarPotions1" class="RatioBarSegment"/>
+								<Panel id="RatioBarPotions2" class="RatioBarSegment"/>
+								<Panel id="RatioBarPotions3" class="RatioBarSegment"/>
+							</Panel>
+							<Label text="#Dungeon_Scoreboard_Potions" class="RatioBarUnderCategory"/>
+					  	</Panel>
+						<Panel class="CategoryLabelContainer TopBottomFlow">
+							<Label text="{d:potions}" class="RatioBarCount"/>
+							<Label text="#Dungeon_Scoreboard_Potions" class="RatioBarCategory"/>
+						</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

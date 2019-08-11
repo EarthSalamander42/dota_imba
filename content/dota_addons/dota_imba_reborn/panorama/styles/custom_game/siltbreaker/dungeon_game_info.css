@@ -1,0 +1,241 @@
+.DungeonGameInfo
+{
+    width:100%;
+    flow-children: down;
+}
+ 
+Label
+{
+    font-size: 18px;
+    color: #999999;
+    vertical-align: top;
+}
+ 
+#Title
+{
+    flow-children: right;
+}
+
+#TitleIcon
+{
+    width: 64px;
+    height: 64px;
+    vertical-align: center;
+}
+
+#TitleName
+{
+    color: #cccccc;
+    font-size: 32px;
+    margin-left: 0px;
+    margin-top: 0px;
+    text-transform: uppercase;
+    vertical-align: center;
+}
+
+#BriefDescription
+{
+    margin-top: 12px;
+    width: 90%;
+}
+
+#ControlPointText,
+#TeamPointsText,
+#HulkCreepsText,
+#FireTrapsText
+{
+    width: 90%;
+}
+
+.Header
+{
+	font-size: 18px;
+    font-weight: bold;
+	margin-top: 36px;
+	text-transform: uppercase;
+}
+
+#ObjectiveHeader
+{
+	margin-top: 12px;
+}
+
+#ControlPointRow
+{
+    margin-top: 12px;
+}
+
+#ControlPointText
+{
+    margin-top: 12px;
+	text-align: left;
+}
+
+#ControlPointImage
+{
+    margin-top: -24px;
+    width: 288px;
+    height: 192px;
+    border: 0px solid white;
+    horizontal-align: center;
+}
+
+#TeamPointsRow
+{
+    margin-top: 0px;
+}
+
+#TeamPointsImage1,
+#TeamPointsImage2
+{
+}
+
+.TeamPointsImages
+{
+    margin-top: 12px;
+    margin-left: 16px;
+    width: 480px;
+    height: 64px;
+    border: 0px solid white;
+}
+
+#TeamPointsText1,
+#TeamPointsText2
+{
+    margin-top: 6px;
+    width: 95%;
+}
+
+#HulkCreepsRow
+{
+    margin-top: 12px;
+}
+
+#HulkCreepsImageRow
+{
+    margin-top: 12px;
+}
+
+#HulkCreepsRadiantImage,
+#HulkCreepsDireImage
+{
+}
+
+.HulkCreepsImage
+{
+    margin-top: -32px;
+    margin-left: 48px;
+    width: 192px;
+    height: 256px;
+    border: 0px solid white;
+}
+
+#HulkCreepsText1,
+#HulkCreepsText2
+{
+    margin-top: 12px;
+	text-align: left;
+    width: 95%;
+}
+
+#TrapsRow
+{
+    margin-top: 12px;
+}
+
+#TrapsImageRow1,
+#TrapsImageRow1
+{
+}
+
+#TrapButtonImage,
+#FireTrapsImage,
+#VenomTrapsImage,
+{
+    margin-top: 0px;
+    margin-left: 24px;
+    width: 144px;
+    height: 192px;
+    border: 0px solid white;
+}
+
+#SpikeTrapsImage,
+#PendulumImage
+{
+    margin-top: 0px;
+    margin-left: 64px;
+    width: 144px;
+    height: 192px;
+    border: 0px solid white;
+}
+
+#FireTrapsText
+{
+    margin-top: 12px;
+    text-align: left;
+}
+
+#TipsHeader
+{
+	margin-top: 12px;
+}
+
+#TipsRow
+{
+	flow-children: down;
+	margin-right: 92px;
+	margin-top: 0px;
+}
+
+#WaypointImage
+{
+    margin-top: -48px;
+    width: 96px;
+    height: 128px;
+    border: 0px solid white;
+    horizontal-align: right;
+}
+
+#RejuvenationImage,
+#MangoJuiceImage,
+#GoldCoinImage,
+#CandyImage
+{
+    margin-top: 12px;
+    margin-left: 48px;
+    width: 96px;
+    height: 96px;
+    border: 0px solid white;
+}
+
+.TipText
+{
+	margin-left: 16px;
+    margin-top: 12px;
+}
+
+.InfoRow
+{
+    flow-children: down;
+    width: 100%;
+}
+
+.ImageRow
+{
+    flow-children: right;
+    width: 100%;
+}
+
+Label .control_point,
+Label .team_points,
+{
+    color: #cccccc;
+    font-weight: bold;
+}
+
+Label .hulk_creeps,
+Label .fire_traps,
+{
+    color: #fcaf3d;
+    font-weight: bold;
+}

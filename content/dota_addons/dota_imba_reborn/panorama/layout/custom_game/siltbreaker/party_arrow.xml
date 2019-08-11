@@ -1,0 +1,13 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/siltbreaker/party_arrows.css" />
+	</styles>
+
+	<Panel class="PartyArrow">
+		<Image src="s2r://panorama/images/interface/offscreen_arrow_psd.vtex" id="PartyArrowImage"/>
+		<Panel id="IconContainer">
+			<DOTAHeroImage id="HeroImage" heroimagestyle="icon" />
+		</Panel>
+	</Panel>
+</root>
