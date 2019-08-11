@@ -11,6 +11,7 @@ DONATOR_COLOR[8] = {47, 91, 151} -- Icefrog Donator (blue)
 DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 
+
 CustomNetTables:SetTableValue("game_options", "donator_colors", DONATOR_COLOR)
 
 UNIQUE_DONATOR_COMPANION = {}
