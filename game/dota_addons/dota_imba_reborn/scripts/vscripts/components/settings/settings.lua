@@ -48,7 +48,7 @@ if IsInToolsMode() or GetMapName() == "imba_demo" then
 	SHOWCASE_TIME = 0.0
 end
 AP_GAME_TIME = 60.0
-if GetMapName() == MapOverthrow() or GetMapName() == "imba_demo" then
+if IsOverthrowMap() or GetMapName() == "imba_demo" then
 	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
 else
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
@@ -274,6 +274,20 @@ BANNED_ITEMS[Map1v1()] = {
 BANNED_ITEMS[MapDiretide()] = {
 	"item_recipe_imba_jarnbjorn",
 	"item_imba_jarnbjorn",
+}
+
+BANNED_ITEMS[MapOverthrow()] = {
+	"item_recipe_dagon",
+	"item_dagon",
+	"item_dagon_2",
+	"item_dagon_3",
+	"item_dagon_4",
+	"item_dagon_5",
+	"item_imba_dagon_6",
+	"item_imba_dagon_7",
+	"item_imba_dagon_8",
+	"item_imba_dagon_9",
+	"item_imba_dagon_10",
 }
 
 TOWER_ABILITIES = {}
@@ -593,11 +607,6 @@ IMBA_PUNISHED = {
 }
 
 IMBA_FIRST_BLOOD = false
-
--- files requirements
-if GetMapName() == MapOverthrow() then
-	require("components/settings/settings_imbathrow")
-end
 
 -- IMBA override vanilla systems
 USE_TEAM_COURIER = true -- Should we use vanilla couriers?

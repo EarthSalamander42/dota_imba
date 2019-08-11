@@ -14,7 +14,7 @@ local TESTING = tobool(statInfo.TESTING)
 local MIN_PLAYERS = tonumber(statInfo.MIN_PLAYERS)
 
 if COLLECT_STATS or TESTING then
-    ListenToGameEvent('game_rules_state_change', function(keys)
+    ListenToGameEvent('game_rules_state_change', function()
         local state = GameRules:State_Get()
 
         if state >= DOTA_GAMERULES_STATE_INIT and not statCollection.doneInit then

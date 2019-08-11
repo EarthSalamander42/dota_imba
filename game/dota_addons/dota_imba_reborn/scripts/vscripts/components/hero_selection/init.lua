@@ -24,6 +24,10 @@ function HeroSelection:Init()
 
 	local herolistFile = "scripts/npc/herolist/"..GetMapName()..".txt"
 
+	if not LoadKeyValues(herolistFile) then
+		herolistFile = "scripts/npc/herolist.txt"
+	end
+
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if KeyValues.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
 --			print(key .. " is not in custom file!")

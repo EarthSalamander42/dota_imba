@@ -8,7 +8,7 @@ function customSchema:init()
     statCollection:setFlags({ version = HIVEMIND_VERSION, kills_to_win = KILLS_TO_WIN })
 
     -- Listen for changes in the current state
-    ListenToGameEvent('game_rules_state_change', function(keys)
+    ListenToGameEvent('game_rules_state_change', function()
         local state = GameRules:State_Get()
 
         -- Send custom stats when the game ends

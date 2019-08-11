@@ -14,7 +14,7 @@ LoadFinishEvent.listen(function()
 	finishedLoading = true
 end)
 
-ListenToGameEvent('game_rules_state_change', function(keys)
+ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
 --		api.imba.event(api.events.entered_hero_selection)

@@ -1,3 +1,5 @@
+#base items/overthrow.txt
+
 "DOTAAbilities"
 {
 	//=================================================================================================================
@@ -15,74 +17,6 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 		"ItemDroppable" 				"0"
-	}
-
-	//=================================================================================================================
-	// Bag of Gold
-	//=================================================================================================================
-	"item_bag_of_gold"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityName"					"item_bag_of_gold"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_winter/present.vmdl"
-		"ItemKillable"					"0"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"99999"
-		"ItemPurchasable"				"0"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"0"
-		"ItemKillable"					"0"
-		"ItemCastOnPickup"				"1"
-	}
-
-	//=================================================================================================================
-	// Treasure Chest
-	//=================================================================================================================
-	"item_treasure_chest"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1001"
-		"AbilityName"					"item_treasure_chest"
-		"BaseClass"						"item_bag_of_gold"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_ITEM"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
-		"ItemKillable"					"0"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"99999"
-		"ItemPurchasable"				"0"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"0"
-		"ItemKillable"					"0"
-		"ItemCastOnPickup"				"1"
 	}
 
 	//================================================================================================================
@@ -12111,7 +12045,6 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"60"
 		"ItemCost"						"14000"		
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
@@ -14574,10 +14507,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
-		//"DungeonItemDef"				"12063"
-		//"DungeonAction"					"dungeon_in_game_item_12063"
-		//"DungeonCurrencyCost"			"110"
-
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
@@ -14586,18 +14515,9 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		//"ItemCost"						"0"
 		"ItemCost"						"7000"
-		//"ItemPurchasable"				"0"
-		//"ItemQuality"					""
 		"ItemQuality"					"artifact"
 		"ItemStackable"					"0"
-		//"ItemSellable"					"0"
-		//"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		//"ItemPermanent"					"0"
-		//"ItemKillable"					"0"
-		//"ItemDisplayOwnership"			"1"
-		//"CustomShop"					"1"
 		
 		"ItemShopTags"					"int;regen_mana;hard_to_tag"
 		"ItemAliases"					"brine"

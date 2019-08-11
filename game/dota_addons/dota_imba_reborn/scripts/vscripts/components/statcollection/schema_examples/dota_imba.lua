@@ -8,7 +8,7 @@ function customSchema:init()
     statCollection:setFlags({ version = GAME_VERSION })
 
     -- Listen for changes in the current state
-    ListenToGameEvent('game_rules_state_change', function(keys)
+    ListenToGameEvent('game_rules_state_change', function()
         local state = GameRules:State_Get()
 
         -- Send custom stats when the game ends

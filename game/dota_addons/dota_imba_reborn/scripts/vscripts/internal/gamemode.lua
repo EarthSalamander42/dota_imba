@@ -66,27 +66,29 @@ function GameMode:_InitGameMode()
 		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
 	end
 
-	-- This is multiteam configuration stuff
-	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
-		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)
-		local count = 0
-		for team,number in pairs(TEAM_COLORS) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, num)
+	if not IsOverthrowMap() then
+		-- This is multiteam configuration stuff
+		if USE_AUTOMATIC_PLAYERS_PER_TEAM then
+			local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)
+			local count = 0
+			for team,number in pairs(TEAM_COLORS) do
+				if count >= MAX_NUMBER_OF_TEAMS then
+					GameRules:SetCustomGameTeamMaxPlayers(team, 0)
+				else
+					GameRules:SetCustomGameTeamMaxPlayers(team, num)
+				end
+				count = count + 1
 			end
-			count = count + 1
-		end
-	else
-		local count = 0
-		for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, number)
+		else
+			local count = 0
+			for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
+				if count >= MAX_NUMBER_OF_TEAMS then
+					GameRules:SetCustomGameTeamMaxPlayers(team, 0)
+				else
+					GameRules:SetCustomGameTeamMaxPlayers(team, number)
+				end
+				count = count + 1
 			end
-			count = count + 1
 		end
 	end
 
@@ -106,9 +108,9 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, '_OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, '_OnConnectFull'), self)
 	ListenToGameEvent('player_disconnect', Dynamic_Wrap(self, 'OnDisconnect'), self)
-	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(self, 'OnItemPickedUp'), self)
+--	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(self, 'OnItemPickedUp'), self)
 --	ListenToGameEvent('player_connect', Dynamic_Wrap(self, 'PlayerConnect'), self)
-	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'OnAbilityUsed'), self)
+--	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'OnAbilityUsed'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, '_OnGameRulesStateChange'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(self, '_OnNPCSpawned'), self)
 	ListenToGameEvent("player_reconnected", Dynamic_Wrap(self, 'OnPlayerReconnect'), self)

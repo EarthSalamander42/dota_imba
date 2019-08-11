@@ -841,13 +841,14 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
 		local item = keys.entindex_ability
 		if item == nil then return true end
-
+		print("Baned item list:", BANNED_ITEMS[GetMapName()])
 		if BANNED_ITEMS[GetMapName()] then
 			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
---				print(banned_item)
---				print(self.itemIDs[item])
+				print(banned_item)
+				print(item)
+				print(self.itemIDs[item])
 				if self.itemIDs[item] == banned_item then
-					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
+					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_map_banned")
 					return false
 				end
 			end

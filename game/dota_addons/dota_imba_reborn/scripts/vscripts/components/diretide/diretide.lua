@@ -28,7 +28,7 @@ function TestEndScreenDiretide()
 	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
 end
 
-ListenToGameEvent('game_rules_state_change', function(keys)
+ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		Diretide:Init()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then

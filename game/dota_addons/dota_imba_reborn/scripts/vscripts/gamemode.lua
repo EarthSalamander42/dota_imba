@@ -46,13 +46,17 @@ require('filters')
 -- A*-Path-finding logic (RIKI NEEDS THIS FOR HIS BLINK STRIKE)
 require('libraries/astar')
 
+if IsOverthrowMap() then
+	require("components/overthrow/init")
+end
+
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
 	
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() and GetMapName() ~= "imba_demo" then
+	if GetMapName() ~= Map1v1() and not IsOverthrowMap() and GetMapName() ~= "imba_demo" then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 
@@ -246,7 +250,7 @@ function GameMode:SetupFrostivus()
 	end
 end
 
-ListenToGameEvent('game_rules_state_change', function(keys)
+ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)

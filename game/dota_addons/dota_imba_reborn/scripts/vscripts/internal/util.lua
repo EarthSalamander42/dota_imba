@@ -67,9 +67,24 @@ function MapSuperFrantic10v10() return "super_frantic_10v10" end
 function Map1v1() return "imba_1v1" end
 function Map10v10() return "imba_10v10" end
 function MapTournament() return "map_tournament" end
-function MapOverthrow() return "imbathrow_3v3v3v3" end
 function MapDiretide() return "diretide_5v5" end
 function MapDemo() return "imba_demo" end
+
+function MapOverthrow()
+	if string.find(GetMapName(), "imbathrow") then
+		return GetMapName()
+	end
+
+	return "nil"
+end
+
+function IsOverthrowMap()
+	if GetMapName() == MapOverthrow() then
+		return true
+	end
+
+	return false
+end
 
 function IsRankedMap()
 	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then

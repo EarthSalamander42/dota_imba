@@ -32,7 +32,7 @@
 "dota_hud_error_cant_use_disarmed"							"Can't use ability when disarmed"
 "dota_hud_error_cant_cast_on_spirits"						"This unit is already bound to you"
 "dota_hud_error_cast_only_pumpkin"							"You can't target towers!"
-"dota_hud_error_cant_purchase_1v1"							"This item is not allowed in 1v1!"
+"dota_hud_error_cant_purchase_map_banned"					"This item is not allowed on this map!"
 "dota_hud_error_cant_shrine_1v1"							"You can't use shrines in 1v1!"
 "dota_hud_error_cant_infest_bob"							"You can't infest BOB!"
 "dota_hud_error_cant_devour_roshan"							"This boii is too big for your mouth!"

@@ -1,6 +1,6 @@
 LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
-ListenToGameEvent('game_rules_state_change', function(keys)
+ListenToGameEvent('game_rules_state_change', function()
 	-- Minor delay is required as the "custom game difficulty" is not initialized on the exact frame of game rule state change
 	Timers:CreateTimer(FrameTime(), function()
 		--	print("Gamemode:", GameMode:GetCustomGamemode())

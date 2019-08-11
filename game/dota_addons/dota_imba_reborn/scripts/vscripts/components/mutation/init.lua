@@ -7,7 +7,7 @@ if Mutation == nil then
 	IMBA_MUTATION["terrain"] = ""
 end
 
-ListenToGameEvent('game_rules_state_change', function(keys)
+ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		Timers:CreateTimer(0.5, function()
 			if GameMode:GetCustomGamemode() ~= 2 then return end

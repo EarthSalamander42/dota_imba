@@ -1,14 +1,14 @@
 --[[ items.lua ]]
 
 --Spawns Bags of Gold in the middle
-function GameMode:ThinkGoldDrop()
+function Imbathrow:ThinkGoldDrop()
 	local r = RandomInt( 1, 100 )
 	if r > ( 100 - self.m_GoldDropPercent ) then
 		self:SpawnGold()
 	end
 end
 
-function GameMode:SpawnGold()
+function Imbathrow:SpawnGold()
 	local overBoss = Entities:FindByName( nil, "@overboss" )
 	local throwCoin = nil
 	local throwCoin2 = nil
@@ -27,18 +27,25 @@ function GameMode:SpawnGold()
 	end
 end
 
-function GameMode:SpawnGoldEntity( spawnPoint )
+function Imbathrow:SpawnGoldEntity( spawnPoint )
+	local item_name = "item_bag_of_gold"
+
+	if Imbathrow.USE_RUNES_IN_KOBOLD_THROW == true then
+		if RandomInt(1, 100) < Imbathrow.RUNES_SPAWN_CHANCE then
+			item_name = Imbathrow.RUNES_LIST[RandomInt(1, #Imbathrow.RUNES_LIST)]
+		end
+	end
+
 	EmitGlobalSound("Item.PickUpGemWorld")
-	local newItem = CreateItem( "item_bag_of_gold", nil, nil )
+	local newItem = CreateItem( item_name, nil, nil )
 	local drop = CreateItemOnPositionForLaunch( spawnPoint, newItem )
 	local dropRadius = RandomFloat( self.m_GoldRadiusMin, self.m_GoldRadiusMax )
 	newItem:LaunchLootInitialHeight( false, 0, 500, 0.75, spawnPoint + RandomVector( dropRadius ) )
 	newItem:SetContextThink( "KillLoot", function() return self:KillLoot( newItem, drop ) end, 20 )
 end
 
-
 --Removes Bags of Gold after they expire
-function GameMode:KillLoot( item, drop )
+function Imbathrow:KillLoot( item, drop )
 
 	if drop:IsNull() then
 		return
@@ -54,7 +61,7 @@ function GameMode:KillLoot( item, drop )
 	UTIL_Remove( drop )
 end
 
-function GameMode:SpecialItemAdd( event )
+function Imbathrow:SpecialItemAdd( event )
 	local item = EntIndexToHScript( event.ItemEntityIndex )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
 	local hero = owner:GetClassname()
@@ -73,101 +80,158 @@ function GameMode:SpecialItemAdd( event )
 	local tableindex = 0
 	local tier1 = 
 	{
-		"item_urn_of_shadows",
+		"item_imba_urn_of_shadows",
 		"item_ring_of_basilius",
-		"item_ring_of_aquila",
-		"item_arcane_boots",
+		"item_imba_ring_of_aquila",
+		"item_imba_arcane_boots",
 		"item_tranquil_boots",
 		"item_phase_boots",
 		"item_power_treads",
 		"item_medallion_of_courage",
 		"item_soul_ring",
 		"item_gem",
-		"item_orb_of_venom"
+		"item_orb_of_venom",
+		"item_imba_poor_mans_shield",
+		"item_imba_ogre_seal_totem",
 	}
 	local tier2 = 
 	{
-		"item_blink",
-		"item_force_staff",
+		"item_imba_blink",
+		"item_imba_force_staff",
 		"item_cyclone",
-		"item_ghost",
-		"item_vanguard",
-		"item_mask_of_madness",
-		"item_blade_mail",
+		"item_imba_ghost",
+		"item_imba_vanguard",
+		"item_imba_mask_of_madness",
+		"item_imba_blade_mail",
 		"item_helm_of_the_dominator",
-		"item_vladmir",
-		"item_yasha",
-		"item_mekansm",
+		"item_imba_vladmir",
+		"item_imba_sange",
+		"item_imba_yasha",
+		"item_imba_kaya",
+		"item_imba_mekansm",
 		"item_hood_of_defiance",
-		"item_veil_of_discord",
-		"item_glimmer_cape"
+		"item_imba_veil_of_discord",
+		"item_glimmer_cape",
+		"item_imba_armlet",
+		"item_imba_ancient_janggo",
+		"item_imba_white_queen_cape",
+		"item_imba_cheese",
+		"item_imba_echo_sabre",
+		"item_imba_aether_lens",
+		"item_imba_cloak_of_flames",
+		"item_imba_spirit_vessel",
 	}
 	local tier3 = 
 	{
-		"item_shivas_guard",
+		"item_imba_shivas_guard",
 		"item_sphere",
-		"item_diffusal_blade",
-		"item_maelstrom",
+		"item_imba_diffusal_blade",
+		"item_imba_maelstrom",
 		"item_basher",
-		"item_invis_sword",
-		"item_desolator",
+		"item_imba_shadow_blade",
+		"item_imba_desolator",
 		"item_ultimate_scepter",
 		"item_bfury",
-		"item_pipe",
-		"item_heavens_halberd",
-		"item_crimson_guard",
+		"item_imba_pipe",
+		"item_imba_heavens_halberd",
+		"item_imba_crimson_guard",
 		"item_black_king_bar",
-		"item_bloodstone",
+		"item_imba_black_queen_cape",
+		"item_imba_bloodstone_720",
 		"item_lotus_orb",
-		"item_guardian_greaves",
-		"item_moon_shard"
+		"item_imba_guardian_greaves",
+		"item_imba_lifesteal_boots",
+		"item_imba_moon_shard",
+		"item_imba_vladmir_2",
+		"item_imba_arcane_nexus",
+		"item_imba_hurricane_pike",
+		"item_imba_nullifier",
 	}
 	local tier4 = 
 	{
-		"item_skadi",
-		"item_sange_and_yasha",
-		"item_greater_crit",
-		"item_sheepstick",
-		"item_orchid",
-		"item_heart",
-		"item_mjollnir",
-		"item_ethereal_blade",
-		"item_radiance",
-		"item_abyssal_blade",
-		"item_butterfly",
-		"item_monkey_king_bar",
-		"item_satanic",
-		"item_octarine_core",
-		"item_silver_edge",
-		"item_rapier"
+		"item_imba_skadi",
+		"item_imba_sange_yasha",
+		"item_imba_kaya_and_sange",
+		"item_imba_yasha_and_kaya",
+		"item_imba_greater_crit",
+		"item_imba_sheepstick",
+		"item_imba_orchid",
+		"item_imba_heart",
+		"item_imba_mjollnir",
+		"item_imba_ethereal_blade",
+		"item_imba_radiance",
+		"item_imba_abyssal_blade",
+		"item_imba_butterfly",
+		"item_imba_monkey_king_bar",
+		"item_imba_satanic",
+		"item_imba_octarine_core",
+		"item_imba_silver_edge",
+		"item_imba_rapier",
+		"item_imba_rapier_magic",
+		"item_imba_assault",
+		"item_imba_diffusal_blade_2",
+		"item_imba_power_treads_2",
+		"item_imba_haste_boots",
+		"item_imba_ironleaf_boots",
+		"item_imba_blink_boots",
+		"item_imba_reverb_rapier",
+		"item_imba_manta",
+	}
+	local tier5 = 
+	{
+		"item_imba_bloodthorn",
+		"item_imba_siege_cuirass",
+		"item_imba_sogat_cuirass",
+		"item_imba_jarnbjorn",
+		"item_imba_desolator_2",
+		"item_imba_witchblade",
+		"item_imba_starfury",
+		"item_imba_ultimate_scepter_synth",
+		"item_imba_rapier_2",
+		"item_imba_rapier_magic_2",
+		"item_imba_rapier_cursed",
+		"item_imba_hellblade",
+		"item_imba_meteor_hammer_4",
+		"item_imba_rod_of_atos_2",
+		"item_imba_the_triumvirate_v2",
+		"item_imba_wand_of_the_brine",
+		"item_imba_glimmerdark_shield",
+		"item_imba_lance_of_longinus",
+		"item_imba_nullifier_2",
+		"item_imba_bladestorm_mail",
+		"item_imba_origin",
+		"item_the_caustic_finale",
 	}
 
 	local t1 = PickRandomShuffle( tier1, self.tier1ItemBucket )
 	local t2 = PickRandomShuffle( tier2, self.tier2ItemBucket )
 	local t3 = PickRandomShuffle( tier3, self.tier3ItemBucket )
 	local t4 = PickRandomShuffle( tier4, self.tier4ItemBucket )
+	local t5 = PickRandomShuffle( tier5, self.tier5ItemBucket )
 
 	local spawnedItem = ""
 
 	-- pick the item we're giving them
 	if GetTeamHeroKills( leader ) > 5 and GetTeamHeroKills( leader ) <= 10 then
-		if ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 3 ) then
+		if ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 0 ) and ( self.leadingTeamScore - self.runnerupTeamScore < 3 ) then
 			spawnedItem = t1
-		elseif ownerTeam == lastPlace then
-			spawnedItem = t3
-		else
-			spawnedItem = t2
-		end
-	elseif GetTeamHeroKills( leader ) > 10 and GetTeamHeroKills( leader ) <= 15 then
-		if ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 3 ) then
+		elseif ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 3 ) then
 			spawnedItem = t2
 		elseif ownerTeam == lastPlace then
 			spawnedItem = t4
 		else
 			spawnedItem = t3
 		end
+	elseif GetTeamHeroKills( leader ) > 10 and GetTeamHeroKills( leader ) <= 15 then
+		if ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 3 ) then
+			spawnedItem = t3
+		elseif ownerTeam == lastPlace then
+			spawnedItem = t5
+		else
+			spawnedItem = t4
+		end
 	else
-		spawnedItem = t2
+		spawnedItem = t3
 	end
 
 	-- add the item to the inventory and broadcast
@@ -181,7 +245,7 @@ function GameMode:SpecialItemAdd( event )
 	CustomGameEventManager:Send_ServerToAllClients( "overthrow_item_drop", overthrow_item_drop )
 end
 
-function GameMode:ThinkSpecialItemDrop()
+function Imbathrow:ThinkSpecialItemDrop()
 	-- Stop spawning items after 15
 	if self.nNextSpawnItemNumber >= 15 then
 		return
@@ -206,7 +270,7 @@ function GameMode:ThinkSpecialItemDrop()
 	end
 end
 
-function GameMode:PlanNextSpawn()
+function Imbathrow:PlanNextSpawn()
 	local missingSpawnPoint =
 	{
 		origin = "0 0 384",
@@ -234,7 +298,7 @@ function GameMode:PlanNextSpawn()
 	self.itemSpawnIndex = r
 end
 
-function GameMode:WarnItem()
+function Imbathrow:WarnItem()
 	-- find the spawn point
 	self:PlanNextSpawn()
 
@@ -255,7 +319,7 @@ function GameMode:WarnItem()
 	visionRevealer:SetContextThink( "KillVisionParticle", function() return trueSight:RemoveSelf() end, 35 )
 end
 
-function GameMode:SpawnItem()
+function Imbathrow:SpawnItem()
 	-- notify everyone
 	CustomGameEventManager:Send_ServerToAllClients( "item_has_spawned", {} )
 	EmitGlobalSound( "powerup_05" )
@@ -273,12 +337,12 @@ function GameMode:SpawnItem()
 	treasureCourier:Attribute_SetIntValue( "particleID", particleTreasure )
 end
 
-function GameMode:ForceSpawnItem()
+function Imbathrow:ForceSpawnItem()
 	self:WarnItem()
 	self:SpawnItem()
 end
 
-function GameMode:KnockBackFromTreasure( center, radius, knockback_duration, knockback_distance, knockback_height )
+function Imbathrow:KnockBackFromTreasure( center, radius, knockback_duration, knockback_distance, knockback_height )
 	local targetType = bit.bor( DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_HERO )
 	local knockBackUnits = FindUnitsInRadius( DOTA_TEAM_NOTEAM, center, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, targetType, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
  
@@ -300,7 +364,7 @@ function GameMode:KnockBackFromTreasure( center, radius, knockback_duration, kno
 end
 
 
-function GameMode:TreasureDrop( treasureCourier )
+function Imbathrow:TreasureDrop( treasureCourier )
 	--Create the death effect for the courier
 	local spawnPoint = treasureCourier:GetInitialGoalEntity():GetAbsOrigin()
 	spawnPoint.z = 400
@@ -328,7 +392,7 @@ function GameMode:TreasureDrop( treasureCourier )
 	UTIL_Remove( treasureCourier )
 end
 
-function GameMode:ForceSpawnGold()
+function Imbathrow:ForceSpawnGold()
 	self:SpawnGold()
 end
 

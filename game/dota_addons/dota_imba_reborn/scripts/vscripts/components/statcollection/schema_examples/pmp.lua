@@ -6,7 +6,7 @@ function customSchema:init(options)
     statCollection:setFlags({ version = GetVersion() })
 
     -- Listen for changes in the current state
-    ListenToGameEvent('game_rules_state_change', function(keys)
+    ListenToGameEvent('game_rules_state_change', function()
         -- Grab the current state
         local state = GameRules:State_Get()
 
