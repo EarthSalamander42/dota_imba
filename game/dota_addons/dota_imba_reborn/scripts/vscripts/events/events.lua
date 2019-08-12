@@ -107,14 +107,27 @@ function GameMode:OnGameRulesStateChange(keys)
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
 		end
 
-		-- Create a timer to avoid lag spike entering pick screen
-		Timers:CreateTimer(3.0, function()
+		-- Create a timer to avoid lag
+		Timers:CreateTimer(2.0, function()
 			if USE_TEAM_COURIER == true then
 				COURIER_TEAM = {}
 				for i = 2, 3 do
 					local pos = {}
-					pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
-					pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
+					if IsOverthrowMap() then
+						for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+							if IsValidEntity(fountain) then
+								pos[fountain:GetTeamNumber()] = fountain
+							end
+						end
+					else
+						if not pos[2] then
+							pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
+						end
+
+						if not pos[3] then
+							pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
+						end
+					end
 
 					if pos[i] then
 						COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)

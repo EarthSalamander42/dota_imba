@@ -876,7 +876,20 @@ function GameMode:OrderFilter( keys )
 		if item == nil then return false end
 
 		-- Make sure non-heroes cannot pick up runes and make them do nothing
-		if not unit:IsRealHero() then
+		if unit:IsRealHero() then
+			if unit:GetNumItemsInInventory() < 9 then
+				--print("inventory has space")
+				return true
+			else
+				--print("Moving to target instead")
+				local position = drop:GetAbsOrigin()
+				keys["position_x"] = position.x
+				keys["position_y"] = position.y
+				keys["position_z"] = position.z
+				keys["order_type"] = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+				return true
+			end
+		else
 			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
 				return false
 			end
@@ -885,6 +898,11 @@ function GameMode:OrderFilter( keys )
 				if item.airdrop then
 					return false
 				end
+			end
+
+			if unit:IsClone() then
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_clone_cant_pickup_item_drop")
+				return false
 			end
 
 			return true

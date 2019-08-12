@@ -128,7 +128,7 @@ function Imbathrow:SpecialItemAdd( event )
 		"item_imba_diffusal_blade",
 		"item_imba_maelstrom",
 		"item_basher",
-		"item_imba_shadow_blade",
+		"item_imba_shadow_blade", -- had to add icon in imba files because this item's imba name is different than vanilla
 		"item_imba_desolator",
 		"item_ultimate_scepter",
 		"item_bfury",
@@ -137,7 +137,7 @@ function Imbathrow:SpecialItemAdd( event )
 		"item_imba_crimson_guard",
 		"item_black_king_bar",
 		"item_imba_black_queen_cape",
-		"item_imba_bloodstone_720",
+		"item_imba_bloodstone_720", -- had to add icon in imba files because this item's imba name is different than vanilla
 		"item_lotus_orb",
 		"item_imba_guardian_greaves",
 		"item_imba_lifesteal_boots",
@@ -150,7 +150,7 @@ function Imbathrow:SpecialItemAdd( event )
 	local tier4 = 
 	{
 		"item_imba_skadi",
-		"item_imba_sange_yasha",
+		"item_imba_sange_yasha", -- had to add icon in imba files because this item's imba name is different than vanilla
 		"item_imba_kaya_and_sange",
 		"item_imba_yasha_and_kaya",
 		"item_imba_greater_crit",
@@ -171,8 +171,7 @@ function Imbathrow:SpecialItemAdd( event )
 		"item_imba_assault",
 		"item_imba_diffusal_blade_2",
 		"item_imba_power_treads_2",
-		"item_imba_haste_boots",
-		"item_imba_ironleaf_boots",
+		"item_imba_transient_boots",
 		"item_imba_blink_boots",
 		"item_imba_reverb_rapier",
 		"item_imba_manta",

@@ -37,9 +37,6 @@ function fetch() {
 		return;
 	}
 
-	if (Game.GetMapInfo().map_display_name == "imba_1v1")
-		DisableVoting();
-
 	var game_version = game_options.value
 
 	if (isInt(game_version))
@@ -163,17 +160,15 @@ function SetGameModeTooltips() {
 }
 */
 
-function DisableVoting() {
-	$("#imba-loading-title-vote").style.visibility = "collapse";
-}
-
 (function(){
 	HoverableLoadingScreen();
 	fetch();
 //	SetGameModeTooltips();
 
-	if (Game.GetMapInfo().map_display_name != "imbathrow_mines_3v3v3")
+	if (Game.GetMapInfo().map_display_name == "imbathrow_mines_3v3v3" || Game.GetMapInfo().map_display_name == "imba_1v1") {
+	} else {
 		$("#imba-loading-title-vote").style.visibility = "visible";
+	}
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();

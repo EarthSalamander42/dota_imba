@@ -1,0 +1,7 @@
+"dota_hud_error_clone_cant_pickup_item_drop"				"Clones can't pickup items!"
+
+"DOTA_Tooltip_modifier_overthrow_gold_xp_granter_buff"							"Golden Aura"
+"DOTA_Tooltip_modifier_overthrow_gold_xp_granter_buff_Description"				"Gaining more gold and experience!"
+
+"DOTA_Tooltip_modifier_overthrow_gold_xp_granter_global_buff"					"Global Aura"
+"DOTA_Tooltip_modifier_overthrow_gold_xp_granter_global_buff_Description"		"Gaining gold and experience"

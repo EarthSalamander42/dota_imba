@@ -15,7 +15,6 @@ ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		GameRules:GetGameModeEntity():SetRuneEnabled( DOTA_RUNE_BOUNTY, false ) --Bounty
 		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
-		Imbathrow:SetOrderFilter()
 
 		Convars:RegisterCommand( "overthrow_force_item_drop", function(...) Imbathrow:ForceSpawnItem() end, "Force an item drop.", FCVAR_CHEAT )
 		Convars:RegisterCommand( "overthrow_force_gold_drop", function(...) Imbathrow:ForceSpawnGold() end, "Force gold drop.", FCVAR_CHEAT )

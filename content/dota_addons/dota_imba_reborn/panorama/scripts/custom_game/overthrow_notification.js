@@ -49,7 +49,7 @@ function OnItemDrop(msg) {
 	var chest_image_name = "file://{images}/econ/tools/gift_lockless_luckbox.png";
 	$("#PickupMessage_Chest").SetImage(chest_image_name);
 
-	var item_image_name = "file://{images}/items/" + msg.dropped_item.replace("item_", "") + ".png"
+	var item_image_name = "file://{images}/items/" + msg.dropped_item.replace("item_", "").replace("imba_", "") + ".png"
 	$("#PickupMessage_Item").SetImage(item_image_name);
 	$.Msg(item_image_name)
 
