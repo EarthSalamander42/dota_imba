@@ -58,7 +58,7 @@
 		"AbilityCastRange"				"525"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8"
-		"AbilityManaCost"				"100 110 120 130"
+		"AbilityManaCost"				"80 90 100 110"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -286,7 +286,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"	"525"
+				"scepter_cast_range"	"700"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -378,7 +378,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"160 120 80"
+		"AbilityCooldown"				"140 120 100"
 		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
 
 		// Precache
@@ -396,7 +396,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"40"
+				"duration"					"30"
 			}
 			"02"
 			{

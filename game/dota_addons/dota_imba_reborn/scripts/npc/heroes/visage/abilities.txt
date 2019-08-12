@@ -289,7 +289,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"unfeeling_status_resistance"	"100"
-			}			
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"petrifying_breath_reduction_per_stack"			"1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"petrifying_breath_duration"		"3"
+			}
 		}
 	}
 
@@ -305,6 +315,7 @@
 		"AbilityTextureName"			"visage_summon_familiars_stone_form"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"MaxLevel"						"3"
@@ -430,7 +441,8 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_visage"
 		"AbilityTextureName"			"custom/visage/become_familiar"
-
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 

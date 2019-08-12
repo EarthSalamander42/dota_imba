@@ -1080,7 +1080,7 @@ function modifier_imba_darkness_night:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()       
 
-	self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage")
+	--self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage")
 
 	-- Start a Night Stalker night
 	if IsServer() then        
@@ -1135,16 +1135,16 @@ end
 
 function modifier_imba_darkness_night:DeclareFunctions()
 	local decFuncs = {
-	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	--MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 	MODIFIER_PROPERTY_MOVESPEED_MAX
 	}
 
 	return decFuncs
 end
 
-function modifier_imba_darkness_night:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
-end
+-- function modifier_imba_darkness_night:GetModifierPreAttack_BonusDamage()
+	-- return self.bonus_damage
+-- end
 
 function modifier_imba_darkness_night:GetModifierMoveSpeed_Max()
 	return 99999

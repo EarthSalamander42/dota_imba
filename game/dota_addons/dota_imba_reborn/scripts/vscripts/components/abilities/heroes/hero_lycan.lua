@@ -23,7 +23,7 @@ function imba_lycan_summon_wolves:OnUpgrade()
     	
     	-- Ability specials
     	local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")
-    	local max_charges = ability:GetSpecialValueFor("max_charges")	
+    	local max_charges = ability:GetTalentSpecialValueFor("max_charges")	
     	
     	-- Give buff, set stacks to maximum count.
     	if not caster:HasModifier(charges_buff) then
@@ -59,7 +59,7 @@ function imba_lycan_summon_wolves:OnSpellStart()
 
 	-- Ability specials
 	local distance = ability:GetSpecialValueFor("distance")
-	local wolves_count = ability:GetSpecialValueFor("wolves_count")
+	local wolves_count = ability:GetTalentSpecialValueFor("wolves_count")
 	local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")		
 	local wolf_type = ability:GetSpecialValueFor("wolf_type")		
 	
@@ -222,9 +222,9 @@ function modifier_imba_lycan_wolf_charge:OnCreated()
         self.ability = self:GetAbility()	    	
     	
     	-- Ability specials
-        self.max_charges = self.ability:GetSpecialValueFor("max_charges")
+        self.max_charges = self.ability:GetTalentSpecialValueFor("max_charges")
         self.charge_cooldown = self.ability:GetSpecialValueFor("charge_cooldown")
-        self.wolves_count = self.ability:GetSpecialValueFor("wolves_count")                        
+        self.wolves_count = self.ability:GetTalentSpecialValueFor("wolves_count")                        
     			
         -- Start thinking
     	self:StartIntervalThink(self.charge_cooldown-0.01)

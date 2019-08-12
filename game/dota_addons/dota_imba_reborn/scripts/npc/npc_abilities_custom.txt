@@ -9892,6 +9892,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"wolves_count"					"2 2 2 3"
+				"LinkedSpecialBonus"			"special_bonus_imba_lycan_10"
 			}
 			"03"
 			{
@@ -9928,6 +9929,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_charges"					"2 2 2 3"
+				"LinkedSpecialBonus"			"special_bonus_imba_lycan_10"
 			}
 			"05"
 			{
@@ -10630,6 +10632,34 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"40"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// +X Wolves Summoned
+	//=================================================================================================================
+	"special_bonus_imba_lycan_10"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_summon_wolves"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
 			}
 		}
 	}
@@ -15271,7 +15301,7 @@
 	//=================================================================================================================
 	// Pugna's Talents
 	//=================================================================================================================
-	"special_bonus_imba_pugna_1" // Life Drain cannot be broken by distance for the first 4 seconds of Life Drain.
+	"special_bonus_imba_pugna_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15296,7 +15326,7 @@
 		}
 	}
 
-	"special_bonus_imba_pugna_2" // Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.	
+	"special_bonus_imba_pugna_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
