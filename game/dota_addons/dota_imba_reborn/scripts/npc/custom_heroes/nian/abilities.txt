@@ -18,11 +18,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"17 14 11 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
+		"AbilityManaCost"				"100"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -31,12 +31,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attack_damage_multiplier"		"1.4"
+				"attack_damage_multiplier"		"1.35 1.4 1.45 1.5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attack_speed_multiplier"			"1.4"
+				"attack_speed_multiplier"			"1.35 1.4 1.45 1.5"
 			}
 			"03"
 			{
@@ -46,7 +46,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_angle"			"60"
+				"attack_angle"			"70"
 			}
 			"05"
 			{

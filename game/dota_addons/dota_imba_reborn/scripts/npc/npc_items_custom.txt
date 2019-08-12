@@ -1024,12 +1024,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"1.75"
+				"mana_regen_aura"		"3.5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"11"
+				"hp_regen_aura"			"12"
 			}
 			"07"
 			{
@@ -15359,7 +15359,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15463,7 +15463,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_passive"			"10"
+				"power_passive"			"12"
 			}
 			"12"
 			{
@@ -15490,7 +15490,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_stat_reduction"	"35"
+				"power_stat_reduction"	"40"
 			}
 			
 			"17"
@@ -15501,7 +15501,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chaos_dmg_pct"			"130"
+				"chaos_dmg_pct"			"160"
 			}
 		}
 	}

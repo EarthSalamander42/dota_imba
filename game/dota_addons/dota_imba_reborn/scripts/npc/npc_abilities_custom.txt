@@ -15346,7 +15346,7 @@
 		}
 	}
 
-	"special_bonus_imba_pugna_4" //Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.
+	"special_bonus_imba_pugna_4" //Life Drain cannot be broken by distance for the first X seconds of Life Drain.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15366,7 +15366,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"						"1.0"
+				"value"						"2.0"
 			}
 		}
 	}

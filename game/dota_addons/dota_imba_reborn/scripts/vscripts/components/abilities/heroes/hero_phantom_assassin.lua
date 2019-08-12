@@ -632,7 +632,7 @@ end
 function modifier_imba_blur:GetModifierIncomingDamage_Percentage()
 
 	--TALENT: Blur now grants +30% chance to evade any damage
-	if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_8")) then
+	if RollPseudoRandom(self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_8"), self) then
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, self.caster, 0, nil)
 		return -100
 	end
