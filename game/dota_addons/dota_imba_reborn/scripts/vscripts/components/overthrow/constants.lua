@@ -76,7 +76,7 @@ Imbathrow.RUNES_LIST = {
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3 )
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 3 )
 		Imbathrow.m_GoldRadiusMin = 300
-		Imbathrow.m_GoldRadiusMax = 1900
+		Imbathrow.m_GoldRadiusMax = 900
 		Imbathrow.m_GoldDropPercent = 8
 	elseif GetMapName() == "imbathrow_3v3v3v3" then
 		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3 )

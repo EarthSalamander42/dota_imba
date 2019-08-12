@@ -26,11 +26,14 @@ game/dota_addons/dota_imba_reborn/rich_presence_persistent_data\.txt
 game/dota_addons/dota_imba_reborn/server_log\.txt
 
 # Roshan
-content/dota_addons/dota_imba/models/rosh*
-game/dota_addons/dota_imba/models/rosh*
+content/dota_addons/dota_imba_reborn/models/rosh*
+game/dota_addons/dota_imba_reborn/models/rosh*
 
 # eclipse
 .project
 .settings
 .DS_Store
 .idea
+
+# Imbathrow
+content/dota_addons/dota_imba_reborn/materials/models/courier/*

@@ -6,6 +6,8 @@ if _G.Imbathrow == nil then
 
 	LinkLuaModifier("modifier_overthrow_gold_xp_granter", "components/modifiers/overthrow/modifier_overthrow_gold_xp_granter.lua", LUA_MODIFIER_MOTION_NONE )
 
+	PrecacheItemByNameAsync("item_bag_of_gold", function(...) end)
+
 	Imbathrow:GatherAndRegisterValidTeams()
 end
 

@@ -172,5 +172,8 @@ function DisableVoting() {
 	fetch();
 //	SetGameModeTooltips();
 
+	if (Game.GetMapInfo().map_display_name != "imbathrow_mines_3v3v3")
+		$("#imba-loading-title-vote").style.visibility = "visible";
+
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();
