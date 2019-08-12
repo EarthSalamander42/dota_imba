@@ -214,6 +214,8 @@ function modifier_imba_doom_bringer_doom_enemies:OnCreated()
 	
 	if not IsServer() then return end
 	
+	EmitSoundOn("Hero_DoomBringer.Doom", self:GetParent())
+	
 	-- This is to track Aghanim's Scepter duration and tick mechanics 
 	self.reentered = nil
 	
@@ -236,6 +238,12 @@ end
 
 function modifier_imba_doom_bringer_doom_enemies:OnRefresh()
 	self:OnCreated()
+end
+
+function modifier_imba_doom_bringer_doom_enemies:OnDestroy()
+	if not IsServer() then return end
+
+	StopSoundOn("Hero_DoomBringer.Doom", self:GetParent())
 end
 
 function modifier_imba_doom_bringer_doom_enemies:GetStatusEffectName()

@@ -420,7 +420,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 			new_lane_creep:SetBaseDamageMax(target:GetBaseDamageMax())
 			new_lane_creep:SetMinimumGoldBounty(target:GetGoldBounty())
 			new_lane_creep:SetMaximumGoldBounty(target:GetGoldBounty())			
-			UTIL_Remove(target)
+			target:AddNoDraw()
+			target:ForceKill(false)
 			target = new_lane_creep
 		end
 		

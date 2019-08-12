@@ -60,7 +60,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"150 250 350 450"
-				"LinkedSpecialBonus"		"special_bonus_unique_shadow_shaman_3"
+				//"LinkedSpecialBonus"		"special_bonus_unique_shadow_shaman_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_shadow_shaman_ether_shock_damage"
 			}
 			
 			"06"
