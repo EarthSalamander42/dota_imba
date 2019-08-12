@@ -1,5 +1,7 @@
 // Editor: naowin 	12.08.2019
 
+// not sure if overriding tooltip.text destroys stuff. If it turns out we cant do this. when we have to create new lable and just hide the old one.
+
 function print(msg) {
 	$.Msg(msg)
 }
