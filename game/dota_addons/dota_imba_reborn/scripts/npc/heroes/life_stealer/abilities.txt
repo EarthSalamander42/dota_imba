@@ -108,7 +108,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"engorge_pct"			"50"
+				"engorge_pct"			"75"
 			}			
 			"03"
 			{
@@ -118,7 +118,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"banquet_base_health"	"400"
+				"banquet_base_health"	"600"
 			}
 			"05"
 			{
@@ -305,7 +305,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chestburster_orders_to_tick_up"	"4"
+				"chestburster_orders_to_tick_up"	"3"
 			}
 			"09"
 			{
