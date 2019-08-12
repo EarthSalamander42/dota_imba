@@ -5719,6 +5719,12 @@
 
 	"npc_dota_visage_familiar1"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
+		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"			// Physical protection.
@@ -5735,6 +5741,12 @@
 
 	"npc_dota_visage_familiar2"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
+		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"			// Physical protection.
@@ -5751,6 +5763,12 @@
 
 	"npc_dota_visage_familiar3"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
+		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"			// Physical protection.
