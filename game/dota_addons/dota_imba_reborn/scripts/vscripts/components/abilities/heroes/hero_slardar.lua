@@ -1089,10 +1089,6 @@ function imba_slardar_corrosive_haze:OnInventoryContentsChanged()
 	end
 end
 
-function imba_slardar_corrosive_haze:OnHeroCalculateStatBonus()
-	self:OnInventoryContentsChanged()
-end
-
 function imba_slardar_corrosive_haze:GetAOERadius()
 	local caster = self:GetCaster()
 	return caster:FindTalentValue("special_bonus_imba_slardar_7", "radius")
