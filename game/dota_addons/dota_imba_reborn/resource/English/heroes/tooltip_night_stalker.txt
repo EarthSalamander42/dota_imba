@@ -84,7 +84,7 @@
 
 // Night Stalker's Darkness
 "DOTA_Tooltip_ability_imba_night_stalker_darkness"                      "Darkness"
-"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Nightstalker gains bonus damage during this time.\n<font color='#FF7800'>The Dark World:</font> All enemy units also have their vision range reduced for the duration.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed."
+"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest.\n<font color='#FF7800'>Midnight Reigns:</font> Darkness is not removed on death.\n<font color='#FF7800'>The Dark World:</font> All enemy units also have their vision range reduced for the duration.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_Lore"                "It is a humbling sight to see when the mightiest of warriors become afraid of the dark."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_Note0"					"Darkness stops the natural day/night flow while it is active."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"

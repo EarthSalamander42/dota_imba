@@ -388,6 +388,22 @@
 				"var_type"					"FIELD_FLOAT"
 				"scepter_efficiency"		"0.25"
 			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_drain_interval"		"0.2 0.2 0.2 0.2"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_drain_pct"			"6.0"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_cooldown"			"2"
+			}
 		}
 	}
 
@@ -862,4 +878,33 @@
 			}
 		}
 	}
+	
+	
+	//=================================================================================================================
+	// Wisp Talent 12: Remnants of Overcharge
+	//=================================================================================================================
+	"special_bonus_imba_wisp_12"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_overcharge_721"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}	
 }

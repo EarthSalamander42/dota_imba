@@ -256,16 +256,19 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"illusion_duration"			"20"
+				"RequiresScepter"			"1"
 			}	
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"images_take_damage_percent"	"100"
+				"RequiresScepter"			"1"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"images_take_damage_percent_tooltip"			"200"
+				"RequiresScepter"			"1"
 			}			
 		}
 	}

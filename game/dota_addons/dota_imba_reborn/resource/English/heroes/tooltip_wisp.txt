@@ -142,3 +142,5 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_10"						"Large Hadron Collider"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_10_Description"			"Increases Spirits cooldown by 50%. Doubles Spirits count, in/out move speed, and oscillation speed, and halves formation delay."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_11"						"+75 Spirits Hero Damage"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_12"						"Remnants of Overcharge"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_12_Description"			"Overcharge can now be toggled, at the cost of 6% of Io's current health and mana per second. Can set auto-cast on to revert to default logic."

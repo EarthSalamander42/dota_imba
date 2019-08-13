@@ -1024,12 +1024,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"1.75"
+				"mana_regen_aura"		"3.5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"11"
+				"hp_regen_aura"			"12"
 			}
 			"07"
 			{
@@ -8138,28 +8138,28 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15"
+				"bonus_intellect"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"15"
+				"bonus_strength"		"12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15"
+				"bonus_attack_speed"	"10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"bonus_damage"			"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"0.5"
+				"bonus_mana_regen"		"1.25"
 			}
 			"06"
 			{
@@ -8253,17 +8253,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18"
+				"bonus_intellect"		"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"18"
+				"bonus_strength"		"14"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"18"
+				"bonus_attack_speed"	"12"
 			}
 			"04"
 			{
@@ -8274,7 +8274,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"0.75"
+				"bonus_mana_regen"		"1.5"
 			}
 			"06"
 			{
@@ -15359,7 +15359,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15463,7 +15463,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_passive"			"10"
+				"power_passive"			"12"
 			}
 			"12"
 			{
@@ -15490,7 +15490,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_stat_reduction"	"35"
+				"power_stat_reduction"	"40"
 			}
 			
 			"17"
@@ -15501,7 +15501,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chaos_dmg_pct"			"130"
+				"chaos_dmg_pct"			"160"
 			}
 		}
 	}

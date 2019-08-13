@@ -1831,10 +1831,36 @@ end
 
 LinkLuaModifier("modifier_imba_wisp_overcharge_721", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_overcharge_721_aura", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge_721_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_wisp_overcharge_721				= class({})
-modifier_imba_wisp_overcharge_721		= class({})
-modifier_imba_wisp_overcharge_721_aura	= class({})
+imba_wisp_overcharge_721					= class({})
+modifier_imba_wisp_overcharge_721			= class({})
+modifier_imba_wisp_overcharge_721_aura		= class({})
+modifier_imba_wisp_overcharge_721_handler	= class({})
+
+function imba_wisp_overcharge_721:GetBehavior()
+	if self:GetCaster():HasTalent("special_bonus_imba_wisp_12") then
+		if self:GetCaster():GetModifierStackCount("modifier_imba_wisp_overcharge_721_handler", self:GetCaster()) == 0 then
+			return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		else
+			return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		end	
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
+	end
+end
+
+function imba_wisp_overcharge_721:GetCooldown(level)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_wisp_overcharge_721_handler", self:GetCaster()) == 0 then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self:GetSpecialValueFor("talent_cooldown")
+	end
+end
+
+function imba_wisp_overcharge_721:GetIntrinsicModifierName()
+	return "modifier_imba_wisp_overcharge_721_handler"
+end
 
 function imba_wisp_overcharge_721:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -1846,6 +1872,16 @@ function imba_wisp_overcharge_721:OnSpellStart()
 	if not IsServer() then return end
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_overcharge_721", {duration = self:GetSpecialValueFor("duration")})
+end
+
+function imba_wisp_overcharge_721:OnToggle()
+	if not IsServer() then return end
+	
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_overcharge_721", {})
+	else
+		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_wisp_overcharge_721", self:GetCaster())
+	end
 end
 
 ----------------------------------------
@@ -1871,6 +1907,9 @@ function modifier_imba_wisp_overcharge_721:OnCreated()
 	self.bonus_cast_speed		= self.ability:GetSpecialValueFor("bonus_cast_speed")
 	self.bonus_attack_range		= self.ability:GetSpecialValueFor("bonus_attack_range")
 	
+	self.talent_drain_interval	= self.ability:GetSpecialValueFor("talent_drain_interval")
+	self.talent_drain_pct		= self.ability:GetSpecialValueFor("talent_drain_pct")
+	
 	if not IsServer() then return end
 	
 	local tether_ability = self:GetCaster():FindAbilityByName("imba_wisp_tether")
@@ -1878,6 +1917,23 @@ function modifier_imba_wisp_overcharge_721:OnCreated()
 	if tether_ability and tether_ability.target and not tether_ability.target:HasModifier("modifier_imba_wisp_overcharge_721") then
 		tether_ability.target:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_overcharge_721", {})
 	end
+	
+	if self.caster == self.parent and self.ability:GetToggleState() then
+		if not self.ability:GetAutoCastState() then
+			self:SetDuration(-1, true)
+			self:StartIntervalThink(self.talent_drain_interval)
+		else
+			-- Toggle off the ability and re-cast with the proper default logic
+			self.ability:ToggleAbility()
+			self:StartIntervalThink(-1)
+			self.ability:CastAbility()
+		end
+	end
+end
+
+function modifier_imba_wisp_overcharge_721:OnIntervalThink()
+	self.parent:ModifyHealth(self.caster:GetHealth() * (1 - (self.talent_drain_pct * 0.01 * self.talent_drain_interval)), self.ability, false, 0)
+	self.parent:ReduceMana(self.caster:GetMana() * self.talent_drain_pct * 0.01 * self.talent_drain_interval)
 end
 
 function modifier_imba_wisp_overcharge_721:OnRefresh()
@@ -1943,6 +1999,7 @@ function modifier_imba_wisp_overcharge_721:GetAuraSearchType()			return DOTA_UNI
 function modifier_imba_wisp_overcharge_721:GetModifierAura()			return "modifier_imba_wisp_overcharge_721_aura" end
 
 function modifier_imba_wisp_overcharge_721:GetAuraEntityReject(hEntity)	return hEntity:HasModifier("modifier_imba_wisp_overcharge_721") end
+
 ---------------------------------------------
 -- OVERCHARGE AURA MODIFIER (7.21 VERSION) --
 ---------------------------------------------
@@ -2007,10 +2064,36 @@ function modifier_imba_wisp_overcharge_721_aura:GetModifierAttackRangeBonus()
 	return self.bonus_attack_range
 end
 
+------------------------------------------------
+-- OVERCHARGE HANDLER MODIFIER (7.21 VERSION) --
+------------------------------------------------
+
+-- A talent that adds an auto-cast function to an ability...that's new
+
+function modifier_imba_wisp_overcharge_721_handler:IsHidden()	return true end
+
+function modifier_imba_wisp_overcharge_721_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_wisp_overcharge_721_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or not self:GetParent():HasTalent("special_bonus_imba_wisp_12") or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+
 -- Client-side helper functions
 LinkLuaModifier("modifier_special_bonus_imba_wisp_4", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_wisp_9", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_wisp_10", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_wisp_12", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_wisp_4	= class({})
 
@@ -2030,6 +2113,12 @@ function modifier_special_bonus_imba_wisp_10:IsHidden() 		return true end
 function modifier_special_bonus_imba_wisp_10:IsPurgable() 		return false end
 function modifier_special_bonus_imba_wisp_10:RemoveOnDeath() 	return false end
 
+modifier_special_bonus_imba_wisp_12	= class({})
+
+function modifier_special_bonus_imba_wisp_12:IsHidden() 		return true end
+function modifier_special_bonus_imba_wisp_12:IsPurgable() 		return false end
+function modifier_special_bonus_imba_wisp_12:RemoveOnDeath() 	return false end
+
 function imba_wisp_spirits:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_wisp_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_10"), "modifier_special_bonus_imba_wisp_10", {})
@@ -2040,6 +2129,10 @@ function imba_wisp_overcharge_721:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_wisp_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_4"), "modifier_special_bonus_imba_wisp_4", {})
 	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_wisp_12") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_12") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_12"), "modifier_special_bonus_imba_wisp_12", {})
+	end	
 end
 
 function imba_wisp_relocate:OnOwnerSpawned()

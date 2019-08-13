@@ -542,6 +542,12 @@ function modifier_imba_life_stealer_feast_banquet:OnAttacked(keys)
 		end	
 		
 		if self:GetParent():GetHealth() <= 0 then
+			local infest_effect_modifier = self:GetParent():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest_effect", self:GetCaster())
+			
+			if infest_effect_modifier then
+				infest_effect_modifier:Destroy()
+			end
+		
 			self:GetParent():Kill(nil, keys.attacker)
 			self:GetParent():RemoveSelf()
 			self:Destroy()

@@ -80,7 +80,10 @@ function item_imba_iron_talon:OnSpellStart()
 	if self:GetCursorTarget().CutDown then
 		self:GetCursorTarget():CutDown(self:GetCaster():GetTeamNumber())
 	else
-		if self:GetCursorTarget():IsCreep() then
+		-- Furion Sprout exception???
+		if not self:GetCursorTarget().IsCreep then
+			self:GetCursorTarget():Kill()
+		elseif self:GetCursorTarget():IsCreep() then
 			self:GetCursorTarget():EmitSound("DOTA_Item.IronTalon.Activate")
 
 			local talon_particle = ParticleManager:CreateParticle("particles/items3_fx/iron_talon_active.vpcf", PATTACH_ABSORIGIN, self:GetCursorTarget())

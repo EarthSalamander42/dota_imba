@@ -29,7 +29,7 @@
 
 // Enigma's Midnight Pulse
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse"                      "Midnight Pulse"
-"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Description"          "Steeps an area in dark resonance, damaging enemy units based on their max HP.\n<font color='#FF7800'>Gravity Falls:</font> Counts as a gravity force where units are pulled towards. Midnight Pulse is stronger than Enigma as a gravity source, but is weaker than Black Hole.\n<font color='#FF7800'>Safe Space:</font> Grants health regeneration to eidolons. Lasts %eidolon_heal_duration% seconds after they leave the Midnight Pulse area of effect."
+"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Description"          "Steeps an area in dark resonance, damaging enemy units based on their max HP.\n<font color='#FF7800'>Gravity Falls:</font> Counts as a gravity force where units are pulled towards. Midnight Pulse is stronger than Enigma as a gravity source, but is weaker than Black Hole.\n<font color='#FF7800'>Safe Space:</font> Grants health regeneration to eidolons."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Lore"                  "A section of the world slowly descends into the void."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note0"                "The pull does not pierce Spell Immunity."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note1"                "The health regeneration for Eidolons does not stack from multiple sources."

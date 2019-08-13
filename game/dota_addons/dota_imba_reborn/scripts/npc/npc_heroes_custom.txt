@@ -20,6 +20,7 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/tidehunter/hero.txt
+// #base heroes/visage/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
@@ -973,10 +974,11 @@
 		"Ability14"					"special_bonus_imba_lycan_2"
 		"Ability15"					"special_bonus_imba_lycan_6"
 		"Ability16"					"special_bonus_imba_lycan_9"
-		"Ability17"					"special_bonus_imba_lycan_8"
+		"Ability17"					"special_bonus_imba_lycan_10"
 
 		// Removed Talents
 		// "Ability16"					"special_bonus_imba_lycan_7" // Shapeshift hasted speed increased to 1200
+		// "Ability17"					"special_bonus_imba_lycan_8" // Blood Hunt
 	}
 
 	//=================================================================================================================
@@ -1458,10 +1460,10 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_pugna_life_drain"
 		
-		"Ability10"					"special_bonus_hp_200"				//+200 HP
-		"Ability11"					"special_bonus_evasion_20"			//+20 Evasion
+		"Ability10"					"special_bonus_hp_275"				
+		"Ability11"					"special_bonus_movement_speed_20"
 		"Ability12"					"special_bonus_imba_pugna_3"		//+1 Decrepify duration
-		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.
+		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain cannot be broken by distance for the first 2 seconds of Life Drain.
 		"Ability14"					"special_bonus_imba_pugna_5"		//Nether Blast secondary blasts deal 10% of original damage.
 		"Ability15"					"special_bonus_imba_pugna_6"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.
 		"Ability16"					"special_bonus_imba_pugna_7"		//+3% Target current health as Life Drain's per sec damage
