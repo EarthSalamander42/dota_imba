@@ -792,7 +792,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" and (hero == caster) then
+						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
 							ability_set = {
 								[0] = "imba_life_stealer_rage",
 								[1] = "imba_life_stealer_feast",
@@ -813,7 +813,7 @@ function GameMode:OnPlayerChat(keys)
 								[16] = "special_bonus_unique_lifestealer"
 							}
 							upgraded = true
-						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" and (hero == caster) then
+						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" then
 							ability_set = {
 								[0] = "imba_visage_grave_chill",
 								[1] = "imba_visage_soul_assumption",
