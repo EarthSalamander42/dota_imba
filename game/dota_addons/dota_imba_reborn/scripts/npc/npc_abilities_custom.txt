@@ -5,6 +5,7 @@
 #base heroes/towers.txt
 
 #base heroes/alchemist/abilities.txt
+#base heroes/ancient_apparition/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/bristleback/abilities.txt
