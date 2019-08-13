@@ -378,7 +378,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"140 120 100"
+		"AbilityCooldown"				"140 110 80"
 		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
 
 		// Precache
