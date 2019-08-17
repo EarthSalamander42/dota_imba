@@ -1,7 +1,7 @@
 "DOTAUnits"
 {
 	//=================================================================================================================
-	//	Forged Spirit tweaked stats abit to remove code from hero_invoker.lua... 
+	//	Forged Spirit tweaked stats abit to remove code from hero_invoker.lua...  
 	//=================================================================================================================
 	"npc_dota_invoker_forged_spirit"
 	{
@@ -43,7 +43,7 @@
 		"AttackRate"				"1.5"		// Speed of attack.
 		"AttackAnimationPoint"		"0.2"		// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"900"		// Range within a target can be acquired.
-		"AttackRange"				"250"		// Range within a target can be attacked.
+		"AttackRange"				"250"			// Range within a target can be attacked.
 		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"1000"		// Speed of projectile.
 

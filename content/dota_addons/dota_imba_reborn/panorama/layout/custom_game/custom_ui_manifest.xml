@@ -1,4 +1,7 @@
 <root> 
+	<scripts>
+     		<include src="file://{resources}/scripts/custom_game/imba_invoker_tooltips.js" />
+ 	</scripts>
 	<script>
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );      //Time of day (clock).
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );     //Heroes and team score at the top of the HUD.
@@ -277,6 +280,11 @@
 //			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.visibility = "collapse";
 //			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.transform = "TranslateX(-1000px)";
 //		}
+
+		GameEvents.Subscribe("init_imba_invoker_tooltip", function(data) 
+		{
+			init_invoker_tooltips()
+		})
 	</script>
 
 	<Panel>

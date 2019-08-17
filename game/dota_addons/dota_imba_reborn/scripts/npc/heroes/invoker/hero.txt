@@ -10,13 +10,15 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"ProjectileModel"			"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
 		
-		"Ability1"					"invoker_quas"
-		"Ability2"					"invoker_wex"
-		"Ability3"					"invoker_exort"
+		"Ability1"					"imba_invoker_quas"
+		"Ability2"					"imba_invoker_wex"
+		"Ability3"					"imba_invoker_exort"
 		"Ability4"					"imba_invoker_empty1"
 		"Ability5"					"imba_invoker_empty2"
-		"Ability6"					"invoker_invoke"
+		"Ability6"					"imba_invoker_invoke"
 		"Ability7"					"imba_invoker_cold_snap"
 		"Ability8"					"imba_invoker_ghost_walk"
 		"Ability9"					"imba_invoker_tornado"
@@ -26,7 +28,7 @@
 		"Ability13"					"imba_invoker_sun_strike"
 		"Ability14"					"imba_invoker_forge_spirit"
 		"Ability15"					"imba_invoker_ice_wall"
-		"Ability16"					"imba_invoker_deafening_blast"
+		"Ability16"					"imba_invoker_deafening_blast"		
 		"Ability17"					"imba_special_bonus_unique_invoker_1"
 		"Ability18"					"imba_special_bonus_unique_invoker_2"
 		"Ability19"					"imba_special_bonus_unique_invoker_3"
