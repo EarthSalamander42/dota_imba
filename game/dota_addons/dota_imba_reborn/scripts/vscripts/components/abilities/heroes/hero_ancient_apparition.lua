@@ -1,12 +1,12 @@
--- -- Creator:
--- --	   AltiV, August 13th, 2019
+-- Creator:
+--	   AltiV, August 13th, 2019
 
 LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet_freeze", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex_buff", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_chilling_touch_slow", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
@@ -16,1533 +16,1099 @@ LinkLuaModifier("modifier_imba_ancient_apparition_imbued_ice_slow", "components/
 
 LinkLuaModifier("modifier_imba_ancient_apparition_anti_abrasion_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_global_cooling", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
-imba_ancient_apparition_cold_feet						= class({})
-modifier_imba_ancient_apparition_cold_feet				= class({})
-modifier_imba_ancient_apparition_cold_feet_freeze		= class({})
+imba_ancient_apparition_cold_feet								= class({})
+modifier_imba_ancient_apparition_cold_feet						= class({})
+modifier_imba_ancient_apparition_cold_feet_freeze				= class({})
 
-imba_ancient_apparition_ice_vortex						= class({})
-modifier_imba_ancient_apparition_ice_vortex_thinker		= class({})
-modifier_imba_ancient_apparition_ice_vortex				= class({})
-modifier_imba_ancient_apparition_ice_vortex_buff		= class({})
+imba_ancient_apparition_ice_vortex								= class({})
+modifier_imba_ancient_apparition_ice_vortex_thinker				= class({})
+modifier_imba_ancient_apparition_ice_vortex						= class({})
 
-imba_ancient_apparition_chilling_touch					= class({})
-modifier_imba_ancient_apparition_chilling_touch_slow	= class({})
+imba_ancient_apparition_chilling_touch							= class({})
+modifier_imba_ancient_apparition_chilling_touch_slow			= class({})
 
-imba_ancient_apparition_imbued_ice						= class({})
-modifier_imba_ancient_apparition_imbued_ice				= class({})
-modifier_imba_ancient_apparition_imbued_ice_slow		= class({})
+imba_ancient_apparition_imbued_ice								= class({})
+modifier_imba_ancient_apparition_imbued_ice						= class({})
+modifier_imba_ancient_apparition_imbued_ice_slow				= class({})
 
-imba_ancient_apparition_anti_abrasion					= class({})
-modifier_imba_ancient_apparition_anti_abrasion_thinker	= class({})
+imba_ancient_apparition_anti_abrasion							= class({})
+modifier_imba_ancient_apparition_anti_abrasion_thinker			= class({})
 
-imba_ancient_apparition_ice_blast						= class({})
-modifier_imba_ancient_apparition_ice_blast				= class({})
+imba_ancient_apparition_ice_blast								= class({})
+modifier_imba_ancient_apparition_ice_blast_thinker				= class({})
+modifier_imba_ancient_apparition_ice_blast						= class({})
+modifier_imba_ancient_apparition_ice_blast_global_cooling		= class({})
+
+imba_ancient_apparition_ice_blast_release						= class({})
 
 ---------------
 -- COLD FEET --
 ---------------
 
-function imba_ancient_apparition_cold_feet:OnSpellStart()
+function imba_ancient_apparition_cold_feet:GetAOERadius()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_cold_feet_aoe")
+end
 
+function imba_ancient_apparition_cold_feet:GetBehavior()
+	if not self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_cold_feet_aoe") then
+		return self.BaseClass.GetBehavior(self)
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+	end
+end
+
+function imba_ancient_apparition_cold_feet:OnSpellStart()
+	if not self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_cold_feet_aoe") then
+		local target = self:GetCursorTarget()
+		
+		if target:TriggerSpellAbsorb(self) then return end
+		
+		if not target:HasModifier("imba_ancient_apparition_cold_feet") then
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_cold_feet", {})
+		end
+	else
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_cold_feet_aoe"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	
+		for _, enemy in pairs(enemies) do
+			if not enemy:HasModifier("imba_ancient_apparition_cold_feet") then
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_cold_feet", {})
+			end
+		end
+	end
 end
 
 ------------------------
 -- COLD FEET MODIFIER --
 ------------------------
 
-modifier_imba_ancient_apparition_cold_feet				= class({})
+function modifier_imba_ancient_apparition_cold_feet:IgnoreTenacity()	return true end
+
+function modifier_imba_ancient_apparition_cold_feet:OnCreated()
+	if not IsServer() then return end
+	
+	self.duration		= self:GetAbility():GetDuration()
+	self.damage			= self:GetAbility():GetSpecialValueFor("damage")
+	self.break_distance	= self:GetAbility():GetSpecialValueFor("break_distance")
+	self.stun_duration	= self:GetAbility():GetSpecialValueFor("stun_duration")
+
+	self.damageTable 	= {
+		victim 			= self:GetParent(),
+		damage 			= self.damage,
+		damage_type		= self:GetAbility():GetAbilityDamageType(),
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	}
+
+	self.original_position	= self:GetParent():GetAbsOrigin()
+	self.counter			= 1
+	self.ticks				= 0
+	
+	self.interval			= 0.1
+	
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.ColdFeetCast")
+	
+	-- This marks the original location on the ground
+	local cold_feet_marker_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+	self:AddParticle(cold_feet_marker_particle, false, false, -1, false, false)
+	
+	-- This marks the debuff over the target's head
+	local cold_feet_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	self:AddParticle(cold_feet_particle, false, false, -1, false, false)
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
+	if (self:GetParent():GetAbsOrigin() - self.original_position):Length2D() < self.break_distance then
+		self.counter	= self.counter + self.interval
+	
+		if self.counter >= 1 then
+			if self.ticks < self.duration then
+				EmitSoundOnClient("Hero_Ancient_Apparition.ColdFeetTick", self:GetParent():GetPlayerOwner())
+			
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage, nil)
+			
+				ApplyDamage(self.damageTable)
+				self.ticks = self.ticks + 1
+				self.counter = 0
+			else
+				local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self.stun_duration})
+				
+				if stun_modifier then
+					stun_modifier:SetDuration(self.stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
+				end
+				
+				self:Destroy()
+			end
+		end
+	else
+		self:Destroy()
+	end
+end
+
+function modifier_imba_ancient_apparition_cold_feet:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_ORDER
+	}
+	
+	return decFuncs
+end
+
+-- IMBAfication: Pole Transferral
+function modifier_imba_ancient_apparition_cold_feet:OnOrder(keys)
+	if keys.unit:GetTeamNumber() == self:GetParent():GetTeamNumber() and keys.target == self:GetParent() and keys.unit ~= self:GetParent() and not keys.unit:IsMagicImmune() then
+		if not keys.unit:HasModifier("imba_ancient_apparition_cold_feet") then
+			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet", {})
+		end
+	end
+end
 
 -------------------------------
 -- COLD FEET FREEZE MODIFIER --
 -------------------------------
 
-modifier_imba_ancient_apparition_cold_feet_freeze		= class({})
+function modifier_imba_ancient_apparition_cold_feet_freeze:GetEffectName()
+	return "particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+end
+
+function modifier_imba_ancient_apparition_cold_feet_freeze:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_ancient_apparition_cold_feet_freeze:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.ColdFeetFreeze")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_ancient_apparition" then
+		self:GetCaster():EmitSound("ancient_apparition_appa_ability_coldfeet_0"..RandomInt(2, 4))
+	end	
+end
+
+function modifier_imba_ancient_apparition_cold_feet_freeze:CheckState()
+	local state = {
+		[MODIFIER_STATE_STUNNED]	= true,
+		[MODIFIER_STATE_FROZEN]		= true
+	}
+	
+	return state
+end
+
+function modifier_imba_ancient_apparition_cold_feet_freeze:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_DISABLE_HEALING,
+		MODIFIER_EVENT_ON_ORDER
+	}
+	
+	return decFuncs
+end
+
+-- IMBAfication: Thoroughly Chilled
+function modifier_imba_ancient_apparition_cold_feet_freeze:GetDisableHealing()
+	return 1
+end
+
+-- IMBAfication: Pole Transferral
+function modifier_imba_ancient_apparition_cold_feet_freeze:OnOrder(keys)
+	if keys.unit:GetTeamNumber() == self:GetParent():GetTeamNumber() and keys.target == self:GetParent() and keys.unit ~= self:GetParent() and not keys.unit:IsMagicImmune() then
+		if not keys.unit:HasModifier("imba_ancient_apparition_cold_feet") then
+			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self:GetRemainingTime()})
+		end
+	end
+end
 
 ----------------
 -- ICE VORTEX --
 ----------------
 
-imba_ancient_apparition_ice_vortex						= class({})
+function imba_ancient_apparition_ice_vortex:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_ancient_apparition_ice_vortex:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_cooldown")
+end
+
+function imba_ancient_apparition_ice_vortex:OnUpgrade()
+	if not self.anti_abrasion_ability then
+		self.anti_abrasion_ability 		= self:GetCaster():FindAbilityByName("imba_ancient_apparition_anti_abrasion")
+	end
+	
+	if self.anti_abrasion_ability then
+		self.anti_abrasion_ability:SetLevel(self:GetLevel())
+	end
+end
+
+function imba_ancient_apparition_ice_vortex:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Ancient_Apparition.IceVortexCast")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_ancient_apparition" then
+		if not self.responses then
+			self.responses = 
+			{
+				["ancient_apparition_appa_ability_vortex_01"] = 0,
+				["ancient_apparition_appa_ability_vortex_02"] = 0,
+				["ancient_apparition_appa_ability_vortex_03"] = 0,
+				["ancient_apparition_appa_ability_vortex_04"] = 0,
+				["ancient_apparition_appa_ability_vortex_05"] = 0,
+				["ancient_apparition_appa_ability_vortex_06"] = 0
+			}
+		end
+		
+		for response, timer in pairs(self.responses) do
+			if GameRules:GetDOTATime(true, true) - timer >= 60 then
+				self:GetCaster():EmitSound(response)
+				self.responses[response] = GameRules:GetDOTATime(true, true)
+				break
+			end
+		end
+	end	
+	
+	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_ice_vortex_thinker", {duration = self:GetSpecialValueFor("vortex_duration")}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
 
 ---------------------------------
 -- ICE VORTEX THINKER MODIFIER --
 ---------------------------------
 
-modifier_imba_ancient_apparition_ice_vortex_thinker		= class({})
+function modifier_imba_ancient_apparition_ice_vortex_thinker:OnCreated()
+	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+	self.vision_aoe			= self:GetAbility():GetSpecialValueFor("vision_aoe")
+	self.vortex_duration	= self:GetAbility():GetSpecialValueFor("vortex_duration")
+
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex")
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex.lp")
+	
+	local vortex_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(vortex_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(vortex_particle, 5, Vector(self.radius, 0, 0))
+	self:AddParticle(vortex_particle, false, false, -1, false, false)
+	
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self.vortex_duration, false)
+end
+
+function modifier_imba_ancient_apparition_ice_vortex_thinker:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Ancient_Apparition.IceVortex.lp")
+	self:GetParent():RemoveSelf()
+end
+
+function modifier_imba_ancient_apparition_ice_vortex_thinker:IsHidden()				return true end
+
+function modifier_imba_ancient_apparition_ice_vortex_thinker:IsAura() 				return true end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:IsAuraActiveOnDeath() 	return false end
+
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraRadius()		return self.radius end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_BOTH end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetModifierAura()		return "modifier_imba_ancient_apparition_ice_vortex" end
 
 -------------------------
 -- ICE VORTEX MODIFIER --
 -------------------------
 
-modifier_imba_ancient_apparition_ice_vortex				= class({})
+function modifier_imba_ancient_apparition_ice_vortex:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf"
+end
 
-------------------------------
--- ICE VORTEX BUFF MODIFIER --
-------------------------------
+function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
+	if self:GetAbility() then
+		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+		self.movement_speed_pct	= self:GetAbility():GetTalentSpecialValueFor("movement_speed_pct")
+		self.spell_resist_pct	= self:GetAbility():GetTalentSpecialValueFor("spell_resist_pct")
+	else
+		self.radius				= 0
+		self.movement_speed_pct	= 0
+		self.spell_resist_pct	= 0
+	end
+end
 
-modifier_imba_ancient_apparition_ice_vortex_buff		= class({})
+function modifier_imba_ancient_apparition_ice_vortex:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+	}
+	
+	return decFuncs	
+end
+
+function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		return self.movement_speed_pct
+	else
+		return self.movement_speed_pct * (-1)
+	end
+end
+
+function modifier_imba_ancient_apparition_ice_vortex:GetModifierSpellAmplify_Percentage()
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		return self.spell_resist_pct
+	else
+		return 0
+	end
+end
 
 --------------------
 -- CHILLING TOUCH --
 --------------------
 
-imba_ancient_apparition_chilling_touch					= class({})
+function imba_ancient_apparition_chilling_touch:OnUpgrade()
+	if not self.imbued_ice_ability then
+		self.imbued_ice_ability 		= self:GetCaster():FindAbilityByName("imba_ancient_apparition_imbued_ice")
+	end
+	
+	if self.imbued_ice_ability then
+		self.imbued_ice_ability:SetLevel(self:GetLevel())
+	end
+end
+
+function imba_ancient_apparition_chilling_touch:GetIntrinsicModifierName()
+	return "modifier_generic_orb_effect_lua"
+end
+
+function imba_ancient_apparition_chilling_touch:GetProjectileName()
+	return "particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_projectile.vpcf"
+end
+
+function imba_ancient_apparition_chilling_touch:GetCastRange()
+	return self:GetCaster():Script_GetAttackRange() + self:GetSpecialValueFor("attack_range_bonus")
+end
+
+function imba_ancient_apparition_chilling_touch:OnOrbFire()
+	self:GetCaster():EmitSound("Hero_Ancient_Apparition.ChillingTouch.Cast")
+end
+
+-- "The attacks first apply the debuff, then their own damage."
+function imba_ancient_apparition_chilling_touch:OnOrbImpact( keys )
+	keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
+
+	local chilling_touch_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") })
+
+	if chilling_touch_modifier then
+		chilling_touch_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+	end
+
+	local damageTable = {
+		victim 			= keys.target,
+		damage 			= self:GetTalentSpecialValueFor("damage"),
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self
+	}
+
+	ApplyDamage(damageTable)
+	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self:GetTalentSpecialValueFor("damage"), nil)
+end
 
 ----------------------------------
 -- CHILLING TOUCH SLOW MODIFIER --
 ----------------------------------
 
-modifier_imba_ancient_apparition_chilling_touch_slow	= class({})
+function modifier_imba_ancient_apparition_chilling_touch_slow:OnCreated()
+	-- IMBAfication: Packed Ice
+	self.state = {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_FROZEN] = true
+	}
+
+	if self:GetAbility() then
+		self.slow	= self:GetAbility():GetSpecialValueFor("slow")
+	else
+		self.slow	= 0
+	end
+end
+
+function modifier_imba_ancient_apparition_chilling_touch_slow:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+	
+	return decFuncs	
+end
+
+function modifier_imba_ancient_apparition_chilling_touch_slow:CheckState()
+	if self.state then
+		return self.state
+	end
+end
+
+function modifier_imba_ancient_apparition_chilling_touch_slow:GetModifierMoveSpeedBonus_Percentage()
+	if self.slow then
+		return self.slow * (-1)
+	end
+end
 
 ----------------
 -- IMBUED ICE --
 ----------------
 
-imba_ancient_apparition_imbued_ice						= class({})
+function imba_ancient_apparition_imbued_ice:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_ancient_apparition_imbued_ice:OnSpellStart()
+	local position = self:GetCursorPosition()
+
+	self:GetCaster():EmitSound("Hero_Ancient_Apparition.Imbued_Ice_Cast")
+
+	local imbued_ice_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(imbued_ice_particle, 0, position)
+	ParticleManager:SetParticleControl(imbued_ice_particle, 1, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), 0))
+	ParticleManager:ReleaseParticleIndex(imbued_ice_particle)
+
+	-- "The buff is always placed on Ancient Apparition, even when he is outside the targeted area."
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice", {duration = self:GetSpecialValueFor("buff_duration")})
+
+	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	
+	for _, ally in pairs(allies) do
+		if ally ~= self:GetCaster() then
+			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice", {duration = self:GetSpecialValueFor("buff_duration")})
+		end
+	end
+end
 
 -------------------------
 -- IMBUED ICE MODIFIER --
 -------------------------
 
-modifier_imba_ancient_apparition_imbued_ice				= class({})
+function modifier_imba_ancient_apparition_imbued_ice:OnCreated()
+	if not IsServer() then return end
+	
+	self.number_of_attacks		= self:GetAbility():GetSpecialValueFor("number_of_attacks")
+	self.damage_per_attack		= self:GetAbility():GetSpecialValueFor("damage_per_attack")
+	self.move_speed_slow		= self:GetAbility():GetSpecialValueFor("move_speed_slow")
+	self.move_speed_duration	= self:GetAbility():GetSpecialValueFor("move_speed_duration")
+	
+	-- "The damage source is set to be the attacking hero, not Ancient Apparition."
+	self.damage_table	= {
+		victim 			= nil,
+		damage 			= self.damage_per_attack,
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetParent(),
+		ability 		= self:GetAbility()
+	}
+	
+	local imbued_ice_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(imbued_ice_particle, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(imbued_ice_particle, false, false, -1, false, false)
+	
+	self:SetStackCount(self.number_of_attacks)
+end
+
+function modifier_imba_ancient_apparition_imbued_ice:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_ancient_apparition_imbued_ice:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+	
+	return decFuncs
+end
+
+-- "Does not work against buildings, but fully works against wards."
+function modifier_imba_ancient_apparition_imbued_ice:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
+		self:DecrementStackCount()
+		
+		keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
+		
+		self.damage_table.victim = keys.target
+		ApplyDamage(self.damage_table)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self.damage_per_attack, nil)
+		
+		local imbued_ice_slow_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", {duration = self.move_speed_duration})
+		
+		if imbued_ice_slow_modifier then
+			imbued_ice_slow_modifier:SetDuration(self.move_speed_duration * (1 - keys.target:GetStatusResistance()), true)
+		end
+		
+		if self:GetStackCount() <= 0 then
+			self:Destroy()
+		end
+	end
+end
 
 ------------------------------
 -- IMBUED ICE SLOW MODIFIER --
 ------------------------------
 
-modifier_imba_ancient_apparition_imbued_ice_slow		= class({})
+function modifier_imba_ancient_apparition_imbued_ice_slow:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_ancient_apparition_imbued_ice_slow:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf"
+end
+
+function modifier_imba_ancient_apparition_imbued_ice_slow:OnCreated()
+	if self:GetAbility() then
+		self.move_speed_slow	= self:GetAbility():GetSpecialValueFor("move_speed_slow")
+	else
+		self.move_speed_slow	= 0
+	end
+end
+
+function modifier_imba_ancient_apparition_imbued_ice_slow:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_DISABLE_HEALING
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_ancient_apparition_imbued_ice_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.move_speed_slow
+end
+
+function modifier_imba_ancient_apparition_imbued_ice_slow:GetDisableHealing()
+	return 1
+end
 
 -------------------
 -- ANTI-ABRASION --
 -------------------
 
-imba_ancient_apparition_anti_abrasion					= class({})
+function imba_ancient_apparition_anti_abrasion:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_ancient_apparition_anti_abrasion:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Ancient_Apparition.IceVortexCast")
+	
+	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_anti_abrasion_thinker", {duration = self:GetSpecialValueFor("vortex_duration")}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
 
 ----------------------------
 -- ANTI-ABRASION MODIFIER --
 ----------------------------
 
-modifier_imba_ancient_apparition_anti_abrasion_thinker	= class({})
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:OnCreated()
+	self.radius		= self:GetAbility():GetSpecialValueFor("radius")
+	self.vision_aoe	= self:GetAbility():GetSpecialValueFor("vision_aoe")
+	self.vortex_duration	= self:GetAbility():GetSpecialValueFor("vortex_duration")
+
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex")
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex.lp")
+	
+	local vortex_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(vortex_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(vortex_particle, 5, Vector(self.radius, 0, 0))
+	self:AddParticle(vortex_particle, false, false, -1, false, false)
+	
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self.vortex_duration, false)
+end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Ancient_Apparition.IceVortex.lp")
+	self:GetParent():RemoveSelf()
+end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:IsHidden()				return true end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:IsAura() 				return true end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:IsAuraActiveOnDeath() 	return false end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraRadius()			return self.radius end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetModifierAura()		return "modifier_ice_slide" end
+
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraDuration()		return 0.25 end
 
 ---------------
 -- ICE BLAST --
 ---------------
 
-imba_ancient_apparition_ice_blast						= class({})
+function imba_ancient_apparition_ice_blast:GetAssociatedSecondaryAbilities()	return "imba_ancient_apparition_ice_blast_release" end
+
+function imba_ancient_apparition_ice_blast:OnUpgrade()
+	if not self.release_ability then
+		self.release_ability = self:GetCaster():FindAbilityByName("imba_ancient_apparition_ice_blast_release")
+	end
+	
+	if self.release_ability and not self.release_ability:IsTrained() then
+		self.release_ability:SetLevel(1)
+	end
+end
+
+function imba_ancient_apparition_ice_blast:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
+	EmitSoundOnClient("Hero_Ancient_Apparition.IceBlast.Tracker", self:GetCaster():GetPlayerOwner())
+
+	local velocity	= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed")
+
+	-- Use a dummy to attach logic to
+	self.ice_blast_dummy = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_ice_blast_thinker", {x = velocity.x, y = velocity.y}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+
+	local linear_projectile = {
+		Ability				= self,
+		--EffectName			= "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf", -- Since this should only show to allies I think I have to make this a separate particle on a modifier thinker?
+		vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
+		fDistance			= math.huge, -- Will this cause issues?
+		fStartRadius		= 0,
+		fEndRadius			= 0,
+		Source				= self:GetCaster(),
+		bHasFrontalCone		= false,
+		bReplaceExisting	= false,
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		fExpireTime 		= GameRules:GetGameTime() + 30.0,
+		bDeleteOnHit		= false,
+		vVelocity			= Vector(velocity.x, velocity.y, 0),
+		bProvidesVision		= true,
+		iVisionRadius 		= self:GetSpecialValueFor("target_sight_radius"),
+		iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+		
+		ExtraData			=
+		{
+			direction_x		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).x,
+			direction_y		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).y,
+			direction_z		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).z,
+			ice_blast_dummy	= self.ice_blast_dummy:entindex(),
+		}
+	}
+
+	self.initial_projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
+	
+	if self.release_ability then
+		self:GetCaster():SwapAbilities(self:GetName(), self.release_ability:GetName(), false, true)
+	end
+end
+
+function imba_ancient_apparition_ice_blast:OnProjectileThink_ExtraData(location, data)
+	if data.ice_blast_dummy then
+		EntIndexToHScript(data.ice_blast_dummy):SetAbsOrigin(location)
+	end
+	
+	if not self:GetCaster():IsAlive() and self.release_ability then
+		self.release_ability:OnSpellStart()
+	end
+end
+
+function imba_ancient_apparition_ice_blast:OnProjectileHit_ExtraData(target, location, data)
+	if not target and data.ice_blast_dummy then
+		local ice_blast_thinker_modifier = EntIndexToHScript(data.ice_blast_dummy):FindModifierByNameAndCaster("modifier_imba_ancient_apparition_ice_blast_thinker", self:GetCaster())
+		
+		if ice_blast_thinker_modifier then
+			ice_blast_thinker_modifier:Destroy()
+		end
+	end
+end
+
+--------------------------------
+-- ICE BLAST THINKER MODIFIER --
+--------------------------------
+
+function modifier_imba_ancient_apparition_ice_blast_thinker:IsPurgable()	return false end
+
+function modifier_imba_ancient_apparition_ice_blast_thinker:OnCreated(params)
+	if not IsServer() then return end
+	
+	local ice_blast_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(ice_blast_particle, 1, Vector(params.x, params.y, 0))
+	self:AddParticle(ice_blast_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_ancient_apparition_ice_blast_thinker:OnDestroy()
+	if not IsServer() then return end
+
+	self.release_ability	= self:GetCaster():FindAbilityByName("imba_ancient_apparition_ice_blast_release")
+
+	if self:GetAbility() and self:GetAbility():IsHidden() and self.release_ability then	
+		self:GetCaster():SwapAbilities(self:GetAbility():GetName(), self.release_ability:GetName(), true, false)
+	end
+	
+	self:GetParent():RemoveSelf()
+end
 
 ------------------------
 -- ICE BLAST MODIFIER --
 ------------------------
 
-modifier_imba_ancient_apparition_ice_blast				= class({})
+function modifier_imba_ancient_apparition_ice_blast:GetEffectName()
+	return "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
+end
 
+function modifier_imba_ancient_apparition_ice_blast:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf"
+end
 
-
---modifier_ice_slide
-
-		-- "Ability1"		"imba_ancient_apparition_cold_feet"
-		-- "Ability2"		"imba_ancient_apparition_ice_vortex"
-		-- "Ability3"		"imba_ancient_apparition_chilling_touch"
-		-- "Ability4"		"imba_ancient_apparition_imbued_ice"
-		-- "Ability5"		"imba_ancient_apparition_anti_abrasion"
-		-- "Ability6"		"imba_ancient_apparition_ice_blast"
-		-- "Ability7"		"imba_ancient_apparition_ice_blast_release"
-
--- LinkLuaModifier("modifier_imba_visage_grave_chill_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_debuff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura_modifier", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_soul_assumption", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_stacks", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_counter", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary_ally", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_stone_form_self_cast", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_petrifying_breath", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_root", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_become_familiar_delay", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_become_familiar", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- imba_visage_grave_chill									= class({})
--- modifier_imba_visage_grave_chill_buff					= class({})
--- modifier_imba_visage_grave_chill_debuff					= class({})
--- modifier_imba_visage_grave_chill_aura					= class({})
--- modifier_imba_visage_grave_chill_aura_modifier			= class({})
-
--- imba_visage_soul_assumption								= class({})
--- modifier_imba_visage_soul_assumption					= class({})
--- modifier_imba_visage_soul_assumption_stacks				= class({})
--- modifier_imba_visage_soul_assumption_counter			= class({})
-
--- imba_visage_gravekeepers_cloak							= class({})
--- modifier_imba_visage_gravekeepers_cloak					= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary		= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary_ally	= class({})
-
--- imba_visage_stone_form_self_cast						= class({})
--- modifier_imba_visage_stone_form_self_cast				= class({})
-
--- imba_visage_summon_familiars							= class({})
--- modifier_imba_visage_summon_familiars					= class({})
--- modifier_imba_visage_summon_familiars_petrifying_breath	= class({})
-
--- imba_visage_summon_familiars_stone_form					= class({})
--- modifier_imba_visage_summon_familiars_stone_form_root	= class({})
--- modifier_imba_visage_summon_familiars_stone_form_buff	= class({})
-
--- imba_visage_become_familiar								= class({})
--- modifier_imba_visage_become_familiar_delay				= class({})
--- modifier_imba_visage_become_familiar					= class({})
-
-
-
--- LinkLuaModifier("modifier_imba_visage_grave_chill_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_debuff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura_modifier", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_soul_assumption", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_stacks", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_counter", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary_ally", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_stone_form_self_cast", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_petrifying_breath", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_root", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_become_familiar_delay", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_become_familiar", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- imba_visage_grave_chill									= class({})
--- modifier_imba_visage_grave_chill_buff					= class({})
--- modifier_imba_visage_grave_chill_debuff					= class({})
--- modifier_imba_visage_grave_chill_aura					= class({})
--- modifier_imba_visage_grave_chill_aura_modifier			= class({})
-
--- imba_visage_soul_assumption								= class({})
--- modifier_imba_visage_soul_assumption					= class({})
--- modifier_imba_visage_soul_assumption_stacks				= class({})
--- modifier_imba_visage_soul_assumption_counter			= class({})
-
--- imba_visage_gravekeepers_cloak							= class({})
--- modifier_imba_visage_gravekeepers_cloak					= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary		= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary_ally	= class({})
-
--- imba_visage_stone_form_self_cast						= class({})
--- modifier_imba_visage_stone_form_self_cast				= class({})
-
--- imba_visage_summon_familiars							= class({})
--- modifier_imba_visage_summon_familiars					= class({})
--- modifier_imba_visage_summon_familiars_petrifying_breath	= class({})
-
--- imba_visage_summon_familiars_stone_form					= class({})
--- modifier_imba_visage_summon_familiars_stone_form_root	= class({})
--- modifier_imba_visage_summon_familiars_stone_form_buff	= class({})
-
--- imba_visage_become_familiar								= class({})
--- modifier_imba_visage_become_familiar_delay				= class({})
--- modifier_imba_visage_become_familiar					= class({})
-
--- -----------------
--- -- GRAVE CHILL --
--- -----------------
-
--- function imba_visage_grave_chill:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_grave_chill_aura"
--- end
-
--- function imba_visage_grave_chill:OnSpellStart()
-	-- local target = self:GetCursorTarget()
+function modifier_imba_ancient_apparition_ice_blast:OnCreated(params)
+	if not IsServer() then return end
 	
-	-- -- Blocked by Linken's
-	-- if target:TriggerSpellAbsorb(self) then return end
+	self.dot_damage		= params.dot_damage
+	self.kill_pct		= params.kill_pct
+	
+	self.damage_table	= {
+		victim 			= self:GetParent(),
+		damage 			= self.dot_damage,
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	}
+	
+	self:StartIntervalThink(1 - self:GetParent():GetStatusResistance())
+end
+
+function modifier_imba_ancient_apparition_ice_blast:OnRefresh(params)
+	self:OnCreated(params)
+end
+
+function modifier_imba_ancient_apparition_ice_blast:OnIntervalThink()
+	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceBlastRelease.Tick")
+
+	ApplyDamage(self.damage_table)
+	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.dot_damage, nil)
+end
+
+function modifier_imba_ancient_apparition_ice_blast:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_DISABLE_HEALING,
+		MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_ancient_apparition_ice_blast:GetDisableHealing()
+	return 1
+end
+
+function modifier_imba_ancient_apparition_ice_blast:OnTakeDamageKillCredit(keys)
+	if keys.target == self:GetParent() and (self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 <= self.kill_pct then
+		if keys.attacker == self:GetParent() then
+			self:GetParent():Kill(self:GetAbility(), self:GetCaster())
+		else
+			self:GetParent():Kill(self:GetAbility(), keys.attacker)
+		end
 		
-	-- self:GetCaster():EmitSound("Hero_Visage.GraveChill.Cast")
-	-- target:EmitSound("Hero_Visage.GraveChill.Target")
+		if not self:GetParent():IsAlive() then
+			local ice_blast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:ReleaseParticleIndex(ice_blast_particle)
+		end
+	end
+end
 
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" and RollPercentage(25) then
-		-- if not self.responses then
-			-- self.responses = 
-			-- {
-				-- "visage_visa_gravechill_04",
-				-- "visage_visa_gravechill_05",
-				-- "visage_visa_gravechill_14",
-				-- "visage_visa_gravechill_21",
-				-- "visage_visa_gravechill_22"
-			-- }
-		-- end
-		
-		-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-	-- end
+---------------------------------------
+-- ICE BLAST GLOBAL COOLING MODIFIER --
+---------------------------------------
+
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:IgnoreTenacity()		return true end
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:IsPurgable()			return false end
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:RemoveOnDeath()		return false end
+
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf"
+end
+
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:OnCreated()
+	self.global_cooling_move_speed_reduction	= self:GetAbility():GetSpecialValueFor("global_cooling_move_speed_reduction")
+end
+
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_cast_beams.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
-	-- ParticleManager:ReleaseParticleIndex(chill_particle)
+	return decFuncs
+end
+
+function modifier_imba_ancient_apparition_ice_blast_global_cooling:GetModifierMoveSpeedBonus_Percentage()
+	return self.global_cooling_move_speed_reduction * (-1)
+end
+
+-----------------------
+-- ICE BLAST RELEASE --
+-----------------------
+
+function imba_ancient_apparition_ice_blast_release:IsStealable()	return false end
+function imba_ancient_apparition_ice_blast_release:GetAssociatedPrimaryAbilities()	return "imba_ancient_apparition_ice_blast" end
+
+function imba_ancient_apparition_ice_blast_release:OnSpellStart()
+	if not self.ice_blast_ability then
+		self.ice_blast_ability	= self:GetCaster():FindAbilityByName("imba_ancient_apparition_ice_blast")
+	end
 	
-	-- -- I set the target as the caster here rather than the caster itself because I am utilizing that target's Death's Enticement IMBAfication modifier stacks, which I want to show on client-side
-	-- local chill_buff_modifier	= self:GetCaster():AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-	-- if chill_buff_modifier then
-		-- chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	-- end
-	
-	-- -- "Grave Chill also grants the buff to Familiars within 1200 range of Visage. The buff on the Familiars is not aura-based. It places a separate buff on each Familiar."
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-			-- chill_buff_modifier	= ally:AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-			-- if chill_buff_modifier then
-				-- chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-			-- end
-		-- end
-	-- end
-	
-	-- local chill_debuff_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_grave_chill_debuff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-	-- if chill_debuff_modifier then
-		-- chill_debuff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	-- end
--- end
-
--- -------------------------------
--- -- GRAVE CHILL BUFF MODIFIER --
--- -------------------------------
-
--- function modifier_imba_visage_grave_chill_buff:IsDebuff()	return false end
-
--- function modifier_imba_visage_grave_chill_buff:OnCreated()
-	-- self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus")
-	-- self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
-	-- self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
-	
-	-- self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	
-	-- if not IsServer() then return end
-	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_caster.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- -- I have no god damn idea what connects to where
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
-	
-	-- if self:GetParent():GetName() == "npc_dota_hero_visage" and not self:GetParent():HasModifier("modifier_imba_visage_become_familiar") then
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_tail_tip", self:GetParent():GetAbsOrigin(), true)ParticleManager:SetParticleControlEnt(chill_particle, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_wingtipL", self:GetParent():GetAbsOrigin(), true)
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_wingtipR", self:GetParent():GetAbsOrigin(), true)
-	-- else
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)ParticleManager:SetParticleControlEnt(chill_particle, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)	
-	-- end
-	
-	-- self:AddParticle(chill_particle, false, false, -1, false, false)
--- end
-
--- function modifier_imba_visage_grave_chill_buff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.movespeed_bonus
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierAttackSpeedBonus_Constant()
-	-- return self.attackspeed_bonus + (self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec)
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierTurnRate_Percentage()
-	-- return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec
--- end
-
--- ---------------------------------
--- -- GRAVE CHILL DEBUFF MODIFIER --
--- ---------------------------------
-
--- function modifier_imba_visage_grave_chill_debuff:GetStatusEffectName()
-	-- return "particles/units/heroes/hero_visage/status_effect_visage_chill_slow.vpcf"
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:OnCreated()
-	-- self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus")
-	-- self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
-	-- self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
-	
-	-- self.deaths_enticement_stacks			= self:GetParent():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetCaster())
-	
-	-- if not IsServer() then return end
-	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-	-- self:AddParticle(chill_particle, false, false, -1, false, false)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.movespeed_bonus * (-1)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierAttackSpeedBonus_Constant()
-	-- return (self.attackspeed_bonus + self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec) * (-1)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierTurnRate_Percentage()
-	-- return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec * (-1)
--- end
-
--- -------------------------------
--- -- GRAVE CHILL AURA MODIFIER --
--- -------------------------------
-
--- -- IMBAfication: Death's Enticement
--- -- Assuming this line will be required in case it gets duplicated through something like Grimstroke's Soulbind, which would then otherwise remove this modifier
--- function modifier_imba_visage_grave_chill_aura:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_visage_grave_chill_aura:IsHidden()				return true end
-
--- function modifier_imba_visage_grave_chill_aura:IsAura() 				return true end
--- function modifier_imba_visage_grave_chill_aura:IsAuraActiveOnDeath() 	return true end
-
--- function modifier_imba_visage_grave_chill_aura:GetAuraRadius()			return FIND_UNITS_EVERYWHERE end
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_BOTH end
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
--- function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifier_imba_visage_grave_chill_aura_modifier" end
-
--- ----------------------------------------
--- -- GRAVE CHILL AURA MODIFIER MODIFIER --
--- ----------------------------------------
-
--- function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
-	-- if not IsServer() then return end
-
-	-- self:StartIntervalThink(1)
--- end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnIntervalThink()
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
-	-- return self:GetStackCount()
--- end
-
--- ---------------------
--- -- SOUL ASSUMPTION --
--- ---------------------
-
--- function imba_visage_soul_assumption:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_soul_assumption"
--- end
-
--- function imba_visage_soul_assumption:OnUpgrade()
-	-- if not IsServer() then return end
-	
-	-- if self:GetLevel() >= 1 and self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()) and not self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle then
-		-- self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
-		-- self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()):AddParticle(self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle, false, false, -1, false, false)
-	-- end
--- end
-
--- function imba_visage_soul_assumption:OnSpellStart()
-	-- local target = self:GetCursorTarget()
-	
-	-- self:GetCaster():EmitSound("Hero_Visage.SoulAssumption.Cast")
-
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" then
-		-- if RollPercentage(10) then
-			-- if not self.responses_rare then
-				-- self.responses_rare = 
-				-- {
-					-- "visage_visa_soulassumption01",
-					-- "visage_visa_soulassumption02",
-					-- "visage_visa_soulassumption07"
-				-- }
-			-- end
+	if self.ice_blast_ability then
+		if self.ice_blast_ability.ice_blast_dummy and self.ice_blast_ability.initial_projectile then
+			-- Distance vector between where the ice blast tracer ends and where Ancient Apparition is
+			local vector	= self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
 			
-			-- self:GetCaster():EmitSound(self.responses_rare[RandomInt(1, #self.responses_rare)])
-		-- else
-			-- if not self.responses then
-				-- self.responses = 
-				-- {
-					-- "visage_visa_gravechill_24",
-					-- "visage_visa_gravechill_26",
-					-- "visage_visa_gravechill_27",
-					-- "visage_visa_gravechill_28",
-					-- "visage_visa_gravechill_32"
-				-- }
-			-- end
+			-- "The ice blast travels at a speed of 750, or reaches the targeted point in 2 seconds, whichever is faster."
+			local velocity	= vector:Normalized() * math.max(vector:Length2D() / 2, 750)
+
+			-- "The explosion radius starts at 275 and increases by 50 for every second the tracer has traveled, capped at 1000 radius."
+			local final_radius	= math.min(self.ice_blast_ability:GetSpecialValueFor("radius_min") + ((vector:Length2D() / self.ice_blast_ability:GetSpecialValueFor("speed")) * self.ice_blast_ability:GetSpecialValueFor("radius_grow")), self.ice_blast_ability:GetSpecialValueFor("radius_max"))
+
+			--EmitSoundOnClient("Hero_Ancient_Apparition.IceBlastRelease.Cast.Self", self:GetCaster():GetPlayerOwner())
+			self:GetCaster():EmitSound("Hero_Ancient_Apparition.IceBlastRelease.Cast")
 			
-			-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-		-- end
-	-- end
-	
-	-- local assumption_counter_modifier	= self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	-- local damage_bars					= 0
-	-- local effect_name					= "particles/units/heroes/hero_visage/visage_soul_assumption_bolt.vpcf"
-	-- -- IMBAfication: Soul Accelerant
-	-- local overflow_counter				= 1
-	
-	-- if assumption_counter_modifier then	
-		-- damage_bars = math.min(math.floor(assumption_counter_modifier:GetStackCount() / self:GetSpecialValueFor("damage_limit")), self:GetSpecialValueFor("stack_limit"))
-		-- overflow_counter = math.max(assumption_counter_modifier:GetStackCount() - (self:GetSpecialValueFor("damage_limit") * self:GetSpecialValueFor("stack_limit")), 0)
-		
-		-- if damage_bars > 0 then
-			-- effect_name	="particles/units/heroes/hero_visage/visage_soul_assumption_bolt"..damage_bars..".vpcf"
-		-- end
-		
-		-- local assumption_stack_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_visage_soul_assumption_stacks")
-		
-		-- for _, mod in pairs(assumption_stack_modifiers) do
-			-- mod:Destroy()
-		-- end
-		
-		-- assumption_counter_modifier:Destroy()
-	-- end
-	
-	-- local projectile =
-	-- {
-		-- Target 				= nil,
-		-- Source 				= self:GetCaster(),
-		-- Ability 			= self,
-		-- EffectName 			= effect_name,
-		-- iMoveSpeed			= math.min(self:GetSpecialValueFor("bolt_speed") + overflow_counter, self:GetSpecialValueFor("soul_accelerant_max")),
-		-- vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
-		-- bDrawsOnMinimap 	= false,
-		-- bDodgeable 			= true,
-		-- bIsAttack 			= false,
-		-- bVisibleToEnemies 	= true,
-		-- bReplaceExisting 	= false,
-		-- flExpireTime 		= GameRules:GetGameTime() + 10.0,
-		-- bProvidesVision 	= false,
-		
-		-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-		
-		-- ExtraData = {
-			-- charges			= damage_bars
-		-- }
-	-- }
-	
-	-- projectile.Target = target
-	-- ProjectileManager:CreateTrackingProjectile(projectile)
-	
-	-- local target_counter = 1
-	
-	-- -- CDOTA_BaseNPC: GetCastRangeBonus() added in Summer Scrub patch xd
-	-- -- "Heroes and illusions have a higher priority than other units. Treats creep-heroes as creeps."
-	-- local enemy_heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
-	
-	-- for _, enemy in pairs(enemy_heroes) do	
-		-- if target_counter >= self:GetTalentSpecialValueFor("targets") then
-			-- break
-		-- end	
-	
-		-- if enemy ~= target then
-			-- projectile.Target = enemy
-			-- ProjectileManager:CreateTrackingProjectile(projectile)
-			
-			-- target_counter = target_counter + 1
-		-- end
-	-- end
-	
-	-- if target_counter < self:GetTalentSpecialValueFor("targets") then
-		-- local enemy_creeps = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false) 
-		
-		-- for _, enemy in pairs(enemy_creeps) do
-			-- if target_counter >= self:GetTalentSpecialValueFor("targets") then
-				-- break
-			-- end
-		
-			-- if enemy ~= target then
-				-- projectile.Target = enemy
-				-- ProjectileManager:CreateTrackingProjectile(projectile)
+			local ice_blast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+			ParticleManager:SetParticleControl(ice_blast_particle, 0, self:GetCaster():GetAbsOrigin())
+			-- CP1: Direction Vector
+			ParticleManager:SetParticleControl(ice_blast_particle, 1, velocity)
+			-- CP5: Duration
+			ParticleManager:SetParticleControl(ice_blast_particle, 5, Vector(math.min(vector:Length2D() / velocity:Length2D(), 2), 0, 0))
+			ParticleManager:ReleaseParticleIndex(ice_blast_particle)
+
+			local marker_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_marker.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+			ParticleManager:SetParticleControl(marker_particle, 0, self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(marker_particle, 1, Vector(final_radius, 1, 1))
+
+			-- "The tracer has 500 flying vision around itself. Upon release, provides 650 flying vision of the impact site for 4 seconds."
+			AddFOWViewer(self:GetCaster():GetTeamNumber(), self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin(), 650, 4, false)
+
+			local linear_projectile = {
+				Ability				= self,
+				--EffectName			= "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf",
+				vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
+				fDistance			= vector:Length2D(),
+				fStartRadius		= self.ice_blast_ability:GetSpecialValueFor("path_radius"),
+				fEndRadius			= self.ice_blast_ability:GetSpecialValueFor("path_radius"),
+				Source				= self:GetCaster(),
+				bHasFrontalCone		= false,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
+				iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				fExpireTime 		= GameRules:GetGameTime() + 10.0,
+				bDeleteOnHit		= true,
+				vVelocity			= velocity,
+				bProvidesVision		= true,
+				iVisionRadius 		= self.ice_blast_ability:GetSpecialValueFor("target_sight_radius"),
+				iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
 				
-				-- target_counter = target_counter + 1		
-			-- end
-		-- end
-	-- end
--- end
+				ExtraData			=
+				{
+					marker_particle	= marker_particle,
+					final_radius	= final_radius
+				}
+			}
 
--- function imba_visage_soul_assumption:OnProjectileHit_ExtraData(target, location, data)
-	-- if target and not target:TriggerSpellAbsorb(self) then
-		-- target:EmitSound("Hero_Visage.SoulAssumption.Target")
+			self.initial_projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
 
-		-- local damageTable = {
-			-- victim 			= target,
-			-- damage 			= self:GetSpecialValueFor("soul_base_damage") + (self:GetTalentSpecialValueFor("soul_charge_damage") * data.charges),
-			-- damage_type		= self:GetAbilityDamageType(),
-			-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			-- attacker 		= self:GetCaster(),
-			-- ability 		= self
-		-- }
-
-		-- ApplyDamage(damageTable)
-	-- end
--- end
-
--- -------------------------------
--- -- SOUL ASSUMPTION MODIFIER --
--- ------------------------------
-
--- function modifier_imba_visage_soul_assumption:IsHidden()		return true end
--- function modifier_imba_visage_soul_assumption:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- -- This shouldn't really happen but in case it gets ported in already leveled
--- function modifier_imba_visage_soul_assumption:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and not self.particle then
-		-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-		-- self:AddParticle(self.particle, false, false, -1, false, false)
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption:OnDestroy()
-	-- if IsServer() and self.particle then
-		-- ParticleManager:DestroyParticle(self.particle, true)
-		-- ParticleManager:ReleaseParticleIndex(self.particle)
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_EVENT_ON_TAKEDAMAGE
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_soul_assumption:OnTakeDamage(keys)
-	-- -- "Only counts damage dealt by players (including their summons) and Roshan."
-	-- -- "Only counts when the damage was dealt to a hero (excluding illusions and creep-heroes)."
-	-- -- "Does not count self-inflicted damage, or damage less than 2 or greater than 3000 (after reductions)."
-
-	-- if (keys.unit:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("radius") and
-	-- (keys.attacker:IsControllableByAnyPlayer() or keys.attacker:IsRoshan()) and
-	-- (keys.unit:IsRealHero() or string.find(keys.attacker:GetDebugName(), "npc_dota_visage_familiar")) and -- IMBAfication: Familiar Flow
-	-- keys.unit ~= keys.attacker and
-	-- keys.damage >= self:GetAbility():GetSpecialValueFor("damage_min") and
-	-- keys.damage <= self:GetAbility():GetSpecialValueFor("damage_max") and
-	-- -- Seems like Soul Assumption damage doesn't feed into its own stacks
-	-- keys.inflictor ~= self:GetAbility() then	
-
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_counter", 
-		-- {
-			-- duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
-			-- stacks		= keys.damage
-		-- })
-	
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_stacks", 
-		-- {
-			-- duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
-			-- stacks		= keys.damage
-		-- })
-	-- end
--- end
-
--- -------------------------------------
--- -- SOUL ASSUMPTION STACKS MODIFIER --
--- -------------------------------------
-
--- function modifier_imba_visage_soul_assumption_stacks:IsHidden()				return true end
--- function modifier_imba_visage_soul_assumption_stacks:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_visage_soul_assumption_stacks:OnCreated(params)
-	-- if not IsServer() then return end
-
-	-- self.damage_limit	= self:GetAbility():GetSpecialValueFor("damage_limit")
-	-- self.stack_limit	= self:GetAbility():GetSpecialValueFor("stack_limit")
-
-	-- self:SetStackCount(params.stacks)
-
-	-- local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
-	-- local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	
-	-- if assumption_modifier and assumption_modifier.particle and assumption_counter_modifier then
-		-- assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() + params.stacks)
-	
-		-- for bar = 1, self.stack_limit do
-			-- ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
-		-- end
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption_stacks:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
-	-- local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	
-	-- if assumption_counter_modifier then
-		-- assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() - self:GetStackCount())
-		
-		-- if assumption_modifier and assumption_modifier.particle then
-			-- for bar = 1, 6 do
-				-- ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
-			-- end
-		-- end
-	-- end
--- end
-
--- ------------------------------------
--- -- SOUL ASSUMPTION COUNT MODIFIER --
--- ------------------------------------
-
--- function modifier_imba_visage_soul_assumption_counter:IsHidden()	return true end
--- function modifier_imba_visage_soul_assumption_counter:IsPurgable()	return false end
-
--- -------------------------
--- -- GRAVEKEEPER'S CLOAK --
--- -------------------------
-
--- function imba_visage_gravekeepers_cloak:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_gravekeepers_cloak"
--- end
-
--- function imba_visage_gravekeepers_cloak:OnUpgrade()
-	-- local cloak_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak", self:GetCaster())
-	
-	-- if cloak_modifier then
-		-- if self:GetLevel() >= 1 and not cloak_modifier.initialized then
-			-- cloak_modifier:SetStackCount(self:GetSpecialValueFor("max_layers"))
-			-- cloak_modifier.initialized	= true
-		-- end
-	-- end
--- end
-
--- -- Hmm...
--- function imba_visage_gravekeepers_cloak:OnSpellStart()
-
--- end
-
--- ----------------------------------
--- -- GRAVEKEEPER'S CLOAK MODIFIER --
--- ----------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak:IsHidden()	return self:GetAbility() == nil or self:GetAbility():GetLevel() < 1 end
-
--- -- This OnCreated block is technically not vanilla
--- function modifier_imba_visage_gravekeepers_cloak:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak:OnIntervalThink()
-	-- if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
-		-- self:IncrementStackCount()
-	-- else
-		-- -- IMBAfication: Cloak Encompassing
-		-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		
-		-- for _, ally in pairs(allies) do
-			-- if ally ~= self:GetParent() and not string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-				-- local secondary_cloak_modifier = ally:FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak_secondary_ally", self:GetCaster())
-				
-				-- if not secondary_cloak_modifier or secondary_cloak_modifier:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
-					-- ally:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_gravekeepers_cloak_secondary_ally", {})
-					-- break
-				-- end
-			-- end
-		-- end
-	-- end
-	
-	-- -- Restart interval think every time due to recovery time changing based on ability level
-	-- self:StartIntervalThink(-1)
-	-- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
--- end
-
--- -- We don't even need this block now if the OnCreated exists
--- -- function modifier_imba_visage_gravekeepers_cloak:OnStackCountChanged(stackCount)
-	-- -- -- If max stacks have been reached, the modifier no longer needs to think
-	-- -- if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_layers") then
-		-- -- -- Vanilla would just stop interval think at max stacks, but let's add another mechanic
-		-- -- -- self:StartIntervalThink(-1)
-
-	-- -- -- Otherwise, if the stack has been reduced to one below its max, start the interval think
-	-- -- -- (cannot be called below that because it would keep resetting the think timer otherwise)
-	-- -- elseif stackCount == self:GetAbility():GetSpecialValueFor("max_layers") and self:GetStackCount() == self:GetAbility():GetSpecialValueFor("max_layers") - 1 then
-		-- -- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
-	-- -- end
--- -- end
-
--- function modifier_imba_visage_gravekeepers_cloak:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-	-- }
-	
-	-- return decFuncs
--- end
-
--- -- "Only reacts on player-based damage, excluding self-inflicted damage."
--- function modifier_imba_visage_gravekeepers_cloak:GetModifierIncomingDamage_Percentage(keys)
-	-- if not self:GetParent():PassivesDisabled() and keys.attacker:IsControllableByAnyPlayer() and keys.attacker ~= self:GetParent() and keys.damage > self:GetAbility():GetSpecialValueFor("minimum_damage") and self:GetStackCount() > 0 then
-		-- self:DecrementStackCount()
-		-- return self:GetAbility():GetSpecialValueFor("damage_reduction") * (self:GetStackCount() + 1) * (-1)
-	-- else
-		-- return 0
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak:IsAura()						return true end
--- function modifier_imba_visage_gravekeepers_cloak:IsAuraActiveOnDeath() 			return false end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("radius") end
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
--- function modifier_imba_visage_gravekeepers_cloak:GetModifierAura()				return "modifier_imba_visage_gravekeepers_cloak_secondary" end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() or not hTarget:GetOwner() or not hTarget:GetOwner() == self:GetCaster() or not string.find(hTarget:GetDebugName(), "npc_dota_visage_familiar") end
-
--- --------------------------------------------
--- -- GRAVEKEEPER'S CLOAK SECONDARY MODIFIER --
--- --------------------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary:OnCreated()
-	-- self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-	-- }
-	
-	-- return decFuncs
--- end
-
--- -- "Unlike the damage reduction on the hero itself, this damage reduction has no minimum threshold."
--- function modifier_imba_visage_gravekeepers_cloak_secondary:GetModifierIncomingDamage_Percentage(keys)
-	-- return self:GetCaster():GetModifierStackCount("modifier_imba_visage_gravekeepers_cloak", self:GetCaster()) * self.damage_reduction * (-1)
--- end
-
--- -------------------------------------------------
--- -- GRAVEKEEPER'S CLOAK SECONDARY ALLY MODIFIER --
--- -------------------------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:IsPurgable()	return false end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnCreated()
-	-- self.minimum_damage		= self:GetAbility():GetSpecialValueFor("minimum_damage")
-	-- self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
-	
-	-- if not IsServer() then return end
-	
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- -- If stacks reach 0, destroy the modifier (after a short delay so it can block a last damage instance) as it's no longer needed
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnStackCountChanged(stackCount)
-	-- if self:GetStackCount() <= 0 then
-		-- self:StartIntervalThink(FrameTime())
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnIntervalThink()
-	-- self:StartIntervalThink(-1)
-	-- self:Destroy()
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:GetModifierIncomingDamage_Percentage(keys)
-	-- if keys.attacker:IsControllableByAnyPlayer() and keys.attacker ~= self:GetParent() and keys.damage > self.minimum_damage and self:GetStackCount() > 0 then
-		-- self:DecrementStackCount()
-		-- return self.damage_reduction * (self:GetStackCount() + 1) * (-1)
-	-- else
-		-- return 0
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnTooltip()
-	-- return self.damage_reduction * self:GetStackCount()
--- end
-
--- --------------------------
--- -- STONE FORM SELF CAST --
--- --------------------------
-
--- function imba_visage_stone_form_self_cast:IsStealable()	return false end
-
--- function imba_visage_stone_form_self_cast:GetAssociatedSecondaryAbilities()
-	-- return "imba_visage_summon_familiars"
--- end
-
--- function imba_visage_stone_form_self_cast:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_stone_form_self_cast"
--- end
-
--- -- "If the familiar is stunned, silenced, sleeping, hidden, feared or hypnotized, it cannot be made to enter Stone Form."
--- function imba_visage_stone_form_self_cast:OnSpellStart()
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-			-- local stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
+			self.ice_blast_ability.ice_blast_dummy:Destroy()
+			ProjectileManager:DestroyLinearProjectile(self.ice_blast_ability.initial_projectile)
 			
-			-- if stone_form_ability and stone_form_ability:IsCooldownReady() and
-			-- not (ally:IsStunned() or ally:IsSilenced() or ally:IsNightmared() or ally:IsOutOfGame()) then
-				-- stone_form_ability:CastAbility()
-				-- break
-			-- end
-		-- end
-	-- end
--- end
-
--- -----------------------------------
--- -- STONE FORM SELF CAST MODIFIER --
--- -----------------------------------
-
--- -- This tracks cooldowns of familiars and sets its own cooldown accordingly
-
--- function modifier_imba_visage_stone_form_self_cast:IsHidden()	return true end
-
--- function modifier_imba_visage_stone_form_self_cast:OnCreated()
-	-- if not IsServer() then return end
+			self.ice_blast_ability.ice_blast_dummy		= nil
+			self.ice_blast_ability.initial_projectile	= nil
+		end
 	
-	-- self.summon_familiars_ability = self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
+		self:GetCaster():SwapAbilities(self:GetName(), self.ice_blast_ability:GetName(), false, true)
+	end
+end
 
-	-- self:StartIntervalThink(0.1)
--- end
+function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(location, data)
+	-- "The ice blast has 500 flying vision, lasting 3 seconds."
+	if self.ice_blast_ability then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self.ice_blast_ability:GetSpecialValueFor("target_sight_radius"), 3, false)
+		
+		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self.ice_blast_ability:GetSpecialValueFor("path_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		
+		local duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration")
+		
+		if self:GetCaster():HasScepter() then
+			duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration_scepter")
+		end
 
--- -- This block seems like it could be problematic with respect to memory usage
--- function modifier_imba_visage_stone_form_self_cast:OnIntervalThink()
-	-- if self.summon_familiars_ability and self.summon_familiars_ability.familiar_table then
-		-- local bValidFamiliars = false
-
-		-- for num = 1, #self.summon_familiars_ability.familiar_table do
-			-- if self.summon_familiars_ability.familiar_table[num] and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]) and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]):IsAlive() then
-				-- bValidFamiliars = true
-				-- break
-			-- end
-		-- end
-		
-		-- if not bValidFamiliars then
-			-- self:GetAbility():SetActivated(false)
-			-- return
-		-- else
-			-- self:GetAbility():SetActivated(true)
-		-- end
-		
-		-- local lowest_cooldown	= 99
-		
-		-- local allies 			= FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
-		
-		-- for _, ally in pairs(allies) do
-			-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-				-- local stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
-				
-				-- if stone_form_ability and stone_form_ability:GetCooldownTimeRemaining() <= lowest_cooldown then
-					-- lowest_cooldown = stone_form_ability:GetCooldownTimeRemaining()
-				-- end
-			-- end
-		-- end
-		
-		-- self:GetAbility():StartCooldown(lowest_cooldown)
-	-- else
-		-- self:GetAbility():SetActivated(false)
-		-- self.summon_familiars_ability = self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
-	-- end
--- end
-
--- ----------------------
--- -- SUMMON FAMILIARS --
--- ----------------------
--- -- TODO: familiars take 4 hp damage if all the damage is blocked by a right click (but still does 0 from magic???)
--- -- ...yeah I might just ignore this
-
--- function imba_visage_summon_familiars:GetAssociatedPrimaryAbilities()
-	-- return "imba_visage_stone_form_self_cast"
--- end
-
--- function imba_visage_summon_familiars:OnUpgrade()
-	-- local stone_form_self_cast_ability = self:GetCaster():FindAbilityByName("imba_visage_stone_form_self_cast")
-	
-	-- if stone_form_self_cast_ability then
-		-- stone_form_self_cast_ability:SetLevel(self:GetLevel())
-	-- end
-
-	-- local become_familiar_ability = self:GetCaster():FindAbilityByName("imba_visage_become_familiar")
-	
-	-- if become_familiar_ability then
-		-- become_familiar_ability:SetLevel(self:GetLevel())
-	-- end	
--- end
-
--- function imba_visage_summon_familiars:OnSpellStart()
-	-- self:GetCaster():EmitSound("Hero_Visage.SummonFamiliars.Cast")
-
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" then
-		-- if not self.responses then
-			-- self.responses = 
-			-- {
-				-- "visage_visa_summon_03",
-				-- "visage_visa_summon_04"
-			-- }
-		-- end
-		
-		-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-	-- end
-	
-	-- self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
-	
-	-- -- Baseline familiars
-	-- local unit_count = self:GetSpecialValueFor("initial_familiar_count")
-	
-	-- if self:GetCaster():HasScepter() then
-		-- unit_count = self:GetSpecialValueFor("tooltip_scepter_total_familiars")
-	-- end
-	
-	-- -- Probably don't need one of these since I'm making more of them innate
-	-- -- if self:GetCaster():HasTalent("") then
-		-- -- unit_count = unit_count + 1
-	-- -- end
-	
-	-- -- "The Familiars are summoned 200 range in front on Visage, with 120 range distance between the Familiars. Visage is always at the center of the line."
-	-- -- Forward Vector: self:GetCaster():GetForwardVector() * 200
-	-- -- Perpendicular Vector: self:GetCaster():GetRightVector() * (math.max(unit_count - 1, 0) * 120 * (-0.5))
-	
-	-- if self.familiar_table then
-		-- for num = 1, #self.familiar_table do
-			-- if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]):IsAlive() then
-				-- EntIndexToHScript(self.familiar_table[num]):ForceKill(false)
-			-- end
-		-- end
-	-- end
-	
-	-- -- Empty out the table to insert new familiars
-	-- self.familiar_table = {}
-
-	-- -- I guess it's bad to initialize a variable multiple times so I'll do it outside the loop?
-	
-	-- local familiar 				= nil
-	-- local spawn_location		= nil
-	-- local stone_form_ability 	= nil
-	-- local summon_particle		= nil
-
-	-- for num = 1, unit_count do
-		-- spawn_location = self:GetCaster():GetAbsOrigin() + 
-		-- -- Front vector
-		-- (self:GetCaster():GetForwardVector() * 200) + 
-		-- -- Perpendicular vector (gets the left-most spot where the first familiar will spawn, then loops through the rest being 120 distance apart)
-		-- (self:GetCaster():GetRightVector() * ((math.max(unit_count - 1, 0) * 120) * (-0.5 + ((math.max(num - 1, 0)) / (unit_count - 1)))))
-	
-		-- familiar = CreateUnitByName("npc_dota_visage_familiar"..math.min(self:GetLevel(), 3), spawn_location, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
-		
-		-- summon_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_summon_familiars.vpcf", PATTACH_ABSORIGIN, familiar)
-		-- ParticleManager:ReleaseParticleIndex(summon_particle)
-		
-		-- familiar:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_summon_familiars", {})
-		-- familiar:SetForwardVector(self:GetCaster():GetForwardVector())
-		-- stone_form_ability = familiar:FindAbilityByName("imba_visage_summon_familiars_stone_form")
-		
-		-- if stone_form_ability then
-			-- stone_form_ability:SetLevel(self:GetLevel())
-		-- end
-		
-		-- -- Set ownership to Visage
-		-- familiar:SetOwner(self:GetCaster())
-		-- familiar:SetTeam(self:GetCaster():GetTeam())
-		-- familiar:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
-		
-		-- -- Set unit values
-		-- familiar:SetBaseMaxHealth(self:GetSpecialValueFor("familiar_hp"))
-		-- familiar:SetMaxHealth(self:GetSpecialValueFor("familiar_hp"))
-		-- familiar:SetHealth(self:GetSpecialValueFor("familiar_hp"))
-		
-		-- familiar:SetPhysicalArmorBaseValue(self:GetSpecialValueFor("familiar_armor"))
-		
-		-- familiar:SetBaseMoveSpeed(self:GetTalentSpecialValueFor("familiar_speed"))
-		
-		-- familiar:SetBaseDamageMin(self:GetTalentSpecialValueFor("familiar_attack_damage"))
-		-- familiar:SetBaseDamageMax(self:GetTalentSpecialValueFor("familiar_attack_damage"))
-		
-		-- table.insert(self.familiar_table, familiar:entindex())
-	-- end
--- end
+		for _, enemy in pairs(enemies) do
+			-- IMBAfication: Absolute Freeze
+			local ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+				{
+					duration		= duration,
+					dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+					kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
+				}
+			)
 			
--- -------------------------------
--- -- SUMMON FAMILIARS MODIFIER --
--- -------------------------------
+			if ice_blast_modifier then
+				ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			end
+		end
+	end
+end
 
--- function modifier_imba_visage_summon_familiars:IsHidden()	return true end
--- function modifier_imba_visage_summon_familiars:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars:OnCreated()
-	-- self.unfeeling_status_resistance	= self:GetAbility():GetSpecialValueFor("unfeeling_status_resistance")
-	-- self.petrifying_breath_duration		= self:GetAbility():GetSpecialValueFor("petrifying_breath_duration")
+function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(target, location, data)
+	if not target and self.ice_blast_ability then
+		EmitSoundOnLocationWithCaster(location, "Hero_Ancient_Apparition.IceBlast.Target", self:GetCaster())
 	
-	-- if not IsServer() then return end
+		if data.marker_particle then
+			ParticleManager:DestroyParticle(data.marker_particle, false)
+			ParticleManager:ReleaseParticleIndex(data.marker_particle)
+		end
 	
-	-- self:StartIntervalThink(FrameTime())
--- end
-
--- -- IDK why this is a thing but vanilla familiars can push each other around so let's implement it here and make everything potentially stupidly laggy
--- function modifier_imba_visage_summon_familiars:OnIntervalThink()
-	-- -- Rubick exception
-	-- if not self:GetAbility() then
-		-- self:StartIntervalThink(-1)
-		-- self:GetParent():ForceKill(false)
-	-- end
+		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, data.final_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():GetHullRadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if ally ~= self:GetParent() and string.find(ally:GetDebugName(), "npc_dota_visage_familiar") and not ally:IsMoving() then
-			-- ally:SetAbsOrigin(GetGroundPosition(ally:GetAbsOrigin() + (ally:GetAbsOrigin() - self:GetParent():GetAbsOrigin()), ally))
-		-- end
-	-- end
--- end
-
--- function modifier_imba_visage_summon_familiars:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_FLYING] = true,
-		-- [MODIFIER_STATE_NO_UNIT_COLLISION] = true
-	-- }
-	
-	-- return state
--- end
-
--- function modifier_imba_visage_summon_familiars:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,	-- IMBAfication: Unfeeling Stone
-		-- MODIFIER_EVENT_ON_ATTACK_LANDED					-- IMBAfication: Petrifying Breath
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars:GetModifierStatusResistanceStacking()
-	-- return self.unfeeling_status_resistance
--- end
-
--- function modifier_imba_visage_summon_familiars:OnAttackLanded(keys)
-	-- if keys.attacker == self:GetParent() then
-		-- local petrifying_breath_modifier = keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_visage_summon_familiars_petrifying_breath", {duration = self.petrifying_breath_duration})
+		local damageTable = {
+			victim 			= nil,
+			damage 			= self.ice_blast_ability:GetAbilityDamage(),
+			damage_type		= self.ice_blast_ability:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
 		
-		-- if petrifying_breath_modifier then
-			-- petrifying_breath_modifier:SetDuration(self.petrifying_breath_duration * (1 - keys.target:GetStatusResistance()), true)
-		-- end
-	-- end
--- end
-
--- -------------------------------------------------
--- -- SUMMON FAMILIARS PETRIFYING BREATH MODIFIER --
--- -------------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:OnCreated()
-	-- if self:GetAbility() then
-		-- self.petrifying_breath_reduction_per_stack	= self:GetAbility():GetSpecialValueFor("petrifying_breath_reduction_per_stack")
-	-- else
-		-- self.petrifying_breath_reduction_per_stack	= 0
-	-- end
-	
-	-- if not IsServer() then return end
-	
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierMoveSpeedBonus_Constant()
-	-- return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierAttackSpeedBonus_Constant()
-	-- return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
--- end
-
--- ---------------------------------
--- -- SUMMON FAMILIARS STONE FORM --
--- ---------------------------------
-
--- -- 0.55 seconds is default, so making the stun delay longer or shorter should change the speed of the cast animation
--- -- function imba_visage_summon_familiars_stone_form:GetPlaybackRateOverride()
-	-- -- return self:GetSpecialValueFor("stun_delay") / 0.55
--- -- end
-
--- -- TODO: When this is done, make sure to remove the vanilla ability from the familiars
-
--- function imba_visage_summon_familiars_stone_form:OnSpellStart()
-	-- -- Remove this block when done with testing and the whole thing is properly ported over
-	-- local summon_familiars_ability = self:GetCaster():GetOwner():FindAbilityByName("imba_visage_summon_familiars")
-	
-	-- if not summon_familiars_ability then
-		-- self:SetHidden(true)
-		-- return
-	-- end
-	-- --
-
-	-- self:GetCaster():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 1)
-
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_summon_familiars_stone_form_root", {duration = self:GetSpecialValueFor("stun_delay")})
--- end
-
--- -----------------------------------------------
--- -- SUMMON FAMILIARS STONE FORM ROOT MODIFIER --
--- -----------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_stone_form_root:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars_stone_form_root:OnDestroy()
-	-- -- Only apply the buff if the modifier lasts for its full duration (i.e. the familiar doesn't die mid-cast)
-	-- if not IsServer() or not self:GetAbility() or self:GetRemainingTime() > 0 then return end
+		local duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration")
 		
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_summon_familiars_stone_form_buff", {duration = self:GetAbility():GetSpecialValueFor("stone_duration")})
--- end
-
--- -- "During the effect delay, the Familiar is rooted and disarmed, being prevented from moving or attacking."
--- function modifier_imba_visage_summon_familiars_stone_form_root:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_ROOTED] 							= true,
-		-- [MODIFIER_STATE_DISARMED]							= true,
+		if self:GetCaster():HasScepter() then
+			duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration_scepter")
+		end
+	
+		for _, enemy in pairs(enemies) do
+			-- IMBAfication: Absolute Freeze
+			local ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+				{
+					duration		= duration,
+					dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+					kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
+				}
+			)
+			
+			if ice_blast_modifier then
+				ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			end
 		
-		-- -- These aren't vanilla states but it seems to make sense cause you can otherwise spam the ability during the delay time and get a bunch of stuns in WTF mode
-		-- [MODIFIER_STATE_SILENCED]							= true,
-	-- }
-	
-	-- return state
--- end
+			if not enemy:IsMagicImmune() then
+				damageTable.victim = enemy
 
--- -----------------------------------------------
--- -- SUMMON FAMILIARS STONE FORM BUFF MODIFIER --
--- -----------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetEffectName()
-	-- return "particles/units/heroes/hero_visage/visage_stone_form_area_energy.vpcf"
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnCreated()
-	-- if not self:GetAbility() then self:Destroy() return end
-	
-	-- self.hp_regen		= self:GetAbility():GetSpecialValueFor("hp_regen")
-	
-	-- if not IsServer() then return end
-
-	-- self.stun_radius	= self:GetAbility():GetSpecialValueFor("stun_radius")
-	-- self.stun_damage	= self:GetAbility():GetSpecialValueFor("stun_damage")
-	-- self.stun_duration	= self:GetAbility():GetSpecialValueFor("stun_duration")
-	-- self.stone_duration	= self:GetAbility():GetSpecialValueFor("stone_duration")
-	
-	-- self:GetParent():EmitSound("Visage_Familar.StoneForm.Cast")
-	
-	-- local stone_form_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_stone_form.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	-- self:AddParticle(stone_form_particle, false, false, -1, false, false)
-
-	-- -- "Upon landing, trees in the surrounding area are destroyed"
-	-- GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), true)
-	
-	-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	-- local damageTable = {
-		-- victim 			= nil,
-		-- damage 			= self.stun_damage,
-		-- damage_type		= self:GetAbility():GetAbilityDamageType(),
-		-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		-- attacker 		= self:GetParent(),
-		-- ability 		= self:GetAbility()
-	-- }
-	
-	-- local stun_modifier = nil
-	
-	-- if #enemies >= 1 then
-		-- self:GetParent():EmitSound("Visage_Familar.StoneForm.Stun")
-	-- end
-	
-	-- -- "Stone Form first applies the debuff, then the damage."
-	-- for _, enemy in pairs(enemies) do
-		-- stun_modifier		= enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+				ApplyDamage(damageTable)
+			end
+		end
 		
-		-- if stun_modifier then
-			-- stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
-		-- end
-	
-		-- damageTable.victim	= enemy
-
-		-- ApplyDamage(damageTable)
-	-- end
-	
-	-- -- Initiate counter and tick down every interval
-	-- self.counter = self.stone_duration
-	
-	-- self:StartIntervalThink(1)
--- end
-
--- -- Counter countdown
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnIntervalThink()
-	-- self.counter = self.counter - 1
-
-	-- -- CreateParticleForPlayer wasn't working for me
-	-- self.stone_form_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_visage/visage_stoneform_overhead_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
-	-- ParticleManager:SetParticleControl(self.stone_form_overhead_particle, 1, Vector(0, self.counter, 0))
-	-- ParticleManager:SetParticleControl(self.stone_form_overhead_particle, 2, Vector(1, 0, 0))
-	-- ParticleManager:ReleaseParticleIndex(self.stone_form_overhead_particle)
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnDestroy()
-	-- local stone_form_transform_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_familiar_transform.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:ReleaseParticleIndex(stone_form_transform_particle)
--- end
-
--- -- "After the effect delay, the Familiar's health regeneration is heavily boosted, it is turned invulnerable and it gets disabled."
--- function modifier_imba_visage_summon_familiars_stone_form_buff:CheckState()
-	-- if not IsServer() then return end
-
-	-- local state = {
-		-- [MODIFIER_STATE_INVULNERABLE] 	= true,
-		-- -- Using MODIFIER_STATE_STUNNED breaks the cast animation...gonna just override with a gesture
-		-- [MODIFIER_STATE_STUNNED] 		= true
-	-- }
-	
-	-- return state
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		-- MODIFIER_PROPERTY_VISUAL_Z_DELTA
+		-- IMBAfication: Global Cooling
+		local all_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		
-	-- }
+		for _, enemy in pairs(all_enemies) do
+			enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_global_cooling", {duration = duration})
+		end
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown		= class({})
+modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage	= class({})
+modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost			= class({})
+modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe			= class({})
+
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown:IsHidden() 			return true end
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage:OnCreated()
+	if not IsServer() then return end
 	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetModifierConstantHealthRegen()
-	-- return self.hp_regen
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetVisualZDelta()
-	-- return 0
--- end
-
--- ---------------------
--- -- BECOME FAMILIAR --
--- ---------------------
-
--- function imba_visage_become_familiar:IsStealable()	return false end
-
--- function imba_visage_become_familiar:OnSpellStart()
-	-- self:SetActivated(false)
-
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_become_familiar_delay", {duration = self:GetSpecialValueFor("familiar_transform_delay")})
--- end
-
--- ------------------------------------
--- -- BECOME FAMILIAR DELAY MODIFIER --
--- ------------------------------------
-
--- function modifier_imba_visage_become_familiar_delay:IsPurgable()	return false end
-
--- function modifier_imba_visage_become_familiar_delay:GetEffectName() return "particles/units/heroes/hero_spirit_breaker/spirit_breaker_haste_owner_dark.vpcf" end
-
--- function modifier_imba_visage_become_familiar_delay:OnCreated()
-	-- if not IsServer() then return end
+	self.chilling_touch_ability		= self:GetCaster():FindAbilityByName("imba_ancient_apparition_chilling_touch")
+	self.imbued_ice_ability 		= self:GetCaster():FindAbilityByName("imba_ancient_apparition_imbued_ice")
 	
-	-- self:GetParent():EmitSound("Visage_Familar.BellToll")
--- end
+	if self.chilling_touch_ability and self.imbued_ice_ability then
+		self.imbued_ice_ability:SetHidden(false)
+		self.imbued_ice_ability:SetLevel(self.chilling_touch_ability:GetLevel())
+	end
+end
 
--- function modifier_imba_visage_become_familiar_delay:OnDestroy()
-	-- if not IsServer() then return end
-
-	-- local become_familiar_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_become_familiar", self:GetCaster())
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage:OnDestroy()
+	if not IsServer() then return end
 	
-	-- if not become_familiar_modifier then
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_become_familiar", {})
-	-- else
-		-- become_familiar_modifier:Destroy()
-	-- end
+	if self.imbued_ice_ability then
+		self.imbued_ice_ability:SetHidden(true)
+	end
+end
+
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:IsHidden() 		return true end
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:OnCreated()
+	if not IsServer() then return end
 	
-	-- self:GetAbility():SetActivated(true)
--- end
-
--- ------------------------------
--- -- BECOME FAMILIAR MODIFIER --
--- ------------------------------
-
--- function modifier_imba_visage_become_familiar:IsPurgable()	return false end
-
--- function modifier_imba_visage_become_familiar:OnCreated()
-	-- self.familiar_speed					= self:GetAbility():GetTalentSpecialValueFor("familiar_speed")
-	-- self.familiar_attack_damage			= self:GetAbility():GetSpecialValueFor("familiar_attack_damage")
-	-- self.familiar_attack_rate			= self:GetAbility():GetSpecialValueFor("familiar_attack_rate")
-	-- self.familiar_vision_daytime		= self:GetAbility():GetSpecialValueFor("familiar_vision_daytime")
-	-- self.familiar_vision_nighttime		= self:GetAbility():GetSpecialValueFor("familiar_vision_nighttime")
-	-- self.familiar_projectile_speed		= self:GetAbility():GetSpecialValueFor("familiar_projectile_speed")
-	-- self.familiar_armor					= self:GetAbility():GetSpecialValueFor("familiar_armor")
-	-- self.familiar_movement_turn_rate	= self:GetAbility():GetSpecialValueFor("familiar_movement_turn_rate")
-	-- self.familiar_attack_range			= self:GetAbility():GetSpecialValueFor("familiar_attack_range")
-
-	-- if not IsServer() then return end
+	self.ice_vortex_ability		= self:GetCaster():FindAbilityByName("imba_ancient_apparition_ice_vortex")
+	self.anti_abrasion_ability	= self:GetCaster():FindAbilityByName("imba_ancient_apparition_anti_abrasion")
 	
-	-- -- self.standard_projectile_speed	= self:GetParent():GetProjectileSpeed()
+	if self.ice_vortex_ability and self.anti_abrasion_ability then
+		self.anti_abrasion_ability:SetHidden(false)
+		self.anti_abrasion_ability:SetLevel(self.ice_vortex_ability:GetLevel())
+	end
+end
 
-	-- -- self.damage_reducer				= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - self.familiar_attack_damage
+function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:OnDestroy()
+	if not IsServer() then return end
 	
-	-- -- self:SetStackCount(self.damage_reducer)
-	
-	-- self:StartIntervalThink(0.1)
--- end
+	if self.anti_abrasion_ability then
+		self.anti_abrasion_ability:SetHidden(true)
+	end
+end
 
--- function modifier_imba_visage_become_familiar:OnIntervalThink()
-	-- -- self:SetStackCount(0)
-	-- -- self.damage_reducer	 = self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - self.familiar_attack_damage
-	-- -- self:SetStackCount(self.damage_reducer)
+function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:IsHidden() 		return true end
+function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:RemoveOnDeath() 	return false end
 
-	-- if not GameRules:IsDaytime() then
-		-- AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.familiar_vision_daytime, 0.1, false)
-	-- else
-		-- AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.familiar_vision_nighttime, 0.1, false)
-	-- end
--- end
+function imba_ancient_apparition_cold_feet:OnOwnerSpawned()
+	if not IsServer() then return end
 
--- function modifier_imba_visage_become_familiar:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_FLYING]				= true,
-		-- [MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
-		
-		-- [MODIFIER_STATE_MUTED]				= true,
-	-- }
-	
-	-- return state
--- end
+	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_cold_feet_aoe") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_cold_feet_aoe"), "modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", {})
+	end
+end
 
--- function modifier_imba_visage_become_familiar:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MODEL_CHANGE,
-		-- MODIFIER_PROPERTY_PROJECTILE_NAME,
-		-- -- MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
-		
-		-- -- MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-		-- -- MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE,
-		-- MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
-		-- MODIFIER_PROPERTY_TURN_RATE_OVERRIDE,
-		-- -- MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
-	-- }
-	
-	-- return decFuncs
--- end
+function imba_ancient_apparition_ice_vortex:OnOwnerSpawned()
+	if not IsServer() then return end
 
--- function modifier_imba_visage_become_familiar:GetModifierModelChange()
-	-- -- return "models/heroes/visage/visage_familiar.vmdl"
-	-- return "models/items/visage/immortal_familiar/immortal_familiar.vmdl"
--- end
+	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_ice_vortex_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_cooldown"), "modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", {})
+	end
 
--- function modifier_imba_visage_become_familiar:GetModifierProjectileName()
-	-- -- return "particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf"
-	-- return "particles/econ/items/visage/immortal_familiar/visage_immortal_ti5/visage_familiar_base_attack_ti5.vpcf"
--- end
+	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_ice_vortex_boost") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_boost"), "modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", {})
+	end	
+end
 
--- -- function modifier_imba_visage_become_familiar:GetModifierProjectileSpeedBonus()
-	-- -- if not IsServer() then return end
+function imba_ancient_apparition_chilling_touch:OnOwnerSpawned()
+	if not IsServer() then return end
 
-	-- -- return self.familiar_projectile_speed - self.standard_projectile_speed
--- -- end
-
--- -- function modifier_imba_visage_become_familiar:GetModifierBaseAttack_BonusDamage()
-	-- -- return self:GetStackCount() * (-1)
--- -- end
-
--- -- function modifier_imba_visage_become_familiar:GetModifierAttackRangeOverride()
-	-- -- return self.familiar_attack_range
--- -- end
-
--- function modifier_imba_visage_become_familiar:GetModifierMoveSpeedOverride()
-	-- return self.familiar_speed
--- end
-
--- function modifier_imba_visage_become_familiar:GetModifierTurnRate_Override()
-	-- return self.familiar_movement_turn_rate
--- end
-
--- -- Yeah this seems too strong lol
--- -- function modifier_imba_visage_become_familiar:GetModifierBaseAttackTimeConstant()
-	-- -- return self.familiar_attack_rate
--- -- end
-
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
-
--- LinkLuaModifier("modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed	= class({})
-
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:IsHidden() 		return true end
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:IsPurgable() 	return false end
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:RemoveOnDeath() 	return false end
-
--- function imba_visage_summon_familiars:OnOwnerSpawned()
-	-- if not IsServer() then return end
-
-	-- if self:GetCaster():HasTalent("special_bonus_imba_visage_summon_familiars_bonus_move_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_visage_summon_familiars_bonus_move_speed"), "modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed", {})
-	-- end
--- end
+	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_chilling_touch_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_damage"), "modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", {})
+	end
+end

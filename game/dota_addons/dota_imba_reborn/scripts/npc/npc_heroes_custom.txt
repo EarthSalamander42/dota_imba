@@ -1,3 +1,4 @@
+// #base heroes/ancient_apparition/hero.txt
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt

@@ -47,17 +47,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"30 50 70 90"
+				"damage"				"50 70 90 110"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"715"
+				"break_distance"		"720 780 840 900"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.5 3.0 3.5"
+				"stun_duration"			"2.25 2.75 3.25 3.75"
 			}
 			"04"
 			{
@@ -92,7 +92,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_ICE_VORTEX"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCastRange"				"1500 1500 1500 1500"
+		"AbilityCastRange"				"3000"
 		"AbilityCastPoint"				"0.01 0.01 0.01 0.01"
 
 		// Time		
@@ -111,24 +111,26 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 275 275 275"
+				"radius"				"300 400 500 600"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movement_speed_pct"	"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				//"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_ice_vortex_boost"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_resist_pct"		"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				//"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_ice_vortex_boost"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"		"200 200 200 200"
+				"vision_aoe"		"350"
 			}
 			"05"
 			{
@@ -172,8 +174,9 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 90 130 170"
-				"LinkedSpecialBonus"		"special_bonus_unique_ancient_apparition_2"
+				"damage"				"60 100 140 180"
+				//"LinkedSpecialBonus"		"special_bonus_unique_ancient_apparition_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_chilling_touch_damage"
 			}
 			"02"
 			{
@@ -183,7 +186,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.5"
+				"duration"				"0.7"
 			}
 			"04"
 			{
@@ -230,7 +233,7 @@
 		
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"250 350 450"
+		"AbilityDamage"					"250 450 650"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -239,43 +242,44 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_min"			"275"
+				"radius_min"			"300 350 400"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"radius_grow"			"50.0"
+				"radius_grow"			"50.0 55.0 60.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_max"			"1000"
+				"radius_max"			"1200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"275"
+				"path_radius"			"275 300 325"
 			}
 			"05"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"frostbite_duration"	"10 11 12"
+				"frostbite_duration"	"10 12 14"
 			}
 			"06"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"dot_damage"			"12.5 20.0 32.0"
+				"dot_damage"			"14.0 26.0 38.0"
 			}
 			"07"
 			{	
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1500 1500 1500 1500"
+				"speed"					"1500 1750 2000"
 			}
 			"08"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"kill_pct"				"10.0 11.0 12.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_5"
+				"kill_pct"				"10.0 12.0 14.0"
+				//"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_5"
+				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold"
 			}
 			"09"
 			{
@@ -285,8 +289,14 @@
 			"10"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"frostbite_duration_scepter"	"17"
+				"frostbite_duration_scepter"	"20"
 				"RequiresScepter"			"1"
+			}
+
+			"11"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"global_cooling_move_speed_reduction"	"17"
 			}
 		}
 	}
@@ -302,7 +312,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_ancient_apparition"
 		"AbilityTextureName"			"ancient_apparition_ice_blast_release"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"1"
 		
@@ -325,9 +335,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_ancient_apparition"
-		"AbilityTextureName"			"ancient_apparition_ice_vortex"
+		"AbilityTextureName"			"custom/ancient_apparition/anti_abrasion"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Ancient_Apparition.IceVortexCast"
@@ -355,26 +365,14 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 275 275 275"
+				"radius"				"300 400 500 600"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				"vision_aoe"			"350"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_resist_pct"		"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"		"200 200 200 200"
-			}
-			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vortex_duration"		"16"
@@ -391,9 +389,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_ancient_apparition"
-		"AbilityTextureName"			"ancient_apparition_chilling_touch"
+		"AbilityTextureName"			"custom/ancient_apparition/imbued_ice"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Ancient_Apparition.IceVortexCast"
@@ -402,17 +400,16 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_ICE_VORTEX"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCastRange"				"1500 1500 1500 1500"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.01 0.01 0.01 0.01"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
-		"AbilityDuration"				"16"
+		"AbilityCooldown"				"44 36 24 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40 60 80 100"
+		"AbilityManaCost"				"110 120 130 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -421,35 +418,179 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 275 275 275"
+				"radius"				"525"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				"number_of_attacks"		"4 5 6 7"
+			}			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_attack"		"30 50 70 90"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_resist_pct"		"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
+				"move_speed_slow"		"-30"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"		"200 200 200 200"
+				"var_type"				"FIELD_FLOAT"
+				"move_speed_duration"	"0.3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vortex_duration"		"16"
+				"buff_duration"			"20 24 28 32"
 			}
 		}
 	}
 	
-	// Vanilla overrides
+	//=================================================================================================================
+	// Talent: -Xs Ice Vortex Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_ice_vortex_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_ice_vortex"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Talent: +X Chilling Touch Damage
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_chilling_touch_damage" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_chilling_touch"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"80"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Talent: +X% Ice Vortex Slow/Resistance
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_ice_vortex_boost" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_ice_vortex"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-12"
+			}
+		}
+	}
 
+	//=================================================================================================================
+	// Talent: +X% Ice Blast Kill Threshold
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_ice_blast"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
+			}
+		}
+	}
+
+	
+	//=================================================================================================================
+	// Talent: X AoE Cold Feet
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_cold_feet_aoe" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_cold_feet"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"625"
+			}
+		}
+	}	
+	
+	// Vanilla overrides
+	
 	//=================================================================================================================
 	// Ancient Apparition: Cold Feet
 	//=================================================================================================================

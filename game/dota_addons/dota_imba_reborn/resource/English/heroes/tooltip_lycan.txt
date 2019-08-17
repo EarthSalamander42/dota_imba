@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves"								"#{DOTA_Tooltip_ability_lycan_summon_wolves}"
-"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"					"Summons a number of wolves to fight with you. Wolves have passive evasion and invisibility, and their abilities and stats improve with their level.\n<font color='#FF7800'>The Pack is for Life:</font> Wolves last until killed.\n<font color='#FF7800'>Wolf Pack:</font> Lycan gains a charge of Wolf Pack every %charge_cooldown% seconds, up to a maximum of the wolf summon amount. Whenever a wolf dies, a stack is consumed and the wolf respawns near Lycan's location.\n<font color='#FF7800'>Alpha's Leadership:</font> Wolves gain bonus health based on Lycan's level."
+"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"					"Summons a number of wolves to fight with you. Wolves have passive evasion and invisibility, and their abilities and stats improve with their level.\n<font color='#FF7800'>The Pack is for Life:</font> Wolves last until killed.\n<font color='#FF7800'>Wolf Pack:</font> Lycan gains a charge of Wolf Pack every %charge_cooldown% seconds, up to a maximum of %max_charges% charges. Whenever a wolf dies, a stack is consumed and the wolf respawns near Lycan's location.\n<font color='#FF7800'>Alpha's Leadership:</font> Wolves gain bonus health based on Lycan's level."
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_Note0"						"Automatically revives wolves whenever there is a charge available, until the maximum of wolves is reached."
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_Lore"						"#{DOTA_Tooltip_ability_lycan_summon_wolves_Lore}"
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolves_count"				"WOLF COUNT:"
@@ -119,7 +119,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_8_Description"	"Acquiring a Wolfsbane stack gives Lycan and his units +20% move speed, +75 attack speed, and +20% bonus damage for %duration% seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_9"				"+40% Chance Shapeshift Critical Strike"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_10"				"+3 Wolves Summoned"
-"DOTA_Tooltip_ability_special_bonus_imba_lycan_10_Description"	"Also increases Wolf Pack max charges by the same amount."
 
 "DOTA_Tooltip_ability_imba_summoned_wolf_pack_leader"         "Packleader Aura"
 "DOTA_Tooltip_ability_imba_summoned_wolf_pack_leader_Note0"       "Packleader Aura only benefits from base damage."

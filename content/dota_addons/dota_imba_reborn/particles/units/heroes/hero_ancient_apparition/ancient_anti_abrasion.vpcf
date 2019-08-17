@@ -1,0 +1,101 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 0
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_o.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_j.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_f.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_a.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_g.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_m.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_c.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_k.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_e.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_d.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_n.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_p.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_h.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_i.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion_l.vpcf"
+			m_bDisableChild = true
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 5
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 275.0, 275.0, 275.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_SetSingleControlPointPosition"
+			m_vecCP1Pos = [ 0.0, 0.0, 20.0 ]
+		},
+		{
+			_class = "C_OP_SetControlPointRotation"
+			m_vecRotAxis = [ 0.0, 1.0, 0.0 ]
+			m_flRotRate = 40.0
+			m_nCP = 1
+		},
+	]
+	m_nBehaviorVersion = 10
+}

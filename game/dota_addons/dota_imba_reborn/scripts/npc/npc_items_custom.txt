@@ -7574,7 +7574,9 @@
 		"ItemResult"					"item_imba_power_treads_2"
 		"ItemRequirements"
 		{
-			"01"						"item_power_treads;item_staff_of_wizardry;item_blade_of_alacrity;item_ogre_axe"
+			"01"						"item_power_treads;item_ogre_axe;item_belt_of_strength;item_gloves"
+			"02"						"item_power_treads;item_blade_of_alacrity;item_boots_of_elves;item_gloves"
+			"03"						"item_power_treads;item_staff_of_wizardry;item_robe;item_gloves"
 		}
 	}
 
@@ -7593,7 +7595,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4350"
+		"ItemCost"						"3300"
 		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
 		"ItemQuality"					"magic"
 		"ItemAliases"					"power treads; mega; mega treads"
@@ -7612,7 +7614,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"34"
+				"bonus_stat"				"30"
 			}
 			"03"
 			{
@@ -7622,12 +7624,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_mode_tenacity"			"20"
+				"str_mode_tenacity"			"15"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"agi_mode_evasion"			"20"
+				"agi_mode_evasion"			"15"
 			}
 			"06"
 			{
