@@ -368,7 +368,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"delay"						"2.9"
+				"delay"						"2.9 2.8 2.7 2.6 2.5 2.4 2.3 2.2"
 			}
 			"02"
 			{
@@ -424,9 +424,19 @@
 		"precache"
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
-			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam.vpcf"
 			"particle"		"particles/hero/invoker/sunstrike/invoker_sun_strike_outer_beam.vpcf"
-			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray2.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray3.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_blastup.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_blastup_glow.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_c.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_column_beams.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_dark_arts.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_glow_small.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_glow_small2.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_rotating_glow.vpcf"
 		}
 
 		//-------------------------------------------------------------------------------------------------------------
@@ -481,7 +491,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mini_beam_radius"		"195"
+				"incinerate_beam_radius"		"175"
 			}
 		}
 	}	
@@ -933,8 +943,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
-			"particle"			"particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+			"particle"			"particles/econ/items/invoker/invoker_ti6/invoker_tornado_ti6.vpcf"
+			"particle"			"particles/econ/items/invoker/invoker_ti6/invoker_tornado_child_ti6.vpcf"
 		}
 			
 		//-------------------------------------------------------------------------------------------------------------
@@ -1232,6 +1242,7 @@
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+			"particle"		"particles/hero/invoker/deafeningblast/imba_invoker_deafening_blast.vpcf"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
 			"particle"		"particles/status_fx/status_effect_frost.vpcf"

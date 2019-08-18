@@ -12,6 +12,22 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"ProjectileModel"			"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
+
+		"precache"
+		{
+			// Quas + Wex + Exort
+			"particle"		"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
+
+			// Quas 
+			"particle"		"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
+			
+			// Wex
+			"particle"		"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
+			
+			// Exort
+			"particle"		"particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
+			
+		}
 		
 		"Ability1"					"imba_invoker_quas"
 		"Ability2"					"imba_invoker_wex"
