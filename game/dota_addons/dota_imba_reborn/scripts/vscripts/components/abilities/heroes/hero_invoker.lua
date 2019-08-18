@@ -481,8 +481,6 @@ imba_invoker = imba_invoker or class({})
 				quas:SetLevel(quas:GetLevel() + 1)
 				wex:SetLevel(wex:GetLevel() + 1)
 				exort:SetLevel(exort:GetLevel() + 1)
-
-				print()
 			end
 		end
 
@@ -1287,13 +1285,9 @@ imba_invoker = imba_invoker or class({})
 			damage_table.ability 		= ability
 			damage_table.damage_type 	= ability:GetAbilityDamageType() 
 			damage_table.damage 		= damage / table.getn(enemies_hit)
-
-			print("SS hit: ".. table.getn(enemies_hit) .. " or " .. #enemies_hit)
-
+			
 			-- Deal damage to each enemy hero
 			for _,hero in pairs(enemies_hit) do
-				print("SS dealing daamge to: " .. hero:GetName())
-
 				damage_table.victim = hero
 				ApplyDamage(damage_table)
 			end
