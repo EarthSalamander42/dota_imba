@@ -240,29 +240,31 @@ function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifi
 -- GRAVE CHILL AURA MODIFIER MODIFIER --
 ----------------------------------------
 
+function modifier_imba_visage_grave_chill_aura_modifier:IsHidden()		return true end
 function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
 
 function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
-	if not IsServer() then return end
-
-	self:StartIntervalThink(1)
-end
-
-function modifier_imba_visage_grave_chill_aura_modifier:OnIntervalThink()
-	self:IncrementStackCount()
+	self.creation_time = GameRules:GetDOTATime(true, true)
 end
 
 function modifier_imba_visage_grave_chill_aura_modifier:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_TOOLTIP
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		-- MODIFIER_PROPERTY_TOOLTIP
 	}
 	
 	return decFuncs
 end
 
-function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
-	return self:GetStackCount()
+function modifier_imba_visage_grave_chill_aura_modifier:OnAbilityExecuted(keys)
+	if keys.ability == self:GetAbility() and keys.target == self:GetParent() then
+		self:SetStackCount(GameRules:GetDOTATime(true, true) - self.creation_time)
+	end
 end
+
+-- function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
+	-- return self:GetStackCount()
+-- end
 
 ---------------------
 -- SOUL ASSUMPTION --

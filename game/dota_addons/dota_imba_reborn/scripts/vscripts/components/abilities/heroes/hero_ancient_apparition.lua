@@ -822,7 +822,6 @@ end
 -- ICE BLAST GLOBAL COOLING MODIFIER --
 ---------------------------------------
 
-function modifier_imba_ancient_apparition_ice_blast_global_cooling:IgnoreTenacity()		return true end
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:IsPurgable()			return false end
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:RemoveOnDeath()		return false end
 
@@ -1009,8 +1008,14 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 		-- IMBAfication: Global Cooling
 		local all_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		
+		local global_cooling_modifier = nil
+		
 		for _, enemy in pairs(all_enemies) do
-			enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_global_cooling", {duration = duration})
+			global_cooling_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_global_cooling", {duration = duration})
+			
+			if global_cooling_modifier then
+				global_cooling_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			end
 		end
 	end
 end

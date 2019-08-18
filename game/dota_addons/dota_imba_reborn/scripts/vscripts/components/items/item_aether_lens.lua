@@ -57,7 +57,7 @@ function modifier_imba_aether_lens_passive:DeclareFunctions()
 end
 
 function modifier_imba_aether_lens_passive:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff","modifier_imba_nether_wand"})
+	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff","modifier_imba_nether_wand","modifier_item_imba_aether_specs"})
 end
 
 function modifier_imba_aether_lens_passive:GetModifierConstantManaRegen()
@@ -69,5 +69,5 @@ function modifier_imba_aether_lens_passive:GetModifierManaBonus()
 end
 
 function modifier_imba_aether_lens_passive:GetModifierCastRangeBonusStacking()
-	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff"})
+	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff","modifier_item_imba_aether_specs"})
 end
