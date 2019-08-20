@@ -342,12 +342,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ms_increase_per_stack"	"3"
+				"ms_increase_per_stack"	"2.5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_increase_per_stack"	"8"
+				"as_increase_per_stack"	"5"
 			}
 			"06"
 			{

@@ -986,6 +986,24 @@ function imba_keeper_of_the_light_spotlights:GetIntrinsicModifierName()
 	return "modifier_imba_keeper_of_the_light_spotlights"
 end
 
+function imba_keeper_of_the_light_spotlights:OnInventoryContentsChanged()
+	if not self.spotlights_modifier then
+		self.spotlights_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_keeper_of_the_light_spotlights", self:GetCaster())
+	end
+
+	if self.spotlights_modifier then
+		if self:GetCaster():HasScepter() then
+			self.spotlights_modifier:StartIntervalThink(0.1)
+		else
+			self.spotlights_modifier:StartIntervalThink(-1)
+		end
+	end
+end
+
+function imba_keeper_of_the_light_spotlights:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
 -------------------------
 -- SPOTLIGHTS MODIFIER --
 -------------------------
@@ -1001,6 +1019,13 @@ function modifier_imba_keeper_of_the_light_spotlights:OnCreated()
 	self.attack_duration	= self.ability:GetSpecialValueFor("attack_duration")
 	self.damaged_duration	= self.ability:GetSpecialValueFor("damaged_duration")
 end
+
+function modifier_imba_keeper_of_the_light_spotlights:OnIntervalThink()
+	if GameRules:IsDaytime() then
+		AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self:GetParent():GetCurrentVisionRange(), 0.1, false)
+	end
+end
+
 
 function modifier_imba_keeper_of_the_light_spotlights:DeclareFunctions()
 	local decFuncs = {
