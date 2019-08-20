@@ -16230,7 +16230,7 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_duration"			"30"
+				"ward_duration"			"120"
 			}
 			"16"
 			{

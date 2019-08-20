@@ -849,7 +849,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
 								[14] = "special_bonus_imba_ancient_apparition_cold_feet_aoe"
 							}
-							upgraded = true
+							upgraded = true			
 						end
 							
 						for ability = 0, 23 do
@@ -875,6 +875,8 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-dark_seer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			elseif str == "-phantom_lancer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do

@@ -57,7 +57,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"525"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8"
+		"AbilityCooldown"				"11 10 9 8"
 		"AbilityManaCost"				"80 90 100 110"
 
 		// Precache
@@ -76,7 +76,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 200 300 400"
+				"damage"				"90 160 255 335"
 			}
 
 			"02"
@@ -132,16 +132,19 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius_scepter"		"900"
+				"RequiresScepter"		"1"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_ministun"		"0.6"
+				"RequiresScepter"		"1"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_cooldown_reduction"		"2"
+				"RequiresScepter"		"1"
 			}			
 		}
 	}
@@ -287,6 +290,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cast_range"	"700"
+				"RequiresScepter"		"1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -304,7 +308,7 @@
 		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
 		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 //		"AbilityManaCost"				"80"
-		"AbilityCooldown"				"30 26 22 18"
+//		"AbilityCooldown"				"30 26 22 18"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -328,7 +332,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"base_bonus_as"		"40 60 80 100"
+				"base_bonus_as"		"30 50 70 90"
 			}
 			"03"
 			{
@@ -338,12 +342,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ms_increase_per_stack"	"3.5"
+				"ms_increase_per_stack"	"3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_increase_per_stack"	"10"
+				"as_increase_per_stack"	"8"
 			}
 			"06"
 			{
@@ -378,8 +382,9 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"140 110 80"
+		"AbilityCooldown"				"140 130 120"
 		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
+		"AbilityManaCost"				"125 175 225"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -410,8 +415,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_duration"		"3"
+				"var_type"					"FIELD_FLOAT"
+				"enemy_vision_duration"		"1.5"
 			}
 		}
 	}
@@ -621,6 +626,56 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"						"8"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_9" // +X Hunter in the Night Attack Speed
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_hunter_in_the_night"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"140"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_10" // -Xs Dark Ascension Cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_darkness"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"40"
 			}
 		}
 	}
