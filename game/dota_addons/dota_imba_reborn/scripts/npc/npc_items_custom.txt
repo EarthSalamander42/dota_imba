@@ -1024,12 +1024,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"1.75"
+				"mana_regen_aura"		"3.5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"11"
+				"hp_regen_aura"			"12"
 			}
 			"07"
 			{
@@ -7574,7 +7574,9 @@
 		"ItemResult"					"item_imba_power_treads_2"
 		"ItemRequirements"
 		{
-			"01"						"item_power_treads;item_staff_of_wizardry;item_blade_of_alacrity;item_ogre_axe"
+			"01"						"item_power_treads;item_ogre_axe;item_belt_of_strength;item_gloves"
+			"02"						"item_power_treads;item_blade_of_alacrity;item_boots_of_elves;item_gloves"
+			"03"						"item_power_treads;item_staff_of_wizardry;item_robe;item_gloves"
 		}
 	}
 
@@ -7593,7 +7595,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4350"
+		"ItemCost"						"3300"
 		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
 		"ItemQuality"					"magic"
 		"ItemAliases"					"power treads; mega; mega treads"
@@ -7612,7 +7614,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"34"
+				"bonus_stat"				"30"
 			}
 			"03"
 			{
@@ -7622,12 +7624,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_mode_tenacity"			"20"
+				"str_mode_tenacity"			"15"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"agi_mode_evasion"			"20"
+				"agi_mode_evasion"			"15"
 			}
 			"06"
 			{
@@ -8138,28 +8140,28 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15"
+				"bonus_intellect"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"15"
+				"bonus_strength"		"12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15"
+				"bonus_attack_speed"	"10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"bonus_damage"			"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"0.5"
+				"bonus_mana_regen"		"1.25"
 			}
 			"06"
 			{
@@ -8253,17 +8255,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18"
+				"bonus_intellect"		"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"18"
+				"bonus_strength"		"14"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"18"
+				"bonus_attack_speed"	"12"
 			}
 			"04"
 			{
@@ -8274,7 +8276,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"0.75"
+				"bonus_mana_regen"		"1.5"
 			}
 			"06"
 			{
@@ -15359,7 +15361,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15463,7 +15465,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_passive"			"10"
+				"power_passive"			"12"
 			}
 			"12"
 			{
@@ -15490,7 +15492,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_stat_reduction"	"35"
+				"power_stat_reduction"	"40"
 			}
 			
 			"17"
@@ -15501,7 +15503,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chaos_dmg_pct"			"130"
+				"chaos_dmg_pct"			"160"
 			}
 		}
 	}
@@ -16090,6 +16092,168 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Recipe: Aether Specs
+	//=================================================================================================================
+	"item_recipe_imba_aether_specs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2345"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1050"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_aether_specs"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_aether_lens;item_imba_ring_of_aquila"
+		}
+	}	
+		
+	//=================================================================================================================
+	// Aether Specs
+	//=================================================================================================================
+	"item_imba_aether_specs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_aether_specs"
+		"AbilityTextureName"			"custom/item_aether_specs"
+		
+		"ID"							"2346"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80.0"
+		"AbilityCastRange"				"800"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		"ItemCost"						"4200"
+		"ItemShopTags"					"damage;armor;int;spell_amp;cast_range;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"as;aether specs;aether;specs;glasses"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"3.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_bonus"		"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_power"			"8"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"9"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"3"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"3.0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_armor"		"3"
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_aspd"			"5"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_vision"		"200"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_duration"			"120"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1000"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_cast_range"		"75"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hits_to_kill"			"3"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"			"800" // Change the actual cast range value above too if you want to change this
+			}
+		}
+	}
 	
-	//next free ID: 2345
+	//next free ID: 2347
 }

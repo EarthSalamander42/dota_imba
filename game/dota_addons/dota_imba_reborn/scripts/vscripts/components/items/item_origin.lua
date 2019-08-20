@@ -72,6 +72,8 @@ function item_imba_origin:OnSpellStart()
 				origin_modifier:IncrementStackCount()
 			end
 		end
+		
+		target:CalculateStatBonus()
 	else
 		-- Do not bypass linken's Sphere
 		if target:TriggerSpellAbsorb(self) then

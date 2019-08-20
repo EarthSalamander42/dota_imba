@@ -792,7 +792,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" and (hero == caster) then
+						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
 							ability_set = {
 								[0] = "imba_life_stealer_rage",
 								[1] = "imba_life_stealer_feast",
@@ -813,7 +813,7 @@ function GameMode:OnPlayerChat(keys)
 								[16] = "special_bonus_unique_lifestealer"
 							}
 							upgraded = true
-						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" and (hero == caster) then
+						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" then
 							ability_set = {
 								[0] = "imba_visage_grave_chill",
 								[1] = "imba_visage_soul_assumption",
@@ -831,6 +831,25 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_spell_amplify_20"
 							}
 							upgraded = true
+						elseif string.find(text, 'aa') and hero:GetName() == "npc_dota_hero_ancient_apparition" then
+							ability_set = {
+								[0] = "imba_ancient_apparition_cold_feet",
+								[1] = "imba_ancient_apparition_ice_vortex",
+								[2] = "imba_ancient_apparition_chilling_touch",
+								[3] = "imba_ancient_apparition_anti_abrasion",
+								[4] = "imba_ancient_apparition_imbued_ice",
+								[5] = "imba_ancient_apparition_ice_blast",
+								[6] = "imba_ancient_apparition_ice_blast_release",
+								[7] = "special_bonus_gold_income_15",
+								[8] = "special_bonus_spell_amplify_10",
+								[9] = "special_bonus_imba_ancient_apparition_ice_vortex_cooldown",
+								[10] = "special_bonus_hp_regen_15",
+								[11] = "special_bonus_imba_ancient_apparition_chilling_touch_damage",
+								[12] = "special_bonus_imba_ancient_apparition_ice_vortex_boost",
+								[13] = "special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
+								[14] = "special_bonus_imba_ancient_apparition_cold_feet_aoe"
+							}
+							upgraded = true			
 						end
 							
 						for ability = 0, 23 do
@@ -856,6 +875,8 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-dark_seer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			elseif str == "-phantom_lancer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do

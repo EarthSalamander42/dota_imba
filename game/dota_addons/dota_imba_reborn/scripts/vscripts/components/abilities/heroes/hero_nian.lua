@@ -46,12 +46,18 @@ modifier_imba_nian_volcanic_burster_tracker			= class({})
 -------------------
 
 function imba_nian_frenzy_swipes:OnToggle()
-	if self:GetToggleState() then
+	local frenzy_swipes_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
+
+	if self:GetToggleState() and not frenzy_swipes_modifier then
 		self:GetCaster():EmitSound("Hero_Nian.Frenzy_Swipes_Cast")
 	
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_frenzy_swipes", {})
-	else
-		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
+	elseif not self:GetToggleState() then
+		if frenzy_swipes_modifier and frenzy_swipes_modifier:GetElapsedTime() >= 0.25 then
+			self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
+		else
+			self:ToggleAbility()
+		end
 	end
 end
 
@@ -95,7 +101,7 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 		if self:GetParent():GetMana() >= self.mana_per_attack and self:GetAbility() then
 		
 			if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
-				self:GetCaster():ReduceMana(self.mana_per_attack)
+				-- self:GetCaster():ReduceMana(self.mana_per_attack)
 			
 				self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
 				self:GetParent():StartGesture(ACT_DOTA_ATTACK)

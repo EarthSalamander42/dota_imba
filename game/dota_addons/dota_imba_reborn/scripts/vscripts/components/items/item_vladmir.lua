@@ -328,6 +328,11 @@ function modifier_item_imba_vladmir_blood:GetModifierBonusStats_Intellect()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_vladmir_blood_aura_emitter == nil then modifier_item_imba_vladmir_blood_aura_emitter = class({}) end
+
+function modifier_item_imba_vladmir_blood_aura_emitter:OnCreated()
+	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+end
+
 function modifier_item_imba_vladmir_blood_aura_emitter:IsAura() return true end
 function modifier_item_imba_vladmir_blood_aura_emitter:IsHidden() return true end
 function modifier_item_imba_vladmir_blood_aura_emitter:IsDebuff() return false end
@@ -350,7 +355,7 @@ function modifier_item_imba_vladmir_blood_aura_emitter:GetModifierAura()
 end
 
 function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraRadius()
-	return self:GetAbility():GetSpecialValueFor("aura_radius") end
+	return self.aura_radius end
 
 -----------------------------------------------------------------------------------------------------------
 --	Vladmir's Blood aura

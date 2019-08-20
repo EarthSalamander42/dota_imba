@@ -1,3 +1,4 @@
+// #base heroes/ancient_apparition/hero.txt
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
@@ -974,10 +975,11 @@
 		"Ability14"					"special_bonus_imba_lycan_2"
 		"Ability15"					"special_bonus_imba_lycan_6"
 		"Ability16"					"special_bonus_imba_lycan_9"
-		"Ability17"					"special_bonus_imba_lycan_8"
+		"Ability17"					"special_bonus_imba_lycan_10"
 
 		// Removed Talents
 		// "Ability16"					"special_bonus_imba_lycan_7" // Shapeshift hasted speed increased to 1200
+		// "Ability17"					"special_bonus_imba_lycan_8" // Blood Hunt
 	}
 
 	//=================================================================================================================
@@ -1185,16 +1187,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_night_stalker_darkness"
 
-		"Ability10"					"special_bonus_imba_night_stalker_1"
-		"Ability11"					"special_bonus_imba_night_stalker_2"
-		"Ability12"					"special_bonus_imba_night_stalker_3"
-		"Ability13"					"special_bonus_cast_range_200"
+		"Ability10"					"special_bonus_hp_225"
+		"Ability11"					"special_bonus_mp_225"
+		"Ability12"					"special_bonus_strength_15"
+		"Ability13"					"special_bonus_lifesteal_15"
 		"Ability14"					"special_bonus_movement_speed_45"
 		"Ability15"					"special_bonus_attack_damage_50"
-		"Ability16"					"special_bonus_lifesteal_25"
-		"Ability17"					"special_bonus_mana_break_35"
+		"Ability16"					"special_bonus_imba_night_stalker_9"
+		"Ability17"					"special_bonus_imba_night_stalker_10"
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_imba_night_stalker_1"
+		// "Ability11"					"special_bonus_imba_night_stalker_2"
+		// "Ability12"					"special_bonus_imba_night_stalker_3"
 		// "special_bonus_imba_night_stalker_4"               "+1 Night Terror duration"
 		// "special_bonus_imba_night_stalker_5"               "+400 Stalker in the Night night vision bonus"
 		// "special_bonus_imba_night_stalker_6"               "Crippling Fear now also mutes the target"
@@ -1459,10 +1464,10 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_pugna_life_drain"
 		
-		"Ability10"					"special_bonus_hp_200"				//+200 HP
-		"Ability11"					"special_bonus_evasion_20"			//+20 Evasion
+		"Ability10"					"special_bonus_hp_275"				
+		"Ability11"					"special_bonus_movement_speed_20"
 		"Ability12"					"special_bonus_imba_pugna_3"		//+1 Decrepify duration
-		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.
+		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain cannot be broken by distance for the first 2 seconds of Life Drain.
 		"Ability14"					"special_bonus_imba_pugna_5"		//Nether Blast secondary blasts deal 10% of original damage.
 		"Ability15"					"special_bonus_imba_pugna_6"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.
 		"Ability16"					"special_bonus_imba_pugna_7"		//+3% Target current health as Life Drain's per sec damage
@@ -1768,26 +1773,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_sven_gods_strength"
 
-		"Ability10"					"special_bonus_imba_sven_1"
-		"Ability11"					"special_bonus_imba_sven_2"
-		"Ability12"					"special_bonus_imba_sven_3"
-		"Ability13"					"special_bonus_imba_sven_4"
+		"Ability10"					"special_bonus_strength_10"
+		"Ability11"					"special_bonus_mp_regen_4"
+		"Ability12"					"special_bonus_imba_sven_4"
+		"Ability13"					"special_bonus_imba_sven_9"
 		"Ability14"					"special_bonus_imba_sven_5"
 		"Ability15"					"special_bonus_imba_sven_6"
 		"Ability16"					"special_bonus_imba_sven_7"
 		"Ability17"					"special_bonus_imba_sven_8"
-	}
-
-	//=================================================================================================================
-	// HERO: Tidehunter
-	//=================================================================================================================
-	"npc_dota_hero_tidehunter"
-	{
-	
 		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		
-		"Ability6"					"imba_tidehunter_ravage"
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_sven_1" // +X Storm Hammer effect radius
+		// "Ability11"					"special_bonus_imba_sven_2" // +X Great Cleave length/end radius
+		// "Ability12"					"special_bonus_imba_sven_3" // +X% Warcry movement speed
 	}
 
 	//=================================================================================================================

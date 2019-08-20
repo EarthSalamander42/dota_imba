@@ -17,6 +17,7 @@ LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary_ally", "compo
 LinkLuaModifier("modifier_imba_visage_stone_form_self_cast", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_visage_summon_familiars", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_visage_summon_familiars_petrifying_breath", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_root", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
@@ -45,6 +46,7 @@ modifier_imba_visage_stone_form_self_cast				= class({})
 
 imba_visage_summon_familiars							= class({})
 modifier_imba_visage_summon_familiars					= class({})
+modifier_imba_visage_summon_familiars_petrifying_breath	= class({})
 
 imba_visage_summon_familiars_stone_form					= class({})
 modifier_imba_visage_summon_familiars_stone_form_root	= class({})
@@ -151,7 +153,8 @@ end
 function modifier_imba_visage_grave_chill_buff:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 	}
 	
 	return decFuncs
@@ -163,6 +166,10 @@ end
 
 function modifier_imba_visage_grave_chill_buff:GetModifierAttackSpeedBonus_Constant()
 	return self.attackspeed_bonus + (self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec)
+end
+
+function modifier_imba_visage_grave_chill_buff:GetModifierTurnRate_Percentage()
+	return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec
 end
 
 ---------------------------------
@@ -190,7 +197,8 @@ end
 function modifier_imba_visage_grave_chill_debuff:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 	}
 	
 	return decFuncs
@@ -202,6 +210,10 @@ end
 
 function modifier_imba_visage_grave_chill_debuff:GetModifierAttackSpeedBonus_Constant()
 	return (self.attackspeed_bonus + self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec) * (-1)
+end
+
+function modifier_imba_visage_grave_chill_debuff:GetModifierTurnRate_Percentage()
+	return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec * (-1)
 end
 
 -------------------------------
@@ -228,29 +240,31 @@ function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifi
 -- GRAVE CHILL AURA MODIFIER MODIFIER --
 ----------------------------------------
 
+function modifier_imba_visage_grave_chill_aura_modifier:IsHidden()		return true end
 function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
 
 function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
-	if not IsServer() then return end
-
-	self:StartIntervalThink(1)
-end
-
-function modifier_imba_visage_grave_chill_aura_modifier:OnIntervalThink()
-	self:IncrementStackCount()
+	self.creation_time = GameRules:GetDOTATime(true, true)
 end
 
 function modifier_imba_visage_grave_chill_aura_modifier:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_TOOLTIP
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		-- MODIFIER_PROPERTY_TOOLTIP
 	}
 	
 	return decFuncs
 end
 
-function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
-	return self:GetStackCount()
+function modifier_imba_visage_grave_chill_aura_modifier:OnAbilityExecuted(keys)
+	if keys.ability == self:GetAbility() and keys.target == self:GetParent() then
+		self:SetStackCount(GameRules:GetDOTATime(true, true) - self.creation_time)
+	end
 end
+
+-- function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
+	-- return self:GetStackCount()
+-- end
 
 ---------------------
 -- SOUL ASSUMPTION --
@@ -306,7 +320,7 @@ function imba_visage_soul_assumption:OnSpellStart()
 	local damage_bars					= 0
 	local effect_name					= "particles/units/heroes/hero_visage/visage_soul_assumption_bolt.vpcf"
 	-- IMBAfication: Soul Accelerant
-	local overflow_counter				= 0
+	local overflow_counter				= 1
 	
 	if assumption_counter_modifier then	
 		damage_bars = math.min(math.floor(assumption_counter_modifier:GetStackCount() / self:GetSpecialValueFor("damage_limit")), self:GetSpecialValueFor("stack_limit"))
@@ -348,20 +362,25 @@ function imba_visage_soul_assumption:OnSpellStart()
 		}
 	}
 	
-	local target_counter = 0
+	projectile.Target = target
+	ProjectileManager:CreateTrackingProjectile(projectile)
+	
+	local target_counter = 1
 	
 	-- CDOTA_BaseNPC: GetCastRangeBonus() added in Summer Scrub patch xd
 	-- "Heroes and illusions have a higher priority than other units. Treats creep-heroes as creeps."
 	local enemy_heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 	
-	for _, enemy in pairs(enemy_heroes) do
-		projectile.Target = enemy
-		ProjectileManager:CreateTrackingProjectile(projectile)
-		
-		target_counter = target_counter + 1
-		
+	for _, enemy in pairs(enemy_heroes) do	
 		if target_counter >= self:GetTalentSpecialValueFor("targets") then
 			break
+		end	
+	
+		if enemy ~= target then
+			projectile.Target = enemy
+			ProjectileManager:CreateTrackingProjectile(projectile)
+			
+			target_counter = target_counter + 1
 		end
 	end
 	
@@ -369,13 +388,15 @@ function imba_visage_soul_assumption:OnSpellStart()
 		local enemy_creeps = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false) 
 		
 		for _, enemy in pairs(enemy_creeps) do
-			projectile.Target = enemy
-			ProjectileManager:CreateTrackingProjectile(projectile)
-			
-			target_counter = target_counter + 1		
-			
 			if target_counter >= self:GetTalentSpecialValueFor("targets") then
 				break
+			end
+		
+			if enemy ~= target then
+				projectile.Target = enemy
+				ProjectileManager:CreateTrackingProjectile(projectile)
+				
+				target_counter = target_counter + 1		
 			end
 		end
 	end
@@ -437,7 +458,7 @@ function modifier_imba_visage_soul_assumption:OnTakeDamage(keys)
 
 	if (keys.unit:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("radius") and
 	(keys.attacker:IsControllableByAnyPlayer() or keys.attacker:IsRoshan()) and
-	keys.unit:IsRealHero() and
+	(keys.unit:IsRealHero() or string.find(keys.attacker:GetDebugName(), "npc_dota_visage_familiar")) and -- IMBAfication: Familiar Flow
 	keys.unit ~= keys.attacker and
 	keys.damage >= self:GetAbility():GetSpecialValueFor("damage_min") and
 	keys.damage <= self:GetAbility():GetSpecialValueFor("damage_max") and
@@ -900,6 +921,7 @@ function modifier_imba_visage_summon_familiars:IsPurgable()	return false end
 
 function modifier_imba_visage_summon_familiars:OnCreated()
 	self.unfeeling_status_resistance	= self:GetAbility():GetSpecialValueFor("unfeeling_status_resistance")
+	self.petrifying_breath_duration		= self:GetAbility():GetSpecialValueFor("petrifying_breath_duration")
 	
 	if not IsServer() then return end
 	
@@ -908,6 +930,12 @@ end
 
 -- IDK why this is a thing but vanilla familiars can push each other around so let's implement it here and make everything potentially stupidly laggy
 function modifier_imba_visage_summon_familiars:OnIntervalThink()
+	-- Rubick exception
+	if not self:GetAbility() then
+		self:StartIntervalThink(-1)
+		self:GetParent():ForceKill(false)
+	end
+	
 	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():GetHullRadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
 	
 	for _, ally in pairs(allies) do
@@ -928,7 +956,8 @@ end
 
 function modifier_imba_visage_summon_familiars:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,	-- IMBAfication: Unfeeling Stone
+		MODIFIER_EVENT_ON_ATTACK_LANDED					-- IMBAfication: Petrifying Breath
 	}
 	
 	return decFuncs
@@ -936,6 +965,55 @@ end
 
 function modifier_imba_visage_summon_familiars:GetModifierStatusResistanceStacking()
 	return self.unfeeling_status_resistance
+end
+
+function modifier_imba_visage_summon_familiars:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() then
+		local petrifying_breath_modifier = keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_visage_summon_familiars_petrifying_breath", {duration = self.petrifying_breath_duration})
+		
+		if petrifying_breath_modifier then
+			petrifying_breath_modifier:SetDuration(self.petrifying_breath_duration * (1 - keys.target:GetStatusResistance()), true)
+		end
+	end
+end
+
+-------------------------------------------------
+-- SUMMON FAMILIARS PETRIFYING BREATH MODIFIER --
+-------------------------------------------------
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:IsPurgable()	return false end
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:OnCreated()
+	if self:GetAbility() then
+		self.petrifying_breath_reduction_per_stack	= self:GetAbility():GetSpecialValueFor("petrifying_breath_reduction_per_stack")
+	else
+		self.petrifying_breath_reduction_per_stack	= 0
+	end
+	
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
+	
+	return decFuncs
+end
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierMoveSpeedBonus_Constant()
+	return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
+end
+
+function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierAttackSpeedBonus_Constant()
+	return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
 end
 
 ---------------------------------
@@ -1104,6 +1182,8 @@ end
 ---------------------
 -- BECOME FAMILIAR --
 ---------------------
+
+function imba_visage_become_familiar:IsStealable()	return false end
 
 function imba_visage_become_familiar:OnSpellStart()
 	self:SetActivated(false)

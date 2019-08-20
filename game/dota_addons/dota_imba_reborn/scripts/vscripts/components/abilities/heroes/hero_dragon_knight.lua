@@ -317,6 +317,19 @@ end
 
 modifier_imba_dragon_blood = modifier_imba_dragon_blood or class({})
 
+function modifier_imba_dragon_blood:OnCreated()
+	if not IsServer() then return end
+	
+	-- IMBAfication: Gold Hoard
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_dragon_blood:OnIntervalThink()
+	if self:GetParent().GetGold then
+		self:SetStackCount(self:GetParent():GetGold() / self:GetAbility():GetSpecialValueFor("gold_hoard_amount_per_inc"))
+	end
+end
+
 function modifier_imba_dragon_blood:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
@@ -329,18 +342,18 @@ end
 function modifier_imba_dragon_blood:GetModifierConstantHealthRegen()
 	if self:GetCaster():PassivesDisabled() then return end
 	if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
-		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") * 2
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") * 2 + self:GetStackCount()
 	else
-		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") + self:GetStackCount()
 	end
 end
 
 function modifier_imba_dragon_blood:GetModifierPhysicalArmorBonus()
 	if self:GetCaster():PassivesDisabled() then return end
 	if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
-		return self:GetAbility():GetSpecialValueFor("bonus_armor") * 2
+		return self:GetAbility():GetSpecialValueFor("bonus_armor") * 2 + self:GetStackCount()
 	else
-		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+		return self:GetAbility():GetSpecialValueFor("bonus_armor") + self:GetStackCount()
 	end
 end
 
