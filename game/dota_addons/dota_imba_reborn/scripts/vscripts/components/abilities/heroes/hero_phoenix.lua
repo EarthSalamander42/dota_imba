@@ -2410,7 +2410,11 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 	if self:GetCaster():GetHealth() <= 1 then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = ability:GetSpecialValueFor("scepter_cooldown")})
+		local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
+		local  cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
+		if cooldown_modifier ~= nil then 
+			cooldown_modifier:SetStackCount(scepter_cooldown)
+		end
 		local location = caster:GetAbsOrigin()
 		local egg_duration = ability:GetSpecialValueFor("duration")
 		local extend_duration = ability:GetSpecialValueFor("scepter_additional_duration")
@@ -2434,8 +2438,17 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		-- Set health to max here as compromise to prevent easy insta-gibs I guess
 		caster:SetHealth(caster:GetMaxHealth())
-	end
 
+		-- Add cooldown to scepter icon
+		for i = 0, 6 do 
+			local aghs = caster:GetItemInSlot(i)
+			if aghs ~= nil then
+				if aghs:GetName() == 'item_ultimate_scepter' then 
+					aghs:StartCooldown(scepter_cooldown)
+				end
+			end
+		end
+	end
 end
 
 
@@ -2449,6 +2462,17 @@ function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff()
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPermanent() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() 	return false end
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated() 
+	if IsServer() then 
+		self:StartIntervalThink(1)
+	end
+end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnIntervalThink() 
+	if IsServer() then 
+		self:SetStackCount(self:GetStackCount() - 1)
+	end
+end
 
 -------------------------------------------
 --			Burning Wings
