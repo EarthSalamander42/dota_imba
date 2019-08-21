@@ -1,0 +1,7 @@
+"DOTA_Tooltip_modifier_imba_aeon_disk"											"Combo Breaker"
+"DOTA_Tooltip_modifier_imba_aeon_disk_description"								"All incoming damage is reduced to zero. Outgoing damage is reduced by 85%."
+"DOTA_Tooltip_ability_item_imba_aeon_disk" 										"Aeon Disk"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_health" 						"+$health"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_mana" 							"+$mana"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_description" 							"<h1>Toggle: C-C-Combo Breaker </h1> When activated and your health falls below %proc_treshold%%  a strong dispel is applied and you gain a %duration% second buff that provides %status_resistance%%  Status Resistance, causes all damage you take to be reduced to zero, and all damage dealt to be reduced by %damage_reduction%%. Only triggers by player based daamge."
+"DOTA_Tooltip_ability_item_imba_aeon_disk_lore" 								"A powerful artifact long ago smuggled out of the Ivory Incubarium. Or so many believe."
