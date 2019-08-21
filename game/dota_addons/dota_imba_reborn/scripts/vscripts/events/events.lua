@@ -947,7 +947,7 @@ function GameMode:OnPlayerChat(keys)
 			
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
-				caster:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(caster, pos, false)
 			end
 		end
 	end

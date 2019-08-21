@@ -56,7 +56,6 @@ modifier_imba_life_stealer_assimilate_effect				= class({})
 modifier_imba_life_stealer_assimilate_counter				= class({})
 
 imba_life_stealer_assimilate_eject 							= class({})
-modifier_imba_life_stealer_assimilate_eject 				= class({})
 
 ----------
 -- RAGE --
@@ -1475,6 +1474,8 @@ end
 -- ASSIMILATE MODIFIER --
 -------------------------
 
+function modifier_imba_life_stealer_assimilate:IsPurgable()	return false end
+
 function modifier_imba_life_stealer_assimilate:OnCreated(params)
 	self.radius					= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage					= self:GetAbility():GetSpecialValueFor("damage")
@@ -1544,7 +1545,7 @@ function modifier_imba_life_stealer_assimilate:OnDestroy()
 	
 	self:GetParent():RemoveNoDraw()
 	
-	if self.assimilate_effect_modifier then
+	if self.assimilate_effect_modifier and not self.assimilate_effect_modifier:IsNull() then
 		self.assimilate_effect_modifier:Destroy()
 	end
 	
@@ -1621,20 +1622,21 @@ function modifier_imba_life_stealer_assimilate_effect:OnCreated()
 	self:AddParticle(assimilate_overhead_particle, false, false, -1, true, false)
 end
 
--- function modifier_imba_life_stealer_assimilate_effect:OnDestroy()
-	-- if not IsServer() then return end
+function modifier_imba_life_stealer_assimilate_effect:OnDestroy()
+	if not IsServer() then return end
 	
-	-- local assimilate_effect_modifiers = self:GetCaster():FindAllModifiersByName(self:GetName())
+	if self.assimilate_modifier and not self.assimilate_modifier:IsNull() then
+		self.assimilate_modifier:Destroy()
+	end
 	
-	-- if #assimilate_effect_modifiers <= 0 then
-		-- -- Swap out Assimilate Eject ability back for Assimilate
-		-- local eject_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
-		
-		-- if eject_ability and self:GetAbility() then
-			-- self:GetCaster():SwapAbilities(self:GetAbility():GetName(), eject_ability:GetName(), true, false)
-		-- end
-	-- end
--- end
+	local assimilate_effect_modifiers = self:GetCaster():FindAllModifiersByName(self:GetName())
+	
+	self.eject_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
+	
+	if self.eject_ability and #assimilate_effect_modifiers <= 0 then
+		self.eject_ability:SetActivated(false)
+	end
+end
 
 function modifier_imba_life_stealer_assimilate_effect:DeclareFunctions()
 	local decFuncs = {

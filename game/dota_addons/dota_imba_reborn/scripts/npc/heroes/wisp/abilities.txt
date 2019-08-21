@@ -66,7 +66,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"attackslow_tooltip"		"-100"
+				"attackslow_tooltip"		"-50"
 			}
 			"09"
 			{
