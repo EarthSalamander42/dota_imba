@@ -128,6 +128,7 @@ end
 
 -- This is to manage fog vision tracking for the Dramatic Entrance IMBAfication
 function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()			return true end
+function modifier_imba_shadow_shaman_ether_shock_handler:IsPurgable()		return false end
 -- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
 function modifier_imba_shadow_shaman_ether_shock_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -527,6 +528,8 @@ function imba_shadow_shaman_shackles:OnSpellStart()
 			for _, enemy in pairs(enemies) do
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles", {duration = self:GetChannelTime()})
 			end
+		else
+			self:GetCaster():Interrupt()
 		end
 	else
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
@@ -556,6 +559,7 @@ end
 -------------------------------
 
 function modifier_imba_shadow_shaman_shackles_handler:IsHidden()		return true end
+function modifier_imba_shadow_shaman_shackles_handler:IsPurgable()		return false end
 function modifier_imba_shadow_shaman_shackles_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_handler:DeclareFunctions()

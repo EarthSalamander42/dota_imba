@@ -360,8 +360,20 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"40 50 60"
+			}		
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_bonus_damage"		"30"
+				"RequiresScepter"			"1"
 			}
-		}		
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_spell_amp"		"6"
+				"RequiresScepter"			"1"
+			}			
+		}
 	}
 
 	//=================================================================================================================

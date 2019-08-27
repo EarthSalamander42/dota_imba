@@ -10,16 +10,19 @@ LinkLuaModifier("modifier_imba_entrangling_roots", "components/abilities/heroes/
 imba_malfurion_entrangling_roots = imba_malfurion_entrangling_roots or class({})
 
 function imba_malfurion_entrangling_roots:OnSpellStart()
-	if IsServer() then
-		self:GetCursorTarget():EmitSound("Hero_Treant.LeechSeed.Target")
-		self:GetCursorTarget():AddNewModifier(self:GetCursorTarget(), self, "modifier_imba_entrangling_roots", {duration=self:GetSpecialValueFor("duration") - 0.01}) -- minus 0.01 second/instance to keep the right root duration but have 1 less damage instance, because first damage instance happen when modifier is granted and not after the first think time.
+	local target = self:GetCursorTarget()
+
+	if not target:TriggerSpellAbsorb(self) then
+		target:EmitSound("Hero_Treant.LeechSeed.Target")
+		target:AddNewModifier(self:GetCursorTarget(), self, "modifier_imba_entrangling_roots", {duration=self:GetSpecialValueFor("duration") - 0.01}) -- minus 0.01 second/instance to keep the right root duration but have 1 less damage instance, because first damage instance happen when modifier is granted and not after the first think time.
 	end
 end
 
 modifier_imba_entrangling_roots = modifier_imba_entrangling_roots or class({})
 
-function modifier_imba_entrangling_roots:IsDebuff() return false end
-function modifier_imba_entrangling_roots:IsHidden() return false end
+function modifier_imba_entrangling_roots:IgnoreTenacity()	return true end
+function modifier_imba_entrangling_roots:IsDebuff()			return true end
+function modifier_imba_entrangling_roots:IsPurgable()		return true end
 
 -------------------------------------------
 
@@ -95,23 +98,20 @@ modifier_imba_rejuvenation = modifier_imba_rejuvenation or class({})
 function modifier_imba_rejuvenation:OnCreated()
 	if IsServer() then
 		self.heal_per_sec = self:GetAbility():GetSpecialValueFor("heal_per_sec") + self:GetCaster():FindTalentValue("special_bonus_imba_malfurion_5")
+		
+		if self:GetParent():IsBuilding() or string.find(self:GetParent():GetUnitName(), "living_tower") then
+			self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
+		elseif not self:GetParent():IsHero() then
+			self.heal_per_sec = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
+		end
+		
 		self:StartIntervalThink(1.0)
 	end
 end
 
 function modifier_imba_rejuvenation:OnIntervalThink()
-	local heal_value = self.heal_per_sec
-
-	if self:GetParent():IsBuilding() or string.find(self:GetParent():GetUnitName(), "living_tower") then
-		heal_value = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_building_pct")
-	else
-		if not self:GetParent():IsHero() then
-			heal_value = self.heal_per_sec / 100 * self:GetAbility():GetSpecialValueFor("heal_per_sec_creep_pct")
-		end
-	end
-
-	self:GetParent():Heal(heal_value, self:GetCaster())
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), heal_value, nil)
+	self:GetParent():Heal(self.heal_per_sec, self:GetCaster())
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_sec, nil)
 end
 
 function modifier_imba_rejuvenation:GetEffectName()
@@ -151,7 +151,7 @@ function modifier_imba_mark_of_the_claw:OnAttackLanded(kv)
 		if self:GetParent() == kv.attacker and kv.attacker:GetTeamNumber() ~= kv.target:GetTeamNumber() then
 			if kv.target:IsBuilding() then return end
 
-			if RandomInt(1, 100) <= self:GetAbility():GetSpecialValueFor("chance") then
+			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("chance"), self) then
 				local base_damage = kv.damage * (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") / 100)
 				local splash_damage = base_damage * (self:GetAbility():GetSpecialValueFor("splash_damage_pct") / 100)
 
@@ -243,7 +243,13 @@ function imba_malfurion_living_tower:OnSpellStart()
 		tower_name[2] = "radiant"
 		tower_name[3] = "dire"
 		self.living_tower = CreateUnitByName("npc_imba_malfurion_living_tower_"..tower_name[self:GetCaster():GetTeamNumber()], self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeam())
-		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_kill", {duration=self:GetSpecialValueFor("duration")})
+		
+		if not self:GetCaster():HasScepter() then
+			self.living_tower:AddNewModifier(self.living_tower, self, "modifier_kill", {duration=self:GetSpecialValueFor("duration")})
+		else
+			self.living_tower:AddNewModifier(self.living_tower, self, "modifier_kill", {duration=self:GetSpecialValueFor("scepter_duration")})
+		end
+		
 		self.living_tower:AddNewModifier(self.living_tower, self, "modifier_imba_malfurion_living_tower", {})
 		
 		if self:GetCaster().GetPlayerID then
@@ -252,9 +258,16 @@ function imba_malfurion_living_tower:OnSpellStart()
 			self.living_tower:SetControllableByPlayer(self:GetCaster():GetOwner():GetPlayerID(), false)
 		end
 		
-		self.living_tower:SetMaxHealth(self:GetSpecialValueFor("health"))
-		self.living_tower:SetHealth(self:GetSpecialValueFor("health"))
-		self.living_tower:SetBaseMaxHealth(self:GetSpecialValueFor("health"))
+		if not self:GetCaster():HasScepter() then
+			self.living_tower:SetMaxHealth(self:GetSpecialValueFor("health"))
+			self.living_tower:SetHealth(self:GetSpecialValueFor("health"))
+			self.living_tower:SetBaseMaxHealth(self:GetSpecialValueFor("health"))
+		else
+			self.living_tower:SetMaxHealth(self:GetSpecialValueFor("scepter_health"))
+			self.living_tower:SetHealth(self:GetSpecialValueFor("scepter_health"))
+			self.living_tower:SetBaseMaxHealth(self:GetSpecialValueFor("scepter_health"))		
+		end
+		
 		self.living_tower:SetBaseDamageMin(self:GetSpecialValueFor("damage") * 0.9)
 		self.living_tower:SetBaseDamageMax(self:GetSpecialValueFor("damage") * 1.1)
 		self.living_tower:SetAcquisitionRange(self:GetSpecialValueFor("attack_range"))
@@ -311,6 +324,9 @@ function modifier_imba_malfurion_living_tower:GetOverrideAnimation()
 end
 
 function modifier_imba_malfurion_living_tower:OnCreated()
+	self.attack_speed	= self:GetAbility():GetSpecialValueFor("attack_speed")
+	self.attack_range	= self:GetAbility():GetSpecialValueFor("attack_range")
+
 	if not IsServer() then return end
 
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", PATTACH_ABSORIGIN, self:GetParent())
@@ -357,9 +373,9 @@ function modifier_imba_malfurion_living_tower:OnDeath(keys)
 end
 
 function modifier_imba_malfurion_living_tower:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("attack_speed")
+	return self.attack_speed
 end
 
 function modifier_imba_malfurion_living_tower:GetModifierAttackRangeBonus()
-	return self:GetAbility():GetSpecialValueFor("attack_range")
+	return self.attack_range
 end

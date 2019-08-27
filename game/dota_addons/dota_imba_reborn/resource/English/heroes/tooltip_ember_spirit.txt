@@ -1,20 +1,21 @@
 "npc_dota_hero_ember_spirit"                                    "Ember Spirit (IMBA)"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains"                  "Searing Chains"
-"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_description"      "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, rooting them in place and dealing damage every half second.\n<font color='#FF7800'>Searing Rain:</font> Each fire remnant also throws out %units_per_charge% bolas. If they are not currently deployed, the extra bolas are centered around Ember Spirit."
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_description"      "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, rooting them in place and dealing damage every <font color='#FF7800'>half</font> second.\n<font color='#FF7800'>Searing Rain:</font> Each fire remnant also throws out %units_per_charge% bolas. If they are not currently deployed, the extra bolas are centered around Ember Spirit."
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_note0"            "Mini-stuns targets when first applied."
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_lore"             "Your place is here."
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_effect_radius"    "EFFECT RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_duration"         "ROOT DURATION:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_damage_per_tick"  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_total_damage"     "TOTAL DAMAGE:"
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_units_per_charge"	"UNIT COUNT:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist"                    "Sleight of Fist"
-"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_description"        "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.\n<font color='#FF7800'>Feed the Flame:</font> Attacks during Sleight of fist benefit from bonus damage.\n<font color='#FF7800'>Blaze Connection:</font> Also attacks enemies around your remnants at 75% of the standard radius. Enemies in reach of more than one remnant can be attacked more than once."
+"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_description"        "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location. Deals bonus damage to heroes and <font color='#FF7800'>standard</font> damage to creeps.\n<font color='#FF7800'>Blaze Connection:</font> Also attacks enemies around your remnants at 75% of the standard radius. Enemies in reach of more than one remnant can be attacked more than once."
 // "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_note0"              "Lifesteal is halved when hitting creeps."
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_lore"               "The cuts rain down!"
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_effect_radius"      "EFFECT RADIUS:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_bonus_damage"       "BONUS DAMAGE:"
+"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_bonus_damage"       "BONUS HERO DAMAGE:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_hero_lifesteal"     "%BONUS LIFESTEAL:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard"                        "Flame Guard"
@@ -36,7 +37,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_damage"           "EXPLOSION DAMAGE:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant"                       "Fire Remnant"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_description"           "Deploys one of your fire remnants to the target area, generating various effects.\n<font color='#FF7800'>Through Fire and Flames:</font> Remnants replicate Ember Spirit's abilities, and after expiring or being activated, only need a short %remnant_recharge% second cooldown to be usable again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_description"           "Ember Spirit generates Fire Remnant charges every %remnant_recharge% seconds, with a max of %max_charges% charges. Releasing a charge sends a Fire Remnant that <font color='#FF7800'>teleports</font> to the target location <font color='#FF7800'>instantly.</font>. Using Activate Fire Remnant, Ember Spirit can <font color='#FF7800'>teleport</font> out to his Remnants, dealing damage along the way and exploding them upon arrival. The targeted Remnant will be arrived at last.\n<font color='#FF7800'>Through Fire and Flames:</font> Remnants replicate Ember Spirit's abilities, and after expiring or being activated, only need a %remnant_recharge% second cooldown to be usable again."
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_note0"                 "If a remnant's duration expires, it doesn't explode, and simply returns to Ember Spirit."
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_lore"                  "Xin's spirit fragments into quasi-real copies of himself, able of replicating his feats at a distance."
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_max_charges"           "REMNANT CHARGES:"
@@ -44,7 +45,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_effect_radius"         "EXPLOSION RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_damage"                "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_attack_cd_scepter"     "SCEPTER ATTACK RATE:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds."
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "<font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>"
 
 // Modifiers
 "DOTA_Tooltip_modifier_imba_flame_guard_aura"                           "Flame Guard"
@@ -67,9 +68,9 @@
 
 // Talents
 "DOTA_Tooltip_Ability_special_bonus_ember_chains_on_attack"                     "Attacks apply Searing Chains"
-"DOTA_Tooltip_Ability_special_bonus_ember_chains_on_attack_description"         "Your attacks now have a %chance%%% chance to apply searing chains for %duration% second."
-"DOTA_Tooltip_Ability_special_bonus_ember_chains_duration"                      "+1 sec Searing Chains duration"
-"DOTA_Tooltip_Ability_special_bonus_ember_guard_damage"                         "+60 Flame Guard damage per second"
+"DOTA_Tooltip_Ability_special_bonus_ember_chains_on_attack_description"         "Your attacks now have a 17% chance to apply Searing Chains for 1.5 seconds."
+"DOTA_Tooltip_Ability_special_bonus_ember_chains_duration"                      "+1s Searing Chains"
+"DOTA_Tooltip_Ability_special_bonus_ember_guard_damage"                         "+60 Flame Guard DPS"
 "DOTA_Tooltip_Ability_special_bonus_ember_sleight_extra_targets"                "Sleight of Fist hits 3 bonus targets"
 "DOTA_Tooltip_Ability_special_bonus_ember_sleight_extra_targets_description"    "3 amongst the targets are randomly picked to be hit one extra time. Effect can stack on a single unit."
 "DOTA_Tooltip_Ability_special_bonus_ember_permanent_guard"                      "Permanent Flame Guard"

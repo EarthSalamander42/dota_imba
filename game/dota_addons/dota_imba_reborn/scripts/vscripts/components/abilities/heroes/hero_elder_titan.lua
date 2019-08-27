@@ -218,6 +218,7 @@ end
 imba_elder_titan_ancestral_spirit = class({})
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_damage", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_ms", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_armor", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_ancestral_spirit:GetAbilityTextureName()
@@ -359,6 +360,22 @@ function modifier_imba_elder_titan_ancestral_spirit_ms:GetModifierMoveSpeedBonus
 	return self:GetStackCount()
 end
 
+modifier_imba_elder_titan_ancestral_spirit_armor = class({})
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:IsPurgable() return false end
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:GetModifierPhysicalArmorBonus()
+	return self:GetStackCount() * 0.1
+end
+
 modifier_imba_elder_titan_ancestral_spirit_self = modifier_imba_elder_titan_ancestral_spirit_self or class({})
 
 -- Modifier properties
@@ -379,8 +396,13 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 	self.damage_creeps = self:GetAbility():GetSpecialValueFor("damage_creeps")
 	self.speed_heroes = self:GetAbility():GetSpecialValueFor("move_pct_heroes")
 	self.speed_creeps = self:GetAbility():GetSpecialValueFor("move_pct_creeps")
+	self.armor_creeps = self:GetAbility():GetSpecialValueFor("armor_creeps")
+	self.armor_heroes = self:GetAbility():GetSpecialValueFor("armor_heroes")
+	
 	self.bonus_damage = 0
 	self.bonus_ms = 0
+	self.bonus_armor = 0
+	
 	self.targets_hit = {}
 
 	if IsServer() then
@@ -443,11 +465,13 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			-- Add enemy to the targets hit table
 			self.targets_hit[#self.targets_hit + 1] = enemy
 			if enemy:IsRealHero() then
-				self.bonus_damage = self.bonus_damage + self.damage_heroes
-				self.bonus_ms = self.bonus_ms + self.speed_heroes
+				self.bonus_damage	= self.bonus_damage + self.damage_heroes
+				self.bonus_ms		= self.bonus_ms + self.speed_heroes
+				self.bonus_armor	= self.bonus_armor + self.armor_heroes
 			else
-				self.bonus_damage = self.bonus_damage + self.damage_creeps
-				self.bonus_ms = self.bonus_ms + self.speed_creeps
+				self.bonus_damage	= self.bonus_damage + self.damage_creeps
+				self.bonus_ms		= self.bonus_ms + self.speed_creeps
+				self.bonus_armor	= self.bonus_armor + self.armor_creeps
 			end
 		end
 	end
@@ -470,7 +494,8 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 		end
 	end
 
-	if self.return_timer - 10.0 > self.duration then
+	if self.return_timer - 10.0 > self.duration or 
+	(self:GetParent().is_returning == true and (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length() < 180) then
 		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
 		if self.bonus_damage > 0 then
 			local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
@@ -481,30 +506,15 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			local speed_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_ms", {duration = self.buff_duration})
 			speed_mod:SetStackCount(self.bonus_ms)
 		end
+		
+		if self.bonus_armor > 0 then
+			local armor_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_armor", {duration = self.buff_duration})
+			armor_mod:SetStackCount(self.bonus_armor * 10)
+		end
 
 		self:GetParent():RemoveSelf()
 		astral_spirit = nil
 		return nil
-	end
-
-	local hero_distance = (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length()
-	if self:GetParent().is_returning == true then
-		if hero_distance < 180 then
-			self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
-			if self.bonus_damage > 0 then
-				local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
-				damage_mod:SetStackCount(self.bonus_damage)
-			end
-
-			if self.bonus_ms > 0 then
-				local speed_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_ms", {duration = self.buff_duration})
-				speed_mod:SetStackCount(self.bonus_ms)
-			end
-
-			self:GetParent():RemoveSelf()
-			astral_spirit = nil
-			return nil
-		end
 	end
 
 	self.return_timer = self.return_timer + 0.1
@@ -540,12 +550,17 @@ function modifier_imba_elder_titan_ancestral_spirit_self:DeclareFunctions()
 	local funcs =
 		{
 			MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+			MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
 		}
 	return funcs
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierMoveSpeed_AbsoluteMin (keys)
 	return self:GetParent().basemovespeed
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierIgnoreMovespeedLimit()
+	return 1
 end
 
 -- On the edge case where Juggernaut's Omnislash jumps to the Astral Spirit and kills it...give Elder Titan back the skill immediately
@@ -897,15 +912,69 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_1", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_2", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_4", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_5", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_elder_titan_6", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_elder_titan_9", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_elder_titan_1 = class({})
+modifier_special_bonus_imba_elder_titan_2 = class({})
+modifier_special_bonus_imba_elder_titan_4 = class({})
+modifier_special_bonus_imba_elder_titan_5 = class({})
+modifier_special_bonus_imba_elder_titan_6 = class({})
 modifier_special_bonus_imba_elder_titan_9 = class({})
+
+function modifier_special_bonus_imba_elder_titan_1:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_1:RemoveOnDeath()	return false end
+
+function modifier_special_bonus_imba_elder_titan_2:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_2:RemoveOnDeath()	return false end
+
+function modifier_special_bonus_imba_elder_titan_4:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_4:RemoveOnDeath()	return false end
+
+function modifier_special_bonus_imba_elder_titan_5:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_5:RemoveOnDeath()	return false end
+
+function modifier_special_bonus_imba_elder_titan_6:IsHidden()		return true end
+function modifier_special_bonus_imba_elder_titan_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_elder_titan_6:RemoveOnDeath()	return false end
 
 function modifier_special_bonus_imba_elder_titan_9:IsHidden()		return true end
 function modifier_special_bonus_imba_elder_titan_9:IsPurgable()		return false end
 function modifier_special_bonus_imba_elder_titan_9:RemoveOnDeath()	return false end
 
+function imba_elder_titan_ancestral_spirit:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_1"), "modifier_special_bonus_imba_elder_titan_1", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_2"), "modifier_special_bonus_imba_elder_titan_2", {})
+	end	
+end
+
+function imba_elder_titan_natural_order:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_4"), "modifier_special_bonus_imba_elder_titan_4", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_5"), "modifier_special_bonus_imba_elder_titan_5", {})
+	end	
+end
+
 function imba_elder_titan_earth_splitter:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_6"), "modifier_special_bonus_imba_elder_titan_6", {})
+	end
+
 	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_elder_titan_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:FindAbilityByName("special_bonus_imba_elder_titan_9"), "modifier_special_bonus_imba_elder_titan_9", {})
 	end

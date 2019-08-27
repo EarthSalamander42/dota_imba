@@ -292,6 +292,7 @@ end
 ---------------------------
 
 function modifier_imba_tidehunter_gush_handler:IsHidden() return true end
+function modifier_imba_tidehunter_gush_handler:IsPurgable()	return false end
 -- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
 function modifier_imba_tidehunter_gush_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -704,7 +705,8 @@ end
 -- ANCHOR SMASH HANDLER --
 --------------------------
 
-function modifier_imba_tidehunter_anchor_smash_handler:IsHidden()	return true end
+function modifier_imba_tidehunter_anchor_smash_handler:IsHidden()		return true end
+function modifier_imba_tidehunter_anchor_smash_handler:IsPurgable()		return false end
 
 function modifier_imba_tidehunter_anchor_smash_handler:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ORDER}

@@ -252,8 +252,10 @@ function modifier_imba_sleight_of_fist_caster:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage(keys)
+	if keys.target and keys.target:IsHero() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -297,7 +299,7 @@ function modifier_imba_searing_chains_attack:OnAttackLanded(keys)
 			if attacker:FindAbilityByName("special_bonus_ember_chains_on_attack") and attacker:FindAbilityByName("special_bonus_ember_chains_on_attack"):GetLevel() > 0 then
 				local talent_ability = attacker:FindAbilityByName("special_bonus_ember_chains_on_attack")
 				local target = keys.target
-				if RollPercentage(talent_ability:GetSpecialValueFor("chance")) and not (target:IsBuilding() or target:IsMagicImmune()) then
+				if not (target:IsBuilding() or target:IsMagicImmune()) and RollPseudoRandom(talent_ability:GetSpecialValueFor("chance"), self) then
 					ApplySearingChains(attacker, attacker, target, self:GetAbility(), talent_ability:GetSpecialValueFor("duration"))
 				end
 			end

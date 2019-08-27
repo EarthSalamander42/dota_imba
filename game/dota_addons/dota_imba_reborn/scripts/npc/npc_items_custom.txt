@@ -16230,12 +16230,12 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_duration"			"120"
+				"ward_duration"			"60"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1000"
+				"radius"				"800"
 			}
 			"17"
 			{

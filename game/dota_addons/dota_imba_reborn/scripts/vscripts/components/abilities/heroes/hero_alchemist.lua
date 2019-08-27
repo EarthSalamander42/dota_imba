@@ -872,7 +872,11 @@ end
 function imba_alchemist_goblins_greed:OnSpellStart()
 	if IsServer() then
 		-- Can't spawn multiple greevils
-		if self.greevil_active then self:EndCooldown() return end
+		if self.greevil_active then
+			self:EndCooldown()
+			DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_active_greevil")
+			return
+		end
 
 		-- Ability properties
 		local caster	= 	self:GetCaster()
@@ -1167,12 +1171,19 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_chemical_rage_handler"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_chemical_rage_aura"] 		= LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_chemical_rage_aura_talent"] =  LUA_MODIFIER_MOTION_NONE,
+	
+	-- The logic is done for this but it's actually unncessary since the vanilla logic's already built into the hero itself...
+	-- ["modifier_imba_chemical_rage_scepter_handler"]	= LUA_MODIFIER_MOTION_NONE
 })
 imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class ({})
 
 function imba_alchemist_chemical_rage:GetAbilityTextureName()
 	return "alchemist_chemical_rage"
 end
+
+-- function imba_alchemist_chemical_rage:GetIntrinsicModifierName()
+	-- return "modifier_imba_chemical_rage_scepter_handler"
+-- end
 
 function imba_alchemist_chemical_rage:IsHiddenWhenStolen()
 	return false
@@ -1467,6 +1478,49 @@ end
 function modifier_imba_chemical_rage_aura_buff:IsHidden()
 	return false
 end
+
+--------------------------------------------
+-- CHEMICAL RAGE SCEPTER HANDLER MODIFIER --
+--------------------------------------------
+
+-- modifier_imba_chemical_rage_scepter_handler = class({})
+
+-- function modifier_imba_chemical_rage_scepter_handler:IsPurgable()	return false end
+
+-- function modifier_imba_chemical_rage_scepter_handler:GetTexture()
+	-- return "item_ultimate_scepter"
+-- end
+
+-- function modifier_imba_chemical_rage_scepter_handler:OnCreated()
+	
+-- end
+
+-- function modifier_imba_chemical_rage_scepter_handler:DeclareFunctions()
+	-- return {
+		-- MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		
+		-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		-- MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	-- }
+-- end
+
+-- function modifier_imba_chemical_rage_scepter_handler:OnAbilityFullyCast(keys)
+	-- if IsServer() and keys.unit == self:GetCaster() and keys.ability:GetDebugName() == "item_ultimate_scepter" and keys.target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		-- self:IncrementStackCount()
+	-- end
+-- end
+
+-- function modifier_imba_chemical_rage_scepter_handler:GetModifierPreAttack_BonusDamage()
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetAbility():GetSpecialValueFor("scepter_bonus_damage") * self:GetStackCount()
+	-- end
+-- end
+
+-- function modifier_imba_chemical_rage_scepter_handler:GetModifierSpellAmplify_Percentage()
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetAbility():GetSpecialValueFor("scepter_spell_amp") * self:GetStackCount()
+	-- end
+-- end
 
 ----------------------------------
 --         MAMMONITE            --

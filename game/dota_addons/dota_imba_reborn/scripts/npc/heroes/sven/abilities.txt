@@ -306,11 +306,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ally_bonus_dmg_pct_scepter"	"80 120 160"
+				"RequiresScepter"				"1"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius_scepter"			"900"
+				"aura_radius_scepter"			"1200"
+				"RequiresScepter"				"1"
 			}
 		}
 	}
@@ -356,7 +358,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proj_speed"				"2000"
+				"proj_speed"				"3000"
 			}
 			"02"
 			{
@@ -376,7 +378,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_multiplier"			"30 45 60"
+				"range_multiplier"			"50 75 100"
 			}
 			"06"
 			{

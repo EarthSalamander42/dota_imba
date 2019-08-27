@@ -849,7 +849,25 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
 								[14] = "special_bonus_imba_ancient_apparition_cold_feet_aoe"
 							}
-							upgraded = true			
+							upgraded = true
+						elseif string.find(text, 'weaver') and hero:GetName() == "npc_dota_hero_weaver" then
+							ability_set = {
+								[0] = "imba_weaver_the_swarm",
+								[1] = "imba_weaver_shukuchi",
+								[2] = "imba_weaver_geminate_attack",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_weaver_time_lapse",
+								[6] = "special_bonus_imba_weaver_shukuchi_damage",
+								[7] = "special_bonus_exp_boost_35",
+								[8] = "special_bonus_mana_break_20",
+								[9] = "special_bonus_strength_14",
+								[10] = "special_bonus_imba_weaver_the_swarm_armor_reduction",
+								[11] = "special_bonus_imba_weaver_the_swarm_destroy_attacks",
+								[12] = "special_bonus_imba_weaver_shukuchi_hasted_speed",
+								[13] = "special_bonus_imba_weaver_geminate_attack_tooltip_attack",
+							}
+							upgraded = true	
 						end
 							
 						for ability = 0, 23 do

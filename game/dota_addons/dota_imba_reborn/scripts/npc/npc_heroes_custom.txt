@@ -1,4 +1,4 @@
-// #base heroes/ancient_apparition/hero.txt
+#base heroes/ancient_apparition/hero.txt
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
@@ -21,7 +21,8 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/tidehunter/hero.txt
-// #base heroes/visage/hero.txt
+#base heroes/visage/hero.txt
+#base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
@@ -623,12 +624,13 @@
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
 		"Ability12"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
-		"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
+		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
 		"Ability17"					"special_bonus_lifesteal_100"
 		
 		// Removed Talents
+		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 	}
 
@@ -652,13 +654,13 @@
 
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
-		"Ability12"					"special_bonus_ember_chains_duration"
-		"Ability13"					"special_bonus_ember_guard_damage"
+		"Ability12"					"special_bonus_ember_guard_damage"
+		"Ability13"					"special_bonus_ember_chains_duration"
 		"Ability14"					"special_bonus_attack_damage_50"
-		"Ability15"					"special_bonus_spell_amplify_20"
+		"Ability15"					"special_bonus_spell_amplify_15"
 		"Ability16"					"special_bonus_ember_permanent_guard"
 		//"Ability17"					"special_bonus_ember_remnant_charges"
-		"Ability17"					"special_bonus_all_stats_20"
+		"Ability17"					"special_bonus_all_stats_15"
 	}
 
 	//=================================================================================================================
@@ -1709,7 +1711,7 @@
 
 		"Ability10"					"special_bonus_cooldown_reduction_25"
 		"Ability11"					"special_bonus_attack_damage_25"
-		"Ability12"					"special_bonus_attack_speed_50"
+		"Ability12"					"special_bonus_attack_speed_40"
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
 		"Ability15"					"special_bonus_imba_sniper_9"
