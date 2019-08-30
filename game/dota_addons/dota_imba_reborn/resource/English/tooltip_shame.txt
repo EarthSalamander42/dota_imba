@@ -67,7 +67,7 @@
 "npc_dota_hero_arc_warden"                                  "Arc Warden"
 "npc_dota_hero_axe"                                        "Axe (IMBA)"
 "npc_dota_hero_bane"                                        "Bane (IMBA)"
-"npc_dota_hero_batrider"                                    "Batrider"
+"npc_dota_hero_batrider"                                    "Batrider (IMBA)"
 "npc_dota_hero_beastmaster"                                "Beastmaster"
 "npc_dota_hero_bloodseeker"                                "Bloodseeker (IMBA)"
 "npc_dota_hero_bounty_hunter"                              "Bounty Hunter (IMBA)"

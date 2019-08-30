@@ -867,7 +867,25 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_imba_weaver_shukuchi_hasted_speed",
 								[13] = "special_bonus_imba_weaver_geminate_attack_tooltip_attack",
 							}
-							upgraded = true	
+							upgraded = true
+						elseif string.find(text, 'batrider') and hero:GetName() == "npc_dota_hero_batrider" then
+							ability_set = {
+								[0] = "imba_batrider_sticky_napalm",
+								[1] = "imba_batrider_flamebreak",
+								[2] = "imba_batrider_firefly",
+								[3] = "imba_batrider_methane_boost",
+								[4] = "generic_hidden",
+								[5] = "imba_batrider_flaming_lasso",
+								[6] = "special_bonus_spell_amplify_6",
+								[7] = "special_bonus_armor_5",
+								[8] = "special_bonus_unique_imba_batrider_methane_boost_distance",
+								[9] = "special_bonus_hp_400",
+								[10] = "special_bonus_cooldown_reduction_15",
+								[11] = "special_bonus_movement_speed_50",
+								[12] = "special_bonus_unique_imba_batrider_firefly_truesight",
+								[13] = "special_bonus_unique_imba_batrider_flamebreak_cooldown",
+							}
+							upgraded = true						
 						end
 							
 						for ability = 0, 23 do

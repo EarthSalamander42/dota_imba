@@ -829,6 +829,14 @@ imba_ember_spirit_activate_fire_remnant = imba_ember_spirit_activate_fire_remnan
 
 function imba_ember_spirit_activate_fire_remnant:GetAssociatedSecondaryAbilities() return "imba_ember_spirit_fire_remnant" end
 
+function imba_ember_spirit_activate_fire_remnant:GetManaCost(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetManaCost(self, level)
+	else
+		return self:GetSpecialValueFor("scepter_mana_cost")
+	end
+end
+
 function imba_ember_spirit_activate_fire_remnant:OnUpgrade()
 	if IsServer() then
 		if self:GetLevel() == 1 then

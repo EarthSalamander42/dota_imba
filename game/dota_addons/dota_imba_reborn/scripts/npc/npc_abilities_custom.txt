@@ -7,6 +7,7 @@
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
 #base heroes/bane/abilities.txt
+#base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/bristleback/abilities.txt
 #base heroes/chen/abilities.txt
@@ -10216,7 +10217,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"absolute_speed"			"650"
+				"absolute_speed"			"700"
 			}
 			"04"
 			{
@@ -37458,7 +37459,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11"
+		"AbilityCooldown"				"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -39828,7 +39829,7 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"		"ember_spirit_activate_fire_remnant"
 		"ScriptFile"				"components/abilities/heroes/hero_ember.lua"
-
+		"HasScepterUpgrade"         "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -39885,6 +39886,12 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
+				"RequiresScepter"			"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_mana_cost"			"25"
 				"RequiresScepter"			"1"
 			}
 		}
@@ -39964,7 +39971,8 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
-			}
+				"RequiresScepter"			"1"
+			}	
 		}
 	}
 

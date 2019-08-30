@@ -18,6 +18,8 @@ LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw", "components/abili
 LinkLuaModifier("modifier_imba_tidehunter_ravage_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_ravage_creeping_wave", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
 imba_tidehunter_gush										= class({})
 modifier_imba_tidehunter_gush								= class({})
 modifier_imba_tidehunter_gush_handler						= class({})

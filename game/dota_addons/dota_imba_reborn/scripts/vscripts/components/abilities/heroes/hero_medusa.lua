@@ -1,5 +1,7 @@
 -- Creator:
 --	   AltiV, April 29th, 2019
+-- Primary Idea Giver:
+--     Acalia
 
 LinkLuaModifier("modifier_imba_medusa_split_shot", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_medusa_serpent_shot", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
