@@ -590,7 +590,7 @@ function modifier_imba_batrider_firefly:GetModifierMoveSpeedBonus_Percentage()
 	if self:GetStackCount() == 1 then
 		return self.movement_speed
 	elseif self:GetStackCount() == 0 then
-		return self.movement_speed * quiet_flight_multi
+		return self.movement_speed * self.quiet_flight_multi
 	end
 end
 

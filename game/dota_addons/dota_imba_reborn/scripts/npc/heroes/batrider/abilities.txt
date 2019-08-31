@@ -237,7 +237,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"quiet_flight_multi"	"2.25"
+				"quiet_flight_multi"	"2.5"
 			}
 		}
 	}
