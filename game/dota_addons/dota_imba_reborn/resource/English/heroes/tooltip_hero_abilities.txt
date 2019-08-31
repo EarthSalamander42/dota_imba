@@ -374,7 +374,7 @@
 "DOTA_Tooltip_ability_imba_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
 
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order"               "Natural Order"
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit."
+"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Lore"              "As it was at the beginning, Elder Titan makes it so again."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Note0"             "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"

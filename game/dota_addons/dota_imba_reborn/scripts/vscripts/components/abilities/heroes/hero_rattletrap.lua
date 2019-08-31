@@ -837,8 +837,11 @@ function imba_rattletrap_rocket_flare:GetAOERadius()
 end
 
 function imba_rattletrap_rocket_flare:OnSpellStart()
-	if not IsServer() then return end
-	
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+
 	-- This temporarily deletes the rocket model from Clockwerk
 	if self:GetCaster():GetName() == "npc_dota_hero_rattletrap" then	
 		self:GetCaster():EmitSound("rattletrap_ratt_ability_flare_0"..RandomInt(1, 7))
@@ -890,8 +893,11 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 				ExtraData = {rocket_dummy = rocket_dummy:entindex(), rocket_particle = rocket_particle, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y, z = self:GetCaster():GetAbsOrigin().z}
 			}
 		
-		self:GetCaster():EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")
-		rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
+		self:GetCaster():EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")		
+		-- Arbitrary band-aid fix for lingering sounds when cast too close to caster
+		if (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D() > 200 then
+			rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
+		end		
 		
 		ProjectileManager:CreateTrackingProjectile(rocket)
 		
@@ -959,14 +965,10 @@ end
 
 -- Make the travel sound follow the rocket
 function imba_rattletrap_rocket_flare:OnProjectileThink_ExtraData(vLocation, ExtraData)
-	if not IsServer() then return end
-	
 	EntIndexToHScript(ExtraData.rocket_dummy):SetAbsOrigin(vLocation)
 end
 
 function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
-	if not IsServer() then return end
-	
 	ParticleManager:DestroyParticle(ExtraData.rocket_particle, false)
 	ParticleManager:ReleaseParticleIndex(ExtraData.rocket_particle)
 	

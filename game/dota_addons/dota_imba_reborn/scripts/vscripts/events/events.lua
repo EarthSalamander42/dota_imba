@@ -711,6 +711,11 @@ function GameMode:OnPlayerChat(keys)
 			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 		end
 		
+		if str == "-memory" then
+			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			-- print(package.loaded) -- This lags everything to absolute death
+		end
+		
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			
@@ -909,8 +914,6 @@ function GameMode:OnPlayerChat(keys)
 						end
 					end
 				end
-			elseif str == "-dark_seer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
 			elseif str == "-phantom_lancer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
@@ -975,9 +978,6 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
-			elseif str == "-memory" then
-				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
-				-- print(package.loaded) -- This lags everything to absolute death
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
 			

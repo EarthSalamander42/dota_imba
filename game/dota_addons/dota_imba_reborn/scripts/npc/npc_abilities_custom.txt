@@ -2073,7 +2073,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"2000"
+				"maximum_distance"		"400"
 			}
 		}
 	}
@@ -2169,12 +2169,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"16 20 24 28"
+				"damage"				"16 32 48 64"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_9"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_pct_as_damage"		"40 60 80 100"
+				"str_pct_as_damage"		"30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -2191,7 +2192,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"				
+				"aura_radius"			"1200"				
 			}
 			"06"
 			{
@@ -2278,6 +2279,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction_scepter"	"40"
 				"CalculateSpellDamageTooltip"	"0"
+				"RequiresScepter"			"1"
 			}
 			"06"
 			{
@@ -2500,7 +2502,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"value"						"100"
 			}
 		}
 	}
@@ -2529,6 +2531,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// +X Retaliate Damage
+	//=================================================================================================================
+	"special_bonus_imba_centaur_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_centaur_return"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"80"
 			}
 		}
 	}
@@ -4956,8 +4986,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"			"ACT_INVALID"
 
 		"AbilityCastRange"				"350"
@@ -18970,16 +19000,19 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_regen"				"35"
+				"RequiresScepter"			"1"
 			}
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_armor"				"12"
+				"RequiresScepter"			"1"
 			}
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_status_resistance"			"40"
+				"RequiresScepter"			"1"
 			}
             "19"
             {
@@ -19050,25 +19083,25 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.3 1.6 1.9 2.2"
+				"stun_duration"			"1"
 			}
 
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2"
+				"slow_duration"			"3 4 5 6"
 			}
 
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"-20"
+				"ms_slow_pct"			"-20 -25 -30 -35"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_slow"				"-20"
+				"as_slow"				"-20 -25 -30 -35"
 			}
 
 			"07"
@@ -19099,11 +19132,13 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"scepter_puddle_duration"		"25"
+				"RequiresScepter"	"1"
 			}
 			"12"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"scepter_puddle_radius"		"550"
+				"RequiresScepter"	"1"
 			}			
 		}
 	}
@@ -19173,6 +19208,52 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Ability: Slardar Bash (7.20 Version)
+	//=================================================================================================================
+	"imba_slardar_bash_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_slardar"
+		"AbilityTextureName"			"slardar_bash"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilitySound"					"Hero_Slardar.Bash"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"25"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"75 125 175 225"
+				//"LinkedSpecialBonus"	"special_bonus_unique_slardar_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_slardar_13"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1 1.1 1.2 1.3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_count"			"3"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}	
 
 	//=================================================================================================================
 	// Slardar's Corrosive Haze
@@ -19653,6 +19734,31 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_slardar_13"	// +X Bash Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_slardar_bash_720"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"75"
+			}
+		}
+	}	
 	
 	//=================================================================================================================
 	// Timbersaw's Dendrophobia
@@ -32138,12 +32244,14 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_dagger_count"	"3"
+				"scepter_dagger_count"	"1"
+				"RequiresScepter"		"1"
 			}
 			"09"
 			{
 				"var_type"				    "FIELD_INTEGER"
 				"scepter_knives_interval"	"0.3"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
@@ -32325,6 +32433,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_cooldown"			"12"
+				"RequiresScepter"			"1"
 			}			
 		}
 	}

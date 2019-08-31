@@ -1,11 +1,11 @@
 // Phantom Assassin's Stifling Dagger
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger"						"Stifling Dagger"
-"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"            "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Description}\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Silent As The Grave:</font> Briefly silences enemies, interrupting their spellcasting."
+"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"            "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Description}\n<font color='#FF7800'>Silent As The Grave:</font> Briefly silences enemies, interrupting their spellcasting."
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Lore"                   "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_move_slow"              "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_move_slow}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"          "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_duration}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"           "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_base_damage}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 3 additional daggers after the first one; these hit random enemies in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
+"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_cast_range"             "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_tooltip_range}"
 
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow"									"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger}"
@@ -25,7 +25,7 @@
 
 // Phantom Assassin's Blur
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur"						"#{DOTA_Tooltip_ability_phantom_assassin_blur}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack."
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack."
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_Lore"					"#{DOTA_Tooltip_ability_phantom_assassin_blur_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_evasion"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_bonus_evasion}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_radius"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_radius}"
