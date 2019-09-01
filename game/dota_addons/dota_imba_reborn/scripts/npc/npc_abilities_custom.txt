@@ -27650,7 +27650,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"725"
+		"AbilityCastRange"				"775"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"40 34 28 22"
 		"AbilityManaCost"				"75"
@@ -27868,7 +27868,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_pcnt_increase"			"15"
+				"as_pcnt_increase"			"7"
 			}
 		}
 	}
@@ -32176,7 +32176,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -32244,13 +32244,13 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_dagger_count"	"1"
+				"scepter_dagger_count"	"0"
 				"RequiresScepter"		"1"
 			}
 			"09"
 			{
 				"var_type"				    "FIELD_INTEGER"
-				"scepter_knives_interval"	"0.3"
+				"scepter_knives_interval"	"0"
 				"RequiresScepter"			"1"
 			}
 			"10"
@@ -32398,6 +32398,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"evasion"					"20 30 40 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_10"
 			}
 			"02"
 			{
@@ -32470,13 +32471,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"230 355 480"
+				"crit_bonus"				"200 325 450"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"17"
+				"crit_chance"				"15"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_9"
 			}
 			"03"
 			{
@@ -32555,7 +32557,7 @@
 		}
 	}
 
-	"special_bonus_imba_phantom_assassin_3"	// +1 Stifling Dagger bonus dagger (like aghs)
+	"special_bonus_imba_phantom_assassin_3"	// +X Stifling Dagger bonus dagger (like aghs)
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32575,7 +32577,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"value"			"2"
 			}
 		}
 	}
@@ -32705,6 +32707,56 @@
 		}
 	}
 	
+	"special_bonus_imba_phantom_assassin_9"	// +X% Coup de Grace chance
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_phantom_assassin_coup_de_grace"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"10"
+			}
+		}
+	}
+	
+	
+	"special_bonus_imba_phantom_assassin_10"	// +X% Blur Evasion
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_phantom_assassin_blur"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"25"
+			}
+		}
+	}		
 
 	//=================================================================================================================
 	// Phantom Lancer's Spirit Lance

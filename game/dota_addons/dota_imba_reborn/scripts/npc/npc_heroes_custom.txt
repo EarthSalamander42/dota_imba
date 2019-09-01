@@ -1384,14 +1384,17 @@
 		"Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
 		"Ability12"					"special_bonus_lifesteal_15"
 		"Ability13"					"special_bonus_cleave_25"
-		"Ability14"					"special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
-		"Ability15"					"special_bonus_imba_phantom_assassin_3" // "+1 Stifling Dagger thrown"
-		"Ability16"					"special_bonus_imba_phantom_assassin_7" // "+8s Coup de Grace's Die Hard duration"
-		"Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a 30% chance to evade any damage"
+		"Ability14"					"special_bonus_corruption_4"
+		"Ability15"					"special_bonus_imba_phantom_assassin_10" // "+X% Blur Evasion"
+		"Ability16"					"special_bonus_imba_phantom_assassin_9" // +X% Coup de Grace chance
+		"Ability17"					"special_bonus_imba_phantom_assassin_3" // "+X Stifling Dagger thrown"
 		
 		// Removed Talents
+		// "Ability13"				""special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
 		// "Ability13"				"special_bonus_imba_phantom_assassin_4" // "+5% Phantom Strike bonus crit chance"
 		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
+		// "Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a X% chance to evade any damage"
+		//"Ability17"					"special_bonus_imba_phantom_assassin_7" // "+Xs Coup de Grace's Die Hard duration"
 		
 	}
 

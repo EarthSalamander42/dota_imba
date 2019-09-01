@@ -5,8 +5,8 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_move_slow"              "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_move_slow}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"          "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_duration}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"           "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_base_damage}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_cast_range"             "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_tooltip_range}"
+//"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow"									"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger}"
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow_Description"						"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger_Description}"
@@ -63,9 +63,12 @@
 // Phantom Assassin's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_1"            "+35 Stifling Dagger damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_2"            "+30 Phantom Strike bonus attack speed"
-"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3"            "+1 Stifling Dagger thrown"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3"            "Triple Strike Stifling Dagger"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3_Description"            "Launches a two extra Stifling Daggers towards random visible enemies within the cast range."
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_4"            "+5% Phantom Strike bonus crit chance"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_5"            "+100% Coup de Grace crit damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_6"            "+2 Phantom Strike attacks"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_7"            "+8s Coup de Grace's Die Hard duration"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_8"            "Blur now grants a 25% chance to evade any damage"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_9"			"+10% Coup de Grace chance"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_10"			"+25% Blur Evasion"
