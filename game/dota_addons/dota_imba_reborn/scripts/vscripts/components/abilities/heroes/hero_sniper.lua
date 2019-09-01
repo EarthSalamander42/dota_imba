@@ -676,7 +676,7 @@ function modifier_imba_headshot_attacks:OnAttackStart(keys)
 			end
 
 			-- If the target is a buidling, do nothing
-			if target and target:IsBuilding() then
+			if target and target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetParent():GetTeamNumber() then
 				return nil
 			end
 			
@@ -733,7 +733,7 @@ function modifier_imba_headshot_attacks:OnAttack(keys)
 		local target = keys.target
 
 		-- Only apply on caster's attacks
-		if attacker == self.caster then
+		if attacker == self.caster and not target:IsBuilding() and not target:IsOther() and target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 
 			-- Increment stack count as soon as the attack fires
 			if self.increment_stacks then
@@ -770,7 +770,7 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 		local target = keys.target
 
 		-- Only apply on caster's attacks
-		if attacker == self.caster and not keys.no_attack_cooldown then
+		if attacker == self.caster and not keys.no_attack_cooldown and not target:IsBuilding() and not target:IsOther() and target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			self.attacks = self.attacks + 1
 			
 			-- If target is magic immune, we won't get any headshot or perfectshot, because fuck logic

@@ -34,25 +34,11 @@ modifier_imba_weaver_time_lapse				= class({})
 -- THE SWARM --
 ---------------
 
--- TODO: Make projectile properly destroy itself, but also bypass units that already have a swarm unit on them
 function imba_weaver_the_swarm:OnSpellStart()
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 	end
-	
-	-- "API Additions - Global (Server): * CreateIllusions( hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace ) Note: See script_help2 for supported modifier keys"
-	-- CreateIllusions(self:GetCaster(), self:GetCaster(), 
-	-- {
-		-- outgoing_damage = 0,
-		-- incoming_damage	= 0,
-		-- bounty_base		= 100,
-		-- bounty_growth	= 0,
-		-- outgoing_damage_structure	= 0,
-		-- outgoing_damage_roshan		= 0,
-		-- duration		= 5
-	-- }
-	-- , 2, self:GetCaster():GetHullRadius(), true, true)
 	
 	-- Rationale for how this is programmed:
 		-- The Swarm latches onto the first enemy it hits which then destroys the linear projectile, but ONLY if the target doesn't already have a latched beetle

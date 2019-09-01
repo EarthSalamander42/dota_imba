@@ -1,5 +1,7 @@
 -- Creator:
 --	   AltiV, August 27th, 2019
+-- Primary Idea Giver:
+--     Kinkykids
 
 LinkLuaModifier("modifier_imba_batrider_sticky_napalm_handler", "components/abilities/heroes/hero_batrider", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_batrider_sticky_napalm", "components/abilities/heroes/hero_batrider", LUA_MODIFIER_MOTION_NONE)
@@ -384,6 +386,10 @@ function modifier_imba_batrider_flamebreak_damage:OnIntervalThink()
 	ApplyDamage(self.damage_table)
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_per_second, nil)
+		
+	if self:GetParent():IsRealHero() and not self:GetParent():IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_batrider" and RollPercentage(50) then		
+		self:GetCaster():EmitSound("batrider_bat_ability_firefly_0"..RandomInt(1, 6))
+	end
 end
 
 ---------------------------
@@ -460,6 +466,20 @@ function imba_batrider_firefly:OnSpellStart()
 	end
 
 	self:GetCaster():EmitSound("Hero_Batrider.Firefly.Cast")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_batrider" then
+		if not self.responses then
+			self.responses = {
+				"batrider_bat_ability_firefly_01",
+				"batrider_bat_ability_firefly_04",
+				"batrider_bat_ability_firefly_07",
+				"batrider_bat_ability_firefly_08",
+				"batrider_bat_ability_firefly_09",
+			}
+		end
+		
+		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+	end
 	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_firefly", {duration = self:GetTalentSpecialValueFor("duration")})
 end
@@ -547,6 +567,18 @@ function modifier_imba_batrider_firefly:OnIntervalThink()
 					
 					ApplyDamage(self.damage_table)
 					self.damaged_enemies[enemy] = true
+					
+					if enemy:IsRealHero() and not enemy:IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_batrider" and RollPercentage(50) then
+						if not self.kill_responses then
+							self.responses = {
+								"batrider_bat_ability_firefly_02",
+								"batrider_bat_ability_firefly_05",
+								"batrider_bat_ability_firefly_06"
+							}
+						end
+						
+						self:GetCaster():EmitSound(self.kill_responses[RandomInt(1, #self.kill_responses)])
+					end
 				end
 			end
 		end
@@ -684,6 +716,16 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 	if target:TriggerSpellAbsorb(self) then return end
 	
 	self:GetCaster():EmitSound("Hero_Batrider.FlamingLasso.Cast")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_batrider" then
+		local random_int = RandomInt(1, 11)
+		
+		if random_int <= 9 then
+			self:GetCaster():EmitSound("batrider_bat_ability_lasso_0"..random_int)
+		else
+			self:GetCaster():EmitSound("batrider_bat_ability_lasso_"..random_int)
+		end
+	end	
 	
 	-- "Can be cast on Roshan, but he is neither disabled nor dragged (Upgradable by Aghanim's Scepter. nor damaged). Batrider is still disarmed."
 	if not target:IsRoshan() then

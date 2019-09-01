@@ -755,7 +755,10 @@ end
 
 function imba_life_stealer_infest:OnSpellStart()
 	local target = self:GetCursorTarget()
-
+	
+	-- Some really messy stuff happening if this line isn't in...
+	if target:IsInvulnerable() or target:IsOutOfGame() then return end
+	
 	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_life_stealer" and RollPercentage(75) then
@@ -805,7 +808,7 @@ function imba_life_stealer_infest:OnSpellStart()
 	
 	local infest_effect_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_infest_effect", {})
 	
-	if infest_modifier then
+	if infest_modifier and infest_effect_modifier then
 		infest_modifier.infest_effect_modifier	= infest_effect_modifier
 		infest_effect_modifier.infest_modifier	= infest_modifier
 	end

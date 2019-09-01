@@ -410,7 +410,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"2 3 4"
+				"ward_hp_tooltip"		"2 2 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 			}
 			"04"
@@ -431,7 +431,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp"		"2 3 4"
+				"ward_hp"		"2 2 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 			}
 			

@@ -681,7 +681,7 @@ function GameMode:OrderFilter( keys )
 				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_devour_roshan")
 				return false
 			end
-		elseif ability:GetAbilityName() == "life_stealer_infest" then
+		elseif ability:GetAbilityName() == "life_stealer_infest" or ability:GetAbilityName() == "imba_life_stealer_infest" then
 			if target:GetUnitName() == "npc_dota_mutation_golem" then
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
 				return false
@@ -965,6 +965,15 @@ function GameMode:OrderFilter( keys )
 		-- If the above checks failed, then it shouldn't be a valid order
 		DisplayError(unit:GetPlayerID(), "Cannot Act")
 		return false
+	end
+	
+	-----------------------------------------------------------
+	-- Gyrocopter Vanilla Flak Cannon Stack Refresh Override --
+	-----------------------------------------------------------
+	if EntIndexToHScript(keys.entindex_ability) and EntIndexToHScript(keys.entindex_ability).GetName and EntIndexToHScript(keys.entindex_ability):GetName() == "gyrocopter_flak_cannon" and unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit) then
+		-- Cannot directly manipulate modifier stack count as there's some hard-coded value that makes the modifier destroy itself after the original max attacks are reached
+		unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit):Destroy()
+		EntIndexToHScript(keys.entindex_ability):OnSpellStart()
 	end
 
 	return true

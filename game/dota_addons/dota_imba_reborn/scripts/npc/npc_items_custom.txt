@@ -9724,7 +9724,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"20"
+				"damage_bonus"					"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -9735,7 +9735,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"200"
+				"berserk_attack_speed"			"140"
 			}
 			"04"
 			{
@@ -9745,7 +9745,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_armor_reduction"		"6"
+				"berserk_armor_reduction"		"8"
 			}
 			"06"
 			{
@@ -16245,7 +16245,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hits_to_kill"			"3"
+				"hits_to_kill"			"2"
 			}
 			"19"
 			{

@@ -35516,7 +35516,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"armor_reduction"		"3 4 5 6"
+				"armor_reduction"		"4 5 6 7"
+				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_9"
 			}
 			"05"
 			{
@@ -35526,7 +35527,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_aoe"			"500"
+				"vision_aoe"			"300"
 			}
 			"07"
 			{
@@ -35554,6 +35555,7 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"FightRecapLevel"					"1"
 		"AbilityTextureName"    	 		"vengefulspirit_command_aura"
+		"HasScepterUpgrade"					"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -35564,7 +35566,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900"
+		"AbilityCastRange"					"1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -35578,12 +35580,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"3 7 11 15"
+				"aura_radius"				"1200"
 			}
 			"03"
 			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"100"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"150"
+			}
+			
+			"05"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"1200"
+				"num_illusions_on_death"	"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_upgrade_level"	"25"
+			}				
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_illusions_on_death_upgrade"	"2"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"3 7 11 15"
 			}
 		}
 	}
@@ -35615,7 +35643,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"5"
+				"damage_pct"				"4"
 			}
 
 			"03"
@@ -35672,8 +35700,8 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"45"
-
+		"AbilityCooldown"					"0"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"					"100 150 200"
@@ -35700,7 +35728,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"swapback_delay"					"2.5"
+				"swapback_delay"					"2.25"
 				"LinkedSpecialBonus"				"special_bonus_imba_vengefulspirit_2"
 			}
 			"03"
@@ -35728,6 +35756,22 @@
 				"var_type"							"FIELD_INTEGER"
 				"tree_radius"						"300"
 			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_charges"					"2"
+			}		
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"charge_restore_time"			"80 70 60"
+			}		
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"charge_restore_time_scepter"	"10"
+				"RequiresScepter"		"1"
+			}			
 		}
 	}
 
@@ -35761,7 +35805,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengeful Spirit Talent 1 (Level 10): Additional Magic Missile damage
+	// +X Magic Missile Damage
 	//=================================================================================================================
 	"special_bonus_imba_vengefulspirit_1"
 	{
@@ -35783,7 +35827,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
+				"value"						"400"
 			}
 		}
 	}
@@ -35811,7 +35855,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"-1.0"
+				"value"						"-1.25"
 			}
 		}
 	}
@@ -35844,7 +35888,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"5"
+				"spell_power"				"0"
 			}
 		}
 	}
@@ -36004,6 +36048,90 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// -(-X) Wave of Terror Armor
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_wave_of_terror"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// -Xs Wave of Terror Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_wave_of_terror"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// -Xs Magic Missile Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_11"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_magic_missile"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Venomancer's Venomous Gale

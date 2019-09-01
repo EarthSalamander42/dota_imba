@@ -201,6 +201,10 @@ function imba_vengefulspirit_magic_missile:GetAOERadius()
 	return self:GetTalentSpecialValueFor("split_radius")
 end
 
+function imba_vengefulspirit_magic_missile:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_11")
+end
+
 function imba_vengefulspirit_magic_missile:CastFilterResultTarget( target )
 	if IsServer() then
 
@@ -407,6 +411,10 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_wave_of_terror", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
+function imba_vengefulspirit_wave_of_terror:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_10")
+end
+
 function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 	if IsServer() then	
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
@@ -503,7 +511,7 @@ function modifier_imba_wave_of_terror:RemoveOnDeath() return true end
 
 function modifier_imba_wave_of_terror:OnCreated( params )
 	local ability = self:GetAbility()
-	self.armor_reduction = ability:GetSpecialValueFor("armor_reduction")
+	self.armor_reduction = ability:GetTalentSpecialValueFor("armor_reduction")
 	self.atk_reduction_pct = ability:GetSpecialValueFor("atk_reduction_pct")
 end
 
@@ -555,6 +563,37 @@ function imba_vengefulspirit_command_aura:GetIntrinsicModifierName()
 	return "modifier_imba_command_aura_positive_aura"
 end
 
+function imba_vengefulspirit_command_aura:OnOwnerDied()
+	if self:IsTrained() and not self:GetCaster():IsIllusion() then
+		local num_illusions_on_death	 = self:GetSpecialValueFor("num_illusions_on_death")
+		
+		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
+			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
+		end
+	
+		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
+		{
+			outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
+			incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
+			bounty_base					= self:GetCaster():GetLevel() * 2, -- I THINK that's what it is?...
+			bounty_growth				= nil,
+			outgoing_damage_structure	= nil,
+			outgoing_damage_roshan		= nil,
+			duration					= nil
+		}
+		, num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
+	
+		for _, illusion in pairs(super_illusions) do
+			illusion:SetHealth(illusion:GetMaxHealth())
+			illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+			-- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
+			FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
+			
+			PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
+		end
+	end
+end
+
 -- Positive Aura Effects
 -------------------------------------------
 modifier_imba_command_aura_positive = class({})
@@ -565,6 +604,11 @@ function modifier_imba_command_aura_positive:IsPurgeException() return false end
 function modifier_imba_command_aura_positive:IsStunDebuff() return false end
 function modifier_imba_command_aura_positive:RemoveOnDeath() return false end
 -------------------------------------------
+
+function modifier_imba_command_aura_positive:OnCreated()
+	self.spell_power		= self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
+	self.bonus_damage_pct	= self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+end
 
 function modifier_imba_command_aura_positive:DeclareFunctions()
 	local decFuncs =
@@ -577,7 +621,7 @@ function modifier_imba_command_aura_positive:DeclareFunctions()
 end
 
 function modifier_imba_command_aura_positive:GetModifierSpellAmplify_Percentage()
-	return self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
+	return self.spell_power
 end
 
 function modifier_imba_command_aura_positive:GetModifierBaseDamageOutgoing_Percentage()
@@ -585,7 +629,7 @@ function modifier_imba_command_aura_positive:GetModifierBaseDamageOutgoing_Perce
 		if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
 			return 0
 		else
-			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+			return self.bonus_damage_pct
 		end
 	end
 end
@@ -593,7 +637,7 @@ end
 function modifier_imba_command_aura_positive:GetModifierDamageOutgoing_Percentage()
 	if self:GetCaster() then
 		if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
-			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+			return self.bonus_damage_pct
 		else
 			return 0
 		end
@@ -669,6 +713,11 @@ function modifier_imba_command_aura_negative:IsStunDebuff() return false end
 function modifier_imba_command_aura_negative:RemoveOnDeath() return false end
 -------------------------------------------
 
+function modifier_imba_command_aura_negative:OnCreated()
+	self.spell_power		= (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
+	self.bonus_damage_pct	= (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+end
+
 function modifier_imba_command_aura_negative:DeclareFunctions()
 	local decFuncs =
 		{
@@ -680,20 +729,20 @@ function modifier_imba_command_aura_negative:DeclareFunctions()
 end
 
 function modifier_imba_command_aura_negative:GetModifierSpellAmplify_Percentage()
-	return (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
+	return self.spell_power
 end
 
 function modifier_imba_command_aura_negative:GetModifierBaseDamageOutgoing_Percentage()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
 		return 0
 	else
-		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+		return self.bonus_damage_pct
 	end
 end
 
 function modifier_imba_command_aura_negative:GetModifierDamageOutgoing_Percentage()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
-		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+		return self.bonus_damage_pct
 	else
 		return 0
 	end
@@ -709,6 +758,10 @@ function modifier_imba_command_aura_negative_aura:IsPurgeException() return fals
 function modifier_imba_command_aura_negative_aura:IsStunDebuff() return false end
 function modifier_imba_command_aura_negative_aura:RemoveOnDeath() return false end
 -------------------------------------------
+
+function modifier_imba_command_aura_negative_aura:OnCreated()
+	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+end
 
 function modifier_imba_command_aura_negative_aura:DeclareFunctions()
 	local decFuns =
@@ -731,7 +784,7 @@ function modifier_imba_command_aura_negative_aura:GetModifierAura()
 end
 
 function modifier_imba_command_aura_negative_aura:GetAuraRadius()
-	return self:GetAbility():GetSpecialValueFor("aura_radius")
+	return self.aura_radius
 end
 
 function modifier_imba_command_aura_negative_aura:GetAuraSearchFlags()
@@ -750,6 +803,8 @@ end
 --            NETHER SWAP
 -------------------------------------------
 
+LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_nether_swap", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 imba_vengefulspirit_nether_swap = class({})
@@ -762,6 +817,10 @@ function imba_vengefulspirit_nether_swap:GetAbilityTextureName()
 	return "vengefulspirit_nether_swap"
 end
 -------------------------------------------
+
+function imba_vengefulspirit_nether_swap:GetIntrinsicModifierName()
+	return "modifier_generic_charges"
+end
 
 function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 	if IsServer() then
@@ -787,8 +846,11 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 end
 
 function imba_vengefulspirit_nether_swap:GetCooldown( nLevel )
-	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
-	return self.BaseClass.GetCooldown( self, nLevel )
+	-- if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
+	-- return self.BaseClass.GetCooldown( self, nLevel )
+	if IsServer() then
+		return 0.25 -- Literally just for some WTF-check logic in modifier_generic_charges.lua
+	end
 end
 
 function imba_vengefulspirit_nether_swap:CastTalentMeteor(target)
@@ -941,48 +1003,49 @@ function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 	EmitSoundOnLocationWithCaster(location, sound_hit, caster)
 end
 
-function imba_vengefulspirit_nether_swap:OnOwnerDied()
-	local caster = self:GetCaster()
-	if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
-		local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
-		super_illusion:AddNewModifier(caster, self, "modifier_illusion", {outgoing_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_dmg_scepter")), incoming_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_amp_scepter"))})
-		super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
-		super_illusion:SetRespawnsDisabled(true)
-		super_illusion:MakeIllusion()
+-- Mechanic moved from Nether Swap Aghanim's to Vengeance Aura Standard
+-- function imba_vengefulspirit_nether_swap:OnOwnerDied()
+	-- local caster = self:GetCaster()
+	-- if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
+		-- local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
+		-- super_illusion:AddNewModifier(caster, self, "modifier_illusion", {outgoing_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_dmg_scepter")), incoming_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_amp_scepter"))})
+		-- super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+		-- super_illusion:SetRespawnsDisabled(true)
+		-- super_illusion:MakeIllusion()
 
-		super_illusion:SetControllableByPlayer(caster:GetPlayerID(), true)
-		super_illusion:SetPlayerID(caster:GetPlayerID())
+		-- super_illusion:SetControllableByPlayer(caster:GetPlayerID(), true)
+		-- super_illusion:SetPlayerID(caster:GetPlayerID())
 
-		local parent_level = caster:GetLevel()
-		for i=1, parent_level-1 do
-			super_illusion:HeroLevelUp(false)
-		end
+		-- local parent_level = caster:GetLevel()
+		-- for i=1, parent_level-1 do
+			-- super_illusion:HeroLevelUp(false)
+		-- end
 
-		-- Set the skill points to 0 and learn the skills of the caster
-		super_illusion:SetAbilityPoints(0)
-		for abilitySlot=0,15 do
-			local ability = caster:GetAbilityByIndex(abilitySlot)
-			if ability ~= nil then
-				local abilityLevel = ability:GetLevel()
-				local abilityName = ability:GetAbilityName()
-				local illusionAbility = super_illusion:FindAbilityByName(abilityName)
-				if illusionAbility then
-					illusionAbility:SetLevel(abilityLevel)
-				end
-			end
-		end
+		-- -- Set the skill points to 0 and learn the skills of the caster
+		-- super_illusion:SetAbilityPoints(0)
+		-- for abilitySlot=0,15 do
+			-- local ability = caster:GetAbilityByIndex(abilitySlot)
+			-- if ability ~= nil then
+				-- local abilityLevel = ability:GetLevel()
+				-- local abilityName = ability:GetAbilityName()
+				-- local illusionAbility = super_illusion:FindAbilityByName(abilityName)
+				-- if illusionAbility then
+					-- illusionAbility:SetLevel(abilityLevel)
+				-- end
+			-- end
+		-- end
 
-		-- Recreate the items of the caster
-		for itemSlot=0,5 do
-			local item = caster:GetItemInSlot(itemSlot)
-			if item ~= nil then
-				local itemName = item:GetName()
-				local newItem = CreateItem(itemName, super_illusion, super_illusion)
-				super_illusion:AddItem(newItem)
-			end
-		end
-	end
-end
+		-- -- Recreate the items of the caster
+		-- for itemSlot=0,5 do
+			-- local item = caster:GetItemInSlot(itemSlot)
+			-- if item ~= nil then
+				-- local itemName = item:GetName()
+				-- local newItem = CreateItem(itemName, super_illusion, super_illusion)
+				-- super_illusion:AddItem(newItem)
+			-- end
+		-- end
+	-- end
+-- end
 -------------------------------------------
 modifier_imba_nether_swap = class({})
 function modifier_imba_nether_swap:IsDebuff() return false end
@@ -1090,6 +1153,9 @@ end
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_3", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_8", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_9", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_10", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_11", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_vengefulspirit_3 = class({})
 function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() 		return true end
@@ -1100,6 +1166,37 @@ modifier_special_bonus_imba_vengefulspirit_8 = class({})
 function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() 		return true end
 function modifier_special_bonus_imba_vengefulspirit_8:IsPurgable() 		return false end
 function modifier_special_bonus_imba_vengefulspirit_8:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_vengefulspirit_9 = class({})
+function modifier_special_bonus_imba_vengefulspirit_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_vengefulspirit_9:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_vengefulspirit_10 = class({})
+function modifier_special_bonus_imba_vengefulspirit_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_10:IsPurgable() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_10:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_vengefulspirit_11 = class({})
+function modifier_special_bonus_imba_vengefulspirit_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_11:IsPurgable() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_11:RemoveOnDeath() 	return false end
+
+function imba_vengefulspirit_magic_missile:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_11") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_11"), "modifier_special_bonus_imba_vengefulspirit_11", {})
+	end
+end
+
+function imba_vengefulspirit_wave_of_terror:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_9"), "modifier_special_bonus_imba_vengefulspirit_9", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_10"), "modifier_special_bonus_imba_vengefulspirit_10", {})
+	end
+end
 
 function imba_vengefulspirit_command_aura:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_3") then
