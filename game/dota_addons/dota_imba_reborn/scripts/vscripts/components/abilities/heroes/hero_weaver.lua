@@ -675,17 +675,6 @@ function imba_weaver_time_lapse:OnSpellStart()
 			self:GetCaster():SetHealth(math.max(self.intrinsic_modifier.instances_health[1], 1))
 			self:GetCaster():SetMana(self.intrinsic_modifier.instances_mana[1])
 			FindClearSpaceForUnit(self:GetCaster(), self.intrinsic_modifier.instances_position[1], false)
-			
-			-- IMBAfication: It's Rewind Time
-			if not self.abilities_to_refresh then
-				self.abilities_to_refresh = {"imba_weaver_the_swarm", "imba_weaver_shukuchi", "imba_weaver_geminate_attack"}
-			end
-			
-			for _, ability in pairs(self.abilities_to_refresh) do
-				if self:GetCaster():FindAbilityByName(ability) then
-					self:GetCaster():FindAbilityByName(ability):EndCooldown()
-				end
-			end
 		end
 	else
 		local target_modifier = self:GetCursorTarget():FindModifierByName("modifier_imba_weaver_time_lapse")
@@ -727,6 +716,17 @@ function imba_weaver_time_lapse:OnSpellStart()
 			FindClearSpaceForUnit(self:GetCursorTarget(), target_modifier.instances_position[1], false)
 		end
 	end
+	
+	-- IMBAfication: It's Rewind Time
+	if not self.abilities_to_refresh then
+		self.abilities_to_refresh = {"imba_weaver_the_swarm", "imba_weaver_shukuchi", "imba_weaver_geminate_attack"}
+	end
+	
+	for _, ability in pairs(self.abilities_to_refresh) do
+		if self:GetCaster():FindAbilityByName(ability) then
+			self:GetCaster():FindAbilityByName(ability):EndCooldown()
+		end
+	end	
 end
 
 ------------------------------
