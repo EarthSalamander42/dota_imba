@@ -897,7 +897,6 @@ function modifier_imba_coup_de_grace:OnCreated()
 	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
 
 	-- Ability specials
-	self.crit_chance = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 	self.crit_increase_duration = self:GetAbility():GetSpecialValueFor("crit_increase_duration")
 	self.crit_bonus = self:GetAbility():GetSpecialValueFor("crit_bonus")
 end
@@ -916,7 +915,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 	if IsServer() then
 		local target = keys.target							-- TALENT: +8 sec Coup de Grace bonus damage duration
 		local crit_duration = self.crit_increase_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")
-		local crit_chance_total = self.crit_chance
+		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
 		if target:IsBuilding() then
@@ -945,17 +944,18 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			}
 			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
 
-			-- If the caster doesn't have the stacks modifier, give it to him
-			if not self.caster:HasModifier(self.modifier_stacks) then
-				self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
-			end
+			-- -- IMBAfication: Die Hard
+			-- -- If the caster doesn't have the stacks modifier, give it to him
+			-- if not self.caster:HasModifier(self.modifier_stacks) then
+				-- self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
+			-- end
 
-			-- Find the modifier, increase a stack and refresh it
-			local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
-			if modifier_stacks_handler then
-				modifier_stacks_handler:IncrementStackCount()
-				modifier_stacks_handler:ForceRefresh()
-			end
+			-- -- Find the modifier, increase a stack and refresh it
+			-- local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
+			-- if modifier_stacks_handler then
+				-- modifier_stacks_handler:IncrementStackCount()
+				-- modifier_stacks_handler:ForceRefresh()
+			-- end
 
 			-- TALENT: +100% Coup de Grace crit damage
 			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
@@ -1104,4 +1104,25 @@ end
 
 function modifier_imba_coup_de_grace_crit:GetModifierPreAttack_BonusDamage()
 	return self.crit_increase_damage * self:GetStackCount()
+end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_10", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_10		= class({})
+
+function modifier_special_bonus_imba_phantom_assassin_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_phantom_assassin_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_assassin_10:RemoveOnDeath() 	return false end
+
+function imba_phantom_assassin_blur:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_assassin_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_assassin_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_assassin_10"), "modifier_special_bonus_imba_phantom_assassin_10", {})
+	end
 end

@@ -746,7 +746,7 @@ end
 function imba_life_stealer_infest:OnAbilityPhaseStart()
 	local target = self:GetCursorTarget()
 	
-	if not target:IsAlive() then
+	if not target:IsAlive() or target:IsInvulnerable() or target:IsOutOfGame() then
 		return false
 	else
 		return true

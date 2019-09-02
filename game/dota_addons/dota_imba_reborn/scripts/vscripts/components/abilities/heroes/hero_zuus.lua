@@ -1213,7 +1213,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		damage_table.damage_type 	= ability:GetAbilityDamageType() 
 		
 		for _,hero in pairs(HeroList:GetAllHeroes()) do 
-			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) then 
+			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) and not hero:IsClone() then 
 				local target_point = hero:GetAbsOrigin()
 				local particle_effect = "particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf"
 				if self:GetCaster().thundergods_wrath_effect then

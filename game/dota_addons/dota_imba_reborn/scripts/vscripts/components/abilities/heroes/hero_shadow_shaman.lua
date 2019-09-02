@@ -639,7 +639,7 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
 			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
 			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)
-			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_XP, self:GetCaster(), actual_gold_to_steal, nil)
 		end
 	end
 end

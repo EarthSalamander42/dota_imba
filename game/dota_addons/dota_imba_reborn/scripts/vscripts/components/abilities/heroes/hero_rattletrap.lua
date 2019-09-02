@@ -288,7 +288,7 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 	
 	self:GetCaster():StartGesture(ACT_DOTA_RATTLETRAP_POWERCOGS)
 	
-	if not self:GetAutoCastState() then
+	-- if not self:GetAutoCastState() then
 		for cog = 1, num_of_cogs do
 			local cog = CreateUnitByName("npc_dota_rattletrap_cog", cog_vector, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 			
@@ -330,32 +330,32 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 			
 			cog_vector		= RotatePosition(caster_pos, QAngle(0, 360 / num_of_cogs, 0), cog_vector)
 		end
-	else
-		local cog_vectors = 
-		{
-			Vector(-square_dist, square_dist, 0), Vector(0, square_dist, 0), Vector(square_dist, square_dist, 0),
-			Vector(-square_dist, 0, 0), Vector(square_dist, 0, 0),
-			Vector(-square_dist, -square_dist, 0), Vector(0, -square_dist, 0), Vector(square_dist, -square_dist, 0)
-		}
+	-- else
+		-- local cog_vectors = 
+		-- {
+			-- Vector(-square_dist, square_dist, 0), Vector(0, square_dist, 0), Vector(square_dist, square_dist, 0),
+			-- Vector(-square_dist, 0, 0), Vector(square_dist, 0, 0),
+			-- Vector(-square_dist, -square_dist, 0), Vector(0, -square_dist, 0), Vector(square_dist, -square_dist, 0)
+		-- }
 		
-		for cog = 1, #cog_vectors do
-			local cog = CreateUnitByName("npc_dota_rattletrap_cog", self:GetCaster():GetAbsOrigin() + cog_vectors[cog], false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		-- for cog = 1, #cog_vectors do
+			-- local cog = CreateUnitByName("npc_dota_rattletrap_cog", self:GetCaster():GetAbsOrigin() + cog_vectors[cog], false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 			
-			cog:EmitSound("Hero_Rattletrap.Power_Cogs")
+			-- cog:EmitSound("Hero_Rattletrap.Power_Cogs")
 			
-			cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
-			{
-				duration 	= self:GetSpecialValueFor("duration"),
-				x 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).x,
-				y 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).y,
+			-- cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
+			-- {
+				-- duration 	= self:GetSpecialValueFor("duration"),
+				-- x 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).x,
+				-- y 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).y,
 				
-				-- Also need to store these for the Rotational IMBAfication
-				center_x	= self:GetCaster():GetAbsOrigin().x,
-				center_y	= self:GetCaster():GetAbsOrigin().y,
-				center_z	= self:GetCaster():GetAbsOrigin().z
-			})
-		end
-	end
+				-- -- Also need to store these for the Rotational IMBAfication
+				-- center_x	= self:GetCaster():GetAbsOrigin().x,
+				-- center_y	= self:GetCaster():GetAbsOrigin().y,
+				-- center_z	= self:GetCaster():GetAbsOrigin().z
+			-- })
+		-- end
+	-- end
 	
 	local deploy_particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_cog_deploy.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(deploy_particle)
@@ -452,11 +452,19 @@ function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 		-- ResolveNPCPositions(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius())
 	-- end
 	
-	-- if self:GetAbility() and self:GetAbility():GetAutoCastState() and not self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_rotational", {})
-	-- elseif self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
-		-- self:GetParent():RemoveModifierByName("modifier_imba_rattletrap_power_cogs_rotational")
-	-- end
+	if self:GetAbility() then
+		if self:GetAbility():GetAutoCastState() and not self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_rotational", 
+			{
+				center_loc_x		= self.center_loc.x,
+				center_loc_y		= self.center_loc.y,
+				center_loc_z		= self.center_loc.z,
+				rotational_speed	= self.rotational_speed
+			})
+		elseif not self:GetAbility():GetAutoCastState() and self:GetParent():HasModifier("modifier_imba_rattletrap_power_cogs_rotational") then
+			self:GetParent():RemoveModifierByName("modifier_imba_rattletrap_power_cogs_rotational")
+		end
+	end
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.trigger_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_CLOSEST, false)
 	
@@ -498,11 +506,10 @@ function modifier_imba_rattletrap_power_cogs:OnDestroy()
 end
 
 function modifier_imba_rattletrap_power_cogs:CheckState()
-	local state = {
-		[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
+	return  {
+		[MODIFIER_STATE_SPECIALLY_DENIABLE]					= true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true
 	}
-
-	return state
 end
 
 function modifier_imba_rattletrap_power_cogs:DeclareFunctions()
@@ -778,39 +785,20 @@ end
 function modifier_imba_rattletrap_power_cogs_rotational:OnCreated(params)
 	if not IsServer() then return end
 	
-	-- self.duration			= params.duration
-	-- self.damage				= params.damage
-	-- self.mana_burn			= params.mana_burn
-	-- self.push_length		= params.push_length
-	
-	-- -- This is purely for if a cog is destroyed while it is applying a push, so the attacker can be rerouted to the cog owner to properly deal damage
-	-- self.owner				= self:GetCaster():GetOwner() or self:GetCaster()
-	
-	-- -- Calculate speed at which modifier owner will be knocked back
-	-- self.knockback_speed		= self.push_length / self.duration
-	
-	-- -- Get the center of the cog to know which direction to get knocked back
-	-- self.position	= self:GetCaster():GetAbsOrigin()
-	
-	print("ADDED")
+	self.center_loc			= Vector(params.center_loc_x, params.center_loc_y, params.center_loc_z)
+	self.rotational_speed	= params.rotational_speed
 	
 	-- If horizontal motion cannot be applied, remove the modifier
 	if self:ApplyHorizontalMotionController() == false then 
 		self:Destroy()
 		return
 	end
+	
 end
 
 function modifier_imba_rattletrap_power_cogs_rotational:UpdateHorizontalMotion( me, dt )
-	if not IsServer() then return end
-
-	-- local distance = (me:GetOrigin() - self.position):Normalized()
-	
-	-- me:SetOrigin( me:GetOrigin() + distance * self.knockback_speed * dt )
-	
-	me:SetOrigin(me:GetOrigin() + Vector(100, 100, 0) * dt)
-	
-	ResolveNPCPositions(me:GetOrigin(), me:GetHullRadius())
+	me:SetOrigin(GetGroundPosition(RotatePosition(self.center_loc, QAngle(0, self.rotational_speed * dt, 0), me:GetAbsOrigin()), nil))
+	me:SetForwardVector(me:GetAbsOrigin() - self.center_loc)
 end
 
 -- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion

@@ -23,6 +23,7 @@
 #base heroes/life_stealer/abilities.txt
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
+#base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
@@ -18993,7 +18994,7 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_rain"	"10"
+				"damage_reduction_rain"	"5"
 			}
 			
 			"16"
@@ -27632,7 +27633,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_time"			"2"				
+				"damage_time"			"1"
 			}
 		}
 	}
@@ -27837,7 +27838,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"25 30 35 40"
-				"LinkedSpecialBonus"	"special_bonus_unique_faceless_void_3"
+				//"LinkedSpecialBonus"	"special_bonus_unique_faceless_void_3"
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_12"
 			}
 			"05"
 			{
@@ -27868,7 +27870,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_pcnt_increase"			"7"
+				"as_pcnt_increase"			"15"
 			}
 		}
 	}
@@ -27962,13 +27964,13 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_as_slow"				"150"
+				"scepter_ally_as_slow"				"200"
 			}
 
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_ms_slow_pcnt"			"50"
+				"scepter_ally_ms_slow_pcnt"			"100"
 			}
 
 			"10"
@@ -28290,7 +28292,7 @@
 	//=================================================================================================================
 	// Increased Chronosphere Radius
 	//=================================================================================================================
-	"special_bonus_imba_faceless_void_10" 
+	"special_bonus_imba_faceless_void_10"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28314,6 +28316,62 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// -Xs Time Walk
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_11"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_faceless_void_time_walk"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1.5"
+			}
+		}
+	}
+	//=================================================================================================================
+	// +X Time Lock Damage
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_12"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_faceless_void_time_lock_720"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+	
 	
 	//=================================================================================================================
 	// Juggernaut's Blade Fury
@@ -30770,7 +30828,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_repeat_pct"		"20"
+				"damage_repeat_pct"		"40"
 				"CalculateSpellDamageTooltip"	"0"
 				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_13"
 			}
@@ -31013,7 +31071,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160 210 260"
+		"AbilityManaCost"				"140 200 260"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -31038,7 +31096,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"16 18 20"
+				"movement_speed_pct"	"20 22 24"
 			}
 
 			"03"
@@ -31051,7 +31109,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_vendetta_stacks"	"250 400 550"
+				"maximum_vendetta_stacks"	"300 450 600"
 				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_12"
 			}
 			
@@ -31509,7 +31567,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1025"
+				"range"					"900 1000 1100 1200"
 			}
 			"03"
 			{
@@ -31544,7 +31602,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attackspeed"		"490"
+				"bonus_attackspeed"		"190"
 			}
 			"10"
 			{
@@ -32471,7 +32529,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"200 325 450"
+				"crit_bonus"				"230 355 480"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
 			}
 			"02"
@@ -38133,7 +38191,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 11 9 7"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38206,7 +38264,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 11 9 7"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38283,7 +38341,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38357,7 +38415,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

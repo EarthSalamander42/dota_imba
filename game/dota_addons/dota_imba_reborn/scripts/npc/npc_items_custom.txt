@@ -9735,7 +9735,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"140"
+				"berserk_attack_speed"			"130"
 			}
 			"04"
 			{
@@ -14582,7 +14582,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"25.0"
 

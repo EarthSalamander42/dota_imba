@@ -30,7 +30,7 @@
 
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_tooltip_attack"						"GEMINATE ATTACK COUNT:"
 "DOTA_Tooltip_ability_imba_weaver_time_lapse"							"Time Lapse"
-"DOTA_Tooltip_ability_imba_weaver_time_lapse_Description"				"Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>It's Rewind Time:</font> Resets cooldowns of The Swarm, Shukuchi, and Geminate Attack.\n<font color='#FF7800'>Paradox:</font> Creates an illusion of the target at the position before Time Lapse for 5 seconds. This illusion has standard incoming and outgoing damage, and grants 100 gold bounty if killed."
+"DOTA_Tooltip_ability_imba_weaver_time_lapse_Description"				"Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>It's Rewind Time:</font> Resets cooldowns of The Swarm, Shukuchi, and Geminate Attack.\n<font color='#FF7800'>Paradox:</font> Creates an illusion of the target at the position before Time Lapse for 5 seconds. This illusion has standard incoming and outgoing damage."
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_cooldown_scepter"	        "SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_cast_range_tooltip_scepter"	"SCEPTER ALLY CAST RANGE:"
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_Lore"						"If Skitskurr does not deem the current reality of the world to fit his desires, he simply crawls back in time to right what was wronged."

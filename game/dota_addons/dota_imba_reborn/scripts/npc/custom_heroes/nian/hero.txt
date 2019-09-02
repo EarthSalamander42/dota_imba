@@ -11,8 +11,8 @@
 		"HeroID"					"125"
 		"Model"						"models/creeps/nian/nian_creep.vmdl"	// Model.
 		"SoundSet"					"cny_beast"
-		"MinimapIcon"				"minimap_nian"
-		"MinimapIconSize"			"500"
+		//"MinimapIcon"				"minimap_nian"
+		//"MinimapIconSize"			"500"
 		"ModelScale" 				"0.4"
 	
 		//Picking Screen
@@ -61,12 +61,12 @@
 		// Attributes
 		//----------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"AttributeBaseStrength"		"24"			// Base strength
-		"AttributeStrengthGain"		"2.4"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"24"			// Base intelligence
-		"AttributeIntelligenceGain"	"2.4"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"24"			// Base agility
-		"AttributeAgilityGain"		"2.4"			// Agility bonus per level.
+		"AttributeBaseStrength"		"25"			// Base strength
+		"AttributeStrengthGain"		"2.5"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"25"			// Base intelligence
+		"AttributeIntelligenceGain"	"2.5"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"25"			// Base agility
+		"AttributeAgilityGain"		"2.5"			// Agility bonus per level.
 
 		// Movement
 		//----------------------------------------------------------------

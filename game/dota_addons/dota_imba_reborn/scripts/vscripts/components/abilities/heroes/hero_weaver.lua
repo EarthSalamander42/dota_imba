@@ -664,10 +664,10 @@ function imba_weaver_time_lapse:OnSpellStart()
 			{
 				outgoing_damage = 0,
 				incoming_damage	= 0,
-				bounty_base		= 100,
-				bounty_growth	= 0,
-				outgoing_damage_structure	= 0,
-				outgoing_damage_roshan		= 0,
+				bounty_base		= self:GetCaster():GetLevel() * 2,
+				bounty_growth	= nil,
+				outgoing_damage_structure	= nil,
+				outgoing_damage_roshan		= nil,
 				duration		= 5
 			}
 			, 1, self:GetCaster():GetHullRadius(), true, true)
@@ -714,10 +714,10 @@ function imba_weaver_time_lapse:OnSpellStart()
 			{
 				outgoing_damage = 0,
 				incoming_damage	= 0,
-				bounty_base		= 100,
-				bounty_growth	= 0,
-				outgoing_damage_structure	= 0,
-				outgoing_damage_roshan		= 0,
+				bounty_base		= self:GetCursorTarget():GetLevel() * 2,
+				bounty_growth	= nil,
+				outgoing_damage_structure	= nil,
+				outgoing_damage_roshan		= nil,
 				duration		= 5
 			}
 			, 1, self:GetCaster():GetHullRadius(), true, true)		
