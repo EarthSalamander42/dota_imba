@@ -35,6 +35,9 @@ game/dota_addons/dota_imba/models/rosh*
 .DS_Store
 .idea
 
+# Imbathrow
+content/dota_addons/dota_imba_reborn/materials/models/courier/*
+
 # Siltbreaker
 game/dota_addons/dota_imba_reborn/maps/journey_assets/*
 game/dota_addons/dota_imba_reborn/maps/reef_assets/*
