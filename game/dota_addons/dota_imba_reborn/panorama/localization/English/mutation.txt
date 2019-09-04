@@ -125,6 +125,9 @@
 "mutation_hyper_blink"							"Hyper Blink"
 "mutation_hyper_blink_Description"				"Every time a point or unit targeted ability or item is cast, the caster immediately blinks to that location."
 
+"mutation_"										"N/A"
+"mutation_Description"							""
+
 // Not implemented yet
 
 // Positive

@@ -85,14 +85,14 @@ function Mutation:Init()
 		-- IMBA_MUTATION["positive"] = "ultimate_level"
 		-- IMBA_MUTATION["negative"] = "monkey_business"
 		-- IMBA_MUTATION["terrain"] = "river_flows"
-		
-		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+
 		IMBA_MUTATION["terrain"] = "hyper_blink"
 	else
-		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+		-- Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
+		-- Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+		-- Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+		
+		IMBA_MUTATION["terrain"] = "hyper_blink"	
 	end
 
 --	if IsInToolsMode() then
