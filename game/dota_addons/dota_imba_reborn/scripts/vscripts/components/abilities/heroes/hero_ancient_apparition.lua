@@ -674,6 +674,7 @@ function imba_ancient_apparition_ice_blast:OnSpellStart()
 		fStartRadius		= 0,
 		fEndRadius			= 0,
 		Source				= self:GetCaster(),
+		bDrawsOnMinimap 	= true,
 		bHasFrontalCone		= false,
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,

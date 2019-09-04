@@ -25,7 +25,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	local scepter 	= caster:HasScepter()
 
 	--ability specials
-	self.scepter_knives_interval 	=	0.3
+	self.scepter_knives_interval 	=	self:GetSpecialValueFor("scepter_knives_interval")
 	self.cast_range					=	self:GetCastRange() + GetCastRangeIncrease(caster)
 	self.playbackrate				=	1 + self.scepter_knives_interval
 
@@ -53,7 +53,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 		-- TALENT: +1 Stifling Dagger bonus dagger (like aghs)
 		if not scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
-			secondary_knives_thrown = scepter_dagger_count
+			-- secondary_knives_thrown = scepter_dagger_count
 		elseif scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 		else
@@ -74,64 +74,75 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 			FIND_UNITS_EVERYWHERE,
 			false
 		)
-
-		for _, enemy in pairs (enemies) do
-			enemy.hit_by_pa_dagger = false
+		
+		for _, enemy in pairs(enemies) do
+			if enemy ~= target then
+				self:LaunchDagger(enemy, extra_data)
+				secondary_knives_thrown = secondary_knives_thrown + 1
+			end
+			
+			if secondary_knives_thrown >= scepter_dagger_count then
+				break
+			end
 		end
 
-		-- Mark the main target, set variables
-		target.hit_by_pa_dagger = true
-		local dagger_target_found
+		-- for _, enemy in pairs (enemies) do
+			-- enemy.hit_by_pa_dagger = false
+		-- end
 
-		-- Look for a secondary target to throw a knife at
-		Timers:CreateTimer(self.scepter_knives_interval, function()
-			-- Set variable for clear action
-			dagger_target_found = false
+		-- -- Mark the main target, set variables
+		-- target.hit_by_pa_dagger = true
+		-- local dagger_target_found
 
-			-- Look for a target in the cast range of the spell
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-				caster:GetAbsOrigin(),
-				nil,
-				self.cast_range,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-				FIND_ANY_ORDER,
-				false)
+		-- -- Look for a secondary target to throw a knife at
+		-- Timers:CreateTimer(self.scepter_knives_interval, function()
+			-- -- Set variable for clear action
+			-- dagger_target_found = false
 
-			-- Check if there's an enemy unit without a mark. Mark it and throw a dagger to it
-			for _, enemy in pairs (enemies) do
-				if not enemy.hit_by_pa_dagger then
-					enemy.hit_by_pa_dagger = true
-					dagger_target_found = true
+			-- -- Look for a target in the cast range of the spell
+			-- local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+				-- caster:GetAbsOrigin(),
+				-- nil,
+				-- self.cast_range,
+				-- DOTA_UNIT_TARGET_TEAM_ENEMY,
+				-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				-- DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+				-- FIND_ANY_ORDER,
+				-- false)
 
-					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, self.playbackrate)
+			-- -- Check if there's an enemy unit without a mark. Mark it and throw a dagger to it
+			-- for _, enemy in pairs (enemies) do
+				-- if not enemy.hit_by_pa_dagger then
+					-- enemy.hit_by_pa_dagger = true
+					-- dagger_target_found = true
 
-					self:LaunchDagger(enemy, extra_data)
-					break -- only hit the first enemy found
-				end
-			end
+					-- caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, self.playbackrate)
 
-			-- If all enemies were found with a mark, clear all marks from everyone
-			if not dagger_target_found then
-				for _, enemy in pairs (enemies) do
-					enemy.hit_by_pa_dagger = false
-				end
+					-- self:LaunchDagger(enemy, extra_data)
+					-- break -- only hit the first enemy found
+				-- end
+			-- end
 
-				-- Throw dagger at a random enemy
-				local enemy = enemies[RandomInt(1, #enemies)]
+			-- -- If all enemies were found with a mark, clear all marks from everyone
+			-- if not dagger_target_found then
+				-- for _, enemy in pairs (enemies) do
+					-- enemy.hit_by_pa_dagger = false
+				-- end
 
-				self:LaunchDagger(enemy, extra_data)
-			end
+				-- -- Throw dagger at a random enemy
+				-- local enemy = enemies[RandomInt(1, #enemies)]
 
-			-- Check if there are knives remaining
-			secondary_knives_thrown = secondary_knives_thrown + 1
-			if secondary_knives_thrown < scepter_dagger_count then
-				return self.scepter_knives_interval
-			else
-				return nil
-			end
-		end)
+				-- self:LaunchDagger(enemy, extra_data)
+			-- end
+
+			-- -- Check if there are knives remaining
+			-- secondary_knives_thrown = secondary_knives_thrown + 1
+			-- if secondary_knives_thrown < scepter_dagger_count then
+				-- return self.scepter_knives_interval
+			-- else
+				-- return nil
+			-- end
+		-- end)
 	end
 end
 
@@ -579,7 +590,7 @@ function modifier_imba_blur:OnCreated()
 
 	-- Ability specials
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
-	self.evasion = self:GetAbility():GetSpecialValueFor("evasion")
+	self.evasion = self:GetAbility():GetTalentSpecialValueFor("evasion")
 	self.ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
 
 	if IsServer() then
@@ -886,7 +897,6 @@ function modifier_imba_coup_de_grace:OnCreated()
 	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
 
 	-- Ability specials
-	self.crit_chance = self:GetAbility():GetSpecialValueFor("crit_chance")
 	self.crit_increase_duration = self:GetAbility():GetSpecialValueFor("crit_increase_duration")
 	self.crit_bonus = self:GetAbility():GetSpecialValueFor("crit_bonus")
 end
@@ -905,7 +915,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 	if IsServer() then
 		local target = keys.target							-- TALENT: +8 sec Coup de Grace bonus damage duration
 		local crit_duration = self.crit_increase_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")
-		local crit_chance_total = self.crit_chance
+		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
 		if target:IsBuilding() then
@@ -934,17 +944,18 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			}
 			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
 
-			-- If the caster doesn't have the stacks modifier, give it to him
-			if not self.caster:HasModifier(self.modifier_stacks) then
-				self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
-			end
+			-- -- IMBAfication: Die Hard
+			-- -- If the caster doesn't have the stacks modifier, give it to him
+			-- if not self.caster:HasModifier(self.modifier_stacks) then
+				-- self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
+			-- end
 
-			-- Find the modifier, increase a stack and refresh it
-			local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
-			if modifier_stacks_handler then
-				modifier_stacks_handler:IncrementStackCount()
-				modifier_stacks_handler:ForceRefresh()
-			end
+			-- -- Find the modifier, increase a stack and refresh it
+			-- local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
+			-- if modifier_stacks_handler then
+				-- modifier_stacks_handler:IncrementStackCount()
+				-- modifier_stacks_handler:ForceRefresh()
+			-- end
 
 			-- TALENT: +100% Coup de Grace crit damage
 			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
@@ -1093,4 +1104,25 @@ end
 
 function modifier_imba_coup_de_grace_crit:GetModifierPreAttack_BonusDamage()
 	return self.crit_increase_damage * self:GetStackCount()
+end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_10", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_10		= class({})
+
+function modifier_special_bonus_imba_phantom_assassin_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_phantom_assassin_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_assassin_10:RemoveOnDeath() 	return false end
+
+function imba_phantom_assassin_blur:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_assassin_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_assassin_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_assassin_10"), "modifier_special_bonus_imba_phantom_assassin_10", {})
+	end
 end

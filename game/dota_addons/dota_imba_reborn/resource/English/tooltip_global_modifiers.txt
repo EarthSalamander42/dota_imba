@@ -110,3 +110,4 @@
 * %2fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regeneration"
 
 "DOTA_Tooltip_modifier_generic_motion_controller"				"Motion Controller"
+"DOTA_Tooltip_modifier_generic_charges"							"Charges"

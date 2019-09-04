@@ -94,6 +94,10 @@ end
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
+function imba_faceless_void_time_walk:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_11")
+end
+
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
 	if not self:GetCaster():IsIllusion() then
 		return "modifier_imba_faceless_void_time_walk_damage_counter"
@@ -1230,8 +1234,7 @@ function modifier_imba_faceless_void_chronosphere_handler:CheckState()
 			[MODIFIER_STATE_SILENCED] = true,
 			[MODIFIER_STATE_INVISIBLE] = false,}
 	elseif stacks == 1 or stacks == 4 then
-		state = {	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true, }
+		state = {	[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 	end
 	return state
 end
@@ -1368,27 +1371,27 @@ function modifier_imba_faceless_void_time_lock_720:OnAttackLanded(keys)
 		if RollPseudoRandom(chance_pct, self) then
 			self:ApplyTimeLock(keys.target)
 			
-			-- IMBAfication: Chrono Lock
-			if keys.target:HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
-				-- Find enemies
-				local enemies	= FindUnitsInRadius(
-					keys.attacker:GetTeamNumber(),
-					keys.target:GetAbsOrigin(),
-					nil,
-					FIND_UNITS_EVERYWHERE,
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
-					FIND_ANY_ORDER,
-					false)
+			-- -- IMBAfication: Chrono Lock
+			-- if keys.target:HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+				-- -- Find enemies
+				-- local enemies	= FindUnitsInRadius(
+					-- keys.attacker:GetTeamNumber(),
+					-- keys.target:GetAbsOrigin(),
+					-- nil,
+					-- FIND_UNITS_EVERYWHERE,
+					-- DOTA_UNIT_TARGET_TEAM_ENEMY,
+					-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					-- DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
+					-- FIND_ANY_ORDER,
+					-- false)
 				
-				-- Proc Time Lock on all enemies affected by Chronosphere
-				for _, enemy in pairs(enemies) do
-					if enemy ~= keys.target and enemy:HasModifier("modifier_imba_faceless_void_chronosphere_handler") and not enemy:HasModifier("modifier_imba_faceless_void_time_lock_720_freeze") then
-						self:ApplyTimeLock(enemy)
-					end
-				end
-			end
+				-- -- Proc Time Lock on all enemies affected by Chronosphere
+				-- for _, enemy in pairs(enemies) do
+					-- if enemy ~= keys.target and enemy:HasModifier("modifier_imba_faceless_void_chronosphere_handler") and not enemy:HasModifier("modifier_imba_faceless_void_time_lock_720_freeze") then
+						-- self:ApplyTimeLock(enemy)
+					-- end
+				-- end
+			-- end
 		end
 	end
 end
@@ -1402,7 +1405,7 @@ function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
 	local duration 				= ability:GetSpecialValueFor("duration")
 	local duration_creep 		= ability:GetSpecialValueFor("duration_creep")
 	-- local chance_pct 		= ability:GetSpecialValueFor("chance_pct")
-	local bonus_damage 			= ability:GetSpecialValueFor("bonus_damage")
+	local bonus_damage 			= ability:GetTalentSpecialValueFor("bonus_damage")
 	local moment_cd_increase	= ability:GetSpecialValueFor("moment_cd_increase")
 
 	-- Emit sound
@@ -1510,10 +1513,12 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_10", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_11", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_faceless_void_3		= class({})
 modifier_special_bonus_imba_faceless_void_9		= class({})
 modifier_special_bonus_imba_faceless_void_10	= class({})
+modifier_special_bonus_imba_faceless_void_11	= class({})
 
 -------------------
 -- SPEED BARRIER --
@@ -1546,8 +1551,19 @@ function modifier_special_bonus_imba_faceless_void_9:IsHidden() 		return true en
 function modifier_special_bonus_imba_faceless_void_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_faceless_void_9:RemoveOnDeath() 	return false end
 
+----------------------------
+-- -Xs TIME WALK COOLDOWN --
+----------------------------
+function modifier_special_bonus_imba_faceless_void_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_11:IsPurgable() 		return false end
+function modifier_special_bonus_imba_faceless_void_11:RemoveOnDeath() 	return false end
+
 function imba_faceless_void_time_walk:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_9"), "modifier_special_bonus_imba_faceless_void_9", {})
 	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_11") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_11"), "modifier_special_bonus_imba_faceless_void_11", {})
+	end	
 end

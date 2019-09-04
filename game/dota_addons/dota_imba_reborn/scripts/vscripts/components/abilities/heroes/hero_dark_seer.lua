@@ -656,11 +656,17 @@ end
 function imba_dark_seer_wall_of_replica:OnSpellStart()
 	if not IsServer() then return end
 	
+	local duration = self:GetSpecialValueFor("duration")
+	
+	if self:GetCaster():HasScepter() then
+		duration = self:GetSpecialValueFor("scepter_duration")
+	end
+	
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Dark_Seer.Wall_of_Replica_Start", self:GetCaster())
 	
 	-- Create the dual walls
 	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_dark_seer_wall_of_replica", {
-		duration		= self:GetSpecialValueFor("duration"),
+		duration		= duration,
 		x				= self:GetCursorPosition().x,
 		y				= self:GetCursorPosition().y,
 		rotation		= 45
@@ -668,7 +674,7 @@ function imba_dark_seer_wall_of_replica:OnSpellStart()
 	self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	
 	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_dark_seer_wall_of_replica", {
-		duration		= self:GetSpecialValueFor("duration"),
+		duration		= duration,
 		x				= self:GetCursorPosition().x,
 		y				= self:GetCursorPosition().y,
 		rotation		= -45
@@ -688,6 +694,10 @@ function modifier_imba_dark_seer_wall_of_replica:OnCreated(params)
 	self.scepter_rotation_speed	= self:GetAbility():GetSpecialValueFor("scepter_rotation_speed")
 	
 	self.scepter		= self:GetCaster():HasScepter()
+	
+	if self.scepter then
+		self.width					= self:GetAbility():GetSpecialValueFor("scepter_width")
+	end
 	
 	if not IsServer() then return end
 	
@@ -729,25 +739,26 @@ end
 function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 	if not IsServer() then return end
 	
-	if self.scepter then
-		self.rotation			= self.rotation + self.scepter_rotation_speed * 0.1
+	-- Too laggy I guess, with all the particle creation/re-creation...
+	-- if self.scepter then
+		-- self.rotation			= self.rotation + self.scepter_rotation_speed * 0.1
 	
-		self.wall_vector		= RotatePosition(Vector(0, 0, 0), QAngle(0, self.rotation, 0), self.distance_vector:Normalized())
+		-- self.wall_vector		= RotatePosition(Vector(0, 0, 0), QAngle(0, self.rotation, 0), self.distance_vector:Normalized())
 		
-		self.wall_start 		= self.cursor_position + self.wall_vector * self.width * 0.5
-		self.wall_end			= self.cursor_position - self.wall_vector * self.width * 0.5
+		-- self.wall_start 		= self.cursor_position + self.wall_vector * self.width * 0.5
+		-- self.wall_end			= self.cursor_position - self.wall_vector * self.width * 0.5
 		
-		-- This is probably hyper-inefficient to constantly destroy and recreate the particle, but quick test of entity attachment didn't work
-		-- Also this might require a epileptic warning
-		ParticleManager:DestroyParticle(self.particle, false)
-		ParticleManager:ReleaseParticleIndex(self.particle)
+		-- -- This is probably hyper-inefficient to constantly destroy and recreate the particle, but quick test of entity attachment didn't work
+		-- -- Also this might require a epileptic warning
+		-- ParticleManager:DestroyParticle(self.particle, false)
+		-- ParticleManager:ReleaseParticleIndex(self.particle)
 		
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-		ParticleManager:SetParticleControl(self.particle, 0, self.wall_start)
-		ParticleManager:SetParticleControl(self.particle, 1, self.wall_end)
-		ParticleManager:SetParticleControl(self.particle, 61, Vector(1, 0, 0))
-		self:AddParticle(self.particle, false, false, -1, false, false)
-	end
+		-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		-- ParticleManager:SetParticleControl(self.particle, 0, self.wall_start)
+		-- ParticleManager:SetParticleControl(self.particle, 1, self.wall_end)
+		-- ParticleManager:SetParticleControl(self.particle, 61, Vector(1, 0, 0))
+		-- self:AddParticle(self.particle, false, false, -1, false, false)
+	-- end
 	
 	-- All of this code text is just to mess around with colours
 	self.random_int_1		= self.random_int_1 + self.scale_1

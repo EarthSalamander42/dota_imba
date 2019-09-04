@@ -1413,17 +1413,25 @@ function imba_rubick_spellsteal:ForgetSpell()
 		for i = 0, self:GetCaster():GetAbilityCount() -1 do
 			local talent = self:GetCaster():FindAbilityByName("special_bonus_imba_"..string.gsub(self.CurrentSpellOwner, "npc_dota_hero_","").."_"..i)
 			if talent then
-				print(talent:GetAbilityName())
+				-- print(talent:GetAbilityName())
 				self:GetCaster():RemoveAbility( talent:GetAbilityName() )
 			end
 		end
 			
 	end
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
+		if self.CurrentPrimarySpell.OnUnStolen then
+			self.CurrentPrimarySpell:OnUnStolen()
+		end
+	
 		--print("forgetting primary")
 		self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), true, false )
 		self:GetCaster():RemoveAbility( self.CurrentPrimarySpell:GetAbilityName() )
 		if self.CurrentSecondarySpell~=nil and not self.CurrentSecondarySpell:IsNull() then
+			if self.CurrentSecondarySpell.OnUnStolen then
+				self.CurrentSecondarySpell:OnUnStolen()
+			end
+		
 			--print("forgetting secondary")
 			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), true, false )
 			self:GetCaster():RemoveAbility( self.CurrentSecondarySpell:GetAbilityName() )

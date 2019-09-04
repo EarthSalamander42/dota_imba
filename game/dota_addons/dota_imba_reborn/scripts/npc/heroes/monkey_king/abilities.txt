@@ -1,0 +1,18 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Monkey King: Innate True Strike
+	//=================================================================================================================
+	"imba_monkey_king_true_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_monkey_king"
+		"MaxLevel"						"1"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+	}
+}

@@ -1,4 +1,5 @@
-// #base heroes/ancient_apparition/hero.txt
+#base heroes/ancient_apparition/hero.txt
+#base heroes/batrider/hero.txt
 #base heroes/bristleback/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
@@ -21,7 +22,8 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/tidehunter/hero.txt
-// #base heroes/visage/hero.txt
+#base heroes/visage/hero.txt
+#base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
 #base heroes/winter_wyvern/hero.txt
@@ -330,12 +332,17 @@
 
 		"Ability10"					"special_bonus_imba_centaur_1" //Double Edge self-damage reduction
 		"Ability11"					"special_bonus_imba_centaur_4" //Double edge damage in increased by x * strength
-		"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
+		"Ability12"					"special_bonus_attack_base_damage_30" //Stampede duration increase per trampled enemy
 		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
-		"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
-		"Ability15"					"special_bonus_imba_centaur_6" //Return becomes an aura 
+		"Ability14"					"special_bonus_imba_centaur_9" // +X Retaliate Damage
+		"Ability15"					"special_bonus_strength_20"
 		"Ability16"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
-		"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
+		"Ability17"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		
+		// Removed Talents
+		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
+		//"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
+		//"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
 	}
 
 	//=================================================================================================================
@@ -623,12 +630,13 @@
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
 		"Ability12"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
-		"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
+		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
 		"Ability17"					"special_bonus_lifesteal_100"
 		
 		// Removed Talents
+		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 	}
 
@@ -652,13 +660,13 @@
 
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
-		"Ability12"					"special_bonus_ember_chains_duration"
-		"Ability13"					"special_bonus_ember_guard_damage"
+		"Ability12"					"special_bonus_ember_guard_damage"
+		"Ability13"					"special_bonus_ember_chains_duration"
 		"Ability14"					"special_bonus_attack_damage_50"
-		"Ability15"					"special_bonus_spell_amplify_20"
+		"Ability15"					"special_bonus_spell_amplify_15"
 		"Ability16"					"special_bonus_ember_permanent_guard"
 		//"Ability17"					"special_bonus_ember_remnant_charges"
-		"Ability17"					"special_bonus_all_stats_20"
+		"Ability17"					"special_bonus_all_stats_15"
 	}
 
 	//=================================================================================================================
@@ -707,14 +715,14 @@
 		"Ability2"					"imba_faceless_void_time_dilation"
 		//"Ability3"					"imba_faceless_void_time_lock"
 		"Ability3"					"imba_faceless_void_time_lock_720"
-		"Ability4"					"imba_faceless_void_timelord"
+		//"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_faceless_void_chronosphere"
 
 		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
-		"Ability11"					"special_bonus_strength_10"
-		"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
-		"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleave
+		"Ability11"					"special_bonus_strength_12"
+		"Ability12"					"special_bonus_imba_faceless_void_12" // +X Time Lock Damage
+		"Ability13"					"special_bonus_imba_faceless_void_11" // -Xs Time Walk
 		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
 		"Ability15"					"special_bonus_imba_faceless_void_9" // Increased Time Walk cast range
 		"Ability16"					"special_bonus_unique_faceless_void_4" // Backtrack
@@ -723,6 +731,8 @@
 		// Removed Talents
 		
 		//"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+		//"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+		//"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleav
 		//"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
 		//"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
 		//"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
@@ -1106,6 +1116,7 @@
 		"Ability6"					"monkey_king_wukongs_command"
 		"Ability7"					"monkey_king_primal_spring_early"
 		"Ability8"					"monkey_king_untransform"
+		"Ability9"					"imba_monkey_king_true_strike"
 
 		"Ability10"					"special_bonus_unique_monkey_king_5"
 		"Ability11"					"special_bonus_attack_speed_20"
@@ -1376,14 +1387,17 @@
 		"Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
 		"Ability12"					"special_bonus_lifesteal_15"
 		"Ability13"					"special_bonus_cleave_25"
-		"Ability14"					"special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
-		"Ability15"					"special_bonus_imba_phantom_assassin_3" // "+1 Stifling Dagger thrown"
-		"Ability16"					"special_bonus_imba_phantom_assassin_7" // "+8s Coup de Grace's Die Hard duration"
-		"Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a 30% chance to evade any damage"
+		"Ability14"					"special_bonus_corruption_4"
+		"Ability15"					"special_bonus_imba_phantom_assassin_10" // "+X% Blur Evasion"
+		"Ability16"					"special_bonus_imba_phantom_assassin_9" // +X% Coup de Grace chance
+		"Ability17"					"special_bonus_imba_phantom_assassin_3" // "+X Stifling Dagger thrown"
 		
 		// Removed Talents
+		// "Ability13"				""special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
 		// "Ability13"				"special_bonus_imba_phantom_assassin_4" // "+5% Phantom Strike bonus crit chance"
 		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
+		// "Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a X% chance to evade any damage"
+		//"Ability17"					"special_bonus_imba_phantom_assassin_7" // "+Xs Coup de Grace's Die Hard duration"
 		
 	}
 
@@ -1665,7 +1679,8 @@
 
 		"Ability1"					"imba_slardar_guardian_sprint"
 		"Ability2"					"imba_slardar_slithereen_crush"
-		"Ability3"					"imba_slardar_bash_of_the_deep"
+		//"Ability3"					"imba_slardar_bash_of_the_deep"
+		"Ability3"					"imba_slardar_bash_720"
 		"Ability4"					"imba_slardar_rain_cloud"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_slardar_corrosive_haze"
@@ -1679,14 +1694,18 @@
 		//"Ability16"					"special_bonus_imba_slardar_7"
 		//"Ability17"					"special_bonus_imba_slardar_8"
 		
-		"Ability10"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
-		"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
-		"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep affects buildings
-		"Ability13"					"special_bonus_night_vision_1000"
+		"Ability10"					"special_bonus_hp_regen_10"
+		"Ability11"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
+		"Ability12"					"special_bonus_night_vision_1000"
+		"Ability13"					"special_bonus_imba_slardar_13" // +X Bash Damage
 		"Ability14"					"special_bonus_imba_slardar_10" // Depression
 		"Ability15"					"special_bonus_imba_slardar_11" // Corrosive Haze Armor Transfer
 		"Ability16"					"special_bonus_imba_slardar_6" // Casts a second free Slithereen Crush
 		"Ability17"					"special_bonus_imba_slardar_12" // Corrosive Haze Undispellable
+		
+		// Removed Talents
+		//"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
+		//"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep Upgrade
 	}
 
 	//=================================================================================================================
@@ -1709,7 +1728,7 @@
 
 		"Ability10"					"special_bonus_cooldown_reduction_25"
 		"Ability11"					"special_bonus_attack_damage_25"
-		"Ability12"					"special_bonus_attack_speed_50"
+		"Ability12"					"special_bonus_attack_speed_40"
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
 		"Ability15"					"special_bonus_imba_sniper_9"
@@ -1959,14 +1978,20 @@
 		"Ability5"					"imba_vengefulspirit_swap_back"
 		"Ability6"					"imba_vengefulspirit_nether_swap"
 
-		"Ability10"					"special_bonus_imba_vengefulspirit_1"
-		"Ability11"					"special_bonus_imba_vengefulspirit_2"
-		"Ability12"					"special_bonus_imba_vengefulspirit_3"
-		"Ability13"					"special_bonus_imba_vengefulspirit_4"
-		"Ability14"					"special_bonus_imba_vengefulspirit_5"
-		"Ability15"					"special_bonus_imba_vengefulspirit_6"
-		"Ability16"					"special_bonus_imba_vengefulspirit_7"
-		"Ability17"					"special_bonus_imba_vengefulspirit_8"
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_imba_vengefulspirit_2" // -Xs Nether Swap Swapback Delay
+		"Ability12"					"special_bonus_agility_15"
+		"Ability13"					"special_bonus_imba_vengefulspirit_10" // -Xs Wave of Terror Cooldown
+		"Ability14"					"special_bonus_imba_vengefulspirit_11" // -Xs Magic Missile Cooldown
+		"Ability15"					"special_bonus_imba_vengefulspirit_3" // +X% Vengeance Aura Damage
+		"Ability16"					"special_bonus_imba_vengefulspirit_1" // +X Magic Missile Damage
+		"Ability17"					"special_bonus_imba_vengefulspirit_5" // Magic Missile Pierces Spell Immunity
+		
+		// Removed Talents
+		//"Ability13"					"special_bonus_imba_vengefulspirit_4" // Allied Rancor
+		//"Ability15"					"special_bonus_imba_vengefulspirit_6" // Nether Missile
+		//"Ability16"					"special_bonus_imba_vengefulspirit_7" // -X% buyback cost, -X% buyback cooldown
+		//"Ability17"					"special_bonus_imba_vengefulspirit_8" // Full-blown Vengeance
 	}
 
 	//=================================================================================================================

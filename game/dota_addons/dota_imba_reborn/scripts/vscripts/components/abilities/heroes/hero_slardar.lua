@@ -483,6 +483,14 @@ function modifier_imba_rip_current_stun:CheckState()
 	return state
 end
 
+function modifier_imba_rip_current_stun:DeclareFunctions()
+    return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_rip_current_stun:GetOverrideAnimation()
+	 return ACT_DOTA_DISABLED
+end
+
 -- Slow propel modifier
 modifier_imba_rip_current_slow = class({})
 
@@ -691,6 +699,14 @@ end
 function modifier_imba_slithereen_crush_stun:CheckState()
 	local state = {[MODIFIER_STATE_STUNNED] = true}
 	return state
+end
+
+function modifier_imba_slithereen_crush_stun:DeclareFunctions()
+    return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_slithereen_crush_stun:GetOverrideAnimation()
+	 return ACT_DOTA_DISABLED
 end
 
 -- Slow modifier
@@ -1033,8 +1049,64 @@ function modifier_imba_bash_of_the_deep_stun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
+---------------------------------------------
+-- SLARDAR BASH OF THE DEEP (7.20 VERSION) --
+---------------------------------------------
 
+LinkLuaModifier("imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
+imba_slardar_bash_720			= class({})
+modifier_imba_slardar_bash_720	= class({})
+
+---------------------------
+-- IMBA_SLARDAR_BASH_720 --
+---------------------------
+
+function imba_slardar_bash_720:GetIntrinsicModifierName()
+	if not self:GetCaster():IsIllusion() then
+		return "modifier_imba_slardar_bash_720"
+	end
+end
+
+------------------------------------
+-- MODIFIER_IMBA_SLARDAR_BASH_720 --
+------------------------------------
+
+function modifier_imba_slardar_bash_720:IsHidden()	return self:GetStackCount() == 0 end
+
+function modifier_imba_slardar_bash_720:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL, MODIFIER_PROPERTY_TOOLTIP}
+end
+
+function modifier_imba_slardar_bash_720:GetModifierProcAttack_BonusDamage_Physical(keys)
+	if not IsServer() then return end
+	
+	-- "Does not count attacks done against allies, wards or buildings, nor bashes allies, buildings or wards on the bashing attack."
+	-- IMBAfication: Guard Brutality (lets it work on wards and buildings)
+	-- if not self:GetParent():PassivesDisabled() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsOther() and not keys.target:IsBuilding() then
+	if self:GetAbility() and self:GetAbility():IsTrained() and not self:GetParent():PassivesDisabled() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("attack_count") then
+			self:IncrementStackCount()
+		else
+			keys.target:EmitSound("Hero_Slardar.Bash")
+			
+			local stun_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+			end
+			
+			self:SetStackCount(0)
+			
+			return self:GetAbility():GetTalentSpecialValueFor("bonus_damage")
+		end
+	end
+end
+
+function modifier_imba_slardar_bash_720:OnTooltip()
+	return self:GetAbility():GetSpecialValueFor("attack_count") + 1
+end
 
 ---------------------------------------------------
 ---------------------------------------------------

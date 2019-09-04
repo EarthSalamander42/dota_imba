@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle"					"#{DOTA_Tooltip_ability_pangolier_swashbuckle}"
-"DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Description"		"#{DOTA_Tooltip_ability_pangolier_swashbuckle_Description}\n<font color='#FF7800'>Cunning Pangolin:</font> Pangolier will automatically target the nearest enemy, prioritizing heroes. If no targets are found, Pangolier will attack in front of him.\n<font color='#FF7800'>Swashbucklord:</font> After using Swashbuckle, Pangolier gains %bonus_attackspeed% Attack Speed for the next %max_attacks% attacks for %buff_duration% seconds."
+"DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Description"		"<font color='#FF7800'>Point Targeted.</font> Pangolier dashes along the <font color='#FF7800'>path between himself and the target location</font>, then slashes <font color='FF7800'>towards the closest visible enemy</font> with several quick swipes.\n\nLucky Shot has a chance to activate from this damage.\n<font color='#FF7800'>Cunning Pangolin:</font> Pangolier will automatically target the nearest enemy, prioritizing heroes. If no targets are found, Pangolier will attack in front of him.\n<font color='#FF7800'>Swashbucklord:</font> After using Swashbuckle, Pangolier gains %bonus_attackspeed% Attack Speed for the next %max_attacks% attacks for %buff_duration% seconds."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note0"				"You just need to point where to dash, the rest is handled by Pangolier."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note1"				"Pangolier can't detect invisible enemies, however they can still be damaged."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note2"				"Apply on-hit effects and can critically strike."
@@ -14,7 +14,7 @@
 "DOTA_Tooltip_modifier_imba_swashbuckle_buff_Description"			"Attack speed dramatically increased for a limited amount of attacks."
 
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash"					"#{DOTA_Tooltip_ability_pangolier_shield_crash}"
-"DOTA_Tooltip_ability_imba_pangolier_shield_crash_Description"		"#{DOTA_Tooltip_ability_pangolier_shield_crash_Description}\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Sir Bounce A'lot:</font> Cooldown reduced to %roll_cooldown% seconds during Rolling Thunder."
+"DOTA_Tooltip_ability_imba_pangolier_shield_crash_Description"		"#{DOTA_Tooltip_ability_pangolier_shield_crash_Description}\n<font color='#FF7800'>Sir Bounce A'lot:</font> Cooldown reduced to %roll_cooldown% seconds during Rolling Thunder."
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_Note0"			"The leap will be much longer if cast during Rolling Thunder."
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_Note1"			"Damage can't be reduced below 1."
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_Note2"			"Will count only heroes effectively damaged."

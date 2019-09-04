@@ -230,7 +230,8 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"channel_time"		"2.75 4.25 5.75 7.25"
-				"LinkedSpecialBonus"	"special_bonus_unique_shadow_shaman_2"
+				// "LinkedSpecialBonus"	"special_bonus_unique_shadow_shaman_2"
+				"LinkedSpecialBonus" "special_bonus_imba_shadow_shaman_shackles_duration"
 			}
 			
 			"04"
@@ -257,7 +258,10 @@
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 
-
+	//=====================
+	// VANILLA OVERRIDES ==
+	//=====================
+	
 	//=================================================================================================================
 	// Shadow Shaman: Ether Shock
 	//=================================================================================================================
@@ -406,7 +410,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"2 3 4"
+				"ward_hp_tooltip"		"2 2 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 			}
 			"04"
@@ -427,7 +431,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp"		"2 3 4"
+				"ward_hp"		"2 2 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 			}
 			

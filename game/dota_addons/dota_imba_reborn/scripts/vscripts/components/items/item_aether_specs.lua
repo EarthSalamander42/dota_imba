@@ -26,6 +26,10 @@ function item_imba_aether_specs:GetIntrinsicModifierName()
 	return "modifier_item_imba_aether_specs"
 end
 
+function item_imba_aether_specs:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
 function item_imba_aether_specs:OnSpellStart()
 	local ward = CreateUnitByName("npc_dota_aether_spec_ward", self:GetCursorPosition(), false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_item_buff_ward", {duration = self:GetSpecialValueFor("ward_duration")})
@@ -55,22 +59,22 @@ function modifier_item_imba_aether_specs_ward:OnCreated()
 	
 	self.radius		= self:GetAbility():GetSpecialValueFor("radius")
 	
-	self.interval	= 0.5
+	-- self.interval	= 0.5
 	
 	local aura_particle = ParticleManager:CreateParticle("particles/items_fx/aether_specs_ward_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(aura_particle, 1, Vector(self.radius, 0, 0))
 	self:AddParticle(aura_particle, false, false, -1, false, false)
 	
-	self:StartIntervalThink(self.interval)
+	-- self:StartIntervalThink(self.interval)
 end
 
-function modifier_item_imba_aether_specs_ward:OnIntervalThink()
-	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.radius, self.interval, false)
-end
+-- function modifier_item_imba_aether_specs_ward:OnIntervalThink()
+	-- AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.radius, self.interval, false)
+-- end
 
-function modifier_item_imba_aether_specs_ward:CheckState()
-	return {[MODIFIER_STATE_FLYING] = true}
-end
+-- function modifier_item_imba_aether_specs_ward:CheckState()
+	-- return {[MODIFIER_STATE_FLYING] = true}
+-- end
 
 ------------------------------
 -- AETHER OF SPECS MODIFIER --

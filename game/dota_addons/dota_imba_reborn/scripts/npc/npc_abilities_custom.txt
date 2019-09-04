@@ -7,6 +7,7 @@
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
 #base heroes/bane/abilities.txt
+#base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/bristleback/abilities.txt
 #base heroes/chen/abilities.txt
@@ -22,6 +23,7 @@
 #base heroes/life_stealer/abilities.txt
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
+#base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
@@ -37,6 +39,7 @@
 #base heroes/tidehunter/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
+#base heroes/weaver/abilities.txt
 #base heroes/winter_wyvern/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
@@ -2071,7 +2074,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"2000"
+				"maximum_distance"		"400"
 			}
 		}
 	}
@@ -2167,12 +2170,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"16 20 24 28"
+				"damage"				"16 32 48 64"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_9"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_pct_as_damage"		"40 60 80 100"
+				"str_pct_as_damage"		"30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -2189,7 +2193,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"				
+				"aura_radius"			"1200"				
 			}
 			"06"
 			{
@@ -2276,6 +2280,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction_scepter"	"40"
 				"CalculateSpellDamageTooltip"	"0"
+				"RequiresScepter"			"1"
 			}
 			"06"
 			{
@@ -2498,7 +2503,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"value"						"100"
 			}
 		}
 	}
@@ -2527,6 +2532,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// +X Retaliate Damage
+	//=================================================================================================================
+	"special_bonus_imba_centaur_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_centaur_return"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"80"
 			}
 		}
 	}
@@ -4875,7 +4908,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"9.0"
+				"buff_duration"					"10.0"
 			}
 			"05"
 			{
@@ -4904,7 +4937,17 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage_heroes"					"20 50 80 110"
 				"CalculateSpellDamageTooltip"	"0"
-			}	
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"armor_creeps"					"0.5"
+			}		
+			"11"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"armor_heroes"					"1.5 3 4.5 6"
+			}			
 		}
 	}
 
@@ -5024,6 +5067,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crack_distance"			"2400"
+				"LinkedSpecialBonus"		"special_bonus_imba_elder_titan_6"
 			}
 			"04"
 			{
@@ -5050,6 +5094,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"slow_duration_scepter"		"4.0 6.0 8.0"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -5182,7 +5227,7 @@
 		}
 	}
 
-	"special_bonus_imba_elder_titan_6"	// Earth Splitter crack distance bonus (+3000)
+	"special_bonus_imba_elder_titan_6"	// Earth Splitter crack distance bonus
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -5202,7 +5247,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"3000"
+				"value"			"3600"
 			}
 		}
 	}
@@ -10203,7 +10248,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"absolute_speed"			"650"
+				"absolute_speed"			"700"
 			}
 			"04"
 			{
@@ -13034,19 +13079,27 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_duration"			"8 9 10"
+				"radius"					"1200"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"shield_duration"			"6 7 8"
-			}
+				"scepter_duration"			"8 9 10"
+				"RequiresScepter"		"1"
+			}		
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"scepter_regen"					"40"
+				"RequiresScepter"		"1"
 			}
+			
 			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shield_duration"			"6 7 8"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_hp_shield_health_pct"	"12 18 24"
@@ -18941,23 +18994,26 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_rain"	"10"
+				"damage_reduction_rain"	"5"
 			}
 			
 			"16"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_regen"				"35"
+				"RequiresScepter"			"1"
 			}
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_armor"				"12"
+				"RequiresScepter"			"1"
 			}
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_puddle_status_resistance"			"40"
+				"RequiresScepter"			"1"
 			}
             "19"
             {
@@ -19028,25 +19084,25 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.3 1.6 1.9 2.2"
+				"stun_duration"			"1"
 			}
 
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2"
+				"slow_duration"			"3 4 5 6"
 			}
 
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"-20"
+				"ms_slow_pct"			"-20 -25 -30 -35"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_slow"				"-20"
+				"as_slow"				"-20 -25 -30 -35"
 			}
 
 			"07"
@@ -19077,11 +19133,13 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"scepter_puddle_duration"		"25"
+				"RequiresScepter"	"1"
 			}
 			"12"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"scepter_puddle_radius"		"550"
+				"RequiresScepter"	"1"
 			}			
 		}
 	}
@@ -19151,6 +19209,52 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Ability: Slardar Bash (7.20 Version)
+	//=================================================================================================================
+	"imba_slardar_bash_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_slardar"
+		"AbilityTextureName"			"slardar_bash"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilitySound"					"Hero_Slardar.Bash"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"25"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"75 125 175 225"
+				//"LinkedSpecialBonus"	"special_bonus_unique_slardar_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_slardar_13"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1 1.1 1.2 1.3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_count"			"3"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}	
 
 	//=================================================================================================================
 	// Slardar's Corrosive Haze
@@ -19631,6 +19735,31 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_slardar_13"	// +X Bash Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_slardar_bash_720"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"75"
+			}
+		}
+	}	
 	
 	//=================================================================================================================
 	// Timbersaw's Dendrophobia
@@ -27504,7 +27633,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_time"			"2"				
+				"damage_time"			"1"
 			}
 		}
 	}
@@ -27522,7 +27651,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"725"
+		"AbilityCastRange"				"775"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"40 34 28 22"
 		"AbilityManaCost"				"75"
@@ -27709,7 +27838,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"25 30 35 40"
-				"LinkedSpecialBonus"	"special_bonus_unique_faceless_void_3"
+				//"LinkedSpecialBonus"	"special_bonus_unique_faceless_void_3"
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_12"
 			}
 			"05"
 			{
@@ -27834,13 +27964,13 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_as_slow"				"150"
+				"scepter_ally_as_slow"				"200"
 			}
 
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_ms_slow_pcnt"			"50"
+				"scepter_ally_ms_slow_pcnt"			"100"
 			}
 
 			"10"
@@ -28162,7 +28292,7 @@
 	//=================================================================================================================
 	// Increased Chronosphere Radius
 	//=================================================================================================================
-	"special_bonus_imba_faceless_void_10" 
+	"special_bonus_imba_faceless_void_10"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28186,6 +28316,62 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// -Xs Time Walk
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_11"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_faceless_void_time_walk"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1.5"
+			}
+		}
+	}
+	//=================================================================================================================
+	// +X Time Lock Damage
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_12"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_faceless_void_time_lock_720"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+	
 	
 	//=================================================================================================================
 	// Juggernaut's Blade Fury
@@ -30642,7 +30828,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_repeat_pct"		"20"
+				"damage_repeat_pct"		"40"
 				"CalculateSpellDamageTooltip"	"0"
 				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_13"
 			}
@@ -30885,7 +31071,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160 210 260"
+		"AbilityManaCost"				"140 200 260"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -30910,7 +31096,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"16 18 20"
+				"movement_speed_pct"	"20 22 24"
 			}
 
 			"03"
@@ -30923,7 +31109,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_vendetta_stacks"	"250 400 550"
+				"maximum_vendetta_stacks"	"300 450 600"
 				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_12"
 			}
 			
@@ -31381,7 +31567,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1025"
+				"range"					"900 1000 1100 1200"
 			}
 			"03"
 			{
@@ -31416,7 +31602,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attackspeed"		"490"
+				"bonus_attackspeed"		"190"
 			}
 			"10"
 			{
@@ -32048,7 +32234,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -32116,12 +32302,14 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_dagger_count"	"3"
+				"scepter_dagger_count"	"0"
+				"RequiresScepter"		"1"
 			}
 			"09"
 			{
 				"var_type"				    "FIELD_INTEGER"
-				"scepter_knives_interval"	"0.3"
+				"scepter_knives_interval"	"0"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
@@ -32268,6 +32456,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"evasion"					"20 30 40 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_10"
 			}
 			"02"
 			{
@@ -32303,6 +32492,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_cooldown"			"12"
+				"RequiresScepter"			"1"
 			}			
 		}
 	}
@@ -32345,7 +32535,8 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"17"
+				"crit_chance"				"15"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_9"
 			}
 			"03"
 			{
@@ -32424,7 +32615,7 @@
 		}
 	}
 
-	"special_bonus_imba_phantom_assassin_3"	// +1 Stifling Dagger bonus dagger (like aghs)
+	"special_bonus_imba_phantom_assassin_3"	// +X Stifling Dagger bonus dagger (like aghs)
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32444,7 +32635,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"value"			"2"
 			}
 		}
 	}
@@ -32574,6 +32765,56 @@
 		}
 	}
 	
+	"special_bonus_imba_phantom_assassin_9"	// +X% Coup de Grace chance
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_phantom_assassin_coup_de_grace"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"10"
+			}
+		}
+	}
+	
+	
+	"special_bonus_imba_phantom_assassin_10"	// +X% Blur Evasion
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_phantom_assassin_blur"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"25"
+			}
+		}
+	}		
 
 	//=================================================================================================================
 	// Phantom Lancer's Spirit Lance
@@ -33397,7 +33638,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"perfectshot_critical_dmg_pct"	"125 150 175 200"
+				"perfectshot_critical_dmg_pct"	"150"
 			}
 
 			"08"
@@ -33458,7 +33699,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aim_bonus_range"			"1000"
+				"aim_bonus_range"			"600"
 			}
 		}
 	}
@@ -35385,7 +35626,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"armor_reduction"		"3 4 5 6"
+				"armor_reduction"		"4 5 6 7"
+				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_9"
 			}
 			"05"
 			{
@@ -35395,7 +35637,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_aoe"			"500"
+				"vision_aoe"			"300"
 			}
 			"07"
 			{
@@ -35423,6 +35665,7 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"FightRecapLevel"					"1"
 		"AbilityTextureName"    	 		"vengefulspirit_command_aura"
+		"HasScepterUpgrade"					"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -35433,7 +35676,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900"
+		"AbilityCastRange"					"1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -35447,12 +35690,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"3 7 11 15"
+				"aura_radius"				"1200"
 			}
 			"03"
 			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"100"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"150"
+			}
+			
+			"05"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"1200"
+				"num_illusions_on_death"	"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_upgrade_level"	"25"
+			}				
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_illusions_on_death_upgrade"	"2"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"3 7 11 15"
 			}
 		}
 	}
@@ -35484,7 +35753,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"5"
+				"damage_pct"				"4"
 			}
 
 			"03"
@@ -35541,8 +35810,8 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"45"
-
+		"AbilityCooldown"					"0"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"					"100 150 200"
@@ -35569,7 +35838,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"swapback_delay"					"2.5"
+				"swapback_delay"					"2.25"
 				"LinkedSpecialBonus"				"special_bonus_imba_vengefulspirit_2"
 			}
 			"03"
@@ -35597,6 +35866,22 @@
 				"var_type"							"FIELD_INTEGER"
 				"tree_radius"						"300"
 			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_charges"					"2"
+			}		
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"charge_restore_time"			"80 70 60"
+			}		
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"charge_restore_time_scepter"	"10"
+				"RequiresScepter"		"1"
+			}			
 		}
 	}
 
@@ -35630,7 +35915,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengeful Spirit Talent 1 (Level 10): Additional Magic Missile damage
+	// +X Magic Missile Damage
 	//=================================================================================================================
 	"special_bonus_imba_vengefulspirit_1"
 	{
@@ -35652,7 +35937,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
+				"value"						"400"
 			}
 		}
 	}
@@ -35680,7 +35965,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"-1.0"
+				"value"						"-1.25"
 			}
 		}
 	}
@@ -35713,7 +35998,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"5"
+				"spell_power"				"0"
 			}
 		}
 	}
@@ -35873,6 +36158,90 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// -(-X) Wave of Terror Armor
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_wave_of_terror"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// -Xs Wave of Terror Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_wave_of_terror"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// -Xs Magic Missile Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_11"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_magic_missile"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Venomancer's Venomous Gale
@@ -37437,7 +37806,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11"
+		"AbilityCooldown"				"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37597,6 +37966,7 @@
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_hypothermic_wisdom"
 		"MaxLevel"						"4"
+		"HasScepterUpgrade"				"1"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37613,6 +37983,12 @@
 				"var_type"					"FIELD_FLOAT"
 				"spell_amp_per_int"			"0.1" 
 			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"armor_per_health_pct_loss"	"0.5"
+				"RequiresScepter"			"1"
+			}			
 		}
 	}
 
@@ -37706,7 +38082,7 @@
 	}
 	
 	//=================================================================================================================
-	// Sly King Unique Talent: +0.3 Hypothermic Wisdom INT/health loss %
+	// Sly King Unique Talent: +X Hypothermic Wisdom INT/health loss %
 	//=================================================================================================================
 	"special_bonus_imba_unique_sly_king_1"
 	{
@@ -37723,7 +38099,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"0.3"
+				"value"			"0.4"
 			}
 		}
 	}
@@ -37815,7 +38191,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 11 9 7"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37888,7 +38264,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 11 9 7"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37965,7 +38341,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38039,7 +38415,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -39583,7 +39959,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30 60 90 120"
+				"bonus_damage"				"40 80 120 160"
 			}
 			"03"
 			{
@@ -39648,7 +40024,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"30 40 50 60"
+				"damage_per_second"			"40 50 60 70"
 				"LinkedSpecialBonus"		"special_bonus_ember_guard_damage"
 			}
 			"04"
@@ -39687,7 +40063,7 @@
 			"02"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"duration"		"1.0"	// proc duration
+				"duration"		"1.5"	// proc duration
 			}
 		}
 	}
@@ -39800,7 +40176,7 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"		"ember_spirit_activate_fire_remnant"
 		"ScriptFile"				"components/abilities/heroes/hero_ember.lua"
-
+		"HasScepterUpgrade"         "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -39857,6 +40233,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
+				"RequiresScepter"			"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_mana_cost"			"25"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -39935,7 +40318,8 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
-			}
+				"RequiresScepter"			"1"
+			}	
 		}
 	}
 

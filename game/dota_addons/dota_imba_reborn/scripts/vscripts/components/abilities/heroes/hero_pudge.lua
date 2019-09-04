@@ -1042,6 +1042,7 @@ function imba_pudge_dismember:OnSpellStart()
 
 	if self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(self) then
+			self:GetCaster():Interrupt()
 			return nil
 		end
 	end
@@ -1097,6 +1098,7 @@ modifier_imba_pudge_dismember_handler	= class({})
 
 function modifier_imba_pudge_dismember_handler:IsHidden()	return true end
 -- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
+function modifier_imba_pudge_dismember_handler:IsPurgable()	return false end
 function modifier_imba_pudge_dismember_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_pudge_dismember_handler:DeclareFunctions()
@@ -1134,8 +1136,6 @@ function modifier_imba_dismember:OnCreated()
 	if IsServer() then
 		-- Add the pull towards modifier
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {duration = self:GetAbility():GetChannelTime()})
-	
-		self:GetParent():StartGesture(ACT_DOTA_DISABLED)
 	end
 end
 
@@ -1156,9 +1156,6 @@ end
 
 function modifier_imba_dismember:OnDestroy()
 	if IsServer() then
-		self:GetParent():FadeGesture(ACT_DOTA_DISABLED)
-		self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_4)
-		
 		-- Status Resistance compromise to make Pudge automatically attack the Dismember target on interrupt
 		if self:GetCaster():IsChanneling() then
 			self:GetAbility():EndChannel(false)
@@ -1170,6 +1167,14 @@ end
 function modifier_imba_dismember:CheckState()
 	local state = {[MODIFIER_STATE_STUNNED] = true,}
 	return state
+end
+
+function modifier_imba_dismember:DeclareFunctions()
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_dismember:GetOverrideAnimation()
+	return ACT_DOTA_DISABLED
 end
 
 modifier_imba_pudge_dismember_buff = modifier_imba_pudge_dismember_buff or class({})

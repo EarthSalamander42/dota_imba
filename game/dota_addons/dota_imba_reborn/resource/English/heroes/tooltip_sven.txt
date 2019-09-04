@@ -44,10 +44,10 @@
 
 // Sven's God's Strength
 "DOTA_Tooltip_ability_imba_sven_gods_strength"                          "God's Strength"
-"DOTA_Tooltip_ability_imba_sven_gods_strength_Description"              "Sven channels his rogue strength, granting himself bonus damage.\n<font color='#FF7800'>Colossal Slash:</font> While Gods Strength is active Sven can use Colossal Slash.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_sven_gods_strength_Lore"                    "With the strength that shattered the Sacred Helm, the Rogue Knight stands unopposed in melee combat."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_Description"              "Sven channels his rogue strength, granting himself bonus damage.\n<font color='#FF7800'>Colossal Slash:</font> While Gods Strength is active, Sven can use Colossal Slash."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_Lore"						"With the strength that shattered the Sacred Helm, the Rogue Knight stands unopposed in melee combat."
 "DOTA_Tooltip_ability_imba_sven_gods_strength_Note0"                    "Only increases base damage and that given by the primary attribute. Raw bonus damage is not increased."
-"DOTA_Tooltip_ability_imba_sven_gods_strength_aghanim_description"                  "God's Strength grants bonus damage to allies. This effect is an Aura."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_aghanim_description"		"God's Strength grants bonus damage to allies in a %aura_radius_scepter% radius."
 "DOTA_Tooltip_ability_imba_sven_gods_strength_bonus_dmg_pct"            "%DAMAGE BONUS:"
 "DOTA_Tooltip_ability_imba_sven_gods_strength_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_sven_gods_strength_radius"                  "EFFECT RADIUS:"

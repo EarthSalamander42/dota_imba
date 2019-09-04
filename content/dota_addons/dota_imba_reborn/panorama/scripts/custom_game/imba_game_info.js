@@ -8,12 +8,11 @@
 		"imba_bounty_hunter_headhunter",
 		"imba_centaur_thick_hide",
 		"imba_crystal_maiden_arcane_dynamo",
-		"imba_faceless_void_timelord",
 		"imba_kunkka_ebb_and_flow",
 		"imba_queenofpain_delightful_torment",
-		"imba_scaldris_antipode",
 		"imba_tiny_rolling_stone",
 		"imba_ursa_territorial_hunter",
+		"imba_visage_become_familiar"
 	]
 
 	if (AbilityPanel) {
@@ -53,7 +52,7 @@
 		"item_imba_arcane_nexus",
 		"item_imba_black_queen_cape",
 		"item_imba_jarnbjorn",
-		"item_imba_siege_cuirass",
+		"item_imba_meteor_hammer_4",
 		"item_imba_sogat_cuirass",
 		"item_imba_starfury",
 		"item_imba_ultimate_scepter_synth",

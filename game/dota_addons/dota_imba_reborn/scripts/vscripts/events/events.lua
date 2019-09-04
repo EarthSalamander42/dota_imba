@@ -711,6 +711,11 @@ function GameMode:OnPlayerChat(keys)
 			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 		end
 		
+		if str == "-memory" then
+			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			-- print(package.loaded) -- This lags everything to absolute death
+		end
+		
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			
@@ -849,7 +854,43 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
 								[14] = "special_bonus_imba_ancient_apparition_cold_feet_aoe"
 							}
-							upgraded = true			
+							upgraded = true
+						elseif string.find(text, 'weaver') and hero:GetName() == "npc_dota_hero_weaver" then
+							ability_set = {
+								[0] = "imba_weaver_the_swarm",
+								[1] = "imba_weaver_shukuchi",
+								[2] = "imba_weaver_geminate_attack",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_weaver_time_lapse",
+								[6] = "special_bonus_imba_weaver_shukuchi_damage",
+								[7] = "special_bonus_exp_boost_35",
+								[8] = "special_bonus_mana_break_20",
+								[9] = "special_bonus_strength_14",
+								[10] = "special_bonus_imba_weaver_the_swarm_armor_reduction",
+								[11] = "special_bonus_imba_weaver_the_swarm_destroy_attacks",
+								[12] = "special_bonus_imba_weaver_shukuchi_hasted_speed",
+								[13] = "special_bonus_imba_weaver_geminate_attack_tooltip_attack",
+							}
+							upgraded = true
+						elseif string.find(text, 'batrider') and hero:GetName() == "npc_dota_hero_batrider" then
+							ability_set = {
+								[0] = "imba_batrider_sticky_napalm",
+								[1] = "imba_batrider_flamebreak",
+								[2] = "imba_batrider_firefly",
+								[3] = "imba_batrider_methane_boost",
+								[4] = "generic_hidden",
+								[5] = "imba_batrider_flaming_lasso",
+								[6] = "special_bonus_spell_amplify_6",
+								[7] = "special_bonus_armor_5",
+								[8] = "special_bonus_unique_imba_batrider_methane_boost_distance",
+								[9] = "special_bonus_hp_400",
+								[10] = "special_bonus_cooldown_reduction_15",
+								[11] = "special_bonus_movement_speed_50",
+								[12] = "special_bonus_unique_imba_batrider_firefly_truesight",
+								[13] = "special_bonus_unique_imba_batrider_flamebreak_cooldown",
+							}
+							upgraded = true						
 						end
 							
 						for ability = 0, 23 do
@@ -873,8 +914,6 @@ function GameMode:OnPlayerChat(keys)
 						end
 					end
 				end
-			elseif str == "-dark_seer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
 			elseif str == "-phantom_lancer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
@@ -939,15 +978,12 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
-			elseif str == "-memory" then
-				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
-				-- print(package.loaded) -- This lags everything to absolute death
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
 			
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
-				caster:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(caster, pos, false)
 			end
 		end
 	end

@@ -5721,9 +5721,7 @@
 	{
 		// Abilities
 		//----------------------------------------------------------------
-		
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -5743,9 +5741,7 @@
 	{
 		// Abilities
 		//----------------------------------------------------------------
-		
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
 
 		// Armor
 		//----------------------------------------------------------------
@@ -5765,9 +5761,7 @@
 	{
 		// Abilities
 		//----------------------------------------------------------------
-		
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
 
 		// Armor
 		//----------------------------------------------------------------
@@ -6971,6 +6965,13 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"4"		// Base health.
 	}
+	
+	"npc_dota_rattletrap_cog"
+	{										
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	}		
 	
 	//=================================================================================
 	// Storm Spirit's Static Remnant

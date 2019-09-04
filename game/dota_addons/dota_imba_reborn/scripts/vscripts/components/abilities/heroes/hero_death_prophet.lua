@@ -44,7 +44,7 @@ function imba_death_prophet_silence:OnSpellStart()
 		ParticleManager:SetParticleControl(pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(pfx)
 
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", {duration = self:GetDuration()})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - enemy:GetStatusResistance()), true)
 	end
 end
 
@@ -54,10 +54,6 @@ end
 
 modifier_imba_death_prophet_silence = class({})
 
-function modifier_imba_death_prophet_silence:IsHidden() return false end
-function modifier_imba_death_prophet_silence:IsPurgable() return false end
-function modifier_imba_death_prophet_silence:RemoveOnDeath() return false end
-function modifier_imba_death_prophet_silence:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_death_prophet_silence:GetEffectName() return CustomNetTables:GetTableValue("battlepass", "death_prophet").silence_overhead end
 function modifier_imba_death_prophet_silence:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 

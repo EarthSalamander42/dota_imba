@@ -349,7 +349,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"huntmastery_grace_period"	"0.5"
+				"huntmastery_grace_period"	"2.0"
 			}
 		}
 	}
