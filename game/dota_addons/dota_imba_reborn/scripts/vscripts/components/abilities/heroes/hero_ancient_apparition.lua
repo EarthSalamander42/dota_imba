@@ -19,6 +19,7 @@ LinkLuaModifier("modifier_imba_ancient_apparition_anti_abrasion_thinker", "compo
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_global_cooling", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_cold_hearted", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 imba_ancient_apparition_cold_feet								= class({})
 modifier_imba_ancient_apparition_cold_feet						= class({})
@@ -42,6 +43,7 @@ imba_ancient_apparition_ice_blast								= class({})
 modifier_imba_ancient_apparition_ice_blast_thinker				= class({})
 modifier_imba_ancient_apparition_ice_blast						= class({})
 modifier_imba_ancient_apparition_ice_blast_global_cooling		= class({})
+modifier_imba_ancient_apparition_ice_blast_cold_hearted			= class({})
 
 imba_ancient_apparition_ice_blast_release						= class({})
 
@@ -675,6 +677,7 @@ function imba_ancient_apparition_ice_blast:OnSpellStart()
 		fEndRadius			= 0,
 		Source				= self:GetCaster(),
 		bDrawsOnMinimap 	= true,
+		bVisibleToEnemies 	= false,
 		bHasFrontalCone		= false,
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
@@ -846,6 +849,34 @@ function modifier_imba_ancient_apparition_ice_blast_global_cooling:GetModifierMo
 	return self.global_cooling_move_speed_reduction * (-1)
 end
 
+-------------------------------------
+-- ICE BLAST COLD HEARTED MODIFIER --
+-------------------------------------
+
+function modifier_imba_ancient_apparition_ice_blast_cold_hearted:OnCreated(params)
+	if not IsServer() then return end
+	
+	if self:GetAbility() then
+		self.cold_hearted_pct	= self:GetAbility():GetSpecialValueFor("cold_hearted_pct") * 0.01
+	else
+		self.cold_hearted_pct	= 0.5
+	end
+
+	self:SetStackCount(self:GetStackCount() + (params.regen * self.cold_hearted_pct))
+end
+
+function modifier_imba_ancient_apparition_ice_blast_cold_hearted:OnRefresh(params)
+	self:OnCreated(params)
+end
+
+function modifier_imba_ancient_apparition_ice_blast_cold_hearted:DeclareFunctions()
+	return {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+end
+
+function modifier_imba_ancient_apparition_ice_blast_cold_hearted:GetModifierConstantHealthRegen()
+	return self:GetStackCount()
+end
+
 -----------------------
 -- ICE BLAST RELEASE --
 -----------------------
@@ -1004,20 +1035,24 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 
 				ApplyDamage(damageTable)
 			end
-		end
-		
-		-- IMBAfication: Global Cooling
-		local all_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		
-		local global_cooling_modifier = nil
-		
-		for _, enemy in pairs(all_enemies) do
-			global_cooling_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_global_cooling", {duration = duration})
 			
-			if global_cooling_modifier then
-				global_cooling_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
-			end
+			-- IMBAfication: Cold-Hearted
+			self:GetCaster():AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_cold_hearted", {duration = duration, regen = enemy:GetHealthRegen()})
 		end
+		
+		-- -- IMBAfication: Global Cooling
+		-- -- Something something lag? IDK
+		-- local all_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		
+		-- local global_cooling_modifier = nil
+		
+		-- for _, enemy in pairs(all_enemies) do
+			-- global_cooling_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_global_cooling", {duration = duration})
+			
+			-- if global_cooling_modifier then
+				-- global_cooling_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			-- end
+		-- end
 	end
 end
 

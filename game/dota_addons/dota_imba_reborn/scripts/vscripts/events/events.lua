@@ -716,6 +716,11 @@ function GameMode:OnPlayerChat(keys)
 			-- print(package.loaded) -- This lags everything to absolute death
 		end
 		
+		-- For the serial disconnectors
+		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
+			GameRules:SetGameWinner(caster:GetTeamNumber())
+		end
+		
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			

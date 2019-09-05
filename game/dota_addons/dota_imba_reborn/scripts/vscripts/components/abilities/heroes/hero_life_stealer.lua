@@ -146,7 +146,12 @@ end
 -- RAGE INSANITY MODIFIER --
 ----------------------------
 
+function modifier_imba_life_stealer_rage_insanity:IsPurgable()	return false end
+
 function modifier_imba_life_stealer_rage_insanity:OnCreated(params)
+	if self:GetAbility() then
+		self.stack_activation	= self:GetAbility():GetSpecialValueFor("insanity_stack_activation")
+	end
 	
 	if not IsServer() then return end
 	
