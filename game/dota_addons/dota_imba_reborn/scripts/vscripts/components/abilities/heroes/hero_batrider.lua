@@ -654,15 +654,27 @@ end
 function modifier_imba_batrider_firefly_thinker:IsPurgable()	return false end
 
 -- "Minor" issue: Particles instantly vanish when modifier ends, unlike vanilla which has flames gradually vanish
-function modifier_imba_batrider_firefly_thinker:GetEffectName()
-	return "particles/units/heroes/hero_batrider/batrider_firefly.vpcf"
-end
+-- function modifier_imba_batrider_firefly_thinker:GetEffectName()
+	-- return "particles/units/heroes/hero_batrider/batrider_firefly.vpcf"
+-- end
 
 function modifier_imba_batrider_firefly_thinker:OnCreated()
 	if not IsServer() then return end
 	
+	self.firefly_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_firefly.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+	ParticleManager:SetParticleControl(self.firefly_particle, 11, Vector(1, 0, 0))
+	self:AddParticle(self.firefly_particle, false, false, -1, false, false)
+	
 	-- This seems better than a FrameTime() interval thinker to change origin? Wonder if there's any negative consequences...
-	self:GetParent():FollowEntity(self:GetCaster(), false)
+	-- ...YEAH THE NEGATIVE CONSEQUENCE IS THE GOD DAMN INVIS = INVIS PARTICLES
+	-- self:GetParent():FollowEntity(self:GetCaster(), false)
+	
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_batrider_firefly_thinker:OnIntervalThink()
+	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin())
 end
 
 function modifier_imba_batrider_firefly_thinker:OnDestroy()
@@ -737,7 +749,7 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 	end
 
 	if self:GetCaster():HasScepter() then
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 		
 		for _, enemy in pairs(enemies) do
 			if enemy ~= target and enemy:IsConsideredHero() then

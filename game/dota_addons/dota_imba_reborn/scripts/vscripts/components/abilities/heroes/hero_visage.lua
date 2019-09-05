@@ -133,6 +133,8 @@ function modifier_imba_visage_grave_chill_buff:OnCreated()
 	
 	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
 	
+	self:StartIntervalThink(FrameTime())
+	
 	if not IsServer() then return end
 	
 	local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_caster.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -148,6 +150,16 @@ function modifier_imba_visage_grave_chill_buff:OnCreated()
 	end
 	
 	self:AddParticle(chill_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_visage_grave_chill_buff:OnRefresh()
+	self:OnCreated()
+end
+
+-- This is just to update client-side
+function modifier_imba_visage_grave_chill_buff:OnIntervalThink()
+	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
+	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_visage_grave_chill_buff:DeclareFunctions()
@@ -187,11 +199,23 @@ function modifier_imba_visage_grave_chill_debuff:OnCreated()
 	
 	self.deaths_enticement_stacks			= self:GetParent():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetCaster())
 	
+	self:StartIntervalThink(FrameTime())
+	
 	if not IsServer() then return end
 	
 	local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(chill_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_visage_grave_chill_debuff:OnRefresh()
+	self:OnCreated()
+end
+
+-- This is just to update client-side
+function modifier_imba_visage_grave_chill_debuff:OnIntervalThink()
+	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
+	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_visage_grave_chill_debuff:DeclareFunctions()
@@ -242,6 +266,7 @@ function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifi
 
 function modifier_imba_visage_grave_chill_aura_modifier:IsHidden()		return true end
 function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
+function modifier_imba_visage_grave_chill_aura_modifier:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
 	self.creation_time = GameRules:GetDOTATime(true, true)
@@ -751,8 +776,10 @@ function modifier_imba_visage_stone_form_self_cast:IsHidden()	return true end
 function modifier_imba_visage_stone_form_self_cast:OnCreated()
 	if not IsServer() then return end
 	
-	self.summon_familiars_ability = self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
-
+	self.summon_familiars_ability	= self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
+	self.lowest_cooldown			= 99
+	self.stone_form_ability			= nil
+	
 	self:StartIntervalThink(0.1)
 end
 
@@ -775,21 +802,22 @@ function modifier_imba_visage_stone_form_self_cast:OnIntervalThink()
 			self:GetAbility():SetActivated(true)
 		end
 		
-		local lowest_cooldown	= 99
+		self.lowest_cooldown	= 99
 		
 		local allies 			= FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
 		
 		for _, ally in pairs(allies) do
 			if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-				local stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
+				self.stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
 				
-				if stone_form_ability and stone_form_ability:GetCooldownTimeRemaining() <= lowest_cooldown then
-					lowest_cooldown = stone_form_ability:GetCooldownTimeRemaining()
+				if self.stone_form_ability and self.stone_form_ability:GetCooldownTimeRemaining() <= self.lowest_cooldown then
+					self.lowest_cooldown = self.stone_form_ability:GetCooldownTimeRemaining()
 				end
 			end
 		end
 		
-		self:GetAbility():StartCooldown(lowest_cooldown)
+		self:GetAbility():EndCooldown()
+		self:GetAbility():StartCooldown(self.lowest_cooldown)
 	else
 		self:GetAbility():SetActivated(false)
 		self.summon_familiars_ability = self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
@@ -832,7 +860,9 @@ function imba_visage_summon_familiars:OnSpellStart()
 			}
 		end
 		
-		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+		if self.responses then
+			self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+		end
 	end
 	
 	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
@@ -855,7 +885,7 @@ function imba_visage_summon_familiars:OnSpellStart()
 	
 	if self.familiar_table then
 		for num = 1, #self.familiar_table do
-			if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]):IsAlive() then
+			if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and EntIndexToHScript(self.familiar_table[num]).IsNull and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]).IsAlive and EntIndexToHScript(self.familiar_table[num]):IsAlive() then
 				EntIndexToHScript(self.familiar_table[num]):ForceKill(false)
 			end
 		end
@@ -1024,8 +1054,6 @@ end
 -- function imba_visage_summon_familiars_stone_form:GetPlaybackRateOverride()
 	-- return self:GetSpecialValueFor("stun_delay") / 0.55
 -- end
-
--- TODO: When this is done, make sure to remove the vanilla ability from the familiars
 
 function imba_visage_summon_familiars_stone_form:OnSpellStart()
 	-- Remove this block when done with testing and the whole thing is properly ported over

@@ -298,6 +298,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"global_cooling_move_speed_reduction"	"17"
 			}
+			"12"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"cold_hearted_pct"				"50"
+			}
 		}
 	}
 
