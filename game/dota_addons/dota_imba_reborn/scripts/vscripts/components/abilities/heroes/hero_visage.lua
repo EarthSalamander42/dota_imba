@@ -786,16 +786,16 @@ end
 -- This block seems like it could be problematic with respect to memory usage
 function modifier_imba_visage_stone_form_self_cast:OnIntervalThink()
 	if self.summon_familiars_ability and self.summon_familiars_ability.familiar_table then
-		local bValidFamiliars = false
+		self.bValidFamiliars = false
 
 		for num = 1, #self.summon_familiars_ability.familiar_table do
 			if self.summon_familiars_ability.familiar_table[num] and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]) and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]):IsAlive() then
-				bValidFamiliars = true
+				self.bValidFamiliars = true
 				break
 			end
 		end
 		
-		if not bValidFamiliars then
+		if not self.bValidFamiliars then
 			self:GetAbility():SetActivated(false)
 			return
 		else
@@ -885,7 +885,7 @@ function imba_visage_summon_familiars:OnSpellStart()
 	
 	if self.familiar_table then
 		for num = 1, #self.familiar_table do
-			if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and EntIndexToHScript(self.familiar_table[num]).IsNull and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]).IsAlive and EntIndexToHScript(self.familiar_table[num]):IsAlive() then
+			if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and EntIndexToHScript(self.familiar_table[num]).IsNull and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]).IsAlive and EntIndexToHScript(self.familiar_table[num]):IsAlive() and EntIndexToHScript(self.familiar_table[num]).ForceKill then
 				EntIndexToHScript(self.familiar_table[num]):ForceKill(false)
 			end
 		end
