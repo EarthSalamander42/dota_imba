@@ -16,7 +16,7 @@ function OnUpdateHeroSelection()
 
 	if (hype_text == undefined)
 		return;
-
+/*
 	var friends_and_foes = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("FriendsAndFoes");
 	var hero_bio = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroBio");
 	if (hero_bio == null) {
@@ -30,6 +30,7 @@ function OnUpdateHeroSelection()
 //	hero_bio.DeleteAsync(0);
 
 	hero_bio.text = hype_text;
+*/
 }
 
 function UpdateTeam( teamId )
