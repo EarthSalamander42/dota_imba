@@ -40,6 +40,7 @@
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
 #base heroes/weaver/abilities.txt
+#base heroes/windranger/abilities.txt
 #base heroes/winter_wyvern/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt

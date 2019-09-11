@@ -631,6 +631,7 @@ modifier_imba_wisp_tether_handler = class({})
 
 function modifier_imba_wisp_tether_handler:IsHidden()		return true end
 function modifier_imba_wisp_tether_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_wisp_tether_handler:IsPurgable()		return false end
 
 function modifier_imba_wisp_tether_handler:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ORDER}

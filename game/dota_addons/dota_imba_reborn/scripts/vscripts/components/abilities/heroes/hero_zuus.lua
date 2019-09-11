@@ -29,7 +29,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 		caster:GetTeam(),
 		target:GetAbsOrigin(), 
 		nil, 
-		radius, 
+		radius * static_chain_mult, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		--DOTA_UNIT_TARGET_FLAG_NONE, 
@@ -58,7 +58,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	Timers:CreateTimer(jump_delay, function() 
 		-- Find targets to chain too
 		for _,enemy in pairs(nearby_enemy_units) do 
-			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy then
+			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
 				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
 				-- Abort when we find something to chain too
 				break
