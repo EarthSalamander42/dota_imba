@@ -7,7 +7,7 @@ require('addon_init')
 
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
-	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+--	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 end
 
 require('libraries/animations')

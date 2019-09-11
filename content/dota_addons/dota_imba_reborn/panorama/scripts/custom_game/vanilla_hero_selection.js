@@ -1,95 +1,75 @@
-var count = 0;
 var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
-var herocard = FindDotaHudElement('GridCore');
-var total = herocard.GetChildCount();
+var GridCategories = FindDotaHudElement('GridCategories');
+//var total = herocard.GetChildCount();
 var picked_heroes = [];
+
+// $.Msg(herolist)
+// $.Msg(GridCategories)
 
 function FindDotaHudElement(panel) {
 	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(panel);
 }
 
 function InitHeroSelection()  {
-	for(var i = 0; i < total; i++) {
-		$.Schedule((0.02 * i), UpdateHero);
-	}
-}
+//	$.Msg(GridCategories.GetChildCount())
+	var i = 0;
 
-function UpdateHero() {
-	var hero_image_panel;
+	while (i < GridCategories.GetChildCount()) {
+//		$.Msg(GridCategories.GetChild(i))
+//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList"))
+//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount())
 
-	if (herocard.GetChild(count) != null) {
-		hero_image_panel = herocard.GetChild(count).FindChildTraverse("HeroImage");
-	}
-
-	if (hero_image_panel != undefined) {
-		hero_image_panel.GetParent().style.visibility = "visible";
-		for (hero in herolist.hotdisabledlist) {
-			if (hero == "npc_dota_hero_" + hero_image_panel.heroname) {
-				if (hero_image_panel.GetParent()) {
-					hero_image_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
-					hero_image_panel.GetParent().GetParent().AddClass("Unavailable")
-					hero_image_panel.GetParent().GetParent().AddClass("Banned")
-					hero_image_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
-					hero_image_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
-					CheckForBannedHero();
-					count++;
-					return;
+		for (var j = 0; j < GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount(); j++) {
+			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
+				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j).GetChild(0).GetChild(0);
+//				$.Msg(hero_panel)
+				
+				if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
+					hero_panel.GetParent().AddClass("IMBA_HeroCard");
+					hero_panel.GetParent().style.boxShadow = "inset #FF7800aa 0 0 5px 0";
+				} else if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
+					hero_panel.GetParent().AddClass("IMBA_HeroCard");
+					hero_panel.GetParent().style.boxShadow = "inset purple 0 0 5px 0";
 				}
 			}
 		}
 
-		for (hero in herolist.imbalist) {
-			if (hero == "npc_dota_hero_" + hero_image_panel.heroname) {
-				hero_image_panel.GetParent().AddClass("IMBA_HeroCard");
-				hero_image_panel.GetParent().style.boxShadow = "inset #FF7800aa 0 0 30px 0";
-				break;
-			}
-		}
+		i++;
+	}
+}
+/*
+function OnUpdateHeroSelection() {
+	picked_heroes = []
 
-		for (hero in herolist.customlist) {
-			if (hero == "npc_dota_hero_" + hero_image_panel.heroname) {
-				hero_image_panel.GetParent().AddClass("IMBA_HeroCard");
-				hero_image_panel.GetParent().style.boxShadow = "inset purple 0 0 30px 0";
-				break;
-			}
+	for(var i = 0; i < 19; i++)
+	{
+		if (Game.GetPlayerInfo(i)) {
+			$.Msg(Game.GetPlayerInfo(i).player_selected_hero);
+			picked_heroes[i] = Game.GetPlayerInfo(i).player_selected_hero;
 		}
 	}
 
-	count++;
-}
+	$.Msg("Start hero picked update...")
 
-function OnUpdateHeroSelection() {
-//	picked_heroes = []
+	count = 0;
 
-//	for(var i = 0; i < 19; i++)
-//	{
-//		if (Game.GetPlayerInfo(i)) {
-//			$.Msg(Game.GetPlayerInfo(i).player_selected_hero);
-//			picked_heroes[i] = Game.GetPlayerInfo(i).player_selected_hero;
-//		}
-//	}
+	for(var i = 0; i < total; i++)
+	{
+		UpdatePickedHeroes();
+	}
 
-//	$.Msg("Start hero picked update...")
+	count = 0;
 
-//	count = 0;
-
-//	for(var i = 0; i < total; i++)
-//	{
-//		UpdatePickedHeroes();
-//	}
-
-//	count = 0;
-/*
 	if (Game.GetMapInfo().map_display_name == "imba_demo") {
 		$.Msg(Game.GetPlayerInfo(0).player_selected_hero);
 		GameEvents.SendCustomGameEventToServer("fix_newly_picked_hero", {
 			hero : Game.GetPlayerInfo(0).player_selected_hero,
 		});
 	}
-*/
+
 }
 
-/*
+
 function OnUpdateHeroSelectionDirty() {
 	CheckForBannedHero();
 }
@@ -171,5 +151,5 @@ function CheckForBannedHero() {
 //	$.Schedule(1.0, OnUpdateHeroSelection);
 
 //	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
-	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
+//	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
 })();
