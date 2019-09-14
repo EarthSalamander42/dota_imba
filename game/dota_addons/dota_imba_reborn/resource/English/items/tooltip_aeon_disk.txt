@@ -1,0 +1,7 @@
+"DOTA_Tooltip_modifier_imba_aeon_disk"											"#{DOTA_Tooltip_modifier_item_aeon_disk_buff}"
+"DOTA_Tooltip_modifier_imba_aeon_disk_description"								"All incoming damage negated. Outgoing damage reduced by 85%."
+"DOTA_Tooltip_ability_item_imba_aeon_disk" 										"#{DOTA_Tooltip_ability_item_aeon_disk}"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_health" 						"+$health"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_mana" 							"+$mana"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_description" 							"#{DOTA_Tooltip_ability_item_aeon_disk_Description}"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_lore" 								"#{DOTA_Tooltip_ability_item_aeon_disk_Lore}"
