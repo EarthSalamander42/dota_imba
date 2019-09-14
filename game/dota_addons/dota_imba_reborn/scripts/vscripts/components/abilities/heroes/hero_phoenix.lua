@@ -2440,7 +2440,7 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		caster:SetHealth(caster:GetMaxHealth())
 
 		-- Add cooldown to scepter icon
-		for i = 0, 6 do 
+		for i = 0, 5 do 
 			local aghs = caster:GetItemInSlot(i)
 			if aghs ~= nil then
 				if aghs:GetName() == 'item_ultimate_scepter' then 
