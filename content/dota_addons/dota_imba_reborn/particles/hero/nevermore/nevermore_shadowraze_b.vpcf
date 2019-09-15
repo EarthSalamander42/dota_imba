@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -60,6 +60,11 @@
 			m_flRadiusMax = 200.0
 		},
 		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.7
+			m_fLifetimeMin = 0.7
+		},
+		{
 			_class = "C_INIT_PositionPlaceOnGround"
 			m_flOffset = 5.0
 			m_bIncludeWater = true
@@ -71,25 +76,29 @@
 			m_nFieldOutput = 7
 			m_flOutputMin = 1.0
 			m_flOutputMax = 0.0
-			m_bScaleInitialRange = true
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
 		},
 		{
 			_class = "C_INIT_RemapParticleCountToScalar"
 			m_nInputMax = 3
 			m_nFieldOutput = 7
-			m_bScaleInitialRange = true
-		},
-		{
-			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMax = 0.7
-			m_fLifetimeMin = 0.7
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
 		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 20
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 20.0
+			}
 		},
 	]
 	m_controlPointConfigurations = 
@@ -107,4 +116,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 3
 }

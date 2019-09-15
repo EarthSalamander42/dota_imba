@@ -1,69 +1,68 @@
 BATTLEPASS_LEVEL_REWARD = {}
-BATTLEPASS_LEVEL_REWARD[2]	= {"vengefulspirit_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[4]	= {"fountain", "common"}
-BATTLEPASS_LEVEL_REWARD[6]	= {"bristleback_rare", "rare"}
-BATTLEPASS_LEVEL_REWARD[7]	= {"slark_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[9]	= {"blink", "common"}
-BATTLEPASS_LEVEL_REWARD[11]	= {"chen_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[13]	= {"fountain2", "common"}
-BATTLEPASS_LEVEL_REWARD[14]	= {"alchemist_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[15]	= {"vengefulspirit_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[16]	= {"force_staff", "common"}
-BATTLEPASS_LEVEL_REWARD[18]	= {"blink2", "common"}
-BATTLEPASS_LEVEL_REWARD[20]	= {"maelstorm", "common"}
-BATTLEPASS_LEVEL_REWARD[22]	= {"fountain3", "common"}
-BATTLEPASS_LEVEL_REWARD[23]	= {"enigma_taunt", "rare"}
--- BATTLEPASS_LEVEL_REWARD[26]	= "bottle"
-BATTLEPASS_LEVEL_REWARD[27]	= {"blink3", "common"}
-BATTLEPASS_LEVEL_REWARD[28]	= {"dark_seer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[30]	= {"zuus_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[31]	= {"fountain4", "common"}
-BATTLEPASS_LEVEL_REWARD[32]	= {"force_staff2", "common"}
-BATTLEPASS_LEVEL_REWARD[33]	= {"skywrath_mage_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[35]	= {"mekansm", "common"}
-BATTLEPASS_LEVEL_REWARD[36]	= {"blink4", "common"}
-BATTLEPASS_LEVEL_REWARD[38]	= {"lion_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[39]	= {"bristleback_rare2", "rare"}
-BATTLEPASS_LEVEL_REWARD[40]	= {"fountain5", "common"}
-BATTLEPASS_LEVEL_REWARD[44]	= {"radiance", "common"}
-BATTLEPASS_LEVEL_REWARD[45]	= {"blink5", "common"}
-BATTLEPASS_LEVEL_REWARD[46]	= {"nyx_assassin_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[48]	= {"force_staff3", "common"}
-BATTLEPASS_LEVEL_REWARD[49]	= {"fountain6", "common"}
+BATTLEPASS_LEVEL_REWARD[2]		= {"vengefulspirit_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[4]		= {"fountain", "common"}
+BATTLEPASS_LEVEL_REWARD[5]		= {"bottle", "common"}
+BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
+BATTLEPASS_LEVEL_REWARD[7]		= {"slark_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[9]		= {"blink", "common"}
+BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
+BATTLEPASS_LEVEL_REWARD[13]		= {"fountain2", "common"}
+BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[16]		= {"force_staff", "common"}
+BATTLEPASS_LEVEL_REWARD[18]		= {"blink2", "common"}
+BATTLEPASS_LEVEL_REWARD[20]		= {"maelstorm", "common"}
+BATTLEPASS_LEVEL_REWARD[22]		= {"fountain3", "common"}
+BATTLEPASS_LEVEL_REWARD[23]		= {"enigma_taunt", "rare"}
+BATTLEPASS_LEVEL_REWARD[25]		= {"bottle2", "common"}
+BATTLEPASS_LEVEL_REWARD[27]		= {"blink3", "common"}
+BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[30]		= {"zuus_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[31]		= {"fountain4", "common"}
+BATTLEPASS_LEVEL_REWARD[32]		= {"force_staff2", "common"}
+BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[35]		= {"mekansm", "common"}
+BATTLEPASS_LEVEL_REWARD[36]		= {"blink4", "common"}
+BATTLEPASS_LEVEL_REWARD[38]		= {"lion_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
+BATTLEPASS_LEVEL_REWARD[40]		= {"fountain5", "common"}
+BATTLEPASS_LEVEL_REWARD[44]		= {"radiance", "common"}
+BATTLEPASS_LEVEL_REWARD[45]		= {"blink5", "common"}
+BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[48]		= {"force_staff3", "common"}
+BATTLEPASS_LEVEL_REWARD[49]		= {"fountain6", "common"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
--- BATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
-BATTLEPASS_LEVEL_REWARD[51]	= {"maelstorm2", "common"}
-BATTLEPASS_LEVEL_REWARD[52]	= {"enigma_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[54]	= {"blink6", "common"}
-BATTLEPASS_LEVEL_REWARD[55]	= {"lina_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[56]	= {"huskar_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[58]	= {"fountain7", "common"}
-BATTLEPASS_LEVEL_REWARD[60]	= {"sheepstick", "common"}
-BATTLEPASS_LEVEL_REWARD[62]	= {"dark_willow_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[63]	= {"blink7", "common"}
-BATTLEPASS_LEVEL_REWARD[64]	= {"force_staff4", "common"}
-BATTLEPASS_LEVEL_REWARD[65]	= {"juggernaut_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[67]	= {"fountain8", "common"}
-BATTLEPASS_LEVEL_REWARD[68]	= {"axe_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[70]	= {"mekansm2", "common"}
-BATTLEPASS_LEVEL_REWARD[71]	= {"zuus_taunt", "mythical"}
-BATTLEPASS_LEVEL_REWARD[72]	= {"blink8", "common"}
--- BATTLEPASS_LEVEL_REWARD[74]	= "bottle3"
-BATTLEPASS_LEVEL_REWARD[75]	= {"pudge_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[76]	= {"fountain9", "common"}
-BATTLEPASS_LEVEL_REWARD[80]	= {"force_staff5", "common"}
-BATTLEPASS_LEVEL_REWARD[81]	= {"blink9", "common"}
-BATTLEPASS_LEVEL_REWARD[82]	= {"maelstorm3", "common"}
-BATTLEPASS_LEVEL_REWARD[84]	= {"pangolier_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[85]	= {"fountain10", "common"}
-BATTLEPASS_LEVEL_REWARD[88]	= {"radiance2", "common"}
-BATTLEPASS_LEVEL_REWARD[90]	= {"blink10", "common"}
-BATTLEPASS_LEVEL_REWARD[94]	= {"fountain11", "common"}
-BATTLEPASS_LEVEL_REWARD[95]	= {"furion_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[96]	= {"force_staff6", "common"}
-BATTLEPASS_LEVEL_REWARD[97]	= {"life_stealer_immortal", "immortal"}
--- BATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
-BATTLEPASS_LEVEL_REWARD[99]	= {"blink11", "common"}
+BATTLEPASS_LEVEL_REWARD[51]		= {"maelstorm2", "common"}
+BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
+BATTLEPASS_LEVEL_REWARD[54]		= {"blink6", "common"}
+BATTLEPASS_LEVEL_REWARD[55]		= {"lina_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[58]		= {"fountain7", "common"}
+BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
+BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[63]		= {"blink7", "common"}
+BATTLEPASS_LEVEL_REWARD[64]		= {"force_staff4", "common"}
+BATTLEPASS_LEVEL_REWARD[65]		= {"juggernaut_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[67]		= {"fountain8", "common"}
+BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[70]		= {"mekansm2", "common"}
+BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
+BATTLEPASS_LEVEL_REWARD[72]		= {"blink8", "common"}
+BATTLEPASS_LEVEL_REWARD[75]		= {"pudge_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[76]		= {"fountain9", "common"}
+BATTLEPASS_LEVEL_REWARD[77]		= {"bottle3", "common"}
+BATTLEPASS_LEVEL_REWARD[80]		= {"force_staff5", "common"}
+BATTLEPASS_LEVEL_REWARD[81]		= {"blink9", "common"}
+BATTLEPASS_LEVEL_REWARD[82]		= {"maelstorm3", "common"}
+BATTLEPASS_LEVEL_REWARD[84]		= {"pangolier_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[85]		= {"fountain10", "common"}
+BATTLEPASS_LEVEL_REWARD[88]		= {"radiance2", "common"}
+BATTLEPASS_LEVEL_REWARD[90]		= {"blink10", "common"}
+BATTLEPASS_LEVEL_REWARD[94]		= {"fountain11", "common"}
+BATTLEPASS_LEVEL_REWARD[95]		= {"furion_taunt", "immortal"}
+BATTLEPASS_LEVEL_REWARD[96]		= {"force_staff6", "common"}
+BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[99]		= {"blink11", "common"}
 BATTLEPASS_LEVEL_REWARD[100]	= {"shiva", "common"}
 BATTLEPASS_LEVEL_REWARD[103]	= {"fountain12", "common"}
 BATTLEPASS_LEVEL_REWARD[105]	= {"mekansm3", "common"}
@@ -77,13 +76,13 @@ BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
 BATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
 BATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
--- BATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
 BATTLEPASS_LEVEL_REWARD[125]	= {"juggernaut_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[126]	= {"blink14", "common"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
 BATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
+BATTLEPASS_LEVEL_REWARD[136]	= {"bottle4", "common"}
 BATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
 BATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
 BATTLEPASS_LEVEL_REWARD[144]	= {"maelstorm5", "common"}
@@ -100,15 +99,22 @@ BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
 BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
+if IsInToolsMode() then
+--	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
+	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
+end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
 BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
+BATTLEPASS_LEVEL_REWARD[257]	= {"bottle5", "common"}
 BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
+-- BATTLEPASS_LEVEL_REWARD[310]	= {"dragon_knight_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
+BATTLEPASS_LEVEL_REWARD[411]	= {"bottle6", "common"}
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
@@ -130,9 +136,13 @@ function Battlepass:Init()
 	BattlepassHeroes["leshrac"] = {}
 	BattlepassHeroes["life_stealer"] = {}
 	BattlepassHeroes["lina"] = {}
+	if IsInToolsMode() then
+		BattlepassHeroes["nevermore"] = {}
+	end
 	BattlepassHeroes["nyx_assassin"] = {}
 	BattlepassHeroes["pudge"] = {}
 	BattlepassHeroes["skywrath_mage"] = {}
+--	BattlepassHeroes["terrorblade"] = {}
 --	BattlepassHeroes["tidehunter"] = {}
 	BattlepassHeroes["ursa"] = {}
 	BattlepassHeroes["vengefulspirit"] = {}
@@ -141,7 +151,7 @@ function Battlepass:Init()
 
 	BattlepassItems = {}
 	BattlepassItems["blink"] = {}
---	BattlepassItems["bottle"] = {}
+	BattlepassItems["bottle"] = {}
 	BattlepassItems["force_staff"] = {}
 	BattlepassItems["fountain"] = {}
 	BattlepassItems["maelstorm"] = {}
@@ -504,6 +514,7 @@ function Battlepass:GetBottleEffect(ID)
 	effects["effect1"][3] = "particles/econ/events/ti6/bottle_ti6.vpcf"
 	effects["effect1"][4] = "particles/econ/events/ti5/bottle_ti5.vpcf"
 	effects["effect1"][5] = "particles/econ/events/ti8/bottle_ti8.vpcf"
+	effects["effect1"][6] = "particles/econ/events/ti9/bottle_ti9.vpcf"
 
 	local hero_item_effects = {}
 	hero_item_effects["level"] = 0
@@ -577,7 +588,7 @@ end
 function Battlepass:SetItemEffects(ID)
 	CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
 		blink = Battlepass:GetBlinkEffect(ID),
---		bottle = Battlepass:GetBottleEffect(ID),
+		bottle = Battlepass:GetBottleEffect(ID),
 		force_staff = Battlepass:GetForceStaffEffect(ID),
 		fountain = Battlepass:GetFountainEffect(ID),
 		maelstorm = Battlepass:GetMaelstormEffect(ID),
@@ -664,6 +675,8 @@ function Battlepass:GetHeroEffect(hero)
 		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
+
 	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
 		hero.tether_effect = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		hero.spirits_effect = "particles/units/heroes/hero_wisp/wisp_guardian.vpcf"
@@ -926,6 +939,13 @@ function Battlepass:GetHeroEffect(hero)
 				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
+		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
+			if IsInToolsMode() then
+				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nevermore_arcana"] then
+					Wearable:_WearProp(hero, "6996", "head")
+				end
+			end
+
 		elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nyx_assassin_immortal"] then
 				hero.spiked_carapace_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace.vpcf"
@@ -970,6 +990,12 @@ function Battlepass:GetHeroEffect(hero)
 
 				-- custom icons
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
+			if IsInToolsMode() then
+				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["terrorblade_arcana"] then
+					Wearable:_WearProp(hero, "5957", "head")
+				end
 			end
 --		elseif hero:GetUnitName() == "npc_dota_hero_tidehunter" then
 --			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["tidehunter_ancient"] then

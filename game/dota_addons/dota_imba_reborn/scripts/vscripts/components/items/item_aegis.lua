@@ -28,7 +28,6 @@ function item_imba_aegis:GetAbilityTextureName()
 	return "custom/imba_aegis"
 end
 
-
 modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
 -- Passive modifier
 function modifier_item_imba_aegis:OnCreated()

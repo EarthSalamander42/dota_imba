@@ -223,6 +223,9 @@
 				<DOTASettingsCheckbox id="PlayerXPCheckBox" class="SettingsButtonClass" onactivate="SettingsPlayerXP();">
 					<Label text="#toggle_player_xp"/>
 				</DOTASettingsCheckbox>
+				<DOTASettingsCheckbox id="WinrateCheckBox" class="SettingsButtonClass" onactivate="SettingsWinrate();">
+					<Label text="#toggle_winrate"/>
+				</DOTASettingsCheckbox>
 			</Panel>
 		</Panel>
 	</Panel>

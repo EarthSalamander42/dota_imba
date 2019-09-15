@@ -24,6 +24,7 @@ CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(Battle
 CustomGameEventManager:RegisterListener("change_battlepass_rewards", Dynamic_Wrap(Battlepass, 'BattlepassRewards'))
 CustomGameEventManager:RegisterListener("change_player_xp", Dynamic_Wrap(Battlepass, 'PlayerXP'))
 CustomGameEventManager:RegisterListener("play_hero_taunt", Dynamic_Wrap(Battlepass, "PlayHeroTaunt"))
+CustomGameEventManager:RegisterListener("change_winrate", Dynamic_Wrap(Battlepass, 'Winrate'))
 
 function Battlepass:GetRewardUnlocked(ID)
 	if IsInToolsMode() then return 1000 end
@@ -215,4 +216,25 @@ function Battlepass:PlayHeroTaunt(keys)
 			hero.can_cast_taunt = true
 		end)
 	end
+end
+
+function Battlepass:Winrate(keys)
+	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+
+	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+		XP = ply_table.XP,
+		MaxXP = ply_table.MaxXP,
+		Lvl = ply_table.Lvl,
+		ply_color = ply_table.ply_color,
+		title = ply_table.title,
+		title_color = ply_table.title_color,
+		XP_change = 0,
+		IMR_5v5_change = 0,
+		donator_level = ply_table.donator_level,
+		donator_color = ply_table.donator_color,
+		in_game_tag = ply_table.in_game_tag,
+		bp_rewards = ply_table.bp_rewards,
+		player_xp = ply_table.player_xp,
+		winrate = keys.winrate
+	})
 end

@@ -222,6 +222,28 @@ function api:GetPlayerXPEnabled(player_id)
 	end
 end
 
+function api:GetPlayerWinrateShown(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+		native_print("api:GetPlayerWinrateShown: Player ID not valid!")
+		return false
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+		native_print("api:GetPlayerWinrateShown() self.players == nil")
+		return false
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid]["winrate_toggle"]
+	else
+		native_print("api:GetPlayerWinrateShown: api players steamid not valid!")
+		return false
+	end
+end
+
 function api:GetPlayerWinrate(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
 		native_print("api:GetPlayerWinrate: Player ID not valid!")
@@ -237,7 +259,6 @@ function api:GetPlayerWinrate(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		print("Winrate string name:", "winrate_"..string.gsub(GetMapName(), "imba_", ""))
 		return self.players[steamid]["winrate_"..string.gsub(GetMapName(), "imba_", "")]
 	else
 		native_print("api:GetPlayerWinrate: api players steamid not valid!")

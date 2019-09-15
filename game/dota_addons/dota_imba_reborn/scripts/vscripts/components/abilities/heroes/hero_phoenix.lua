@@ -2411,13 +2411,15 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
-		local  cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
-		if cooldown_modifier ~= nil then 
-			cooldown_modifier:SetStackCount(scepter_cooldown)
-		end
-		local location = caster:GetAbsOrigin()
+		local cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
 		local egg_duration = ability:GetSpecialValueFor("duration")
 		local extend_duration = ability:GetSpecialValueFor("scepter_additional_duration")
+
+		if cooldown_modifier ~= nil then 
+			cooldown_modifier:SetStackCount(scepter_cooldown + egg_duration + extend_duration)
+		end
+
+		local location = caster:GetAbsOrigin()
 
 		local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
 
@@ -2444,13 +2446,12 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 			local aghs = caster:GetItemInSlot(i)
 			if aghs ~= nil then
 				if aghs:GetName() == 'item_ultimate_scepter' then 
-					aghs:StartCooldown(scepter_cooldown)
+					aghs:StartCooldown(scepter_cooldown + egg_duration + extend_duration)
 				end
 			end
 		end
 	end
 end
-
 
 modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class({})
 
@@ -2495,6 +2496,7 @@ function imba_phoenix_burning_wings:OnToggle()
 	if not IsServer() then
 		return
 	end
+
 	if self:GetToggleState() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_burning_wings_buff", {} )
 	else

@@ -29,6 +29,7 @@ var api = {
 		toggleIngameTag : "imba/toggle-ingame-tag",
 		toggleBPRewards : "imba/toggle-bp-rewards",
 		togglePlayerXP : "imba/toggle-player-xp",
+		toggleWinrate : "imba/toggle-winrate",
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
@@ -197,6 +198,29 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error ply xp " + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+	updateWinrate : function(data, success_callback, error_callback) {
+		$.AsyncWebRequest(api.base + api.urls.toggleWinrate, {
+			type : "POST",
+			dataType : "json",
+			data : data,
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+//				$.Msg(obj)
+				if (obj.error) {
+					$.Msg("Error updating winrate");
+					error_callback();
+				} else {
+					$.Msg("Updated winrate");
+					success_callback();
+				}
+			},
+			error : function(err) {
+				$.Msg("Error winrate " + JSON.stringify(err));
 				error_callback();
 			}
 		});
@@ -972,10 +996,36 @@ function SettingsPlayerXP() {
 	});
 }
 
+function SettingsWinrate() {
+	var toggle = false;
+	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle)
+	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle != undefined) {
+		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle
+		if (toggle == 1)
+			toggle = 0
+		else
+			toggle = 1
+	}
+
+//	$.Msg("Player XP :" + toggle)
+
+	api.updateWinrate({
+		steamid : Game.GetLocalPlayerInfo().player_steamid,
+		winrate : toggle
+	}, function() {
+		GameEvents.SendCustomGameEventToServer("change_winrate", {
+			ID : Players.GetLocalPlayer(),
+			player_xp : toggle
+		});
+	}, function() {
+		$.Msg("Winrate update fail!")
+	});
+}
+
 function SetupPanel() {
 	var ply_table = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
 
-//	$.Msg(ply_table.bp_rewards)
+//	$.Msg(ply_table.winrate_toggle)
 	if (ply_table) {
 		if (ply_table.in_game_tag)
 			$("#IngameTagCheckBox").checked = ply_table.in_game_tag;
@@ -983,6 +1033,8 @@ function SetupPanel() {
 			$("#BPRewardsCheckBox").checked = ply_table.bp_rewards;
 		if (ply_table.player_xp)
 			$("#PlayerXPCheckBox").checked = ply_table.player_xp;
+		if (ply_table.winrate_toggle)
+			$("#WinrateCheckBox").checked = ply_table.winrate_toggle;
 	}
 }
 

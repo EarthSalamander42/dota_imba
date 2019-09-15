@@ -12960,7 +12960,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"28.0"
 		"AbilityManaCost"				"125"
 		"AbilitySharedCooldown"			"meteor_hammer"
@@ -13096,22 +13096,21 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_meteor_hammer.lua"
 		"AbilityTextureName"			"custom/imba_meteor_hammer_2"
-		
+
 		"ID"							"2300"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		
+
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		
-		
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityChannelTime"			"2.0"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"28.0"
 		"AbilityManaCost"				"125"
 		"AbilitySharedCooldown"			"meteor_hammer"
@@ -13262,7 +13261,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"28.0"
 		"AbilityManaCost"				"125"
 		"AbilitySharedCooldown"			"meteor_hammer"
@@ -13413,7 +13412,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"28.0"
 		"AbilityManaCost"				"125"
 

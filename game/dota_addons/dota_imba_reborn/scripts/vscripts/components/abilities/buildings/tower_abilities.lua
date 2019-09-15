@@ -4678,3 +4678,4 @@ function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStack
 	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks
 	return tenacity
 end
+

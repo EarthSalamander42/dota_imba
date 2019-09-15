@@ -16263,7 +16263,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_storm_spirit"
+		"ScriptFile"					"components/abilities/heroes/hero_storm_spirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -16276,7 +16276,6 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 			"particle"  				"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
 			"particle"  				"particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf"
-
 		}
 		
 		// Special
@@ -16288,19 +16287,16 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"60 100 140 180"
 			}
-			
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aoe"							"300"
 			}
-			
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"move_slow"						"-80"
 			}
-			
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -34236,7 +34232,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"switch_lose_pct"			"85 70 55 40"
+				"switch_lose_pct"			"90 80 70 60"
 				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_3"
 			}
 //			"03"
@@ -34266,7 +34262,7 @@
 		"AbilityTextureName"			"troll_warlord_battle_trance"
 		"AbilitySound"					"Hero_TrollWarlord.BattleTrance.Cast"
 		"HasScepterUpgrade"				"1"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"25000"		

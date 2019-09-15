@@ -152,11 +152,16 @@ function GameMode:ModifierFilter( keys )
 		local modifier_name = keys.name_const
 		local modifier_caster
 		local modifier_class
+		local modifier_ability
 
 		if keys.entindex_caster_const then
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
 		else
 			return true
+		end
+
+		if keys.entindex_ability_const then
+			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
 		end
 
 		if modifier_owner ~= nil then
@@ -172,8 +177,8 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 
-			if keys.entindex_ability_const and EntIndexToHScript(keys.entindex_ability_const).GetAbilityName then
-				if ignore_frantic == false and string.find(EntIndexToHScript(keys.entindex_ability_const):GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+			if keys.entindex_ability_const and modifier_ability.GetAbilityName then
+				if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
@@ -267,6 +272,14 @@ function GameMode:ModifierFilter( keys )
 
 				return false
 			end
+		end
+
+		if modifier_name == "modifier_bottle_regeneration" then
+			local duration = modifier_ability:GetSpecialValueFor("restore_time")
+
+			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
+
+			return false
 		end
 
 		return true

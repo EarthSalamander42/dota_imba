@@ -24,8 +24,9 @@
 
 #Mutations
 {
-	width: 100%;
+	width: 70%;
     flow-children: right;
+    horizontal-align: center;
 	visibility: collapse;
 }
 

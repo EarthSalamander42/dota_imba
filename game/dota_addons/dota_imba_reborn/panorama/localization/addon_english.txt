@@ -406,6 +406,7 @@
 	"maxlevel_button" "Level to Max"
 	"maxlevel_msg" "Hero Maxed Out"
 	"misc_buttoncategory" "Customize"
+	"mutation_" "N/A"
 	"mutation_airdrop" "Airdrop"
 	"mutation_airdrop_description" "Gifts are periodically deployed around the map every 2 minutes."
 	"mutation_alien_incubation" "Alien Incubation"
@@ -436,6 +437,8 @@
 	"mutation_frantic_description" "25% Cooldown Reduction, Mana Cost and Status Resistance."
 	"mutation_greed_is_good" "Greed is Good"
 	"mutation_greed_is_good_description" "Bonus gold is granted each minute!"
+	"mutation_hyper_blink" "Hyper Blink"
+	"mutation_hyper_blink_description" "Every time a point or unit targeted ability or item is cast, the caster immediately blinks to that location."
 	"mutation_imba_tutorial_heroes_01" "Mutation is a mod where 3 mutators will take place in a regular match, 1 positive, 1 negative and 1 terrain-based."
 	"mutation_imba_tutorial_heroes_02" "The 3 mutators are chosen randomly on each games! Mutation replace Frantic maps, but Frantic is in the Mutator list."
 	"mutation_imba_tutorial_heroes_03" "Some mutators can be added/removed at anytime, we will keep a list of the active mutators on Dota IMBA's website. (Wiki section)"
@@ -539,6 +542,7 @@
 	"toggle_companion" "Toggle Companion"
 	"toggle_ingame_tag" "Toggle health bar label"
 	"toggle_player_xp" "Toggle battlepass XP visibility (will take effect on next game)"
+	"toggle_winrate" "Toggle Winrate visibility"
 	"unassigned" "Unassigned Team"
 	"vanilla_hero" "Lazy"
 	"vote_gamemode" "Gamemode Vote"
@@ -546,10 +550,4 @@
 	"vote_gamemode_2" "Mutation"
 	"vote_gamemode_3" "Super Frantic"
 	"welcome_label" "Welcome to Dota IMBA!"
-	
-	"mutation_hyper_blink"							"Hyper Blink"
-	"mutation_hyper_blink_Description"				"Every time a point or unit targeted ability or item is cast, the caster immediately blinks to that location."
-	
-	"mutation_"										"N/A"
-	"mutation__Description"							"N/A"	
 }

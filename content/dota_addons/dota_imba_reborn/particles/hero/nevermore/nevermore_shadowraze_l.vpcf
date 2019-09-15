@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -39,11 +39,6 @@
 			m_fRadiusMax = 10.0
 		},
 		{
-			_class = "C_INIT_PositionOffset"
-			m_OffsetMax = [ 10.0, 10.0, 20.0 ]
-			m_OffsetMin = [ -10.0, -10.0, 20.0 ]
-		},
-		{
 			_class = "C_INIT_RandomLifeTime"
 			m_fLifetimeMin = 3.0
 			m_fLifetimeMax = 4.0
@@ -62,6 +57,11 @@
 			m_nAlphaMax = 225
 		},
 		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMax = [ 10.0, 10.0, 20.0 ]
+			m_OffsetMin = [ -10.0, -10.0, 20.0 ]
+		},
+		{
 			_class = "C_INIT_RandomYawFlip"
 		},
 	]
@@ -69,7 +69,16 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 2
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 2.0
+			}
 		},
 	]
 	m_controlPointConfigurations = 
@@ -87,4 +96,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
 }

@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -18,10 +18,19 @@
 			m_flMaxLength = 650.0
 			m_flLengthFadeInTime = 0.25
 			m_flAnimationRate = 2.0
-			m_flRadiusScale = 0.5
 			m_flFinalTextureScaleV = -1.0
 			m_flFinalTextureOffsetV = 1.0
 			m_vEndTrailTintFactor = [ 0.0, 0.0, 0.0, 0.0 ]
+			m_flRadiusTaper = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+			m_flRadiusScale = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.5
+			}
 		},
 	]
 	m_Operators = 
@@ -72,12 +81,6 @@
 			m_fLifetimeMin = 0.6
 		},
 		{
-			_class = "C_INIT_OffsetVectorToVector"
-			m_vecOutputMax = [ 0.0, 0.0, 2000.0 ]
-			m_vecOutputMin = [ 0.0, 0.0, 1000.0 ]
-			m_nFieldOutput = 17
-		},
-		{
 			_class = "C_INIT_RandomTrailLength"
 			m_flMinLength = 2.0
 			m_flMaxLength = 2.0
@@ -85,6 +88,12 @@
 		{
 			_class = "C_INIT_RandomSequence"
 			m_nSequenceMax = 63
+		},
+		{
+			_class = "C_INIT_OffsetVectorToVector"
+			m_vecOutputMax = [ 0.0, 0.0, 2000.0 ]
+			m_vecOutputMin = [ 0.0, 0.0, 1000.0 ]
+			m_nFieldOutput = 17
 		},
 		{
 			_class = "C_INIT_PositionOffset"
@@ -102,7 +111,16 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 8
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 8.0
+			}
 		},
 	]
 	m_Children = 
@@ -126,4 +144,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 4
 }
