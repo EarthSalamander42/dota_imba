@@ -588,9 +588,11 @@ function modifier_imba_sly_king_hypothermic_wisdom:OnDestroy()
 end
 
 function modifier_imba_sly_king_hypothermic_wisdom:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE	}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_sly_king_hypothermic_wisdom:GetModifierBonusStats_Intellect()
@@ -608,6 +610,12 @@ end
 function modifier_imba_sly_king_hypothermic_wisdom:GetModifierSpellAmplify_Percentage()
 	if self:GetParent():HasModifier("modifier_imba_sly_king_hypothermic_wisdom_int_tracker") and not self:GetParent():PassivesDisabled() and self:GetParent():GetHealthPercent() > 0 then
 		return self:GetParent():GetModifierStackCount("modifier_imba_sly_king_hypothermic_wisdom_int_tracker", self:GetParent()) * self:GetAbility():GetSpecialValueFor("spell_amp_per_int")
+	end
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom:GetModifierPhysicalArmorBonus()
+	if not self:GetParent():PassivesDisabled() and self:GetParent():GetHealthPercent() > 0 and self:GetCaster():HasScepter() then
+		return (100 - self:GetParent():GetHealthPercent()) * (self:GetAbility():GetSpecialValueFor("armor_per_health_pct_loss"))
 	end
 end
 
@@ -630,9 +638,7 @@ function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:OnIntervalThink()
 	if self:GetParent():PassivesDisabled() or self:GetParent():GetHealthPercent() == 0 then
 		self:GetParent():SetRenderColor(255, 255, 255)
 	else
-		local healthPctRender = (self:GetParent():GetHealthPercent() / 100) * 255
-		
-		self:GetParent():SetRenderColor(healthPctRender, healthPctRender, healthPctRender)
+		self:GetParent():SetRenderColor((self:GetParent():GetHealthPercent() / 100) * 255, (self:GetParent():GetHealthPercent() / 100) * 255, (self:GetParent():GetHealthPercent() / 100) * 255)
 	end
 end
 

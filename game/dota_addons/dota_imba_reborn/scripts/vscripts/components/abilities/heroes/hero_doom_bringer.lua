@@ -277,7 +277,7 @@ function modifier_imba_doom_bringer_doom_enemies:OnIntervalThink()
 	if IsServer() then
 		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
 		
-		if self:GetAbility() and not self:GetAbility():GetAutoCastState() and self:GetCaster():HasScepter() and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 900 then
+		if self:GetAbility() and not self:GetAbility():GetAutoCastState() and self:GetCaster():HasScepter() and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 900 and self:GetCaster():IsAlive() then
 			if self.reentered == nil then
 				self.reentered = true
 			end

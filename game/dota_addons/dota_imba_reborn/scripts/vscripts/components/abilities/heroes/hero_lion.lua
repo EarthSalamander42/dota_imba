@@ -398,13 +398,16 @@ function imba_lion_hex:OnSpellStart()
 			end
 		end
 
-		-- Add particle effect
-		local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
-		ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
-		ParticleManager:ReleaseParticleIndex(particle_hex_fx)
-
-		-- Transform your enemy into a frog
-		target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		-- I don't really have an idea as to why this can reflect onto magic-immune enemies, but I guess I'll just put a guard here
+		if not target:IsMagicImmune() then
+			-- Add particle effect
+			local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
+			ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
+			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
+			
+			-- Transform your enemy into a frog
+			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		end
 	else
 		target = self:GetCursorPosition()
 	

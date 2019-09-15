@@ -56,7 +56,6 @@ modifier_imba_life_stealer_assimilate_effect				= class({})
 modifier_imba_life_stealer_assimilate_counter				= class({})
 
 imba_life_stealer_assimilate_eject 							= class({})
-modifier_imba_life_stealer_assimilate_eject 				= class({})
 
 ----------
 -- RAGE --
@@ -147,7 +146,12 @@ end
 -- RAGE INSANITY MODIFIER --
 ----------------------------
 
+function modifier_imba_life_stealer_rage_insanity:IsPurgable()	return false end
+
 function modifier_imba_life_stealer_rage_insanity:OnCreated(params)
+	if self:GetAbility() then
+		self.stack_activation	= self:GetAbility():GetSpecialValueFor("insanity_stack_activation")
+	end
 	
 	if not IsServer() then return end
 	
@@ -747,7 +751,7 @@ end
 function imba_life_stealer_infest:OnAbilityPhaseStart()
 	local target = self:GetCursorTarget()
 	
-	if not target:IsAlive() then
+	if not target:IsAlive() or target:IsInvulnerable() or target:IsOutOfGame() then
 		return false
 	else
 		return true
@@ -756,7 +760,10 @@ end
 
 function imba_life_stealer_infest:OnSpellStart()
 	local target = self:GetCursorTarget()
-
+	
+	-- Some really messy stuff happening if this line isn't in...
+	if target:IsInvulnerable() or target:IsOutOfGame() then return end
+	
 	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_life_stealer" and RollPercentage(75) then
@@ -806,7 +813,7 @@ function imba_life_stealer_infest:OnSpellStart()
 	
 	local infest_effect_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_infest_effect", {})
 	
-	if infest_modifier then
+	if infest_modifier and infest_effect_modifier then
 		infest_modifier.infest_effect_modifier	= infest_effect_modifier
 		infest_effect_modifier.infest_modifier	= infest_modifier
 	end
@@ -1475,6 +1482,8 @@ end
 -- ASSIMILATE MODIFIER --
 -------------------------
 
+function modifier_imba_life_stealer_assimilate:IsPurgable()	return false end
+
 function modifier_imba_life_stealer_assimilate:OnCreated(params)
 	self.radius					= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage					= self:GetAbility():GetSpecialValueFor("damage")
@@ -1544,7 +1553,7 @@ function modifier_imba_life_stealer_assimilate:OnDestroy()
 	
 	self:GetParent():RemoveNoDraw()
 	
-	if self.assimilate_effect_modifier then
+	if self.assimilate_effect_modifier and not self.assimilate_effect_modifier:IsNull() then
 		self.assimilate_effect_modifier:Destroy()
 	end
 	
@@ -1621,20 +1630,21 @@ function modifier_imba_life_stealer_assimilate_effect:OnCreated()
 	self:AddParticle(assimilate_overhead_particle, false, false, -1, true, false)
 end
 
--- function modifier_imba_life_stealer_assimilate_effect:OnDestroy()
-	-- if not IsServer() then return end
+function modifier_imba_life_stealer_assimilate_effect:OnDestroy()
+	if not IsServer() then return end
 	
-	-- local assimilate_effect_modifiers = self:GetCaster():FindAllModifiersByName(self:GetName())
+	if self.assimilate_modifier and not self.assimilate_modifier:IsNull() then
+		self.assimilate_modifier:Destroy()
+	end
 	
-	-- if #assimilate_effect_modifiers <= 0 then
-		-- -- Swap out Assimilate Eject ability back for Assimilate
-		-- local eject_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
-		
-		-- if eject_ability and self:GetAbility() then
-			-- self:GetCaster():SwapAbilities(self:GetAbility():GetName(), eject_ability:GetName(), true, false)
-		-- end
-	-- end
--- end
+	local assimilate_effect_modifiers = self:GetCaster():FindAllModifiersByName(self:GetName())
+	
+	self.eject_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
+	
+	if self.eject_ability and #assimilate_effect_modifiers <= 0 then
+		self.eject_ability:SetActivated(false)
+	end
+end
 
 function modifier_imba_life_stealer_assimilate_effect:DeclareFunctions()
 	local decFuncs = {

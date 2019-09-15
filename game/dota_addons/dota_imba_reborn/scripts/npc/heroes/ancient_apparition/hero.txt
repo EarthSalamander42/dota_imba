@@ -1,0 +1,38 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Ancient Apparition
+	//=================================================================================================================
+	"npc_dota_hero_ancient_apparition"
+	{
+		"IsImba"					"1"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"		"imba_ancient_apparition_cold_feet"
+		"Ability2"		"imba_ancient_apparition_ice_vortex"
+		"Ability3"		"imba_ancient_apparition_chilling_touch"
+		"Ability4"		"imba_ancient_apparition_anti_abrasion"
+		"Ability5"		"imba_ancient_apparition_imbued_ice"
+		"Ability6"		"imba_ancient_apparition_ice_blast"
+		"Ability7"		"imba_ancient_apparition_ice_blast_release"
+		
+		"Ability10"		"special_bonus_gold_income_15"
+		"Ability11"		"special_bonus_spell_amplify_10"
+		"Ability12"		"special_bonus_imba_ancient_apparition_ice_vortex_cooldown"
+		"Ability13"		"special_bonus_hp_regen_15"
+		"Ability14"		"special_bonus_imba_ancient_apparition_chilling_touch_damage"
+		"Ability15"		"special_bonus_imba_ancient_apparition_ice_vortex_boost"
+		"Ability16"		"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold"
+		"Ability17"		"special_bonus_imba_ancient_apparition_cold_feet_aoe"
+		
+		// Removed Talents
+		// "Ability12"		"special_bonus_unique_ancient_apparition_3"
+		// "Ability14"		"special_bonus_unique_ancient_apparition_4"
+		// "Ability15"		"special_bonus_unique_ancient_apparition_2"
+		// "Ability16"		"special_bonus_unique_ancient_apparition_6"
+		// "Ability17"		"special_bonus_unique_ancient_apparition_5"
+	}
+}

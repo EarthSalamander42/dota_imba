@@ -168,6 +168,8 @@ function modifier_imba_cursed_fountain:OnCreated()
 	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
 	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
 	
+	self.damage_outgoing	= -10
+	
 	self:SetStackCount(1)
 	
 	self:StartIntervalThink(0.5)
@@ -215,6 +217,8 @@ function modifier_imba_cursed_fountain:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS, 
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 
 		MODIFIER_EVENT_ON_HERO_KILLED
 	}
@@ -249,7 +253,13 @@ end
 function modifier_imba_cursed_fountain:GetModifierBonusStats_Intellect()
 	if not IsServer() or self:GetStackCount() < 2 then return end
 	
-	return self.intellect* (-1)
+	return self.intellect * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierTotalDamageOutgoing_Percentage()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.damage_outgoing * self:GetStackCount()
 end
 
 function modifier_imba_cursed_fountain:OnHeroKilled(params)

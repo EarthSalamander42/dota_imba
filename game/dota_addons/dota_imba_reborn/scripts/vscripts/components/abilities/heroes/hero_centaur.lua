@@ -125,7 +125,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 			radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
 			false)
 
@@ -296,7 +296,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				radius,
 				DOTA_UNIT_TARGET_TEAM_ENEMY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+				DOTA_UNIT_TARGET_FLAG_NONE,
 				FIND_ANY_ORDER,
 				false)
 
@@ -721,7 +721,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		local modifier_damage_block = "modifier_imba_return_damage_block"
 		local particle_block_msg = "particles/msg_fx/msg_block.vpcf"
 		-- Ability specials
-		local damage = ability:GetSpecialValueFor("damage")
+		local damage = ability:GetTalentSpecialValueFor("damage")
 		local str_pct_as_damage = ability:GetSpecialValueFor("str_pct_as_damage")
 		local damage_block = ability:GetSpecialValueFor("damage_block")
 		local block_duration = ability:GetSpecialValueFor("block_duration")
@@ -744,9 +744,8 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		end
 
 		-- Only commence on enemies attacking Centaur
-		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target
-			-- Don't affect wards.
-			and not attacker:IsOther() then
+		-- Don't affect wards.
+		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target and not attacker:IsOther() then
 			-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 			if not caster:HasTalent("special_bonus_imba_centaur_7") then
 				if keys.inflictor then

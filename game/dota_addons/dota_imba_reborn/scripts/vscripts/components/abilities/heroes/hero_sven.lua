@@ -101,6 +101,10 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 				else
 					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
+					
+					if caster:HasTalent("special_bonus_imba_sven_9") then
+						enemy:Purge(true, false, false, false, false)
+					end
 				end
 			end
 		end
@@ -916,4 +920,38 @@ function modifier_imba_colossal_slash_animation:GetActivityTranslationModifiers(
 		return "loadout"
 	end
 	return 0
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sven_4", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_5", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sven_4	= class({})
+modifier_special_bonus_imba_sven_5	= class({})
+
+function modifier_special_bonus_imba_sven_4:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_5:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_5:RemoveOnDeath() 	return false end
+
+function imba_sven_storm_bolt:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_sven_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_5"), "modifier_special_bonus_imba_sven_5", {})
+	end
+end
+
+function imba_sven_gods_strength:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_sven_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_4"), "modifier_special_bonus_imba_sven_4", {})
+	end
 end

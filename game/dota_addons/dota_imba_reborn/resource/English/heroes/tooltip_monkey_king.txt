@@ -1,0 +1,1 @@
+"DOTA_Tooltip_modifier_imba_monkey_king_true_strike"	"Innate True Strike"

@@ -252,8 +252,10 @@ function modifier_imba_sleight_of_fist_caster:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage(keys)
+	if keys.target and keys.target:IsHero() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -297,7 +299,7 @@ function modifier_imba_searing_chains_attack:OnAttackLanded(keys)
 			if attacker:FindAbilityByName("special_bonus_ember_chains_on_attack") and attacker:FindAbilityByName("special_bonus_ember_chains_on_attack"):GetLevel() > 0 then
 				local talent_ability = attacker:FindAbilityByName("special_bonus_ember_chains_on_attack")
 				local target = keys.target
-				if RollPercentage(talent_ability:GetSpecialValueFor("chance")) and not (target:IsBuilding() or target:IsMagicImmune()) then
+				if not (target:IsBuilding() or target:IsMagicImmune()) and RollPseudoRandom(talent_ability:GetSpecialValueFor("chance"), self) then
 					ApplySearingChains(attacker, attacker, target, self:GetAbility(), talent_ability:GetSpecialValueFor("duration"))
 				end
 			end
@@ -558,6 +560,8 @@ function imba_ember_spirit_searing_chains:OnSpellStart()
 			duration = duration + caster:FindAbilityByName("special_bonus_ember_chains_duration"):GetSpecialValueFor("value")
 		end
 
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+
 		-- Particles and sound
 		caster:EmitSound("Hero_EmberSpirit.SearingChains.Cast")
 		local cast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf", PATTACH_ABSORIGIN, caster)
@@ -577,6 +581,8 @@ function imba_ember_spirit_searing_chains:OnSpellStart()
 		local active_remnants = FindActiveRemnants(caster)
 		if active_remnants then
 			for _, remnant in pairs(active_remnants) do
+				remnant:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+			
 				local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, self:GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 				for i = 1, max_targets do
 					if nearby_enemies[i] then
@@ -686,13 +692,15 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 					return attack_interval
 				-- If not, stop everything
 				else
-					if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
-						FindClearSpaceForUnit(caster, caster_loc, true)
-					end
-					caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
-					for _, target in pairs(sleight_targets) do
-						EntIndexToHScript(target):RemoveModifierByName("modifier_imba_sleight_of_fist_marker")
-					end
+					Timers:CreateTimer(attack_interval - FrameTime(), function()
+						if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
+							FindClearSpaceForUnit(caster, caster_loc, true)
+						end
+						caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
+						for _, target in pairs(sleight_targets) do
+							EntIndexToHScript(target):RemoveModifierByName("modifier_imba_sleight_of_fist_marker")
+						end
+					end)
 				end
 			end)
 		end
@@ -801,11 +809,15 @@ function imba_ember_spirit_flame_guard:OnSpellStart()
 		if caster:FindAbilityByName("special_bonus_ember_guard_damage") and caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
 			damage = damage + caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
 		end
+		
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_3)
 
 		-- Remnant versions
 		local active_remnants = FindActiveRemnants(caster)
 		if active_remnants then
 			for _, remnant in pairs(active_remnants) do
+				remnant:StartGesture(ACT_DOTA_CAST_ABILITY_3)
+			
 				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
 				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
 				remnant:AddNewModifier(caster, self, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = absorb_amount, duration = duration})
@@ -826,6 +838,14 @@ end
 imba_ember_spirit_activate_fire_remnant = imba_ember_spirit_activate_fire_remnant or class ({})
 
 function imba_ember_spirit_activate_fire_remnant:GetAssociatedSecondaryAbilities() return "imba_ember_spirit_fire_remnant" end
+
+function imba_ember_spirit_activate_fire_remnant:GetManaCost(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetManaCost(self, level)
+	else
+		return self:GetSpecialValueFor("scepter_mana_cost")
+	end
+end
 
 function imba_ember_spirit_activate_fire_remnant:OnUpgrade()
 	if IsServer() then

@@ -172,6 +172,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 			in_game_tag = api:GetPlayerTagEnabled(ID),
 			bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
 			player_xp = api:GetPlayerXPEnabled(ID),
+			winrate = api:GetPlayerWinrate(ID),
 			arcana = arcana
 		})
 

@@ -208,6 +208,11 @@ function modifier_imba_abyssal_blade_unique:OnAttack(keys)
 			if target:IsBuilding() or target:IsOther() then
 				return nil                
 			end
+
+			-- Monkey King clones cannot utilize the bash
+			if attacker:HasModifier("modifier_monkey_king_fur_army_soldier") or attacker:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+				return nil
+			end
 			
 			-- Teammates are allowed to bash each other
 			-- if attacker:GetTeamNumber() == target:GetTeamNumber() then

@@ -97,14 +97,9 @@
 //		PregameBG.style.opacity = "0";
 		PregameBG.style.transitionDuration = "0.0s";
 //		AmbientFX.style.backgroundColor = "#000000fa";
-		MainHeroPickScreenContents.style.height = "87%";
-		HeroPickLeftColumn.style.height = "100%";
-		HeroGrid.style.height = "92%";
-		GridCore.style.height = "605px";
-		PreMinimapContainer.style.height = "270px";
 
 		HidePickScreen();
-		OverrideVersusScreen();
+//		OverrideVersusScreen();
 
 		function HidePickScreen() {
 			if (!Game.GameStateIs(3)) {
@@ -135,6 +130,7 @@
 		}
 
 		// Override Versus Screen with IMBA info (Credits: EarthSalamander)
+/*
 		function OverrideVersusScreen() {
 			if (PreGame.FindChildTraverse("VersusScreen2")) {
 				var versus_screen = PreGame.FindChildTraverse("VersusScreen2");
@@ -228,7 +224,7 @@
 				}
 			}
 		}
-
+*/
 		function PlayHeroTaunt() {
 			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
 				ID : Players.GetLocalPlayer(),

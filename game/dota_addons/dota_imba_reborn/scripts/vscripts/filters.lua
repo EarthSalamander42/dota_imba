@@ -570,18 +570,45 @@ function GameMode:OrderFilter( keys )
 	-- "Vanilla" courier filters
 	else
 		if unit:IsCourier() then
+			-- Timers:CreateTimer(FrameTime(), function()
+				-- if unit and not unit:IsNull() and keys.issuer_player_id_const then
+					-- unit.last_idle_change_time 			= unit:GetLastIdleChangeTime()
+					-- unit.issuer_player_id_const			= keys.issuer_player_id_const
+				-- end
+			-- end)
+			
 			local ability = EntIndexToHScript(keys["entindex_ability"])
 
 			if keys.issuer_player_id_const then
+				-- Attempts at locking courier to one player at a time
+				--  How it works: When the player issues a transfer item command, the courier will have its issuer_player_id_const variable set to keys.issuer_player_id_const, which will only turn nil once that player issues a different courier command OR the courier inventory contents change
+				-- Yes, even with this there may be potential abuse...
+				if unit.issuer_player_id_const then
+					if keys.issuer_player_id_const == unit.issuer_player_id_const then
+						unit.issuer_player_id_const = nil
+					else
+						DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to "..PlayerResource:GetPlayerName(unit.issuer_player_id_const))
+						return false
+					end
+				end
+				
 				-- allow buy order!
-				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
 					return true
 				end
 
 				if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
 --					print("Valid Ability")
 					if unit:HasAbility(ability:GetName()) then
-						return true
+					
+						if (ability:GetName() == "courier_transfer_items" or "courier_take_stash_and_transfer_items") then
+							if not unit.issuer_player_id_const then
+								unit.issuer_player_id_const = keys.issuer_player_id_const
+								return true
+							end
+						else
+							return true
+						end
 					end
 				else
 					-- Prevent the courier from moving on right-click
@@ -654,7 +681,7 @@ function GameMode:OrderFilter( keys )
 				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_devour_roshan")
 				return false
 			end
-		elseif ability:GetAbilityName() == "life_stealer_infest" then
+		elseif ability:GetAbilityName() == "life_stealer_infest" or ability:GetAbilityName() == "imba_life_stealer_infest" then
 			if target:GetUnitName() == "npc_dota_mutation_golem" then
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
 				return false
@@ -938,6 +965,15 @@ function GameMode:OrderFilter( keys )
 		-- If the above checks failed, then it shouldn't be a valid order
 		DisplayError(unit:GetPlayerID(), "Cannot Act")
 		return false
+	end
+	
+	-----------------------------------------------------------
+	-- Gyrocopter Vanilla Flak Cannon Stack Refresh Override --
+	-----------------------------------------------------------
+	if EntIndexToHScript(keys.entindex_ability) and EntIndexToHScript(keys.entindex_ability).GetName and EntIndexToHScript(keys.entindex_ability):GetName() == "gyrocopter_flak_cannon" and unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit) then
+		-- Cannot directly manipulate modifier stack count as there's some hard-coded value that makes the modifier destroy itself after the original max attacks are reached
+		unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit):Destroy()
+		EntIndexToHScript(keys.entindex_ability):OnSpellStart()
 	end
 
 	return true
