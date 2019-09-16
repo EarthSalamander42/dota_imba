@@ -23,7 +23,11 @@
 "imba_team_good_gg_message"									"Radiant have GG! Game will end in 5 seconds..."
 "imba_team_bad_gg_message"									"Dire have GG! Game will end in 5 seconds..."
 
-"imba_player_aegis_message"                                " has picked up the <font color='#FF7800'>Aegis of the Immortal!</font>"
+"imba_player_aegis_message"									" has picked up the <font color='#FF7800'>Aegis of the Immortal!</font>"
+"imba_player_aegis_message_snatch"							" snatched the <font color='#FF7800'>Aegis of the Immortal!</font>"
+"dota_hud_error_non_hero_cant_pickup_aegis"					"Only real heroes can handle the power of the Aegis of the Immortal!"
+"dota_hud_error_already_have_aegis"							"You can't wear 2 aegises."
+
 "imba_player_rapier_pickup_01"                              " has picked up a level "
 "imba_player_rapier_pickup_02"                              " <font color='#FF7800'> Divine Rapier!</font>"
 "imba_player_rapier_drop_01"                                " has dropped a level "

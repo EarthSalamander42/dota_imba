@@ -301,11 +301,12 @@ function GameMode:ItemAddedFilter( keys )
 	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
 		item:EndCooldown()
 
-		return true
+		return ENABLE_TPSCROLL_ON_FIRST_SPAWN
 
 		-- return false to remove it
 --		return false
 	end
+
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
@@ -330,32 +331,47 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
-	if item_name == "item_imba_aegis" then
+	if item_name == "item_aegis" then
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
-
 			-- Display aegis pickup message for all players
 			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+
 			local line_duration = 7
-			Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
-			Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, continue = true})
-			Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
-			-- Destroy the item
-			return false
-			-- If this is not a player, do nothing and drop another Aegis
-		else
-			local drop = CreateItem("item_imba_aegis", nil, nil)
-			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
-			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100))
+			if unit:GetTeamNumber() ~= _G.GAME_ROSHAN_KILLER_TEAM and _G.GAME_ROSHAN_KILLER_TEAM ~= 0 then
+				local color = "white"
 
-			UTIL_Remove(item:GetContainer())
-			UTIL_Remove(item)
+				if unit.GetPlayerID and PLAYER_COLORS[unit:GetPlayerID()] then
+					rgbToHex(PLAYER_COLORS[unit:GetPlayerID()])
+				end
 
-			-- Destroy the item
-			return false
+				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
+				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_aegis_message_snatch", duration = line_duration, continue = true})
+
+				_G.GAME_ROSHAN_KILLER_TEAM = 0
+			else
+				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
+				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, continue = true})
+			end
+
+			-- With no timer, combat events notification is not triggered
+			Timers:CreateTimer(1.0, function()
+				if item then
+					if item.GetContainer then
+						UTIL_Remove(item:GetContainer())
+					end
+
+					UTIL_Remove(item)
+				end
+			end)
+
+			return true
 		end
-		return false
+
+		return true
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -463,6 +479,9 @@ function GameMode:OrderFilter( keys )
 		return true
 	end
 
+	local target = keys.entindex_target ~= 0 and EntIndexToHScript(keys.entindex_target) or nil
+	local ability = keys.entindex_ability ~= 0 and EntIndexToHScript(keys.entindex_ability) or nil
+
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 	--		local ability = EntIndexToHScript(keys["entindex_ability"])
 	--		if unit:IsRealHero() then
@@ -491,7 +510,26 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CombatEvents("generic", "glyph", unit)
 	end
-	
+
+	-- credits Overthrow 2.0 (Dota2Unofficial)
+	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+		if not target then return true end
+		local pickedItem = target:GetContainedItem()
+		if not pickedItem then return true end
+
+		local itemName = pickedItem:GetAbilityName()
+
+		if itemName == "item_aegis" then
+			if not unit:IsRealHero() then
+				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_non_hero_cant_pickup_aegis")
+				return false
+			elseif unit:HasModifier("modifier_item_imba_aegis") then
+				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_already_have_aegis")
+				return false
+			end
+		end
+	end
+
 	-- Turbo Courier filters
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
@@ -524,8 +562,6 @@ function GameMode:OrderFilter( keys )
 --					return false
 --				end
 --			end
-
-			local ability = EntIndexToHScript(keys["entindex_ability"])
 
 			if player_id then
 				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
@@ -1275,20 +1311,20 @@ function GameMode:BountyRuneFilter(keys)
 end
 
 --[[
-function GameMode:HealingFilter( filterTable )
+function GameMode:HealingFilter( keys )
 	-- Values:
-	--	filterTable.entindex_target_const (probably want to use EntIndexToHScript(filterTable.entindex_target_const) to get the unit reference)
-	--	filterTable.heal
+	--	keys.entindex_target_const (probably want to use EntIndexToHScript(keys.entindex_target_const) to get the unit reference)
+	--	keys.heal
 	--
 	-- Yeah that's it.
 
 	-- MAKE HEALTH REGEN AMP CODE HERE
-	-- local nHeal = filterTable["heal"]
-	-- if filterTable["entindex_healer_const"] == nil then
+	-- local nHeal = keys["heal"]
+	-- if keys["entindex_healer_const"] == nil then
 		-- return true
 	-- end
 
-	-- local hHealingHero = EntIndexToHScript( filterTable["entindex_healer_const"] )
+	-- local hHealingHero = EntIndexToHScript( keys["entindex_healer_const"] )
 	-- if nHeal > 0 and hHealingHero ~= nil and hHealingHero:IsRealHero() then
 		-- for _,Zone in pairs( self.Zones ) do
 			-- if Zone:ContainsUnit( hHealingHero ) then

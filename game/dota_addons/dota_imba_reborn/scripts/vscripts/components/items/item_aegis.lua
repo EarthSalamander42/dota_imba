@@ -107,7 +107,12 @@ function modifier_item_imba_aegis:OnDestroy()
 			self:GetParent():EmitSound("Aegis.Expire")
 		end
 
-		UTIL_Remove(item:GetContainer())
-		UTIL_Remove(item)
+		if item then
+			if item.GetContainer then
+				UTIL_Remove(item:GetContainer())
+			end
+
+			UTIL_Remove(item)
+		end
 	end
 end
