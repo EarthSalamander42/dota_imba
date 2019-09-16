@@ -802,98 +802,23 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
+						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" and (hero == caster) then
 							ability_set = {
-								[0] = "imba_life_stealer_rage",
-								[1] = "imba_life_stealer_feast",
-								[2] = "imba_life_stealer_open_wounds",
-								[3] = "imba_life_stealer_assimilate",
-								[4] = "imba_life_stealer_assimilate_eject",
-								[5] = "imba_life_stealer_infest",
-								[6] = "imba_life_stealer_control",
-								[7] = "imba_life_stealer_consume",
-								[8] = "generic_hidden",
-								[9] = "special_bonus_hp_200",
-								[10] = "special_bonus_attack_speed_20",
-								[11] = "special_bonus_attack_damage_30",
-								[12] = "special_bonus_movement_speed_25",
-								[13] = "special_bonus_evasion_20",
-								[14] = "special_bonus_unique_lifestealer_2",
-								[15] = "special_bonus_unique_lifestealer_3",
-								[16] = "special_bonus_unique_lifestealer"
-							}
-							upgraded = true
-						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" then
-							ability_set = {
-								[0] = "imba_visage_grave_chill",
-								[1] = "imba_visage_soul_assumption",
-								[2] = "imba_visage_gravekeepers_cloak",
-								[3] = "imba_visage_stone_form_self_cast",
-								[4] = "imba_visage_become_familiar",
-								[5] = "imba_visage_summon_familiars",
-								[6] = "special_bonus_cast_range_100",
-								[7] = "special_bonus_attack_damage_30",
-								[8] = "special_bonus_exp_boost_60",
-								[9] = "special_bonus_imba_visage_soul_assumption_extra_targets",
-								[10] = "special_bonus_imba_visage_soul_assumption_charge_damage",
-								[11] = "special_bonus_imba_visage_summon_familiars_bonus_move_speed",
-								[12] = "special_bonus_imba_visage_gravekeepers_cloak_cd_reduction",
-								[13] = "special_bonus_spell_amplify_20"
-							}
-							upgraded = true
-						elseif string.find(text, 'aa') and hero:GetName() == "npc_dota_hero_ancient_apparition" then
-							ability_set = {
-								[0] = "imba_ancient_apparition_cold_feet",
-								[1] = "imba_ancient_apparition_ice_vortex",
-								[2] = "imba_ancient_apparition_chilling_touch",
-								[3] = "imba_ancient_apparition_anti_abrasion",
-								[4] = "imba_ancient_apparition_imbued_ice",
-								[5] = "imba_ancient_apparition_ice_blast",
-								[6] = "imba_ancient_apparition_ice_blast_release",
-								[7] = "special_bonus_gold_income_15",
-								[8] = "special_bonus_spell_amplify_10",
-								[9] = "special_bonus_imba_ancient_apparition_ice_vortex_cooldown",
-								[10] = "special_bonus_hp_regen_15",
-								[11] = "special_bonus_imba_ancient_apparition_chilling_touch_damage",
-								[12] = "special_bonus_imba_ancient_apparition_ice_vortex_boost",
-								[13] = "special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
-								[14] = "special_bonus_imba_ancient_apparition_cold_feet_aoe"
-							}
-							upgraded = true
-						elseif string.find(text, 'weaver') and hero:GetName() == "npc_dota_hero_weaver" then
-							ability_set = {
-								[0] = "imba_weaver_the_swarm",
-								[1] = "imba_weaver_shukuchi",
-								[2] = "imba_weaver_geminate_attack",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_weaver_time_lapse",
-								[6] = "special_bonus_imba_weaver_shukuchi_damage",
-								[7] = "special_bonus_exp_boost_35",
-								[8] = "special_bonus_mana_break_20",
-								[9] = "special_bonus_strength_14",
-								[10] = "special_bonus_imba_weaver_the_swarm_armor_reduction",
-								[11] = "special_bonus_imba_weaver_the_swarm_destroy_attacks",
-								[12] = "special_bonus_imba_weaver_shukuchi_hasted_speed",
-								[13] = "special_bonus_imba_weaver_geminate_attack_tooltip_attack",
-							}
-							upgraded = true
-						elseif string.find(text, 'batrider') and hero:GetName() == "npc_dota_hero_batrider" then
-							ability_set = {
-								[0] = "imba_batrider_sticky_napalm",
-								[1] = "imba_batrider_flamebreak",
-								[2] = "imba_batrider_firefly",
-								[3] = "imba_batrider_methane_boost",
-								[4] = "generic_hidden",
-								[5] = "imba_batrider_flaming_lasso",
-								[6] = "special_bonus_spell_amplify_6",
-								[7] = "special_bonus_armor_5",
-								[8] = "special_bonus_unique_imba_batrider_methane_boost_distance",
-								[9] = "special_bonus_hp_400",
-								[10] = "special_bonus_cooldown_reduction_15",
-								[11] = "special_bonus_movement_speed_50",
-								[12] = "special_bonus_unique_imba_batrider_firefly_truesight",
-								[13] = "special_bonus_unique_imba_batrider_flamebreak_cooldown",
+								[0] = "imba_windranger_shackleshot",
+								[1] = "imba_windranger_powershot",
+								[2] = "imba_windranger_windrun",
+								[3] = "imba_windranger_backpedal",
+								[4] = "imba_windranger_focusfire_vanilla_enhancer",
+								-- [5] = "imba_windranger_focusfire",
+								[5] = "windrunner_focusfire",
+								[6] = "special_bonus_mp_regen_3",
+								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								[8] = "special_bonus_imba_windranger_powershot_damage",
+								[9] = "special_bonus_attack_range_125",
+								[10] = "special_bonus_imba_windranger_windrun_invisibility",
+								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								[12] = "special_bonus_unique_windranger_8",
+								[13] = "special_bonus_cooldown_reduction_30",
 							}
 							upgraded = true						
 						end

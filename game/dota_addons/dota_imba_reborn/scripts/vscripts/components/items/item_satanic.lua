@@ -147,9 +147,11 @@ function modifier_imba_satanic_unique:OnCreated()
 end
 
 function modifier_imba_satanic_unique:DeclareFunctions()
-	local decFunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	-- local decFunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
 
-	return decFunc
+	-- return decFunc
+
+	return {MODIFIER_EVENT_ON_HERO_KILLED}
 end
 
 function modifier_imba_satanic_unique:GetModifierLifesteal()
@@ -163,64 +165,88 @@ function modifier_imba_satanic_unique:GetModifierLifesteal()
 	return lifesteal_pct
 end
 
-function modifier_imba_satanic_unique:OnAttackLanded(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-		local damage = keys.damage
+-- This is so broken jfc
+-- function modifier_imba_satanic_unique:OnAttackLanded(keys)
+	-- if IsServer() then
+		-- local attacker = keys.attacker
+		-- local target = keys.target
+		-- local damage = keys.damage
 
-		-- Only apply on caster attacking an enemy
-		if self.caster == attacker and self.caster:GetTeamNumber() ~= target:GetTeamNumber() then
-			-- If it is not a hero or a unit, do nothing
-			if not target:IsHero() and not target:IsCreep() then
-				return nil
+		-- -- Only apply on caster attacking an enemy
+		-- if self.caster == attacker and self.caster:GetTeamNumber() ~= target:GetTeamNumber() then
+			-- -- If it is not a hero or a unit, do nothing
+			-- if not target:IsHero() and not target:IsCreep() then
+				-- return nil
+			-- end
+
+			-- -- Wait a gametick to let things die
+			-- Timers:CreateTimer(FrameTime(), function()
+				-- -- If the target is an illusion, do nothing
+				-- if target:IsIllusion() then
+					-- return nil
+				-- end
+
+				-- -- Check if the target died as a result of that attack
+				-- if not target:IsAlive() and (not target.IsReincarnating or target.IsReincarnating and not target:IsReincarnating()) then
+
+					-- -- Calculate soul worth in health and stacks
+					-- local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)
+					-- local soul_stacks = (soul_health/self.soul_slaughter_hp_per_stack)
+
+					-- --Calculate maximum stacks based on caster health
+					-- local maximum_stacks = (attacker:GetMaxHealth()*(self.soul_slaughter_max_hp_pct * 0.01)/self.soul_slaughter_hp_per_stack)
+
+					-- -- Set variable
+					-- local modifier_soul_feast
+
+					-- -- Assign 5 second duration
+					-- local duration = self.soul_slaughter_duration
+
+					-- -- Feast on its soul!
+					-- -- Check if the buff already exists, otherwise, add it
+					-- if not self.caster:HasModifier(self.modifier_soul) then
+						-- self.caster:AddNewModifier(self.caster, self.ability, self.modifier_soul, {duration = duration})
+					-- end
+
+					-- modifier_soul_feast = self.caster:FindModifierByName(self.modifier_soul)
+					-- if modifier_soul_feast then
+						-- for i = 1, soul_stacks do
+							-- -- Increment the stack count if it will not exceed the maximum
+							-- if modifier_soul_feast:GetStackCount() < maximum_stacks then
+								-- modifier_soul_feast:IncrementStackCount()
+								-- modifier_soul_feast:ForceRefresh()
+							-- end
+						-- end
+					-- end
+				-- end
+			-- end)
+		-- end
+	-- end
+-- end
+
+function modifier_imba_satanic_unique:OnHeroKilled(keys)
+	if keys.attacker == self:GetParent() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.damage_type == 1 then
+		-- Calculate soul worth in health and stacks
+		local soul_health = keys.target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)
+		local soul_stacks = (soul_health / self.soul_slaughter_hp_per_stack)
+
+		-- Feast on its soul!
+		-- Check if the buff already exists, otherwise, add it
+		if not self.caster:HasModifier(self.modifier_soul) then
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_soul, {duration = self.soul_slaughter_duration})
+		end
+
+		local modifier_soul_feast = self.caster:FindModifierByName(self.modifier_soul)
+
+		-- Honestly this block seems like a recipe for lag disaster when you for-loop something over a thousand times just to add stacks
+		if modifier_soul_feast then
+			for i = 1, soul_stacks do
+				modifier_soul_feast:IncrementStackCount()
+				modifier_soul_feast:ForceRefresh()
 			end
-
-			-- Wait a gametick to let things die
-			Timers:CreateTimer(FrameTime(), function()
-				-- If the target is an illusion, do nothing
-				if target:IsIllusion() then
-					return nil
-				end
-
-				-- Check if the target died as a result of that attack
-				if not target:IsAlive() and (not target.IsReincarnating or target.IsReincarnating and not target:IsReincarnating()) then
-
-					-- Calculate soul worth in health and stacks
-					local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)
-					local soul_stacks = (soul_health/self.soul_slaughter_hp_per_stack)
-
-					--Calculate maximum stacks based on caster health
-					local maximum_stacks = (attacker:GetMaxHealth()*(self.soul_slaughter_max_hp_pct * 0.01)/self.soul_slaughter_hp_per_stack)
-
-					-- Set variable
-					local modifier_soul_feast
-
-					-- Assign 5 second duration
-					local duration = self.soul_slaughter_duration
-
-					-- Feast on its soul!
-					-- Check if the buff already exists, otherwise, add it
-					if not self.caster:HasModifier(self.modifier_soul) then
-						self.caster:AddNewModifier(self.caster, self.ability, self.modifier_soul, {duration = duration})
-					end
-
-					modifier_soul_feast = self.caster:FindModifierByName(self.modifier_soul)
-					if modifier_soul_feast then
-						for i = 1, soul_stacks do
-							-- Increment the stack count if it will not exceed the maximum
-							if modifier_soul_feast:GetStackCount() < maximum_stacks then
-								modifier_soul_feast:IncrementStackCount()
-								modifier_soul_feast:ForceRefresh()
-							end
-						end
-					end
-				end
-			end)
 		end
 	end
 end
-
 
 -- Active Satanic modifier
 modifier_imba_satanic_active = class({})

@@ -106,3 +106,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"                 "Deadeye passively affects allied heroes as well"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"                 "Marksmanship no longer disabled by distance"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_9"                 "+550 Gust Distance/Knockback"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+25% Precision Aura Attack Speed"

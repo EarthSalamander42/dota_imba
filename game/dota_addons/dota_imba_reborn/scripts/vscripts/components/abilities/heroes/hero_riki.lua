@@ -456,6 +456,8 @@ function imba_riki_blink_strike:OnSpellStart()
 		self.hTarget = self:GetCursorTarget()
 		local hTarget = self.hTarget
 
+		if self.hTarget:TriggerSpellAbsorb(self) then return end
+
 		-- Parameters
 		self.damage = self:GetSpecialValueFor("damage")
 		self.duration = self:GetTalentSpecialValueFor("duration")
@@ -478,6 +480,8 @@ function imba_riki_blink_strike:OnSpellStart()
 			self.hCaster:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_cmd", {duration = FrameTime()})
 		end
 
+		local damage_type = self:GetAbilityDamageType()
+
 		Timers:CreateTimer(jump_duration, function()
 			local target_loc_forward_vector = hTarget:GetForwardVector()
 			local final_pos = hTarget:GetAbsOrigin() - target_loc_forward_vector * 100
@@ -487,7 +491,7 @@ function imba_riki_blink_strike:OnSpellStart()
 			FindClearSpaceForUnit(self.hCaster, final_pos, true)
 			self.hCaster:MoveToTargetToAttack(hTarget)
 			if (hTarget:GetTeamNumber() ~= self.hCaster:GetTeamNumber()) then
-				ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = self:GetAbilityDamageType()})
+				ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = damage_type})
 				hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
 			end
 			self.hCaster:SetForwardVector(target_loc_forward_vector)
@@ -732,7 +736,11 @@ function modifier_imba_blink_strike_debuff_turn:DeclareFunctions()
 end
 
 function modifier_imba_blink_strike_debuff_turn:OnCreated()
-	self.slow_pct = self:GetAbility():GetSpecialValueFor("turn_rate_slow_pct")
+	if self:GetAbility() then
+		self.slow_pct = self:GetAbility():GetSpecialValueFor("turn_rate_slow_pct")
+	else
+		self.slow_pct = 0
+	end
 end
 
 function modifier_imba_blink_strike_debuff_turn:GetModifierTurnRate_Percentage()
@@ -1316,6 +1324,19 @@ end
 function imba_riki_tricks_of_the_trade:GetAOERadius()
 	return self:GetSpecialValueFor("area_of_effect") end
 
+function imba_riki_tricks_of_the_trade:OnAbilityPhaseStart()
+	if self:GetCaster():HasScepter() and self:GetCursorTarget() and self:GetCursorTarget() ~= self:GetCaster() then
+		self.target = self:GetCursorTarget()
+		self:GetCaster():SetCursorCastTarget(self:GetCaster())
+	end
+
+	return true
+end
+
+function imba_riki_tricks_of_the_trade:OnAbilityPhaseInterrupted()
+	self.target = nil
+end
+
 function imba_riki_tricks_of_the_trade:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1325,8 +1346,9 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 
 		self.channel_start_time = GameRules:GetGameTime()
 
-		if caster:HasScepter() then
-			origin = target:GetAbsOrigin() end
+		if caster:HasScepter() and self.target and not self.target:IsNull() then
+			origin = self.target:GetAbsOrigin()
+		end
 
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_primary", {})
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_secondary", {})
@@ -1348,17 +1370,8 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 
 		local caster_loc = caster:GetAbsOrigin()
 
-		if caster:HasScepter() and target ~= caster then
-			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
-
-
-			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
-		else
-			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
-
-
-			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
-		end
+		self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
+		ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
 
 		ParticleManager:SetParticleControl(self.TricksParticle, 0, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.TricksParticle, 1, Vector(aoe, 0, aoe))
@@ -1369,15 +1382,12 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 end
 
 function imba_riki_tricks_of_the_trade:OnChannelThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local target = self:GetCursorTarget()
-		if caster:HasScepter() and target and target ~= caster then
-			origin = target:GetAbsOrigin()
-			caster:SetAbsOrigin(origin)
-			ParticleManager:SetParticleControl(self.TricksParticle, 0, origin)
-			ParticleManager:SetParticleControl(self.TricksParticle, 3, origin)
-		end
+	local caster = self:GetCaster()
+	if caster:HasScepter() and self.target and not self.target:IsNull() then
+		origin = self.target:GetAbsOrigin()
+		caster:SetAbsOrigin(origin)
+		ParticleManager:SetParticleControl(self.TricksParticle, 0, origin)
+		ParticleManager:SetParticleControl(self.TricksParticle, 3, origin)
 	end
 end
 
@@ -1417,6 +1427,8 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 			self:EndCooldown()
 			self:StartCooldown(new_cooldown)
 		end
+		
+		self.target = nil
 	end
 end
 

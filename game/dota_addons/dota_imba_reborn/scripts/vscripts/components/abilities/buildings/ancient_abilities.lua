@@ -166,13 +166,13 @@ function modifier_imba_fountain_danger_zone:IsPurgable() return false end
 function modifier_imba_fountain_danger_zone:IsPurgeException() return false end
 function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
 
-function modifier_imba_fountain_danger_zone:CheckState()
-	local state = {
-		[MODIFIER_STATE_DISARMED] = true,
-	}
+-- function modifier_imba_fountain_danger_zone:CheckState()
+	-- local state = {
+		-- [MODIFIER_STATE_DISARMED] = true,
+	-- }
 
-	return state
-end
+	-- return state
+-- end
 
 function modifier_imba_fountain_danger_zone:OnCreated()
 	self.interval = 0.2

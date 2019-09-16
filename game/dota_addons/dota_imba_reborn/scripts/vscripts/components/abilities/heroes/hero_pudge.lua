@@ -890,7 +890,7 @@ function modifier_imba_rot_slow:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_rot_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetSpecialValueFor("rot_slow") end
+function modifier_imba_rot_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetTalentSpecialValueFor("rot_slow") end
 
 --//=================================================================================================================
 --// Pudge's Flesh Heap
@@ -1283,17 +1283,27 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_pudge_5", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pudge_9", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_pudge_5	= class({})
+modifier_special_bonus_imba_pudge_9	= class({})
 
 function modifier_special_bonus_imba_pudge_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_pudge_5:IsPurgable() 	return false end
+function modifier_special_bonus_imba_pudge_5:IsPurgable() 		return false end
 function modifier_special_bonus_imba_pudge_5:RemoveOnDeath() 	return false end
 
-function imba_pudge_meat_hook:OnOwnerSpawned()
-	if not IsServer() then return end
+function modifier_special_bonus_imba_pudge_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_9:RemoveOnDeath() 	return false end
 
+function imba_pudge_meat_hook:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_pudge_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_pudge_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_pudge_5"), "modifier_special_bonus_imba_pudge_5", {})
+	end
+end
+
+function imba_pudge_rot:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_pudge_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_pudge_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_pudge_9"), "modifier_special_bonus_imba_pudge_9", {})
 	end
 end

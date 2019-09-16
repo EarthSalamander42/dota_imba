@@ -29,6 +29,7 @@
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_Note0"						"The second attack leaves Weaver 0.2 seconds after the first, and has no range limit."
 
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_tooltip_attack"						"GEMINATE ATTACK COUNT:"
+"DOTA_Tooltip_ability_imba_weaver_geminate_attack_bonus_damage"							"GEMINATE ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_imba_weaver_time_lapse"							"Time Lapse"
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_Description"				"Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>It's Rewind Time:</font> Resets cooldowns of The Swarm, Shukuchi, and Geminate Attack.\n<font color='#FF7800'>Paradox:</font> Creates an illusion of the target at the position before Time Lapse for 5 seconds. This illusion has standard incoming and outgoing damage."
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_cooldown_scepter"	        "SCEPTER COOLDOWN:"

@@ -966,7 +966,7 @@
 
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
-"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
+"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy hero grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
 "DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
 "DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
@@ -979,8 +979,8 @@
 "DOTA_Tooltip_modifier_imba_satanic_active"                    "Unholy Rage"
 "DOTA_Tooltip_modifier_imba_satanic_active_Description"                     "Gaining a huge amount of lifesteal."
 
-"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"            "Soul Slaughter"
-"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"             "Slain creeps and heroes' souls grant you bonus health and damage."
+"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"					"Soul Slaughter"
+"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"		"Slain heroes' souls grant you bonus health and damage."
 
 // Scythe of Vyse
 "DOTA_Tooltip_Ability_item_imba_sheepstick"                    "Scythe of Vyse"

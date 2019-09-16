@@ -82,7 +82,7 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 	LaunchArcaneBolt(caster, ability, target)
 
 	-- Scepter: Find a secondary target to shot at. Prioritize heroes
-	if scepter then
+	if scepter or caster:HasTalent("special_bonus_imba_skywrath_mage_9") then
 		local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(),
 											   target:GetAbsOrigin(),
 											   nil,
@@ -93,13 +93,24 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 											   FIND_ANY_ORDER,
 											   false)
 
+		local extra_bolts	= caster:FindTalentValue("special_bonus_imba_skywrath_mage_9")
+		local counter		= 0
+
+		if scepter then
+			extra_bolts = extra_bolts + 1
+		end
 		
 		-- If at least one hero was found to shot at, make sure it's not the main target
 		for _,enemy_hero in pairs(enemy_heroes) do
 			if enemy_hero ~= target then
 				-- Launch a bolt at this blyat
 				LaunchArcaneBolt(caster, ability, enemy_hero)
-				return nil
+			
+				counter = counter + 1
+
+				if counter >= extra_bolts then
+					return nil
+				end
 			end
 		end
 	
@@ -119,7 +130,12 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 			if enemy_creep ~= target then
 				-- Fire at this creep blyat
 				LaunchArcaneBolt(caster, ability, enemy_creep)
-				return nil
+			
+				counter = counter + 1
+
+				if counter >= extra_bolts then
+					return nil
+				end
 			end
 		end
 	end
@@ -282,9 +298,14 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 	local scepter = caster:HasScepter()
 
 	-- Ability specials
-	local search_radius = ability:GetSpecialValueFor("search_radius")    
+	local search_radius = ability:GetSpecialValueFor("search_radius")
 	local max_bounces = ability:GetSpecialValueFor("max_bounces")    
-	local scepter_search_radius = ability:GetSpecialValueFor("scepter_search_radius")        
+	local scepter_search_radius = ability:GetSpecialValueFor("scepter_search_radius")
+
+	if caster:HasTalent("special_bonus_imba_skywrath_mage_11") then
+		search_radius = FIND_UNITS_EVERYWHERE
+		scepter_search_radius = FIND_UNITS_EVERYWHERE
+	end
 
 	-- Roll for a cast response
 	if RollPercentage(75) then
@@ -317,7 +338,12 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 
 	-- Otherwise, launch projectile
 	local target = enemies[1]   
-	LaunchConcussiveShot(caster, caster, ability, target, true, max_bounces)    
+	
+	if (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("search_radius") then
+		LaunchConcussiveShot(caster, caster, ability, target, true, max_bounces)
+	else
+		LaunchConcussiveShot(caster, caster, ability, target, true, max_bounces, false)
+	end
 
 	-- #8 Talent: Concussive Shot hits all visible heroes
 	if caster:HasTalent("special_bonus_imba_skywrath_mage_8") then
@@ -344,8 +370,13 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 		-- If at least one hero was found to shot at, make sure it's not the main target        
 		for _,enemy_hero in pairs(enemy_heroes) do
 			if enemy_hero ~= target then
-				-- Launch a concussive shot at the secondary hero
-				LaunchConcussiveShot(caster, caster, ability, enemy_hero, true, max_bounces)
+				-- Launch a concussive shot at the secondary hero				
+				if (enemy_hero:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("scepter_search_radius") then
+					LaunchConcussiveShot(caster, caster, ability, enemy_hero, true, max_bounces)
+				else
+					LaunchConcussiveShot(caster, caster, ability, enemy_hero, true, max_bounces, false)
+				end
+				
 				return nil
 			end
 		end
@@ -365,7 +396,12 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 			-- Make sure it's not the main target
 			if enemy_creep ~= target then
 				-- Fire at this creep blyat
-				LaunchConcussiveShot(caster, caster, ability, enemy_creep, true, max_bounces)
+				if (enemy_creep:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("scepter_search_radius") then
+					LaunchConcussiveShot(caster, caster, ability, enemy_creep, true, max_bounces)
+				else
+					LaunchConcussiveShot(caster, caster, ability, enemy_creep, true, max_bounces, false)
+				end				
+				
 				return nil
 			end
 		end
@@ -444,10 +480,10 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 			-- Apply/Refresh slow debuff
 			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
 		end
-	end    
+	end
 
 	-- Check if there are anymore bounces to fire    
-	if bounces_left > 0 then
+	if extra_data.bShouldBounce == 1 and bounces_left > 0 then
 	  local target_pos = target:GetAbsOrigin()
 		-- If there are, wait a second
 		Timers:CreateTimer(ghastly_delay, function()
@@ -485,7 +521,13 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 	end
 end
 
-function LaunchConcussiveShot(caster, source, ability, target, primary, bounces_left)
+function LaunchConcussiveShot(caster, source, ability, target, primary, bounces_left, bGhastlyPulse)
+	local bShouldBounce = true
+	
+	if bGhastlyPulse ~= nil and bGhastlyPulse == false then
+		bShouldBounce = false
+	end
+
 	-- Ability properties
 	local particle_projectile = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
 
@@ -506,7 +548,7 @@ function LaunchConcussiveShot(caster, source, ability, target, primary, bounces_
 							  bProvidesVision = true,
 							  iVisionRadius = vision_radius,
 							  iVisionTeamNumber = caster:GetTeamNumber(),
-							  ExtraData = {bounces_left = bounces_left, primary_concussive = primary}
+							  ExtraData = {bounces_left = bounces_left, primary_concussive = primary, bShouldBounce = bShouldBounce}
 	}
 
 	ProjectileManager:CreateTrackingProjectile(concussive_projectile)  
@@ -685,11 +727,11 @@ function modifier_imba_ancient_seal_main:OnCreated()
 	self.particle_seal = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
 
 	-- Ability specials
-	self.mr_reduction_pct = self.ability:GetSpecialValueFor("mr_reduction_pct")
+	self.mr_reduction_pct = self.ability:GetTalentSpecialValueFor("mr_reduction_pct")
 
 	-- Apply seal particle
 	self.particle_seal_fx = ParticleManager:CreateParticle(self.particle_seal, PATTACH_OVERHEAD_FOLLOW, self.parent)
-	ParticleManager:SetParticleControlEnt(self.particle_seal_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.particle_seal_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	self:AddParticle(self.particle_seal_fx, false, false, -1 , false, true)
 end
 
@@ -784,11 +826,11 @@ function modifier_imba_ancient_seal_secondary:OnCreated()
 	self.particle_seal = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
 
 	-- Ability specials
-	self.mr_reduction_pct = self.ability:GetSpecialValueFor("mr_reduction_pct")
+	self.mr_reduction_pct = self.ability:GetTalentSpecialValueFor("mr_reduction_pct")
 
 	-- Apply seal particle
 	self.particle_seal_fx = ParticleManager:CreateParticle(self.particle_seal, PATTACH_OVERHEAD_FOLLOW, self.parent)
-	ParticleManager:SetParticleControlEnt(self.particle_seal_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.particle_seal_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	self:AddParticle(self.particle_seal_fx, false, false, -1 , false, true)
 end
 
@@ -889,7 +931,9 @@ function imba_skywrath_mage_mystic_flare:OnSpellStart()
 		-- If at least one hero was found to strike, make sure he's not in the initial flare radius
 		for _,enemy_hero in pairs(enemy_heroes) do
 			local distance = (enemy_hero:GetAbsOrigin() - target_point):Length2D()
-			if (distance - 50) > damage_radius then
+			
+			print(damage_radius)
+			if distance > damage_radius then
 
 				-- Secondary flare
 				ExecuteMysticFlare(caster, ability, enemy_hero:GetAbsOrigin())
@@ -929,8 +973,10 @@ function ExecuteMysticFlare(caster, ability, target_point)
 	local damage_duration = ability:GetSpecialValueFor("damage_duration")        
 
 	-- #6 Talent: Mystic Flare deals the damage in half the duration
-		damage_duration = damage_duration * (1 - caster:FindTalentValue("special_bonus_imba_skywrath_mage_6") * 0.01)        
-
+	if caster:HasTalent("special_bonus_imba_skywrath_mage_6") then
+		damage_duration = damage_duration * caster:FindTalentValue("special_bonus_imba_skywrath_mage_6")
+	end
+	
 	-- Apply thinker modifier on target location
 	CreateModifierThinker(caster, ability, modifier_mystic, {duration = damage_duration}, target_point, caster:GetTeamNumber(), false)
 end
@@ -964,8 +1010,10 @@ function modifier_imba_mystic_flare:OnCreated()
 		self.damage_radius = self.damage_radius + self.caster:FindTalentValue("special_bonus_imba_skywrath_mage_4")
 
 		-- #6 Talent: Mystic Flare deals the damage in half the duration
-		self.damage_duration = self.damage_duration * (1 - self.caster:FindTalentValue("special_bonus_imba_skywrath_mage_6") * 0.01)
-		self.damage_interval = self.damage_interval * (1 - self.caster:FindTalentValue("special_bonus_imba_skywrath_mage_6") * 0.01)
+		if self.caster:HasTalent("special_bonus_imba_skywrath_mage_6") then
+			self.damage_duration = self.damage_duration * self.caster:FindTalentValue("special_bonus_imba_skywrath_mage_6")
+			self.damage_interval = self.damage_interval * self.caster:FindTalentValue("special_bonus_imba_skywrath_mage_6")
+		end
 
 		-- Calculate damage per interval
 		self.damage_per_interval = self.damage / self.damage_duration * self.damage_interval
@@ -1110,3 +1158,31 @@ end
 function modifier_imba_skywrath_flying_movement:IsHidden() return true end
 function modifier_imba_skywrath_flying_movement:IsPurgable() return false end
 function modifier_imba_skywrath_flying_movement:IsDebuff() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_3", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_10", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skywrath_mage_3		= class({})
+modifier_special_bonus_imba_skywrath_mage_10	= class({})
+
+function modifier_special_bonus_imba_skywrath_mage_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skywrath_mage_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skywrath_mage_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skywrath_mage_10:RemoveOnDeath() 	return false end
+
+function imba_skywrath_mage_ancient_seal:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skywrath_mage_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_skywrath_mage_3"), "modifier_special_bonus_imba_skywrath_mage_3", {})
+	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skywrath_mage_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_skywrath_mage_10"), "modifier_special_bonus_imba_skywrath_mage_10", {})
+	end	
+end
