@@ -334,9 +334,6 @@ function GameMode:ItemAddedFilter( keys )
 	if item_name == "item_aegis" then
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
-			-- Display aegis pickup message for all players
-			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
-
 			local line_duration = 7
 
 			if unit:GetTeamNumber() ~= _G.GAME_ROSHAN_KILLER_TEAM and _G.GAME_ROSHAN_KILLER_TEAM ~= 0 then
@@ -358,15 +355,24 @@ function GameMode:ItemAddedFilter( keys )
 			end
 
 			-- With no timer, combat events notification is not triggered
-			Timers:CreateTimer(1.0, function()
-				if item then
-					if item.GetContainer then
-						UTIL_Remove(item:GetContainer())
+			if unit:GetNumItemsInInventory() >= 6 then
+				unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			else
+				Timers:CreateTimer(1.0, function()
+					if item then
+						if item.GetContainer then
+							UTIL_Remove(item:GetContainer())
+						end
+
+						UTIL_Remove(item)
 					end
 
-					UTIL_Remove(item)
-				end
-			end)
+					-- in the rare case where the player would die within 1 second after picked the aegis
+					if unit:IsAlive() then
+						unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+					end
+				end)
+			end
 
 			return true
 		end
