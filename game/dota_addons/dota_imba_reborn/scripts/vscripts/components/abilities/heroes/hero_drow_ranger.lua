@@ -1846,9 +1846,7 @@ function modifier_imba_drow_ranger_trueshot_720:OnCreated()
 end
 
 function modifier_imba_drow_ranger_trueshot_720:OnIntervalThink()
-	if not IsServer() then return end
-
-	self:SetStackCount(self:GetCaster():GetAgility() * (self:GetAbility():GetSpecialValueFor("trueshot_ranged_attack_speed") / 100))
+	self:SetStackCount(self:GetCaster():GetAgility() * (self:GetAbility():GetTalentSpecialValueFor("trueshot_ranged_attack_speed") / 100))
 	
 	if self.activation_counter > 0 then
 		self.activation_counter = math.max(self.activation_counter - 0.1, 0)

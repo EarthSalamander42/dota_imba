@@ -785,7 +785,7 @@ function modifier_imba_batrider_flaming_lasso:OnCreated()
 	if not IsServer() then return end
 	
 	self.drag_distance			= self:GetAbility():GetSpecialValueFor("drag_distance")
-	self.break_distance			= self:GetAbility():GetSpecialValueFor("drag_distance")
+	self.break_distance			= self:GetAbility():GetSpecialValueFor("break_distance")
 	
 	if self:GetCaster():HasScepter() then
 		self.damage				= self:GetAbility():GetSpecialValueFor("scepter_damage")
@@ -828,7 +828,7 @@ end
 
 function modifier_imba_batrider_flaming_lasso:OnIntervalThink()
 	-- "If Batrider teleports a distance greater than 425, the lasso breaks." (This one's gonna have a higher break distance than 425 but same concept applies)
-	if (self:GetCaster():GetAbsOrigin() - self.current_position):Length2D() > self.break_distance or not self:GetCaster():IsAlive() then		
+	if (self:GetCaster():GetAbsOrigin() - self.current_position):Length2D() > self.break_distance or not self:GetCaster():IsAlive() then
 		self:Destroy()
 	else
 		self.vector				= self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()

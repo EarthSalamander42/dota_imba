@@ -125,17 +125,22 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_antimage_mana_void"
 
-		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
-		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+		"Ability10"					"special_bonus_strength_12"
+		"Ability11"					"special_bonus_attack_speed_25"
 		"Ability12"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
 		"Ability13"					"special_bonus_agility_15"
-		"Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
-		"Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
-		"Ability16"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
-		"Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
+		"Ability14"					"special_bonus_imba_antimage_9" // Blink Uncontrollable Illusion
+		"Ability15"					"special_bonus_imba_antimage_10" // -Xs Blink Cooldown
+		"Ability16"					"special_bonus_imba_antimage_11" // +X% Counterspell Magic Resistance
+		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
 		
 		// Removed Abilities
+		// "Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
+		// "Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
 		// "Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		// "Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
+		// "Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
+		// "Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
 	}
 
 	//=================================================================================================================
@@ -568,7 +573,7 @@
 		"Ability13"					"special_bonus_imba_drow_ranger_9" //+x Gust Distance/Knockback
 		"Ability14"					"special_bonus_evasion_25"
 		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
-		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disabled by distance
+		"Ability16"					"special_bonus_imba_drow_ranger_10" // +25% Precision Aura Attack Speed
 		"Ability17"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for x seconds. This small gust wave pushes the main target back x units for x seconds, deals no damage, and does not silence.
 		
 		// Removed Abilities
@@ -577,6 +582,7 @@
 		// Removed Talents
 		// "Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
 		// "Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		// "Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disabled by distance
 	}
 
 	//=================================================================================================================
@@ -917,14 +923,22 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_lina_laguna_blade"
 
-		"Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
-		"Ability11"					"special_bonus_imba_lina_3" // Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave
-		"Ability12"					"special_bonus_imba_lina_2" // Spawns a main Dragon Slave at the end of the second Dragon Slave
-		"Ability13"					"special_bonus_imba_lina_5" // Lina's Spells causes DoT based on Fiery Soul stacks
-		"Ability14"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
-		"Ability15"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
-		"Ability16"					"special_bonus_imba_lina_4" // After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
-		"Ability17"					"special_bonus_imba_lina_8" // Blazing Fire
+		"Ability10"					"special_bonus_attack_damage_30" // Additional Dragon Slaves
+		"Ability11"					"special_bonus_cast_range_125"
+		"Ability12"					"special_bonus_hp_400"
+		"Ability13"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
+		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
+		"Ability15"					"special_bonus_imba_lina_9" // +30/2% Fiery Soul Per Stack
+		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
+		"Ability17"					"special_bonus_attack_range_175"
+		
+		// Removed Abilities
+		// "Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
+		// "Ability11"					"special_bonus_imba_lina_3" // Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave (this will no longer work because it's now built-in to the ability)
+		// "Ability12"					"special_bonus_imba_lina_2" // Spawns a main Dragon Slave at the end of the second Dragon Slaves
+		// "Ability13"					"special_bonus_imba_lina_5" // Lina's Spells causes DoT based on Fiery Soul stacks
+		// "Ability16"					"special_bonus_imba_lina_4" // After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
+		// "Ability17"					"special_bonus_imba_lina_8" // Blazing Fire
 	}
 
 	//=================================================================================================================
@@ -1442,14 +1456,19 @@
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
 
-		"Ability10"					"special_bonus_mp_300" // +300 mana
+		"Ability10"					"special_bonus_exp_boost_40"
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
-		"Ability12"					"special_bonus_armor_10" // +10 armor
-		"Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
-		"Ability14"					"special_bonus_imba_pudge_8" // Dismember last 2 more seconds
-		"Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
+		"Ability12"					"special_bonus_spell_lifesteal_13"
+		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
+		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
+		"Ability15"					"special_bonus_cooldown_reduction_15"
 		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
 		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_armor_10" // +10 armor
+		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
+		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
 	}
 
 	//=================================================================================================================
@@ -1648,14 +1667,21 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_skywrath_mage_mystic_flare"
 
-		"Ability10"					"special_bonus_imba_skywrath_mage_1"
-		"Ability11"					"special_bonus_imba_skywrath_mage_2"
-		"Ability12"					"special_bonus_imba_skywrath_mage_3"
-		"Ability13"					"special_bonus_imba_skywrath_mage_4"
-		"Ability14"					"special_bonus_imba_skywrath_mage_5"
-		"Ability15"					"special_bonus_imba_skywrath_mage_6"
+		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability11"					"special_bonus_exp_boost_40"
+		"Ability12"					"special_bonus_imba_skywrath_mage_3" // "-Xs Ancient Seal Cooldown"
+		"Ability13"					"special_bonus_imba_skywrath_mage_9" // "+1 Arcane Bolt Per Cast"
+		"Ability14"					"special_bonus_imba_skywrath_mage_11" // "Global Concussive Shot"
+		"Ability15"					"special_bonus_imba_skywrath_mage_10" // "+15% Ancient Seal Magic Resistance Reduction"
 		"Ability16"					"special_bonus_intelligence_35"
-		"Ability17"					"special_bonus_imba_skywrath_mage_8"
+		"Ability17"					"special_bonus_imba_skywrath_mage_6" // "Mystic Flare deals the damage in half the duration"
+
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_skywrath_mage_1" // -25 Arcane Bolt mana cost
+		// "Ability11"					"special_bonus_imba_skywrath_mage_2" // "+1s Ancient Seal duration"
+		// "Ability13"					"special_bonus_imba_skywrath_mage_4" // "+100% Mystic Flare radius"
+		// "Ability14"					"special_bonus_imba_skywrath_mage_5" // -1s Arcane Bolt cooldown
+		// "Ability17"					"special_bonus_imba_skywrath_mage_8" // "Concussive Shot hits all visible heroes in range"
 	}
 
 	//=================================================================================================================

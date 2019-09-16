@@ -7666,7 +7666,9 @@
 		"ItemResult"					"item_imba_power_treads_2"
 		"ItemRequirements"
 		{
-			"01"						"item_power_treads;item_staff_of_wizardry;item_blade_of_alacrity;item_ogre_axe"
+			"01"						"item_power_treads;item_ogre_axe;item_belt_of_strength;item_gloves"
+			"02"						"item_power_treads;item_blade_of_alacrity;item_boots_of_elves;item_gloves"
+			"03"						"item_power_treads;item_staff_of_wizardry;item_robe;item_gloves"
 		}
 	}
 
@@ -7685,7 +7687,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4350"
+		"ItemCost"						"3300"
 		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
 		"ItemQuality"					"magic"
 		"ItemAliases"					"power treads; mega; mega treads"
@@ -7704,7 +7706,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"34"
+				"bonus_stat"				"30"
 			}
 			"03"
 			{
@@ -7714,12 +7716,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_mode_tenacity"			"20"
+				"str_mode_tenacity"			"15"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"agi_mode_evasion"			"20"
+				"agi_mode_evasion"			"15"
 			}
 			"06"
 			{
@@ -9814,7 +9816,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"20"
+				"damage_bonus"					"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -9825,7 +9827,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"200"
+				"berserk_attack_speed"			"130"
 			}
 			"04"
 			{
@@ -9835,7 +9837,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_armor_reduction"		"6"
+				"berserk_armor_reduction"		"8"
 			}
 			"06"
 			{
@@ -9971,13 +9973,13 @@
 			"08"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"soul_slaughter_damage_per_stack"	"0.25"
+				"soul_slaughter_damage_per_stack"	"0.1"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"soul_slaughter_hp_per_stack"		"5"
+				"var_type"							"FIELD_FLOAT"
+				"soul_slaughter_hp_per_stack"		"0.8"
 			}
 
 			"10"
@@ -14671,7 +14673,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"25.0"
 
@@ -15478,12 +15480,13 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES" // For Power state (Health and Chaos are caught in unit filter)
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"950"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"25.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15570,18 +15573,18 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_damage_amount"	"70"
+				"health_damage_amount"	"50"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"enemy_hp_drain"		"7"
+				"enemy_hp_drain"		"5.5"
 			}
 			
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"power_stat_reduction"	"40"
+				"power_stat_reduction"	"35"
 			}
 			
 			"17"
@@ -16181,6 +16184,168 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Recipe: Aether Specs
+	//=================================================================================================================
+	"item_recipe_imba_aether_specs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2345"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1050"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_aether_specs"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_aether_lens;item_imba_ring_of_aquila"
+		}
+	}	
+		
+	//=================================================================================================================
+	// Aether Specs
+	//=================================================================================================================
+	"item_imba_aether_specs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_aether_specs"
+		"AbilityTextureName"			"custom/item_aether_specs"
+		
+		"ID"							"2346"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80.0"
+		"AbilityCastRange"				"800"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		"ItemCost"						"4200"
+		"ItemShopTags"					"damage;armor;int;spell_amp;cast_range;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"as;aether specs;aether;specs;glasses"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"3.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_bonus"		"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_power"			"8"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"9"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"3"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"3.0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_armor"		"3"
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_aspd"			"5"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_vision"		"200"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_duration"			"30"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"800"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_cast_range"		"75"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hits_to_kill"			"2"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"			"800" // Change the actual cast range value above too if you want to change this
+			}
+		}
+	}
 	
-	//next free ID: 2345
+	//next free ID: 2347
 }

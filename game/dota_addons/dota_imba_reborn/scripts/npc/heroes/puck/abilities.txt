@@ -91,7 +91,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_ethereal_jaunt"	
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilitySound"					"Hero_Puck.EtherealJaunt"
 		
 		"MaxLevel"						"1"
@@ -190,7 +190,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_phase_shift"	
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilitySound"					"Hero_Puck.Phase_Shift"
 
 		// Casting
@@ -351,7 +351,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.4"
+				"value"						"1.5"
 			}
 		}
 	}	
@@ -379,7 +379,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"8"
+				"value"						"9"
 			}
 		}
 	}

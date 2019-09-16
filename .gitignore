@@ -37,32 +37,3 @@ game/dota_addons/dota_imba/models/rosh*
 
 # Imbathrow
 content/dota_addons/dota_imba_reborn/materials/models/courier/*
-
-# Siltbreaker
-game/dota_addons/dota_imba_reborn/maps/journey_assets/*
-game/dota_addons/dota_imba_reborn/maps/reef_assets/*
-game/dota_addons/dota_imba_reborn/maps/scenes/*
-game/dota_addons/dota_imba_reborn/maps/tilesets/*
-game/dota_addons/dota_imba_reborn/maps/act1_art.vpk
-game/dota_addons/dota_imba_reborn/maps/crypt_test.vpk
-game/dota_addons/dota_imba_reborn/maps/dune_test.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_art.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_art_01.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_art_01a.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_art_01b.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_envonly.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_gameplay.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_outline.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_1_z.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_2.vpk
-game/dota_addons/dota_imba_reborn/maps/ep_2_alt.vpk
-game/dota_addons/dota_imba_reborn/maps/gate_test.vpk
-game/dota_addons/dota_imba_reborn/maps/lightning.vpk
-game/dota_addons/dota_imba_reborn/maps/reef_test.vpk
-game/dota_addons/dota_imba_reborn/maps/sand_king_test.vpk
-game/dota_addons/dota_imba_reborn/maps/snowtest.vpk
-game/dota_addons/dota_imba_reborn/maps/stonering.vpk
-game/dota_addons/dota_imba_reborn/maps/test_prison.vpk
-game/dota_addons/dota_imba_reborn/maps/trap_test.vpk
-game/dota_addons/dota_imba_reborn/maps/trap_test_unified.vpk

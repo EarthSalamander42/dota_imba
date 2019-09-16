@@ -673,12 +673,12 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 		-- end
 
 		if self:GetParent():HasScepter() then
-			if self:GetParent():PassivesDisabled() then
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
-			elseif not self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetAbility() and self:GetAbility():GetToggleState() then
+			-- if self:GetParent():PassivesDisabled() then
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
+			if not self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetAbility() and self:GetAbility():GetToggleState() then
 				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end

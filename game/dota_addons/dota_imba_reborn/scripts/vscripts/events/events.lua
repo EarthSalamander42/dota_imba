@@ -711,6 +711,16 @@ function GameMode:OnPlayerChat(keys)
 			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
 		end
 		
+		if str == "-memory" then
+			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			-- print(package.loaded) -- This lags everything to absolute death
+		end
+		
+		-- For the serial disconnectors
+		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
+			GameRules:SetGameWinner(caster:GetTeamNumber())
+		end
+		
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			
@@ -792,45 +802,25 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" then
+						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" and (hero == caster) then
 							ability_set = {
-								[0] = "imba_life_stealer_rage",
-								[1] = "imba_life_stealer_feast",
-								[2] = "imba_life_stealer_open_wounds",
-								[3] = "imba_life_stealer_assimilate",
-								[4] = "imba_life_stealer_assimilate_eject",
-								[5] = "imba_life_stealer_infest",
-								[6] = "imba_life_stealer_control",
-								[7] = "imba_life_stealer_consume",
-								[8] = "generic_hidden",
-								[9] = "special_bonus_hp_200",
-								[10] = "special_bonus_attack_speed_20",
-								[11] = "special_bonus_attack_damage_30",
-								[12] = "special_bonus_movement_speed_25",
-								[13] = "special_bonus_evasion_20",
-								[14] = "special_bonus_unique_lifestealer_2",
-								[15] = "special_bonus_unique_lifestealer_3",
-								[16] = "special_bonus_unique_lifestealer"
+								[0] = "imba_windranger_shackleshot",
+								[1] = "imba_windranger_powershot",
+								[2] = "imba_windranger_windrun",
+								[3] = "imba_windranger_backpedal",
+								[4] = "imba_windranger_focusfire_vanilla_enhancer",
+								-- [5] = "imba_windranger_focusfire",
+								[5] = "windrunner_focusfire",
+								[6] = "special_bonus_mp_regen_3",
+								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								[8] = "special_bonus_imba_windranger_powershot_damage",
+								[9] = "special_bonus_attack_range_125",
+								[10] = "special_bonus_imba_windranger_windrun_invisibility",
+								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								[12] = "special_bonus_unique_windranger_8",
+								[13] = "special_bonus_cooldown_reduction_30",
 							}
-							upgraded = true
-						elseif string.find(text, 'visage') and hero:GetName() == "npc_dota_hero_visage" then
-							ability_set = {
-								[0] = "imba_visage_grave_chill",
-								[1] = "imba_visage_soul_assumption",
-								[2] = "imba_visage_gravekeepers_cloak",
-								[3] = "imba_visage_stone_form_self_cast",
-								[4] = "imba_visage_become_familiar",
-								[5] = "imba_visage_summon_familiars",
-								[6] = "special_bonus_cast_range_100",
-								[7] = "special_bonus_attack_damage_30",
-								[8] = "special_bonus_exp_boost_60",
-								[9] = "special_bonus_imba_visage_soul_assumption_extra_targets",
-								[10] = "special_bonus_imba_visage_soul_assumption_charge_damage",
-								[11] = "special_bonus_imba_visage_summon_familiars_bonus_move_speed",
-								[12] = "special_bonus_imba_visage_gravekeepers_cloak_cd_reduction",
-								[13] = "special_bonus_spell_amplify_20"
-							}
-							upgraded = true
+							upgraded = true						
 						end
 							
 						for ability = 0, 23 do
@@ -854,8 +844,8 @@ function GameMode:OnPlayerChat(keys)
 						end
 					end
 				end
-			elseif str == "-dark_seer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			elseif str == "-phantom_lancer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
@@ -918,15 +908,12 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
-			elseif str == "-memory" then
-				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
-				-- print(package.loaded) -- This lags everything to absolute death
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
 			
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
-				caster:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(caster, pos, false)
 			end
 		end
 	end

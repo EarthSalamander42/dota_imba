@@ -631,7 +631,7 @@ function modifier_imba_ancient_apparition_anti_abrasion_thinker:IsAura() 				ret
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:IsAuraActiveOnDeath() 	return false end
 
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraRadius()			return self.radius end
-function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
 
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
