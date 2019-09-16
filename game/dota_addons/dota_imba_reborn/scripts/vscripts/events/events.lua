@@ -676,6 +676,10 @@ function GameMode:OnPlayerChat(keys)
 					end
 				end)
 			end
+
+			if str == "-toggle_ui" then
+				CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "toggle_ui", {})
+			end
 		end
 
 		if str == "-gg" then

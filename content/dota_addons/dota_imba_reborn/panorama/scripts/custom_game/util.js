@@ -321,3 +321,21 @@ function GetDonatorColor(status) {
 
 	return donator_colors[status];
 }
+
+GameEvents.Subscribe("toggle_ui", ToggleUI);
+
+var toggle_ui = true;
+
+function ToggleUI() {
+	$.Msg("Toggle UI")
+
+	if (toggle_ui == true) {
+		FindDotaHudElement("HUDElements").style.visibility = "collapse";
+		FindDotaHudElement("CustomUIRoot").style.visibility = "collapse";
+		toggle_ui = false;
+	} else {
+		FindDotaHudElement("HUDElements").style.visibility = "visible";
+		FindDotaHudElement("CustomUIRoot").style.visibility = "visible";
+		toggle_ui = true;
+	}
+}
