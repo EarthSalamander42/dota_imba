@@ -178,7 +178,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"trigger_distance"			"170"
+				"trigger_distance"			"185"
 			}
 			"09"
 			{

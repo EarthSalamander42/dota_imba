@@ -10,6 +10,11 @@ LinkLuaModifier("modifier_imba_windranger_windrun_handler", "components/abilitie
 LinkLuaModifier("modifier_imba_windranger_windrun_slow", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_windranger_windrun_invis", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_windranger_backpedal", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
+LinkLuaModifier("modifier_imba_windranger_focusfire_vanilla_enhancer", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_windranger_focusfire", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
 imba_windranger_shackleshot					= class({})
@@ -24,12 +29,22 @@ modifier_imba_windranger_windrun			= class({})
 modifier_imba_windranger_windrun_slow		= class({})
 modifier_imba_windranger_windrun_invis		= class({})
 
+imba_windranger_backpedal					= class({})
+modifier_imba_windranger_backpedal			= class({})
+
+imba_windranger_focusfire_vanilla_enhancer	= class({})
+modifier_imba_windranger_focusfire_vanilla_enhancer	= class({})
+
 imba_windranger_focusfire					= class({})
 modifier_imba_windranger_focusfire			= class({})
 
 ---------------------------------
 -- IMBA_WINDRANGER_SHACKLESHOT --
 ---------------------------------
+
+function imba_windranger_shackleshot:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
+end
 
 function imba_windranger_shackleshot:OnSpellStart()
 	local target = self:GetCursorTarget()
@@ -72,14 +87,24 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 			local shackleshot_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_pair.vpcf", PATTACH_POINT_FOLLOW, target)
 			ParticleManager:SetParticleControlEnt(shackleshot_particle, 1, enemy, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControl(shackleshot_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
-
-			local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
 			
-			if target_modifier then
-				target_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
+			if target.AddNewModifier then
+				local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+				
+				if target_modifier then
+					target_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
+					target_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), true)
+				end
 			end
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+			if enemy.AddNewModifier then
+				local enemy_shackleshot_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+				
+				if enemy_shackleshot_modifier then
+					enemy_shackleshot_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
+				end
+			end
+			
 			break
 		end
 	end
@@ -92,17 +117,19 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 			if not ignore_list[enemy] and math.abs(AngleDiff(target_angle, VectorToAngles(tree:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then
 				shackleTarget = tree
 				
-				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+				if target.AddNewModifier then
+					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
 
-				local shackleshot_tree_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_pair.vpcf", PATTACH_POINT_FOLLOW, target)
-				ParticleManager:SetParticleControl(shackleshot_tree_particle, 1, tree:GetAbsOrigin())
-				ParticleManager:SetParticleControl(shackleshot_tree_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
+					local shackleshot_tree_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_pair.vpcf", PATTACH_POINT_FOLLOW, target)
+					ParticleManager:SetParticleControl(shackleshot_tree_particle, 1, tree:GetAbsOrigin())
+					ParticleManager:SetParticleControl(shackleshot_tree_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
 
-				local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
-				
-				if target_modifier then
-					target_modifier:AddParticle(shackleshot_tree_particle, false, false, -1, false, false)
-				end
+					local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+					
+					if target_modifier then
+						target_modifier:AddParticle(shackleshot_tree_particle, false, false, -1, false, false)
+					end
+				end	
 			end
 		end
 	end
@@ -116,7 +143,7 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 end
 
 function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location, ExtraData)
-	if not target or target:TriggerSpellAbsorb(self) then return end
+	if not target or (target.TriggerSpellAbsorb and target:TriggerSpellAbsorb(self)) then return end
 
 	local shackled_counter	= 0
 	local target_origin		= target:GetAbsOrigin()
@@ -149,18 +176,6 @@ function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location,
 		end
 	end
 end
-
--- modifier_imba_windranger_shackle_shot	= class({})
-
--- imba_windranger_powershot				= class({})
-
--- imba_windranger_windrun					= class({})
--- modifier_imba_windranger_windrun		= class({})
--- modifier_imba_windranger_windrun_slow	= class({})
--- modifier_imba_windranger_windrun_invis	= class({})
-
--- imba_windranger_focusfire				= class({})
--- modifier_imba_windranger_focusfire		= class({})
 
 -------------------------------------------
 -- MODIFIER_IMBA_WINDRANGER_SHACKLE_SHOT --
@@ -197,6 +212,15 @@ function imba_windranger_powershot:OnSpellStart()
 	if not self.powershot_modifier or self.powershot_modifier:IsNull() then
 		self.powershot_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_powershot", self:GetCaster())
 	end
+	
+	-- REMOVE THIS WHEN DONE WITH EVERYTHING
+	if self:GetCaster():HasAbility("imba_windranger_backpedal") then
+		self:GetCaster():FindAbilityByName("imba_windranger_backpedal"):SetLevel(1)
+	end
+	
+	if self:GetCaster():HasAbility("imba_windranger_focusfire_vanilla_enhancer") then
+		self:GetCaster():FindAbilityByName("imba_windranger_focusfire_vanilla_enhancer"):SetLevel(math.min(self:GetCaster():GetLevel() / 6, 3))
+	end	
 end
 
 function imba_windranger_powershot:OnChannelThink(flInterval)
@@ -213,13 +237,21 @@ function imba_windranger_powershot:OnChannelFinish(bInterrupted)
 		self.powershot_modifier:SetStackCount(0)
 	end
 	
-	local channel_pct = (GameRules:GetGameTime() - self:GetChannelStartTime())/self:GetChannelTime()
+	local channel_pct = (GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()
 
 	-- This "dummy" literally only exists to attach the gush travel sound to
 	local powershot_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	powershot_dummy:EmitSound("Ability.Powershot")
 	-- Keep track of how many units the Powershot will hit to calculate damage reductions
 	powershot_dummy.units_hit = 0
+	
+	local powershot_particle = "particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+	
+	-- IMBAfication: Godshot
+	if channel_pct >= self:GetSpecialValueFor("godshot_min") * 0.01 and channel_pct <= self:GetSpecialValueFor("godshot_max") * 0.01 then
+		powershot_particle = "particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot.vpcf"
+		powershot_dummy:EmitSound("Hero_Windranger.Powershot_Godshot")
+	end
 	
 	self:GetCaster():StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 	
@@ -232,7 +264,7 @@ function imba_windranger_powershot:OnChannelFinish(bInterrupted)
 	    iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 	    iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 	    
-	    EffectName = "particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf",
+	    EffectName = powershot_particle,
 	    fDistance = self:GetSpecialValueFor("arrow_range") + self:GetCaster():GetCastRangeBonus(),
 	    fStartRadius = self:GetSpecialValueFor("arrow_width"),
 	    fEndRadius = self:GetSpecialValueFor("arrow_width"),
@@ -253,16 +285,33 @@ function imba_windranger_powershot:OnProjectileThink_ExtraData(location, data)
 	if data.dummy_index then
 		EntIndexToHScript(data.dummy_index):SetAbsOrigin(location)
 	end
+	
+	GridNav:DestroyTreesAroundPoint(location, 75, true)
 end
 
 function imba_windranger_powershot:OnProjectileHit_ExtraData(target, location, data)
 	if target and data.dummy_index and EntIndexToHScript(data.dummy_index) and not EntIndexToHScript(data.dummy_index):IsNull() and EntIndexToHScript(data.dummy_index).units_hit then
 		EmitSoundOnLocationWithCaster(location, "Hero_Windrunner.PowershotDamage", self:GetCaster())
-	
+		
+		local damage		= self:GetTalentSpecialValueFor("powershot_damage") * data.channel_pct * 0.01 * ((100 - self:GetSpecialValueFor("damage_reduction")) * 0.01) ^ EntIndexToHScript(data.dummy_index).units_hit
+		local damage_type	= self:GetAbilityDamageType()
+		
+		-- IMBAfication: Godshot
+		if data.channel_pct >= self:GetSpecialValueFor("godshot_min") and data.channel_pct <= self:GetSpecialValueFor("godshot_max") then
+			damage		= self:GetTalentSpecialValueFor("powershot_damage") * self:GetSpecialValueFor("godshot_damage_pct") * 0.01
+			damage_type	= DAMAGE_TYPE_PURE
+			
+			local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("godshot_stun_duration")})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self:GetSpecialValueFor("godshot_stun_duration") * (1 - target:GetStatusResistance()), true)
+			end
+		end
+		
 		ApplyDamage({
 			victim 			= target,
-			damage 			= self:GetTalentSpecialValueFor("powershot_damage") * data.channel_pct * 0.01 * ((100 - self:GetSpecialValueFor("damage_reduction")) * 0.01) ^ EntIndexToHScript(data.dummy_index).units_hit,
-			damage_type		= self:GetAbilityDamageType(),
+			damage 			= damage,
+			damage_type		= damage_type,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self:GetCaster(),
 			ability 		= self
@@ -289,10 +338,25 @@ function imba_windranger_windrun:GetIntrinsicModifierName()
 	return "modifier_imba_windranger_windrun_handler"
 end
 
+-- function imba_windranger_windrun:OnInventoryContentsChanged()
+	-- if self:GetCaster():HasScepter() and self:GetCaster():HasModifier("modifier_imba_windranger_windrun_handler") and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()).initialized then
+		-- self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()).initialized = true
+		-- self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()):SetStackCount(self:GetSpecialValueFor("max_charges"))
+	-- end
+-- end
+
+-- function imba_windranger_windrun:OnHeroCalculateStatBonus()
+	-- self:OnInventoryContentsChanged()
+-- end
+
 function imba_windranger_windrun:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.Windrun")
 	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_windrun", {duration = self:GetSpecialValueFor("duration")})
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_windranger_windrun_invisibility") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_windrun_invis", {duration = self:GetSpecialValueFor("duration")})
+	end
 end
 
 ----------------------------------------------
@@ -305,7 +369,10 @@ function modifier_imba_windranger_windrun_handler:IsHidden()		return not self:Ge
 function modifier_imba_windranger_windrun_handler:DestroyOnExpire()	return false end
 
 function modifier_imba_windranger_windrun_handler:OnCreated()
-	self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+	if not IsServer() then return end
+
+	-- Sphaget way of getting this working but it's hardcode (doesn't read the server-side value if RequiresScepter flag is on and scepter is not held)
+	self:SetStackCount(math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2))
 	self:CalculateCharge()
 end
 
@@ -316,7 +383,7 @@ function modifier_imba_windranger_windrun_handler:OnIntervalThink()
 end
 
 function modifier_imba_windranger_windrun_handler:CalculateCharge()	
-	if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_charges") then
+	if self:GetStackCount() >= math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2) then
 		self:SetDuration(-1, true)
 		self:StartIntervalThink(-1)
 	else
@@ -450,7 +517,7 @@ end
 
 function modifier_imba_windranger_windrun_slow:OnCreated()
 	if self:GetAbility() then
-		self.enemy_movespeed_bonus_pct	= self:GetAbility():GetTalentSpecialValueFor("enemy_movespeed_bonus_pct")
+		self.enemy_movespeed_bonus_pct	= self:GetAbility():GetSpecialValueFor("enemy_movespeed_bonus_pct")
 	else
 		self.enemy_movespeed_bonus_pct	= 0
 	end
@@ -470,21 +537,146 @@ end
 -- MODIFIER_IMBA_WINDRANGER_WINDRUN_INVIS --
 --------------------------------------------
 
+function modifier_imba_windranger_windrun_invis:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+		
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+	}
+end
+
+function modifier_imba_windranger_windrun_invis:GetModifierInvisibilityLevel()
+	return 1
+end
+
+function modifier_imba_windranger_windrun_invis:OnAttack(keys)
+	if keys.attacker == self:GetParent() and not keys.no_attack_cooldown then
+		self:Destroy()
+	end
+end
+
+function modifier_imba_windranger_windrun_invis:OnAbilityFullyCast(keys)
+	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() then
+		self:Destroy()
+	end
+end
+
 ------
 --  --
 ------
+
+-------------------------------
+-- IMBA_WINDRANGER_BACKPEDAL --
+-------------------------------
+
+function imba_windranger_backpedal:IsInnateAbility()	return true end
+
+function imba_windranger_backpedal:OnToggle()
+	if self:GetToggleState() and not self:GetCaster():HasModifier("modifier_imba_windranger_backpedal") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_backpedal", {})
+	elseif not self:GetToggleState() and self:GetCaster():HasModifier("modifier_imba_windranger_backpedal") then
+		self:GetCaster():RemoveModifierByName("modifier_imba_windranger_backpedal")
+	end
+end
+
+----------------------------------------
+-- MODIFIER_IMBA_WINDRANGER_BACKPEDAL --
+----------------------------------------
+
+function modifier_imba_windranger_backpedal:IsHidden()		return true end
+function modifier_imba_windranger_backpedal:IsPurgable()	return false end
+
+function modifier_imba_windranger_backpedal:OnCreated()
+	self.backpedal_distance	= self:GetAbility():GetSpecialValueFor("backpedal_distance")
+	self.backpedal_height	= self:GetAbility():GetSpecialValueFor("backpedal_height")
+	self.backpedal_duration	= self:GetAbility():GetSpecialValueFor("backpedal_duration")
+end
+
+function modifier_imba_windranger_backpedal:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+end
+
+function modifier_imba_windranger_backpedal:OnAbilityFullyCast(keys)
+	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and not keys.ability:IsItem() then
+		local direction_vector = self:GetParent():GetForwardVector() * (-1)
+	
+		if keys.ability:GetCursorPosition() and bit.band(keys.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
+			if keys.ability:GetCursorPosition() == self:GetParent():GetAbsOrigin() then
+				direction_vector = (keys.ability:GetCursorPosition() + self:GetParent():GetForwardVector() - self:GetParent():GetAbsOrigin()):Normalized() * (-1)
+			else
+				direction_vector = (keys.ability:GetCursorPosition() - self:GetParent():GetAbsOrigin()):Normalized() * (-1)
+			end
+		end
+	
+		self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		{
+			distance		= self.backpedal_distance,
+			direction_x 	= direction_vector.x,
+			direction_y 	= direction_vector.y,
+			direction_z 	= direction_vector.z,
+			duration 		= self.backpedal_duration,
+			height 			= self.backpedal_height,
+			bGroundStop 	= true,
+			bDecelerate 	= false,
+			bInterruptible 	= false,
+			bIgnoreTenacity	= true
+		})
+	end
+end
+
+------------------------------------------------
+-- IMBA_WINDRANGER_FOCUSFIRE_VANILLA_ENHANCER --
+------------------------------------------------
+
+function imba_windranger_focusfire_vanilla_enhancer:IsInnateAbility()	return true end
+
+function imba_windranger_focusfire_vanilla_enhancer:GetIntrinsicModifierName()
+	return "modifier_imba_windranger_focusfire_vanilla_enhancer"
+end
+
+---------------------------------------------------------
+-- MODIFIER_IMBA_WINDRANGER_FOCUSFIRE_VANILLA_ENHANCER --
+---------------------------------------------------------
+
+function modifier_imba_windranger_focusfire_vanilla_enhancer:IsHidden()	return true end
+
+function modifier_imba_windranger_focusfire_vanilla_enhancer:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+function modifier_imba_windranger_focusfire_vanilla_enhancer:OnAbilityFullyCast(keys)
+	if keys.unit == self:GetParent() and keys.ability:GetName() == "windrunner_focusfire" then 
+		self.target			= keys.ability:GetCursorTarget()
+	end
+end
+
+function modifier_imba_windranger_focusfire_vanilla_enhancer:OnAttackLanded(keys)
+	-- TODO: Add mini-stun value to the vanilla focus fire and read value from there
+	-- TODO: Add mini-stun sound?
+	if keys.attacker == self:GetParent() and self.target and not self.target:IsNull() and self.target:IsAlive() and self.target == keys.target and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("ministun_chance"), self) then
+		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
+	end
+end
 
 -------------------------------
 -- IMBA_WINDRANGER_FOCUSFIRE --
 -------------------------------
 
 function imba_windranger_focusfire:OnSpellStart()
+	self:GetCaster():EmitSound("Ability.Focusfire")
+	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_focusfire", {duration = 10})
 end
 
 ----------------------------------------
 -- MODIFIER_IMBA_WINDRANGER_FOCUSFIRE --
 ----------------------------------------
+
+function modifier_imba_windranger_focusfire:IsPurgable()	return false end
 
 function modifier_imba_windranger_focusfire:OnCreated(params)
 	self.bonus_attack_speed			= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
@@ -499,7 +691,7 @@ function modifier_imba_windranger_focusfire:OnCreated(params)
 end
 
 function modifier_imba_windranger_focusfire:OnIntervalThink()
-	if self:GetParent():AttackReady() then
+	if self:GetParent():AttackReady() and self.target and not self.target:IsNull() and self.target:IsAlive() and (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():Script_GetAttackRange() then
 		--self:GetParent():SetForwardVector((self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized())
 		self:GetParent():StartGesture(ACT_DOTA_ATTACK)
 		self:GetParent():PerformAttack(self.target, true, true, false, true, true, false, false)
@@ -520,14 +712,16 @@ function modifier_imba_windranger_focusfire:DeclareFunctions()
 end
 
 function modifier_imba_windranger_focusfire:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed
+	if IsClient() or self:GetParent():GetAttackTarget() == self.target then
+		return self.bonus_attack_speed
+	end
 end
 
--- function modifier_imba_windranger_focusfire:GetModifierPreAttack_BonusDamage()
-	-- if IsClient() or self:GetParent():GetAttackTarget() == self.target then
-		-- return self.focusfire_damage_reduction
-	-- end
--- end
+function modifier_imba_windranger_focusfire:GetModifierPreAttack_BonusDamage()
+	if IsClient() or self:GetParent():GetAttackTarget() == self.target then
+		return self.focusfire_damage_reduction
+	end
+end
 
 -- function modifier_imba_windranger_focusfire:GetModifierDisableTurning()
 	-- return 1
@@ -535,6 +729,36 @@ end
 
 function modifier_imba_windranger_focusfire:GetActivityTranslationModifiers()
 	return "focusfire"
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_windranger_shackle_shot_cooldown", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_windranger_focusfire_damage_reduction", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_windranger_shackle_shot_cooldown		= class({})
+modifier_special_bonus_imba_windranger_focusfire_damage_reduction	= class({})
+
+function modifier_special_bonus_imba_windranger_shackle_shot_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_windranger_shackle_shot_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_windranger_shackle_shot_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_windranger_focusfire_damage_reduction:IsHidden() 		return true end
+function modifier_special_bonus_imba_windranger_focusfire_damage_reduction:IsPurgable() 	return false end
+function modifier_special_bonus_imba_windranger_focusfire_damage_reduction:RemoveOnDeath() 	return false end
+
+function imba_windranger_shackleshot:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_windranger_shackle_shot_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_windranger_shackle_shot_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_windranger_shackle_shot_cooldown"), "modifier_special_bonus_imba_windranger_shackle_shot_cooldown", {})
+	end
+end
+
+function imba_windranger_focusfire:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_windranger_focusfire_damage_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_windranger_focusfire_damage_reduction") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_windranger_focusfire_damage_reduction"), "modifier_special_bonus_imba_windranger_focusfire_damage_reduction", {})
+	end
 end
 
 -- LinkLuaModifier("modifier_imba_visage_grave_chill_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)

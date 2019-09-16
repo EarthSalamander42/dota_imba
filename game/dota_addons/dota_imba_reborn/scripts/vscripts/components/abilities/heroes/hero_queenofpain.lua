@@ -242,6 +242,14 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 	end
 end
 
+-- "A unit with less than 25% of its maximum health can be denied when it has the Shadow Strike debuff on."
+function modifier_imba_shadow_strike_debuff:CheckState()
+	if self:GetParent():GetHealthPercent() < 25 then
+		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
+	end
+end
+
+
 function modifier_imba_shadow_strike_debuff:DeclareFunctions()
 	local decFuncs =
 		{

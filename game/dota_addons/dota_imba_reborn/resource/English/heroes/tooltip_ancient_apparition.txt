@@ -48,7 +48,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_release_Description"			"Releases the ice blast to explode at the tracer's current location."
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion"							"Anti-Abrasion"
-"DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_Description"				"Creates a vortex of icy energy that causes enemies to lose traction and slip around. Pierces spell immunity."
+"DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_Description"				"Creates a vortex of icy energy that causes enemies to lose traction and slip around."
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_Lore"						"Amidst the cruel, icy winds, even the walking grounds cannot be trusted."
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_radius"						"RADIUS:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_vortex_duration"			"DURATION:"

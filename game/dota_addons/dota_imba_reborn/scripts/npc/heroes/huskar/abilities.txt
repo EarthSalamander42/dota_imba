@@ -411,18 +411,31 @@
 		}
 	}
 	
-	// Using vanilla talent reference for custom ability
+
 	//=================================================================================================================
-	//	Huskar: Bonus Life Break Cast Range
+	//
 	//=================================================================================================================
-	"special_bonus_unique_huskar"
+	"special_bonus_imba_huskar_life_break_cast_range" 
 	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_huskar_life_break"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"550"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"400"
 			}
 		}
 	}

@@ -29,10 +29,11 @@ function item_imba_origin:CastFilterResultTarget(target)
 	if IsServer() then
 		if target == self:GetCaster() then
 			return UF_SUCCESS
+		elseif (self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 1 or self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 3) and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and target:IsMagicImmune() then
+			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
-		
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
+
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 	end
 end
 
@@ -53,8 +54,6 @@ function item_imba_origin:GetAbilityTextureName()
 end
 
 function item_imba_origin:OnSpellStart()
-	if not IsServer() then return end
-
 	local target	= self:GetCursorTarget()
 	local active_duration	= self:GetSpecialValueFor("active_duration")
 
@@ -116,6 +115,8 @@ end
 -----------------------------------
 -- ORIGIN HEALTH ACTIVE MODIFIER --
 -----------------------------------
+
+function modifier_item_imba_origin_health:IsPurgable()	return false end
 
 function modifier_item_imba_origin_health:GetEffectName()
 	return "particles/items4_fx/spirit_vessel_damage.vpcf"
@@ -186,6 +187,8 @@ end
 ----------------------------------
 -- ORIGIN POWER ACTIVE MODIFIER --
 ----------------------------------
+
+function modifier_item_imba_origin_power:IsPurgable()	return false end
 
 function modifier_item_imba_origin_power:GetEffectName()
 	return "particles/items4_fx/nullifier_slow.vpcf"

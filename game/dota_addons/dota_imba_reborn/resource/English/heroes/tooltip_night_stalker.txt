@@ -8,7 +8,7 @@
 
 // Night Stalker's Void
 "DOTA_Tooltip_ability_imba_night_stalker_void"                          "Void"
-"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Adaption:</font> Void deals full damage and mini-stuns during the day time.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
+"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\n<font color='#FF7800'>Adaption:</font> Void also mini-stuns during the day time.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Lore"                    "Balanar creates a vortex of infinite night, tearing opponents violently into the eternal darkness that once was."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Note0"                    "Everlasting Night does not trigger when casting Void on illusions."
 "DOTA_Tooltip_ability_imba_night_stalker_void_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

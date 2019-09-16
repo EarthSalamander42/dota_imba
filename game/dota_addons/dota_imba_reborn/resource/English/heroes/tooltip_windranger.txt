@@ -8,7 +8,7 @@
 "DOTA_Tooltip_ability_imba_windranger_shackleshot_stun_duration"						"SHACKLE DURATION:"
 
 "DOTA_Tooltip_ability_imba_windranger_powershot"										"Powershot"
-"DOTA_Tooltip_ability_imba_windranger_powershot_Description"							"Windranger charges her bow for up to 1 second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages enemies and destroys trees along its path. For each enemy that Powershot hits, its damage is reduced by 20%%."
+"DOTA_Tooltip_ability_imba_windranger_powershot_Description"							"Windranger charges her bow for up to 1 second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages enemies and destroys trees along its path. For each enemy that Powershot hits, its damage is reduced by %damage_reduction%%%.\n<font color='#FF7800'>Godshot:</font> If Powershot is channeled for between %godshot_min%%% and %godshot_max%%% of its full duration, a more powerful version of Powershot is released, dealing %godshot_damage_pct%%% of its full damage as pure damage with no damage reductions, and stunning any hit enemies for %godshot_stun_duration% seconds."
 "DOTA_Tooltip_ability_imba_windranger_powershot_Lore"								"During her early years of training, Lyralei learned to fire powerful arrows that cleaved even trees to reach their targets."
 "DOTA_Tooltip_ability_imba_windranger_powershot_Note0"								"Powershot will destroy trees in its area of effect."
 "DOTA_Tooltip_ability_imba_windranger_powershot_arrow_range"							"RANGE:"
@@ -24,16 +24,27 @@
 "DOTA_Tooltip_ability_imba_windranger_windrun_radius"								"ENEMY SLOW RADIUS:"
 "DOTA_Tooltip_ability_imba_windranger_windrun_duration"								"DURATION:"
 
+"DOTA_Tooltip_ability_imba_windranger_windrun_aghanim_description"					"Grants 2 charges to Windrun, increases movement speed, and removes movement speed limit."
+"DOTA_Tooltip_ability_imba_windranger_windrun_max_charges"							"SCEPTER CHARGES:"
+"DOTA_Tooltip_ability_imba_windranger_windrun_charge_restore_time"					"SCEPTER REPLENISH TIME:"
+"DOTA_Tooltip_ability_imba_windranger_windrun_scepter_bonus_movement"				"%SCEPTER MOVE SPEED BONUS:"
+
+"DOTA_Tooltip_modifier_imba_windranger_windrun_handler"								"WINDRUN CHARGES"
+
+"DOTA_Tooltip_Ability_imba_windranger_backpedal"									"Backpedal"
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_Description"						"When toggled on, any ability cast causes Windranger to jump backwards. If the ability is a targeted cast, Windranger will leap in the opposite direction of the cast position."
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_Lore"								"Lyralei's extensive training in the enchanted woods has taught her extensive methods of evasion; one cannot rely on the wind alone."
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_distance"					"BACKPEDAL DISTANCE:"
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_height"					"BACKPEDAL HEIGHT:"
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_duration"					"BACKPEDAL DURATION:"
+
 "DOTA_Tooltip_ability_imba_windranger_focusfire"										"Focus Fire"
-"DOTA_Tooltip_ability_imba_windranger_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_windranger_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds."
 "DOTA_Tooltip_ability_imba_windranger_focusfire_Lore"								"Lyralei's ability to bombard opponents with a flurry of arrows is unparalleled - even at the expense of accuracy."
 "DOTA_Tooltip_ability_imba_windranger_focusfire_Note0"								"Can target buildings and Spell Immune units."
 "DOTA_Tooltip_ability_imba_windranger_focusfire_bonus_attack_speed" 			"BONUS ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_damage_reduction" 			"%DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_duration_tooltip"	"DURATION:"		
-"DOTA_Tooltip_ability_imba_windranger_focusfire_cooldown_scepter"					"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_damage_reduction_scepter"	"%SCEPTER DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_windranger_focusfire_aghanim_description"					"Reduces cooldown, decreases damage reduction, and removes debuffs from item effects."
 
 "DOTA_Tooltip_modifier_imba_windranger_shackle_shot"				"Shackleshot"
 "DOTA_Tooltip_modifier_imba_windranger_shackle_shot_Description"	"Bound by thick ropes from Windranger's ensnaring arrow."
@@ -45,3 +56,8 @@
 "DOTA_Tooltip_modifier_imba_windranger_windrun_invis_Description"			"Unseen but for the hindering gust in your wake."
 "DOTA_Tooltip_modifier_imba_windranger_focusfire"				"Focus Fire"
 "DOTA_Tooltip_modifier_imba_windranger_focusfire_Description"	"Constantly attacking with greatly increased attack speed and %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% reduced damage"
+
+"DOTA_Tooltip_ability_special_bonus_imba_windranger_shackle_shot_cooldown"		"-2s Shackleshot Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_windranger_powershot_damage"			"+125 Powershot Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_windranger_windrun_invisibility"		"Windrun Grants Invisibility"
+"DOTA_Tooltip_ability_special_bonus_imba_windranger_shackle_shot_duration"		"+1s Shackleshot Duration"

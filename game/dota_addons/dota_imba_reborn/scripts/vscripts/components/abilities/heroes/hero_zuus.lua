@@ -602,7 +602,7 @@ end
 function modifier_imba_zuus_static_field:Apply(target)
 	if not IsServer() then return end	
 	
-	if not target:IsAlive() or target == caster or target:IsRoshan() then return end
+	if self:GetCaster():PassivesDisabled() or not target:IsAlive() or target == self:GetCaster() or target:IsRoshan() then return end
 	
 	local ability			= self:GetAbility()
 	local caster			= self:GetCaster()

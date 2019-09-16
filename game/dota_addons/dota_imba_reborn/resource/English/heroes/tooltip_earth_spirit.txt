@@ -85,7 +85,7 @@
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"					"Earth's Mark reduces magic resistance by 5% per stack"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10 seconds Overdrow cooldown"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10s Overdraw Cooldown"
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"                    "+3 free Stone Remnants"
 

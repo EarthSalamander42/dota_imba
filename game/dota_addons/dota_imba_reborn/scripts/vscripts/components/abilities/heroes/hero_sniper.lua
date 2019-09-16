@@ -1576,7 +1576,7 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 
 		-- If target has Linken's Sphere off cooldown, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(ability) then
+			if not self:GetCaster():HasScepter() and target:TriggerSpellAbsorb(ability) then
 				return nil
 			end
 		end

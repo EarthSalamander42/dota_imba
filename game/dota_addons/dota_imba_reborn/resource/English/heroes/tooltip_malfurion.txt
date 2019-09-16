@@ -36,7 +36,7 @@
 "DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild_Description"				"Increases Malfurion's attack damage by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% against non-heroes enemies."
 
 "DOTA_Tooltip_ability_imba_malfurion_living_tower"							"Living Tower"
-"DOTA_Tooltip_ability_imba_malfurion_living_tower_Description"				"Summons a powerful living tower. This tower is treated as a magic immune, creep-hero Ancient unit."
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_Description"				"Summons a powerful living tower, which benefits from custom creep scaling. This tower is treated as a magic immune, creep-hero Ancient unit."
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_Lore"						""
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_health"					"TOWER HEALTH:"
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_damage"					"TOWER DAMAGE:"

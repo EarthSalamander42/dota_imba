@@ -273,7 +273,7 @@
 // Disruptor's Static Storm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_static_storm"                      "Static Storm"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_Lore"                "A summer squall in Druud is a hardship that only an Oglodi can survive."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -282,7 +282,7 @@
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_max_damage"          "MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_max_damage"               "SCEPTER MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_damage_increase_enemy"            "BONUS DAMAGE PER ENEMY:"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"              "Increases maximum damage and duration, and mutes enemies inside the storm."
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"              "Mutes items and increases duration."
 
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
@@ -1348,13 +1348,13 @@
 // Skywrath Mage's Arcane Bolt
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt"                  "Arcane Bolt"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Lore"              "Within the Ghastly Eyrie's endless intrigue, only the clever and calm can hope to survive."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_projectile_speed_per_stack"    "BOLT SPEED PER STACK:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "INT MULTIPLIER PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "Casts a second Arcane Bolt at a random enemy in 700 range of the main target."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within 700 range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Each stack increases Arcane Bolt projectile speed and damage, and increases Mystic Nova's damage."
@@ -1363,7 +1363,7 @@
 // Skywrath Mage's Concussive Shot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot"              "Concussive Shot"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"          "Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "The slow debuff is always refreshed, and does not stacks with itself."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 40 Concussive Shot talent."
@@ -1372,7 +1372,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_slow_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_max_bounces"               "MAXIMUM GHASTLY PULSE BOUNCES:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "Casts a second Concussive shot on another random enemy in 1600 range, if possible."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow"                      "Concussive Shot"
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"          "Slowed."
@@ -1381,13 +1381,13 @@
 // Skywrath Mage's Ancient Seal
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal"                  "Ancient Seal"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Lore"            "A holy incantation, whosoever finds themselves touched by Avilliva's sigil must suffer in penitent silence."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Note0"            "The ground seal ignores targets that has the regular seal on them, but can apply it if the seal gets purged."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_seal_duration"                "SEAL DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_mr_reduction_pct"             "%MAGIC AMPLIFICATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_sigil_radius"                 "EMBEDDED SEAL RADIUS:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Casts a second Ancient Seal on a random enemy in 700 range."
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_ancient_seal_main"                          "Ancient Seal"
 "DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"              "Silenced, and taking increased magic damage."
@@ -1399,27 +1399,31 @@
 // Skywrath Mage's Mystic Flare
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare"                  "Mystic Flare"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"                  "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %damage_duration% seconds.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, huge amounts of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%% for each Arcane Wrath stack he has at the moment of explosion.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"            "Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_radius"                "FLARE RADIUS:"
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"             "NOVA RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_int_as_damage_pct"            "%INTELLIGENCE AS DAMAGE:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "Casts a second Mystic Flare on a random enemy in 700 range that is not inside the initial Mystic Flare."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within 700 range (that is not inside the initial Mystic Flare). Heroes will take priority."
 
 ////===============================================================================================================
 // Skywrath Mage's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_1"               "-25 Arcane Bolt mana cost"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_2"               "+1s Ancient Seal duration"
-"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-4s Ancient Seal cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-8s Ancient Seal Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_4"               "+100% Mystic Flare radius"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_5"               "-1s Arcane Bolt cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6"               "Mystic Flare deals the damage in half the duration"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6"               "-1.2s Mystic Flare Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6_Description"	"Total damage unchanged."
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_7"               "Skywrath gains permanent flying movement"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_8"               "Concussive Shot hits all visible heroes in range"
-
-
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_9"               "+1 Arcane Bolt Per Cast"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_10"              "+15% Ancient Seal Magic Resistance Reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11"              "Global Concussive Shot"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11_Description"	"Ghastly Pulse will not activate if the distance between Skywrath Mage and the target upon cast is greater than the standard cast range."
 
 
 

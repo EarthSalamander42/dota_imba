@@ -152,7 +152,7 @@ function modifier_imba_lifesteal_boots_buff:OnCreated()
 	self.ms_limit = self.ability:GetSpecialValueFor("ms_limit")
 	self.drain_damage = self.ability:GetSpecialValueFor("drain_damage")
 	self.drain_radius = self.ability:GetSpecialValueFor("drain_radius")
-	self.ideal_speed = math.min(self:GetParent():GetIdealSpeedNoSlows(), self.ms_limit)
+	-- self.ideal_speed = math.min(self:GetParent():GetIdealSpeedNoSlows(), self.ms_limit)
 
 	if IsServer() then
 		-- Apply particle effects
@@ -213,22 +213,29 @@ function modifier_imba_lifesteal_boots_buff:OnIntervalThink()
 	end
 end
 
-function modifier_imba_lifesteal_boots_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN}
+function modifier_imba_lifesteal_boots_buff:CheckState()
+	return {
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_UNSLOWABLE] = true
+	}
+end
 
-	return decFuncs
+function modifier_imba_lifesteal_boots_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT
+	}
 end
 
 function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeedBonus_Percentage()
 	return self.phase_ms
 end
 
-function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_AbsoluteMin()
-	return self.ideal_speed
+function modifier_imba_lifesteal_boots_buff:GetModifierIgnoreMovespeedLimit()
+	return 1
 end
 
-function modifier_imba_lifesteal_boots_buff:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	return state
+function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_Limit()
+	return self.ms_limit
 end

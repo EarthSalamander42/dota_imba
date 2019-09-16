@@ -3,20 +3,16 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_break"                        "Mana Break"
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Description"            "Burns an opponent's mana on each attack. Mana Break deals %damage_per_burn% damage per mana burned as damage to the target.\n<font color='#FF7800'>Energy Blast:</font> When Anti Mage deals mana burn that causes the current mana pool of the target to fall below a multiplication of %threshold_difference%%, its mana becomes unstable and explodes violently, damaging the target and all nearby enemies in %blast_aoe% radius. The damage is equal to a portion of the target's maximum mana pool. This effect always occurs if the enemy has no mana after the attack is complete."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"                  "Does not work on structures, units naturally without mana, or magic immune targets."
-"DOTA_Tooltip_ability_imba_antimage_mana_break_Note1"                  "Energy Blasts will occur when dropping a target below 75%, 50%, and 25%."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Lore"                    "Thy mana's weight, in life pay."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_base_mana_burn"          "MANA BURNED:"
-"DOTA_Tooltip_ability_imba_antimage_mana_break_damage_per_burn"                     "DAMAGE PER MANA BURNT:"
 "DOTA_Tooltip_ability_imba_antimage_mana_break_max_mana_blast"          "%ENERGY BLAST DAMAGE:"
 
 // Anti Mage's Blink
 "DOTA_Tooltip_ability_imba_antimage_blink"                              "Blink"
-"DOTA_Tooltip_ability_imba_antimage_blink_Description"                  "Short distance teleportation that allows Anti-Mage to move in and out of combat.\n<font color='#FF7800'>Mana Distortion:</font> Burns a percentage of every enemy's current mana in a %radius% radius around the destination. Deals %percent_damage%%% of mana burnt as magic damage, up to a limit."
+"DOTA_Tooltip_ability_imba_antimage_blink_Description"                  "Short distance teleportation that allows Anti-Mage to move in and out of combat.\n<font color='#FF7800'>Mana Distortion:</font> Burns %percent_mana_burn%%% of every enemy's current mana in a %radius% radius around the destination. Deals %percent_damage%%% of mana burnt as magic damage, up to a limit."
 "DOTA_Tooltip_ability_imba_antimage_blink_Note0"                        "Blink can be used to dodge incoming projectiles."
 "DOTA_Tooltip_ability_imba_antimage_blink_Lore"                        "In his encounter with the Dead Gods, Anti-Mage learned the value of being elusive."
 "DOTA_Tooltip_ability_imba_antimage_blink_percent_blink_range"          "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
-"DOTA_Tooltip_ability_imba_antimage_blink_percent_mana_burn"            "%CURRENT MANA BURNED:"
-"DOTA_Tooltip_ability_imba_antimage_blink_percent_damage"              "%DAMAGE PER MANA:"
 "DOTA_Tooltip_ability_imba_antimage_blink_radius"                      "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_antimage_blink_mana_burn_limit"              "MAX MANA DISTORTION DAMAGE:"
 
@@ -25,7 +21,7 @@
 
 // Anti Mage's Spell Shield
 "DOTA_Tooltip_ability_imba_antimage_spell_shield"                      "Counterspell"
-"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"          "Passively grants you magic resistance. Can be activated to create an anti-magic shell around you that sends any targeted spells back towards enemies instead of affecting you.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"          "Passively grants you magic resistance. Can be activated to create an anti-magic shell around you that sends any targeted spells back towards enemies instead of affecting you.\n<font color='#FF7800'>Trading Places:</font> Can be set to auto-cast. If the active component of Counterspell blocks an ability while auto-cast is on, Anti-Mage and the caster immediately switch positions with each other."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Note0"                "Increases the magic resistance bonus additively, not multiplicatively."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                  "Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                  "%MAGIC RESISTANCE:"
@@ -46,7 +42,7 @@
 
 // Anti Mage's Mana Void
 "DOTA_Tooltip_ability_imba_antimage_mana_void"								"Mana Void"
-"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"					"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>The Magic Ends Here:</font> Burns part of the target's mana pool before calculating damage."
+"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"					"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n<font color='#FF7800'>PURITY OF WILL:</font> Mana Void deals pure damage.\n<font color='#FF7800'>The Magic Ends Here:</font> Burns part of the target's mana pool before calculating damage."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_Note0"						"Damage is calculated based on the main target's missing mana."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_Lore"							"The magic ends here."
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_damage_per_mana"	"DAMAGE PER MANA MISSING:"
@@ -72,8 +68,12 @@
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_4"                    "+10% of target's missing mana to Mana Break damage"
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_5"                    "+10% Blink mana burned"
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_6"                    "Magic Overload"
-"Dota_Tooltip_Ability_special_bonus_imba_antimage_6_Description"    "Mana Void explosion is delayed. Each point of mana lost during this period is worth as 2 missing mana points."
+"Dota_Tooltip_Ability_special_bonus_imba_antimage_6_Description"		"Mana Void explosion is delayed by 2 seconds. Each point of mana lost during this period counts as 3 missing mana in final damage calculations."
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_7"                    "Devoid of Essence"
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_7_Description"    "Mana Break attacks burn 45% of mana burned to enemies in 400 AoE."
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_8"                    "Nirvana"
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_8_Description"    "Mana Void counts missing mana from all targets in the AOE."
+"Dota_Tooltip_Ability_special_bonus_imba_antimage_9"					"Blink Uncontrollable Illusion"
+"Dota_Tooltip_Ability_special_bonus_imba_antimage_9_Description"		"After blinking, an uncontrollable illusion is created at Anti-Mage's original location.  Deals 25%% damage, takes 250%% damage, and lasts 10 seconds."
+"Dota_Tooltip_Ability_special_bonus_imba_antimage_10"                    "-2.5s Blink Cooldown"
+"Dota_Tooltip_Ability_special_bonus_imba_antimage_11"                    "+25% Counterspell Magic Resistance"
