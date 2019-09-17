@@ -32,10 +32,9 @@ modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
 
 function modifier_item_imba_aegis:OnCreated()
 	-- Parameters
-	local item = self:GetAbility()
-	self:SetDuration(item:GetSpecialValueFor("disappear_time"), true)
-	self.reincarnate_time = item:GetSpecialValueFor("reincarnate_time")
-	self.vision_radius = item:GetSpecialValueFor("vision_radius")
+	self:SetDuration(GetAbilitySpecial("item_imba_aegis", "disappear_time"), true)
+	self.reincarnate_time = GetAbilitySpecial("item_imba_aegis", "reincarnate_time")
+	self.vision_radius = GetAbilitySpecial("item_imba_aegis", "vision_radius")
 end
 
 function modifier_item_imba_aegis:DeclareFunctions()

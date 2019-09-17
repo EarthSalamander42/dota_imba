@@ -997,10 +997,10 @@ function AddMindBleeding(caster, target, count)
 		if target:HasModifier(modifierReduction) then
 			currentStack = target:GetModifierStackCount(modifierReduction, ability) + count
 
-			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration })
+			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration, count = count })
 			target:SetModifierStackCount( modifierReduction, ability, currentStack)
 		else
-			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration })
+			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration, count = count })
 			target:SetModifierStackCount( modifierReduction, ability, count )
 		end
 
@@ -1076,31 +1076,27 @@ end
 
 function modifier_mind_bleeding:OnCreated( event )
 	self.lastManaAmount = 0
+	self.count = event.count
+	self.parent = self:GetParent()
 end
 
 function modifier_mind_bleeding:GetModifierExtraHealthBonus()
-	local stackCount = self:GetStackCount()
-	local reduction = self:GetAbility():GetSpecialValueFor("reduction")
-	local talentBonus = self:GetCaster():FindTalentValue("special_bonus_vardor_8")
-	reduction = reduction + talentBonus 
+	if not IsServer() then return end
+	local reduction = self:GetAbility():GetSpecialValueFor("reduction") + self:GetCaster():FindTalentValue("special_bonus_vardor_8")
+	local max_reduction = self.parent:GetBaseMaxHealth() + (reduction * self.count)
+	local amount = self:GetStackCount() * reduction
 
-	local amount = stackCount * reduction
-
-	if self:GetParent():GetMaxHealth() > amount then
-		return amount
-	end
-
-	return 0
+	return math.max(amount, max_reduction * (-1))
 end
 
 function modifier_mind_bleeding:GetModifierExtraManaBonus()
-	local stackCount = self:GetStackCount()
+	if not IsServer() then return end
 	local reduction = self:GetAbility():GetSpecialValueFor("reduction")
 	local talentBonus = self:GetCaster():FindTalentValue("special_bonus_vardor_8")
 	reduction = reduction + talentBonus 
 
-	local newAmount = stackCount * reduction
-	local trueMaxMana = self:GetParent():GetMaxMana() + math.abs(self.lastManaAmount)
+	local newAmount = self:GetStackCount() * reduction
+	local trueMaxMana = self.parent:GetMaxMana() + math.abs(self.lastManaAmount)
 	if math.abs(newAmount) >= trueMaxMana then
 		newAmount = -(trueMaxMana - 1)
 	end
@@ -1111,25 +1107,31 @@ end
 function modifier_mind_bleeding:OnDeath(params)
 	if not IsServer() then return end
 
-	self:SetDuration(-1, true)
+	if params.unit == self.parent then
+		self:SetDuration(-1, true)
+	end
 end
 
-function modifier_mind_bleeding:OnRespawn( event )
-	if IsServer() then
-		local parent = self:GetParent()
+function modifier_mind_bleeding:OnRespawn(params)
+	if not IsServer() then return end
 
-		if event.unit == parent then
-			Timers:CreateTimer(FrameTime(), function()
-				print("heal!")
-				local maxHP = parent:GetMaxHealth()
-				local maxMana = parent:GetMaxMana()
-				parent:SetHealth(maxHP)
-				parent:SetMana(maxMana)
-			end)
-		end
-
-		self:Destroy()
+	if params.unit == self.parent then
+		self:StartIntervalThink(FrameTime() * 2)
 	end
+end
+
+-- creepy
+function modifier_mind_bleeding:OnIntervalThink()
+	self:StartIntervalThink(-1)
+	-- Healing OnIntervalThink doesn't work but it works OnDestroy okay why not
+	self:Destroy()
+end
+
+function modifier_mind_bleeding:OnDestroy()
+	if not IsServer() then return end
+
+	self.parent:SetHealth(999999)
+	self.parent:SetMana(999999)
 end
 
 LinkLuaModifier("modifier_piercing_shot_prevent_movement", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
