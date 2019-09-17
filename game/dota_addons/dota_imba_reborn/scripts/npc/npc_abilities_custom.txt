@@ -15002,7 +15002,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"5.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -15027,61 +15027,51 @@
 				"var_type"					"FIELD_INTEGER"
 				"mini_blast_count"			"3 4 5 6"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magic_res_reduction_pct"	"4"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magic_res_building_pct"	"50"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"magic_res_duration"		"6.5"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"blast_delay"				"0.9"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 200 300 400"
+				"damage"					"100 175 250 325"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_buildings_pct"		"50"
+				"damage_buildings_pct"		"25"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mini_blast_distance"		"350 300 250 200"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mini_blast_radius"			"400"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"main_blast_radius"			"400"
 			}
-
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -15138,43 +15128,36 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"3.5 3.75 4 4.25"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"ally_res_reduction_pct"	"25"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"enemy_res_reduction_pct"	"30 40 50 60"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"enemy_slow_pct"			"30 40 50 60"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"blast_delay"				"0.9"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_radius"				"100"
 			}			
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"total_dmg_conversion_pct"	"10 15 20 25"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -15392,6 +15375,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastRange"					"700"
 		"AbilityCastPoint"					"0.2"
 
 		// Time
@@ -15420,41 +15404,35 @@
 				"var_type"					"FIELD_INTEGER"
 				"health_drain"				"150 250 350"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_health_drain"		"180 300 360"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_slow_pct"				"5"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_per_second"			"0 2 4"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_rate"					"0.25"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_distance_extend"		"300"
+				"break_distance_extend"		"200"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"900"
+				"cast_range"				"700"
 			}
 		}
 	}

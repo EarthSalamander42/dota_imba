@@ -327,8 +327,6 @@ GameEvents.Subscribe("toggle_ui", ToggleUI);
 var toggle_ui = true;
 
 function ToggleUI() {
-	$.Msg("Toggle UI")
-
 	if (toggle_ui == true) {
 		FindDotaHudElement("HUDElements").style.visibility = "collapse";
 		FindDotaHudElement("CustomUIRoot").style.visibility = "collapse";

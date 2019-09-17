@@ -125,6 +125,6 @@
 	"npc_dota_hero_sohei"				"1"
 	"npc_dota_hero_mars"				"1"
 	"npc_dota_hero_malfurion"			"1"
-	"npc_dota_hero_vardor"				"0" // REALLY buggy and weak right now
+	"npc_dota_hero_vardor"				"1" // REALLY buggy and weak right now
 	"npc_dota_hero_nian"				"1"
 }

@@ -33,7 +33,7 @@ end
 
 modifier_fountain_aura_effect_lua = class({})
 
-function modifier_fountain_aura_effect_lua:IsHidden()	return true end
+function modifier_fountain_aura_effect_lua:IsHidden()	return false end
 function modifier_fountain_aura_effect_lua:IsPurgable() return false end
 
 function modifier_fountain_aura_effect_lua:DeclareFunctions()
@@ -78,18 +78,18 @@ function modifier_fountain_aura_effect_lua:OnIntervalThink()
 
 	if IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
 		-- self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
-
-		if self:GetParent():HasItemInInventory("item_bottle") then
-			local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
-
-			if bottle then
-				if bottle:GetCurrentCharges() < bottle:GetSpecialValueFor("max_charges") then
-					bottle:SetCurrentCharges(bottle:GetSpecialValueFor("max_charges"))
-				end
-			end
-		end
 	else
 		self:GetParent():RemoveModifierByName("modifier_fountain_invulnerable")
+	end
+
+	if self:GetParent():HasItemInInventory("item_bottle") then
+		local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
+
+		if bottle then
+			if bottle:GetCurrentCharges() < bottle:GetSpecialValueFor("max_charges") then
+				bottle:SetCurrentCharges(bottle:GetSpecialValueFor("max_charges"))
+			end
+		end
 	end
 end
 

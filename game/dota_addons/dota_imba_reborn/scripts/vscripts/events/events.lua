@@ -1040,8 +1040,8 @@ function GameMode:OnThink()
 						if team == 3 then
 							abandon_text = "#imba_team_bad_abandon_message"
 						end
-						Notifications:BottomToAll({ text = abandon_text, duration = 1.0, style = { color = "DodgerBlue" } })
-						Notifications:BottomToAll({ text = " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" }, continue = true })
+						abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
+						Notifications:BottomToAll({text = abandon_text, duration = 1.0})
 					end
 
 					TEAM_ABANDON[team][2] = true

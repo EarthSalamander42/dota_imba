@@ -209,7 +209,6 @@ function modifier_yari_count:OnStackCountChanged( oldCount )
 		local newCount = self:GetStackCount()
 
 		if newCount == 0 then
-
 			if caster.yari.particle then
 				ParticleManager:DestroyParticle(caster.yari.particle, false)
 				caster.yari.particle = false
@@ -223,9 +222,8 @@ function modifier_yari_count:OnStackCountChanged( oldCount )
 			end
 
 		elseif newCount > 0 then
-
 			if caster.weaponParticle then
-				ParticleManager:DestroyParticle(caster.weaponParticle, true)
+				ParticleManager:DestroyParticle(caster.weaponParticle, false)
 				caster.weaponParticle = false
 			end
 
@@ -280,13 +278,13 @@ function modifier_celestial_yari_dummy:OnCreated( event )
 		parent:SetForwardVector(targetVec)
 
 		if self.particle then
-			ParticleManager:DestroyParticle(self.particle, true)
+			ParticleManager:DestroyParticle(self.particle, false)
 		end
 		if self.particle2 then
-			ParticleManager:DestroyParticle(self.particle2, true)
+			ParticleManager:DestroyParticle(self.particle2, false)
 		end
 		if self.particle3 then
-			ParticleManager:DestroyParticle(self.particle3, true)
+			ParticleManager:DestroyParticle(self.particle3, false)
 		end
 
 		local ret = 1
@@ -354,13 +352,13 @@ end
 function modifier_celestial_yari_dummy:OnDestroy()
 	if IsServer() then
 		if self.particle then
-			ParticleManager:DestroyParticle(self.particle, true)
+			ParticleManager:DestroyParticle(self.particle, false)
 		end
 		if self.particle2 then
-			ParticleManager:DestroyParticle(self.particle2, true)
+			ParticleManager:DestroyParticle(self.particle2, false)
 		end
 		if self.particle3 then
-			ParticleManager:DestroyParticle(self.particle3, true)
+			ParticleManager:DestroyParticle(self.particle3, false)
 		end
 	end
 end
@@ -371,7 +369,6 @@ LinkLuaModifier("modifier_graceful_jump_dummy", "components/abilities/heroes/her
 LinkLuaModifier("modifier_graceful_jump_hidden", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_graceful_jump_count", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_graceful_jump_count_hidden", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
-
 
 --Spell Function
 
@@ -402,9 +399,37 @@ function vardor_graceful_jump:GetCustomCastErrorTarget( target )
 	end
 end
 
+function vardor_graceful_jump:OnAbilityPhaseStart()
+	if not IsServer() then return end
+
+	local active_remnants = self:GetCaster().yari.targets
+
+	if #active_remnants == 0 and self:GetCursorTarget() == nil then
+		DisplayError(self:GetCaster():GetPlayerID(), "No active spear.")
+		return false
+	end
+
+	-- init/remove previous
+	self.target = nil
+
+	if self:GetCursorTarget() then
+		self.target = self:GetCursorTarget()
+	end
+
+--[[
+	if closest_distance <= self:GetSpecialValueFor("max_range") then
+
+	else
+		DisplayError(caster:GetPlayerID(), "Spear is too far away!")
+		return false
+	end
+--]]
+
+	return true
+end
+
 function vardor_graceful_jump:OnSpellStart()
 	local caster = self:GetCaster()
-	local target = self:GetCursorTarget()
 
 	if caster:HasTalent("special_bonus_vardor_6") then
 		local modifier = caster:FindModifierByName("modifier_graceful_jump_count")
@@ -420,13 +445,15 @@ function vardor_graceful_jump:OnSpellStart()
 				self:EndCooldown()
 				self:StartCooldown(duration)
 			end
-
 		end
 	end
 
-	if target then
-		self.target = target
-		if target:HasModifier("modifier_piercing_shot_stuck") or target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
+	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_SkywrathMage.ConcussiveShot.Cast", caster)
+
+	print("Target:", self.target)
+
+	if self.target then
+		if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
 			Teleport(self)
 		else
 			Jump(self)
@@ -435,49 +462,31 @@ function vardor_graceful_jump:OnSpellStart()
 		return
 	end
 
-	local active_remnants = Entities:FindAllByModel("models/spear.vmdl")
+	local active_remnants = caster.yari.targets
+
+	print(#active_remnants)
 
 	if active_remnants[1] then
 		local closest_remnant_position = active_remnants[1]:GetAbsOrigin()
 		local closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
 
-		if closest_distance <= self:GetSpecialValueFor("max_range") then
-			self.target = active_remnants[1]
+		self.target = active_remnants[1]
 
-			for _, spear in pairs(active_remnants) do
-				if (spear:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < closest_distance then
-					self.target = spear
-					closest_remnant_position = spear:GetAbsOrigin()
-					closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
-				end
+		print(self.target:GetUnitName(), self.target:entindex())
+
+		for _, spear in pairs(active_remnants) do
+			if (spear:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < closest_distance then
+				self.target = spear
+				closest_remnant_position = spear:GetAbsOrigin()
+				closest_distance = (closest_remnant_position - self:GetCursorPosition()):Length2D()
 			end
-
-			if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
-				Teleport(self)
-			else
-				Jump(self)
-			end
-		else
-			DisplayError(caster:GetPlayerID(), "Spear is too far away!")
-			self:RefundManaCost()
-			self:EndCooldown()
 		end
-	else
-		DisplayError(caster:GetPlayerID(), "No active spear.")
-		self:RefundManaCost()
-		self:EndCooldown()
-	end
-end
 
-function vardor_graceful_jump:GetCastRange( point, target )
-	if target ~= nil then
-		if target:HasModifier("modifier_piercing_shot_stuck") or target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
-			return self:GetSpecialValueFor("max_range")
+		if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
+			Teleport(self)
 		else
-			return self:GetSpecialValueFor("short_range")
+			Jump(self)
 		end
-	else
-		return self:GetSpecialValueFor("short_range")
 	end
 end
 
@@ -497,6 +506,8 @@ function Teleport(self)
 	endTinker:AddNewModifier(caster, self, "modifier_graceful_jump_dummy", {EntIndex = self.target:entindex(), StartX = casterLoc.x, StartY = casterLoc.y, StartZ = casterLoc.z})
 
 	local startTinker = CreateUnitByName("npc_dota_vardor_spear_dummy", targetLocG, false, caster, caster, caster:GetTeam())
+	startTinker:SetModel("models/development/invisiblebox.vmdl")
+	startTinker:SetOriginalModel("models/development/invisiblebox.vmdl")
 	startTinker:SetAbsOrigin(casterLocG)
 	startTinker:SetModelScale(0)
 
@@ -536,9 +547,9 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 
 	caster:SetAbsOrigin(targetLoc)
 	caster:RemoveModifierByName("modifier_graceful_jump_hidden")
+	EmitSoundOnLocationWithCaster(targetLoc, "Hero_SkywrathMage.ConcussiveShot.Target", caster)
 
-	target:ForceKill(false)
-
+	target:RemoveSelf()
 end
 
 function vardor_graceful_jump:OnProjectileThink( location )
@@ -581,7 +592,8 @@ function EndJump(caster, target, ability, location)
 	}
 	local radius = ability:GetSpecialValueFor("damage_radius")
 	local targetTeams = DOTA_UNIT_TARGET_TEAM_ENEMY
-	local targetTypes = ability:GetAbilityTargetType()
+--	local targetTypes = ability:GetAbilityTargetType()
+	local targetTypes = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 	local targetFlags = ability:GetAbilityTargetFlags()
 
 	if target:HasModifier("modifier_piercing_shot_stuck") then
@@ -605,7 +617,7 @@ function EndJump(caster, target, ability, location)
 		end
 
 		target:RemoveModifierByName("modifier_dummy_health")
-		target:ForceKill(false)
+		target:RemoveSelf()
 	else
 		damageTable.damage = ability:GetSpecialValueFor("low_damage")
 		damageTable.victim = target
@@ -632,17 +644,9 @@ end
 
 modifier_graceful_jump_movement = class({})
 
-function modifier_graceful_jump_movement:IsHidden()
-	return true
-end
-
-function modifier_graceful_jump_movement:IsDebuff()
-	return false
-end
-
-function modifier_graceful_jump_movement:IsPurgable()
-	return true
-end
+function modifier_graceful_jump_movement:IsHidden() return true end
+function modifier_graceful_jump_movement:IsDebuff() return false end
+function modifier_graceful_jump_movement:IsPurgable() return true end
 
 function modifier_graceful_jump_movement:OnCreated( event )
 	if IsServer() then
@@ -652,6 +656,7 @@ function modifier_graceful_jump_movement:OnCreated( event )
 		self.curZ = self:GetAbility().curZ
 		self.initDist = self:GetAbility().initDist
 		self.travDist = self:GetAbility().travDist
+		self.parent = self:GetParent()
 		self:ApplyHorizontalMotionController()
 		self:ApplyVerticalMotionController()
 	end
@@ -721,23 +726,23 @@ end
 
 function modifier_graceful_jump_movement:OnDestroy()
 	if IsServer() then
-		self:GetParent():RemoveHorizontalMotionController( self )
-		self:GetParent():RemoveVerticalMotionController( self )
+		self.parent:RemoveHorizontalMotionController( self )
+		self.parent:RemoveVerticalMotionController( self )
 		Timers:CreateTimer(FrameTime(), function()
-			FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), true)
+			FindClearSpaceForUnit(self.parent, self.parent:GetAbsOrigin(), true)
 		end)
 	end
 end
 
 function modifier_graceful_jump_movement:OnHorizontalMotionInterrupted()
 	if IsServer() then
-		self:GetParent():RemoveModifierByName("modifier_graceful_jump_movement")
+		self.parent:RemoveModifierByName("modifier_graceful_jump_movement")
 	end
 end
 
 function modifier_graceful_jump_movement:OnVerticalMotionInterrupted()
 	if IsServer() then
-		self:GetParent():RemoveModifierByName("modifier_graceful_jump_movement")
+		self.parent:RemoveModifierByName("modifier_graceful_jump_movement")
 	end
 end
 
@@ -1053,7 +1058,7 @@ function LevelUp(keys)
 	local abilityLevel = ability:GetLevel()
 
 	if caster.yari == nil then
-		print("Init Yari!")
+--		print("Init Yari!")
 		caster.yari = {}
 		caster.yari.count = 1
 		caster.yari.targets = {}
@@ -1207,8 +1212,7 @@ function table.clone(orig)
 end
 
 function vardor_piercing_shot:GetCastRange(location, target)
-	local castRange = self:GetSpecialValueFor("cast_range")	
-	return castRange
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_vardor_3")
 end
 
 function vardor_piercing_shot:OnUpgrade()
@@ -1230,7 +1234,6 @@ function vardor_piercing_shot:OnAbilityPhaseStart()
 end
 
 function vardor_piercing_shot:OnSpellStart()
-
 	local caster = self:GetCaster()
 	if caster.yari.count > 0 then
 		caster.yari.count = caster.yari.count - 1
@@ -1254,6 +1257,8 @@ function vardor_piercing_shot:OnSpellStart()
 		if caster.yari.count > 0 then
 			self:EndCooldown()
 		end
+
+		EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_EarthSpirit.StoneRemnant.Impact", caster)
 	end
 end
 
@@ -1286,17 +1291,16 @@ function PiercingShotCastHero(self)
 	else
 		returnAbility:SetActivated(false)
 	end
-
 end
 
 function PiercingShotCastPoint(self)
-
 	local caster = self:GetCaster()
 	local casterLoc = caster:GetAbsOrigin()
 	local targetLoc = self:GetCursorPosition()
 
 	local targetTeams = self:GetAbilityTargetTeam()
-	local targetTypes = self:GetAbilityTargetType()
+--	local targetTypes = self:GetAbilityTargetType()
+	local targetTypes = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 	local targetFlags = self:GetAbilityTargetFlags()
 
 	local rootDuration = self:GetSpecialValueFor("root_duration")
@@ -1344,18 +1348,25 @@ end
 
 function ReturnYari( keys )
 	local caster = keys.caster
-		
+
 	local tempTable = table.clone(caster.yari.targets)
+
+	caster.yari.count = caster.yari.count + #tempTable
+	caster:SetModifierStackCount("modifier_yari_count", caster, caster.yari.count + #tempTable)
+
+	if #tempTable > 0 then
+		caster:FindAbilityByName("vardor_piercing_shot"):SetActivated(true)
+	end
+
 	for _,target in pairs(tempTable) do
 		if target:HasModifier("modifier_piercing_shot_stuck") then
 			target:RemoveModifierByName("modifier_piercing_shot_stuck")
 		elseif target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
-			target:ForceKill(false)
+			target:RemoveSelf()
 		end
 	end
 
 	caster.yari.targets = {}
-
 end
 
 ---------------------------------------
@@ -1454,7 +1465,7 @@ function modifier_dummy_health:OnDestroy()
 			shotAbility:SetActivated(true)
 		end
 
-		ParticleManager:DestroyParticle(self.particle, true)
+		ParticleManager:DestroyParticle(self.particle, false)
 	end
 end
 
@@ -1527,17 +1538,9 @@ end
 
 modifier_piercing_shot_stuck = class({})
 
-function modifier_piercing_shot_stuck:IsHidden()
-	return false
-end
-
-function modifier_piercing_shot_stuck:IsDebuff()
-	return true
-end
-
-function modifier_piercing_shot_stuck:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
+function modifier_piercing_shot_stuck:IsHidden() return false end
+function modifier_piercing_shot_stuck:IsDebuff() return true end
+function modifier_piercing_shot_stuck:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- function modifier_piercing_shot_stuck:GetEffectName()
 -- 	return "particles/piercing_shot_debuff.vpcf"
@@ -1546,6 +1549,10 @@ end
 -- function modifier_piercing_shot_stuck:GetEffectAttachType()
 -- 	return PATTACH_CUSTOMORIGIN_FOLLOW
 -- end
+
+function modifier_piercing_shot_stuck:DeclareFunctions() return {
+	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+} end
 
 function modifier_piercing_shot_stuck:OnCreated( event )
 	if IsServer() then
@@ -1562,6 +1569,10 @@ function modifier_piercing_shot_stuck:OnIntervalThink()
 	if IsServer() then
 		ApplyMentalThrusts(self)
 	end
+end
+
+function modifier_piercing_shot_stuck:GetModifierProvidesFOWVision()
+	return 1
 end
 
 function modifier_piercing_shot_stuck:OnDestroy()
@@ -1596,7 +1607,7 @@ function modifier_piercing_shot_stuck:OnDestroy()
 
 		self:GetParent():RemoveModifierByName("modifier_truesight")
 
-		ParticleManager:DestroyParticle(self.debuffParticle, true)
+		ParticleManager:DestroyParticle(self.debuffParticle, false)
 	end
 end
 

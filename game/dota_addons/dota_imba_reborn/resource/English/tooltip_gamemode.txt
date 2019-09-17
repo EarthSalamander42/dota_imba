@@ -17,8 +17,8 @@
 "imba_player_abandon_message"                              " has <font color='#FF0000'>abandoned</font> the fight!"
 "imba_player_reconnect_message"                            " is back to the fight!"
 
-"imba_team_good_abandon_message"                            "The cowardly Radiant have fled the battle! Game will end in 15 seconds if no player reconnects."
-"imba_team_bad_abandon_message"                            "The cowardly Dire have fled the battle! Game will end in 15 seconds if no player reconnects."
+"imba_team_good_abandon_message"                            "The cowardly Radiant have fled the battle! Game will end in {s:seconds} seconds if no player reconnects."
+"imba_team_bad_abandon_message"                            "The cowardly Dire have fled the battle! Game will end in {s:seconds} seconds if no player reconnects."
 
 "imba_team_good_gg_message"									"Radiant have GG! Game will end in 5 seconds..."
 "imba_team_bad_gg_message"									"Dire have GG! Game will end in 5 seconds..."

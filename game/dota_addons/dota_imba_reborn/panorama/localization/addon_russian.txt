@@ -389,7 +389,7 @@
 	"loading_heroes_button" "Загрузка героя..."
 	"loading_pre_game" "Загрузка героев, пожалуйста подождите..."
 	"loading_screen_button" "Официальный сайт Dota 2 IMBA"
-	"loading_screen_description" "Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+	"loading_screen_description" " Dota IMBA является частью студии Frostrose под руководством EarthSalamander."
 	"loading_screen_patreon" "Патреон"
 	"loading_screen_patreon_description" "Поддержите студию Frostrose на Патреоне и получите внутриигровые награды! Бустер Опыта Боевого пропуска, Компаньона следующего за Вами по полю боя и многое другое!"
 	"loading_screen_patreon_description_bottom" "Пожертвования помогают в разработке следующих модов:"

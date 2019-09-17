@@ -254,7 +254,7 @@ function imba_zuus_lightning_bolt:OnSpellStart()
 	end
 end
 
-function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, target_point)
+function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, target_point, nimbus)
 	if IsServer() then
 		local spread_aoe 			= ability:GetSpecialValueFor("spread_aoe")
 		local true_sight_radius 	= ability:GetSpecialValueFor("true_sight_radius")
@@ -265,7 +265,11 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		local pierce_spellimmunity 	= false
 		local z_pos 				= 2000
 
-		caster:EmitSound("Hero_Zuus.LightningBolt")
+		if nimbus then
+			nimbus:EmitSound("Hero_Zuus.LightningBolt")
+		else
+			caster:EmitSound("Hero_Zuus.LightningBolt")
+		end
 
 		if caster:HasTalent("special_bonus_imba_zuus_1") then 
 			spread_aoe = spread_aoe + caster:FindTalentValue("special_bonus_imba_zuus_1", "spread_aoe")
@@ -694,7 +698,6 @@ end
 --------------------------------------
 --				Nimbus				--
 --------------------------------------
-LinkLuaModifier("modifier_zuus_nimbus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_zuus_nimbus_storm", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_cloud = imba_zuus_cloud or class({})
@@ -813,7 +816,7 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 
 			for _,unit in pairs(nearby_enemy_units) do
 				if unit:IsAlive() then
-					imba_zuus_lightning_bolt:CastLightningBolt(self.caster, self.lightning_bolt, unit, unit:GetAbsOrigin())
+					imba_zuus_lightning_bolt:CastLightningBolt(self.caster, self.lightning_bolt, unit, unit:GetAbsOrigin(), self:GetParent())
 					-- Abort when we find something to hit
 					self.counter = 0
 					break
