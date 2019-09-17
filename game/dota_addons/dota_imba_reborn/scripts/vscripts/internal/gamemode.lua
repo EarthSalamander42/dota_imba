@@ -10,13 +10,9 @@ function GameMode:_InitGameMode()
 
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
-	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
-	CustomGameEventManager:RegisterListener("change_statue", Dynamic_Wrap(self, "DonatorStatueJS"))
-	CustomGameEventManager:RegisterListener("change_emblem", Dynamic_Wrap(self, "DonatorEmblemJS"))
-	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
-	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 	print("Vote Settings listener initialized.")
 	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
+	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
 	self:SetupAncients()
 	self:SetupFountains()

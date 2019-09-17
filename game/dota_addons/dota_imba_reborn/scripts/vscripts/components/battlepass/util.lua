@@ -20,6 +20,10 @@ LinkLuaModifier("modifier_patreon_donator", "components/battlepass/modifiers/mod
 LinkLuaModifier("modifier_donator_statue", "components/battlepass/modifiers/modifier_donator_statue.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_battlepass_taunt", "components/battlepass/modifiers/modifier_battlepass_taunt.lua", LUA_MODIFIER_MOTION_NONE )
 
+CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(Battlepass, "DonatorCompanionJS"))
+CustomGameEventManager:RegisterListener("change_statue", Dynamic_Wrap(Battlepass, "DonatorStatueJS"))
+CustomGameEventManager:RegisterListener("change_emblem", Dynamic_Wrap(Battlepass, "DonatorEmblemJS"))
+CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(Battlepass, "DonatorCompanionSkinJS"))
 CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(Battlepass, 'DonatorTag'))
 CustomGameEventManager:RegisterListener("change_battlepass_rewards", Dynamic_Wrap(Battlepass, 'BattlepassRewards'))
 CustomGameEventManager:RegisterListener("change_player_xp", Dynamic_Wrap(Battlepass, 'PlayerXP'))
@@ -237,4 +241,27 @@ function Battlepass:Winrate(keys)
 		player_xp = ply_table.player_xp,
 		winrate = keys.winrate
 	})
+end
+
+function Battlepass:DonatorCompanionJS(event)
+	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
+end
+
+function Battlepass:DonatorStatueJS(event)
+	-- need to update the current statue with the new one
+--	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
+end
+
+function Battlepass:DonatorEmblemJS(event)
+	local hero = PlayerResource:GetSelectedHeroEntity(event.ID)
+
+	if hero:HasModifier("modifier_patreon_donator") then
+		local modifier = hero:FindModifierByName("modifier_patreon_donator")
+
+		modifier.effect_name = event.unit
+	end
+end
+
+function Battlepass:DonatorCompanionSkinJS(event)
+	DonatorCompanionSkin(event.ID, event.unit, event.skin)
 end
