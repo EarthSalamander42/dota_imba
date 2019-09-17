@@ -29,17 +29,13 @@ function item_imba_aegis:GetAbilityTextureName()
 end
 
 modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
--- Passive modifier
+
 function modifier_item_imba_aegis:OnCreated()
 	-- Parameters
 	local item = self:GetAbility()
-	self:SetDuration(item:GetSpecialValueFor("disappear_time"),true)
+	self:SetDuration(item:GetSpecialValueFor("disappear_time"), true)
 	self.reincarnate_time = item:GetSpecialValueFor("reincarnate_time")
 	self.vision_radius = item:GetSpecialValueFor("vision_radius")
-end
-
-function modifier_item_imba_aegis:OnRefresh()
-	self:SetDuration(self:GetAbility():GetSpecialValueFor("disappear_time"),true)
 end
 
 function modifier_item_imba_aegis:DeclareFunctions()
