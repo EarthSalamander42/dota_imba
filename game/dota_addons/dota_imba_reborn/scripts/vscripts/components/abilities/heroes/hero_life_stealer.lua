@@ -1306,12 +1306,6 @@ function modifier_imba_life_stealer_control:OnCreated()
 		[DOTA_UNIT_ORDER_STOP]				= true,
 		[DOTA_UNIT_ORDER_CONTINUE]			= true
 	}
-	
-	self:StartIntervalThink(1)
-end
-
-function modifier_imba_life_stealer_control:OnIntervalThink()
-	if not IsServer() then return end
 end
 
 function modifier_imba_life_stealer_control:CheckState()

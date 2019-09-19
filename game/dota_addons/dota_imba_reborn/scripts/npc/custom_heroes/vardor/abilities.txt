@@ -70,11 +70,6 @@
 				"var_type"    					"FIELD_FLOAT"
 				"root_duration"    				"1.0 1.5 2.0 2.5"
 			}
-			"08"
-			{
-				"var_type"    					"FIELD_FLOAT"
-				"spawn_delay"    				"0.2"
-			}
 		}
 	}
 
@@ -90,9 +85,8 @@
 		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"    				"1"
 		"AbilityTextureName" 				"slark_pounce"
-		"AbilityCastRange"					"1200"
 		"AbilityCastPoint"   				"0.0"
-		"AbilityCooldown"    				"5.0"
+		"AbilityCooldown"    				"10.0 9.0 8.0 7.0"
 		"AbilityManaCost"    				"25"
 		"AbilityDamage" 					"%damage"
 
@@ -244,15 +238,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityTextureName"			"phantom_lancer_spirit_lance"
 		"MaxLevel"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_yari_count"	"2"
-			}
-		}
 	
 		"OnSpellStart"
 		{

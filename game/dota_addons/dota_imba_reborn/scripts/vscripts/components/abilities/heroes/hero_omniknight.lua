@@ -629,7 +629,7 @@ function imba_omniknight_heavenly_grace:OnSpellStart()
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_omniknight_heavenly_grace", {duration = self:GetSpecialValueFor("duration")})
 	
 	-- "Applies a strong dispel on the target upon cast."
-	self:GetCaster():Purge(false, true, false, true, true)
+	self:GetCursorTarget():Purge(false, true, false, true, true)
 end
 
 -----------------------------

@@ -121,7 +121,7 @@ end
 
 function modifier_diretide_candy_hp_loss:GetModifierExtraHealthPercentage()
 	if IsServer() then
-		local hp_to_reduce = self.hp_loss_pct / 100 * self:GetStackCount() * (-1)
+		local hp_to_reduce = self.hp_loss_pct * 0.01 * self:GetStackCount() * (-1)
 		-- Make sure you don't go over 100%
 		if hp_to_reduce < -0.99 then
 			return -0.99

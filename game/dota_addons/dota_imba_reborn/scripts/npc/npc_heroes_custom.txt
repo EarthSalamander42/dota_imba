@@ -1047,6 +1047,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_meepo"
 	{
+	
+
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
