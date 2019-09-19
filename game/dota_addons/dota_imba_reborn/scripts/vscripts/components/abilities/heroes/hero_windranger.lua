@@ -4,8 +4,6 @@
 LinkLuaModifier("modifier_imba_windranger_shackle_shot", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_windranger_powershot", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_windranger_powershot_scattershot", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_windranger_powershot_overstretch", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_windranger_windrun", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_windranger_windrun_handler", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
@@ -24,8 +22,6 @@ modifier_imba_windranger_shackle_shot		= class({})
 
 imba_windranger_powershot					= class({})
 modifier_imba_windranger_powershot			= class({})
-modifier_imba_windranger_powershot_scattershot	= class({})
-modifier_imba_windranger_powershot_overstretch	= class({})
 
 imba_windranger_windrun						= class({})
 modifier_imba_windranger_windrun_handler	= class({})
@@ -46,19 +42,8 @@ modifier_imba_windranger_focusfire			= class({})
 -- IMBA_WINDRANGER_SHACKLESHOT --
 ---------------------------------
 
-function imba_windranger_shackleshot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_windranger_shackleshot:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
-end
-
--- Splinter Sister IMBAfication will be an "opt-out" add-on
-function imba_windranger_shackleshot:OnUpgrade()
-	if self:GetLevel() == 1 then
-		self:ToggleAutoCast()
-	end
 end
 
 function imba_windranger_shackleshot:OnSpellStart()
@@ -66,48 +51,26 @@ function imba_windranger_shackleshot:OnSpellStart()
 	
 	self:GetCaster():EmitSound("Hero_Windrunner.ShackleshotCast")
 	
-	-- IMBAfication: Natural Slinger
-	-- Rough check to assume a tree was targeted, since CutDown doesn't work with "artificial" trees
-	if target:GetName() == "" then
-		local temp_thinker = CreateModifierThinker(self:GetCaster(), self, nil, {duration = 0.1}, target:GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-	
-		ProjectileManager:CreateTrackingProjectile({
-			Target		= temp_thinker,
-			Source		= self:GetCaster(),
-			Ability		= self,	
-			
-			EffectName	= "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf",
-			iMoveSpeed	= self:GetSpecialValueFor("arrow_speed"),
-			bDodgeable	= true,
+	ProjectileManager:CreateTrackingProjectile({
+		Target		= target,
+		Source		= self:GetCaster(),
+		Ability		= self,	
+		
+		EffectName	= "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf",
+		iMoveSpeed	= self:GetSpecialValueFor("arrow_speed"),
+		bDodgeable	= true,
 
-			ExtraData	= {
-				location_x = self:GetCaster():GetAbsOrigin().x,
-				location_y = self:GetCaster():GetAbsOrigin().y,
-				location_z = self:GetCaster():GetAbsOrigin().z,
-			}
-		})
-	else
-		ProjectileManager:CreateTrackingProjectile({
-			Target		= target,
-			Source		= self:GetCaster(),
-			Ability		= self,	
-			
-			EffectName	= "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf",
-			iMoveSpeed	= self:GetSpecialValueFor("arrow_speed"),
-			bDodgeable	= true,
-
-			ExtraData	= {
-				location_x = self:GetCaster():GetAbsOrigin().x,
-				location_y = self:GetCaster():GetAbsOrigin().y,
-				location_z = self:GetCaster():GetAbsOrigin().z,
-			}
-		})
-	end
+		ExtraData	= {
+			location_x = self:GetCaster():GetAbsOrigin().x,
+			location_y = self:GetCaster():GetAbsOrigin().y,
+			location_z = self:GetCaster():GetAbsOrigin().z,
+		}
+	})
 end
 
 -- TODO: Fix these hot garbage particles and targeting logic
 -- This helper function looks for valid targets
-function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle, ignore_list, target_count)
+function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle, ignore_list)
 	local shackleTarget = nil
 	
 	-- "Shackleshot always prioritizes units over trees as a secondary target."
@@ -146,8 +109,8 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 		end
 	end
 
-	-- Then check trees (don't let this bounce from tree to tree I guess)
-	if not shackleTarget and target:GetName() ~= "npc_dota_thinker" then
+	-- Then check trees
+	if not shackleTarget then
 		local trees = GridNav:GetAllTreesAroundPoint(target:GetAbsOrigin(), self:GetSpecialValueFor("shackle_distance"), false)
 		
 		for _, tree in pairs(trees) do
@@ -167,8 +130,6 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 						target_modifier:AddParticle(shackleshot_tree_particle, false, false, -1, false, false)
 					end
 				end	
-				
-				break
 			end
 		end
 	end
@@ -182,59 +143,37 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 end
 
 function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location, ExtraData)
-	if not ExtraData.bSplinterSister or ExtraData.bSplinterSister ~= 1 then
-		if not target or (target.TriggerSpellAbsorb and target:TriggerSpellAbsorb(self)) then return end
-		
-		-- Initialize table to hold the shackled targets (so a unit doesn't somehow get shackled more than once by the cast)
-		local shackled_targets	= {}
-		
-		target:EmitSound("Hero_Windrunner.ShackleshotStun")
-		
-		-- The next_target variable will be fed the targets through the self:SearchForShackleTarget function
+	if not target or (target.TriggerSpellAbsorb and target:TriggerSpellAbsorb(self)) then return end
+
+	local shackled_counter	= 0
+	local target_origin		= target:GetAbsOrigin()
+	
+	local shackled_targets	= {}
+	
+	target:EmitSound("Hero_Windrunner.ShackleshotStun")
+	
+	for targets = 0, self:GetSpecialValueFor("shackle_count") do
 		local next_target = target
 		
-		-- Check for up to shackle_count units
-		for targets = 0, self:GetSpecialValueFor("shackle_count") do
-			-- If a target was found, keep going for up to shackle_count hits
+		if next_target then
+			local next_target = self:SearchForShackleTarget(next_target, VectorToAngles(next_target:GetAbsOrigin() - Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z)).y, shackled_targets)
+			
 			if next_target then
-				next_target = self:SearchForShackleTarget(next_target, VectorToAngles(next_target:GetAbsOrigin() - Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z)).y, shackled_targets, targets)
+				shackled_targets[next_target] = true
+			elseif targets == 0 then
+				local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("fail_stun_duration")})
 				
-				if next_target then
-					shackled_targets[next_target] = true
-					
-					if targets == 0 and self:GetCaster():GetName() == "npc_dota_hero_windrunner" and RollPercentage(35) then
-						if not self.responses then
-							self.responses = 
-							{
-								"windrunner_wind_ability_shackleshot_05",
-								"windrunner_wind_ability_shackleshot_06",
-								"windrunner_wind_ability_shackleshot_07",
-							}
-						end
-						
-						self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-					end
-					
-				-- targets == 0 represents the unit that was originally targeted; if there's no unit behind them just apply the fail stun and that's it
-				elseif targets == 0 then
-					local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("fail_stun_duration")})
-					
-					if stun_modifier then
-						local shackleshot_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_single.vpcf", PATTACH_ABSORIGIN, target)
-						-- TODO: Figure out how this particle is oriented?
-						ParticleManager:SetParticleControlForward(shackleshot_particle, 2, Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z):Normalized())
-						stun_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
-					end
+				if stun_modifier then
+					local shackleshot_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_single.vpcf", PATTACH_ABSORIGIN, target)
+					-- TODO: Figure out how this particle is oriented?
+					ParticleManager:SetParticleControlForward(shackleshot_particle, 2, Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z):Normalized())
+					stun_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
 				end
-			-- If no target was found to latch to, stop the for-loop
-			else
-				break
+		
 			end
+		else
+			break
 		end
-	-- IMBAfication: Spliter Sister
-	elseif target then
-		EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), "Hero_Windrunner.ProjectileImpact", self:GetCaster())
-		self:GetCaster():PerformAttack(target, true, true, true, true, false, false, false)
 	end
 end
 
@@ -246,51 +185,22 @@ function modifier_imba_windranger_shackle_shot:CheckState()
 	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
+
 function modifier_imba_windranger_shackle_shot:DeclareFunctions()
-	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	
-	MODIFIER_EVENT_ON_ATTACK_LANDED}
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
 end
 
 function modifier_imba_windranger_shackle_shot:GetOverrideAnimation()
 	return ACT_DOTA_DISABLED
 end
 
--- IMBAfication: Splinter Sister
-function modifier_imba_windranger_shackle_shot:OnAttackLanded(keys)
-	if keys.attacker == self:GetCaster() and keys.target == self:GetParent() and not keys.no_attack_cooldown and self:GetAbility() and self:GetAbility():GetAutoCastState() then
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetCaster():Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)) do
-			if enemy ~= self:GetParent() and enemy:FindModifierByNameAndCaster("modifier_imba_windranger_shackle_shot", self:GetCaster()) and self:GetAbility() then
-				EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_Windrunner.Attack", self:GetCaster())
-				ProjectileManager:CreateTrackingProjectile({
-					Target 				= enemy,
-					Source 				= self:GetParent(),
-					Ability 			= self:GetAbility(),
-					EffectName 			= self:GetCaster():GetRangedProjectileName() or "particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf",
-					iMoveSpeed			= self:GetCaster():GetProjectileSpeed() or 1250,
-					bDrawsOnMinimap 	= false,
-					bDodgeable 			= true,
-					bIsAttack 			= true, -- Does this even do anything
-					bVisibleToEnemies 	= true,
-					bReplaceExisting 	= false,
-					flExpireTime 		= GameRules:GetGameTime() + 10.0,
-					bProvidesVision 	= false,
-					ExtraData			= {bSplinterSister = true}
-				})	
-			end
-		end
-	end
-end
+------
+--  --
+------
 
 -------------------------------
 -- IMBA_WINDRANGER_POWERSHOT --
 -------------------------------
-
--- Not gonna do the voicelines for this one cause I'd need to track hero kills with the arrows and stuff and it's gonna get annoying
-
-function imba_windranger_powershot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_windranger_powershot:GetIntrinsicModifierName()
 	return "modifier_imba_windranger_powershot"
@@ -303,13 +213,13 @@ function imba_windranger_powershot:OnSpellStart()
 		self.powershot_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_powershot", self:GetCaster())
 	end
 	
-	-- TODO: REMOVE THIS WHEN DONE WITH EVERYTHING
+	-- REMOVE THIS WHEN DONE WITH EVERYTHING
 	if self:GetCaster():HasAbility("imba_windranger_backpedal") then
 		self:GetCaster():FindAbilityByName("imba_windranger_backpedal"):SetLevel(1)
 	end
 	
 	if self:GetCaster():HasAbility("imba_windranger_focusfire_vanilla_enhancer") then
-		self:GetCaster():FindAbilityByName("imba_windranger_focusfire_vanilla_enhancer"):SetLevel(1)
+		self:GetCaster():FindAbilityByName("imba_windranger_focusfire_vanilla_enhancer"):SetLevel(math.min(self:GetCaster():GetLevel() / 6, 3))
 	end	
 end
 
@@ -327,28 +237,9 @@ function imba_windranger_powershot:OnChannelFinish(bInterrupted)
 		self.powershot_modifier:SetStackCount(0)
 	end
 	
-	if bInterrupted or not self:GetAutoCastState() then
-		local channel_pct = (GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()
+	local channel_pct = (GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()
 
-		if channel_pct < self:GetSpecialValueFor("scattershot_min") * 0.01 or channel_pct > self:GetSpecialValueFor("scattershot_max") * 0.01 then
-			self:FirePowershot(channel_pct)
-		else
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_powershot_scattershot",
-			{
-				duration		= self:GetSpecialValueFor("scattershot_interval") * (self:GetSpecialValueFor("scattershot_shots") - 1),
-				channel_pct 	= channel_pct,
-				cursor_pos_x	= self:GetCursorPosition().x,
-				cursor_pos_y	= self:GetCursorPosition().y,
-				cursor_pos_z	= self:GetCursorPosition().z
-			})
-		end
-	else
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_powershot_overstretch", {})
-	end
-end
-
-function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
--- This "dummy" literally only exists to attach the gush travel sound to
+	-- This "dummy" literally only exists to attach the gush travel sound to
 	local powershot_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	powershot_dummy:EmitSound("Ability.Powershot")
 	-- Keep track of how many units the Powershot will hit to calculate damage reductions
@@ -364,11 +255,6 @@ function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
 	
 	self:GetCaster():StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 	
-	-- IMBAfication: Overstretched
-	if not overstretch_bonus then
-		overstretch_bonus = 0
-	end
-	
 	ProjectileManager:CreateLinearProjectile({
 		Source = self:GetCaster(),
 		Ability = self,
@@ -379,7 +265,7 @@ function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
 	    iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 	    
 	    EffectName = powershot_particle,
-	    fDistance = self:GetSpecialValueFor("arrow_range") + overstretch_bonus + self:GetCaster():GetCastRangeBonus(),
+	    fDistance = self:GetSpecialValueFor("arrow_range") + self:GetCaster():GetCastRangeBonus(),
 	    fStartRadius = self:GetSpecialValueFor("arrow_width"),
 	    fEndRadius = self:GetSpecialValueFor("arrow_width"),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("arrow_speed") * Vector(1, 1, 0),
@@ -390,7 +276,7 @@ function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
 		
 		ExtraData = {
 			dummy_index			= powershot_dummy:entindex(),
-			channel_pct			= channel_pct * 100
+			channel_pct			= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()) * 100
 		}
 	})
 end
@@ -420,9 +306,6 @@ function imba_windranger_powershot:OnProjectileHit_ExtraData(target, location, d
 			if stun_modifier then
 				stun_modifier:SetDuration(self:GetSpecialValueFor("godshot_stun_duration") * (1 - target:GetStatusResistance()), true)
 			end
-		-- IMBAfication: Scattershot
-		elseif data.channel_pct >= self:GetSpecialValueFor("scattershot_min") and data.channel_pct <= self:GetSpecialValueFor("scattershot_max") then
-			damage		= self:GetTalentSpecialValueFor("powershot_damage") * self:GetSpecialValueFor("scattershot_damage_pct") * 0.01 * ((100 - self:GetSpecialValueFor("damage_reduction")) * 0.01) ^ EntIndexToHScript(data.dummy_index).units_hit
 		end
 		
 		ApplyDamage({
@@ -447,92 +330,6 @@ end
 
 function modifier_imba_windranger_powershot:IsHidden()	return self:GetStackCount() <= 0 end
 
-----------------------------------------------------
--- MODIFIER_IMBA_WINDRANGER_POWERSHOT_SCATTERSHOT --
-----------------------------------------------------
-
-function modifier_imba_windranger_powershot_scattershot:IsPurgable()	return false end
-
-function modifier_imba_windranger_powershot_scattershot:OnCreated(params)
-	if not IsServer() then return end
-	
-	self.channel_pct	= params.channel_pct
-	self.cursor_pos		= Vector(params.cursor_pos_x, params.cursor_pos_y, params.cursor_pos_z)
-	
-	self.scattershot_interval	= self:GetAbility():GetSpecialValueFor("scattershot_interval")
-	self.scattershot_deviation	= self:GetAbility():GetSpecialValueFor("scattershot_deviation")	
-	
-	self:OnIntervalThink()
-	self:StartIntervalThink(self.scattershot_interval)
-end
-
-function modifier_imba_windranger_powershot_scattershot:OnIntervalThink()
-	if self:GetAbility() then
-		self:GetParent():SetCursorPosition(RotatePosition(self:GetParent()	:GetAbsOrigin(), QAngle(0, RandomInt(-self.scattershot_deviation, self.scattershot_deviation), 0), self.cursor_pos))
-		self:GetAbility():FirePowershot(self.channel_pct)
-	end
-end
-
-----------------------------------------------------
--- MODIFIER_IMBA_WINDRANGER_POWERSHOT_OVERSTRETCH --
-----------------------------------------------------
-
--- TODO: Find a way to hold the powershot gesture if possible?
-
-function modifier_imba_windranger_powershot_overstretch:OnCreated()
-	if self:GetAbility() then
-		self.overstretch_bonus_range_per_second	= self:GetAbility():GetSpecialValueFor("overstretch_bonus_range_per_second")
-	else
-		self.overstretch_bonus_range_per_second	= 0
-	end
-	
-	if not IsServer() then return end
-
-	self.destroy_orders	=
-	{
-		[DOTA_UNIT_ORDER_STOP]				= true,
-		[DOTA_UNIT_ORDER_CONTINUE]			= true,
-		[DOTA_UNIT_ORDER_CAST_POSITION]		= true,
-		[DOTA_UNIT_ORDER_CAST_TARGET]		= true,
-		[DOTA_UNIT_ORDER_CAST_TARGET_TREE]	= true,
-		[DOTA_UNIT_ORDER_CAST_NO_TARGET]	= true,
-		[DOTA_UNIT_ORDER_CAST_TOGGLE]		= true
-	}
-	
-	self:GetParent():StartGesture(ACT_DOTA_CAST_ABILITY_2)
-	
-	self:StartIntervalThink(1)
-end
-
-function modifier_imba_windranger_powershot_overstretch:OnIntervalThink()
-	self:GetParent():StartGesture(ACT_DOTA_CAST_ABILITY_2)
-	self:IncrementStackCount()
-end
-
-function modifier_imba_windranger_powershot_overstretch:OnDestroy()
-	if not IsServer() or not self:GetAbility() then return end
-	
-	self:GetParent():FadeGesture(ACT_DOTA_CAST_ABILITY_2)
-	
-	self:GetParent():SetCursorPosition(self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector())
-	-- By logic this should be fully channeled already so 1 = 100%
-	self:GetAbility():FirePowershot(1, self:GetStackCount() * self.overstretch_bonus_range_per_second)
-end
-
-function modifier_imba_windranger_powershot_overstretch:CheckState()
-	return {[MODIFIER_STATE_ROOTED] = true}
-end
-
-function modifier_imba_windranger_powershot_overstretch:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ORDER}
-end
-
-function modifier_imba_windranger_powershot_overstretch:OnOrder(keys)
-	if keys.unit == self:GetParent() and self.destroy_orders[keys.order_type] then
-		self:Destroy()
-	end
-end
-
 -----------------------------
 -- IMBA_WINDRANGER_WINDRUN --
 -----------------------------
@@ -554,21 +351,6 @@ end
 
 function imba_windranger_windrun:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.Windrun")
-
-	if self:GetCaster():GetName() == "npc_dota_hero_windrunner" and RollPercentage(75) then
-		if not self.responses then
-			self.responses = 
-			{
-				"windrunner_wind_spawn_04",
-				"windrunner_wind_move_08",
-				"windrunner_wind_move_10",
-			}
-		end
-		
-		-- This one doesn't work or something
-		-- EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
-		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-	end	
 	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_windrun", {duration = self:GetSpecialValueFor("duration")})
 	
@@ -669,47 +451,17 @@ function modifier_imba_windranger_windrun:GetEffectName()
 end
 
 function modifier_imba_windranger_windrun:OnCreated()
-	if self:GetAbility() then
-		self.movespeed_bonus_pct		= self:GetAbility():GetSpecialValueFor("movespeed_bonus_pct")
-		self.evasion_pct_tooltip		= self:GetAbility():GetSpecialValueFor("evasion_pct_tooltip")
-		self.scepter_bonus_movemen		= self:GetAbility():GetSpecialValueFor("scepter_bonus_movement")
-		
-		self.radius						= self:GetAbility():GetSpecialValueFor("radius")
-		self.gale_enchantment_radius	= self:GetAbility():GetSpecialValueFor("gale_enchantment_radius")
-		self.gale_enchantment_duration	= self:GetAbility():GetSpecialValueFor("gale_enchantment_duration")
-	else
-		self.movespeed_bonus_pct		= 0
-		self.evasion_pct_tooltip		= 0
-		self.scepter_bonus_movement		= 0
-		
-		self.radius						= 0
-		self.gale_enchantment_radius	= 0
-		self.gale_enchantment_duration	= 0
-	end
+	self.movespeed_bonus_pct	= self:GetAbility():GetSpecialValueFor("movespeed_bonus_pct")
+	self.evasion_pct_tooltip	= self:GetAbility():GetSpecialValueFor("evasion_pct_tooltip")
+	self.scepter_bonus_movement	= self:GetAbility():GetSpecialValueFor("scepter_bonus_movement")
 	
-	if not IsServer() then return end
-	
-	self:StartIntervalThink(0.1)
-end
-
-function modifier_imba_windranger_windrun:OnIntervalThink()
-	for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.gale_enchantment_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		if self:GetCaster() == self:GetParent() and ally ~= self:GetCaster() then
-			ally:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_windranger_windrun", {duration = self.gale_enchantment_duration})
-		end
-	end
+	self.radius					= self:GetAbility():GetSpecialValueFor("radius")
 end
 
 function modifier_imba_windranger_windrun:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetCaster():StopSound("Ability.Windrun")
-end
-
-function modifier_imba_windranger_windrun:CheckState()
-	if self:GetParent():GetLevel() >= 25 then
-		return {[MODIFIER_STATE_ALLOW_PATHING_TROUGH_TREES] = true}
-	end
 end
 
 function modifier_imba_windranger_windrun:DeclareFunctions()	
@@ -805,17 +557,18 @@ function modifier_imba_windranger_windrun_invis:OnAttack(keys)
 end
 
 function modifier_imba_windranger_windrun_invis:OnAbilityFullyCast(keys)
-	-- Let Backpedal not break this invis?
-	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and keys.ability:GetName() ~= "imba_windranger_backpedal" then
+	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() then
 		self:Destroy()
 	end
 end
 
+------
+--  --
+------
+
 -------------------------------
 -- IMBA_WINDRANGER_BACKPEDAL --
 -------------------------------
-
--- TODO: This needs an ability icon
 
 function imba_windranger_backpedal:IsInnateAbility()	return true end
 
@@ -831,6 +584,7 @@ end
 -- MODIFIER_IMBA_WINDRANGER_BACKPEDAL --
 ----------------------------------------
 
+function modifier_imba_windranger_backpedal:IsHidden()		return true end
 function modifier_imba_windranger_backpedal:IsPurgable()	return false end
 
 function modifier_imba_windranger_backpedal:OnCreated()
@@ -844,8 +598,7 @@ function modifier_imba_windranger_backpedal:DeclareFunctions()
 end
 
 function modifier_imba_windranger_backpedal:OnAbilityFullyCast(keys)
-	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and bit.band(keys.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET and not keys.ability:IsItem() then
-		-- For the sake of "usability" I'm going to make this not activate on no-target abilities, but will keep a bit of this redundant code in in case things change
+	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and not keys.ability:IsItem() then
 		local direction_vector = self:GetParent():GetForwardVector() * (-1)
 	
 		if keys.ability:GetCursorPosition() and bit.band(keys.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
@@ -896,15 +649,15 @@ function modifier_imba_windranger_focusfire_vanilla_enhancer:DeclareFunctions()
 end
 
 function modifier_imba_windranger_focusfire_vanilla_enhancer:OnAbilityFullyCast(keys)
-	if keys.unit == self:GetParent() and keys.ability:GetName() == "windrunner_focusfire" then
-		self.ability		= keys.ability
+	if keys.unit == self:GetParent() and keys.ability:GetName() == "windrunner_focusfire" then 
 		self.target			= keys.ability:GetCursorTarget()
 	end
 end
 
 function modifier_imba_windranger_focusfire_vanilla_enhancer:OnAttackLanded(keys)
-	if keys.attacker == self:GetParent() and self:GetParent():HasModifier("modifier_windrunner_focusfire") and self.target and not self.target:IsNull() and self.target:IsAlive() and self.target == keys.target and RollPseudoRandom(self.ability:GetSpecialValueFor("ministun_chance"), self) then
-		keys.target:EmitSound("DOTA_Item.MKB.Minibash")
+	-- TODO: Add mini-stun value to the vanilla focus fire and read value from there
+	-- TODO: Add mini-stun sound?
+	if keys.attacker == self:GetParent() and self.target and not self.target:IsNull() and self.target:IsAlive() and self.target == keys.target and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("ministun_chance"), self) then
 		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
 	end
 end
@@ -913,13 +666,10 @@ end
 -- IMBA_WINDRANGER_FOCUSFIRE --
 -------------------------------
 
--- Tried to replicate the vanilla ability as usual, but it seems far too hacky to properly replicate the "on_the_move" aspect where forward vector is separate from Windranger's movement, so I will just be using the vanilla ability
--- There was a suggestion to use a separate entity to control the movement, but this starts breaking apart when you have to start considering forced movements (i.e. how do you make the forced movement affect both the movement control unit AND Windranger, without ending up making that movement control unit a target for other abilities?)
-
 function imba_windranger_focusfire:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.Focusfire")
 	
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_focusfire", {duration = self:GetDuration()})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_focusfire", {duration = 10})
 end
 
 ----------------------------------------
@@ -934,8 +684,6 @@ function modifier_imba_windranger_focusfire:OnCreated(params)
 	self.focusfire_fire_on_the_move	= self:GetAbility():GetSpecialValueFor("focusfire_fire_on_the_move")
 
 	if not IsServer() then return end
-		
-	self.bFocusing	= true
 	
 	self.target	= self:GetAbility():GetCursorTarget()
 	
@@ -943,7 +691,7 @@ function modifier_imba_windranger_focusfire:OnCreated(params)
 end
 
 function modifier_imba_windranger_focusfire:OnIntervalThink()
-	if self:GetParent():AttackReady() and self.target and not self.target:IsNull() and self.target:IsAlive() and (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():Script_GetAttackRange() and self.bFocusing then
+	if self:GetParent():AttackReady() and self.target and not self.target:IsNull() and self.target:IsAlive() and (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():Script_GetAttackRange() then
 		--self:GetParent():SetForwardVector((self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized())
 		self:GetParent():StartGesture(ACT_DOTA_ATTACK)
 		self:GetParent():PerformAttack(self.target, true, true, false, true, true, false, false)
@@ -959,9 +707,7 @@ function modifier_imba_windranger_focusfire:DeclareFunctions()
 		-- MODIFIER_PROPERTY_DISABLE_TURNING,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		
-		MODIFIER_EVENT_ON_ORDER
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 	}
 end
 
@@ -983,16 +729,6 @@ end
 
 function modifier_imba_windranger_focusfire:GetActivityTranslationModifiers()
 	return "focusfire"
-end
-
-function modifier_imba_windranger_focusfire:OnOrder(keys)
-	if keys.unit == self:GetParent() then
-		if keys.order_type == DOTA_UNIT_ORDER_STOP or keys.order_type == DOTA_UNIT_ORDER_CONTINUE or not self:GetParent():AttackReady() then
-			self.bFocusing	= false
-		else
-			self.bFocusing	= true
-		end
-	end
 end
 
 ---------------------

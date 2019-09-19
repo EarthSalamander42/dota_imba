@@ -1,5 +1,5 @@
--- Credits: Nibuja.
--- https://steamcommunity.com/profiles/76561198068804194/
+-- Author: Nibuja: https://steamcommunity.com/profiles/76561198068804194/
+-- Editor: EarthSalamander
 
 LinkLuaModifier("modifier_yari_count", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_celestial_yari_dummy", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
@@ -12,8 +12,8 @@ ListenToGameEvent("npc_spawned", function(keys)
 	end
 
 	if npc:GetUnitName() == "npc_dota_hero_vardor" then
-		Timers:CreateTimer(0.2, function()
-			if npc.yari == nil then
+		if npc.yari == nil then
+			Timers:CreateTimer(0.2, function()
 				print("[Yari] Init Yari...")
 				Wearable:_WearProp(npc, "127", "body_head")
 				Wearable:_WearProp(npc, "7749", "shoulder")
@@ -23,9 +23,14 @@ ListenToGameEvent("npc_spawned", function(keys)
 				npc:SetRenderColor(255, 0, 0)
 
 				npc.yari = {}
-				npc.yari.count = 1
 				npc.yari.targets = {}
 				npc.yari.targetCount = 0
+
+				if GetAbilitySpecial("vardor_return_of_the_yari", "initial_yari_count", 1) then
+					npc.yari.count = GetAbilitySpecial("vardor_return_of_the_yari", "initial_yari_count", 1)
+				else
+					npc.yari.count = 1
+				end
 
 				if not npc:HasModifier("modifier_yari_count") then
 					npc:AddNewModifier(npc, self, "modifier_yari_count", nil)
@@ -34,40 +39,10 @@ ListenToGameEvent("npc_spawned", function(keys)
 				local yariCount = npc.yari.count
 				if yariCount < 1 then yariCount = 0 end
 				npc:SetModifierStackCount("modifier_yari_count", npc, yariCount)
-			end
-		end)
+			end)
+		end
 	end
 end, nil)
-
---[[
-function FindActiveSpears(caster)
-	local remnants = Entities:FindAllByModel("models/spear.vmdl")
-
-	for key, remnant in pairs(remnants) do
-		--if caster == remnant or caster ~= remnant:GetOwner() or remnant:IsIllusion() or (not remnant:IsAlive()) then	
-		if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_graceful_jump_dummy") then
-			table.remove(remnants, key)
-		end
-	end
-
-	print(remnants, #remnants)
-
-	if #remnants > 0 then
-		local available_remnants = {}
-		for _, remnant in pairs(remnants) do
-			if remnant:GetTeam() == caster:GetTeam() then
-				table.insert(available_remnants, remnant)
-			end
-		end
-
-		return available_remnants
-	else
-		return nil
-	end
-
-	return Entities:FindAllByModel("models/spear.vmdl")
-end
---]]
 
 function AddYari( keys )
 	local caster = keys.caster
@@ -77,7 +52,7 @@ function AddYari( keys )
 
 	if caster.yari == nil then
 		caster.yari = {}
-		caster.yari.count = 1
+		caster.yari.count = ability:GetSpecialValueFor("initial_yari_count")
 	end
 
 	local amount = ability:GetSpecialValueFor("bonus_yari")
@@ -453,11 +428,15 @@ function vardor_graceful_jump:OnSpellStart()
 	print("Target:", self.target)
 
 	if self.target then
-		if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
+		print("Target:", self.target:GetUnitName())
+
+--		if self.target:HasModifier("modifier_piercing_shot_stuck") or self.target:HasModifier("modifier_piercing_shot_dummy_slow_aura") then
+			print("Teleport")
 			Teleport(self)
-		else
-			Jump(self)
-		end
+--		else
+--			print("Jump")
+--			Jump(self)
+--		end
 
 		return
 	end
@@ -659,6 +638,8 @@ function modifier_graceful_jump_movement:OnCreated( event )
 		self.parent = self:GetParent()
 		self:ApplyHorizontalMotionController()
 		self:ApplyVerticalMotionController()
+
+		print("modifier_graceful_jump_movement:OnCreated")
 	end
 end
 	
@@ -675,11 +656,12 @@ function modifier_graceful_jump_movement:UpdateHorizontalMotion(me, dt)
 		local maxDist = self:GetAbility():GetSpecialValueFor("short_range") * 2
 		local distance = (targetLoc - casterLoc):Length2D()
 
-		if self.travDist >= maxDist then
-			caster:InterruptMotionControllers(true)
-			caster:RemoveModifierByName("modifier_graceful_jump_movement")
-			FindClearSpaceForUnit(caster, casterLocG, true)
-		end
+		print(self.travDist, maxDist)
+--		if self.travDist >= maxDist then
+--			caster:InterruptMotionControllers(true)
+--			caster:RemoveModifierByName("modifier_graceful_jump_movement")
+--			FindClearSpaceForUnit(caster, casterLocG, true)
+--		end
 
 		if distance > 20 then
 			local newPos = casterLoc + direction * self.speed * dt
@@ -726,6 +708,7 @@ end
 
 function modifier_graceful_jump_movement:OnDestroy()
 	if IsServer() then
+		print("modifier_graceful_jump_movement:OnCreated")
 		self.parent:RemoveHorizontalMotionController( self )
 		self.parent:RemoveVerticalMotionController( self )
 		Timers:CreateTimer(FrameTime(), function()
@@ -980,7 +963,6 @@ end
 --=================================================================================================================
 
 LinkLuaModifier("modifier_mind_bleeding", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_mind_bleeding_death", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_yari_count", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
 
 
@@ -995,7 +977,6 @@ function MentalThrustsHit(keys)
 	if target:IsHero() and target:IsAlive() and caster:IsRealHero() and caster.yari.count > 0 then
 		AddMindBleeding(caster, target, caster.yari.count)
 	end
-
 end
 
 function AddMindBleeding(caster, target, count)
@@ -1016,10 +997,10 @@ function AddMindBleeding(caster, target, count)
 		if target:HasModifier(modifierReduction) then
 			currentStack = target:GetModifierStackCount(modifierReduction, ability) + count
 
-			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration })
+			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration, count = count })
 			target:SetModifierStackCount( modifierReduction, ability, currentStack)
 		else
-			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration })
+			target:AddNewModifier(caster, ability, modifierReduction, { Duration = duration, count = count })
 			target:SetModifierStackCount( modifierReduction, ability, count )
 		end
 
@@ -1046,7 +1027,6 @@ function SubstractValues(caster, target, reduction)
 	}
 	ApplyDamage(damageTable)
 	target:ReduceMana(reduction)
-
 end
 
 --================================
@@ -1076,70 +1056,47 @@ end
 
 modifier_mind_bleeding = class({})
 
-function modifier_mind_bleeding:IsHidden()
-	return false
-end
-
-function modifier_mind_bleeding:IsDebuff()
-	return true
-end
-
-function modifier_mind_bleeding:IsPurgable()
-	return false
-end
-
-function modifier_mind_bleeding:RemoveOnDeath()
-	return true
-end
-
-function modifier_mind_bleeding:GetEffectName()
-	return "particles/mental_thrusts_debuff.vpcf"
-end
-
-function modifier_mind_bleeding:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
-
-function modifier_mind_bleeding:ShouldUseOverheadOffset()
-	return true
-end
+function modifier_mind_bleeding:IsHidden() return false end
+function modifier_mind_bleeding:IsDebuff() return true end
+function modifier_mind_bleeding:IsPurgable() return false end
+function modifier_mind_bleeding:RemoveOnDeath() return false end
+function modifier_mind_bleeding:GetEffectName() return "particles/mental_thrusts_debuff.vpcf" end
+function modifier_mind_bleeding:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_mind_bleeding:ShouldUseOverheadOffset() return true end
 
 function modifier_mind_bleeding:DeclareFunctions()
 	local funcs = {
-			MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-			MODIFIER_PROPERTY_EXTRA_MANA_BONUS,
-			-- MODIFIER_EVENT_ON_RESPAWN,
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_EXTRA_MANA_BONUS,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_RESPAWN,
 	}
 	return funcs
 end
 
 function modifier_mind_bleeding:OnCreated( event )
 	self.lastManaAmount = 0
+	self.count = event.count
+	self.parent = self:GetParent()
 end
 
 function modifier_mind_bleeding:GetModifierExtraHealthBonus()
-	local stackCount = self:GetStackCount()
-	local reduction = self:GetAbility():GetSpecialValueFor("reduction")
-	local talentBonus = self:GetCaster():FindTalentValue("special_bonus_vardor_8")
-	reduction = reduction + talentBonus 
+	if not IsServer() then return end
+	local reduction = self:GetAbility():GetSpecialValueFor("reduction") + self:GetCaster():FindTalentValue("special_bonus_vardor_8")
+	local max_reduction = self.parent:GetBaseMaxHealth() + (reduction * self.count)
+	local amount = self:GetStackCount() * reduction
 
-	local amount = stackCount * reduction
-
-	if self:GetParent():GetMaxHealth() > amount then
-		return amount
-	end
-
-	return 0
+	return math.max(amount, max_reduction * (-1))
 end
 
 function modifier_mind_bleeding:GetModifierExtraManaBonus()
-	local stackCount = self:GetStackCount()
+	if not IsServer() then return end
 	local reduction = self:GetAbility():GetSpecialValueFor("reduction")
 	local talentBonus = self:GetCaster():FindTalentValue("special_bonus_vardor_8")
 	reduction = reduction + talentBonus 
 
-	local newAmount = stackCount * reduction
-	local trueMaxMana = self:GetParent():GetMaxMana() + math.abs(self.lastManaAmount)
+	local newAmount = self:GetStackCount() * reduction
+	local trueMaxMana = self.parent:GetMaxMana() + math.abs(self.lastManaAmount)
 	if math.abs(newAmount) >= trueMaxMana then
 		newAmount = -(trueMaxMana - 1)
 	end
@@ -1147,43 +1104,34 @@ function modifier_mind_bleeding:GetModifierExtraManaBonus()
 	return newAmount
 end
 
-modifier_mind_bleeding_death = class({})
+function modifier_mind_bleeding:OnDeath(params)
+	if not IsServer() then return end
 
-function modifier_mind_bleeding_death:IsHidden()
-	return true
-end
-
-function modifier_mind_bleeding_death:IsDebuff()
-	return false
-end
-
-function modifier_mind_bleeding_death:RemoveOnDeath()
-	return false
-end
-
-function modifier_mind_bleeding_death:DeclareFunctions()
-	local funcs = {
-		MODIFIER_EVENT_ON_RESPAWN,
-	}
-	return funcs
-end
-
-function modifier_mind_bleeding_death:OnRespawn( event )
-	if IsServer() then
-		local parent = self:GetParent()
-		for k,_ in pairs(event) do
-			print(k)
-		end
-		if event.unit == parent then
-			Timers:CreateTimer(0.01, function()
-				print("heal!")
-				local maxHP = parent:GetMaxHealth()
-				local maxMana = parent:GetMaxMana()
-				parent:SetHealth(maxHP)
-				parent:SetMana(maxMana)
-			end)
-		end
+	if params.unit == self.parent then
+		self:SetDuration(-1, true)
 	end
+end
+
+function modifier_mind_bleeding:OnRespawn(params)
+	if not IsServer() then return end
+
+	if params.unit == self.parent then
+		self:StartIntervalThink(FrameTime() * 2)
+	end
+end
+
+-- creepy
+function modifier_mind_bleeding:OnIntervalThink()
+	self:StartIntervalThink(-1)
+	-- Healing OnIntervalThink doesn't work but it works OnDestroy okay why not
+	self:Destroy()
+end
+
+function modifier_mind_bleeding:OnDestroy()
+	if not IsServer() then return end
+
+	self.parent:SetHealth(999999)
+	self.parent:SetMana(999999)
 end
 
 LinkLuaModifier("modifier_piercing_shot_prevent_movement", "components/abilities/heroes/hero_vardor.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1319,7 +1267,7 @@ function PiercingShotCastPoint(self)
 		damage = damage,
 	}
 
-	Timers:CreateTimer(0.2, function()
+	Timers:CreateTimer(self:GetSpecialValueFor("spawn_delay"), function()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), targetLoc, nil, radius, targetTeams, targetTypes, targetFlags, FIND_CLOSEST, false) 
 		for _,enemy in pairs(enemies) do
 			enemy:AddNewModifier(caster, self, "modifier_piercing_shot_prevent_movement", {Duration = rootDuration})
@@ -1607,7 +1555,9 @@ function modifier_piercing_shot_stuck:OnDestroy()
 
 		self:GetParent():RemoveModifierByName("modifier_truesight")
 
-		ParticleManager:DestroyParticle(self.debuffParticle, false)
+		if self.debuffParticle then
+			ParticleManager:DestroyParticle(self.debuffParticle, false)
+		end
 	end
 end
 
@@ -1623,7 +1573,6 @@ function HideWearables(caster)
 	caster.wearableNames = {} -- In here we'll store the wearable names to revert the change
 	caster.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
 
-	
 	local model = caster:FirstMoveChild()
 	--local model = caster:FirstMoveChild()
 	--print(model)
@@ -1680,26 +1629,9 @@ end
 
 vardor_perma_status_effect = class({})
 
-function vardor_perma_status_effect:IsDebuff()
-	return false
-end
-
-function vardor_perma_status_effect:IsPurgable()
-	return false
-end
-
-function vardor_perma_status_effect:IsHidden()
-	return true
-end
-
-function vardor_perma_status_effect:RemoveOnDeath()
-	return false
-end
-
-function vardor_perma_status_effect:GetStatusEffectName()
-	return "particles/status_effect_grey.vpcf"
-end
-
-function vardor_perma_status_effect:StatusEffectPriority()
-	return 99
-end
+function vardor_perma_status_effect:IsDebuff() return false end
+function vardor_perma_status_effect:IsPurgable() return false end
+function vardor_perma_status_effect:IsHidden() return true end
+function vardor_perma_status_effect:RemoveOnDeath() return false end
+function vardor_perma_status_effect:GetStatusEffectName() return "particles/status_effect_grey.vpcf" end
+function vardor_perma_status_effect:StatusEffectPriority() return 99 end

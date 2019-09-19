@@ -815,7 +815,7 @@ function GameMode:OnPlayerChat(keys)
 								[4] = "imba_windranger_focusfire_vanilla_enhancer",
 								-- [5] = "imba_windranger_focusfire",
 								[5] = "windrunner_focusfire",
-								[6] = "special_bonus_mp_regen_4",
+								[6] = "special_bonus_mp_regen_3",
 								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
 								[8] = "special_bonus_imba_windranger_powershot_damage",
 								[9] = "special_bonus_attack_range_125",
@@ -835,11 +835,6 @@ function GameMode:OnPlayerChat(keys)
 								
 								local new_ability = hero:AddAbility(ability_set[ability])
 								new_ability:SetLevel(old_ability_level)
-								
-								-- Remove this when done
-								if new_ability:GetName() == "imba_windranger_backpedal" or new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" then
-									new_ability:SetLevel(1)
-								end
 							end
 						end
 						

@@ -48,14 +48,14 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.2 2.8 3.4 4.0"
+				"stun_duration"			"2.0 2.6 3.2 3.8"
 				//"LinkedSpecialBonus"	"special_bonus_unique_windranger_6"
 				"LinkedSpecialBonus"	"special_bonus_imba_windranger_shackle_shot_duration"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shackle_distance"		"575 620 665 710"
+				"shackle_distance"		"575"
 			}
 			"04"
 			{
@@ -65,12 +65,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shackle_count"			"1 2 3 4"
+				"shackle_count"			"1"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"shackle_angle"			"23 28 33 38"
+				"shackle_angle"			"23"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -95,12 +95,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2600 2800 3000 3200"
+		"AbilityCastRange"				"2600"
 		"AbilityCastPoint"				"0.0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10.5 9 7.5"
+		"AbilityCooldown"				"12 11 10 9"
 		"AbilityChannelTime"			"1.0 1.0 1.0 1.0"
 
 
@@ -122,7 +122,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"20 15 10 5"
+				"damage_reduction"		"20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -133,7 +133,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_range"			"2600 2800 3000 3200"
+				"arrow_range"			"2600"
 			}
 			"05"
 			{
@@ -169,54 +169,18 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"godshot_max"			"67"
+				"godshot_max"			"65"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"godshot_damage_pct"	"120"			
+				"godshot_damage_pct"	"110"			
 			}
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"godshot_stun_duration"	"0.7"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scattershot_min"		"30"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scattershot_max"		"37"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scattershot_damage_pct"	"30"
-			}
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scattershot_shots"		"5"
-			}
-			"18"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scattershot_interval"	"0.09"
-			}
-			"19"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scattershot_deviation"	"12"
-			}
-			
-			"20"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"overstretch_bonus_range_per_second"	"1000"
-			}
+				"godshot_stun_duration"	"0.5"			
+			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -262,7 +226,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"60 70 80 90"		
+				"movespeed_bonus_pct"	"60"		
 			}
 			"02"
 			{
@@ -272,13 +236,13 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_movespeed_bonus_pct"	"-15 -25 -35 -45"
+				"enemy_movespeed_bonus_pct"	"-15 -20 -25 -30"
 				"LinkedSpecialBonus"		"special_bonus_unique_windranger_2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 375 425 475"
+				"radius"					"325"
 			}
 			"05"
 			{
@@ -303,17 +267,6 @@
 				"scepter_bonus_movement"	"45"
 				"RequiresScepter"			"1"
 			}
-			
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"gale_enchantment_radius"	"200"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"gale_enchantment_duration"	"2.5"
-			}				
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
@@ -327,7 +280,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_windranger"
-		"AbilityTextureName"			"custom/windranger/backpedal"
+		"AbilityTextureName"			"windrunner_windrun"
 		"MaxLevel"						"1"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
@@ -339,7 +292,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"backpedal_distance"	"230"
+				"backpedal_distance"	"300"		
 			}
 			"02"
 			{
@@ -365,7 +318,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_windranger"
 		
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel"						"1"
+		"MaxLevel"						"3"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -378,33 +331,7 @@
 			}
 		}
 	}
-	//=================================================================================================================
-	// Windrunner: Focus Fire (Vanilla)
-	//=================================================================================================================
-	"windrunner_focusfire"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -35 -20"
-				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
-			}
-			
-			// Perhaps this gives it a higher chance to not randomly get overwritten by some other vanilla stuff?
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ministun_chance"			"0 10 20"
-			}			
-		}
-	}
+	
 	//=================================================================================================================
 	// Windranger: Focus Fire
 	//=================================================================================================================
@@ -448,12 +375,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
+				"bonus_attack_speed"			"450"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -35 -20"
+				"focusfire_damage_reduction"	"-50 -40 -30"
 				"LinkedSpecialBonus"		"special_bonus_unique_windranger_8"
 			}						
 			"03"
@@ -465,11 +392,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"focusfire_fire_on_the_move"	"1"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ministun_chance"			"0 10 20"
 			}
 		}
 	}
