@@ -151,7 +151,7 @@ function modifier_imba_satanic_unique:DeclareFunctions()
 
 	-- return decFunc
 
-	return {MODIFIER_EVENT_ON_HERO_KILLED}
+	return {MODIFIER_EVENT_ON_DEATH}
 end
 
 function modifier_imba_satanic_unique:GetModifierLifesteal()
@@ -224,10 +224,11 @@ end
 	-- end
 -- end
 
-function modifier_imba_satanic_unique:OnHeroKilled(keys)
-	if keys.attacker == self:GetParent() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.damage_type == 1 then
+function modifier_imba_satanic_unique:OnDeath(keys)
+	-- Assumption is that no keys.inflictor means it's a regular attack
+	if keys.attacker == self:GetParent() and keys.unit:IsRealHero() and keys.attacker ~= keys.unit and not keys.inflictor then	
 		-- Calculate soul worth in health and stacks
-		local soul_health = keys.target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)
+		local soul_health = keys.unit:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)
 		local soul_stacks = (soul_health / self.soul_slaughter_hp_per_stack)
 
 		-- Feast on its soul!
