@@ -1,49 +1,49 @@
 -- Creator:
 --	   AltiV, September 19th, 2019
 
-LinkLuaModifier("modifier_imba_shredder_whirling_death_thinker", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_whirling_death_debuff", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_whirling_death_oil", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_whirling_death_thinker", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_whirling_death_debuff", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_whirling_death_oil", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_shredder_timber_chain", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_timber_chain_side_hooks", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_timber_chain", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_timber_chain_side_hooks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_shredder_reactive_armor", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_reactive_armor_stack", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_reactive_armor", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_reactive_armor_stack", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_shredder_chakram_thinker", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_chakram_debuff", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shredder_chakram_disarm", "components/abilities/heroes/hero_shredder", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_chakram_thinker", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_chakram_debuff", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_chakram_disarm", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-imba_shredder_whirling_death					= class({})
-modifier_imba_shredder_whirling_death_thinker	= class({})
-modifier_imba_shredder_whirling_death_debuff	= class({})
-modifier_imba_shredder_whirling_death_oil		= class({})
+imba_timbersaw_whirling_death					= class({})
+modifier_imba_timbersaw_whirling_death_thinker	= class({})
+modifier_imba_timbersaw_whirling_death_debuff	= class({})
+modifier_imba_timbersaw_whirling_death_oil		= class({})
 
-imba_shredder_timber_chain						= class({})
-modifier_imba_shredder_timber_chain				= class({})
-modifier_imba_shredder_timber_chain_side_hooks	= class({})
+imba_timbersaw_timber_chain						= class({})
+modifier_imba_timbersaw_timber_chain				= class({})
+modifier_imba_timbersaw_timber_chain_side_hooks	= class({})
 
-imba_shredder_reactive_armor					= class({})
-modifier_imba_shredder_reactive_armor			= class({})
-modifier_imba_shredder_reactive_armor_stack		= class({})
+imba_timbersaw_reactive_armor					= class({})
+modifier_imba_timbersaw_reactive_armor			= class({})
+modifier_imba_timbersaw_reactive_armor_stack		= class({})
 
-imba_shredder_chakram							= class({})
-imba_shredder_chakram_2							= class({})
+imba_timbersaw_chakram							= class({})
+imba_timbersaw_chakram_2							= class({})
 
-modifier_imba_shredder_chakram_thinker			= class({})
-modifier_imba_shredder_chakram_debuff			= class({})
-modifier_imba_shredder_chakram_disarm			= class({})
+modifier_imba_timbersaw_chakram_thinker			= class({})
+modifier_imba_timbersaw_chakram_debuff			= class({})
+modifier_imba_timbersaw_chakram_disarm			= class({})
 
-imba_shredder_return_chakram					= class({})
-imba_shredder_return_chakram_2					= class({})
+imba_timbersaw_return_chakram					= class({})
+imba_timbersaw_return_chakram_2					= class({})
 
 
 ----------------------------------
--- IMBA_SHREDDER_WHIRLING_DEATH --
+-- imba_timbersaw_WHIRLING_DEATH --
 ----------------------------------
 
-function imba_shredder_whirling_death:OnSpellStart()
+function imba_timbersaw_whirling_death:OnSpellStart()
 	
 
 				-- "01"
@@ -92,7 +92,7 @@ function imba_shredder_whirling_death:OnSpellStart()
 				-- "var_type"					"FIELD_INTEGER"
 				-- "blood_oil_duration"		"6"
 			-- }
-	
+
 	self:GetCaster():EmitSound("Hero_Shredder.WhirlingDeath.Cast")
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_shredder" and RollPercentage(15) then
@@ -122,7 +122,7 @@ function imba_shredder_whirling_death:OnSpellStart()
 	-- "Whirling Death first applies the debuff, then the damage."
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("whirling_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		if enemy:IsHero() and enemy.GetPrimaryStatValue then
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shredder_whirling_death_debuff", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_whirling_death_debuff", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
 			
 			if not hero_check then
 				hero_check = true
@@ -145,138 +145,138 @@ function imba_shredder_whirling_death:OnSpellStart()
 end
 
 ---------------------------------------------------
--- MODIFIER_IMBA_SHREDDER_WHIRLING_DEATH_THINKER --
+-- MODIFIER_imba_timbersaw_WHIRLING_DEATH_THINKER --
 ---------------------------------------------------
 
-function modifier_imba_shredder_whirling_death_thinker:OnCreated()
+function modifier_imba_timbersaw_whirling_death_thinker:OnCreated()
 
 end
 
 --------------------------------------------------
--- MODIFIER_IMBA_SHREDDER_WHIRLING_DEATH_DEBUFF --
+-- MODIFIER_imba_timbersaw_WHIRLING_DEATH_DEBUFF --
 --------------------------------------------------
 
-function modifier_imba_shredder_whirling_death_debuff:GetEffectName()		return "particles/units/heroes/hero_shredder/shredder_whirling_death_debuff.vpcf" end
-function modifier_imba_shredder_whirling_death_debuff:GetStatusEffectName()	return "particles/status_fx/status_effect_shredder_whirl.vpcf" end
-function modifier_imba_shredder_whirling_death_debuff:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_timbersaw_whirling_death_debuff:GetEffectName()		return "particles/units/heroes/hero_shredder/shredder_whirling_death_debuff.vpcf" end
+function modifier_imba_timbersaw_whirling_death_debuff:GetStatusEffectName()	return "particles/status_fx/status_effect_shredder_whirl.vpcf" end
+function modifier_imba_timbersaw_whirling_death_debuff:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_shredder_whirling_death_debuff:OnCreated()
+function modifier_imba_timbersaw_whirling_death_debuff:OnCreated()
 	if not IsServer() then return end
 
 	self.stat_loss_pct		= self:GetAbility():GetTalentSpecialValueFor("stat_loss_pct")
-	self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * self.stat_loss_pct * 0.01
+	self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * self.stat_loss_pct * 0.01 * (-1)
 	
 	self:StartIntervalThink(FrameTime())
 end
 
-function modifier_imba_shredder_whirling_death_debuff:OnIntervalThink()
+function modifier_imba_timbersaw_whirling_death_debuff:OnIntervalThink()
 	self:GetParent():CalculateStatBonus()
 	self:StartIntervalThink(-1)
 end
 
-function modifier_imba_shredder_whirling_death_debuff:DeclareFunctions()
+function modifier_imba_timbersaw_whirling_death_debuff:DeclareFunctions()
 	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	MODIFIER_PROPERTY_STATS_AGILITY_BONUS, MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 end
 
 if IsServer() then
-	function modifier_imba_shredder_whirling_death_debuff:GetModifierBonusStats_Strength()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_STRENGTH then return self.primary_stat_loss * (-1) end
+	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Strength()
+		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_STRENGTH then return self.primary_stat_loss end
 	end
 
-	function modifier_imba_shredder_whirling_death_debuff:GetModifierBonusStats_Agility()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_AGILITY then return self.primary_stat_loss * (-1) end
+	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Agility()
+		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_AGILITY then return self.primary_stat_loss end
 	end
 
-	function modifier_imba_shredder_whirling_death_debuff:GetModifierBonusStats_Intellect()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_INTELLECT then return self.primary_stat_loss * (-1) end
+	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Intellect()
+		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_INTELLECT then return self.primary_stat_loss end
 	end
 end
 
 -----------------------------------------------
--- MODIFIER_IMBA_SHREDDER_WHIRLING_DEATH_OIL --
+-- MODIFIER_imba_timbersaw_WHIRLING_DEATH_OIL --
 -----------------------------------------------
 
-function modifier_imba_shredder_whirling_death_oil:OnCreated()
+function modifier_imba_timbersaw_whirling_death_oil:OnCreated()
 
 end
 
 -- --------------------------------
--- -- IMBA_SHREDDER_TIMBER_CHAIN --
+-- -- imba_timbersaw_TIMBER_CHAIN --
 -- --------------------------------
 
--- imba_shredder_timber_chain
+-- imba_timbersaw_timber_chain
 
 -- -----------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_TIMBER_CHAIN --
+-- -- MODIFIER_imba_timbersaw_TIMBER_CHAIN --
 -- -----------------------------------------
 
--- modifier_imba_shredder_timber_chain
+-- modifier_imba_timbersaw_timber_chain
 
 -- ----------------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_TIMBER_CHAIN_SIDE_HOOKS --
+-- -- MODIFIER_imba_timbersaw_TIMBER_CHAIN_SIDE_HOOKS --
 -- ----------------------------------------------------
 
--- modifier_imba_shredder_timber_chain_side_hooks
+-- modifier_imba_timbersaw_timber_chain_side_hooks
 
 -- ----------------------------------
--- -- IMBA_SHREDDER_REACTIVE_ARMOR --
+-- -- imba_timbersaw_REACTIVE_ARMOR --
 -- ----------------------------------
 
--- imba_shredder_reactive_armor
+-- imba_timbersaw_reactive_armor
 
 -- -------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_REACTIVE_ARMOR --
+-- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR --
 -- -------------------------------------------
 
--- modifier_imba_shredder_reactive_armor
+-- modifier_imba_timbersaw_reactive_armor
 
 -- -------------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_REACTIVE_ARMOR_STACK --
+-- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR_STACK --
 -- -------------------------------------------------
 
--- modifier_imba_shredder_reactive_armor_stack
+-- modifier_imba_timbersaw_reactive_armor_stack
 
 -- -----------------------------
--- -- IMBA_SHREDDER_CHAKRAM_2 --
+-- -- imba_timbersaw_CHAKRAM_2 --
 -- -----------------------------
 
--- imba_shredder_chakram_2
+-- imba_timbersaw_chakram_2
 
 -- ---------------------------
--- -- IMBA_SHREDDER_CHAKRAM --
+-- -- imba_timbersaw_CHAKRAM --
 -- ---------------------------
 
--- imba_shredder_chakram
+-- imba_timbersaw_chakram
 
 -- ----------------------------------
--- -- IMBA_SHREDDER_RETURN_CHAKRAM --
+-- -- imba_timbersaw_RETURN_CHAKRAM --
 -- ----------------------------------
 
--- imba_shredder_return_chakram
+-- imba_timbersaw_return_chakram
 
 -- ------------------------------------
--- -- IMBA_SHREDDER_RETURN_CHAKRAM_2 --
+-- -- imba_timbersaw_RETURN_CHAKRAM_2 --
 -- ------------------------------------
 
--- imba_shredder_return_chakram_2
+-- imba_timbersaw_return_chakram_2
 
 -- --------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_CHAKRAM_THINKER --
+-- -- MODIFIER_imba_timbersaw_CHAKRAM_THINKER --
 -- --------------------------------------------
 
--- modifier_imba_shredder_chakram_thinker
+-- modifier_imba_timbersaw_chakram_thinker
 
 -- -------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_CHAKRAM_DEBUFF --
+-- -- MODIFIER_imba_timbersaw_CHAKRAM_DEBUFF --
 -- -------------------------------------------
 
--- modifier_imba_shredder_chakram_debuff
+-- modifier_imba_timbersaw_chakram_debuff
 
 -- -------------------------------------------
--- -- MODIFIER_IMBA_SHREDDER_CHAKRAM_DISARM --
+-- -- MODIFIER_imba_timbersaw_CHAKRAM_DISARM --
 -- -------------------------------------------
 
--- modifier_imba_shredder_chakram_disarm
+-- modifier_imba_timbersaw_chakram_disarm
 
 -- "DOTA_Tooltip_modifier_shredder_whirling_death_debuff"				"Whirling Death"
 -- "DOTA_Tooltip_modifier_shredder_whirling_death_debuff_Description"	"Losing 13%% of primary attribute."

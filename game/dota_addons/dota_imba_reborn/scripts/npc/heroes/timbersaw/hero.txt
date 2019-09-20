@@ -11,14 +11,14 @@
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
-		"Ability1"		"imba_shredder_whirling_death"
-		"Ability2"		"imba_shredder_timber_chain"
-		"Ability3"		"imba_shredder_reactive_armor"
-		"Ability4"		"imba_shredder_chakram_2"
-		"Ability5"		"imba_shredder_chakram_3"
-		"Ability6"		"imba_shredder_chakram"
-		"Ability7"		"imba_shredder_return_chakram"
-		"Ability8"		"imba_shredder_return_chakram_2"
+		"Ability1"		"imba_timbersaw_whirling_death"
+		"Ability2"		"imba_timbersaw_timber_chain"
+		"Ability3"		"imba_timbersaw_reactive_armor"
+		"Ability4"		"imba_timbersaw_chakram_2"
+		"Ability5"		"imba_timbersaw_chakram_3"
+		"Ability6"		"imba_timbersaw_chakram"
+		"Ability7"		"imba_timbersaw_return_chakram"
+		"Ability8"		"imba_timbersaw_return_chakram_2"
 		
 		"Ability10"		"special_bonus_hp_225"
 		"Ability11"		"special_bonus_mp_regen_250"

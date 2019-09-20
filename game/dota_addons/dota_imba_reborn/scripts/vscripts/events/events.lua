@@ -827,14 +827,14 @@ function GameMode:OnPlayerChat(keys)
 							upgraded = true
 						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
 							ability_set = {
-								[0] = "imba_shredder_whirling_death",
-								[1] = "imba_shredder_timber_chain",
-								[2] = "imba_shredder_reactive_armor",
-								-- [3] = "imba_shredder_chakram_2",
-								-- [4] = "imba_shredder_chakram_3",
-								-- [5] = "imba_shredder_chakram",
-								-- [5] = "imba_shredder_return_chakram",
-								-- [6] = "imba_shredder_return_chakram_2",
+								[0] = "imba_timbersaw_whirling_death",
+								-- [1] = "imba_timbersaw_timber_chain",
+								-- [2] = "imba_timbersaw_reactive_armor",
+								-- [3] = "imba_timbersaw_chakram_2",
+								-- [4] = "imba_timbersaw_chakram_3",
+								-- [5] = "imba_timbersaw_chakram",
+								-- [5] = "imba_timbersaw_return_chakram",
+								-- [6] = "imba_timbersaw_return_chakram_2",
 								-- [7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
 								-- [8] = "special_bonus_imba_windranger_powershot_damage",
 								-- [9] = "special_bonus_attack_range_125",

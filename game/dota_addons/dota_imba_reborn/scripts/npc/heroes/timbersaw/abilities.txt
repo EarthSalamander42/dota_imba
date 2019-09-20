@@ -3,12 +3,12 @@
 	//=================================================================================================================
 	// Shredder: Whirling Death
 	//=================================================================================================================
-	"imba_shredder_whirling_death"
+	"imba_timbersaw_whirling_death"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_whirling_death"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -89,12 +89,12 @@
 	//=================================================================================================================
 	// Shredder: Timber Chain
 	//=================================================================================================================
-	"imba_shredder_timber_chain"
+	"imba_timbersaw_timber_chain"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_timber_chain"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
@@ -153,12 +153,12 @@
 	//=================================================================================================================
 	// Shredder: Reactive Armor
 	//=================================================================================================================
-	"imba_shredder_reactive_armor"
+	"imba_timbersaw_reactive_armor"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_reactive_armor"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -197,12 +197,12 @@
 	//=================================================================================================================
 	// Shredder: Chakram
 	//=================================================================================================================
-	"imba_shredder_chakram"
+	"imba_timbersaw_chakram"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_chakram"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -284,12 +284,12 @@
 	//=================================================================================================================
 	// Shredder: Chakram 2
 	//=================================================================================================================
-	"imba_shredder_chakram_2"
+	"imba_timbersaw_chakram_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_chakram_2"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"		
@@ -379,12 +379,12 @@
 	//=================================================================================================================
 	// Shredder: Return Chakram
 	//=================================================================================================================
-	"imba_shredder_return_chakram"
+	"imba_timbersaw_return_chakram"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_return_chakram"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -403,12 +403,12 @@
 	//=================================================================================================================
 	// Shredder: Return Chakram
 	//=================================================================================================================
-	"imba_shredder_return_chakram_2"
+	"imba_timbersaw_return_chakram_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_return_chakram_2"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"		
@@ -427,12 +427,12 @@
 	//=================================================================================================================
 	// Shredder: Chakram 3
 	//=================================================================================================================
-	"imba_shredder_chakram_3"
+	"imba_timbersaw_chakram_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_shredder"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
 		"AbilityTextureName"			"shredder_chakram_2"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"		
