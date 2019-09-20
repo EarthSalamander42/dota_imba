@@ -37,6 +37,7 @@
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
 #base heroes/tidehunter/abilities.txt
+#base heroes/timbersaw/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
 #base heroes/weaver/abilities.txt

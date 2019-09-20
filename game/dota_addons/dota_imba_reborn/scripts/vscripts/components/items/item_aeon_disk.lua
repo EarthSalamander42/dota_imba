@@ -127,12 +127,12 @@ function modifier_imba_aeon_disk_unique:RemoveOnDeath() return false end
 
 function modifier_imba_aeon_disk_unique:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 	}
 	return funcs
 end
 
-function modifier_imba_aeon_disk_unique:OnTakeDamage(kv)
+function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
 	if IsServer() then
 		local state = self:GetStackCount()
 		if state == 2 then	-- [ 1 = disabled | 2 = enabled ]
@@ -140,14 +140,19 @@ function modifier_imba_aeon_disk_unique:OnTakeDamage(kv)
 			local ability 	= self:GetAbility()
 			local parent 	= self:GetParent()
 
-			if kv.unit == parent and ability:IsCooldownReady() and kv.attacker:IsHero() then
-				local duration 			= ability:GetSpecialValueFor("duration")
-				local proc_treshold 	= ability:GetSpecialValueFor("proc_treshold") / 100.0
+			if ability:IsCooldownReady() and kv.attacker:GetOwner() and kv.attacker ~= parent and not parent:HasModifier("modifier_imba_aeon_disk") and not parent:IsIllusion() then
+				local buff_duration 			= ability:GetSpecialValueFor("buff_duration")
+				local health_threshold_pct 	= ability:GetSpecialValueFor("health_threshold_pct") / 100.0
 				local health_treshold 	= parent:GetHealth() / parent:GetMaxHealth()
-				if health_treshold < proc_treshold then 
+				
+				if health_treshold < health_threshold_pct or ((parent:GetHealth() - kv.damage) / parent:GetMaxHealth()) <= health_threshold_pct then
+					parent:EmitSound("DOTA_Item.ComboBreaker")
+				
 					parent:Purge( false, true, false, true, true )
-					local aeon_disc = parent:AddNewModifier(parent, ability, "modifier_imba_aeon_disk", {duration = duration})
+					local aeon_disc = parent:AddNewModifier(parent, ability, "modifier_imba_aeon_disk", {duration = buff_duration})
 					ability:UseResources(false, false, true)
+					
+					return -100
 				end
 			end
 		end
@@ -155,9 +160,11 @@ function modifier_imba_aeon_disk_unique:OnTakeDamage(kv)
 end
 
 if modifier_imba_aeon_disk == nil then modifier_imba_aeon_disk = class({}) end
-function modifier_imba_aeon_disk:IsDebuff() return false end
-function modifier_imba_aeon_disk:IsPurgable() return false end
-function modifier_imba_aeon_disk:RemoveOnDeath() return false end
+
+function modifier_imba_aeon_disk:GetTexture()
+	return "item_aeon_disk"
+end
+
 function modifier_imba_aeon_disk:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
@@ -168,34 +175,42 @@ function modifier_imba_aeon_disk:DeclareFunctions()
 end
 
 function modifier_imba_aeon_disk:OnCreated(kv)
+	self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
+	self.status_resistance	= self:GetAbility():GetSpecialValueFor("status_resistance")
+
 	if IsServer() then
 		local parent 			= self:GetParent()
 		self.ability 			= self:GetAbility()
-	 	self.aeon_disk_pfx 		= ParticleManager:CreateParticle("particles/item/aeon_disk/imba_combo_breaker_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-	 	local pfx_point 		= Vector(parent:GetAbsOrigin().x, parent:GetAbsOrigin().y , parent:GetAbsOrigin().z + parent:GetBoundingMaxs().z )   
-		ParticleManager:SetParticleControl(self.aeon_disk_pfx, 0, pfx_point)
-		ParticleManager:SetParticleControl(self.aeon_disk_pfx, 1, pfx_point)
+	 	-- self.aeon_disk_pfx 		= ParticleManager:CreateParticle("particles/item/aeon_disk/imba_combo_breaker_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+	 	-- local pfx_point 		= Vector(parent:GetAbsOrigin().x, parent:GetAbsOrigin().y , parent:GetAbsOrigin().z + parent:GetBoundingMaxs().z )   
+		-- ParticleManager:SetParticleControl(self.aeon_disk_pfx, 0, pfx_point)
+		-- ParticleManager:SetParticleControl(self.aeon_disk_pfx, 1, pfx_point)
+		
+		local combo_breaker_particle = ParticleManager:CreateParticle("particles/items4_fx/combo_breaker_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(combo_breaker_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(combo_breaker_particle, false, false, -1, true, false)
+		
 --	 else
 --	 	self.damage_reduction 	= -100
 	 end
- end
-
-function modifier_imba_aeon_disk:OnRemoved()
-	if IsServer() then
-		if self.aeon_disk_pfx ~= nil then
-			ParticleManager:DestroyParticle(self.aeon_disk_pfx, false)
-		end
-	end
 end
+
+-- function modifier_imba_aeon_disk:OnRemoved()
+	-- if IsServer() then
+		-- if self.aeon_disk_pfx ~= nil then
+			-- ParticleManager:DestroyParticle(self.aeon_disk_pfx, false)
+		-- end
+	-- end
+-- end
 
 function modifier_imba_aeon_disk:GetModifierIncomingDamage_Percentage() 
 	return -100
 end
 
 function modifier_imba_aeon_disk:GetModifierTotalDamageOutgoing_Percentage()
-	return -self.ability:GetSpecialValueFor("damage_reduction")
+	return self.damage_reduction * (-1)
 end
 
 function modifier_imba_aeon_disk:GetModifierStatusResistanceStacking()
-	return -self.ability:GetSpecialValueFor("status_resistance")
+	return self.status_resistance
 end

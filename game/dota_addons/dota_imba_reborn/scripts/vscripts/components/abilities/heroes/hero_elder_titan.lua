@@ -115,6 +115,10 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 end
 
 function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
+	if self:GetCaster():HasScepter() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = self:GetChannelTime()})
+	end
+
 	if astral_spirit == nil then
 	else
 		if astral_spirit.is_returning == true then return true end
@@ -132,10 +136,6 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
-	
-	if self:GetCaster():HasScepter() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = self:GetChannelTime()})
-	end
 
 	return true
 end

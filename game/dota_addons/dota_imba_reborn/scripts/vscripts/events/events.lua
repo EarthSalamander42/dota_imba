@@ -815,7 +815,7 @@ function GameMode:OnPlayerChat(keys)
 								[4] = "imba_windranger_focusfire_vanilla_enhancer",
 								-- [5] = "imba_windranger_focusfire",
 								[5] = "windrunner_focusfire",
-								[6] = "special_bonus_mp_regen_3",
+								[6] = "special_bonus_mp_regen_4",
 								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
 								[8] = "special_bonus_imba_windranger_powershot_damage",
 								[9] = "special_bonus_attack_range_125",
@@ -824,7 +824,26 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_unique_windranger_8",
 								[13] = "special_bonus_cooldown_reduction_30",
 							}
-							upgraded = true						
+							upgraded = true
+						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
+							ability_set = {
+								[0] = "imba_timbersaw_whirling_death",
+								-- [1] = "imba_timbersaw_timber_chain",
+								-- [2] = "imba_timbersaw_reactive_armor",
+								-- [3] = "imba_timbersaw_chakram_2",
+								-- [4] = "imba_timbersaw_chakram_3",
+								-- [5] = "imba_timbersaw_chakram",
+								-- [5] = "imba_timbersaw_return_chakram",
+								-- [6] = "imba_timbersaw_return_chakram_2",
+								-- [7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								-- [8] = "special_bonus_imba_windranger_powershot_damage",
+								-- [9] = "special_bonus_attack_range_125",
+								-- [10] = "special_bonus_imba_windranger_windrun_invisibility",
+								-- [11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								-- [12] = "special_bonus_unique_windranger_8",
+								-- [13] = "special_bonus_cooldown_reduction_30",
+							}
+							upgraded = true							
 						end
 							
 						for ability = 0, 23 do
@@ -835,6 +854,11 @@ function GameMode:OnPlayerChat(keys)
 								
 								local new_ability = hero:AddAbility(ability_set[ability])
 								new_ability:SetLevel(old_ability_level)
+								
+								-- Remove this when done
+								if new_ability:GetName() == "imba_windranger_backpedal" or new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" then
+									new_ability:SetLevel(1)
+								end
 							end
 						end
 						

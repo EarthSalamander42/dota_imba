@@ -1,0 +1,34 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Timbersaw
+	//=================================================================================================================
+	"npc_dota_hero_shredder"
+	{
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability1"		"imba_timbersaw_whirling_death"
+		"Ability2"		"imba_timbersaw_timber_chain"
+		"Ability3"		"imba_timbersaw_reactive_armor"
+		"Ability4"		"imba_timbersaw_chakram_2"
+		"Ability5"		"imba_timbersaw_chakram_3"
+		"Ability6"		"imba_timbersaw_chakram"
+		"Ability7"		"imba_timbersaw_return_chakram"
+		"Ability8"		"imba_timbersaw_return_chakram_2"
+		
+		"Ability10"		"special_bonus_hp_225"
+		"Ability11"		"special_bonus_mp_regen_250"
+		"Ability12"		"special_bonus_spell_amplify_10"
+		"Ability13"		"special_bonus_unique_timbersaw_2" // +8 Reactive Armor Stacks
+		"Ability14"		"special_bonus_strength_20"
+		"Ability15"		"special_bonus_cooldown_reduction_15"
+		"Ability16"		"special_bonus_unique_timbersaw" // +12% Whirling Death Attribute Reduction
+		"Ability17"		"special_bonus_unique_timbersaw_3"// +1400 Timber Chain Range
+		
+		// Removed Talents
+	}
+}

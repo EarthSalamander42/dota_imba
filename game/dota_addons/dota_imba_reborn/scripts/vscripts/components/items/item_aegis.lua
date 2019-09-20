@@ -31,6 +31,8 @@ end
 modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
 
 function modifier_item_imba_aegis:OnCreated()
+	if not IsServer() then return end
+
 	-- Parameters
 	self:SetDuration(GetAbilitySpecial("item_imba_aegis", "disappear_time"), true)
 	self.reincarnate_time = GetAbilitySpecial("item_imba_aegis", "reincarnate_time")

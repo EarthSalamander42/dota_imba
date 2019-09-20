@@ -354,30 +354,43 @@ function GameMode:ItemAddedFilter( keys )
 				Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, continue = true})
 			end
 
-			-- With no timer, combat events notification is not triggered
-			if unit:GetNumItemsInInventory() >= 6 then
-				unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
-			else
-				Timers:CreateTimer(1.0, function()
-					if item then
-						if item.GetContainer then
-							UTIL_Remove(item:GetContainer())
-						end
+			-- I get what you were trying to do but none of this works properly
+			-- -- With no timer, combat events notification is not triggered
+			-- if unit:GetNumItemsInInventory() >= 6 then
+				-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			-- else
+				-- Timers:CreateTimer(1.0, function()
+					-- if item then
+						-- if item.GetContainer then
+							-- UTIL_Remove(item:GetContainer())
+						-- end
 
-						UTIL_Remove(item)
-					end
+						-- UTIL_Remove(item)
+					-- end
 
-					-- in the rare case where the player would die within 1 second after picked the aegis
-					if unit:IsAlive() then
-						unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
-					end
-				end)
-			end
+					-- -- in the rare case where the player would die within 1 second after picked the aegis
+					-- if unit:IsAlive() then
+						-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+					-- end
+				-- end)
+			-- end
 
-			return true
+			-- return true
+				
+			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			return false			
+		else
+			local drop = CreateItem("item_imba_aegis", nil, nil)
+			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
+			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100))
+
+			UTIL_Remove(item:GetContainer())
+			UTIL_Remove(item)
+			return false
 		end
-
-		return true
+		-- return true
+		
+		return false
 	end
 
 	-------------------------------------------------------------------------------------------------

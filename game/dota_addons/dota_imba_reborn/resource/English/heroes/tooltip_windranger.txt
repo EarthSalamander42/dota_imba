@@ -1,23 +1,30 @@
 //WINDRUNNER
 "DOTA_Tooltip_ability_imba_windranger_shackleshot"									"Shackleshot"
-"DOTA_Tooltip_ability_imba_windranger_shackleshot_Description"						"Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%."
+"DOTA_Tooltip_ability_imba_windranger_shackleshot_Description"						"Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.\n<font color='#FF7800'>Natural Slinger:</font> Can directly target trees.\n<font color='#FF7800'>Splinter Sister:</font> Can be set to auto-cast to cause any attacks Windranger does on a shackled target to also launch attacks towards other shackled targets within attack range."
 "DOTA_Tooltip_ability_imba_windranger_shackleshot_Lore"								"Windranger's variety of bow skills includes an arrow with thick ropes attached to encumber any escaping target."
 "DOTA_Tooltip_ability_imba_windranger_shackleshot_Note0"								"This spell can shackle two enemies together, stunning them both."
-"DOTA_Tooltip_ability_imba_windranger_shackleshot_Note1"								"Can shackle the target to an enemy unit or tree at most 525/500 behind it."
-"DOTA_Tooltip_ability_imba_windranger_shackleshot_Note2"								"Shackleshot can be disjointed."
+"DOTA_Tooltip_ability_imba_windranger_shackleshot_Note1"								"Shackleshot can be disjointed."
+"DOTA_Tooltip_ability_imba_windranger_shackleshot_Note2"								"Splinter Sister checks for other shackled enemies around the attacked target within a radius equal to Windranger's attack range."
 "DOTA_Tooltip_ability_imba_windranger_shackleshot_stun_duration"						"SHACKLE DURATION:"
 
 "DOTA_Tooltip_ability_imba_windranger_powershot"										"Powershot"
-"DOTA_Tooltip_ability_imba_windranger_powershot_Description"							"Windranger charges her bow for up to 1 second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages enemies and destroys trees along its path. For each enemy that Powershot hits, its damage is reduced by %damage_reduction%%%.\n<font color='#FF7800'>Godshot:</font> If Powershot is channeled for between %godshot_min%%% and %godshot_max%%% of its full duration, a more powerful version of Powershot is released, dealing %godshot_damage_pct%%% of its full damage as pure damage with no damage reductions, and stunning any hit enemies for %godshot_stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_windranger_powershot_Description"							"Windranger charges her bow for up to 1 second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages enemies and destroys trees along its path. For each enemy that Powershot hits, its damage is reduced by %damage_reduction%%%.\n<font color='#FF7800'>Godshot:</font> If Powershot is channeled for between %godshot_min%%% and %godshot_max%%% of its full duration, a more powerful version of Powershot is released, dealing %godshot_damage_pct%%% of its full damage as pure damage with no damage reductions, and stunning any hit enemies for %godshot_stun_duration% seconds.\n<font color='#FF7800'>Scattershot:</font> If Powershot is channeled for between %scattershot_min%%% and %scattershot_max%%% of its full duration, a fragmented version of Powershot is released, firing %scattershot_shots% shots at a %scattershot_interval% second interval, with each shot dealing %scattershot_damage_pct%%% of its full damage. These shots have a %scattershot_deviation% degree angle deviation from the original cast location.\n<font color='#FF7800'>Overstretch:</font> Can be set to auto-cast to allow Powershot to continue charging for bonus range. Windranger is rooted while Overstretching, but can re-aim Powershot based on her forward vector, and add %overstretch_bonus_range_per_second% bonus range per second to the charging Powershot."
 "DOTA_Tooltip_ability_imba_windranger_powershot_Lore"								"During her early years of training, Lyralei learned to fire powerful arrows that cleaved even trees to reach their targets."
 "DOTA_Tooltip_ability_imba_windranger_powershot_Note0"								"Powershot will destroy trees in its area of effect."
+"DOTA_Tooltip_ability_imba_windranger_powershot_Note1"								"Overstretch does not add bonus damage."
+"DOTA_Tooltip_ability_imba_windranger_powershot_Note2"								"Overstretch is cancelled by issuing a stop order or casting another ability."
 "DOTA_Tooltip_ability_imba_windranger_powershot_arrow_range"							"RANGE:"
 "DOTA_Tooltip_ability_imba_windranger_powershot_powershot_damage"					"DAMAGE:"
 
+"DOTA_Tooltip_modifier_imba_windranger_powershot"									"Powershot Channeling"
+
+"DOTA_Tooltip_modifier_imba_windranger_powershot_overstretch"						"Overstretch"
+"DOTA_Tooltip_modifier_imba_windranger_powershot_overstretch_Description"			"Allowing for Powershot re-aiming, and gaining bonus range upon release."
+
 "DOTA_Tooltip_ability_imba_windranger_windrun"										"Windrun"
-"DOTA_Tooltip_ability_imba_windranger_windrun_Description" 							"Increases movement speed and adds evasion from all physical attacks, while slowing movement of nearby enemies."
+"DOTA_Tooltip_ability_imba_windranger_windrun_Description" 							"Increases movement speed and adds evasion from all physical attacks, while slowing movement of nearby enemies.\n<font color='#FF7800'>Gale Enchantment:</font> Ally heroes within %gale_enchantment_radius% radius of Windranger while Windrun is active will also gain their own Windrun buff for %gale_enchantment_duration% seconds.\n<font color='#FF7800'>Mastery of the Woods:</font> When Windranger reaches Level 25, Windrun can also path through trees."
 "DOTA_Tooltip_ability_imba_windranger_windrun_Lore"									"Lyralei enchants gusts of winds to fight incoming attacks."
-"DOTA_Tooltip_ability_imba_windranger_windrun_Note0"									"Activating Windrun will evade incoming projectiles."
+"DOTA_Tooltip_ability_imba_windranger_windrun_Note0"									"Mastery of the Woods also affects units who received Windrun through Gale Enchantment, so long as they are Level 25 or higher."
 "DOTA_Tooltip_ability_imba_windranger_windrun_movespeed_bonus_pct"					"%MOVE SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_windranger_windrun_evasion_pct_tooltip"					"%EVASION:"
 "DOTA_Tooltip_ability_imba_windranger_windrun_enemy_movespeed_bonus_pct"				"%ENEMY SLOW:"		
@@ -32,11 +39,18 @@
 "DOTA_Tooltip_modifier_imba_windranger_windrun_handler"								"WINDRUN CHARGES"
 
 "DOTA_Tooltip_Ability_imba_windranger_backpedal"									"Backpedal"
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Description"						"When toggled on, any ability cast causes Windranger to jump backwards. If the ability is a targeted cast, Windranger will leap in the opposite direction of the cast position."
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_Description"						"When toggled on, any targeted ability cast causes Windranger to jump a short distance in the opposite direction of the cast position."
 "DOTA_Tooltip_Ability_imba_windranger_backpedal_Lore"								"Lyralei's extensive training in the enchanted woods has taught her extensive methods of evasion; one cannot rely on the wind alone."
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_Note0"								"Backpedal toggles do not break invisibility granted by the Windrun Invisibility talent."
+"DOTA_Tooltip_Ability_imba_windranger_backpedal_Note1"								"Does not activate on items."
 "DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_distance"					"BACKPEDAL DISTANCE:"
 "DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_height"					"BACKPEDAL HEIGHT:"
 "DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_duration"					"BACKPEDAL DURATION:"
+
+"DOTA_Tooltip_modifier_imba_windranger_backpedal"									"Backpedal"
+"DOTA_Tooltip_modifier_imba_windranger_backpedal_Description"						"Leaping backwards when casting a targeted ability."
+
+// "DOTA_Tooltip_ability_windrunner_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds.\n<font color='#FF7800'>Pincushion:</font> Windranger has a %ministun_chance%%% chance to mini-stun Focus Fire targets."
 
 "DOTA_Tooltip_ability_imba_windranger_focusfire"										"Focus Fire"
 "DOTA_Tooltip_ability_imba_windranger_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds."
@@ -44,7 +58,7 @@
 "DOTA_Tooltip_ability_imba_windranger_focusfire_Note0"								"Can target buildings and Spell Immune units."
 "DOTA_Tooltip_ability_imba_windranger_focusfire_bonus_attack_speed" 			"BONUS ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_damage_reduction" 			"%DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_duration_tooltip"	"DURATION:"		
+"DOTA_Tooltip_ability_imba_windranger_focusfire_focusfire_duration_tooltip"	"DURATION:"
 
 "DOTA_Tooltip_modifier_imba_windranger_shackle_shot"				"Shackleshot"
 "DOTA_Tooltip_modifier_imba_windranger_shackle_shot_Description"	"Bound by thick ropes from Windranger's ensnaring arrow."
