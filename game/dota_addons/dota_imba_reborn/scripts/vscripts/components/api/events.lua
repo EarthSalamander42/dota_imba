@@ -24,6 +24,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 					id = api:GetApiGameId(),
 					radiant_score = GetTeamHeroKills(2),
 					dire_score = GetTeamHeroKills(3),
+					gamemode = GameMode:GetCustomGamemode(),
 				},
 			})
 		end)

@@ -300,10 +300,14 @@ function GameMode:OnSettingVote(keys)
 end
 
 function GameMode:SetCustomGamemode(iValue)
-	CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	if iValue and type(iValue) == "number" then
+		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	end
+
+	return nil
 end
 
 function GameMode:GetCustomGamemode()
 --	print("Gamemode:", CustomNetTables:GetTableValue("game_options", "gamemode")["1"])
-	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"]
+	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"] or nil
 end
