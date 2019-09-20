@@ -824,7 +824,26 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_unique_windranger_8",
 								[13] = "special_bonus_cooldown_reduction_30",
 							}
-							upgraded = true						
+							upgraded = true
+						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
+							ability_set = {
+								[0] = "imba_shredder_whirling_death",
+								[1] = "imba_shredder_timber_chain",
+								[2] = "imba_shredder_reactive_armor",
+								-- [3] = "imba_shredder_chakram_2",
+								-- [4] = "imba_shredder_chakram_3",
+								-- [5] = "imba_shredder_chakram",
+								-- [5] = "imba_shredder_return_chakram",
+								-- [6] = "imba_shredder_return_chakram_2",
+								-- [7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								-- [8] = "special_bonus_imba_windranger_powershot_damage",
+								-- [9] = "special_bonus_attack_range_125",
+								-- [10] = "special_bonus_imba_windranger_windrun_invisibility",
+								-- [11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								-- [12] = "special_bonus_unique_windranger_8",
+								-- [13] = "special_bonus_cooldown_reduction_30",
+							}
+							upgraded = true							
 						end
 							
 						for ability = 0, 23 do

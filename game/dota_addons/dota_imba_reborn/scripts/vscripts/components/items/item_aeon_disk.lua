@@ -140,7 +140,7 @@ function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
 			local ability 	= self:GetAbility()
 			local parent 	= self:GetParent()
 
-			if ability:IsCooldownReady() and kv.attacker:GetOwner() and kv.attacker ~= parent and not parent:HasModifier("modifier_imba_aeon_disk") then
+			if ability:IsCooldownReady() and kv.attacker:GetOwner() and kv.attacker ~= parent and not parent:HasModifier("modifier_imba_aeon_disk") and not parent:IsIllusion() then
 				local buff_duration 			= ability:GetSpecialValueFor("buff_duration")
 				local health_threshold_pct 	= ability:GetSpecialValueFor("health_threshold_pct") / 100.0
 				local health_treshold 	= parent:GetHealth() / parent:GetMaxHealth()
