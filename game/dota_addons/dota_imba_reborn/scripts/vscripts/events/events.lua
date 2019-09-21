@@ -828,7 +828,7 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
 							ability_set = {
 								[0] = "imba_timbersaw_whirling_death",
-								-- [1] = "imba_timbersaw_timber_chain",
+								[1] = "imba_timbersaw_timber_chain",
 								-- [2] = "imba_timbersaw_reactive_armor",
 								-- [3] = "imba_timbersaw_chakram_2",
 								-- [4] = "imba_timbersaw_chakram_3",

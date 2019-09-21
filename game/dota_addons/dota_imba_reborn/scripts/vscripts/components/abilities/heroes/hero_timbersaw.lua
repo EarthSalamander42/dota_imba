@@ -261,9 +261,9 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 	
 	self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Cast")
 
-	local timber_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timberchain.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	local timber_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timberchain.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(timber_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCursorPosition())
+	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCaster():GetAbsOrigin() + ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus())))
 	ParticleManager:SetParticleControl(timber_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0 ))
 	ParticleManager:SetParticleControl(timber_particle, 3, Vector(((self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2, 0, 0 ))
 		
@@ -277,11 +277,11 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 	    EffectName = nil,
 	    fDistance = self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
-	    fStartRadius = self:GetSpecialValueFor("radius"),
-		fEndRadius = self:GetSpecialValueFor("radius"),
+	    fStartRadius = self:GetSpecialValueFor("chain_radius"),
+		fEndRadius = self:GetSpecialValueFor("chain_radius"),
 		
-		-- TODO: Check that this works...
-		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
+		-- Check that this works... (It doesn't)
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_BOTH,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_TREE,
 		
@@ -305,28 +305,40 @@ function imba_timbersaw_timber_chain:OnProjectileThink_ExtraData(location, data)
 	-- if data.gush_dummy then
 		-- EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
 	-- end
+	
+	if #GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false) >= 1 then
+		local tree = GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false)[1]
+	
+		if tree then
+			local direction = (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+		
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
+				duration		= (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("speed"),
+				
+				autocast_state	= self:GetAutoCastState(),
+				
+				direction_x		= direction.x,
+				direction_y		= direction.y,
+				direction_z		= direction.z,
+				tree_entindex	= tree:entindex(),
+				damage_type		= self:GetAbilityDamageType(),
+				
+				radius			= self:GetSpecialValueFor("radius"),
+				speed			= self:GetSpecialValueFor("speed"),
+				damage			= self:GetSpecialValueFor("damage"),
+				whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
+				side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
+				side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
+				
+				timber_particle	= data.timber_particle
+			})
+		end
+	end
 end
 
 function imba_timbersaw_timber_chain:OnProjectileHit_ExtraData(target, location, data)
 	if target then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
-			autocast_state	= self:GetAutoCastState(),
-			
-			direction_x		= location.x,
-			direction_y		= location.y,
-			direction_z		= location.z,
-			tree_entindex	= tree:entindex(),
-			damage_type		= self:GetAbilityDamageType(),
-			
-			radius			= self:GetSpecialValueFor("radius"),
-			speed			= self:GetSpecialValueFor("speed"),
-			damage			= self:GetSpecialValueFor("damage"),
-			whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
-			side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
-			side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
-			
-			timber_particle	= data.timber_particle
-		})
+
 	end
 end
 
@@ -376,7 +388,7 @@ function modifier_imba_timbersaw_timber_chain:OnCreated(params)
 	self.autocast_state	= params.autocast_state
 	self.damage_type	= params.damage_type
 	
-	self.tree			= EntIndexToHScript(data.tree_entindex)
+	self.tree			= EntIndexToHScript(params.tree_entindex)
 	
 	self.radius	= params.radius
 	self.speed	= params.speed
@@ -384,6 +396,8 @@ function modifier_imba_timbersaw_timber_chain:OnCreated(params)
 	self.whirling_chain_stat_loss_pct	= params.whirling_chain_stat_loss_pct
 	self.side_hooks_damage_reduction	= params.side_hooks_damage_reduction
 	self.side_hooks_drag_pct			= params.side_hooks_drag_pct
+	
+	self.timber_particle				= params.timber_particle
 	
 	self.distance		= (Vector(params.direction_x, params.direction_y, params.direction_z) - self:GetCaster():GetAbsOrigin()):Length2D()
 	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
@@ -405,7 +419,7 @@ function modifier_imba_timbersaw_timber_chain:OnDestroy()
 	
 	if self.tree and not self.tree:IsNull() then
 		if self.tree.CutDown then
-			self:GetCursorTarget():CutDown(self:GetParent():GetTeamNumber())
+			self.tree:CutDown(self:GetParent():GetTeamNumber())
 		else
 			self.tree:Kill()
 		end
@@ -418,7 +432,9 @@ end
 function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
 	if not IsServer() then return end
 	
-	me:SetOrigin( me:GetOrigin() + self.velocity * dt )
+	-- If we go by the logic of Timbersaw porting along if die + buyback while chaining then the below may not be correct
+	-- But it looks like vanilla Timber Chain has a duration so...
+	me:SetOrigin(me:GetOrigin() + self.velocity * dt)
 	
 	-- TODO: Damage
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
