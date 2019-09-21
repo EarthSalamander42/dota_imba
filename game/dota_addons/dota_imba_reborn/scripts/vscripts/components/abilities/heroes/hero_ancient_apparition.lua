@@ -701,6 +701,10 @@ function imba_ancient_apparition_ice_blast:OnSpellStart()
 
 	self.initial_projectile = ProjectileManager:CreateLinearProjectile(linear_projectile)
 	
+	if not self.release_ability then
+		self.release_ability = self:GetCaster():FindAbilityByName("imba_ancient_apparition_ice_blast_release")
+	end	
+	
 	if self.release_ability then
 		self:GetCaster():SwapAbilities(self:GetName(), self.release_ability:GetName(), false, true)
 	end

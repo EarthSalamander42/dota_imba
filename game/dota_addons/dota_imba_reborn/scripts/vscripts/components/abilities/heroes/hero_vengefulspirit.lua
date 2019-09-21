@@ -564,18 +564,23 @@ function imba_vengefulspirit_command_aura:GetIntrinsicModifierName()
 end
 
 function imba_vengefulspirit_command_aura:OnOwnerDied()
-	if self:IsTrained() and not self:GetCaster():IsIllusion() then
-		local num_illusions_on_death	 = self:GetSpecialValueFor("num_illusions_on_death")
+	if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
+		local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
+		local bounty_base				= self:GetCaster():GetLevel() * 2 -- I THINK that's what it is?...
 		
 		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
 			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
 		end
-	
+		
+		if self:GetCaster():HasScepter() then
+			bounty_base					= 0
+		end
+		
 		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
 		{
 			outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
 			incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
-			bounty_base					= self:GetCaster():GetLevel() * 2, -- I THINK that's what it is?...
+			bounty_base					= bounty_base,
 			bounty_growth				= nil,
 			outgoing_damage_structure	= nil,
 			outgoing_damage_roshan		= nil,

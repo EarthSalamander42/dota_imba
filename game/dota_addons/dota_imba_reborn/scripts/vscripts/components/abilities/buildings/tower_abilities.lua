@@ -959,8 +959,10 @@ function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-	return self.bonus_health + self.health_per_protective * protective_instinct_stacks
+	if self.caster then
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		return self.bonus_health + self.health_per_protective * protective_instinct_stacks
+	end
 end
 
 
