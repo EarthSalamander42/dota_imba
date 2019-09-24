@@ -146,6 +146,22 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"100 140 180 220"
 			}
+			
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"whirling_chain_stat_loss_pct"	"4 5 6 7"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"side_hooks_damage_reduction"	"50"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"side_hooks_drag_pct"	"50"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}

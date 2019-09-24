@@ -1017,7 +1017,7 @@ end
 function modifier_imba_mass_serpent_ward:OnDeath(keys)
 	if not IsServer() then return end
 	
-	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() and not keys.unit:IsOther() and not keys.unit:GetName() == "npc_dota_unit_undying_zombie" then
+	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() and not keys.unit:IsOther() and keys.unit:GetName() ~= "npc_dota_unit_undying_zombie" then	
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
 			for ward = 1, self.snake_charmer_creep_count do

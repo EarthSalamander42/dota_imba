@@ -5,7 +5,7 @@ LinkLuaModifier("modifier_imba_timbersaw_whirling_death_thinker", "components/ab
 LinkLuaModifier("modifier_imba_timbersaw_whirling_death_debuff", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_timbersaw_whirling_death_oil", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_timbersaw_timber_chain", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_timber_chain", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_timbersaw_timber_chain_side_hooks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_timbersaw_reactive_armor", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
@@ -174,6 +174,12 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnIntervalThink()
 	self:StartIntervalThink(-1)
 end
 
+function modifier_imba_timbersaw_whirling_death_debuff:OnDestroy()
+	if not IsServer() then return end
+
+	self:GetParent():CalculateStatBonus()
+end
+
 function modifier_imba_timbersaw_whirling_death_debuff:DeclareFunctions()
 	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	MODIFIER_PROPERTY_STATS_AGILITY_BONUS, MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 end
@@ -200,35 +206,285 @@ function modifier_imba_timbersaw_whirling_death_oil:OnCreated()
 
 end
 
--- --------------------------------
--- -- imba_timbersaw_TIMBER_CHAIN --
--- --------------------------------
+--------------------------------
+-- IMBA_TIMBERSAW_TIMBER_CHAIN --
+--------------------------------
 
--- imba_timbersaw_timber_chain
+function imba_timbersaw_timber_chain:OnSpellStart()
+			-- "01"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "chain_radius"		"90 90 90 90"
+			-- }
+			-- "02"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "range"				"850 1050 1250 1450"
+				-- "LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
+			-- }
+			-- "03"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "radius"		"225 225 225 225"
+			-- }
+			-- "04"
+			-- {	
+				-- "var_type"			"FIELD_INTEGER"
+				-- "speed"				"1600 2000 2400 2800"
+			-- }
+			-- "05"
+			-- {	
+				-- "var_type"			"FIELD_INTEGER"
+				-- "damage"			"100 140 180 220"
+			-- }
+			
+			-- "06"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "whirling_chain_stat_loss_pct"	"4 5 6 7"
+			-- }
+			-- "07"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "side_hooks_damage_reduction"	"50"
+			-- }
+			-- "08"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "side_hooks_drag_pct"	"50"
+			-- }
+
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
+	self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Cast")
+
+	local timber_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timberchain.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(timber_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCursorPosition())
+	ParticleManager:SetParticleControl(timber_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0 ))
+	ParticleManager:SetParticleControl(timber_particle, 3, Vector(((self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2, 0, 0 ))
+		
+	ProjectileManager:CreateLinearProjectile({
+		Source			= self:GetCaster(),
+		Ability			= self,
+		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
+		
+	    bDeleteOnHit = false,
+	    
+	    EffectName = nil,
+	    fDistance = self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
+		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+	    fStartRadius = self:GetSpecialValueFor("radius"),
+		fEndRadius = self:GetSpecialValueFor("radius"),
+		
+		-- TODO: Check that this works...
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_TREE,
+		
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		fExpireTime = GameRules:GetGameTime() + 10.0,
+		
+		-- "The chain's tip briefly provides 100 radius ground vision around itself while traveling, and 400 radius ground vision once reaching max distance or connecting with a tree."
+		-- ...Yeah but how long does it give the 400 radius ground vision for though
+		bProvidesVision = true,
+		iVisionRadius = 100,
+		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+		
+		ExtraData = {
+			timber_particle = timber_particle
+		}
+	})
+end
+
+function imba_timbersaw_timber_chain:OnProjectileThink_ExtraData(location, data)
+	-- if data.gush_dummy then
+		-- EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
+	-- end
+end
+
+function imba_timbersaw_timber_chain:OnProjectileHit_ExtraData(target, location, data)
+	if target then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
+			autocast_state	= self:GetAutoCastState(),
+			
+			direction_x		= location.x,
+			direction_y		= location.y,
+			direction_z		= location.z,
+			tree_entindex	= tree:entindex(),
+			damage_type		= self:GetAbilityDamageType(),
+			
+			radius			= self:GetSpecialValueFor("radius"),
+			speed			= self:GetSpecialValueFor("speed"),
+			damage			= self:GetSpecialValueFor("damage"),
+			whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
+			side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
+			side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
+			
+			timber_particle	= data.timber_particle
+		})
+	end
+end
+
+		-- "03"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "radius"		"225 225 225 225"
+			-- }
+			-- "04"
+			-- {	
+				-- "var_type"			"FIELD_INTEGER"
+				-- "speed"				"1600 2000 2400 2800"
+			-- }
+			-- "05"
+			-- {	
+				-- "var_type"			"FIELD_INTEGER"
+				-- "damage"			"100 140 180 220"
+			-- }
+			
+			-- "06"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "whirling_chain_stat_loss_pct"	"4 5 6 7"
+			-- }
+			-- "07"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "side_hooks_damage_reduction"	"50"
+			-- }
+			-- "08"
+			-- {
+				-- "var_type"			"FIELD_INTEGER"
+				-- "side_hooks_drag_pct"	"50"
+			-- }
+
 
 -- -----------------------------------------
--- -- MODIFIER_imba_timbersaw_TIMBER_CHAIN --
+-- -- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN --
 -- -----------------------------------------
 
--- modifier_imba_timbersaw_timber_chain
+function modifier_imba_timbersaw_timber_chain:IsPurgable()		return false end
+function modifier_imba_timbersaw_timber_chain:RemoveOnDeath()	return false end
+
+function modifier_imba_timbersaw_timber_chain:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.autocast_state	= params.autocast_state
+	self.damage_type	= params.damage_type
+	
+	self.tree			= EntIndexToHScript(data.tree_entindex)
+	
+	self.radius	= params.radius
+	self.speed	= params.speed
+	self.damage	= params.damage
+	self.whirling_chain_stat_loss_pct	= params.whirling_chain_stat_loss_pct
+	self.side_hooks_damage_reduction	= params.side_hooks_damage_reduction
+	self.side_hooks_drag_pct			= params.side_hooks_drag_pct
+	
+	self.distance		= (Vector(params.direction_x, params.direction_y, params.direction_z) - self:GetCaster():GetAbsOrigin()):Length2D()
+	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
+	
+	-- Velocity = Displacement/Time
+	self.velocity		= self.direction * params.speed
+	
+	self.damaged_targets	= {}
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+	end
+end
+
+function modifier_imba_timbersaw_timber_chain:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():InterruptMotionControllers(true)
+	
+	if self.tree and not self.tree:IsNull() then
+		if self.tree.CutDown then
+			self:GetCursorTarget():CutDown(self:GetParent():GetTeamNumber())
+		else
+			self.tree:Kill()
+		end
+	end
+	
+	ParticleManager:DestroyParticle(self.timber_particle, true)
+	ParticleManager:ReleaseParticleIndex(self.timber_particle)
+end
+
+function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
+	if not IsServer() then return end
+	
+	me:SetOrigin( me:GetOrigin() + self.velocity * dt )
+	
+	-- TODO: Damage
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		if not self.damaged_targets[senemy] then
+			ApplyDamage({
+				victim 			= enemy,
+				damage 			= self.damage,
+				damage_type		= self.damage_type,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetParent(),
+				ability 		= self:GetAbility()
+			})
+		
+			self.damaged_targets[enemy] = true
+		end
+	end
+	
+	if self:GetParent():IsStunned() then
+		self:Destroy()
+	end
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_timbersaw_timber_chain:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_timbersaw_timber_chain:CheckState()
+	return {[MODIFIER_STATE_DISARMED] = true}
+end
+
+-- function modifier_imba_timbersaw_timber_chain:DeclareFunctions()
+	-- return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+-- end
+
+-- function modifier_imba_timbersaw_timber_chain:GetOverrideAnimation( params )
+	-- if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		-- return ACT_DOTA_FLAIL
+	-- end
+-- end
 
 -- ----------------------------------------------------
--- -- MODIFIER_imba_timbersaw_TIMBER_CHAIN_SIDE_HOOKS --
+-- -- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN_SIDE_HOOKS --
 -- ----------------------------------------------------
 
 -- modifier_imba_timbersaw_timber_chain_side_hooks
 
 -- ----------------------------------
--- -- imba_timbersaw_REACTIVE_ARMOR --
+-- -- IMBA_TIMBERSAW_REACTIVE_ARMOR --
 -- ----------------------------------
 
--- imba_timbersaw_reactive_armor
+function imba_timbersaw_reactive_armor:GetIntrinsicModifierName()
+	return "modifier_imba_timbersaw_reactive_armor"
+end
+
+function imba_timbersaw_reactive_armor:OnSpellStart()
+
+end
 
 -- -------------------------------------------
 -- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR --
 -- -------------------------------------------
 
--- modifier_imba_timbersaw_reactive_armor
+function modifier_imba_timbersaw_reactive_armor:OnCreated()
+
+end
 
 -- -------------------------------------------------
 -- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR_STACK --

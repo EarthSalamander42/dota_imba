@@ -2,7 +2,13 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
 
 	if hero.companion then
-		hero.companion:ForceKill(false)
+		-- ForceKill on roshan companions results in global death sound which is annoying
+	
+		--hero.companion:ForceKill(false)
+		
+		if hero.companion.RemoveSelf then
+			hero.companion:RemoveSelf()
+		end
 	end
 
 	-- Disabled companion

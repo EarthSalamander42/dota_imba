@@ -483,6 +483,15 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 	for _,enemy in pairs(enemies) do
 		if enemy:IsRealHero() then
+			enemy:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
+
+			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, enemy)
+			ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(hit_pfx)
+		
+			local hit_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf_d.vpcf", PATTACH_ABSORIGIN, enemy)
+			ParticleManager:ReleaseParticleIndex(hit_pfx_2)
+			
 			-- Iterate through the enemies abilities
 			local abilities_on_cooldown = 0
 			for i = 0, 23 do
@@ -501,14 +510,12 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 			end
 
 			if abilities_on_cooldown > 0 then
-				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase}):SetDuration(cd_increase * (1 - enemy:GetStatusResistance()), true)
-				debuff:SetStackCount(abilities_on_cooldown)
-
-				enemy:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
-
-				local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, enemy)
-				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
-				ParticleManager:ReleaseParticleIndex(hit_pfx)
+				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase})
+				
+				if debuff then
+					debuff:SetDuration(cd_increase * (1 - enemy:GetStatusResistance()), true)
+					debuff:SetStackCount(abilities_on_cooldown)
+				end
 			end
 
 		end
@@ -630,6 +637,15 @@ function modifier_imba_faceless_void_time_dilation_slow:GetEffectName()
 function modifier_imba_faceless_void_time_dilation_slow:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
+function modifier_imba_faceless_void_time_dilation_slow:OnCreated()
+	self.ms_debuff	= self:GetAbility():GetSpecialValueFor("ms_debuff")
+	self.as_debuff	= self:GetAbility():GetSpecialValueFor("as_debuff")
+end
+
+function modifier_imba_faceless_void_time_dilation_slow:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_faceless_void_time_dilation_slow:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, }
@@ -637,10 +653,10 @@ function modifier_imba_faceless_void_time_dilation_slow:DeclareFunctions()
 end
 
 function modifier_imba_faceless_void_time_dilation_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("ms_debuff") * self:GetStackCount() * -1 end
+	return self.ms_debuff * self:GetStackCount() * -1 end
 
 function modifier_imba_faceless_void_time_dilation_slow:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("as_debuff") * self:GetStackCount() * -1 end
+	return self.as_debuff * self:GetStackCount() * -1 end
 
 --------------------------------------
 ---	Time Dilation Backtrack talent --- (#1 TALENT modifier)

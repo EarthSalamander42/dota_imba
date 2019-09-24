@@ -269,8 +269,8 @@ function imba_enchantress_enchant:OnSpellStart()
 			new_lane_creep:SetBaseDamageMax(self.target:GetBaseDamageMax())
 			new_lane_creep:SetMinimumGoldBounty(self.target:GetGoldBounty())
 			new_lane_creep:SetMaximumGoldBounty(self.target:GetGoldBounty())
-			target:AddNoDraw()
-			target:ForceKill(false)
+			self.target:AddNoDraw()
+			self.target:ForceKill(false)
 			self.target = new_lane_creep
 		end
 
