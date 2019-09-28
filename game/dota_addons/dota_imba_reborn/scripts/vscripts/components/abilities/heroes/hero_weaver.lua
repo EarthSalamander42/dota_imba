@@ -664,7 +664,7 @@ function imba_weaver_time_lapse:OnSpellStart()
 			{
 				outgoing_damage = 0,
 				incoming_damage	= 0,
-				bounty_base		= self:GetCaster():GetLevel() * 2,
+				bounty_base		= self:GetCaster():GetIllusionBounty(),
 				bounty_growth	= nil,
 				outgoing_damage_structure	= nil,
 				outgoing_damage_roshan		= nil,
@@ -703,7 +703,7 @@ function imba_weaver_time_lapse:OnSpellStart()
 			{
 				outgoing_damage = 0,
 				incoming_damage	= 0,
-				bounty_base		= self:GetCursorTarget():GetLevel() * 2,
+				bounty_base		= self:GetCursorTarget():GetIllusionBounty(),
 				bounty_growth	= nil,
 				outgoing_damage_structure	= nil,
 				outgoing_damage_roshan		= nil,

@@ -1,5 +1,6 @@
 -- Extension of CDOTA_BaseNPC class.
 
+-- Deprecated
 -- some of the code is based on yahnich's version of Boss Hunters illusion system
 function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if pos == nil then
@@ -791,6 +792,10 @@ function CDOTA_BaseNPC:GetTeamRealName()
 	team[3] = "Dire"
 
 	return team[self:GetTeamNumber()]
+end
+
+function CDOTA_BaseNPC:GetIllusionBounty()
+	return self:GetLevel() * 2
 end
 
 -- credits to yahnich for the following

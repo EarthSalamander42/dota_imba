@@ -334,7 +334,7 @@ function imba_antimage_blink:OnSpellStart()
 			{
 				outgoing_damage = self:GetCaster():FindTalentValue("special_bonus_imba_antimage_9", "outgoing_damage"),
 				incoming_damage	= self:GetCaster():FindTalentValue("special_bonus_imba_antimage_9", "incoming_damage"),
-				-- bounty_base		= self:GetCaster():GetLevel() * 2,
+				-- bounty_base		= self:GetCaster():GetIllusionBounty(),
 				-- bounty_growth	= nil,
 				-- outgoing_damage_structure	= nil,
 				-- outgoing_damage_roshan		= nil,

@@ -1028,6 +1028,121 @@ function SpawnEasterEgg()
 	end
 end
 
+function mysplit(inputstr, sep)
+	-- whitespace by default
+	if sep == nil then
+		sep = "%s"
+	end
+
+	local t = {}
+
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+
+	return t
+end
+
+function IsSaturday()
+	local check_date = {}
+	check_date.day = 28
+	check_date.month = 09
+	check_date.year = 19
+
+--	if IsInToolsMode() then
+		-- GetSystemDate returns MM/DD/AA format
+--		current_date = "03/28/20"
+--	end
+
+	local current_date_split = mysplit(GetSystemDate(), "/")
+	local current_date = {}
+	current_date.day = tonumber(current_date_split[2])
+	current_date.month = tonumber(current_date_split[1])
+	current_date.year = tonumber(current_date_split[3])
+	local day_count = 0
+	print(check_date, current_date)
+
+	if current_date.month == check_date.month and current_date.year == check_date.year then
+		print("Check/Current day:", check_date.day, current_date.day)
+		day_count = check_date.day - current_date.day
+		if day_count < 0 then day_count = day_count * (-1) end
+	else
+		for y = check_date.year, current_date.year do
+			print("Currently checking year:", y)
+			if check_date.year == current_date.year then
+				print("Check in same check/current year")
+				for i = check_date.month, current_date.month do
+					if i == check_date.month then
+						print("First month:", get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0))
+						day_count = day_count + get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0)
+					elseif i == current_date.month then
+						print("last month:", get_remaining_days_in_month(current_date.month, current_date.day, current_date.year % 4 == 0))
+						day_count = day_count + current_date.day - 1
+					else
+						print("month between (full)", get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)	)
+						day_count = day_count + get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)						
+					end
+				end
+			else
+				if y == check_date.year then
+					print("Remaining days in first year:", get_remaining_days_in_year(check_date.year, check_date.month, check_date.day))
+					day_count = day_count + get_remaining_days_in_year(check_date.year, check_date.month, check_date.day)
+				elseif y == current_date.year then
+					print("Remaining days in last year:", get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
+					day_count = day_count + (get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
+				else
+					print("Year between (full):", get_remaining_days_in_year(check_date.year))
+					day_count = day_count + get_remaining_days_in_year(check_date.year)
+				end
+			end
+		end
+	end
+
+	print("Day count:", day_count, day_count % 7)
+
+	if day_count % 7 == 0 then
+		return true
+	else
+		return false
+	end
+end
+
+function get_remaining_days_in_month(iMonth, iDay, iLeapYear)
+	local count = 0
+	local days_in_months = {"31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"}
+	if iLeapYear and iMonth == 2 then count = 1 end
+
+	if iDay then
+		print("Total days/current day:", iMonth, days_in_months[iMonth], iDay)
+		count = count + (tonumber(days_in_months[iMonth]) - iDay) + 1
+	else
+		count = count + tonumber(days_in_months[iMonth])
+	end
+
+	return count
+end
+
+function get_remaining_days_in_year(iYear, iMonth, iDay)
+	local count = 0
+	local leap_year = false
+	if iYear % 4 == 0 then leap_year = true end
+
+	local starting_iteration = 1
+	if iMonth then starting_iteration = iMonth end
+
+	for i = starting_iteration, 12 do
+		if i == starting_iteration and iMonth then
+			print(i, get_remaining_days_in_month(i, iDay, leap_year))
+			count = count + get_remaining_days_in_month(i, iDay, leap_year)
+		else
+			count = count + get_remaining_days_in_month(i, nil, leap_year)
+			print(i, get_remaining_days_in_month(i, nil, leap_year))
+		end
+	end
+
+	return count
+end
+
 -- credits to yahnich for the following
 function ParticleManager:FireParticle(effect, attach, owner, cps)
 	local FX = ParticleManager:CreateParticle(effect, attach, owner)

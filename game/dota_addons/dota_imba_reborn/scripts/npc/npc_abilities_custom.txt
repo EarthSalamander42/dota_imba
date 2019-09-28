@@ -30036,7 +30036,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_naga_siren"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilitySound"					"Hero_NagaSiren.MirrorImage"
 		"AbilityTextureName"			"naga_siren_mirror_image"
@@ -30099,17 +30099,19 @@
 	"imba_naga_siren_rip_tide"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_naga_siren"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
 		"AbilityTextureName"			"naga_siren_rip_tide"
 		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
 
 		"AbilityCooldown"				"10 9 8 7"
 		"AbilityManaCost"				"80 90 100 110"
 		"AbilityDamage"					"120 160 200 240"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 
 		"AbilitySpecial"
 		{

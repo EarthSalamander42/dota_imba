@@ -566,7 +566,7 @@ end
 function imba_vengefulspirit_command_aura:OnOwnerDied()
 	if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
 		local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
-		local bounty_base				= self:GetCaster():GetLevel() * 2 -- I THINK that's what it is?...
+		local bounty_base				= self:GetCaster():GetIllusionBounty()
 		
 		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
 			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
