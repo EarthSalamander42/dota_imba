@@ -736,16 +736,17 @@ end
 
 -- IMBAfication: Emergency Bunker
 function imba_timbersaw_reactive_armor:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	-- return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
-function imba_timbersaw_reactive_armor:GetCooldown(level)
-	return self:GetSpecialValueFor("emergency_bunker_debuff_cooldown")
-end
+-- function imba_timbersaw_reactive_armor:GetCooldown(level)
+	-- return self:GetSpecialValueFor("emergency_bunker_debuff_cooldown")
+-- end
 
-function imba_timbersaw_reactive_armor:GetManaCost(level)
-	return self:GetSpecialValueFor("emergency_bunker_debuff_mana_cost")
-end
+-- function imba_timbersaw_reactive_armor:GetManaCost(level)
+	-- return self:GetSpecialValueFor("emergency_bunker_debuff_mana_cost")
+-- end
 
 -- Disabling Emergency Bunker with this line + commenting OnSpellStart out cause of potential lag issues
 function imba_timbersaw_reactive_armor:OnAbilityPhaseStart()
