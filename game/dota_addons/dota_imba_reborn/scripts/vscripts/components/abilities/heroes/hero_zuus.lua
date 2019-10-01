@@ -168,7 +168,7 @@ function imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list)
 			end
 
 			if caster:HasTalent("special_bonus_imba_zuus_8") then 
-				print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
+				-- print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
 				if hit_list[enemy] < caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits") then
 					return true
 				end

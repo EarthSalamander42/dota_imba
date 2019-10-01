@@ -1052,15 +1052,10 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600 650 700 750 800"
-			}
-			"05"
-			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_delay"			"0"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"mana_cost_tooltip"		"120"
@@ -1096,18 +1091,13 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600 650 700 750 800"
+				"var_type"				"FIELD_FLOAT"
+				"damage_delay"			"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"140"
+				"mana_cost_tooltip"		"120"
 			}
 		}
 	}
@@ -1140,18 +1130,13 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600 650 700 750 800"
+				"var_type"				"FIELD_FLOAT"
+				"damage_delay"			"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"160"
+				"mana_cost_tooltip"		"120"
 			}
 		}
 	}
@@ -1184,18 +1169,13 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600 650 700 750 800"
+				"var_type"				"FIELD_FLOAT"
+				"damage_delay"			"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"180"
+				"mana_cost_tooltip"		"120"
 			}
 		}
 	}
@@ -1228,18 +1208,13 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"600 650 700 750 800"
+				"var_type"				"FIELD_FLOAT"
+				"damage_delay"			"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"200"
+				"mana_cost_tooltip"		"120"
 			}
 		}
 	}
@@ -1488,16 +1463,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"2.0 2.5 3.0 3.5"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"700 900 1050 1150"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"13 11 9 7"
-			}
 		}
 	}
 
@@ -1679,12 +1644,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"move_speed_slow_pct"	"20 30 40 50"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"500 700 900 1100"
-				"LinkedSpecialBonus"		"special_bonus_unique_arc_warden_5"
 			}
 		}
 	}
@@ -3009,13 +2968,13 @@
 				"totem_damage_percentage"	"175 275 375 475"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-			"03"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"distance_scepter"			"1200"
 				"RequiresScepter"		"1"
 			}
-			"05"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"aftershock_range"			"300 350 400 450"
@@ -3290,12 +3249,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"2.0"
 			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"1800"
-				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_3"
-			}
 		}
 	}
 
@@ -3360,33 +3313,33 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movespeed_bonus_pct"	"35 40 45 50"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"600"
 				"LinkedSpecialBonus"	"special_bonus_unique_grimstroke_1"
 			}
-			"05"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_damage"			"220 320 420 520"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"max_stun"				"2.2 2.8 3.4 4.0"
 			}
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_tick"		"9 11 13 15"
 			}
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tick_dps_tooltip"		"45 55 65 75"
@@ -4053,7 +4006,7 @@
 	//=================================================================================================================
 	"leshrac_split_earth"
 	{
-		"AbilityDamage"					"140 240 340 440"
+		"AbilityDamage"					"150 250 350 450"
 
 		"AbilitySpecial"
 		{
@@ -4069,8 +4022,8 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"2"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0 2.1 2.2 2.3"
 			}
 		}
 	}
@@ -4529,12 +4482,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"900 950 1000 1050"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"500 1000 1500 2000"
-				"LinkedSpecialBonus"	"special_bonus_unique_meepo_4"
-			}
 		}
 	}
 
@@ -4638,6 +4585,23 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_respawn"		"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_meepo"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
 			}
 		}
 	}
@@ -4935,11 +4899,6 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"range_tooltip"			"600 750 900 1050"
-			}
-			"05"
-			{
 				"var_type"						"FIELD_FLOAT"
 				"projectile_speed"					"3000"
 			}
@@ -4977,11 +4936,6 @@
 				"knockback_max"			"700"
 			}
 			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"range_tooltip"			"600 750 900 1050"
-			}
-			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"projectile_speed"				"3000"
@@ -5495,6 +5449,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"60"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"multicast_bloodlust_aoe"			"900"
+			}			
 		}
 	}
 
@@ -5523,37 +5482,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_2_times"		"0.7 0.85 1.0"
+				"multicast_2_times"		"70 85 100"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_3_times"		"0.2 0.4 0.6"
+				"multicast_3_times"		"20 40 60"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_4_times"		"0.0 0.2 0.4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bloodlust_aoe"			"900"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"multicast_2_times_tooltip"		"70 85 100"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"multicast_3_times_tooltip"		"20 40 60"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"multicast_4_times_tooltip"		"0 20 40"
+				"multicast_4_times"		"0 20 40"
 			}
 		}
 	}
@@ -6056,13 +5995,13 @@
 				"purge_damage"			"400 500 600"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_demon_1"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_restore_time"	"30"
 				"RequiresScepter"			"1"
 			}
-			"05"
+			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"charge_restore_time_tooltip_scepter"	"30"
@@ -6558,224 +6497,6 @@
 	}
 
 	//=================================================================================================================
-	// Timbersaw: Whirling Death
-	//=================================================================================================================
-	"shredder_whirling_death"
-	{
-		"AbilityCastRange"					"300 325 350 375"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"whirling_radius"			"300 325 350 375"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 150 200 250"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"13 15 17 19"
-				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Timbersaw: Timber Chain
-	//=================================================================================================================
-	"shredder_timber_chain"
-	{
-		"AbilityCastRange"			"800 1200 1600 2000"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"chain_radius"		"130"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"800 1200 1600 2000"
-				"LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"225 250 275 300"
-			}
-			"04"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"1600 2400 3200 4000"
-			}
-			"05"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"100 185 270 355"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Timbersaw: Reactive Armor
-	//=================================================================================================================
-	"shredder_reactive_armor"
-	{
-		"MaxLevel"					"4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_armor"			"1.0 1.2 1.4 1.6"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"1.0 1.2 1.4 1.6"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_duration"		"10 15 20 25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Timbersaw: Chakram
-	//=================================================================================================================
-	"shredder_chakram"
-	{
-		"AbilityCastRange"				"1200 1300 1400"
-		"AbilityCooldown"				"8 6 4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1050 1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200 225 250"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"100 200 300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"100 200 300"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"5 6 7"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"0.5"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"3000"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_second"		"15 20 25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pass_slow_duration"	"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Timbersaw: Chakram 2
-	//=================================================================================================================
-	"shredder_chakram_2"
-	{
-		"AbilityCastRange"				"1200 1300 1400"
-		"AbilityCooldown"				"8 6 4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1050 1200"
-				"RequiresScepter"	"1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200 225 250"
-				"RequiresScepter"	"1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"100 200 300"
-				"RequiresScepter"	"1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"100 200 300"
-				"RequiresScepter"	"1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"5 6 7"
-				"RequiresScepter"	"1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"0.5"
-				"RequiresScepter"	"1"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"3000"
-				"RequiresScepter"	"1"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_second"		"15 20 25"
-				"RequiresScepter"	"1"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pass_slow_duration"	"1"
-				"RequiresScepter"	"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Tinker: Laser
 	//=================================================================================================================
 	"tinker_laser"
@@ -6797,7 +6518,7 @@
 				"laser_damage"			"100 225 350 475"
 				"LinkedSpecialBonus"	"special_bonus_unique_tinker"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_bounce_range"	"900"
@@ -6874,16 +6595,6 @@
 		"MaxLevel"						"3"
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_tinker_temp"
-		"AbilityCastPoint"				"0.53"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"channel_tooltip"		"3.0 0.75 0.65"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -8811,19 +8522,19 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"450"
 			}
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"450 650 850"
 				"RequiresScepter"			"1"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius_scepter"			"500"
 				"RequiresScepter"			"1"
 			}
-			"12"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"model_scale"				"0 20 40"     // Percentage over model scale
@@ -9215,14 +8926,9 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"		"1300"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"toss_damage"				"250"
 			}
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_restore_time"	"11"
@@ -9258,11 +8964,6 @@
 				"restore_time"			"2.5"
 			}
 			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"350"
-			}
-			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_charges"			"4"

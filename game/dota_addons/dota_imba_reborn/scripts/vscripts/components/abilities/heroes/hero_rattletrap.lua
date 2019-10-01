@@ -1225,9 +1225,10 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 
 				ParticleManager:SetParticleControlEnt(ExtraData.hookshot_particle, 1, hTarget, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin(), true)
 				-- "The pulling lasts a maximum of 0.5 seconds, so if the target moves away, Clockwerk may not fully reach it."
+				-- Gonna make this last cast range / speed seconds instead of 0.5 due to warped values; the vanilla always has speed at double max range but things are a little different here
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_hookshot", 
 				{
-					duration 		= 0.5,
+					duration 		= (self:GetSpecialValueFor("tooltip_range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed"),
 					latch_radius	= self:GetSpecialValueFor("latch_radius"),
 					stun_radius		= self:GetSpecialValueFor("stun_radius"),
 					stun_duration	= self:GetSpecialValueFor("duration"),
@@ -1261,7 +1262,7 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 		
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_hookshot", 
 			{
-				duration 		= 0.5,
+				duration 		= (self:GetSpecialValueFor("tooltip_range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed"),
 				latch_radius	= self:GetSpecialValueFor("latch_radius"),
 				stun_radius		= self:GetSpecialValueFor("stun_radius"),
 				stun_duration	= self:GetSpecialValueFor("duration"),

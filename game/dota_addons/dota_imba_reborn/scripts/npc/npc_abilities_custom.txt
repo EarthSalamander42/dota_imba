@@ -18519,7 +18519,7 @@
 			"03"
 			{
 				"var_type" 				"FIELD_INTEGER"
-				"ms_slow_pct"			"30 35 40 45"
+				"ms_slow_pct"			"35 40 45 50"
 			}
 
 			"04"
@@ -18537,7 +18537,7 @@
 			"06"
 			{
 				"var_type" 				"FIELD_FLOAT"
-				"ghastly_delay"			"0.25"
+				"ghastly_delay"			"0.2"
 			}
 
 			"07"
@@ -18634,13 +18634,13 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mr_reduction_pct"	"30 35 40 45"
+				"mr_reduction_pct"	"35 40 45 50"
 				"LinkedSpecialBonus"	"special_bonus_imba_skywrath_mage_10"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"sigil_radius"		"250"
+				"sigil_radius"		"300"
 			}
 			"04"
 			{

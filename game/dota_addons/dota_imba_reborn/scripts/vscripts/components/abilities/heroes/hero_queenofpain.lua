@@ -81,17 +81,11 @@ function modifier_imba_delightful_torment_as_bonus:GetAttributes() return MODIFI
 -------------------------------------------
 
 function modifier_imba_delightful_torment_as_bonus:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-		}
-	return decFuns
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_delightful_torment_as_bonus:GetModifierAttackSpeedBonus_Constant()
-	if IsServer() then
-		return 10
-	end
+	return self:GetCaster():FindTalentValue("special_bonus_imba_queenofpain_4")
 end
 
 -------------------------------------------
@@ -783,4 +777,24 @@ end
 
 function modifier_imba_sonic_wave_daze:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_queenofpain_4	= class({})
+
+function modifier_special_bonus_imba_queenofpain_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_4:IsPurgable() 	return false end
+function modifier_special_bonus_imba_queenofpain_4:RemoveOnDeath() 	return false end
+
+function imba_queenofpain_delightful_torment:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_queenofpain_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_queenofpain_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_queenofpain_4"), "modifier_special_bonus_imba_queenofpain_4", {})
+	end
 end
