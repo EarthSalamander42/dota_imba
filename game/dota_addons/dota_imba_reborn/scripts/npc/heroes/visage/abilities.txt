@@ -508,7 +508,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"familiar_transform_delay"			"1.5"
+				"familiar_transform_delay"			"3.0"
 			}					
 		}
 		

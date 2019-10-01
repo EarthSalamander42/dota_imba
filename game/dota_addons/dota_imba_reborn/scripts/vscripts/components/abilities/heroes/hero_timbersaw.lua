@@ -6,14 +6,19 @@ LinkLuaModifier("modifier_imba_timbersaw_whirling_death_debuff", "components/abi
 LinkLuaModifier("modifier_imba_timbersaw_whirling_death_oil", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_timbersaw_timber_chain", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_timbersaw_timber_chain_side_hooks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_timber_chain_side_hooks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_timbersaw_timber_chain_claw", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_timbersaw_reactive_armor", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_timbersaw_reactive_armor_stack", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_reactive_armor_debuff", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_timbersaw_chakram_thinker", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_timbersaw_chakram_thinker", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_timbersaw_chakram_thinker_aura", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_timbersaw_chakram_debuff", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_timbersaw_chakram_disarm", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_timbersaw_chakram_3", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
 imba_timbersaw_whirling_death					= class({})
 modifier_imba_timbersaw_whirling_death_thinker	= class({})
@@ -21,80 +26,38 @@ modifier_imba_timbersaw_whirling_death_debuff	= class({})
 modifier_imba_timbersaw_whirling_death_oil		= class({})
 
 imba_timbersaw_timber_chain						= class({})
-modifier_imba_timbersaw_timber_chain				= class({})
+modifier_imba_timbersaw_timber_chain			= class({})
 modifier_imba_timbersaw_timber_chain_side_hooks	= class({})
+modifier_imba_timbersaw_timber_chain_claw		= class({})
 
 imba_timbersaw_reactive_armor					= class({})
 modifier_imba_timbersaw_reactive_armor			= class({})
-modifier_imba_timbersaw_reactive_armor_stack		= class({})
+modifier_imba_timbersaw_reactive_armor_stack	= class({})
+modifier_imba_timbersaw_reactive_armor_debuff	= class({})
 
 imba_timbersaw_chakram							= class({})
-imba_timbersaw_chakram_2							= class({})
+imba_timbersaw_chakram_2						= class({})
 
 modifier_imba_timbersaw_chakram_thinker			= class({})
+modifier_imba_timbersaw_chakram_thinker_aura	= class({})
 modifier_imba_timbersaw_chakram_debuff			= class({})
 modifier_imba_timbersaw_chakram_disarm			= class({})
 
 imba_timbersaw_return_chakram					= class({})
 imba_timbersaw_return_chakram_2					= class({})
 
+imba_timbersaw_chakram_3						= class({})
+modifier_imba_timbersaw_chakram_3				= class({})
 
 ----------------------------------
--- imba_timbersaw_WHIRLING_DEATH --
+-- IMBA_TIMBERSAW_WHIRLING_DEATH --
 ----------------------------------
+
+function imba_timbersaw_whirling_death:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
 
 function imba_timbersaw_whirling_death:OnSpellStart()
-	
-
-				-- "01"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "whirling_radius"			"300"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "whirling_damage"			"90 120 150 180"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "tree_damage_scale"			"12 18 24 30"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "whirling_tick"				"0.3"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "stat_loss_pct"				"13 14 15 16"
-				-- "LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "duration"					"14.0"
-			-- }
-						-- "07"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "revving_down_duration"		"0.5"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "blood_oil_convert_pct"		"100"
-			-- }
-			-- "09"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "blood_oil_duration"		"6"
-			-- }
-
-	self:GetCaster():EmitSound("Hero_Shredder.WhirlingDeath.Cast")
-	
 	if self:GetCaster():GetName() == "npc_dota_hero_shredder" and RollPercentage(15) then
 		if not self.responses then
 			self.responses = 
@@ -108,11 +71,36 @@ function imba_timbersaw_whirling_death:OnSpellStart()
 		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
 	end
 	
+	if not self:GetAutoCastState() then
+		self:WhirlingDeath()
+	else
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_whirling_death_thinker", {duration = (self:GetSpecialValueFor("revving_down_instances") - 1) * self:GetSpecialValueFor("revving_down_interval")})
+	end
+end
+
+-- Helper function (this will be called multiple times for the Revving Down IMBAfication)
+function imba_timbersaw_whirling_death:WhirlingDeath(revving_down_efficacy)
+	local efficacy = 1
+
+	if revving_down_efficacy then
+		efficacy = revving_down_efficacy * 0.01
+	end
+
+	self:GetCaster():EmitSound("Hero_Shredder.WhirlingDeath.Cast")
+
 	local whirling_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_whirling_death.vpcf", PATTACH_CENTER_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(whirling_particle, 1, self:GetCaster(), PATTACH_CENTER_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(whirling_particle)
 	
 	local trees = GridNav:GetAllTreesAroundPoint(self:GetCaster():GetAbsOrigin(), self:GetSpecialValueFor("whirling_radius"), false)
+	
+	if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+		self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+	end
+	
+	if self.dendrophobia_modifier then
+		self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #trees)
+	end
 	
 	GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), self:GetSpecialValueFor("whirling_radius"), false)
 	
@@ -122,7 +110,13 @@ function imba_timbersaw_whirling_death:OnSpellStart()
 	-- "Whirling Death first applies the debuff, then the damage."
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("whirling_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		if enemy:IsHero() and enemy.GetPrimaryStatValue then
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_whirling_death_debuff", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_whirling_death_debuff", {
+				duration				= self:GetSpecialValueFor("duration"),
+				blood_oil_convert_pct	= self:GetSpecialValueFor("blood_oil_convert_pct"),
+				blood_oil_duration		= self:GetSpecialValueFor("blood_oil_duration"),
+				
+				efficacy				= efficacy
+			}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
 			
 			if not hero_check then
 				hero_check = true
@@ -131,7 +125,7 @@ function imba_timbersaw_whirling_death:OnSpellStart()
 	
 		ApplyDamage({
 			victim 			= enemy,
-			damage 			= self:GetSpecialValueFor("whirling_damage") + #trees * self:GetSpecialValueFor("tree_damage_scale"),
+			damage 			= (self:GetSpecialValueFor("whirling_damage") + #trees * self:GetSpecialValueFor("tree_damage_scale")) * efficacy,
 			damage_type		= self:GetAbilityDamageType(),
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self:GetCaster(),
@@ -145,39 +139,69 @@ function imba_timbersaw_whirling_death:OnSpellStart()
 end
 
 ---------------------------------------------------
--- MODIFIER_imba_timbersaw_WHIRLING_DEATH_THINKER --
+-- MODIFIER_IMBA_TIMBERSAW_WHIRLING_DEATH_THINKER --
 ---------------------------------------------------
 
-function modifier_imba_timbersaw_whirling_death_thinker:OnCreated()
+function modifier_imba_timbersaw_whirling_death_thinker:IsHidden()		return true end
+function modifier_imba_timbersaw_whirling_death_thinker:IsPurgable()	return false end
+function modifier_imba_timbersaw_whirling_death_thinker:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_imba_timbersaw_whirling_death_thinker:OnCreated()
+	self.revving_down_efficacy	= self:GetAbility():GetSpecialValueFor("revving_down_efficacy")
+
+	if not IsServer() then return end
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("revving_down_interval"))
+end
+
+function modifier_imba_timbersaw_whirling_death_thinker:OnIntervalThink()
+	self:GetAbility():WhirlingDeath(self.revving_down_efficacy)
 end
 
 --------------------------------------------------
--- MODIFIER_imba_timbersaw_WHIRLING_DEATH_DEBUFF --
+-- MODIFIER_IMBA_TIMBERSAW_WHIRLING_DEATH_DEBUFF --
 --------------------------------------------------
 
 function modifier_imba_timbersaw_whirling_death_debuff:GetEffectName()		return "particles/units/heroes/hero_shredder/shredder_whirling_death_debuff.vpcf" end
 function modifier_imba_timbersaw_whirling_death_debuff:GetStatusEffectName()	return "particles/status_fx/status_effect_shredder_whirl.vpcf" end
 function modifier_imba_timbersaw_whirling_death_debuff:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_timbersaw_whirling_death_debuff:OnCreated()
-	if not IsServer() then return end
-
-	self.stat_loss_pct		= self:GetAbility():GetTalentSpecialValueFor("stat_loss_pct")
-	self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * self.stat_loss_pct * 0.01 * (-1)
+function modifier_imba_timbersaw_whirling_death_debuff:OnCreated(params)
+	if not IsServer() or not self:GetParent().GetPrimaryStatValue then return end
+	
+	self.efficacy	= params.efficacy
+	
+	if not params.stat_loss_pct then
+		self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * self:GetAbility():GetTalentSpecialValueFor("stat_loss_pct") * 0.01 * (-1) * self.efficacy
+	else
+		self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * params.stat_loss_pct * 0.01 * (-1)
+	end
+	
+	-- IMBAfication: Blood to Oil
+	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_oil", {
+		duration	= params.blood_oil_duration,
+		attribute	= self:GetParent():GetPrimaryAttribute(),
+		stat_gain	= self.primary_stat_loss * params.blood_oil_convert_pct * 0.01 * (-1)
+	})
 	
 	self:StartIntervalThink(FrameTime())
 end
 
 function modifier_imba_timbersaw_whirling_death_debuff:OnIntervalThink()
-	self:GetParent():CalculateStatBonus()
+	if self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
+	
 	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_timbersaw_whirling_death_debuff:OnDestroy()
 	if not IsServer() then return end
-
-	self:GetParent():CalculateStatBonus()
+	
+	if self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
 end
 
 function modifier_imba_timbersaw_whirling_death_debuff:DeclareFunctions()
@@ -199,61 +223,62 @@ if IsServer() then
 end
 
 -----------------------------------------------
--- MODIFIER_imba_timbersaw_WHIRLING_DEATH_OIL --
+-- MODIFIER_IMBA_TIMBERSAW_WHIRLING_DEATH_OIL --
 -----------------------------------------------
 
-function modifier_imba_timbersaw_whirling_death_oil:OnCreated()
+function modifier_imba_timbersaw_whirling_death_oil:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_imba_timbersaw_whirling_death_oil:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.attribute	= params.attribute
+	self.stat_gain	= params.stat_gain
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_timbersaw_whirling_death_oil:OnIntervalThink()
+	self:GetParent():CalculateStatBonus()
+	self:StartIntervalThink(-1)
+end
+
+function modifier_imba_timbersaw_whirling_death_oil:OnDestroy()
+	if not IsServer() then return end
+
+	self:GetParent():CalculateStatBonus()
+end
+
+function modifier_imba_timbersaw_whirling_death_oil:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	MODIFIER_PROPERTY_STATS_AGILITY_BONUS, MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+end
+
+if IsServer() then
+	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Strength()
+		if self.attribute == DOTA_ATTRIBUTE_STRENGTH then return self.stat_gain end
+	end
+
+	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Agility()
+		if self.attribute == DOTA_ATTRIBUTE_AGILITY then return self.stat_gain end
+	end
+
+	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Intellect()
+		if self.attribute == DOTA_ATTRIBUTE_INTELLECT then return self.stat_gain end
+	end
 end
 
 --------------------------------
 -- IMBA_TIMBERSAW_TIMBER_CHAIN --
 --------------------------------
 
-function imba_timbersaw_timber_chain:OnSpellStart()
-			-- "01"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "chain_radius"		"90 90 90 90"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "range"				"850 1050 1250 1450"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "radius"		"225 225 225 225"
-			-- }
-			-- "04"
-			-- {	
-				-- "var_type"			"FIELD_INTEGER"
-				-- "speed"				"1600 2000 2400 2800"
-			-- }
-			-- "05"
-			-- {	
-				-- "var_type"			"FIELD_INTEGER"
-				-- "damage"			"100 140 180 220"
-			-- }
-			
-			-- "06"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "whirling_chain_stat_loss_pct"	"4 5 6 7"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "side_hooks_damage_reduction"	"50"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "side_hooks_drag_pct"	"50"
-			-- }
+function imba_timbersaw_timber_chain:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
 
+function imba_timbersaw_timber_chain:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_timbersaw_timber_chain_range")
+end
+
+function imba_timbersaw_timber_chain:OnSpellStart()
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
@@ -261,27 +286,38 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 	
 	self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Cast")
 
-	local timber_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timberchain.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	local timber_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timberchain.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(timber_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCursorPosition())
+	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCaster():GetAbsOrigin() + ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus())))
 	ParticleManager:SetParticleControl(timber_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0 ))
 	ParticleManager:SetParticleControl(timber_particle, 3, Vector(((self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2, 0, 0 ))
-		
-	ProjectileManager:CreateLinearProjectile({
+	
+	if not self.projectiles then
+		self.projectiles = {}
+	end
+	
+	local ExtraData = {
+		timber_particle = timber_particle,
+		cast_pos_x		= self:GetCaster():GetAbsOrigin().x,
+		cast_pos_y		= self:GetCaster():GetAbsOrigin().y,
+		cast_pos_z		= self:GetCaster():GetAbsOrigin().z
+	}
+	
+	local timber_projectile = ProjectileManager:CreateLinearProjectile({
 		Source			= self:GetCaster(),
 		Ability			= self,
 		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
 		
 	    bDeleteOnHit = false,
 	    
-	    EffectName = nil,
+	    -- EffectName = "particles/dev/library/base_linear_projectile_model.vpcf",
 	    fDistance = self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
-	    fStartRadius = self:GetSpecialValueFor("radius"),
-		fEndRadius = self:GetSpecialValueFor("radius"),
+	    fStartRadius = self:GetSpecialValueFor("chain_radius"),
+		fEndRadius = self:GetSpecialValueFor("chain_radius"),
 		
-		-- TODO: Check that this works...
-		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
+		-- Check that this works... (It doesn't)
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_BOTH,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_TREE,
 		
@@ -295,80 +331,161 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 		iVisionRadius = 100,
 		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
 		
-		ExtraData = {
-			timber_particle = timber_particle
-		}
+		ExtraData = ExtraData
 	})
+	
+	self.projectiles[timber_projectile] = ExtraData
+	
+	-- This temporarily deletes the claw model from Timbersaw
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then	
+		if self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ) then
+			self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ):AddEffects(EF_NODRAW)
+		end
+		
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain_claw", {duration = ((self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2})
+	end	
 end
 
-function imba_timbersaw_timber_chain:OnProjectileThink_ExtraData(location, data)
-	-- if data.gush_dummy then
-		-- EntIndexToHScript(data.gush_dummy):SetAbsOrigin(location)
-	-- end
-end
-
-function imba_timbersaw_timber_chain:OnProjectileHit_ExtraData(target, location, data)
-	if target then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
-			autocast_state	= self:GetAutoCastState(),
+function imba_timbersaw_timber_chain:OnProjectileThinkHandle(projectileHandle)
+	if #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("chain_radius"), false) >= 1 and self.projectiles and self.projectiles[projectileHandle] and self.projectiles[projectileHandle].cast_pos_x then
+		local valid_trees = GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)
+		local tree = nil
+		
+		local original_caster_location = Vector(self.projectiles[projectileHandle].cast_pos_x, self.projectiles[projectileHandle].cast_pos_y, self.projectiles[projectileHandle].cast_pos_z)
+		
+		for _, other_tree in pairs(valid_trees) do
+			-- This is to prevent Timbersaw from latching to trees behind him upon initial cast
+			if (tree == nil or (other_tree ~= tree and (other_tree:GetAbsOrigin() - ProjectileManager:GetLinearProjectileLocation(projectileHandle)):Length2D() < (tree:GetAbsOrigin() - ProjectileManager:GetLinearProjectileLocation(projectileHandle)):Length2D())) and math.abs(AngleDiff(VectorToAngles(other_tree:GetAbsOrigin() - original_caster_location).y, VectorToAngles(ProjectileManager:GetLinearProjectileLocation(projectileHandle) - original_caster_location).y)) <= 90 then
+				tree = other_tree
+			end
+		end
+	
+		if tree then
+			EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.TimberChain.Impact", self:GetCaster())
+			self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Retract")
+	
+			ParticleManager:SetParticleControl(self.projectiles[projectileHandle].timber_particle, 1, tree:GetAbsOrigin())
 			
-			direction_x		= location.x,
-			direction_y		= location.y,
-			direction_z		= location.z,
-			tree_entindex	= tree:entindex(),
-			damage_type		= self:GetAbilityDamageType(),
+			local direction = (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+		
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
+				duration		= (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("speed"),
+				
+				autocast_state	= self:GetAutoCastState(),
+				
+				direction_x		= direction.x,
+				direction_y		= direction.y,
+				direction_z		= direction.z,
+				tree_entindex	= tree:entindex(),
+				damage_type		= self:GetAbilityDamageType(),
+				
+				radius			= self:GetSpecialValueFor("radius"),
+				speed			= self:GetSpecialValueFor("speed"),
+				damage			= self:GetSpecialValueFor("damage"),
+				whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
+				side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
+				side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
+				
+				timber_particle	= self.projectiles[projectileHandle].timber_particle
+			})
 			
-			radius			= self:GetSpecialValueFor("radius"),
-			speed			= self:GetSpecialValueFor("speed"),
-			damage			= self:GetSpecialValueFor("damage"),
-			whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
-			side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
-			side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
+			self.projectiles[projectileHandle] = nil
+			ProjectileManager:DestroyLinearProjectile(projectileHandle)
+				
+			if self:GetCaster():HasModifier("modifier_imba_timbersaw_timber_chain_claw") then
+				self:GetCaster():FindModifierByName("modifier_imba_timbersaw_timber_chain_claw"):Destroy()
+			end
+		end
+	else
+		-- Yes, there's going to be a lot of code duplication here, but this is starting to make my eyes glaze over
+		for _, ent in pairs(Entities:FindAllByClassname("npc_dota_thinker")) do
+			if ent.bTimberChainTarget and (ProjectileManager:GetLinearProjectileLocation(projectileHandle) - ent:GetAbsOrigin()):Length2D() <= self:GetSpecialValueFor("chain_radius") then
+				EmitSoundOnLocationWithCaster(ent:GetAbsOrigin(), "Hero_Shredder.TimberChain.Impact", self:GetCaster())
+				self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Retract")
+		
+				ParticleManager:SetParticleControl(self.projectiles[projectileHandle].timber_particle, 1, ent:GetAbsOrigin())
+				
+				local direction = (ent:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 			
-			timber_particle	= data.timber_particle
-		})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
+					duration		= (ent:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("speed"),
+					
+					autocast_state	= self:GetAutoCastState(),
+					
+					direction_x		= direction.x,
+					direction_y		= direction.y,
+					direction_z		= direction.z,
+					tree_entindex	= ent:entindex(),
+					damage_type		= self:GetAbilityDamageType(),
+					
+					radius			= self:GetSpecialValueFor("radius"),
+					speed			= self:GetSpecialValueFor("speed"),
+					damage			= self:GetSpecialValueFor("damage"),
+					whirling_chain_stat_loss_pct	= self:GetSpecialValueFor("whirling_chain_stat_loss_pct"),
+					side_hooks_damage_reduction		= self:GetSpecialValueFor("side_hooks_damage_reduction"),
+					side_hooks_drag_pct				= self:GetSpecialValueFor("side_hooks_drag_pct"),
+					
+					timber_particle	= self.projectiles[projectileHandle].timber_particle
+				})
+				
+				self.projectiles[projectileHandle] = nil
+				ProjectileManager:DestroyLinearProjectile(projectileHandle)
+				
+				if self:GetCaster():HasModifier("modifier_imba_timbersaw_timber_chain_claw") then
+					self:GetCaster():FindModifierByName("modifier_imba_timbersaw_timber_chain_claw"):Destroy()
+				end
+			end
+		end
 	end
 end
 
-		-- "03"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "radius"		"225 225 225 225"
-			-- }
-			-- "04"
-			-- {	
-				-- "var_type"			"FIELD_INTEGER"
-				-- "speed"				"1600 2000 2400 2800"
-			-- }
-			-- "05"
-			-- {	
-				-- "var_type"			"FIELD_INTEGER"
-				-- "damage"			"100 140 180 220"
-			-- }
+function imba_timbersaw_timber_chain:OnProjectileHit_ExtraData(target, location, data)
+	if not target then
+		-- Yeah IDK how long it's supposed to last but it seems really short
+		self:CreateVisibilityNode(location, 400, 0.1)
+	
+		self:GetCaster():EmitSound("Hero_Shredder.TimberChain.Retract")
+		
+		if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+			if not self.responses then
+				self.responses = 
+				{
+					["shredder_timb_failure_01"] = 0,
+					["shredder_timb_failure_02"] = 0,
+					["shredder_timb_failure_03"] = 0,
+				}
+
+				self.response_keys = {}
+				
+				for _, timer in pairs(self.responses) do
+					table.insert(self.response_keys, _)
+				end
+			end
 			
-			-- "06"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "whirling_chain_stat_loss_pct"	"4 5 6 7"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "side_hooks_damage_reduction"	"50"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"			"FIELD_INTEGER"
-				-- "side_hooks_drag_pct"	"50"
-			-- }
+			self.random_selection = RandomInt(1, #self.response_keys)
+			
+			if GameRules:GetDOTATime(true, true) - self.responses[self.response_keys[self.random_selection]] >= 5 then
+				self:GetCaster():EmitSound(self.response_keys[self.random_selection])
+				self.responses[self.response_keys[self.random_selection]] = GameRules:GetDOTATime(true, true)
+			end
+		end
+		
+		if data.timber_particle and not self:GetCaster():HasModifier("modifier_imba_timbersaw_timber_chain") then
+			ParticleManager:SetParticleControlEnt(data.timber_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+		end
+	end
+end
 
-
--- -----------------------------------------
--- -- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN --
--- -----------------------------------------
+------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN --
+------------------------------------------
 
 function modifier_imba_timbersaw_timber_chain:IsPurgable()		return false end
 function modifier_imba_timbersaw_timber_chain:RemoveOnDeath()	return false end
+
+function modifier_imba_timbersaw_timber_chain:GetEffectName()
+	return "particles/units/heroes/hero_shredder/shredder_timber_chain_trail.vpcf"
+end
 
 function modifier_imba_timbersaw_timber_chain:OnCreated(params)
 	if not IsServer() then return end
@@ -376,7 +493,7 @@ function modifier_imba_timbersaw_timber_chain:OnCreated(params)
 	self.autocast_state	= params.autocast_state
 	self.damage_type	= params.damage_type
 	
-	self.tree			= EntIndexToHScript(data.tree_entindex)
+	self.tree			= EntIndexToHScript(params.tree_entindex)
 	
 	self.radius	= params.radius
 	self.speed	= params.speed
@@ -384,6 +501,12 @@ function modifier_imba_timbersaw_timber_chain:OnCreated(params)
 	self.whirling_chain_stat_loss_pct	= params.whirling_chain_stat_loss_pct
 	self.side_hooks_damage_reduction	= params.side_hooks_damage_reduction
 	self.side_hooks_drag_pct			= params.side_hooks_drag_pct
+	
+	self.timber_particle				= params.timber_particle
+	
+	if self.autocast_state == 1 then
+		self.damage = self.damage * self.side_hooks_damage_reduction * 0.01
+	end
 	
 	self.distance		= (Vector(params.direction_x, params.direction_y, params.direction_z) - self:GetCaster():GetAbsOrigin()):Length2D()
 	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
@@ -403,26 +526,68 @@ function modifier_imba_timbersaw_timber_chain:OnDestroy()
 	
 	self:GetParent():InterruptMotionControllers(true)
 	
-	if self.tree and not self.tree:IsNull() then
-		if self.tree.CutDown then
-			self:GetCursorTarget():CutDown(self:GetParent():GetTeamNumber())
-		else
-			self.tree:Kill()
+	if self.tree and not self.tree:IsNull() then	
+		EmitSoundOnLocationWithCaster(self.tree:GetAbsOrigin(), "Hero_Shredder.TimberChain.Impact", self:GetCaster())
+	
+		self.tree_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timber_chain_tree.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(self.tree_particle, 0, self.tree:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(self.tree_particle)
+	
+		if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+			self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+		end	
+		
+		if self.tree.CutDown or (self.tree.Kill and not self.tree.HasModifier) then
+			if self:GetCaster():GetName() == "npc_dota_hero_shredder" and RollPercentage(50) then
+				if self:GetAbility() and not self:GetAbility().tree_responses then
+					self:GetAbility().tree_responses = 
+					{
+						"shredder_timb_timberchain_02",
+						"shredder_timb_timberchain_04",
+						"shredder_timb_timberchain_05",
+						"shredder_timb_timberchain_07",
+						"shredder_timb_timberchain_08",
+						"shredder_timb_timberchain_09"
+					}
+				end
+				
+				self:GetCaster():EmitSound(self:GetAbility().tree_responses[RandomInt(1, #self:GetAbility().tree_responses)])
+			end
+			
+			if self.tree.CutDown then
+				self.tree:CutDown(self:GetParent():GetTeamNumber())
+			elseif self.tree.Kill and not self.tree.HasModifier then
+				self.tree:Kill()
+			end
+			
+			if self.dendrophobia_modifier then
+				self.dendrophobia_modifier:IncrementStackCount()
+			end			
 		end
 	end
 	
 	ParticleManager:DestroyParticle(self.timber_particle, true)
 	ParticleManager:ReleaseParticleIndex(self.timber_particle)
+	
+	if self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ) then
+		self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ):RemoveEffects(EF_NODRAW)
+	end	
 end
 
 function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
 	if not IsServer() then return end
 	
-	me:SetOrigin( me:GetOrigin() + self.velocity * dt )
+	-- If we go by the logic of Timbersaw porting along if die + buyback while chaining then the below may not be correct
+	-- But it looks like vanilla Timber Chain has a duration so...
+	me:SetOrigin(me:GetOrigin() + self.velocity * dt)
 	
-	-- TODO: Damage
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		if not self.damaged_targets[senemy] then
+		if not self.damaged_targets[enemy] then
+			enemy:EmitSound("Hero_Shredder.TimberChain.Damage")
+		
+			self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_timber_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+			ParticleManager:ReleaseParticleIndex(self.damage_particle)
+		
 			ApplyDamage({
 				victim 			= enemy,
 				damage 			= self.damage,
@@ -433,15 +598,53 @@ function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
 			})
 		
 			self.damaged_targets[enemy] = true
+			
+			-- IMBAfication: Whirling Chain
+			if self:GetAbility() and self:GetCaster():HasAbility("imba_timbersaw_whirling_death") then
+				if not self:GetAbility().whirling_ability or self:GetAbility().whirling_ability:IsNull() then
+					self:GetAbility().whirling_ability = self:GetCaster():FindAbilityByName("imba_timbersaw_whirling_death")
+				end
+				
+				if self:GetAbility().whirling_ability then
+					local whirling_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_debuff", {
+						duration				= self:GetAbility().whirling_ability:GetSpecialValueFor("duration"),
+						blood_oil_convert_pct	= self:GetAbility().whirling_ability:GetSpecialValueFor("blood_oil_convert_pct"),
+						blood_oil_duration		= self:GetAbility().whirling_ability:GetSpecialValueFor("blood_oil_duration"),
+						
+						stat_loss_pct			= self.whirling_chain_stat_loss_pct
+					})
+					
+					if whirling_modifier then
+						whirling_modifier:SetDuration(self:GetAbility().whirling_ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+					end
+				end
+			end
+			
+			-- IMBAfication: Side Hooks
+			if self.autocast_state and self.autocast_state == 1 then
+				local direction = (self.tree:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
+			
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_timber_chain_side_hooks", {
+					duration		= ((self.tree:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() / self.speed) * self.side_hooks_drag_pct * 0.01,
+					
+					direction_x		= direction.x,
+					direction_y		= direction.y,
+					direction_z		= direction.z,
+					tree_entindex	= self.tree:entindex(),
+					
+					speed			= self.speed
+				})
+			end
 		end
 	end
 	
-	if self:GetParent():IsStunned() then
+	if self:GetParent():IsStunned() or (self.tree:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():GetHullRadius() then
 		self:Destroy()
 	end
 end
 
 -- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+-- Inconsistency with vanilla: Timbersaw can't blink while being pulled by Timber Chain in vanilla, but can here...
 function modifier_imba_timbersaw_timber_chain:OnHorizontalMotionInterrupted()
 	self:Destroy()
 end
@@ -450,1471 +653,1426 @@ function modifier_imba_timbersaw_timber_chain:CheckState()
 	return {[MODIFIER_STATE_DISARMED] = true}
 end
 
--- function modifier_imba_timbersaw_timber_chain:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
--- end
+-----------------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN_SIDE_HOOKS --
+-----------------------------------------------------
 
--- function modifier_imba_timbersaw_timber_chain:GetOverrideAnimation( params )
-	-- if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		-- return ACT_DOTA_FLAIL
-	-- end
--- end
+function modifier_imba_timbersaw_timber_chain_side_hooks:OnCreated(params)
+	if not IsServer() then return end
 
--- ----------------------------------------------------
--- -- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN_SIDE_HOOKS --
--- ----------------------------------------------------
+	self.tree			= EntIndexToHScript(params.tree_entindex)	
+	self.speed			= params.speed
+	
+	self.distance		= (Vector(params.direction_x, params.direction_y, params.direction_z) - self:GetParent():GetAbsOrigin()):Length2D()
+	self.direction		= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
+	
+	-- Velocity = Displacement/Time
+	self.velocity		= self.direction * self.speed
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+	end
+end
 
--- modifier_imba_timbersaw_timber_chain_side_hooks
+function modifier_imba_timbersaw_timber_chain_side_hooks:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():InterruptMotionControllers(true)
+end
 
--- ----------------------------------
--- -- IMBA_TIMBERSAW_REACTIVE_ARMOR --
--- ----------------------------------
+function modifier_imba_timbersaw_timber_chain_side_hooks:UpdateHorizontalMotion(me, dt)
+	if not IsServer() then return end
+	
+	me:SetOrigin(me:GetOrigin() + self.velocity * dt)
+	
+	if (self.tree:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():GetHullRadius() then
+		self:Destroy()
+	end
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_timbersaw_timber_chain_side_hooks:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_timbersaw_timber_chain_side_hooks:CheckState()
+	return {[MODIFIER_STATE_DISARMED] = true}
+end
+
+function modifier_imba_timbersaw_timber_chain_side_hooks:DeclareFunctions()
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_timbersaw_timber_chain_side_hooks:GetOverrideAnimation( params )
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		return ACT_DOTA_FLAIL
+	end
+end
+
+-----------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_TIMBER_CHAIN_CLAW --
+-----------------------------------------------
+
+-- This is just to return the claw draw model back after a failed Timber Chain
+function modifier_imba_timbersaw_timber_chain_claw:IsHidden()		return true end
+function modifier_imba_timbersaw_timber_chain_claw:IsPurgable()		return false end
+function modifier_imba_timbersaw_timber_chain_claw:RemoveOnDeath()	return false end
+
+function modifier_imba_timbersaw_timber_chain_claw:OnDestroy()
+	if not IsServer() or self:GetRemainingTime() > 0 then return end
+	
+	if self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ) then
+		self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ):RemoveEffects(EF_NODRAW)
+	end	
+end
+
+----------------------------------
+-- IMBA_TIMBERSAW_REACTIVE_ARMOR --
+----------------------------------
 
 function imba_timbersaw_reactive_armor:GetIntrinsicModifierName()
 	return "modifier_imba_timbersaw_reactive_armor"
 end
 
-function imba_timbersaw_reactive_armor:OnSpellStart()
-
+-- IMBAfication: Emergency Bunker
+function imba_timbersaw_reactive_armor:GetBehavior()
+	-- return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
--- -------------------------------------------
--- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR --
--- -------------------------------------------
+-- function imba_timbersaw_reactive_armor:GetCooldown(level)
+	-- return self:GetSpecialValueFor("emergency_bunker_debuff_cooldown")
+-- end
+
+-- function imba_timbersaw_reactive_armor:GetManaCost(level)
+	-- return self:GetSpecialValueFor("emergency_bunker_debuff_mana_cost")
+-- end
+
+-- Disabling Emergency Bunker with this line + commenting OnSpellStart out cause of potential lag issues
+function imba_timbersaw_reactive_armor:OnAbilityPhaseStart()
+	return false
+end
+
+-- TODO: Find particle effect + sound for Emergency Bunker IMBAfication
+-- On second thought, this looks like it's gonna be way too god damn laggy due to mass modifier application...guess I should scrap this
+-- function imba_timbersaw_reactive_armor:OnSpellStart()
+	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_reactive_armor_debuff", {duration = self:GetSpecialValueFor("emergency_bunker_debuff_duration")})
+
+	-- for stack_num = 1, self:GetTalentSpecialValueFor("stack_limit") do
+		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_reactive_armor_stack", {duration = self:GetSpecialValueFor("stack_duration")})
+	-- end
+	
+	-- if not self.reactive_armor_modifier then
+		-- self.reactive_armor_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_reactive_armor", self:GetCaster()) 
+	-- end
+	
+	-- if self.reactive_armor_modifier and not self.reactive_armor_modifier:IsNull() then
+		-- self.reactive_armor_modifier:SetDuration(self:GetSpecialValueFor("stack_duration"), true)
+	-- end
+-- end
+
+-------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_REACTIVE_ARMOR --
+-------------------------------------------
+
+function modifier_imba_timbersaw_reactive_armor:DestroyOnExpire()	return false end
+function modifier_imba_timbersaw_reactive_armor:IsHidden()			return self:GetStackCount() == 0 end
 
 function modifier_imba_timbersaw_reactive_armor:OnCreated()
+	if not IsServer() then return end
+	
+	-- Set up all the armor pieces (this took longer than it should have to figure out, and maybe it's not even correct?)
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+		self.reactive_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_1, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_armor", self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(self.reactive_particle_1, 2, Vector(0, 0, 0))
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_1, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_chimmney", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.reactive_particle_1, false, false, -1, false, false)
+		
+		self.reactive_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_2, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_armor", self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(self.reactive_particle_2, 2, Vector(0, 0, 0))
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_2, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_chimmney", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.reactive_particle_2, false, false, -1, false, false)
 
+		self.reactive_particle_3 = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_3, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_armor", self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(self.reactive_particle_3, 2, Vector(0, 0, 0))
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_3, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_chimmney", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.reactive_particle_3, false, false, -1, false, false)
+
+		self.reactive_particle_4 = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_4, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_armor", self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(self.reactive_particle_4, 2, Vector(0, 0, 0))
+		ParticleManager:SetParticleControlEnt(self.reactive_particle_4, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_chimmney", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.reactive_particle_4, false, false, -1, false, false)
+	end
 end
 
--- -------------------------------------------------
--- -- MODIFIER_imba_timbersaw_REACTIVE_ARMOR_STACK --
--- -------------------------------------------------
+-- IMBAfication: C'mon, HIT ME!
+function modifier_imba_timbersaw_reactive_armor:CheckState()
+	if self:GetAbility().GetAutoCastState and self:GetAbility():GetAutoCastState() then
+		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
+	end
+end
 
--- modifier_imba_timbersaw_reactive_armor_stack
-
--- -----------------------------
--- -- imba_timbersaw_CHAKRAM_2 --
--- -----------------------------
-
--- imba_timbersaw_chakram_2
-
--- ---------------------------
--- -- imba_timbersaw_CHAKRAM --
--- ---------------------------
-
--- imba_timbersaw_chakram
-
--- ----------------------------------
--- -- imba_timbersaw_RETURN_CHAKRAM --
--- ----------------------------------
-
--- imba_timbersaw_return_chakram
-
--- ------------------------------------
--- -- imba_timbersaw_RETURN_CHAKRAM_2 --
--- ------------------------------------
-
--- imba_timbersaw_return_chakram_2
-
--- --------------------------------------------
--- -- MODIFIER_imba_timbersaw_CHAKRAM_THINKER --
--- --------------------------------------------
-
--- modifier_imba_timbersaw_chakram_thinker
-
--- -------------------------------------------
--- -- MODIFIER_imba_timbersaw_CHAKRAM_DEBUFF --
--- -------------------------------------------
-
--- modifier_imba_timbersaw_chakram_debuff
-
--- -------------------------------------------
--- -- MODIFIER_imba_timbersaw_CHAKRAM_DISARM --
--- -------------------------------------------
-
--- modifier_imba_timbersaw_chakram_disarm
-
--- "DOTA_Tooltip_modifier_shredder_whirling_death_debuff"				"Whirling Death"
--- "DOTA_Tooltip_modifier_shredder_whirling_death_debuff_Description"	"Losing 13%% of primary attribute."
--- "DOTA_Tooltip_modifier_shredder_reactive_armor"						"Reactive Armor"
--- "DOTA_Tooltip_modifier_shredder_reactive_armor_Description"			"Gaining bonus armor and HP regen per stack."
--- "DOTA_Tooltip_modifier_shredder_chakram_debuff"						"Chakram"
--- "DOTA_Tooltip_modifier_shredder_chakram_debuff_Description"			"Taking damage over time and being slowed by the Chakram."
--- "DOTA_Tooltip_modifier_shredder_chakram_disarm"						"Chakram Disarm"
--- "DOTA_Tooltip_modifier_shredder_chakram_disarm_Description"			"You cannot attack while Chakram is in the air."
--- "DOTA_Tooltip_modifier_shredder_timber_chain"						"Timber Chain"
--- "DOTA_Tooltip_modifier_shredder_timber_chain_Description"			"Damaging any enemy in your path."
-
-
-
-
-
--- LinkLuaModifier("modifier_imba_visage_grave_chill_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_debuff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_grave_chill_aura_modifier", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_soul_assumption", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_stacks", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_soul_assumption_counter", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_gravekeepers_cloak_secondary_ally", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_stone_form_self_cast", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_petrifying_breath", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_root", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_summon_familiars_stone_form_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_visage_become_familiar_delay", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_visage_become_familiar", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- imba_visage_grave_chill									= class({})
--- modifier_imba_visage_grave_chill_buff					= class({})
--- modifier_imba_visage_grave_chill_debuff					= class({})
--- modifier_imba_visage_grave_chill_aura					= class({})
--- modifier_imba_visage_grave_chill_aura_modifier			= class({})
-
--- imba_visage_soul_assumption								= class({})
--- modifier_imba_visage_soul_assumption					= class({})
--- modifier_imba_visage_soul_assumption_stacks				= class({})
--- modifier_imba_visage_soul_assumption_counter			= class({})
-
--- imba_visage_gravekeepers_cloak							= class({})
--- modifier_imba_visage_gravekeepers_cloak					= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary		= class({})
--- modifier_imba_visage_gravekeepers_cloak_secondary_ally	= class({})
-
--- imba_visage_stone_form_self_cast						= class({})
--- modifier_imba_visage_stone_form_self_cast				= class({})
-
--- imba_visage_summon_familiars							= class({})
--- modifier_imba_visage_summon_familiars					= class({})
--- modifier_imba_visage_summon_familiars_petrifying_breath	= class({})
-
--- imba_visage_summon_familiars_stone_form					= class({})
--- modifier_imba_visage_summon_familiars_stone_form_root	= class({})
--- modifier_imba_visage_summon_familiars_stone_form_buff	= class({})
-
--- imba_visage_become_familiar								= class({})
--- modifier_imba_visage_become_familiar_delay				= class({})
--- modifier_imba_visage_become_familiar					= class({})
-
--- -----------------
--- -- GRAVE CHILL --
--- -----------------
-
--- function imba_visage_grave_chill:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_grave_chill_aura"
--- end
-
--- function imba_visage_grave_chill:OnSpellStart()
-	-- local target = self:GetCursorTarget()
-	
-	-- -- Blocked by Linken's
-	-- if target:TriggerSpellAbsorb(self) then return end
+function modifier_imba_timbersaw_reactive_armor:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		
-	-- self:GetCaster():EmitSound("Hero_Visage.GraveChill.Cast")
-	-- target:EmitSound("Hero_Visage.GraveChill.Target")
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
 
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" and RollPercentage(25) then
-		-- if not self.responses then
-			-- self.responses = 
-			-- {
-				-- "visage_visa_gravechill_04",
-				-- "visage_visa_gravechill_05",
-				-- "visage_visa_gravechill_14",
-				-- "visage_visa_gravechill_21",
-				-- "visage_visa_gravechill_22"
-			-- }
-		-- end
+function modifier_imba_timbersaw_reactive_armor:GetModifierPhysicalArmorBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_armor") * self:GetStackCount()
+end
+
+function modifier_imba_timbersaw_reactive_armor:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_hp_regen") * self:GetStackCount()
+end
+
+-- "Each successful attack on Timbersaw grants him 1 stack. The stack is added right before the attack's damage is applied."
+-- ...I hope this is right?
+function modifier_imba_timbersaw_reactive_armor:OnAttackLanded(keys)
+	if keys.target == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():HasModifier("modifier_imba_timbersaw_reactive_armor_debuff") and self:GetAbility() and self:GetAbility():IsTrained() then
+		self.reactive_hit_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_reactive_hit.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.reactive_hit_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_chimmney", self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(self.reactive_hit_particle)
+	
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_reactive_armor_stack", {duration = self:GetAbility():GetSpecialValueFor("stack_duration")})
+		self:SetDuration(self:GetAbility():GetSpecialValueFor("stack_duration"), true)
+	end
+end
+
+-------------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_REACTIVE_ARMOR_STACK --
+-------------------------------------------------
+
+function modifier_imba_timbersaw_reactive_armor_stack:IsHidden()		return true end
+function modifier_imba_timbersaw_reactive_armor_stack:IsPurgable()		return false end
+function modifier_imba_timbersaw_reactive_armor_stack:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- The amount of stacks is also visually indicated by a dome which closes over on Timbersaw. The exhaust on the suit also starts emitting fire once the dome is fully closed.
+    -- The dome has 4 fragments, each appearing for every 4 stacks (1-4, 5-8, 9-12, 13-16). The dome opens again upon dropping below the given amount of stacks.
+function modifier_imba_timbersaw_reactive_armor_stack:OnCreated()
+	if not IsServer() then return end
+	
+	self.stack_limit			= self:GetAbility():GetTalentSpecialValueFor("stack_limit")
+	
+	self.min_stacks_particle_1	= 1
+	self.min_stacks_particle_2	= 5
+	self.min_stacks_particle_3	= 9
+	self.min_stacks_particle_4	= 13
+	
+	self.reactive_armor_modifier = self:GetParent():FindModifierByNameAndCaster("modifier_imba_timbersaw_reactive_armor", self:GetCaster())
+	
+	if self.reactive_armor_modifier and not self.reactive_armor_modifier:IsNull() then
+		if not self:GetCaster():HasModifier("modifier_imba_timbersaw_reactive_armor_debuff") then
+			self.reactive_armor_modifier:SetStackCount(math.min(#self:GetParent():FindAllModifiersByName(self:GetName()), self.stack_limit))
+		else
+			self.reactive_armor_modifier:SetStackCount(#self:GetParent():FindAllModifiersByName(self:GetName()))
+		end
 		
-		-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-	-- end
+		if self.reactive_armor_modifier.reactive_particle_1 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_1, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_1, 0, 0))
+		end
+		
+		if self.reactive_armor_modifier.reactive_particle_2 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_2, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_2, 0, 0))
+		end
+
+		if self.reactive_armor_modifier.reactive_particle_3 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_3, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_3, 0, 0))
+		end
+
+		if self.reactive_armor_modifier.reactive_particle_4 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_4, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_4, 0, 0))
+		end
+	end
+end
+
+function modifier_imba_timbersaw_reactive_armor_stack:OnDestroy()
+	if not IsServer() then return end
 	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_cast_beams.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
-	-- ParticleManager:ReleaseParticleIndex(chill_particle)
+	if self.reactive_armor_modifier and not self.reactive_armor_modifier:IsNull() then
+		if not self:GetCaster():HasModifier("modifier_imba_timbersaw_reactive_armor_debuff") then
+			self.reactive_armor_modifier:SetStackCount(math.min(#self:GetParent():FindAllModifiersByName(self:GetName()), self.stack_limit))
+		else
+			self.reactive_armor_modifier:SetStackCount(#self:GetParent():FindAllModifiersByName(self:GetName()))
+		end
+
+		if self.reactive_armor_modifier.reactive_particle_1 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_1, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_1, 0, 0))
+		end
+		
+		if self.reactive_armor_modifier.reactive_particle_2 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_2, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_2, 0, 0))
+		end
+
+		if self.reactive_armor_modifier.reactive_particle_3 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_3, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_3, 0, 0))
+		end
+
+		if self.reactive_armor_modifier.reactive_particle_4 then
+			ParticleManager:SetParticleControl(self.reactive_armor_modifier.reactive_particle_4, 2, Vector(self.reactive_armor_modifier:GetStackCount() - self.min_stacks_particle_4, 0, 0))
+		end
+	end
 	
-	-- -- I set the target as the caster here rather than the caster itself because I am utilizing that target's Death's Enticement IMBAfication modifier stacks, which I want to show on client-side
-	-- local chill_buff_modifier	= self:GetCaster():AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
+	-- Technically you won't even see the modifier when it's at 0 stacks but w/e
+	if self.reactive_armor_modifier:GetStackCount() == 0 then
+		self.reactive_armor_modifier:SetDuration(-1, true)
+	end
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_REACTIVE_ARMOR_DEBUFF --
+---------------------------------------------------
+
+function modifier_imba_timbersaw_reactive_armor_debuff:IsDebuff()		return true end
+function modifier_imba_timbersaw_reactive_armor_debuff:IsPurgable()		return false end
+function modifier_imba_timbersaw_reactive_armor_debuff:RemoveOnDeath()	return false end
+
+-----------------------------
+-- IMBA_TIMBERSAW_CHAKRAM_2 --
+-----------------------------
+
+-- Time for the world's worst copy-paste job
+
+function imba_timbersaw_chakram_2:GetAssociatedSecondaryAbilities()
+	return "imba_timbersaw_return_chakram_2"
+end
+
+function imba_timbersaw_chakram_2:IsInnateAbility()	return true end
+
+function imba_timbersaw_chakram_2:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_timbersaw_chakram_2:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_timbersaw_chakram_2:OnInventoryContentsChanged()
+	if self:GetCaster():HasScepter() then
+		if not self:IsTrained() then
+			self:SetLevel(1)
+		end
+		
+		if not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2") or (self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden()) then
+			self:SetHidden(false)
+		end
+	else
+		if not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2") or (self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden()) then
+			self:SetHidden(true)
+		end
+	end
+end
+
+function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
+function imba_timbersaw_chakram_2:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
 	
-	-- if chill_buff_modifier then
-		-- chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	-- end
+	if not self.projectiles then
+		self.projectiles = {}
+	end
+
+	self:GetCaster():EmitSound("Hero_Shredder.Chakram.Cast")
 	
-	-- -- "Grave Chill also grants the buff to Familiars within 1200 range of Visage. The buff on the Familiars is not aura-based. It places a separate buff on each Familiar."
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-			-- chill_buff_modifier	= ally:AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-			-- if chill_buff_modifier then
-				-- chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-			-- end
-		-- end
-	-- end
-	
-	-- local chill_debuff_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_grave_chill_debuff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-	-- if chill_debuff_modifier then
-		-- chill_debuff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	-- end
--- end
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+		if not self.responses then
+			self.responses = 
+			{
+				["shredder_timb_chakram_02"] = 0,
+				["shredder_timb_chakram_03"] = 0,
+				["shredder_timb_chakram_06"] = 0,
+				["shredder_timb_chakram_07"] = 0,
+				["shredder_timb_chakram_08"] = 0
+			}
 
--- -------------------------------
--- -- GRAVE CHILL BUFF MODIFIER --
--- -------------------------------
-
--- function modifier_imba_visage_grave_chill_buff:IsDebuff()	return false end
-
--- function modifier_imba_visage_grave_chill_buff:OnCreated()
-	-- self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus")
-	-- self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
-	-- self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
-	
-	-- self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	
-	-- self:StartIntervalThink(FrameTime())
-	
-	-- if not IsServer() then return end
-	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_caster.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- -- I have no god damn idea what connects to where
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
-	
-	-- if self:GetParent():GetName() == "npc_dota_hero_visage" and not self:GetParent():HasModifier("modifier_imba_visage_become_familiar") then
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_tail_tip", self:GetParent():GetAbsOrigin(), true)ParticleManager:SetParticleControlEnt(chill_particle, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_wingtipL", self:GetParent():GetAbsOrigin(), true)
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_wingtipR", self:GetParent():GetAbsOrigin(), true)
-	-- else
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)ParticleManager:SetParticleControlEnt(chill_particle, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-		-- ParticleManager:SetParticleControlEnt(chill_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)	
-	-- end
-	
-	-- self:AddParticle(chill_particle, false, false, -1, false, false)
--- end
-
--- function modifier_imba_visage_grave_chill_buff:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- -- This is just to update client-side
--- function modifier_imba_visage_grave_chill_buff:OnIntervalThink()
-	-- self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	-- self:StartIntervalThink(-1)
--- end
-
--- function modifier_imba_visage_grave_chill_buff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.movespeed_bonus
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierAttackSpeedBonus_Constant()
-	-- return self.attackspeed_bonus + (self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec)
--- end
-
--- function modifier_imba_visage_grave_chill_buff:GetModifierTurnRate_Percentage()
-	-- return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec
--- end
-
--- ---------------------------------
--- -- GRAVE CHILL DEBUFF MODIFIER --
--- ---------------------------------
-
--- function modifier_imba_visage_grave_chill_debuff:GetStatusEffectName()
-	-- return "particles/units/heroes/hero_visage/status_effect_visage_chill_slow.vpcf"
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:OnCreated()
-	-- self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus")
-	-- self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
-	-- self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
-	
-	-- self.deaths_enticement_stacks			= self:GetParent():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetCaster())
-	
-	-- self:StartIntervalThink(FrameTime())
-	
-	-- if not IsServer() then return end
-	
-	-- local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-	-- self:AddParticle(chill_particle, false, false, -1, false, false)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- -- This is just to update client-side
--- function modifier_imba_visage_grave_chill_debuff:OnIntervalThink()
-	-- self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	-- self:StartIntervalThink(-1)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.movespeed_bonus * (-1)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierAttackSpeedBonus_Constant()
-	-- return (self.attackspeed_bonus + self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec) * (-1)
--- end
-
--- function modifier_imba_visage_grave_chill_debuff:GetModifierTurnRate_Percentage()
-	-- return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec * (-1)
--- end
-
--- -------------------------------
--- -- GRAVE CHILL AURA MODIFIER --
--- -------------------------------
-
--- -- IMBAfication: Death's Enticement
--- -- Assuming this line will be required in case it gets duplicated through something like Grimstroke's Soulbind, which would then otherwise remove this modifier
--- function modifier_imba_visage_grave_chill_aura:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_visage_grave_chill_aura:IsHidden()				return true end
-
--- function modifier_imba_visage_grave_chill_aura:IsAura() 				return true end
--- function modifier_imba_visage_grave_chill_aura:IsAuraActiveOnDeath() 	return true end
-
--- function modifier_imba_visage_grave_chill_aura:GetAuraRadius()			return FIND_UNITS_EVERYWHERE end
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_BOTH end
--- function modifier_imba_visage_grave_chill_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
--- function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifier_imba_visage_grave_chill_aura_modifier" end
-
--- ----------------------------------------
--- -- GRAVE CHILL AURA MODIFIER MODIFIER --
--- ----------------------------------------
-
--- function modifier_imba_visage_grave_chill_aura_modifier:IsHidden()		return true end
--- function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
--- function modifier_imba_visage_grave_chill_aura_modifier:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
-	-- self.creation_time = GameRules:GetDOTATime(true, true)
--- end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		-- -- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnAbilityExecuted(keys)
-	-- if keys.ability == self:GetAbility() and keys.target == self:GetParent() then
-		-- self:SetStackCount(GameRules:GetDOTATime(true, true) - self.creation_time)
-	-- end
--- end
-
--- -- function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
-	-- -- return self:GetStackCount()
--- -- end
-
--- ---------------------
--- -- SOUL ASSUMPTION --
--- ---------------------
-
--- function imba_visage_soul_assumption:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_soul_assumption"
--- end
-
--- function imba_visage_soul_assumption:OnUpgrade()
-	-- if not IsServer() then return end
-	
-	-- if self:GetLevel() >= 1 and self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()) and not self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle then
-		-- self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
-		-- self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()):AddParticle(self:GetCaster():FindModifierByNameAndCaster(self:GetIntrinsicModifierName(), self:GetCaster()).particle, false, false, -1, false, false)
-	-- end
--- end
-
--- function imba_visage_soul_assumption:OnSpellStart()
-	-- local target = self:GetCursorTarget()
-	
-	-- self:GetCaster():EmitSound("Hero_Visage.SoulAssumption.Cast")
-
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" then
-		-- if RollPercentage(10) then
-			-- if not self.responses_rare then
-				-- self.responses_rare = 
-				-- {
-					-- "visage_visa_soulassumption01",
-					-- "visage_visa_soulassumption02",
-					-- "visage_visa_soulassumption07"
-				-- }
-			-- end
+			self.response_keys = {}
 			
-			-- self:GetCaster():EmitSound(self.responses_rare[RandomInt(1, #self.responses_rare)])
-		-- else
-			-- if not self.responses then
-				-- self.responses = 
-				-- {
-					-- "visage_visa_gravechill_24",
-					-- "visage_visa_gravechill_26",
-					-- "visage_visa_gravechill_27",
-					-- "visage_visa_gravechill_28",
-					-- "visage_visa_gravechill_32"
-				-- }
-			-- end
+			for _, timer in pairs(self.responses) do
+				table.insert(self.response_keys, _)
+			end
+		end
+		
+		self.random_selection = RandomInt(1, #self.response_keys)
+		
+		if GameRules:GetDOTATime(true, true) - self.responses[self.response_keys[self.random_selection]] >= 5 then
+			self:GetCaster():EmitSound(self.response_keys[self.random_selection])
+			self.responses[self.response_keys[self.random_selection]] = GameRules:GetDOTATime(true, true)
+		end
+	end
+	
+	local ExtraData = {
+		cast_pos_x		= self:GetCaster():GetAbsOrigin().x,
+		cast_pos_y		= self:GetCaster():GetAbsOrigin().y,
+		cast_pos_z		= self:GetCaster():GetAbsOrigin().z,
+		bAutoCastState	= self:GetAutoCastState()
+	}
+	
+	local chakram_projectile = ProjectileManager:CreateLinearProjectile({
+		Source			= self:GetCaster(),
+		Ability			= self,
+		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
+		
+	    bDeleteOnHit = false,
+	    
+	    EffectName = "particles/units/heroes/hero_shredder/shredder_chakram_aghs.vpcf",
+	    fDistance = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D(),
+		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+	    fStartRadius = self:GetSpecialValueFor("radius"),
+		fEndRadius = self:GetSpecialValueFor("radius"),
+		
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		fExpireTime = GameRules:GetGameTime() + 10.0,
+		
+		-- "Chakram provides 300 radius flying vision while spinning in place at the target area (but not while traveling)."
+		bProvidesVision = false,
+		
+		ExtraData = ExtraData
+	})
+	
+	self.projectiles[chakram_projectile] = ExtraData
+
+	if not self:IsHidden() and self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden() then
+		if self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):GetLevel() ~= self:GetLevel() then
+			self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):SetLevel(self:GetLevel())
+		end
+		
+		self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram_2", false, true)
+	end
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_disarm", {})
+end
+
+function imba_timbersaw_chakram_2:OnProjectileThinkHandle(projectileHandle)
+	if #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), true) >= 1 then
+		for _, tree in pairs(GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)) do
+			EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.Chakram.Tree", self:GetCaster())
+		end
+	
+		if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+			self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+		end
+		
+		if self.dendrophobia_modifier then
+			self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false))
+		end
+	
+		GridNav:DestroyTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)
+	end
+end
+
+-- This is for the returning chakram logic (tracking projectile to caster)
+-- It looks like this function always runs after the "OnProjectileThinkHandle()" function above so I'm gonna do something a bit hacker to get the projectileID of tracking projectiles (cause otherwise it doesn't provide a reference to it on its own creation...)
+function imba_timbersaw_chakram_2:OnProjectileThink_ExtraData(location, data)
+	if data.bReturning then
+		if #GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), true) >= 1 then
+			for _, tree in pairs(GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false)) do
+				EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.Chakram.Tree", self:GetCaster())
+			end
+		
+			if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+				self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+			end
 			
-			-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-		-- end
-	-- end
-	
-	-- local assumption_counter_modifier	= self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	-- local damage_bars					= 0
-	-- local effect_name					= "particles/units/heroes/hero_visage/visage_soul_assumption_bolt.vpcf"
-	-- -- IMBAfication: Soul Accelerant
-	-- local overflow_counter				= 1
-	
-	-- if assumption_counter_modifier then	
-		-- damage_bars = math.min(math.floor(assumption_counter_modifier:GetStackCount() / self:GetSpecialValueFor("damage_limit")), self:GetSpecialValueFor("stack_limit"))
-		-- overflow_counter = math.max(assumption_counter_modifier:GetStackCount() - (self:GetSpecialValueFor("damage_limit") * self:GetSpecialValueFor("stack_limit")), 0)
+			if self.dendrophobia_modifier then
+				self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false))
+			end
 		
-		-- if damage_bars > 0 then
-			-- effect_name	="particles/units/heroes/hero_visage/visage_soul_assumption_bolt"..damage_bars..".vpcf"
-		-- end
+			GridNav:DestroyTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false)
+		end
 		
-		-- local assumption_stack_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_visage_soul_assumption_stacks")
-		
-		-- for _, mod in pairs(assumption_stack_modifiers) do
-			-- mod:Destroy()
-		-- end
-		
-		-- assumption_counter_modifier:Destroy()
-	-- end
-	
-	-- local projectile =
-	-- {
-		-- Target 				= nil,
-		-- Source 				= self:GetCaster(),
-		-- Ability 			= self,
-		-- EffectName 			= effect_name,
-		-- iMoveSpeed			= math.min(self:GetSpecialValueFor("bolt_speed") + overflow_counter, self:GetSpecialValueFor("soul_accelerant_max")),
-		-- vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
-		-- bDrawsOnMinimap 	= false,
-		-- bDodgeable 			= true,
-		-- bIsAttack 			= false,
-		-- bVisibleToEnemies 	= true,
-		-- bReplaceExisting 	= false,
-		-- flExpireTime 		= GameRules:GetGameTime() + 10.0,
-		-- bProvidesVision 	= false,
-		
-		-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-		
-		-- ExtraData = {
-			-- charges			= damage_bars
-		-- }
-	-- }
-	
-	-- projectile.Target = target
-	-- ProjectileManager:CreateTrackingProjectile(projectile)
-	
-	-- local target_counter = 1
-	
-	-- -- CDOTA_BaseNPC: GetCastRangeBonus() added in Summer Scrub patch xd
-	-- -- "Heroes and illusions have a higher priority than other units. Treats creep-heroes as creeps."
-	-- local enemy_heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
-	
-	-- for _, enemy in pairs(enemy_heroes) do	
-		-- if target_counter >= self:GetTalentSpecialValueFor("targets") then
-			-- break
-		-- end	
-	
-		-- if enemy ~= target then
-			-- projectile.Target = enemy
-			-- ProjectileManager:CreateTrackingProjectile(projectile)
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+			if self.projectiles[data.id] and not self.projectiles[data.id].returning_enemies then
+				self.projectiles[data.id].returning_enemies = {}
+			end
 			
-			-- target_counter = target_counter + 1
-		-- end
-	-- end
-	
-	-- if target_counter < self:GetTalentSpecialValueFor("targets") then
-		-- local enemy_creeps = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false) 
-		
-		-- for _, enemy in pairs(enemy_creeps) do
-			-- if target_counter >= self:GetTalentSpecialValueFor("targets") then
-				-- break
-			-- end
-		
-			-- if enemy ~= target then
-				-- projectile.Target = enemy
-				-- ProjectileManager:CreateTrackingProjectile(projectile)
+			if self.projectiles[data.id].returning_enemies and not self.projectiles[data.id].returning_enemies[enemy] then
+				enemy:EmitSound("Hero_Shredder.Chakram.Target")
+			
+				ApplyDamage({
+					victim 			= enemy,
+					damage 			= self:GetSpecialValueFor("pass_damage"),
+					damage_type		= self:GetAbilityDamageType(),
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self
+				})
+					
+				local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
 				
-				-- target_counter = target_counter + 1		
-			-- end
-		-- end
-	-- end
--- end
+				if slow_modifier then
+					slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance()), true)
+				end			
+			
+				self.projectiles[data.id].returning_enemies[enemy] = true
+			end
+		end		
+	end
+end
 
--- function imba_visage_soul_assumption:OnProjectileHit_ExtraData(target, location, data)
-	-- if target and not target:TriggerSpellAbsorb(self) then
-		-- target:EmitSound("Hero_Visage.SoulAssumption.Target")
-
-		-- local damageTable = {
-			-- victim 			= target,
-			-- damage 			= self:GetSpecialValueFor("soul_base_damage") + (self:GetTalentSpecialValueFor("soul_charge_damage") * data.charges),
-			-- damage_type		= self:GetAbilityDamageType(),
-			-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			-- attacker 		= self:GetCaster(),
-			-- ability 		= self
-		-- }
-
-		-- ApplyDamage(damageTable)
-	-- end
--- end
-
--- -------------------------------
--- -- SOUL ASSUMPTION MODIFIER --
--- ------------------------------
-
--- function modifier_imba_visage_soul_assumption:IsHidden()		return true end
--- function modifier_imba_visage_soul_assumption:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- -- This shouldn't really happen but in case it gets ported in already leveled
--- function modifier_imba_visage_soul_assumption:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and not self.particle then
-		-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_soul_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-		-- self:AddParticle(self.particle, false, false, -1, false, false)
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption:OnDestroy()
-	-- if IsServer() and self.particle then
-		-- ParticleManager:DestroyParticle(self.particle, true)
-		-- ParticleManager:ReleaseParticleIndex(self.particle)
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_EVENT_ON_TAKEDAMAGE
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_soul_assumption:OnTakeDamage(keys)
-	-- -- "Only counts damage dealt by players (including their summons) and Roshan."
-	-- -- "Only counts when the damage was dealt to a hero (excluding illusions and creep-heroes)."
-	-- -- "Does not count self-inflicted damage, or damage less than 2 or greater than 3000 (after reductions)."
-
-	-- if (keys.unit:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("radius") and
-	-- (keys.attacker:IsControllableByAnyPlayer() or keys.attacker:IsRoshan()) and
-	-- (keys.unit:IsRealHero() or string.find(keys.attacker:GetDebugName(), "npc_dota_visage_familiar")) and -- IMBAfication: Familiar Flow
-	-- keys.unit ~= keys.attacker and
-	-- keys.damage >= self:GetAbility():GetSpecialValueFor("damage_min") and
-	-- keys.damage <= self:GetAbility():GetSpecialValueFor("damage_max") and
-	-- -- Seems like Soul Assumption damage doesn't feed into its own stacks
-	-- keys.inflictor ~= self:GetAbility() then	
-
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_counter", 
-		-- {
-			-- duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
-			-- stacks		= keys.damage
-		-- })
-	
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_soul_assumption_stacks", 
-		-- {
-			-- duration	= self:GetAbility():GetSpecialValueFor("stack_duration"),
-			-- stacks		= keys.damage
-		-- })
-	-- end
--- end
-
--- -------------------------------------
--- -- SOUL ASSUMPTION STACKS MODIFIER --
--- -------------------------------------
-
--- function modifier_imba_visage_soul_assumption_stacks:IsHidden()				return true end
--- function modifier_imba_visage_soul_assumption_stacks:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_visage_soul_assumption_stacks:OnCreated(params)
-	-- if not IsServer() then return end
-
-	-- self.damage_limit	= self:GetAbility():GetSpecialValueFor("damage_limit")
-	-- self.stack_limit	= self:GetAbility():GetSpecialValueFor("stack_limit")
-
-	-- self:SetStackCount(params.stacks)
-
-	-- local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
-	-- local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	
-	-- if assumption_modifier and assumption_modifier.particle and assumption_counter_modifier then
-		-- assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() + params.stacks)
-	
-		-- for bar = 1, self.stack_limit do
-			-- ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
-		-- end
-	-- end
--- end
-
--- function modifier_imba_visage_soul_assumption_stacks:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- local assumption_modifier			= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption", self:GetCaster())
-	-- local assumption_counter_modifier 	= self:GetParent():FindModifierByNameAndCaster("modifier_imba_visage_soul_assumption_counter", self:GetCaster())
-	
-	-- if assumption_counter_modifier then
-		-- assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() - self:GetStackCount())
+-- This is for the launching chakram logic (linear projectile)
+function imba_timbersaw_chakram_2:OnProjectileHitHandle(target, location, projectileHandle)
+	if target and target ~= self:GetCaster() then
+		if not self.projectiles[projectileHandle].launching_enemies then
+			self.projectiles[projectileHandle].launching_enemies = {}
+		end
 		
-		-- if assumption_modifier and assumption_modifier.particle then
-			-- for bar = 1, 6 do
-				-- ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
-			-- end
-		-- end
-	-- end
--- end
-
--- ------------------------------------
--- -- SOUL ASSUMPTION COUNT MODIFIER --
--- ------------------------------------
-
--- function modifier_imba_visage_soul_assumption_counter:IsHidden()	return true end
--- function modifier_imba_visage_soul_assumption_counter:IsPurgable()	return false end
-
--- -------------------------
--- -- GRAVEKEEPER'S CLOAK --
--- -------------------------
-
--- function imba_visage_gravekeepers_cloak:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_gravekeepers_cloak"
--- end
-
--- function imba_visage_gravekeepers_cloak:OnUpgrade()
-	-- local cloak_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak", self:GetCaster())
-	
-	-- if cloak_modifier then
-		-- if self:GetLevel() >= 1 and not cloak_modifier.initialized then
-			-- cloak_modifier:SetStackCount(self:GetSpecialValueFor("max_layers"))
-			-- cloak_modifier.initialized	= true
-		-- end
-	-- end
--- end
-
--- -- Hmm...
--- function imba_visage_gravekeepers_cloak:OnSpellStart()
-
--- end
-
--- ----------------------------------
--- -- GRAVEKEEPER'S CLOAK MODIFIER --
--- ----------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak:IsHidden()	return self:GetAbility() == nil or self:GetAbility():GetLevel() < 1 end
-
--- -- This OnCreated block is technically not vanilla
--- function modifier_imba_visage_gravekeepers_cloak:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak:OnIntervalThink()
-	-- if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
-		-- self:IncrementStackCount()
-	-- else
-		-- -- IMBAfication: Cloak Encompassing
-		-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+			target:EmitSound("Hero_Shredder.Chakram.Target")
 		
-		-- for _, ally in pairs(allies) do
-			-- if ally ~= self:GetParent() and not string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-				-- local secondary_cloak_modifier = ally:FindModifierByNameAndCaster("modifier_imba_visage_gravekeepers_cloak_secondary_ally", self:GetCaster())
+			-- "A passing Chakram first applies the passing damage, then the debuff."
+			ApplyDamage({
+				victim 			= target,
+				damage 			= self:GetSpecialValueFor("pass_damage"),
+				damage_type		= self:GetAbilityDamageType(),
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
+			end
+			
+			self.projectiles[projectileHandle].launching_enemies[target] = true
+		end
+	elseif not target and self.projectiles and self.projectiles[projectileHandle] then
+		local auto_cast_flag = 0
+	
+		if self.projectiles[projectileHandle].bAutoCastState then
+			auto_cast_flag = 1
+		end
+	
+		CreateModifierThinker(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_thinker", {
+			bAutoCastState		= auto_cast_flag,
+		
+			cast_pos_x			= self.projectiles[projectileHandle].cast_pos_x,
+			cast_pos_y			= self.projectiles[projectileHandle].cast_pos_y,
+			cast_pos_z			= self.projectiles[projectileHandle].cast_pos_z,
+			
+			speed				= self:GetSpecialValueFor("speed"),
+			radius				= self:GetSpecialValueFor("radius"),
+			damage_per_second	= self:GetSpecialValueFor("damage_per_second"),
+			pass_damage			= self:GetSpecialValueFor("pass_damage"),
+			damage_interval		= self:GetSpecialValueFor("damage_interval"),
+			break_distance		= self:GetSpecialValueFor("break_distance"),
+			mana_per_second		= self:GetSpecialValueFor("mana_per_second"),
+			observe_tick_scale	= self:GetSpecialValueFor("observe_tick_scale"),
+			observe_max_scale	= self:GetSpecialValueFor("observe_max_scale"),
+		}, 
+		GetGroundPosition(location, nil), self:GetCaster():GetTeamNumber(), false)
+		
+		-- Remove projectile reference from table when the Chakram has fully launched
+		self.projectiles[projectileHandle] = nil	
+	end
+end
+
+function imba_timbersaw_chakram_2:OnProjectileHit_ExtraData(target, location, data)
+	if target and target == self:GetCaster() and data.bReturning then
+		-- Remove appropriate projectile reference from table when the Chakram has fully returned
+		if self.projectiles and self.projectiles[data.id] then
+			self.projectiles[data.id] = nil
+		end	
+		
+		if self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") and not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden() and self:IsHidden() then
+			self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram_2", true, false)
+		end
+		
+		-- Remove disarm debuff if all Chakrams have returned
+		if (not self:GetCaster():HasAbility("imba_timbersaw_return_chakram") or (self:GetCaster():HasAbility("imba_timbersaw_return_chakram") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):IsHidden()))
+		and
+		(not self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") or (self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden()))
+		and
+		self:GetCaster():HasModifier("modifier_imba_timbersaw_chakram_disarm") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_timbersaw_chakram_disarm")
+		end
+	end
+end
+
+---------------------------
+-- IMBA_TIMBERSAW_CHAKRAM --
+---------------------------
+
+function imba_timbersaw_chakram:GetAssociatedSecondaryAbilities()
+	return "imba_timbersaw_return_chakram"
+end
+
+function imba_timbersaw_chakram:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_timbersaw_chakram:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_timbersaw_chakram:OnUpgrade()
+	if self:GetCaster():HasAbility("imba_timbersaw_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_chakram_2"):GetLevel() ~= self:GetLevel() then
+		self:GetCaster():FindAbilityByName("imba_timbersaw_chakram_2"):SetLevel(self:GetLevel())
+	end
+	
+	if self:GetCaster():HasAbility("imba_timbersaw_chakram_3") and self:GetCaster():FindAbilityByName("imba_timbersaw_chakram_3"):GetLevel() ~= self:GetLevel() then
+		self:GetCaster():FindAbilityByName("imba_timbersaw_chakram_3"):SetLevel(self:GetLevel())
+	end	
+end
+
+function imba_timbersaw_chakram:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
+	if not self.projectiles then
+		self.projectiles = {}
+	end
+
+	self:GetCaster():EmitSound("Hero_Shredder.Chakram.Cast")
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+		if not self.responses then
+			self.responses = 
+			{
+				["shredder_timb_chakram_02"] = 0,
+				["shredder_timb_chakram_03"] = 0,
+				["shredder_timb_chakram_06"] = 0,
+				["shredder_timb_chakram_07"] = 0,
+				["shredder_timb_chakram_08"] = 0
+			}
+
+			self.response_keys = {}
+			
+			for _, timer in pairs(self.responses) do
+				table.insert(self.response_keys, _)
+			end
+		end
+		
+		self.random_selection = RandomInt(1, #self.response_keys)
+		
+		if GameRules:GetDOTATime(true, true) - self.responses[self.response_keys[self.random_selection]] >= 5 then
+			self:GetCaster():EmitSound(self.response_keys[self.random_selection])
+			self.responses[self.response_keys[self.random_selection]] = GameRules:GetDOTATime(true, true)
+		end
+	end
+	
+	local ExtraData = {
+		-- chakram_particle = chakram_particle,
+		cast_pos_x		= self:GetCaster():GetAbsOrigin().x,
+		cast_pos_y		= self:GetCaster():GetAbsOrigin().y,
+		cast_pos_z		= self:GetCaster():GetAbsOrigin().z,
+		bAutoCastState	= self:GetAutoCastState()
+	}
+	
+	local chakram_projectile = ProjectileManager:CreateLinearProjectile({
+		Source			= self:GetCaster(),
+		Ability			= self,
+		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
+		
+	    bDeleteOnHit = false,
+	    
+	    EffectName = "particles/units/heroes/hero_shredder/shredder_chakram.vpcf",
+	    fDistance = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D(),
+		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+	    fStartRadius = self:GetSpecialValueFor("radius"),
+		fEndRadius = self:GetSpecialValueFor("radius"),
+		
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		fExpireTime = GameRules:GetGameTime() + 10.0,
+		
+		-- "Chakram provides 300 radius flying vision while spinning in place at the target area (but not while traveling)."
+		bProvidesVision = false,
+		
+		ExtraData = ExtraData
+	})
+	
+	self.projectiles[chakram_projectile] = ExtraData
+
+	if not self:IsHidden() and self:GetCaster():HasAbility("imba_timbersaw_return_chakram") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):IsHidden() then
+		if self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):GetLevel() ~= self:GetLevel() then
+			self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):SetLevel(self:GetLevel())
+		end
+		
+		self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram", false, true)
+	end
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_disarm", {})
+end
+
+function imba_timbersaw_chakram:OnProjectileThinkHandle(projectileHandle)
+	if #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), true) >= 1 then
+		for _, tree in pairs(GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)) do
+			EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.Chakram.Tree", self:GetCaster())
+		end
+		
+		if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+			self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+		end
+		
+		if self.dendrophobia_modifier then
+			self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false))
+		end		
+	
+		GridNav:DestroyTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)
+	end
+end
+
+-- This is for the returning chakram logic (tracking projectile to caster)
+-- It looks like this function always runs after the "OnProjectileThinkHandle()" function above so I'm gonna do something a bit hacker to get the projectileID of tracking projectiles (cause otherwise it doesn't provide a reference to it on its own creation...)
+function imba_timbersaw_chakram:OnProjectileThink_ExtraData(location, data)
+	if data.bReturning then
+		if #GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), true) >= 1 then
+			for _, tree in pairs(GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false)) do
+				EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.Chakram.Tree", self:GetCaster())
+			end
+
+			if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+				self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+			end
+			
+			if self.dendrophobia_modifier then
+				self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false))
+			end
+		
+			GridNav:DestroyTreesAroundPoint(location, self:GetSpecialValueFor("radius"), false)
+		end
+		
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+			if self.projectiles[data.id] and not self.projectiles[data.id].returning_enemies then
+				self.projectiles[data.id].returning_enemies = {}
+			end
+			
+			if self.projectiles[data.id].returning_enemies and not self.projectiles[data.id].returning_enemies[enemy] then
+				enemy:EmitSound("Hero_Shredder.Chakram.Target")
+			
+				ApplyDamage({
+					victim 			= enemy,
+					damage 			= self:GetSpecialValueFor("pass_damage"),
+					damage_type		= self:GetAbilityDamageType(),
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self
+				})
+					
+				local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
 				
-				-- if not secondary_cloak_modifier or secondary_cloak_modifier:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
-					-- ally:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_gravekeepers_cloak_secondary_ally", {})
-					-- break
+				if slow_modifier then
+					slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance()), true)
+				end			
+			
+				self.projectiles[data.id].returning_enemies[enemy] = true
+			end
+		end		
+	end
+end
+
+-- This is for the launching chakram logic (linear projectile)
+function imba_timbersaw_chakram:OnProjectileHitHandle(target, location, projectileHandle)
+	if target and target ~= self:GetCaster() then
+		if not self.projectiles[projectileHandle].launching_enemies then
+			self.projectiles[projectileHandle].launching_enemies = {}
+		end
+		
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+			target:EmitSound("Hero_Shredder.Chakram.Target")
+		
+			-- "A passing Chakram first applies the passing damage, then the debuff."
+			ApplyDamage({
+				victim 			= target,
+				damage 			= self:GetSpecialValueFor("pass_damage"),
+				damage_type		= self:GetAbilityDamageType(),
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
+			end
+			
+			self.projectiles[projectileHandle].launching_enemies[target] = true
+		end
+	elseif not target and self.projectiles and self.projectiles[projectileHandle] then
+		local auto_cast_flag = 0
+	
+		if self.projectiles[projectileHandle].bAutoCastState then
+			auto_cast_flag = 1
+		end
+	
+		CreateModifierThinker(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_thinker", {
+			bAutoCastState		= auto_cast_flag,
+		
+			cast_pos_x			= self.projectiles[projectileHandle].cast_pos_x,
+			cast_pos_y			= self.projectiles[projectileHandle].cast_pos_y,
+			cast_pos_z			= self.projectiles[projectileHandle].cast_pos_z,
+			
+			speed				= self:GetSpecialValueFor("speed"),
+			radius				= self:GetSpecialValueFor("radius"),
+			damage_per_second	= self:GetSpecialValueFor("damage_per_second"),
+			pass_damage			= self:GetSpecialValueFor("pass_damage"),
+			damage_interval		= self:GetSpecialValueFor("damage_interval"),
+			break_distance		= self:GetSpecialValueFor("break_distance"),
+			mana_per_second		= self:GetSpecialValueFor("mana_per_second"),
+			observe_tick_scale	= self:GetSpecialValueFor("observe_tick_scale"),
+			observe_max_scale	= self:GetSpecialValueFor("observe_max_scale"),
+		}, 
+		GetGroundPosition(location, nil), self:GetCaster():GetTeamNumber(), false)
+		
+		-- Remove projectile reference from table when the Chakram has fully launched
+		self.projectiles[projectileHandle] = nil	
+	end
+end
+
+function imba_timbersaw_chakram:OnProjectileHit_ExtraData(target, location, data)
+	if target and target == self:GetCaster() and data.bReturning then
+		-- Remove appropriate projectile reference from table when the Chakram has fully returned
+		if self.projectiles and self.projectiles[data.id] then
+			self.projectiles[data.id] = nil
+		end	
+		
+		if self:GetCaster():HasAbility("imba_timbersaw_return_chakram") and not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):IsHidden() and self:IsHidden() then
+			self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram", true, false)
+		end
+		
+		-- Remove disarm debuff if all Chakrams have returned
+		if (not self:GetCaster():HasAbility("imba_timbersaw_return_chakram") or (self:GetCaster():HasAbility("imba_timbersaw_return_chakram") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):IsHidden()))
+		and
+		(not self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") or (self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") and self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden()))
+		and
+		self:GetCaster():HasModifier("modifier_imba_timbersaw_chakram_disarm") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_timbersaw_chakram_disarm")
+		end
+	end
+end
+
+----------------------------------
+-- IMBA_TIMBERSAW_RETURN_CHAKRAM --
+----------------------------------
+
+-- TODO: Check this thing's interaction with Magic Wand...
+
+function imba_timbersaw_return_chakram:GetAssociatedPrimaryAbilities()
+	return "imba_timbersaw_chakram"
+end
+
+function imba_timbersaw_return_chakram:IsStealable()		return false end
+
+function imba_timbersaw_return_chakram:OnSpellStart()
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+		if not self.responses then
+			self.responses = 
+			{
+				["shredder_timb_chakramreturn_03"] = 0,
+				["shredder_timb_chakramreturn_04"] = 0,
+				["shredder_timb_chakramreturn_05"] = 0
+			}
+			
+			self.response_keys = {}
+			
+			for _, timer in pairs(self.responses) do
+				table.insert(self.response_keys, _)
+			end
+		end
+		
+		self.random_selection = RandomInt(1, #self.response_keys)
+		
+		if GameRules:GetDOTATime(true, true) - self.responses[self.response_keys[self.random_selection]] >= 5 then
+			self:GetCaster():EmitSound(self.response_keys[self.random_selection])
+			self.responses[self.response_keys[self.random_selection]] = GameRules:GetDOTATime(true, true)
+		end
+	end
+
+	if not self.chakram_ability then
+		self.chakram_ability = self:GetCaster():FindAbilityByName("imba_timbersaw_chakram")
+	end
+	
+	if self.chakram_ability then
+		for _, data in pairs(self.chakram_ability.projectiles) do
+			-- Okay so the point of this is that it allows you to pull launching chakrams back before they've settled and actually put down those aura thinkers
+			-- I need the weird "ProjectileManager:GetLinearProjectileRadius(_) == self.chakram_ability:GetSpecialValueFor("radius")" line because it's getting the linear projectile location of tracking projectiles somehow, which starts duplicating returning chakrams in a weird nearby place
+			if ProjectileManager:GetLinearProjectileLocation(_) and ProjectileManager:GetLinearProjectileRadius(_) == self.chakram_ability:GetSpecialValueFor("radius") then
+				local ExtraData			= {
+					bReturning		= true,
+					id				= GameRules:GetGameTime() -- Tracking Projectiles don't create their own ids so gonna do some spaghet method
+				}
+			
+				local chakram_projectile = ProjectileManager:CreateTrackingProjectile({
+					Target 				= self:GetCaster(),
+					Source 				= nil,
+					Ability 			= self.chakram_ability,
+					EffectName 			= "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf",
+					iMoveSpeed			= self.chakram_ability:GetSpecialValueFor("speed"),
+					vSourceLoc 			= ProjectileManager:GetLinearProjectileLocation(_),
+					bDrawsOnMinimap 	= false,
+					bDodgeable 			= false,
+					bIsAttack 			= false,
+					bVisibleToEnemies 	= true,
+					bReplaceExisting 	= false,
+					flExpireTime 		= GameRules:GetGameTime() + 20.0,
+					bProvidesVision 	= false,
+					
+					ExtraData = ExtraData
+				})
+				
+				self.chakram_ability.projectiles[GameRules:GetGameTime()] = ExtraData
+				
+				ProjectileManager:DestroyLinearProjectile(_)
+				self.chakram_ability.projectiles[_] = nil
+			end
+		end
+	end
+end
+
+-------------------------------------
+-- IMBA_TIMBERSAW_RETURN_CHAKRAM_2 --
+------------------------------------
+
+function imba_timbersaw_return_chakram_2:GetAssociatedPrimaryAbilities()
+	return "imba_timbersaw_chakram_2"
+end
+
+function imba_timbersaw_return_chakram_2:IsStealable()		return false end
+
+function imba_timbersaw_return_chakram_2:OnSpellStart()
+	if self:GetCaster():GetName() == "npc_dota_hero_shredder" then
+		if not self.responses then
+			self.responses = 
+			{
+				["shredder_timb_chakramreturn_03"] = 0,
+				["shredder_timb_chakramreturn_04"] = 0,
+				["shredder_timb_chakramreturn_05"] = 0
+			}
+			
+			self.response_keys = {}
+			
+			for _, timer in pairs(self.responses) do
+				table.insert(self.response_keys, _)
+			end
+		end
+		
+		self.random_selection = RandomInt(1, #self.response_keys)
+		
+		if GameRules:GetDOTATime(true, true) - self.responses[self.response_keys[self.random_selection]] >= 5 then
+			self:GetCaster():EmitSound(self.response_keys[self.random_selection])
+			self.responses[self.response_keys[self.random_selection]] = GameRules:GetDOTATime(true, true)
+		end
+	end
+
+	if not self.chakram_ability then
+		self.chakram_ability = self:GetCaster():FindAbilityByName("imba_timbersaw_chakram_2")
+	end
+	
+	if self.chakram_ability then
+		for _, data in pairs(self.chakram_ability.projectiles) do
+			-- Okay so the point of this is that it allows you to pull launching chakrams back before they've settled and actually put down those aura thinkers
+			-- I need the weird "ProjectileManager:GetLinearProjectileRadius(_) == self.chakram_ability:GetSpecialValueFor("radius")" line because it's getting the linear projectile location of tracking projectiles somehow, which starts duplicating returning chakrams in a weird nearby place
+			if ProjectileManager:GetLinearProjectileLocation(_) and ProjectileManager:GetLinearProjectileRadius(_) == self.chakram_ability:GetSpecialValueFor("radius") then
+				local ExtraData			= {
+					bReturning		= true,
+					id				= GameRules:GetGameTime() -- Tracking Projectiles don't create their own ids so gonna do some spaghet method
+				}
+			
+				local chakram_projectile = ProjectileManager:CreateTrackingProjectile({
+					Target 				= self:GetCaster(),
+					Source 				= nil,
+					Ability 			= self.chakram_ability,
+					-- Okay I know this is wrong...but since it's situated as a tracking projectile I can't change its CPs
+					EffectName 			= "particles/econ/items/shredder/hero_shredder_icefx/shredder_chakram_return_ice.vpcf",
+					iMoveSpeed			= self.chakram_ability:GetSpecialValueFor("speed"),
+					vSourceLoc 			= ProjectileManager:GetLinearProjectileLocation(_),
+					bDrawsOnMinimap 	= false,
+					bDodgeable 			= false,
+					bIsAttack 			= false,
+					bVisibleToEnemies 	= true,
+					bReplaceExisting 	= false,
+					flExpireTime 		= GameRules:GetGameTime() + 20.0,
+					bProvidesVision 	= false,
+					
+					ExtraData = ExtraData
+				})
+				
+				self.chakram_ability.projectiles[GameRules:GetGameTime()] = ExtraData
+				
+				ProjectileManager:DestroyLinearProjectile(_)
+				self.chakram_ability.projectiles[_] = nil
+			end
+		end
+	end
+end
+
+---------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_CHAKRAM_THINKER --
+---------------------------------------------
+
+-- TODO: Check to make sure Rubick can use this properly
+function modifier_imba_timbersaw_chakram_thinker:IsPurgable()		return false end
+function modifier_imba_timbersaw_chakram_thinker:RemoveOnDeath()	return false end
+
+-- Three states possible for Chakram (well there will actually be four here but that's for later...)
+-- - 1. Launching (use linear projectile?)
+-- - 2. Lingering (use aura thinker?)
+-- - 3. Returning (use tracking projectile?)
+
+function modifier_imba_timbersaw_chakram_thinker:OnCreated(params)
+	if self:GetAbility() then
+		self.speed				= self:GetAbility():GetSpecialValueFor("speed")
+		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+		self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+		self.pass_damage		= self:GetAbility():GetSpecialValueFor("pass_damage")
+		self.damage_interval	= self:GetAbility():GetSpecialValueFor("damage_interval")
+		self.break_distance		= self:GetAbility():GetSpecialValueFor("break_distance")
+		self.mana_per_second	= self:GetAbility():GetSpecialValueFor("mana_per_second")		
+		self.observe_tick_scale	= self:GetAbility():GetSpecialValueFor("observe_tick_scale")
+		self.observe_max_scale	= self:GetAbility():GetSpecialValueFor("observe_max_scale")
+	elseif not self:GetAbility() and IsServer() then
+		self.speed				= params.speed
+		self.radius				= params.radius
+		self.damage_per_second	= params.damage_per_second
+		self.pass_damage		= params.pass_damage
+		self.damage_interval	= params.damage_interval
+		self.break_distance		= params.break_distance
+		self.mana_per_second	= params.mana_per_second
+		self.observe_tick_scale	= params.observe_tick_scale
+		self.observe_max_scale	= params.observe_max_scale
+	end
+
+	if not IsServer() then return end
+	
+	if self:GetAbility() then
+		self.damage_type		= self:GetAbility():GetAbilityDamageType()
+		
+		if self:GetAbility():GetName() == "imba_timbersaw_chakram" then
+			self.effect_name	= "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf"
+		elseif self:GetAbility():GetName() == "imba_timbersaw_chakram_2" then
+			self.effect_name	= "particles/econ/items/shredder/hero_shredder_icefx/shredder_chakram_return_ice.vpcf"
+		end	
+	else
+		self.damage_type		= DAMAGE_TYPE_PURE
+	end
+	
+	self:GetParent():EmitSound("Hero_Shredder.Chakram")
+	
+	if params.bAutoCastState and params.bAutoCastState == 1 then
+		-- -- Was trying to do some fancy stuff with moving Chakrams on auto-cast but the particles and motion controllers didn't play nice so I guess I gotta switch it up...
+		-- self.interval	= FrameTime()
+		-- -- Initialize some extra variables to deal with the FrameTime() interval think (man I hope this doesn't lag to death but I'm not optimistic)
+		-- self.counter	= self.interval
+		-- self.damaged_targets	= {}
+	
+		-- self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+	
+		-- -- Honestly all three of these particles don't really work properly with what I'm trying, but this is argubaly the lesser evil
+		  -- -- Stationary chakram can't attach to moving units to have the particle move itself
+		  -- -- Launching chakram can't have its direction change in the OnIntervalThink() or any time right after it's created
+		  -- -- Returning chakram goes vertical if it reaches its target which basically needs to be always in this scenario (this is the one used)
+		-- self.chakram_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- ParticleManager:SetParticleControlEnt(self.chakram_particle, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+		-- -- Arbitrary fast speed for the model to keep up with the thinker's movement
+		-- ParticleManager:SetParticleControl(self.chakram_particle, 2, Vector(3000, 0, 0 ))
+		
+		-- self:AddParticle(self.chakram_particle, false, false, -1, false, false)
+		
+	
+		-- self.cast_pos = Vector(params.cast_pos_x, params.cast_pos_y, params.cast_pos_z)
+		
+		-- self.circumference	= 2 * math.pi * (self:GetParent():GetAbsOrigin() - self.cast_pos):Length2D() * 0.5
+		-- self.angle			=  ((self.speed * 0.5) / self.circumference) * 360
+		
+		-- if self:ApplyHorizontalMotionController() == false then 
+			-- self:Destroy()
+		-- end
+	else
+		-- self.interval = self.damage_interval
+	
+		-- self.chakram_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- self:AddParticle(self.chakram_particle, false, false, -1, false, false)
+	end
+	
+	self.interval = self.damage_interval
+
+	self.chakram_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	
+	-- Because they share the same particle with just different CPs for colours, this needs to be established here
+	if self:GetAbility() then
+		if self:GetAbility():GetName() == "imba_timbersaw_chakram" then
+			if self:GetAbility():GetAutoCastState() then
+				self:GetParent().bTimberChainTarget = true
+				ParticleManager:SetParticleControl(self.chakram_particle, 15, Vector(255, 255, 255))
+				ParticleManager:SetParticleControl(self.chakram_particle, 16, Vector(1, 0, 0))
+			else
+				ParticleManager:SetParticleControl(self.chakram_particle, 16, Vector(0, 0, 0))
+			end
+		elseif self:GetAbility():GetName() == "imba_timbersaw_chakram_2" then
+			if self:GetAbility():GetAutoCastState() then
+				self:GetParent().bTimberChainTarget = true
+				ParticleManager:SetParticleControl(self.chakram_particle, 15, Vector(128, 128, 255))
+				ParticleManager:SetParticleControl(self.chakram_particle, 60, Vector(255, 255, 255))
+				ParticleManager:SetParticleControl(self.chakram_particle, 61, Vector(1, 0, 0))
+			else
+				ParticleManager:SetParticleControl(self.chakram_particle, 15, Vector(0, 0, 255))
+			end
+			
+			ParticleManager:SetParticleControl(self.chakram_particle, 16, Vector(1, 0, 0))
+		end
+	end
+	
+	self:AddParticle(self.chakram_particle, false, false, -1, false, false)
+	
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_timbersaw_chakram_thinker:OnIntervalThink()
+	if not self:GetAbility() then self:Destroy() return end
+
+	if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+		self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+	end
+	
+	if self.dendrophobia_modifier then
+		self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), false))
+	end
+
+	GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), true)
+	
+	if self.interval == self.damage_interval or (self.interval ~= self.damage_interval and self.counter >= self.damage_interval) then
+		-- Issue: This doesn't account for mana-reduction values when checking if there's enough mana for Chakram to be sustained
+		if self:GetCaster():GetMana() >= self.mana_per_second and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.break_distance then
+			self:GetCaster():ReduceMana(self.mana_per_second)			
+
+			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+				-- if not self.counter then
+					ApplyDamage({
+						victim 			= enemy,
+						-- IMBAfication: Observe and Improve
+						damage 			= self.damage_per_second * (1 + math.min(self.observe_tick_scale * (self:GetElapsedTime() / self.damage_interval) * 0.01, self.observe_max_scale * 0.01)),
+						damage_type		= self.damage_type,
+						damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+						attacker 		= self:GetCaster(),
+						ability 		= self:GetAbility()
+					})
+				-- elseif not self.damaged_targets[enemy] or GameRules:GetDOTATime(true, true) - self.damaged_targets[enemy] >= self.damage_interval then
+					-- ApplyDamage({
+						-- victim 			= enemy,
+						-- damage 			= self.pass_damage,
+						-- damage_type		= self.damage_type,
+						-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+						-- attacker 		= self:GetCaster(),
+						-- ability 		= self:GetAbility()
+					-- })
+					
+					-- self.damaged_targets[enemy] = GameRules:GetDOTATime(true, true)
 				-- end
-			-- end
-		-- end
-	-- end
+			end
+		else
+			self:Destroy()
+		end
+		
+		if self.counter then
+			self.counter = 0
+		end
+	elseif self.counter then
+		self.counter = self.counter + self.interval
+	end
 	
-	-- -- Restart interval think every time due to recovery time changing based on ability level
-	-- self:StartIntervalThink(-1)
-	-- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
--- end
+	if self.counter ~= nil then
+		self:GetParent():SetOrigin(RotatePosition(self.cast_pos, QAngle(0, self.angle * self.interval, 0), self:GetParent():GetOrigin()))
+	end
+end
 
--- -- We don't even need this block now if the OnCreated exists
--- -- function modifier_imba_visage_gravekeepers_cloak:OnStackCountChanged(stackCount)
-	-- -- -- If max stacks have been reached, the modifier no longer needs to think
-	-- -- if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_layers") then
-		-- -- -- Vanilla would just stop interval think at max stacks, but let's add another mechanic
-		-- -- -- self:StartIntervalThink(-1)
-
-	-- -- -- Otherwise, if the stack has been reduced to one below its max, start the interval think
-	-- -- -- (cannot be called below that because it would keep resetting the think timer otherwise)
-	-- -- elseif stackCount == self:GetAbility():GetSpecialValueFor("max_layers") and self:GetStackCount() == self:GetAbility():GetSpecialValueFor("max_layers") - 1 then
-		-- -- self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
-	-- -- end
--- -- end
-
--- function modifier_imba_visage_gravekeepers_cloak:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-	-- }
+function modifier_imba_timbersaw_chakram_thinker:OnDestroy()
+	if not IsServer() then return end
 	
-	-- return decFuncs
--- end
-
--- -- "Only reacts on player-based damage, excluding self-inflicted damage."
--- function modifier_imba_visage_gravekeepers_cloak:GetModifierIncomingDamage_Percentage(keys)
-	-- if not self:GetParent():PassivesDisabled() and keys.attacker:IsControllableByAnyPlayer() and keys.attacker ~= self:GetParent() and keys.damage > self:GetAbility():GetSpecialValueFor("minimum_damage") and self:GetStackCount() > 0 then
-		-- self:DecrementStackCount()
-		-- return self:GetAbility():GetSpecialValueFor("damage_reduction") * (self:GetStackCount() + 1) * (-1)
-	-- else
-		-- return 0
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak:IsAura()						return true end
--- function modifier_imba_visage_gravekeepers_cloak:IsAuraActiveOnDeath() 			return false end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("radius") end
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
--- function modifier_imba_visage_gravekeepers_cloak:GetModifierAura()				return "modifier_imba_visage_gravekeepers_cloak_secondary" end
-
--- function modifier_imba_visage_gravekeepers_cloak:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() or not hTarget:GetOwner() or not hTarget:GetOwner() == self:GetCaster() or not string.find(hTarget:GetDebugName(), "npc_dota_visage_familiar") end
-
--- --------------------------------------------
--- -- GRAVEKEEPER'S CLOAK SECONDARY MODIFIER --
--- --------------------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary:OnCreated()
-	-- self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-	-- }
+	self:GetParent():InterruptMotionControllers(true)
 	
-	-- return decFuncs
--- end
-
--- -- "Unlike the damage reduction on the hero itself, this damage reduction has no minimum threshold."
--- function modifier_imba_visage_gravekeepers_cloak_secondary:GetModifierIncomingDamage_Percentage(keys)
-	-- return self:GetCaster():GetModifierStackCount("modifier_imba_visage_gravekeepers_cloak", self:GetCaster()) * self.damage_reduction * (-1)
--- end
-
--- -------------------------------------------------
--- -- GRAVEKEEPER'S CLOAK SECONDARY ALLY MODIFIER --
--- -------------------------------------------------
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:IsPurgable()	return false end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnCreated()
-	-- self.minimum_damage		= self:GetAbility():GetSpecialValueFor("minimum_damage")
-	-- self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
+	self:GetParent():StopSound("Hero_Shredder.Chakram")
+	EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_Shredder.Chakram.Return", self:GetCaster())
 	
-	-- if not IsServer() then return end
-	
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- -- If stacks reach 0, destroy the modifier (after a short delay so it can block a last damage instance) as it's no longer needed
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnStackCountChanged(stackCount)
-	-- if self:GetStackCount() <= 0 then
-		-- self:StartIntervalThink(FrameTime())
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnIntervalThink()
-	-- self:StartIntervalThink(-1)
-	-- self:Destroy()
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:GetModifierIncomingDamage_Percentage(keys)
-	-- if keys.attacker:IsControllableByAnyPlayer() and keys.attacker ~= self:GetParent() and keys.damage > self.minimum_damage and self:GetStackCount() > 0 then
-		-- self:DecrementStackCount()
-		-- return self.damage_reduction * (self:GetStackCount() + 1) * (-1)
-	-- else
-		-- return 0
-	-- end
--- end
-
--- function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnTooltip()
-	-- return self.damage_reduction * self:GetStackCount()
--- end
-
--- --------------------------
--- -- STONE FORM SELF CAST --
--- --------------------------
-
--- function imba_visage_stone_form_self_cast:IsStealable()	return false end
-
--- function imba_visage_stone_form_self_cast:GetAssociatedSecondaryAbilities()
-	-- return "imba_visage_summon_familiars"
--- end
-
--- function imba_visage_stone_form_self_cast:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_stone_form_self_cast"
--- end
-
--- -- "If the familiar is stunned, silenced, sleeping, hidden, feared or hypnotized, it cannot be made to enter Stone Form."
--- function imba_visage_stone_form_self_cast:OnSpellStart()
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-			-- local stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
+	if self:GetAbility() then
+		local ExtraData			= {
+			bReturning		= true,
+			id				= GameRules:GetGameTime() -- Tracking Projectiles don't create their own ids so gonna do some spaghet method
+		}
+		
+		local chakram_projectile = ProjectileManager:CreateTrackingProjectile({
+			Target 				= self:GetCaster(),
+			Source 				= self:GetParent(),
+			Ability 			= self:GetAbility(),
+			EffectName 			= self.effect_name or "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf",
+			iMoveSpeed			= self.speed,
+			vSourceLoc 			= self:GetParent():GetAbsOrigin(),
+			bDrawsOnMinimap 	= false,
+			bDodgeable 			= false,
+			bIsAttack 			= false,
+			bVisibleToEnemies 	= true,
+			bReplaceExisting 	= false,
+			flExpireTime 		= GameRules:GetGameTime() + 20.0,
+			bProvidesVision 	= false,
 			
-			-- if stone_form_ability and stone_form_ability:IsCooldownReady() and
-			-- not (ally:IsStunned() or ally:IsSilenced() or ally:IsNightmared() or ally:IsOutOfGame()) then
-				-- stone_form_ability:CastAbility()
-				-- break
-			-- end
-		-- end
-	-- end
--- end
-
--- -----------------------------------
--- -- STONE FORM SELF CAST MODIFIER --
--- -----------------------------------
-
--- -- This tracks cooldowns of familiars and sets its own cooldown accordingly
-
--- function modifier_imba_visage_stone_form_self_cast:IsHidden()	return true end
-
--- function modifier_imba_visage_stone_form_self_cast:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self.summon_familiars_ability	= self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
-	-- self.lowest_cooldown			= 99
-	-- self.stone_form_ability			= nil
-	
-	-- self:StartIntervalThink(0.1)
--- end
-
--- -- This block seems like it could be problematic with respect to memory usage
--- function modifier_imba_visage_stone_form_self_cast:OnIntervalThink()
-	-- if self.summon_familiars_ability and self.summon_familiars_ability.familiar_table then
-		-- self.bValidFamiliars = false
-
-		-- for num = 1, #self.summon_familiars_ability.familiar_table do
-			-- if self.summon_familiars_ability.familiar_table[num] and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]) and EntIndexToHScript(self.summon_familiars_ability.familiar_table[num]):IsAlive() then
-				-- self.bValidFamiliars = true
-				-- break
-			-- end
-		-- end
+			ExtraData = ExtraData
+		})
 		
-		-- if not self.bValidFamiliars then
-			-- self:GetAbility():SetActivated(false)
-			-- return
-		-- else
-			-- self:GetAbility():SetActivated(true)
-		-- end
+		self:GetAbility().projectiles[GameRules:GetGameTime()] = ExtraData
+	end
+end
+
+-- This function won't run for some reason so I'm swapping to the intervalthink (hopefully won't be laggy as hell -_-)
+function modifier_imba_timbersaw_chakram_thinker:UpdateHorizontalMotion(me, dt)
+	if not IsServer() then return end
+	
+	-- me:SetOrigin(RotatePosition(self.cast_pos, QAngle(0, self.angle * dt, 0), me:GetOrigin()))
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_timbersaw_chakram_thinker:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_timbersaw_chakram_thinker:CheckState()
+	return {[MODIFIER_STATE_PROVIDES_VISION] = true}
+end
+
+function modifier_imba_timbersaw_chakram_thinker:DeclareFunctions()
+	return {MODIFIER_PROPERTY_BONUS_DAY_VISION, MODIFIER_PROPERTY_BONUS_NIGHT_VISION, MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+end
+
+function modifier_imba_timbersaw_chakram_thinker:GetBonusDayVision()
+	return 300
+end
+
+function modifier_imba_timbersaw_chakram_thinker:GetBonusNightVision()
+	return 300
+end
+
+function modifier_imba_timbersaw_chakram_thinker:OnAbilityFullyCast(keys)
+	if keys.unit == self:GetCaster() and keys.ability:GetAssociatedPrimaryAbilities() == self:GetAbility():GetName() then
+		self:Destroy()
+	end
+end
+
+function modifier_imba_timbersaw_chakram_thinker:IsHidden()				return true end
+
+function modifier_imba_timbersaw_chakram_thinker:IsAura() 				return true end
+function modifier_imba_timbersaw_chakram_thinker:IsAuraActiveOnDeath() 	return true end
+
+function modifier_imba_timbersaw_chakram_thinker:GetAuraRadius()		return self.radius end
+function modifier_imba_timbersaw_chakram_thinker:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_timbersaw_chakram_thinker:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_timbersaw_chakram_thinker:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_timbersaw_chakram_thinker:GetModifierAura()		return "modifier_imba_timbersaw_chakram_debuff" end
+
+-------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_CHAKRAM_DEBUFF --
+-------------------------------------------
+
+-- "The slow debuff from passing and from the stationary aura are the same. However, the former is dispellable, the latter is not."
+function modifier_imba_timbersaw_chakram_debuff:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf"
+end
+
+function modifier_imba_timbersaw_chakram_debuff:OnCreated()
+	if self:GetAbility() then
+		self.slow						= self:GetAbility():GetSpecialValueFor("slow")
+		self.slow_health_percentage		= self:GetAbility():GetSpecialValueFor("slow_health_percentage")
+	else
+		self.slow						= 0
+		self.slow_health_percentage		= 0
+	end
+	
+	if not IsServer() then return end
+end
+
+function modifier_imba_timbersaw_chakram_debuff:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+end
+
+function modifier_imba_timbersaw_chakram_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return math.ceil((self:GetParent():GetHealthPercent() - 100) / self.slow_health_percentage) * self.slow
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_CHAKRAM_DISARM --
+-------------------------------------------
+
+function modifier_imba_timbersaw_chakram_disarm:IsDebuff()		return true end
+function modifier_imba_timbersaw_chakram_disarm:IsPurgable()	return false end
+function modifier_imba_timbersaw_chakram_disarm:RemoveOnDeath()	return false end
+
+function modifier_imba_timbersaw_chakram_disarm:CheckState()
+	-- I don't think this shows on client-side
+	if not IsServer() then return end
+
+	return {[MODIFIER_STATE_DISARMED] = true}
+end
+
+------------------------------
+-- IMBA_TIMBERSAW_CHAKRAM_3 --
+------------------------------
+
+function imba_timbersaw_chakram_3:IsInnateAbility()	return true end
+function imba_timbersaw_chakram_3:IsStealable()		return false end
+
+function imba_timbersaw_chakram_3:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + math.max(self:GetCaster():GetModifierStackCount("modifier_imba_timbersaw_chakram_3", self:GetCaster()) - self:GetSpecialValueFor("trees_to_activate"), 0)
+end
+
+function imba_timbersaw_chakram_3:GetIntrinsicModifierName()
+	return "modifier_imba_timbersaw_chakram_3"
+end
+
+function imba_timbersaw_chakram_3:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_timbersaw_chakram_3:OnSpellStart()
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
+	if not self.projectiles then
+		self.projectiles = {}
+	end
+
+	self:GetCaster():EmitSound("Hero_Shredder.Chakram.Cast")
+	
+	local ExtraData = {
+		-- chakram_particle = chakram_particle,
+		cast_pos_x		= self:GetCaster():GetAbsOrigin().x,
+		cast_pos_y		= self:GetCaster():GetAbsOrigin().y,
+		cast_pos_z		= self:GetCaster():GetAbsOrigin().z,
+		bAutoCastState	= self:GetAutoCastState()
+	}
+	
+	local chakram_projectile = ProjectileManager:CreateLinearProjectile({
+		Source			= self:GetCaster(),
+		Ability			= self,
+		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
 		
-		-- self.lowest_cooldown	= 99
+	    bDeleteOnHit = false,
+	    
+	    EffectName = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold.vpcf",
+	    fDistance = self:GetCastRange(self:GetCursorPosition(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(),
+		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+	    fStartRadius = self:GetSpecialValueFor("radius"),
+		fEndRadius = self:GetSpecialValueFor("radius"),
 		
-		-- local allies 			= FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		
-		-- for _, ally in pairs(allies) do
-			-- if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-				-- self.stone_form_ability = ally:FindAbilityByName("imba_visage_summon_familiars_stone_form")
-				
-				-- if self.stone_form_ability and self.stone_form_ability:GetCooldownTimeRemaining() <= self.lowest_cooldown then
-					-- self.lowest_cooldown = self.stone_form_ability:GetCooldownTimeRemaining()
-				-- end
-			-- end
-		-- end
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		fExpireTime = GameRules:GetGameTime() + 10.0,
 		
-		-- self:GetAbility():EndCooldown()
-		-- self:GetAbility():StartCooldown(self.lowest_cooldown)
-	-- else
-		-- self:GetAbility():SetActivated(false)
-		-- self.summon_familiars_ability = self:GetCaster():FindAbilityByName("imba_visage_summon_familiars")
-	-- end
--- end
-
--- ----------------------
--- -- SUMMON FAMILIARS --
--- ----------------------
--- -- TODO: familiars take 4 hp damage if all the damage is blocked by a right click (but still does 0 from magic???)
--- -- ...yeah I might just ignore this
-
--- function imba_visage_summon_familiars:GetAssociatedPrimaryAbilities()
-	-- return "imba_visage_stone_form_self_cast"
--- end
-
--- function imba_visage_summon_familiars:OnUpgrade()
-	-- local stone_form_self_cast_ability = self:GetCaster():FindAbilityByName("imba_visage_stone_form_self_cast")
-	
-	-- if stone_form_self_cast_ability then
-		-- stone_form_self_cast_ability:SetLevel(self:GetLevel())
-	-- end
-
-	-- local become_familiar_ability = self:GetCaster():FindAbilityByName("imba_visage_become_familiar")
-	
-	-- if become_familiar_ability then
-		-- become_familiar_ability:SetLevel(self:GetLevel())
-	-- end	
--- end
-
--- function imba_visage_summon_familiars:OnSpellStart()
-	-- self:GetCaster():EmitSound("Hero_Visage.SummonFamiliars.Cast")
-
-	-- if self:GetCaster():GetName() == "npc_dota_hero_visage" then
-		-- if not self.responses then
-			-- self.responses = 
-			-- {
-				-- "visage_visa_summon_03",
-				-- "visage_visa_summon_04"
-			-- }
-		-- end
+		-- "Chakram provides 300 radius flying vision while spinning in place at the target area (but not while traveling)."
+		bProvidesVision = false,
 		
-		-- if self.responses then
-			-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-		-- end
-	-- end
+		ExtraData = ExtraData
+	})
 	
-	-- self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
-	
-	-- -- Baseline familiars
-	-- local unit_count = self:GetSpecialValueFor("initial_familiar_count")
-	
-	-- if self:GetCaster():HasScepter() then
-		-- unit_count = self:GetSpecialValueFor("tooltip_scepter_total_familiars")
-	-- end
-	
-	-- -- Probably don't need one of these since I'm making more of them innate
-	-- -- if self:GetCaster():HasTalent("") then
-		-- -- unit_count = unit_count + 1
-	-- -- end
-	
-	-- -- "The Familiars are summoned 200 range in front on Visage, with 120 range distance between the Familiars. Visage is always at the center of the line."
-	-- -- Forward Vector: self:GetCaster():GetForwardVector() * 200
-	-- -- Perpendicular Vector: self:GetCaster():GetRightVector() * (math.max(unit_count - 1, 0) * 120 * (-0.5))
-	
-	-- if self.familiar_table then
-		-- for num = 1, #self.familiar_table do
-			-- if self.familiar_table[num] and EntIndexToHScript(self.familiar_table[num]) and EntIndexToHScript(self.familiar_table[num]).IsNull and not EntIndexToHScript(self.familiar_table[num]):IsNull() and EntIndexToHScript(self.familiar_table[num]).IsAlive and EntIndexToHScript(self.familiar_table[num]):IsAlive() and EntIndexToHScript(self.familiar_table[num]).ForceKill then
-				-- EntIndexToHScript(self.familiar_table[num]):ForceKill(false)
-			-- end
-		-- end
-	-- end
-	
-	-- -- Empty out the table to insert new familiars
-	-- self.familiar_table = {}
+	self.projectiles[chakram_projectile] = ExtraData
+end
 
-	-- -- I guess it's bad to initialize a variable multiple times so I'll do it outside the loop?
-	
-	-- local familiar 				= nil
-	-- local spawn_location		= nil
-	-- local stone_form_ability 	= nil
-	-- local summon_particle		= nil
+function imba_timbersaw_chakram_3:OnProjectileThinkHandle(projectileHandle)
+	if #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), true) >= 1 then
+		for _, tree in pairs(GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)) do
+			EmitSoundOnLocationWithCaster(tree:GetAbsOrigin(), "Hero_Shredder.Chakram.Tree", self:GetCaster())
+		end
 
-	-- for num = 1, unit_count do
-		-- spawn_location = self:GetCaster():GetAbsOrigin() + 
-		-- -- Front vector
-		-- (self:GetCaster():GetForwardVector() * 200) + 
-		-- -- Perpendicular vector (gets the left-most spot where the first familiar will spawn, then loops through the rest being 120 distance apart)
-		-- (self:GetCaster():GetRightVector() * ((math.max(unit_count - 1, 0) * 120) * (-0.5 + ((math.max(num - 1, 0)) / (unit_count - 1)))))
-	
-		-- familiar = CreateUnitByName("npc_dota_visage_familiar"..math.min(self:GetLevel(), 3), spawn_location, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
+			self.dendrophobia_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_timbersaw_chakram_3", self:GetCaster())
+		end
 		
-		-- summon_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_summon_familiars.vpcf", PATTACH_ABSORIGIN, familiar)
-		-- ParticleManager:ReleaseParticleIndex(summon_particle)
+		if self.dendrophobia_modifier then
+			self.dendrophobia_modifier:SetStackCount(self.dendrophobia_modifier:GetStackCount() + #GridNav:GetAllTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false))
+		end
+	
+		GridNav:DestroyTreesAroundPoint(ProjectileManager:GetLinearProjectileLocation(projectileHandle), self:GetSpecialValueFor("radius"), false)
+	end
+end
+
+-- This is for the launching chakram logic (linear projectile)
+function imba_timbersaw_chakram_3:OnProjectileHitHandle(target, location, projectileHandle)
+	if target and target ~= self:GetCaster() then
+		target:EmitSound("Hero_Shredder.Chakram.Target")
+	
+		-- "A passing Chakram first applies the passing damage, then the debuff."
+		ApplyDamage({
+			victim 			= target,
+			damage 			= self:GetSpecialValueFor("pass_damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
 		
-		-- familiar:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_summon_familiars", {})
-		-- familiar:SetForwardVector(self:GetCaster():GetForwardVector())
-		-- stone_form_ability = familiar:FindAbilityByName("imba_visage_summon_familiars_stone_form")
+		local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
 		
-		-- if stone_form_ability then
-			-- stone_form_ability:SetLevel(self:GetLevel())
-		-- end
-		
-		-- -- Set ownership to Visage
-		-- familiar:SetOwner(self:GetCaster())
-		-- familiar:SetTeam(self:GetCaster():GetTeam())
-		-- familiar:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
-		
-		-- -- Set unit values
-		-- familiar:SetBaseMaxHealth(self:GetSpecialValueFor("familiar_hp"))
-		-- familiar:SetMaxHealth(self:GetSpecialValueFor("familiar_hp"))
-		-- familiar:SetHealth(self:GetSpecialValueFor("familiar_hp"))
-		
-		-- familiar:SetPhysicalArmorBaseValue(self:GetSpecialValueFor("familiar_armor"))
-		
-		-- familiar:SetBaseMoveSpeed(self:GetTalentSpecialValueFor("familiar_speed"))
-		
-		-- familiar:SetBaseDamageMin(self:GetTalentSpecialValueFor("familiar_attack_damage"))
-		-- familiar:SetBaseDamageMax(self:GetTalentSpecialValueFor("familiar_attack_damage"))
-		
-		-- table.insert(self.familiar_table, familiar:entindex())
-	-- end
--- end
-			
--- -------------------------------
--- -- SUMMON FAMILIARS MODIFIER --
--- -------------------------------
-
--- function modifier_imba_visage_summon_familiars:IsHidden()	return true end
--- function modifier_imba_visage_summon_familiars:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars:OnCreated()
-	-- self.unfeeling_status_resistance	= self:GetAbility():GetSpecialValueFor("unfeeling_status_resistance")
-	-- self.petrifying_breath_duration		= self:GetAbility():GetSpecialValueFor("petrifying_breath_duration")
-	
-	-- if not IsServer() then return end
-	
-	-- self:StartIntervalThink(FrameTime())
--- end
-
--- -- IDK why this is a thing but vanilla familiars can push each other around so let's implement it here and make everything potentially stupidly laggy
--- function modifier_imba_visage_summon_familiars:OnIntervalThink()
-	-- -- Rubick exception
-	-- if not self:GetAbility() then
-		-- self:StartIntervalThink(-1)
-		-- self:GetParent():ForceKill(false)
-	-- end
-	
-	-- local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():GetHullRadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-	
-	-- for _, ally in pairs(allies) do
-		-- if ally ~= self:GetParent() and string.find(ally:GetDebugName(), "npc_dota_visage_familiar") and not ally:IsMoving() then
-			-- ally:SetAbsOrigin(GetGroundPosition(ally:GetAbsOrigin() + (ally:GetAbsOrigin() - self:GetParent():GetAbsOrigin()), ally))
-		-- end
-	-- end
--- end
-
--- function modifier_imba_visage_summon_familiars:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_FLYING] = true,
-		-- [MODIFIER_STATE_NO_UNIT_COLLISION] = true
-	-- }
-	
-	-- return state
--- end
-
--- function modifier_imba_visage_summon_familiars:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,	-- IMBAfication: Unfeeling Stone
-		-- MODIFIER_EVENT_ON_ATTACK_LANDED					-- IMBAfication: Petrifying Breath
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars:GetModifierStatusResistanceStacking()
-	-- return self.unfeeling_status_resistance
--- end
-
--- function modifier_imba_visage_summon_familiars:OnAttackLanded(keys)
-	-- if keys.attacker == self:GetParent() then
-		-- local petrifying_breath_modifier = keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_visage_summon_familiars_petrifying_breath", {duration = self.petrifying_breath_duration})
-		
-		-- if petrifying_breath_modifier then
-			-- petrifying_breath_modifier:SetDuration(self.petrifying_breath_duration * (1 - keys.target:GetStatusResistance()), true)
-		-- end
-	-- end
--- end
-
--- -------------------------------------------------
--- -- SUMMON FAMILIARS PETRIFYING BREATH MODIFIER --
--- -------------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:OnCreated()
-	-- if self:GetAbility() then
-		-- self.petrifying_breath_reduction_per_stack	= self:GetAbility():GetSpecialValueFor("petrifying_breath_reduction_per_stack")
-	-- else
-		-- self.petrifying_breath_reduction_per_stack	= 0
-	-- end
-	
-	-- if not IsServer() then return end
-	
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierMoveSpeedBonus_Constant()
-	-- return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_visage_summon_familiars_petrifying_breath:GetModifierAttackSpeedBonus_Constant()
-	-- return self.petrifying_breath_reduction_per_stack * self:GetStackCount() * (-1)
--- end
-
--- ---------------------------------
--- -- SUMMON FAMILIARS STONE FORM --
--- ---------------------------------
-
--- -- 0.55 seconds is default, so making the stun delay longer or shorter should change the speed of the cast animation
--- -- function imba_visage_summon_familiars_stone_form:GetPlaybackRateOverride()
-	-- -- return self:GetSpecialValueFor("stun_delay") / 0.55
--- -- end
-
--- function imba_visage_summon_familiars_stone_form:OnSpellStart()
-	-- -- Remove this block when done with testing and the whole thing is properly ported over
-	-- local summon_familiars_ability = self:GetCaster():GetOwner():FindAbilityByName("imba_visage_summon_familiars")
-	
-	-- if not summon_familiars_ability then
-		-- self:SetHidden(true)
-		-- return
-	-- end
-	-- --
-
-	-- self:GetCaster():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 1)
-
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_summon_familiars_stone_form_root", {duration = self:GetSpecialValueFor("stun_delay")})
--- end
-
--- -----------------------------------------------
--- -- SUMMON FAMILIARS STONE FORM ROOT MODIFIER --
--- -----------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_stone_form_root:IsPurgable()	return false end
-
--- function modifier_imba_visage_summon_familiars_stone_form_root:OnDestroy()
-	-- -- Only apply the buff if the modifier lasts for its full duration (i.e. the familiar doesn't die mid-cast)
-	-- if not IsServer() or not self:GetAbility() or self:GetRemainingTime() > 0 then return end
-		
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_summon_familiars_stone_form_buff", {duration = self:GetAbility():GetSpecialValueFor("stone_duration")})
--- end
-
--- -- "During the effect delay, the Familiar is rooted and disarmed, being prevented from moving or attacking."
--- function modifier_imba_visage_summon_familiars_stone_form_root:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_ROOTED] 							= true,
-		-- [MODIFIER_STATE_DISARMED]							= true,
-		
-		-- -- These aren't vanilla states but it seems to make sense cause you can otherwise spam the ability during the delay time and get a bunch of stuns in WTF mode
-		-- [MODIFIER_STATE_SILENCED]							= true,
-	-- }
-	
-	-- return state
--- end
-
--- -----------------------------------------------
--- -- SUMMON FAMILIARS STONE FORM BUFF MODIFIER --
--- -----------------------------------------------
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetEffectName()
-	-- return "particles/units/heroes/hero_visage/visage_stone_form_area_energy.vpcf"
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnCreated()
-	-- if not self:GetAbility() then self:Destroy() return end
-	
-	-- self.hp_regen		= self:GetAbility():GetSpecialValueFor("hp_regen")
-	
-	-- if not IsServer() then return end
-
-	-- self.stun_radius	= self:GetAbility():GetSpecialValueFor("stun_radius")
-	-- self.stun_damage	= self:GetAbility():GetSpecialValueFor("stun_damage")
-	-- self.stun_duration	= self:GetAbility():GetSpecialValueFor("stun_duration")
-	-- self.stone_duration	= self:GetAbility():GetSpecialValueFor("stone_duration")
-	
-	-- self:GetParent():EmitSound("Visage_Familar.StoneForm.Cast")
-	
-	-- local stone_form_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_stone_form.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	-- self:AddParticle(stone_form_particle, false, false, -1, false, false)
-
-	-- -- "Upon landing, trees in the surrounding area are destroyed"
-	-- GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), true)
-	
-	-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	-- local damageTable = {
-		-- victim 			= nil,
-		-- damage 			= self.stun_damage,
-		-- damage_type		= self:GetAbility():GetAbilityDamageType(),
-		-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		-- attacker 		= self:GetParent(),
-		-- ability 		= self:GetAbility()
-	-- }
-	
-	-- local stun_modifier = nil
-	
-	-- if #enemies >= 1 then
-		-- self:GetParent():EmitSound("Visage_Familar.StoneForm.Stun")
-	-- end
-	
-	-- -- "Stone Form first applies the debuff, then the damage."
-	-- for _, enemy in pairs(enemies) do
-		-- stun_modifier		= enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-		
-		-- if stun_modifier then
-			-- stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
-		-- end
-	
-		-- damageTable.victim	= enemy
-
-		-- ApplyDamage(damageTable)
-	-- end
-	
-	-- -- Initiate counter and tick down every interval
-	-- self.counter = self.stone_duration
-	
-	-- self:StartIntervalThink(1)
--- end
-
--- -- Counter countdown
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnIntervalThink()
-	-- self.counter = self.counter - 1
-
-	-- -- CreateParticleForPlayer wasn't working for me
-	-- self.stone_form_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_visage/visage_stoneform_overhead_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
-	-- ParticleManager:SetParticleControl(self.stone_form_overhead_particle, 1, Vector(0, self.counter, 0))
-	-- ParticleManager:SetParticleControl(self.stone_form_overhead_particle, 2, Vector(1, 0, 0))
-	-- ParticleManager:ReleaseParticleIndex(self.stone_form_overhead_particle)
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:OnDestroy()
-	-- local stone_form_transform_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_familiar_transform.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:ReleaseParticleIndex(stone_form_transform_particle)
--- end
-
--- -- "After the effect delay, the Familiar's health regeneration is heavily boosted, it is turned invulnerable and it gets disabled."
--- function modifier_imba_visage_summon_familiars_stone_form_buff:CheckState()
-	-- if not IsServer() then return end
-
-	-- local state = {
-		-- [MODIFIER_STATE_INVULNERABLE] 	= true,
-		-- -- Using MODIFIER_STATE_STUNNED breaks the cast animation...gonna just override with a gesture
-		-- [MODIFIER_STATE_STUNNED] 		= true
-	-- }
-	
-	-- return state
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		-- MODIFIER_PROPERTY_VISUAL_Z_DELTA
-		
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetModifierConstantHealthRegen()
-	-- return self.hp_regen
--- end
-
--- function modifier_imba_visage_summon_familiars_stone_form_buff:GetVisualZDelta()
-	-- return 0
--- end
-
--- ---------------------
--- -- BECOME FAMILIAR --
--- ---------------------
-
--- function imba_visage_become_familiar:IsStealable()	return false end
-
--- function imba_visage_become_familiar:OnSpellStart()
-	-- self:SetActivated(false)
-
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_become_familiar_delay", {duration = self:GetSpecialValueFor("familiar_transform_delay")})
--- end
-
--- ------------------------------------
--- -- BECOME FAMILIAR DELAY MODIFIER --
--- ------------------------------------
-
--- function modifier_imba_visage_become_familiar_delay:IsPurgable()	return false end
-
--- function modifier_imba_visage_become_familiar_delay:GetEffectName() return "particles/units/heroes/hero_spirit_breaker/spirit_breaker_haste_owner_dark.vpcf" end
-
--- function modifier_imba_visage_become_familiar_delay:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self:GetParent():EmitSound("Visage_Familar.BellToll")
--- end
-
--- function modifier_imba_visage_become_familiar_delay:OnDestroy()
-	-- if not IsServer() then return end
-
-	-- local become_familiar_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_visage_become_familiar", self:GetCaster())
-	
-	-- if not become_familiar_modifier then
-		-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_visage_become_familiar", {})
-	-- else
-		-- become_familiar_modifier:Destroy()
-	-- end
-	
-	-- self:GetAbility():SetActivated(true)
--- end
-
--- ------------------------------
--- -- BECOME FAMILIAR MODIFIER --
--- ------------------------------
-
--- function modifier_imba_visage_become_familiar:IsPurgable()	return false end
-
--- function modifier_imba_visage_become_familiar:OnCreated()
-	-- self.familiar_speed					= self:GetAbility():GetTalentSpecialValueFor("familiar_speed")
-	-- self.familiar_attack_damage			= self:GetAbility():GetSpecialValueFor("familiar_attack_damage")
-	-- self.familiar_attack_rate			= self:GetAbility():GetSpecialValueFor("familiar_attack_rate")
-	-- self.familiar_vision_daytime		= self:GetAbility():GetSpecialValueFor("familiar_vision_daytime")
-	-- self.familiar_vision_nighttime		= self:GetAbility():GetSpecialValueFor("familiar_vision_nighttime")
-	-- self.familiar_projectile_speed		= self:GetAbility():GetSpecialValueFor("familiar_projectile_speed")
-	-- self.familiar_armor					= self:GetAbility():GetSpecialValueFor("familiar_armor")
-	-- self.familiar_movement_turn_rate	= self:GetAbility():GetSpecialValueFor("familiar_movement_turn_rate")
-	-- self.familiar_attack_range			= self:GetAbility():GetSpecialValueFor("familiar_attack_range")
-
-	-- if not IsServer() then return end
-	
-	-- -- self.standard_projectile_speed	= self:GetParent():GetProjectileSpeed()
-
-	-- -- self.damage_reducer				= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - self.familiar_attack_damage
-	
-	-- -- self:SetStackCount(self.damage_reducer)
-	
-	-- self:StartIntervalThink(0.1)
--- end
-
--- function modifier_imba_visage_become_familiar:OnIntervalThink()
-	-- -- self:SetStackCount(0)
-	-- -- self.damage_reducer	 = self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - self.familiar_attack_damage
-	-- -- self:SetStackCount(self.damage_reducer)
-
-	-- if not GameRules:IsDaytime() then
-		-- AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.familiar_vision_daytime, 0.1, false)
-	-- else
-		-- AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.familiar_vision_nighttime, 0.1, false)
-	-- end
--- end
-
--- function modifier_imba_visage_become_familiar:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_FLYING]				= true,
-		-- [MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
-		
-		-- [MODIFIER_STATE_MUTED]				= true,
-	-- }
-	
-	-- return state
--- end
-
--- function modifier_imba_visage_become_familiar:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_MODEL_CHANGE,
-		-- MODIFIER_PROPERTY_PROJECTILE_NAME,
-		-- -- MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
-		
-		-- -- MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-		-- -- MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE,
-		-- MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
-		-- MODIFIER_PROPERTY_TURN_RATE_OVERRIDE,
-		-- -- MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_visage_become_familiar:GetModifierModelChange()
-	-- -- return "models/heroes/visage/visage_familiar.vmdl"
-	-- return "models/items/visage/immortal_familiar/immortal_familiar.vmdl"
--- end
-
--- function modifier_imba_visage_become_familiar:GetModifierProjectileName()
-	-- -- return "particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf"
-	-- return "particles/econ/items/visage/immortal_familiar/visage_immortal_ti5/visage_familiar_base_attack_ti5.vpcf"
--- end
-
--- -- function modifier_imba_visage_become_familiar:GetModifierProjectileSpeedBonus()
-	-- -- if not IsServer() then return end
-
-	-- -- return self.familiar_projectile_speed - self.standard_projectile_speed
--- -- end
-
--- -- function modifier_imba_visage_become_familiar:GetModifierBaseAttack_BonusDamage()
-	-- -- return self:GetStackCount() * (-1)
--- -- end
-
--- -- function modifier_imba_visage_become_familiar:GetModifierAttackRangeOverride()
-	-- -- return self.familiar_attack_range
--- -- end
-
--- function modifier_imba_visage_become_familiar:GetModifierMoveSpeedOverride()
-	-- return self.familiar_speed
--- end
-
--- function modifier_imba_visage_become_familiar:GetModifierTurnRate_Override()
-	-- return self.familiar_movement_turn_rate
--- end
-
--- -- Yeah this seems too strong lol
--- -- function modifier_imba_visage_become_familiar:GetModifierBaseAttackTimeConstant()
-	-- -- return self.familiar_attack_rate
--- -- end
-
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
-
--- LinkLuaModifier("modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-
--- modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed	= class({})
-
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:IsHidden() 		return true end
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:IsPurgable() 	return false end
--- function modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed:RemoveOnDeath() 	return false end
-
--- function imba_visage_summon_familiars:OnOwnerSpawned()
-	-- if not IsServer() then return end
-
-	-- if self:GetCaster():HasTalent("special_bonus_imba_visage_summon_familiars_bonus_move_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_visage_summon_familiars_bonus_move_speed"), "modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed", {})
-	-- end
--- end
+		if slow_modifier then
+			slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
+		end
+	end
+end
+
+---------------------------------------
+-- MODIFIER_IMBA_TIMBERSAW_CHAKRAM_3 --
+---------------------------------------
+
+function modifier_imba_timbersaw_chakram_3:OnStackCountChanged(stackCount)
+	if not IsServer() then return end
+
+	if self:GetAbility() and self:GetAbility():IsTrained() and self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("trees_to_activate") and self:GetAbility():IsHidden() then
+		self:GetAbility():SetHidden(false)
+	end
+end
+
+function modifier_imba_timbersaw_chakram_3:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TOOLTIP}
+end
+
+function modifier_imba_timbersaw_chakram_3:OnTooltip()
+	return self:GetAbility():GetSpecialValueFor("trees_to_activate")
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_timbersaw_timber_chain_range	= class({})
+
+function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable()	 	return false end
+function modifier_special_bonus_imba_timbersaw_timber_chain_range:RemoveOnDeath() 	return false end
+
+function imba_timbersaw_timber_chain:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_timbersaw_timber_chain_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_timbersaw_timber_chain_range"), "modifier_special_bonus_imba_timbersaw_timber_chain_range", {})
+	end
+end

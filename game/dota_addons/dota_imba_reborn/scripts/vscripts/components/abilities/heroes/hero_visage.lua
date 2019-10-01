@@ -589,12 +589,29 @@ function modifier_imba_visage_gravekeepers_cloak:IsHidden()	return self:GetAbili
 function modifier_imba_visage_gravekeepers_cloak:OnCreated()
 	if not IsServer() then return end
 	
+	self.cloak_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_cloak_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	
+	-- The particle only supports up to 4 layers but we have more here
+	for layer = 2, 5 do
+		ParticleManager:SetParticleControl(self.cloak_particle, layer, Vector(1, 0, 0))
+	end
+	
+	self:AddParticle(self.cloak_particle, false, false, -1, false, false)
+	
 	self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("recovery_time"))
 end
 
 function modifier_imba_visage_gravekeepers_cloak:OnIntervalThink()
 	if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_layers") then
 		self:IncrementStackCount()
+		
+		for layer = 2, 5 do
+			if self:GetStackCount() + 1 >= layer then
+				ParticleManager:SetParticleControl(self.cloak_particle, layer, Vector(1, 0, 0))
+			else
+				ParticleManager:SetParticleControl(self.cloak_particle, layer, Vector(0, 0, 0))
+			end
+		end
 	else
 		-- IMBAfication: Cloak Encompassing
 		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -642,6 +659,15 @@ end
 function modifier_imba_visage_gravekeepers_cloak:GetModifierIncomingDamage_Percentage(keys)
 	if not self:GetParent():PassivesDisabled() and keys.attacker:IsControllableByAnyPlayer() and keys.attacker ~= self:GetParent() and keys.damage > self:GetAbility():GetSpecialValueFor("minimum_damage") and self:GetStackCount() > 0 then
 		self:DecrementStackCount()
+		
+		for layer = 2, 5 do
+			if self:GetStackCount() + 1 >= layer then
+				ParticleManager:SetParticleControl(self.cloak_particle, layer, Vector(1, 0, 0))
+			else
+				ParticleManager:SetParticleControl(self.cloak_particle, layer, Vector(0, 0, 0))
+			end
+		end		
+		
 		return self:GetAbility():GetSpecialValueFor("damage_reduction") * (self:GetStackCount() + 1) * (-1)
 	else
 		return 0

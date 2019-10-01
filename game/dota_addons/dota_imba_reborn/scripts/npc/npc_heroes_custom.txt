@@ -1050,15 +1050,6 @@
 	{
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability10"					"special_bonus_strength_7"
-		"Ability11"					"special_bonus_attack_damage_20"
-		"Ability12"					"special_bonus_lifesteal_10"
-		"Ability13"					"special_bonus_unique_meepo_2"
-		"Ability14"					"special_bonus_unique_meepo_3"
-		"Ability15"					"special_bonus_evasion_15"
-		"Ability16"					"special_bonus_hp_600"
-		"Ability17"					"special_bonus_unique_meepo"
 		
 		"Ability1"		"meepo_earthbind"
 		"Ability2"		"meepo_poof"
@@ -1067,13 +1058,13 @@
 		"Ability5"		"generic_hidden"
 		"Ability6"		"meepo_divided_we_stand"
 		
-		"Ability10"		"special_bonus_strength_10"
+		"Ability10"		"special_bonus_strength_15"
 		"Ability11"		"special_bonus_attack_damage_25"
-		"Ability12"		"special_bonus_evasion_15"
+		"Ability12"		"special_bonus_evasion_20"
 		"Ability13"		"special_bonus_unique_meepo_2"
 		"Ability14"		"special_bonus_unique_meepo_3"
-		"Ability15"		"special_bonus_lifesteal_10"
-		"Ability16"		"special_bonus_hp_600"
+		"Ability15"		"special_bonus_lifesteal_15"
+		"Ability16"		"special_bonus_hp_800"
 		"Ability17"		"special_bonus_unique_meepo"
 	}
 
@@ -1922,7 +1913,6 @@
 		"Ability7"		"tusk_launch_snowball"
 		
 		"Ability10"		"special_bonus_exp_boost_40"
-		"Ability11"		"special_bonus_gold_income_15"
 		"Ability12"		"special_bonus_hp_350"
 		"Ability13"		"special_bonus_unique_tusk_2"
 		"Ability14"		"special_bonus_unique_tusk_3"
@@ -2267,7 +2257,7 @@
 		"Ability14"					"special_bonus_cast_range_150" 
 		"Ability15"					"special_bonus_spell_amplify_10"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_gold_income_300"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
@@ -2366,7 +2356,7 @@
 //		"Ability14"					"special_bonus_cast_range_150" 
 //		"Ability15"					"special_bonus_spell_amplify_10"
 //		"Ability16"					"special_bonus_cooldown_reduction_15"
-//		"Ability17"					"special_bonus_gold_income_50"
+//		"Ability17"					"special_bonus_gold_income_300"
 //
 //		// Bounds
 //		//-------------------------------------------------------------------------------------------------------------

@@ -104,8 +104,8 @@
 			}
 			"13"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ink_lines_cd_increase"				"5"
+				"var_type"					"FIELD_FLOAT"
+				"ink_lines_cd_increase"				"3.5"
 			}
 			"14"
 			{

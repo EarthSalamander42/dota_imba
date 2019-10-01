@@ -828,20 +828,21 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
 							ability_set = {
 								[0] = "imba_timbersaw_whirling_death",
-								-- [1] = "imba_timbersaw_timber_chain",
-								-- [2] = "imba_timbersaw_reactive_armor",
-								-- [3] = "imba_timbersaw_chakram_2",
-								-- [4] = "imba_timbersaw_chakram_3",
-								-- [5] = "imba_timbersaw_chakram",
-								-- [5] = "imba_timbersaw_return_chakram",
-								-- [6] = "imba_timbersaw_return_chakram_2",
-								-- [7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
-								-- [8] = "special_bonus_imba_windranger_powershot_damage",
-								-- [9] = "special_bonus_attack_range_125",
-								-- [10] = "special_bonus_imba_windranger_windrun_invisibility",
-								-- [11] = "special_bonus_imba_windranger_shackle_shot_duration",
-								-- [12] = "special_bonus_unique_windranger_8",
-								-- [13] = "special_bonus_cooldown_reduction_30",
+								[1] = "imba_timbersaw_timber_chain",
+								[2] = "imba_timbersaw_reactive_armor",
+								[3] = "imba_timbersaw_chakram_2",
+								[4] = "imba_timbersaw_chakram_3",
+								[5] = "imba_timbersaw_chakram",
+								[6] = "imba_timbersaw_return_chakram",
+								[7] = "imba_timbersaw_return_chakram_2",
+								[8] = "special_bonus_hp_225",
+								[9] = "special_bonus_mp_regen_250",
+								[10] = "special_bonus_spell_amplify_10",
+								[11] = "special_bonus_imba_timbersaw_reactive_armor_max_stacks",
+								[12] = "special_bonus_strength_20",
+								[13] = "special_bonus_cooldown_reduction_15",
+								[14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
+								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
 							}
 							upgraded = true							
 						end
@@ -856,7 +857,10 @@ function GameMode:OnPlayerChat(keys)
 								new_ability:SetLevel(old_ability_level)
 								
 								-- Remove this when done
-								if new_ability:GetName() == "imba_windranger_backpedal" or new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" then
+								if new_ability:GetName() == "imba_windranger_backpedal" or
+								new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" or
+								new_ability:GetName() == "imba_timbersaw_chakram_2" or
+								new_ability:GetName() == "imba_timbersaw_chakram_3" then
 									new_ability:SetLevel(1)
 								end
 							end

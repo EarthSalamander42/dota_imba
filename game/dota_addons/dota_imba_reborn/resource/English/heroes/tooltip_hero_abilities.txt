@@ -1028,13 +1028,17 @@
 // Queen of Pain's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_1"       "Shadow Struck targets can be seen through fog"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2"       "Sonic Wave deals damage in 5 instances"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3"       "Damaging an enemy releases Shadow Strike's tick damage"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4"       "Delightful Torment procs grant bonus attack speed"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2"       "Sonic Wave deals damage in five instances"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2_Description"       "The total damage is also split across the five instances."
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3"       "Enhanced Shadow Strike"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3_Description"		"Whenever Queen of Pain damages an enemy with the Shadow Strike debuff, it will also deal its tick damage."
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4"       "Delightful Torment Bonus Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4_Description"       "Proccing Delightful Torment also grants 10 bonus attack speed for 5 seconds. This buff stacks with, but does not refresh itself."
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_5"       "Blink can be used twice, with increased mana cost"
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_6"       "Shadow Struck enemies release SOP every tick"
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_7"       "Scream of Pain now causes confusion"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8"       "Your abilities apply Shadow Strike to all enemies hit"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8"       "Shadow Strike Bonus Applications"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8_Description"       "Scream of Pain and Sonic Wave projectile impacts immediately apply the Shadow Strike debuff."
 
 ////===============================================================================================================
 // Riki's Smoke Screen
@@ -1120,13 +1124,15 @@
 ////===============================================================================================================
 // Riki's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_1"            	"Creates Smokescreens on Blink Strikes"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_1"            	"Creates 1s Smoke Screens on Blink Strikes"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2"				"Martyr Strike's Marks"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2_Description"	"Tricks of the Trade's Martyr Strikes mark struck targets for 6 seconds, making them more likely to be targetted by other Martyr Strikes."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3"            	"Cloak and Dagger Reveal"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to multiply the Backstab bonus agility multiplier by 2x, trading in invisibility for 6 seconds."
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Riki can apply Sidestab with reduced Agi multiplier bonus"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smokescreen grants Riki another form of Invisibility"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Cloak and Dagger Sidestab"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_4_Description"	"Riki can Sidestab at an angle of up to 285 degrees, with 0.2/0.3/0.4/0.5 Sidestab Damage per agility."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smoke Screen Cloak"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_5_Description"	"If Riki does not currently have Cloak and Dagger invisibility, Smoke Screen areas will put Riki into Cloak and Dagger invisibility after a 1.5 second delay."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Tricks of the Trade cooldown storage"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_6_Description"    "Ending Tricks of the Trade early reduces its cooldown proportionally to the remaining time, up to a minimum of 6 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_7"           		"Broken Back"

@@ -31,7 +31,7 @@ TERRAIN_MUTATION_LIST[1] = "airdrop"
 TERRAIN_MUTATION_LIST[2] = "river_flows"
 TERRAIN_MUTATION_LIST[3] = "wormhole"
 TERRAIN_MUTATION_LIST[4] = "tug_of_war"
-TERRAIN_MUTATION_LIST[5] = "hyper_blink"
+-- TERRAIN_MUTATION_LIST[5] = "hyper_blink"
 
 -- TERRAIN_MUTATION_LIST[5] = "super_runes"
 -- TERRAIN_MUTATION_LIST[5] = "danger_zone" -- nofun
