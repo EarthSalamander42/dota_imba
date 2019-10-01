@@ -13,6 +13,7 @@
 #base heroes/life_stealer/hero.txt
 #base heroes/luna/hero.txt
 #base heroes/medusa/hero.txt
+#base heroes/naga_siren/hero.txt
 #base heroes/phantom_lancer/hero.txt
 #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
@@ -1256,31 +1257,6 @@
 		// "Ability11"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
 		// Unused						"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
 		// Unused						"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
-	}
-
-	//=================================================================================================================
-	// HERO: Naga Siren
-	//=================================================================================================================
-	"npc_dota_hero_naga_siren"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-//		"Ability1"					"imba_naga_siren_mirror_image"
-//		"Ability2"					"imba_naga_siren_ensnare"
-//		"Ability3"					"imba_naga_siren_rip_tide"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"imba_naga_siren_song_of_the_siren"
-//		"Ability7"					"imba_naga_siren_song_of_the_siren_cancel"
-
-//		"Ability10"					"special_bonus_movement_speed_20"
-//		"Ability11"					"special_bonus_unique_naga_siren_4"
-//		"Ability12"					"special_bonus_agility_12"
-//		"Ability13"					"special_bonus_strength_14"
-//		"Ability14"					"special_bonus_unique_naga_siren_2"
-//		"Ability15"					"special_bonus_unique_naga_siren"
-//		"Ability16"					"special_bonus_evasion_30"
-//		"Ability17"					"special_bonus_unique_naga_siren_3"
 	}
 
 	//=================================================================================================================

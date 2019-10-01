@@ -25,6 +25,7 @@
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
+#base heroes/naga_siren/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
@@ -30024,112 +30025,6 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"	                    "750"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Naga Siren: Mirror Image
-	//=================================================================================================================
-	"imba_naga_siren_mirror_image"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilitySound"					"Hero_NagaSiren.MirrorImage"
-		"AbilityTextureName"			"naga_siren_mirror_image"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.65"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-
-		"AbilityCooldown"				"40"
-		"AbilityManaCost"				"70 80 90 100"
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"illusion_duration"						"30 32 34 36"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-60 -60 -50 -50"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"40 40 50 50"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"225 175 175 175"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"325 275 275 275"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"images_count"							"2 3 3 4"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"invuln_duration"						"0.3"
-			}		
-		}
-	}
-
-	//=================================================================================================================
-	// Naga Siren: Rip Tide
-	//=================================================================================================================
-	"imba_naga_siren_rip_tide"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
-		"AbilityTextureName"			"naga_siren_rip_tide"
-		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
-
-		"AbilityCooldown"				"10 9 8 7"
-		"AbilityManaCost"				"80 90 100 110"
-		"AbilityDamage"					"120 160 200 240"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-2 -3 -4 -5"
-				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"320 350 380 410"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"8"
 			}
 		}
 	}

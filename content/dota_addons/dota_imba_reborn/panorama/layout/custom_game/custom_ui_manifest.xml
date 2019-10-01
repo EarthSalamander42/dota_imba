@@ -110,7 +110,7 @@
 				PreGame.style.opacity = "1";				
 			}
 		}
-
+/*
 		//Buff Bar
 		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
 		BuffBar.style.width = "30%";
@@ -122,11 +122,12 @@
 		DeBuffBar.style.marginBottom = "40.5%";
 		DeBuffBar.style.marginRight = "29.5%";
 		DeBuffBar.style.flowChildren = "right";
-
+*/
 		// Enable Hero bio
 		if (PreGame.FindChildTraverse("BattlePassHeroUpsell")) {
 			PreGame.FindChildTraverse("BattlePassHeroUpsell").style.visibility = "collapse";
-			PreGame.FindChildTraverse("BattlePassHeroData").style.visibility = "collapse";
+			PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
+			PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
 		}
 
 		// Override Versus Screen with IMBA info (Credits: EarthSalamander)

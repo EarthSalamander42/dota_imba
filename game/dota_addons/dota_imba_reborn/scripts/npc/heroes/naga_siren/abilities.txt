@@ -1,0 +1,272 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Naga Siren: Mirror Image
+	//=================================================================================================================
+	"imba_naga_siren_mirror_image"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilitySound"					"Hero_NagaSiren.MirrorImage"
+		"AbilityTextureName"			"naga_siren_mirror_image"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.65"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"70 80 90 100"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"illusion_duration"						"30 32 34 36"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage"						"-60 -60 -50 -50"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage_tooltip"				"40 40 50 50"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"incoming_damage"						"225 175 175 175"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"tooltip_incoming_damage_total_pct"		"325 275 275 275"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"images_count"							"2 3 3 4"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"invuln_duration"						"0.3"
+			}		
+		}
+	}
+
+	//=================================================================================================================
+	// Naga Siren: Ensnare
+	//=================================================================================================================
+	"imba_naga_siren_ensnare"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
+		"AbilityTextureName"			"naga_siren_ensnare"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_NagaSiren.Ensnare.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.6 0.55 0.5 0.45"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0"		
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 80 90 100"
+		
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"650 750 850 950"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"2.5 3.5 4.5 5.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"net_speed"					"1500 1750 2000 2250"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fake_ensnare_distance"		"1100"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Naga Siren: Rip Tide
+	//=================================================================================================================
+	"imba_naga_siren_rip_tide"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
+		"AbilityTextureName"			"naga_siren_rip_tide"
+		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
+
+		"AbilityDamage"					"120 160 200 240"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"chance"					"17"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction"			"-4 -6 -8 -10"
+				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"30 45 60 75"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"320 350 380 410"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Naga Siren: Song of the Siren
+	//=================================================================================================================
+	"imba_naga_siren_song_of_the_siren"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
+		"AbilityTextureName"			"naga_siren_song_of_the_siren"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		"AbilitySound"					"Hero_NagaSiren.SongOfTheSiren"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.8 0.65 0.5"
+		"AbilityCastRange"				"1250 1500 1750"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"160.0 120.0 80.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 175 200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1250 1500 1750"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"7.0 7.0 7.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"animation_rate"			"0.55 0.55 0.55"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_regen_rate"		"10.0 13.0 16.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_regen_rate_self"	"10.0 13.0 16.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"regen_rate_tooltip_scepter"	"10 13 16"
+				"RequiresScepter"				"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aura_linger"				"0.4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Naga Siren: Song of the Siren Cancel
+	//=================================================================================================================
+	"imba_naga_siren_song_of_the_siren_cancel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
+		"AbilityTextureName"			"naga_siren_song_of_the_siren_cancel"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+	}
+}
