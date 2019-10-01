@@ -57,6 +57,29 @@ function bubbleSort(A)
 	until hasChanged == false
 end
 
+function string.split(input, delimiter)
+	input = tostring(input)
+	delimiter = tostring(delimiter)
+	if (delimiter == "") then
+		return false
+	end
+	local pos, arr = 0, {}
+	-- for each divider found
+	for st, sp in function()
+		return string.find(input, delimiter, pos, true)
+	end do
+		table.insert(arr, string.sub(input, pos, st - 1))
+		pos = sp + 1
+	end
+	table.insert(arr, string.sub(input, pos))
+	return arr
+end
+
+function String2Vector(s)
+	local array = string.split(s, " ")
+	return Vector(array[1], array[2], array[3])
+end
+
 -- Map utils
 function MapRanked5v5() return "ranked_5v5" end
 function MapRanked10v10() return "ranked_10v10" end

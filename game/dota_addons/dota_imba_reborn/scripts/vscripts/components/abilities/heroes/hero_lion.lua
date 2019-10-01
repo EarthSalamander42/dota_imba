@@ -1243,12 +1243,11 @@ function imba_lion_finger_of_death:OnSpellStart()
 			Timers:CreateTimer(FrameTime(), function()
 				ability:EndCooldown()
 				ability:StartCooldown(self:GetSpecialValueFor("triggerfinger_cooldown"))
-			end)		
+			end)
 		end
 	end)
-end 
+end
 
-	
 function FingerOfDeath(caster, ability, main_target, target, damage, enemies_frog_radius)
 	-- Ability properties
 	local sound_impact = "Hero_Lion.FingerOfDeathImpact"
@@ -1259,6 +1258,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 	local damage_delay = ability:GetSpecialValueFor("damage_delay")    
 	local enemies_frog_duration = ability:GetSpecialValueFor("enemies_frog_duration")
 	local damage_per_kill = ability:GetSpecialValueFor("damage_per_kill")
+	local kill_grace_duration = ability:GetSpecialValueFor("kill_grace_duration")
 	
 	-- Add particle effects
 	local particle_finger_fx = ParticleManager:CreateParticle(particle_finger, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -1299,7 +1299,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 			return nil
 		end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = ability:GetSpecialValueFor("kill_grace_duration")})
+		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration})
 		
 		-- Play impact sound
 		EmitSoundOn(sound_impact, target)

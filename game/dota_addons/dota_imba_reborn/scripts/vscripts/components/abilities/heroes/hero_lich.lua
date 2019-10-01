@@ -2161,12 +2161,7 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	self.destination		= self.ability:GetSpecialValueFor("destination") + self.caster:FindTalentValue("special_bonus_imba_lich_10")
 	self.distance 			= CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
 
-	-- Status Resistance net table calculates in custom mechanics modifier
-	if self.parent:HasModifier("modifier_custom_mechanics") then
-		self.status_resistance	= CustomNetTables:GetTableValue( "status_resistance", string.format("%d", self.parent:GetEntityIndex()) ).status_resistance
-	else
-		self.status_resistance	= 0
-	end
+	self.status_resistance = self:GetParent():GetStatusResistance()
 
 	if not IsServer() then return end
 	

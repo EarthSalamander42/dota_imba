@@ -108,5 +108,5 @@ function OnUpdateQueryUnit()
 
 	// Built-In Dota client events
 	GameEvents.Subscribe( "dota_player_update_selected_unit", OnUpdateSelectedUnit );
-	GameEvents.Subscribe( "dota_player_update_query_unit", OnUpdateQueryUnit );
+//	GameEvents.Subscribe( "dota_player_update_query_unit", OnUpdateQueryUnit );
 })();

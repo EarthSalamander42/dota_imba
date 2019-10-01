@@ -83,6 +83,9 @@ BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
 BATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
+if IsInToolsMode() then
+BATTLEPASS_LEVEL_REWARD[135]	= {"phantom_assassin_arcana", "arcana"}
+end
 BATTLEPASS_LEVEL_REWARD[136]	= {"bottle4", "common"}
 BATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
 BATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
@@ -141,6 +144,7 @@ function Battlepass:Init()
 		BattlepassHeroes["nevermore"] = {}
 	end
 	BattlepassHeroes["nyx_assassin"] = {}
+	BattlepassHeroes["phantom_assassin"] = {}
 	BattlepassHeroes["pudge"] = {}
 	BattlepassHeroes["skywrath_mage"] = {}
 --	BattlepassHeroes["terrorblade"] = {}
@@ -708,6 +712,8 @@ function Battlepass:GetHeroEffect(hero)
 
 		if hero:GetUnitName() == "npc_dota_hero_axe" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["axe_immortal"] then
+				LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+
 				Wearable:_WearProp(hero, "12964", "weapon")
 				Wearable:_WearProp(hero, "12965", "armor")
 				Wearable:_WearProp(hero, "12966", "belt")
@@ -868,6 +874,8 @@ function Battlepass:GetHeroEffect(hero)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then
+				LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
 				local style = 0
 				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana2"] then
 					style = 1
@@ -946,7 +954,6 @@ function Battlepass:GetHeroEffect(hero)
 					Wearable:_WearProp(hero, "6996", "head")
 				end
 			end
-
 		elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nyx_assassin_immortal"] then
 				hero.spiked_carapace_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace.vpcf"
@@ -957,6 +964,26 @@ function Battlepass:GetHeroEffect(hero)
 
 			-- custom icons
 			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+		elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
+			if not IsInToolsMode() then return end
+
+			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["phantom_assassin_arcana"] then
+				LinkLuaModifier("modifier_phantom_assassin_arcana", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+				local style = 0
+				print("Arcana kills:")
+				local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
+				print(pa_arcana_kills)
+				hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
+
+				if tonumber(pa_arcana_kills) >= 400 then
+					style = 1
+				elseif tonumber(pa_arcana_kills) >= 1000 then
+					style = 2
+				end
+
+				Wearable:_WearProp(hero, "7247", "weapon", style)
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana"] then
 				local style = 0

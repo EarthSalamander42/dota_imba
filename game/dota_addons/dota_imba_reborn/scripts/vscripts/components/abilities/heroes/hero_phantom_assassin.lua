@@ -846,6 +846,11 @@ end
 function modifier_imba_blur_smoke:OnIntervalThink()
 	if self.linger == true then return end
 
+	-- script error on enemies line
+	print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
+	print(self:GetParent():GetTeamNumber())
+	print(self:GetParent():GetAbsOrigin())
+
 	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("vanish_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	if #enemies > 0 then
@@ -1124,5 +1129,87 @@ function imba_phantom_assassin_blur:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_phantom_assassin_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_assassin_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_assassin_10"), "modifier_special_bonus_imba_phantom_assassin_10", {})
+	end
+end
+
+-- PA Arcana
+
+LinkLuaModifier("modifier_phantom_assassin_gravestone", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_phantom_assassin_gravestone = modifier_phantom_assassin_gravestone or class({})
+
+function modifier_phantom_assassin_gravestone:IsHidden() return not IsInToolsMode() end
+
+function modifier_phantom_assassin_gravestone:CheckState() return {
+	[MODIFIER_STATE_INVULNERABLE] = true,
+	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+	[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+} end
+
+function modifier_phantom_assassin_gravestone:OnCreated()
+	if not IsServer() then return end
+	self:StartIntervalThink(0.25)
+end
+
+function modifier_phantom_assassin_gravestone:OnIntervalThink()
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
+		if PlayerResource:IsUnitSelected(i, self:GetParent()) and PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex() then
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "update_pa_arcana_tooltips", {
+				victim = self:GetStackCount(),
+				victim_id = self:GetParent().victim_id,
+				epitaph = self:GetParent().epitaph_number,
+			})
+		end
+	end
+end
+
+modifier_phantom_assassin_arcana = modifier_phantom_assassin_arcana or class({})
+
+function modifier_phantom_assassin_arcana:IsHidden() return not IsInToolsMode() end
+function modifier_phantom_assassin_arcana:RemoveOnDeath() return false end
+
+function modifier_phantom_assassin_arcana:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_HERO_KILLED,
+} end
+
+function modifier_phantom_assassin_arcana:OnHeroKilled(params)
+	if not IsServer() then return end
+
+	if params.attacker == self:GetParent() and params.target:IsRealHero() then
+		self:IncrementStackCount()
+		print("New arcana kill:", self:GetStackCount())
+
+		self.gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
+		self.gravestone:SetOwner(self:GetParent())
+		self.gravestone:AddNewModifier(self.gravestone, nil, "modifier_phantom_assassin_gravestone", {}):SetStackCount(params.target:entindex())
+		self.gravestone.epitaph_number = RandomInt(1, 13)
+		self.gravestone.victim_id = params.target:GetPlayerID()
+
+		-- hack to show the panel when clicking on the sword
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			self.gravestone:SetControllableByPlayer(i, false)
+		end
+
+		if self:GetStackCount() == 400 then
+			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 1)
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {image="file://{images}/econ/items/phantom_assassin/manifold_paradox/arcana_pa_style1.png", duration=5.0})
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {text="Style 1 unlocked!", duration = 10.0})
+		elseif self:GetStackCount() == 1000 then
+			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 2)
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {image="file://{images}/econ/items/phantom_assassin/manifold_paradox/arcana_pa_style2.png", duration=5.0})
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {text="Style 2 unlocked!", duration = 10.0})
+		end
+
+		local style = 0
+
+		if self:GetStackCount() >= 400 then
+			style = 1
+		elseif self:GetStackCount() >= 1000 then
+			style = 2
+		end
+
+		self.gravestone:SetMaterialGroup(tostring(style))
+		self:StartIntervalThink(1.0)
 	end
 end

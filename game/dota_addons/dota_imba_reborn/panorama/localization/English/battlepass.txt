@@ -130,6 +130,7 @@
 "battlepass_earthshaker_arcana"			"Planetfall (Celestial Summons)"
 "battlepass_earthshaker_arcana2"		"Planetfall (Burning Descent)"
 "battlepass_invoker_legendary"			"Acolyte of the Lost Arts"
+"battlepass_phantom_assassin_arcana"	"#{DOTA_Item_Manifold_Paradox}"
 
 //Donator Tab
 "donator_companion"				"Companion"
