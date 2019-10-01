@@ -5,6 +5,7 @@ BATTLEPASS_LEVEL_REWARD[5]		= {"bottle", "common"}
 BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
 BATTLEPASS_LEVEL_REWARD[7]		= {"slark_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[9]		= {"blink", "common"}
+-- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[13]		= {"fountain2", "common"}
 BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}

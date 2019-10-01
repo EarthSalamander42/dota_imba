@@ -43,6 +43,13 @@ function OnUpdateHeroSelection()
 		else
 			hero_bio.text = hype_text;
 	}
+
+	var hero_portrait = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroPortrait").GetChild(0);
+
+	if (hero_portrait) {
+		hero_portrait.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + localPlayerInfo.possible_hero_selection + '.png")';
+		hero_portrait.style.backgroundSize = "100% 100%";
+	}
 }
 
 function UpdateTeam( teamId )

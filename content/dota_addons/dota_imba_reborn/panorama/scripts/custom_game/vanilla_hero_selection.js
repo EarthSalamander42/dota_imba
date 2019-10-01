@@ -1,10 +1,10 @@
 var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
 var GridCategories = FindDotaHudElement('GridCategories');
-//var total = herocard.GetChildCount();
+//	var total = herocard.GetChildCount();
 var picked_heroes = [];
 
-// $.Msg(herolist)
-// $.Msg(GridCategories)
+//	$.Msg(herolist.customlist)
+//	$.Msg(GridCategories)
 
 function FindDotaHudElement(panel) {
 	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(panel);
@@ -22,14 +22,15 @@ function InitHeroSelection()  {
 		for (var j = 0; j < GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount(); j++) {
 			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
 				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j).GetChild(0).GetChild(0);
-//				$.Msg(hero_panel)
 				
 				if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 					hero_panel.GetParent().AddClass("IMBA_HeroCard");
 					hero_panel.GetParent().style.boxShadow = "inset #FF7800aa 0 0 5px 0";
-				} else if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
+				} else if (herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
 					hero_panel.GetParent().AddClass("IMBA_HeroCard");
-					hero_panel.GetParent().style.boxShadow = "inset purple 0 0 5px 0";
+					hero_panel.GetParent().style.boxShadow = "inset purple 0 0 50px 0";
+					hero_panel.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + hero_panel.heroname + '.png")';
+					hero_panel.style.backgroundSize = "100% 100%";
 				}
 			}
 		}

@@ -45,7 +45,7 @@ ListenToGameEvent('npc_spawned', function(event)
 				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
 					Timers:CreateTimer(1.5, function()
 						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
-						
+
 						-- if api and api.GetPlayerCompanion and api:GetPlayerCompanion(npc:GetPlayerID()) then
 							-- Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
 						-- else
@@ -55,6 +55,10 @@ ListenToGameEvent('npc_spawned', function(event)
 				end
 			end
 		end
+
+		if npc.bp_init == true then return end
+
+		npc.bp_init = true
 
 		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
 			hero_name = string.gsub(npc:GetUnitName(), "npc_dota_hero_", ""),

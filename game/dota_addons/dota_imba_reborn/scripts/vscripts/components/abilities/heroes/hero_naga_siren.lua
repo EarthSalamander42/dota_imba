@@ -72,7 +72,7 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 		return nil
 	end, self:GetSpecialValueFor("invuln_duration"))
 
-	EmitSoundOn("Hero_NagaSiren.MirrorImage", self:GetCaster())
+	self:GetCaster():EmitSound("Hero_NagaSiren.MirrorImage")
 end
 
 modifier_imba_naga_siren_mirror_image_invulnerable = modifier_imba_naga_siren_mirror_image_invulnerable or class({})
@@ -213,7 +213,7 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 		end
 
 		for _, tide_caster in pairs(caster_table) do
-			EmitSoundOn("Hero_NagaSiren.Riptide.Cast", tide_caster)
+			tide_caster:EmitSound("Hero_NagaSiren.Riptide.Cast")
 			tide_caster:StartGesture(ACT_DOTA_CAST_ABILITY_3)
 
 			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_siren/naga_siren_riptide.vpcf", PATTACH_ABSORIGIN, tide_caster)
@@ -278,7 +278,11 @@ imba_naga_siren_song_of_the_siren = imba_naga_siren_song_of_the_siren or class({
 function imba_naga_siren_song_of_the_siren:OnSpellStart()
 	if not IsServer() then return end
 
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(pfx)
+
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_song_of_the_siren_aura", {duration = self:GetSpecialValueFor("duration")})
+	self:GetCaster():EmitSound("Hero_NagaSiren.SongOfTheSiren")
 end
 
 modifier_imba_naga_siren_song_of_the_siren_aura = modifier_imba_naga_siren_song_of_the_siren_aura or class({})
@@ -298,11 +302,21 @@ function modifier_imba_naga_siren_song_of_the_siren_aura:GetModifierAura() retur
 function modifier_imba_naga_siren_song_of_the_siren_aura:OnCreated()
 	if not IsServer() then return end
 
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_siren/naga_siren_song_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+
 	self:GetCaster():SwapAbilities(self:GetAbility():GetAbilityName(), "imba_naga_siren_song_of_the_siren_cancel", false, true)
 end
 
 function modifier_imba_naga_siren_song_of_the_siren_aura:OnDestroy()
 	if not IsServer() then return end
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+
+	self:GetCaster():EmitSound("Hero_NagaSiren.SongOfTheSiren.Cancel")
+	self:GetCaster():StopSound("Hero_NagaSiren.SongOfTheSiren")
 
 	self:GetCaster():SwapAbilities(self:GetAbility():GetAbilityName(), "imba_naga_siren_song_of_the_siren_cancel", true, false)
 end
@@ -325,7 +339,7 @@ function modifier_imba_naga_siren_song_of_the_siren_debuff:CheckState() return {
 
 imba_naga_siren_song_of_the_siren_cancel = imba_naga_siren_song_of_the_siren_cancel or class({})
 
-function imba_naga_siren_song_of_the_siren_cancel:IsInnateAbility() return true end
+function imba_naga_siren_song_of_the_siren_cancel:IsInnateAbility()	return true end
 
 function imba_naga_siren_song_of_the_siren_cancel:OnSpellStart()
 	if not IsServer() then return end

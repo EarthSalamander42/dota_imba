@@ -27,10 +27,25 @@ function Precache( context )
 	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE) -- using vanilla aegis item with imba aegis modifier to keep combat events notifications on pickup/steal/deny
 
 	-- Battlepass precaching
-	Wearables:PrecacheWearables(context)
+--	Wearables:PrecacheWearables(context)
+
+	-- arcanas
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
-	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
+	PrecacheModel("models/items/pudge/arcana/pudge_arcana_base.vmdl", context)
+
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
+	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/earthshaker/earthshaker_arcana", context)
+	PrecacheModel("models/items/earthshaker/earthshaker_arcana/earthshaker_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/zeus/arcana_chariot", context)
+	PrecacheModel("models/heroes/zeus/zeus_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/wisp", context)
+	PrecacheModel("models/items/io/io_ti7/io_ti7.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/lina/lina_head_headflame", context)
 	
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)

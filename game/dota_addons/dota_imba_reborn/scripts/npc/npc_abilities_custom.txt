@@ -14388,7 +14388,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_range"			"1300 1400 1500 1600"
+				"base_range"			"1300"
 				"LinkedSpecialBonus"	"special_bonus_imba_pudge_5"
 			}
 			"05"
@@ -14719,7 +14719,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_pudge.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_pudge.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"custom/pudge_light_hook"
 		"MaxLevel"						"4"
@@ -14746,7 +14746,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_range"				"10"
+				"stack_range"				"15"
 			}
 		}
 	}

@@ -23,8 +23,9 @@ end
 
 function modifier_companion:DeclareFunctions()
 	local funcs = {
+--		MODIFIER_EVENT_ON_ATTACKED,
+--		MODIFIER_EVENT_ON_DEATH,
 		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
-		MODIFIER_EVENT_ON_ATTACKED,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
@@ -90,6 +91,16 @@ local target = keys.target
 				end)
 			end
 		end
+	end
+end
+
+
+function modifier_companion:OnDeath(params)
+	if not IsServer() then return end
+	if not self:GetParent().GetPlayerOwner then return end
+	if not self:GetParent():GetPlayerOwner().GetAssignedHero then return end
+	if params.unit == self:GetParent():GetPlayerOwner():GetAssignedHero() then
+		self:GetParent():ForceKill(false)
 	end
 end
 --]]

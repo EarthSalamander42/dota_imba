@@ -109,6 +109,14 @@ function modifier_imba_hook_sharp_stack:OnIntervalThink()
 	end
 end
 
+function modifier_imba_hook_sharp_stack:DeclareFunctions() return {
+	MODIFIER_PROPERTY_TOOLTIP,
+} end
+
+function modifier_imba_hook_sharp_stack:OnTooltip()
+	return self:GetAbility():GetSpecialValueFor("stack_damage") * self:GetStackCount()
+end
+
 function modifier_imba_hook_light_stack:IsDebuff() return false end
 function modifier_imba_hook_light_stack:IsHidden() return false end
 function modifier_imba_hook_light_stack:IsPurgable() return false end
@@ -134,6 +142,19 @@ function modifier_imba_hook_light_stack:OnIntervalThink()
 			self:GetAbility():ToggleAbility()
 		end
 	end
+end
+
+function modifier_imba_hook_light_stack:DeclareFunctions() return {
+	MODIFIER_PROPERTY_TOOLTIP,
+	MODIFIER_PROPERTY_TOOLTIP2,
+} end
+
+function modifier_imba_hook_light_stack:OnTooltip()
+	return self:GetAbility():GetSpecialValueFor("stack_speed") * self:GetStackCount()
+end
+
+function modifier_imba_hook_light_stack:OnTooltip2()
+	return self:GetAbility():GetSpecialValueFor("stack_range") * self:GetStackCount()
 end
 
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -256,7 +277,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	local hook_dmg = self:GetSpecialValueFor("base_damage")
 	local stack_dmg = 0
 
-	if self:GetCaster():HasAbility("imba_pudge_light_hook") then
+	if self:GetCaster():HasAbility("imba_pudge_sharp_hook") then
 		stack_dmg = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
 	end
 

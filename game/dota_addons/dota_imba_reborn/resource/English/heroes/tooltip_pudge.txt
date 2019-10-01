@@ -67,10 +67,10 @@
 "DOTA_Tooltip_modifier_imba_pudge_dismember_pull_Description"	"Being sucked in by a large mass..."
 
 "DOTA_Tooltip_modifier_imba_hook_sharp_stack"					"Power Hook"
-"DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Increases Meat Hook's damage"
+"DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Meat Hook's damage increased by %dMODIFIER_PROPERTY_TOOLTIP%."
 
 "DOTA_Tooltip_modifier_imba_hook_light_stack"					"Swift Hook"
-"DOTA_Tooltip_modifier_imba_hook_light_stack_Description"		"Increases Meat Hook's speed and range"
+"DOTA_Tooltip_modifier_imba_hook_light_stack_Description"		"Meat Hook's speed increased by %dMODIFIER_PROPERTY_TOOLTIP%. Meat Hook's range increased by %dMODIFIER_PROPERTY_TOOLTIP2%."
 
 "DOTA_Tooltip_modifier_imba_hook_target_enemy"					"Meat Hook"
 "DOTA_Tooltip_modifier_imba_hook_target_enemy_Description"		"Helpless, and flying towards a hungry Pudge"

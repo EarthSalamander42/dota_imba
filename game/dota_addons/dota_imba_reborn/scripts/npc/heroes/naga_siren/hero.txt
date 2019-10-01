@@ -10,16 +10,8 @@
 //		"Ability1"					"imba_naga_siren_mirror_image"
 //		"Ability2"					"imba_naga_siren_ensnare"
 //		"Ability3"					"imba_naga_siren_rip_tide"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
 //		"Ability6"					"imba_naga_siren_song_of_the_siren"
 //		"Ability7"					"imba_naga_siren_song_of_the_siren_cancel"
-
-		"Ability18"					"imba_naga_siren_mirror_image"
-		"Ability19"					"imba_naga_siren_ensnare"
-		"Ability20"					"imba_naga_siren_rip_tide"
-		"Ability21"					"imba_naga_siren_song_of_the_siren"
-		"Ability22"					"imba_naga_siren_song_of_the_siren_cancel"
 
 //		"Ability10"					"special_bonus_movement_speed_20"
 //		"Ability11"					"special_bonus_unique_naga_siren_4"
