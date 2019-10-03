@@ -19,7 +19,6 @@ function imba_phantom_assassin_stifling_dagger:GetAbilityTextureName()
 end
 
 function imba_phantom_assassin_stifling_dagger:OnSpellStart()
-
 	local caster 	= self:GetCaster()
 	local target 	= self:GetCursorTarget()
 	local scepter 	= caster:HasScepter()
