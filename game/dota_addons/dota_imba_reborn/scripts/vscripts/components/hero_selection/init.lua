@@ -66,7 +66,7 @@ function HeroSelection:Init()
 --		end
 --	end
 
-	CustomNetTables:SetTableValue("hero_selection", "herolist", {
+	CustomNetTables:SetTableValue("game_options", "herolist", {
 		gametype = GetMapName(),
 		herolist = herolist,
 		imbalist = imbalist,

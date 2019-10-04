@@ -11,6 +11,8 @@
 #base units/statues.txt
 #base units/vanilla_override.txt
 
+#base siltbreaker/npc_units_custom_siltbreaker.txt
+
 "DOTAUnits"
 {
 	"Version"	"1"

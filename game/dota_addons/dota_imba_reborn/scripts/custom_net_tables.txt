@@ -4,7 +4,6 @@
 	[
 		"game_options",
 		"player_table",
-		"hero_selection",
 		"battlepass",
 		"mutations",
 		"zone_names",
@@ -12,10 +11,8 @@
 		"player_zone_locations",
 		"respawns_remaining",
 		"boss",
-		"crypt_holdout"
+		"crypt_holdout",
 		"mutation_info",
-		"hero_wearables",
 		"other_available_items",
-		"selection",
 	]
 }

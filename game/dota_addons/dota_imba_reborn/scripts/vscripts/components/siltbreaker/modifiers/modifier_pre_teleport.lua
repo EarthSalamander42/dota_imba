@@ -10,6 +10,7 @@ end
 
 function modifier_pre_teleport:OnCreated( kv )
 	if IsServer() then
+		print("Pre teleport:OnCreated")
 		self:GetParent():AddEffects( EF_NODRAW )
 		self.vPos = self:GetParent():GetOrigin()
 		self.bTPFinished = false

@@ -1,4 +1,4 @@
-var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
+var herolist = CustomNetTables.GetTableValue('game_options', 'herolist')
 var GridCategories = FindDotaHudElement('GridCategories');
 //	var total = herocard.GetChildCount();
 var picked_heroes = [];

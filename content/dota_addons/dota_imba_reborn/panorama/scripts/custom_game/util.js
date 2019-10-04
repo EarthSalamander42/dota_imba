@@ -148,7 +148,7 @@ function HideIMR(panel) {
 }
 
 function OverrideTopBarHeroImage(args) {
-	var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
+	var herolist = CustomNetTables.GetTableValue('game_options', 'herolist')
 	var arcana_level = undefined;
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 

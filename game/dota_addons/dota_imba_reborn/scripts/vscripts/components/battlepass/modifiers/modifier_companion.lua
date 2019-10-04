@@ -144,9 +144,17 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
+		local fountain_abs
+
+		if GetMapName() == "ep_1" then
+			fountain_abs = Vector(0, 0, 0)
+		else
+			fountain_abs = fountain:GetAbsOrigin()
+		end
+
 		local hero_origin = hero:GetAbsOrigin()
 		local hero_distance = (hero_origin - companion:GetAbsOrigin()):Length()
-		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
+		local fountain_distance = (fountain_abs - companion:GetAbsOrigin()):Length()
 		local min_distance = 250
 		local blink_distance = 750
 
@@ -200,7 +208,7 @@ function modifier_companion:OnIntervalThink()
 				companion:MoveToNPC(hero)
 			end
 		elseif fountain_distance > blink_distance and not hero:IsAlive() then -- min_distance is too high with fountain bound radius
-			FindClearSpaceForUnit(companion, fountain:GetAbsOrigin(), false)
+			FindClearSpaceForUnit(companion, fountain_abs, false)
 			companion:Stop()
 			return
 		end

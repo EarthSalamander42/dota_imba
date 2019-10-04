@@ -49,7 +49,7 @@ function GameMode:_InitGameMode()
 		SendToServerConsole("customgamesetup_set_auto_launch_delay 300")
 --	end
 
-	if IMBA_PICK_SCREEN == false then
+	if IMBA_PICK_SCREEN and IMBA_PICK_SCREEN == false then
 		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
 	else
 		GameRules:SetStartingGold(0)
@@ -57,7 +57,7 @@ function GameMode:_InitGameMode()
 
 	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
 
-	if IMBA_PICK_SCREEN == false then
+	if IMBA_PICK_SCREEN and IMBA_PICK_SCREEN == false then
 		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)
 		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
 	end

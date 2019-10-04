@@ -158,6 +158,7 @@ function Precache( context )
 			PrecacheResource( "soundfile", Sound, context )
 		end
 --	end
+
 end
 
 function Activate()
@@ -165,5 +166,5 @@ function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
 	-- Run the scoreboard functions that handle share unit / share hero / disable help
-	initScoreBoardEvents()
+--	initScoreBoardEvents()
 end

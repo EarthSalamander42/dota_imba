@@ -49,8 +49,8 @@ function Battlepass:AddItemEffects(hero)
 	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
 
 	if ply_table and ply_table.bp_rewards == 0 then
-	else
-		Battlepass:SetItemEffects(hero:GetPlayerID())
+	else -- too much net tables used atm in siltbreaker
+--		Battlepass:SetItemEffects(hero:GetPlayerID())
 	end
 
 	-- some effects override some items effects, need to call it after items setup

@@ -98,6 +98,7 @@ function SiltbreakerThink()
 	local fDistFromSpawn = ( thisEntity:GetOrigin() - thisEntity.fOrigSpawnPos ):Length2D()
 
 	if ( fDistFromSpawn > 7000 ) and ( thisEntity.bHasOwner == false ) then
+		print("Find clear space for no owner entity")
 		FindClearSpaceForUnit( thisEntity, thisEntity.fOrigSpawnPos, true )
 		return 0.1
 	end

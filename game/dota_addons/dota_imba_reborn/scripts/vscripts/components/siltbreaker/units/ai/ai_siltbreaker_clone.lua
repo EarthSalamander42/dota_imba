@@ -59,6 +59,7 @@ function SiltbreakerCloneThink()
 
 	local fDistFromSpawn = ( thisEntity:GetOrigin() - thisEntity.fOrigSpawnPos ):Length2D()
 	if fDistFromSpawn > 7000 then
+		print("Find clear space for no owner entity (clone)")
 		FindClearSpaceForUnit( thisEntity, thisEntity.fOrigSpawnPos, true )
 		return 0.1
 	end

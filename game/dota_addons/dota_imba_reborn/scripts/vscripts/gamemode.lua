@@ -18,7 +18,7 @@ require('libraries/player')
 require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
-require('libraries/selection') -- For Turbo Couriers
+-- require('libraries/selection') -- For Turbo Couriers
 require('libraries/timers')
 require('libraries/wearables')
 require('libraries/wearables_warmful_ancient')
@@ -35,6 +35,9 @@ require("components/frantic/init")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')
+if string.find(GetMapName(), "ep_") then
+	require("components/siltbreaker/init")
+end
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
@@ -52,7 +55,7 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() and GetMapName() ~= "imba_demo" then
+	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() and GetMapName() ~= "imba_demo" and GetMapName() ~= "ep_1" then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 

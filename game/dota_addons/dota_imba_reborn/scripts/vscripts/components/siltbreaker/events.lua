@@ -75,7 +75,7 @@ function CDungeon:OnNPCSpawned_PlayerHero( event )
 			if not PlayerResource:IsFakeClient( hPlayerHero:GetPlayerOwnerID() ) then
 				if GetMapName() == "ep_1" then
 					print("Add pre teleport modifier")
---					hPlayerHero:AddNewModifier( hPlayerHero, nil, "modifier_pre_teleport", {} )
+					hPlayerHero:AddNewModifier( hPlayerHero, nil, "modifier_pre_teleport", {} )
 
 					self:OnPlayerHeroEnteredZone( hPlayerHero, "start" )
 --					CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( hPlayerHero:GetPlayerOwnerID() ), "hide_scroll", {} )
@@ -875,7 +875,7 @@ end
 ---------------------------------------------------------
 
 function CDungeon:OnPlayerHeroEnteredZone( playerHero, zoneName )
-	--print( "CDungeon:OnPlayerHeroEnteredZone - PlayerHero " .. playerHero:GetUnitName() .. " entered " .. zoneName )
+	print( "CDungeon:OnPlayerHeroEnteredZone - PlayerHero " .. playerHero:GetUnitName() .. " entered " .. zoneName )
 
 	local netTable = {}
 	netTable["ZoneName"] = zoneName

@@ -47,6 +47,8 @@
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 
+#base siltbreaker/npc_abilities_custom_siltbreaker.txt
+
 "DOTAAbilities"
 {
 	"Version"		"1"

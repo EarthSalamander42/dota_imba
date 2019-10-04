@@ -206,6 +206,7 @@ CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
 CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
+CUSTOM_GOLD_BONUS["ep_1"] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 local global_xp = 300
@@ -219,6 +220,7 @@ CUSTOM_XP_BONUS[MapTournament()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS[MapDiretide()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
+CUSTOM_XP_BONUS["ep_1"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -231,6 +233,7 @@ HERO_STARTING_LEVEL[MapTournament()] = 5
 HERO_STARTING_LEVEL[MapOverthrow()] = 5
 HERO_STARTING_LEVEL[MapDiretide()] = 5
 HERO_STARTING_LEVEL["imba_demo"] = 1
+HERO_STARTING_LEVEL["ep_1"] = 1
 
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = 42
@@ -242,6 +245,7 @@ MAX_LEVEL[MapTournament()] = 42
 MAX_LEVEL[MapOverthrow()] = 42
 MAX_LEVEL[MapDiretide()] = 42
 MAX_LEVEL["imba_demo"] = 42
+MAX_LEVEL["ep_1"] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = 1400
@@ -253,6 +257,7 @@ HERO_INITIAL_GOLD[MapTournament()] = 1400
 HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 HERO_INITIAL_GOLD[MapDiretide()] = 2500
 HERO_INITIAL_GOLD["imba_demo"] = 99999
+HERO_INITIAL_GOLD["ep_1"] = 500
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = 0.6
@@ -264,6 +269,7 @@ GOLD_TICK_TIME[MapTournament()] = 0.6
 GOLD_TICK_TIME[MapOverthrow()] = 0.4
 GOLD_TICK_TIME[MapDiretide()] = 0.4
 GOLD_TICK_TIME["imba_demo"] = 0.4
+GOLD_TICK_TIME["ep_1"] = 0.4
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {

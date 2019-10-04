@@ -4,6 +4,8 @@
 #base heroes/winter_wyvern/abilities.txt
 #base npc_jungle_creep_abilities.txt
 
+#base siltbreaker/npc_abilities_override_siltbreaker.txt
+
 "DOTAAbilities"
 {
 	"Version"		"1"

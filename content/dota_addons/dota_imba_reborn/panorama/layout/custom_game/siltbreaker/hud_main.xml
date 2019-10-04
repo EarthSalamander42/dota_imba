@@ -78,7 +78,7 @@
 			var scenePanel = $( '#TPScroll' );
 			var offscreenPanel = scenePanel.GetPanoramaSurfacePanel();					
 			
-			offscreenPanel.AddClass( "ScrollHovered" ); 
+//			offscreenPanel.AddClass( "ScrollHovered" ); 
 			$.DispatchEvent( 'DOTAGlobalSceneFireEntityInput', 'TPScroll', 'hoverFX', 'start', 0 );
 		}
 		
