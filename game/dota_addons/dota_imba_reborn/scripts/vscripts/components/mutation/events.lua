@@ -97,6 +97,8 @@ ListenToGameEvent('npc_spawned', function(keys)
 			hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
 		elseif IMBA_MUTATION["terrain"] == "river_flows" then
 			hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
+		elseif IMBA_MUTATION["terrain"] == "hyper_blink" then
+			hero:AddNewModifier(hero, nil, "modifier_mutation_hyper_blink", {})
 		end
 	end
 end, nil)

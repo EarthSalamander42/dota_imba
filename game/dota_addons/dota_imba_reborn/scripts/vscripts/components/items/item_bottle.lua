@@ -146,22 +146,24 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 	}
 end
 
-function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	if self:GetAbility() ~= nil then
-		return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
-	end
-end
-
-function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	if self:GetAbility() ~= nil then
-		return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
-	end
-end
-
 function modifier_item_imba_bottle_heal:OnCreated()
+	-- the ability is added in ModifierFilter, using vanilla bottle. Clientside is not called OnCreated, and CustomNetTables are sending values to client to show on UI, but it doesn't show up on UI somehow.
 	if not IsServer() then return end
-	self.pfx = ParticleManager:CreateParticle(self:GetCaster().bottle_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+
+	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+
+	local particle_name = "particles/items_fx/bottle.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["bottle"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["bottle"]["effect1"]
+	end
+
+	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 end
+
+function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen() return self.health_restore end
+function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen() return self.mana_restore end
 
 function modifier_item_imba_bottle_heal:OnDestroy()
 	if not IsServer() then return end

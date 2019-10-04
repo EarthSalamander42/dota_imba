@@ -1,5 +1,7 @@
 -- Editors:
 --    AltiV, June 22nd, 2019
+-- Primary Idea Giver:
+--    Flat is Justice / SnowyFang
 
 LinkLuaModifier("modifier_imba_grimstroke_dark_artistry_extend", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_grimstroke_dark_artistry_slow", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)

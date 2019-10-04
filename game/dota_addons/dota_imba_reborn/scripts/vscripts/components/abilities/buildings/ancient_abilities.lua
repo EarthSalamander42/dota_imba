@@ -166,13 +166,13 @@ function modifier_imba_fountain_danger_zone:IsPurgable() return false end
 function modifier_imba_fountain_danger_zone:IsPurgeException() return false end
 function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
 
-function modifier_imba_fountain_danger_zone:CheckState()
-	local state = {
-		[MODIFIER_STATE_DISARMED] = true,
-	}
+-- function modifier_imba_fountain_danger_zone:CheckState()
+	-- local state = {
+		-- [MODIFIER_STATE_DISARMED] = true,
+	-- }
 
-	return state
-end
+	-- return state
+-- end
 
 function modifier_imba_fountain_danger_zone:OnCreated()
 	self.interval = 0.2
@@ -186,7 +186,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 	if IsServer() then
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
-		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		if #nearby_enemies == 0 then return end
 
 		for _, enemy in pairs(nearby_enemies) do

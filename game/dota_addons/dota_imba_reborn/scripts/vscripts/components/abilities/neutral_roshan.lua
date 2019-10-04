@@ -155,6 +155,10 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 	-- Spawn death particle, start the respawn timer, index death point
 	GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
 
+	if keys.attacker then
+		_G.GAME_ROSHAN_KILLER_TEAM = keys.attacker:GetTeamNumber()
+	end
+
 	-- Play sounds
 	self.roshan:EmitSound("Diretide.RoshanDeathLava")
 	self.roshan:EmitSound("Diretide.RoshanDeath1")
@@ -169,7 +173,7 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 	ParticleManager:ReleaseParticleIndex(deathParticle)
 
 	Timers:CreateTimer(self.animDeath, function()
-		local item = CreateItem("item_imba_aegis", nil, nil)
+		local item = CreateItem("item_aegis", nil, nil)
 		local pos = self.roshan:GetAbsOrigin()
 		local drop = CreateItemOnPositionSync(pos, item)
 		item:LaunchLoot(false, 300, 0.5, pos)

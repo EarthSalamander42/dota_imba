@@ -367,6 +367,13 @@ function modifier_imba_venomous_gale:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
 
+-- "A unit with less that 25% of its maximum health can be denied when it has the Venomous Gale debuff on."
+function modifier_imba_venomous_gale:CheckState()
+	if self:GetParent():GetHealthPercent() < 25 then
+		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
+	end
+end
+
 -------------------------------------------
 modifier_imba_venomous_gale_wardcast = class({})
 function modifier_imba_venomous_gale_wardcast:IsDebuff() return true end

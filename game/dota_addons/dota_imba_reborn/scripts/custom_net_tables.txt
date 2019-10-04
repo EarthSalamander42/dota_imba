@@ -7,12 +7,15 @@
 		"hero_selection",
 		"battlepass",
 		"mutations",
-		"status_resistance",
 		"zone_names",
 		"revive_state",
 		"player_zone_locations",
 		"respawns_remaining",
 		"boss",
 		"crypt_holdout"
+		"mutation_info",
+		"hero_wearables",
+		"other_available_items",
+		"selection",
 	]
 }

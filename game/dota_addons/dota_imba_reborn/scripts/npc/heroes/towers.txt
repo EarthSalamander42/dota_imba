@@ -35,9 +35,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"sniper_assassinate"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -53,7 +52,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -80,9 +79,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_explosion"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -98,7 +96,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -131,9 +129,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"keeper_of_the_light_chakra_magic"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -148,7 +145,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -173,9 +170,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"modifier_invulnerable"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -190,7 +186,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -215,9 +211,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_toughness"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -232,7 +227,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -257,7 +252,6 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_observatory"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
@@ -283,9 +277,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"gyrocopter_skyhigh_flak_cannon"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities.lua"
 
 		// Special
@@ -301,7 +294,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -328,9 +321,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_thorns"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Precache
@@ -347,27 +339,23 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"return_damage_pct"				"30 35 40"
+				"return_damage_pct"				"30 35 40 45"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"aura_stickyness"				"0.5"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"return_damage_per_stack"		"3"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -386,9 +374,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_spellshield"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -404,7 +391,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -433,7 +420,7 @@
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_tenacity"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -453,7 +440,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"05"
 			{
@@ -473,9 +460,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_spellmastery"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -503,7 +489,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"05"
@@ -525,7 +511,7 @@
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_regen"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -540,7 +526,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -566,9 +552,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_vicious"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -588,7 +573,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"04"
 			{
@@ -613,9 +598,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_atrophy"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -630,7 +614,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -650,9 +634,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_mana_burn"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -667,7 +650,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -702,7 +685,6 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_rot"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"700"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -745,9 +727,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_bash"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 
@@ -768,7 +749,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"04"
 			{
@@ -798,9 +779,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"ursa_fury_swipes"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -815,7 +795,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -845,9 +825,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"slark_essence_shift"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -862,7 +841,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -897,9 +876,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_starlight"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -929,7 +907,7 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"aura_radius"						"900"
+				"aura_radius"						"1200"
 			}
 			"06"
 			{
@@ -949,9 +927,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_protection"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -966,7 +943,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
@@ -991,9 +968,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/disease_aura"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -1008,7 +984,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -1035,9 +1011,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_doppleganger"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Precache
@@ -1054,7 +1029,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"02"
@@ -1111,9 +1086,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_barrier"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Precache
@@ -1130,7 +1104,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"02"
@@ -1169,9 +1143,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_soul_leech"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Special
@@ -1187,7 +1160,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -1220,9 +1193,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_frost_shroud"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
 		// Precache
@@ -1245,7 +1217,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"900"
+				"aura_radius"					"1200"
 			}
 
 			"03"
@@ -1297,9 +1269,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"faceless_void_chronosphere"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"12"
 
 		// Special
@@ -1375,9 +1346,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/mana_flare"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"6"
 
 		// Special
@@ -1387,7 +1357,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"burn_aoe"						"900"
+				"burn_aoe"						"1200"
 			}
 			"02"
 			{
@@ -1430,9 +1400,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"terrorblade_reflection"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"10 8 6"
 
 		// Special
@@ -1479,9 +1448,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/imba_force_tower"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"8"
 
 		// Special
@@ -1552,9 +1520,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"treant_overgrowth"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"10 9 8"
 
 		// Special
@@ -1564,7 +1531,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"root_radius"					"900"
+				"root_radius"					"1200"
 			}
 			"02"
 			{
@@ -1647,9 +1614,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"silencer_last_word"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"10 9 8"
 
 		// Special
@@ -1659,7 +1625,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"silence_radius"				"600 750 900"
+				"silence_radius"				"600 750 1200"
 			}
 			"02"
 			{
@@ -1720,9 +1686,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"shadow_shaman_voodoo"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"12"
 
 		// Special
@@ -1794,9 +1759,8 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"custom/tower_healing_wave"
-		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
+		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"8"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
@@ -1815,7 +1779,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"search_radius"				"900"
+				"search_radius"				"1200"
 			}
 			"02"
 			{
@@ -1836,6 +1800,43 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hp_threshold"				"80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower: Multishot
+	//=================================================================================================================
+	"imba_tower_multishot"
+	{
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"components/abilities/buildings/towers/multishot.lua"
+		"AbilityTextureName"				"medusa_split_shot"	
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_modifier"				"-0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_modifier_tooltip"		"100"
+			}
+			"03"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"arrow_count"					"2 4 6 8"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"split_shot_bonus_range"		"100"
 			}
 		}
 	}

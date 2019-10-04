@@ -21,8 +21,11 @@
 @define COLOR_INFO_TEXT_GREY: #ff0000;
 
 .addon-root {
-	width: 39%;
 	height: 100%;
+	background-color: black;
+	background-position: center center;
+	background-size: cover;
+	background-image: url("file://{images}/custom_game/loading_screen/loading_screen_bg.png");
 /*	z-index: 1; /* disable if loading players are no longer visible */
 }
 
@@ -51,12 +54,9 @@
 
 #imba-loading {
 	flow-children: down;
-	width: 100%;
+	width: 79.3%;
 	height: 100%;
-	background-color: black;
-	background-position: center center;
-	background-size: cover;
-	background-image: url("file://{images}/custom_game/loading_screen/nian.jpg");
+	z-index: 1; /* Should fix buttons not hoverable/clickable in pick screen, if it hides players loading please comment this line */
 }
 
 #imba-loading-title,
@@ -181,7 +181,7 @@
 }
 
 .LoadingButtons {
-	margin-left: 220px;
+	margin-left: 280px;
 	overflow: scroll;
 	flow-children: down;
 	background-color: COLOR_INFO_BACKGROUND_GREY_SOCIAL;
@@ -209,6 +209,10 @@
 .LoadingButtons Label {
 	font-size: 20px;
 	color: #fff;
+}
+
+#BottomButtonBar {
+	margin-left: 125px;
 }
 
 .SocialButtons {

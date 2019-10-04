@@ -29,7 +29,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 		caster:GetTeam(),
 		target:GetAbsOrigin(), 
 		nil, 
-		radius, 
+		radius * static_chain_mult, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		--DOTA_UNIT_TARGET_FLAG_NONE, 
@@ -58,7 +58,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	Timers:CreateTimer(jump_delay, function() 
 		-- Find targets to chain too
 		for _,enemy in pairs(nearby_enemy_units) do 
-			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy then
+			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
 				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
 				-- Abort when we find something to chain too
 				break
@@ -168,7 +168,7 @@ function imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list)
 			end
 
 			if caster:HasTalent("special_bonus_imba_zuus_8") then 
-				print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
+				-- print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
 				if hit_list[enemy] < caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits") then
 					return true
 				end
@@ -254,7 +254,7 @@ function imba_zuus_lightning_bolt:OnSpellStart()
 	end
 end
 
-function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, target_point)
+function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, target_point, nimbus)
 	if IsServer() then
 		local spread_aoe 			= ability:GetSpecialValueFor("spread_aoe")
 		local true_sight_radius 	= ability:GetSpecialValueFor("true_sight_radius")
@@ -265,7 +265,11 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		local pierce_spellimmunity 	= false
 		local z_pos 				= 2000
 
-		caster:EmitSound("Hero_Zuus.LightningBolt")
+		if nimbus then
+			nimbus:EmitSound("Hero_Zuus.LightningBolt")
+		else
+			caster:EmitSound("Hero_Zuus.LightningBolt")
+		end
 
 		if caster:HasTalent("special_bonus_imba_zuus_1") then 
 			spread_aoe = spread_aoe + caster:FindTalentValue("special_bonus_imba_zuus_1", "spread_aoe")
@@ -602,7 +606,7 @@ end
 function modifier_imba_zuus_static_field:Apply(target)
 	if not IsServer() then return end	
 	
-	if not target:IsAlive() or target == caster or target:IsRoshan() then return end
+	if self:GetCaster():PassivesDisabled() or not target:IsAlive() or target == self:GetCaster() or target:IsRoshan() then return end
 	
 	local ability			= self:GetAbility()
 	local caster			= self:GetCaster()
@@ -694,7 +698,6 @@ end
 --------------------------------------
 --				Nimbus				--
 --------------------------------------
-LinkLuaModifier("modifier_zuus_nimbus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_zuus_nimbus_storm", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_cloud = imba_zuus_cloud or class({})
@@ -813,7 +816,7 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 
 			for _,unit in pairs(nearby_enemy_units) do
 				if unit:IsAlive() then
-					imba_zuus_lightning_bolt:CastLightningBolt(self.caster, self.lightning_bolt, unit, unit:GetAbsOrigin())
+					imba_zuus_lightning_bolt:CastLightningBolt(self.caster, self.lightning_bolt, unit, unit:GetAbsOrigin(), self:GetParent())
 					-- Abort when we find something to hit
 					self.counter = 0
 					break
@@ -1213,7 +1216,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		damage_table.damage_type 	= ability:GetAbilityDamageType() 
 		
 		for _,hero in pairs(HeroList:GetAllHeroes()) do 
-			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) then 
+			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) and not hero:IsClone() then 
 				local target_point = hero:GetAbsOrigin()
 				local particle_effect = "particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf"
 				if self:GetCaster().thundergods_wrath_effect then

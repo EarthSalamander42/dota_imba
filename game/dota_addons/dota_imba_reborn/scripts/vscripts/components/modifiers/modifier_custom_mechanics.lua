@@ -19,8 +19,6 @@ function modifier_custom_mechanics:OnIntervalThink()
 	if IsServer() then
 		-- Calculate current regen before this modifier
 		local parent = self:GetParent()
-
-		CustomNetTables:SetTableValue( "status_resistance", string.format("%d", self:GetParent():GetEntityIndex()) , { status_resistance = self:GetParent():GetStatusResistance() } )
 		
 		-- Rough Out of Bounds warp back logic
 		if parent:GetAbsOrigin().x >= 8000 then

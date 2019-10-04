@@ -91,7 +91,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_ethereal_jaunt"	
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilitySound"					"Hero_Puck.EtherealJaunt"
 		
 		"MaxLevel"						"1"
@@ -190,7 +190,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_phase_shift"	
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilitySound"					"Hero_Puck.Phase_Shift"
 
 		// Casting
@@ -351,7 +351,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.4"
+				"value"						"1.5"
 			}
 		}
 	}	
@@ -379,7 +379,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"8"
+				"value"						"9"
 			}
 		}
 	}
@@ -411,4 +411,170 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Vanilla Overrides
+	//=================================================================================================================
+
+	//=================================================================================================================
+	// Puck: Illusory Orb
+	//=================================================================================================================
+	"puck_illusory_orb"
+	{
+		"MaxLevel"							"4"
+
+		"AbilityCooldown"					"14 12 10 8"
+
+		"AbilityCastRange"					"4000"
+		"AbilityManaCost"					"50 75 100 125"
+		"AbilityDamage"						"125 250 375 500"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"225"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_distance"				"1950 2100 2250 2400"
+				"LinkedSpecialBonus"		"special_bonus_unique_puck"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"orb_speed"					"651 701 751 801"
+				"LinkedSpecialBonus"		"special_bonus_unique_puck"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"orb_vision"				"450"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"3.34"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Puck: Ethereal Jaunt
+	//=================================================================================================================
+	"puck_ethereal_jaunt"
+	{
+		"MaxLevel"							"1"
+	}
+
+	//=================================================================================================================
+	// Puck: Waning Rift
+	//=================================================================================================================
+	"puck_waning_rift"
+	{
+		"MaxLevel"							"4"
+		"AbilityCooldown"					"16 14 12 10"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400 435 470 505"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"silence_duration"			"1.5 2.0 2.5 3.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"120 240 360 480"
+				"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Puck: Phase Shift
+	//=================================================================================================================
+	"puck_phase_shift"
+	{
+		"AbilityChannelTime"				"1.0 2.0 3.0 4.0"
+		"AbilityCooldown"					"10.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"1.0 2.0 3.0 4.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Puck: Dream Coil
+	//=================================================================================================================
+	"puck_dream_coil"
+	{
+		"AbilityCooldown"					"70 60 50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_duration"				"6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_break_radius"			"600 570 540"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.5 0.75 1.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"coil_stun_duration"		"1.5 3.0 4.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_break_damage"			"300 450 600"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_radius"				"375 400 425"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_duration_scepter"		"8"
+				"RequiresScepter"			"1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_break_damage_scepter"	"400 650 900"
+				"RequiresScepter"			"1"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"coil_stun_duration_scepter"	"3.0 4.5 6.0"
+				"RequiresScepter"			"1"
+			}
+		}
+	}	
 }

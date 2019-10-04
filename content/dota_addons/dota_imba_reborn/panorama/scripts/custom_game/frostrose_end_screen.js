@@ -230,6 +230,10 @@ function EndScoreboard(args) {
 //			if (Game.IsInToolsMode())
 //				xpDiff = 300000;
 
+			// fail-safe to prevent text being grey
+			values.xp.earned.text = "0";
+			values.xp.earned.AddClass("es-text-white");
+
 			if (xpDiff > 0) {
 				if (ply_table && ply_table.player_xp == 1) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -262,9 +266,6 @@ function EndScoreboard(args) {
 						}
 					}
 				}
-			} else if (xpDiff == 0) {
-				values.xp.earned.text = "0";
-				values.xp.earned.AddClass("es-text-white");
 			} else {
 				values.xp.earned.text = new String(xpDiff);
 				values.xp.earned.AddClass("es-text-red");

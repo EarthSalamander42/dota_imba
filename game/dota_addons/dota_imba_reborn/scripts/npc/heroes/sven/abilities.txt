@@ -33,7 +33,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140"
+		"AbilityManaCost"				"110 120 130 140"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -136,19 +136,19 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_ending_width"		"300"
+				"cleave_ending_width"		"360"
 				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_distance"			"570"
+				"cleave_distance"			"650"
 				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"great_cleave_damage"		"40 55 70 85"
+				"great_cleave_damage"		"30 50 70 90"
 			}
 			"05"
 			{
@@ -270,7 +270,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80 70 60"
+		"AbilityCooldown"				"80"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -306,11 +306,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ally_bonus_dmg_pct_scepter"	"80 120 160"
+				"RequiresScepter"				"1"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius_scepter"			"900"
+				"aura_radius_scepter"			"1200"
+				"RequiresScepter"				"1"
 			}
 		}
 	}
@@ -356,7 +358,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proj_speed"				"2000"
+				"proj_speed"				"3000"
 			}
 			"02"
 			{
@@ -376,7 +378,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_multiplier"			"30 45 60"
+				"range_multiplier"			"50 75 100"
 			}
 			"06"
 			{
@@ -610,4 +612,32 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Sven Talent 9: Storm Hammer Dispels Enemies
+	//=================================================================================================================
+	"special_bonus_imba_sven_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sven_storm_bolt"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}	
 }

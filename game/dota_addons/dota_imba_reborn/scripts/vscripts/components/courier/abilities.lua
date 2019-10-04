@@ -7,6 +7,13 @@ function courier_movespeed:GetIntrinsicModifierName()
 	return "modifier_courier_turbo"
 end
 
+-- Remove any locks if inventory changes (presumably as a result of delivering the item(s))
+function courier_movespeed:OnInventoryContentsChanged()
+	if self:GetCaster().issuer_player_id_const then
+		self:GetCaster().issuer_player_id_const = nil
+	end
+end
+
 LinkLuaModifier("modifier_courier_turbo", "components/courier/abilities.lua", LUA_MODIFIER_MOTION_NONE)
 
 modifier_courier_turbo = modifier_courier_turbo or class({})
@@ -48,11 +55,28 @@ end
 function modifier_courier_turbo:OnCreated()
 	if IsServer() then
 		self.fv_set = false
+		
+		-- Let's try some arbitrary values for ensuring courier never gets perma-bricked
+		-- If the courier would otherwise be locked to one particular player for 8 or more seconds, release the lock
+		self.counter				= 0
+		self.player_id_reset_time	= 8
+		
 		self:StartIntervalThink(0.1)
 	end
 end
 
 function modifier_courier_turbo:OnIntervalThink()
+	if self:GetCaster().issuer_player_id_const then
+		self.counter = self.counter + 0.1
+		
+		if self.counter >= self.player_id_reset_time then
+			self:GetCaster().issuer_player_id_const = nil
+			self.counter = 0
+		end
+	else
+		self.counter = 0
+	end
+
 	if self:GetParent().return_position == nil then
 		return
 	end

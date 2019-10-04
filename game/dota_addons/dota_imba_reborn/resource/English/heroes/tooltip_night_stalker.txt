@@ -1,17 +1,14 @@
 // Night Stalker's Stalker in the Night
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night"						"Stalker in the Night"
-"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Description"          "Drastically increases his night vision. Each time a night comes naturally, or a night inducing spell is used, Stalker in the Night gains a stack. Stacks are used to increase Hunter in the Dark's potency."
+"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Description"          "Each time a night comes naturally, or a night inducing spell is used, Stalker in the Night gains a stack. Stacks are used to increase Hunter in the Dark's potency."
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Lore"                 "A very fearsome creature, Night Stalker operates in the dark. In the long time since the First Day, Balanar's eyes have adjusted to the dark, and his body welcomes the night."
-"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Note0"                "When Balanar is afflicted with Break, this skill's effect stops, effectively turning Balanar into a normal hero in terms of vision."
-//"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_vision_day_loss"      "DAY VISION REDUCTION:"
-"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_vision_night_gain"    "BONUS NIGHT VISION:"
 
 "DOTA_Tooltip_modifier_imba_stalker_in_the_night"                      "Stalker in the Night"
 "DOTA_Tooltip_modifier_imba_stalker_in_the_night_Description"          "Gains stacks whenever a night comes. Hunter in the Night becomes stronger with each stack."
 
 // Night Stalker's Void
 "DOTA_Tooltip_ability_imba_night_stalker_void"                          "Void"
-"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Adaption:</font> Void deals full damage and mini-stuns during the day time.\n<font color='#FF7800'>Everlasting Night:</font> When Void is cast on an enemy hero at day, hastens the time of the day by a few seconds, bringing the night faster with each cast. When Void is cast on an enemy hero at night, it extends the night instead. If Darkness is active while casting Void on an enemy hero, Darkness' duration is increased.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
+"DOTA_Tooltip_ability_imba_night_stalker_void_Description"              "Creates a damaging void that slows and deals damage to an enemy. Void also mini-stuns, interrupting channeling abilities. The effect lasts longer at night.\n<font color='#FF7800'>Adaption:</font> Void also mini-stuns during the day time.\n<font color='#FF7800'>Void Vision:</font> Reduces the target's vision range for the duration."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Lore"                    "Balanar creates a vortex of infinite night, tearing opponents violently into the eternal darkness that once was."
 "DOTA_Tooltip_ability_imba_night_stalker_void_Note0"                    "Everlasting Night does not trigger when casting Void on illusions."
 "DOTA_Tooltip_ability_imba_night_stalker_void_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -19,8 +16,8 @@
 "DOTA_Tooltip_ability_imba_night_stalker_void_as_slow"                  "ATTACK SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_day_duration"            "DAY DURATION:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_night_duration"          "NIGHT DURATION:"
-"DOTA_Tooltip_ability_imba_night_stalker_void_night_pull"              "DAY HASTE:"
-"DOTA_Tooltip_ability_imba_night_stalker_void_night_extend"            "NIGHT EXTEND:"
+//"DOTA_Tooltip_ability_imba_night_stalker_void_night_pull"              "DAY HASTE:"
+//"DOTA_Tooltip_ability_imba_night_stalker_void_night_extend"            "NIGHT EXTEND:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_vision_reduction"                     "VISION REDUCTION:"
 
 "DOTA_Tooltip_ability_imba_night_stalker_void_aghanim_description"			"Causes Void to be an AoE ability. Increases the ministun duration and reduces cooldown. <font color='#FF7800'>Increased ministun duration does not apply during day time casts, and Everlasting Night will only apply once if multiple heroes are affected by Void.</font>"
@@ -50,6 +47,7 @@
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720"						"Crippling Fear"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_Description"			"Night Stalker horrifies all nearby enemies, causing them to become silenced while near him.  The effect lasts longer at night.\n<font color='#FF7800'>I Am The Night: </font>Any enemy hero dying within Crippilng Fear's aura radius doubles it and adds its base duration to its remaining time. The aura radius size only changes once."
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_Lore"					"A vision of the twisted maw of Balanar etches itself into the minds of the poor souls unlucky enough to cross his path."
+"DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_Note0"					"Recasting the ability while Crippling Fear is active resets its radius."
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_duration_day"			"DAY DURATION:"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_duration_night"			"NIGHT DURATION:"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_radius"					"AURA RADIUS:"
@@ -66,35 +64,34 @@
 
 // Night Stalker's Hunter in the Night
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night"						"Hunter in the Night"
-"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Description"           "Night Stalker is in his element at night, attacking and moving with great swiftness. Can be activated during night to grant Night Stalker flying movement for %flying_duration% seconds.\n<font color='#FF7800'>Empowering Nights:</font> Hunter in the Night's bonuses increase based on the stacks of Stalker in the Night.\n<font color='#FF7800'>See Into The Night:</font> Gains bonus night vision when Hunter in the Night is active.\n<font color='#FF7800'>Encroaching Terror:</font> No move speed limit while Hunter in the Night is active."
+"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Description"           "Night Stalker is in his element at night, attacking and moving with great swiftness.\n<font color='#FF7800'>Empowering Nights:</font> Hunter in the Night's bonuses increase based on the stacks of Stalker in the Night.\n<font color='#FF7800'>Encroaching Terror:</font> No move speed limit while Hunter in the Night is active."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Lore"                  "The hunting prowess of Balanar improves as the night beckons."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_Note0"                 "While the bonus gives percentage bonus, stacks of Stalker in the Night actually give a constant increase."
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_base_bonus_ms_pct"     "%MOVE SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_base_bonus_as"         "ATTACK SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_ms_increase_per_stack" "BASE MOVE SPEED BONUS PER STACK:"
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_as_increase_per_stack" "ATTACK SPEED BONUS PER STACK:"
-"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_night_vision_bonus"    "NIGHT VISION BONUS:"
-"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_flying_duration"		"FLYING MOVEMENT DURATION:"
+//"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_night_vision_bonus"    "NIGHT VISION BONUS:"
+//"DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_flying_duration"		"FLYING MOVEMENT DURATION:"
 
 "DOTA_Tooltip_modifier_imba_hunter_in_the_night_flying"								"Flight"
 "DOTA_Tooltip_modifier_imba_hunter_in_the_night_flying_Description"					"Flying unobstructed."
 
 "DOTA_Tooltip_modifier_imba_hunter_in_the_night"                        "Hunter in the Night"
-"DOTA_Tooltip_modifier_imba_hunter_in_the_night_Description"            "Increased attackspeed, movespeed, and vision range. Becomes stronger with more stacks in Stalker in the Night."
+"DOTA_Tooltip_modifier_imba_hunter_in_the_night_Description"            "Night Stalker is in his element at night, attacking and moving with great swiftness."
 
 // Night Stalker's Darkness
-"DOTA_Tooltip_ability_imba_night_stalker_darkness"                      "Darkness"
-"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Nightstalker gains bonus damage during this time.\n<font color='#FF7800'>The Dark World:</font> All enemy units also have their vision range reduced for the duration.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed."
+"DOTA_Tooltip_ability_imba_night_stalker_darkness"                      "Dark Ascension"
+"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Nightstalker gains flight and bonus damage during this time. Has unobstructed vision.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_Lore"                "It is a humbling sight to see when the mightiest of warriors become afraid of the dark."
-"DOTA_Tooltip_ability_imba_night_stalker_darkness_Note0"					"Darkness stops the natural day/night flow while it is active."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_bonus_damage"				"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_vision_reduction_pct"		"%VISION RANGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_enemy_vision_duration"	"DARKSIGHT DURATION:"
 //"DOTA_Tooltip_ability_imba_night_stalker_darkness_aghanim_description"	"Grants unobstructed flying vision at night."
 
-"DOTA_Tooltip_modifier_imba_darkness_night"                            "Darkness"
-"DOTA_Tooltip_modifier_imba_darkness_night_Description"                "Turns the day into night."
+"DOTA_Tooltip_modifier_imba_darkness_night"                            "Dark Ascension"
+"DOTA_Tooltip_modifier_imba_darkness_night_Description"                "Temporarily turns day into night, granting flight, bonus damage and unobstructed vision."
 
 "DOTA_Tooltip_modifier_imba_darkness_vision"                            "Darkness"
 "DOTA_Tooltip_modifier_imba_darkness_vision_Description"                "Vision range reduced."
@@ -108,3 +105,5 @@
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_6"               "Crippling Fear now also mutes the target"
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_7"               "-150 vision range to enemies in Darkness"
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_8"               "-8s Crippling Fear Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_night_stalker_9"               "+140 Hunter in the Night Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_night_stalker_10"               "-40s Dark Ascension Cooldown"

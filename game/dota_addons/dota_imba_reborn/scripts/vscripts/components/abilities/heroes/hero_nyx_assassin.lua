@@ -1275,11 +1275,19 @@ function modifier_imba_vendetta:OnCreated()
 	self.particle_vendetta_attack = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta.vpcf"
 	self.carapace_ability = "imba_nyx_assassin_spiked_carapace"
 	self.modifier_charge = "modifier_imba_vendetta_charge"
-
+	
 	-- Ability specials
-	self.movement_speed_pct = self.ability:GetSpecialValueFor("movement_speed_pct")
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
-	self.break_duration = self.ability:GetSpecialValueFor("break_duration")
+	-- Why the heck is self.ability throwing errors here
+	
+	if self.ability and not self.ability:IsNull() then
+		self.movement_speed_pct = self.ability:GetSpecialValueFor("movement_speed_pct")
+		self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+		self.break_duration = self.ability:GetSpecialValueFor("break_duration")
+	else
+		self.movement_speed_pct = 0
+		self.bonus_damage = 0
+		self.break_duration = 0
+	end
 
 	-- Talent: If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks
 	if self.caster:HasTalent("special_bonus_imba_nyx_assassin_1") then

@@ -66,7 +66,7 @@ function modifier_wearable:OnIntervalThink()
 		end
 	end
 
-	if hero:IsOutOfGame() then
+	if hero:IsOutOfGame() or hero:IsHexed() then
 		self:GetParent():AddNoDraw()
 	else
 		self:GetParent():RemoveNoDraw()

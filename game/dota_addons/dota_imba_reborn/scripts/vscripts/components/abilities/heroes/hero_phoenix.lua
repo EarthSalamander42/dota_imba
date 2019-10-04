@@ -1636,6 +1636,8 @@ LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown", "com
 LinkLuaModifier("modifier_imba_phoenix_supernova_egg_double", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_kill_no_timer", "modifier/modifier_kill_no_timer", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_phoenix_supernova_force_day", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+
 imba_phoenix_supernova = imba_phoenix_supernova or class({})
 
 function imba_phoenix_supernova:IsHiddenWhenStolen() 	return false end
@@ -1663,6 +1665,45 @@ function imba_phoenix_supernova:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	
+	-- Can't get forced daytime to work
+	-- if not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_force_day") and not GameRules:IsDaytime() then
+		-- -- if not self.day_start then
+			-- -- Establish some variables to mess with the day/night cycle
+			-- self.day_start			= 0.25
+			-- -- "Each day in Dota 2 is 10 minutes long, divided evenly between daytime and nighttime."
+			-- self.minutes_per_day	= 10
+			-- self.seconds_per_minute	= 60
+			
+			-- -- Calculate how many total seconds are in one day or one night
+			-- self.seconds_per_cycle	= (self.minutes_per_day / 2) * self.seconds_per_minute
+		-- -- end
+
+		-- self.current_time_of_day	= GameRules:GetTimeOfDay()
+
+		-- self.daytime_seconds = (GameRules:GetTimeOfDay() - self.day_start) * self.minutes_per_day * self.seconds_per_minute
+
+		-- if self.daytime_seconds < 0 then
+			-- self.daytime_seconds = self.daytime_seconds + (self.minutes_per_day * self.seconds_per_minute)
+		-- end
+		
+		-- -- Calculate the number of seconds until daytime (need to account for when Supernova is cast when there is less than "duration" seconds of nighttime remaining)
+		-- self.time_till_day			= (self.seconds_per_cycle - self.daytime_seconds) % self.seconds_per_cycle
+
+		-- -- Convert daytime back to dota format
+		-- self.dota_daytime = ((self.daytime_seconds + 50) / self.seconds_per_minute / self.minutes_per_day) + self.day_start
+		
+		-- GameRules:SetTimeOfDay(self.dota_daytime)
+		
+		-- GameRules:GetGameModeEntity():SetDaynightCycleDisabled(true)
+
+		-- local force_day_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_supernova_force_day", 
+		-- {
+			-- duration 			= math.min(self:GetSpecialValueFor("duration"), self.time_till_day),
+			-- current_time_of_day	= self.current_time_of_day
+		-- })
+	-- end
+	
 	local caster = self:GetCaster()
 	local ability = self
 	local location = caster:GetAbsOrigin()
@@ -2410,10 +2451,16 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 	if self:GetCaster():GetHealth() <= 1 then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = ability:GetSpecialValueFor("scepter_cooldown")})
-		local location = caster:GetAbsOrigin()
+		local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
+		local cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
 		local egg_duration = ability:GetSpecialValueFor("duration")
 		local extend_duration = ability:GetSpecialValueFor("scepter_additional_duration")
+
+		if cooldown_modifier ~= nil then 
+			cooldown_modifier:SetStackCount(scepter_cooldown + egg_duration + extend_duration)
+		end
+
+		local location = caster:GetAbsOrigin()
 
 		local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
 
@@ -2434,10 +2481,18 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		-- Set health to max here as compromise to prevent easy insta-gibs I guess
 		caster:SetHealth(caster:GetMaxHealth())
+
+		-- Add cooldown to scepter icon
+		for i = 0, 5 do 
+			local aghs = caster:GetItemInSlot(i)
+			if aghs ~= nil then
+				if aghs:GetName() == 'item_ultimate_scepter' then 
+					aghs:StartCooldown(scepter_cooldown + egg_duration + extend_duration)
+				end
+			end
+		end
 	end
-
 end
-
 
 modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class({})
 
@@ -2449,6 +2504,42 @@ function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff()
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPermanent() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() 	return false end
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated() 
+	if IsServer() then 
+		self:StartIntervalThink(1)
+	end
+end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnIntervalThink() 
+	if IsServer() then 
+		self:SetStackCount(self:GetStackCount() - 1)
+	end
+end
+
+----------------------------------
+-- SUPERNOVA FORCE DAY MODIFIER --
+----------------------------------
+
+modifier_imba_phoenix_supernova_force_day = class({})
+
+function modifier_imba_phoenix_supernova_force_day:IsHidden()		return true end
+function modifier_imba_phoenix_supernova_force_day:IsPurgable()		return false end
+function modifier_imba_phoenix_supernova_force_day:RemoveOnDeath()	return false end
+
+function modifier_imba_phoenix_supernova_force_day:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.duration				= params.duration
+	self.current_time_of_day	= params.current_time_of_day
+end
+
+function modifier_imba_phoenix_supernova_force_day:OnDestroy()
+	if not IsServer() then return end
+	
+	GameRules:SetTimeOfDay(self.current_time_of_day + self.duration)
+	
+	GameRules:GetGameModeEntity():SetDaynightCycleDisabled(false)
+end
 
 -------------------------------------------
 --			Burning Wings
@@ -2471,6 +2562,7 @@ function imba_phoenix_burning_wings:OnToggle()
 	if not IsServer() then
 		return
 	end
+
 	if self:GetToggleState() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_burning_wings_buff", {} )
 	else

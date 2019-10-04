@@ -375,8 +375,21 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_rotation_speed"	"45"		
+				"scepter_rotation_speed"	"45"
+				"RequiresScepter"			"1"
+			}	
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_width"				"1300"
+				"RequiresScepter"			"1"
 			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_duration"		"30.0 35.0 40.0"
+				"RequiresScepter"			"1"
+			}			
 		}
 	}
 	

@@ -119,14 +119,14 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		local global_xp = tonumber(api:GetPlayerXP(ID))
-		print("Player "..ID.." XP: "..global_xp)
+--		print("Player "..ID.." XP: "..global_xp)
 		local level = Battlepass:GetXPLevelByXp(global_xp)
-		print("Battlepass level for ID "..ID..": "..level)
+--		print("Battlepass level for ID "..ID..": "..level)
 		local progress_to_next_level = Battlepass:GetXpProgressToNextLevel(global_xp)
 		local current_xp_in_level = progress_to_next_level.xp
-		print("Battlepass xp in level for ID "..ID..": "..current_xp_in_level)
+--		print("Battlepass xp in level for ID "..ID..": "..current_xp_in_level)
 		local max_xp = progress_to_next_level.max_xp
-		print("Battlepass max xp for ID "..ID..": "..max_xp)
+--		print("Battlepass max xp for ID "..ID..": "..max_xp)
 
 		local color = PLAYER_COLORS[ID]
 
@@ -144,7 +144,9 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 			"earthshaker",
 			"juggernaut",
 			"lina",
+			"nevermore",
 			"pudge",
+			"terrorblade",
 			"wisp",
 			"zuus",
 		}
@@ -172,6 +174,8 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 			in_game_tag = api:GetPlayerTagEnabled(ID),
 			bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
 			player_xp = api:GetPlayerXPEnabled(ID),
+			winrate = api:GetPlayerWinrate(ID),
+			winrate_toggle = api:GetPlayerWinrateShown(ID),
 			arcana = arcana
 		})
 

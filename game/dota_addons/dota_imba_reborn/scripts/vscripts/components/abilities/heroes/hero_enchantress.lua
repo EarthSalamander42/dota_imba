@@ -1,5 +1,7 @@
 -- Creator:
 --	   AltiV, January 17th, 2019
+-- Primary Idea Giver:
+--     Acalia
 
 -----------------
 -- Untouchable --
@@ -267,7 +269,8 @@ function imba_enchantress_enchant:OnSpellStart()
 			new_lane_creep:SetBaseDamageMax(self.target:GetBaseDamageMax())
 			new_lane_creep:SetMinimumGoldBounty(self.target:GetGoldBounty())
 			new_lane_creep:SetMaximumGoldBounty(self.target:GetGoldBounty())
-			UTIL_Remove(self.target)
+			self.target:AddNoDraw()
+			self.target:ForceKill(false)
 			self.target = new_lane_creep
 		end
 
@@ -440,6 +443,19 @@ function imba_enchantress_natures_attendants:OnSpellStart()
 	self.caster		= self:GetCaster()
 	self.duration	= self:GetDuration()
 
+	-- Make Fundamental's Essence ordered instead of random
+	if not self.type then
+		self.type = 1
+	else
+		if not self.caster:HasModifier("modifier_imba_enchantress_natures_attendants") then
+			self.type = self.type + 1
+			
+			if self.type > 5 then
+				self.type = 1
+			end
+		end
+	end
+
 	self.caster:AddNewModifier(self.caster, self, "modifier_imba_enchantress_natures_attendants", {duration = self.duration})
 
 	if self.caster:GetName() == "npc_dota_hero_enchantress" then
@@ -500,7 +516,9 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	-- 3 Green: Amplifies all sources of healing by 20%
 	-- 4 Orange: Increase day/night vision by 250/750 respectively 
 	-- 5 Pink: Increases move speed by 5% and grants flying movement
-	self:SetStackCount(RandomInt(1, 5))
+	if self.ability.type then
+		self:SetStackCount(self.ability.type)
+	end
 	
 	-- PARTICLESSSS
 	-- 3/5/7/9 wisps based on level

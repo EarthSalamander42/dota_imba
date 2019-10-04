@@ -128,6 +128,7 @@ end
 
 -- This is to manage fog vision tracking for the Dramatic Entrance IMBAfication
 function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()			return true end
+function modifier_imba_shadow_shaman_ether_shock_handler:IsPurgable()		return false end
 -- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
 function modifier_imba_shadow_shaman_ether_shock_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -527,6 +528,8 @@ function imba_shadow_shaman_shackles:OnSpellStart()
 			for _, enemy in pairs(enemies) do
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles", {duration = self:GetChannelTime()})
 			end
+		else
+			self:GetCaster():Interrupt()
 		end
 	else
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
@@ -556,6 +559,7 @@ end
 -------------------------------
 
 function modifier_imba_shadow_shaman_shackles_handler:IsHidden()		return true end
+function modifier_imba_shadow_shaman_shackles_handler:IsPurgable()		return false end
 function modifier_imba_shadow_shaman_shackles_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_handler:DeclareFunctions()
@@ -635,7 +639,7 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
 			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
 			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)
-			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_XP, self:GetCaster(), actual_gold_to_steal, nil)
 		end
 	end
 end
@@ -1013,8 +1017,7 @@ end
 function modifier_imba_mass_serpent_ward:OnDeath(keys)
 	if not IsServer() then return end
 	
-	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() then
-		
+	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() and not keys.unit:IsOther() and keys.unit:GetName() ~= "npc_dota_unit_undying_zombie" then	
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
 			for ward = 1, self.snake_charmer_creep_count do

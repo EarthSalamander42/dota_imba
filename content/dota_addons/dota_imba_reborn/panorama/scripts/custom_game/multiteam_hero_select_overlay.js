@@ -1,5 +1,7 @@
 "use strict";
 
+var hero_bio;
+
 function OnUpdateHeroSelection()
 {
 	for ( var teamId of Game.GetAllTeamIDs() )
@@ -18,18 +20,36 @@ function OnUpdateHeroSelection()
 		return;
 
 	var friends_and_foes = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("FriendsAndFoes");
-	var hero_bio = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroBio");
-	if (hero_bio == null) {
+
+	if (friends_and_foes && hero_bio == null) {
 		hero_bio = $.CreatePanel('Label', friends_and_foes, 'HeroBio');
-		hero_bio.style.paddingLeft = "5%";
-		hero_bio.style.paddingRight = "5%";
+		hero_bio.style.height = "100%";
+		hero_bio.style.paddingLeft = "4%";
+		hero_bio.style.paddingRight = "4%";
 		hero_bio.style.color = "#6283BB";
+		hero_bio.style.fontSize = "16px";
+	}
+/*
+	// Testing purpose
+	friends_and_foes.GetChild(0).DeleteAsync(0)
+	friends_and_foes.GetChild(1).DeleteAsync(0)
+	friends_and_foes.GetChild(2).DeleteAsync(0)
+	friends_and_foes.GetChild(3).DeleteAsync(0)
+	friends_and_foes.GetChild(4).DeleteAsync(0)
+*/
+	if (hero_bio) {
+		if (hype_text == "npc_dota_hero_" + localPlayerInfo.possible_hero_selection + "_hype")
+			hero_bio.text = "";
+		else
+			hero_bio.text = hype_text;
 	}
 
-	// Testing purpose
-//	hero_bio.DeleteAsync(0);
+	var hero_portrait = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HeroPortrait").GetChild(0);
 
-	hero_bio.text = hype_text;
+	if (hero_portrait) {
+		hero_portrait.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + localPlayerInfo.possible_hero_selection + '.png")';
+		hero_portrait.style.backgroundSize = "100% 100%";
+	}
 }
 
 function UpdateTeam( teamId )

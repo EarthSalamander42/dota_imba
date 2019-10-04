@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -65,11 +65,6 @@
 			m_fLifetimeMin = 0.3
 		},
 		{
-			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ 0.0, 0.0, -50.0 ]
-			m_OffsetMax = [ 0.0, 0.0, -50.0 ]
-		},
-		{
 			_class = "C_INIT_RandomRadius"
 			m_flRadiusMax = 20.0
 			m_flRadiusMin = 10.0
@@ -81,6 +76,16 @@
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 11.0
 			m_nOverrideCP = 1
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMax = [ 33, 0, 0, 255 ]
+			m_ColorMin = [ 99, 0, 0, 255 ]
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, -50.0 ]
+			m_OffsetMax = [ 0.0, 0.0, -50.0 ]
 		},
 		{
 			_class = "C_INIT_PositionWarp"
@@ -98,29 +103,36 @@
 		},
 		{
 			_class = "C_INIT_RemapParticleCountToScalar"
-			m_bScaleInitialRange = true
 			m_flOutputMax = 0.1
 			m_flOutputMin = 2.0
 			m_nInputMax = 50
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
 		},
 		{
 			_class = "C_INIT_InitialVelocityNoise"
 			m_vecOutputMax = [ 100.0, 100.0, 500.0 ]
 			m_vecOutputMin = [ -100.0, -100.0, 0.0 ]
 		},
-		{
-			_class = "C_INIT_RandomColor"
-			m_ColorMax = [ 33, 0, 0, 255 ]
-			m_ColorMin = [ 99, 0, 0, 255 ]
-		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 250.0
-			m_nScaleControlPointField = -1
-			m_flEmissionDuration = 0.2
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.2
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 250.0
+			}
 		},
 	]
 	m_ForceGenerators = 
@@ -133,7 +145,13 @@
 			_class = "C_OP_AttractToControlPoint"
 			m_vecComponentScale = [ 1.0, 1.0, 0.0 ]
 			m_fFalloffPower = -0.2
-			m_fForceAmount = 5000.0
+			m_fForceAmount = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 5000.0
+			}
+			m_fForceAmountMin = null
+			m_bApplyMinForce = false
 		},
 	]
 	m_controlPointConfigurations = 
@@ -151,4 +169,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
 }

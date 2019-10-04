@@ -162,8 +162,9 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 
 		-- Main stun the target
 		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration})
-
-		if not extra_data.bTalent then
+		
+		-- IMBAfication: Behond the Wraith!
+		if extra_data.bTalent == 0 then
 			-- Split to enemies around
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 											  target:GetAbsOrigin(),

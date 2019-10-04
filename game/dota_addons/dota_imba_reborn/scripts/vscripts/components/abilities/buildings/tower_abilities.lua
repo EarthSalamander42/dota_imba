@@ -688,7 +688,13 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
 			ParticleManager:ReleaseParticleIndex(return_pfx)
 
 			-- Get the hero's main attribute value
-			local main_attribute_value = self.parent:GetPrimaryStatValue()
+			local main_attribute_value
+			
+			if self.parent.GetPrimaryStatValue then
+				main_attribute_value = self.parent:GetPrimaryStatValue()
+			else
+				main_attribute_value = 0
+			end
 
 			-- Calculate damage based on percentage of main stat
 			local return_damage_pct_final = self.return_damage_pct + self.return_damage_per_stack * protective_instinct_stacks
@@ -953,8 +959,10 @@ function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-	return self.bonus_health + self.health_per_protective * protective_instinct_stacks
+	if self.caster then
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		return self.bonus_health + self.health_per_protective * protective_instinct_stacks
+	end
 end
 
 
@@ -4672,3 +4680,4 @@ function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStack
 	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks
 	return tenacity
 end
+

@@ -821,8 +821,6 @@
 // Nether Wand
 "DOTA_Tooltip_Ability_item_imba_nether_wand"                    "Nether Wand"
 "DOTA_Tooltip_ability_item_imba_nether_wand_Lore"              "A wicked wand, whose wild energies are nigh uncontrollable."
-"DOTA_Tooltip_ability_item_imba_nether_wand_Note0"              "Nether burn's damage does not refresh itself."
-"DOTA_Tooltip_ability_item_imba_nether_wand_Note1"              "spell amp from Aether Lens-based sources does not stack with itself."
 "DOTA_Tooltip_ability_item_imba_nether_wand_bonus_damage"                   "+$damage"
 "DOTA_Tooltip_ability_item_imba_nether_wand_bonus_as"          "+$attack"
 "DOTA_Tooltip_ability_item_imba_nether_wand_bonus_intellect"                "+$int"
@@ -968,7 +966,7 @@
 
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
-"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
+"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy hero grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
 "DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
 "DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
@@ -981,8 +979,8 @@
 "DOTA_Tooltip_modifier_imba_satanic_active"                    "Unholy Rage"
 "DOTA_Tooltip_modifier_imba_satanic_active_Description"                     "Gaining a huge amount of lifesteal."
 
-"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"            "Soul Slaughter"
-"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"             "Slain creeps and heroes' souls grant you bonus health and damage."
+"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"					"Soul Slaughter"
+"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"		"Slain heroes' souls grant you bonus health and damage."
 
 // Scythe of Vyse
 "DOTA_Tooltip_Ability_item_imba_sheepstick"                    "Scythe of Vyse"
@@ -1236,35 +1234,34 @@
 "DOTA_Tooltip_modifier_veil_debuff_aura_modifier_Description"	"Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 // Vladmir's Blood
-
 "DOTA_Tooltip_Ability_item_imba_vladmir_2"                      "Vladmir's Blood"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1> Grants an improved version of Vladmir's Aura, allowing allies to lifesteal from both attacks<font color='#FF7800'> and spells.</font> <br><br> Overrides and does not stack with Vladmir's Aura."
+"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1> Grants bonus attack damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks <font color='#FF7800'>and spells.</font> <br><br> Overrides and does not stack with Vladmir's Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Lore"                "An eerie mask possessed by a fallen vampire's mighty bloodlust."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Note0"                "Vladmir's Aura is completely overriden and does not stack with Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_vampiric_aura"                    "%AURA LIFESTEAL:"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_damage_aura"          "%AURA DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_vladmir_2_damage_aura"          "%AURA BONUS ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_armor_aura"          "AURA ARMOR:"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_mana_regen_aura"                  "AURA MANA REGEN:"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_hp_regen_aura"                    "AURA HEALTH REGEN:"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"          "+$all"
 
 "DOTA_Tooltip_modifier_item_imba_vladmir_blood_aura"            "Blood Aura"
-"DOTA_Tooltip_modifier_item_imba_vladmir_blood_aura_Description"            "Benefitting from Vladmir's blood's auras"
+"DOTA_Tooltip_modifier_item_imba_vladmir_blood_aura_Description"            "Benefitting from Vladmir's Blood's Aura."
 
 // Vladmir's Offering
 "DOTA_Tooltip_Ability_item_imba_vladmir"                        "Vladmir's Offering"
-"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1> Grants bonus damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
+"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1> Grants bonus attack damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
 "DOTA_Tooltip_ability_item_imba_vladmir_Lore"                  "An eerie mask that is haunted with the malice of a fallen vampire."
 "DOTA_Tooltip_ability_item_imba_vladmir_Note0"                  "Vladmir's Aura is completely overriden and does not stack with Vladmir's Blood's Blood Aura"
 "DOTA_Tooltip_ability_item_imba_vladmir_vampiric_aura"          "%AURA LIFESTEAL:"
-"DOTA_Tooltip_ability_item_imba_vladmir_damage_aura"            "%AURA DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_vladmir_damage_aura"            "%AURA BONUS ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_vladmir_armor_aura"            "AURA ARMOR:"
 "DOTA_Tooltip_ability_item_imba_vladmir_mana_regen_aura"                    "AURA MANA REGEN:"
 "DOTA_Tooltip_ability_item_imba_vladmir_hp_regen_aura"          "AURA HEALTH REGEN:"
 "DOTA_Tooltip_ability_item_imba_vladmir_stat_bonus"            "+$all"
 
 "DOTA_Tooltip_modifier_item_imba_vladmir_aura"                  "Vladmir's Aura"
-"DOTA_Tooltip_modifier_item_imba_vladmir_aura_Description"                  "Benefitting from Vladmir's offering's auras"
+"DOTA_Tooltip_modifier_item_imba_vladmir_aura_Description"                  "Benefitting from Vladmir's Offering's Aura."
 
 // White Queen's Cape
 "DOTA_Tooltip_Ability_item_imba_white_queen_cape"              "White Queen's Cape"

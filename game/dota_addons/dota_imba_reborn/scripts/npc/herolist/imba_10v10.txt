@@ -127,7 +127,7 @@
 	"npc_dota_hero_hell_empress" 		"1"
 	"npc_dota_hero_malfurion"			"1"
 	"npc_dota_hero_scaldris"			"1"
-	"npc_dota_hero_vardor"				"0"
+	"npc_dota_hero_vardor"				"0" // FIX YOUR BUGS
 //	"npc_dota_hero_storegga"			"0" // not implemented
 
 	"npc_dota_hero_nian"				"1"

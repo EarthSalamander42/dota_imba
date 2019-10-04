@@ -250,6 +250,7 @@ imba_antimage_blink = imba_antimage_blink or class({})
 MergeTables(LinkedModifiers,{
 	["modifier_imba_antimage_blink_charges"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_antimage_blink_spell_immunity"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_antimage_blink_command_restricted"] = LUA_MODIFIER_MOTION_NONE
 })
 
 function imba_antimage_blink:GetAbilityTextureName()
@@ -282,7 +283,7 @@ function imba_antimage_blink:GetCooldown( nLevel )
 		return 0
 	end
 
-	return self.BaseClass.GetCooldown( self, nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_10")
 end
 
 function imba_antimage_blink:OnSpellStart()
@@ -326,6 +327,24 @@ function imba_antimage_blink:OnSpellStart()
 		if caster:HasTalent("special_bonus_imba_antimage_5") then
 			local immunity_duration = caster:FindTalentValue("special_bonus_imba_antimage_5")
 			caster:AddNewModifier(caster, self, modifier_spell_immunity, {duration = immunity_duration})
+		end
+
+		if self:GetCaster():HasTalent("special_bonus_imba_antimage_9") then
+			local illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
+			{
+				outgoing_damage = self:GetCaster():FindTalentValue("special_bonus_imba_antimage_9", "outgoing_damage"),
+				incoming_damage	= self:GetCaster():FindTalentValue("special_bonus_imba_antimage_9", "incoming_damage"),
+				-- bounty_base		= self:GetCaster():GetIllusionBounty(),
+				-- bounty_growth	= nil,
+				-- outgoing_damage_structure	= nil,
+				-- outgoing_damage_roshan		= nil,
+				duration		= self:GetCaster():FindTalentValue("special_bonus_imba_antimage_9", "illusion_duration")
+			}
+			, 1, self:GetCaster():GetHullRadius(), true, true)
+			
+			for _, illusion in pairs(illusions) do
+				illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_antimage_blink_command_restricted", {})
+			end			
 		end
 
 		-- Adding an extreme small timer for the particles, else they will only appear at the dest
@@ -569,6 +588,20 @@ function modifier_imba_antimage_blink_spell_immunity:CheckState()
 	return state
 end
 
+-----------------------------------------------------
+-- MODIFIER_IMBA_ANTIMAGE_BLINK_COMMAND_RESTRICTED --
+-----------------------------------------------------
+
+-- This is for the "Blink Uncontrollable Illusion" talent
+
+modifier_imba_antimage_blink_command_restricted = class({})
+
+function modifier_imba_antimage_blink_command_restricted:IsHidden()		return true end
+function modifier_imba_antimage_blink_command_restricted:IsPurgable()	return false end
+
+function modifier_imba_antimage_blink_command_restricted:CheckState()
+	return {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+end
 
 -------------------------------------------
 --      SPELL SHIELD
@@ -594,7 +627,7 @@ function imba_antimage_spell_shield:GetBehavior()
 		return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE
 	end
 
-	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 -- Declare active skill + visuals
@@ -639,6 +672,10 @@ local function SpellReflect(parent, params)
 		["imba_alchemist_unstable_concoction"] = true,
 		["imba_disruptor_glimpse"] = true,
 		["legion_commander_duel"] = true,
+		["imba_phantom_assassin_phantom_strike"] = true,
+		["phantom_assassin_phantom_strike"] = true,
+		["imba_riki_blink_strike"] = true,
+		["riki_blink_strike"] = true,
 	}
 
 	local reflected_spell_name = params.ability:GetAbilityName()
@@ -693,6 +730,11 @@ local function SpellReflect(parent, params)
 		parent:SetCursorCastTarget(target)
 		ability:OnSpellStart()
 		target:EmitSound("Hero_Antimage.Counterspell.Target")
+		
+		-- This isn't considered vanilla behavior, but at minimum it should resolve any lingering channeled abilities...
+		if ability.OnChannelFinish then
+			ability:OnChannelFinish(false)
+		end	
 	end
 
 	return false
@@ -706,6 +748,7 @@ local function SpellAbsorb(parent, params)
 	local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
 	ParticleManager:SetParticleControlEnt(reflect_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(reflect_pfx)
+	
 	return 1
 end
 
@@ -734,7 +777,6 @@ function modifier_imba_spell_shield_buff_passive:OnCreated()
 	--		self:Destroy()
 	--		return
 	--	end
-	self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
 
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")
@@ -759,7 +801,9 @@ function modifier_imba_spell_shield_buff_passive:OnRefresh()
 end
 
 function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBonus(params)
-	return self.magic_resistance
+	if not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetTalentSpecialValueFor("magic_resistance")
+	end
 end
 
 function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
@@ -791,7 +835,7 @@ function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
 				self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_recharge, {duration = self.internal_cooldown})
 
 				-- Apply Spell Absorption
-				return SpellAbsorb(parent)
+				return SpellAbsorb(parent, params)
 			end
 		end
 		return false
@@ -841,19 +885,28 @@ function modifier_imba_spell_shield_buff_reflect:OnCreated( params )
 end
 
 function modifier_imba_spell_shield_buff_reflect:GetReflectSpell( params )
-	if IsServer() then
-		if not self:GetParent():PassivesDisabled() then
-			return SpellReflect(self:GetParent(), params)
-		end
-	end
+	return SpellReflect(self:GetParent(), params)
 end
 
 function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
-	if IsServer() then
-		if not self:GetParent():PassivesDisabled() then
-			return SpellAbsorb(self:GetParent(), params)
-		end
+	-- IMBAfication: Trading Places
+	if self:GetAbility() and self:GetAbility():GetAutoCastState() and params.ability:GetCaster() and params.ability:GetCaster():IsAlive() then
+		local modifier_holder_position	= self:GetParent():GetAbsOrigin()
+		local caster_position			= params.ability:GetCaster():GetAbsOrigin()
+		
+		FindClearSpaceForUnit(self:GetParent(), caster_position, true)
+		FindClearSpaceForUnit(params.ability:GetCaster(), modifier_holder_position, true)
+		
+		local blink_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(blink_1)
+		self:GetParent():EmitSound("Hero_Antimage.Blink_out")
+
+		local blink_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_ABSORIGIN, params.ability:GetCaster())
+		ParticleManager:ReleaseParticleIndex(blink_2)
+		params.ability:GetCaster():EmitSound("Hero_Antimage.Blink_out")
 	end
+
+	return SpellAbsorb(self:GetParent(), params)
 end
 
 -- Deleting old abilities
@@ -1131,4 +1184,34 @@ function modifier_imba_mana_void_delay_counter:OnIntervalThink()
 	-- Add stacks equal to mana lost and its value
 	local stack_to_add = mana_difference * self.mana_point_worth
 	self:SetStackCount(self:GetStackCount() + stack_to_add)
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_antimage_10", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_antimage_11", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_antimage_10		= class({})
+modifier_special_bonus_imba_antimage_11		= class({})
+
+function modifier_special_bonus_imba_antimage_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_antimage_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_antimage_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_antimage_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_antimage_11:IsPurgable() 		return false end
+function modifier_special_bonus_imba_antimage_11:RemoveOnDeath() 	return false end
+
+function imba_antimage_blink:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_antimage_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_antimage_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_antimage_10"), "modifier_special_bonus_imba_antimage_10", {})
+	end
+end
+
+function imba_antimage_spell_shield:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_antimage_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_antimage_11") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_antimage_11"), "modifier_special_bonus_imba_antimage_11", {})
+	end
 end

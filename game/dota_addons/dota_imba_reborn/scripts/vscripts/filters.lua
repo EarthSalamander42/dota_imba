@@ -152,11 +152,16 @@ function GameMode:ModifierFilter( keys )
 		local modifier_name = keys.name_const
 		local modifier_caster
 		local modifier_class
+		local modifier_ability
 
 		if keys.entindex_caster_const then
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
 		else
 			return true
+		end
+
+		if keys.entindex_ability_const then
+			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
 		end
 
 		if modifier_owner ~= nil then
@@ -172,8 +177,8 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 
-			if keys.entindex_ability_const and EntIndexToHScript(keys.entindex_ability_const).GetAbilityName then
-				if ignore_frantic == false and string.find(EntIndexToHScript(keys.entindex_ability_const):GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+			if keys.entindex_ability_const and modifier_ability.GetAbilityName then
+				if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
@@ -269,6 +274,14 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
+		if modifier_name == "modifier_bottle_regeneration" then
+			local duration = modifier_ability:GetSpecialValueFor("restore_time")
+
+			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
+
+			return false
+		end
+
 		return true
 	end
 end
@@ -288,11 +301,12 @@ function GameMode:ItemAddedFilter( keys )
 	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
 		item:EndCooldown()
 
-		return true
+		return ENABLE_TPSCROLL_ON_FIRST_SPAWN
 
 		-- return false to remove it
 --		return false
 	end
+
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
@@ -317,20 +331,54 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
-	if item_name == "item_imba_aegis" then
+	if item_name == "item_aegis" then
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
-
-			-- Display aegis pickup message for all players
-			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
 			local line_duration = 7
-			Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
-			Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, continue = true})
-			Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
-			-- Destroy the item
-			return false
-			-- If this is not a player, do nothing and drop another Aegis
+			if unit:GetTeamNumber() ~= _G.GAME_ROSHAN_KILLER_TEAM and _G.GAME_ROSHAN_KILLER_TEAM ~= 0 then
+				local color = "white"
+
+				if unit.GetPlayerID and PLAYER_COLORS[unit:GetPlayerID()] then
+					rgbToHex(PLAYER_COLORS[unit:GetPlayerID()])
+				end
+
+				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
+				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_aegis_message_snatch", duration = line_duration, continue = true})
+
+				_G.GAME_ROSHAN_KILLER_TEAM = 0
+			else
+				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
+				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, continue = true})
+			end
+
+			-- I get what you were trying to do but none of this works properly
+			-- -- With no timer, combat events notification is not triggered
+			-- if unit:GetNumItemsInInventory() >= 6 then
+				-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			-- else
+				-- Timers:CreateTimer(1.0, function()
+					-- if item then
+						-- if item.GetContainer then
+							-- UTIL_Remove(item:GetContainer())
+						-- end
+
+						-- UTIL_Remove(item)
+					-- end
+
+					-- -- in the rare case where the player would die within 1 second after picked the aegis
+					-- if unit:IsAlive() then
+						-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+					-- end
+				-- end)
+			-- end
+
+			-- return true
+				
+			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			return false			
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
@@ -338,10 +386,10 @@ function GameMode:ItemAddedFilter( keys )
 
 			UTIL_Remove(item:GetContainer())
 			UTIL_Remove(item)
-
-			-- Destroy the item
 			return false
 		end
+		-- return true
+		
 		return false
 	end
 
@@ -450,6 +498,9 @@ function GameMode:OrderFilter( keys )
 		return true
 	end
 
+	local target = keys.entindex_target ~= 0 and EntIndexToHScript(keys.entindex_target) or nil
+	local ability = keys.entindex_ability ~= 0 and EntIndexToHScript(keys.entindex_ability) or nil
+
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 	--		local ability = EntIndexToHScript(keys["entindex_ability"])
 	--		if unit:IsRealHero() then
@@ -478,7 +529,26 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CombatEvents("generic", "glyph", unit)
 	end
-	
+
+	-- credits Overthrow 2.0 (Dota2Unofficial)
+	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+		if not target then return true end
+		local pickedItem = target:GetContainedItem()
+		if not pickedItem then return true end
+
+		local itemName = pickedItem:GetAbilityName()
+
+		if itemName == "item_aegis" then
+			if not unit:IsRealHero() then
+				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_non_hero_cant_pickup_aegis")
+				return false
+			elseif unit:HasModifier("modifier_item_imba_aegis") then
+				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_already_have_aegis")
+				return false
+			end
+		end
+	end
+
 	-- Turbo Courier filters
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
@@ -511,8 +581,6 @@ function GameMode:OrderFilter( keys )
 --					return false
 --				end
 --			end
-
-			local ability = EntIndexToHScript(keys["entindex_ability"])
 
 			if player_id then
 				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
@@ -570,18 +638,45 @@ function GameMode:OrderFilter( keys )
 	-- "Vanilla" courier filters
 	else
 		if unit:IsCourier() then
+			-- Timers:CreateTimer(FrameTime(), function()
+				-- if unit and not unit:IsNull() and keys.issuer_player_id_const then
+					-- unit.last_idle_change_time 			= unit:GetLastIdleChangeTime()
+					-- unit.issuer_player_id_const			= keys.issuer_player_id_const
+				-- end
+			-- end)
+			
 			local ability = EntIndexToHScript(keys["entindex_ability"])
 
 			if keys.issuer_player_id_const then
+				-- Attempts at locking courier to one player at a time
+				--  How it works: When the player issues a transfer item command, the courier will have its issuer_player_id_const variable set to keys.issuer_player_id_const, which will only turn nil once that player issues a different courier command OR the courier inventory contents change
+				-- Yes, even with this there may be potential abuse...
+				if unit.issuer_player_id_const then
+					if keys.issuer_player_id_const == unit.issuer_player_id_const then
+						unit.issuer_player_id_const = nil
+					else
+						DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to "..PlayerResource:GetPlayerName(unit.issuer_player_id_const))
+						return false
+					end
+				end
+				
 				-- allow buy order!
-				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
 					return true
 				end
 
 				if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
 --					print("Valid Ability")
 					if unit:HasAbility(ability:GetName()) then
-						return true
+					
+						if (ability:GetName() == "courier_transfer_items" or "courier_take_stash_and_transfer_items") then
+							if not unit.issuer_player_id_const then
+								unit.issuer_player_id_const = keys.issuer_player_id_const
+								return true
+							end
+						else
+							return true
+						end
 					end
 				else
 					-- Prevent the courier from moving on right-click
@@ -654,7 +749,7 @@ function GameMode:OrderFilter( keys )
 				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_devour_roshan")
 				return false
 			end
-		elseif ability:GetAbilityName() == "life_stealer_infest" then
+		elseif ability:GetAbilityName() == "life_stealer_infest" or ability:GetAbilityName() == "imba_life_stealer_infest" then
 			if target:GetUnitName() == "npc_dota_mutation_golem" then
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
 				return false
@@ -938,6 +1033,15 @@ function GameMode:OrderFilter( keys )
 		-- If the above checks failed, then it shouldn't be a valid order
 		DisplayError(unit:GetPlayerID(), "Cannot Act")
 		return false
+	end
+	
+	-----------------------------------------------------------
+	-- Gyrocopter Vanilla Flak Cannon Stack Refresh Override --
+	-----------------------------------------------------------
+	if EntIndexToHScript(keys.entindex_ability) and EntIndexToHScript(keys.entindex_ability).GetName and EntIndexToHScript(keys.entindex_ability):GetName() == "gyrocopter_flak_cannon" and unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit) then
+		-- Cannot directly manipulate modifier stack count as there's some hard-coded value that makes the modifier destroy itself after the original max attacks are reached
+		unit:FindModifierByNameAndCaster("modifier_gyrocopter_flak_cannon", unit):Destroy()
+		EntIndexToHScript(keys.entindex_ability):OnSpellStart()
 	end
 
 	return true
@@ -1226,20 +1330,20 @@ function GameMode:BountyRuneFilter(keys)
 end
 
 --[[
-function GameMode:HealingFilter( filterTable )
+function GameMode:HealingFilter( keys )
 	-- Values:
-	--	filterTable.entindex_target_const (probably want to use EntIndexToHScript(filterTable.entindex_target_const) to get the unit reference)
-	--	filterTable.heal
+	--	keys.entindex_target_const (probably want to use EntIndexToHScript(keys.entindex_target_const) to get the unit reference)
+	--	keys.heal
 	--
 	-- Yeah that's it.
 
 	-- MAKE HEALTH REGEN AMP CODE HERE
-	-- local nHeal = filterTable["heal"]
-	-- if filterTable["entindex_healer_const"] == nil then
+	-- local nHeal = keys["heal"]
+	-- if keys["entindex_healer_const"] == nil then
 		-- return true
 	-- end
 
-	-- local hHealingHero = EntIndexToHScript( filterTable["entindex_healer_const"] )
+	-- local hHealingHero = EntIndexToHScript( keys["entindex_healer_const"] )
 	-- if nHeal > 0 and hHealingHero ~= nil and hHealingHero:IsRealHero() then
 		-- for _,Zone in pairs( self.Zones ) do
 			-- if Zone:ContainsUnit( hHealingHero ) then

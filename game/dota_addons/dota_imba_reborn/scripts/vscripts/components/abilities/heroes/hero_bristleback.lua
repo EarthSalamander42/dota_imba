@@ -647,8 +647,8 @@ function modifier_imba_bristleback_bristleback_has:OnCreated()
 	
 	if not IsServer() then return end
 
-	self.particle = ParticleManager:CreateParticle("particles/econ/items/pangolier/pangolier_ti8_immortal/pangolier_ti8_immortal_shield_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(self.particle, 1, self.parent:GetAbsOrigin())
+	self.particle = ParticleManager:CreateParticle("particles/econ/items/pangolier/pangolier_ti8_immortal/pangolier_ti8_immortal_shield_buff.vpcf", PATTACH_POINT_FOLLOW, self.parent)
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.particle, 3, Vector(50, 0, 0))
 	self:AddParticle(self.particle, false, false, -1, false, false)
 	

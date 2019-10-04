@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.16b"
+GAME_VERSION = "7.17b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -84,6 +84,7 @@ DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
 LOSE_GOLD_ON_DEATH = true					-- Should we have players lose the normal amount of dota gold on death?
+ENABLE_TPSCROLL_ON_FIRST_SPAWN = true		-- Should heroes spawn with a TP Scroll?
 FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"		-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
 MAXIMUM_ATTACK_SPEED = 1000					-- What should we use for the maximum attack speed?
@@ -105,9 +106,10 @@ BUYBACK_COOLDOWN_MAXIMUM = 180												-- Maximum buyback cooldown
 BUYBACK_RESPAWN_PENALTY	= 15												-- Increased respawn time when dying after a buyback
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
-FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
+FULL_ABANDON_TIME = 5.0														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
+_G.GAME_ROSHAN_KILLER_TEAM = 0
 ROSHAN_RESPAWN_TIME_MIN = 3
 ROSHAN_RESPAWN_TIME_MAX = 6													-- Roshan respawn timer (in minutes)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
@@ -284,20 +286,22 @@ TOWER_ABILITIES["tower1"] = {
 TOWER_ABILITIES["tower2"] = {
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
-	"imba_tower_regeneration"
+	"imba_tower_regeneration",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
+	"imba_tower_multishot",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_tenacity",
 	"imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_splash_fire"
+	"imba_tower_splash_fire",
+	"imba_tower_multishot",
 }
 
 -- Update game mode net tables
@@ -628,7 +632,9 @@ if IMBA_DIRETIDE == true then
 	require("components/diretide/diretide")
 end
 
-SAME_HERO_SELECTION = IMBA_PICK_SCREEN
+-- SAME_HERO_SELECTION = IMBA_PICK_SCREEN
+SAME_HERO_SELECTION = IsSaturday()
+CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true
 end

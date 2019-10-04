@@ -144,13 +144,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 600 650 700"
+		"AbilityCastRange"				"575 650 725 800"
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
  		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -350,6 +350,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"MaxLevel"						"1"
+		
+		"HasScepterUpgrade"			"1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -418,7 +420,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"on_count"					"4 5 6"
+				"on_count"					"4 6 8"
 				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light_3"
 			}
 			"02"

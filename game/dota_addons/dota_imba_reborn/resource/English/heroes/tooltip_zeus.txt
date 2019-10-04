@@ -99,6 +99,6 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_7"				"Thundergod"
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_7_description"	"With 6 or more stacks of Thundergod's Focus, Lightning Bolt and Thundergod's Wrath deal pure damage and pierce magic immunity."
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_8"				"Master of Lightning"
-"DOTA_Tooltip_Ability_special_bonus_imba_zuus_8_description"	"Arc Lightning chains between the same targets up to 3 times."
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_8_description"	"Arc Lightning chains between the same targets up to three times, if there are at least three targets."
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_9"				"\"Kill Secured\""
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_9_description"	"Killing enemies with Thundergod's Wrath refreshes Nimbus and Ascend cooldowns, and adds five Thundergod's Focus stacks per kill."

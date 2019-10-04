@@ -1216,8 +1216,10 @@ function Wearable:AddParticle(hUnit, hWear, particle_name, sSlotName, sStyle)
 			if (not cp_table.style) or tostring(cp_table.style) == sStyle then
 				local control_point_index = cp_table.control_point_index
 				attach_type = cp_table.attach_type
+--				print("attach_type:", attach_type)
 				if attach_type == "vector" then
 					-- 控制点设置向量
+--					print(cp_table, cp_table.cp_position)
 					local vPosition = String2Vector(cp_table.cp_position)
 					-- print(p, control_point_index, vPosition)
 					ParticleManager:SetParticleControl(p, control_point_index, vPosition)

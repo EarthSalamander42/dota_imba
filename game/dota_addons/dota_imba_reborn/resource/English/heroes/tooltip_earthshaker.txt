@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_aghanim_description"		"Enchant Totem becomes a %distance_scepter% range ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping."
 
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua"							"#{DOTA_Tooltip_ability_earthshaker_enchant_totem}"
-"DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_aghanim_description"		"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_aghanim_description}"
+"DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_aghanim_description"		"Enchant Totem becomes a %distance_scepter% range ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping."
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Description"				"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Description}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Lore"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Lore}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Note0"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Note0}"

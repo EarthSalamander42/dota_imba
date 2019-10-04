@@ -62,3 +62,6 @@ game/dota_addons/dota_imba_reborn/maps/stonering.vpk
 game/dota_addons/dota_imba_reborn/maps/test_prison.vpk
 game/dota_addons/dota_imba_reborn/maps/trap_test.vpk
 game/dota_addons/dota_imba_reborn/maps/trap_test_unified.vpk
+
+# Imbathrow
+content/dota_addons/dota_imba_reborn/materials/models/courier/*

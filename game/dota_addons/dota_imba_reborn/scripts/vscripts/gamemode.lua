@@ -93,29 +93,6 @@ function GameMode:InitGameMode()
 	self:_InitGameMode()
 end
 
-function GameMode:DonatorCompanionJS(event)
-	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
-end
-
-function GameMode:DonatorStatueJS(event)
-	-- need to update the current statue with the new one
---	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
-end
-
-function GameMode:DonatorEmblemJS(event)
-	local hero = PlayerResource:GetSelectedHeroEntity(event.ID)
-
-	if hero:HasModifier("modifier_patreon_donator") then
-		local modifier = hero:FindModifierByName("modifier_patreon_donator")
-
-		modifier.effect_name = event.unit
-	end
-end
-
-function GameMode:DonatorCompanionSkinJS(event)
-	DonatorCompanionSkin(event.ID, event.unit, event.skin)
-end
-
 function GameMode:SetupAncients()
 	local forts = Entities:FindAllByClassname('npc_dota_fort')
 
@@ -323,10 +300,14 @@ function GameMode:OnSettingVote(keys)
 end
 
 function GameMode:SetCustomGamemode(iValue)
-	CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	if iValue and type(iValue) == "number" then
+		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	end
+
+	return nil
 end
 
 function GameMode:GetCustomGamemode()
 --	print("Gamemode:", CustomNetTables:GetTableValue("game_options", "gamemode")["1"])
-	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"]
+	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"] or nil
 end

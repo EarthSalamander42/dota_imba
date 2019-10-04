@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -71,23 +71,23 @@
 			m_nSequenceMax = 2
 		},
 		{
+			_class = "C_INIT_RandomRotationSpeed"
+			m_flDegreesMax = 50.0
+			m_flDegreesMin = 30.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 150
+		},
+		{
 			_class = "C_INIT_InitialVelocityNoise"
 			m_vecOutputMax = [ 50.0, 50.0, 150.0 ]
 			m_vecOutputMin = [ -50.0, -50.0, 0.0 ]
 			m_flNoiseScaleLoc = 0.56
 		},
 		{
-			_class = "C_INIT_RandomRotationSpeed"
-			m_flDegreesMax = 50.0
-			m_flDegreesMin = 30.0
-		},
-		{
 			_class = "C_INIT_PositionOffset"
 			m_OffsetMax = [ 0.0, 0.0, 200.0 ]
-		},
-		{
-			_class = "C_INIT_RandomAlpha"
-			m_nAlphaMin = 150
 		},
 		{
 			_class = "C_INIT_RemapCPtoScalar"
@@ -100,7 +100,21 @@
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmissionDuration = 0.2
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.2
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 100.0
+			}
 		},
 	]
 	m_controlPointConfigurations = 
@@ -118,4 +132,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 8
 }

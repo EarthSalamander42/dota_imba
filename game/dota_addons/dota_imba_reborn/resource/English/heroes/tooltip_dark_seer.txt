@@ -45,15 +45,19 @@
 
 
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica"								"Prismatic Bisector"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Description"					"Raises two crossing walls of warping light that slow any enemy hero who crosses it, while also causing them to take damage equal to their attack damage and attack speed for the slow duration. \n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Description"					"Raises two crossing walls of warping light that slow any enemy hero who crosses it, while also causing them to take damage equal to their attack damage and attack speed for the slow duration."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Lore"							"The Dark Seer, while unable to return to his natural realm, can channel part of the prismatic wall with powerful strength of mind, sowing confusion amongst enemy ranks."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Note0"							"Each wall functions separately from the other, allowing two instances of slow and self-attacks at the same time."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_duration"						"WALL DURATION:"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_range_tooltip"					"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_width"							"WALL LENGTH:"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_movement_slow"		            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_slow_duration"		            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
+//"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
+//"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
+
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"		"Increases wall length and duration."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_width"				"SCEPTER WIDTH:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_duration"			"SCEPTER DURATION:"
 
 "DOTA_Tooltip_modifier_imba_dark_seer_vacuum"						"Vacuum"
 "DOTA_Tooltip_modifier_imba_dark_seer_vacuum_Description"			"Being pulled."

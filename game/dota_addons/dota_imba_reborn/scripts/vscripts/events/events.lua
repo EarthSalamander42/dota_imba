@@ -676,6 +676,10 @@ function GameMode:OnPlayerChat(keys)
 					end
 				end)
 			end
+
+			if str == "-toggle_ui" then
+				CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "toggle_ui", {})
+			end
 		end
 
 		if str == "-gg" then
@@ -709,6 +713,16 @@ function GameMode:OnPlayerChat(keys)
 			
 			Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
 			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
+		end
+		
+		if str == "-memory" then
+			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			-- print(package.loaded) -- This lags everything to absolute death
+		end
+		
+		-- For the serial disconnectors
+		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
+			GameRules:SetGameWinner(caster:GetTeamNumber())
 		end
 		
 		-- Spooky (inefficiently coded) dev commands
@@ -792,68 +806,45 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'shaman') and hero:GetName() == "npc_dota_hero_shadow_shaman" then
+						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" and (hero == caster) then
 							ability_set = {
-								[0] = "imba_shadow_shaman_ether_shock",
-								[1] = "imba_shadow_shaman_voodoo",
-								[2] = "imba_shadow_shaman_shackles",
-								-- [3] = "imba_puck_ethereal_jaunt",
-								-- [4] = "generic_hidden",
-								-- [5] = "imba_puck_dream_coil",
-								[6] = "special_bonus_hp_300",
-								[7] = "special_bonus_exp_boost_30",
-								[8] = "special_bonus_cast_range_125",
-								[9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
-								[10] = "special_bonus_imba_shadow_shaman_shackles_duration",
-								[11] = "special_bonus_imba_shadow_shaman_wards_movement",
-								[12] = "special_bonus_imba_shadow_shaman_ether_shock_damage",
-								[13] = "special_bonus_imba_shadow_shaman_3"
+								[0] = "imba_windranger_shackleshot",
+								[1] = "imba_windranger_powershot",
+								[2] = "imba_windranger_windrun",
+								[3] = "imba_windranger_backpedal",
+								[4] = "imba_windranger_focusfire_vanilla_enhancer",
+								-- [5] = "imba_windranger_focusfire",
+								[5] = "windrunner_focusfire",
+								[6] = "special_bonus_mp_regen_4",
+								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								[8] = "special_bonus_imba_windranger_powershot_damage",
+								[9] = "special_bonus_attack_range_125",
+								[10] = "special_bonus_imba_windranger_windrun_invisibility",
+								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								[12] = "special_bonus_unique_windranger_8",
+								[13] = "special_bonus_cooldown_reduction_30",
 							}
 							upgraded = true
-						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
+						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
 							ability_set = {
-								[0] = "imba_grimstroke_dark_artistry",
-								[1] = "imba_grimstroke_ink_creature",
-								[2] = "imba_grimstroke_spirit_walk",
-								[3] = "grimstroke_scepter",
-								[4] = "imba_grimstroke_ink_gods_incarnation",
-								-- [5] = "imba_grimstroke_soul_chain", -- not working do not enable this
-								[6] = "special_bonus_movement_speed_30",
-								[7] = "special_bonus_gold_income_15",
-								[8] = "special_bonus_spell_amplify_12",
-								[9] = "special_bonus_cast_range_125",
-								[10] = "special_bonus_imba_grimstroke_stroke_of_fate_cast_range",
-								[11] = "special_bonus_imba_grimstroke_phantoms_embrace_extra_hits",
-								[12] = "special_bonus_imba_grimstroke_ink_swell_radius",
-								[13] = "special_bonus_imba_grimstroke_stroke_of_fate_damage"
+								[0] = "imba_timbersaw_whirling_death",
+								[1] = "imba_timbersaw_timber_chain",
+								[2] = "imba_timbersaw_reactive_armor",
+								[3] = "imba_timbersaw_chakram_2",
+								[4] = "imba_timbersaw_chakram_3",
+								[5] = "imba_timbersaw_chakram",
+								[6] = "imba_timbersaw_return_chakram",
+								[7] = "imba_timbersaw_return_chakram_2",
+								[8] = "special_bonus_hp_225",
+								[9] = "special_bonus_mp_regen_250",
+								[10] = "special_bonus_spell_amplify_10",
+								[11] = "special_bonus_imba_timbersaw_reactive_armor_max_stacks",
+								[12] = "special_bonus_strength_20",
+								[13] = "special_bonus_cooldown_reduction_15",
+								[14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
+								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
 							}
-							upgraded = true
-							
-							local soulbind_vanilla_enahncer_ability = hero:AddAbility("imba_grimstroke_soul_chain_vanilla_enhancer")
-							soulbind_vanilla_enahncer_ability:SetAbilityIndex(6)
-							soulbind_vanilla_enahncer_ability:OnHeroLevelUp()
-						
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" and (hero == caster) then
-							ability_set = {
-								[0] = "imba_life_stealer_rage",
-								[1] = "imba_life_stealer_feast",
-								[2] = "imba_life_stealer_open_wounds",
-								[3] = "imba_life_stealer_assimilate",
-								[4] = "imba_life_stealer_assimilate_eject",
-								[5] = "imba_life_stealer_infest",
-								[6] = "imba_life_stealer_control",
-								[7] = "imba_life_stealer_consume",
-								[8] = "generic_hidden",
-								[9] = "special_bonus_hp_200",
-								[10] = "special_bonus_attack_speed_20",
-								[11] = "special_bonus_attack_damage_30",
-								[12] = "special_bonus_movement_speed_25",
-								[13] = "special_bonus_evasion_20",
-								[14] = "special_bonus_unique_lifestealer_2",
-								[15] = "special_bonus_unique_lifestealer_3",
-								[16] = "special_bonus_unique_lifestealer"
-							}
-							upgraded = true
+							upgraded = true							
 						end
 							
 						for ability = 0, 23 do
@@ -864,6 +855,14 @@ function GameMode:OnPlayerChat(keys)
 								
 								local new_ability = hero:AddAbility(ability_set[ability])
 								new_ability:SetLevel(old_ability_level)
+								
+								-- Remove this when done
+								if new_ability:GetName() == "imba_windranger_backpedal" or
+								new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" or
+								new_ability:GetName() == "imba_timbersaw_chakram_2" or
+								new_ability:GetName() == "imba_timbersaw_chakram_3" then
+									new_ability:SetLevel(1)
+								end
 							end
 						end
 						
@@ -877,8 +876,8 @@ function GameMode:OnPlayerChat(keys)
 						end
 					end
 				end
-			elseif str == "-dark_seer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			elseif str == "-phantom_lancer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
@@ -941,15 +940,12 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
-			elseif str == "-memory" then
-				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
-				-- print(package.loaded) -- This lags everything to absolute death
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
 			
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
-				caster:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(caster, pos, false)
 			end
 		end
 	end
@@ -1072,8 +1068,8 @@ function GameMode:OnThink()
 						if team == 3 then
 							abandon_text = "#imba_team_bad_abandon_message"
 						end
-						Notifications:BottomToAll({ text = abandon_text, duration = 1.0, style = { color = "DodgerBlue" } })
-						Notifications:BottomToAll({ text = " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" }, continue = true })
+						abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
+						Notifications:BottomToAll({text = abandon_text, duration = 1.0})
 					end
 
 					TEAM_ABANDON[team][2] = true

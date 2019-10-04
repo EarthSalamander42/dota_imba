@@ -1,0 +1,37 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Weaver
+	//=================================================================================================================
+	"npc_dota_hero_weaver"
+	{
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		
+		"Ability1"		"imba_weaver_the_swarm"
+		"Ability2"		"imba_weaver_shukuchi"
+		"Ability3"		"imba_weaver_geminate_attack"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_weaver_time_lapse"
+		
+		"Ability10"		"special_bonus_imba_weaver_shukuchi_damage"
+		"Ability11"		"special_bonus_exp_boost_35"
+		"Ability12"		"special_bonus_mana_break_20"
+		"Ability13"		"special_bonus_strength_14"
+		"Ability14"		"special_bonus_imba_weaver_the_swarm_armor_reduction"
+		"Ability15"		"special_bonus_imba_weaver_the_swarm_destroy_attacks"
+		"Ability16"		"special_bonus_imba_weaver_shukuchi_hasted_speed"
+		"Ability17"		"special_bonus_imba_weaver_geminate_attack_tooltip_attack"
+		
+		// Removed Talents
+		//"Ability10"		"special_bonus_unique_weaver_1"
+		//"Ability14"		"special_bonus_unique_weaver_3"
+		//"Ability15"		"special_bonus_unique_weaver_4"
+		//"Ability16"		"special_bonus_unique_weaver_2"
+		//"Ability17"		"special_bonus_unique_weaver_5"
+	}
+}
