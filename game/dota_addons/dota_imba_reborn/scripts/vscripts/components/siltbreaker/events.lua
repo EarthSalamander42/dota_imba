@@ -75,10 +75,10 @@ function CDungeon:OnNPCSpawned_PlayerHero( event )
 			if not PlayerResource:IsFakeClient( hPlayerHero:GetPlayerOwnerID() ) then
 				if GetMapName() == "ep_1" then
 					print("Add pre teleport modifier")
-					hPlayerHero:AddNewModifier( hPlayerHero, nil, "modifier_pre_teleport", {} )
+--					hPlayerHero:AddNewModifier( hPlayerHero, nil, "modifier_pre_teleport", {} )
 
 					self:OnPlayerHeroEnteredZone( hPlayerHero, "start" )
---					CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( hPlayerHero:GetPlayerOwnerID() ), "hide_scroll", {} )
+					CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( hPlayerHero:GetPlayerOwnerID() ), "hide_scroll", {} )
 				elseif GetMapName() == "ep_2" then
 					if hPlayerHero:FindItemInInventory("item_tpscroll") then
 						hPlayerHero:RemoveItem(hPlayerHero:FindItemInInventory("item_tpscroll"))
