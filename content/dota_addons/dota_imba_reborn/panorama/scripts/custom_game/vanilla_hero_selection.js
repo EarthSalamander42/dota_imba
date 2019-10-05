@@ -12,6 +12,18 @@ function FindDotaHudElement(panel) {
 
 function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
+	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
+	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
+
+	if (same_selection && same_selection.value == 1)
+		pick_screen_title.text = "Same hero selection enabled on saturday!";
+	else {
+		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+
+		if (gamemode && gamemode[1] == 3)
+			pick_screen_title.text = "Super Frantic";
+	}
+
 	var i = 0;
 
 	while (i < GridCategories.GetChildCount()) {

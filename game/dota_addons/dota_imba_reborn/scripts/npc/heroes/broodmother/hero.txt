@@ -27,9 +27,9 @@
 //		"Ability16"					"special_bonus_unique_broodmother_1"
 //		"Ability17"					"special_bonus_unique_broodmother_2"
 
-		"Ability18"					"imba_broodmother_spawn_spiderlings"
-		"Ability19"					"imba_broodmother_spin_web"
-		"Ability20"					"imba_broodmother_incapacitating_bite"
-		"Ability21"					"imba_broodmother_insatiable_hunger"
+//		"Ability18"					"imba_broodmother_spawn_spiderlings"
+//		"Ability19"					"imba_broodmother_spin_web"
+//		"Ability20"					"imba_broodmother_incapacitating_bite"
+//		"Ability21"					"imba_broodmother_insatiable_hunger"
 	}
 }
