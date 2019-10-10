@@ -6,7 +6,32 @@
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/diretide.js" />
 	</scripts>
+
 	<Panel class="Diretide" hittest="false">
+		<Panel id="LeaderboardInfoContainer" hittest="false">
+				<Panel id="LeaderboardMainContainer" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate="HallOfFame('XP');">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate="HallOfFame('IMR');">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LocalPlayerInfoContainer" hittest="false">
+					<Panel id="LocalPlayerInfo" class="LeaderboardGames" hittest="false">
+					</Panel>
+				</Panel>
+			</Panel>
+
 		<Panel id="DiretidePanel">
 			<Panel id="Diretide">
 				<Label id="PhaseLabel" text="#diretide_phase_1" onmouseover="DiretideInfo()" onmouseout="UIHideTextTooltip()"/>

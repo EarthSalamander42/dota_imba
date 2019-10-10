@@ -258,8 +258,8 @@ function Diretide:End()
 
 	local level = ROSHAN_ENT:GetLevel()
 
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-		api.imba.diretide_update_levels(level)
+	if api:IsCheatGame() == false then
+--		api.imba.diretide_update_levels(level)
 	end
 
 	if DIRETIDE_WINNER == 2 then

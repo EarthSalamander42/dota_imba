@@ -61,6 +61,7 @@ function GameMode:OnFirstPlayerLoaded()
 				ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 			else
 				if IMBA_DIRETIDE_EASTER_EGG == true then
+					LinkLuaModifier("modifier_npc_dialog", "components/modifiers/diretide/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )
 					local easter_egg = CreateUnitByName("npc_dota_diretide_easter_egg", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 					easter_egg:AddNewModifier(easter_egg, nil, "modifier_npc_dialog", {})
 				else

@@ -10,7 +10,6 @@
 	</scripts>
 
 	<Panel class="es-root">
-<!--
 		<Panel id="HallOfFame" hittest="false">
 			<Panel id="InfoHeader" hittest="false">
 				<Button id="CloseButton" onactivate="CloseHallOfFame();">
@@ -30,7 +29,7 @@
 			<Panel id="Tops" hittest="false">
 			</Panel>
 		</Panel>
--->
+
 		<Panel id="es-player-reward-panel" hittest="false">
 <!--
 			<Button class="es-player-reward-button" onactivate="CloseBottlepassReward()">
