@@ -1166,6 +1166,54 @@ function get_remaining_days_in_year(iYear, iMonth, iDay)
 	return count
 end
 
+-- ALLOW MULTIPLE INTRINSIC MODIFIERS (table support for GetIntrinsicModifierName)
+--[[
+-- needs to be tested before using it
+original_GetIntrinsicModifierName = CDOTABaseAbility.GetIntrinsicModifierName
+CDOTABaseAbility.GetIntrinsicModifierName = function(self, sModifierName)
+    print("Ability/Item:", self)
+    if self == nil then return end
+
+    print("type:", type(sModifierName))
+    if type(sModifierName) == "table" then
+        print("Table of intrinsic modifiers! yay!")
+        for index, modifier_name in pairs(sModifierName) do
+            print(index, modifier_name)
+            if not self.intrinsic_modifiers then self.intrinsic_modifiers = {} end
+
+            local class = modifier_name.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
+            load(class)()
+
+            local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, modifier_name, {})
+            table.insert(self.intrinsic_modifiers, mod)
+        end
+    else
+        return original_GetIntrinsicModifierName(self, sModifierName)
+    end
+end
+
+-- Item added to inventory filter
+GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
+	local unit = EntIndexToHScript(event.inventory_parent_entindex_const)
+	if unit == nil then return end
+	if unit:IsRealHero() then if unit:GetPlayerID() == -1 then return end end
+	local item = EntIndexToHScript(event.item_entindex_const)
+
+    if not unit:HasItemInInventory(item:GetAbilityName()) then
+        if not unit:HasItemInInventory(item:GetAbilityName()) then
+            print("Dropped item has multiple intrinsic modifiers, removing them")
+            for index, modifier_name in pairs(item.intrinsic_modifiers) do
+                if unit:HasModifier(modifier_name) then
+                    unit:RemoveModifierByName(modifier_name)
+                end
+            end
+        end
+    end
+
+   	return true
+end, GameMode)
+--]]
+
 -- credits to yahnich for the following
 function ParticleManager:FireParticle(effect, attach, owner, cps)
 	local FX = ParticleManager:CreateParticle(effect, attach, owner)
