@@ -63,6 +63,7 @@
 "imba_gamemode_name_all_random_tooltip"                                             "Players will be forced to random, receiving bonus gold."
 "imba_gamemode_name_all_random_same_hero"											"All Random Same Hero"
 "imba_gamemode_name_all_random_same_hero_tooltip"									"Players will be forced to random the same hero, receiving bonus gold."
+"pick_screen_same_hero_title"														"Same hero selection enabled on saturday!"
 
 "imba_random_pick_button"                                                           "RANDOM HERO"
 "imba_random_imba_pick_button"                                                      "RANDOM IMBA HERO"

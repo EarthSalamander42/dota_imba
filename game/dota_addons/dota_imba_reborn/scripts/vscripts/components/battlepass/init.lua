@@ -61,6 +61,7 @@ ListenToGameEvent('npc_spawned', function(event)
 		npc.bp_init = true
 
 		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+			player_id = npc:GetPlayerID(),
 			hero_name = string.gsub(npc:GetUnitName(), "npc_dota_hero_", ""),
 		})
 	end

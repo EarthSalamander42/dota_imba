@@ -15,6 +15,7 @@ function FindDotaHudElement(panel) {
 function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
+		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 
 	if (same_selection && same_selection.value == 1) {
 		pick_screen_title.style.marginTop = "30px";
@@ -22,12 +23,13 @@ function InitHeroSelection()  {
 		pick_screen_title.style.fontSize = "30px";
 		pick_screen_title.style.horizontalAlign = "left";
 		pick_screen_title.style.opacity = "1";
-		pick_screen_title.text = "Same hero selection enabled on saturday!";
-	} else {
-		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
-
 		if (gamemode && gamemode[1] == 3)
-			pick_screen_title.text = "Super Frantic";
+			pick_screen_title.text = $.Localize("pick_screen_same_hero_title") + " (" + $.Localize("DOTA_Tooltip_modifier_frantic") + ")";
+		else
+			pick_screen_title.text = $.Localize("pick_screen_same_hero_title");
+	} else {
+		if (gamemode && gamemode[1] == 3)
+			pick_screen_title.text = $.Localize("DOTA_Tooltip_modifier_frantic");
 	}
 
 	var i = 0;
