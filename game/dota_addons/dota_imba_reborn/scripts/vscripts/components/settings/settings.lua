@@ -637,4 +637,7 @@ SAME_HERO_SELECTION = IsSaturday()
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true
 end
+
+if IsInToolsMode() then SAME_HERO_SELECTION = true end
+
 CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})

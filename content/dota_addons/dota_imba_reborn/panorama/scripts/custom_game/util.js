@@ -159,19 +159,19 @@ function OverrideTopBarHeroImage(args) {
 			if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] != undefined) {
 				arcana_level = ply_battlepass.arcana["npc_dota_hero_" + args.hero_name];
 			} else {
-				$.Msg("No arcana found for this hero.")
+//				$.Msg("No arcana found for this hero.")
 				return;
 			}
 		}
 	}
 
 	var team = "Radiant"
-	if (Players.GetTeam(Players.GetLocalPlayer()) == 3) {
+	if (Players.GetTeam(args.player_id) == 3) {
 		team = "Dire"
 	}
 
-	if (FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()) && arcana_level != undefined) {
-		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
+	if (FindDotaHudElement(team + "Player" + args.player_id) && arcana_level != undefined) {
+		var panel = FindDotaHudElement(team + "Player" + args.player_id).FindChildTraverse("HeroImage")
 		if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
 	}
 }
