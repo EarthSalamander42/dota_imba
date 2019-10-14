@@ -95,16 +95,9 @@ item_imba_moon_shard = item_imba_moon_shard or class({})
 LinkLuaModifier("modifier_item_imba_moon_shard", "components/items/item_moon_shard", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_moon_shard_active", "components/items/item_moon_shard", LUA_MODIFIER_MOTION_NONE)
 
-CDOTAIMBA_ITEM_MOON_SHARD_AS_1 = 70
-CDOTAIMBA_ITEM_MOON_SHARD_AS_2 = 50
-CDOTAIMBA_ITEM_MOON_SHARD_AS_3 = 30
-CDOTAIMBA_ITEM_MOON_SHARD_NV_1 = 250
-CDOTAIMBA_ITEM_MOON_SHARD_NV_2 = 150
-
 function item_imba_moon_shard:GetIntrinsicModifierName() return "modifier_item_imba_moon_shard" end
 
 function item_imba_moon_shard:OnSpellStart()
-	if not IsServer() then return end
 	local caster = self:GetCaster()
 	if caster:IsTempestDouble() then return end
 	local pos = caster:GetAbsOrigin()
@@ -191,9 +184,10 @@ function modifier_item_imba_moon_shard:OnIntervalThink()
 end
 
 function modifier_item_imba_moon_shard:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BONUS_NIGHT_VISION}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION
+	}
 end
 
 function modifier_item_imba_moon_shard:GetModifierAttackSpeedBonus_Constant()
@@ -217,34 +211,35 @@ function modifier_item_imba_moon_shard_active:IsPurgable() return false end
 function modifier_item_imba_moon_shard_active:RemoveOnDeath() return false end
 function modifier_item_imba_moon_shard_active:GetTexture() return "item_moon_shard" end
 
+function modifier_item_imba_moon_shard_active:OnCreated()
+	self.consume_as_1		= self:GetAbility():GetSpecialValueFor("consume_as_1")
+	self.consume_vision_1	= self:GetAbility():GetSpecialValueFor("consume_vision_1")
+	self.consume_as_2		= self:GetAbility():GetSpecialValueFor("consume_as_2")
+	self.consume_vision_2	= self:GetAbility():GetSpecialValueFor("consume_vision_2")
+	self.consume_as_3		= self:GetAbility():GetSpecialValueFor("consume_as_3")
+end
 
 function modifier_item_imba_moon_shard_active:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BONUS_NIGHT_VISION}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION
+	}
 end
 
 function modifier_item_imba_moon_shard_active:GetModifierAttackSpeedBonus_Constant()
-	local first_as = CDOTAIMBA_ITEM_MOON_SHARD_AS_1
-	local second_as = CDOTAIMBA_ITEM_MOON_SHARD_AS_2
-	local third_as = CDOTAIMBA_ITEM_MOON_SHARD_AS_3
-	local stack = self:GetStackCount()
-	if stack == 1 then
-		return first_as
-	elseif stack == 2 then
-		return (first_as + second_as)
+	if self:GetStackCount() == 1 then
+		return self.consume_as_1
+	elseif self:GetStackCount() == 2 then
+		return self.consume_as_1 + self.consume_as_2
 	else
-		return (first_as + second_as + (stack - 2) * third_as)
+		return self.consume_as_1 + self.consume_as_2 + (self:GetStackCount() - 2) * self.consume_as_3
 	end
 end
 
 function modifier_item_imba_moon_shard_active:GetBonusNightVision()
-	local first_nv = CDOTAIMBA_ITEM_MOON_SHARD_NV_1
-	local second_nv = CDOTAIMBA_ITEM_MOON_SHARD_NV_2
-	local stack = self:GetStackCount()
-	if stack == 1 then
-		return first_nv
+	if self:GetStackCount() == 1 then
+		return self.consume_vision_1
 	else
-		return (first_nv + second_nv)
+		return self.consume_vision_1 + self.consume_vision_2
 	end
 end

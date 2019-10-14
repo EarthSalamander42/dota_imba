@@ -449,6 +449,7 @@ end
 ------------------------------
 
 function modifier_imba_visage_soul_assumption:IsHidden()		return true end
+function modifier_imba_visage_soul_assumption:IsPurgable()		return false end
 function modifier_imba_visage_soul_assumption:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- This shouldn't really happen but in case it gets ported in already leveled
@@ -509,6 +510,7 @@ end
 -------------------------------------
 
 function modifier_imba_visage_soul_assumption_stacks:IsHidden()				return true end
+function modifier_imba_visage_soul_assumption_stacks:IsPurgable()			return false end
 function modifier_imba_visage_soul_assumption_stacks:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_visage_soul_assumption_stacks:OnCreated(params)
@@ -541,7 +543,7 @@ function modifier_imba_visage_soul_assumption_stacks:OnDestroy()
 		assumption_counter_modifier:SetStackCount(assumption_counter_modifier:GetStackCount() - self:GetStackCount())
 		
 		if assumption_modifier and assumption_modifier.particle then
-			for bar = 1, 6 do
+			for bar = 1, self.stack_limit do
 				ParticleManager:SetParticleControl(assumption_modifier.particle, bar, Vector(assumption_counter_modifier:GetStackCount() - (self.damage_limit * bar), 0, 0))
 			end
 		end

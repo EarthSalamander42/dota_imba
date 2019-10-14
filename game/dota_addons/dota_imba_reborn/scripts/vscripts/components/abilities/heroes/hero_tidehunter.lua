@@ -17,6 +17,7 @@ LinkLuaModifier("modifier_imba_tidehunter_anchor_smash_throw", "components/abili
 
 LinkLuaModifier("modifier_imba_tidehunter_ravage_handler", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidehunter_ravage_creeping_wave", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tidehunter_ravage_suggestive_compromise", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
@@ -28,7 +29,7 @@ modifier_imba_tidehunter_gush_surf							= class({})
 imba_tidehunter_kraken_shell								= class({})
 modifier_imba_tidehunter_kraken_shell						= class({})
 modifier_imba_tidehunter_kraken_shell_backstroke			= class({})
-modifier_imba_tidehunter_kraken_shell_greater_hardening	= class({})
+modifier_imba_tidehunter_kraken_shell_greater_hardening		= class({})
 
 imba_tidehunter_anchor_smash								= class({})
 modifier_imba_tidehunter_anchor_smash						= class({})
@@ -38,6 +39,7 @@ modifier_imba_tidehunter_anchor_smash_throw					= class({})
 
 modifier_imba_tidehunter_ravage_handler						= class({})
 modifier_imba_tidehunter_ravage_creeping_wave				= class({})
+modifier_imba_tidehunter_ravage_suggestive_compromise		= class({})
 
 ----------
 -- GUSH --
@@ -844,6 +846,7 @@ function imba_tidehunter_ravage:OnSpellStart()
 		-- Ability parameters
 		local end_radius	=	self:GetSpecialValueFor("radius")
 		local stun_duration	=	self:GetSpecialValueFor("duration")
+		local suggestive_duration	=	self:GetSpecialValueFor("suggestive_duration")
 
 		-- Emit sound
 		caster:EmitSound(cast_sound)
@@ -896,6 +899,13 @@ function imba_tidehunter_ravage:OnSpellStart()
 					enemy:RemoveModifierByName("modifier_knockback")
 					enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
 
+					-- IMBAfication: Suggestive Compromise
+					local suggestive_modifier = enemy:AddNewModifier(caster, self, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = suggestive_duration})
+					
+					if suggestive_modifier then
+						suggestive_modifier:SetDuration(suggestive_duration * (1 - enemy:GetStatusResistance()), true)
+					end
+					
 					Timers:CreateTimer(0.5, function()
 						-- Apply damage
 						local damageTable = {victim = enemy,
@@ -945,7 +955,8 @@ function imba_tidehunter_ravage:OnSpellStart()
 				duration		=	0.3, -- Kinda arbitrary but only want to show one wave of tentacles and not all five
 				damage			=	self:GetAbilityDamage(),
 				stun_duration	=	stun_duration,
-				creeping_radius	=	creeping_radius
+				creeping_radius	=	creeping_radius,
+				suggestive_duration	= self:GetSpecialValueFor("suggestive_duration")
 			}, 
 			caster_pos + (forward_vec * counter * creeping_radius * 2 * ((creeping_range + GetCastRangeIncrease(self:GetCaster())) / creeping_range)), self:GetCaster():GetTeamNumber(), false)
 
@@ -985,7 +996,7 @@ function modifier_imba_tidehunter_ravage_handler:OnOrder(keys)
 end
 
 function modifier_imba_tidehunter_ravage_handler:GetActivityTranslationModifiers()
-	if RollPercentage(50) then
+	if RollPercentage and RollPercentage(50) then
 		return "belly_flop"
 	end
 end
@@ -1038,6 +1049,13 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnCreated(params)
 		enemy:RemoveModifierByName("modifier_knockback")
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
 		
+		-- IMBAfication: Suggestive Compromise
+		local suggestive_modifier = enemy:AddNewModifier(self:GetCaster(), ability, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = params.suggestive_duration})
+		
+		if suggestive_modifier then
+			suggestive_modifier:SetDuration(params.suggestive_duration * (1 - enemy:GetStatusResistance()), true)
+		end
+		
 		Timers:CreateTimer(0.5, function()
 			-- Apply damage
 			local damageTable = 
@@ -1064,6 +1082,32 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnDestroy()
 	ParticleManager:DestroyParticle(self.ravage_particle, false)
 	ParticleManager:ReleaseParticleIndex(self.ravage_particle)
 	self:GetParent():RemoveSelf()
+end
+
+-------------------------------------------
+-- RAVAGE SUGGESTIVE COMPROMISE MODIFIER --
+-------------------------------------------
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:IsPurgable()	return false end
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:GetEffectName()
+	return "particles/units/heroes/hero_monkey_king/monkey_king_jump_armor_debuff_model.vpcf"
+end
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:OnCreated()
+	self.suggestive_armor_reduction	= self:GetAbility():GetSpecialValueFor("suggestive_armor_reduction") * (-1)
+end
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+end
+
+function modifier_imba_tidehunter_ravage_suggestive_compromise:GetModifierPhysicalArmorBonus()
+	return self.suggestive_armor_reduction
 end
 
 ---------------------

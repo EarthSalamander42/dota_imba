@@ -38,13 +38,15 @@ function modifier_imba_occult_mask:OnCreated()
 	self.modifier_self = "modifier_imba_occult_mask"
 	self.modifier_unique = "modifier_imba_occult_mask_unique"
 
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
-	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
+	if self.ability then
+		self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+		self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
 
-	if IsServer() then
-		-- If the caster doesn't already has the unique modifier, give it to him
-		if not self.caster:HasModifier(self.modifier_unique) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})
+		if IsServer() then
+			-- If the caster doesn't already has the unique modifier, give it to him
+			if not self.caster:HasModifier(self.modifier_unique) then
+				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})
+			end
 		end
 	end
 end
@@ -88,12 +90,14 @@ function modifier_imba_occult_mask_unique:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
-	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.damage_per_second = self.ability:GetSpecialValueFor("damage_per_second")
-	self.interval = self.ability:GetSpecialValueFor("interval")
+	if self.ability then
+		self.radius = self.ability:GetSpecialValueFor("radius")
+		self.damage_per_second = self.ability:GetSpecialValueFor("damage_per_second")
+		self.interval = self.ability:GetSpecialValueFor("interval")
 
-	if IsServer() then
-		self:StartIntervalThink(self.interval)
+		if IsServer() then
+			self:StartIntervalThink(self.interval)
+		end
 	end
 end
 

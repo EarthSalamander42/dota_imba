@@ -57,8 +57,8 @@ end
 
 modifier_imba_enchantress_untouchable		= class({})
 
-function modifier_imba_enchantress_untouchable:IsHidden()		return true end
-function modifier_imba_enchantress_untouchable:IsPurgable()		return false end
+function modifier_imba_enchantress_untouchable:IsHidden()		return self:GetCaster() == self:GetParent() end
+function modifier_imba_enchantress_untouchable:IsPurgable()		return self:GetCaster() ~= self:GetParent()  end
 function modifier_imba_enchantress_untouchable:RemoveOnDeath()	return false end
 
 function modifier_imba_enchantress_untouchable:OnCreated()
@@ -85,15 +85,15 @@ end
 function modifier_imba_enchantress_untouchable:OnAttackStart(keys)
 	if not IsServer() then return end
 	
-    if self.caster == keys.target and not self.caster:PassivesDisabled() and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
-		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
+    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+		keys.attacker:AddNewModifier(self.parent, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
     end
 end
 
 function modifier_imba_enchantress_untouchable:OnHeroKilled(keys)
 	if not IsServer() then return end
 
-    if self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+    if self.caster == self.parent and self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
 		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {}):SetStackCount(self.regret_stacks)
     end
 end
@@ -113,6 +113,11 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase 		= self.ability:GetSpecialValueFor("stopgap_bat_increase")
+	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
+	
+	if self.ability:GetCaster() ~= self.caster then
+		self.slow_attack_speed = self.slow_attack_speed * (self.kindred_spirits_multiplier * 0.01)
+	end
 end
 
 function modifier_imba_enchantress_untouchable_slow:GetEffectName()
@@ -280,6 +285,11 @@ function imba_enchantress_enchant:OnSpellStart()
 		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_controlled", {duration = self.dominate_duration})
 		--self.target:AddNewModifier(self.caster, self, "modifier_dominated", {duration = self.dominate_duration}) -- This didn't work for me
 		self.target:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.dominate_duration})
+
+		-- IMBAfication: Kindred Spirits
+		if self:GetCaster():HasAbility("imba_enchantress_untouchable") and self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"):IsTrained() then
+			self.target:AddNewModifier(self.caster, self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"), "modifier_imba_enchantress_untouchable", {})
+		end
 
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
 			self.caster:EmitSound("enchantress_ench_ability_enchant_0"..math.random(1,3))

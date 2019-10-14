@@ -1,0 +1,32 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Oracle
+	//=================================================================================================================
+	"npc_dota_hero_oracle"
+	{
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability1"		"imba_oracle_fortunes_end"
+		"Ability2"		"imba_oracle_fates_edict"
+		"Ability3"		"imba_oracle_purifying_flames"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_oracle_false_promise"
+		
+		"Ability10"		"special_bonus_unique_oracle_2" // +1s Fortune's End Max Duration
+		"Ability11"		"special_bonus_exp_boost_25"
+		"Ability12"		"special_bonus_cast_range_150"
+		"Ability13"		"special_bonus_gold_income_120"
+		"Ability14"		"special_bonus_movement_speed_45"
+		"Ability15"		"special_bonus_unique_oracle_4" // False Promise Invisibility
+		"Ability16"		"special_bonus_unique_oracle_3" // -5s Fate's Edict Cooldown
+		"Ability17"		"special_bonus_unique_oracle" // +2s False Promise Duration
+		
+		// Removed Talents
+	}
+}

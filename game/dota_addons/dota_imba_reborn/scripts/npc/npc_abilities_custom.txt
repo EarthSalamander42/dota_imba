@@ -26,6 +26,7 @@
 #base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
 #base heroes/naga_siren/abilities.txt
+#base heroes/oracle/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
@@ -40497,7 +40498,19 @@
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
 				"RequiresScepter"			"1"
-			}	
+			}
+            "07"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "scepter_additional_charges"	"1"
+				"RequiresScepter"	"1"
+            }
+            "08"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "scepter_additional_cast_range"	"500"
+				"RequiresScepter"	"1"
+            }
 		}
 	}
 

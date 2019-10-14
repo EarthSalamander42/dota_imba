@@ -1,8 +1,10 @@
 "npc_dota_hero_ember_spirit"                                    "Ember Spirit (IMBA)"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains"                  "Searing Chains"
-"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_description"      "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, rooting them in place and dealing damage every <font color='#FF7800'>half</font> second.\n<font color='#FF7800'>Searing Rain:</font> Each fire remnant also throws out %units_per_charge% bolas. If they are not currently deployed, the extra bolas are centered around Ember Spirit."
-"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_note0"            "Mini-stuns targets when first applied."
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_description"      "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, rooting them in place and dealing damage every <font color='#FF7800'>half</font> second.\n<font color='#FF7800'>Searing Rain:</font> Each fire remnant also throws out %units_per_charge% bolas. If they are not currently deployed, the extra bolas are centered around Ember Spirit.\n<font color='#FF7800'>Flash Fire:</font> Searing Chains also mini-stuns upon application."
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_Note0"				"Targets are chosen randomly around Xin."
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_Note1"				"Does not affect Spell Immune or invisible units."
+"DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_Note2"				"Interrupts channeling spells."
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_lore"             "Your place is here."
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_effect_radius"    "EFFECT RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_duration"         "ROOT DURATION:"
@@ -48,7 +50,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_effect_radius"         "EXPLOSION RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_damage"                "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_attack_cd_scepter"     "SCEPTER ATTACK RATE:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "<font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>"
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%. <font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>"
 
 // Modifiers
 "DOTA_Tooltip_modifier_imba_flame_guard_aura"                           "Flame Guard"

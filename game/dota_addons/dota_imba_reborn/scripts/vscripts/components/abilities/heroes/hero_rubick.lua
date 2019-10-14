@@ -1050,8 +1050,6 @@ LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroe
 imba_rubick_spellsteal.banned_abilities = 
 {
 	"imba_sniper_headshot",
-	"imba_phoenix_sun_ray",
-	"imba_phoenix_sun_ray_toggle_move",
 	"imba_rubick_spellsteal",
 	"shredder_chakram",
 	"shredder_chakram_2",
@@ -1362,6 +1360,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.CurrentPrimarySpell:SetLevel( primarySpell:GetLevel() )
 		self.CurrentPrimarySpell:SetStolen( true )
 		
+		if self.CurrentPrimarySpell.OnStolen then
+			self.CurrentPrimarySpell:OnStolen(self.CurrentPrimarySpell)
+		end
+		
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentPrimarySpell:IsHiddenWhenStolen() then
 			self.CurrentPrimarySpell:SetHidden(true)
@@ -1374,6 +1376,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.CurrentSecondarySpell = self:GetCaster():AddAbility( secondarySpell:GetAbilityName() )
 		self.CurrentSecondarySpell:SetLevel( secondarySpell:GetLevel() )
 		self.CurrentSecondarySpell:SetStolen( true )
+
+		if self.CurrentSecondarySpell.OnStolen then
+			self.CurrentSecondarySpell:OnStolen(self.CurrentPrimarySpell)
+		end
 		
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
@@ -1419,6 +1425,7 @@ function imba_rubick_spellsteal:ForgetSpell()
 		end
 			
 	end
+	
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
 		if self.CurrentPrimarySpell.OnUnStolen then
 			self.CurrentPrimarySpell:OnUnStolen()

@@ -542,15 +542,18 @@ function modifier_imba_rattletrap_power_cogs:OnAttackLanded(keys)
 	if keys.target == self:GetParent() then
 		if keys.attacker == self:GetCaster() then
 			self:GetParent():Kill(nil, self:GetCaster())
-			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_counter",
-			{
-				duration		= self.charge_coil_duration,
-				push_duration	= self.push_duration,
-				damage			= self.damage,
-				mana_burn		= self.mana_burn,
-				push_length		= self.push_length,
-			})
-			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_instance", {duration = 20})
+			
+			for count = 1, self.attacks_to_destroy do
+				keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_counter",
+				{
+					duration		= self.charge_coil_duration,
+					push_duration	= self.push_duration,
+					damage			= self.damage,
+					mana_burn		= self.mana_burn,
+					push_length		= self.push_length,
+				})
+				keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_instance", {duration = self.charge_coil_duration})
+			end
 		else
 			self.health = self.health - 1
 			
@@ -558,15 +561,17 @@ function modifier_imba_rattletrap_power_cogs:OnAttackLanded(keys)
 				self:GetParent():Kill(nil, keys.attacker)
 				
 				if keys.attacker:GetTeamNumber() == self:GetParent():GetTeamNumber() then
-					keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_counter", 
-					{
-						duration		= self.charge_coil_duration,
-						push_duration	= self.push_duration,
-						damage			= self.damage,
-						mana_burn		= self.mana_burn,
-						push_length		= self.push_length,
-					})
-					keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_instance", {duration = 20})
+					for count = 1, self.attacks_to_destroy do
+						keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_counter", 
+						{
+							duration		= self.charge_coil_duration,
+							push_duration	= self.push_duration,
+							damage			= self.damage,
+							mana_burn		= self.mana_burn,
+							push_length		= self.push_length,
+						})
+						keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_power_cogs_charge_coil_instance", {duration = self.charge_coil_duration})
+					end
 				end
 			end
 		end

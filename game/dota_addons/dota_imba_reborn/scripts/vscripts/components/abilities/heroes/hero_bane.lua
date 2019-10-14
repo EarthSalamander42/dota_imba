@@ -405,16 +405,11 @@ function imba_bane_brain_sap:GetCooldown(level)
 end
 
 function imba_bane_brain_sap:CastFilterResultTarget(target)
-	if not IsServer() then return end
-
-	local caster = self:GetCaster()
-
-	if caster:HasScepter() and caster:GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
+	if self:GetCaster():HasScepter() and self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
 		return UF_SUCCESS
 	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
-	return nResult
+	
+	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber() )
 end
 
 function imba_bane_brain_sap:GetAbilityTextureName()

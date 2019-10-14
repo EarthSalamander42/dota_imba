@@ -1623,6 +1623,12 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 				local particle_slow_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 				ParticleManager:SetParticleControl(particle_slow_fx, 0, target:GetAbsOrigin())
 
+				-- Remove particles when they end
+				Timers:CreateTimer(headshot_duration, function()
+					ParticleManager:DestroyParticle(particle_slow_fx, false)
+					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
+				end)
+
 				-- Knocknback enemy
 				local knockback = {
 					center_x 			= caster:GetAbsOrigin()[1]+1,
@@ -1635,13 +1641,11 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 					should_stun 		= 0
 				}
 
-				target:AddNewModifier(caster, head_shot_ability_handler, "modifier_knockback", knockback):SetDuration(knockback_duration * (1 - target:GetStatusResistance()), true)
-
-				-- Remove particles when they end
-				Timers:CreateTimer(headshot_duration, function()
-					ParticleManager:DestroyParticle(particle_slow_fx, false)
-					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
-				end)
+				local knockback_modifier = target:AddNewModifier(caster, head_shot_ability_handler, "modifier_knockback", knockback)
+				
+				if knockback_modifier then
+					knockback_modifier:SetDuration(knockback_duration * (1 - target:GetStatusResistance()), true)
+				end
 			end
 		end
 

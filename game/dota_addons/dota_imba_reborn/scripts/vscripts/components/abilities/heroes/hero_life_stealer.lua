@@ -19,6 +19,7 @@ LinkLuaModifier("modifier_imba_life_stealer_infest_effect", "components/abilitie
 
 LinkLuaModifier("modifier_imba_life_stealer_control", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_life_stealer_assimilate_handler", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_life_stealer_assimilate", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_life_stealer_assimilate_effect", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_life_stealer_assimilate_counter", "components/abilities/heroes/hero_life_stealer", LUA_MODIFIER_MOTION_NONE)
@@ -51,6 +52,7 @@ modifier_imba_life_stealer_control	 						= class({})
 imba_life_stealer_consume 									= class({})
 
 imba_life_stealer_assimilate 								= class({})
+modifier_imba_life_stealer_assimilate_handler				= class({})
 modifier_imba_life_stealer_assimilate 						= class({})
 modifier_imba_life_stealer_assimilate_effect				= class({})
 modifier_imba_life_stealer_assimilate_counter				= class({})
@@ -1411,6 +1413,10 @@ end
 
 function imba_life_stealer_assimilate:IsStealable()	return false end
 
+function imba_life_stealer_assimilate:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_AOE
+end
+
 function imba_life_stealer_assimilate:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
 		self:SetHidden(false)
@@ -1424,59 +1430,104 @@ function imba_life_stealer_assimilate:OnInventoryContentsChanged()
 	end
 end
 
+function imba_life_stealer_assimilate:GetIntrinsicModifierName()
+	return "modifier_imba_life_stealer_assimilate_handler"
+end
+
 function imba_life_stealer_assimilate:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
 function imba_life_stealer_assimilate:CastFilterResultTarget(target)
-	if not IsServer() then return end
-
 	if target == self:GetCaster() then
 		return UF_FAIL_OTHER
 	end
 
+	if not IsServer() then return end
+
 	return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 end
 
-function imba_life_stealer_assimilate:OnSpellStart()
-	local target = self:GetCursorTarget()
-	
-	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
-
-	local infest_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, self:GetCaster())
-	ParticleManager:SetParticleControl(infest_particle, 0, target:GetAbsOrigin())
-	ParticleManager:SetParticleControlEnt(infest_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:ReleaseParticleIndex(infest_particle)
-
-	-- "Unlike Infest, Assimilate applies a strong dispel on the target and disjoints projectiles upon cast."
-	target:Purge(false, true, false, true, true)
-	ProjectileManager:ProjectileDodge(target)
-
-	local assimilate_effect_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate_effect", {})
-	
-	local assimilate_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate", {})
-	
-	-- Couple assimilate and the assimilate effect modifiers together so one can destroy the other
-	if assimilate_effect_modifier then
-		assimilate_effect_modifier.assimilate_modifier	= assimilate_modifier
-		assimilate_modifier.assimilate_effect_modifier	= assimilate_effect_modifier
+function imba_life_stealer_assimilate:GetAOERadius()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_life_stealer_assimilate_handler", self:GetCaster()) == 0 then
+		return 0
+	else
+		return self:GetSpecialValueFor("consume_radius")
 	end
-	
-	target:Interrupt()
-	
-	local eject_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
-	
-	if eject_ability then
-		if not eject_ability:IsTrained() then
-			eject_ability:SetLevel(1)
-		end
-		
-		--self:GetCaster():SwapAbilities(self:GetName(), eject_ability:GetName(), false, true)
-	end
-	
-	-- IMBAfication: I'm So Hungry...
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate_counter", {})
 end
+
+function imba_life_stealer_assimilate:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
+	
+	if not self:GetAutoCastState() then
+		self.consume_radius = 0
+	else
+		self.consume_radius = self:GetSpecialValueFor("consume_radius")
+	end
+	
+	for _, target in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorTarget():GetAbsOrigin(), nil, self.consume_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)) do
+		if target ~= self:GetCaster() and not PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then
+			local infest_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, self:GetCaster())
+			ParticleManager:SetParticleControl(infest_particle, 0, target:GetAbsOrigin())
+			ParticleManager:SetParticleControlEnt(infest_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(infest_particle)
+
+			-- "Unlike Infest, Assimilate applies a strong dispel on the target and disjoints projectiles upon cast."
+			target:Purge(false, true, false, true, true)
+			ProjectileManager:ProjectileDodge(target)
+
+			local assimilate_effect_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate_effect", {})
+			
+			local assimilate_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate", {})
+			
+			-- Couple assimilate and the assimilate effect modifiers together so one can destroy the other
+			if assimilate_effect_modifier then
+				assimilate_effect_modifier.assimilate_modifier	= assimilate_modifier
+				assimilate_modifier.assimilate_effect_modifier	= assimilate_effect_modifier
+			end
+			
+			target:Interrupt()
+			
+			local eject_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate_eject")
+			
+			if eject_ability then
+				if not eject_ability:IsTrained() then
+					eject_ability:SetLevel(1)
+				end
+				
+				--self:GetCaster():SwapAbilities(self:GetName(), eject_ability:GetName(), false, true)
+			end
+			
+			-- IMBAfication: I'm So Hungry...
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_assimilate_counter", {})
+		end
+	end
+end
+
+---------------------------------
+-- ASSIMILATE HANDLER MODIFIER --
+---------------------------------
+
+function modifier_imba_life_stealer_assimilate_handler:IsHidden()		return true end
+function modifier_imba_life_stealer_assimilate_handler:IsPurgable()		return false end
+
+function modifier_imba_life_stealer_assimilate_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+	
+	return decFuncs
+end
+
+function modifier_imba_life_stealer_assimilate_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+
 
 -------------------------
 -- ASSIMILATE MODIFIER --
@@ -1522,7 +1573,6 @@ function modifier_imba_life_stealer_assimilate:OnIntervalThink()
 	
 	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin())
 end
-
 
 function modifier_imba_life_stealer_assimilate:OnDestroy()
 	if not IsServer() then return end

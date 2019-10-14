@@ -720,6 +720,19 @@ function GameMode:OnPlayerChat(keys)
 			-- print(package.loaded) -- This lags everything to absolute death
 		end
 		
+		if str == "-modifier_count" then
+			local all_entities = Entities:FindAllInSphere(Vector(0, 0, 0), 25000)
+			local modifier_count = 0
+
+			for ent = 1, #all_entities do
+				if all_entities[ent].FindAllModifiers then
+					modifier_count = modifier_count + #all_entities[ent]:FindAllModifiers()
+				end
+			end		
+		
+			Say(PlayerResource:GetPlayer(keys.playerid), "There are a total of "..modifier_count.." modifiers present.", true)
+		end		
+		
 		-- For the serial disconnectors
 		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
 			GameRules:SetGameWinner(caster:GetTeamNumber())
@@ -806,7 +819,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" and (hero == caster) then
+						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" then
 							ability_set = {
 								[0] = "imba_windranger_shackleshot",
 								[1] = "imba_windranger_powershot",
@@ -825,7 +838,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_cooldown_reduction_30",
 							}
 							upgraded = true
-						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" and (hero == caster) then
+						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" then
 							ability_set = {
 								[0] = "imba_timbersaw_whirling_death",
 								[1] = "imba_timbersaw_timber_chain",
@@ -843,6 +856,26 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_cooldown_reduction_15",
 								[14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
 								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
+							}
+							upgraded = true
+						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" and (hero == caster) then
+							ability_set = {
+								[0] = "imba_oracle_fortunes_end",
+								[1] = "imba_oracle_fates_edict",
+								[2] = "imba_oracle_purifying_flames",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_oracle_false_promise",
+								-- [6] = "imba_timbersaw_return_chakram",
+								-- [7] = "imba_timbersaw_return_chakram_2",
+								-- [8] = "special_bonus_hp_225",
+								-- [9] = "special_bonus_mp_regen_250",
+								-- [10] = "special_bonus_spell_amplify_10",
+								-- [11] = "special_bonus_imba_timbersaw_reactive_armor_max_stacks",
+								-- [12] = "special_bonus_strength_20",
+								-- [13] = "special_bonus_cooldown_reduction_15",
+								-- [14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
+								-- [15] = "special_bonus_imba_timbersaw_timber_chain_range",
 							}
 							upgraded = true							
 						end

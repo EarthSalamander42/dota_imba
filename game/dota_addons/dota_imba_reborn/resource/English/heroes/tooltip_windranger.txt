@@ -22,7 +22,7 @@
 "DOTA_Tooltip_modifier_imba_windranger_powershot_overstretch_Description"			"Allowing for Powershot re-aiming, and gaining bonus range upon release."
 
 "DOTA_Tooltip_ability_imba_windranger_windrun"										"Windrun"
-"DOTA_Tooltip_ability_imba_windranger_windrun_Description" 							"Increases movement speed and adds evasion from all physical attacks, while slowing movement of nearby enemies.\n<font color='#FF7800'>Gale Enchantment:</font> Ally heroes within %gale_enchantment_radius% radius of Windranger while Windrun is active will also gain their own Windrun buff for %gale_enchantment_duration% seconds.\n<font color='#FF7800'>Mastery of the Woods:</font> When Windranger reaches Level 25, Windrun can also path through trees."
+"DOTA_Tooltip_ability_imba_windranger_windrun_Description" 							"Increases movement speed and adds evasion from all physical attacks, while slowing movement of nearby enemies.\n<font color='#FF7800'>Gale Enchantment:</font> Ally heroes within %gale_enchantment_radius% radius of Windranger while Windrun is active will also gain their own Windrun buff for %gale_enchantment_duration% seconds."
 "DOTA_Tooltip_ability_imba_windranger_windrun_Lore"									"Lyralei enchants gusts of winds to fight incoming attacks."
 "DOTA_Tooltip_ability_imba_windranger_windrun_Note0"									"Mastery of the Woods also affects units who received Windrun through Gale Enchantment, so long as they are Level 25 or higher."
 "DOTA_Tooltip_ability_imba_windranger_windrun_movespeed_bonus_pct"					"%MOVE SPEED BONUS:"
