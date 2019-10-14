@@ -33,7 +33,7 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = false
+	BOTS_ENABLED = true
 else
 	BOTS_ENABLED = false
 end
@@ -634,6 +634,7 @@ end
 
 -- SAME_HERO_SELECTION = IMBA_PICK_SCREEN
 SAME_HERO_SELECTION = IsSaturday()
+if IsInToolsMode() then SAME_HERO_SELECTION = true end
 CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true

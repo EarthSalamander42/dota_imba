@@ -1,0 +1,54 @@
+"BattlepassHeroes"
+{
+	"npc_dota_hero_axe"
+	{
+		"12964" // Fists of Axe Unleashed
+		{
+			"RequiredLevel"				"68"
+		}
+
+		"12965" // Torso of Axe Unleashed
+		{
+			"RequiredLevel"				"68"
+		}
+
+		"12966" // Belt of Axe Unleashed
+		{
+			"RequiredLevel"				"68"
+		}
+
+		"12968" // Hair of Axe Unleashed
+		{
+			"RequiredLevel"				"68"
+		}
+	}
+
+	BattlepassHeroes["bristleback"] = {}
+	BattlepassHeroes["centaur"] = {}
+	BattlepassHeroes["chen"] = {}
+	BattlepassHeroes["dark_seer"] = {}
+	BattlepassHeroes["death_prophet"] = {}
+	BattlepassHeroes["drow_ranger"] = {}
+	BattlepassHeroes["earthshaker"] = {}
+	BattlepassHeroes["enigma"] = {}
+	BattlepassHeroes["huskar"] = {}
+	BattlepassHeroes["invoker"] = {}
+	BattlepassHeroes["juggernaut"] = {}
+	BattlepassHeroes["leshrac"] = {}
+	BattlepassHeroes["life_stealer"] = {}
+	BattlepassHeroes["lina"] = {}
+	if IsInToolsMode() then
+		BattlepassHeroes["nevermore"] = {}
+	end
+	BattlepassHeroes["nyx_assassin"] = {}
+	BattlepassHeroes["phantom_assassin"] = {}
+	BattlepassHeroes["pudge"] = {}
+	BattlepassHeroes["skywrath_mage"] = {}
+--	BattlepassHeroes["terrorblade"] = {}
+--	BattlepassHeroes["tidehunter"] = {}
+	BattlepassHeroes["ursa"] = {}
+	BattlepassHeroes["vengefulspirit"] = {}
+	BattlepassHeroes["wisp"] = {}
+	BattlepassHeroes["zuus"] = {}
+
+}

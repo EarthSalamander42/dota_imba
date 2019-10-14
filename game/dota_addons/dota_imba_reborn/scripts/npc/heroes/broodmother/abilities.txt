@@ -1,0 +1,298 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Broodmother: Spawn Spiderlings
+	//=================================================================================================================
+	"imba_broodmother_spawn_spiderlings"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_spawn_spiderlings"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Broodmother.SpawnSpiderlingsImpact"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"11 10 9 8"
+		"AbilityManaCost"				"100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"12.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spiderling_duration"	"60.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 160 240 320"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"1 3 5 7"
+			}	 
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1200"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spin Web
+	//=================================================================================================================
+	"broodmother_spin_web"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5280"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Broodmother.SpinWebCast"
+        "HasScepterUpgrade"			"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"0.0"
+		"AbilityManaCost"				"50"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"2 4 6 8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heath_regen"			"3 5 7 9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"25 40 55 70"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"2 4 6 8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"45.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges_scepter"	"6 10 14 18"
+				"RequiresScepter"		"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_scepter"	"30 50 70 90"
+				"RequiresScepter"		"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count_scepter"					"6 10 14 18"
+				"RequiresScepter"		"1"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Broodmother: Incapacitating Bite
+	//=================================================================================================================
+	"broodmother_incapacitating_bite"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5281"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-16 -26 -36 -46"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"2.0 2.0 2.0 2.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Broodmother: Insatiable Hunger
+	//=================================================================================================================
+	"broodmother_insatiable_hunger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5282"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2 0.2 0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		"AbilityCooldown"				"45.0 45.0 45.0"
+		"AbilityManaCost"				"100 100 100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"60 100 140"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_pct"			"60 100 140"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"14.0 14.0 14.0"
+			}
+		}
+	}
+
+	// Spiderlings
+
+	//=================================================================================================================
+	// Broodmother: Poison Sting
+	//=================================================================================================================
+	"broodmother_poison_sting"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5284"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"15"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"-8"
+			}
+			"03"
+			{		
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"2.0"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spawn Spiderites
+	//=================================================================================================================
+	"broodmother_spawn_spiderite"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5283"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"spiderite_duration"			"60.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"buff_duration"					"2.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+}
