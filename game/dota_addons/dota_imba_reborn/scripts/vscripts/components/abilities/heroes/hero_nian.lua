@@ -119,7 +119,7 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 			self:Destroy()
 		end
 	else
-		if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
+		if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() and not self:GetParent():IsDisarmed() and not self:GetParent():IsHexed() and not self:GetParent():IsNightmared() then
 			local frenzy_swipe_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(frenzy_swipe_particle)
 			
