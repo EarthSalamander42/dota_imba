@@ -568,7 +568,7 @@ function modifier_imba_weaver_geminate_attack_delay:OnCreated(params)
 	
 	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	
-	if self:GetAbility():GetAutoCastState() then
+	if self:GetAbility():GetAutoCastState() and not self:GetParent():IsRooted() then
 		local new_position = self:GetCaster():GetAbsOrigin() + RandomVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D())
 	
 		local geminate_lapse_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_weaver/weaver_timelapse.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())

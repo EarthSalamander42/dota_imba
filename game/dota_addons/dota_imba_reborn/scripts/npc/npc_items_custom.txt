@@ -4558,7 +4558,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"flutter_movespeed_pct" "40"
+				"flutter_movespeed_pct" "30"
 			}
 			"07"
 			{
@@ -4573,7 +4573,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_bonus_ms_pct"	"40"
+				"wind_song_bonus_ms_pct"	"30"
 			}
 			"10"
 			{

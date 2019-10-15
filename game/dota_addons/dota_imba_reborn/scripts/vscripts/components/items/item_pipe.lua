@@ -43,8 +43,8 @@ function item_imba_pipe:OnSpellStart()
 		nil,
 		search_radius,
 		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-		0,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_BUILDING,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 		FIND_ANY_ORDER,
 		false)
 	for _, unit in pairs(allies) do
