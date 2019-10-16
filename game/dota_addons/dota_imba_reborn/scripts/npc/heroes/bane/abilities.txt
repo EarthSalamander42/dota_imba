@@ -288,8 +288,8 @@
 
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_linger_duration"			"0.5 1.5 2.5"
+				"var_type"								"FIELD_INTEGER"
+				"fiends_grip_linger_duration"			"1"
 			}
 
 			"03"
@@ -307,13 +307,13 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"talent_vision_radius"					"900"
+				"talent_vision_radius"					"600"
 			}
 
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"talent_vision_cone"					"45"
+				"talent_vision_cone"					"30"
 			}					
 
 			"07"
@@ -461,7 +461,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"duration"		"0.5"
+				"duration"		"0.25"
 			}
 			"02"
 			{

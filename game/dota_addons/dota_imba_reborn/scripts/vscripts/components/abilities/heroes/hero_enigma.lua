@@ -992,7 +992,10 @@ function modifier_imba_singularity:OnDeath(keys)
 		local extra_pull_radius = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
 		ability.radius = base_radius + extra_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
 		ability.pull_radius = base_pull_radius + extra_pull_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-		ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+		
+		Timers:CreateTimer(FrameTime(), function()
+			ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+		end)
 	end
 end
 

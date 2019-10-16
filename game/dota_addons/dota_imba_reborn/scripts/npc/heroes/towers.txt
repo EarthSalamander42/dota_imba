@@ -430,7 +430,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"base_tenacity_pct"				"20 30 40 50"
+				"base_tenacity_pct"				"10 15 20 25"
 			}			
 			"03"
 			{

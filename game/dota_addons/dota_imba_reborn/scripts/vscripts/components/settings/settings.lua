@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.17b"
+GAME_VERSION = "7.17d"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -32,11 +32,11 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
-if IsInToolsMode() then
-	BOTS_ENABLED = true
-else
+-- if IsInToolsMode() then
+	-- BOTS_ENABLED = true
+-- else
 	BOTS_ENABLED = false
-end
+-- end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
@@ -281,27 +281,27 @@ BANNED_ITEMS[MapDiretide()] = {
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns"
+	-- "imba_tower_thorns"
 }
 TOWER_ABILITIES["tower2"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_multishot",
+	-- "imba_tower_multishot",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_splash_fire",
-	"imba_tower_multishot",
+	-- "imba_tower_splash_fire",
+	-- "imba_tower_multishot",
 }
 
 -- Update game mode net tables

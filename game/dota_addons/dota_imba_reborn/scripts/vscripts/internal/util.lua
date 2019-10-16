@@ -1083,45 +1083,45 @@ function IsSaturday()
 	current_date.month = tonumber(current_date_split[1])
 	current_date.year = tonumber(current_date_split[3])
 	local day_count = 0
-	print(check_date, current_date)
+	-- print(check_date, current_date)
 
 	if current_date.month == check_date.month and current_date.year == check_date.year then
-		print("Check/Current day:", check_date.day, current_date.day)
+		-- print("Check/Current day:", check_date.day, current_date.day)
 		day_count = check_date.day - current_date.day
 		if day_count < 0 then day_count = day_count * (-1) end
 	else
 		for y = check_date.year, current_date.year do
-			print("Currently checking year:", y)
+			-- print("Currently checking year:", y)
 			if check_date.year == current_date.year then
-				print("Check in same check/current year")
+				-- print("Check in same check/current year")
 				for i = check_date.month, current_date.month do
 					if i == check_date.month then
-						print("First month:", get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0))
+						-- print("First month:", get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0))
 						day_count = day_count + get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0)
 					elseif i == current_date.month then
-						print("last month:", get_remaining_days_in_month(current_date.month, current_date.day, current_date.year % 4 == 0))
+						-- print("last month:", get_remaining_days_in_month(current_date.month, current_date.day, current_date.year % 4 == 0))
 						day_count = day_count + current_date.day - 1
 					else
-						print("month between (full)", get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)	)
+						-- print("month between (full)", get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)	)
 						day_count = day_count + get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)						
 					end
 				end
 			else
 				if y == check_date.year then
-					print("Remaining days in first year:", get_remaining_days_in_year(check_date.year, check_date.month, check_date.day))
+					-- print("Remaining days in first year:", get_remaining_days_in_year(check_date.year, check_date.month, check_date.day))
 					day_count = day_count + get_remaining_days_in_year(check_date.year, check_date.month, check_date.day)
 				elseif y == current_date.year then
-					print("Remaining days in last year:", get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
+					-- print("Remaining days in last year:", get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
 					day_count = day_count + (get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
 				else
-					print("Year between (full):", get_remaining_days_in_year(check_date.year))
+					-- print("Year between (full):", get_remaining_days_in_year(check_date.year))
 					day_count = day_count + get_remaining_days_in_year(check_date.year)
 				end
 			end
 		end
 	end
 
-	print("Day count:", day_count, day_count % 7)
+	-- print("Day count:", day_count, day_count % 7)
 
 	if day_count % 7 == 0 then
 		return true
@@ -1136,7 +1136,7 @@ function get_remaining_days_in_month(iMonth, iDay, iLeapYear)
 	if iLeapYear and iMonth == 2 then count = 1 end
 
 	if iDay then
-		print("Total days/current day:", iMonth, days_in_months[iMonth], iDay)
+		-- print("Total days/current day:", iMonth, days_in_months[iMonth], iDay)
 		count = count + (tonumber(days_in_months[iMonth]) - iDay) + 1
 	else
 		count = count + tonumber(days_in_months[iMonth])
@@ -1155,11 +1155,11 @@ function get_remaining_days_in_year(iYear, iMonth, iDay)
 
 	for i = starting_iteration, 12 do
 		if i == starting_iteration and iMonth then
-			print(i, get_remaining_days_in_month(i, iDay, leap_year))
+			-- print(i, get_remaining_days_in_month(i, iDay, leap_year))
 			count = count + get_remaining_days_in_month(i, iDay, leap_year)
 		else
 			count = count + get_remaining_days_in_month(i, nil, leap_year)
-			print(i, get_remaining_days_in_month(i, nil, leap_year))
+			-- print(i, get_remaining_days_in_month(i, nil, leap_year))
 		end
 	end
 
