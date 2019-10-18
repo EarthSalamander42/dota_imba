@@ -13,7 +13,7 @@
 // "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_mana_per_attack"							"MANA COST PER ATTACK:"
 
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes"											"Frenzy Swipes"
-"DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_Description"								"Tearing at the area in front, unable to move or turn."
+"DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_Description"								"Tearing at the area in front, unable to move."
 
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_slow"									"Frenzy Swipes Slow"
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_slow_Description"						"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."

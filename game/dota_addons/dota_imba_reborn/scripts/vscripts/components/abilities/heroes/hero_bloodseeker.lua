@@ -738,7 +738,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 
 	-- Scepter effect: Rupture has charges
 	-- The weird positional check is a bootleg way of determine if the ability is a duplicate or not (it's not perfect, but it's the best way I could think of in the meantime; if the positions match, then the ability is a standard cast)
-	if caster:HasScepter() and not self.from_blood_rite and self:GetAbsOrigin() == self:GetCaster():GetAbsOrigin() and self:GetForwardVector() == self:GetCaster():GetForwardVector() then
+	if caster:HasScepter() and not self.from_blood_rite and (self:GetAbsOrigin() == self:GetCaster():GetAbsOrigin() and self:GetForwardVector() == self:GetCaster():GetForwardVector()) or self:IsStolen() then
 		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
 		if modifier_rupture_charges_handler then
 			modifier_rupture_charges_handler:DecrementStackCount()
