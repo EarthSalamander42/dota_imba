@@ -528,7 +528,7 @@
 }
 
 #LeaderboardInfoContainer {
-	width: 80%;
+	width: 50%;
 	height: 80%;
 	flow-children: down;
 	padding: 5px;
@@ -593,10 +593,9 @@
 }
 
 .LeaderboardRank,
-.LeaderboardXP,
-.LeaderboardIMR,
 .LeaderboardAvatar,
-.LeaderboardAvatar_alt
+.LeaderboardXP,
+.LeaderboardIMR
 {
 	height: 100%;
 	text-align: center;
@@ -626,18 +625,18 @@
 }
 
 .LeaderboardAvatar {
-	width: 15%;
-	border: 0;
+	margin-left: 1%;	
+	margin-right: 1%;	
 	align:  center center;
 }
 
 .LeaderboardXP {
-	width: 50%;	
+	width: 80%;	
 	align:  center center;
 }
 
 .LeaderboardIMR {
-	width: 23%;	
+	width: 10%;	
 	align:  center center;
 }
 

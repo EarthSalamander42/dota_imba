@@ -10,34 +10,6 @@
 	</scripts>
 
 	<Panel class="es-root">
-		<Panel id="HallOfFame" hittest="false">
-			<Panel id="InfoHeader" hittest="false">
-				<Button id="CloseButton" onactivate="CloseHallOfFame();">
-					<Label id="CloseButtonImage" />
-				</Button>
-				<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="hall of fame" />
-			</Panel>
-
-			<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-				<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-				<Label id="SteamAvatar" class="LeaderboardAvatar" text="Players" />
-				<Panel id="IMR" class="LeaderboardIMR">
-					<Label class="LeaderboardButtonLabel" text="Level" />
-				</Panel>
-			</Panel>
-
-			<Panel id="Tops" hittest="false">
-			</Panel>
-		</Panel>
-
-		<Panel id="es-player-reward-panel" hittest="false">
-<!--
-			<Button class="es-player-reward-button" onactivate="CloseBottlepassReward()">
-				<Label text="Accept" />
-			</Button>
--->
-		</Panel>
-
 		<Panel class="end-screen">
 			<Panel id="es-victory-info">
 				<Label id="es-victory-info-text" text="Whoops! Something went wrong with the server." />

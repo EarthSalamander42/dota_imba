@@ -139,29 +139,13 @@ var api = {
 	},
 };
 
-var current_type = "";
 var top_xp = [];
 
 function HallOfFame(type) {
 	var leaderboard_container = $("#LeaderboardInfoContainer");
 	leaderboard_container.style.visibility = "visible";
-
-	var type = "XP";
-
-	if (current_type == type) {
-//		$.Msg("Bro don't reload you're fine!");
-		return;
-	}
-
-	$.Msg(top_xp)
-
-	current_type = type;
-
-	// temporary, implement in the for loop later
-	// local player stats
-	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
-	$.Msg(plyData)
-
+/*
+	// self-record
 	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");
 	player.AddClass("LeaderboardGames");
 	var rank = $.CreatePanel("Label", player, "rank_local");
@@ -205,48 +189,65 @@ function HallOfFame(type) {
 
 	var imr = $.CreatePanel("Label", player, "rank_local");
 	imr.AddClass("LeaderboardIMR");
-
-	// temporary
-	if (type == "IMR") {
-		imr.text = plyData.win_percentage;
-	} else {
-		imr.text = 0;
-	}
-
-	for (var i = 1; i <= 10; i++) {
-		if (type == "XP") {
-			var top_users = top_xp;
-		} else if (type == "IMR") {
-			var top_users = top_winrate;
+	imr.text = 0;
+*/
+	var diretide_records = {
+		"rank1": {
+			"players": {
+				"1": "76561198015161808",
+				"2": "76561198015161808",
+				"3": "76561198015161808",
+				"4": "76561198015161808",
+				"5": "76561198015161808",
+				"6": "76561198015161808",
+				"7": "76561198015161808",
+				"8": "76561198015161808",
+				"9": "76561198015161808",
+				"10": "76561198015161808",
+			},
+			"roshan_level": 5,
 		}
+	};
 
-		if (top_users === undefined) {
-			$.Msg("Top Players not defined...")
-			return;
-		}
+	$.Msg(diretide_records)
 
-		if (!top_users[i - 1])
-			return;
+	var i = 1;
+	var j = 1;
+
+	while (diretide_records["rank" + i]) {
+		var players = diretide_records["rank" + i]["players"]
+		var roshan_level = diretide_records["rank" + i]["roshan_level"]
+		$.Msg(players)
+		$.Msg(roshan_level)
 
 		if ($("#player_" + i)) {
 			$("#player_" + i).DeleteAsync(0);
 		}
 
-		var player = $.CreatePanel("Panel", $('#Tops'), "player_" + i);
-		player.AddClass("LeaderboardGames");
-		var rank = $.CreatePanel("Label", player, "rank_" + i);
+		var row = $.CreatePanel("Panel", $('#Tops'), "row_" + i);
+		row.AddClass("LeaderboardGames");
+		var rank = $.CreatePanel("Label", row, "rank_" + i);
 		rank.AddClass("LeaderboardRank");
 		rank.text = i;
 
-		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
-		steam_id.AddClass("LeaderboardAvatar");
-		steam_id.steamid = top_users[i - 1].steamid;
-		steam_id.style.width = "38px";
-		steam_id.style.height = "38px";
-		steam_id.style.marginLeft = "40px";
-		steam_id.style.marginRight = "40px";
-		steam_id.style.align = "center center";
+/*		works fine but let's focus on roshan health bar (similar to top xp)
+		while (players[j]) {
+			var steamid = players[j];
+			$.Msg(steamid)
+			var panel_steam_id = $.CreatePanel("DOTAAvatarImage", row, "player_steamid_" + i);
+			panel_steam_id.AddClass("LeaderboardAvatar");
+			panel_steam_id.steamid = steamid;
+			panel_steam_id.style.width = "38px";
+			panel_steam_id.style.height = "38px";
+			panel_steam_id.style.marginLeft = "1%";
+			panel_steam_id.style.marginRight = "1%";
+			panel_steam_id.style.verticalAlign = "center";
 
+			j++;
+		}
+*/
+
+/*
 		var leaderboard_border = [];
 		leaderboard_border[1] = "darkred"
 		leaderboard_border[2] = "red"
@@ -257,7 +258,7 @@ function HallOfFame(type) {
 		leaderboard_border[7] = "purple"
 		leaderboard_border[8] = "dodgerblue"
 		leaderboard_border[9] = "brown"
-
+*/
 //		if (top_users[i - 1].donator_level)
 //			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
 //			steam_id.style.border = "2px solid " + leaderboard_border[i];
@@ -299,22 +300,17 @@ function HallOfFame(type) {
 		} else {
 			imr.text = 0;
 		}
+
+		i++
 	}
 }
 
 (function()
 {
-	api.getTopPlayerXP(function(players) {
-		$.Msg(players)
-		for (var player in players) {
-			top_xp[player] = players[player];
-		}
-	});
-
 	GameEvents.Subscribe("countdown", UpdateTimer);
 	GameEvents.Subscribe("update_score", UpdateScoreUI);
 	GameEvents.Subscribe("diretide_phase", Phase);
 	GameEvents.Subscribe("roshan_target", RoshanTarget);
 	GameEvents.Subscribe("diretide_player_reconnected", OnPlayerReconnect);
-	GameEvents.Subscribe("hall_of_fame", HallOfFame);
+	GameEvents.Subscribe("diretide_hall_of_fame", HallOfFame);
 })();

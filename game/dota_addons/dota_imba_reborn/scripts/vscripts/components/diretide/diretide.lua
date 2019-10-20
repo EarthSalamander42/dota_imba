@@ -25,7 +25,7 @@ function Diretide:Init()
 end
 
 function TestEndScreenDiretide()
-	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
+	CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
 end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
@@ -262,12 +262,6 @@ function Diretide:End()
 --		api.imba.diretide_update_levels(level)
 	end
 
-	if DIRETIDE_WINNER == 2 then
-		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
-	else
-		Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
-	end
-
 --	for _, hero in pairs(HeroList:GetAllHeroes()) do
 --		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 --		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
@@ -275,11 +269,20 @@ function Diretide:End()
 --		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), ROSHAN_ENT)
 --	end
 
---	Timers:CreateTimer(function()
---		CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
---
---		return 1.0
---	end)
+	-- todo: run hall of fame in record api callback
+
+	Timers:CreateTimer(function()
+		CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
+
+		-- set the team with most candies when phase 2 ends as winners
+		if DIRETIDE_WINNER == 2 then
+			Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
+		else
+			Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
+		end
+
+		return 1.0
+	end)
 end
 
 function Diretide:OnEntityKilled(killer, victim)

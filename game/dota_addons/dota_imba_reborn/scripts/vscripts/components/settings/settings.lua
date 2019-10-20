@@ -35,7 +35,8 @@ BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
 	BOTS_ENABLED = false
 else
-BOTS_ENABLED = false
+	BOTS_ENABLED = false
+end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
@@ -631,12 +632,14 @@ if IMBA_DIRETIDE == true then
 	require("components/diretide/diretide")
 end
 
--- SAME_HERO_SELECTION = IMBA_PICK_SCREEN
-SAME_HERO_SELECTION = IsSaturday()
+SAME_HERO_SELECTION = false
+-- SAME_HERO_SELECTION = IsSaturday()
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true
 end
 
-if IsInToolsMode() then SAME_HERO_SELECTION = true end
+-- if IsInToolsMode() then SAME_HERO_SELECTION = true end
 
-CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
+if SAME_HERO_SELECTION == true then
+	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
+end
