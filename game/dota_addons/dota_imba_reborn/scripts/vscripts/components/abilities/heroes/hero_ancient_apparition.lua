@@ -760,6 +760,8 @@ end
 -- ICE BLAST MODIFIER --
 ------------------------
 
+function modifier_imba_ancient_apparition_ice_blast:IsPurgable()	return false end
+
 function modifier_imba_ancient_apparition_ice_blast:GetEffectName()
 	return "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
 end

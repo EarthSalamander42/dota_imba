@@ -1339,8 +1339,24 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 	if IsServer() then
 		self.modifier_dummy = self.parent:FindModifierByName("modifier_imba_moonlight_shadow_invis_dummy")
 
-		-- Set stack count to level 2
-		self:SetStackCount(2)
+		-- Look around for enemy heroes in the immunity radius
+		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.truesight_immunity_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+			FIND_ANY_ORDER,
+			false)
+
+		-- If an enemy hero was found, remove immunity
+		if #enemies > 0 then
+			self:SetStackCount(1)
+		else
+			-- Else, set it back
+			self:SetStackCount(2)
+		end
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)

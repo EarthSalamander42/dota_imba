@@ -1701,6 +1701,10 @@ end
 -- Spell immunity modifier
 modifier_imba_golem_spell_immunity = class({})
 
+function modifier_imba_golem_spell_immunity:GetEffectName()
+	return "particles/items_fx/black_king_bar_avatar.vpcf"
+end
+
 function modifier_imba_golem_spell_immunity:CheckState()
 	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 	return state

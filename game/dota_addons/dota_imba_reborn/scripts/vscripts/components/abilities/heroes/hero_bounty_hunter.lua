@@ -1560,7 +1560,8 @@ function modifier_imba_headhunter_debuff_handler:OnCreated()
 		self.contract_vision_linger = self.ability:GetSpecialValueFor("contract_vision_linger")
 		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
 		self.contract_gold_mult = self.ability:GetSpecialValueFor("contract_gold_mult")
-
+		self.projectile_speed = self.ability:GetSpecialValueFor("projectile_speed")
+		
 		-- Apply particles visible only to the caster's team
 		self.particle_contract_fx = ParticleManager:CreateParticleForTeam(self.particle_contract, PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster:GetTeamNumber())
 		ParticleManager:SetParticleControl(self.particle_contract_fx, 0, self.parent:GetAbsOrigin())
@@ -1575,6 +1576,12 @@ end
 
 function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 	if IsServer() then
+		if not self:GetAbility() then 
+			self:StartIntervalThink(-1)
+			self:Destroy()
+			return
+		end
+		
 		-- Find all heroes in the parent's team
 		local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
 			self.parent:GetAbsOrigin(),
@@ -1602,6 +1609,17 @@ function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 		if self.time_passed >= self.contract_vision_timer then
 			self.time_passed = 0
 
+			ProjectileManager:CreateTrackingProjectile({
+				Target = self.parent,
+				Source = self.caster,
+				Ability = self.ability,
+				EffectName = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf",
+				iMoveSpeed = self.projectile_speed,
+				bDodgeable = false,
+				bVisibleToEnemies = false,
+				bReplaceExisting = false
+			})
+			
 			AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.vision_radius, self.contract_vision_linger, false)
 		end
 	end

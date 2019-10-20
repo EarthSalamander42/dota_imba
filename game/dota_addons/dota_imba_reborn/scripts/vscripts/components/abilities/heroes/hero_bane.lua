@@ -405,16 +405,11 @@ function imba_bane_brain_sap:GetCooldown(level)
 end
 
 function imba_bane_brain_sap:CastFilterResultTarget(target)
-	if not IsServer() then return end
-
-	local caster = self:GetCaster()
-
-	if caster:HasScepter() and caster:GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
+	if self:GetCaster():HasScepter() and self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
 		return UF_SUCCESS
 	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
-	return nResult
+	
+	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber() )
 end
 
 function imba_bane_brain_sap:GetAbilityTextureName()
@@ -1066,6 +1061,8 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 			talent_3:Destroy()
 		end
 
+		StopSoundOn("Hero_Bane.FiendsGrip.Cast", ability.fiendcaster)
+
 		parent:FadeGesture(ACT_DOTA_FLAIL) -- Fade the gesture, even though it can be immeditaely reinvoked if it's not been spread
 		if not parent:IsMagicImmune() and self.propogated == 0 then -- Are we magic immune somehow(omniknight)? have we already retriggered once?
 			if self.original_target == 1 then -- If we are the original target and it's NOT spread, we need to interrupt the primary caster (typically Bane)
@@ -1196,16 +1193,13 @@ function modifier_imba_fiends_grip_talent:OnStateChanged(keys)
 	local unit = keys.unit
 	local caster = self:GetCaster()
 	local ability =	self:GetAbility()
-	local fiends_grip_modifier = ability.fiendtarget:FindModifierByName("modifier_imba_fiends_grip_handler")
 
 	-- Only apply if the unit is the caster himself
-	if unit == caster then
-		-- Interrupt Fiend's Grip if caster is disabled
-		if fiends_grip_modifier then
-			if fiends_grip_modifier.propogated == 0 then   			-- Only do this if this is the first Grip cast
-				if  caster:IsStunned() or caster:IsSilenced()  then
-					fiends_grip_modifier:Destroy()
-			end
+	-- Interrupt Fiend's Grip if caster is disabled
+	if unit == caster and (caster:IsStunned() or caster:IsSilenced()) then
+		for num = 1, #ability.fiendgriptable do
+			if ability.fiendgriptable[num] and ability.fiendgriptable[num].HasModifier and ability.fiendgriptable[num]:HasModifier("modifier_imba_fiends_grip_handler") and ability.fiendgriptable[num]:FindModifierByName("modifier_imba_fiends_grip_handler").propogated == 0 then -- Only do this if this is the first Grip cast
+				ability.fiendgriptable[num]:FindModifierByName("modifier_imba_fiends_grip_handler"):Destroy()
 			end
 		end
 	end

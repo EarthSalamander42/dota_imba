@@ -63,10 +63,10 @@ function item_imba_lance_of_longinus:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_ally", {duration = duration})
 	else
-		-- If the target possesses a ready Linken's Sphere, do nothing (removing this due to Lotus Orb crashes / too many conflicting functions to cleanly resolve)
-		-- if target:TriggerSpellAbsorb(ability) then
-			-- return nil
-		-- end
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
+		end
 
 		if caster:IsRangedAttacker() then
 			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_ranged", {duration = duration})
@@ -76,17 +76,20 @@ function item_imba_lance_of_longinus:OnSpellStart()
 			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_melee", {duration = duration})
 		end
 	
-		local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetSpecialValueFor("god_piercing_duration")})
+		-- Attempting to fix Lotus Orb crashes with the purchase time check
+		if self:GetPurchaseTime() ~= -1 then
+			local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetSpecialValueFor("god_piercing_duration")})
+			
+			if god_piercing_modifier then
+				god_piercing_modifier.enemy = target
 
-		if god_piercing_modifier then
-			god_piercing_modifier.enemy = target
+				target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_enemy", {duration = self:GetSpecialValueFor("god_piercing_duration")})
 
-			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_enemy", {duration = self:GetSpecialValueFor("god_piercing_duration")})
-
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/lone_druid_spiritlink_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-			ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle)
+				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/lone_druid_spiritlink_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+				ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle)
+			end
 		end
 		
 		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})

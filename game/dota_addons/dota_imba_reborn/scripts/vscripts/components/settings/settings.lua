@@ -35,8 +35,7 @@ BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
 	BOTS_ENABLED = false
 else
-	BOTS_ENABLED = false
-end
+BOTS_ENABLED = false
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
@@ -281,27 +280,27 @@ BANNED_ITEMS[MapDiretide()] = {
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns"
+	-- "imba_tower_thorns"
 }
 TOWER_ABILITIES["tower2"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_multishot",
+	-- "imba_tower_multishot",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_splash_fire",
-	"imba_tower_multishot",
+	-- "imba_tower_splash_fire",
+	-- "imba_tower_multishot",
 }
 
 -- Update game mode net tables

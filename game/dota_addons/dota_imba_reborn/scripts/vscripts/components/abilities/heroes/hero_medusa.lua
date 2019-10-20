@@ -272,7 +272,9 @@ end
 
 -- This technically doesn't do anything but is purely for visual purposes
 function modifier_imba_medusa_serpent_shot:GetModifierPreAttack_BonusDamage(keys)
-	return (self:GetStackCount() / (self.serpent_shot_damage_pct * 0.01)) * (100 - self.serpent_shot_damage_pct) * 0.01 * (-1)
+	if (not keys.target or (keys.target and not keys.target:IsBuilding() and not keys.target:IsOther())) then
+		return (self:GetStackCount() / (self.serpent_shot_damage_pct * 0.01)) * (100 - self.serpent_shot_damage_pct) * 0.01 * (-1)
+	end
 end
 
 function modifier_imba_medusa_serpent_shot:GetModifierProcAttack_BonusDamage_Magical(keys)
@@ -284,7 +286,7 @@ function modifier_imba_medusa_serpent_shot:GetModifierProcAttack_BonusDamage_Mag
 end
 
 function modifier_imba_medusa_serpent_shot:GetModifierDamageOutgoing_Percentage(keys)
-	if keys.attacker == self:GetParent() and self:GetStackCount() > 0 then
+	if keys.attacker == self:GetParent() and self:GetStackCount() > 0 and (not keys.target or (keys.target and not keys.target:IsBuilding() and not keys.target:IsOther())) then
 		return -100
 	end
 end
@@ -321,18 +323,23 @@ function modifier_imba_medusa_enchanted_aim:GetAttributes()	return MODIFIER_ATTR
 
 function modifier_imba_medusa_enchanted_aim:OnCreated()
 	-- Technically it would be better to use self:GetParent():Script_GetAttackRange(), but this is heavily abusable stacking with both itself as well as Hurricane Pike variants (infinite attack range for 10 seconds seemsgood)
-	self.attack_range = self:GetAbility():GetSpecialValueFor("enchanted_aim_bonus_attack_range")
-	
+	self.attack_range		= self:GetAbility():GetSpecialValueFor("enchanted_aim_bonus_attack_range")
+	self.incoming_damage	= self:GetAbility():GetSpecialValueFor("enchanted_aim_bonus_incoming_damage")
 end
 
 function modifier_imba_medusa_enchanted_aim:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
-	
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
 end
 
 function modifier_imba_medusa_enchanted_aim:GetModifierAttackRangeBonus()
 	return self.attack_range
+end
+
+function modifier_imba_medusa_enchanted_aim:GetModifierIncomingDamage_Percentage()
+	return self.incoming_damage
 end
 
 ------------------

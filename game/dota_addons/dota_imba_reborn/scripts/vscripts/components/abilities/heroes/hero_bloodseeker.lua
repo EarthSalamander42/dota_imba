@@ -737,7 +737,8 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-	if caster:HasScepter() and not self.from_blood_rite then
+	-- The weird positional check is a bootleg way of determine if the ability is a duplicate or not (it's not perfect, but it's the best way I could think of in the meantime; if the positions match, then the ability is a standard cast)
+	if caster:HasScepter() and not self.from_blood_rite and (self:GetAbsOrigin() == self:GetCaster():GetAbsOrigin() and self:GetForwardVector() == self:GetCaster():GetForwardVector()) or self:IsStolen() then
 		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
 		if modifier_rupture_charges_handler then
 			modifier_rupture_charges_handler:DecrementStackCount()
@@ -842,6 +843,8 @@ end
 function modifier_imba_rupture_charges:IsDebuff() return false end
 function modifier_imba_rupture_charges:IsPurgable() return false end
 function modifier_imba_rupture_charges:RemoveOnDeath() return false end
+-- Need this for the Grimstroke interaction
+function modifier_imba_rupture_charges:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_rupture_charges:OnCreated()
 	if IsServer() then

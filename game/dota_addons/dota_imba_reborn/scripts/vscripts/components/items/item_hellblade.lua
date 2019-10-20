@@ -101,7 +101,7 @@ function item_imba_hellblade:TransferAllDebuffs(caster, target)
 			end
 
 			-- If the modifier was found, remove it on the caster and transfer it to the enemy
-			if modifier_found then
+			if modifier_found and modifier_name ~= "modifier_item_imba_spirit_vessel_damage" then
 				local modifier_duration = modifier:GetDuration()
 				caster:RemoveModifierByName(modifier_name)
 
@@ -321,7 +321,7 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 			for _,modifier in pairs(modifiers) do
 
 				-- Lua based debuff/purgable declaration
-				if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil  then
+				if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil and modifier:GetName() ~= "modifier_item_imba_spirit_vessel_damage" then
 					if modifier:IsDebuff() and modifier:IsPurgable() then
 						debuff_found = true
 						break
@@ -363,7 +363,7 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 					local modifier_name = modifier:GetName()
 
 					-- Lua based debuff/purgable declaration
-					if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil  then
+					if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil then
 						if modifier:IsDebuff() and modifier:IsPurgable() then
 							is_valid_debuff = true
 						end

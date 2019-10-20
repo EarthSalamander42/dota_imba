@@ -940,9 +940,9 @@ function modifier_imba_timbersaw_reactive_armor_debuff:RemoveOnDeath()	return fa
 
 -- Time for the world's worst copy-paste job
 
-function imba_timbersaw_chakram_2:GetAssociatedSecondaryAbilities()
-	return "imba_timbersaw_return_chakram_2"
-end
+-- function imba_timbersaw_chakram_2:GetAssociatedSecondaryAbilities()
+	-- return "imba_timbersaw_return_chakram_2"
+-- end
 
 function imba_timbersaw_chakram_2:IsInnateAbility()	return true end
 
@@ -955,7 +955,7 @@ function imba_timbersaw_chakram_2:GetBehavior()
 end
 
 function imba_timbersaw_chakram_2:OnInventoryContentsChanged()
-	if self:GetCaster():HasScepter() then
+	if self:GetCaster():HasScepter() or self:IsStolen() then
 		if not self:IsTrained() then
 			self:SetLevel(1)
 		end
@@ -972,6 +972,28 @@ end
 
 function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
+end
+
+
+function imba_timbersaw_chakram_2:OnStolen(self)
+	if not self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") then
+		self:GetCaster():AddAbility("imba_timbersaw_return_chakram_2"):SetHidden(true)
+	end
+end
+
+-- SPAGHET
+function imba_timbersaw_chakram_2:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_timbersaw_return_chakram_2") then		
+		if not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram_2"):IsHidden() then
+			self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram_2", true, false)
+		end
+		
+		self:GetCaster():RemoveAbility("imba_timbersaw_return_chakram_2")
+		
+		if self.GetCaster and self:GetCaster() and self:GetCaster().RemoveModifierByName then
+			self:GetCaster():RemoveModifierByName("modifier_imba_timbersaw_chakram_disarm")
+		end
+	end
 end
 
 function imba_timbersaw_chakram_2:OnSpellStart()
@@ -1211,8 +1233,29 @@ end
 -- IMBA_TIMBERSAW_CHAKRAM --
 ---------------------------
 
-function imba_timbersaw_chakram:GetAssociatedSecondaryAbilities()
-	return "imba_timbersaw_return_chakram"
+-- function imba_timbersaw_chakram:GetAssociatedSecondaryAbilities()
+	-- return "imba_timbersaw_return_chakram"
+-- end
+
+function imba_timbersaw_chakram:OnStolen(self)
+	if not self:GetCaster():HasAbility("imba_timbersaw_return_chakram") then
+		self:GetCaster():AddAbility("imba_timbersaw_return_chakram"):SetHidden(true)
+	end
+end
+
+-- SPAGHET
+function imba_timbersaw_chakram:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_timbersaw_return_chakram") then		
+		if not self:GetCaster():FindAbilityByName("imba_timbersaw_return_chakram"):IsHidden() then
+			self:GetCaster():SwapAbilities(self:GetName(), "imba_timbersaw_return_chakram", true, false)
+		end
+		
+		self:GetCaster():RemoveAbility("imba_timbersaw_return_chakram")
+		
+		if self.GetCaster and self:GetCaster() and self:GetCaster().RemoveModifierByName then
+			self:GetCaster():RemoveModifierByName("modifier_imba_timbersaw_chakram_disarm")
+		end
+	end
 end
 
 function imba_timbersaw_chakram:GetBehavior()
@@ -1471,8 +1514,6 @@ end
 -- IMBA_TIMBERSAW_RETURN_CHAKRAM --
 ----------------------------------
 
--- TODO: Check this thing's interaction with Magic Wand...
-
 function imba_timbersaw_return_chakram:GetAssociatedPrimaryAbilities()
 	return "imba_timbersaw_chakram"
 end
@@ -1508,7 +1549,7 @@ function imba_timbersaw_return_chakram:OnSpellStart()
 		self.chakram_ability = self:GetCaster():FindAbilityByName("imba_timbersaw_chakram")
 	end
 	
-	if self.chakram_ability then
+	if self.chakram_ability and self.chakram_ability.projectiles then
 		for _, data in pairs(self.chakram_ability.projectiles) do
 			-- Okay so the point of this is that it allows you to pull launching chakrams back before they've settled and actually put down those aura thinkers
 			-- I need the weird "ProjectileManager:GetLinearProjectileRadius(_) == self.chakram_ability:GetSpecialValueFor("radius")" line because it's getting the linear projectile location of tracking projectiles somehow, which starts duplicating returning chakrams in a weird nearby place
@@ -1626,7 +1667,6 @@ end
 -- MODIFIER_IMBA_TIMBERSAW_CHAKRAM_THINKER --
 ---------------------------------------------
 
--- TODO: Check to make sure Rubick can use this properly
 function modifier_imba_timbersaw_chakram_thinker:IsPurgable()		return false end
 function modifier_imba_timbersaw_chakram_thinker:RemoveOnDeath()	return false end
 
@@ -1866,7 +1906,7 @@ function modifier_imba_timbersaw_chakram_thinker:GetBonusNightVision()
 end
 
 function modifier_imba_timbersaw_chakram_thinker:OnAbilityFullyCast(keys)
-	if keys.unit == self:GetCaster() and keys.ability:GetAssociatedPrimaryAbilities() == self:GetAbility():GetName() then
+	if keys.unit == self:GetCaster() and self:GetAbility() and keys.ability:GetAssociatedPrimaryAbilities() == self:GetAbility():GetName() then
 		self:Destroy()
 	end
 end

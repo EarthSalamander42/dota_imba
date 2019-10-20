@@ -27,6 +27,7 @@
 #base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
 // #base heroes/naga_siren/abilities.txt
+#base heroes/oracle/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
@@ -37895,7 +37896,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_burrowblast"
 		"MaxLevel"						"4"
@@ -40348,7 +40349,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_lua"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -40498,7 +40499,19 @@
 				"var_type"					"FIELD_FLOAT"
 				"attack_cd_scepter"			"2.0"
 				"RequiresScepter"			"1"
-			}	
+			}
+            "07"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "scepter_additional_charges"	"1"
+				"RequiresScepter"	"1"
+            }
+            "08"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "scepter_additional_cast_range"	"500"
+				"RequiresScepter"	"1"
+            }
 		}
 	}
 

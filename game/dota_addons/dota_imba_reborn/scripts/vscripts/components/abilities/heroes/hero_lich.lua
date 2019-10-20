@@ -2161,9 +2161,9 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	self.destination		= self.ability:GetSpecialValueFor("destination") + self.caster:FindTalentValue("special_bonus_imba_lich_10")
 	self.distance 			= CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
 
-	self.status_resistance = self:GetParent():GetStatusResistance()
-
 	if not IsServer() then return end
+	
+	self.status_resistance = self:GetParent():GetStatusResistance()
 	
 	-- This is so errors don't pop up if the spell gets reflected
 	if self.caster:GetName() == "npc_dota_hero_lich" then
@@ -2220,6 +2220,8 @@ function modifier_imba_lich_sinister_gaze:DeclareFunctions()
 end
 
 function modifier_imba_lich_sinister_gaze:GetModifierMoveSpeed_Absolute()
+	if not IsServer() then return end
+
 	return self.distance / (self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999))) -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
 end
 

@@ -194,7 +194,7 @@
 			"11"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"charge_coil_duration"	"15"
+				"charge_coil_duration"	"20"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"

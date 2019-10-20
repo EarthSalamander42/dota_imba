@@ -343,7 +343,22 @@
 				"var_type"			"FIELD_INTEGER"
 				"creeping_waves"	"4 5 6"
 			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"suggestive_armor_reduction"	"6 10 14"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"suggestive_duration"	"10"
+			}
 		}
+		
+		"precache"
+		{
+			"particle" 									"particles/units/heroes/hero_monkey_king/monkey_king_jump_armor_debuff_model.vpcf"
+		}		
 	}
 
 	//=================================================================================================================

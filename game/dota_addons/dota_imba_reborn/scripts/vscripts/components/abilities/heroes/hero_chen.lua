@@ -885,7 +885,7 @@ end
 function modifier_imba_chen_holy_persuasion_immortalized:CheckState()
 	local state = {
 		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_DOMINATED] = true,
 		[MODIFIER_STATE_FROZEN] = true,

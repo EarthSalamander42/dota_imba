@@ -31,6 +31,9 @@
 "DOTA_Tooltip_modifier_imba_torrent_slow"							"#{DOTA_Tooltip_modifier_kunkka_torrent_slow}"
 "DOTA_Tooltip_modifier_imba_torrent_slow_Description"				"#{DOTA_Tooltip_modifier_kunkka_torrent_slow_Description}"
 
+"DOTA_Tooltip_modifier_imba_sec_torrent_slow"						"Salty Geyser Slow"
+"DOTA_Tooltip_modifier_imba_sec_torrent_slow_Description"			"Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer"						"#{DOTA_Tooltip_ability_kunkka_tidebringer}"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_Description"            "Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.\n<font color='#FF7800'>Tidal Resonance:</font> Reduces the cooldown of Ebb and Flow for each enemy hit.\n\n<font color='#00ccff'>Low Tide:</font> Cleave length increased by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Slows enemies hit by %tide_red_slow%%% for %tide_red_slow_duration% seconds.\n<font color='#333399'>Flood Tide:</font> Damage increased by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Initial and final cleave radius increased by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Next hit will not trigger the cooldown.\n<font color='#FF7800'>TSUNAMI:</font> Bashes enemies hit by Tidebringer for %tsunami_stun% seconds."
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_Note0"				"#{DOTA_Tooltip_ability_kunkka_tidebringer_Note0}"

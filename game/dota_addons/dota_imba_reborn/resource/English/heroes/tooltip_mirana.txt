@@ -1,6 +1,6 @@
 // Mirana's Starstorm
 "DOTA_Tooltip_ability_imba_mirana_starfall"                            "Starstorm"
-"DOTA_Tooltip_ability_imba_mirana_starfall_Description"                "Calls down meteors to damage nearby enemy units. An additional meteor strikes the nearest unit, dealing %secondary_damage_pct%%% damage.\n<font color='#FF7800'>Meteor Shower:</font> Marks the ground with Selemene's sign, attracting additional waves of meteors every %additional_waves_interval% seconds. These waves consist of both primary and secondary meteors, but deal %additional_waves_dmg_pct%%% less damage.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_mirana_starfall_Description"                "Calls down meteors to damage nearby enemy units. An additional meteor strikes the nearest unit, dealing %secondary_damage_pct%%% damage.\n<font color='#FF7800'>Meteor Shower:</font> Marks the ground with Selemene's sign, attracting additional waves of meteors every %additional_waves_interval% seconds. These waves consist of both primary and secondary meteors, but deal %additional_waves_dmg_pct%%% less damage."
 "DOTA_Tooltip_ability_imba_mirana_starfall_Note0"                      "Additional waves are centered around the cast point of Starstorm, and do not follow Mirana's location."
 "DOTA_Tooltip_ability_imba_mirana_starfall_Note1"                      "Scepter Starstorm does not activate when Mirana is invisible."
 "DOTA_Tooltip_ability_imba_mirana_starfall_Lore"                        "The Goddess breaks the strata to empower her Princess in the time of need."
@@ -54,8 +54,8 @@
 "DOTA_Tooltip_modifier_imba_mirana_leap_Description"					"Number of charges left on Leap."
 
 // Mirana's Moonlight Shadow
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow"                    "Moonlight Shadow"
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Description"                     "Turns Mirana and all allied heroes invisible. If a hero loses invisibility due to attacking or casting a spell, it will be restored after the fade delay, as long as Moonlight Shadow is still active.\n<font color='#FF7800'>Selemene's Cloak:</font> Heroes affected by Moonlight Shadow become immune to True Sight, unless an enemy hero is near them.\n<font color='#FF7800'>Emergency Shroud:</font> Has a 0.1 second invisibility fade delay upon initial cast."
+"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow"						"Moonlight Shadow"
+"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Description"			"Turns Mirana and all allied heroes invisible. If a hero loses invisibility due to attacking or casting a spell, it will be restored after the fade delay, as long as Moonlight Shadow is still active.\n<font color='#FF7800'>Selemene's Cloak:</font> Heroes affected by Moonlight Shadow become immune to True Sight, unless an enemy hero is near them.\n<font color='#FF7800'>Emergency Shroud:</font> Immediately grants invisibility with no fade delay upon initial cast."
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note0"              "Illusions do not remove True Sight immunity."
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note1"              "Losing True Sight immunity does not imply losing regular invisibility."
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Lore"                "Her tenure with Selemene allows Mirana to eclipse the ground, wrapping her allies in a cloak of shadows."

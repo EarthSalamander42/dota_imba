@@ -377,7 +377,12 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 				self.learned_charges_talent = true
 			end
 		end
-
+		
+		if not self.learned_charges_scepter and self:GetCaster():HasScepter() then
+			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+			self.learned_charges_scepter = true
+		end
+		
 		if self:GetParent():IsAlive() and self:GetCaster().spirit_charges > 0 then
 			self:SetStackCount(self:GetStackCount() + self:GetCaster().spirit_charges)
 			self:GetCaster().spirit_charges = 0
@@ -714,6 +719,16 @@ imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class ({})
 
 function imba_ember_spirit_fire_remnant:GetAssociatedPrimaryAbilities() return "imba_ember_spirit_activate_fire_remnant" end
 
+function imba_ember_spirit_fire_remnant:OnStolen(self)
+	local caster = self:GetCaster()
+	
+	Timers:CreateTimer(FrameTime(), function()
+		if caster:HasModifier("modifier_imba_fire_remnant_charges") then
+			caster:FindModifierByName("modifier_imba_fire_remnant_charges"):OnCreated()
+		end
+	end)
+end
+
 function imba_ember_spirit_fire_remnant:CollectRemnant()
 	if IsServer() then
 		-- ember spirit bug: this modifier is not added
@@ -735,6 +750,14 @@ end
 
 function imba_ember_spirit_fire_remnant:GetAOERadius()
 	return self:GetSpecialValueFor("effect_radius")
+end
+
+function imba_ember_spirit_fire_remnant:GetCastRange(vLocation, hTarget)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastRange(self, vLocation, hTarget)
+	else
+		return self.BaseClass.GetCastRange(self, vLocation, hTarget) + self:GetSpecialValueFor("scepter_additional_cast_range")
+	end
 end
 
 function imba_ember_spirit_fire_remnant:OnUpgrade()
