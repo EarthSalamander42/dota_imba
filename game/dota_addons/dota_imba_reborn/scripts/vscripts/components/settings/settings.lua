@@ -632,8 +632,8 @@ if IMBA_DIRETIDE == true then
 	require("components/diretide/diretide")
 end
 
--- SAME_HERO_SELECTION = IMBA_PICK_SCREEN
-SAME_HERO_SELECTION = IsSaturday()
+SAME_HERO_SELECTION = false
+-- SAME_HERO_SELECTION = IsSaturday()
 if IsInToolsMode() then SAME_HERO_SELECTION = true end
 CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
 if GetMapName() == "imba_1v1" then
