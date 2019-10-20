@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.17b"
+GAME_VERSION = "7.17d"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -33,7 +33,7 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = true
+	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
 end

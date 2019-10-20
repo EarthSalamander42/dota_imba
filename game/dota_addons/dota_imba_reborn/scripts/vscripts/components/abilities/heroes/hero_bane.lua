@@ -558,23 +558,6 @@ function imba_bane_nightmare:OnSpellStart()
 	end
 end
 
--- Prevent Nightmare griefing when help is disabled
-function imba_bane_nightmare:CastFilterResultTarget(target)
-	if IsServer() then
-		-- Ability paramaters
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
-end
-
 function imba_bane_nightmare:OnUpgrade()
 	local caster  =	self:GetCaster()
 

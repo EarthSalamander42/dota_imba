@@ -179,7 +179,7 @@ end
 
 function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 	if not IsServer() then return end
-	
+
 	-- Gush hit some unit
 	if target then
 		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
@@ -188,14 +188,14 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 				target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("shieldbreaker_stun")}):SetDuration(self:GetSpecialValueFor("shieldbreaker_stun") * (1 - target:GetStatusResistance()), true)
 				return nil
 			end
-		
+
 			target:EmitSound("Ability.GushImpact")
-			
+
 			-- IMBAfication: Filtration System
 			if data.bFiltrate == 1 then
 				target:Purge(true, false, false, false, false)
 			end
-		
+
 			-- Make the targeted gush not have any effects except for shield break if scepter (no double damage nuttiness)
 			if not (data.bScepter == 1 and data.bTargeted == 1) then
 				-- "Gush first applies the debuff, then the damage."
@@ -216,15 +216,15 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 				}
 
 				ApplyDamage(damageTable)
-				
+
 				if self:GetCaster():GetName() == "npc_dota_hero_tidehunter" and target:IsRealHero() and not target:IsAlive() and RollPercentage(25) then
 					self:GetCaster():EmitSound("tidehunter_tide_ability_gush_0"..RandomInt(1, 2))
 				end
 			end
 		end
-		
+
 		-- IMBAfication: Surf's Up!
-		if self:GetAutoCastState() and target ~= self:GetCaster() and (target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or (target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and not PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()))) then
+		if self:GetAutoCastState() and target ~= self:GetCaster() and (target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or (target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) then
 			local surf_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush_surf", 
 			{
 				duration	= self:GetSpecialValueFor("surf_duration"),
@@ -233,12 +233,11 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 				y			= data.y,
 				z			= data.z,
 			})
-			
+
 			if surf_modifier then
 				surf_modifier:SetDuration(self:GetSpecialValueFor("surf_duration") * (1 - target:GetStatusResistance()), true)
 			end
 		end
-		
 	-- Scepter Gush has reached its end location
 	elseif data.gush_dummy then
 		EntIndexToHScript(data.gush_dummy):StopSound("Hero_Tidehunter.Gush.AghsProjectile")

@@ -297,19 +297,6 @@ end
 -- PHASE SHIFT --
 -----------------
 
--- Man this is messy...
-function imba_puck_phase_shift:CastFilterResultTarget(hTarget)
-	if not IsServer() or not self:GetAutoCastState() then return end
-	
-	if PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-		return UF_FAIL_DISABLE_HELP
-	end
-		
-	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	
-	return nResult
-end
-
 function imba_puck_phase_shift:GetAbilityTargetFlags()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
 		return DOTA_UNIT_TARGET_FLAG_NONE

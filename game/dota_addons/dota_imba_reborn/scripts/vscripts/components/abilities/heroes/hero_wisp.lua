@@ -69,10 +69,6 @@ function imba_wisp_tether:CastFilterResultTarget(target)
 			return UF_FAIL_COURIER
 		end
 
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
 		if target:HasModifier("modifier_imba_wisp_tether") and self:GetCaster():HasModifier("modifier_imba_wisp_tether_ally") then
 			return UF_FAIL_CUSTOM
 		end

@@ -1358,7 +1358,7 @@ function modifier_imba_rattletrap_hookshot:UpdateHorizontalMotion( me, dt )
 			
 			-- Shish Kabob drags units (friend and foe) along with Clockwerk until he reaches the last target
 			-- Can be blocked by Disabling Help cause this can easily be a griefing ability
-			if self.shish_kabob and unit ~= self.target and not PlayerResource:IsDisableHelpSetForPlayerID(unit:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then
+			if self.shish_kabob and unit ~= self.target then
 				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_hookshot", 
 				{
 					duration 		= self:GetRemainingTime(),

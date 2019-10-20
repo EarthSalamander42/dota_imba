@@ -478,13 +478,6 @@ function imba_earth_spirit_boulder_smash:CastFilterResultTarget(target)
 		return UF_FAIL_INVULNERABLE
 	elseif target:IsAncient() then
 		return UF_FAIL_ANCIENT
-
-	-- Can't target allies who disabled helps
-	elseif caster:GetTeamNumber() == target:GetTeamNumber() then
-		if target:GetPlayerOwnerID() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID()) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
 	-- Can't target spell immune enemies
 	elseif target:IsMagicImmune() then
 		return UF_FAIL_MAGIC_IMMUNE_ENEMY 
@@ -1146,7 +1139,7 @@ function imba_earth_spirit_geomagnetic_grip:OnAbilityPhaseStart()
 			end
 		end
 		
-		if target and target:GetTeamNumber() == caster:GetTeamNumber() and not target:IsBuilding() and not target:IsInvulnerable() and not (target:IsPlayer() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID())) then
+		if target and target:GetTeamNumber() == caster:GetTeamNumber() and not target:IsBuilding() and not target:IsInvulnerable() and not target:IsPlayer() then
 			target:RemoveModifierByName("modifier_imba_boulder_smash_push")
 			target:AddNewModifier(caster, self, "modifier_imba_geomagnetic_grip_pull", {})
 			
@@ -1453,10 +1446,9 @@ function imba_earth_spirit_petrify:IsNetherWardStealable() return false end
 function imba_earth_spirit_petrify:IsStealable() return false end
 function imba_earth_spirit_petrify:IsInnateAbility() return true end
 
-
 function imba_earth_spirit_petrify:CastFilterResultTarget(target)
 	local caster = self:GetCaster()
-	
+
 	-- Can't target self, buildings, and invuln units
 	if caster == target then
 		return UF_FAIL_CUSTOM
@@ -1466,18 +1458,11 @@ function imba_earth_spirit_petrify:CastFilterResultTarget(target)
 		return UF_FAIL_INVULNERABLE
 	elseif target:IsAncient() then
 		return UF_FAIL_ANCIENT
-	
-	-- Can't target allies who disabled helps
-	elseif caster:GetTeamNumber() == target:GetTeamNumber() then
-		if target:IsPlayer() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID()) then
-			return UF_FAIL_DISABLE_HELP
-		end
-	
 	-- Can't target spell immune enemies
 	elseif target:IsMagicImmune() then
 		return UF_FAIL_MAGIC_IMMUNE_ENEMY 
 	end
-	
+
 	return UF_SUCCESS
 end
 

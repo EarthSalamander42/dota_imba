@@ -11,6 +11,7 @@ if IsInToolsMode() then -- might lag a bit and backend to get errors not working
 end
 
 require('libraries/animations')
+require('libraries/disable_help')
 require('libraries/keyvalues')
 require('libraries/modifiers')
 require('libraries/notifications')

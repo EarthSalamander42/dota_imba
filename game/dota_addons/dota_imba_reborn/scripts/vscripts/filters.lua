@@ -148,6 +148,11 @@ function GameMode:ModifierFilter( keys )
 	-- name_const				modifier_imba_roshan_rage_stack
 
 	if IsServer() then
+		local disableHelpResult = DisableHelp.ModifierGainedFilter(keys)
+		if disableHelpResult == false then
+			return false
+		end
+
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
@@ -500,6 +505,11 @@ function GameMode:OrderFilter( keys )
 
 	local target = keys.entindex_target ~= 0 and EntIndexToHScript(keys.entindex_target) or nil
 	local ability = keys.entindex_ability ~= 0 and EntIndexToHScript(keys.entindex_ability) or nil
+
+	local disableHelpResult = DisableHelp.ExecuteOrderFilter(keys.order_type, ability, target, unit)
+	if disableHelpResult == false then
+		return false
+	end
 
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 	--		local ability = EntIndexToHScript(keys["entindex_ability"])
