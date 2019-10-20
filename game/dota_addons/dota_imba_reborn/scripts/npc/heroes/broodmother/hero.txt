@@ -5,31 +5,28 @@
 	//=================================================================================================================
 	"npc_dota_hero_broodmother"
 	{
-	
-
 		//Picking Screen
-//		"IsImba"					"1"
+		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-//		"Ability1"					"broodmother_spawn_spiderlings"
-//		"Ability2"					"broodmother_spin_web"
-//		"Ability3"					"broodmother_incapacitating_bite"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"broodmother_insatiable_hunger"
+		"Ability1"					"imba_broodmother_spawn_spiderlings"
+		"Ability2"					"broodmother_spin_web"
+		"Ability3"					"broodmother_incapacitating_bite"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"broodmother_insatiable_hunger"
 
-//		"Ability10"					"special_bonus_unique_broodmother_3"
-//		"Ability11"					"special_bonus_hp_200"
-//		"Ability12"					"special_bonus_cooldown_reduction_20"
-//		"Ability13"					"special_bonus_agility_20"
-//		"Ability14"					"special_bonus_unique_broodmother_4"
-//		"Ability15"					"special_bonus_attack_speed_50"
-//		"Ability16"					"special_bonus_unique_broodmother_1"
-//		"Ability17"					"special_bonus_unique_broodmother_2"
+		"Ability10"					"special_bonus_unique_broodmother_3"
+		"Ability11"					"special_bonus_hp_200"
+		"Ability12"					"special_bonus_cooldown_reduction_20"
+		"Ability13"					"special_bonus_agility_20"
+		"Ability14"					"special_bonus_unique_broodmother_4"
+		"Ability15"					"special_bonus_attack_speed_50"
+		"Ability16"					"special_bonus_unique_broodmother_1"
+		"Ability17"					"special_bonus_unique_broodmother_2"
 
-//		"Ability18"					"imba_broodmother_spawn_spiderlings"
-//		"Ability19"					"imba_broodmother_spin_web"
-//		"Ability20"					"imba_broodmother_incapacitating_bite"
-//		"Ability21"					"imba_broodmother_insatiable_hunger"
+		"Ability18"					"imba_broodmother_spin_web"
+		"Ability19"					"imba_broodmother_incapacitating_bite"
+		"Ability20"					"imba_broodmother_insatiable_hunger"
 	}
 }

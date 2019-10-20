@@ -117,10 +117,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
-			
+
 			local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
+			ParticleManager:ReleaseParticleIndex(fountain_aura_pfx)
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen

@@ -66,15 +66,17 @@
 	//=================================================================================================================
 	// Broodmother: Spin Web
 	//=================================================================================================================
-	"broodmother_spin_web"
+	"imba_broodmother_spin_web"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5280"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_spin_web"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Broodmother.SpinWebCast"
-        "HasScepterUpgrade"			"1"
+        "HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -82,7 +84,8 @@
 		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"0.0"
 		"AbilityManaCost"				"50"
-			
+		"AoERadius"						"%radius"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -125,14 +128,14 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"bonus_movespeed_scepter"	"30 50 70 90"
-				"RequiresScepter"		"1"
+				"RequiresScepter"			"1"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"count_scepter"					"6 10 14 18"
+				"count_scepter"			"6 10 14 18"
 				"RequiresScepter"		"1"
 			}
 		}
@@ -142,11 +145,13 @@
 	//=================================================================================================================
 	// Broodmother: Incapacitating Bite
 	//=================================================================================================================
-	"broodmother_incapacitating_bite"
+	"imba_broodmother_incapacitating_bite"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5281"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_incapacitating_bite"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -168,7 +173,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"			"2.0 2.0 2.0 2.0"
+				"duration"			"2.0"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -177,11 +182,13 @@
 	//=================================================================================================================
 	// Broodmother: Insatiable Hunger
 	//=================================================================================================================
-	"broodmother_insatiable_hunger"
+	"imba_broodmother_insatiable_hunger"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5282"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_insatiable_hunger"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
@@ -189,11 +196,11 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2 0.2 0.2"
+		"AbilityCastPoint"				"0.2"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
-		"AbilityCooldown"				"45.0 45.0 45.0"
-		"AbilityManaCost"				"100 100 100"
+		"AbilityCooldown"				"45.0"
+		"AbilityManaCost"				"100"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -214,7 +221,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"14.0 14.0 14.0"
+				"duration"				"14.0"
 			}
 		}
 	}

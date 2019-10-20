@@ -28,6 +28,16 @@ if IsServer() then
 		end
 	end
 
+	function modifier_charges:OnRefresh(kv)
+		if kv then
+			if kv.start_count then self.kv.start_count = kv.start_count end
+			if kv.max_count then self.kv.max_count = kv.max_count end
+			if kv.replenish_time then self.kv.replenish_time = kv.replenish_time end
+		end
+
+		self:Update()
+	end
+
 	function modifier_charges:DeclareFunctions()
 		local funcs = {
 			MODIFIER_EVENT_ON_ABILITY_EXECUTED
