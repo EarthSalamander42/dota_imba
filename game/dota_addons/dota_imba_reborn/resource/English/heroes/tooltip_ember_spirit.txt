@@ -53,6 +53,9 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%. <font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>"
 
 // Modifiers
+"DOTA_Tooltip_modifier_imba_sleight_of_fist_caster"					"Sleight of Fist"
+"DOTA_Tooltip_modifier_imba_sleight_of_fist_caster_Description"		"Attacking all enemies in the targeted area of effect."
+
 "DOTA_Tooltip_modifier_imba_flame_guard_aura"                           "Flame Guard"
 "DOTA_Tooltip_modifier_imba_flame_guard_aura_Description"               "Absorbing incoming magic damage and dealing fire damage over time to nearby enemies."
 

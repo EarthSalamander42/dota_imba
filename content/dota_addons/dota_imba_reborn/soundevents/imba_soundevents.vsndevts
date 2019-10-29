@@ -3977,3 +3977,251 @@
 		}
 	}
 }
+
+"Hero_Oracle.FortunesEnd.Channel_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/fortune_channel_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.FortunesEnd.Attack_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/fortune_attack_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.FortunesEnd.Target_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/fortune_target_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.FatesEdict.Cast_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/edict_cast_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.PurifyingFlames.Damage_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/purifying_damage_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.Alter_Self"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/alter_self.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "0.500000"  }
+                    "pitch_rand_min"    {   "value"     "-0.020000"  }
+                    "pitch_rand_max"    {   "value"     "0.020000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.Alter_Self_Base"
+{
+	"operator_stacks" 
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/alter_self_base.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "0.500000"  }
+                    "pitch_rand_min"    {   "value"     "-0.020000"  }
+                    "pitch_rand_max"    {   "value"     "0.020000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Oracle.False_Promise_Alter"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/oracle/false_promise_alter.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "3.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}

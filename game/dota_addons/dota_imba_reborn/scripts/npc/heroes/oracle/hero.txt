@@ -14,19 +14,23 @@
 		"Ability1"		"imba_oracle_fortunes_end"
 		"Ability2"		"imba_oracle_fates_edict"
 		"Ability3"		"imba_oracle_purifying_flames"
-		"Ability4"		"generic_hidden"
+		"Ability4"		"imba_oracle_alter_self"
 		"Ability5"		"generic_hidden"
 		"Ability6"		"imba_oracle_false_promise"
 		
-		"Ability10"		"special_bonus_unique_oracle_2" // +1s Fortune's End Max Duration
+		"Ability10"		"special_bonus_imba_oracle_fortunes_end_max_duration" // +1s Fortune's End Max Duration
 		"Ability11"		"special_bonus_exp_boost_25"
 		"Ability12"		"special_bonus_cast_range_150"
 		"Ability13"		"special_bonus_gold_income_120"
 		"Ability14"		"special_bonus_movement_speed_45"
-		"Ability15"		"special_bonus_unique_oracle_4" // False Promise Invisibility
-		"Ability16"		"special_bonus_unique_oracle_3" // -5s Fate's Edict Cooldown
-		"Ability17"		"special_bonus_unique_oracle" // +2s False Promise Duration
+		"Ability15"		"special_bonus_imba_oracle_false_promise_invisibility" // False Promise Invisibility
+		"Ability16"		"special_bonus_imba_oracle_fates_edict_cooldown" // -5s Fate's Edict Cooldown
+		"Ability17"		"special_bonus_imba_oracle_false_promise_duration" // +2s False Promise Duration
 		
 		// Removed Talents
+		//"Ability10"		"special_bonus_unique_oracle_2" // +1s Fortune's End Max Duration
+		//"Ability15"		"special_bonus_unique_oracle_4" // False Promise Invisibility
+		//"Ability16"		"special_bonus_unique_oracle_3" // -5s Fate's Edict Cooldown
+		//"Ability17"		"special_bonus_unique_oracle" // +2s False Promise Duration
 	}
 }

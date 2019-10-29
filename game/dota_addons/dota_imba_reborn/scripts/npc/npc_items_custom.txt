@@ -3842,8 +3842,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"20"
-				"CalculateSpellDamageTooltip"	"0"
+				"damage_block_melee"	"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block_ranged"	"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}
@@ -3887,6 +3896,8 @@
 		"ScriptFile"					"components/items/item_vanguard.lua"
 		"AbilityTextureName" 			"custom/imba_poor_mans_shield"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"AbilityCooldown"				"25.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3902,13 +3913,37 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"6"
+				"bonus_agility"				"6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"30"
-				"CalculateSpellDamageTooltip"	"0"
+				"damage_block_melee"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block_ranged"	"18"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_block_melee"			"18"
+			}	
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_block_range"			"9"
+			}	
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_block_duration"		"5"
 			}
 		}
 	}
@@ -3978,8 +4013,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"40"
-				"CalculateSpellDamageTooltip"	"0"
+				"block_damage_melee"	"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged"	"24"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}
@@ -4031,7 +4075,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"46"
 		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
@@ -4069,29 +4113,57 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
-				"CalculateSpellDamageTooltip"	"0"
+				"block_damage_melee"	"50"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
-			}
+				"block_damage_ranged"	"30"
+			}			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"block_chance"			"100"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_radius"			"1200"
+				"active_armor"			"2"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"duration"				"12"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_radius"			"1200"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee_active"	"60"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged_active"	"60"
+			}		
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance_active"			"100"
+			}	
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_reapply_time"	"45"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"10"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -4143,7 +4215,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"40.0"
+		"AbilityCooldown"				"41.0"
 		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
@@ -4207,35 +4279,57 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
-				"CalculateSpellDamageTooltip"	"0"
+				"block_damage_melee"	"50"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
-			}
+				"block_damage_ranged"	"30"
+			}			
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"block_chance"			"100"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct"	"25"
-				"CalculateSpellDamageTooltip"	"0"
+				"active_armor"			"2"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_reapply_time"	"40"
+				"duration"				"12"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_pct"	"25"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_reapply_time"	"40"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"damage_reduction_pct_passive"		"10"
-				"CalculateSpellDamageTooltip"	"0"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee_active"	"60"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged_active"	"60"
+			}		
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance_active"			"100"
 			}
 		}
 	}
@@ -4506,7 +4600,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"30"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10625,7 +10719,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_second"				"15"
+				"damage_per_second"				"20"
 			}
 			"04"
 			{
@@ -10789,6 +10883,10 @@
 		"SideShop" 						"0"
 		"SecretShop" 					"0"		
 
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"				
@@ -10859,23 +10957,33 @@
 			}
 			"12"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_block"					"45"
+				"var_type"						"FIELD_FLOAT"
+				"internal_bash_cd"				"2.3"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"internal_bash_cd"				"2"
+				"active_stun_duration"			"2"
 			}
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"active_stun_duration"			"2"
+				"actual_break_duration"			"7"
 			}
 			"15"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"actual_break_duration"			"7"
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee"	"45"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged"	"27"
+			}			
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}

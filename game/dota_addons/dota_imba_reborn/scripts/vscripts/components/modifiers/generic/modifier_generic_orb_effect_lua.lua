@@ -109,7 +109,7 @@ function modifier_generic_orb_effect_lua:OnOrder( params )
 
 	if params.ability then
 		-- if this ability, cast
-		if params.ability==self:GetAbility() then
+		if params.ability==self:GetAbility() and not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) then
 			self.cast = true
 			return
 		end

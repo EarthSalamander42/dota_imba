@@ -880,15 +880,21 @@ end
 -- end
 
 function modifier_imba_chen_holy_persuasion_immortalized:OnIntervalThink()
-	if not IsServer() then return end
-	
-	self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	if not self:GetAbility() then
+		self:GetParent():ForceKill(false)
+	end
+	-- if ((self:GetCaster():GetAbsOrigin() + self.immortalize_vector) - self:GetParent():GetAbsOrigin()):Length2D() > self.distance then
+		-- self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	-- else
+		self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	-- end
 end
 
 -- Perhaps a bit overkill?
 function modifier_imba_chen_holy_persuasion_immortalized:CheckState()
 	local state = {
 		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+		-- [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
 		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_DOMINATED] = true,
@@ -918,7 +924,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 		
-		MODIFIER_EVENT_ON_DEATH
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ORDER
     }
 
     return decFuncs
@@ -934,6 +941,22 @@ end
 
 function modifier_imba_chen_holy_persuasion_immortalized:GetModifierModelScale()
 	return -20
+end
+
+function modifier_imba_chen_holy_persuasion_immortalized:OnOrder(keys)	
+	-- for _, key in pairs(keys) do
+		-- print(_, " ", key)
+	-- end
+	if keys.unit == self:GetParent() and keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+		local parent = self:GetParent()
+		local caster = self:GetCaster()
+	
+		Timers:CreateTimer(FrameTime(), function()
+			self:GetParent():Interrupt()
+			self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+		end)
+		-- self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	end
 end
 
 -- If the immortalized creep dies (how, I don't know) or the caster dies, remove the relevant modifier from the caster as well (also make sure the creep dies)

@@ -764,6 +764,9 @@ if IsServer() then
 		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self.parent:GetAbsOrigin()
+		
+		self.movedamage_think = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+		
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("damage_cap_interval") )
 	end
 
@@ -773,7 +776,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
 		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
-			self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+			self.movedamage = self.movedamage_think
 		
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
