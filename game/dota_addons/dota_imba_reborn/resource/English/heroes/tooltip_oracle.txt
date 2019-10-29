@@ -1,7 +1,8 @@
 // ORACLE
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end"							"Fortune's End"
-"DOTA_Tooltip_ability_imba_oracle_fortunes_end_Description"				"CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and purges enemies of buffs in an area around the target. If target is an ally it will only purge debuffs. Can be channeled for up to %abilitychanneltime% seconds. The root duration is equal to the time spent channeling.\n\nDISPEL TYPE: Basic Dispel\n<font color='#20C6B6'>Alter Self:</font> Standard mechanics, but restricts commands instead of rooting."
+"DOTA_Tooltip_ability_imba_oracle_fortunes_end_Description"				"CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and purges enemies of buffs in an area around the target. If target is an ally it will only purge debuffs. Can be channeled for up to %abilitychanneltime% seconds. The root duration is equal to the time spent channeling.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Line Mergence:</font> Can be set to auto-cast to apply a modifier on the target that will activate Fortune's End after a %mergence_delay% second delay.\n<font color='#20C6B6'>Alter Self:</font> Standard mechanics, but restricts commands instead of rooting."
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_Lore"						"The astral orb crackles with power while raw energy lances out, temporarily disrupting an enemy's connection to their own body."
+"DOTA_Tooltip_ability_imba_oracle_fortunes_end_Note0"					"Line Mergence will still activate if the target dies during the delay."
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_damage"					"DAMAGE:"
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_radius"					"RADIUS:"
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_minimum_purge_duration"	"MIN ROOT DURATION:"
@@ -37,6 +38,8 @@
 "DOTA_Tooltip_ability_imba_oracle_false_promise_Note1"					"The delayed damage and healing takes effect as soon as the target becomes vulnerable."
 "DOTA_Tooltip_ability_imba_oracle_false_promise_Note2"					"Future Unsealed will not work if the target dies during the delay, or is in a state where modifiers cannot be applied when the delay ends."
 
+"DOTA_Tooltip_modifier_imba_oracle_fortunes_end_delay"						"Line Mergence"
+"DOTA_Tooltip_modifier_imba_oracle_fortunes_end_delay_Description"			"Fortune's End will activate upon expiry of this modifier."
 "DOTA_Tooltip_modifier_imba_oracle_fortunes_end_purge"								"Fortune's End Purge"
 "DOTA_Tooltip_modifier_imba_oracle_fortunes_end_purge_Description"								"Purged of buffs, and stopped."
 "DOTA_Tooltip_modifier_imba_oracle_fortunes_end_purge_alter"								"Fortune's End Purge Alter"

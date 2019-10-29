@@ -202,9 +202,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if GameMode:GetCustomGamemode() > 1 then
-				SpawnEasterEgg()
-			end
+			-- Controversial addition
+			-- if GameMode:GetCustomGamemode() > 1 then
+				-- SpawnEasterEgg()
+			-- end
 
 			ImbaRunes:Spawn()
 		end
@@ -544,7 +545,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	end
 	
 	-- Add some deprecated abilities back to heroes for that "IMBA" factor
-	local subAbilities = {"chen_test_of_faith", "keeper_of_the_light_mana_leak", "huskar_inner_vitality", "tusk_frozen_sigil"}
+	local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 	
 	for _, ability in ipairs(subAbilities) do 
 		if hero:HasAbility(ability) then
