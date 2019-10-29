@@ -32,7 +32,7 @@ function item_imba_sogat_cuirass:OnSpellStart(keys)
 		for _,ally in pairs(nearby_allies) do
 			if not non_relevant_units[ally:GetUnitName()] and not ally:HasModifier("modifier_item_imba_sogat_cuirass_nostack") then
 				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_buff", {duration = self:GetSpecialValueFor("duration")})
-				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_nostack", {duration = self:GetSpecialValueFor("tooltip_reapply_time")})
+				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_nostack", {duration = self:GetEffectiveCooldown(self:GetLevel()) - 1})
 			end
 		end
 	end
@@ -40,6 +40,11 @@ end
 
 -- Stats passive modifier (stacking)
 modifier_imba_sogat_cuirass = class({})
+
+function modifier_imba_sogat_cuirass:IsHidden() return true end
+function modifier_imba_sogat_cuirass:IsPurgable() return false end
+function modifier_imba_sogat_cuirass:IsDebuff() return false end
+function modifier_imba_sogat_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_sogat_cuirass:OnCreated()
 	-- Ability properties
@@ -50,6 +55,16 @@ function modifier_imba_sogat_cuirass:OnCreated()
 	if not self:GetAbility() then
 		self:Destroy()
 	end
+	
+	self.bonus_health 			= self:GetAbility():GetSpecialValueFor("bonus_health")
+	self.bonus_health_regen		= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	self.bonus_stats			= self:GetAbility():GetSpecialValueFor("bonus_stats")
+	self.bonus_as				= self:GetAbility():GetSpecialValueFor("bonus_as")
+	self.bonus_armor			= self:GetAbility():GetSpecialValueFor("bonus_armor")
+	self.bonus_strength 		= self:GetAbility():GetSpecialValueFor("bonus_strength")
+	self.block_damage_melee 	= self:GetAbility():GetSpecialValueFor("block_damage_melee")
+	self.block_damage_ranged 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
+	self.block_chance 			= self:GetAbility():GetSpecialValueFor("block_chance")
 
 	if IsServer() then
 		-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
@@ -60,62 +75,6 @@ function modifier_imba_sogat_cuirass:OnCreated()
 	end
 end
 
-function modifier_imba_sogat_cuirass:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_HEALTH_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-	}
-
-	return decFuncs
-end
-
-function modifier_imba_sogat_cuirass:GetCustomDamageBlockUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_block")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_health")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_as")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_armor")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats")
-end
-
-function modifier_imba_sogat_cuirass:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats")
-end
-
--- Custom unique damage reduction property
-function modifier_imba_sogat_cuirass:GetCustomIncomingDamageReductionUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct_passive")
-end
-
-function modifier_imba_sogat_cuirass:IsHidden() return true end
-function modifier_imba_sogat_cuirass:IsPurgable() return false end
-function modifier_imba_sogat_cuirass:IsDebuff() return false end
-function modifier_imba_sogat_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
 function modifier_imba_sogat_cuirass:OnDestroy()
 	if IsServer() then
 		-- If it is the last Assault Cuirass in the inventory, remove the aura
@@ -124,6 +83,67 @@ function modifier_imba_sogat_cuirass:OnDestroy()
 			self:GetCaster():RemoveModifierByName(self.modifier_aura_negative)
 		end
 	end
+end
+
+function modifier_imba_sogat_cuirass:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
+end
+
+-- function modifier_imba_sogat_cuirass:GetCustomDamageBlockUnique()
+	-- return self:GetAbility():GetSpecialValueFor("damage_block")
+-- end
+
+function modifier_imba_sogat_cuirass:GetModifierHealthBonus()
+	return self.bonus_health
+end
+
+function modifier_imba_sogat_cuirass:GetModifierConstantHealthRegen()
+	return self.bonus_health_regen
+end
+
+function modifier_imba_sogat_cuirass:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_as
+end
+
+function modifier_imba_sogat_cuirass:GetModifierPhysicalArmorBonus()
+	return self.bonus_armor
+end
+
+function modifier_imba_sogat_cuirass:GetModifierBonusStats_Strength()
+	return self.bonus_stats
+end
+
+function modifier_imba_sogat_cuirass:GetModifierBonusStats_Agility()
+	return self.bonus_stats
+end
+
+function modifier_imba_sogat_cuirass:GetModifierBonusStats_Intellect()
+	return self.bonus_stats
+end
+
+function modifier_imba_sogat_cuirass:GetModifierPhysical_ConstantBlock()
+	if RollPseudoRandom(self.block_chance, self) then
+		if not self:GetParent():IsRangedAttacker() then
+			return self.damage_block_melee
+		else
+			return self.damage_block_ranged
+		end
+	end
+end
+
+-- Custom unique damage reduction property
+function modifier_imba_sogat_cuirass:GetCustomIncomingDamageReductionUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct_passive")
 end
 
 -- Assault Cuirass positive aura
@@ -279,44 +299,54 @@ function modifier_item_imba_sogat_cuirass_buff:IsPurgable() return false end
 
 -- Particle creation and value storage
 function modifier_item_imba_sogat_cuirass_buff:OnCreated(keys)
+	self.active_armor 					= self:GetAbility():GetSpecialValueFor("active_armor")
+	self.block_damage_melee_active 		= self:GetAbility():GetSpecialValueFor("block_damage_melee_active")
+	self.block_damage_ranged_active 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged_active")
+	self.block_chance_active 			= self:GetAbility():GetSpecialValueFor("block_chance_active")
+	self.damage_reduction_pct 			= self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
+
 	if IsServer() then
 		self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
 
 		self.sogat_active_pfx = ParticleManager:CreateParticle("particles/items2_fx/sogat_cuirass_active.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.sogat_active_pfx, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.sogat_active_pfx, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.sogat_active_pfx, false, false, -1, false, false)
 	end
 end
 
--- Particle destruction
-function modifier_item_imba_sogat_cuirass_buff:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.sogat_active_pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.sogat_active_pfx)
+-- Declare modifier events/properties
+function modifier_item_imba_sogat_cuirass_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_item_imba_sogat_cuirass_buff:GetModifierPhysicalArmorBonus()
+	return self.active_armor
+end
+
+function modifier_item_imba_sogat_cuirass_buff:GetModifierPhysical_ConstantBlock()
+	if IsClient() then return self.block_damage_melee_active end
+
+	if RollPseudoRandom(self.block_chance_active, self) then
+		if not self:GetParent():IsRangedAttacker() then
+			return self.block_damage_melee_active
+		else
+			return self.block_damage_ranged_active
+		end
 	end
+end
+
+function modifier_item_imba_sogat_cuirass_buff:OnTooltip()
+	return self.damage_reduction_pct
 end
 
 -- Custom unique damage reduction property
 function modifier_item_imba_sogat_cuirass_buff:GetCustomIncomingDamageReductionUnique()
 	return self.damage_reduction_pct
-end
-
--- Declare modifier events/properties
-function modifier_item_imba_sogat_cuirass_buff:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-	}
-	return funcs
-end
-
-function modifier_item_imba_sogat_cuirass_buff:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("active_armor")
-end
-
--- Regular damage block (for towers, redundant on heroes)
-function modifier_item_imba_sogat_cuirass_buff:GetModifierPhysical_ConstantBlock()
-	return self:GetAbility():GetSpecialValueFor("damage_block")
 end
 
 ----------------------------------

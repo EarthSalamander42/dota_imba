@@ -1265,6 +1265,11 @@ function GameMode:DamageFilter( keys )
 --			attacker:RemoveSelf()
 			keys.damage = 0
 		end
+		
+		-- Oracle False Promise Alter logic (most of it will be handled in the ability file)
+		if attacker:HasModifier("modifier_imba_oracle_false_promise_timer_alter") then
+			keys.damage = 0
+		end		
 	end
 
 --	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then

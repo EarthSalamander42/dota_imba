@@ -1,12 +1,13 @@
 // Items
 
 // Abyssal Blade
-"DOTA_Tooltip_Ability_item_imba_abyssal_blade"                   "Abyssal Blade"
-"DOTA_Tooltip_Ability_item_imba_abyssal_blade_Description"                   "<h1>Active: Overwhelm</h1>Stuns the target unit for %active_stun_duration% seconds, and <font color='#FF7800'>breaks it for %actual_break_duration% seconds.</font>  Pierces spell immunity.\n<h1>Passive: Bash</h1>Grants melee heroes a %bash_chance_melee%%  chance on hit to stun the target for %stun_duration% seconds and deal %bash_damage% bonus damage. Bash chance for ranged heroes is %bash_chance_ranged%% .\n<h1><font color='#FF7800'>Passive: Abyssal Skull Crash</font></h1> When a bash occurs, grants a %insta_skull_break_chance_pct%% chance to immediately break the target. If the bash doesn't break, the target's skull becomes fragile for %skull_break_duration% seconds. Bashing the same target again with Abyssal Blade will cause its skull to completely break, applying Break to it for the duration of the stun.\n<h1><font color='#FF7800'>Passive: Damage Block</font></h1> Blocks %damage_block% of all incoming attack damage. Ranged heroes can only utilize 60% of the damage block."
+"DOTA_Tooltip_Ability_item_imba_abyssal_blade"					"Abyssal Blade"
+"DOTA_Tooltip_Ability_item_imba_abyssal_blade_Description"		"<h1>Active: Overwhelm</h1> Stuns a target enemy unit for %active_stun_duration% seconds, <font color='#FF7800'>and breaks them for %actual_break_duration% seconds.</font><br><br>Pierces Spell Immunity.<br><br>Range: %abilitycastrange%\n<h1>Passive: Bash</h1> Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %stun_duration% seconds and deal %bash_damage% bonus magical damage.  Bash chance for ranged heroes is %bash_chance_ranged%%%.\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Abyssal Skull Crash</font></h1> When a bash occurs, grants a %insta_skull_break_chance_pct%%% chance to immediately break the target. If the bash doesn't break, the target's skull becomes fragile for %skull_break_duration% seconds. Bashing the same target again with Abyssal Blade will cause its skull to completely break, applying Break to it for the duration of the stun."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Lore"             "The lost blade of the Commander of the Abyss, this edge cuts into an enemy's soul."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note0"             "Applying Skull Break consumes the fragility preparation modifier."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note1"             "Heroes with a built in Bash ability cannot use Abyssal Blade."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note2"             "Does not stack with other sources of bash."
+"DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note3"			"Multiple sources of damage block do not stack."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_bonus_damage"                  "+$damage"
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_bonus_strength"                "+$str"
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_bonus_health"                  "+$health"
@@ -20,6 +21,9 @@
 
 "DOTA_Tooltip_modifier_imba_abyssal_blade_skull_break"           "Skull Break"
 "DOTA_Tooltip_modifier_imba_abyssal_blade_skull_break_Description"           "Passives broken, along with your skull."
+
+"DOTA_Tooltip_modifier_imba_abyssal_blade_internal_cd"					"Bash Cooldown"
+"DOTA_Tooltip_modifier_imba_abyssal_blade_internal_cd_Description"		"Abyssal Blade cannot bash while this modifier is active."
 
 // Aegis of the Immortal
 "DOTA_Tooltip_Ability_item_imba_aegis"                          "Aegis of the Immortal"
@@ -234,19 +238,16 @@
 
 // Crimson Guard
 "DOTA_Tooltip_Ability_item_imba_crimson_guard"                  "Crimson Guard"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_Description"                  "<h1>Active: Guard</h1> Temporarily grants nearby allies %active_armor% bonus armor, %damage_block% damage block,<font color='#FF7800'> and %damage_reduction%%% damage reduction</font>. Does not stack with the passive bonuses.\n<h1>Passive: Block</h1> Blocks part of all incoming physical damage. Ranged heroes can only utilize 60%% of the damage block.\n<h1><font color='#FF7800'>Passive: Parry</font></h1> Also reduces all incoming damage by %damage_reduction%%%."
-"DOTA_Tooltip_ability_item_imba_crimson_guard_Lore"            "A cuirass originally built to protect against the dreaded Year Beast."
-"DOTA_Tooltip_ability_item_imba_crimson_guard_Note0"            "Damage block, damage reduction and tenacity from Stout Shield, Poor Man's Shield, Vanguard, Crimson Guard or Tutela Plate do not stack with themselves or each other."
-"DOTA_Tooltip_ability_item_imba_crimson_guard_health"          "+$health"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_health_regen"                 "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_bonus_stats"                  "+$all"
+"DOTA_Tooltip_ability_item_imba_crimson_guard_Description"		"<h1>Active: Guard</h1> For %duration% seconds, grant nearby allied heroes and buildings +%active_armor% armor, a %block_chance_active%%% chance to block %block_damage_melee_active% damage from each incoming attack, <font color='#FF7800'>and %damage_reduction%%% damage reduction for heroes.</font><br><br>Units may only be affected by Guard once every %tooltip_reapply_time% seconds.<br><br>Radius: %bonus_aoe_radius%\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Parry</font></h1> Also reduces all incoming damage by %damage_reduction%%%. Passive damage reduction does not stack with Guard's damage reduction."
+"DOTA_Tooltip_ability_item_imba_crimson_guard_Lore"				"A cuirass originally built to protect against the dreaded Year Beast."
+"DOTA_Tooltip_ability_item_imba_crimson_guard_Note0"			"Multiple sources of damage block and Crimson Guard series damage reduction do not stack."
+"DOTA_Tooltip_ability_item_imba_crimson_guard_health"			"+$health"
+"DOTA_Tooltip_ability_item_imba_crimson_guard_health_regen"		"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_crimson_guard_bonus_stats"		"+$all"
 "DOTA_Tooltip_ability_item_imba_crimson_guard_armor"            "+$armor"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_damage_block"                 "DAMAGE BLOCK:"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_duration"                     "GUARD DURATION:"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_active_radius"                "GUARD RANGE:"
 
-"DOTA_Tooltip_modifier_item_crimson_guard_active"              "Guard"
-"DOTA_Tooltip_modifier_item_crimson_guard_active_Description"               "Blocking part of incoming physical damage"
+"DOTA_Tooltip_modifier_item_imba_crimson_guard_buff"					"Guard"
+"DOTA_Tooltip_modifier_item_imba_crimson_guard_buff_Description"		"Gained %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE% armor, and a 100%% chance to block %dMODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK% damage from incoming attacks. Heroes also gain %dMODIFIER_PROPERTY_TOOLTIP%%% damage reduction."
 
 // Crystalys
 "DOTA_Tooltip_Ability_item_imba_lesser_crit"                   "Crystalys"
@@ -889,12 +890,14 @@
 "DOTA_Tooltip_modifier_imba_pipe_active_bonus_Description"                 "Your magic resistance cannot be reduced below a certain point."
 
 // Poor Man's Shield
-"DOTA_Tooltip_Ability_item_imba_poor_mans_shield"              "Poor Man's Shield"
-"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Description"               "<h1>Passive: Block</h1> Blocks part of all incoming attack damage. Ranged heroes can only utilize 60%% of the damage block."
+"DOTA_Tooltip_Ability_item_imba_poor_mans_shield"				"Poor Man's Shield"
+"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Description"	"<h1>Passive: Damage Block</h1><font color='#FF7800'>When cooldown is ready, blocks an additional %bonus_block_melee% damage on melee heroes and %bonus_block_range% on ranged heroes for %bonus_block_duration% seconds. Only triggers on attacks from heroes.</font><br><br>Gives a <font color='#FF7800'>%block_chance%%%</font> chance to block %damage_block_melee% damage from incoming attacks on melee heroes, and %damage_block_ranged% damage on ranged."
 "DOTA_Tooltip_ability_item_imba_poor_mans_shield_Lore"          "A busted old shield that seems to block more than it should."
-"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Note0"                     "Damage block from Stout Shield, Poor Man's Shield, Vanguard, Crimson Guard and Tutela Plate does not stack."
-"DOTA_Tooltip_ability_item_imba_poor_mans_shield_bonus_agi"                 "+$agi"
-"DOTA_Tooltip_ability_item_imba_poor_mans_shield_damage_block"              "DAMAGE BLOCK:"
+"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Note0"			"Multiple sources of damage block do not stack."
+"DOTA_Tooltip_ability_item_imba_poor_mans_shield_bonus_agility"	"+$agi"
+
+"DOTA_Tooltip_modifier_item_imba_poor_mans_shield_active"				"Damage Block Bonus"
+"DOTA_Tooltip_modifier_item_imba_poor_mans_shield_active_Description"	"Blocking additional attack damage."
 
 // Planck's Artifact
 "DOTA_Tooltip_Ability_item_imba_plancks_artifact"             "Planck's Artifact"
@@ -1138,11 +1141,10 @@
 "DOTA_Tooltip_modifier_imba_starfury_buff_increase_Description"		"Temporarily increased agility"
 
 // Stout Shield
-"DOTA_Tooltip_Ability_item_imba_stout_shield"                  "Stout Shield"
-"DOTA_Tooltip_ability_item_imba_stout_shield_Description"                   "<h1>Passive: Block</h1>Blocks part of all incoming attack damage. Ranged heroes can only utilize 60%% of the damage block."
-"DOTA_Tooltip_ability_item_imba_stout_shield_Lore"              "One man's wine barrel bottom is another man's shield."
-"DOTA_Tooltip_ability_item_imba_stout_shield_Note0"            "Damage block from Stout Shield, Poor Man's Shield, Vanguard, Crimson Guard and Tutela Plate does not stack."
-"DOTA_Tooltip_ability_item_imba_stout_shield_damage_block"                  "DAMAGE BLOCK:"
+"DOTA_Tooltip_Ability_item_imba_stout_shield"					"Stout Shield"
+"DOTA_Tooltip_ability_item_imba_stout_shield_Description"		"<h1>Passive: Damage Block</h1>Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %damage_block_melee% damage from incoming attacks on melee heroes, and %damage_block_ranged% damage on ranged."
+"DOTA_Tooltip_ability_item_imba_stout_shield_Lore"				"One man's wine barrel bottom is another man's shield."
+"DOTA_Tooltip_ability_item_imba_stout_shield_Note0"				"Multiple sources of damage block do not stack."
 
 // Stygian Desolator
 
@@ -1198,13 +1200,12 @@
 
 // Vanguard
 
-"DOTA_Tooltip_Ability_item_imba_vanguard"                      "Vanguard"
-"DOTA_Tooltip_ability_item_imba_vanguard_Description"          "<h1>Passive: Block</h1> Blocks part of all incoming attack damage. Ranged heroes can only utilize 60%% of the damage block."
-"DOTA_Tooltip_ability_item_imba_vanguard_Lore"                  "A powerful shield that defends its wielder from even the most vicious of attacks."
-"DOTA_Tooltip_ability_item_imba_vanguard_Note0"                "Damage block, damage reduction and tenacity from Stout Shield, Poor Man's Shield, Vanguard, Crimson Guard or Tutela Plate do not stack with themselves or each other."
+"DOTA_Tooltip_Ability_item_imba_vanguard"						"Vanguard"
+"DOTA_Tooltip_ability_item_imba_vanguard_Description"			"<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged."
+"DOTA_Tooltip_ability_item_imba_vanguard_Lore"					"A powerful shield that defends its wielder from even the most vicious of attacks."
+"DOTA_Tooltip_ability_item_imba_vanguard_Note0"					"Multiple sources of damage block do not stack."
 "DOTA_Tooltip_ability_item_imba_vanguard_health"                "+$health"
 "DOTA_Tooltip_ability_item_imba_vanguard_health_regen"          "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_vanguard_damage_block"          "DAMAGE BLOCK:"
 
 // Veil of Discord
 

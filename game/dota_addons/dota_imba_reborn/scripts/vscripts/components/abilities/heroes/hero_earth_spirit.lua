@@ -276,7 +276,10 @@ function modifier_imba_stone_remnant:OnDestroy()
 			ParticleManager:DestroyParticle(self.remnantParticle, false)
 			ParticleManager:ReleaseParticleIndex(self.remnantParticle)
 			UTIL_Remove(self:GetParent())
-			self:GetAbility():KillRemnant(self:GetParent():GetEntityIndex())
+			
+			if self:GetAbility() and not self:GetAbility():IsNull() then
+				self:GetAbility():KillRemnant(self:GetParent():GetEntityIndex())
+			end
 		else
 			FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 			
@@ -1477,9 +1480,11 @@ function imba_earth_spirit_petrify:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local duration = self:GetSpecialValueFor("duration")
 		
-		EmitSoundOn("Hero_EarthSpirit.Petrify", target)
-		local mod = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_stone_remnant", {duration = duration})
-		mod:SetPetrify(self)
+		if not target:TriggerSpellAbsorb(self) then
+			EmitSoundOn("Hero_EarthSpirit.Petrify", target)
+			local mod = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_stone_remnant", {duration = duration})
+			mod:SetPetrify(self)
+		end
 	end
 end
 

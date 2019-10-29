@@ -54,6 +54,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_4"					"+15% Magic Resistance during Cold Embrace"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_5"					"Arctic Burn now deals pure damage"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_5_Description"		"Does not pierce spell immunity."
-"DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_6"					"-5s Cold Embrace cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_6"					"-5s Cold Embrace Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_7"					"Frost Curse"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_7_Description"		"Cursed enemies have their passives disabled."

@@ -600,7 +600,7 @@ function modifier_imba_antimage_blink_command_restricted:IsHidden()		return true
 function modifier_imba_antimage_blink_command_restricted:IsPurgable()	return false end
 
 function modifier_imba_antimage_blink_command_restricted:CheckState()
-	return {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+	return {[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true}
 end
 
 -------------------------------------------

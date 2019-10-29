@@ -61,8 +61,17 @@ function item_imba_abyssal_blade:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(particle_abyssal_fx)
 
 	-- Stun and break the target for the duration
-	target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration})
-	target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration})
+	local stun_modifier = target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration})
+	
+	if stun_modifier then
+		stun_modifier:SetDuration(active_stun_duration * (1 - target:GetStatusResistance()), true)
+	end
+	
+	local break_modifier = target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration})
+
+	if break_modifier then
+		break_modifier:SetDuration(actual_break_duration * (1 - target:GetStatusResistance()), true)
+	end
 end
 
 
@@ -88,7 +97,9 @@ function modifier_imba_abyssal_blade:OnCreated()
 	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")   
 	self.bonus_hp_regen = self.ability:GetSpecialValueFor("bonus_hp_regen") 
 	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")
-	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
+	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
+	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
 
 	if IsServer() then
 		-- Grant the unique modifier for bashing
@@ -111,7 +122,8 @@ function modifier_imba_abyssal_blade:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 					  MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 					  MODIFIER_PROPERTY_HEALTH_BONUS,
-					  MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+					  MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					  MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
 
 	return decFuncs
 end
@@ -132,10 +144,19 @@ function modifier_imba_abyssal_blade:GetModifierConstantHealthRegen()
 	return self.bonus_hp_regen
 end
 
-function modifier_imba_abyssal_blade:GetCustomDamageBlockUnique()
-	return self.damage_block
-end
+-- function modifier_imba_abyssal_blade:GetCustomDamageBlockUnique()
+	-- return self.damage_block
+-- end
 
+function modifier_imba_abyssal_blade:GetModifierPhysical_ConstantBlock()
+	if RollPseudoRandom(self.block_chance, self) then
+		if not self:GetParent():IsRangedAttacker() then
+			return self.damage_block_melee
+		else
+			return self.damage_block_ranged
+		end
+	end
+end
 
 
 -- Unique modifier responsible for bashing the target
@@ -247,18 +268,32 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
 		-- Only apply if the caster is the attacker
 		if attacker == self.caster then
 			if self.bash_proc then
+				EmitSoundOn("DOTA_Item.SkullBasher", target)
+				
 				-- Bash bash bash
-				target:AddNewModifier(self.caster, self.ability, self.modifier_bash, {duration = self.stun_duration})
-
+				local bash_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_bash, {duration = self.stun_duration})
+				
+				if bash_modifier then
+					bash_modifier:SetDuration(self.stun_duration * (1 - target:GetStatusResistance()), true)
+				end
+				
 				-- Make the ability go into an internal cooldown
 				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_internal_cd, {duration = self.internal_bash_cd})
 
 				-- If the target is not skull crashed yet, try to immediately CRUSH IT!
 				if not target:HasModifier(self.modifier_skull_crash) then
 					if RollPseudoRandom(self.insta_skull_break_chance_pct, self) then
-						target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})  
+						local break_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
+						
+						if break_modifier then
+							break_modifier:SetDuration(self.actual_break_duration * (1 - target:GetStatusResistance()), true)
+						end
 					else
-						target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
+						local break_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
+						
+						if break_modifier then
+							break_modifier:SetDuration(self.skull_break_duration * (1 - target:GetStatusResistance()), true)
+						end
 					end
 				else
 					-- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
@@ -266,7 +301,11 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
 					target:RemoveModifierByName(self.modifier_skull_crash)
 
 					-- Apply BREAK!
-					target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
+					local break_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
+					
+					if break_modifier then
+						break_modifier:SetDuration(self.actual_break_duration * (1 - target:GetStatusResistance()), true)
+					end
 				end
 			end            
 
@@ -354,6 +393,6 @@ end
 -- Modifier responsible for being an internal CD
 modifier_imba_abyssal_blade_internal_cd = modifier_imba_abyssal_blade_internal_cd or class({})
 
-function modifier_imba_abyssal_blade_internal_cd:IsHidden() return true end
-function modifier_imba_abyssal_blade_internal_cd:IsPurgable() return false end
-function modifier_imba_abyssal_blade_internal_cd:IsDebuff() return false end
+function modifier_imba_abyssal_blade_internal_cd:IgnoreTenacity()	return true end
+function modifier_imba_abyssal_blade_internal_cd:IsPurgable() 		return false end
+function modifier_imba_abyssal_blade_internal_cd:IsDebuff() 		return true end
