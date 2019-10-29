@@ -1,6 +1,7 @@
 -- Editors:
 --    AltiV, October 4th, 2019
 
+LinkLuaModifier("modifier_imba_oracle_fortunes_end_delay", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_fortunes_end_purge", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_fortunes_end_purge_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
@@ -19,6 +20,7 @@ LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter", "components/ab
 LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter_targets", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
 imba_oracle_fortunes_end					= class({})
+modifier_imba_oracle_fortunes_end_delay		= class({})
 modifier_imba_oracle_fortunes_end_purge		= class({})
 modifier_imba_oracle_fortunes_end_purge_alter	= class({})
 
@@ -52,6 +54,10 @@ function imba_oracle_fortunes_end:GetAbilityTextureName()
 	end
 end
 
+function imba_oracle_fortunes_end:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
 function imba_oracle_fortunes_end:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
@@ -78,6 +84,8 @@ function imba_oracle_fortunes_end:OnSpellStart()
 		self.aoe_particle_name	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_aoe.vpcf"
 		self.modifier_name		= "modifier_imba_oracle_fortunes_end_purge_alter"
 	end
+	
+	self.autocast_state			= self:GetAutoCastState()
 	
 	self:GetCaster():EmitSound(self.channel_sound)
 
@@ -118,7 +126,7 @@ function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
 		iMoveSpeed			= self:GetSpecialValueFor("bolt_speed"),
 		vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
 		bDrawsOnMinimap 	= false,
-		bDodgeable 			= true,
+		bDodgeable 			= false,
 		bIsAttack 			= false,
 		bVisibleToEnemies 	= true,
 		bReplaceExisting 	= false,
@@ -129,62 +137,111 @@ function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
 		
 		ExtraData = {
 			charge_pct			= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()),
-			aoe_particle_name	= self.aoe_particle_name
+			target_sound		= self.target_sound,
+			aoe_particle_name	= self.aoe_particle_name,
+			modifier_name		= self.modifier_name,
+			autocast_state		= self.autocast_state
 		}
 	})
 end
 
 function imba_oracle_fortunes_end:OnProjectileHit_ExtraData(target, location, data)
-	EmitSoundOnLocationWithCaster(location, self.target_sound, self:GetCaster())
+	if target and data.charge_pct and not target:TriggerSpellAbsorb(self) then
+		if not data.autocast_state or data.autocast_state == 0 then
+			self:ApplyFortunesEnd(target, data.target_sound, data.aoe_particle_name, data.modifier_name, data.charge_pct)
+		else
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_fortunes_end_delay", {
+				duration			= self:GetSpecialValueFor("mergence_delay"),
+				target_sound		= data.target_sound,
+				aoe_particle_name	= data.aoe_particle_name,
+				modifier_name		= data.modifier_name,
+				charge_pct			= data.charge_pct
+			})
+		end
+	end
+end
+
+function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_particle_name, modifier_name, charge_pct)
+	EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), target_sound, self:GetCaster())
 	
-	if data.aoe_particle_name then
-		self.aoe_particle = ParticleManager:CreateParticle(data.aoe_particle_name, PATTACH_WORLDORIGIN, self:GetCaster())
-		ParticleManager:SetParticleControl(self.aoe_particle, 0, location)
+	if aoe_particle_name then
+		self.aoe_particle = ParticleManager:CreateParticle(aoe_particle_name, PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(self.aoe_particle, 0, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.aoe_particle, 2, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius")))
 		ParticleManager:ReleaseParticleIndex(self.aoe_particle)
 	end
-
-	if target and data.charge_pct and not target:TriggerSpellAbsorb(self) then
-		-- "Fortune's End first applies the dispel, then the debuff, then the damage."
-		if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-			target:Purge(false, true, false, false, false)
-		end
-		
-		-- "Always removes Fate's Edict on affected targets."
-		if target:HasModifier("modifier_imba_oracle_fates_edict") then
-			target:RemoveModifierByName("modifier_imba_oracle_fates_edict")
-		end
-		
-		if target:HasModifier("modifier_imba_oracle_fates_edict_alter") then
-			target:RemoveModifierByName("modifier_imba_oracle_fates_edict_alter")
-		end
-		
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-			self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(self.damage_particle, 1, location)
-			ParticleManager:SetParticleControl(self.damage_particle, 3, enemy:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.damage_particle)
-		
-			enemy:Purge(true, false, false, false, false)
-			
-			self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, self.modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * data.charge_pct, self:GetSpecialValueFor("minimum_purge_duration"))})
-			
-			if self.purge_modifier then
-				self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * data.charge_pct, self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
-			end
-
-			ApplyDamage({
-				victim 			= enemy,
-				damage 			= self:GetSpecialValueFor("damage"),
-				damage_type		= self:GetAbilityDamageType(),
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetCaster(),
-				ability 		= self
-			})
-		end
-		
-		self.purge_modifier = nil
+	
+	-- "Fortune's End first applies the dispel, then the debuff, then the damage."
+	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		target:Purge(false, true, false, false, false)
 	end
+	
+	-- "Always removes Fate's Edict on affected targets."
+	if target:HasModifier("modifier_imba_oracle_fates_edict") then
+		target:RemoveModifierByName("modifier_imba_oracle_fates_edict")
+	end
+	
+	if target:HasModifier("modifier_imba_oracle_fates_edict_alter") then
+		target:RemoveModifierByName("modifier_imba_oracle_fates_edict_alter")
+	end
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(self.damage_particle, 1, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.damage_particle, 3, enemy:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(self.damage_particle)
+	
+		enemy:Purge(true, false, false, false, false)
+		
+		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration"))})
+		
+		if self.purge_modifier then
+			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
+		end
+
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	end
+	
+	self.purge_modifier = nil
+end
+
+---------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FORTUNES_END_DELAY --
+---------------------------------------------
+
+function modifier_imba_oracle_fortunes_end_delay:IsPurgable()		return false end
+function modifier_imba_oracle_fortunes_end_delay:RemoveOnDeath()	return false end
+function modifier_imba_oracle_fortunes_end_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_fortunes_end_delay:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_fortunes_end_delay:GetTexture()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return "oracle_fortunes_end"
+	else
+		return "custom/oracle/fortunes_end_alter"
+	end
+end
+
+function modifier_imba_oracle_fortunes_end_delay:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.target_sound		= params.target_sound
+	self.aoe_particle_name	= params.aoe_particle_name
+	self.modifier_name		= params.modifier_name
+	self.charge_pct			= params.charge_pct
+end
+
+function modifier_imba_oracle_fortunes_end_delay:OnDestroy()
+	if not IsServer() or not self:GetAbility() or not self:GetParent():IsAlive() or self:GetRemainingTime() > 0 then return end
+	
+	self:GetAbility():ApplyFortunesEnd(self:GetParent(), self.target_sound, self.aoe_particle_name, self.modifier_name, self.charge_pct)
 end
 
 ---------------------------------------------
@@ -200,7 +257,10 @@ function modifier_imba_oracle_fortunes_end_purge:GetEffectName()
 end
 
 function modifier_imba_oracle_fortunes_end_purge:CheckState()
-	return {[MODIFIER_STATE_ROOTED] = true}
+	return {
+		[MODIFIER_STATE_ROOTED]		= true,
+		[MODIFIER_STATE_INVISIBLE]	= false -- This might not be technically correct
+	}
 end
 
 ---------------------------------------------------
@@ -230,7 +290,10 @@ function modifier_imba_oracle_fortunes_end_purge_alter:OnCreated()
 end
 
 function modifier_imba_oracle_fortunes_end_purge_alter:CheckState()
-	return {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+	return {
+		[MODIFIER_STATE_COMMAND_RESTRICTED]	= true,
+		[MODIFIER_STATE_INVISIBLE]			= false -- This might not be technically correct
+	}
 end
 
 -----------------------------
@@ -314,6 +377,7 @@ end
 
 function modifier_imba_oracle_fates_edict_delay:IsPurgable()	return false end
 function modifier_imba_oracle_fates_edict_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_fates_edict_delay:IgnoreTenacity()	return true end
 
 function modifier_imba_oracle_fates_edict_delay:GetTexture()
 	if self.texture_name then
@@ -773,6 +837,10 @@ end
 -- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_DELAY --
 ----------------------------------------------
 
+function modifier_imba_oracle_false_promise_delay:IsPurgable()		return false end
+function modifier_imba_oracle_false_promise_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_false_promise_delay:IgnoreTenacity()	return true end
+
 function modifier_imba_oracle_false_promise_delay:GetTexture()
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		return "oracle_false_promise"
@@ -780,9 +848,6 @@ function modifier_imba_oracle_false_promise_delay:GetTexture()
 		return "custom/oracle/false_promise_alter"
 	end
 end
-
-function modifier_imba_oracle_false_promise_delay:IsPurgable()		return false end
-function modifier_imba_oracle_false_promise_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_oracle_false_promise_delay:OnDestroy()
 	if not IsServer() or not self:GetAbility() or not self:GetParent():IsAlive() or self:GetRemainingTime() > 0 then return end
@@ -795,7 +860,8 @@ end
 ----------------------------------------------
 
 -- "If the target is invulnerable as False Promise expires, the delayed heal and damage wait for it to become vulnerable again."
-function modifier_imba_oracle_false_promise_timer:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() end
+-- Since Ball Lightning is coded...differently, this exception needs to be included as well
+function modifier_imba_oracle_false_promise_timer:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
 -- I have no idea how this priority function works
 function modifier_imba_oracle_false_promise_timer:GetPriority()	return MODIFIER_PRIORITY_ULTRA end
 function modifier_imba_oracle_false_promise_timer:IsPurgable()	return false end
@@ -883,6 +949,8 @@ function modifier_imba_oracle_false_promise_timer:OnDestroy()
 		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(self.end_particle)
 	
+		-- TODO: Check "modifier_imba_chen_divine_favor" and make sure it doesn't block the damage
+	
 		for _, instance in pairs(self.damage_instances) do
 			if self.heal_counter > 0 then
 				if self.heal_counter < instance.damage then
@@ -959,8 +1027,8 @@ function modifier_imba_oracle_false_promise_timer:GetModifierIncomingDamage_Perc
 	
 		self.damage_instances[self.instance_counter] = {
 			victim			= self:GetParent(),
-			damage			= keys.original_damage,
-			damage_type		= keys.damage_type,
+			damage			= keys.damage,
+			damage_type		= DAMAGE_TYPE_PURE,
 			damage_flags	= damage_flags,
 			attacker		= keys.attacker,
 			ability			= keys.ability
@@ -1067,8 +1135,8 @@ function modifier_imba_oracle_false_promise_timer_alter:OnTakeDamage(keys)
 		
 			table.insert(alter_targets_modifier.damage_instances, {
 				victim			= keys.unit,
-				damage			= keys.original_damage,
-				damage_type		= keys.damage_type,
+				damage			= keys.damage,
+				damage_type		= DAMAGE_TYPE_PURE,
 				damage_flags	= damage_flags,
 				attacker		= keys.attacker,
 				ability			= keys.ability
@@ -1086,7 +1154,7 @@ end
 -- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER_ALTER_TARGETS --
 ------------------------------------------------------------
 
-function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() end
+function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
 function modifier_imba_oracle_false_promise_timer_alter_targets:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_oracle_false_promise_timer_alter_targets:IsHidden()			return self:GetStackCount() <= 0 end
 function modifier_imba_oracle_false_promise_timer_alter_targets:IsPurgable()		return false end

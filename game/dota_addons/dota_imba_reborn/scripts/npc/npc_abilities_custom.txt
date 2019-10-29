@@ -480,12 +480,12 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_pct"					"25"
+				"damage_pct"					"15"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"aura_linger"					"1.0"
+				"aura_linger"					"0.5"
 			}
 		}
 	}
