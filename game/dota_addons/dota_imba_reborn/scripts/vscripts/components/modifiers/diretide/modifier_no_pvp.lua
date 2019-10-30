@@ -1,6 +1,7 @@
 modifier_no_pvp = class({})
 
 function modifier_no_pvp:IsHidden() return true end
+function modifier_no_pvp:RemoveOnDeath() return false end
 
 --[[
 function modifier_no_pvp:DeclareFunctions()
