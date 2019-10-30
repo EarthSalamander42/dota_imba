@@ -239,7 +239,7 @@ function GameMode:ModifierFilter( keys )
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
 			end
 
-			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" then
+			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
 				return false
 			end
 		end
@@ -288,7 +288,8 @@ function GameMode:ModifierFilter( keys )
 			return false
 		end
 
-		if modifier_owner:HasModifier("modifier_no_pvp") and modifier_owner:GetOpposingTeamNumber() == modifier_caster:GetTeamNumber() then
+		if modifier_owner:HasModifier("modifier_no_pvp") and modifier_owner:GetOpposingTeamNumber() == modifier_caster:GetTeamNumber() and not modifier_name == "modifier_truesight" then
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
 			return false
 		end
 
