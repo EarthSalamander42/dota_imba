@@ -413,10 +413,6 @@ function GameMode:OnEntityKilled(keys)
 			return
 		end
 
-		if IMBA_DIRETIDE == true then
-			Diretide:OnEntityKilled(killer, killed_unit)
-		end
-
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
 			GameMode:OnHeroDeath(killer, killed_unit)

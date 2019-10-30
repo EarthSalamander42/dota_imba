@@ -33,6 +33,7 @@ require('components/battlepass/init')
 require('components/courier/init')
 require("components/demo/init")
 require("components/frantic/init")
+require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')
@@ -58,18 +59,8 @@ function GameMode:OnFirstPlayerLoaded()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 
 		if GetMapName() ~= Map1v1() then
-			if IMBA_DIRETIDE == true then
-				ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-			else
-				if IMBA_DIRETIDE_EASTER_EGG == true then
-					LinkLuaModifier("modifier_npc_dialog", "components/modifiers/diretide/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )
-					local easter_egg = CreateUnitByName("npc_dota_diretide_easter_egg", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-					easter_egg:AddNewModifier(easter_egg, nil, "modifier_npc_dialog", {})
-				else
-					local roshan = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-					roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
-				end
-			end
+			ROSHAN_ENT = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+			ROSHAN_ENT:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
 		end
 	end
 end
@@ -229,13 +220,6 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
-
-		if IMBA_DIRETIDE == true then
-			GameMode:SetCustomGamemode(4)
-
-			return
-		end
-
 		GameMode:SetCustomGamemode(1)
 
 		if GameMode.VoteTable == nil then return end
@@ -283,7 +267,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				GameRules:SetCustomGameDifficulty(highest_key)
 			end
 
---			print(category .. ": " .. highest_key)
+			print(category .. ": " .. highest_key)
 		end
 	end
 end, nil)
@@ -299,7 +283,9 @@ function GameMode:OnSettingVote(keys)
 		GameMode.VoteTable[keys.category] = {}
 	end
 
-	GameMode.VoteTable[keys.category][pid] = keys.vote
+	if pid >= 0 then
+		GameMode.VoteTable[keys.category][pid] = keys.vote
+	end
 
 --	Say(nil, keys.category, false)
 --	Say(nil, tostring(keys.vote), false)

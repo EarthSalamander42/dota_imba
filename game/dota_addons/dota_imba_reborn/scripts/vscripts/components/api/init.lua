@@ -570,8 +570,8 @@ function api:CompleteGame(successCallback, failCallback)
 	local rosh_hp
 	local rosh_max_hp
 
-	print("Cheat game?", api:IsCheatGame(), IMBA_DIRETIDE)
-	if api:IsCheatGame() == false and IMBA_DIRETIDE == true then
+	print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
+	if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
 		rosh_lvl = ROSHAN_ENT:GetLevel()
 		rosh_hp = ROSHAN_ENT:GetHealth()
 		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()

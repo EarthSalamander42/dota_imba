@@ -51,7 +51,7 @@ function fetch() {
 	view.link_text.text = $.Localize("#loading_screen_button");
 
 //	$.Msg("Fetching and setting loading screen data");
-	
+
 	var mapInfo = Game.GetMapInfo();
 	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
 
@@ -96,6 +96,9 @@ function fetch() {
 		$.Msg(reason);
 	});
 	*/
+
+	$("#VoteGameMode4").checked = true;
+	OnVoteButtonPressed("gamemode", 4);
 };
 
 function HoverableLoadingScreen() {
@@ -107,9 +110,9 @@ function HoverableLoadingScreen() {
 
 function OnVoteButtonPressed(category, vote)
 {
-//	$.Msg("Category: ", category);
-//	$.Msg("Vote: ", vote);
-	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote } );
+	$.Msg("Category: ", category);
+	$.Msg("Vote: ", vote);
+	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
 }
 
 function OnVotesReceived(data)
@@ -117,16 +120,18 @@ function OnVotesReceived(data)
 //	$.Msg(data)
 //	$.Msg(data.vote.toString())
 //	$.Msg(data.table)
+//	$.Msg(data.table[id])
 
 	var vote_count = []
 	vote_count[1] = 0;
 	vote_count[2] = 0;
 	vote_count[3] = 0;
+	vote_count[4] = 0;
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
 	// Reset tooltips
-	for (var i = 1; i <= 3; i++) {
+	for (var i = 1; i <= 4; i++) {
 		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
 	}
 
@@ -136,8 +141,10 @@ function OnVotesReceived(data)
 		vote_count[gamemode]++;
 	}
 
+	$.Msg(vote_count)
+
 	// Modify tooltips based on voted gamemode
-	for (var i = 1; i <= 3; i++) {
+	for (var i = 1; i <= 4; i++) {
 		var vote_tooltip = "vote"
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"
@@ -148,20 +155,6 @@ function OnVotesReceived(data)
 
 //	}
 }
-/*
-function SetGameModeTooltips() {
-	// if data is not available yet, reschedule
-	if (!info_already_available()) {
-		$.Schedule(0.1, SetGameModeTooltips);
-		return;
-	}
-
-	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
-	for (var i = 1; i <= 3; i++) {
-		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (0 vote)";
-	}
-}
-*/
 
 function DisableVoting() {
 	$("#imba-loading-title-vote").style.visibility = "collapse";
@@ -171,7 +164,7 @@ function DisableVoting() {
 	HoverableLoadingScreen();
 	fetch();
 //	SetGameModeTooltips();
-	$("#VoteGameMode4").checked = true;
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();
+

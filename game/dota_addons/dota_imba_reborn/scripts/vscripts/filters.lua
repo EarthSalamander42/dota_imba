@@ -10,11 +10,11 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
---	if IMBA_DIRETIDE == true then
---		if Diretide.DIRETIDE_PHASE >= 3 then
---			return false
---		end
---	end
+	if GameMode:GetCustomGamemode() == 4 then
+		if Diretide.DIRETIDE_PHASE >= 3 then
+			return false
+		end
+	end
 
 	-- Ignore negative gold values
 	if keys.gold <= 0 then
@@ -1281,16 +1281,6 @@ function GameMode:DamageFilter( keys )
 			keys.damage = 0
 		end
 	end
-
---	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then
---		if attacker == victim then return true end
---		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
---			if victim:IsRealHero() then
---				print("Attacker and victim are heroes, don't damage them!")
---				keys.damage = 0
---			end
---		end
---	end
 
 	return true
 end

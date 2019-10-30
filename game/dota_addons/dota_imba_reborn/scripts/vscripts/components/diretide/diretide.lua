@@ -21,8 +21,20 @@ function Diretide:Init()
 	BadCamera:SetAbsOrigin(dire_top_shrine_pos)
 	BadCamera:RemoveModifierByName("modifier_invulnerable")
 
-
 	Convars:RegisterCommand("hall_of_fame", function(keys) return TestEndScreenDiretide() end, "Test Duel Event", FCVAR_CHEAT)
+
+--	if IMBA_DIRETIDE_EASTER_EGG == true then
+--		LinkLuaModifier("modifier_npc_dialog", "components/modifiers/diretide/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )
+--		local easter_egg = CreateUnitByName("npc_dota_diretide_easter_egg", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+--		easter_egg:AddNewModifier(easter_egg, nil, "modifier_npc_dialog", {})
+--	end
+
+	-- IMBA Roshan
+	if ROSHAN_ENT then
+		ROSHAN_ENT:RemoveSelf()
+	end
+
+	ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 end
 
 function TestEndScreenDiretide()
@@ -30,25 +42,27 @@ function TestEndScreenDiretide()
 end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		Diretide:Init()
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-		Diretide:Countdown()
-		CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
-
-		-- failsafe in case hero selection didn't enabled the HUD after hero pick
-		Timers:CreateTimer(5.0, function()
+--	print("Diretide gamemode?", GameMode:GetCustomGamemode())
+	if GameMode:GetCustomGamemode() == 4 then
+		if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+			Diretide:Init()
+			Diretide:Countdown()
 			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
-		end)
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Diretide.COUNT_DOWN = true
-		Diretide:Announcer("diretide", "game_in_progress")
 
-		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+			-- failsafe in case hero selection didn't enabled the HUD after hero pick
+			Timers:CreateTimer(5.0, function()
+				CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
+			end)
+		elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			Diretide.COUNT_DOWN = true
+			Diretide:Announcer("diretide", "game_in_progress")
 
-		for _, building in pairs(buildings) do
-			if string.find(building:GetName(), "tower2") or string.find(building:GetName(), "pumpkin") then
-				building:AddAbility("diretide_pumpkin_immune"):SetLevel(1)
+			local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+
+			for _, building in pairs(buildings) do
+				if string.find(building:GetName(), "tower2") or string.find(building:GetName(), "pumpkin") then
+					building:AddAbility("diretide_pumpkin_immune"):SetLevel(1)
+				end
 			end
 		end
 	end
@@ -275,7 +289,16 @@ function Diretide:End()
 	end)
 end
 
-function Diretide:OnEntityKilled(killer, victim)
+ListenToGameEvent('entity_killed', function(keys)
+	local victim = EntIndexToHScript(keys.entindex_killed)
+	if not victim then return end
+
+--	local killer = nil
+
+--	if keys.entindex_attacker then
+--		killer = EntIndexToHScript(keys.entindex_attacker)
+--	end
+
 	if victim:GetTeamNumber() == 4 then
 		if victim:GetUnitLabel() == "npc_diretide_roshan" or victim:GetUnitName() == "npc_imba_roshling" then return end
 		local chance = RandomInt(1, 100)
@@ -302,7 +325,7 @@ function Diretide:OnEntityKilled(killer, victim)
 			victim:SetTimeUntilRespawn(victim:GetTimeUntilRespawn() / 2)
 		end
 	end
-end
+end, nil)
 
 -- Pumpkin ability
 function Pumpkin(keys)

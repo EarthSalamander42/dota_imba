@@ -611,25 +611,12 @@ IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
 IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
 
-IMBA_DIRETIDE = true -- Should we enable diretide?
-
 if IMBA_PICK_SCREEN == false then
 	PRE_GAME_TIME = 60.0
 
 	if not IsInToolsMode() then
 		STRATEGY_TIME = 10.0
 	end
-end
-
-if GetMapName() == MapDiretide() then
-	IMBA_DIRETIDE = true
-end
-
-IMBA_DIRETIDE_EASTER_EGG = true
-
-if IMBA_DIRETIDE == true then
-	IMBA_DIRETIDE_EASTER_EGG = false
-	require("components/diretide/diretide")
 end
 
 SAME_HERO_SELECTION = false
