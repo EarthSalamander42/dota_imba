@@ -566,6 +566,21 @@ function api:CompleteGame(successCallback, failCallback)
 		winnerTeam = json.null
 	end
 
+	local rosh_lvl
+	local rosh_hp
+	local rosh_max_hp
+
+	print("Cheat game?", api:IsCheatGame(), IMBA_DIRETIDE)
+	if api:IsCheatGame() == false and IMBA_DIRETIDE == true then
+		rosh_lvl = ROSHAN_ENT:GetLevel()
+		rosh_hp = ROSHAN_ENT:GetHealth()
+		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+
+		CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
+	end
+
+	print(rosh_lvl, rosh_hp, rosh_max_hp)
+
 	local payload = {
 		winner = winnerTeam,
 		game_id = self.game_id,
@@ -573,9 +588,13 @@ function api:CompleteGame(successCallback, failCallback)
 		radiant_score = self:GetKillsForTeam(2),
 		dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
+		rosh_lvl = rosh_lvl,
+		rosh_hp = rosh_hp,
+		rosh_max_hp = rosh_max_hp,
 	}
 
 	self:Request("game-complete", function(data)
+		print(successCallback, failCallback)
 		if successCallback ~= nil then
 			successCallback(data, payload);
 		end

@@ -115,7 +115,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		end
 
 		local mod = self.roshan:AddNewModifier(self.roshan, self:GetAbility(), "modifier_imba_roshan_death_buff", {})
-		mod:SetStackCount(GAME_ROSHAN_KILLS +1)
+		mod:SetStackCount(1)
 
 		-- Turn on brain
 		self:StartPhase()

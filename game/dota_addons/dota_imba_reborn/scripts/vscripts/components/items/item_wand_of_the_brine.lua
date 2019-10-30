@@ -13,20 +13,6 @@ LinkLuaModifier( "modifier_item_imba_wand_of_the_brine_bubble", "components/item
 
 --------------------------------------------------------------------------------
 
-function item_imba_wand_of_the_brine:CastFilterResultTarget( hTarget )
-	if not IsServer() then return end
-
-	if PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-		return UF_FAIL_DISABLE_HELP
-	end
-	
-	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	
-	return nResult
-end
-
---------------------------------------------------------------------------------
-
 function item_imba_wand_of_the_brine:OnSpellStart()
 	if IsServer() then
 		self.bubble_duration = self:GetSpecialValueFor( "bubble_duration" )

@@ -6,6 +6,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/diretide.js" />
 	</scripts>
+
 	<Panel class="Diretide" hittest="false">
 		<Panel id="DiretidePanel">
 			<Panel id="Diretide">

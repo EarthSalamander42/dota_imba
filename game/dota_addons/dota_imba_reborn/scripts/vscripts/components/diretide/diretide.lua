@@ -1,5 +1,6 @@
 if Diretide == nil then
 	Diretide = class({})
+	Diretide.player_team_swapped = {}
 end
 
 require("components/diretide/announcer")
@@ -25,7 +26,7 @@ function Diretide:Init()
 end
 
 function TestEndScreenDiretide()
-	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
+	CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
 end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
@@ -33,9 +34,10 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		Diretide:Init()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		Diretide:Countdown()
+		CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 
 		-- failsafe in case hero selection didn't enabled the HUD after hero pick
-		Timers:CreateTimer(AP_GAME_TIME + 5.0, function()
+		Timers:CreateTimer(5.0, function()
 			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
@@ -236,9 +238,9 @@ function Diretide:IncreaseTimer(time)
 end
 
 function Diretide:EndRoshanCamera()
-local i = 1
-
 --	ROSHAN_ENT:SetTeam(4)
+
+	ROSHAN_ENT.CAN_START_COUNTDOWN = true
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
@@ -256,30 +258,21 @@ function Diretide:End()
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
-	local level = ROSHAN_ENT:GetLevel()
-
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-		api.imba.diretide_update_levels(level)
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
+		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 	end
 
-	if DIRETIDE_WINNER == 2 then
-		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
-	else
-		Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
-	end
+	-- todo: run hall of fame in record api callback
 
---	for _, hero in pairs(HeroList:GetAllHeroes()) do
---		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
---		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
---		hero:SetRespawnsDisabled(true)
---		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), ROSHAN_ENT)
---	end
-
---	Timers:CreateTimer(function()
---		CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
---
---		return 1.0
---	end)
+	Timers:CreateTimer(1.0, function()
+		-- set the team with most candies when phase 2 ends as winners
+		if DIRETIDE_WINNER == 2 then
+			Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
+		else
+			Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
+		end
+	end)
 end
 
 function Diretide:OnEntityKilled(killer, victim)

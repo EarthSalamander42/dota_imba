@@ -340,7 +340,7 @@ function imba_riki_blink_strike:GetCastRange(location , target)
 			end
 		end
 	end
-	return self.BaseClass.GetCastRange(self,location,target)
+	return self.BaseClass.GetCastRange(self,location,target) + self:GetCaster():FindTalentValue("special_bonus_imba_riki_blink_strike_cast_range")
 end
 
 function imba_riki_blink_strike:OnAbilityPhaseStart()
@@ -1549,7 +1549,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
 		local aps = parent:GetAttacksPerSecond()
-		self:StartIntervalThink(1/aps)
+		self:StartIntervalThink((1/aps) * (1 / (self:GetAbility():GetSpecialValueFor("martyr_aspd_pct") * 0.01)))
 	end
 end
 
@@ -1636,7 +1636,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 
 					local caster = self:GetParent()
 					local aps = caster:GetAttacksPerSecond()
-					self:StartIntervalThink(1/aps)
+					self:StartIntervalThink((1/aps) * (1 / (self:GetAbility():GetSpecialValueFor("martyr_aspd_pct") * 0.01)))
 					return
 				end
 				-- If the marked target doesn't get hit, add him into the checklist
@@ -1650,7 +1650,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 
 				local caster = self:GetParent()
 				local aps = caster:GetAttacksPerSecond()
-				self:StartIntervalThink(1/aps)
+				self:StartIntervalThink((1/aps) * (1 / (self:GetAbility():GetSpecialValueFor("martyr_aspd_pct") * 0.01)))
 				return
 			end
 		end
@@ -1724,3 +1724,21 @@ for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_riki", MotionController)
 end
 -------------------------------------------
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_riki_blink_strike_cast_range", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_riki_blink_strike_cast_range		= class({})
+
+function modifier_special_bonus_imba_riki_blink_strike_cast_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_blink_strike_cast_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_riki_blink_strike_cast_range:RemoveOnDeath() 	return false end
+
+function imba_riki_blink_strike:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_riki_blink_strike_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_riki_blink_strike_cast_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_riki_blink_strike_cast_range"), "modifier_special_bonus_imba_riki_blink_strike_cast_range", {})
+	end
+end

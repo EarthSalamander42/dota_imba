@@ -841,10 +841,6 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 			return UF_FAIL_CREEP
 		end
 
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
 		return nResult
 	end

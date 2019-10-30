@@ -145,7 +145,7 @@ function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
 				local health_threshold_pct 	= ability:GetSpecialValueFor("health_threshold_pct") / 100.0
 				local health_treshold 	= parent:GetHealth() / parent:GetMaxHealth()
 				
-				if health_treshold < health_threshold_pct or ((parent:GetHealth() - kv.damage) / parent:GetMaxHealth()) <= health_threshold_pct then
+				if (health_treshold < health_threshold_pct or ((parent:GetHealth() - kv.damage) / parent:GetMaxHealth()) <= health_threshold_pct) and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 					parent:EmitSound("DOTA_Item.ComboBreaker")
 				
 					parent:Purge( false, true, false, true, true )

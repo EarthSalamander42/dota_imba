@@ -57,9 +57,17 @@ function modifier_imba_broodmother_spawn_spiderlings:OnDestroy()
 			spiderling:SetOwner(self:GetCaster())
 			spiderling:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
 			spiderling:SetUnitOnClearGround()
-			spiderling:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = "spiderling_duration"})
+			spiderling:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self:GetAbility():GetSpecialValueFor("spiderling_duration")})
 --			ResolveNPCPositions(spiderling:GetAbsOrigin(), 50)
 			self:GetParent():EmitSound("Hero_Broodmother.SpawnSpiderlings")
+
+			for i = 0, 24 do
+				local ability = spiderling:GetAbilityByIndex(i)
+
+				if ability then
+					ability:SetLevel(1)
+				end
+			end
 		end
 	end
 end
@@ -72,19 +80,26 @@ imba_broodmother_spin_web = imba_broodmother_spin_web or class({})
 function imba_broodmother_spin_web:OnUpgrade()
 	if not IsServer() then return end
 
-	LinkLuaModifier("modifier_charges", "Abilities/modifiers/modifier_charges.lua", LUA_MODIFIER_MOTION_NONE)
-
 	local charges_start_count = nil
 
 	if self:GetLevel() == 1 then
-		charges_start_count = self:GetSpecialValueFor("max_charges")
-	end
+		LinkLuaModifier("modifier_charges", "components/modifiers/modifier_charges.lua", LUA_MODIFIER_MOTION_NONE)
 
-	self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_charges", {
-		max_count = self:GetSpecialValueFor("max_charges"),
-		start_count = charges_start_count,
-		replenish_time = self:GetSpecialValueFor("charge_restore_time"),
-	})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_charges", {
+			start_count = self:GetSpecialValueFor("max_charges"),
+			max_count = self:GetSpecialValueFor("max_charges"),
+			replenish_time = self:GetSpecialValueFor("charge_restore_time"),
+		})
+	else
+		charges_modifier = self:GetCaster():FindModifierByName("modifier_charges")
+
+		if charges_modifier then
+			local kv = {}
+			kv.max_count = self:GetSpecialValueFor("max_charges")
+			kv.replenish_time = self:GetSpecialValueFor("charge_restore_time")
+			charges_modifier:OnRefresh(kv)
+		end
+	end
 end
 
 function imba_broodmother_spin_web:OnSpellStart()
@@ -92,8 +107,44 @@ function imba_broodmother_spin_web:OnSpellStart()
 
 	-- todo: allow web to be cast out of cast range if overlapping onto an existing web
 
+
+	local webs = Entities:FindAllByClassname("npc_dota_broodmother_web")
+
+	-- remove oldest web
+	if #webs >= self:GetSpecialValueFor("count") then
+		local table_position = nil
+		local oldest_web = nil
+
+		for k, web in pairs(webs) do
+			if table_position == nil then table_position = k end
+			if oldest_web == nil then oldest_web = web end
+
+			if web.spawn_time < oldest_web.spawn_time then
+				oldest_web = web
+				table_position = k
+			end
+		end
+
+		if IsValidEntity(oldest_web) and oldest_web:IsAlive() then
+			oldest_web:ForceKill(false)
+		end
+	end
+
 	local web = CreateUnitByName("npc_dota_broodmother_web", self:GetCursorPosition(), false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
-	web:AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_spin_web_aura", hModifierTable)
+	web:AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_spin_web_aura", {})
+	web:SetOwner(self:GetCaster())
+	web:SetControllableByPlayer(self:GetCaster():GetPlayerID(), false)
+	web.spawn_time = math.floor(GameRules:GetDOTATime(false, false))
+
+	for i = 0, 24 do
+		local ability = web:GetAbilityByIndex(i)
+
+		if ability then
+			ability:SetLevel(1)
+		end
+	end
+
+	self:GetCaster():EmitSound("Hero_Broodmother.SpinWebCast")
 end
 
 modifier_imba_broodmother_spin_web_aura = modifier_imba_broodmother_spin_web_aura or class({})
@@ -104,29 +155,62 @@ function modifier_imba_broodmother_spin_web_aura:GetAuraRadius() return self:Get
 function modifier_imba_broodmother_spin_web_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED end
 function modifier_imba_broodmother_spin_web_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_broodmother_spin_web_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_broodmother_spin_web_aura:GetModifierAura() return "modifier_imba_broodmother_spin_web_aura_buff" end
+function modifier_imba_broodmother_spin_web_aura:GetModifierAura() return "modifier_imba_broodmother_spin_web" end
 
 function modifier_imba_broodmother_spin_web_aura:IsHidden() return true end
+function modifier_imba_broodmother_spin_web_aura:IsPurgable() return false end
+function modifier_imba_broodmother_spin_web_aura:IsPurgeException() return false end
+function modifier_imba_broodmother_spin_web_aura:RemoveOnDeath() return false end
 
 function modifier_imba_broodmother_spin_web_aura:GetAuraEntityReject(hTarget)
 	if not IsServer() then return end
 
-	if hTarget == self:GetCaster() or hTarget:GetUnitName() == "npc_dota_broodmother_spiderling" then
-		return true
+	if hTarget == self:GetCaster() or hTarget:GetUnitName() == "npc_dota_broodmother_spiderling" or hTarget:GetUnitName() == "npc_dota_broodmother_spiderite" then
+		return false
 	end
 
-	return false
+	return true
 end
+
+function modifier_imba_broodmother_spin_web_aura:CheckState() return {
+	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+	[MODIFIER_STATE_INVULNERABLE] = true,
+	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+} end
 
 function modifier_imba_broodmother_spin_web_aura:DeclareFunctions() return {
 	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+	MODIFIER_EVENT_ON_DEATH,
+	MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 } end
 
 function modifier_imba_broodmother_spin_web_aura:GetModifierProvidesFOWVision()
 	return 1
 end
 
+function modifier_imba_broodmother_spin_web_aura:OnCreated()
+	if not IsServer() then return end
+
+	self:GetParent():EmitSound("Hero_Broodmother.WebLoop")
+end
+
+function modifier_imba_broodmother_spin_web_aura:OnDeath(params)
+	if not IsServer() then return end
+
+	if params.unit == self:GetParent() then
+		self:GetParent():StopSound("Hero_Broodmother.WebLoop")
+		UTIL_Remove(self:GetParent())
+	end
+end
+
 modifier_imba_broodmother_spin_web = modifier_imba_broodmother_spin_web or class({})
+
+function modifier_imba_broodmother_spin_web:IsPurgable() return false end
+function modifier_imba_broodmother_spin_web:IsPurgeException() return false end
+
+function modifier_imba_broodmother_spin_web:CheckState() return {
+	[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+} end
 
 function modifier_imba_broodmother_spin_web:DeclareFunctions() return {
 	MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
@@ -139,4 +223,78 @@ end
 
 function modifier_imba_broodmother_spin_web:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+end
+
+LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite_orb", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_broodmother_incapacitating_bite = imba_broodmother_incapacitating_bite or class({})
+
+function imba_broodmother_incapacitating_bite:GetIntrinsicModifierName()
+	return "modifier_imba_broodmother_incapacitating_bite"
+end
+
+modifier_imba_broodmother_incapacitating_bite = modifier_imba_broodmother_incapacitating_bite or class({})
+
+function modifier_imba_broodmother_incapacitating_bite:IsHidden() return true end
+
+function modifier_imba_broodmother_incapacitating_bite:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_ATTACK_LANDED,
+} end
+
+function modifier_imba_broodmother_incapacitating_bite:OnAttackLanded(params)
+	if not IsServer() then return end
+
+	if self:GetParent() == params.attacker then
+		params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_broodmother_incapacitating_bite_orb", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+	end
+end
+
+modifier_imba_broodmother_incapacitating_bite_orb = modifier_imba_broodmother_incapacitating_bite_orb or class({})
+
+function modifier_imba_broodmother_incapacitating_bite_orb:IsDebuff() return true end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:DeclareFunctions() return {
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	MODIFIER_PROPERTY_MISS_PERCENTAGE,
+} end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:GetModifierMiss_Percentage()
+	return self:GetAbility():GetSpecialValueFor("miss_chance")
+end
+
+LinkLuaModifier("modifier_imba_broodmother_insatiable_hunger", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_broodmother_insatiable_hunger = imba_broodmother_insatiable_hunger or class({})
+
+function imba_broodmother_insatiable_hunger:OnSpellStart()
+	if not IsServer() then return end
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_insatiable_hunger", {duration = self:GetSpecialValueFor("duration")})
+
+	self:GetCaster():EmitSound("Hero_Broodmother.InsatiableHunger")
+end
+
+modifier_imba_broodmother_insatiable_hunger = modifier_imba_broodmother_insatiable_hunger or class({})
+
+function modifier_imba_broodmother_insatiable_hunger:DeclareFunctions() return {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+} end
+
+function modifier_imba_broodmother_insatiable_hunger:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
+function modifier_imba_broodmother_insatiable_hunger:GetModifierLifesteal()
+	return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
+end
+
+function modifier_imba_broodmother_insatiable_hunger:OnDestroy()
+	if not IsServer() then return end
+
+	self:GetCaster():StopSound("Hero_Broodmother.InsatiableHunger")
 end

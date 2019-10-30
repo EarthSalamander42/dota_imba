@@ -623,6 +623,10 @@ function modifier_imba_elder_titan_natural_order_aura:GetModifierAura()
 	return "modifier_imba_elder_titan_natural_order"
 end
 
+function modifier_imba_elder_titan_natural_order_aura:GetAuraDuration()
+	return 1
+end
+
 modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_order or class({})
 
 -- Modifier properties

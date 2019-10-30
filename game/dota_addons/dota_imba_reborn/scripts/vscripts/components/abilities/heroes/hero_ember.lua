@@ -212,19 +212,27 @@ end
 -- Sleight of Fist caster modifier
 modifier_imba_sleight_of_fist_caster = modifier_imba_sleight_of_fist_caster or class ({})
 
-function modifier_imba_sleight_of_fist_caster:IsDebuff() return false end
-function modifier_imba_sleight_of_fist_caster:IsHidden() return true end
 function modifier_imba_sleight_of_fist_caster:IsPurgable() return false end
 
 function modifier_imba_sleight_of_fist_caster:OnCreated()
 	if IsServer() then
+		-- The particles will properly attach if PATTACH_CUSTOMORIGIN is used instead of PATTACH_WORLDORIGIN, but there is a whole other subset of issues concerning invisible particles if the caster goes invisible or out of sight so this may be the lesser of two evils for now...
+		self.sleight_caster_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_caster.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(self.sleight_caster_particle, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:SetParticleControlForward(self.sleight_caster_particle, 1, self:GetCaster():GetForwardVector())
+		
 		self:GetParent():AddNoDraw()
+		self:GetAbility():SetActivated(false)
 	end
 end
 
 function modifier_imba_sleight_of_fist_caster:OnDestroy()
 	if IsServer() then
+		ParticleManager:DestroyParticle(self.sleight_caster_particle, false)
+		ParticleManager:ReleaseParticleIndex(self.sleight_caster_particle)
+	
 		self:GetParent():RemoveNoDraw()
+		self:GetAbility():SetActivated(true)
 	end
 end
 
@@ -235,7 +243,7 @@ function modifier_imba_sleight_of_fist_caster:CheckState()
 			[MODIFIER_STATE_INVULNERABLE] = true,
 			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
-			[MODIFIER_STATE_ROOTED] = true,
+			--[MODIFIER_STATE_ROOTED] = true,
 			[MODIFIER_STATE_UNSELECTABLE] = true,
 			[MODIFIER_STATE_DISARMED] = true
 		}
@@ -247,6 +255,7 @@ end
 function modifier_imba_sleight_of_fist_caster:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 	}
 
 	return funcs
@@ -256,6 +265,10 @@ function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage(k
 	if keys.target and keys.target:IsHero() then
 		return self:GetAbility():GetSpecialValueFor("bonus_damage")
 	end
+end
+
+function modifier_imba_sleight_of_fist_caster:GetModifierIgnoreCastAngle()
+	return 1
 end
 
 --------------------------------------------------------------------------------
@@ -606,6 +619,13 @@ imba_ember_spirit_sleight_of_fist = imba_ember_spirit_sleight_of_fist or class (
 
 function imba_ember_spirit_sleight_of_fist:GetAOERadius()
 	return self:GetSpecialValueFor("effect_radius")
+end
+
+-- This should realistically never be called, but you never know with script errors...
+function imba_ember_spirit_sleight_of_fist:OnOwnerDied()
+	if not self:IsActivated() then
+		self:SetActivated(true)
+	end
 end
 
 function imba_ember_spirit_sleight_of_fist:OnSpellStart()

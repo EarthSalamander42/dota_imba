@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.17d"
+GAME_VERSION = "7.17e"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -32,11 +32,11 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
--- if IsInToolsMode() then
-	-- BOTS_ENABLED = true
--- else
+if IsInToolsMode() then
+	BOTS_ENABLED = true
+else
 	BOTS_ENABLED = false
--- end
+end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
@@ -611,7 +611,7 @@ IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
 IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
 
-IMBA_DIRETIDE = false -- Should we enable diretide?
+IMBA_DIRETIDE = true -- Should we enable diretide?
 
 if IMBA_PICK_SCREEN == false then
 	PRE_GAME_TIME = 60.0
@@ -625,17 +625,21 @@ if GetMapName() == MapDiretide() then
 	IMBA_DIRETIDE = true
 end
 
-IMBA_DIRETIDE_EASTER_EGG = false
+IMBA_DIRETIDE_EASTER_EGG = true
 
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
 	require("components/diretide/diretide")
 end
 
--- SAME_HERO_SELECTION = IMBA_PICK_SCREEN
-SAME_HERO_SELECTION = IsSaturday()
-if IsInToolsMode() then SAME_HERO_SELECTION = true end
-CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
+SAME_HERO_SELECTION = false
+-- SAME_HERO_SELECTION = IsSaturday()
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true
+end
+
+-- if IsInToolsMode() then SAME_HERO_SELECTION = true end
+
+if SAME_HERO_SELECTION == true then
+	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
 end

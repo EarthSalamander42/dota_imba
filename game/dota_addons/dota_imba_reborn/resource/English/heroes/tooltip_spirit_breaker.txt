@@ -77,7 +77,7 @@
 "DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy"				"Planeswalker Marking"
 "DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy_Description"	"Marked as a potential target for dimensional warping."
 
-"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_charge_speed"			"+175 Charge of Darkness Bonus Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_charge_speed"			"+{s:value} Charge of Darkness Bonus Speed"
 "DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bash_chance"			"+25% Greater Bash Chance"
 "DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bulldoze_cooldown"		"-7s Bulldoze Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bonus_health"			"+1000 Health"

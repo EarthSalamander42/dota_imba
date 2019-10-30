@@ -550,5 +550,6 @@
 	"vote_gamemode_1" "标准模式"
 	"vote_gamemode_2" "突变模式"
 	"vote_gamemode_3" "Frantic模式"
+	"vote_gamemode_4" "夜魇暗潮"
 	"welcome_label" "欢迎来到 Dota IMBA!"
 }

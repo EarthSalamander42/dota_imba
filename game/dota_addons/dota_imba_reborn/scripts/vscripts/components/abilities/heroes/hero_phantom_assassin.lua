@@ -836,9 +836,14 @@ function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_blur_smoke:OnCreated()
-	if IsServer() then
-		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
-		self:StartIntervalThink(FrameTime())
+	if self:GetAbility() and not self:GetAbility():IsNull() then
+		self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
+		self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
+
+		if IsServer() then
+			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+			self:StartIntervalThink(FrameTime())
+		end
 	end
 end
 
@@ -846,21 +851,22 @@ function modifier_imba_blur_smoke:OnIntervalThink()
 	if self.linger == true then return end
 
 	-- script error on enemies line
-	print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
-	print(self:GetParent():GetTeamNumber())
-	print(self:GetParent():GetAbsOrigin())
+	-- print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
+	-- print(self:GetParent():GetTeamNumber())
+	-- print(self:GetParent():GetAbsOrigin())
 
-	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("vanish_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	if #enemies > 0 then
 		self.linger = true
 		self:StartIntervalThink(-1)
-		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("fade_duration"), function()
+		Timers:CreateTimer(self.fade_duration, function()
 			self:Destroy()
 		end)
 	end
 end
 
+-- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
 function modifier_imba_blur_smoke:OnRemoved()
 	if IsServer() then
 		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
@@ -1152,7 +1158,7 @@ end
 
 function modifier_phantom_assassin_gravestone:OnIntervalThink()
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
-		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
+--		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
 		if PlayerResource:IsUnitSelected(i, self:GetParent()) and PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex() then
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "update_pa_arcana_tooltips", {
 				victim = self:GetStackCount(),

@@ -64,7 +64,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"insanity_stack_activation"		"100"
+				"insanity_stack_activation"		"50"
 			}			
 			"07"
 			{

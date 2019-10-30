@@ -138,7 +138,7 @@ function earthshaker_fissure_lua:PlayEffects( start_pos, end_pos, duration )
 	local caster = self:GetCaster()
 
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( caster.fissure_pfx, PATTACH_WORLDORIGIN, caster )
+	local effect_cast = ParticleManager:CreateParticle( caster.fissure_pfx or particle_cast, PATTACH_WORLDORIGIN, caster )
 --	local effect_cast = assert(loadfile("lua_abilities/rubick_spell_steal_lua/rubick_spell_steal_lua_arcana"))(self, particle_cast, PATTACH_WORLDORIGIN, caster )
 	ParticleManager:SetParticleControl( effect_cast, 0, start_pos )
 	ParticleManager:SetParticleControl( effect_cast, 1, end_pos )
@@ -220,7 +220,7 @@ end
 -- Initializations
 function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 	if IsServer() then
-		if not self:GetParent():IsHero() then
+		if not self:GetParent():IsHero() and not self:GetParent():IsControllableByAnyPlayer() then
 			self.movement_capability = 0
 
 			if self:GetParent():HasGroundMovementCapability() then
@@ -235,7 +235,7 @@ function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 end
 
 function modifier_earthshaker_fissure_lua_prevent_movement:OnDestroy( kv )
-	if IsServer() then
+	if IsServer() and self.movement_capability then
 		self:GetParent():SetMoveCapability(self.movement_capability)
 	end
 end

@@ -1055,6 +1055,5 @@ function SetupPanel() {
 	$("#MaxLevelValue").text = max_level[1];
 	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 
-	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
 })();

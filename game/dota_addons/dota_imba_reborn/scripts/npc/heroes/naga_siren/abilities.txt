@@ -168,6 +168,16 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"8.0"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wet_bonus_armor"			"-2"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wet_bonus_damage"			"30"
+			}
 		}
 	}
 

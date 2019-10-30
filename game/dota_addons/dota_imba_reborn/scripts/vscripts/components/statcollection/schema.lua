@@ -185,6 +185,7 @@ function GetCustomGameVote()
 	gamemode[1] = "All Pick"
 	gamemode[2] = "Mutation"
 	gamemode[3] = "Super Frantic"
+	gamemode[4] = "Diretide"
 
 	return gamemode[vote]
 end

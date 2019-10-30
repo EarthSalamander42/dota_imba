@@ -21,6 +21,7 @@
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
 		"MaxLevel"						"1"
+		"HasScepterUpgrade"				"1"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"no_cost_remnants"		"6"
+				"no_cost_remnants"		"7"
 				"LinkedSpecialBonus"	"special_bonus_imba_earth_spirit_6"					
 			}
 			"02"
@@ -140,7 +141,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"unit_distance"			"450 600 750 900"				
+				"unit_distance"			"500 650 800 950"				
 			}
 			"06"
 			{
@@ -176,7 +177,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 //		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
 //		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -185,7 +186,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"16 12 8 4"
-		"AbilityManaCost"				"60 40 20 0"
+		"AbilityManaCost"				"50"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -309,7 +310,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
+				"damage"				"100 150 200 250"				
 			}
 			"03"
 			{
@@ -324,7 +325,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"silence_duration"		"2 2.5 3 3.5"				
+				"silence_duration"		"2.5 3.0 3.5 4.0"				
 			}
 			"06"
 			{
@@ -401,12 +402,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"50 150 250"				
+				"damage_per_sec"			"80 150 220"				
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"				
+				"duration"					"6"
 			}
 			"06"
 			{
@@ -453,6 +454,8 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 
+		"IsGrantedByScepter"			"1"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"125"

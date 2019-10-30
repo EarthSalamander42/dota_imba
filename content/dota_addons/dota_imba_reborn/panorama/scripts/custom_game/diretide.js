@@ -112,6 +112,33 @@ function OnPlayerReconnect( data ) {
 	$.Msg("Phase: " + phase)
 }
 
+var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"];
+
+var api = {
+	base : "http://api.dota2imba.fr/",
+	urls : {
+		rankingsXp : "website/statistics/ranking/xp",
+	},
+	getTopPlayerXP : function(callback) {
+		$.AsyncWebRequest(api.base + api.urls.rankingsXp, {
+			type : "GET",
+			dataType : "json",
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error || !obj.data || !obj.data.players)
+					$.Msg("Error finding top xp");
+				else {
+					callback(obj.data.players);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error finding top xp " + JSON.stringify(err));
+			}
+		});
+	},
+};
+
 (function()
 {
 	GameEvents.Subscribe("countdown", UpdateTimer);

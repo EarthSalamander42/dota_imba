@@ -98,6 +98,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_5"				"Fury Swipes Bonus Health Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_5_Description"	"Fury Swipes' Devastating Blow deals 3.5%% of the target's maximum health if the target has more than 50%% health."
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_6"				"Casting Overpower Roots Enemies"
-"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"				"Enrage Adds 6%% Current Health to Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"				"Enrage Adds {s:value}% Current Health to Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_8"				"Overpower Passive"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_8_Description"	"Overpower becomes a passive, triggering a 3.5 second attack speed bonus when Ursa starts an attack and it's off cooldown."

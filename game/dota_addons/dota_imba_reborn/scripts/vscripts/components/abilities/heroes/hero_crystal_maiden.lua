@@ -452,11 +452,6 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 			targetID = target:GetPlayerID()
 		end
 
-		-- Disable help
-		if target ~= nil and targetID and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
 		-- #2 Talent: Frostbite can be cast on allies, regenerating them.
 		if target:GetTeamNumber() == caster:GetTeamNumber() and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
 			return UF_SUCCESS

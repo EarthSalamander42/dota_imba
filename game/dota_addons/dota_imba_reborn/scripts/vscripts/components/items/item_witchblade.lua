@@ -227,7 +227,7 @@ function modifier_item_imba_witchblade:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
     }
 	
     return decFuncs
@@ -287,13 +287,13 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 	end
 end
 
-function modifier_item_imba_witchblade:OnAttackLanded(keys)
+function modifier_item_imba_witchblade:OnTakeDamage(keys)
 	if not IsServer() then return end
 	
-	local target = keys.target
+	local target = keys.unit
 
 	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies for one item
-	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self then
+	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self and keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and keys.damage > 0 then
 		-- Copying part of OnSpellStart code
 		-- Roll for a chance to dispel a buff
 		if RollPseudoRandom(self.severance_chance, self) then

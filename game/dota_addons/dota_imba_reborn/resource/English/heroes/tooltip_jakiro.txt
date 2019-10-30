@@ -73,9 +73,9 @@
 // Jakiro's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_1"				"+350 Dual Breath range"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_2"				"+20 Fire Breath DPS, +8% Ice Breath slow"
-"DOTA_Tooltip_ability_special_bonus_imba_jakiro_3"				"+4 sec Ice Path duration"
+"DOTA_Tooltip_ability_special_bonus_imba_jakiro_3"				"+4s Ice Path duration"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_4"				"+400 Liquid Fire cast range"
-"DOTA_Tooltip_ability_special_bonus_imba_jakiro_5"				"+1.25 sec Ice Path stun duration"
+"DOTA_Tooltip_ability_special_bonus_imba_jakiro_5"				"+1.25s Ice Path stun duration"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_6"				"+500 Dual Breath speed"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_7"				"+30% Ice Path Antipode effect"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_8"				"Macropyre slows enemies (5% * 1.05% per tick)"

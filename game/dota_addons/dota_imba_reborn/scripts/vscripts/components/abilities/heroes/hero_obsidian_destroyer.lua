@@ -797,21 +797,6 @@ function imba_obsidian_destroyer_astral_imprisonment:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 end
 
-function imba_obsidian_destroyer_astral_imprisonment:CastFilterResultTarget(target)   
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
-end
-
 function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()
 	-- If a prison is ongoing, remove the cast point
 	if self:GetCaster():HasModifier("modifier_imba_astral_imprisonment_buff") then
