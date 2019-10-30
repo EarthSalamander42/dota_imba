@@ -238,8 +238,6 @@ function Diretide:IncreaseTimer(time)
 end
 
 function Diretide:EndRoshanCamera()
-local i = 1
-
 --	ROSHAN_ENT:SetTeam(4)
 
 	ROSHAN_ENT.CAN_START_COUNTDOWN = true
@@ -259,8 +257,6 @@ function Diretide:End()
 	Diretide.COUNT_DOWN = false
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
-
-	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})

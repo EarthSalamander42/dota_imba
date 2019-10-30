@@ -288,6 +288,10 @@ function GameMode:ModifierFilter( keys )
 			return false
 		end
 
+		if modifier_owner:HasModifier("modifier_no_pvp") and modifier_owner:GetOpposingTeamNumber() == modifier_caster:GetTeamNumber() then
+			return false
+		end
+
 		return true
 	end
 end
@@ -1270,7 +1274,11 @@ function GameMode:DamageFilter( keys )
 		-- Oracle False Promise Alter logic (most of it will be handled in the ability file)
 		if attacker:HasModifier("modifier_imba_oracle_false_promise_timer_alter") then
 			keys.damage = 0
-		end		
+		end
+
+		if victim:HasModifier("modifier_no_pvp") and attacker:GetTeamNumber() == victim:GetOpposingTeamNumber() then
+			keys.damage = 0
+		end
 	end
 
 --	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then
