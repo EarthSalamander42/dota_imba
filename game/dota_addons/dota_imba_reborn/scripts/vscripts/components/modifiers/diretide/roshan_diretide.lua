@@ -337,7 +337,16 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 			end
 		end
 	else
-		if self.AItarget and self.AItarget:IsAlive() then 
+		local disconnected = true
+		if self.AItarget.GetPlayerID then
+			if PlayerResource:GetConnectionState(self.AItarget:GetPlayerID()) ~= 3 then
+				disconnected = false
+			end
+--		else
+--			disconnected = true
+		end
+
+		if self.AItarget and self.AItarget:IsAlive() and not self.AItarget:HasModifier("modifier_fountain_invulnerable") and disconnected == false then 
 			if not self.roshan:IsAttackingEntity(self.AItarget) then
 				self.roshan:SetForceAttackTarget(self.AItarget)
 			end
