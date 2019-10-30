@@ -293,6 +293,10 @@ ListenToGameEvent('entity_killed', function(keys)
 	local victim = EntIndexToHScript(keys.entindex_killed)
 	if not victim then return end
 
+	if GameMode:GetCustomGamemode() ~= 4 then
+		return
+	end
+
 --	local killer = nil
 
 --	if keys.entindex_attacker then
