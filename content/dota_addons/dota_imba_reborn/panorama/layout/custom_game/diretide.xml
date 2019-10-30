@@ -8,29 +8,6 @@
 	</scripts>
 
 	<Panel class="Diretide" hittest="false">
-		<Panel id="LeaderboardInfoContainer" hittest="false">
-				<Panel id="LeaderboardMainContainer" hittest="false">
-					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-						<Panel id="XP" class="LeaderboardXP">
-							<Label class="LeaderboardButtonLabel" text="#leaderboard_steam_avatar" />
-						</Panel>
-						<Panel id="IMR" class="LeaderboardIMR">
-							<Label class="LeaderboardButtonLabel" text="Roshan" />
-						</Panel>
-					</Panel>
-
-					<Panel id="Tops" hittest="false">
-						<!-- JS Inserts records here -->
-					</Panel>
-				</Panel>
-
-				<Panel id="LocalPlayerInfoContainer" hittest="false">
-					<Panel id="LocalPlayerInfo" class="LeaderboardGames" hittest="false">
-					</Panel>
-				</Panel>
-			</Panel>
-
 		<Panel id="DiretidePanel">
 			<Panel id="Diretide">
 				<Label id="PhaseLabel" text="#diretide_phase_1" onmouseover="DiretideInfo()" onmouseout="UIHideTextTooltip()"/>

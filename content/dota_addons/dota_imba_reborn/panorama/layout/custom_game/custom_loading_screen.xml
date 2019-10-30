@@ -52,7 +52,7 @@
 				<Panel class="down">
 					<Label id="loading-title-text-vote" text="#vote_gamemode"/>
 					<Panel id="vote-content">
-						<Panel class="VoteButton" hittest="false">
+<!--					<Panel class="VoteButton" hittest="false">
 							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 1)" />
 							<Label id="VoteGameModeText1" class="VoteGameModeText" text="#vote_gamemode_1" />
 						</Panel>
@@ -63,6 +63,10 @@
 						<Panel class="VoteButton" hittest="false">
 							<RadioButton id="VoteGameMode3" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 3)" />
 							<Label id="VoteGameModeText3" class="VoteGameModeText" text="#vote_gamemode_3" />
+						</Panel> -->
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode4" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 4)" />
+							<Label id="VoteGameModeText4" class="VoteGameModeText" text="#vote_gamemode_4" />
 						</Panel>
 					</Panel>
 				</Panel>

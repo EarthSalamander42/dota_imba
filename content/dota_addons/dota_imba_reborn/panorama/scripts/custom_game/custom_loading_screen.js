@@ -171,6 +171,7 @@ function DisableVoting() {
 	HoverableLoadingScreen();
 	fetch();
 //	SetGameModeTooltips();
+	$("#VoteGameMode4").checked = true;
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();

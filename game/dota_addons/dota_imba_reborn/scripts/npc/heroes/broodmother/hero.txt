@@ -10,11 +10,11 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_broodmother_spawn_spiderlings"
-		"Ability2"					"broodmother_spin_web"
-		"Ability3"					"broodmother_incapacitating_bite"
+		"Ability2"					"imba_broodmother_spin_web"
+		"Ability3"					"imba_broodmother_incapacitating_bite"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"broodmother_insatiable_hunger"
+		"Ability6"					"imba_broodmother_insatiable_hunger"
 
 		"Ability10"					"special_bonus_unique_broodmother_3"
 		"Ability11"					"special_bonus_hp_200"
@@ -24,9 +24,5 @@
 		"Ability15"					"special_bonus_attack_speed_50"
 		"Ability16"					"special_bonus_unique_broodmother_1"
 		"Ability17"					"special_bonus_unique_broodmother_2"
-
-		"Ability18"					"imba_broodmother_spin_web"
-		"Ability19"					"imba_broodmother_incapacitating_bite"
-		"Ability20"					"imba_broodmother_insatiable_hunger"
 	}
 }

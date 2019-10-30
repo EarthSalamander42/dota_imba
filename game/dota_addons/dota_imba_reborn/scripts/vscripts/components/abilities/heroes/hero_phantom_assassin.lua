@@ -1158,7 +1158,7 @@ end
 
 function modifier_phantom_assassin_gravestone:OnIntervalThink()
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
-		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
+--		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
 		if PlayerResource:IsUnitSelected(i, self:GetParent()) and PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex() then
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "update_pa_arcana_tooltips", {
 				victim = self:GetStackCount(),

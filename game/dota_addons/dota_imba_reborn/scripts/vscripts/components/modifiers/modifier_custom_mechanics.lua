@@ -151,7 +151,6 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		local damage = math.max(parent:GetRealDamageDone(target), 0)
 		local heal = damage * lifesteal_amount / 100
 
-
 		-- Choose the particle to draw
 		local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"
 		if parent:HasModifier("modifier_item_imba_vladmir_blood_aura") then

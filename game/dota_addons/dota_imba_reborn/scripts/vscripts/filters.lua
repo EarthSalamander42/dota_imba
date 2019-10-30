@@ -224,6 +224,7 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:IsRoshan() then
 			-- Ignore stuns
+			print("Roshan modifier name:", modifier_name)
 			if modifier_name == "modifier_stunned" then
 				return false
 			end
@@ -238,7 +239,7 @@ function GameMode:ModifierFilter( keys )
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
 			end
 
-			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" then
+			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" then
 				return false
 			end
 		end

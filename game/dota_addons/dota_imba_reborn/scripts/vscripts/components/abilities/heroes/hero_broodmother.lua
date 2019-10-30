@@ -119,7 +119,6 @@ function imba_broodmother_spin_web:OnSpellStart()
 			if table_position == nil then table_position = k end
 			if oldest_web == nil then oldest_web = web end
 
-			print(web.spawn_time, oldest_web.spawn_time)
 			if web.spawn_time < oldest_web.spawn_time then
 				oldest_web = web
 				table_position = k
@@ -127,7 +126,6 @@ function imba_broodmother_spin_web:OnSpellStart()
 		end
 
 		if IsValidEntity(oldest_web) and oldest_web:IsAlive() then
-			print("Found an alive web and killed it")
 			oldest_web:ForceKill(false)
 		end
 	end
@@ -200,7 +198,6 @@ function modifier_imba_broodmother_spin_web_aura:OnDeath(params)
 	if not IsServer() then return end
 
 	if params.unit == self:GetParent() then
-		print("Web killed! remove it")
 		self:GetParent():StopSound("Hero_Broodmother.WebLoop")
 		UTIL_Remove(self:GetParent())
 	end
@@ -226,4 +223,78 @@ end
 
 function modifier_imba_broodmother_spin_web:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+end
+
+LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite_orb", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_broodmother_incapacitating_bite = imba_broodmother_incapacitating_bite or class({})
+
+function imba_broodmother_incapacitating_bite:GetIntrinsicModifierName()
+	return "modifier_imba_broodmother_incapacitating_bite"
+end
+
+modifier_imba_broodmother_incapacitating_bite = modifier_imba_broodmother_incapacitating_bite or class({})
+
+function modifier_imba_broodmother_incapacitating_bite:IsHidden() return true end
+
+function modifier_imba_broodmother_incapacitating_bite:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_ATTACK_LANDED,
+} end
+
+function modifier_imba_broodmother_incapacitating_bite:OnAttackLanded(params)
+	if not IsServer() then return end
+
+	if self:GetParent() == params.attacker then
+		params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_broodmother_incapacitating_bite_orb", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+	end
+end
+
+modifier_imba_broodmother_incapacitating_bite_orb = modifier_imba_broodmother_incapacitating_bite_orb or class({})
+
+function modifier_imba_broodmother_incapacitating_bite_orb:IsDebuff() return true end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:DeclareFunctions() return {
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	MODIFIER_PROPERTY_MISS_PERCENTAGE,
+} end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+end
+
+function modifier_imba_broodmother_incapacitating_bite_orb:GetModifierMiss_Percentage()
+	return self:GetAbility():GetSpecialValueFor("miss_chance")
+end
+
+LinkLuaModifier("modifier_imba_broodmother_insatiable_hunger", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_broodmother_insatiable_hunger = imba_broodmother_insatiable_hunger or class({})
+
+function imba_broodmother_insatiable_hunger:OnSpellStart()
+	if not IsServer() then return end
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_insatiable_hunger", {duration = self:GetSpecialValueFor("duration")})
+
+	self:GetCaster():EmitSound("Hero_Broodmother.InsatiableHunger")
+end
+
+modifier_imba_broodmother_insatiable_hunger = modifier_imba_broodmother_insatiable_hunger or class({})
+
+function modifier_imba_broodmother_insatiable_hunger:DeclareFunctions() return {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+} end
+
+function modifier_imba_broodmother_insatiable_hunger:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
+function modifier_imba_broodmother_insatiable_hunger:GetModifierLifesteal()
+	return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
+end
+
+function modifier_imba_broodmother_insatiable_hunger:OnDestroy()
+	if not IsServer() then return end
+
+	self:GetCaster():StopSound("Hero_Broodmother.InsatiableHunger")
 end
