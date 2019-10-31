@@ -575,8 +575,6 @@ function api:CompleteGame(successCallback, failCallback)
 		rosh_lvl = ROSHAN_ENT:GetLevel()
 		rosh_hp = ROSHAN_ENT:GetHealth()
 		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
-
-		CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
 	end
 
 	print(rosh_lvl, rosh_hp, rosh_max_hp)
@@ -594,11 +592,20 @@ function api:CompleteGame(successCallback, failCallback)
 	}
 
 	self:Request("game-complete", function(data)
-		print(successCallback, failCallback)
 		if successCallback ~= nil then
 			successCallback(data, payload);
 		end
 	end, failCallback, "POST", payload);
+end
+
+function api:DiretideHallOfFame(callback)
+	self:Request("diretide-score", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", {
+		map = GetMapName(),
+	});
 end
 
 require("components/api/events")

@@ -15,6 +15,13 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			return 1.0
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
+		if GameMode:GetCustomGamemode() == 4 then
+			api:DiretideHallOfFame(function(data)
+--				print(data)
+				CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {data = data})
+			end)
+		end
+
 		api:CompleteGame(function(data, payload)
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
 				players = payload.players,

@@ -12,6 +12,14 @@
 	<Panel class="es-root">
 		<Panel id="LeaderboardInfoContainer" hittest="false">
 			<Panel id="LeaderboardMainContainer" hittest="false">
+				<Panel id="Title" class="LeaderboardLegend" hittest="false">
+					<Label id="TitleLabel" class="LeaderboardTitle" text="Hall of Fame" />
+
+					<Button id="CloseButton" onactivate="ToggleHallofFame();">
+						<Label id="CloseButtonImage" />
+					</Button>
+				</Panel>
+
 				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 					<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
 					<Panel id="XP" class="LeaderboardXP">
