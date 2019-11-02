@@ -555,7 +555,7 @@
 #LeaderboardInfoContainer {
 	width: 50%;
 	height: 80%;
-	margin-top: 20%;
+	margin-top: 22%;
 	padding: 5px;
 	z-index: 10;
 	align: center center;
@@ -575,8 +575,8 @@
 #LeaderboardMainContainer {
 	width: 100%;
 	background-color: #040c1850;
-	height: 500px;
-	padding-bottom: 10px;
+	height: 550px;
+	padding: 10px;
 	overflow:  squish scroll;
 	flow-children: down;
 }
@@ -622,7 +622,8 @@
 .LeaderboardRank,
 .LeaderboardAvatar,
 .LeaderboardXP,
-.LeaderboardIMR
+.LeaderboardIMR,
+.LeaderboardTitle
 {
 	height: 100%;
 	text-align: center;
@@ -630,7 +631,6 @@
 	color:#daebff;
 }
 
-/* Leaderboard Legend */
 .LeaderboardLegend {
 	width: 100%;
 	height: 40px;
@@ -665,6 +665,12 @@
 .LeaderboardIMR {
 	width: 40%;	
 	align:  center center;
+}
+
+.LeaderboardTitle {
+	width: 95%;
+	padding-left: 5%;
+	font-size: 28px;
 }
 
 #Tops {
@@ -708,7 +714,8 @@
 	text-shadow: 1px 1px 2px 2.0 #00000030;
 }
 .imbar-rank-wrapper {
-	width: 30%;
+	width: 40%;
+	margin-left: 12%;
 	flow-children:  right;
 	align: center center;
 }
@@ -736,4 +743,20 @@
 	opacity: 0.9;
 	box-shadow: 0px 0px 2px 0px #00000085;
 	brightness: 0.9;
+}
+
+#CloseButton {
+	width: 5%;
+	height: 37px;
+	align: right center;
+}
+#CloseButtonImage {
+	width: 37px;
+	height: 37px;
+	align: right center;
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/close.png");
+	opacity: 0.5;
+}
+#CloseButton:hover #CloseButtonImage {
+	opacity: 1;
 }

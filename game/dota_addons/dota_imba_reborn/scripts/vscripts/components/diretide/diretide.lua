@@ -21,7 +21,7 @@ function Diretide:Init()
 	BadCamera:SetAbsOrigin(dire_top_shrine_pos)
 	BadCamera:RemoveModifierByName("modifier_invulnerable")
 
-	Convars:RegisterCommand("hall_of_fame", function(keys) return TestEndScreenDiretide() end, "Test Duel Event", FCVAR_CHEAT)
+--	Convars:RegisterCommand("hall_of_fame", function(keys) return TestEndScreenDiretide() end, "Test Duel Event", FCVAR_CHEAT)
 
 --	if IMBA_DIRETIDE_EASTER_EGG == true then
 --		LinkLuaModifier("modifier_npc_dialog", "components/modifiers/diretide/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )
@@ -37,9 +37,9 @@ function Diretide:Init()
 	ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 end
 
-function TestEndScreenDiretide()
-	CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
-end
+--	function TestEndScreenDiretide()
+--		CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
+--	end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
 --	print("Diretide gamemode?", GameMode:GetCustomGamemode())

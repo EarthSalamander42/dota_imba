@@ -381,256 +381,26 @@ function CreateBattlepassRewardPanel(level, levelup_count) {
 	}
 }
 
-function HallOfFame(type) {
-	var leaderboard_container = $("#LeaderboardInfoContainer");
-	leaderboard_container.style.visibility = "visible";
-/*
-	// self-record
-	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");
-	player.AddClass("LeaderboardGames");
-	var rank = $.CreatePanel("Label", player, "rank_local");
-	rank.AddClass("LeaderboardRank");
-	rank.text = "--"; // add winrate rank oaeide!
-
-	var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
-	steam_id.AddClass("LeaderboardAvatar");
-	steam_id.steamid = Game.GetLocalPlayerInfo().player_steamid;
-	steam_id.style.width = "38px";
-	steam_id.style.height = "38px";
-	steam_id.style.marginLeft = "40px";
-	steam_id.style.marginRight = "40px";
-	steam_id.style.align = "center center";
-
-	var imbar_container = $.CreatePanel("Panel", player, "imbar_container_local");
-	imbar_container.AddClass("LeaderboardXP");
-	var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_local");
-	imbar.AddClass("imbar-progress-bar");
-	imbar.value = parseFloat(plyData.XP / plyData.MaxXP);
-
-	var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl_local");
-	imbar_lvl.AddClass("imbar-lvl");
-	imbar_lvl.text = "Level: " + plyData.Lvl;
-
-	var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank_local");
-	imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
-
-	var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
-	imbar_rank_circle.AddClass("imbar-rank-cicle");
-	imbar_rank_circle.style.backgroundColor = "white";
-//	imbar_rank_circle.style.backgroundColor = top_users.title_color;
-
-	var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
-	imbar_rank.AddClass("imbar-rank");
-	imbar_rank.text = plyData.title;
-
-//	var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
-//	imbar_xp.AddClass("imbar-xp");
-//	imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
-
-	var imr = $.CreatePanel("Label", player, "rank_local");
-	imr.AddClass("LeaderboardIMR");
-	imr.text = 0;
-*/
-	var diretide_records = {
-		"rank1": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 1000,
-			"roshan_max_health": 100000,
-		},
-		"rank2": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 10000,
-			"roshan_max_health": 100000,
-		},
-		"rank3": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 20000,
-			"roshan_max_health": 100000,
-		},
-		"rank4": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 30000,
-			"roshan_max_health": 100000,
-		},
-		"rank5": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 40000,
-			"roshan_max_health": 100000,
-		},
-		"rank6": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 50000,
-			"roshan_max_health": 100000,
-		},
-		"rank7": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 60000,
-			"roshan_max_health": 100000,
-		},
-		"rank8": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 70000,
-			"roshan_max_health": 100000,
-		},
-		"rank9": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 80000,
-			"roshan_max_health": 100000,
-		},
-		"rank10": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 90000,
-			"roshan_max_health": 100000,
-		},
-		"rank11": {
-			"players": {
-				"1": "76561198015161808",
-				"2": "76561198015161808",
-				"3": "76561198015161808",
-				"4": "76561198015161808",
-				"5": "76561198015161808",
-				"6": "76561198015161808",
-				"7": "76561198015161808",
-				"8": "76561198015161808",
-				"9": "76561198015161808",
-				"10": "76561198015161808",
-			},
-			"roshan_level": 5,
-			"roshan_health": 10000,
-			"roshan_max_health": 100000,
-		},
-	};
-
+function HallOfFame(args) {
+	var diretide_records = args.data.games;
 //	$.Msg(diretide_records)
 
-	var i = 1;
+	if (diretide_records == undefined)
+		return;
 
-	while (diretide_records["rank" + i] && i <= 10) {
+	var leaderboard_container = $("#LeaderboardInfoContainer");
+	if (Game.GetMapInfo().map_display_name == "imba_10v10")
+		leaderboard_container.style.width = "80%";
+	leaderboard_container.style.visibility = "visible";
+
+	var i = 0;
+
+	while (diretide_records[i] && i < 10) {
 		var j = 1;
-		var players = diretide_records["rank" + i]["players"]
-		var roshan_level = diretide_records["rank" + i]["roshan_level"]
-		var roshan_health = diretide_records["rank" + i]["roshan_health"]
-		var roshan_max_health = diretide_records["rank" + i]["roshan_max_health"]
+		var players = diretide_records[i]["players"];
+		var roshan_level = diretide_records[i]["rosh_lvl"];
+		var roshan_health = diretide_records[i]["rosh_hp"];
+		var roshan_max_health = diretide_records[i]["rosh_max_hp"];
 
 //		if ($("#player_" + i)) {
 //			$("#player_" + i).DeleteAsync(0);
@@ -640,22 +410,23 @@ function HallOfFame(type) {
 		row.AddClass("LeaderboardGames");
 		var rank = $.CreatePanel("Label", row, "rank_" + i);
 		rank.AddClass("LeaderboardRank");
-		rank.text = i;
+		rank.text = i + 1;
 
 		var players_row = $.CreatePanel("Panel", row, "player_row_" + i);
 		players_row.AddClass("LeaderboardXP");
 		players_row.style.flowChildren = "right";
+		players_row.style.width = "fit-children";
 
 		while (players[j]) {
 			var steamid = players[j];
 //			$.Msg(steamid)
-			var panel_steam_id = $.CreatePanel("DOTAAvatarImage", players_row, "player_steamid_" + i);
+			var panel_steam_id = $.CreatePanel("DOTAAvatarImage", players_row, "player_steamid_" + j);
 			panel_steam_id.AddClass("LeaderboardAvatar");
 			panel_steam_id.steamid = steamid;
-			panel_steam_id.style.width = "36px";
-			panel_steam_id.style.height = "36px";
-			panel_steam_id.style.marginLeft = "1%";
-			panel_steam_id.style.marginRight = "1%";
+			panel_steam_id.style.width = "30px";
+			panel_steam_id.style.height = "30px";
+			panel_steam_id.style.marginLeft = "0.5%";
+			panel_steam_id.style.marginRight = "0.5%";
 			panel_steam_id.style.verticalAlign = "center";
 
 			j++;
@@ -720,4 +491,8 @@ function HallOfFame(type) {
 
 		i++
 	}
+}
+
+function ToggleHallofFame() {
+	$("#LeaderboardInfoContainer").style.visibility = "collapse";
 }
