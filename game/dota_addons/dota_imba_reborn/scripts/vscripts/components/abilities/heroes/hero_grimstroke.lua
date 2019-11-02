@@ -83,10 +83,6 @@ function imba_grimstroke_dark_artistry:OnAbilityPhaseStart()
 	self.precast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_cast2_ground.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.precast_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
 	
-	if IsServer() and self:GetAutoCastState() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_dark_artistry_ink_line", {})
-	end
-	
 	return true
 end
 
@@ -97,14 +93,6 @@ function imba_grimstroke_dark_artistry:OnAbilityPhaseInterrupted()
 		ParticleManager:DestroyParticle(self.precast_particle, true)
 		ParticleManager:ReleaseParticleIndex(self.precast_particle)
 		self.precast_particle = nil
-	end
-	
-	if IsServer() then
-		local ink_line_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_dark_artistry_ink_line", self:GetCaster())
-	
-		if ink_line_modifier then
-			ink_line_modifier:Destroy()
-		end
 	end
 end
 
@@ -308,12 +296,6 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 			warp_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_grimstroke/grimstroke_ink_lines_warp.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 			ParticleManager:SetParticleControl(warp_particle, 0, self:GetCaster():GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(warp_particle)
-			
-			local ink_line_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_grimstroke_dark_artistry_ink_line", self:GetCaster())
-			
-			if ink_line_modifier then
-				ink_line_modifier:Destroy()
-			end
 		end
 	end
 end
@@ -329,6 +311,22 @@ function modifier_imba_grimstroke_dark_artistry_extend:OnCreated()
 	if not IsServer() then return end
 	
 	self:SetStackCount(0)
+end
+
+
+function modifier_imba_grimstroke_dark_artistry_extend:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ORDER}	
+end
+
+function modifier_imba_grimstroke_dark_artistry_extend:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:GetParent():RemoveModifierByName("modifier_imba_grimstroke_dark_artistry_ink_line")
+	else
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_dark_artistry_ink_line", {})
+	end
 end
 
 ----------------------------------
@@ -372,8 +370,9 @@ end
 -- STROKE OF FATE INK LINE MODIFIER --
 --------------------------------------
 
-function modifier_imba_grimstroke_dark_artistry_ink_line:IsHidden()		return true end
-function modifier_imba_grimstroke_dark_artistry_ink_line:IsPurgable()	return false end
+function modifier_imba_grimstroke_dark_artistry_ink_line:IsHidden()			return true end
+function modifier_imba_grimstroke_dark_artistry_ink_line:IsPurgable()		return false end
+function modifier_imba_grimstroke_dark_artistry_ink_line:RemoveOnDeath()	return false end
 
 -----------------------
 -- PHANTOM'S EMBRACE --

@@ -222,14 +222,20 @@ function modifier_imba_oracle_fortunes_end_delay:GetAttributes()	return MODIFIER
 function modifier_imba_oracle_fortunes_end_delay:IgnoreTenacity()	return true end
 
 function modifier_imba_oracle_fortunes_end_delay:GetTexture()
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-		return "oracle_fortunes_end"
+	if self.texture_name then
+		return self.texture_name
 	else
-		return "custom/oracle/fortunes_end_alter"
+		return "oracle_fortunes_end"
 	end
 end
 
 function modifier_imba_oracle_fortunes_end_delay:OnCreated(params)
+	self.texture_name = "oracle_fortunes_end"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.texture_name = "custom/oracle/fortunes_end_alter"
+	end
+	
 	if not IsServer() then return end
 	
 	self.target_sound		= params.target_sound
@@ -457,7 +463,7 @@ function modifier_imba_oracle_fates_edict_alter:IgnoreTenacity()	return self:Get
 function modifier_imba_oracle_fates_edict_alter:IsDebuff()			return true end
 
 function modifier_imba_oracle_fates_edict_alter:GetEffectName()
-	return "particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+	return "particles/units/heroes/hero_oracle/oracle_fatesedict_alter.vpcf"
 end
 
 function modifier_imba_oracle_fates_edict_alter:GetTexture()
@@ -527,19 +533,13 @@ function imba_oracle_purifying_flames:GetCooldown(level)
 end
 
 function imba_oracle_purifying_flames:OnSpellStart()
-	self.damage_sound			= "Hero_Oracle.PurifyingFlames.Damage"
-	-- self.channel_particle	= "particles/units/heroes/hero_oracle/oracle_fortune_channel.vpcf"
-	-- self.tgt_particle		= "particles/units/heroes/hero_oracle/oracle_fortune_cast_tgt.vpcf"
-	-- self.effect_name		= "particles/units/heroes/hero_oracle/oracle_fortune_prj.vpcf"
-	-- self.aoe_particle_name	= "particles/units/heroes/hero_oracle/oracle_fortune_aoe.vpcf"
+	self.damage_sound		= "Hero_Oracle.PurifyingFlames.Damage"
+	self.hit_particle		= "particles/units/heroes/hero_oracle/oracle_purifyingflames_hit.vpcf"
 	self.modifier_name		= "modifier_imba_oracle_purifying_flames"
 	
 	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		self.damage_sound				= "Hero_Oracle.PurifyingFlames.Damage_Alter"
-		-- self.channel_particle	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_channel.vpcf"
-		-- self.tgt_particle		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_cast_tgt.vpcf"
-		-- self.effect_name		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_proj.vpcf"
-		-- self.aoe_particle_name	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_aoe.vpcf"
+		self.damage_sound		= "Hero_Oracle.PurifyingFlames.Damage_Alter"
+		self.hit_particle		= "particles/units/heroes/hero_oracle/oracle_purifyingflames_hit_alter.vpcf"
 		self.modifier_name		= "modifier_imba_oracle_purifying_flames_alter"
 	end
 
@@ -582,7 +582,7 @@ function imba_oracle_purifying_flames:OnSpellStart()
 		end
 	end
 
-	self.purifying_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_purifyingflames_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
+	self.purifying_particle = ParticleManager:CreateParticle(self.hit_particle, PATTACH_ABSORIGIN_FOLLOW, self.target)
 	ParticleManager:SetParticleControlEnt(self.purifying_particle, 1, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(self.purifying_particle)
 	
@@ -657,6 +657,10 @@ function modifier_imba_oracle_purifying_flames_alter:GetAttributes()	return MODI
 
 function modifier_imba_oracle_purifying_flames_alter:GetTexture()
 	return "custom/oracle/purifying_flames_alter"
+end
+
+function modifier_imba_oracle_purifying_flames_alter:GetEffectName()
+	return "particles/units/heroes/hero_oracle/oracle_purifyingflames_alter.vpcf"
 end
 
 function modifier_imba_oracle_purifying_flames_alter:OnCreated()
@@ -949,7 +953,18 @@ function modifier_imba_oracle_false_promise_timer:OnDestroy()
 		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(self.end_particle)
 	
-		-- TODO: Check "modifier_imba_chen_divine_favor" and make sure it doesn't block the damage
+		-- Since Chen's Divine Favor has an IMBAfication that blocks pure damage, we need this exception here if we don't want it to also block False Promise end-damage...
+		local divine_favor_modifier = self:GetParent():FindModifierByName("modifier_imba_chen_divine_favor")
+		local divine_favor_ability	= nil
+		local divine_favor_caster	= nil
+		local divine_favor_duration = nil
+		
+		if divine_favor_modifier then
+			divine_favor_ability 	= divine_favor_modifier:GetAbility()
+			divine_favor_caster		= divine_favor_modifier:GetCaster()
+			divine_favor_duration	= divine_favor_modifier:GetRemainingTime()
+			divine_favor_modifier:Destroy()
+		end
 	
 		for _, instance in pairs(self.damage_instances) do
 			if self.heal_counter > 0 then
@@ -959,10 +974,17 @@ function modifier_imba_oracle_false_promise_timer:OnDestroy()
 					ApplyDamage(instance)
 				end
 				
-				self.heal_counter = self.heal_counter - math.min(instance.damage, self.heal_counter)
+				local subtraction_value = math.min(instance.damage, self.heal_counter)
+				
+				self.heal_counter = self.heal_counter - subtraction_value
+				self.damage_counter = self.damage_counter - subtraction_value
 			else
 				ApplyDamage(instance)
 			end
+		end
+		
+		if divine_favor_ability and divine_favor_caster then
+			self:GetParent():AddNewModifier(divine_favor_caster, divine_favor_ability, "modifier_imba_chen_divine_favor", {duration = divine_favor_duration})
 		end
 
 		if self:GetCaster():GetName() == "npc_dota_hero_oracle" then
@@ -1024,6 +1046,10 @@ function modifier_imba_oracle_false_promise_timer:GetModifierIncomingDamage_Perc
 		if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_HPLOSS
 		end
+		
+		if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION) ~= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+		end
 	
 		self.damage_instances[self.instance_counter] = {
 			victim			= self:GetParent(),
@@ -1041,6 +1067,9 @@ function modifier_imba_oracle_false_promise_timer:GetModifierIncomingDamage_Perc
 		-- IDK the proper numbers so let's just use large ones based on what I see in the Particle Editor
 		-- Also this wiki description seems wrong too cause I think it only glows when the damage would be considered fatal so...
 		ParticleManager:SetParticleControl(self.overhead_particle, 1, Vector(self.damage_counter - self.heal_counter, 0, 0))
+		ParticleManager:SetParticleControl(self.overhead_particle, 2, Vector(self.heal_counter - self.damage_counter, 0, 0))
+		
+		self:SetStackCount(math.abs(self.damage_counter - self.heal_counter))
 	end
 	
 	return -100
@@ -1051,6 +1080,9 @@ function modifier_imba_oracle_false_promise_timer:OnHealReceived(keys)
 		self.heal_counter = self.heal_counter + (keys.gain * 2)
 		
 		ParticleManager:SetParticleControl(self.overhead_particle, 1, Vector(self.damage_counter - self.heal_counter, 0, 0))
+		ParticleManager:SetParticleControl(self.overhead_particle, 2, Vector(self.heal_counter - self.damage_counter, 0, 0))
+		
+		self:SetStackCount(math.abs(self.damage_counter - self.heal_counter))
 	end
 end
 
@@ -1131,8 +1163,12 @@ function modifier_imba_oracle_false_promise_timer_alter:OnTakeDamage(keys)
 			
 			if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_HPLOSS
-			end			
-		
+			end
+
+			if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION) ~= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+			end
+			
 			table.insert(alter_targets_modifier.damage_instances, {
 				victim			= keys.unit,
 				damage			= keys.damage,
@@ -1189,11 +1225,28 @@ function modifier_imba_oracle_false_promise_timer_alter_targets:OnDestroy()
 	self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(self.end_particle)
 
+	-- Since Chen's Divine Favor has an IMBAfication that blocks pure damage, we need this exception here if we don't want it to also block False Promise end-damage...
+	local divine_favor_modifier = self:GetParent():FindModifierByName("modifier_imba_chen_divine_favor")
+	local divine_favor_ability	= nil
+	local divine_favor_caster	= nil
+	local divine_favor_duration = nil
+	
+	if divine_favor_modifier then
+		divine_favor_ability 	= divine_favor_modifier:GetAbility()
+		divine_favor_caster		= divine_favor_modifier:GetCaster()
+		divine_favor_duration	= divine_favor_modifier:GetRemainingTime()
+		divine_favor_modifier:Destroy()
+	end
+
 	for _, instance in pairs(self.damage_instances) do
 		ApplyDamage(instance)
 	end
 	
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_counter, nil)	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_counter, nil)
+
+	if divine_favor_ability and divine_favor_caster then
+		self:GetParent():AddNewModifier(divine_favor_caster, divine_favor_ability, "modifier_imba_chen_divine_favor", {duration = divine_favor_duration})
+	end
 end
 
 function modifier_imba_oracle_false_promise_timer_alter_targets:DeclareFunctions()

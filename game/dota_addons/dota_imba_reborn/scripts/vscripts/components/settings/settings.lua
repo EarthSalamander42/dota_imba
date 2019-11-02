@@ -33,7 +33,8 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = true
+	-- Might be worth setting something here to differentiate our workspaces, since you seem to like bots on, but I don't...
+	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
 end

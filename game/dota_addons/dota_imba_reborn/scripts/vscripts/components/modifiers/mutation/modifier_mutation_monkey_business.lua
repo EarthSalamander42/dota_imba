@@ -133,8 +133,11 @@ function modifier_mutation_monkey_business:OnRemoved()
 		self:StartIntervalThink(-1)
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business", {})
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform", {})
+		
+		local parent = self:GetParent()
+		
 		Timers:CreateTimer(FrameTime(), function()
-			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform_extra", {})
+			parent:AddNewModifier(parent, nil, "modifier_mutation_monkey_business_transform_extra", {})
 		end)
 	end
 end

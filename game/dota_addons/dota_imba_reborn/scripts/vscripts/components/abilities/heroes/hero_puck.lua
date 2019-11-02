@@ -297,30 +297,38 @@ end
 -- PHASE SHIFT --
 -----------------
 
-function imba_puck_phase_shift:GetAbilityTargetFlags()
+function imba_puck_phase_shift:CastFilterResultTarget(target)
 	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		return DOTA_UNIT_TARGET_FLAG_NONE
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_NONE, DOTA_UNIT_TARGET_NONE, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
 	else
-		return DOTA_UNIT_TARGET_FLAG_INVULNERABLE -- Doesn't seem like this works
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, self:GetCaster():GetTeamNumber())
 	end
 end
 
+-- function imba_puck_phase_shift:GetAbilityTargetFlags()
+	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+		-- return DOTA_UNIT_TARGET_FLAG_NONE
+	-- else
+		-- return DOTA_UNIT_TARGET_FLAG_INVULNERABLE -- Doesn't seem like this works
+	-- end
+-- end
 
-function imba_puck_phase_shift:GetAbilityTargetTeam()
-	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		return DOTA_UNIT_TARGET_TEAM_NONE
-	else
-		return DOTA_UNIT_TARGET_TEAM_FRIENDLY
-	end
-end
 
-function imba_puck_phase_shift:GetAbilityTargetType()
-	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		return DOTA_UNIT_TARGET_NONE
-	else
-		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	end
-end
+-- function imba_puck_phase_shift:GetAbilityTargetTeam()
+	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+		-- return DOTA_UNIT_TARGET_TEAM_NONE
+	-- else
+		-- return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	-- end
+-- end
+
+-- function imba_puck_phase_shift:GetAbilityTargetType()
+	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+		-- return DOTA_UNIT_TARGET_NONE
+	-- else
+		-- return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	-- end
+-- end
 
 
 function imba_puck_phase_shift:GetBehavior()
@@ -332,20 +340,10 @@ function imba_puck_phase_shift:GetBehavior()
 end
 
 function imba_puck_phase_shift:GetCastRange(location, target)
-	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 or IsClient() then
+	if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
 		return self.BaseClass.GetCastRange(self, location, target)
 	else
-		self.talent_cast_range_increases = 0
-		
-		for ability = 0, 23 do
-			local found_ability = self:GetCaster():GetAbilityByIndex(ability)
-		
-			if found_ability and string.find(found_ability:GetName(), "cast_range") and self:GetCaster():HasTalent(found_ability:GetName()) then
-				self.talent_cast_range_increases = self.talent_cast_range_increases + self:GetCaster():FindTalentValue(found_ability:GetName())
-			end
-		end	
-	
-		return self:GetSpecialValueFor("sinusoid_cast_range") - GetCastRangeIncrease(self:GetCaster()) - self.talent_cast_range_increases
+		return self:GetSpecialValueFor("sinusoid_cast_range") - self:GetCaster():GetCastRangeBonus()
 	end
 end
 

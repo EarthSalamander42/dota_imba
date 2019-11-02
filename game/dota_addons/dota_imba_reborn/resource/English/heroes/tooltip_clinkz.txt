@@ -29,7 +29,7 @@
 
 // Clinkz's Skeleton Walk
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk"                        "Skeleton Walk"
-"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Description"            "Clinkz gains bonus movement speed, phasing, and invisibility until the moment he attacks or uses an ability.\n<font color='#FF7800'>Spooky Scary Skeleton:</font> When breaking out of invisibility, all enemy heroes in %spook_radius% radius become spooked. While spooked, they are unable to do anything, and are forced to run in circles in terror. The closer Clinkz is when breaking invisibility, the longer enemies will be spooked. Does nothing if Clinkz could be seen by the enemy before breaking out of invisiblity.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Description"            "Clinkz gains bonus movement speed, phasing, and invisibility until the moment he attacks or uses an ability.\n<font color='#FF7800'>Spooky Scary Skeleton:</font> When breaking out of invisibility, all enemy heroes in %spook_radius% radius become spooked. While spooked, they are unable to do anything, and are forced to run in circles in terror. The closer Clinkz is when breaking invisibility, the longer enemies will be spooked. Does nothing if Clinkz could be seen by the enemy before breaking out of invisiblity."
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Note0"                  "Any form of detection renders Spooky Scary Skeleton useless."
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Lore"                  "With a burst of fire and puff of smoke, the Bone Fletcher is nowhere to be seen."
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_max_spook_duration"                 "MAX SPOOK DURATION:"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_scepter_bonus"					"%SCEPTER BONUS MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_scepter_skeleton_count"			"%SCEPTER SKELETONS COUNT:"
-"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_aghanim_description"                "#Creates two skeletons near Clinkz when exiting Skeleton Walk. Increases Skeleton Walk movement speed by %scepter_bonus%%% and unlocks max movement speed.\n\n <font color='#FF7800'>IMBA:</font> Shares Skeleton Walk's invisibility and part of the movement speed bonus with any ally you mount. Both Clinkz and the mounted ally can spook enemies, and their invisibilities are independent from each other. Skeleton Walk bonuses are lost if you unmount."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_aghanim_description"                "Creates two skeletons near Clinkz when exiting Skeleton Walk. Increases Skeleton Walk movement speed by %scepter_bonus%%% and unlocks max movement speed. <font color='#FF7800'>Shares Skeleton Walk's invisibility and part of the movement speed bonus with any ally you mount. Both Clinkz and the mounted ally can spook enemies, and their invisibilities are independent from each other. Skeleton Walk bonuses are lost if you unmount.</font>"
 
 "DOTA_Tooltip_modifier_imba_skeleton_walk_invis"                        "Skeleton Walk"
 "DOTA_Tooltip_modifier_imba_skeleton_walk_invis_Description"            "Invisible, phased, and moving %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% faster."

@@ -856,7 +856,7 @@ function GameMode:OnPlayerChat(keys)
 								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
 							}
 							upgraded = true
-						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" and (hero == caster) then
+						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" then
 							ability_set = {
 								[0] = "imba_oracle_fortunes_end",
 								[1] = "imba_oracle_fates_edict",

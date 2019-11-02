@@ -174,7 +174,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"godshot_damage_pct"	"120"			
+				"godshot_damage_pct"	"140"
 			}
 			"13"
 			{
@@ -184,7 +184,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scattershot_min"		"30"
+				"scattershot_min"		"35"
 			}
 			"15"
 			{

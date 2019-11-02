@@ -1293,9 +1293,14 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		local aura = "modifier_terrorital_hunter_aura"
 
 		-- Kill previous dummy, if exists
-		if ability.territorial_aura_modifier then
-			ability.territorial_aura_modifier:ForceKill(false)
-			ability.territorial_aura_modifier:RemoveSelf()
+		if ability.territorial_aura_modifier and not ability.territorial_aura_modifier:IsNull() then
+			if ability.territorial_aura_modifier.ForceKill then
+				ability.territorial_aura_modifier:ForceKill(false)
+			end
+			
+			if ability.territorial_aura_modifier.RemoveSelf then
+				ability.territorial_aura_modifier:RemoveSelf()
+			end
 		end
 
 		ability.territorial_tree = target
