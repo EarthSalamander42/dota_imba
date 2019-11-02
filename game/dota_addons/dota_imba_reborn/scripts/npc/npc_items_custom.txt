@@ -16631,11 +16631,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"counter_mana_cost"		"70"
 			}
-			"21"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"counter_angle"			"140"
-			}
 		}
 		
 		// Precache
