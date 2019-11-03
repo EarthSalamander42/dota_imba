@@ -203,7 +203,7 @@
 	padding: 10px;	
 	transition-property: transform;
 	transition-duration: 0.1s;
-	transition-timing-function: ease-in;	
+	transition-timing-function: ease-in;
 }
 
 #BattlepassWindow.setvisible {
@@ -251,10 +251,10 @@
 	overflow:  squish scroll;
 }
 
-#LeaderboardMainContainer {
+.LeaderboardTableWrapper {
 	width: 100%;
 	background-color: #040c1850;
-	height: 490px;
+	height: 445px;
 	padding-bottom: 10px;
 	overflow:  squish scroll;
 	flow-children: down;
@@ -417,7 +417,7 @@
 	/* background-color: #414f62; */
 }
 
-#MiniTabButtonContainer {
+.MiniTabButtonContainer {
 	flow-children: right;
 	width: 100%;
 	align:  center top;
@@ -771,9 +771,10 @@
 	color: #99a8ad;
 	text-transform: uppercase;
 	text-align: center center;
-	font-size: 18px;
+	font-size: 16px;
 	align: left center;
 	margin-top:  2px;
+	text-overflow: shrink;
 }
 
 .BattlepassRow {
