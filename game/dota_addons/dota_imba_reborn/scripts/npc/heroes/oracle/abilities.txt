@@ -30,7 +30,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 12 9 6"
+		"AbilityCooldown"				"12 10 8 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 150 180 210"
+				"damage"					"180 230 280 330"
 			}
 			"02"
 			{
@@ -53,21 +53,34 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"minimum_purge_duration"	"0.5"
+				"minimum_purge_duration"	"1.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"maximum_purge_duration"	"2.5"
-				"LinkedSpecialBonus"	"special_bonus_unique_oracle_2"
+				"maximum_purge_duration"	"3.0"
+				//"LinkedSpecialBonus"	"special_bonus_unique_oracle_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_oracle_fortunes_end_max_duration"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
+				"radius"					"300 350 400 450"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mergence_delay"			"5"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_dark_willow/dark_willow_wisp_spell_fear_debuff.vpcf"
+		}
 	}
 
 	//=================================================================================================================
@@ -91,7 +104,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 600 700 800"
+		"AbilityCastRange"				"500 700 900 1100"
 		"AbilityCastPoint"				"0.3"
 		
 		// Time		
@@ -109,12 +122,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 3.5 4.0 4.5"
+				"duration"				"3.0 3.75 4.5 5.25"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"magic_damage_resistance_pct_tooltip"				"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"alter_status_resistance_reduction_pct"		"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"decree_delay"			"3"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -135,7 +158,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE" // IMBAfication: Faux Flame
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
@@ -149,7 +172,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.25"
+		"AbilityCooldown"				"2.25 2 1.75 1.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -162,22 +185,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 180 270 360"
-			}			
+				"damage"				"120 240 360 480"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_per_second"		"11.0 22.0 33.0 44.0"
+				"heal_per_second"		"15.0 30.0 45.0 60.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_heal_tooltip"	"99 198 297 396"
+				"total_heal_tooltip"	"150 300 450 600"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"9.0"
+				"duration"				"10.0"
 			}
 			"05"
 			{
@@ -187,7 +210,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"1.0"
+				"cooldown_scepter"		"0.5"
 				"RequiresScepter"	"1"
 			}
 			"07"
@@ -198,7 +221,46 @@
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	} 
+	}
+	
+	//=================================================================================================================
+	// Oracle: Alter Self
+	//=================================================================================================================
+	"imba_oracle_alter_self"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_oracle"
+		"AbilityTextureName"			"custom/oracle/alter_self"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/econ/events/league_teleport_2014/teleport_end_ground_flash_league.vpcf"
+			"particle"					"particles/econ/events/ti9/hero_levelup_ti9_flash_hit_magic.vpcf"
+			"particle"					"particles/econ/events/league_teleport_2014/teleport_start_l_flash_league.vpcf"
+		}
+	}
 
 	//=================================================================================================================
 	// Oracle: False Promise
@@ -227,7 +289,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"115 80 45"
+		"AbilityCooldown"				"70 50 30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -240,13 +302,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"8 9 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_oracle"
+				"duration"				"8 10 12"
+				//"LinkedSpecialBonus"	"special_bonus_unique_oracle"
+				"LinkedSpecialBonus"	"special_bonus_imba_oracle_false_promise_duration"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"radius"				"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"alter_heal_pct"		"25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"future_delay"			"10"
 			}
 		}
 	}
@@ -254,7 +327,7 @@
 	//=================================================================================================================
 	//
 	//=================================================================================================================
-	"special_bonus_imba_windranger_windrun_invisibility" 
+	"special_bonus_imba_oracle_fortunes_end_max_duration" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -264,7 +337,7 @@
 		
 		"LinkedAbility"
 		{
-			"01" 	"imba_windranger_windrun"
+			"01" 	"imba_oracle_fortunes_end"
 		}
 		
 		// Special
@@ -274,7 +347,91 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"25"
+				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_oracle_false_promise_invisibility" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_oracle_false_promise"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_oracle_fates_edict_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_oracle_fates_edict"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_oracle_false_promise_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_oracle_false_promise"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}

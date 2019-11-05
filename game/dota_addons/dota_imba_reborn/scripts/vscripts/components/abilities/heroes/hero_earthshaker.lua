@@ -138,7 +138,7 @@ function earthshaker_fissure_lua:PlayEffects( start_pos, end_pos, duration )
 	local caster = self:GetCaster()
 
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( caster.fissure_pfx, PATTACH_WORLDORIGIN, caster )
+	local effect_cast = ParticleManager:CreateParticle( caster.fissure_pfx or particle_cast, PATTACH_WORLDORIGIN, caster )
 --	local effect_cast = assert(loadfile("lua_abilities/rubick_spell_steal_lua/rubick_spell_steal_lua_arcana"))(self, particle_cast, PATTACH_WORLDORIGIN, caster )
 	ParticleManager:SetParticleControl( effect_cast, 0, start_pos )
 	ParticleManager:SetParticleControl( effect_cast, 1, end_pos )
@@ -220,7 +220,7 @@ end
 -- Initializations
 function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 	if IsServer() then
-		if not self:GetParent():IsHero() then
+		if not self:GetParent():IsHero() and not self:GetParent():IsControllableByAnyPlayer() then
 			self.movement_capability = 0
 
 			if self:GetParent():HasGroundMovementCapability() then
@@ -235,7 +235,7 @@ function modifier_earthshaker_fissure_lua_prevent_movement:OnCreated()
 end
 
 function modifier_earthshaker_fissure_lua_prevent_movement:OnDestroy( kv )
-	if IsServer() then
+	if IsServer() and self.movement_capability then
 		self:GetParent():SetMoveCapability(self.movement_capability)
 	end
 end
@@ -420,7 +420,7 @@ end
 -- Graphics & Animations
 function modifier_earthshaker_enchant_totem_lua:PlayEffects()
 	-- Get Resources
-	local particle_cast = self:GetParent().enchant_totem_buff_pfx
+	local particle_cast = self:GetParent().enchant_totem_buff_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
 
 	-- Create Particle
 	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_POINT_FOLLOW, self:GetParent() )
@@ -447,9 +447,8 @@ function modifier_earthshaker_enchant_totem_lua:PlayEffects()
 		false
 	)
 
-	if self:GetParent().enchant_totem_cast_pfx then
-		local effect_cast = ParticleManager:CreateParticle( self:GetParent().enchant_totem_cast_pfx, PATTACH_ABSORIGIN, self:GetParent() )
-	end
+	local effect_cast = ParticleManager:CreateParticle( self:GetParent().enchant_totem_cast_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_totem_cast.vpcf", PATTACH_ABSORIGIN, self:GetParent() )
+	ParticleManager:ReleaseParticleIndex(effect_cast)
 end
 
 modifier_earthshaker_enchant_totem_lua_movement = modifier_earthshaker_enchant_totem_lua_movement or class({})
@@ -473,7 +472,7 @@ function modifier_earthshaker_enchant_totem_lua_movement:OnCreated()
 	self.scepter_height = self.ability:GetSpecialValueFor("scepter_height")
 
 	if IsServer() then
-		self.blur_effect = ParticleManager:CreateParticle( self:GetParent().enchant_totem_leap_blur_pfx, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+		self.blur_effect = ParticleManager:CreateParticle( self:GetParent().enchant_totem_leap_blur_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_totem_leap_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
 
 		-- Variables
 		self.time_elapsed = 0
@@ -840,7 +839,7 @@ end
 
 function modifier_earthshaker_aftershock_lua:PlayEffects()
 	-- Get Resources
-	local particle_cast = self:GetParent().aftershock_pfx
+	local particle_cast = self:GetParent().aftershock_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_aftershock.vpcf"
 
 	-- Create Particle
 	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
@@ -919,7 +918,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 					Target 				= echo_enemy,
 					Source 				= enemy,
 					Ability 			= self,
-					EffectName 			= self:GetCaster().echo_slam_pfx,
+					EffectName 			= self:GetCaster().echo_slam_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf",
 					iMoveSpeed			= 600,
 					vSourceLoc 			= enemy:GetAbsOrigin(),
 					bDrawsOnMinimap 	= false,
@@ -943,7 +942,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 					ProjectileManager:CreateTrackingProjectile(projectile)
 
 					Timers:CreateTimer(0.1, function()
-						local echo_slam_death_pfx = ParticleManager:CreateParticle(self:GetCaster().echo_slam_tgt_pfx, PATTACH_ABSORIGIN, echo_enemy)
+						local echo_slam_death_pfx = ParticleManager:CreateParticle(self:GetCaster().echo_slam_tgt_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_tgt.vpcf", PATTACH_ABSORIGIN, echo_enemy)
 						ParticleManager:SetParticleControl(echo_slam_death_pfx, 6, Vector(math.min(effect_counter, 1), math.min(effect_counter, 1), math.min(effect_counter, 1)))
 						ParticleManager:SetParticleControl(echo_slam_death_pfx, 10, Vector(4, 0, 0)) -- earth particle duration
 						ParticleManager:ReleaseParticleIndex(echo_slam_death_pfx)
@@ -953,7 +952,7 @@ function imba_earthshaker_echo_slam:OnSpellStart()
 		end
 	end
 
-	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx, PATTACH_ABSORIGIN, self:GetCaster())
+	local echo_slam_particle = ParticleManager:CreateParticle(self:GetCaster().echo_slam_start_pfx or "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(echo_slam_particle, 10, Vector(4, 0, 0)) -- earth particle duration
 	ParticleManager:SetParticleControl(echo_slam_particle, 11, Vector(math.min(effect_counter, 1), math.min(effect_counter, 1), 0 )) -- enable ring with symbols
 	ParticleManager:ReleaseParticleIndex(echo_slam_particle)

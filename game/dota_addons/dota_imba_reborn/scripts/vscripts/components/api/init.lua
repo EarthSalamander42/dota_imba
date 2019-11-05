@@ -572,6 +572,19 @@ function api:CompleteGame(successCallback, failCallback)
 		winnerTeam = json.null
 	end
 
+	local rosh_lvl
+	local rosh_hp
+	local rosh_max_hp
+
+	print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
+	if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
+		rosh_lvl = ROSHAN_ENT:GetLevel()
+		rosh_hp = ROSHAN_ENT:GetHealth()
+		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+	end
+
+	print(rosh_lvl, rosh_hp, rosh_max_hp)
+
 	local payload = {
 		winner = winnerTeam,
 		game_id = self.game_id,
@@ -579,6 +592,9 @@ function api:CompleteGame(successCallback, failCallback)
 		radiant_score = self:GetKillsForTeam(2),
 		dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
+		rosh_lvl = rosh_lvl,
+		rosh_hp = rosh_hp,
+		rosh_max_hp = rosh_max_hp,
 	}
 
 	self:Request("game-complete", function(data)

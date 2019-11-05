@@ -3842,8 +3842,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"20"
-				"CalculateSpellDamageTooltip"	"0"
+				"damage_block_melee"	"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block_ranged"	"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}
@@ -3887,6 +3896,8 @@
 		"ScriptFile"					"components/items/item_vanguard.lua"
 		"AbilityTextureName" 			"custom/imba_poor_mans_shield"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"AbilityCooldown"				"25.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3902,13 +3913,37 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"6"
+				"bonus_agility"				"6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"30"
-				"CalculateSpellDamageTooltip"	"0"
+				"damage_block_melee"	"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block_ranged"	"18"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_block_melee"			"18"
+			}	
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_block_range"			"9"
+			}	
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_block_duration"		"5"
 			}
 		}
 	}
@@ -3978,8 +4013,19 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"40"
+				"block_damage_melee"	"40"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged"	"24"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}
@@ -4031,7 +4077,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"46"
 		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
@@ -4069,29 +4115,61 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
+				"block_damage_melee"	"50"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
-			}
+				"block_damage_ranged"	"30"
+				"CalculateSpellDamageTooltip"	"0"
+			}			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"block_chance"			"100"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_radius"			"1200"
+				"active_armor"			"2"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"10"
+				"duration"				"12"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_radius"			"1200"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee_active"	"60"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged_active"	"60"
+				"CalculateSpellDamageTooltip"	"0"
+			}		
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance_active"			"100"
+			}	
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_reapply_time"	"45"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"		"10"
 			}
 		}
 	}
@@ -4143,7 +4221,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"40.0"
+		"AbilityCooldown"				"41.0"
 		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
@@ -4207,35 +4285,61 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
+				"block_damage_melee"	"50"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
-			}
+				"block_damage_ranged"	"30"
+				"CalculateSpellDamageTooltip"	"0"
+			}			
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"block_chance"			"100"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct"	"25"
-				"CalculateSpellDamageTooltip"	"0"
+				"active_armor"			"2"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_reapply_time"	"40"
+				"duration"				"12"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_pct"	"25"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_reapply_time"	"40"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"damage_reduction_pct_passive"		"10"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee_active"	"60"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged_active"	"60"
+				"CalculateSpellDamageTooltip"	"0"
+			}		
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance_active"			"100"
 			}
 		}
 	}
@@ -4506,7 +4610,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"30"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10625,7 +10729,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_second"				"15"
+				"damage_per_second"				"20"
 			}
 			"04"
 			{
@@ -10789,6 +10893,10 @@
 		"SideShop" 						"0"
 		"SecretShop" 					"0"		
 
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"				
@@ -10859,23 +10967,35 @@
 			}
 			"12"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_block"					"45"
+				"var_type"						"FIELD_FLOAT"
+				"internal_bash_cd"				"2.3"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"internal_bash_cd"				"2"
+				"active_stun_duration"			"2"
 			}
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"active_stun_duration"			"2"
+				"actual_break_duration"			"7"
 			}
 			"15"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"actual_break_duration"			"7"
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee"	"45"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged"	"27"
+				"CalculateSpellDamageTooltip"	"0"
+			}			
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
 			}
 		}
 	}
@@ -16338,5 +16458,320 @@
 		}
 	}
 	
-	//next free ID: 2347
+	//=================================================================================================================
+	// Recipe: Valiance
+	//=================================================================================================================
+	"item_recipe_imba_valiance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2347"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					""
+		
+		"ItemPurchasable"				"0"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_valiance"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_vanguard;item_ring_of_tarrasque;item_ring_of_tarrasque"
+		}
+	}	
+		
+	//=================================================================================================================
+	// Valiance
+	//=================================================================================================================
+	"item_imba_valiance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_valiance"
+		"AbilityTextureName"			"custom/item_valiance"
+		
+		"ID"							"2348"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22.0"
+		"AbilityCastRange"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"4450"
+		"ItemShopTags"					"regen_health;block;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"valiance"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		"ItemPurchasable"				"0"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"700"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"17"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_melee"	"45"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_damage_ranged"	"27"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"block_chance"			"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"guard_duration"		"0.9"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"guard_damage_reduction"		"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"guard_angle"			"70"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"guard_status_resistance"		"100"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"counter_duration"		"2.0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_cast_range"	"600"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_dash_speed"	"1000"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_distance"		"300"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_damage_percent"		"150"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_knockback_distance"		"100"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_knockback_height"		"150"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"counter_knockback_duration"		"0.8"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"counter_castpoint"		"0.2"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"counter_tree_radius"		"150"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_stun_threshold"		"500"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"counter_mana_cost"		"70"
+			}
+		}
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/econ/items/chaos_knight/chaos_knight_ti7_shield/chaos_knight_ti7_golden_reality_rift.vpcf"
+			"particle"						"particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+		}
+	}
+	
+	//=================================================================================================================
+	// Recipe: Cyclone EX
+	//=================================================================================================================
+	"item_recipe_imba_cyclone_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2349"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		"ItemPurchasable"				"0"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_cyclone_2"
+		"ItemRequirements"
+		{
+			"01"						"item_cyclone;item_mystic_staff;item_imba_nether_wand;item_void_stone"
+		}
+	}	
+		
+	//=================================================================================================================
+	// Cyclone EX
+	//=================================================================================================================
+	"item_imba_cyclone_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_cyclone"
+		"AbilityTextureName"			"custom/item_cyclone_2"
+		
+		"ID"							"2350"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"ItemPurchasable"				"0"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"575"
+		"AbilityCastPoint"				"0.0"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"23.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"175"
+		"ItemCost"						"7450"
+		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"38"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"10.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cyclone_duration"		"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_drop_damage"	"50"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_spell_amp"		"8"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"self_movement_speed"	"175"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"centrifugal_damage_per_tick"	"50"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"centrifugal_tick_rate"	"0.5"
+			}
+		}
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/econ/items/chaos_knight/chaos_knight_ti7_shield/chaos_knight_ti7_golden_reality_rift.vpcf"
+			"particle"						"particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+		}
+	}
+
+	//next free ID: 2351
 }

@@ -10,7 +10,7 @@
 #base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/bristleback/abilities.txt
-#base heroes/broodmother/abilities.txt
+// #base heroes/broodmother/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
 #base heroes/death_prophet/abilities.txt
@@ -480,12 +480,12 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_pct"					"25"
+				"damage_pct"					"15"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"aura_linger"					"1.0"
+				"aura_linger"					"0.5"
 			}
 		}
 	}
@@ -10869,7 +10869,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"polarize_duration"			"12"
+				"polarize_duration"			"10"
 			}
 			"06"
 			{
@@ -11287,7 +11287,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_per_stack"		"300 400 500"
+				"pull_per_stack"		"300"
 			}
 			"07"
 			{
@@ -11297,7 +11297,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"polarize_duration"		"12"
+				"polarize_duration"		"10"
 			}
 		}
 	}
@@ -12261,7 +12261,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"24 20 16 12"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
@@ -12270,7 +12270,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 150 180 210"
+		"AbilityManaCost"				"140 160 180 200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12294,7 +12294,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"prison_movespeed"		"200 250 300 350"
+				"prison_movespeed"		"250"
 			}
 			"05"
 			{
@@ -15059,7 +15059,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_buildings_pct"		"25"
+				"damage_buildings_pct"		"50"
 			}
 			"08"
 			{
@@ -24681,7 +24681,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 60 80"
+				"damage"				"30 50 70"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
 			}
 //			"03"
@@ -33267,6 +33267,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
 			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"abilitycastrange"					""
+				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
+			}			
 		}
 	}
 
@@ -33422,6 +33428,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_duration"		"8 9 10"
 			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"martyr_aspd_pct"		"40"
+			}			
 		}
 	}
 
@@ -33657,6 +33669,31 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"distance"					"96"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_blink_strike_cast_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_blink_strike"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"600"
 			}
 		}
 	}
@@ -37426,6 +37463,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"beg_distance"			"300"
+			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -38521,7 +38563,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11 10 9 8"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38595,7 +38637,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11 10 9 8"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

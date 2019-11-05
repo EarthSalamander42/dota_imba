@@ -296,7 +296,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	me:FaceTowards(self.target:GetOrigin())
 	-- me:MoveToPosition(self.target:GetOrigin())
 
-	local distance = (self.target:GetOrigin() - me:GetOrigin()):Normalized()
+	local distance = (GetGroundPosition(self.target:GetOrigin(), nil) - GetGroundPosition(me:GetOrigin(), nil)):Normalized()
 	me:SetOrigin( me:GetOrigin() + distance * me:GetIdealSpeed() * dt )
 	
 	if not self.target:CanEntityBeSeenByMyTeam(self:GetParent()) then
@@ -437,6 +437,8 @@ end
 
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:IsHidden()		return true end
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:IsPurgable()	return false end
+function modifier_imba_spirit_breaker_charge_of_darkness_vision:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_spirit_breaker_charge_of_darkness_vision:ShouldUseOverheadOffset() return true end -- I have no idea when this works but it might be particle-specific
 
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnCreated()
 	if not IsServer() then return end
@@ -888,7 +890,7 @@ function modifier_imba_spirit_breaker_greater_bash_speed:OnCreated()
 end
 
 function modifier_imba_spirit_breaker_greater_bash_speed:CheckState()
-	local state = {[MODIFIER_STATE_UNSLOWABLE] = true}
+	return {[MODIFIER_STATE_UNSLOWABLE] = true}
 end
 
 function modifier_imba_spirit_breaker_greater_bash_speed:DeclareFunctions()
@@ -1167,6 +1169,7 @@ end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:IsHidden()	return true end
 function modifier_imba_spirit_breaker_nether_strike_vision:IsPurgable()	return false end
+function modifier_imba_spirit_breaker_nether_strike_vision:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
@@ -1213,6 +1216,7 @@ end
 
 function modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy:IgnoreTenacity()	return true end
 function modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy:IsPurgable()		return false end
+function modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy:OnCreated()
 	if not IsServer() then return end

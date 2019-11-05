@@ -50,16 +50,6 @@ function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	return "modifier_item_imba_lance_of_longinus"
 end
 
-function item_imba_lance_of_longinus:CastFilterResultTarget(target)
-	if IsServer() then
-		if PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	end
-end
-
 function item_imba_lance_of_longinus:OnSpellStart()
 	if not IsServer() then return end
 	

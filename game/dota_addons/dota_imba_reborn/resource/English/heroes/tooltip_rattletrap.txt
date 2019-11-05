@@ -49,6 +49,8 @@
 "DOTA_Tooltip_modifier_imba_rattletrap_power_cogs_charge_coil_counter"					"Charge Coil"
 "DOTA_Tooltip_modifier_imba_rattletrap_power_cogs_charge_coil_counter_Description"		"Charged by Power Cogs. Your next successful attack will stun, deal additional damage, and burn mana."
 
+"DOTA_Tooltip_modifier_imba_rattletrap_power_cogs_rotational"				"Rotational"
+
 "DOTA_Tooltip_modifier_imba_rattletrap_rocket_flare_critical"				"System Critical"
 "DOTA_Tooltip_modifier_imba_rattletrap_rocket_flare_critical_Description"	"Mana regeneration heavily reduced."
 

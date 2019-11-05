@@ -379,6 +379,7 @@
 	"lanecreepson_msg" "Creeps: Encendido"
 	"lang" "es"
 	"leaderboard" "Tabla de clasificaciones"
+	"leaderboard_donator" "Donator"
 	"leaderboard_loading" "Cargando tabla de clasificaciones, espera por favor"
 	"leaderboard_rank" "Rango"
 	"leaderboard_steam_avatar" "Steam"
@@ -550,5 +551,6 @@
 	"vote_gamemode_1" "Estándar"
 	"vote_gamemode_2" "Mutación"
 	"vote_gamemode_3" "Super frenético"
+	"vote_gamemode_4" "Diretide"
 	"welcome_label" "¡Bienvenido a Dota IMBA!"
 }

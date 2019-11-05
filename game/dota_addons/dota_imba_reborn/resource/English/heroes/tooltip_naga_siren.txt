@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image"										"#{DOTA_Tooltip_ability_naga_siren_mirror_image}"
-"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Description"							"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Description}"
+"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Description"							"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Description}\n<font color='#FF7800'>Everlasting Reflection:</font> Mirror Image illusions have an unlimited duration."
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Lore"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Lore}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Note0"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Note0}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Note1"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Note1}"
@@ -10,12 +10,12 @@
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_images_count"						"#{DOTA_Tooltip_ability_naga_siren_mirror_image_images_count}"
 
 "DOTA_Tooltip_ability_imba_naga_siren_ensnare"									"#{DOTA_Tooltip_ability_naga_siren_ensnare}"
-"DOTA_Tooltip_ability_imba_naga_siren_ensnare_Description"						"#{DOTA_Tooltip_ability_naga_siren_ensnare_Description}"
+"DOTA_Tooltip_ability_imba_naga_siren_ensnare_Description"						"#{DOTA_Tooltip_ability_naga_siren_ensnare_Description}\n<font color='#FF7800'>Ensnare Barrage:</font> Illusions also cast Ensnare on their closest target."
 "DOTA_Tooltip_ability_imba_naga_siren_ensnare_Lore"								"#{DOTA_Tooltip_ability_naga_siren_ensnare_Lore}"
 "DOTA_Tooltip_ability_imba_naga_siren_ensnare_duration"							"#{DOTA_Tooltip_ability_naga_siren_ensnare_duration}"
 
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide"									"#{DOTA_Tooltip_ability_naga_siren_rip_tide}"
-"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Description"						"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Description}"
+"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Description"						"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Description}\n<font color='#FF7800'>Wetter Rip Tide:</font> Applies a stack of 'Wet' Each stack of Wet makes them take an additional %wet_bonus_damage% damage from Rip Tide and lowers physical armor by an additional %wet_bonus_armor%."
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Lore"							"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Lore}"
 //	"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_chance"							"#{DOTA_Tooltip_ability_naga_siren_rip_tide_chance}"
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide_chance"							"CHANCE:"

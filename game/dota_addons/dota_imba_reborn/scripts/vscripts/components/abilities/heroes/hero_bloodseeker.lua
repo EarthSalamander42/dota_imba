@@ -737,11 +737,12 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-	-- The weird positional check is a bootleg way of determine if the ability is a duplicate or not (it's not perfect, but it's the best way I could think of in the meantime; if the positions match, then the ability is a standard cast)
-	if caster:HasScepter() and not self.from_blood_rite and (self:GetAbsOrigin() == self:GetCaster():GetAbsOrigin() and self:GetForwardVector() == self:GetCaster():GetForwardVector()) or self:IsStolen() then
+	-- God damn spaghetti check for Grimstroke exception
+	if caster:HasScepter() and (not self.from_blood_rite or self:IsStolen()) and self:GetAbilityIndex() ~= 0 then
 		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
 		if modifier_rupture_charges_handler then
 			modifier_rupture_charges_handler:DecrementStackCount()
+			self:StartCooldown(0.25)
 		end
 	end
 
@@ -764,6 +765,9 @@ if IsServer() then
 		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self.parent:GetAbsOrigin()
+		
+		self.movedamage_think = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+		
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("damage_cap_interval") )
 	end
 
@@ -773,7 +777,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
 		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
-			self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+			self.movedamage = self.movedamage_think
 		
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
@@ -962,18 +966,16 @@ function modifier_imba_rupture_charges:OnStackCountChanged(old_stack_count)
 end
 
 function modifier_imba_rupture_charges:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-
-	return decFuncs
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 end
 
 function modifier_imba_rupture_charges:OnAbilityFullyCast(keys)
 	if IsServer() then
 		local ability = keys.ability
 		local unit = keys.unit
-
+		
 		-- If this was the caster casting Refresher, refresh charges
-		if unit == self.caster and ability:GetName() == "item_refresher" then
+		if unit == self.caster and (ability:GetName() == "item_refresher" or ability:GetName() == "item_refresher_shard") then
 			self:SetStackCount(self.max_charge_count)
 		end
 	end

@@ -548,341 +548,89 @@
 
 
 
-.Diretide
-{
-	width: 100%;
-	height: 100%;
-	z-index: -10;
-}
-
-#DiretidePanel
-{
-	margin-top: 67%;
-	horizontal-align: center;
-	flow-children: down;
-	z-index: -1000;
-}
-
-#Diretide
-{
-	width: fit-children;
-	height: fit-children;
-	flow-children: down;
-	horizontal-align: center;
-	visibility: collapse;
-}
-
-#Diretide2
-{
-	width: fit-children;
-	height: fit-children;
-	flow-children: right;
-	horizontal-align: center;
-	visibility: collapse;
-}
-
-#ScorePanel
-{
-	flow-children: down;
-	width: fit-children;
-	height: fit-children;
-}
-
-#Timer,
-#Timer_alt
-{
-	font-size: 20px;
-	font-weight: bolder;
-	color: #ffffff;
-	text-shadow: 2px 2px 2px #7b612b;
-	text-align: center;
-	width: 100%;
-	text-overflow: clip;
-}
-
-#Timer_alt
-{
-	margin-right: 6%;
-	text-align: right;
-	text-overflow: clip;
-}
-
-#Timer.timer_visible
-{
-	opacity: 1;
-}
-
-#Timer.timer_alert
-{
-	color: red;
-}
-
-#RadiantScore,
-#DireScore
-{
-	flow-children: down;
-	width: 120px;
-	height: 110px;
-	align: center center;
-
-	background-image: url("file://{images}/custom_game/game_info/pumpkin.png");
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	background-size: 70% 70%;
-}
-
-#RadiantScoreText,
-#DireScoreText
-{
-	margin-left: 49px;
-	margin-top: -30px;
-
-	color: green;
-	text-align: center;
-}
-
-#DireScoreText
-{
-	color: red;
-}
-
-.QuestGenericText
-{
-	font-family: TH Sarabun New,YDYGO 540,Gulim,MingLiU;
-	text-shadow: 2px 2px 1px 3.0 #333333b0;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 40px;
-	text-align: center;
-}
-
-#PhaseLabel
-{
-	font-size: 18px;
-	font-weight: bolder;
-	color: green;
-	text-shadow: 1px 1px 1px #7b612b;
-	text-align: center;
-	text-overflow: clip;
-}
-
-#PhaseLevel
-{
-	horizontal-align: left;
-}
-
-//XHS BOSS BARS
-.HoldoutLabelSmall
-{
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	horizontal-align: center;
-	text-align: center;	
-	margin-top: 12px;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 16px;
-}
-
-.HoldoutLabelSmall_alt
-{
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	horizontal-align: center;
-	text-align: center;	
-	margin-bottom: 12px;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 16px;
-}
-
-.HoldoutLabelSmall.Header
-{
-	width: 95px;
-}
-
-#RoshanHP
-{
-	width: 750px;
-	height: 64px;
-	visibility: collapse;
-}
-
-#RoshanProgressBar
-{
-	width: 90%;
-	height: 24px;
-	border-radius: 1px;
-	border: 0px;
-	background-color: black;
-	vertical-align: middle;
-	horizontal-align: right;
-	box-shadow: fill #000 -3px -3px 6px 6px;	
-}
-
-#RoshanProgressBar_Left
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
-	box-shadow: inset #000 1px 1px 3px 3px;	
-	border-radius: 2px;
-}
-
-#RoshanProgressBar_Left
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #D71414 ), color-stop( .5, #D71414 ), to( #320000 ) );
-}
-
-#RoshanProgressBar_Right
-{
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
-}
-
-#RoshanProgressBarContainer
-{
-	width: 100%;
-	height: 40px;
-	margin-right: 6%;
-	vertical-align: bottom;
-}
-
-#BossIcon
-{
-	width: 48px;
-	height: 48px;
-	margin-left: 5%;	
-	background-image: url("file://{images}/custom_game/game_info/roshan.png");
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	background-size: 90% 90%;
-	z-index: 10;
-}
-
-#RoshanHealth
-{
-	margin-left: 6%;
-}
-
-#RoshanLevel
-{
-	margin-left: 6%;
-	horizontal-align: left;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	text-align: center;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 18px;
-}
-
-#RoshanLevel_alt
-{
-	margin-top: 5%;
-	margin-left: 2%;
-	horizontal-align: left;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	text-align: center;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 18px;
-}
 
 
-#Roshan
-{
-	width: 120px;
-	height: 80px;
-	align: center center;
-	background-image: url("file://{images}/custom_game/game_info/roshan.png");
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	background-size: 100% 100%;
-}
 
-#RoshanTarget
-{
-	width: 100%;
-	margin-top: 4%;
-	font-size: 16px;
-	font-weight: bolder;
-	color: #ffffff;
-	text-shadow: 2px 2px 2px #7b612b;
-	text-align: center;
-	text-overflow: clip;
-	visibility: collapse;
-}
 
-#RoshanTarget.visible
-{
-	opacity: 1;
-}
-
-#RoshanTarget.alert
-{
-	color: red;
-}
-
-#HallOfFame
-{
-	width: 800px;
-	height: 570px;
+#LeaderboardInfoContainer {
+	width: 50%;
+	height: 80%;
+	margin-top: 22%;
 	padding: 5px;
+	z-index: 10;
 	align: center center;
 	flow-children: down;
-	visibility: visible;
-	z-index: 10;
+	visibility: collapse;
+}
 
-//	background-color: #040c1850;
-	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
-	padding-bottom: 10px;
+#LocalPlayerInfoContainer {
+	width: 100%;
+	height: 60px;
+}
+
+#LocalPlayerInfo {
+	align: center bottom;
+}
+
+#LeaderboardMainContainer {
+	width: 100%;
+	background-color: #040c1850;
+	height: 550px;
+	padding: 10px;
 	overflow:  squish scroll;
+	flow-children: down;
+}
+
+.LeaderboardButtonLabel {
+	width: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+	align:  center center;
+}
+
+#XP {
+	background-color: #2b323fa4;
+	height: 90%;
+	align:  center center;
+	margin-bottom: 5px;
+}
+
+#XP:hover {
+	background-color: #303848;
+}
+
+#XP:active {
+	background-color: #303848;
+}
+
+#IMR {
+	background-color: #2b323fa4;
+	height: 90%;
+	align:  center center;
+	margin-bottom: 5px;
+}
+
+#IMR:hover {
+	background-color: #303848;
+}
+
+#IMR:active {
+	background-color: #303848;
 }
 
 .LeaderboardRank,
+.LeaderboardAvatar,
 .LeaderboardXP,
 .LeaderboardIMR,
-.LeaderboardAvatar,
-.LeaderboardAvatar_alt
+.LeaderboardTitle
 {
+	height: 100%;
 	text-align: center;
 	font-size: 19px;
 	color:#daebff;
 }
 
-.LeaderboardXP, {
-	padding: 3px 10px 3px 10px;
-	flow-children: right;
-}
-
-/* Leaderboard Legend */
 .LeaderboardLegend {
 	width: 100%;
 	height: 40px;
@@ -899,23 +647,30 @@
 }
 
 .LeaderboardRank {
-	width: 20%;	
-	align:  right center;
+	width: 10%;	
+	align:  center center;
 }
 
 .LeaderboardAvatar {
-	width: 60%;
+	margin-left: 1%;	
+	margin-right: 1%;	
 	align:  center center;
 }
 
 .LeaderboardXP {
-	width: 60%;	
-	align:  center center;
+	width: 50%;	
+	align:  left center;
 }
 
 .LeaderboardIMR {
-	width: 20%;	
-	align:  right center;
+	width: 40%;	
+	align:  center center;
+}
+
+.LeaderboardTitle {
+	width: 95%;
+	padding-left: 5%;
+	font-size: 28px;
 }
 
 #Tops {
@@ -924,219 +679,84 @@
 	flow-children: down;
 }
 
-.LeaderboardButtonLabel {
+.imbar-progress-bar
+{
 	width: 100%;
-	text-align: center;
-	font-size: 19px;
-	color:#daebff;
-	align:  center center;
+	border-radius: 10px;
+	background-color: #282f39;
+	height: 28px;
+	vertical-align: center;
+	overflow:  clip;
 }
 
-#InfoHeader {
-	width: 100%;
-	height: 50px;
-	background-color: #2c4d6015;
-	border-bottom: 1px solid #29353b;
-	margin-bottom: 20px;
+.ProgressBarLeft
+{
+	border-radius:  0 6px 6px 0;
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#0a9153), color-stop( 0.5, #09bb6a ), to(#0a9153));
+}
+
+#ProgressBarRight
+{
+	background-color: gradient( linear, 0% 0%, 0 0%, from( #222222FF ), to( black ) );
+}
+
+.imbar-lvl
+{
+	width: 35%;
+	font-size: 16px;
+	margin-top: 2px;
+	margin-left: 15px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-shadow: 1px 1px 2px 2.0 #00000030;
+}
+.imbar-rank-wrapper {
+	width: 40%;
+	margin-left: 12%;
+	flow-children:  right;
+	align: center center;
+}
+.imbar-rank
+{
+	margin-top: 2px;
+	font-size: 14px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-transform: uppercase;
+	border-radius: 5px;
+	margin-left: 8px;
+
+	text-shadow: 1px 1px 2px 3.0 #00000030;
+}
+
+.imbar-rank-cicle {
+	width: 12px;
+	height: 12px;
+	align:  center center;
+	border-radius: 50%;
+	opacity: 0.9;
+	box-shadow: 0px 0px 2px 0px #00000085;
+	brightness: 0.9;
 }
 
 #CloseButton {
-	width: 90px;
+	width: 5%;
 	height: 37px;
-	align: left center;
+	align: right center;
 }
 #CloseButtonImage {
 	width: 37px;
 	height: 37px;
-	align: left center;
+	align: right center;
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/close.png");
 	opacity: 0.5;
 }
 #CloseButton:hover #CloseButtonImage {
 	opacity: 1;
-}
-
-/* Labels */
-.HoldoutLabelSmall
-{
-	color: #b2baaf;
-	text-transform: uppercase;
-	text-align: center;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	align: center center;
-	text-align: center;	
-	text-shadow: 1px 1px 2px 3.0 #000000ee;
-	font-size: 22px;
-}
-
-#es-player-reward-panel {
-	width: 100%;
-	height: 40%;
-	align: center center;
-	flow-children: right;
-	z-index: 1;
-}
-
-.es-player-reward {
-	width: 25%;
-	height: 90%;
-	padding: 30px;
-	background-color: #000000da;
-	border-radius: 20px;
-	align: center center;
-	visibility: collapse;
-	flow-children: down;
-}
-
-.es-player-reward-name,
-.es-player-reward-description {
-	width: 100%;
-	height: 10%;
-	color: white;
-	text-align: center;
-	vertical-align: center;
-	font-size: 21px;
-}
-
-.es-player-reward-description {
-	font-size: 30px;
-}
-
-.es-player-reward-rarity {
-	width: 100%;
-	height: 10%;
-	text-align: center;
-	vertical-align: center;
-	font-size: 20px;
-}
-
-/*
-#es-player-reward-image-container {
-	width: 180px;
-	height: 180px;
-	margin-top: 30px;
-	align: center bottom;
-	background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
-}
-*/
-.es-player-reward-image {
-	width: 180px;
-	height: 120px;
-	margin-top: 30px;
-	align: center bottom;
-}
-
-.es-player-reward-button {
-	margin-top: 30px;
-	height: 30px;
-	width: fill-parent-flow(1.0);
-	background-position: 10px center;
-	background-repeat: no-repeat;
-	background-size: auto 32px;
-
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404D65dd ), to( #2B3445dd ) );
-	box-shadow: #0000008f -6px -6px 12px 12px;
-	transition-property: brightness;
-	transition-duration: 0.2s;
-	margin-bottom: 20px;
-}
-
-.es-player-reward-button_label {
-	margin-top: 5px;
-	color: darkgrey;
-	align: center center;
-	text-transform: uppercase;
-}
-
-.es-player-reward-button:hover {
-  brightness: 2.0;
-  box-shadow: #999999ff -2px -2px 4px 4px;
-}
-
-.es-player-reward-button:active {
-  brightness: 0.5;
-  box-shadow: #999999ff -2px -2px 4px 4px;
-}
-
-.common {
-	color: COMMON_COLOR;
-}
-
-.uncommon {
-	color: UNCOMMON_COLOR;
-}
-
-.rare {
-	color: RARE_COLOR;
-}
-
-.mythical {
-	color: MYTHICAL_COLOR;
-}
-
-.legendary {
-	color: LEGENDARY_COLOR;
-}
-
-.immortal {
-	color: IMMORTAL_COLOR;
-}
-
-.arcana {
-	color: ARCANA_COLOR;
-}
-
-.ancient {
-	color: ANCIENT_COLOR;
-}
-
-.level-common,
-.level-uncommon {
-	
-}
-
-.level-rare {
-	animation-name: level_rare;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
-}
-
-.level-mythical {
-	animation-name: level_mythical;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
-}
-
-.level-legendary {
-	animation-name: level_legendary;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
-}
-
-.level-immortal {
-	animation-name: level_immortal;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
-}
-
-.level-arcana {
-	animation-name: level_arcana;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
-}
-
-.level-ancient {
-	animation-name: level_ancient;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
 }

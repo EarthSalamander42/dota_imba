@@ -10,11 +10,11 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
---	if IMBA_DIRETIDE == true then
---		if Diretide.DIRETIDE_PHASE >= 3 then
---			return false
---		end
---	end
+	if GameMode:GetCustomGamemode() == 4 then
+		if Diretide.DIRETIDE_PHASE >= 3 then
+			return false
+		end
+	end
 
 	-- Ignore negative gold values
 	if keys.gold <= 0 then
@@ -148,6 +148,11 @@ function GameMode:ModifierFilter( keys )
 	-- name_const				modifier_imba_roshan_rage_stack
 
 	if IsServer() then
+		local disableHelpResult = DisableHelp.ModifierGainedFilter(keys)
+		if disableHelpResult == false then
+			return false
+		end
+
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
@@ -219,6 +224,7 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:IsRoshan() then
 			-- Ignore stuns
+			print("Roshan modifier name:", modifier_name)
 			if modifier_name == "modifier_stunned" then
 				return false
 			end
@@ -233,7 +239,7 @@ function GameMode:ModifierFilter( keys )
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
 			end
 
-			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" then
+			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
 				return false
 			end
 		end
@@ -279,6 +285,11 @@ function GameMode:ModifierFilter( keys )
 
 			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
 
+			return false
+		end
+
+		if modifier_owner:HasModifier("modifier_no_pvp") and modifier_owner:GetOpposingTeamNumber() == modifier_caster:GetTeamNumber() and not modifier_name == "modifier_truesight" then
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
 			return false
 		end
 
@@ -500,6 +511,11 @@ function GameMode:OrderFilter( keys )
 
 	local target = keys.entindex_target ~= 0 and EntIndexToHScript(keys.entindex_target) or nil
 	local ability = keys.entindex_ability ~= 0 and EntIndexToHScript(keys.entindex_ability) or nil
+
+	local disableHelpResult = DisableHelp.ExecuteOrderFilter(keys.order_type, ability, target, unit)
+	if disableHelpResult == false then
+		return false
+	end
 
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 	--		local ability = EntIndexToHScript(keys["entindex_ability"])
@@ -1255,17 +1271,16 @@ function GameMode:DamageFilter( keys )
 --			attacker:RemoveSelf()
 			keys.damage = 0
 		end
-	end
+		
+		-- Oracle False Promise Alter logic (most of it will be handled in the ability file)
+		if attacker:HasModifier("modifier_imba_oracle_false_promise_timer_alter") then
+			keys.damage = 0
+		end
 
---	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then
---		if attacker == victim then return true end
---		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
---			if victim:IsRealHero() then
---				print("Attacker and victim are heroes, don't damage them!")
---				keys.damage = 0
---			end
---		end
---	end
+		if victim:HasModifier("modifier_no_pvp") and attacker:GetTeamNumber() == victim:GetOpposingTeamNumber() then
+			keys.damage = 0
+		end
+	end
 
 	return true
 end

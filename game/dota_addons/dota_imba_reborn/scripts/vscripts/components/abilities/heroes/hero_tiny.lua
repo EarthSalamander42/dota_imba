@@ -789,25 +789,8 @@ end
 
 imba_tiny_toss = imba_tiny_toss or class({})
 
-function imba_tiny_toss:GetAbilityTextureName()
-	return "tiny_toss"
-end
-
-function imba_tiny_toss:IsNetherWardStealable()
-	return false
-end
-
-function imba_tiny_toss:CastFilterResultTarget( hTarget )
-	if IsServer() then
-		print(PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()))
-		print(PlayerResource:IsDisableHelpSetForPlayerID(self:GetCaster():GetPlayerOwnerID(), hTarget:GetPlayerOwnerID()))
-		if hTarget:IsOpposingTeam(self:GetCaster():GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-			return UF_FAIL_DISABLE_HELP
-		end
-		
-		return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	end
-end
+function imba_tiny_toss:GetAbilityTextureName() return "tiny_toss" end
+function imba_tiny_toss:IsNetherWardStealable() return false end
 
 function imba_tiny_toss:OnSpellStart()
 	self.tossPosition = self:GetCursorPosition()
@@ -842,6 +825,7 @@ function imba_tiny_toss:OnSpellStart()
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
 
+	-- This can't be added to disable_help library, too specific.
 	for _, victim in pairs(tossVictims) do
 		if (PlayerResource:IsDisableHelpSetForPlayerID(victim:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID())) then
 			table.remove(tossVictims, _)

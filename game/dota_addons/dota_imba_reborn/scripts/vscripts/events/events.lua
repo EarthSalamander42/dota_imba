@@ -117,10 +117,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
-			
+
 			local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
+			ParticleManager:ReleaseParticleIndex(fountain_aura_pfx)
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen
@@ -201,9 +202,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if GameMode:GetCustomGamemode() > 1 then
-				SpawnEasterEgg()
-			end
+			-- Controversial addition
+			-- if GameMode:GetCustomGamemode() > 1 then
+				-- SpawnEasterEgg()
+			-- end
 
 			ImbaRunes:Spawn()
 		end
@@ -411,10 +413,6 @@ function GameMode:OnEntityKilled(keys)
 			return
 		end
 
-		if IMBA_DIRETIDE == true then
-			Diretide:OnEntityKilled(killer, killed_unit)
-		end
-
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
 			GameMode:OnHeroDeath(killer, killed_unit)
@@ -543,7 +541,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	end
 	
 	-- Add some deprecated abilities back to heroes for that "IMBA" factor
-	local subAbilities = {"chen_test_of_faith", "keeper_of_the_light_mana_leak", "huskar_inner_vitality", "tusk_frozen_sigil"}
+	local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 	
 	for _, ability in ipairs(subAbilities) do 
 		if hero:HasAbility(ability) then
@@ -858,24 +856,22 @@ function GameMode:OnPlayerChat(keys)
 								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
 							}
 							upgraded = true
-						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" and (hero == caster) then
+						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" then
 							ability_set = {
 								[0] = "imba_oracle_fortunes_end",
 								[1] = "imba_oracle_fates_edict",
 								[2] = "imba_oracle_purifying_flames",
-								[3] = "generic_hidden",
+								[3] = "imba_oracle_alter_self",
 								[4] = "generic_hidden",
 								[5] = "imba_oracle_false_promise",
-								-- [6] = "imba_timbersaw_return_chakram",
-								-- [7] = "imba_timbersaw_return_chakram_2",
-								-- [8] = "special_bonus_hp_225",
-								-- [9] = "special_bonus_mp_regen_250",
-								-- [10] = "special_bonus_spell_amplify_10",
-								-- [11] = "special_bonus_imba_timbersaw_reactive_armor_max_stacks",
-								-- [12] = "special_bonus_strength_20",
-								-- [13] = "special_bonus_cooldown_reduction_15",
-								-- [14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
-								-- [15] = "special_bonus_imba_timbersaw_timber_chain_range",
+								[6] = "special_bonus_imba_oracle_fortunes_end_max_duration",
+								[7] = "special_bonus_exp_boost_25",
+								[8] = "special_bonus_cast_range_150",
+								[9] = "special_bonus_gold_income_120",
+								[10] = "special_bonus_movement_speed_45",
+								[11] = "special_bonus_imba_oracle_false_promise_invisibility",
+								[12] = "special_bonus_imba_oracle_fates_edict_cooldown",
+								[13] = "special_bonus_imba_oracle_false_promise_duration",
 							}
 							upgraded = true							
 						end
@@ -893,7 +889,8 @@ function GameMode:OnPlayerChat(keys)
 								if new_ability:GetName() == "imba_windranger_backpedal" or
 								new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" or
 								new_ability:GetName() == "imba_timbersaw_chakram_2" or
-								new_ability:GetName() == "imba_timbersaw_chakram_3" then
+								new_ability:GetName() == "imba_timbersaw_chakram_3" or 
+								new_ability:GetName() == "imba_oracle_alter_self" then
 									new_ability:SetLevel(1)
 								end
 							end

@@ -206,6 +206,11 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
+	
+	"item_recipe_imba_valiance"		"REMOVE"
+	"item_imba_valiance"			"REMOVE"
+	"item_recipe_imba_cyclone_2"	"REMOVE"
+	"item_imba_cyclone_2"			"REMOVE"
 
 
 	//=================================================================================================================
@@ -2220,10 +2225,20 @@
 	
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"6"
+			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"self_attack_chance"		"20 30 40 50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ignite_dps"				"30 40 50 60"
 			}
 			"05"
 			{
@@ -2243,6 +2258,10 @@
 	//=================================================================================================================
 	"brewmaster_drunken_brawler"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 19 18 17"
+		
 		"AbilitySpecial"
 		{
 			"03"
@@ -2276,6 +2295,29 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"16 20 24"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_movementspeed"		"150"
+				"RequiresScepter"			"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_brewmaster"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"2000"
 			}
 		}
 	}

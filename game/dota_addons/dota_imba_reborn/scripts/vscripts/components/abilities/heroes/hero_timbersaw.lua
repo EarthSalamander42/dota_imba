@@ -321,7 +321,7 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_TREE,
 		
-		bHasFrontalCone = false,
+		bHasFrontalCone = true,
 		bReplaceExisting = false,
 		fExpireTime = GameRules:GetGameTime() + 10.0,
 		
@@ -1041,6 +1041,15 @@ function imba_timbersaw_chakram_2:OnSpellStart()
 		bAutoCastState	= self:GetAutoCastState()
 	}
 	
+
+	if not self.effect_name then
+		self.effect_name = "particles/units/heroes/hero_shredder/shredder_chakram_aghs.vpcf"
+		
+		if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+			self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_aghs.vpcf"
+		end
+	end
+
 	local chakram_projectile = ProjectileManager:CreateLinearProjectile({
 		Source			= self:GetCaster(),
 		Ability			= self,
@@ -1558,12 +1567,25 @@ function imba_timbersaw_return_chakram:OnSpellStart()
 					bReturning		= true,
 					id				= GameRules:GetGameTime() -- Tracking Projectiles don't create their own ids so gonna do some spaghet method
 				}
-			
+
+				if not self.effect_name then
+					self.effect_name = "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf"
+					
+					if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+						self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_chakram_return.vpcf"
+						-- self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_return.vpcf"
+					end
+					
+					-- if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand_blade_gold.vmdl") then
+						-- effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_return.vpcf"
+					-- end
+				end
+
 				local chakram_projectile = ProjectileManager:CreateTrackingProjectile({
 					Target 				= self:GetCaster(),
 					Source 				= nil,
 					Ability 			= self.chakram_ability,
-					EffectName 			= "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf",
+					EffectName 			= self.effect_name,
 					iMoveSpeed			= self.chakram_ability:GetSpecialValueFor("speed"),
 					vSourceLoc 			= ProjectileManager:GetLinearProjectileLocation(_),
 					bDrawsOnMinimap 	= false,
@@ -1634,13 +1656,26 @@ function imba_timbersaw_return_chakram_2:OnSpellStart()
 					bReturning		= true,
 					id				= GameRules:GetGameTime() -- Tracking Projectiles don't create their own ids so gonna do some spaghet method
 				}
-			
+				
+				if not self.effect_name then
+					self.effect_name = "particles/econ/items/shredder/hero_shredder_icefx/shredder_chakram_return_ice.vpcf"
+					
+					if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+						self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_chakram_return.vpcf"
+						-- self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_return.vpcf"
+						-- self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_aghs.vpcf"
+					end
+					
+					-- if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand_blade_gold.vmdl") then
+						-- effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_return.vpcf"
+					-- end
+				end
+				
 				local chakram_projectile = ProjectileManager:CreateTrackingProjectile({
 					Target 				= self:GetCaster(),
 					Source 				= nil,
 					Ability 			= self.chakram_ability,
-					-- Okay I know this is wrong...but since it's situated as a tracking projectile I can't change its CPs
-					EffectName 			= "particles/econ/items/shredder/hero_shredder_icefx/shredder_chakram_return_ice.vpcf",
+					EffectName 			= self.effect_name,
 					iMoveSpeed			= self.chakram_ability:GetSpecialValueFor("speed"),
 					vSourceLoc 			= ProjectileManager:GetLinearProjectileLocation(_),
 					bDrawsOnMinimap 	= false,
@@ -1703,11 +1738,13 @@ function modifier_imba_timbersaw_chakram_thinker:OnCreated(params)
 	if self:GetAbility() then
 		self.damage_type		= self:GetAbility():GetAbilityDamageType()
 		
-		if self:GetAbility():GetName() == "imba_timbersaw_chakram" then
-			self.effect_name	= "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf"
+		self.effect_name = "particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf"
+		
+		if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+			self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_chakram_return.vpcf"
 		elseif self:GetAbility():GetName() == "imba_timbersaw_chakram_2" then
 			self.effect_name	= "particles/econ/items/shredder/hero_shredder_icefx/shredder_chakram_return_ice.vpcf"
-		end	
+		end
 	else
 		self.damage_type		= DAMAGE_TYPE_PURE
 	end
@@ -1752,7 +1789,13 @@ function modifier_imba_timbersaw_chakram_thinker:OnCreated(params)
 	
 	self.interval = self.damage_interval
 
-	self.chakram_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.stay_effect = "particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf"
+	
+	if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+		self.stay_effect = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold_stay.vpcf"
+	end
+
+	self.chakram_particle = ParticleManager:CreateParticle(self.stay_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	
 	-- Because they share the same particle with just different CPs for colours, this needs to be established here
 	if self:GetAbility() then

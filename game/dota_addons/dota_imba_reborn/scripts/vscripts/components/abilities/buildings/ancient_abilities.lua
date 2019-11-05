@@ -281,6 +281,7 @@ function modifier_imba_fountain_danger_zone_debuff:IsHidden() return true end
 function modifier_imba_fountain_danger_zone_debuff:IsPurgable() return false end
 function modifier_imba_fountain_danger_zone_debuff:IsPurgeException() return false end
 function modifier_imba_fountain_danger_zone_debuff:IsStunDebuff() return false end
+function modifier_imba_fountain_danger_zone_debuff:IgnoreTenacity()	return true end
 
 function modifier_imba_fountain_danger_zone_debuff:CheckState()
 	local state = {

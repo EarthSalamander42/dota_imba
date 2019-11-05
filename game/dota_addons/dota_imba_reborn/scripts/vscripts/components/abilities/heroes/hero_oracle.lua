@@ -1,83 +1,117 @@
 -- Editors:
 --    AltiV, October 4th, 2019
 
-
+LinkLuaModifier("modifier_imba_oracle_fortunes_end_delay", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_fortunes_end_purge", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_oracle_fortunes_end_purge_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_oracle_fates_edict_delay", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_fates_edict", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_oracle_fates_edict_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_oracle_purifying_flames", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_oracle_purifying_flames_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_oracle_alter_self", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_oracle_false_promise_delay", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_false_promise_timer", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter_targets", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
 imba_oracle_fortunes_end					= class({})
+modifier_imba_oracle_fortunes_end_delay		= class({})
 modifier_imba_oracle_fortunes_end_purge		= class({})
+modifier_imba_oracle_fortunes_end_purge_alter	= class({})
 
 imba_oracle_fates_edict						= class({})
+modifier_imba_oracle_fates_edict_delay		= class({})
 modifier_imba_oracle_fates_edict			= class({})
+modifier_imba_oracle_fates_edict_alter		= class({})
 
 imba_oracle_purifying_flames				= class({})
 modifier_imba_oracle_purifying_flames		= class({})
+modifier_imba_oracle_purifying_flames_alter	= class({})
+
+imba_oracle_alter_self						= class({})
+modifier_imba_oracle_alter_self				= class({})
 
 imba_oracle_false_promise					= class({})
+modifier_imba_oracle_false_promise_delay	= class({})
 modifier_imba_oracle_false_promise_timer	= class({})
+modifier_imba_oracle_false_promise_timer_alter	= class({})
+modifier_imba_oracle_false_promise_timer_alter_targets	= class({})
 
 ------------------------------
 -- IMBA_ORACLE_FORTUNES_END --
 ------------------------------
+
+function imba_oracle_fortunes_end:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return "oracle_fortunes_end"
+	else
+		return "custom/oracle/fortunes_end_alter"
+	end
+end
+
+function imba_oracle_fortunes_end:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
 
 function imba_oracle_fortunes_end:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
 function imba_oracle_fortunes_end:OnSpellStart()
-	self:GetCaster():EmitSound("Hero_Oracle.FortunesEnd.Channel")
+	self.target				= self:GetCursorTarget()
 	
+	self.channel_sound		= "Hero_Oracle.FortunesEnd.Channel"
+	self.attack_sound		= "Hero_Oracle.FortunesEnd.Attack"
+	self.target_sound		= "Hero_Oracle.FortunesEnd.Target"
+	self.channel_particle	= "particles/units/heroes/hero_oracle/oracle_fortune_channel.vpcf"
+	self.tgt_particle		= "particles/units/heroes/hero_oracle/oracle_fortune_cast_tgt.vpcf"
+	self.effect_name		= "particles/units/heroes/hero_oracle/oracle_fortune_prj.vpcf"
+	self.aoe_particle_name	= "particles/units/heroes/hero_oracle/oracle_fortune_aoe.vpcf"
+	self.modifier_name		= "modifier_imba_oracle_fortunes_end_purge"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.channel_sound		= "Hero_Oracle.FortunesEnd.Channel_Alter"
+		self.attack_sound		= "Hero_Oracle.FortunesEnd.Attack_Alter"
+		self.target_sound		= "Hero_Oracle.FortunesEnd.Target_Alter"
+		self.channel_particle	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_channel.vpcf"
+		self.tgt_particle		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_cast_tgt.vpcf"
+		self.effect_name		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_proj.vpcf"
+		self.aoe_particle_name	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_aoe.vpcf"
+		self.modifier_name		= "modifier_imba_oracle_fortunes_end_purge_alter"
+	end
+	
+	self.autocast_state			= self:GetAutoCastState()
+	
+	self:GetCaster():EmitSound(self.channel_sound)
+
+	if self:GetCaster():GetName() == "npc_dota_hero_oracle" and RollPercentage(50) then		
+		self:GetCaster():EmitSound("oracle_orac_fortunesend_0"..RandomInt(1, 6))
+	end
+
 	if self.fortunes_particle then
 		ParticleManager:DestroyParticle(self.fortunes_particle, false)
 		ParticleManager:ReleaseParticleIndex(self.fortunes_particle)
 	end
 	
-	self.fortunes_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_channel.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	self.fortunes_particle = ParticleManager:CreateParticle(self.channel_particle, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.fortunes_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	
-	self.target_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_cast_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+	self.target_particle = ParticleManager:CreateParticle(self.tgt_particle, PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
 	ParticleManager:ReleaseParticleIndex(self.target_particle)
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "damage"					"120 150 180 210"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "bolt_speed"				"1000"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "minimum_purge_duration"	"0.5"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "maximum_purge_duration"	"2.5"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_oracle_2"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "radius"					"300"
-			-- }
 end
 
-function imba_oracle_fortunes_end:OnChannelThink(flInterval)
+-- function imba_oracle_fortunes_end:OnChannelThink(flInterval)
 
-end
+-- end
 
 function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
-	self:GetCaster():StopSound("Hero_Oracle.FortunesEnd.Channel")
-	self:GetCaster():EmitSound("Hero_Oracle.FortunesEnd.Attack")
+	self:GetCaster():StopSound(self.channel_sound)
+	self:GetCaster():EmitSound(self.attack_sound)
 	
 	if self.fortunes_particle then
 		ParticleManager:DestroyParticle(self.fortunes_particle, false)
@@ -85,14 +119,14 @@ function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
 	end
 	
 	ProjectileManager:CreateTrackingProjectile(	{
-		Target 				= self:GetCursorTarget(),
+		Target 				= self.target,
 		Source 				= self:GetCaster(),
 		Ability 			= self,
-		EffectName 			= "particles/units/heroes/hero_oracle/oracle_fortune_prj.vpcf",
+		EffectName 			= self.effect_name,
 		iMoveSpeed			= self:GetSpecialValueFor("bolt_speed"),
 		vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
 		bDrawsOnMinimap 	= false,
-		bDodgeable 			= true,
+		bDodgeable 			= false,
 		bIsAttack 			= false,
 		bVisibleToEnemies 	= true,
 		bReplaceExisting 	= false,
@@ -102,102 +136,280 @@ function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
 		iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
 		
 		ExtraData = {
-			charge_pct		= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime())
+			charge_pct			= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()),
+			target_sound		= self.target_sound,
+			aoe_particle_name	= self.aoe_particle_name,
+			modifier_name		= self.modifier_name,
+			autocast_state		= self.autocast_state
 		}
 	})
 end
 
 function imba_oracle_fortunes_end:OnProjectileHit_ExtraData(target, location, data)
-	EmitSoundOnLocationWithCaster(location, "Hero_Oracle.FortunesEnd.Target", self:GetCaster())
-
-	self.aoe_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_aoe.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(self.aoe_particle, 0, location)
-	ParticleManager:SetParticleControl(self.aoe_particle, 2, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius")))
-	ParticleManager:ReleaseParticleIndex(self.aoe_particle)
-
 	if target and data.charge_pct and not target:TriggerSpellAbsorb(self) then
-		-- "Fortune's End first applies the dispel, then the debuff, then the damage."
-		if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-			target:Purge(false, true, false, false, false)
-		end
-		
-		-- "Always removes Fate's Edict on affected targets."
-		if target:HasModifier("modifier_imba_oracle_fates_edict") then
-			target:RemoveModifierByName("modifier_imba_oracle_fates_edict")
-		end
-		
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-			self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(self.damage_particle, 1, location)
-			ParticleManager:SetParticleControl(self.damage_particle, 3, enemy:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.damage_particle)
-		
-			enemy:Purge(true, false, false, false, false)
-		
-			self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_fortunes_end_purge", {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * data.charge_pct, self:GetSpecialValueFor("minimum_purge_duration"))})
-			
-			if self.purge_modifier then
-				self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * data.charge_pct, self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
-			end
-
-			ApplyDamage({
-				victim 			= enemy,
-				damage 			= self:GetSpecialValueFor("damage"),
-				damage_type		= self:GetAbilityDamageType(),
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetCaster(),
-				ability 		= self
+		if not data.autocast_state or data.autocast_state == 0 then
+			self:ApplyFortunesEnd(target, data.target_sound, data.aoe_particle_name, data.modifier_name, data.charge_pct)
+		else
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_fortunes_end_delay", {
+				duration			= self:GetSpecialValueFor("mergence_delay"),
+				target_sound		= data.target_sound,
+				aoe_particle_name	= data.aoe_particle_name,
+				modifier_name		= data.modifier_name,
+				charge_pct			= data.charge_pct
 			})
 		end
-		
-		self.purge_modifier = nil
 	end
+end
+
+function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_particle_name, modifier_name, charge_pct)
+	EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), target_sound, self:GetCaster())
+	
+	if aoe_particle_name then
+		self.aoe_particle = ParticleManager:CreateParticle(aoe_particle_name, PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(self.aoe_particle, 0, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.aoe_particle, 2, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius")))
+		ParticleManager:ReleaseParticleIndex(self.aoe_particle)
+	end
+	
+	-- "Fortune's End first applies the dispel, then the debuff, then the damage."
+	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		target:Purge(false, true, false, false, false)
+	end
+	
+	-- "Always removes Fate's Edict on affected targets."
+	if target:HasModifier("modifier_imba_oracle_fates_edict") then
+		target:RemoveModifierByName("modifier_imba_oracle_fates_edict")
+	end
+	
+	if target:HasModifier("modifier_imba_oracle_fates_edict_alter") then
+		target:RemoveModifierByName("modifier_imba_oracle_fates_edict_alter")
+	end
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(self.damage_particle, 1, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.damage_particle, 3, enemy:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(self.damage_particle)
+	
+		enemy:Purge(true, false, false, false, false)
+		
+		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration"))})
+		
+		if self.purge_modifier then
+			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
+		end
+
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	end
+	
+	self.purge_modifier = nil
+end
+
+---------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FORTUNES_END_DELAY --
+---------------------------------------------
+
+function modifier_imba_oracle_fortunes_end_delay:IsPurgable()		return false end
+function modifier_imba_oracle_fortunes_end_delay:RemoveOnDeath()	return false end
+function modifier_imba_oracle_fortunes_end_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_fortunes_end_delay:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_fortunes_end_delay:GetTexture()
+	if self.texture_name then
+		return self.texture_name
+	else
+		return "oracle_fortunes_end"
+	end
+end
+
+function modifier_imba_oracle_fortunes_end_delay:OnCreated(params)
+	self.texture_name = "oracle_fortunes_end"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.texture_name = "custom/oracle/fortunes_end_alter"
+	end
+	
+	if not IsServer() then return end
+	
+	self.target_sound		= params.target_sound
+	self.aoe_particle_name	= params.aoe_particle_name
+	self.modifier_name		= params.modifier_name
+	self.charge_pct			= params.charge_pct
+end
+
+function modifier_imba_oracle_fortunes_end_delay:OnDestroy()
+	if not IsServer() or not self:GetAbility() or not self:GetParent():IsAlive() or self:GetRemainingTime() > 0 then return end
+	
+	self:GetAbility():ApplyFortunesEnd(self:GetParent(), self.target_sound, self.aoe_particle_name, self.modifier_name, self.charge_pct)
 end
 
 ---------------------------------------------
 -- MODIFIER_IMBA_ORACLE_FORTUNES_END_PURGE --
 ---------------------------------------------
 
+function modifier_imba_oracle_fortunes_end_purge:GetTexture()
+	return "oracle_fortunes_end"
+end
+
 function modifier_imba_oracle_fortunes_end_purge:GetEffectName()
 	return "particles/units/heroes/hero_oracle/oracle_fortune_purge.vpcf"
 end
 
-function modifier_imba_oracle_fortunes_end_purge:OnCreated()
-
+function modifier_imba_oracle_fortunes_end_purge:CheckState()
+	return {
+		[MODIFIER_STATE_ROOTED]		= true,
+		[MODIFIER_STATE_INVISIBLE]	= false -- This might not be technically correct
+	}
 end
 
-function modifier_imba_oracle_fortunes_end_purge:CheckState()
-	return {[MODIFIER_STATE_ROOTED] = true}
+---------------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FORTUNES_END_PURGE_ALTER --
+---------------------------------------------------
+
+function modifier_imba_oracle_fortunes_end_purge_alter:GetTexture()
+	return "custom/oracle/fortunes_end_alter"
+end
+
+function modifier_imba_oracle_fortunes_end_purge_alter:GetEffectName()
+	return "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_purge.vpcf"
+end
+
+-- Doesn't work properly with the effect name above
+-- function modifier_imba_oracle_fortunes_end_purge_alter:GetStatusEffectName()
+	-- return "particles/status_fx/status_effect_obsidian_matter.vpcf"
+-- end
+
+function modifier_imba_oracle_fortunes_end_purge_alter:OnCreated()
+	if not IsServer() then return end
+	
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_willow/dark_willow_wisp_spell_fear_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.particle, 60, Vector(255, 0, 0))
+	ParticleManager:SetParticleControl(self.particle, 61, Vector(1, 0, 0))
+	self:AddParticle(self.particle, false, false, -1, true, true)
+end
+
+function modifier_imba_oracle_fortunes_end_purge_alter:CheckState()
+	return {
+		[MODIFIER_STATE_COMMAND_RESTRICTED]	= true,
+		[MODIFIER_STATE_INVISIBLE]			= false -- This might not be technically correct
+	}
 end
 
 -----------------------------
 -- IMBA_ORACLE_FATES_EDICT --
 -----------------------------
 
-function imba_oracle_fates_edict:OnSpellStart()
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "duration"				"3.0 3.5 4.0 4.5"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "magic_damage_resistance_pct_tooltip"				"100"
-			-- }
+function imba_oracle_fates_edict:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return "oracle_fates_edict"
+	else
+		return "custom/oracle/fates_edict_alter"
+	end
+end
 
+function imba_oracle_fates_edict:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_oracle_fates_edict:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_fates_edict_cooldown")
+end
+
+function imba_oracle_fates_edict:OnSpellStart()
 	local target = self:GetCursorTarget()
 
 	if target:TriggerSpellAbsorb(self) then return end
+	
+	self.cast_sound			= "Hero_Oracle.FatesEdict.Cast"
+	-- self.channel_particle	= "particles/units/heroes/hero_oracle/oracle_fortune_channel.vpcf"
+	-- self.tgt_particle		= "particles/units/heroes/hero_oracle/oracle_fortune_cast_tgt.vpcf"
+	-- self.effect_name		= "particles/units/heroes/hero_oracle/oracle_fortune_prj.vpcf"
+	-- self.aoe_particle_name	= "particles/units/heroes/hero_oracle/oracle_fortune_aoe.vpcf"
+	self.modifier_name		= "modifier_imba_oracle_fates_edict"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.cast_sound				= "Hero_Oracle.FatesEdict.Cast_Alter"
+		-- self.channel_particle	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_channel.vpcf"
+		-- self.tgt_particle		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_cast_tgt.vpcf"
+		-- self.effect_name		= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_proj.vpcf"
+		-- self.aoe_particle_name	= "particles/econ/items/oracle/oracle_fortune_ti7/oracle_fortune_ti7_aoe.vpcf"
+		self.modifier_name		= "modifier_imba_oracle_fates_edict_alter"
+	end
 
-	self:GetCaster():EmitSound("Hero_Oracle.FatesEdict.Cast")
+	if not self:GetAutoCastState() then
+		self:ApplyFatesEdict(target, self.cast_sound, self.modifier_name)
+	else
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_fates_edict_delay", {
+			duration		= self:GetSpecialValueFor("decree_delay"),
+			cast_sound		= self.cast_sound,
+			modifier_name	= self.modifier_name
+		})
+	end
+end
+
+function imba_oracle_fates_edict:ApplyFatesEdict(target, cast_sound, modifier_name)
+	self:GetCaster():EmitSound(cast_sound)
 	target:EmitSound("Hero_Oracle.FatesEdict")
 
-	self.edict_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_fates_edict", {duration = self:GetSpecialValueFor("duration")})
+	if self:GetCaster():GetName() == "npc_dota_hero_oracle" and RollPercentage(50) then
+		if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+			if target ~= self:GetCaster() then
+				self:GetCaster():EmitSound("oracle_orac_fatesedict_0"..RandomInt(1, 6))
+			else
+				self:GetCaster():EmitSound("oracle_orac_fatesedict_1"..RandomInt(0, 7))
+			end
+		else
+			self:GetCaster():EmitSound("oracle_orac_fatesedict_0"..RandomInt(7, 9))
+		end
+	end
+
+	self.edict_modifier = target:AddNewModifier(self:GetCaster(), self, self.modifier_name, {duration = self:GetSpecialValueFor("duration")})
 	
 	if self.edict_modifier and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		self.edict_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
 	end
+end
+
+--------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FATES_EDICT_DELAY --
+--------------------------------------------
+
+function modifier_imba_oracle_fates_edict_delay:IsPurgable()	return false end
+function modifier_imba_oracle_fates_edict_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_fates_edict_delay:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_fates_edict_delay:GetTexture()
+	if self.texture_name then
+		return self.texture_name
+	else
+		return "oracle_fates_edict"
+	end
+end
+
+function modifier_imba_oracle_fates_edict_delay:OnCreated(params)
+	self.texture_name = "oracle_fates_edict"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.texture_name = "custom/oracle/fates_edict_alter"
+	end
+
+	if not IsServer() then return end
+	
+	self.cast_sound		= params.cast_sound
+	self.modifier_name	= params.modifier_name
+end
+
+function modifier_imba_oracle_fates_edict_delay:OnDestroy()
+	if not IsServer() or not self:GetAbility() or not self:GetParent():IsAlive() or self:GetRemainingTime() > 0 then return end
+	
+	self:GetAbility():ApplyFatesEdict(self:GetParent(), self.cast_sound, self.modifier_name)
 end
 
 --------------------------------------
@@ -207,6 +419,10 @@ end
 -- Even though this is a debuff for both allies and enemies presumably, it is not affected by status resistance for allies
 function modifier_imba_oracle_fates_edict:IgnoreTenacity()	return self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() end
 function modifier_imba_oracle_fates_edict:IsDebuff()		return true end
+
+function modifier_imba_oracle_fates_edict:GetTexture()
+	return "oracle_fates_edict"
+end
 
 function modifier_imba_oracle_fates_edict:GetEffectName()
 	return "particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
@@ -221,6 +437,12 @@ function modifier_imba_oracle_fates_edict:OnCreated()
 	self:AddParticle(self.disarm_particle, false, false, -1, true, true)
 end
 
+function modifier_imba_oracle_fates_edict:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Oracle.FatesEdict")
+end
+
 function modifier_imba_oracle_fates_edict:CheckState()
 	return {[MODIFIER_STATE_DISARMED] = true}
 end
@@ -233,9 +455,66 @@ function modifier_imba_oracle_fates_edict:GetModifierMagicalResistanceBonus()
 	return self.magic_damage_resistance_pct_tooltip
 end
 
+--------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FATES_EDICT_ALTER --
+--------------------------------------------
+
+function modifier_imba_oracle_fates_edict_alter:IgnoreTenacity()	return self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() end
+function modifier_imba_oracle_fates_edict_alter:IsDebuff()			return true end
+
+function modifier_imba_oracle_fates_edict_alter:GetEffectName()
+	return "particles/units/heroes/hero_oracle/oracle_fatesedict_alter.vpcf"
+end
+
+function modifier_imba_oracle_fates_edict_alter:GetTexture()
+	return "custom/oracle/fates_edict_alter"
+end
+
+function modifier_imba_oracle_fates_edict_alter:OnCreated()
+	self.alter_status_resistance_reduction_pct	= self:GetAbility():GetSpecialValueFor("alter_status_resistance_reduction_pct") * (-1)
+	
+	if not IsServer() then return end
+	
+	self.flash_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fatesedict_disarm_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(self.flash_particle)
+	
+	self.mute_particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_muted.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	self:AddParticle(self.mute_particle, false, false, -1, true, true)
+end
+
+function modifier_imba_oracle_fates_edict_alter:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Oracle.FatesEdict")
+end
+
+function modifier_imba_oracle_fates_edict_alter:CheckState()
+	return {[MODIFIER_STATE_MUTED] = true}
+end
+
+function modifier_imba_oracle_fates_edict_alter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL, MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING}
+end
+
+function modifier_imba_oracle_fates_edict_alter:GetAbsoluteNoDamagePhysical()
+	return 1
+end
+
+function modifier_imba_oracle_fates_edict_alter:GetModifierStatusResistanceStacking()
+	return self.alter_status_resistance_reduction_pct
+end
+
 ----------------------------------
 -- IMBA_ORACLE_PURIFYING_FLAMES --
 ----------------------------------
+
+function imba_oracle_purifying_flames:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return "oracle_purifying_flames"
+	else
+		return "custom/oracle/purifying_flames_alter"
+	end
+end
 
 function imba_oracle_purifying_flames:GetCastPoint()
 	if not self:GetCaster():HasScepter() then
@@ -254,52 +533,57 @@ function imba_oracle_purifying_flames:GetCooldown(level)
 end
 
 function imba_oracle_purifying_flames:OnSpellStart()
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "damage"				"90 180 270 360"
-			-- }			
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "heal_per_second"		"11.0 22.0 33.0 44.0"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "total_heal_tooltip"	"99 198 297 396"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "duration"				"9.0"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "tick_rate"				"1.0"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "cooldown_scepter"		"1.0"
-				-- "RequiresScepter"	"1"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "castpoint_scepter"		"0.1"
-				-- "RequiresScepter"	"1"
-			-- }
+	self.damage_sound		= "Hero_Oracle.PurifyingFlames.Damage"
+	self.hit_particle		= "particles/units/heroes/hero_oracle/oracle_purifyingflames_hit.vpcf"
+	self.modifier_name		= "modifier_imba_oracle_purifying_flames"
+	
+	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self.damage_sound		= "Hero_Oracle.PurifyingFlames.Damage_Alter"
+		self.hit_particle		= "particles/units/heroes/hero_oracle/oracle_purifyingflames_hit_alter.vpcf"
+		self.modifier_name		= "modifier_imba_oracle_purifying_flames_alter"
+	end
 
 	self.target = self:GetCursorTarget()
 	
 	if self.target:TriggerSpellAbsorb(self) then return end
-
-	self:GetCaster():EmitSound("Hero_Oracle.PurifyingFlames")
-	self.target:EmitSound("Hero_Oracle.PurifyingFlames.Damage")
 	
-	self.purifying_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_purifyingflames_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
+	self.target:EmitSound(self.damage_sound)
+	self.target:EmitSound("Hero_Oracle.PurifyingFlames")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_oracle" then
+		if self.target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and RollPercentage(30) then
+			if not self.responses_allied then
+				self.responses_allied = 
+				{
+					"oracle_orac_purifyingflames_01",
+					"oracle_orac_purifyingflames_02",
+					"oracle_orac_purifyingflames_03",
+					"oracle_orac_purifyingflames_04",
+					"oracle_orac_purifyingflames_05",
+					"oracle_orac_purifyingflames_08",
+					"oracle_orac_purifyingflames_09",
+					"oracle_orac_purifyingflames_11"
+				}
+			end
+			
+			self:GetCaster():EmitSound(self.responses_allied[RandomInt(1, #self.responses_allied)])
+		elseif RollPercentage(25) then
+			if not self.responses_allied then
+				self.responses_enemy = 
+				{
+					"oracle_orac_purifyingflames_06",
+					"oracle_orac_purifyingflames_07",
+					"oracle_orac_purifyingflames_10",
+					"oracle_orac_purifyingflames_12"
+				}
+			end
+			
+			self:GetCaster():EmitSound(self.responses_enemy[RandomInt(1, #self.responses_enemy)])
+		end
+	end
+
+	self.purifying_particle = ParticleManager:CreateParticle(self.hit_particle, PATTACH_ABSORIGIN_FOLLOW, self.target)
+	ParticleManager:SetParticleControlEnt(self.purifying_particle, 1, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(self.purifying_particle)
 	
 	self.purifying_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_purifyingflames_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
@@ -313,16 +597,22 @@ function imba_oracle_purifying_flames:OnSpellStart()
 		self.damage_flag = DOTA_DAMAGE_FLAG_NON_LETHAL
 	end
 	
-	ApplyDamage({
-		victim 			= self.target,
-		damage 			= self:GetSpecialValueFor("damage"),
-		damage_type		= self:GetAbilityDamageType(),
-		damage_flags 	= self.damage_flag,
-		attacker 		= self:GetCaster(),
-		ability 		= self
-	})
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		ApplyDamage({
+			victim 			= self.target,
+			damage 			= self:GetSpecialValueFor("damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= self.damage_flag,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	else
+		self.target:Heal(self:GetSpecialValueFor("damage"), self:GetCaster())
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, self:GetSpecialValueFor("damage"), nil)
+	end
 	
-	self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_purifying_flames", {duration = self:GetSpecialValueFor("duration")})
+	self.target:AddNewModifier(self:GetCaster(), self, self.modifier_name, {duration = self:GetSpecialValueFor("duration")})
 end
 
 -------------------------------------------
@@ -332,6 +622,10 @@ end
 function modifier_imba_oracle_purifying_flames:IgnoreTenacity()	return true end
 function modifier_imba_oracle_purifying_flames:IsDebuff()		return false end
 function modifier_imba_oracle_purifying_flames:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_oracle_purifying_flames:GetTexture()
+	return "oracle_purifying_flames"
+end
 
 function modifier_imba_oracle_purifying_flames:GetEffectName()
 	return "particles/units/heroes/hero_oracle/oracle_purifyingflames.vpcf"
@@ -352,45 +646,233 @@ function modifier_imba_oracle_purifying_flames:OnIntervalThink()
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_second, nil)
 end
 
+-------------------------------------------------
+-- MODIFIER_IMBA_ORACLE_PURIFYING_FLAMES_ALTER --
+-------------------------------------------------
+
+function modifier_imba_oracle_purifying_flames_alter:IgnoreTenacity()	return true end
+function modifier_imba_oracle_purifying_flames_alter:IsDebuff()			return true end
+function modifier_imba_oracle_purifying_flames_alter:IsPurgable()		return false end
+function modifier_imba_oracle_purifying_flames_alter:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_oracle_purifying_flames_alter:GetTexture()
+	return "custom/oracle/purifying_flames_alter"
+end
+
+function modifier_imba_oracle_purifying_flames_alter:GetEffectName()
+	return "particles/units/heroes/hero_oracle/oracle_purifyingflames_alter.vpcf"
+end
+
+function modifier_imba_oracle_purifying_flames_alter:OnCreated()
+	self.heal_per_second	= self:GetAbility():GetSpecialValueFor("heal_per_second")
+	self.tick_rate			= self:GetAbility():GetSpecialValueFor("tick_rate")
+	
+	if not IsServer() then return end
+	
+	self.damage_flags		= DOTA_DAMAGE_FLAG_NONE
+	
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		self.damage_flags = self.damage_flags + DOTA_DAMAGE_FLAG_NON_LETHAL
+	end
+	
+	self:StartIntervalThink(self.tick_rate)
+end
+
+function modifier_imba_oracle_purifying_flames_alter:OnIntervalThink()
+	if not self:GetParent():HasModifier("modifier_imba_oracle_fates_edict_alter") then
+		ApplyDamage({
+			victim 			= self:GetParent(),
+			damage 			= self.heal_per_second,
+			damage_type		= DAMAGE_TYPE_PURE,
+			damage_flags 	= self.damage_flags,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.heal_per_second, nil)
+	end
+end
+
+----------------------------
+-- IMBA_ORACLE_ALTER_SELF --
+----------------------------
+
+function imba_oracle_alter_self:IsInnateAbility()	return true end
+function imba_oracle_alter_self:IsStealable()		return false end
+
+function imba_oracle_alter_self:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return "custom/oracle/alter_self"
+	else
+		return "custom/oracle/alter_self_return"
+	end
+end
+
+function imba_oracle_alter_self:OnSpellStart()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		self:GetCaster():EmitSound("Hero_Oracle.Alter_Self")
+		
+		self.particle = ParticleManager:CreateParticle("particles/econ/events/league_teleport_2014/teleport_end_ground_flash_league.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:ReleaseParticleIndex(self.particle)
+		
+		self.particle_2 = ParticleManager:CreateParticle("particles/econ/events/ti9/hero_levelup_ti9_flash_hit_magic.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:ReleaseParticleIndex(self.particle_2)
+		
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_alter_self", {})
+	else
+		self:GetCaster():EmitSound("Hero_Oracle.Alter_Self_Base")
+		
+		self.particle = ParticleManager:CreateParticle("particles/econ/events/league_teleport_2014/teleport_start_l_flash_league.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:ReleaseParticleIndex(self.particle)
+		
+		self:GetCaster():RemoveModifierByName("modifier_imba_oracle_alter_self")
+	end
+	
+	if self:GetCaster():HasAbility("imba_oracle_fortunes_end") then
+		self:GetCaster():FindAbilityByName("imba_oracle_fortunes_end"):EndCooldown()
+	end
+	
+	if self:GetCaster():HasAbility("imba_oracle_fates_edict") then
+		self:GetCaster():FindAbilityByName("imba_oracle_fates_edict"):EndCooldown()
+	end
+
+	if self:GetCaster():HasAbility("imba_oracle_purifying_flames") then
+		self:GetCaster():FindAbilityByName("imba_oracle_purifying_flames"):EndCooldown()
+	end	
+	
+	self.particle	= nil
+	self.particle_2	= nil
+end
+
+-------------------------------------
+-- MODIFIER_IMBA_ORACLE_ALTER_SELF --
+-------------------------------------
+
+function modifier_imba_oracle_alter_self:IsPurgable()		return false end
+function modifier_imba_oracle_alter_self:RemoveOnDeath()	return false end
+
+function modifier_imba_oracle_alter_self:GetTexture()
+	return "custom/oracle/alter_self"
+end
+
+function modifier_imba_oracle_alter_self:GetStatusEffectName()
+	return "particles/status_fx/status_effect_teleport_image.vpcf"
+end
+
 -------------------------------
 -- IMBA_ORACLE_FALSE_PROMISE --
 -------------------------------
 
-function imba_oracle_false_promise:OnSpellStart()
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "duration"				"8 9 10"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_oracle"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "radius"				"400"
-			-- }
+function imba_oracle_false_promise:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return "oracle_false_promise"
+	else
+		return "custom/oracle/false_promise_alter"
+	end
+end
 
+function imba_oracle_false_promise:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_oracle_false_promise:CastFilterResultTarget(target)
+	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_oracle_false_promise:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
-	self:GetCaster():EmitSound("Hero_Oracle.FalsePromise.Cast")
+	if not self:GetAutoCastState() then
+		if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() or (target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self)) then
+			self:ApplyFalsePromise(target)
+		end
+	else
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_delay", {duration = self:GetSpecialValueFor("future_delay")})
+	end
+end
+
+function imba_oracle_false_promise:ApplyFalsePromise(target)
 	target:EmitSound("Hero_Oracle.FalsePromise.Target")
-	
+	EmitSoundOnClient("Hero_Oracle.FalsePromise.FP", target:GetPlayerOwner())
+
+	if self:GetCaster():GetName() == "npc_dota_hero_oracle" and target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and RollPercentage(50) then
+		if not self.responses then
+			self.responses = 
+			{
+				"oracle_orac_falsepromise_01",
+				"oracle_orac_falsepromise_02",
+				"oracle_orac_falsepromise_03",
+				"oracle_orac_falsepromise_04",
+				"oracle_orac_falsepromise_06",
+				"oracle_orac_falsepromise_11"
+			}
+		end
+		
+		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+	end
+
 	self.false_promise_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:SetParticleControl(self.false_promise_cast_particle, 2, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(self.false_promise_cast_particle)
 	
 	self.false_promise_target_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:ReleaseParticleIndex(self.false_promise_target_particle)
+	ParticleManager:ReleaseParticleIndex(self.false_promise_target_particle)	
 	
-	target:Purge(false, true, false, true, true)
+	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		self:GetCaster():EmitSound("Hero_Oracle.FalsePromise.Cast")
+		
+		target:Purge(false, true, false, true, true)
+		
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer", {duration = self:GetTalentSpecialValueFor("duration")})
+	else
+		self:GetCaster():EmitSound("Hero_Oracle.False_Promise_Alter")
 	
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer", {duration = self:GetTalentSpecialValueFor("duration")})
+		target:Purge(true, false, false, false, false)
+	
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer_alter", {duration = self:GetTalentSpecialValueFor("duration")})
+	end
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_DELAY --
+----------------------------------------------
+
+function modifier_imba_oracle_false_promise_delay:IsPurgable()		return false end
+function modifier_imba_oracle_false_promise_delay:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_false_promise_delay:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_false_promise_delay:GetTexture()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return "oracle_false_promise"
+	else
+		return "custom/oracle/false_promise_alter"
+	end
+end
+
+function modifier_imba_oracle_false_promise_delay:OnDestroy()
+	if not IsServer() or not self:GetAbility() or not self:GetParent():IsAlive() or self:GetRemainingTime() > 0 then return end
+	
+	self:GetAbility():ApplyFalsePromise(self:GetParent())
 end
 
 ----------------------------------------------
 -- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER --
 ----------------------------------------------
 
+-- "If the target is invulnerable as False Promise expires, the delayed heal and damage wait for it to become vulnerable again."
+-- Since Ball Lightning is coded...differently, this exception needs to be included as well
+function modifier_imba_oracle_false_promise_timer:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+-- I have no idea how this priority function works
+function modifier_imba_oracle_false_promise_timer:GetPriority()	return MODIFIER_PRIORITY_ULTRA end
 function modifier_imba_oracle_false_promise_timer:IsPurgable()	return false end
+
+function modifier_imba_oracle_false_promise_timer:GetTexture()
+	return "oracle_false_promise"
+end
 
 function modifier_imba_oracle_false_promise_timer:GetEffectName()
 	return "particles/units/heroes/hero_oracle/oracle_false_promise.vpcf"
@@ -399,953 +881,407 @@ end
 function modifier_imba_oracle_false_promise_timer:OnCreated()
 	if not IsServer() then return end
 	
-	self:GetParent():EmitSound("Hero_Oracle.FalsePromise.FP")
-	
 	self.overhead_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_indicator.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	self:AddParticle(self.overhead_particle, false, false, -1, true, true)
 	
 	-- I think it's okay to just have a tracked number for heals, but damage needs to also track the attacker so you can properly attribute a kill
 	self.heal_counter		= 0
+	
 	self.damage_instances	= {}
+	self.instance_counter	= 1
 	self.damage_counter		= 0
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") then
+		self.invis_fade_delay = 0.6
+		
+		self:StartIntervalThink(self.invis_fade_delay)
+	end
+end
+
+function modifier_imba_oracle_false_promise_timer:OnRefresh()
+	if not IsServer() then return end
+	
+	self.heal_counter = self.heal_counter or 0
+
+	self.damage_instances	= self.damage_instances or {}
+	self.instance_counter	= self.instance_counter or 1
+	self.damage_counter		= self.damage_counter or 0
+
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") then
+		self.invis_fade_delay = 0.6
+	
+		self:StartIntervalThink(self.invis_fade_delay)
+	end	
+end
+
+function modifier_imba_oracle_false_promise_timer:OnIntervalThink()
+	self.invis_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_invisible", {})
+	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_oracle_false_promise_timer:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():StopSound("Hero_Oracle.FalsePromise.FP")
+	-- print("Heal counter: ", self.heal_counter)
+	-- print("Damage counter: ", self.damage_counter)
+	
+	if self.damage_counter < self.heal_counter then
+		self:GetParent():EmitSound("Hero_Oracle.FalsePromise.Healed")
+
+		if self:GetCaster():GetName() == "npc_dota_hero_oracle" and RollPercentage(25) then
+			self.responses = 
+			{
+				"oracle_orac_falsepromise_14",
+				"oracle_orac_falsepromise_15",
+				"oracle_orac_falsepromise_17",
+				"oracle_orac_falsepromise_18",
+				"oracle_orac_falsepromise_19"
+			}
+			
+			self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+		end
+
+		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(self.end_particle)
+		
+		self:GetParent():Heal(self.heal_counter - self.damage_counter, self:GetCaster())
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_counter - self.damage_counter, nil)
+	else
+		self:GetParent():EmitSound("Hero_Oracle.FalsePromise.Damaged")
+
+		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(self.end_particle)
+	
+		-- Since Chen's Divine Favor has an IMBAfication that blocks pure damage, we need this exception here if we don't want it to also block False Promise end-damage...
+		local divine_favor_modifier = self:GetParent():FindModifierByName("modifier_imba_chen_divine_favor")
+		local divine_favor_ability	= nil
+		local divine_favor_caster	= nil
+		local divine_favor_duration = nil
+		
+		if divine_favor_modifier then
+			divine_favor_ability 	= divine_favor_modifier:GetAbility()
+			divine_favor_caster		= divine_favor_modifier:GetCaster()
+			divine_favor_duration	= divine_favor_modifier:GetRemainingTime()
+			divine_favor_modifier:Destroy()
+		end
+	
+		for _, instance in pairs(self.damage_instances) do
+			if self.heal_counter > 0 then
+				if self.heal_counter < instance.damage then
+					instance.damage = instance.damage - self.heal_counter
+					
+					ApplyDamage(instance)
+				end
+				
+				local subtraction_value = math.min(instance.damage, self.heal_counter)
+				
+				self.heal_counter = self.heal_counter - subtraction_value
+				self.damage_counter = self.damage_counter - subtraction_value
+			else
+				ApplyDamage(instance)
+			end
+		end
+		
+		if divine_favor_ability and divine_favor_caster then
+			self:GetParent():AddNewModifier(divine_favor_caster, divine_favor_ability, "modifier_imba_chen_divine_favor", {duration = divine_favor_duration})
+		end
+
+		if self:GetCaster():GetName() == "npc_dota_hero_oracle" then
+			if not self:GetParent():IsAlive() and RollPercentage(15) then
+				self.responses = 
+				{
+					"oracle_orac_falsepromise_05",
+					"oracle_orac_falsepromise_07",
+					"oracle_orac_falsepromise_08",
+					"oracle_orac_falsepromise_09",
+					"oracle_orac_falsepromise_10",
+					"oracle_orac_falsepromise_12",
+					"oracle_orac_falsepromise_13",
+					"oracle_failure_01",
+				}
+			elseif self:GetParent():GetHealth() >= 100 then
+				self.responses = 
+				{
+					"oracle_orac_falsepromise_14",
+					"oracle_orac_falsepromise_15",
+					"oracle_orac_falsepromise_17",
+					"oracle_orac_falsepromise_18",
+					"oracle_orac_falsepromise_19",
+				}
+			end
+			
+			if self.responses then
+				self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+			end
+		end
+
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_counter, nil)
+	end
+	
+	if self.invis_modifier and not self.invis_modifier:IsNull() then
+		self.invis_modifier:Destroy()
+	end
 end
 
 function modifier_imba_oracle_false_promise_timer:DeclareFunctions()
-	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE, MODIFIER_EVENT_ON_HEAL_RECEIVED, MODIFIER_PROPERTY_DISABLE_HEALING} -- double check that this accounts for regen and heals; there's also MODIFIER_EVENT_ON_HEALTH_GAINED 
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_EVENT_ON_HEAL_RECEIVED,
+		MODIFIER_PROPERTY_DISABLE_HEALING,
+		
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+	}
 end
 
 function modifier_imba_oracle_false_promise_timer:GetModifierIncomingDamage_Percentage(keys)
-	if keys.attacker and keys.record then
-		-- table.insert(self.damage_instances, [GameRules:GetGameTime()] = {attacker = keys.attacker, damage = keys.damage}
-		self.damage_instances[keys.record] = {attacker = keys.attacker, damage = keys.damage}
+	if keys.attacker and self:GetRemainingTime() >= 0 then
+		self.attacked_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_attacked.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(self.attacked_particle)
+	
+		local damage_flags = keys.damage_flags
+		
+		-- "If the heal sum depletes, then the remaining damage instances get applied in order. The damage is flagged as HP Removal."
+		if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_HPLOSS
+		end
+		
+		if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION) ~= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+		end
+	
+		self.damage_instances[self.instance_counter] = {
+			victim			= self:GetParent(),
+			damage			= keys.damage,
+			damage_type		= DAMAGE_TYPE_PURE,
+			damage_flags	= damage_flags,
+			attacker		= keys.attacker,
+			ability			= keys.ability
+		}
+		
+		self.instance_counter = self.instance_counter + 1
 		self.damage_counter = self.damage_counter + keys.damage
+		
+		-- "If the accumulated damage exceeds the accumulated heal, the orb above the target glows red and emits fire, indicating it will receive damage."
+		-- IDK the proper numbers so let's just use large ones based on what I see in the Particle Editor
+		-- Also this wiki description seems wrong too cause I think it only glows when the damage would be considered fatal so...
+		ParticleManager:SetParticleControl(self.overhead_particle, 1, Vector(self.damage_counter - self.heal_counter, 0, 0))
+		ParticleManager:SetParticleControl(self.overhead_particle, 2, Vector(self.heal_counter - self.damage_counter, 0, 0))
+		
+		self:SetStackCount(math.abs(self.damage_counter - self.heal_counter))
 	end
 	
 	return -100
 end
 
 function modifier_imba_oracle_false_promise_timer:OnHealReceived(keys)
-	-- print(keys)
+	if keys.unit == self:GetParent() and self:GetRemainingTime() >= 0 then
+		self.heal_counter = self.heal_counter + (keys.gain * 2)
+		
+		ParticleManager:SetParticleControl(self.overhead_particle, 1, Vector(self.damage_counter - self.heal_counter, 0, 0))
+		ParticleManager:SetParticleControl(self.overhead_particle, 2, Vector(self.heal_counter - self.damage_counter, 0, 0))
+		
+		self:SetStackCount(math.abs(self.damage_counter - self.heal_counter))
+	end
 end
 
 function modifier_imba_oracle_false_promise_timer:GetDisableHealing(keys)
 	return 1
 end
 
--- LinkLuaModifier("modifier_imba_nian_frenzy_swipes", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_frenzy_swipes_suppression", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_frenzy_swipes_slow", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_frenzy_swipes_armor_reduction", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_nian_crushing_leap_movement", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_BOTH)
--- LinkLuaModifier("modifier_imba_nian_crushing_leap_strength", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_crushing_leap_agility", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_crushing_leap_intellect", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_nian_volcanic_burster", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_volcanic_burster_cooldown", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_nian_volcanic_burster_tracker", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
-
--- imba_nian_frenzy_swipes								= class({})
--- modifier_imba_nian_frenzy_swipes					= class({})
--- modifier_imba_nian_frenzy_swipes_suppression		= class({})
--- modifier_imba_nian_frenzy_swipes_slow				= class({})
--- modifier_imba_nian_frenzy_swipes_armor_reduction	= class({})
-
--- imba_nian_crushing_leap								= class({})
--- -- modifier_imba_nian_crushing_leap_movement		= modifier_generic_motion_controller -- Why doesn't this work
--- modifier_imba_nian_crushing_leap_movement			= class({})
--- modifier_imba_nian_crushing_leap_strength			= class({})
--- modifier_imba_nian_crushing_leap_agility			= class({})
--- modifier_imba_nian_crushing_leap_intellect			= class({})
-
--- imba_nian_tail_spin									= class({})
--- modifier_imba_nian_tail_spin						= class({})
-
--- imba_nian_tail_stomp								= class({})
--- modifier_imba_nian_tail_stomp						= class({})
-
--- imba_nian_volcanic_burster							= class({})
--- modifier_imba_nian_volcanic_burster					= class({})
--- modifier_imba_nian_volcanic_burster_cooldown		= class({})
--- modifier_imba_nian_volcanic_burster_tracker			= class({})
-
--- -------------------
--- -- FRENZY SWIPES --
--- -------------------
-
--- function imba_nian_frenzy_swipes:OnToggle()
-	-- local frenzy_swipes_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
-
-	-- if self:GetToggleState() and not frenzy_swipes_modifier then
-		-- self:GetCaster():EmitSound("Hero_Nian.Frenzy_Swipes_Cast")
-	
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_frenzy_swipes", {})
-	-- elseif not self:GetToggleState() then
-		-- if frenzy_swipes_modifier and frenzy_swipes_modifier:GetElapsedTime() >= 0.25 then
-			-- self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes", self:GetCaster())
-		-- else
-			-- self:ToggleAbility()
-		-- end
-	-- end
--- end
-
--- ----------------------------
--- -- FRENZY SWIPES MODIFIER --
--- ----------------------------
-
--- function modifier_imba_nian_frenzy_swipes:IsPurgable()	return false end
-
--- function modifier_imba_nian_frenzy_swipes:OnCreated()
-	-- self.attack_damage_multiplier	= self:GetAbility():GetSpecialValueFor("attack_damage_multiplier")
-	-- self.attack_speed_multiplier	= self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")
-	-- self.mana_per_attack			= self:GetAbility():GetSpecialValueFor("mana_per_attack")
-	-- self.attack_angle				= self:GetAbility():GetSpecialValueFor("attack_angle")
-	-- self.bonus_attack_range			= self:GetAbility():GetSpecialValueFor("bonus_attack_range")
-	-- self.move_speed_slow_duration	= self:GetAbility():GetSpecialValueFor("move_speed_slow_duration")
-	
-	-- if not IsServer() then return end
-	
-	-- self.attack_point	= self:GetParent():GetAttackAnimationPoint() / (1 + self:GetParent():GetIncreasedAttackSpeed())
-	-- self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
-	
-	-- self.wind_up = true
-	
-	-- local glow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes_glow.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(glow_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
-	-- self:AddParticle(glow_particle, true, false, -1, true, false)
-	
-	-- local glow_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes_glow.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(glow_particle_2, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetParent():GetAbsOrigin(), true)
-	-- self:AddParticle(glow_particle_2, true, false, -1, true, false)
-	
-	-- self:OnIntervalThink()
--- end
-
--- function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
-	-- if not IsServer() then return end
-
-	-- if self.wind_up then
-		-- -- Does not properly account for mana loss reduction abilities right now
-		-- if self:GetParent():GetMana() >= self.mana_per_attack and self:GetAbility() then
+function modifier_imba_oracle_false_promise_timer:OnAttack(keys)
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") and keys.attacker == self:GetParent() and not keys.no_attack_cooldown and self.invis_modifier and not self.invis_modifier:IsNull() then
+		self.invis_modifier:Destroy()
 		
-			-- if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
-				-- -- self:GetCaster():ReduceMana(self.mana_per_attack)
+		self:StartIntervalThink(self.invis_fade_delay)
+	end
+end
+
+function modifier_imba_oracle_false_promise_timer:OnAbilityFullyCast(keys)
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") and keys.unit == self:GetParent() and self.invis_modifier and not self.invis_modifier:IsNull() then
+		self.invis_modifier:Destroy()
+		
+		self:StartIntervalThink(self.invis_fade_delay)
+	end
+end
+
+----------------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER_ALTER --
+----------------------------------------------------
+
+function modifier_imba_oracle_false_promise_timer_alter:IsPurgable()		return false end
+function modifier_imba_oracle_false_promise_timer_alter:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_false_promise_timer_alter:GetTexture()
+	return "custom/oracle/false_promise_alter"
+end
+
+function modifier_imba_oracle_false_promise_timer_alter:GetStatusEffectName()
+	return "particles/status_fx/status_effect_electrical.vpcf"
+end
+
+function modifier_imba_oracle_false_promise_timer_alter:OnCreated()
+	self.alter_heal_pct	= self:GetAbility():GetSpecialValueFor("alter_heal_pct")
+
+	if not IsServer() then return end
+	
+	self.false_promise_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.false_promise_particle, 60, Vector(255, 0, 0))
+	ParticleManager:SetParticleControl(self.false_promise_particle, 61, Vector(1, 0, 0))
+	self:AddParticle(self.false_promise_particle, false, false, -1, true, true)
+end
+
+function modifier_imba_oracle_false_promise_timer_alter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE, MODIFIER_EVENT_ON_TAKEDAMAGE}
+end
+
+-- Properly handled in filters.lua for now
+-- function modifier_imba_oracle_false_promise_timer_alter:GetModifierTotalDamageOutgoing_Percentage(keys)
+	-- return -100
+-- end
+
+function modifier_imba_oracle_false_promise_timer_alter:OnTakeDamage(keys)
+	if keys.attacker == self:GetParent() then
+		local alter_targets_modifier = keys.unit:FindModifierByNameAndCaster("modifier_imba_oracle_false_promise_timer_alter_targets", self:GetParent())
+	
+		if not alter_targets_modifier then
+			-- Allow an extra frame so the main modifier should be removed by then (and thus not have damage blocked by the damage filter)
+			alter_targets_modifier = keys.unit:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_oracle_false_promise_timer_alter_targets", {
+				duration		= self:GetRemainingTime() + FrameTime(),
+				alter_heal_pct	= self.alter_heal_pct
+			})
+		end
+		
+		if alter_targets_modifier.damage_instances then
+			self.attacked_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_attacked.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.unit)
+			ParticleManager:SetParticleControl(self.attacked_particle, 60, Vector(255, 0, 0))
+			ParticleManager:SetParticleControl(self.attacked_particle, 61, Vector(1, 0, 0))
+			ParticleManager:ReleaseParticleIndex(self.attacked_particle)	
+		
+			local damage_flags = keys.damage_flags
 			
-				-- self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
-				-- self:GetParent():StartGesture(ACT_DOTA_ATTACK)
-			-- end
+			if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_HPLOSS
+			end
+
+			if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION) ~= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+			end
 			
-			-- self.wind_up = false
+			table.insert(alter_targets_modifier.damage_instances, {
+				victim			= keys.unit,
+				damage			= keys.damage,
+				damage_type		= DAMAGE_TYPE_PURE,
+				damage_flags	= damage_flags,
+				attacker		= keys.attacker,
+				ability			= keys.ability
+			})
 			
-			-- self:StartIntervalThink(self.slash_rate - self.attack_point)
-		-- else
-			-- self:StartIntervalThink(-1)
-			-- if self:GetAbility() and self:GetAbility():GetToggleState() then
-				-- self:GetAbility():ToggleAbility()
-			-- end
-			
-			-- self:Destroy()
-		-- end
-	-- else
-		-- if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
-			-- local frenzy_swipe_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-			-- ParticleManager:ReleaseParticleIndex(frenzy_swipe_particle)
-			
-			-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange() + self.bonus_attack_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
+			if alter_targets_modifier.damage_counter then
+				alter_targets_modifier.damage_counter = alter_targets_modifier.damage_counter + keys.damage
+				alter_targets_modifier:SetStackCount(alter_targets_modifier.damage_counter)
+			end	
+		end
+	end
+end
 
-			-- for _, enemy in pairs(enemies) do
-				-- if math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.attack_angle then
-					-- self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_suppression", {})
-					-- self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
-					-- self:GetParent():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes_suppression", self:GetCaster())
-					
-					-- local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_slow", {duration = self.move_speed_slow_duration})
-					
-					-- if slow_modifier then
-						-- slow_modifier:SetDuration(self.move_speed_slow_duration * (1 - enemy:GetStatusResistance()), true)
-					-- end
-					
-					-- if self:GetCaster():HasTalent("special_bonus_imba_nian_frenzy_swipes_upgrade") then
-						-- local armor_reduction_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_armor_reduction", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration")})
-						
-						-- if armor_reduction_modifier then
-							-- armor_reduction_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration") * (1 - enemy:GetStatusResistance()), true)
-						-- end
-					-- end
-				-- end
-			-- end
-		-- end
+------------------------------------------------------------
+-- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER_ALTER_TARGETS --
+------------------------------------------------------------
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+function modifier_imba_oracle_false_promise_timer_alter_targets:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_oracle_false_promise_timer_alter_targets:IsHidden()			return self:GetStackCount() <= 0 end
+function modifier_imba_oracle_false_promise_timer_alter_targets:IsPurgable()		return false end
+function modifier_imba_oracle_false_promise_timer_alter_targets:IgnoreTenacity()	return true end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:GetTexture()
+	return "custom/oracle/false_promise_alter"
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:GetEffectName()
+	return "particles/units/heroes/hero_oracle/oracle_false_promise_indicator.vpcf"
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.alter_heal_pct		= params.alter_heal_pct
+	
+	self.damage_counter		= 0
+	self.damage_instances	= {}
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Oracle.FalsePromise.Damaged")
+
+	self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(self.end_particle)
+
+	-- Since Chen's Divine Favor has an IMBAfication that blocks pure damage, we need this exception here if we don't want it to also block False Promise end-damage...
+	local divine_favor_modifier = self:GetParent():FindModifierByName("modifier_imba_chen_divine_favor")
+	local divine_favor_ability	= nil
+	local divine_favor_caster	= nil
+	local divine_favor_duration = nil
+	
+	if divine_favor_modifier then
+		divine_favor_ability 	= divine_favor_modifier:GetAbility()
+		divine_favor_caster		= divine_favor_modifier:GetCaster()
+		divine_favor_duration	= divine_favor_modifier:GetRemainingTime()
+		divine_favor_modifier:Destroy()
+	end
+
+	for _, instance in pairs(self.damage_instances) do
+		ApplyDamage(instance)
+	end
+	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_counter, nil)
+
+	if divine_favor_ability and divine_favor_caster then
+		self:GetParent():AddNewModifier(divine_favor_caster, divine_favor_ability, "modifier_imba_chen_divine_favor", {duration = divine_favor_duration})
+	end
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_HEAL_RECEIVED}
+end
+
+function modifier_imba_oracle_false_promise_timer_alter_targets:OnHealReceived(keys)
+	if keys.unit == self:GetParent() and self:GetRemainingTime() >= 0 then
+		local heal_split_amount = (keys.gain * self.alter_heal_pct * 0.01) / #self.damage_instances
 		
-		-- self.wind_up = true
+		for instance = 1, #self.damage_instances do
+			self.damage_instances[instance].damage = self.damage_instances[instance].damage - heal_split_amount
+		end
 		
-		-- self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
-		-- self:StartIntervalThink(self.attack_point)
-	-- end
--- end
+		self.damage_counter = self.damage_counter - (keys.gain * self.alter_heal_pct * 0.01)
+		self:SetStackCount(self.damage_counter)
+	end
+end
 
--- function modifier_imba_nian_frenzy_swipes:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
--- end
+---------------------
+-- TALENT HANDLERS --
+---------------------
 
--- function modifier_imba_nian_frenzy_swipes:CheckState()
-	-- local state = {
-		-- [MODIFIER_STATE_DISARMED]	= true,
-		-- [MODIFIER_STATE_ROOTED]		= true
-	-- }
-	
-	-- return state
--- end
+LinkLuaModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
--- ----------------------------------------
--- -- FRENZY SWIPES SUPPRESSION MODIFIER --
--- ----------------------------------------
+modifier_special_bonus_imba_oracle_fates_edict_cooldown		= class({})
 
--- -- I guess this will also be used for the bonus attack damage
--- function modifier_imba_nian_frenzy_swipes_suppression:OnCreated()
-	-- if self:GetAbility() then
-		-- self.attack_damage_multiplier	= self:GetAbility():GetSpecialValueFor("attack_damage_multiplier")
-	-- else
-		-- self:Destroy()
-	-- end
--- end
+function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsPurgable() 	return false end
+function modifier_special_bonus_imba_oracle_fates_edict_cooldown:RemoveOnDeath() 	return false end
 
- -- -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
--- function modifier_imba_nian_frenzy_swipes_suppression:DeclareFunctions()
-	-- local decFuncs = 
-	-- {
-		-- MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-		-- MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
-		
-		-- MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
-	-- }
-	
-	-- return decFuncs
--- end
+function imba_oracle_fates_edict:OnOwnerSpawned()
+	if not IsServer() then return end
 
--- function modifier_imba_nian_frenzy_swipes_suppression:GetModifierDamageOutgoing_Percentage()
-	-- return (self.attack_damage_multiplier - 1) * 100
--- end
-
--- function modifier_imba_nian_frenzy_swipes_suppression:GetSuppressCleave()
-	-- return 1
--- end
-
--- -- Hopefully this is enough random information to only suppress cleaves?...
--- function modifier_imba_nian_frenzy_swipes_suppression:GetModifierTotalDamageOutgoing_Percentage(keys)
-	-- if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
-		-- return -100
-	-- end
--- end
-
--- ---------------------------------
--- -- FRENZY SWIPES SLOW MODIFIER --
--- ---------------------------------
-
--- function modifier_imba_nian_frenzy_swipes_slow:OnCreated()
-	-- self.move_speed_slow_pct	= self:GetAbility():GetSpecialValueFor("move_speed_slow_pct")
--- end
-
--- function modifier_imba_nian_frenzy_swipes_slow:DeclareFunctions()
-	-- local decFuncs = 
-	-- {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_frenzy_swipes_slow:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.move_speed_slow_pct * (-1)
--- end
-
--- --------------------------------------------
--- -- FRENZY SWIPES ARMOR REDUCTION MODIFIER --
--- --------------------------------------------
-
--- function modifier_imba_nian_frenzy_swipes_armor_reduction:OnCreated()
-	-- if not IsServer() or not self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade") then return end
-	
-	-- self:SetStackCount(self:GetStackCount() + self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade"))
--- end
-
--- function modifier_imba_nian_frenzy_swipes_armor_reduction:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_nian_frenzy_swipes_armor_reduction:DeclareFunctions()
-	-- local decFuncs = 
-	-- {
-		-- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_frenzy_swipes_armor_reduction:GetModifierPhysicalArmorBonus()
-	-- return self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_nian_frenzy_swipes_armor_reduction:OnTooltip()
-	-- return self:GetStackCount()
--- end
-
--- -------------------
--- -- CRUSHING LEAP --
--- -------------------
-
--- function imba_nian_crushing_leap:GetAOERadius()
-	-- return self:GetSpecialValueFor("radius")
--- end
-
--- function imba_nian_crushing_leap:GetCastRange(location, target)
-	-- if IsServer() then
-		-- return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cast_range")
-	-- else
-		-- return self.BaseClass.GetCastRange(self, location, target)
-	-- end
--- end
-
--- function imba_nian_crushing_leap:GetCooldown(level)
-	-- return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cooldown")
--- end
-
--- function imba_nian_crushing_leap:GetCastAnimation()
-	-- return ACT_DOTA_LEAP_STUN
--- end
-
--- function imba_nian_crushing_leap:GetPlaybackRateOverride()
-	-- return 0.8
--- end
-
--- function imba_nian_crushing_leap:OnSpellStart()
-	-- local direction_vector = self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()
-	
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_crushing_leap_movement", 
-	-- {
-		-- distance		= direction_vector:Length2D(),
-		-- direction_x 	= direction_vector.x,
-		-- direction_y 	= direction_vector.y,
-		-- direction_z 	= direction_vector.z,
-		-- duration 		= self:GetSpecialValueFor("duration"),
-		-- height 			= self:GetSpecialValueFor("min_height") + ((self:GetSpecialValueFor("max_height") - self:GetSpecialValueFor("min_height")) * (1 - direction_vector:Length2D() / (self:GetCastRange(self:GetCursorPosition(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster())))),
-		-- bGroundStop 	= true,
-		-- bDecelerate 	= false,
-		-- bInterruptible 	= false,
-		-- treeRadius		= self:GetSpecialValueFor("radius")
-	-- })
--- end
-
--- -------------------------------------
--- -- CRUSHING LEAP MOVEMENT MODIFIER --
--- -------------------------------------
-
--- -- Gonna copy-paste my generic motion controller code here cause there's too many changes that need to be made (and I can't copy the class itself for some reason)
-
--- function modifier_imba_nian_crushing_leap_movement:IgnoreTenacity()	return self.bIgnoreTenacity == 1 end
--- function modifier_imba_nian_crushing_leap_movement:IsPurgable()		return false end
--- function modifier_imba_nian_crushing_leap_movement:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_nian_crushing_leap_movement:OnCreated(params)
-	-- self.radius				= self:GetAbility():GetSpecialValueFor("radius")
-	-- self.damage				= self:GetAbility():GetSpecialValueFor("damage")
-	-- self.stun_duration		= self:GetAbility():GetSpecialValueFor("stun_duration")
-	
-	-- self.scepter_duration	= self:GetAbility():GetSpecialValueFor("scepter_duration")
-	
-	-- if not IsServer() then return end
-	
-	-- self.damage_type		= self:GetAbility():GetAbilityDamageType()
-	
-	-- self.distance			= params.distance
-	-- self.direction			= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
-	-- self.duration			= params.duration
-	-- self.height				= params.height
-	-- self.bInterruptible		= params.bInterruptible
-	-- self.bGroundStop		= params.bGroundStop
-	-- self.bDecelerate		= params.bDecelerate
-	-- self.bIgnoreTenacity	= params.bIgnoreTenacity
-	-- self.treeRadius			= params.treeRadius
-
-	-- self.velocity		= self.direction * self.distance / self.duration
-
-	-- if self.bDecelerate and self.bDecelerate == 1 then
-		-- self.horizontal_velocity		= (2 * self.distance / self.duration) * self.direction
-		-- self.horizontal_acceleration 	= -(2 * self.distance) / (self.duration * self.duration)
-	-- end
-	
-	-- if self.height then
-		-- self.vertical_velocity		= 4 * self.height / self.duration
-		-- self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
-	-- end
-	
-	-- if self:ApplyVerticalMotionController() == false then 
-		-- self:Destroy()
-	-- end
-	
-	-- if self:ApplyHorizontalMotionController() == false then 
-		-- self:Destroy()
-	-- end
--- end
-
--- function modifier_imba_nian_crushing_leap_movement:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- self:GetParent():InterruptMotionControllers(true)
-	
-	-- if self:GetParent():IsAlive() then
-		-- if self:GetRemainingTime() <= 0 and self.treeRadius then
-			-- GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self.treeRadius, true )
-		-- end
-
-		-- self:GetParent():EmitSound("Roshan.Slam")
-
-		-- local slam_particle = ParticleManager:CreateParticle("particles/neutral_fx/roshan_slam.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
-		-- ParticleManager:SetParticleControl(slam_particle, 0, self:GetParent():GetAbsOrigin())
-		-- ParticleManager:SetParticleControl(slam_particle, 1, Vector(self.radius, self.radius, self.radius))
-		-- ParticleManager:ReleaseParticleIndex(slam_particle)
-		
-		-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-
-		-- for _, enemy in pairs(enemies) do
-			-- local damageTable = {
-				-- victim 			= enemy,
-				-- damage 			= self.damage,
-				-- damage_type		= self.damage_type,
-				-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				-- attacker 		= self:GetParent(),
-				-- ability 		= self:GetAbility()
-			-- }
-
-			-- ApplyDamage(damageTable)
-		
-			-- if not enemy:IsMagicImmune() then
-				-- local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-				
-				-- if stun_modifier then
-					-- stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
-				-- end
-				
-				-- if self:GetCaster():HasScepter() then
-					-- local strength_modifier		= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_strength", {duration = self.scepter_duration})
-					-- local agility_modifier		= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_agility", {duration = self.scepter_duration})
-					-- local intellect_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_intellect", {duration = self.scepter_duration})
-					
-					-- if strength_modifier and agility_modifier and intellect_modifier then
-						-- strength_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-						-- agility_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-						-- intellect_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-					-- end
-				-- end
-			-- end
-		-- end
-	-- end
--- end
-
--- function modifier_imba_nian_crushing_leap_movement:UpdateHorizontalMotion(me, dt)
-	-- if not IsServer() then return end
-	
-	-- if not self.bDecelerate or self.bDecelerate == 0 then
-		-- me:SetOrigin( me:GetOrigin() + self.velocity * dt )
-	-- else
-		-- me:SetOrigin( me:GetOrigin() + (self.horizontal_velocity * dt) )
-		-- self.horizontal_velocity = self.horizontal_velocity + (self.direction * self.horizontal_acceleration * dt)
-	-- end
-	
-	-- if self.bInterruptible == 1 and self:GetParent():IsStunned() then
-		-- self:Destroy()
-	-- end
--- end
-
--- -- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
--- function modifier_imba_nian_crushing_leap_movement:OnHorizontalMotionInterrupted()
-	-- self:Destroy()
--- end
-
--- function modifier_imba_nian_crushing_leap_movement:UpdateVerticalMotion(me, dt)
-	-- if not IsServer() then return end
-	
-	-- if self.height then
-		-- me:SetOrigin( me:GetOrigin() + Vector(0, 0, self.vertical_velocity) * dt )
-		
-		-- if self.bGroundStop == 1 and GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z then
-			-- self:Destroy()
-		-- else
-			-- self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
-		-- end
-	-- else
-		-- me:SetOrigin( GetGroundPosition(me:GetOrigin(), nil) )
-	-- end
--- end
-
--- -- -- This typically gets called if the caster uses a position breaking tool (ex. Earth Spike) while in mid-motion
--- function modifier_imba_nian_crushing_leap_movement:OnVerticalMotionInterrupted()
-	-- self:Destroy()
--- end
-
--- -------------------------------------
--- -- CRUSHING LEAP STRENGTH MODIFIER --
--- -------------------------------------
-
--- function modifier_imba_nian_crushing_leap_strength:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- -- In this case this modifier gets refreshed, so it can calculate the percentage properly
-	-- self:SetStackCount(0)
-	
-	-- if self:GetParent().GetStrength then
-		-- self:SetStackCount(self:GetParent():GetStrength() * self:GetAbility():GetSpecialValueFor("scepter_stat_reduction") * 0.01)
-	-- end
--- end
-
--- function modifier_imba_nian_crushing_leap_strength:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_nian_crushing_leap_strength:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_crushing_leap_strength:GetModifierBonusStats_Strength()
-	-- return self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_nian_crushing_leap_strength:OnTooltip()
-	-- return self:GetStackCount()
--- end
-
--- ------------------------------------
--- -- CRUSHING LEAP AGILITY MODIFIER --
--- ------------------------------------
-
--- function modifier_imba_nian_crushing_leap_agility:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- -- In this case this modifier gets refreshed, so it can calculate the percentage properly
-	-- self:SetStackCount(0)
-	
-	-- if self:GetParent().GetAgility then
-		-- self:SetStackCount(self:GetParent():GetAgility() * self:GetAbility():GetSpecialValueFor("scepter_stat_reduction") * 0.01)
-	-- end
--- end
-
--- function modifier_imba_nian_crushing_leap_agility:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_nian_crushing_leap_agility:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_crushing_leap_agility:GetModifierBonusStats_Agility()
-	-- return self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_nian_crushing_leap_agility:OnTooltip()
-	-- return self:GetStackCount()
--- end
-
--- --------------------------------------
--- -- CRUSHING LEAP INTELLECT MODIFIER --
--- --------------------------------------
-
--- function modifier_imba_nian_crushing_leap_intellect:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- -- In this case this modifier gets refreshed, so it can calculate the percentage properly
-	-- self:SetStackCount(0)
-	
-	-- if self:GetParent().GetIntellect then
-		-- self:SetStackCount(self:GetParent():GetIntellect() * self:GetAbility():GetSpecialValueFor("scepter_stat_reduction") * 0.01)
-	-- end
--- end
-
--- function modifier_imba_nian_crushing_leap_intellect:OnRefresh()
-	-- self:OnCreated()
--- end
-
--- function modifier_imba_nian_crushing_leap_intellect:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	-- }
-	
-	-- return decFuncs
--- end
-
--- function modifier_imba_nian_crushing_leap_intellect:GetModifierBonusStats_Intellect()
-	-- return self:GetStackCount() * (-1)
--- end
-
--- function modifier_imba_nian_crushing_leap_intellect:OnTooltip()
-	-- return self:GetStackCount()
--- end
-
--- ---------------
--- -- TAIL SPIN --
--- ---------------
-
--- function imba_nian_tail_spin:GetCastAnimation()
-	-- return ACT_DOTA_CAST_ABILITY_5
--- end
-
--- function imba_nian_tail_spin:GetPlaybackRateOverride()
-	-- return 2
--- end
-
--- function imba_nian_tail_spin:GetBehavior()
-	-- return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
--- end
-
--- function imba_nian_tail_spin:OnSpellStart()
-	-- local spin_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/tail_spin.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	-- ParticleManager:ReleaseParticleIndex(spin_particle)
-
-	-- GridNav:DestroyTreesAroundPoint( self:GetCaster():GetOrigin(), self:GetSpecialValueFor("radius"), true )
-
-	-- self:GetCaster():EmitSound("Hero_Nian.Tail_Spin_Swoosh")
-	
-	-- local target_flag = DOTA_UNIT_TARGET_FLAG_NONE
-	
-	-- if self:GetCaster():HasTalent("special_bonus_imba_nian_tail_spin_pierces_spell_immunity") then
-		-- target_flag = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-	-- end
-	
-	-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, target_flag, FIND_ANY_ORDER, false)
-
-	-- if #enemies >= 1 then
-		-- self:GetCaster():EmitSound("Hero_Nian.Tail_Spin_Impact")
-	-- end
-
-	-- for _, enemy in pairs(enemies) do
-		-- local damageTable = {
-			-- victim 			= enemy,
-			-- damage 			= self:GetSpecialValueFor("damage"),
-			-- damage_type		= self:GetAbilityDamageType(),
-			-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			-- attacker 		= self:GetCaster(),
-			-- ability 		= self
-		-- }
-
-		-- ApplyDamage(damageTable)
-	
-		-- local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-		
-		-- if stun_modifier then
-			-- stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
-		-- end
-		
-		-- local direction_vector = Vector(0, 0, 0)
-		
-		-- if self:GetAutoCastState() then
-			-- direction_vector = enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
-		-- end
-		
-		-- local knockback_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
-		-- {
-			-- distance		= self:GetSpecialValueFor("knockback_distance"),
-			-- direction_x 	= direction_vector.x,
-			-- direction_y 	= direction_vector.y,
-			-- direction_z 	= direction_vector.z,
-			-- duration 		= self:GetSpecialValueFor("duration"),
-			-- height 			= self:GetSpecialValueFor("knockback_height"),
-			-- bGroundStop 	= true,
-			-- bDecelerate 	= false,
-			-- bInterruptible 	= false,
-			-- bIgnoreTenacity	= true,
-			-- treeRadius		= self:GetSpecialValueFor("tree_radius")
-		-- })
-	-- end
--- end
-
--- ----------------------
--- -- VOLCANIC BURSTER --
--- ----------------------
-
--- function imba_nian_volcanic_burster:GetCastAnimation()
-	-- return ACT_DOTA_NIAN_GAME_END
--- end
-
--- function imba_nian_volcanic_burster:GetPlaybackRateOverride()
-	-- return 0.8
--- end
-
--- function imba_nian_volcanic_burster:GetAOERadius()
-	-- return self:GetSpecialValueFor("radius")
--- end
-
--- function imba_nian_volcanic_burster:OnSpellStart()
-	-- -- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	-- if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		-- self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-	-- end
-
-	-- self:GetCaster():EmitSound("Hero_Nian.Volcanic_Burster_Cast")
-
-	-- -- Use a dummy to attach potential sounds to + keep track of projectile time
-	-- local volcanic_dummy = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster_tracker", {}, self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("projectile_spawn_distance"), self:GetCaster():GetTeamNumber(), false)
-	-- volcanic_dummy:EmitSound("Hero_Nian.Volcanic_Burster_Flight")
-
-	-- local velocity	= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("projectile_speed")
-
-	-- local linear_projectile = {
-		-- Ability				= self,
-		-- EffectName			= "particles/units/heroes/hero_nian/volcanic_burster_main.vpcf",
-		-- vSpawnOrigin		= self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("projectile_spawn_distance"),
-		-- fDistance			= self:GetCastRange(self:GetCursorPosition(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster()),
-		-- fStartRadius		= self:GetSpecialValueFor("radius"),
-		-- fEndRadius			= self:GetSpecialValueFor("radius"),
-		-- Source				= self:GetCaster(),
-		-- bHasFrontalCone		= false,
-		-- bReplaceExisting	= false,
-		-- iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		-- iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		-- iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		-- fExpireTime 		= GameRules:GetGameTime() + 20.0,
-		-- bDeleteOnHit		= true,
-		-- vVelocity			= Vector(velocity.x, velocity.y, 0),
-		-- bProvidesVision		= true,
-		-- iVisionRadius 		= self:GetSpecialValueFor("radius"),
-		-- iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
-		
-		-- ExtraData			=
-		-- {
-			-- direction_x		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).x,
-			-- direction_y		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).y,
-			-- direction_z		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()).z,
-			-- volcanic_dummy	= volcanic_dummy:entindex(),
-		-- }
-	-- }
-	
-	-- ProjectileManager:CreateLinearProjectile(linear_projectile)
--- end
-
--- function imba_nian_volcanic_burster:SecondaryProjectiles(location, direction)
-	-- local linear_projectile = {
-		-- Ability				= self,
-		-- EffectName			= "particles/units/heroes/hero_nian/volcanic_burster_secondary.vpcf",
-		-- vSpawnOrigin		= location,
-		-- fDistance			= self:GetSpecialValueFor("secondary_distance"),
-		-- fStartRadius		= self:GetSpecialValueFor("secondary_radius"),
-		-- fEndRadius			= self:GetSpecialValueFor("secondary_radius"),
-		-- Source				= self:GetCaster(),
-		-- bHasFrontalCone		= false,
-		-- bReplaceExisting	= false,
-		-- iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		-- iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		-- iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		-- fExpireTime 		= GameRules:GetGameTime() + 10.0,
-		-- bDeleteOnHit		= true,
-		-- vVelocity			= direction:Normalized() * self:GetSpecialValueFor("secondary_speed"),
-		-- bProvidesVision		= true,
-		-- iVisionRadius 		= self:GetSpecialValueFor("secondary_radius"),
-		-- iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
-		
-		-- ExtraData			=
-		-- {
-			-- bSecondary		= true
-		-- }
-	-- }
-	
-	-- ProjectileManager:CreateLinearProjectile(linear_projectile)
--- end
-
--- function imba_nian_volcanic_burster:OnProjectileThink_ExtraData(location, data)
-	-- if not IsServer() or data.bSecondary == 1 then return end
-	
-	-- if data.volcanic_dummy then
-		-- EntIndexToHScript(data.volcanic_dummy):SetAbsOrigin(location)
-	-- end	
-	
-	-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	-- for _, enemy in pairs(enemies) do
-		-- if not enemy:FindModifierByNameAndCaster("modifier_imba_nian_volcanic_burster_cooldown", self:GetCaster()) then
-			-- enemy:EmitSound("BodyImpact_Common.Heavy")
-			
-			-- local damageTable = {
-				-- victim 			= enemy,
-				-- damage 			= self:GetSpecialValueFor("damage_per_tick"),
-				-- damage_type		= self:GetAbilityDamageType(),
-				-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				-- attacker 		= self:GetCaster(),
-				-- ability 		= self
-			-- }
-			
-			-- ApplyDamage(damageTable)
-
-			-- -- Get the normal push vector
-			-- local push_vector		= self:GetSpecialValueFor("projectile_speed") * Vector(data.direction_x, data.direction_y, data.direction_z):Normalized() * (self:GetSpecialValueFor("stun_on") + self:GetSpecialValueFor("stun_off"))
-			
-			-- -- Get the "suction" vector, being the vector from enemy location to projectile location, and multiply by a percentage
-			-- local suction_vector	= (location - enemy:GetAbsOrigin() + push_vector) * self:GetSpecialValueFor("suction_pct") * 0.01
-			
-			-- -- Sum the two together to get the final result of where to push
-			-- local final_vector		= push_vector + suction_vector
-
-			-- local knockback_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
-			-- {
-				-- distance		= final_vector:Length2D(),
-				-- direction_x 	= final_vector.x,
-				-- direction_y 	= final_vector.y,
-				-- direction_z 	= final_vector.z,
-				-- duration 		= self:GetSpecialValueFor("stun_on"),
-				-- bGroundStop 	= false,
-				-- bDecelerate 	= false,
-				-- bInterruptible 	= false,
-				-- bIgnoreTenacity	= true,
-				-- bStun			= true,
-				-- bTreeRadius		= self:GetSpecialValueFor("tree_radius")
-			-- })
-			
-			-- local burn_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration")})
-			
-			-- if burn_modifier then
-				-- burn_modifier:SetDuration(self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance()), true)
-			-- end
-			
-			-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster_cooldown", {duration = self:GetSpecialValueFor("stun_on") + self:GetSpecialValueFor("stun_off")})
-		-- end
-	-- end
--- end
-
--- function imba_nian_volcanic_burster:OnProjectileHit_ExtraData(target, location, data)
-	-- if not IsServer() then return end
-		
-	-- if target and data.bSecondary == 1 then
-		-- local burn_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration")})
-		
-		-- if burn_modifier then
-			-- burn_modifier:SetDuration(self:GetSpecialValueFor("burn_duration") * (1 - target:GetStatusResistance()), true)
-		-- end
-	-- elseif not target and data.volcanic_dummy then
-		-- EntIndexToHScript(data.volcanic_dummy):RemoveSelf()
-	-- end
--- end
-
--- -------------------------------
--- -- VOLCANIC BURSTER MODIFIER --
--- -------------------------------
-
--- function modifier_imba_nian_volcanic_burster:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_nian_volcanic_burster:GetEffectName()
-	-- return "particles/units/heroes/hero_invoker/invoker_chaos_meteor_burn_debuff.vpcf"
--- end
-
--- function modifier_imba_nian_volcanic_burster:OnCreated()
-	-- self.burn_tick_rate	= self:GetAbility():GetSpecialValueFor("burn_tick_rate")
-	-- self.burn_damage	= self:GetAbility():GetSpecialValueFor("burn_damage")
-
-	-- if not IsServer() then return end
-	
-	-- self:StartIntervalThink(self.burn_tick_rate * (1 - self:GetParent():GetStatusResistance()))
--- end
-
--- function modifier_imba_nian_volcanic_burster:OnIntervalThink()
-	-- if not IsServer() then return end
-	
-	-- local damageTable = {
-		-- victim 			= self:GetParent(),
-		-- damage 			= self:GetAbility():GetSpecialValueFor("burn_damage"),
-		-- damage_type		= self:GetAbility():GetAbilityDamageType(),
-		-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		-- attacker 		= self:GetCaster(),
-		-- ability 		= self:GetAbility()
-	-- }
-	
-	-- ApplyDamage(damageTable)	
--- end
-
--- ----------------------------------------
--- -- VOLCANIC BURSTER COOLDOWN MODIFIER --
--- ----------------------------------------
-
--- function modifier_imba_nian_volcanic_burster_cooldown:IgnoreTenacity()	return true end
--- function modifier_imba_nian_volcanic_burster_cooldown:IsHidden()		return true end
--- function modifier_imba_nian_volcanic_burster_cooldown:IsPurgable()		return false end
-
--- ---------------------------------------
--- -- VOLCANIC BURSTER TRACKER MODIFIER --
--- ---------------------------------------
-
--- function modifier_imba_nian_volcanic_burster_tracker:IsHidden()		return true end
--- function modifier_imba_nian_volcanic_burster_tracker:IsPurgable()		return false end
-
--- function modifier_imba_nian_volcanic_burster_tracker:OnCreated()
-	-- self.radius							= self:GetAbility():GetSpecialValueFor("radius")
-	-- self.projectiles_per_tick			= self:GetAbility():GetSpecialValueFor("projectiles_per_tick")
-	-- self.extra_projectile_tick_timer	= self:GetAbility():GetSpecialValueFor("stun_on") + self:GetAbility():GetSpecialValueFor("stun_off")
-	
-	-- if not IsServer() then return end
-
-	-- self:StartIntervalThink(self.extra_projectile_tick_timer)
--- end
-
--- function modifier_imba_nian_volcanic_burster_tracker:OnIntervalThink()
-	-- if not IsServer() then return end
-
-	-- if self:GetAbility() then
-		-- for projectile = 1, self.projectiles_per_tick do
-			-- local random_vector = RandomVector(self.radius)
-				
-			-- local spawn_vector	= GetGroundPosition(self:GetParent():GetAbsOrigin() + random_vector, nil)
-			
-			-- -- Offset height to make it look a little better?
-			-- spawn_vector.z		= spawn_vector.z + 50
-		
-			-- self:GetAbility():SecondaryProjectiles(spawn_vector, random_vector)
-		-- end
-	-- end
--- end
-
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
-
--- LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cast_range", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cooldown", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
-
--- modifier_special_bonus_imba_nian_crushing_leap_cast_range	= class({})
--- modifier_special_bonus_imba_nian_crushing_leap_cooldown		= class({})
-
--- function modifier_special_bonus_imba_nian_crushing_leap_cast_range:IsHidden() 		return true end
--- function modifier_special_bonus_imba_nian_crushing_leap_cast_range:IsPurgable() 	return false end
--- function modifier_special_bonus_imba_nian_crushing_leap_cast_range:RemoveOnDeath() 	return false end
-
--- function modifier_special_bonus_imba_nian_crushing_leap_cooldown:IsHidden() 		return true end
--- function modifier_special_bonus_imba_nian_crushing_leap_cooldown:IsPurgable() 		return false end
--- function modifier_special_bonus_imba_nian_crushing_leap_cooldown:RemoveOnDeath() 	return false end
-
--- function imba_nian_crushing_leap:OnOwnerSpawned()
-	-- if not IsServer() then return end
-
-	-- if self:GetCaster():HasTalent("special_bonus_imba_nian_crushing_leap_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_nian_crushing_leap_cast_range") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_nian_crushing_leap_cast_range"), "modifier_special_bonus_imba_nian_crushing_leap_cast_range", {})
-	-- end
-	
-	-- if self:GetCaster():HasTalent("special_bonus_imba_nian_crushing_leap_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_nian_crushing_leap_cooldown") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_nian_crushing_leap_cooldown"), "modifier_special_bonus_imba_nian_crushing_leap_cooldown", {})
-	-- end
--- end
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_fates_edict_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_fates_edict_cooldown"), "modifier_special_bonus_imba_oracle_fates_edict_cooldown", {})
+	end
+end

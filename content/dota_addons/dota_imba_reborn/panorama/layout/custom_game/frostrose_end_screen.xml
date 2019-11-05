@@ -10,38 +10,40 @@
 	</scripts>
 
 	<Panel class="es-root">
-<!--
-		<Panel id="HallOfFame" hittest="false">
-			<Panel id="InfoHeader" hittest="false">
-				<Button id="CloseButton" onactivate="CloseHallOfFame();">
-					<Label id="CloseButtonImage" />
-				</Button>
-				<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="hall of fame" />
-			</Panel>
+		<Panel id="LeaderboardInfoContainer" hittest="false">
+			<Panel id="LeaderboardMainContainer" hittest="false">
+				<Panel id="Title" class="LeaderboardLegend" hittest="false">
+					<Label id="TitleLabel" class="LeaderboardTitle" text="Hall of Fame" />
 
-			<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-				<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-				<Label id="SteamAvatar" class="LeaderboardAvatar" text="Players" />
-				<Panel id="IMR" class="LeaderboardIMR">
-					<Label class="LeaderboardButtonLabel" text="Level" />
+					<Button id="CloseButton" onactivate="ToggleHallofFame();">
+						<Label id="CloseButtonImage" />
+					</Button>
+				</Panel>
+
+				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+					<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+					<Panel id="XP" class="LeaderboardXP">
+						<Label class="LeaderboardButtonLabel" text="#leaderboard_steam_avatar" />
+					</Panel>
+					<Panel id="IMR" class="LeaderboardIMR">
+						<Label class="LeaderboardButtonLabel" text="Roshan" />
+					</Panel>
+				</Panel>
+
+				<Panel id="Tops" hittest="false">
+					<!-- JS Inserts records here -->
 				</Panel>
 			</Panel>
 
-			<Panel id="Tops" hittest="false">
+			<Panel id="LocalPlayerInfoContainer" hittest="false">
+				<Panel id="LocalPlayerInfo" class="LeaderboardGames" hittest="false">
+				</Panel>
 			</Panel>
-		</Panel>
--->
-		<Panel id="es-player-reward-panel" hittest="false">
-<!--
-			<Button class="es-player-reward-button" onactivate="CloseBottlepassReward()">
-				<Label text="Accept" />
-			</Button>
--->
 		</Panel>
 
 		<Panel class="end-screen">
 			<Panel id="es-victory-info">
-				<Label id="es-victory-info-text" text="Whoops! Something went wrong with the server." />
+				<Label id="es-victory-info-text" text="Loading..." />
 				<Label id="es-game-time-text" text="00:00" />
 			</Panel>
 			<Panel id="es-teams">

@@ -1,7 +1,7 @@
 #base heroes/ancient_apparition/hero.txt
 #base heroes/batrider/hero.txt
 #base heroes/bristleback/hero.txt
-#base heroes/broodmother/hero.txt
+// #base heroes/broodmother/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
 #base heroes/death_prophet/hero.txt
@@ -14,7 +14,7 @@
 #base heroes/life_stealer/hero.txt
 #base heroes/luna/hero.txt
 #base heroes/medusa/hero.txt
-#base heroes/naga_siren/hero.txt
+// #base heroes/naga_siren/hero.txt
 #base heroes/phantom_lancer/hero.txt
 #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
@@ -1531,9 +1531,12 @@
 		"Ability12"					"special_bonus_imba_riki_3"
 		"Ability13"					"special_bonus_imba_riki_5"
 		"Ability14"					"special_bonus_imba_riki_2"
-		"Ability15"					"special_bonus_imba_riki_6"
+		"Ability15"					"special_bonus_imba_riki_blink_strike_cast_range"
 		"Ability16"					"special_bonus_imba_riki_7"
 		"Ability17"					"special_bonus_imba_riki_8"
+		
+		// Removed Talents
+		//"Ability15"					"special_bonus_imba_riki_6"
 	}
 
 	//=================================================================================================================
@@ -2252,13 +2255,13 @@
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability11"					"special_bonus_movement_speed_30"
+		"Ability12"					"special_bonus_attack_damage_100"
+		"Ability13"					"special_bonus_mp_400"
+		"Ability14"					"special_bonus_cast_range_200" 
 		"Ability15"					"special_bonus_spell_amplify_10"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_300"
+		"Ability17"					"special_bonus_spell_block_15"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

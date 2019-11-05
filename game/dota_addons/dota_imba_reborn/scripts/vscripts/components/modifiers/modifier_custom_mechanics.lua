@@ -16,26 +16,25 @@ function modifier_custom_mechanics:OnCreated()
 end
 
 function modifier_custom_mechanics:OnIntervalThink()
-	if IsServer() then
-		-- Calculate current regen before this modifier
-		local parent = self:GetParent()
-		
-		-- Rough Out of Bounds warp back logic
-		if parent:GetAbsOrigin().x >= 8000 then
-			FindClearSpaceForUnit(parent, GetGroundPosition(Vector(7500, parent:GetAbsOrigin().y, parent:GetAbsOrigin().z), nil), true)
-		elseif parent:GetAbsOrigin().x <= -8000 then
-			FindClearSpaceForUnit(parent, GetGroundPosition(Vector(-7500, parent:GetAbsOrigin().y, parent:GetAbsOrigin().z), nil), true)
-		end
+	-- Rough Out of Bounds warp back logic
+	if self:GetParent():GetAbsOrigin().x >= 8000 then
+		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(7500, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z), nil), true)
+	elseif self:GetParent():GetAbsOrigin().x <= -8000 then
+		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(-7500, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z), nil), true)
+	elseif self:GetParent():GetAbsOrigin().y >= 8000 then
+		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(self:GetParent():GetAbsOrigin().x, 7500, self:GetParent():GetAbsOrigin().z), nil), true)
+	elseif self:GetParent():GetAbsOrigin().y <= -8000 then
+		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(self:GetParent():GetAbsOrigin().x, -7500, self:GetParent():GetAbsOrigin().z), nil), true)
 	end
 end
 
 
 -- Damage block handler
-function modifier_custom_mechanics:GetModifierPhysical_ConstantBlock()
-	if IsServer() then
-		return self:GetParent():GetDamageBlock()
-	end
-end
+-- function modifier_custom_mechanics:GetModifierPhysical_ConstantBlock()
+	-- if IsServer() then
+		-- return self:GetParent():GetDamageBlock()
+	-- end
+-- end
 
 -- Damage amp/reduction handler
 function modifier_custom_mechanics:GetModifierIncomingDamage_Percentage()
@@ -51,7 +50,7 @@ function modifier_custom_mechanics:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		-- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 --		MODIFIER_PROPERTY_RESPAWNTIME,
@@ -151,7 +150,6 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		-- Calculate actual lifesteal amount
 		local damage = math.max(parent:GetRealDamageDone(target), 0)
 		local heal = damage * lifesteal_amount / 100
-
 
 		-- Choose the particle to draw
 		local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"

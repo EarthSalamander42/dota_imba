@@ -125,26 +125,41 @@ function imba_naga_siren_ensnare:OnSpellStart()
 
 	for _, naga in pairs(self.naga_sirens) do
 		if IsValidEntity(naga) and naga:IsAlive() then
-			local target = self:GetCursorTarget()
-			local this_naga_speed = (target:GetAbsOrigin() - naga:GetAbsOrigin()):Length2D() / projectile_duration 
+--			local target = self:GetCursorTarget()
+			local enemies = FindUnitsInRadius(
+				naga:GetTeamNumber(),
+				naga:GetAbsOrigin(),
+				nil,
+				self:GetSpecialValueFor("fake_ensnare_distance"),
+				self:GetAbilityTargetTeam(),
+				self:GetAbilityTargetType(),
+				self:GetAbilityTargetFlags(),
+				FIND_CLOSEST,
+				false
+			)
 
-			local info = {
-				Target = target,
-				Source = naga,
-				Ability = self,
-				bDodgeable = true,
-				EffectName = "particles/units/heroes/hero_siren/siren_net_projectile.vpcf",
-				iMoveSpeed = this_naga_speed,
-				ExtraData = {illusion = naga:IsIllusion()}
-			}
+			if #enemies > 0 then
+				local this_naga_speed = (enemies[1]:GetAbsOrigin() - naga:GetAbsOrigin()):Length2D() / projectile_duration 
 
-			ProjectileManager:CreateTrackingProjectile(info)
+				local info = {
+					Target = enemies[1],
+					Source = naga,
+					Ability = self,
+					bDodgeable = true,
+					EffectName = "particles/units/heroes/hero_siren/siren_net_projectile.vpcf",
+					iMoveSpeed = this_naga_speed,
+					ExtraData = {illusion = naga:IsIllusion()}
+				}
+
+				ProjectileManager:CreateTrackingProjectile(info)
+			end
 		end
 	end
 end
 
 function imba_naga_siren_ensnare:OnProjectileHit_ExtraData(hTarget, vLocation, hExtraData)
-	if hExtraData.illusion == 0 and hTarget and not hTarget:TriggerSpellAbsorb(self) then
+--	if hExtraData.illusion == 0 and hTarget and not hTarget:TriggerSpellAbsorb(self) then
+	if hTarget and not hTarget:TriggerSpellAbsorb(self) then
 		hTarget:EmitSound("Hero_NagaSiren.Ensnare.Target")
 		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration")})
 	end
@@ -235,17 +250,29 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 
 			for _, victim in pairs(victims) do
 				if not victim_table[victim:entindex()] then
+					local damage = self:GetAbility():GetSpecialValueFor("damage")
+					local mod = victim:FindModifierByName("modifier_imba_naga_siren_rip_tide_debuff")
+
+					if mod then
+						local mod = victim:FindModifierByName("modifier_imba_naga_siren_rip_tide_debuff")
+						mod:SetDuration(self:GetAbility():GetSpecialValueFor("duration"), true)
+						mod:SetStackCount(mod:GetStackCount() + 1)
+						damage = damage + (self:GetAbility():GetSpecialValueFor("wet_bonus_damage") * mod:GetStackCount())
+					else
+						mod = victim:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+						damage = damage + self:GetAbility():GetSpecialValueFor("wet_bonus_damage")
+					end
+
 					local damageTable = {
 						victim = victim,
 						attacker = tide_caster,
-						damage = self:GetAbility():GetSpecialValueFor("damage"),
+						damage = damage,
 						damage_type = self:GetAbility():GetAbilityDamageType(),
 						ability = self,
 					}
 
 					ApplyDamage(damageTable)
 
-					victim:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")})
 					victim_table[victim:entindex()] = victim:entindex()
 				end
 			end
@@ -263,7 +290,7 @@ function modifier_imba_naga_siren_rip_tide_debuff:DeclareFunctions() return {
 } end
 
 function modifier_imba_naga_siren_rip_tide_debuff:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_3")
+	return (self:GetAbility():GetSpecialValueFor("wet_bonus_armor") * self:GetStackCount()) +  self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_3")
 end
 
 --=================================================================================================================

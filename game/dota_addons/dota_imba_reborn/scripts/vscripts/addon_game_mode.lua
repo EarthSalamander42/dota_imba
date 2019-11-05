@@ -123,9 +123,7 @@ function Precache( context )
 --		end
 --	end
 
-	if IMBA_DIRETIDE == true then
-		PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
-	end
+	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
 end
 
 function Activate()

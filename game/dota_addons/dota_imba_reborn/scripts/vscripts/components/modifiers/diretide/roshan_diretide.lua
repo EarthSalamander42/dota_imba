@@ -178,7 +178,7 @@ function modifier_imba_roshan_ai_diretide:OnStackCountChanged(stacks)
 	if IsServer() then
 		-- Get new stacks, and start thinking if its 2 or 3, or become idle if its 1 or anything else
 		local stacks = self:GetStackCount()
-		if stacks < 1 or stacks > 3 then
+		if stacks < 1 then
 			stacks = 1
 		end
 		self:StartPhase(stacks)
@@ -274,6 +274,8 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 		self.roshan:RespawnUnit()
 	end
 
+	if phase == 4 then return end
+
 	-- Reset behavior
 	self.roshan:SetAcquisitionRange(-1000)
 	self.roshan:SetForceAttackTarget(nil)
@@ -335,7 +337,16 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 			end
 		end
 	else
-		if self.AItarget and self.AItarget:IsAlive() then 
+		local disconnected = true
+		if self.AItarget.GetPlayerID then
+			if PlayerResource:GetConnectionState(self.AItarget:GetPlayerID()) ~= 3 then
+				disconnected = false
+			end
+--		else
+--			disconnected = true
+		end
+
+		if self.AItarget and self.AItarget:IsAlive() and not self.AItarget:HasModifier("modifier_fountain_invulnerable") and disconnected == false then 
 			if not self.roshan:IsAttackingEntity(self.AItarget) then
 				self.roshan:SetForceAttackTarget(self.AItarget)
 			end
@@ -680,7 +691,7 @@ function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
 				return nil
 			end
 
-			if Diretide.COUNT_DOWN == false then
+			if unit.CAN_START_COUNTDOWN == true and Diretide.COUNT_DOWN == false then
 				Diretide.COUNT_DOWN = true
 				print("PHASE 3")
 				Diretide:Announcer("diretide", "phase_3")
@@ -818,48 +829,45 @@ function modifier_imba_roshan_death_buff:IsPurgable() return false end
 function modifier_imba_roshan_death_buff:IsHidden() return true end
 function modifier_imba_roshan_death_buff:IsDebuff() return false end
 
-function modifier_imba_roshan_death_buff:OnCreated()
-local ability = self:GetAbility()
-
-	self.bonusHealth = ability:GetSpecialValueFor("health_per_death")
-	self.bonusSpellAmp = ability:GetSpecialValueFor("spellamp_per_death")
-	self.bonusDamage = ability:GetSpecialValueFor("damage_per_death")
-	self.bonusAttackSpeed = ability:GetSpecialValueFor("attackspeed_per_death")
-	self.bonusArmor = ability:GetSpecialValueFor("armor_per_death")
-	self.bonusResist = ability:GetSpecialValueFor("resist_per_death")
-	self.bonusTenacity = ability:GetSpecialValueFor("tenacity_per_death")
-end
-
 function modifier_imba_roshan_death_buff:DeclareFunctions()
-	return { MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			 MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-			 MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			 MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			 MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			 MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-			 MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING }
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
 end
 
 function modifier_imba_roshan_death_buff:GetModifierExtraHealthBonus()
-	return self.bonusHealth * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("health_per_death") * self:GetStackCount()
+end
 
 function modifier_imba_roshan_death_buff:GetModifierSpellAmplify_Percentage()
-	return self.bonusSpellAmp * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("spellamp_per_death") * self:GetStackCount()
+end
 	
 function modifier_imba_roshan_death_buff:GetModifierPreAttack_BonusDamage()
-	return self.bonusDamage * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("damage_per_death") * self:GetStackCount()
+end
 	
 function modifier_imba_roshan_death_buff:GetModifierAttackSpeedBonus_Constant()
-	return self.bonusAttackSpeed * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("attackspeed_per_death") * self:GetStackCount()
+end
 	
 function modifier_imba_roshan_death_buff:GetModifierPhysicalArmorBonus()
-	return self.bonusArmor * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("armor_per_death") * self:GetStackCount()
+end
 	
 function modifier_imba_roshan_death_buff:GetModifierMagicalResistanceBonus()
-	return self.bonusResist * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("resist_per_death") * self:GetStackCount()
+end
 
 function modifier_imba_roshan_death_buff:GetModifierStatusResistanceStacking()
-	return self.bonusTenacity * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("tenacity_per_death") * self:GetStackCount()
+end
 
 ---------- Modifier for handling begging
 if modifier_imba_roshan_ai_beg == nil then modifier_imba_roshan_ai_beg = class({}) end

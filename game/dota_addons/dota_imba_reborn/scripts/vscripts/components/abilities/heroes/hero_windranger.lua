@@ -105,7 +105,6 @@ function imba_windranger_shackleshot:OnSpellStart()
 	end
 end
 
--- TODO: Fix these hot garbage particles and targeting logic
 -- This helper function looks for valid targets
 function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle, ignore_list, target_count)
 	local shackleTarget = nil
@@ -672,7 +671,7 @@ function modifier_imba_windranger_windrun:OnCreated()
 	if self:GetAbility() then
 		self.movespeed_bonus_pct		= self:GetAbility():GetSpecialValueFor("movespeed_bonus_pct")
 		self.evasion_pct_tooltip		= self:GetAbility():GetSpecialValueFor("evasion_pct_tooltip")
-		self.scepter_bonus_movemen		= self:GetAbility():GetSpecialValueFor("scepter_bonus_movement")
+		self.scepter_bonus_movement		= self:GetAbility():GetSpecialValueFor("scepter_bonus_movement")
 		
 		self.radius						= self:GetAbility():GetSpecialValueFor("radius")
 		self.gale_enchantment_radius	= self:GetAbility():GetSpecialValueFor("gale_enchantment_radius")
@@ -855,20 +854,24 @@ function modifier_imba_windranger_backpedal:OnAbilityFullyCast(keys)
 				direction_vector = (keys.ability:GetCursorPosition() - self:GetParent():GetAbsOrigin()):Normalized() * (-1)
 			end
 		end
-	
-		self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
-		{
-			distance		= self.backpedal_distance,
-			direction_x 	= direction_vector.x,
-			direction_y 	= direction_vector.y,
-			direction_z 	= direction_vector.z,
-			duration 		= self.backpedal_duration,
-			height 			= self.backpedal_height,
-			bGroundStop 	= true,
-			bDecelerate 	= false,
-			bInterruptible 	= false,
-			bIgnoreTenacity	= true
-		})
+		
+		if not self:GetParent():IsRooted() then
+			ProjectileManager:ProjectileDodge(self:GetParent())
+		
+			self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+			{
+				distance		= self.backpedal_distance,
+				direction_x 	= direction_vector.x,
+				direction_y 	= direction_vector.y,
+				direction_z 	= direction_vector.z,
+				duration 		= self.backpedal_duration,
+				height 			= self.backpedal_height,
+				bGroundStop 	= true,
+				bDecelerate 	= false,
+				bInterruptible 	= false,
+				bIgnoreTenacity	= true
+			})
+		end
 	end
 end
 

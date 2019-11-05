@@ -18,6 +18,10 @@ var toggle = false;
 var first_time = false;
 
 var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"];
+var game_version = CustomNetTables.GetTableValue("game_options", "game_version");
+var game_type = undefined;
+if (game_version)
+	game_type = game_version.game_type;
 
 var api = {
 	base : "http://api.dota2imba.fr/",
@@ -326,6 +330,8 @@ function SwitchLeaderboardWrapper(type) {
 
 	$("#Leaderboard" + type + "TableWrapper").style.visibility = "visible";
 	$("#Leaderboard" + type + "TabButton").AddClass('active');
+
+	$('#DonatorTabTitle').text = $.Localize("#donator_" + type.toLowerCase() + "_wrapper_label").toUpperCase();
 }
 
 function Battlepass(retainSubTab, bRewardsDisabled) {
@@ -342,15 +348,17 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
 	if (companions != undefined)
 		GenerateCompanionPanel(companions["1"], Players.GetLocalPlayer(), "Companion", retainSubTab);
+
 /* weird whitespace issue, need investigation
 	var statues = CustomNetTables.GetTableValue("battlepass", "statues");
 	if (statues != undefined)
-		GenerateCompanionPanel(statues["1"], Players.GetLocalPlayer(), "Statue", retainSubTab);
+		GenerateCompanionPanel(statues["1"], Players.GetLocalPlayer(), "Statue", true);
 
 	var emblems = CustomNetTables.GetTableValue("battlepass", "emblems");
 	if (emblems != undefined)
-		GenerateCompanionPanel(emblems["1"], Players.GetLocalPlayer(), "Emblem", retainSubTab);
+		GenerateCompanionPanel(emblems["1"], Players.GetLocalPlayer(), "Emblem", true);
 */
+
 	SetupPanel();
 }
 
@@ -516,14 +524,10 @@ function SetEmblem(emblem, name, id, required_status) {
 }
 
 var current_type = "";
-function HallOfFame(type) {
-
-	if (current_type == type) {
-//		$.Msg("Bro don't reload you're fine!");
-		return;
+function HallOfFame(type, retainSubTab) {
+	if (!retainSubTab) {
+		SwitchLeaderboardWrapper(type);
 	}
-
-	current_type = type;
 
 	// temporary, implement in the for loop later
 	// local player stats
@@ -561,15 +565,15 @@ function HallOfFame(type) {
 	var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
 	imbar_rank_circle.AddClass("imbar-rank-cicle");
 	imbar_rank_circle.style.backgroundColor = "white";
-//	imbar_rank_circle.style.backgroundColor = top_users.title_color;
+//	imbar_rank_circle.style.backgroundColor = plyData.title_color;
 
 	var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
 	imbar_rank.AddClass("imbar-rank");
 	imbar_rank.text = plyData.title;
 
-//	var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
-//	imbar_xp.AddClass("imbar-xp");
-//	imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
+	var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+	imbar_xp.AddClass("imbar-xp");
+	imbar_xp.text = plyData.XP + "/" + plyData.MaxXP;
 
 	var imr = $.CreatePanel("Label", player, "rank_local");
 	imr.AddClass("LeaderboardIMR");
@@ -582,14 +586,16 @@ function HallOfFame(type) {
 	}
 
 	for (var i = 1; i <= 100; i++) {
+		var top_users = undefined;
+
 		if (type == "Experience") {
-			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_experience");
+			top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_experience");
 		} else if (type == "Donator") {
-			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_donator");
+			top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_donator");
 		} else if (type == "Winrate") {
-			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_winrate");
+			top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_winrate");
 		} else if (type == "Diretide") {
-			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_diretide");
+			top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_diretide");
 		}
 
 		if (top_users === undefined) {
@@ -597,7 +603,9 @@ function HallOfFame(type) {
 			return;
 		}
 
-		if (!top_users[i - 1])
+		var user_info = top_users[i - 1];
+
+		if (!user_info)
 			return;
 
 		if ($('#' + type + 'Tops').FindChildTraverse("player_" + i)) {
@@ -615,7 +623,7 @@ function HallOfFame(type) {
 
 		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar");
-		steam_id.steamid = top_users[i - 1].steamid;
+		steam_id.steamid = user_info.steamid;
 		steam_id.style.width = "38px";
 		steam_id.style.height = "38px";
 		steam_id.style.marginLeft = "40px";
@@ -633,21 +641,20 @@ function HallOfFame(type) {
 		leaderboard_border[8] = "dodgerblue"
 		leaderboard_border[9] = "brown"
 
-//		if (top_users[i - 1].donator_level)
-//			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
-//			steam_id.style.border = "2px solid " + leaderboard_border[i];
-//		else
-//			steam_id.style.border = "2px solid #3f464ecc";
+		if (user_info.donator_status)
+			steam_id.style.border = "1px solid " + leaderboard_border[user_info.donator_status];
+		else
+			steam_id.style.border = "1px solid #3f464ecc";
 
 		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 		imbar_container.AddClass("LeaderboardXP");
 		var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
 		imbar.AddClass("imbar-progress-bar");
-		imbar.value = parseFloat(top_users[i - 1].next_level_progress) / 100;
+		imbar.value = parseFloat(user_info.next_level_progress) / 100;
 
 		var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
 		imbar_lvl.AddClass("imbar-lvl");
-		imbar_lvl.text = "Level: " + top_users[i - 1].xp_level;
+		imbar_lvl.text = "Level: " + user_info.xp_level;
 
 		var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank" + i);
 		imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
@@ -655,11 +662,16 @@ function HallOfFame(type) {
 		var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
 		imbar_rank_circle.AddClass("imbar-rank-cicle");
 		imbar_rank_circle.style.backgroundColor = "white";
-//		imbar_rank_circle.style.backgroundColor = top_users.title_color;
+//		imbar_rank_circle.style.backgroundColor = user_info.title_color;
+
+		if (user_info.rank_title == "Icefrog")
+			user_info.rank_title += " " + (user_info.xp_level - 300);
+		else if (user_info.rank_title == "Firetoad")
+			user_info.rank_title += " " + (user_info.xp_level - 400);
 
 		var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
 		imbar_rank.AddClass("imbar-rank");
-		imbar_rank.text = top_users[i - 1].rank_title;
+		imbar_rank.text = user_info.rank_title;
 
 		var xp_text = {}
 		xp_text["Experience"] = user_info.xp_in_level + "/" + user_info.xp_total_for_level;
@@ -676,7 +688,7 @@ function HallOfFame(type) {
 
 		// temporary
 		if (type == "IMR") {
-			imr.text = top_users[i - 1].win_percentage;
+			imr.text = user_info.win_percentage;
 		} else {
 			imr.text = 0;
 		}
@@ -695,7 +707,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
-	for (var i = 1; i <= 500; i++) {
+	for (var i = 1; i <= 1000; i++) {
 		if (BattlepassRewards[i] != undefined) {
 			var bp_reward = BattlepassRewards[i][1];
 			var bp_rarity = BattlepassRewards[i][2];
@@ -1031,22 +1043,44 @@ function SetupPanel() {
 }
 
 (function() {
-	// Update the game options display
-	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
-	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
-	var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
-	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
-	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
-	var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
+	if (game_type == "IMBA") {
+		// Update the game options display
+		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+		var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
+		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
+		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
+		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+		var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 
-	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
-	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-	$("#InitialGoldValue").text = initial_gold[1];
-	$("#InitialLevelValue").text = initial_level[1];
-	$("#MaxLevelValue").text = max_level[1];
-	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+		$("#InitialGoldValue").text = initial_gold[1];
+		$("#InitialLevelValue").text = initial_level[1];
+		$("#MaxLevelValue").text = max_level[1];
+		$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+	} else if (game_type == "PW") {
+		$("#ExpMultiplierDesc").style.visibility = "collapse";
+		$("#InitialGoldDesc").style.visibility = "collapse";
+		$("#InitialLevelDesc").style.visibility = "collapse";
+		$("#MaxLevelDesc").style.visibility = "collapse";
+		$("#GoldTickDesc").style.visibility = "collapse";
 
-	GameEvents.Subscribe("hall_of_fame", HallOfFame);
+		$("#ExpMultiplierValue").style.visibility = "collapse";
+		$("#InitialGoldValue").style.visibility = "collapse";
+		$("#InitialLevelValue").style.visibility = "collapse";
+		$("#MaxLevelValue").style.visibility = "collapse";
+		$("#GoldTickValue").style.visibility = "collapse";
+
+		var max_score = CustomNetTables.GetTableValue("game_score", "max_score");
+
+		if (max_score)
+			max_score = max_score.kills;
+		else
+			return;
+
+		$("#BountyMultiplierValue").text = max_score;
+	}
+
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
 })();

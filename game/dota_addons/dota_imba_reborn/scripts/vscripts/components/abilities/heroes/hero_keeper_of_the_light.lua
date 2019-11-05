@@ -895,7 +895,7 @@ function imba_keeper_of_the_light_recall:OnSpellStart()
 		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 		
 		for _, ally in pairs(allies) do
-			if ally ~= self:GetCaster() and not PlayerResource:IsDisableHelpSetForPlayerID(ally:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then
+			if ally ~= self:GetCaster() then
 				self:GetCaster():SetCursorCastTarget(ally)
 				break
 			end

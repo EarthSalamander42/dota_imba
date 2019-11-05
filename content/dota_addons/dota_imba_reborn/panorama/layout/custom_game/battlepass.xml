@@ -30,34 +30,34 @@
 					<Button id="SettingsButton" onactivate="SwitchTab('SettingsInfoContainer');">
 						<Label id="SettingsButtonImage" />
 					</Button>
-					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="imba game info" />
+					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="#battlepass" />
 				</Panel>
 
 				<Panel class="GameModeValues">
 					<Panel class="GameModeLabelPanel">
-						<Label class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_gold_multiplier" />
-						<Label class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_initial_gold" />
-						<Label class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_gold_tick" />
+						<Label id="BountyMultiplierDesc" class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_gold_multiplier" />
+						<Label id="InitialGoldDesc" class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_initial_gold" />
+						<Label id="GoldTickDesc" class="ImbaGameInfoLabel gold" text="#imba_gamemode_settings_gold_tick" />
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
-						<Label id="BountyMultiplierValue" class="ImbaGameInfoLabel gold" text="0%" />
-						<Label id="InitialGoldValue" class="ImbaGameInfoLabel gold" text="0" />
-						<Label id="GoldTickValue" class="ImbaGameInfoLabel gold" text="0" />
+						<Label id="BountyMultiplierValue" class="ImbaGameInfoLabel gold" text="" />
+						<Label id="InitialGoldValue" class="ImbaGameInfoLabel gold" text="" />
+						<Label id="GoldTickValue" class="ImbaGameInfoLabel gold" text="" />
 					</Panel>
 
 					<Panel class="Separator" />
 
 					<Panel class="GameModeLabelPanel">
-						<Label class="ImbaGameInfoLabel blue" text="#imba_gamemode_settings_exp_multiplier" />
-						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_level" />
-						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_max_level" />
+						<Label id="ExpMultiplierDesc" class="ImbaGameInfoLabel blue" text="#imba_gamemode_settings_exp_multiplier" />
+						<Label id="InitialLevelDesc" class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_level" />
+						<Label id="MaxLevelDesc" class="ImbaGameInfoLabel" text="#imba_gamemode_settings_max_level" />
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
-						<Label id="ExpMultiplierValue" class="ImbaGameInfoLabel blue" text="0%" />
-						<Label id="InitialLevelValue" class="ImbaGameInfoLabel" text="0" />
-						<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="0" />
+						<Label id="ExpMultiplierValue" class="ImbaGameInfoLabel blue" text="" />
+						<Label id="InitialLevelValue" class="ImbaGameInfoLabel" text="" />
+						<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="" />
 					</Panel>
 				</Panel>
 				<Panel id="TabsButtonWrapper" hittest="false">
@@ -78,8 +78,9 @@
 						</Button>
 					</Panel>
 
-					<Panel id="MiniTabButtonContainer" hittest="false">
-<!--					<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
+					<Panel id="MiniTabButtonContainer" class="MiniTabButtonContainer" hittest="false">
+<!--
+						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
 							<Label class="text" text="#donator_patreon" />
 						</Button>
 

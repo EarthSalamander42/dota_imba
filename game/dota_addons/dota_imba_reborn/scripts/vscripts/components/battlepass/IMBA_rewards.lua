@@ -1021,9 +1021,9 @@ function Battlepass:GetHeroEffect(hero)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
 			if IsInToolsMode() then
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["terrorblade_arcana"] then
-					Wearable:_WearProp(hero, "5957", "head")
-				end
+--				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["terrorblade_arcana"] then
+--					Wearable:_WearProp(hero, "5957", "head")
+--				end
 			end
 --		elseif hero:GetUnitName() == "npc_dota_hero_tidehunter" then
 --			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["tidehunter_ancient"] then

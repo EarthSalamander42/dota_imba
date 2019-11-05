@@ -22,3 +22,4 @@
 "vote_gamemode_1"						"Standard"
 "vote_gamemode_2"						"Mutation"
 "vote_gamemode_3"						"Super Frantic"
+"vote_gamemode_4"						"Diretide"
