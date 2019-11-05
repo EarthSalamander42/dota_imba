@@ -15,7 +15,6 @@ function api:GetUrl(endpoint)
 		baseUrl = websiteUrl
 	end
 
-	print("URL:", baseUrl .. endpoint)
 	return baseUrl..endpoint
 end
 
@@ -604,28 +603,13 @@ function api:CompleteGame(successCallback, failCallback)
 	end, failCallback, "POST", payload);
 end
 
-function api:ExperienceLeaderboard(callback)
-	self:Request("statistics/ranking/xp", function(data)
-		if callback ~= nil then
-			callback(data)
-		end
-	end, nil, "POST", nil);
-end
-
-function api:WinrateLeaderboard(callback)
-	self:Request("statistics/ranking/winrate", function(data)
-		if callback ~= nil then
-			callback(data)
-		end
-	end, nil, "POST", nil);
-end
-
-function api:DiretideHallOfFame(callback)
+function api:DiretideHallOfFame(successCallback, failCallback)
 	self:Request("diretide-score", function(data)
-		if callback ~= nil then
-			callback(data)
+		print(data)
+		if successCallback ~= nil then
+			successCallback(data)
 		end
-	end, nil, "POST", {
+	end, failCallback, "POST", {
 		map = GetMapName(),
 	});
 end

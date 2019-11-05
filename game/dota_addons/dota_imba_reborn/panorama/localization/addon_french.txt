@@ -515,6 +515,7 @@
 	"pausedemo_button" "Pause"
 	"picked_hero" "Déja pris"
 	"pick_screen_same_hero_title" "Same hero selection enabled on saturday!"
+	"playback_buttoncategory" "Controllers"
 	"quitdemo_button" "Quitter"
 	"refresh_button" "Rafraîchir"
 	"refresh_msg" "Hero Refreshed"

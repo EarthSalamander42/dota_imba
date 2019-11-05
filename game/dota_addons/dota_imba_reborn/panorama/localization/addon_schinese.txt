@@ -515,6 +515,7 @@
 	"pausedemo_button" "暂停"
 	"picked_hero" "已选择"
 	"pick_screen_same_hero_title" "Same hero selection enabled on saturday!"
+	"playback_buttoncategory" "Controllers"
 	"quitdemo_button" "退出"
 	"refresh_button" "刷新"
 	"refresh_msg" "状态刷新"

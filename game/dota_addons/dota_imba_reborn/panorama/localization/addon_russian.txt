@@ -515,6 +515,7 @@
 	"pausedemo_button" "Пауза"
 	"picked_hero" "Уже выбран"
 	"pick_screen_same_hero_title" "По субботам разрешен выбор одинаковых героев"
+	"playback_buttoncategory" "Контроллеры"
 	"quitdemo_button" "Выход"
 	"refresh_button" "Обновить"
 	"refresh_msg" "Герой обновлен"

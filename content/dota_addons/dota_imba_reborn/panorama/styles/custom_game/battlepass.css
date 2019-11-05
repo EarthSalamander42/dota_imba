@@ -324,10 +324,23 @@
 
 .LeaderboardRank,
 .LeaderboardXP,
-.LeaderboardIMR,
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardIMR {
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;	
+}
+
+.LeaderboardAvatarDiretide {
+	width: 40%;
 	height: 100%;
 	text-align: center;
 	font-size: 19px;
@@ -371,7 +384,7 @@
 }
 
 .LeaderboardIMR {
-	width: 23%;	
+	width: 23%;
 	align:  center center;
 }
 

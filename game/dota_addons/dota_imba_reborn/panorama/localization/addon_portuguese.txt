@@ -515,6 +515,7 @@
 	"pausedemo_button" "Pausa"
 	"picked_hero" "Escolhido"
 	"pick_screen_same_hero_title" "A mesma seleção de heróis ativada no sábado!"
+	"playback_buttoncategory" "Controladores"
 	"quitdemo_button" "Sair"
 	"refresh_button" "Atualizar"
 	"refresh_msg" "Herói Atualizado"

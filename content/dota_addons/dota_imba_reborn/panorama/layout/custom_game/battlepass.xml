@@ -110,15 +110,6 @@
 					</Panel>
 
 					<Panel id="MiniTabButtonContainer2" class="MiniTabButtonContainer" hittest="false">
-<!--
-						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
-							<Label class="text" text="#donator_patreon" />
-						</Button>
-
-						<Panel hittest="false" class="tab_separator">
-							<Label text="/" />
-						</Panel>
--->
 						<Button class="sub_nav_tab" id="LeaderboardExperienceTabButton" onactivate="SwitchLeaderboardWrapper('Experience');">
 							<Label class="text" text="#leaderboard_xp" />
 						</Button>
@@ -126,7 +117,7 @@
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
 						</Panel>
-
+<!--
 						<Button class="sub_nav_tab" id="LeaderboardDonatorTabButton" onactivate="SwitchLeaderboardWrapper('Donator');">
 							<Label class="text" text="#leaderboard_donator" />
 						</Button>
@@ -134,7 +125,7 @@
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
 						</Panel>
-
+-->
 						<Button class="sub_nav_tab" id="LeaderboardWinrateTabButton" onactivate="SwitchLeaderboardWrapper('Winrate');">
 							<Label class="text" text="#leaderboard_winrate" />
 						</Button>
@@ -280,12 +271,11 @@
 
 				<Panel id="LeaderboardDiretideTableWrapper" class="LeaderboardTableWrapper" hittest="false">
 					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Label id="Rank" class="LeaderboardButtonLabel" text="#leaderboard_rank" />
 						<Button id="XP" class="LeaderboardXP" onactivate=";">
-							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_steam_avatar" />
 						</Button>
-						<Button id="IMR" class="LeaderboardIMR" onactivate=";">
+						<Button id="IMR" class="LeaderboardAvatarDiretide" onactivate=";">
 							<Label class="LeaderboardButtonLabel" text="Winrate" />
 						</Button>
 					</Panel>
