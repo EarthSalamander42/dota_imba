@@ -670,6 +670,13 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					target_flag = target_flag + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 				end
 
+				-- Emit particle
+				local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, parent)
+				ParticleManager:SetParticleControl(particle_fx, 0, keys.target:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_fx)
+
+				keys.target:EmitSound("Hero_StormSpirit.Overload")
+
 				-- Find enemies around the target
 				local enemies	=	FindUnitsInRadius(	parent:GetTeamNumber(),
 					keys.target:GetAbsOrigin(),
@@ -697,10 +704,6 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					-- Apply debuff
 					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration} )
 
-					-- Emit particle
-					local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, parent)
-					ParticleManager:SetParticleControl(particle_fx, 0, keys.target:GetAbsOrigin())
-					ParticleManager:ReleaseParticleIndex(particle_fx)
 					-- Remove overload buff
 					self:Destroy()
 				end
