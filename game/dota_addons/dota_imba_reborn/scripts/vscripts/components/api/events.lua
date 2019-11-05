@@ -14,6 +14,24 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			return 1.0
 		end)
+
+		api:ExperienceLeaderboard(function(data)
+			print("Statistics XP")
+			print(data)
+			CustomNetTables:SetTableValue("game_options", "leaderboard_experience", {data = data})
+		end)
+
+		api:WinrateLeaderboard(function(data)
+			print("Statistics Winrate")
+			print(data)
+			CustomNetTables:SetTableValue("game_options", "leaderboard_winrate", {data = data})
+		end)
+
+		api:DiretideHallOfFame(function(data)
+			print("Statistics Diretide")
+			print(data)
+			CustomNetTables:SetTableValue("game_options", "leaderboard_diretide", {data = data})
+		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
 		api:CompleteGame(function(data, payload)
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {

@@ -183,11 +183,11 @@ function Timers:HandleEventError(name, event, err)
 	--Say(nil, name .. ' threw an error on event '..event, false)
 	--Say(nil, err, false)
 
-	api:Message({
-		name = name,
-		event = event,
-		err = err
-	}, 3);
+--	api:Message({
+--		name = name,
+--		event = event,
+--		err = err
+--	}, 3);
 
 	-- Prevent loop arounds
 	if not self.errorHandled then

@@ -4,13 +4,19 @@
 api = class({});
 
 local baseUrl = "http://api.dota2imba.fr/imba/"
+local websiteUrl = "http://api.dota2imba.fr/website/"
 local timeout = 5000
 
 local native_print = print
 
 -- Utils
 function api:GetUrl(endpoint)
-	return baseUrl .. endpoint
+	if endpoint == "statistics/ranking/xp" or endpoint == "statistics/ranking/winrate" then
+		baseUrl = websiteUrl
+	end
+
+	print("URL:", baseUrl .. endpoint)
+	return baseUrl..endpoint
 end
 
 function api:IsDonator(player_id)
@@ -580,6 +586,32 @@ function api:CompleteGame(successCallback, failCallback)
 			successCallback(data, payload);
 		end
 	end, failCallback, "POST", payload);
+end
+
+function api:ExperienceLeaderboard(callback)
+	self:Request("statistics/ranking/xp", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", nil);
+end
+
+function api:WinrateLeaderboard(callback)
+	self:Request("statistics/ranking/winrate", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", nil);
+end
+
+function api:DiretideHallOfFame(callback)
+	self:Request("diretide-score", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", {
+		map = GetMapName(),
+	});
 end
 
 require("components/api/events")

@@ -15,7 +15,7 @@ function FindDotaHudElement(panel) {
 function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
-		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 
 	if (same_selection && same_selection.value == 1) {
 		pick_screen_title.style.marginTop = "30px";

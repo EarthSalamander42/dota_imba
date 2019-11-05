@@ -1,5 +1,9 @@
 var playerPanels = {};
 
+// Panel init
+var LeaderboardInfoContainer = $("#LeaderboardInfoContainer");
+var MiniTabButtonContainer2 = $("#MiniTabButtonContainer2");
+
 var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 if (localTeam != 2 && localTeam != 3) {
 	HideBattlepass()
@@ -23,8 +27,6 @@ var api = {
 		modifyEmblem : "imba/modify-emblem",
 //		rankingsImr5v5 : "imba/meta/rankings/imr-5v5",
 //		rankingsImr10v10 : "imba/meta/rankings/imr-10v10",
-		rankingsXp : "website/statistics/ranking/xp",
-		rankingsWinrate : "website/statistics/ranking/winrate",
 //		rankingsLevel1v1 : "imba/meta/rankings/level-1v1",
 		toggleIngameTag : "imba/toggle-ingame-tag",
 		toggleBPRewards : "imba/toggle-bp-rewards",
@@ -94,42 +96,6 @@ var api = {
 			error : function(err) {
 				$.Msg("Error updating emblem " + JSON.stringify(err));
 				error_callback();
-			}
-		});
-	},
-	getTopPlayerXP : function(callback) {
-		$.AsyncWebRequest(api.base + api.urls.rankingsXp, {
-			type : "GET",
-			dataType : "json",
-			timeout : 5000,
-			headers : {'X-Dota-Server-Key' : secret_key},
-			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.players)
-					$.Msg("Error finding top xp");
-				else {
-					callback(obj.data.players);
-				}
-			},
-			error : function(err) {
-				$.Msg("Error finding top xp " + JSON.stringify(err));
-			}
-		});
-	},
-	getTopPlayerWinrate : function(callback) {
-		$.AsyncWebRequest(api.base + api.urls.rankingsWinrate, {
-			type : "GET",
-			dataType : "json",
-			timeout : 5000,
-			headers : {'X-Dota-Server-Key' : secret_key},
-			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data)
-					$.Msg("Error finding top winrate");
-				else {
-					callback(obj.data);
-				}
-			},
-			error : function(err) {
-				$.Msg("Error finding top winrate " + JSON.stringify(err));
 			}
 		});
 	},
@@ -302,15 +268,18 @@ function RefreshBattlepass(bRewardsDisabled) {
 function SwitchTab(tab) {
 	$("#BattlepassInfoContainer").style.visibility = "collapse";
 	$("#DonatorInfoContainer").style.visibility = "collapse";
-	$("#LeaderboardInfoContainer").style.visibility = "collapse";
+	LeaderboardInfoContainer.style.visibility = "collapse";
 	$("#SettingsInfoContainer").style.visibility = "collapse";
 
 	$("#" + tab).style.visibility = "visible";
 
+	$('#MiniTabButtonContainer').style.visibility = "collapse";
+	MiniTabButtonContainer2.style.visibility = "collapse";
+
 	if (tab == 'DonatorInfoContainer') {
 		$('#MiniTabButtonContainer').style.visibility = "visible";
-	} else {
-		$('#MiniTabButtonContainer').style.visibility = "collapse";
+	} else if (tab == 'LeaderboardInfoContainer') {
+		MiniTabButtonContainer2.style.visibility = "visible";
 	}
 }
 
@@ -337,26 +306,36 @@ function SwitchDonatorWrapper(type) {
 	$('#DonatorTabTitle').text = $.Localize("#donator_" + type.toLowerCase() + "_wrapper_label").toUpperCase();
 }
 
-var top_xp = [];
-var top_winrate = [];
+function SwitchLeaderboardWrapper(type) {
+	if (current_sub_tab == type) {
+//		$.Msg("Bro don't reload you're fine!");
+		return;
+	}
+
+	current_sub_tab = type;
+	$.Msg(type)
+
+//	$("#PatreonTableWrapper").style.visibility = "collapse";
+	for (var i = 0; i < LeaderboardInfoContainer.GetChildCount(); i++) {
+		LeaderboardInfoContainer.GetChild(i).style.visibility = "collapse";
+	}
+
+	for (var i = 0; i < MiniTabButtonContainer2.GetChildCount(); i++) {
+		MiniTabButtonContainer2.GetChild(i).RemoveClass("active");
+	}
+
+	$("#Leaderboard" + type + "TableWrapper").style.visibility = "visible";
+	$("#Leaderboard" + type + "TabButton").AddClass('active');
+}
 
 function Battlepass(retainSubTab, bRewardsDisabled) {
 	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
 
-	api.getTopPlayerXP(function(players) {
-		for (player in players) {
-			top_xp[player] = players[player];
-		}
-
-		HallOfFame("XP");
-	});
-
-	api.getTopPlayerWinrate(function(players) {
-		for (player in players) {
-			top_winrate[player] = players[player];
-		}
-	});
+	// Generate leaderboards
+	HallOfFame("Experience", retainSubTab);
+	HallOfFame("Winrate", true);
+	HallOfFame("Diretide", true);
 
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
 
@@ -549,7 +528,7 @@ function HallOfFame(type) {
 	// temporary, implement in the for loop later
 	// local player stats
 	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
-	$.Msg(plyData)
+//	$.Msg(plyData)
 
 	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");
 	player.AddClass("LeaderboardGames");
@@ -596,17 +575,21 @@ function HallOfFame(type) {
 	imr.AddClass("LeaderboardIMR");
 
 	// temporary
-	if (type == "IMR") {
+	if (type == "Winrate") {
 		imr.text = plyData.win_percentage;
 	} else {
 		imr.text = 0;
 	}
 
 	for (var i = 1; i <= 100; i++) {
-		if (type == "XP") {
-			var top_users = top_xp;
-		} else if (type == "IMR") {
-			var top_users = top_winrate;
+		if (type == "Experience") {
+			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_experience");
+		} else if (type == "Donator") {
+			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_donator");
+		} else if (type == "Winrate") {
+			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_winrate");
+		} else if (type == "Diretide") {
+			var top_users = CustomNetTables.GetTableValue("game_options", "leaderboard_diretide");
 		}
 
 		if (top_users === undefined) {
@@ -617,11 +600,14 @@ function HallOfFame(type) {
 		if (!top_users[i - 1])
 			return;
 
-		if ($("#player_" + i)) {
+		if ($('#' + type + 'Tops').FindChildTraverse("player_" + i)) {
 			$("#player_" + i).DeleteAsync(0);
 		}
 
-		var player = $.CreatePanel("Panel", $('#Tops'), "player_" + i);
+		if (type == "Diretide")
+			$.Msg(user_info)
+
+		var player = $.CreatePanel("Panel", $('#' + type + 'Tops'), "player_" + i);
 		player.AddClass("LeaderboardGames");
 		var rank = $.CreatePanel("Label", player, "rank_" + i);
 		rank.AddClass("LeaderboardRank");
@@ -675,9 +661,15 @@ function HallOfFame(type) {
 		imbar_rank.AddClass("imbar-rank");
 		imbar_rank.text = top_users[i - 1].rank_title;
 
-//		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
-//		imbar_xp.AddClass("imbar-xp");
-//		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
+		var xp_text = {}
+		xp_text["Experience"] = user_info.xp_in_level + "/" + user_info.xp_total_for_level;
+		xp_text["Winrate"] = "Matches: " + user_info.total_matches;
+		xp_text["Donator"] = "";
+		xp_text["Diretide"] = "";
+
+		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+		imbar_xp.AddClass("imbar-xp");
+		imbar_xp.text = xp_text[type];
 
 		var imr = $.CreatePanel("Label", player, "rank_" + i);
 		imr.AddClass("LeaderboardIMR");

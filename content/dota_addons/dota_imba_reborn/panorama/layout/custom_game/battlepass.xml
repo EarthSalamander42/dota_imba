@@ -107,6 +107,45 @@
 							<Label class="text" text="#donator_emblem" />
 						</Button>
 					</Panel>
+
+					<Panel id="MiniTabButtonContainer2" class="MiniTabButtonContainer" hittest="false">
+<!--
+						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
+							<Label class="text" text="#donator_patreon" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+-->
+						<Button class="sub_nav_tab" id="LeaderboardExperienceTabButton" onactivate="SwitchLeaderboardWrapper('Experience');">
+							<Label class="text" text="#leaderboard_xp" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="LeaderboardDonatorTabButton" onactivate="SwitchLeaderboardWrapper('Donator');">
+							<Label class="text" text="#leaderboard_donator" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="LeaderboardWinrateTabButton" onactivate="SwitchLeaderboardWrapper('Winrate');">
+							<Label class="text" text="#leaderboard_winrate" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="LeaderboardDiretideTabButton" onactivate="SwitchLeaderboardWrapper('Diretide');">
+							<Label class="text" text="#mutation_diretide" />
+						</Button>
+					</Panel>
 				</Panel>
 			</Panel>
 
@@ -187,19 +226,70 @@
 			</Panel>
 
 			<Panel id="LeaderboardInfoContainer" hittest="false">
-				<Panel id="LeaderboardMainContainer" hittest="false">
+				<Panel id="LeaderboardExperienceTableWrapper" class="LeaderboardTableWrapper" hittest="false">
 					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
 						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
-						<Button id="XP" class="LeaderboardXP" onactivate="HallOfFame('XP');">
+						<Button id="XP" class="LeaderboardXP" onactivate="">
 							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
 						</Button>
-						<Button id="IMR" class="LeaderboardIMR" onactivate="HallOfFame('IMR');">
+						<Button id="IMR" class="LeaderboardIMR" onactivate=";">
 							<Label class="LeaderboardButtonLabel" text="Winrate" />
 						</Button>
 					</Panel>
 
-					<Panel id="Tops" hittest="false">
+					<Panel id="ExperienceTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardDonatorTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate="">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate="">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="DonatorTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardWinrateTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="WinrateTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardDiretideTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="DiretideTops" class="Tops" hittest="false">
 						<!-- JS Inserts records here -->
 					</Panel>
 				</Panel>

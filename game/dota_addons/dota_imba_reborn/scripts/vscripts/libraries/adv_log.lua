@@ -362,11 +362,11 @@ if Log == nil then
 			trace = trace .. ", " .. json.encode(trace[i])
 		end
 		-- prepare api request
-		api:Message({
-			level = level,
-			content = tostring(content),
-			trace = trace
-		}, 2)
+--		api:Message({
+--			level = level,
+--			content = tostring(content),
+--			trace = trace
+--		}, 2)
 	end
 
 	ConsoleLogTarget = {
