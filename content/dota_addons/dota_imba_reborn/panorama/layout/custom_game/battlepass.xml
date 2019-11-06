@@ -129,7 +129,7 @@
 						<Button class="sub_nav_tab" id="LeaderboardWinrateTabButton" onactivate="SwitchLeaderboardWrapper('Winrate');">
 							<Label class="text" text="#leaderboard_winrate" />
 						</Button>
-
+<!--
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
 						</Panel>
@@ -137,6 +137,7 @@
 						<Button class="sub_nav_tab" id="LeaderboardDiretideTabButton" onactivate="SwitchLeaderboardWrapper('Diretide');">
 							<Label class="text" text="#mutation_diretide" />
 						</Button>
+-->
 					</Panel>
 				</Panel>
 			</Panel>

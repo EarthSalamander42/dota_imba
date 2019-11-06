@@ -26,7 +26,7 @@ if (game_version)
 	game_type = game_version.game_type;
 
 var api = {
-	base : "http://api.dota2imba.fr/",
+	base : "http://api.frostrose-studio.com/",
 	urls : {
 		modifyCompanion : "imba/modify-companion",
 		modifyStatue : "imba/modify-statue",
@@ -361,7 +361,8 @@ function SwitchLeaderboardWrapper(type) {
 
 //	$("#PatreonTableWrapper").style.visibility = "collapse";
 	for (var i = 0; i < LeaderboardInfoContainer.GetChildCount(); i++) {
-		LeaderboardInfoContainer.GetChild(i).style.visibility = "collapse";
+		if (LeaderboardInfoContainer.GetChild(i).id != "LocalPlayerInfoContainer")
+			LeaderboardInfoContainer.GetChild(i).style.visibility = "collapse";
 	}
 
 	for (var i = 0; i < MiniTabButtonContainer2.GetChildCount(); i++) {
@@ -395,16 +396,12 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 		});
 	});
 
-	if (CustomNetTables.GetTableValue("battlepass", "leaderboard_diretide"))
-		HallOfFame("Diretide", true);
-
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
 
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
 	if (companions != undefined)
 		GenerateCompanionPanel(companions["1"], Players.GetLocalPlayer(), "Companion", retainSubTab);
 
-/* weird whitespace issue, need investigation
 	var statues = CustomNetTables.GetTableValue("battlepass", "statues");
 	if (statues != undefined)
 		GenerateCompanionPanel(statues["1"], Players.GetLocalPlayer(), "Statue", true);
@@ -412,7 +409,6 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	var emblems = CustomNetTables.GetTableValue("battlepass", "emblems");
 	if (emblems != undefined)
 		GenerateCompanionPanel(emblems["1"], Players.GetLocalPlayer(), "Emblem", true);
-*/
 
 	SetupPanel();
 }
@@ -557,7 +553,7 @@ function SetEmblem(emblem, name, id, required_status) {
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
 	}, function() {
 		$("#CompanionNotification").AddClass("success");
-		$("#CompanionNotificationLabel").text = $.Localize("emblem_success") + $.Localize(name) + "!";
+		$("#CompanionNotificationLabel").text = $.Localize("emblem_success") + " " + $.Localize(name) + "!";
 		GameEvents.SendCustomGameEventToServer("change_emblem", {
 			ID : Players.GetLocalPlayer(),
 			unit : emblem
@@ -587,7 +583,7 @@ function HallOfFame(type, retainSubTab) {
 	// temporary, implement in the for loop later
 	// local player stats
 	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
-	$.Msg(plyData)
+//	$.Msg(plyData)
 
 	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");
 	player.AddClass("LeaderboardGames");
@@ -638,10 +634,10 @@ function HallOfFame(type, retainSubTab) {
 		imr.AddClass("LeaderboardIMR");
 
 		// temporary
-		if (type == "Winrate") {
-			imr.text = plyData.win_percentage;
+		if (plyData.winrate) {
+			imr.text = plyData.winrate.toFixed(2) + "%";
 		} else {
-			imr.text = 0;
+			imr.text = "--";
 		}
 	}
 
@@ -675,7 +671,7 @@ function HallOfFame(type, retainSubTab) {
 			$("#player_" + i).DeleteAsync(0);
 		}
 
-		$.Msg(user_info)
+//		$.Msg(user_info)
 
 		var player = $.CreatePanel("Panel", $('#' + type + 'Tops'), "player_" + i);
 		player.AddClass("LeaderboardGames");
@@ -1063,7 +1059,7 @@ function SettingsPlayerXP() {
 }
 
 function SettingsWinrate() {
-	var toggle = false;
+	var toggle = 0;
 	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle)
 	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle != undefined) {
 		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle

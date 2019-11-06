@@ -8,8 +8,6 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 		api:DiretideHallOfFame(
 			function(data)
-				print("Statistics Diretide")
-				print(data)
 				CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
 			end,
 
