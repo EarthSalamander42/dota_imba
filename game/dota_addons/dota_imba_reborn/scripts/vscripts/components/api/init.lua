@@ -494,13 +494,6 @@ function api:RegisterGame(callback)
 
 			cool_hat[j] = {}
 			for k, v in pairs(data) do
-
-				-- temporary fix
-				if data[k]["file"] == '""' then
-					print("fix whitespace", cool_hats[j])
-					data[k]["file"] = "particles/dev/empty_particle.vpcf"
-				end
-
 				table.insert(cool_hat[j], data[k]["id"], data[k])
 			end
 

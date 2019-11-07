@@ -217,7 +217,7 @@
 	"companion_enabled" "Companion enabled."
 	"companion_error" "Oops! Something went wrong."
 	"companion_not_donator" "This feature is only for Patreon donators. Click here to pledge!"
-	"companion_success" "Companion changed with: "
+	"companion_success" "Companion changed with:"
 	"confirm_pick_button" "Select Hero"
 	"custom_end_screen_legend_battlepass_xp" "Battlepass XP"
 	"custom_end_screen_legend_imr" "IMR"

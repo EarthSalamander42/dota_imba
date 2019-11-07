@@ -26,7 +26,7 @@
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
-// #base heroes/naga_siren/abilities.txt
+#base heroes/naga_siren/abilities.txt
 #base heroes/oracle/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt

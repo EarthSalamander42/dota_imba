@@ -14,7 +14,7 @@
 #base heroes/life_stealer/hero.txt
 #base heroes/luna/hero.txt
 #base heroes/medusa/hero.txt
-// #base heroes/naga_siren/hero.txt
+#base heroes/naga_siren/hero.txt
 #base heroes/phantom_lancer/hero.txt
 #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
