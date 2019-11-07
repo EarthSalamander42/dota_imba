@@ -217,7 +217,7 @@
 	"companion_enabled" "Compañero activado."
 	"companion_error" "Oops! Algo fue mal."
 	"companion_not_donator" "Esta característica es solo para donadores de Patreon. ¡Haz click aquí para comprometerte!"
-	"companion_success" "Companion changed with:"
+	"companion_success" "Compañero cambiado con:"
 	"confirm_pick_button" "Seleccionar héroe"
 	"custom_end_screen_legend_battlepass_xp" "XP Pase de batalla"
 	"custom_end_screen_legend_imr" "IMR"

@@ -217,7 +217,7 @@
 	"companion_enabled" "宠物启用"
 	"companion_error" "出错"
 	"companion_not_donator" "本功能仅对Patreon上的捐助者开放！"
-	"companion_success" "Companion changed with:"
+	"companion_success" "已应用新的宠物："
 	"confirm_pick_button" "选择英雄"
 	"custom_end_screen_legend_battlepass_xp" "勇士令状经验"
 	"custom_end_screen_legend_imr" "IMBA天梯分"

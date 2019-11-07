@@ -217,7 +217,7 @@
 	"companion_enabled" "Begleiter aktiviert."
 	"companion_error" "Verdammt. Irgendwas ist schief gelaufen."
 	"companion_not_donator" "Dieses Feature ist nur für Patreon Unterstützer. Klicke hier um zu spenden!"
-	"companion_success" "Companion changed with:"
+	"companion_success" "Begleiter getauscht mit:"
 	"confirm_pick_button" "Held auswählen"
 	"custom_end_screen_legend_battlepass_xp" "Battlepass XP"
 	"custom_end_screen_legend_imr" "IMR"
