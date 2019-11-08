@@ -112,7 +112,7 @@ function modifier_imba_naga_siren_mirror_image_perfect_image:OnDeath(params)
 
 	if params.attacker == self:GetParent() then
 		if params.unit:IsRealHero() then
-			self:SetIllusionsStackCount(self:GetAbility():GetSpecialValueFor("perfect_image"))
+			self:SetIllusionsStackCount(self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks"))
 		else
 			self:SetIllusionsStackCount(math.min(self:GetStackCount() + 1, self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks")))
 		end
@@ -579,7 +579,7 @@ function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierIncomingDam
 end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierMagicalResistanceBonus()
-	return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct")
+	return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct") * (-1)
 end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:OnDestroy()

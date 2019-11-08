@@ -147,7 +147,6 @@
 		"AbilityTextureName"			"naga_siren_rip_tide"
 		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
 
-		"AbilityDamage"					"120 160 200 240"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -271,12 +270,12 @@
 			"08"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"siren_temptation_incoming_damage_pct"		"30"
+				"siren_temptation_incoming_damage_pct"		"30" // %
 			}
 			"09"
 			{
 				"var_type"												"FIELD_INTEGER"
-				"siren_temptation_magical_resistance_reduction_pct"		"30"
+				"siren_temptation_magical_resistance_reduction_pct"		"30" // %
 			}
 		}
 	}
