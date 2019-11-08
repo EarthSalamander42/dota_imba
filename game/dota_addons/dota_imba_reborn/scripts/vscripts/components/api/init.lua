@@ -107,6 +107,9 @@ function api:GetPlayerCompanion(player_id)
 
 	if self.players[steamid] ~= nil then
 		return CustomNetTables:GetTableValue("battlepass", "companions")["1"][tostring(self.players[steamid].companion_id)]
+		print("API")
+		PrintTable(CustomNetTables:GetTableValue("battlepass", "companions"))
+		return CustomNetTables:GetTableValue("battlepass", companion_table_name)["1"][tostring(self.players[steamid].companion_id)]
 	else
 		native_print("api:GetPlayerCompanion: api players steamid not valid!")
 		return false
@@ -502,25 +505,6 @@ function api:RegisterGame(callback)
 	end
 end
 
-function api:IterateWinrateOrdering(callback)
-	self:Request("360-noscope", function(data)
-		-- What does the api returns (data.smth)
-
-		if IsInToolsMode() then
-			print(data)
-		end
-
-		if callback ~= nil then
-			callback()
-		end
-	end, nil, "POST", {
---		map = GetMapName(),
---		match_id = self:GetMatchID(),
-		players = self:GetAllPlayerSteamIds(),
---		cheat_mode = self:IsCheatGame(),
-	});
-end
-
 function api:CompleteGame(successCallback, failCallback)
 	local players = {}
 
@@ -571,11 +555,14 @@ function api:CompleteGame(successCallback, failCallback)
 	local rosh_hp
 	local rosh_max_hp
 
-	print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
-	if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
-		rosh_lvl = ROSHAN_ENT:GetLevel()
-		rosh_hp = ROSHAN_ENT:GetHealth()
-		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+	if CUSTOM_GAME_TYPE == "IMBA" then
+		print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
+
+		if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
+			rosh_lvl = ROSHAN_ENT:GetLevel()
+			rosh_hp = ROSHAN_ENT:GetHealth()
+			rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+		end
 	end
 
 	print(rosh_lvl, rosh_hp, rosh_max_hp)

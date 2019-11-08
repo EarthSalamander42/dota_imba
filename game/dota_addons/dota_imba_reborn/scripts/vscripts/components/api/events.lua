@@ -1,20 +1,23 @@
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
-		api:IterateWinrateOrdering()
 		api:RegisterGame()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
 
-		api:DiretideHallOfFame(
-			function(data)
-				CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
-			end,
+		if CUSTOM_GAME_TYPE == "IMBA" then
+			if GameMode:GetCustomGamemode() == 4 then
+				api:DiretideHallOfFame(
+					function(data)
+						CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
+					end,
 
-			function(data)
-				print("FAIL:", data)
+					function(data)
+						print("FAIL:", data)
+					end
+				)
 			end
-		)
+		end
 
 		Timers:CreateTimer(function()
 			api:CheatDetector()
@@ -26,8 +29,10 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			return 1.0
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
-		if GameMode:GetCustomGamemode() == 4 then
-			CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
+		if CUSTOM_GAME_TYPE == "IMBA" then
+			if GameMode:GetCustomGamemode() == 4 then
+				CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
+			end
 		end
 
 		api:CompleteGame(function(data, payload)
