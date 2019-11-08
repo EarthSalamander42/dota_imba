@@ -220,7 +220,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
-		GameMode:SetCustomGamemode(1)
+		api:SetCustomGamemode(1)
 
 		if GameMode.VoteTable == nil then return end
 		local votes = GameMode.VoteTable
@@ -259,7 +259,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			-- Act on the winning vote
 			if category == "gamemode" then
-				GameMode:SetCustomGamemode(highest_key)
+				api:SetCustomGamemode(highest_key)
 			end
 
 			-- Act on the winning vote
@@ -292,17 +292,4 @@ function GameMode:OnSettingVote(keys)
 
 	-- TODO: Finish votes show up
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
-end
-
-function GameMode:SetCustomGamemode(iValue)
-	if iValue and type(iValue) == "number" then
-		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
-	end
-
-	return nil
-end
-
-function GameMode:GetCustomGamemode()
---	print("Gamemode:", CustomNetTables:GetTableValue("game_options", "gamemode")["1"])
-	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"] or nil
 end

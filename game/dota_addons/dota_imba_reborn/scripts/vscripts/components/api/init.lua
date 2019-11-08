@@ -553,9 +553,9 @@ function api:CompleteGame(successCallback, failCallback)
 	local rosh_max_hp
 
 	if CUSTOM_GAME_TYPE == "IMBA" then
-		print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
+		print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
 
-		if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
+		if api:IsCheatGame() == false and api:GetCustomGamemode() == 4 then
 			rosh_lvl = ROSHAN_ENT:GetLevel()
 			rosh_hp = ROSHAN_ENT:GetHealth()
 			rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
@@ -592,5 +592,25 @@ function api:DiretideHallOfFame(successCallback, failCallback)
 		map = GetMapName(),
 	});
 end
+
+
+function api:SetCustomGamemode(iValue)
+	if iValue and type(iValue) == "number" then
+		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	end
+
+	return nil
+end
+
+function api:GetCustomGamemode()
+	local gamemode = CustomNetTables:GetTableValue("game_options", "gamemode")
+
+	if gamemode then
+		gamemode = gamemode["1"]
+	end
+
+	return gamemode
+end
+
 
 require("components/api/events")

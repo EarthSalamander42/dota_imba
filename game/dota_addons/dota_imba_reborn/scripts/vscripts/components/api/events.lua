@@ -6,7 +6,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		api:InitDonatorTableJS()
 
 		if CUSTOM_GAME_TYPE == "IMBA" then
-			if GameMode:GetCustomGamemode() == 4 then
+			if api:GetCustomGamemode() == 4 then
 				api:DiretideHallOfFame(
 					function(data)
 						CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
@@ -30,7 +30,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
 		if CUSTOM_GAME_TYPE == "IMBA" then
-			if GameMode:GetCustomGamemode() == 4 then
+			if api:GetCustomGamemode() == 4 then
 				CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
 			end
 		end
@@ -44,7 +44,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 					id = api:GetApiGameId(),
 					radiant_score = GetTeamHeroKills(2),
 					dire_score = GetTeamHeroKills(3),
-					gamemode = GameMode:GetCustomGamemode(),
+					gamemode = api:GetCustomGamemode(),
 				},
 			})
 		end)

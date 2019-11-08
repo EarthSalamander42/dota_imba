@@ -10,7 +10,7 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
-	if GameMode:GetCustomGamemode() == 4 then
+	if api:GetCustomGamemode() == 4 then
 		if Diretide.DIRETIDE_PHASE >= 3 then
 			return false
 		end

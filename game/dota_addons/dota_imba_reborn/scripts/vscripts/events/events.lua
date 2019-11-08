@@ -203,7 +203,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			Setup1v1()
 		else
 			-- Controversial addition
-			-- if GameMode:GetCustomGamemode() > 1 then
+			-- if api:GetCustomGamemode() > 1 then
 				-- SpawnEasterEgg()
 			-- end
 

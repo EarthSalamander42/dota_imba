@@ -42,8 +42,8 @@ end
 --	end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
---	print("Diretide gamemode?", GameMode:GetCustomGamemode())
-	if GameMode:GetCustomGamemode() == 4 then
+--	print("Diretide gamemode?", api:GetCustomGamemode())
+	if api:GetCustomGamemode() == 4 then
 		if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 			Diretide:Init()
 			Diretide:Countdown()
@@ -293,7 +293,7 @@ ListenToGameEvent('entity_killed', function(keys)
 	local victim = EntIndexToHScript(keys.entindex_killed)
 	if not victim then return end
 
-	if GameMode:GetCustomGamemode() ~= 4 then
+	if api:GetCustomGamemode() ~= 4 then
 		return
 	end
 
