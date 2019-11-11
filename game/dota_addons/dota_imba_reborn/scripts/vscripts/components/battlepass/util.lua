@@ -50,15 +50,21 @@ function Battlepass:AddItemEffects(hero)
 
 	if ply_table and ply_table.bp_rewards == 0 then
 	else
-		Battlepass:SetItemEffects(hero:GetPlayerID())
+		if CUSTOM_GAME_TYPE == "PW" then
+			Battlepass:SetItemEffects(hero)
+		else
+			Battlepass:SetItemEffects(hero:GetPlayerID())
+		end
 	end
 
 	-- some effects override some items effects, need to call it after items setup
-	Battlepass:GetHeroEffect(hero)
+	if CUSTOM_GAME_TYPE ~= "PW" then
+		Battlepass:GetHeroEffect(hero)
+	end
 end
 
 function Battlepass:HasArcana(ID, hero_name)
-	if not Battlepass.GetRewardUnlocked or not BattlepassHeroes[hero_name] then return nil end
+	if not Battlepass.GetRewardUnlocked or not BattlepassHeroes or not BattlepassHeroes[hero_name] then return nil end
 
 	if BattlepassHeroes[hero_name][hero_name.."_arcana2"] then
 		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name][hero_name.."_arcana2"] then

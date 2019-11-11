@@ -5,6 +5,17 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		api:RegisterGame()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
+
+		api:DiretideHallOfFame(
+			function(data)
+				CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
+			end,
+
+			function(data)
+				print("FAIL:", data)
+			end
+		)
+
 		Timers:CreateTimer(function()
 			api:CheatDetector()
 
@@ -16,10 +27,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
 		if GameMode:GetCustomGamemode() == 4 then
-			api:DiretideHallOfFame(function(data)
---				print(data)
-				CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {data = data})
-			end)
+			CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
 		end
 
 		api:CompleteGame(function(data, payload)

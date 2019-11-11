@@ -97,8 +97,10 @@ function fetch() {
 	});
 	*/
 
-	$("#VoteGameMode4").checked = true;
-	OnVoteButtonPressed("gamemode", 4);
+	$.Schedule(1.0, function(){
+		$("#VoteGameMode1").checked = true;
+		OnVoteButtonPressed("gamemode", 1);
+	});
 };
 
 function HoverableLoadingScreen() {
@@ -131,7 +133,7 @@ function OnVotesReceived(data)
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
 	// Reset tooltips
-	for (var i = 1; i <= 4; i++) {
+	for (var i = 1; i <= 3; i++) {
 		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
 	}
 
@@ -141,10 +143,8 @@ function OnVotesReceived(data)
 		vote_count[gamemode]++;
 	}
 
-	$.Msg(vote_count)
-
 	// Modify tooltips based on voted gamemode
-	for (var i = 1; i <= 4; i++) {
+	for (var i = 1; i <= 3; i++) {
 		var vote_tooltip = "vote"
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"

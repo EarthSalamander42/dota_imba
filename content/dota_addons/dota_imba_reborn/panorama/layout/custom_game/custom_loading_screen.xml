@@ -24,7 +24,7 @@
 
 			<Panel id="TopButtonBar" class="LoadingButtons">
 				<Panel class="Row">
-					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('http://dota2imba.fr/ranking');">
+					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('http://frostrose-studio.com/ranking');">
 						<Label text="Official Website" />
 					</Button>
 					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
@@ -64,10 +64,12 @@
 							<RadioButton id="VoteGameMode3" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 3)" />
 							<Label id="VoteGameModeText3" class="VoteGameModeText" text="#vote_gamemode_3" />
 						</Panel>
+<!--
 						<Panel class="VoteButton" hittest="false">
 							<RadioButton id="VoteGameMode4" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 4)" />
 							<Label id="VoteGameModeText4" class="VoteGameModeText" text="#vote_gamemode_4" />
 						</Panel>
+-->
 					</Panel>
 				</Panel>
 			</Panel>

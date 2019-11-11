@@ -152,7 +152,7 @@ function OverrideTopBarHeroImage(args) {
 	var arcana_level = undefined;
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-	if (herolist.customlist["npc_dota_hero_" + args.hero_name]) {
+	if (herolist && herolist.customlist["npc_dota_hero_" + args.hero_name]) {
 		arcana_level = 7777
 	} else {
 		if (ply_battlepass && ply_battlepass.arcana) {

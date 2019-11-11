@@ -1,7 +1,7 @@
 .CustomHudRoot
 {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 	visibility:  collapse;
 }
 
@@ -11,21 +11,21 @@
 
 .DemoHud
 {
-    flow-children: right;
-    height: 100%;
-    width: 100%;
+	flow-children: right;
+	height: 100%;
+	width: 100%;
 }
 
 .ControlPanel
 {
-    transform: translateX( 0% ) translateY( -100px );
-    vertical-align: middle;
-    horizontal-align: left;
-    padding: 4px;
-    padding-left: 0px;
+	transform: translateX( 0% ) translateY( -100px );
+	vertical-align: middle;
+	horizontal-align: left;
+	padding: 4px;
+	padding-left: 0px;
 	padding-top: 60px;
 
-    transition-property: background-color, transform;
+	transition-property: background-color, transform;
 	transition-duration: 0.35s;
 	transition-timing-function: ease-in-out;
 	visibility: collapse;
@@ -33,19 +33,19 @@
 
 .ControlPanel.visible
 {
-    visibility: visible;
+	visibility: visible;
 }
 
 .ControlPanelContainer
 {
-    flow-children: right;
-    vertical-align: middle;
-    horizontal-align: left;
-    width: 160px;
-    font-size: 16;
-    background-color: #181818dd;
-    border: 2px solid #222222;
-   	box-shadow: #000000aa -4px -4px 8px 8px;
+	flow-children: right;
+	vertical-align: middle;
+	horizontal-align: left;
+	width: 160px;
+	font-size: 16;
+	background-color: #181818dd;
+	border: 2px solid #222222;
+	box-shadow: #000000aa -4px -4px 8px 8px;
 }
 
 #ControlPanelSlideThumb
@@ -53,10 +53,10 @@
 	width: 32px;
 	height: 96px;
 	transform: translateX( 0px );
-    background-color: #181818cc;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-   	box-shadow: #00000055 -4px -4px 8px 8px;
+	background-color: #181818cc;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	box-shadow: #00000055 -4px -4px 8px 8px;
 	vertical-align: middle;
 }
 
@@ -67,7 +67,7 @@
 	vertical-align: middle;
 	horizontal-align: right;
 	background-image: url("s2r://panorama/images/control_icons/double_arrow_left_png.vtex");
-    background-position: 0% 50%;
+	background-position: 0% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
 	wash-color: #91aba6;
@@ -104,31 +104,31 @@
 
 .ControlPanel. #ControlPanelSlideThumb:hover .RightArrowButtonIcon
 {
-    transform: translateX( 3px ) rotateZ(180deg);
-    wash-color: white;
+	transform: translateX( 3px ) rotateZ(180deg);
+	wash-color: white;
 }
 
 .Minimized .ControlPanel
 {
-    transform: translateX( -160px ) translateY( -100px );
+	transform: translateX( -160px ) translateY( -100px );
 }
 
 .QuitPausePanel
 {
 	flow-children: right;
 	transform: translateX( 0px ) translateY( 0px );
-    vertical-align: top;
-    horizontal-align: right;
-    height: 45px;
-    width: 100%;
-    background-color: #181818;
-    border: 2px solid #222222;	
+	vertical-align: top;
+	horizontal-align: right;
+	height: 45px;
+	width: 500px; /* it's actually less, but just in case (aspect ratio, future changes) */
+	background-color: #181818;
+	border: 2px solid #222222;	
 }
 
 .QuitPausePanel .DemoButton
 {
 	height: 100%;
-    width: 48%;
+	width: 48%;
 }
 
 .Category .QuitPausePanel
@@ -146,34 +146,34 @@
 .QuitPausePanel .QuitButton
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #441111), to( #662222 ) );
-    height: 100%;
-    width: 48%;
+	height: 100%;
+	width: 48%;
 
 	margin-top: 3px;
 	margin-bottom: 3px;
 	margin-left: 3px;
 	margin-right: 3px;
 
-    border-style: solid;
-    border-width: 2px;	
+	border-style: solid;
+	border-width: 2px;	
 
-    border-top-color: #661111;
-    border-left-color: #591111;
-    border-bottom-color: #441111;
-    border-right-color: #502222;
+	border-top-color: #661111;
+	border-left-color: #591111;
+	border-bottom-color: #441111;
+	border-right-color: #502222;
 
-    transition-property: background-color;
+	transition-property: background-color;
 	transition-duration: 0.15s;
 	transition-timing-function: ease-in-out;
 }
 
 .Category .QuitPausePanel .QuitButton Label
 {
-    margin-top: 5px;
-    margin-left: 5px;
-    color: #ffffff;
-    font-size: 16;
-    vertical-align: middle;
+	margin-top: 5px;
+	margin-left: 5px;
+	color: #ffffff;
+	font-size: 16;
+	vertical-align: middle;
 }
 
 .QuitPausePanel .QuitButton:hover
@@ -183,7 +183,7 @@
 
 .QuitPausePanel.QuitButton:active
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
 	pre-transform-scale2d: 1.02;
 }
 
@@ -210,12 +210,13 @@
 	horizontal-align: left;
 	margin-left: 0%;
 	margin-top: 2px;
-	font-size: 20;
+	font-size: 20px;
 	color: #888888;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	text-align: left;
 	min-width: 100%;
+	text-overflow: shrink;
 }
 
 .ControlPanelContainer #Maximized
@@ -227,12 +228,12 @@
 .ControlPanelContainer #Maximized #MinimizeButton
 {
 	flow-children: down;
-    transform: translateX( 0% ) translateY( 0% );
-    vertical-align: middle;
-    horizontal-align: left;
-    width: 100%;
-    background-color: #181818;
-    border: 2px solid #111111;
+	transform: translateX( 0% ) translateY( 0% );
+	vertical-align: middle;
+	horizontal-align: left;
+	width: 100%;
+	background-color: #181818;
+	border: 2px solid #111111;
 	visibility:visible;
 }
 
@@ -303,28 +304,28 @@
 	border: 1px solid baseBorder;
 	
 	color: lightgrey;
-    font-size: 16;
+	font-size: 16;
 
-    margin-top: 3px;
+	margin-top: 3px;
 	margin-bottom: 3px;
 	margin-left: 3px;
 	margin-right: 3px;
 
-    height: 20px;
+	height: 20px;
 	width: 40px;
 
-    padding-top: 5px;
-    padding-left: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
 }
 
 .Row TextEntry #PlaceholderText
 {
-    opacity: 1.0;
+	opacity: 1.0;
 
-    transition-property: opacity;
-    transition-duration: 0.1s;
+	transition-property: opacity;
+	transition-duration: 0.1s;
 
-    vertical-align: middle;
+	vertical-align: middle;
 
 	color: #444444;
 	font-size: 16;
@@ -338,7 +339,7 @@
 
 .Row TextEntry:focus #PlaceholderText, TextEntry.HasInput #PlaceholderText
 {
-    opacity: 0.0;
+	opacity: 0.0;
 }
 
 .DemoButton
@@ -353,17 +354,17 @@
 	margin-left: 3px;
 	margin-right: 3px;
 
-    border-style: solid;
-    border-width: 1px;
+	border-style: solid;
+	border-width: 1px;
 
-    border-top-color: #444444;
-    border-left-color: #494949;
-    border-bottom-color: #111111;
-    border-right-color: #404040;
+	border-top-color: #444444;
+	border-left-color: #494949;
+	border-bottom-color: #111111;
+	border-right-color: #404040;
 
-    transition-property: background-color;
-    transition-duration: 0.15s;
-    transition-timing-function: linear;
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
 }
 
 .Category .Row .DemoButton#FieldButton
@@ -374,35 +375,35 @@
 
 .Category .DemoButton Label
 {
-    margin-top: 5px;
+	margin-top: 5px;
 /*	padding: 6% 12% 6% 3%;*/
-    color: #cccccc;
-    font-size: 15;
-    font-weight: thin;
-    vertical-align: middle;
-    text-transform: none;
-    letter-spacing: 0px;
+	color: #cccccc;
+	font-size: 15;
+	font-weight: thin;
+	vertical-align: middle;
+	text-transform: none;
+	letter-spacing: 0px;
 }
 
 .Category .DemoButton:hover
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
 }
 
 .Category .DemoButton:hover Label
 {
-    //color: #cccccc;
+	//color: #cccccc;
 }
 
 .Category .DemoButton:active
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #888888 ), to( #aaaaaa ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #888888 ), to( #aaaaaa ) );
 	pre-transform-scale2d: 1.02;
 }
 
 .Category .DemoButton:active Label
 {
-    //color: #eeeeee;
+	//color: #eeeeee;
 }
 
 .Category .DemoButton:selected
@@ -412,12 +413,12 @@
 
 .Category ToggleButton.DemoButton:active Label
 {
-    //color: #eeeeee;
+	//color: #eeeeee;
 }
 
 .Category ToggleButton:selected Label
 {
-    //color: #cccccc;
+	//color: #cccccc;
 }
 
 #SelectEnemyHeroContainer
@@ -427,7 +428,7 @@
 	background-color: #000c;
 
 	opacity: 0.0;
-    transform: translateX( -60px ) translateY( -100px );
+	transform: translateX( -60px ) translateY( -100px );
 
 	transition-property: opacity, transform;
 	transition-duration: 0.2s;
@@ -453,7 +454,7 @@
 	background-color: #000c;
 
 	opacity: 0.0;
-    transform: translateX( -60px ) translateY( -20px );
+	transform: translateX( -60px ) translateY( -20px );
 
 	transition-property: opacity, transform;
 	transition-duration: 0.2s;
@@ -482,7 +483,7 @@
 	z-index: 10;
 	
 	opacity: 0.0;
-    transform: translateX( 100px ) translateY( 0px );
+	transform: translateX( 100px ) translateY( 0px );
 
 	transition-property: opacity, transform;
 	transition-duration: 0.2s;
@@ -520,8 +521,8 @@
 {
 	horizontal-align: center;
 	vertical-align: top;
-    flow-children: down;
-    width: 100%;
+	flow-children: down;
+	width: 100%;
 }
 
 #EquipItemContainer
@@ -539,15 +540,15 @@
 
 .NotWearable #PleaseSelectWearableUnit
 {
-    visibility: visible;
+	visibility: visible;
 }
 
 #PleaseSelectWearableUnit
 {
-    horizontal-align: middle;
-    vertical-align: middle;
-    visibility: collapse;
-    font-size: 22px;
+	horizontal-align: middle;
+	vertical-align: middle;
+	visibility: collapse;
+	font-size: 22px;
 }
 
 #EquipItemContainer DOTAEconItem
@@ -559,8 +560,8 @@
 
 #PurchaseTooltip
 {
-    font-size: 17px;
-    width: 53%;
+	font-size: 17px;
+	width: 53%;
 }
 
 .EconItemSlot
@@ -598,7 +599,7 @@
 {
 	/* margin: 0px; */
 	padding: 0px;
-    width: 350px;
+	width: 350px;
 	flow-children: down;
 	border: 2px solid black;
 	box-shadow: none;
@@ -622,8 +623,8 @@
 {
 	flow-children: down;
 	margin-top: 8px;
-    width: 95%;
-    horizontal-align: middle;
+	width: 95%;
+	horizontal-align: middle;
 }
 
 #AvailableHeader
@@ -635,15 +636,15 @@
 #AvailableTitle
 {
 	color: white;
-    text-transform: uppercase;
-    vertical-align: bottom;
+	text-transform: uppercase;
+	vertical-align: bottom;
 }
 
 #VoteButton
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #60862d ), to( #3d5f1c ));
-    horizontal-align:right;
-    margin-right: 10px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #60862d ), to( #3d5f1c ));
+	horizontal-align:right;
+	margin-right: 10px;
 }
 
 .SourceButton
@@ -655,31 +656,31 @@
 	border-right: 1px solid #00000044;
 	border-bottom: 1px solid #00000088;
 	padding: 5px 14px 3px 14px;
-    min-width: 100px;
-    height: 34px;
-    margin: 5px;
+	min-width: 100px;
+	height: 34px;
+	margin: 5px;
 
 }
 
 .SourceButton:hover
 {
-    brightness: 2.0;
+	brightness: 2.0;
 }
 
 #Bundle.SourceButton
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #3784a6 ), to( #215373 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3784a6 ), to( #215373 ) );
 }
 
 #Single.SourceButton
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #3751a6 ), to( #1b2b5e ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3751a6 ), to( #1b2b5e ) );
 }
 
 #Single.SourceButtonDisabled,
 #Bundle.SourceButtonDisabled
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #646666 ), to( #646666 ) ) !important;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #646666 ), to( #646666 ) ) !important;
 }
 
 #SourceIconContainer
@@ -687,7 +688,7 @@
 	width: 44px;
 	height: 26px;
 	margin-top: -2px;
-    /* margin-right: elementMargin; */
+	/* margin-right: elementMargin; */
 	vertical-align: middle;
 	flow-children: right;
 
@@ -695,47 +696,47 @@
 
 #SourceIconArrow
 {
-    width: 14px;
-    height: 14px;
-    vertical-align: middle;
+	width: 14px;
+	height: 14px;
+	vertical-align: middle;
 	horizontal-align: center;
 	
 	wash-color: #ceffbb;
 
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 
 	background-image: url("s2r://panorama/images/icon_treasure_arrow_psd.vtex");
 }
 
 #SourceIcon
 {
-    width: 22px;
-    height: 22px;
-    vertical-align: middle;
+	width: 22px;
+	height: 22px;
+	vertical-align: middle;
 	horizontal-align: center;
 
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }
 
 
 #Bundle #SourceIcon
 {
-    background-image: url("s2r://panorama/images/control_icons/brackets_png.vtex");
+	background-image: url("s2r://panorama/images/control_icons/brackets_png.vtex");
 }
 
 #Single #SourceIcon
 {
-    background-image: url("s2r://panorama/images/topbar/armory_icon_off_png.vtex");
-    brightness: 7;
+	background-image: url("s2r://panorama/images/topbar/armory_icon_off_png.vtex");
+	brightness: 7;
 }
 
 .SourceButton Label
 {
-    color: white;
+	color: white;
 }
 
 #StoreButton
@@ -785,11 +786,11 @@
 
 #AvailableItemsCarousel DOTAStoreItem
 {
-    /* width: fill-parent-flow( 1.0 ); */
-    /* 5:6 */
+	/* width: fill-parent-flow( 1.0 ); */
+	/* 5:6 */
 	width: 180px;
-    height: 236px;
-    margin-right: 10px;
+	height: 236px;
+	margin-right: 10px;
 }
 
 #HeroNameContainer
@@ -828,10 +829,10 @@
 #GemContainer
 {
 	flow-children: right;
-    vertical-align: middle;
-    horizontal-align: right;
-    height: 900px;
-    /* width: 700px; */
+	vertical-align: middle;
+	horizontal-align: right;
+	height: 900px;
+	/* width: 700px; */
 	
 	transition-property: background-color, transform;
 	transition-duration: 0.35s;
@@ -844,17 +845,17 @@
 	width: 52px;
 	height: 116px;
 	transform: translateX( 0px );
-    background-color: #181818cc;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-   	box-shadow: #00000055 -4px -4px 8px 8px;
+	background-color: #181818cc;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	box-shadow: #00000055 -4px -4px 8px 8px;
 	vertical-align: middle;
 }
 
 #GemSlideThumb  DOTAEconItem
 {
-    height: 40px;
-    width: 40px;
+	height: 40px;
+	width: 40px;
 }
 
 .LeftArrowButtonIcon
@@ -862,10 +863,10 @@
 	width: 16px;
 	height: 16px;
 	vertical-align: middle;
-    horizontal-align: right;
-    margin-right: 10px;
+	horizontal-align: right;
+	margin-right: 10px;
 	background-image: url("s2r://panorama/images/control_icons/double_arrow_right_png.vtex");
-    background-position: 0% 50%;
+	background-position: 0% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
 	wash-color: #91aba6;
@@ -891,7 +892,7 @@
 
 .GemMinimized #GemContainer
 {
-    transform: translateX( 820px );
+	transform: translateX( 820px );
 }
 
 .GemMinimized #GemContainer .LeftArrowButtonIcon
@@ -908,69 +909,69 @@
 
 #GemContainer #GemSlideThumb:hover .RightArrowButtonIcon
 {
-    transform: translateX( -3px ) rotateZ(180deg);
-    wash-color: white;
+	transform: translateX( -3px ) rotateZ(180deg);
+	wash-color: white;
 }
 
 .GemItemSelected
 {
 	background-color:gradient( linear, 0% 0%, 0% 100%, from( #ffeaa415 ), to( #0e0b0633 ) );
-    box-shadow:  grey 0px 0px 10px 1px;
+	box-shadow:  grey 0px 0px 10px 1px;
 }
 
 #GemMaskContainer
 {
-    height: 100%;
-    
+	height: 100%;
+	
 }
 
 #GemMask
 {
-    width: 100%;
-    height: 100%;
-    z-index: 50;
-    /* blur: gaussian( 1 ); */
-    background-color:gradient( linear, 0% 0%, 0% 100%, from( #000000d0 ), to( #0e0b0633 ) );
-    /* wash-color: #000000bb; */
-    /* opacity: 0.8; */
-    visibility: collapse;
+	width: 100%;
+	height: 100%;
+	z-index: 50;
+	/* blur: gaussian( 1 ); */
+	background-color:gradient( linear, 0% 0%, 0% 100%, from( #000000d0 ), to( #0e0b0633 ) );
+	/* wash-color: #000000bb; */
+	/* opacity: 0.8; */
+	visibility: collapse;
 }
 
 .ShowMask #GemMask
 {
-    visibility: visible;
+	visibility: visible;
 }
 
 #AvailableGems
 {
-    height: 100%;
-    flow-children: right;
+	height: 100%;
+	flow-children: right;
 }
 
 .ShowMask #AvailableGems
 {
-    blur: gaussian( 1 );
+	blur: gaussian( 1 );
 }
 
 #CommingSoon
 {
-    vertical-align: middle;
-    horizontal-align: middle;
-    font-size: 50px;
-    color: dotaPlusLightGold;
-    letter-spacing: 2px;
-    font-weight: bold;
-    text-shadow: 0px 0px 4px dotaPlusLightGold;
+	vertical-align: middle;
+	horizontal-align: middle;
+	font-size: 50px;
+	color: dotaPlusLightGold;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-shadow: 0px 0px 4px dotaPlusLightGold;
 }
 
 #AvailablePrismatics
 {
-    width: 520px;
-    height: 100%;
+	width: 520px;
+	height: 100%;
 	flow-children: down-wrap;
 	/* overflow:  squish squish; */
 	background-color: #181818dd;
-    border: 2px solid #222222;
+	border: 2px solid #222222;
 }
 
 #AvailablePrismatics DOTAEconItem
@@ -982,8 +983,8 @@
 
 .PrismaticItem
 {
-    width: 33%;
-    height: 7.05%;
+	width: 33%;
+	height: 7.05%;
 	flow-children: none;
 }
 
@@ -996,13 +997,13 @@
 {
 	width: 23px;
 	height: 23px;
-    wash-color: none;
-    z-index:1;
-    background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_immortal_psd.vtex");
-    background-repeat: no-repeat;
-    transform: rotateY(180deg);
-    background-size: 100% 100%;
-    visibility: collapse;
+	wash-color: none;
+	z-index:1;
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_immortal_psd.vtex");
+	background-repeat: no-repeat;
+	transform: rotateY(180deg);
+	background-size: 100% 100%;
+	visibility: collapse;
 }
 
 .PrismaticItem:hover
@@ -1014,11 +1015,11 @@
 {
 	vertical-align: middle;
 	horizontal-align: left;
-    flow-children: down;
-    /* position: 40% 0% 0px; */
-    vertical-align: middle;
-    horizontal-align: left;
-    margin-left: 65px;
+	flow-children: down;
+	/* position: 40% 0% 0px; */
+	vertical-align: middle;
+	horizontal-align: left;
+	margin-left: 65px;
 }
 
 .PrismaticLabels #PrismaticName
@@ -1026,8 +1027,8 @@
 	font-size: 18px;
 	color: white;
 	/* margin-bottom: 6px;
-    margin-top: 2px; */
-    line-height: 15px;
+	margin-top: 2px; */
+	line-height: 15px;
 	text-overflow: ellipsis;
 }
 
@@ -1043,12 +1044,12 @@
 
 #AvailableEthereals
 {
-    width: 300px;
-    height: 100%;
+	width: 300px;
+	height: 100%;
 	flow-children: down-wrap;
 	/* overflow:  squish scroll; */
 	background-color: #181818dd;
-    border: 2px solid #222222;
+	border: 2px solid #222222;
 }
 
 #AvailableEthereals DOTAEconItem
@@ -1060,8 +1061,8 @@
 
 .EtherealItem
 {
-    width: 50%;
-    height: 5.5%;
+	width: 50%;
+	height: 5.5%;
 	/* flow-children: right; */
 }
 
@@ -1073,14 +1074,14 @@
 #EtherealEquipped
 {
 	width: 18px;
-    height: 18px;
-    wash-color: #B3DFDC;
-    z-index:1;
-    background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
-    background-repeat: no-repeat;
-    transform: rotateY(180deg);
-    background-size: 100% 100%;
-    visibility: collapse;
+	height: 18px;
+	wash-color: #B3DFDC;
+	z-index:1;
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
+	background-repeat: no-repeat;
+	transform: rotateY(180deg);
+	background-size: 100% 100%;
+	visibility: collapse;
 }
 
 .EtherealItem:hover
@@ -1093,33 +1094,33 @@
 	font-size: 18px;
 	color: white;
 	vertical-align: middle;
-    horizontal-align: left;
-    margin-left: 65px;
-    text-overflow: shrink;
+	horizontal-align: left;
+	margin-left: 65px;
+	text-overflow: shrink;
 }
 
 #ResetGemsButton
 {
-    vertical-align: middle;
-    horizontal-align: middle;
-    width: 44%;
+	vertical-align: middle;
+	horizontal-align: middle;
+	width: 44%;
 }
 
 #ResetGemsButton:hover
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
 }
 
 #ResetGemsButton Label
 {
 /*	padding: 6% 12% 6% 3%;*/
-    color: #cccccc;
-    font-size: 15;
-    font-weight: thin;
-    vertical-align: middle;
-    text-transform: none;
-    letter-spacing: 0px;
-    horizontal-align: middle;
+	color: #cccccc;
+	font-size: 15;
+	font-weight: thin;
+	vertical-align: middle;
+	text-transform: none;
+	letter-spacing: 0px;
+	horizontal-align: middle;
 }
 
 #HeroImageContainer
@@ -1167,28 +1168,28 @@
 
 .Middle
 {
-    horizontal-align: middle;
-    vertical-align: middle;
+	horizontal-align: middle;
+	vertical-align: middle;
 }
 
 #RespawnButtonLabel
 {
-    color: red;
+	color: red;
 }
 
 #CourierSelectorContainer
 {
-    flow-children: down;
-    vertical-align: top;
-    /* margin-top: 75px; */
+	flow-children: down;
+	vertical-align: top;
+	/* margin-top: 75px; */
 }
 
 #TeamSelectorContainer
 {
-    /* visibility: collapse; */
-    flow-children: right;
-    vertical-align: top;
-    margin-top: 15px;
+	/* visibility: collapse; */
+	flow-children: right;
+	vertical-align: top;
+	margin-top: 15px;
 }
 
 .TeamSelector
@@ -1243,10 +1244,10 @@
 
 #FlySelectorContainer
 {
-    /* visibility: collapse; */
-    flow-children: right;
-    vertical-align: top;
-    margin-top: 20px;
+	/* visibility: collapse; */
+	flow-children: right;
+	vertical-align: top;
+	margin-top: 20px;
 }
 
 .FlySelector
@@ -1266,8 +1267,8 @@
 
 .FlySelector.Ground
 {
-    background-image: url("s2r://panorama/images/items/courier_png.vtex");
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #a1a1a1 ), to( #757575 ));
+	background-image: url("s2r://panorama/images/items/courier_png.vtex");
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #a1a1a1 ), to( #757575 ));
 }
 
 .FlySelector.Fly

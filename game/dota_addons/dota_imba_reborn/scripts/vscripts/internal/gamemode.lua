@@ -10,7 +10,7 @@ function GameMode:_InitGameMode()
 
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
-	print("Vote Settings listener initialized.")
+--	print("Vote Settings listener initialized.")
 	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 

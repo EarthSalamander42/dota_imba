@@ -3,14 +3,19 @@
 
 api = class({});
 
-local baseUrl = "http://api.dota2imba.fr/imba/"
+local baseUrl = "http://api.frostrose-studio.com/imba/"
+local websiteUrl = "http://api.frostrose-studio.com/website/"
 local timeout = 5000
 
 local native_print = print
 
 -- Utils
 function api:GetUrl(endpoint)
-	return baseUrl .. endpoint
+	if endpoint == "statistics/ranking/xp" or endpoint == "statistics/ranking/winrate" then
+		baseUrl = websiteUrl
+	end
+
+	return baseUrl..endpoint
 end
 
 function api:IsDonator(player_id)
@@ -372,7 +377,6 @@ end
 
 -- Core
 function api:Request(endpoint, okCallback, failCallback, method, payload)
-
 	if okCallback == nil then
 		okCallback = function()
 		end
@@ -490,6 +494,13 @@ function api:RegisterGame(callback)
 
 			cool_hat[j] = {}
 			for k, v in pairs(data) do
+
+				-- temporary fix
+				if data[k]["file"] == '""' then
+					print("fix whitespace", cool_hats[j])
+					data[k]["file"] = "particles/dev/empty_particle.vpcf"
+				end
+
 				table.insert(cool_hat[j], data[k]["id"], data[k])
 			end
 
@@ -502,20 +513,17 @@ function api:IterateWinrateOrdering(callback)
 	self:Request("360-noscope", function(data)
 		-- What does the api returns (data.smth)
 
---		api.game_id = data.game_id
---		api.players = data.players
 		if IsInToolsMode() then
 			print(data)
 		end
+
 		if callback ~= nil then
 			callback()
 		end
 	end, nil, "POST", {
-		-- What parameters do you need? GET
-
 --		map = GetMapName(),
 --		match_id = self:GetMatchID(),
---		players = self:GetAllPlayerSteamIds(),
+		players = self:GetAllPlayerSteamIds(),
 --		cheat_mode = self:IsCheatGame(),
 	});
 end
@@ -598,12 +606,12 @@ function api:CompleteGame(successCallback, failCallback)
 	end, failCallback, "POST", payload);
 end
 
-function api:DiretideHallOfFame(callback)
+function api:DiretideHallOfFame(successCallback, failCallback)
 	self:Request("diretide-score", function(data)
-		if callback ~= nil then
-			callback(data)
+		if successCallback ~= nil then
+			successCallback(data)
 		end
-	end, nil, "POST", {
+	end, failCallback, "POST", {
 		map = GetMapName(),
 	});
 end

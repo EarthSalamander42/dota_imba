@@ -20,7 +20,6 @@
 "Hero_ButtonCategory"						"Hero"
 "Spawn_ButtonCategory"						"Spawn"
 "Misc_ButtonCategory"						"Customize"
-"Playback_ButtonCategory"					""
 
 "Refresh_Button"							"Refresh"
 "LevelUp_Button"							"Level Up"
