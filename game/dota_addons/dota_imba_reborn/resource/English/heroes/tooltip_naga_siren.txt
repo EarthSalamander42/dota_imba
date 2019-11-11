@@ -8,6 +8,7 @@
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_outgoing_damage_tooltip"				"#{DOTA_Tooltip_ability_naga_siren_mirror_image_outgoing_damage_tooltip}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_tooltip_incoming_damage_total_pct"	"#{DOTA_Tooltip_ability_naga_siren_mirror_image_tooltip_incoming_damage_total_pct}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_images_count"						"#{DOTA_Tooltip_ability_naga_siren_mirror_image_images_count}"
+"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_perfect_image_max_stacks"			"PERFECT IMAGE MAX STACKS:"
 
 "DOTA_Tooltip_modifier_imba_naga_siren_mirror_image_perfect_image"						"Perfect Image"
 "DOTA_Tooltip_modifier_imba_naga_siren_mirror_image_perfect_image_Description"			"Damage dealt increased by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% and damage received reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%."
@@ -51,6 +52,9 @@
 
 "DOTA_Tooltip_modifier_imba_naga_siren_song_of_the_siren"						"#{DOTA_Tooltip_modifier_naga_siren_song_of_the_siren}"
 "DOTA_Tooltip_modifier_imba_naga_siren_song_of_the_siren_Description"			"#{DOTA_Tooltip_modifier_naga_siren_song_of_the_siren_Description}"	
+
+"DOTA_Tooltip_modifier_imba_naga_siren_siren_temptation_debuff"					"Siren's Temptation"
+"DOTA_Tooltip_modifier_imba_naga_siren_siren_temptation_debuff_Description"		"Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%  from all sources."	
 
 // tooltips compiler error when using vanilla token
 "DOTA_Tooltip_modifier_imba_naga_siren_song_of_the_siren_healing"				"Song of the Siren"
