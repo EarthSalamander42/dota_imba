@@ -135,6 +135,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			return nil
 		end
 
+		target:EmitSound("Hero_BountyHunter.Shuriken.Impact")
+
 		-- If target became spell immune when the shuriken was in its way, do nothing
 		if target:IsMagicImmune() then
 			return nil
