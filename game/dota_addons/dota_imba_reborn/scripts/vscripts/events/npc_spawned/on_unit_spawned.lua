@@ -52,9 +52,12 @@ function GameMode:OnUnitFirstSpawn(unit)
 	if unit:GetClassname() == "npc_dota_clinkz_skeleton_archer" then
 		-- IMBA effect
 --		unit:AddNewModifier(unit, nil, "modifier_invulnerable_hidden", {})
-
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:GetUnitName() == "npc_dota_hero_clinkz" then
+	
+		-- These skeletons have no set owner or team like wtf...
+		-- Need to do hacky inconsistent way to check for owner (breaks apart when you have multiple heroes all with Burning Army)
+		for _, hero in pairs(FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_DEAD, FIND_CLOSEST, false)) do
+			if hero:HasAbility("clinkz_burning_army") then
+				unit:SetOwner(hero)
 				unit:AddNewModifier(hero, nil, "modifier_imba_burning_army", {})
 				break
 			end
@@ -67,6 +70,10 @@ function GameMode:OnUnitFirstSpawn(unit)
 				end
 			end
 		end)
+		
+		if unit and unit.HasAbility and unit:HasAbility("imba_clinkz_searing_arrows") and unit.GetOwner and unit:GetOwner() and unit:GetOwner():HasAbility("imba_clinkz_searing_arrows") then
+			unit:FindAbilityByName("imba_clinkz_searing_arrows"):SetLevel(unit:GetOwner():FindAbilityByName("imba_clinkz_searing_arrows"):GetLevel())
+		end
 	end
 
 	-- Unit cosmetics

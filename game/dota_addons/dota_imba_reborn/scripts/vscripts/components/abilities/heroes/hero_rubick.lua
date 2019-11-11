@@ -15,6 +15,16 @@ function imba_rubick_telekinesis:IsStealable() return true end
 function imba_rubick_telekinesis:IsNetherWardStealable() return true end
 -------------------------------------------
 
+function imba_rubick_telekinesis:CastFilterResultTarget(target)
+	if target == self:GetCaster() and self:GetCaster():IsRooted() then
+		return UF_FAIL_CUSTOM
+	end
+end
+
+function imba_rubick_telekinesis:GetCustomCastErrorTarget(target)
+	return "dota_hud_error_ability_disabled_by_root"
+end
+
 function imba_rubick_telekinesis:OnSpellStart( params )
 	local caster = self:GetCaster()
 	-- Handler on lifted targets
@@ -1538,6 +1548,8 @@ function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 end
 
 function modifier_imba_rubick_spellsteal:OnDestroy( kv )
+	if not IsServer() then return end
+	
 	self:GetAbility():ForgetSpell() 
 end
 

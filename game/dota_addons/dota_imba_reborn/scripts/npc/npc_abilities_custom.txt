@@ -39,6 +39,7 @@
 #base heroes/spectre/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
+#base heroes/templar_assassin/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
 #base custom_heroes/vardor/abilities.txt
@@ -2757,66 +2758,67 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_per_second_tooltip"				"100 110 120 130"
+				"total_damage"							"150 220 290 360"
 			}
 
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"1.5 2.0 2.5 3.0"				
-			}			
+				"var_type"								"FIELD_INTEGER"
+				"creep_total_damage"					"1000 1100 1200 1300"
+			}
 
 			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"1.5 2.0 2.5 3.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_frostbite_duration"
+			}			
+
+			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"duration_creep"						"10"
 			}
 
-			"04"
+			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"creep_damage_tooltip"					"1000 1100 1200 1300"
 			}
 
-			"05"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"damage_per_tick"						"50 55 60 65"
-			}
-
-			"07"
+			"06"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration_stun"							"0.1"
 			}
 
-			"08"
+			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"damage_interval"						"0.5"
 				"CalculateSpellDamageTooltip"			"0"
 			}
 
-			"09"
+			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"duration_passive_recharge"				"21 18 15 12"
 			}
 
-			"10"
+			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ally_damage_reduction"					"-50"
 				"CalculateSpellDamageTooltip"			"0"
 			}
 
-			"11"
+			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"heal_per_tick"							"50"
 			}
 
-			"12"
+			"11"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"mana_per_tick"							"15"
@@ -2846,7 +2848,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"mana_regen"							"1 2 3 4"
+				"mana_regen"							"1.25 2.25 3.25 4.25"
 			}
 
 			"02"
@@ -3281,6 +3283,31 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"value"						"0.5"
+			}
+		}
+	}
+	
+	"special_bonus_imba_crystal_maiden_frostbite_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_crystal_maiden_frostbite"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.5"
 			}
 		}
 	}
@@ -5367,7 +5394,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 150 170 190"
+		"AbilityManaCost"				"100 120 140 160"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5500,7 +5527,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"20 28 36 44"
+				"base_damage"				"20 28 38 47"
 			}			
 
 			"08"
@@ -5648,7 +5675,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"180 155 130"
+		"AbilityCooldown"					"185 160 135"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17893,7 +17920,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"poison_duration"			"6 5 4 3"
+				"poison_duration"			"6"
 			}
 
 			"02"
@@ -21538,7 +21565,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"self_dmg_pct"				"10"
+				"self_dmg_pct"				"25"
 			}
 
 			"10"
@@ -26059,13 +26086,13 @@
 			"02"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "4.0 4.4 4.8 5.2"
+				"duration"                  "3.5 3.8 4.1 4.4"
 				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_9"
 			}
 			"03"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"bonus_attack_range"        "100 150 200 250"    
+				"bonus_attack_range"        "50 75 100 125"    
 			}
 		}
 	}
@@ -26541,7 +26568,7 @@
 		}
 	}
 
-	"special_bonus_imba_clinkz_9" // +3s Strafe Duration
+	"special_bonus_imba_clinkz_9" // +Xs Strafe Duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26561,7 +26588,32 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
+				"value"				"4"
+			}
+		}
+	}
+	
+	"special_bonus_imba_clinkz_10" // Searing Arrows Multishot
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_clinkz_searing_arrows"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"0"
 			}
 		}
 	}

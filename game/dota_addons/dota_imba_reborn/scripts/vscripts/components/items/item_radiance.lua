@@ -176,9 +176,20 @@ function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 -- Adds the unique modifier to the owner when created
 function modifier_imba_radiance_basic:OnCreated(keys)
+	self.effect_name = "particles/items2_fx/radiance_owner.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
+		self.effect_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
+	end
+		
 	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_imba_radiance_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_radiance_aura", {})
+		end
+		
+		if self:GetParent():HasModifier("modifier_imba_radiance_aura") then
+			self.particle	= ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self:AddParticle(self.particle, false, false, -1, true, false)
 		end
 	end
 
@@ -249,21 +260,43 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-		local particle_name = "particles/items2_fx/radiance_owner.vpcf"
+		-- local particle_name = "particles/items2_fx/radiance_owner.vpcf"
 		
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
-			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
-		end
+		-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
+			-- particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
+		-- end
 	
-		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+				
+		self:StartIntervalThink(FrameTime())
 	end
+end
+
+-- All this just to have glitched stacking radiance visuals...
+function modifier_imba_radiance_aura:OnIntervalThink()
+	for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
+		if modifier.effect_name and not modifier.particle then
+			modifier.particle	= ParticleManager:CreateParticle(modifier.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			modifier:AddParticle(modifier.particle, false, false, -1, true, false)
+		end
+	end
+		
+	self:StartIntervalThink(-1)
 end
 
 -- Destroy the glow particle
 function modifier_imba_radiance_aura:OnDestroy()
 	if IsServer() then
-		ParticleManager:DestroyParticle(self.particle, false)
-		ParticleManager:ReleaseParticleIndex(self.particle)
+		-- ParticleManager:DestroyParticle(self.particle, false)
+		-- ParticleManager:ReleaseParticleIndex(self.particle)
+		
+		for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
+			if modifier.effect_name and modifier.particle then
+				ParticleManager:DestroyParticle(modifier.particle, false)
+				ParticleManager:ReleaseParticleIndex(modifier.particle)
+				modifier.particle = nil
+			end
+		end
 	end
 end
 
@@ -368,7 +401,10 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 end
 
 function modifier_imba_radiance_burn:GetModifierMiss_Percentage()
-	return self.miss_chance end
+	if not IsServer() then return end
+
+	return self.miss_chance * #self:GetCaster():FindAllModifiersByName("modifier_imba_radiance_basic")
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Afterburn modifier definition

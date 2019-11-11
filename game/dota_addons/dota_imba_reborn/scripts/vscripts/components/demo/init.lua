@@ -26,9 +26,9 @@ function GameMode:InitDemo()
 	-- Set bot mode difficulty: can try GameRules:GetGameModeEntity():SetCustomGameDifficulty( 1 )
 
 	GameRules:SetUseUniversalShopMode(true)
-	GameRules:SetPreGameTime(10.0)
-	GameRules:SetStrategyTime(0.0)
-	GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
+	-- GameRules:SetPreGameTime(10.0)
+	-- GameRules:SetStrategyTime(0.0)
+	-- GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
 	GameRules:SetSafeToLeave(true)
 
 	-- Events

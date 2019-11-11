@@ -75,6 +75,11 @@ function modifier_imba_acid_spray_thinker:OnCreated(keys)
 		self.caster = self:GetCaster()
 		self.thinker = self:GetParent()
 		self.ability = self:GetAbility()
+		
+		self.ability_target_team	= self.ability:GetAbilityTargetTeam()
+		self.ability_target_type	= self.ability:GetAbilityTargetType()
+		self.ability_target_flags	= self.ability:GetAbilityTargetFlags()
+		
 		self.modifier_spray = "modifier_imba_acid_spray_handler"
 		self.thinker_loc = self.thinker:GetAbsOrigin()
 
@@ -97,9 +102,9 @@ function modifier_imba_acid_spray_thinker:OnIntervalThink()
 		self.thinker_loc,
 		nil,
 		self.radius,
-		self.ability:GetAbilityTargetTeam(),
-		self.ability:GetAbilityTargetType(),
-		self.ability:GetAbilityTargetFlags(),
+		self.ability_target_team,
+		self.ability_target_type,
+		self.ability_target_flags,
 		FIND_ANY_ORDER,
 		false)
 
@@ -118,15 +123,15 @@ function modifier_imba_acid_spray_thinker:GetAuraRadius()
 end
 
 function modifier_imba_acid_spray_thinker:GetAuraSearchTeam()
-	return self.ability:GetAbilityTargetTeam()
+	return self.ability_target_team
 end
 
 function modifier_imba_acid_spray_thinker:GetAuraSearchType()
-	return self.ability:GetAbilityTargetType()
+	return self.ability_target_type
 end
 
 function modifier_imba_acid_spray_thinker:GetAuraSearchFlags()
-	return self.ability:GetAbilityTargetFlags()
+	return self.ability_target_flags
 end
 
 function modifier_imba_acid_spray_thinker:GetModifierAura()
@@ -246,14 +251,19 @@ end
 function modifier_imba_acid_spray_debuff_dot:OnCreated()
 	self.caster = self:GetCaster()
 	local ability = self:GetAbility()
-
-	self.armor_reduction = ability:GetSpecialValueFor("armor_reduction")
-	self.stack_armor_reduction = ability:GetSpecialValueFor("stack_armor_reduction")
+	
+	if not ability then self:Destroy() return end
+	
+	self.armor_reduction		= ability:GetSpecialValueFor("armor_reduction")
+	self.stack_armor_reduction	= ability:GetSpecialValueFor("stack_armor_reduction")
+	self.max_stacks				= ability:GetSpecialValueFor("max_stacks")
+	self.movespeed_slow			= self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_1")
 	
 	if IsServer() then
+		self.ability_damage_type	= ability:GetAbilityDamageType()
+		
 		self:SetStackCount(1)
-		local tick_rate = ability:GetSpecialValueFor("tick_rate")
-		self:StartIntervalThink(tick_rate)
+		self:StartIntervalThink(ability:GetSpecialValueFor("tick_rate"))
 	end
 end
 
@@ -284,11 +294,12 @@ function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_
 			or (not unit:HasModifier("modifier_imba_acid_spray_handler")
 			and not unit:HasModifier("modifier_imba_chemical_rage_aura")) then
 			local damage = self.damage + self.stack_damage * self:GetStackCount()
+			
 			local damage_table = {
 				victim = unit,
 				attacker = self.caster,
 				damage = damage,
-				damage_type = self.ability:GetAbilityDamageType(),
+				damage_type = self.ability_damage_type,
 				ability = self.ability,
 			}
 			ApplyDamage(damage_table)
@@ -313,20 +324,18 @@ end
 
 function modifier_imba_acid_spray_debuff_dot:OnStackCountChanged(old_stack_count)
 	self.caster = self.caster or self:GetCaster()
-	self.ability = self.ability or self:GetAbility()
 	if self.caster:IsIllusion() then --prevent ability from becoming nil if the illusion is dead for to long
 		if not self.caster:IsAlive() then
 			self.caster = self.caster:GetPlayerOwner():GetAssignedHero()
-			self.ability = self.caster:FindAbilityByName("imba_alchemist_acid_spray")
-	end
+		end
 	end
 	local stack_count = self:GetStackCount()
-	local max_stacks = self.ability:GetSpecialValueFor("max_stacks")
-	if self.caster:HasModifier("modifier_imba_chemical_rage_buff_haste") then
-		max_stacks = max_stacks + max_stacks
+	
+	if self.caster:HasModifier("modifier_imba_chemical_rage_buff_haste") and self.max_stacks then
+		self.max_stacks = self.max_stacks + self.max_stacks
 	end
-	if stack_count > max_stacks then
-		self:SetStackCount(max_stacks)
+	if stack_count > self.max_stacks then
+		self:SetStackCount(self.max_stacks)
 	end
 end
 
@@ -341,13 +350,15 @@ function modifier_imba_acid_spray_debuff_dot:DeclareFunctions()
 end
 
 function modifier_imba_acid_spray_debuff_dot:GetModifierPhysicalArmorBonus()
-	local armor_reduction = self.armor_reduction + self.stack_armor_reduction * self:GetStackCount()
-	return armor_reduction * (-1)
+	if self.armor_reduction and self.stack_armor_reduction then
+		return (self.armor_reduction + self.stack_armor_reduction * self:GetStackCount()) * (-1)
+	end
 end
 
 function modifier_imba_acid_spray_debuff_dot:GetModifierMoveSpeedBonus_Percentage()
-	-- Talent #1 : Sticky acid now slows targets affected.
-	return self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_1")
+	if self.movespeed_slow then
+		return self.movespeed_slow
+	end
 end
 -------------------------------------------
 --          UNSTABLE CONCOCTION

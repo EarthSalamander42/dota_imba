@@ -549,6 +549,7 @@ end
 modifier_imba_wisp_tether_latch = class({})
 
 function modifier_imba_wisp_tether_latch:IsHidden()	return true end
+function modifier_imba_wisp_tether_latch:IsPurgable()	return false end
 
 function modifier_imba_wisp_tether_latch:OnCreated(params)
 	if IsServer() then
@@ -563,6 +564,14 @@ end
 
 function modifier_imba_wisp_tether_latch:OnIntervalThink()
 	if IsServer() then
+		--"The pull gets interrupted when Io gets stunned, hexed, hidden, feared, hypnotize, or rooted during the pull."
+		-- self:GetParent():IsFeared() and self:GetParent():IsHypnotized() don't actually exist as Valve functions but they'll be placeholders for if it gets implemented one way or another
+		if self:GetParent():IsStunned() or self:GetParent():IsHexed() or self:GetParent():IsOutOfGame() or (self:GetParent().IsFeared and self:GetParent():IsFeared()) or (self:GetParent().IsHypnotized and self:GetParent():IsHypnotized()) or self:GetParent():IsRooted() then
+			self:StartIntervalThink(-1)
+			self:Destroy()
+			return
+		end
+	
 		-- Calculate the distance
 		local casterDir = self:GetCaster():GetAbsOrigin() - self.target:GetAbsOrigin()
 		local distToAlly = casterDir:Length2D()
@@ -587,6 +596,12 @@ function modifier_imba_wisp_tether_latch:OnIntervalThink()
 			self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_latch")
 		end
 	end
+end
+
+function modifier_imba_wisp_tether_latch:OnDestroy()
+	if not IsServer() then return end
+	
+	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 end
 
 ------------------------------
@@ -664,6 +679,11 @@ function modifier_imba_wisp_tether_backpack:OnCreated()
 end
 
 function modifier_imba_wisp_tether_backpack:OnIntervalThink()
+	if self:GetParent():IsStunned() or self:GetParent():IsHexed() or self:GetParent():IsRooted() or self:GetParent():IsOutOfGame() then
+		self:Destroy()
+		return
+	end
+
 	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * self.backpack_distance * (-1)))
 end
 
@@ -2076,8 +2096,12 @@ function modifier_imba_wisp_overcharge_721:GetModifierProjectileSpeedBonus()
 	return self.bonus_missile_speed
 end
 
-function modifier_imba_wisp_overcharge_721:GetModifierPercentageCasttime()
-	return self.bonus_cast_speed
+function modifier_imba_wisp_overcharge_721:GetModifierPercentageCasttime(keys)
+	if self:GetParent().HasAbility and self:GetParent():HasAbility("furion_teleportation") and self:GetParent():FindAbilityByName("furion_teleportation"):IsInAbilityPhase() then
+		return 0
+	else
+		return self.bonus_cast_speed
+	end
 end
 
 -- function modifier_imba_wisp_overcharge_721:GetModifierAttackRangeBonus()

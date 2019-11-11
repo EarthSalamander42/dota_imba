@@ -132,7 +132,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"alter_status_resistance_reduction_pct"		"40"
+				"alter_status_resistance_reduction_pct"		"25"
 			}
 			"04"
 			{
