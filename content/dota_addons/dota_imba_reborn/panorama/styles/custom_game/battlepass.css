@@ -135,6 +135,13 @@
 	flow-children: down;
 }
 
+#BattlepassButtonContainer.PW
+{
+	margin-left: 10%;
+	margin-top: 0%;
+	align: left top;
+}
+
 #SafeToLeave {
 	padding-left: 10px;
 	padding-right: 10px;
