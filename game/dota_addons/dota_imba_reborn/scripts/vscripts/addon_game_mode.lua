@@ -1,4 +1,4 @@
-require('components/statcollection/init')
+-- require('components/statcollection/init')
 require('components/scoreboard_events')
 require('internal/util')
 require('gamemode')
