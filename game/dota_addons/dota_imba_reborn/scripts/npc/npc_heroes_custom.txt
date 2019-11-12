@@ -15,6 +15,7 @@
 #base heroes/luna/hero.txt
 #base heroes/medusa/hero.txt
 #base heroes/naga_siren/hero.txt
+#base heroes/oracle/hero.txt
 #base heroes/phantom_lancer/hero.txt
 #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
@@ -23,11 +24,14 @@
 #base heroes/silencer/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
+// #base heroes/templar_assassin/hero.txt
 #base heroes/tidehunter/hero.txt
+#base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
 #base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
+// #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
@@ -388,7 +392,7 @@
 		"Ability14"					"special_bonus_attack_range_125"
 		"Ability15"					"special_bonus_hp_regen_16"
 		"Ability16"					"special_bonus_imba_clinkz_9"
-		"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
+		"Ability17"					"special_bonus_imba_clinkz_10" // Searing Arrows Multishot
 		
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
@@ -397,6 +401,7 @@
 		// "Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
 		// "Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
 		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		//"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 	}
 
 	//=================================================================================================================
@@ -424,8 +429,11 @@
 		//"Ability14"					"special_bonus_imba_crystal_maiden_7" //Freezing Field no longer drops projectiles - instead, at the end of channel, the damage (based on channeled time) is distributed randomly amongst enemies in Freezing Field's AoE
 		"Ability14"					"special_bonus_attack_speed_250"
 		"Ability15"					"special_bonus_imba_crystal_maiden_8" //+50% Freezing Field explosion rate
-		"Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
+		"Ability16"					"special_bonus_imba_crystal_maiden_frostbite_duration"
 		"Ability17"					"special_bonus_imba_crystal_maiden_3" //Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
+		
+		// Removed Talents
+		// "Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
 	}
 
 	//=================================================================================================================

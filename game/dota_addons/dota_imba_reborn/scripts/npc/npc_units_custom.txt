@@ -251,13 +251,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"260"
+		"MovementSpeed"				"280"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -311,8 +311,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"24"
-		"AttackDamageMax"			"32"
+		"AttackDamageMin"			"25"
+		"AttackDamageMax"			"33"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -329,13 +329,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"280"
+		"MovementSpeed"				"310"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -389,8 +389,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"32"
-		"AttackDamageMax"			"40"
+		"AttackDamageMin"			"34"
+		"AttackDamageMax"			"42"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -407,13 +407,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"300"
+		"MovementSpeed"				"340"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -467,8 +467,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"40"
-		"AttackDamageMax"			"48"
+		"AttackDamageMin"			"43"
+		"AttackDamageMax"			"51"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -485,13 +485,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"320"
+		"MovementSpeed"				"370"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -10471,5 +10471,13 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1000"		// Range of vision during day light.
 		"VisionNighttimeRange"		"1000"		// Range of vision at night time.
-	}	
+	}
+	
+	"npc_dota_templar_assassin_psionic_trap"
+	{
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"templar_assassin_self_trap"			// Ability 1
+		"Ability2"					"imba_templar_assassin_self_trap"		// Ability 2
+	}
 }

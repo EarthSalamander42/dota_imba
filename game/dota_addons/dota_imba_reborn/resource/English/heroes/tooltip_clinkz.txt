@@ -1,6 +1,6 @@
 // Clinkz's Strafe
 "DOTA_Tooltip_ability_imba_clinkz_strafe"                              "Strafe"
-"DOTA_Tooltip_ability_imba_clinkz_strafe_Description"                  "Clinkz nimbly attacks with a barrage of arrows. Dramatically increases attack speed for a short time and grants Clinkz the ability to automatically dodge projectiles.\n<font color='#FF7800'>Ranger's Efficacy:</font> Also boosts attack range by %bonus_attack_range%.\n<font color='#FF7800'>Assume The Position:</font> Activating Strafe on yourself has no extra effect, but targeting an ally allows you to Mount it. While mounted, Clinkz automatically follows the target and cannot move, but gains double Strafe's bonuses, and can still attack or cast spells normally. Automatically unmounts when the duration is up, activate the spell again to do so early."
+"DOTA_Tooltip_ability_imba_clinkz_strafe_Description"                  "Clinkz nimbly attacks with a barrage of arrows. Dramatically increases attack speed for a short time and grants Clinkz the ability to automatically dodge projectiles.\n<font color='#FF7800'>Ranger's Efficacy:</font> Also boosts attack range by %bonus_attack_range%.\n<font color='#FF7800'>Assume The Position:</font> Strafe can be cast as an ally-targeted ability to mount them for Strafe's duration. While mounted, Clinkz cannot freely move, but automatically follows the target and gains double of Strafe's bonus attack speed. Strafe can be activated again while mounted to dismount early."
 "DOTA_Tooltip_ability_imba_clinkz_strafe_Note0"                        "While mounted, Clinkz is rooted and phased, but is not invulnerable and can still be attacked normally."
 "DOTA_Tooltip_ability_imba_clinkz_strafe_Lore"                          "It's hard to say whether the blur around the Bone Fletcher is from his flaming heart or his speed with the quiver."
 "DOTA_Tooltip_ability_imba_clinkz_strafe_as_bonus"                      "BONUS ATTACK SPEED:"
@@ -18,8 +18,7 @@
 // Clinkz's Searing Arrows
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows"                      "Searing Arrows"
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Description"          "<font color='#FF7800'>Passively</font> imbues Clinkz's arrows with fire for extra damage.\n<font color='#FF7800'>Light My Way:</font> Clinkz shoots a huge flaming arrow at the target enemy, lighting it on fire, burning %armor_burn_per_stack% of its armor every second and granting vision in %vision_radius% radius around it for some seconds."
-"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note0"                "Passive Searing Arrows are fully disabled by Break."
-"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note1"                "When the active debuff is removed, the armor lost is immediately returned to the target."
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note0"                "When the active debuff is removed, the armor lost is immediately returned to the target."
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Lore"                  "Clinkz simply lights his arrows from his flaming essence for quite the destructive effect."
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_bonus_damage"          "BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_active_duration"                   "VISION DURATION:"
@@ -95,4 +94,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_clinkz_6"          "Skeleton Walk's move speed persists for 5 seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_clinkz_7"          "Searing Arrows 20% chance to attack target again"
 "DOTA_Tooltip_ability_special_bonus_imba_clinkz_8"          "Burning Army Skeletons attacks burns 20 mana"
-"DOTA_Tooltip_ability_special_bonus_imba_clinkz_9"          "+3s Strafe Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_9"          "+{s:value}s Strafe Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_10"					"Searing Arrows Multishot"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_10_Description"		"When using Searing Arrows, a second Searing Arrow targets a random enemy within the spell's range."

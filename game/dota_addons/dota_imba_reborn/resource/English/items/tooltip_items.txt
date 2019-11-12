@@ -211,7 +211,7 @@
 
 // Butterfly
 "DOTA_Tooltip_Ability_item_imba_butterfly"                      "Butterfly"
-"DOTA_Tooltip_ability_item_imba_butterfly_Description"          "<h1><font color='#FF7800'>Active: Flutter</font></h1>Grants %flutter_movespeed_pct%%% additional movement speed and flying movement/vision for %flutter_duration% seconds. This effect is unpurgable.\n<h1><font color='#FF7800'>Passive: Wind Song</font></h1> Every time the wielder evades an attack, it gets a stack of Wind Song. Accumulating %wind_song_active_stacks% stacks of Wind Song activates it, granting %wind_song_bonus_ms_pct%%% bonus move speed %wind_song_bonus_as% attack speed for %wind_song_duration% seconds. While Wind Song is active, nearby enemies in %wind_song_slow_radius% radius have their move speed slowed by %wind_song_ms_slow_pct%%%."
+"DOTA_Tooltip_ability_item_imba_butterfly_Description"          "<h1><font color='#FF7800'>Active: Flutter</font></h1>Grants %flutter_movespeed_pct%%% additional movement speed and flying movement/vision for %flutter_duration% seconds. This effect is unpurgable.\n<h1><font color='#FF7800'>Passive: Wind Song</font></h1> Every time the wielder evades an attack, it gets a stack of Wind Song for %wind_song_stack_duration% seconds. Accumulating %wind_song_active_stacks% stacks of Wind Song activates it, granting %wind_song_bonus_ms_pct%%% bonus move speed %wind_song_bonus_as% attack speed for %wind_song_duration% seconds. While Wind Song is active, nearby enemies in %wind_song_slow_radius% radius have their move speed slowed by %wind_song_ms_slow_pct%%%."
 "DOTA_Tooltip_ability_item_imba_butterfly_Lore"                "Only the mightiest and most experienced of warriors can wield the Butterfly, but it provides incredible dexterity in combat."
 "DOTA_Tooltip_ability_item_imba_butterfly_Note0"                "When both Flutter and Wind Song are active, their bonuses stack."
 "DOTA_Tooltip_ability_item_imba_butterfly_bonus_agility"                    "+$agi"
@@ -926,10 +926,11 @@
 
 // Radiance
 "DOTA_Tooltip_Ability_item_imba_radiance"                      "Radiance"
-"DOTA_Tooltip_ability_item_imba_radiance_Description"          "<h1>Toggle: Burn</h1> When active, scorches enemies for %base_damage% damage per second, and causes them to miss %miss_chance%%% of their attacks. Illusions deal %base_damage% magical damage per second.<br><br>Radius: %aura_radius%\n<h1><font color='#FF7800'>Passive: Sunburn</font></h1> Deals bonus damage equal to %extra_damage%%% of the target's current health.\n<h1><font color='#FF7800'>Passive: Afterburn</font></h1> The burn effect lingers even after leaving the area. Burns enemies for an extra second for every %stack_decay% they spent inside the burn AOE."
+"DOTA_Tooltip_ability_item_imba_radiance_Description"          "<h1>Toggle: Burn</h1> When active, scorches enemies for %base_damage% damage per second, and causes them to miss %miss_chance%%% of their attacks <font color='#FF7800'>multiplied by the number of active Radiances being held.</font> Illusions deal %base_damage% magical damage per second.<br><br>Radius: %aura_radius%\n<h1><font color='#FF7800'>Passive: Sunburn</font></h1> Deals bonus damage equal to %extra_damage%%% of the target's current health.\n<h1><font color='#FF7800'>Passive: Afterburn</font></h1> The burn effect lingers even after leaving the area. Burns enemies for an extra second for every %stack_decay% they spent inside the burn radius."
 "DOTA_Tooltip_ability_item_imba_radiance_Lore"                  "A divine weapon that causes damage and a bright burning effect that lays waste to nearby enemies."
 "DOTA_Tooltip_ability_item_imba_radiance_Note0"                "Illusions do not apply Afterburn stacks."
 "DOTA_Tooltip_ability_item_imba_radiance_Note1"                "While affected by both the regular burn and Afterburn, Afterburn is paused."
+"DOTA_Tooltip_ability_item_imba_radiance_Note2"                "Afterburn does not benefit from the stacking miss chance from multiple Radiances."
 "DOTA_Tooltip_ability_item_imba_radiance_base_damage"          "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_item_imba_radiance_miss_chance"          "%MISS CHANCE:"
 "DOTA_Tooltip_ability_item_imba_radiance_bonus_damage"          "+$damage"

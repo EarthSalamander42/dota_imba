@@ -336,9 +336,9 @@ function modifier_imba_weaver_the_swarm_debuff:OnAttackLanded(keys)
 	if keys.attacker == self:GetCaster() and keys.target == self:GetParent() then
 		self:IncrementStackCount()
 		
-		ApplyDamage(self.damage_table)
+		-- ApplyDamage(self.damage_table)
 		
-		self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
+		-- self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
 	end
 end
 

@@ -206,12 +206,6 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
-	
-	"item_recipe_imba_valiance"		"REMOVE"
-	"item_imba_valiance"			"REMOVE"
-	"item_recipe_imba_cyclone_2"	"REMOVE"
-	"item_imba_cyclone_2"			"REMOVE"
-
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1620,35 +1614,18 @@
 	{
 		"AbilityCastRange"				"500 700 900 1100"
 		"AbilityCooldown"				"12"
-		"AbilityManaCost"				"75"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"6"
-				"LinkedSpecialBonus"	"special_bonus_unique_arc_warden_2"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 40 50 60"
+				"damage_per_second"		"25 40 55 70"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"search_radius"			"175"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_speed_slow_pct"	"20 30 40 50"
 			}
 		}
 	}
@@ -1658,15 +1635,8 @@
 	//=================================================================================================================
 	"arc_warden_magnetic_field"
 	{
-		"AbilityCooldown"				"20"
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -1677,11 +1647,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_bonus"		"50 70 90 110"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"evasion_chance"			"100"
-			}
 		}
 	}
 		
@@ -1690,8 +1655,6 @@
 	//=================================================================================================================
 	"arc_warden_spark_wraith"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -1709,21 +1672,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"60"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wraith_speed"				"400"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"spark_damage"				"120 210 300 390"
 				"LinkedSpecialBonus"		"special_bonus_unique_arc_warden"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"think_interval"			"0.2"
 			}
 			"07"
 			{
@@ -1748,7 +1701,7 @@
 	//=================================================================================================================
 	"arc_warden_tempest_double"
 	{
-		"AbilityCooldown"				"70 55 30"
+		"AbilityCooldown"				"60 45 30"
 
 		"AbilitySpecial"
 		{
@@ -1756,202 +1709,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"24 26 28"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Sticky Napalm
-	//=================================================================================================================
-	"batrider_sticky_napalm"
-	{
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"3.0 2.8 2.6 2.4"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"12 18 24 30"
-				"CalculateSpellDamageTooltip"	"1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400 450 500 600"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-4 -6 -8 -10"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Flamebreak
-	//=================================================================================================================
-	"batrider_flamebreak"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"25 40 65 80"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"damage_duration"				"7"
-				"CalculateSpellDamageTooltip"	"0"
-				"LinkedSpecialBonus"			"special_bonus_unique_batrider_3"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_total_tooltip"	"175 280 455 560"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"explosion_radius"		"375 425 475 525"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"150"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1000 1100 1200"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"knockback_max_distance"	"550"
-			}	
-		}
-	}
-
-	//=================================================================================================================
-	//	Batrider: bonus Flamebreak aoe
-	//=================================================================================================================
-	"special_bonus_unique_batrider_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Firefly
-	//=================================================================================================================
-	"batrider_firefly"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 60 90 120"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"18 22 26 30"
-				"LinkedSpecialBonus"	"special_bonus_unique_batrider_1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tree_radius"			"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Batrider: bonus Firefly duration
-	//=================================================================================================================
-	"special_bonus_unique_batrider_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_batrider_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Flaming Lasso
-	//=================================================================================================================
-	"batrider_flaming_lasso"
-	{
-		"AbilityCastRange"				"300 375 450"
-		"AbilityCooldown"				"90 60 30"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 4.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"3000"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"600"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius_scepter"	"800"
-				"RequiresScepter"		"1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"40 60 80"
 			}
 		}
 	}
@@ -3097,16 +2854,6 @@
 		
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"rockets_per_second"	"10"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -3177,13 +2924,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fire_rate"				"0.7"
-				"RequiresScepter"		"1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"1000"
+				"fire_rate"				"0.9"
 				"RequiresScepter"		"1"
 			}
 		}
@@ -3199,7 +2940,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
+				"value"				"6"
 			}
 		}
 	}
@@ -3238,175 +2979,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_second_scepter"		"325 425 525"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Grimstroke: Stroke of Fate
-	//=================================================================================================================
-	"grimstroke_dark_artistry"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
-		"AbilityCooldown"				"9 7 5 3"
-		"AbilityDamage"					"120 180 240 300"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"280"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2600"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"140 200 260 320"
-				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_per_target"	"24 36 48 60"
-				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow_pct"		"50 70 90 110"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Grimstroke: Phantom's Embrace
-	//=================================================================================================================
-	"grimstroke_ink_creature"
-	{
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24 21 18 15"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"speed"						"1000"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"destroy_attacks"			"9 9 12 12"
-				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_4"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_attack_multiplier"	"3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"			"5 10 15 20"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"dps_tooltip"				"10 20 30 40"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pop_damage"				"120 200 280 360"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"return_projectile_speed"	"1000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Grimstroke: Ink Swell
-	//=================================================================================================================
-	"grimstroke_spirit_walk"
-	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"35 40 45 50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
-				"LinkedSpecialBonus"	"special_bonus_unique_grimstroke_1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"220 320 420 520"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_stun"				"2.2 2.8 3.4 4.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_tick"		"9 11 13 15"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_dps_tooltip"		"45 55 65 75"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}
-
-	//=================================================================================================================
-	// Grimstroke: Soulbind
-	//=================================================================================================================
-	"grimstroke_soul_chain"
-	{
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70 55 40"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"chain_duration"		"7.0 9.5 12.0"
 			}
 		}
 	}

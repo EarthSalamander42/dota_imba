@@ -127,6 +127,10 @@ modifier_fountain_invulnerable = class({})
 function modifier_fountain_invulnerable:IsPurgable() return false end
 function modifier_fountain_invulnerable:GetTexture() return "tower_armor_aura" end
 
+function modifier_fountain_invulnerable:CheckState()
+	return {[MODIFIER_STATE_INVULNERABLE] = true}
+end
+
 function modifier_fountain_invulnerable:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
@@ -171,6 +175,10 @@ function modifier_imba_cursed_fountain:OnCreated()
 	self.damage_outgoing	= -10
 	
 	self:SetStackCount(1)
+	
+	if self:GetParent():HasModifier("modifier_fountain_invulnerable") then
+		self:GetParent():FindModifierByName("modifier_fountain_invulnerable"):Destroy()
+	end
 	
 	self:StartIntervalThink(0.5)
 end

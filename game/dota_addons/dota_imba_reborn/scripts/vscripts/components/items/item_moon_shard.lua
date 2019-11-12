@@ -212,11 +212,19 @@ function modifier_item_imba_moon_shard_active:RemoveOnDeath() return false end
 function modifier_item_imba_moon_shard_active:GetTexture() return "item_moon_shard" end
 
 function modifier_item_imba_moon_shard_active:OnCreated()
-	self.consume_as_1		= self:GetAbility():GetSpecialValueFor("consume_as_1")
-	self.consume_vision_1	= self:GetAbility():GetSpecialValueFor("consume_vision_1")
-	self.consume_as_2		= self:GetAbility():GetSpecialValueFor("consume_as_2")
-	self.consume_vision_2	= self:GetAbility():GetSpecialValueFor("consume_vision_2")
-	self.consume_as_3		= self:GetAbility():GetSpecialValueFor("consume_as_3")
+	if self:GetAbility() then
+		self.consume_as_1		= self:GetAbility():GetSpecialValueFor("consume_as_1")
+		self.consume_vision_1	= self:GetAbility():GetSpecialValueFor("consume_vision_1")
+		self.consume_as_2		= self:GetAbility():GetSpecialValueFor("consume_as_2")
+		self.consume_vision_2	= self:GetAbility():GetSpecialValueFor("consume_vision_2")
+		self.consume_as_3		= self:GetAbility():GetSpecialValueFor("consume_as_3")
+	else
+		self.consume_as_1		= 0
+		self.consume_vision_1	= 0
+		self.consume_as_2		= 0
+		self.consume_vision_2	= 0
+		self.consume_as_3		= 0
+	end
 end
 
 function modifier_item_imba_moon_shard_active:DeclareFunctions()
@@ -227,19 +235,19 @@ function modifier_item_imba_moon_shard_active:DeclareFunctions()
 end
 
 function modifier_item_imba_moon_shard_active:GetModifierAttackSpeedBonus_Constant()
-	if self:GetStackCount() == 1 then
+	if self:GetStackCount() == 1 and self.consume_as_1 then
 		return self.consume_as_1
-	elseif self:GetStackCount() == 2 then
+	elseif self:GetStackCount() == 2 and self.consume_as_1 and self.consume_as_2 then
 		return self.consume_as_1 + self.consume_as_2
-	else
+	elseif self.consume_as_1 and self.consume_as_2 and self.consume_as_3 then
 		return self.consume_as_1 + self.consume_as_2 + (self:GetStackCount() - 2) * self.consume_as_3
 	end
 end
 
 function modifier_item_imba_moon_shard_active:GetBonusNightVision()
-	if self:GetStackCount() == 1 then
+	if self:GetStackCount() == 1 and self.consume_vision_1 then
 		return self.consume_vision_1
-	else
+	elseif self.consume_vision_1 and self.consume_vision_2 then
 		return self.consume_vision_1 + self.consume_vision_2
 	end
 end

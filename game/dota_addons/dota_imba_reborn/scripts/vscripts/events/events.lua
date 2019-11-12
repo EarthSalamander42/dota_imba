@@ -678,6 +678,12 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-toggle_ui" then
 				CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "toggle_ui", {})
 			end
+			
+			if str == "-same_heroes" then
+				GameRules:SetSameHeroSelectionEnabled( true )
+				CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = true})
+				print(GetMapName())
+			end
 		end
 
 		if str == "-gg" then
@@ -872,6 +878,24 @@ function GameMode:OnPlayerChat(keys)
 								[11] = "special_bonus_imba_oracle_false_promise_invisibility",
 								[12] = "special_bonus_imba_oracle_fates_edict_cooldown",
 								[13] = "special_bonus_imba_oracle_false_promise_duration",
+							}
+							upgraded = true
+						elseif string.find(text, 'templar') and hero:GetName() == "npc_dota_hero_templar_assassin" then
+							ability_set = {
+								[0] = "imba_templar_assassin_refraction",
+								[1] = "imba_templar_assassin_meld",
+								[2] = "imba_templar_assassin_psi_blades",
+								[3] = "imba_templar_assassin_trap",
+								[4] = "imba_templar_assassin_trap_teleport",
+								[5] = "imba_templar_assassin_psionic_trap",
+								[6] = "special_bonus_attack_speed_25",
+								[7] = "special_bonus_evasion_15",
+								[8] = "special_bonus_movement_speed_25",
+								[9] = "special_bonus_imba_templar_assassin_psionic_trap_damage",
+								[10] = "special_bonus_imba_templar_assassin_meld_dispels",
+								[11] = "special_bonus_imba_templar_assassin_meld_armor_reduction",
+								[12] = "special_bonus_imba_templar_assassin_meld_bash",
+								[13] = "special_bonus_imba_templar_assassin_refraction_instances"
 							}
 							upgraded = true							
 						end

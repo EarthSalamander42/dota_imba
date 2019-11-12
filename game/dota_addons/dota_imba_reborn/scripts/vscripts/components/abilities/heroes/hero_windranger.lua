@@ -182,7 +182,7 @@ end
 
 function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if not ExtraData.bSplinterSister or ExtraData.bSplinterSister ~= 1 then
-		if not target or (target.TriggerSpellAbsorb and target:TriggerSpellAbsorb(self)) then return end
+		if not target or (target.IsMagicImmune and target:IsMagicImmune()) or (target.TriggerSpellAbsorb and target:TriggerSpellAbsorb(self)) then return end
 		
 		-- Initialize table to hold the shackled targets (so a unit doesn't somehow get shackled more than once by the cast)
 		local shackled_targets	= {}

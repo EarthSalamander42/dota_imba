@@ -64,7 +64,7 @@
 		"AbilityManaCost"			"110 120 130 140"
 		"AbilityTextureName"		"custom//malfurion/rejuvenation"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
 		"precache"
 		{

@@ -292,6 +292,23 @@ end
 	-- return "dota_hud_error_cant_cast_on_ally"
 -- end
 
+
+function earthshaker_enchant_totem_lua:CastFilterResultLocation(vLocation)
+	if self:GetCaster():HasScepter() and self:GetCaster():IsRooted() then
+		return UF_FAIL_CUSTOM
+	end
+end
+
+function earthshaker_enchant_totem_lua:GetCustomCastErrorLocation(vLocation)
+	return "dota_hud_error_ability_disabled_by_root"
+end
+
+function earthshaker_enchant_totem_lua:CastFilterResultTarget(target)
+	if target ~= self:GetCaster() then
+		return UF_FAIL_OBSTRUCTED
+	end
+end
+
 function earthshaker_enchant_totem_lua:OnAbilityPhaseStart()
 	if self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetCursorTarget() then
 		self:SetOverrideCastPoint(0)

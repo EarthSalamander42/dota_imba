@@ -467,9 +467,9 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
 		local position = self:GetCursorPosition()
-		local duration = self:GetSpecialValueFor("duration")
+		local duration = self:GetTalentSpecialValueFor("duration")
 
-		local duration_creep = self:GetSpecialValueFor("duration_creep")
+		local duration_creep = self:GetTalentSpecialValueFor("duration_creep")
 		local duration_stun = self:GetSpecialValueFor("duration_stun")
 		local damage_interval = self:GetSpecialValueFor("damage_interval")
 
@@ -480,13 +480,24 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:IsHero() or target:IsRoshan() or target:IsAncient() then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
+			local frostbite_modifier = nil
+			
+			if target:IsConsideredHero() or target:IsRoshan() or target:IsAncient() then
+				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
+				
+				if frostbite_modifier then
+					frostbite_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
+				end
 			else
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep })
+				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep })
+
+				if frostbite_modifier then
+					frostbite_modifier:SetDuration(duration_creep * (1 - target:GetStatusResistance()), true)
+				end
 			end
+			
 		elseif target:IsHero() then
 			target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_ally", { duration = duration})
 		end
@@ -498,7 +509,7 @@ end
 ---------------------------------
 modifier_imba_crystal_maiden_frostbite_enemy = class({})
 
-function modifier_imba_crystal_maiden_frostbite_enemy:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true,} end
+function modifier_imba_crystal_maiden_frostbite_enemy:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true, [MODIFIER_STATE_INVISIBLE] = false} end
 
 function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 	if IsServer() then
@@ -507,8 +518,18 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
-		self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
-		self.damage_per_tick = self.ability:GetSpecialValueFor("damage_per_tick")
+		self.damage_interval	= self.ability:GetSpecialValueFor("damage_interval")
+		
+		if self:GetParent():IsConsideredHero() or self:GetParent():IsRoshan() or self:GetParent():IsAncient() then
+			self.total_damage	= self.ability:GetSpecialValueFor("total_damage")
+			self.duration		= self.ability:GetTalentSpecialValueFor("duration")
+		else
+			self.total_damage	= self.ability:GetSpecialValueFor("creep_total_damage")
+			self.duration		= self.ability:GetTalentSpecialValueFor("duration_creep")
+		end
+		
+		self.total_ticks		= (self.duration / self.damage_interval) + 1
+		self.damage_per_tick	= self.total_damage / self.total_ticks
 
 		-- Immediately proc the first damage instance
 		self:OnIntervalThink()
@@ -517,7 +538,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
 
 		-- Get thinkin
-		self:StartIntervalThink(self.damage_interval)
+		self:StartIntervalThink(self.damage_interval * (1 - self:GetParent():GetStatusResistance()))
 	end
 end
 
@@ -721,8 +742,6 @@ function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsPurgable() retur
 -- Arcilliance Aura Modifier
 ---------------------------------
 modifier_imba_crystal_maiden_brilliance_aura = class({})
-
-function modifier_imba_crystal_maiden_brilliance_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_crystal_maiden_brilliance_aura:OnCreated()
 	self.caster = self:GetCaster()
@@ -1050,6 +1069,10 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 		-- Remove self armor modifier
 		if self.caster:HasModifier("modifier_imba_crystal_maiden_freezing_field_armor_bonus") then
 			self.caster:RemoveModifierByName("modifier_imba_crystal_maiden_freezing_field_armor_bonus")
+		end
+		
+		if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+			self.freezing_field_aura:ForceKill(false)
 		end
 	end
 end

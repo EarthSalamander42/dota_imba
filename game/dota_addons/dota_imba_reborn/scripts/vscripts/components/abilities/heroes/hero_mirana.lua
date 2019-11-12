@@ -809,8 +809,8 @@ function imba_mirana_leap:OnSpellStart()
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 
-	-- Disjoint projectiles
-	ProjectileManager:ProjectileDodge(caster)
+	-- -- Disjoint projectiles
+	-- ProjectileManager:ProjectileDodge(caster)
 
 	-- Make Mirana face the target (relevant with #7 Talent)
 	caster:FaceTowards(target_point)

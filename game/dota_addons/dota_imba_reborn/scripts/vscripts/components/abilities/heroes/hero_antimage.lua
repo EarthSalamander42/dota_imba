@@ -676,6 +676,7 @@ local function SpellReflect(parent, params)
 		["phantom_assassin_phantom_strike"] = true,
 		["imba_riki_blink_strike"] = true,
 		["riki_blink_strike"] = true,
+		["imba_rubick_spellsteal"] = true
 	}
 
 	local reflected_spell_name = params.ability:GetAbilityName()

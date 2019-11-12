@@ -59,10 +59,18 @@ function item_imba_valiance:GetCooldown(level)
 end
 
 function item_imba_valiance:GetManaCost(level)
-	if not self:GetCaster():HasModifier("modifier_item_imba_valiance_counter") then
+	if self:GetCaster() and self:GetCaster().HasModifier and not self:GetCaster():HasModifier("modifier_item_imba_valiance_counter") then
 		return self.BaseClass.GetManaCost(self, level)
 	else
 		return self:GetSpecialValueFor("counter_mana_cost")
+	end
+end
+
+function item_imba_valiance:CastFilterResultLocation(vLocation)
+	if not self:GetCaster():IsRooted() or (self:GetCaster():IsRooted() and (vLocation - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetSpecialValueFor("counter_distance")) then
+		return UF_SUCCESS
+	else
+		return UF_FAIL_OTHER
 	end
 end
 
@@ -143,6 +151,10 @@ function modifier_item_imba_valiance_guard:GetTexture()
 	return "custom/item_valiance"
 end
 
+function modifier_item_imba_valiance_guard:GetStatusEffectName()
+	return "particles/status_effect_gold_armor.vpcf"
+end
+
 function modifier_item_imba_valiance_guard:OnCreated()
 	self.guard_damage_reduction		= self:GetAbility():GetSpecialValueFor("guard_damage_reduction") * (-1)
 	self.guard_angle				= self:GetAbility():GetSpecialValueFor("guard_angle")
@@ -186,7 +198,7 @@ function modifier_item_imba_valiance_guard:DeclareFunctions()
 end
 
 function modifier_item_imba_valiance_guard:GetModifierIncomingDamage_Percentage(keys)
-	if keys.attacker and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
+	if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
 		self.damage_counter = self.damage_counter + keys.original_damage
 		self:SetStackCount(self.damage_counter)
 		
@@ -234,6 +246,10 @@ end
 --------------------------------------
 
 function modifier_item_imba_valiance_dash:IsPurgable()	return false end
+
+function modifier_item_imba_valiance_dash:GetStatusEffectName()
+	return "particles/status_effect_gold_armor.vpcf"
+end
 
 function modifier_item_imba_valiance_dash:OnCreated(params)
 	self.guard_angle				= self:GetAbility():GetSpecialValueFor("guard_angle")
@@ -292,10 +308,10 @@ function modifier_item_imba_valiance_dash:OnDestroy()
 	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.counter_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 	if #enemies > 0 then
-		self:GetParent():EmitSound("Hero_Mars.Shield.Cast")
-		self:GetParent():EmitSound("Hero_Mars.Shield.Crit")
+		self:GetParent():EmitSound("Valiance.Shield.Cast")
+		self:GetParent():EmitSound("Valiance.Shield.Crit")
 	else
-		self:GetParent():EmitSound("Hero_Mars.Shield.Cast.Small")
+		self:GetParent():EmitSound("Valiance.Shield.Cast.Small")
 	end
 
 	for _, enemy in pairs(enemies) do
@@ -311,7 +327,7 @@ function modifier_item_imba_valiance_dash:OnDestroy()
 			
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, enemy, self.damage_counter * (self.counter_damage_percent * 0.01), nil)
 			
-			if not enemy:IsMagicImmune() or (enemy:IsMagicImmune() and self.damage_counter >= self.counter_stun_threshold) then
+			-- if not enemy:IsMagicImmune() or (enemy:IsMagicImmune() and self.damage_counter >= self.counter_stun_threshold) then
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 					{
 						distance		= self.counter_knockback_distance,
@@ -324,9 +340,10 @@ function modifier_item_imba_valiance_dash:OnDestroy()
 						bDecelerate 	= true,
 						bInterruptible 	= false,
 						bIgnoreTenacity	= true,
-						treeRadius		= self.counter_tree_radius
+						treeRadius		= self.counter_tree_radius,
+						bStun			= true
 					})
-			end
+			-- end
 		end
 	end
 end

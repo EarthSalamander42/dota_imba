@@ -280,6 +280,7 @@ end
 
 function modifier_imba_shadow_shaman_voodoo_handler:IsHidden()		return true end
 function modifier_imba_shadow_shaman_voodoo_handler:IsPurgable()	return false end
+function modifier_imba_shadow_shaman_voodoo_handler:RemoveOnDeath()	return false end
 function modifier_imba_shadow_shaman_voodoo_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_voodoo_handler:DeclareFunctions()
@@ -722,7 +723,8 @@ end
 function modifier_imba_shadow_shaman_shackles_chariot:GetAttributes() 		return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_chariot:OnCreated()
-	self.chariot_break_distance	= self:GetAbility():GetSpecialValueFor("chariot_break_distance")
+	self.chariot_break_distance		= self:GetAbility():GetSpecialValueFor("chariot_break_distance")
+	self.chariot_bonus_move_speed	= self:GetAbility():GetSpecialValueFor("chariot_bonus_move_speed")
 
 	if not IsServer() then return end
 	
@@ -766,6 +768,14 @@ function modifier_imba_shadow_shaman_shackles_chariot:OnDestroy()
 	if self:GetAbility() and self:GetAbility():IsChanneling() then
 		self:GetAbility():SetChanneling(false)
 	end
+end
+
+function modifier_imba_shadow_shaman_shackles_chariot:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
+end
+
+function modifier_imba_shadow_shaman_shackles_chariot:GetModifierMoveSpeedBonus_Constant()
+	return self.chariot_bonus_move_speed
 end
 
 --------------------------------

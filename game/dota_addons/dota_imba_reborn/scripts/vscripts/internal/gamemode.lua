@@ -20,7 +20,9 @@ function GameMode:_InitGameMode()
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( SAME_HERO_SELECTION ) -- Let server handle hero duplicates
-	GameRules:SetPreGameTime( PRE_GAME_TIME )
+	GameRules:SetHeroSelectionTime( HERO_SELECTION_TIME )
+	GameRules:SetHeroSelectPenaltyTime( SELECT_PENALTY_TIME )
+	GameRules:SetPreGameTime( 90 ) -- Some variable SOMEWHERE is messing this up and constantly forcing it to 60 seconds so I'm overriding it here
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )
 	GameRules:SetStrategyTime( STRATEGY_TIME )

@@ -4667,7 +4667,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_stack_duration"	"15"
+				"wind_song_stack_duration"	"5"
 			}
 			"08"
 			{
@@ -5414,12 +5414,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"21"
+				"spell_amp"				"16"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER" // also mana cost reduction
-				"bonus_cdr"				"10"
+				"bonus_cdr"				"12"
 			}
 			"03"
 			{
@@ -13759,7 +13759,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_reduction_enemy"	"80"
+				"hp_regen_reduction_enemy"	"70"
 			}
 			"14"
 			{
@@ -16476,8 +16476,6 @@
 		"ItemCost"						"1000"
 		"ItemShopTags"					""
 		
-		"ItemPurchasable"				"0"
-		
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -16516,8 +16514,6 @@
 		"ItemAliases"					"valiance"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ShouldBeSuggested"				"1"
-		
-		"ItemPurchasable"				"0"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -16661,8 +16657,6 @@
 		"ItemCost"						"0"
 		"ItemShopTags"					""
 		
-		"ItemPurchasable"				"0"
-		
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -16690,8 +16684,9 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
 		"FightRecapLevel"				"1"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		
-		"ItemPurchasable"				"0"
+
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"2"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -16705,7 +16700,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"175"
-		"ItemCost"						"7450"
+		"ItemCost"						"7550"
 		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
@@ -16749,17 +16744,47 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"self_movement_speed"	"175"
+				"tornado_count"			"5"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"centrifugal_damage_per_tick"	"50"
+				"tornado_spacing"		"300"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tornado_radius"		"400"
 			}
 			"09"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"tornado_pull_speed"	"125"
+			}
+			"10"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"centrifugal_tick_rate"	"0.5"
+				"tornado_aura_duration"	"0.25"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tornado_self_rotations"	"5"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"displacement_distance"	"500"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"disorient_status_resistance"	"40"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"disorient_duration"	"4"
 			}
 		}
 		

@@ -38,6 +38,7 @@
 			"item"		"item_imba_aether_specs"
 			"item"		"item_imba_arcane_nexus"
 			"item"		"item_imba_meteor_hammer_4"
+			"item"		"item_imba_cyclone_2"
 			"item"		"item_imba_necronomicon_5"
 			"item"		"item_imba_nullifier_2"
 			"item"		"item_imba_origin"
@@ -56,6 +57,7 @@
 			"item"		"item_imba_initiate_robe"
 			"item"		"item_imba_black_queen_cape"
 			"item"		"item_imba_vladmir_2"
+			"item"		"item_imba_valiance"
 			"item"		"item_imba_curseblade"
 			"item"		"item_imba_bladestorm_mail"
 			"item"		"item_imba_stonework_pendant"
@@ -75,6 +77,7 @@
 			"item"		"item_refresher"
 			"item"		"item_imba_bladestorm_mail"
 			"item"		"item_imba_meteor_hammer_4"
+			"item"		"item_imba_cyclone_2"
 			"item"		"item_imba_lance_of_longinus"
 			"item"		"item_imba_rapier_cursed"
 		}
