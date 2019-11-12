@@ -19,7 +19,7 @@
 "DOTA_Tooltip_ability_imba_naga_siren_ensnare_duration"							"#{DOTA_Tooltip_ability_naga_siren_ensnare_duration}"
 
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide"									"#{DOTA_Tooltip_ability_naga_siren_rip_tide}"
-"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Description"						"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Description}\n<font color='#FF7800'>Wetter Rip Tide:</font> Applies a stack of 'Wet' Each stack of Wet makes them take an additional %wet_bonus_damage% damage from Rip Tide and lowers physical armor by an additional %wet_bonus_armor%."
+"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Description"						"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Description}\n<font color='#FF7800'>Wetter Rip Tide:</font> Applies a stack of 'Wet'. Each stack of Wet makes them take an additional %wet_bonus_damage% damage from Rip Tide and lowers physical armor by an additional %wet_bonus_armor%."
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide_Lore"							"#{DOTA_Tooltip_ability_naga_siren_rip_tide_Lore}"
 //	"DOTA_Tooltip_ability_imba_naga_siren_rip_tide_chance"							"#{DOTA_Tooltip_ability_naga_siren_rip_tide_chance}"
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide_chance"							"CHANCE:"
@@ -29,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_naga_siren_rip_tide_duration"				        "#{DOTA_Tooltip_ability_naga_siren_rip_tide_duration}"
 
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren"													"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren}"
-"DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Description"										"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Description}\n<font color='#FF7800'>Siren Temptation:</font> Turning auto-cast on replace Song of the Siren's effect. Enemies affected take amplified damage from all sources.."
+"DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Description"										"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Description}\n<font color='#FF7800'>Siren Temptation:</font> Turning auto-cast on replace Song of the Siren's effect. Enemies affected take amplified damage from all sources."
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Lore"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Lore}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Note0"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Note0}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Note1"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Note1}"

@@ -37,7 +37,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
-			if BOTS_ENABLED == true then
+			if BOTS_ENABLED == true or tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')
 			end
@@ -88,7 +88,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- IDK how to get this to print only once
 		Timers:CreateTimer(FrameTime(), function()
-			Say(GameRules:GetGameModeEntity(), "Game Mode Selected: "..GetCustomGameVote(), false)
+			if api:GetCustomGamemode() == 5 then
+				GameMode:SetSameHeroSelection(true)
+			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -196,8 +198,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		api.imba.event(api.events.started_game)
-
 		-- start rune timers
 		if GetMapName() == Map1v1() then
 			Setup1v1()

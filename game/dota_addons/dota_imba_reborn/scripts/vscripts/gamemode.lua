@@ -293,3 +293,8 @@ function GameMode:OnSettingVote(keys)
 	-- TODO: Finish votes show up
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
+
+function GameMode:SetSameHeroSelection(bEnabled)
+	GameRules:SetSameHeroSelectionEnabled(bEnabled)
+	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = bEnabled})
+end

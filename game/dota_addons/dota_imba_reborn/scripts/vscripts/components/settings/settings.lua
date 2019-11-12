@@ -625,7 +625,3 @@ if GetMapName() == "imba_1v1" then
 end
 
 -- if IsInToolsMode() then SAME_HERO_SELECTION = true end
-
-if SAME_HERO_SELECTION == true then
-	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
-end
