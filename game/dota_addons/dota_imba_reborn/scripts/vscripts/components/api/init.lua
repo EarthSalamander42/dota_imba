@@ -348,6 +348,7 @@ function api:GetLoggingConfiguration(callback)
 end
 
 function api:Message(message, _type)
+	if not message or message == '' then end
 
 	_type = _type or 1
 	local data = json.null
