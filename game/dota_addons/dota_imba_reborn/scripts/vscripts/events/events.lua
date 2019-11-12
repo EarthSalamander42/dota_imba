@@ -37,7 +37,11 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
-			if BOTS_ENABLED == true or tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+			if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+				BOTS_ENABLED = false
+			end
+
+			if BOTS_ENABLED == true then
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')
 			end
@@ -100,8 +104,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
---		api.imba.event(api.events.entered_pre_game)
-
 		api:InitDonatorTableJS()
 
 		if GetMapName() == MapOverthrow() then

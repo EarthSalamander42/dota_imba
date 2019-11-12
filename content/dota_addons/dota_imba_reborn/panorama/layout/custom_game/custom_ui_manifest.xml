@@ -293,10 +293,11 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
-<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
+
+		<!-- Enable only during diretide -->
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" /> 
 -->
-		<!-- Enable only during diretide -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/battlepass.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
@@ -306,6 +307,5 @@
 
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
-<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" /> -->
 	</Panel>
 </root>
