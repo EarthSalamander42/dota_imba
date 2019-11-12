@@ -10,7 +10,6 @@ function FindDotaHudElement(panel) {
 	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(panel);
 }
 
-
 function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');

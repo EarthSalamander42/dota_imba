@@ -58,6 +58,7 @@ function UpdateTeam( teamId )
 	var teamPanel = $( "#"+teamPanelName );
 	var teamPlayers = Game.GetPlayerIDsOnTeam( teamId );
 	teamPanel.SetHasClass( "no_players", ( teamPlayers.length == 0 ) );
+
 	for ( var playerId of teamPlayers )
 	{
 		UpdatePlayer( teamPanel, playerId );
@@ -69,11 +70,25 @@ function UpdatePlayer( teamPanel, playerId )
 	var playerContainer = teamPanel.FindChildInLayoutFile( "PlayersContainer" );
 	var playerPanelName = "player_" + playerId;
 	var playerPanel = playerContainer.FindChild( playerPanelName );
+	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
+	var playerIMR = playerContainer.FindChild( playerPanelName + "_imr");
+
 	if ( playerPanel === null )
 	{
 		playerPanel = $.CreatePanel( "Image", playerContainer, playerPanelName );
 		playerPanel.BLoadLayout( "file://{resources}/layout/custom_game/multiteam_hero_select_overlay_player.xml", false, false );
 		playerPanel.AddClass( "PlayerPanel" );
+
+		if (player_table && player_table.IMR) {
+//			$.Msg(player_table)
+			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
+			playerIMR.AddClass("PlayerIMR");
+			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + player_table.IMR;
+		} else if (Game.IsInToolsMode()) {
+			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
+			playerIMR.AddClass("PlayerIMR");
+			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + 3000;			
+		}
 	}
 
 	var playerInfo = Game.GetPlayerInfo( playerId );
@@ -92,7 +107,6 @@ function UpdatePlayer( teamPanel, playerId )
 		playerPanel.AddClass( "is_local_player" );
 	}
 
-	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
 //	$.Msg(player_table.donator_level)
 //	$.Msg(player_table.donator_color)
 
@@ -151,7 +165,9 @@ function UpdateTimer()
 
 (function()
 {
-	var bLargeGame = Game.GetAllPlayerIDs().length >= 12;
+//	var bLargeGame = Game.GetAllPlayerIDs().length >= 12;
+	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
+	var bLargeGame = false;
 
 	var localPlayerTeamId = Game.GetLocalPlayerInfo().player_team_id;
 	var first = true;
@@ -166,6 +182,7 @@ function UpdateTimer()
 	var nTeamsCreated = 0;
 	var nTeams = Game.GetAllTeamIDs().length
 //	$.Msg( nTeams );
+
 	for ( var teamId of Game.GetAllTeamIDs() )
 	{
 		var teamPanelToUse = null;
@@ -176,7 +193,6 @@ function UpdateTimer()
 		else
 		{
 			teamPanelToUse = teamsContainer;
-			
 		}
 
 		$.CreatePanel( "Panel", teamPanelToUse, "Spacer" );
@@ -184,6 +200,7 @@ function UpdateTimer()
 		var teamPanelName = "team_" + teamId;
 		var teamPanel = $.CreatePanel( "Panel", teamPanelToUse, teamPanelName );
 		teamPanel.BLoadLayout( "file://{resources}/layout/custom_game/multiteam_hero_select_overlay_team.xml", false, false );
+		teamPanel.SetHasClass("TenvTen", bTenvTen)
 		var teamName = teamPanel.FindChildInLayoutFile( "TeamName" );
 		if ( teamName )
 		{
@@ -197,7 +214,7 @@ function UpdateTimer()
 			teamLogoPanel.SetAttributeInt( "team_id", teamId );
 			teamLogoPanel.BLoadLayout( logo_xml, false, false );
 		}
-		
+
 		var teamGradient = teamPanel.FindChildInLayoutFile( "TeamGradient" );
 		if ( teamGradient && GameUI.CustomUIConfig().team_colors )
 		{
@@ -223,6 +240,27 @@ function UpdateTimer()
 			teamPanel.AddClass( "not_local_player_team" );
 		}
 		nTeamsCreated = nTeamsCreated + 1;
+
+		var imr_calculation = 0;
+
+		for (var i = 0; i < Game.GetPlayerIDsOnTeam(teamId).length; i++) {
+			var player_id = Game.GetPlayerIDsOnTeam(teamId)[i];
+			var player_table = CustomNetTables.GetTableValue("battlepass", player_id.toString());
+
+			if (Game.IsInToolsMode())
+				imr_calculation += 3000;
+			else {
+				if (player_table && player_table.IMR) {
+					imr_calculation += player_table.IMR;
+				}
+			}
+		}
+
+		if (imr_calculation != 0) {
+			imr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
+			teamPanel.FindChildTraverse("IMRAverage").GetParent().style.visibility = "visible";
+			teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + imr_calculation;
+		}
 	}
 
 	$.CreatePanel( "Panel", teamsContainer, "EndSpacer" );

@@ -123,11 +123,14 @@
 		DeBuffBar.style.marginRight = "29.5%";
 		DeBuffBar.style.flowChildren = "right";
 */
-		// Enable Hero bio
+		// Enable Hero bio + Disable not-working Dota Plus feature
 		if (PreGame.FindChildTraverse("BattlePassHeroUpsell")) {
 			PreGame.FindChildTraverse("BattlePassHeroUpsell").style.visibility = "collapse";
 			PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
 			PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
+			
+			if (PreGame.FindChildTraverse("BattlePassHeroData"))
+				PreGame.FindChildTraverse("BattlePassHeroData").DeleteAsync(0);
 		}
 
 		// Override Versus Screen with IMBA info (Credits: EarthSalamander)

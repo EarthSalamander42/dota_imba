@@ -1,15 +1,14 @@
 .HeroSelectOverlayRoot
 {
 	width: 100%;
-	height: 190px;
+	height: fit-children;
 	margin-top: 5px;
    
 }
 
 .HeroSelectTeamRowsContainer
 {
-	width: 80%;
-	height: 100%;
+	width: 100%;
 	flow-children: down;
 	horizontal-align: center;
 }
@@ -30,11 +29,16 @@
 	visibility: collapse;
 }
 
+#PhaseInstructions {
+	margin-top: 35px;
+	margin-left: 300px;
+}
+
 .HeroSelectOverlayTimer
 {
 	vertical-align: center;
 	margin-left: 200px;
-	margin-bottom: 75px;
+	margin-top: 110px;
 }
 
 .AspectRatio4x3 .HeroSelectOverlayTimer
@@ -137,7 +141,7 @@
 {
 }
 
-.HeroSelectPlayerRoot
+.HeroSelectPlayerContainer
 {
 	flow-children: down;
 }
@@ -178,8 +182,16 @@
 {
 	background-color: #444444;
 	border: 1px solid black;
-	width: 90px;
+	width: 85px;
 	height: 50px;
+}
+
+.AspectRatio16x10 .TenvTen #PlayerPortrait {
+	width: 78px;
+}
+
+.AspectRatio4x3 .TenvTen #PlayerPortrait {
+	width: 64px;
 }
 
 #PlayerName
@@ -237,4 +249,56 @@
 	background-size: cover;
 	color: #ede5da;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+.PlayerIMR {
+	height: 16px;
+	width: 100%;
+//	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
+	horizontal-align: middle;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 0px 2px 0 2px;
+	color:  #8f9dae;
+	text-align: center;
+	margin-bottom: 28%;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+}
+
+.AspectRatio4x3 .TenvTen .PlayerIMR {
+	font-size: 13px;
+}
+
+.AspectRatio16x10 .TenvTen .PlayerIMR {
+	font-size: 14px;
+}
+
+.IMRAverageContainer {
+	width: 100%;
+	height: 24px;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
+	padding: 0px 2px 0 2px;
+	visibility: collapse;
+}
+
+#IMRAverage {
+	align: center center;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 0px 2px 0 2px;
+	color:  #8f9dae;
+	text-align: center;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+}
+
+.TeamInfoContainer {
+	width: 100%;
+	margin-top: 50px;
+	height: fit-children;
+	flow-children: down;
 }
