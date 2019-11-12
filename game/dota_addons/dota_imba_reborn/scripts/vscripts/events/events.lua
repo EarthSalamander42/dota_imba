@@ -104,8 +104,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-		api:InitDonatorTableJS()
-
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
@@ -117,6 +115,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
+
 		for _, fountainEnt in pairs(fountainEntities) do
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
