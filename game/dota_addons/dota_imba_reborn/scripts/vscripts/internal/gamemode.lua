@@ -45,12 +45,6 @@ function GameMode:_InitGameMode()
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ARCANE, true) --Arcane
 --	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_BOUNTY, false) --Bounty
 
-	-- State jumping fix
---	if IsInToolsMode() then
-		SendToServerConsole("dota_surrender_on_disconnect 0")
-		SendToServerConsole("customgamesetup_set_auto_launch_delay 300")
---	end
-
 	if IMBA_PICK_SCREEN == false then
 		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
 	else
