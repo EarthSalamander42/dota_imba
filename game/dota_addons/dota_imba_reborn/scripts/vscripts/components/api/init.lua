@@ -563,7 +563,7 @@ function api:CompleteGame(successCallback, failCallback)
 		end
 	end
 
-	print(rosh_lvl, rosh_hp, rosh_max_hp)
+--	print(rosh_lvl, rosh_hp, rosh_max_hp)
 
 	local payload = {
 		winner = winnerTeam,
@@ -572,6 +572,8 @@ function api:CompleteGame(successCallback, failCallback)
 		radiant_score = self:GetKillsForTeam(2),
 		dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
+		game_type = CUSTOM_GAME_TYPE,
+		gamemode = api:GetCustomGamemode(),
 		rosh_lvl = rosh_lvl,
 		rosh_hp = rosh_hp,
 		rosh_max_hp = rosh_max_hp,
