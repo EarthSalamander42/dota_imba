@@ -59,7 +59,8 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"negative_armor"		"4 6 8 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
+				//"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
+				"LinkedSpecialBonus"	"special_bonus_imba_tidehunter_gush_armor"
 			}
 			"05"
 			{
@@ -390,6 +391,31 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_tidehunter_gush_armor" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_tidehunter_gush"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
 			}
 		}
 	}

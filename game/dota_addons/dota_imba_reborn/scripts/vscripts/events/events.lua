@@ -683,7 +683,6 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-same_heroes" then
 				GameRules:SetSameHeroSelectionEnabled( true )
 				CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = true})
-				print(GetMapName())
 			end
 		end
 
