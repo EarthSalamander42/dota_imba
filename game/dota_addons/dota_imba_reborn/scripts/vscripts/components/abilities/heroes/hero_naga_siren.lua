@@ -48,7 +48,7 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 		-- "API Additions - Global (Server): * CreateIllusions( hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace ) Note: See script_help2 for supported modifier keys"
 		self.illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), {
 			outgoing_damage 			= image_out_dmg,
-			incoming_damage				= self:GetSpecialValueFor("incoming_damage"),
+			incoming_damage				= self:GetSpecialValueFor("incoming_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_damage_taken"),
 			bounty_base					= self:GetCaster():GetIllusionBounty(),
 			bounty_growth				= nil,
 			outgoing_damage_structure	= nil,
@@ -104,7 +104,7 @@ function modifier_imba_naga_siren_mirror_image_perfect_image:GetModifierIncoming
 end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:GetModifierDamageOutgoing_Percentage()
-	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_outgoing_pct")
+	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_outgoing_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_perfect_image")
 end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:OnDeath(params)
@@ -138,6 +138,10 @@ end
 LinkLuaModifier("modifier_imba_naga_siren_ensnare", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_naga_siren_ensnare = imba_naga_siren_ensnare or class({})
+
+function imba_naga_siren_ensnare:GetCooldown(iLevel)
+	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_2")
+end
 
 function imba_naga_siren_ensnare:OnAbilityPhaseInterrupted()
 	if not IsServer() then return end
@@ -290,14 +294,14 @@ function modifier_imba_naga_siren_rip_tide:DeclareFunctions() return {
 function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 	if not IsServer() then return end
 
-	if params.attacker == self:GetParent() and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("chance"), self) then
+	if params.attacker == self:GetParent() and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("chance") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_rip_tide_proc_chance"), self) then
 		local caster_table = {}
 		local victim_table = {}
 
 		table.insert(caster_table, self:GetCaster())
 
 		for _, unit in pairs(self:GetCaster():GetAdditionalOwnedUnits()) do
-			print(unit:GetUnitName(), unit:entindex())
+--			print(unit:GetUnitName(), unit:entindex())
 
 			if unit:GetUnitName() == self:GetCaster():GetUnitName() and unit:IsIllusion() then
 				table.insert(caster_table, unit)
@@ -367,7 +371,7 @@ function modifier_imba_naga_siren_rip_tide_debuff:DeclareFunctions() return {
 } end
 
 function modifier_imba_naga_siren_rip_tide_debuff:GetModifierPhysicalArmorBonus()
-	return (self:GetAbility():GetSpecialValueFor("wet_bonus_armor") * self:GetStackCount()) +  self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_3")
+	return (self:GetAbility():GetSpecialValueFor("wet_bonus_armor") * self:GetStackCount()) + self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_3")
 end
 
 --=================================================================================================================
