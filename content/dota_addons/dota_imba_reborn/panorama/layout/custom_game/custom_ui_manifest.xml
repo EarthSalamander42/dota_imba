@@ -129,8 +129,8 @@
 			PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
 			PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
 			
-			if (PreGame.FindChildTraverse("BattlePassHeroData"))
-				PreGame.FindChildTraverse("BattlePassHeroData").DeleteAsync(0);
+			if (PreGame && PreGame.FindChildTraverse("BattlePassHeroData"))
+				PreGame.FindChildTraverse("BattlePassHeroData").style.visibility = "collapse";
 		}
 
 		// Override Versus Screen with IMBA info (Credits: EarthSalamander)
