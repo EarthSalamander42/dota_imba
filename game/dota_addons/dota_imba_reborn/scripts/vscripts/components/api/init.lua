@@ -501,6 +501,19 @@ function api:RegisterGame(callback)
 			CustomNetTables:SetTableValue("battlepass", j, {cool_hat[j]})
 		end)
 	end
+
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		if PlayerResource:IsValidPlayerID(i) then
+			local payload = {}
+			payload.steamid = tonumber(PlayerResource:GetSteamID(i))
+
+			self:Request("trackme", function(data)
+				if callback ~= nil then
+					callback()
+				end
+			end, nil, "GET", payload);
+		end
+	end
 end
 
 function api:CompleteGame(successCallback, failCallback)
@@ -538,6 +551,8 @@ function api:CompleteGame(successCallback, failCallback)
 
 			if steamid == 0 then
 				steamid = tostring(id)
+			else
+
 			end
 
 			players[steamid] = player
