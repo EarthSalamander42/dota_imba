@@ -693,7 +693,8 @@ function modifier_imba_visage_gravekeepers_cloak:GetAuraEntityReject(hTarget)	re
 --------------------------------------------
 
 function modifier_imba_visage_gravekeepers_cloak_secondary:OnCreated()
-	self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
+	self.damage_reduction				= self:GetAbility():GetSpecialValueFor("damage_reduction")
+	self.familiar_max_damage_reduction	= self:GetAbility():GetSpecialValueFor("familiar_max_damage_reduction")
 end
 
 function modifier_imba_visage_gravekeepers_cloak_secondary:DeclareFunctions()
@@ -706,7 +707,7 @@ end
 
 -- "Unlike the damage reduction on the hero itself, this damage reduction has no minimum threshold."
 function modifier_imba_visage_gravekeepers_cloak_secondary:GetModifierIncomingDamage_Percentage(keys)
-	return self:GetCaster():GetModifierStackCount("modifier_imba_visage_gravekeepers_cloak", self:GetCaster()) * self.damage_reduction * (-1)
+	return math.min(self:GetCaster():GetModifierStackCount("modifier_imba_visage_gravekeepers_cloak", self:GetCaster()) * self.damage_reduction, self.familiar_max_damage_reduction) * (-1)
 end
 
 -------------------------------------------------

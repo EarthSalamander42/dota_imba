@@ -932,6 +932,8 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-phantom_lancer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
+			elseif str == "-vardor" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do

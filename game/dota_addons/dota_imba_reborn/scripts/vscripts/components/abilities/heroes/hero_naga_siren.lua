@@ -93,6 +93,12 @@ modifier_imba_naga_siren_mirror_image_perfect_image = modifier_imba_naga_siren_m
 function modifier_imba_naga_siren_mirror_image_perfect_image:IsPurgable() return false end
 function modifier_imba_naga_siren_mirror_image_perfect_image:IsPurgeException() return false end
 
+function modifier_imba_naga_siren_mirror_image_perfect_image:OnCreated()
+	self.perfect_image_bonus_damage_incoming_pct					= self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_incoming_pct")
+	self.perfect_image_bonus_damage_outgoing_pct					= self:GetAbility():GetTalentSpecialValueFor("perfect_image_bonus_damage_outgoing_pct")
+	self.perfect_image_max_stacks									= self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks")
+end
+
 function modifier_imba_naga_siren_mirror_image_perfect_image:DeclareFunctions() return {
 	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
@@ -100,11 +106,11 @@ function modifier_imba_naga_siren_mirror_image_perfect_image:DeclareFunctions() 
 } end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:GetModifierIncomingDamage_Percentage()
-	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_incoming_pct")
+	return self:GetStackCount() * self.perfect_image_bonus_damage_incoming_pct
 end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:GetModifierDamageOutgoing_Percentage()
-	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_outgoing_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_perfect_image")
+	return self:GetStackCount() * self.perfect_image_bonus_damage_outgoing_pct
 end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:OnDeath(params)
@@ -112,9 +118,9 @@ function modifier_imba_naga_siren_mirror_image_perfect_image:OnDeath(params)
 
 	if params.attacker == self:GetParent() then
 		if params.unit:IsRealHero() then
-			self:SetIllusionsStackCount(self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks"))
+			self:SetIllusionsStackCount(self.perfect_image_max_stacks)
 		else
-			self:SetIllusionsStackCount(math.min(self:GetStackCount() + 1, self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks")))
+			self:SetIllusionsStackCount(math.min(self:GetStackCount() + 1, self.perfect_image_max_stacks))
 		end
 	end
 end
@@ -466,6 +472,14 @@ function modifier_imba_naga_siren_song_of_the_siren:CheckState() return {
 	[MODIFIER_STATE_STUNNED] = true,
 } end
 
+function modifier_imba_naga_siren_song_of_the_siren:DeclareFunctions()
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_naga_siren_song_of_the_siren:GetOverrideAnimation()
+	return ACT_DOTA_DISABLED
+end
+
 --=================================================================================================================
 -- Naga Siren: Song of the Siren (Cancel)
 --=================================================================================================================
@@ -568,7 +582,7 @@ function modifier_imba_naga_siren_siren_temptation_debuff:IsPurgeException() ret
 
 function modifier_imba_naga_siren_siren_temptation_debuff:DeclareFunctions() return {
 	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	-- MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 } end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:OnCreated()
@@ -582,9 +596,9 @@ function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierIncomingDam
 	return self:GetAbility():GetSpecialValueFor("siren_temptation_incoming_damage_pct")
 end
 
-function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierMagicalResistanceBonus()
-	return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct") * (-1)
-end
+-- function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierMagicalResistanceBonus()
+	-- return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct") * (-1)
+-- end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:OnDestroy()
 	if not IsServer() then return end

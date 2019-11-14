@@ -14,17 +14,21 @@ function imba_rubick_telekinesis:IsRefreshable() return true end
 function imba_rubick_telekinesis:IsStealable() return true end
 function imba_rubick_telekinesis:IsNetherWardStealable() return true end
 -------------------------------------------
---[[
+
 function imba_rubick_telekinesis:CastFilterResultTarget(target)
 	if target == self:GetCaster() and self:GetCaster():IsRooted() then
 		return UF_FAIL_CUSTOM
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
 	end
 end
 
 function imba_rubick_telekinesis:GetCustomCastErrorTarget(target)
-	return "dota_hud_error_ability_disabled_by_root"
+	if target == self:GetCaster() and self:GetCaster():IsRooted() then
+		return "dota_hud_error_ability_disabled_by_root"
+	end
 end
---]]
+
 function imba_rubick_telekinesis:OnSpellStart( params )
 	local caster = self:GetCaster()
 	-- Handler on lifted targets

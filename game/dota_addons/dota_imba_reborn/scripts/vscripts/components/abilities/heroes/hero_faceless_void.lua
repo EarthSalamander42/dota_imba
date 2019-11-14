@@ -525,34 +525,33 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 	local charges_spent = 0
 	for _,ally in pairs(allies) do
-		if ally ~= caster then
-			-- #7 TALENT: Time Dilation no longer spends chronocharges to affect allies.
-			if not caster:HasTalent("special_bonus_imba_faceless_void_7") then
-				if chronocharges <= 0 then break end
-			end
 
-			-- Iterate through the allies abilities
-			local abilities_on_cooldown = 0
-			for i = 0, 23 do
-				if chronocharges > 0 or caster:HasTalent("special_bonus_imba_faceless_void_7") then
-					local current_ability = ally:GetAbilityByIndex(i)
+		-- #7 TALENT: Time Dilation no longer spends chronocharges to affect allies.
+		if not caster:HasTalent("special_bonus_imba_faceless_void_7") then
+			if chronocharges <= 0 then break end
+		end
 
-					-- If there is an ability, it's not the casted ability, learned, not a passive, not a talent, and on cooldown, and is not an ultimate ability
-					if current_ability and current_ability ~= self and current_ability:GetLevel() > 0 and not current_ability:IsPassive() and not current_ability:IsAttributeBonus() and not current_ability:IsCooldownReady() and current_ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
-						local newCooldown = current_ability:GetCooldownTimeRemaining() - cd_decrease
-						current_ability:EndCooldown()
-						current_ability:StartCooldown(newCooldown)
-						abilities_on_cooldown = abilities_on_cooldown + 1
+		-- Iterate through the allies abilities
+		local abilities_on_cooldown = 0
+		for i = 0, 23 do
+			if chronocharges > 0 or caster:HasTalent("special_bonus_imba_faceless_void_7") then
+				local current_ability = ally:GetAbilityByIndex(i)
 
-						if not caster:HasTalent("special_bonus_imba_faceless_void_7") then
-							chronocharges = chronocharges - 1
-						end
+				-- If there is an ability, it's not the casted ability, learned, not a passive, not a talent, on cooldown, and not an ultimate ability
+				if current_ability and current_ability ~= self and current_ability:GetLevel() > 0 and not current_ability:IsPassive() and not current_ability:IsAttributeBonus() and not current_ability:IsCooldownReady() and current_ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
+					local newCooldown = current_ability:GetCooldownTimeRemaining() - cd_decrease
+					current_ability:EndCooldown()
+					current_ability:StartCooldown(newCooldown)
+					abilities_on_cooldown = abilities_on_cooldown + 1
+
+					if not caster:HasTalent("special_bonus_imba_faceless_void_7") then
+						chronocharges = chronocharges - 1
 					end
-
-					-- Stop if there are no more chronocharges left and the caster doesn't have the talent
-				else
-					break
 				end
+
+				-- Stop if there are no more chronocharges left and the caster doesn't have the talent
+			else
+				break
 			end
 		end
 

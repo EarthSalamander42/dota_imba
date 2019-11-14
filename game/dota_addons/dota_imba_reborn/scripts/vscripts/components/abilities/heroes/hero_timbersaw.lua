@@ -290,7 +290,7 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 	ParticleManager:SetParticleControlEnt(timber_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(timber_particle, 1, self:GetCaster():GetAbsOrigin() + ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus())))
 	ParticleManager:SetParticleControl(timber_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0 ))
-	ParticleManager:SetParticleControl(timber_particle, 3, Vector(((self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2, 0, 0 ))
+	ParticleManager:SetParticleControl(timber_particle, 3, Vector(((self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed")) * 2, 0, 0 ))
 	
 	if not self.projectiles then
 		self.projectiles = {}
@@ -311,7 +311,7 @@ function imba_timbersaw_timber_chain:OnSpellStart()
 	    bDeleteOnHit = false,
 	    
 	    -- EffectName = "particles/dev/library/base_linear_projectile_model.vpcf",
-	    fDistance = self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
+	    fDistance = self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 	    fStartRadius = self:GetSpecialValueFor("chain_radius"),
 		fEndRadius = self:GetSpecialValueFor("chain_radius"),
@@ -1041,7 +1041,6 @@ function imba_timbersaw_chakram_2:OnSpellStart()
 		bAutoCastState	= self:GetAutoCastState()
 	}
 	
-
 	if not self.effect_name then
 		self.effect_name = "particles/units/heroes/hero_shredder/shredder_chakram_aghs.vpcf"
 		
@@ -1057,7 +1056,7 @@ function imba_timbersaw_chakram_2:OnSpellStart()
 		
 	    bDeleteOnHit = false,
 	    
-	    EffectName = "particles/units/heroes/hero_shredder/shredder_chakram_aghs.vpcf",
+	    EffectName = self.effect_name,
 	    fDistance = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D(),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 	    fStartRadius = self:GetSpecialValueFor("radius"),
@@ -1331,6 +1330,14 @@ function imba_timbersaw_chakram:OnSpellStart()
 		bAutoCastState	= self:GetAutoCastState()
 	}
 	
+	if not self.effect_name then
+		self.effect_name = "particles/units/heroes/hero_shredder/shredder_chakram.vpcf"
+		
+		if Wearables:GetWearable(self:GetCaster(), "models/items/shredder/timbersaw_ti9_immortal_offhand/timbersaw_ti9_immortal_offhand") then
+			self.effect_name = "particles/econ/items/timbersaw/timbersaw_ti9_gold/timbersaw_ti9_chakram_gold.vpcf"
+		end
+	end
+
 	local chakram_projectile = ProjectileManager:CreateLinearProjectile({
 		Source			= self:GetCaster(),
 		Ability			= self,
@@ -1338,7 +1345,7 @@ function imba_timbersaw_chakram:OnSpellStart()
 		
 	    bDeleteOnHit = false,
 	    
-	    EffectName = "particles/units/heroes/hero_shredder/shredder_chakram.vpcf",
+	    EffectName = self.effect_name,
 	    fDistance = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D(),
 		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 	    fStartRadius = self:GetSpecialValueFor("radius"),
