@@ -1834,6 +1834,7 @@ function modifier_imba_timbersaw_chakram_thinker:OnCreated(params)
 end
 
 function modifier_imba_timbersaw_chakram_thinker:OnIntervalThink()
+	--if not self:GetAbility() or not self:GetCaster():IsAlive() then self:Destroy() return end
 	if not self:GetAbility() then self:Destroy() return end
 
 	if not self.dendrophobia_modifier or self.dendrophobia_modifier:IsNull() then
