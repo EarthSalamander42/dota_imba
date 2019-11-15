@@ -1,3 +1,5 @@
+var is_donator_set = [];
+
 function AdvanceTimeline()
 {
 	if ( !g_bPlaying )
@@ -28,7 +30,135 @@ function TogglePlayPause()
 	}
 };
 
+function LightenDarkenColor(col, amt) {
+	var usePound = false;
+  
+	if (col[0] == "#") {
+		col = col.slice(1);
+		usePound = true;
+	}
+ 
+	var num = parseInt(col,16);
+ 
+	var r = (num >> 16) + amt;
+ 
+	if (r > 255) r = 255;
+	else if  (r < 0) r = 0;
+ 
+	var b = ((num >> 8) & 0x00FF) + amt;
+ 
+	if (b > 255) b = 255;
+	else if  (b < 0) b = 0;
+ 
+	var g = (num & 0x0000FF) + amt;
+ 
+	if (g > 255) g = 255;
+	else if (g < 0) g = 0;
+	
+	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
+
+	var length = color.length;
+
+	if ( length < 6 ) {
+		for (var i = 0; i < (6-length); i++) {
+			color = "0" + color;
+		}
+	}
+
+	return (usePound?"#":"") + color;
+}
+
+function rnd(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function SetDonatorRow(panel, playerId) {
+//	$.Schedule(0.1, function(){
+//		SetDonatorRow(panel, playerId)
+//	})
+
+	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
+
+	if (player_table && player_table.donator_level && player_table.donator_color) {
+		if (player_table.donator_level < 10) {
+			if (player_table.in_game_tag == 1) {
+				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
+					is_donator_set.push( playerId.toString() );
+					// panel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
+
+//					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
+//					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
+
+//					donatorTitlePanel.style.visibility = "visible";
+
+					var dark_donator_levels = [ 1, 2, 7, 9 ];
+					var donator_color = player_table.donator_color;
+
+					if ( dark_donator_levels.indexOf( player_table.donator_level ) > -1 ) {
+						panel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
+						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -60) + 'FF ), ' +
+						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
+						'color-stop( 0.8, ' + LightenDarkenColor(donator_color, -40) + 'FF ), ' +
+						'to( ' +  donator_color + ' ) )';
+
+						panel.style.animationName = 'color_transition_bright';
+					} else {
+						if ( player_table.donator_level != 8 ) {
+							donator_color = LightenDarkenColor(donator_color, -30);
+						} else {
+							donator_color = LightenDarkenColor(donator_color, 20);
+						}
+
+						panel.style.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + donator_color + ' ), ' +
+						'color-stop( 0.2, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
+						'color-stop( 0.5, ' + donator_color + 'FF ), ' +
+						'color-stop( 0.8, ' + LightenDarkenColor(donator_color, -80) + 'FF ), ' +
+						'to( ' +  donator_color + ' ) )';
+					}
+
+//					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
+//					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
+
+					if (!panel.FindChildTraverse("particle-holder")) {
+						panel.BCreateChildren('<Panel id="particle-holder" />');
+						var holder = panel.FindChildTraverse("particle-holder");
+						var bubblecount = 30;
+
+						for (var i = 0; i <= bubblecount; i++) {
+							var size = rnd(50, 80) / 10;
+
+							holder.BCreateChildren(
+								'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
+								';x:' +
+								rnd(5, 90) +
+								"%; y:" +
+								rnd(95, 85) +
+								"%;width:" +
+								size +
+								"px; height:" +
+								size +
+								"px;animation-delay: " +
+								rnd(0, 40) / 10 +
+								's;" />'
+							);
+						}
+					}
+				}
+			} else {
+				if (is_donator_set.indexOf( playerId.toString() ) != -1) {
+					var index = is_donator_set.indexOf( playerId.toString() );
+					is_donator_set.splice( index, 1 );
+//					donatorTitlePanel.style.visibility = "collapse";
+					panel.FindChildTraverse("particle-holder").DeleteAsync(1);
+					panel.style.backgroundColor = "transparent";
+				}
+			}
+		}
+	}
+}
+
 (function () {
+/*
 	var game_options = {
 		"data":{
 			"players":{
@@ -85,7 +215,7 @@ function TogglePlayPause()
 			}
 		},
 	};
-
+*/
 	$.Msg("START END SCREEN")
 	// Show loading panel
 	$.GetContextPanel().AddClass("MatchDataLoading");
@@ -98,6 +228,7 @@ function TogglePlayPause()
 	$.GetContextPanel().AddClass("ScoreboardVisible");
 	$("#DetailsOverview").style.opacity = "0";
 	$("#DetailsScoreboardContainer").style.opacity = "1";
+	$("#DetailsDamageDealt").style.opacity = "0"; // This is the panel following DetailsScoreboardContainer, not being used atm
 	$("#PinnedHeroes").style.opacity = "1";
 
 	if (Game.IsInToolsMode()) {
@@ -148,7 +279,6 @@ function TogglePlayPause()
 				var player_items = Game.GetPlayerItems(id);
 
 				$.Msg(player_info)
-				$.Msg(player_items)
 
 				// Set left bar player informations
 				var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
@@ -171,7 +301,16 @@ function TogglePlayPause()
 //				PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0]
 				PlayerRowContainer.FindChildrenWithClassTraverse("NetWorth")[0].text = player_info.player_gold;
 
-				$.Msg("Number of items: " + Entities.GetNumItemsInInventory(player_info.player_selected_hero_entity_index))
+				SetDonatorRow(PlayerRowContainer.GetChild(0), id)
+
+				if (player_items) {
+					for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
+						var item = player_items.inventory[i];
+
+						if (item)
+							PlayerRowContainer.FindChildTraverse("ItemIcon" + i).itemname = item.item_name;
+					}
+				}
 
 				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);;
 				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);;
@@ -180,10 +319,8 @@ function TogglePlayPause()
 				PlayerRowContainer.FindChildrenWithClassTraverse("HeroHealing")[0].text = 0;
 			});
 
-			$.Msg($.Localize(team_localization_name[i]))
-
 			// Set Team name and score
-			$("#" + team_name[i] + "TeamName").text = $.Localize(team_localization_name[i]); // not working?
+			$("#HeroIconsColumn").FindChildTraverse(team_name[i] + "TeamName").text = $.Localize(team_localization_name[i]);
 			$("#" + team_name[i] + "TeamScore").text = "Score: " + Game.GetTeamDetails(i).team_score;
 
 			if (Game.GetGameWinner() == i)

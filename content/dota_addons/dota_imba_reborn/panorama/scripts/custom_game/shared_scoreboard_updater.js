@@ -1,41 +1,41 @@
 "use strict";
 
 function LightenDarkenColor(col, amt) {
-    var usePound = false;
+	var usePound = false;
   
-    if (col[0] == "#") {
-        col = col.slice(1);
-        usePound = true;
-    }
+	if (col[0] == "#") {
+		col = col.slice(1);
+		usePound = true;
+	}
  
-    var num = parseInt(col,16);
+	var num = parseInt(col,16);
  
-    var r = (num >> 16) + amt;
+	var r = (num >> 16) + amt;
  
-    if (r > 255) r = 255;
-    else if  (r < 0) r = 0;
+	if (r > 255) r = 255;
+	else if  (r < 0) r = 0;
  
-    var b = ((num >> 8) & 0x00FF) + amt;
+	var b = ((num >> 8) & 0x00FF) + amt;
  
-    if (b > 255) b = 255;
-    else if  (b < 0) b = 0;
+	if (b > 255) b = 255;
+	else if  (b < 0) b = 0;
  
-    var g = (num & 0x0000FF) + amt;
+	var g = (num & 0x0000FF) + amt;
  
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
- 	
- 	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
+	if (g > 255) g = 255;
+	else if (g < 0) g = 0;
+	
+	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
 
- 	var length = color.length;
+	var length = color.length;
 
- 	if ( length < 6 ) {
- 		for (var i = 0; i < (6-length); i++) {
- 			color = "0" + color;
- 		}
- 	}
+	if ( length < 6 ) {
+		for (var i = 0; i < (6-length); i++) {
+			color = "0" + color;
+		}
+	}
 
-    return (usePound?"#":"") + color;
+	return (usePound?"#":"") + color;
 }
 
 function rnd(min, max) {
