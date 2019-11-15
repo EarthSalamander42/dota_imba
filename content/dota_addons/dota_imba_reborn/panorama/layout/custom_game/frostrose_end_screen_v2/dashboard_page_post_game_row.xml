@@ -29,6 +29,8 @@
 				<DOTAAbilityImage id="ADAbilityIcon2" class="ADAbilityIcon" />
 				<DOTAAbilityImage id="ADAbilityIcon3" class="ADAbilityIcon" />
 			</Panel>
+			<ProgressBar id="BattlepassXPContainer" class="ItemsColumn ItemsContainer" >
+			</ProgressBar>
 			<Panel id="ItemsContainer" class="ItemsColumn ItemsContainer" >
 				<DOTAItemImage id="ItemIcon0" class="ItemIcon" />
 				<DOTAItemImage id="ItemIcon1" class="ItemIcon" />
