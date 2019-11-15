@@ -72,12 +72,10 @@ function rnd(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function SetDonatorRow(panel, playerId) {
+function SetDonatorRow(panel, playerId, player_table) {
 //	$.Schedule(0.1, function(){
 //		SetDonatorRow(panel, playerId)
 //	})
-
-	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
 
 	if (player_table && player_table.donator_level && player_table.donator_color) {
 		if (player_table.donator_level < 10) {
@@ -277,8 +275,10 @@ function SetDonatorRow(panel, playerId) {
 //				$.Msg("Player ID " + id + " in team " + i)
 				var player_info = Game.GetPlayerInfo(id);
 				var player_items = Game.GetPlayerItems(id);
+				var player_table = CustomNetTables.GetTableValue("battlepass", id.toString());
 
 				$.Msg(player_info)
+				$.Msg(player_table)
 
 				// Set left bar player informations
 				var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
@@ -301,7 +301,9 @@ function SetDonatorRow(panel, playerId) {
 //				PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0]
 				PlayerRowContainer.FindChildrenWithClassTraverse("NetWorth")[0].text = player_info.player_gold;
 
-				SetDonatorRow(PlayerRowContainer.GetChild(0), id)
+				SetDonatorRow(PlayerRowContainer.GetChild(0), id, player_table)
+
+				PlayerRowContainer.FindChildTraverse("BattlepassXPContainer").value = player_table.XP / player_table.MaxXP;
 
 				if (player_items) {
 					for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
