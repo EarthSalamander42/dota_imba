@@ -440,6 +440,16 @@ function imba_wraith_king_vampiric_aura:GetIntrinsicModifierName()
 	return "modifier_imba_vampiric_aura"
 end
 
+function imba_wraith_king_vampiric_aura:OnOwnerSpawned()
+	if self.toggle_state then
+		self:ToggleAbility()
+	end
+end
+
+function imba_wraith_king_vampiric_aura:OnOwnerDied()
+	self.toggle_state = self:GetToggleState()
+end
+
 -- Aura modifier
 modifier_imba_vampiric_aura = class({})
 
@@ -470,13 +480,15 @@ function modifier_imba_vampiric_aura:GetAuraSearchTeam()
 end
 
 function modifier_imba_vampiric_aura:GetAuraSearchType()
-	local toggle = self.ability:GetToggleState()
-
-	if toggle then
+	-- if self.ability:GetToggleState() then
+		-- return DOTA_UNIT_TARGET_HERO 
+	-- else
 		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	else
-		return DOTA_UNIT_TARGET_HERO
-	end
+	-- end
+end
+
+function modifier_imba_vampiric_aura:GetAuraEntityReject(target)
+	if self.ability:GetToggleState() and not target:IsConsideredHero() then return true end
 end
 
 function modifier_imba_vampiric_aura:GetModifierAura()

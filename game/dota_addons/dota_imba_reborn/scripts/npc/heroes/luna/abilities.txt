@@ -234,6 +234,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
+				//"beam_interval_scepter"				"0.3"
 				"beam_interval_scepter"				"0.3 0.25 0.2"
 			}
 			"05"
@@ -250,21 +251,25 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"beams_scepter"				"7 14 21"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hit_count_scepter"			"7 14 21"
+				"RequiresScepter"		"1"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration_tooltip_scepter"	"1.8 3.25 4.0"
+				"RequiresScepter"		"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_tooltip_scepter"	"2500"
+				"RequiresScepter"		"1"
 			}
 			
 			"11"

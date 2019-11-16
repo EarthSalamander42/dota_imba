@@ -1141,6 +1141,9 @@ function imba_rubick_spellsteal:OnSpellStart()
 	if self.spell_target:TriggerSpellAbsorb( self ) then
 		return
 	end
+	
+	-- Prevent weird stuff from happening if copied by Lotus Orb or duplicated through Grimstroke's Soulbind
+	if self:GetAbilityIndex() == 0 then return end
 
 	-- Get last used spell
 	self.stolenSpell = {}
@@ -1320,6 +1323,8 @@ imba_rubick_spellsteal.slot1 = "rubick_empty1"
 imba_rubick_spellsteal.slot2 = "rubick_empty2"
 -- Add new stolen spell
 function imba_rubick_spellsteal:SetStolenSpell( spellData )
+	if not spellData then return end
+
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents
@@ -1538,7 +1543,7 @@ function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	self.stolen_spell_amp = kv.spell_amp * 100
 
 	if self:GetParent():HasScepter() then
-		print("Spell Amp:", self.stolen_spell_amp)
+		-- print("Spell Amp:", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end
@@ -1546,7 +1551,7 @@ end
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
 	if self:GetParent():HasScepter() then
-		print("Spell Amp (refresh):", self.stolen_spell_amp)
+		-- print("Spell Amp (refresh):", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end

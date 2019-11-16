@@ -19,8 +19,8 @@
 "DOTA_Tooltip_modifier_imba_wraithfire_blast_debuff_talent_Description"             "Burning, dealing damage to yourself and allies around you. Each additional Wraith Blight increases the damage further."
 
 // Wraith King's Vampiric Aura
-"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura"                  "Vampiric Aura"
-"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"                   "Nearby allies restore health based on the damage they deal. Toggle to affect creeps.\n<font color='#FF7800'>By Any Measure:</font> Allies also spellsteal when dealing magical or pure damage.\n<font color='#FF7800'>For The King:</font> Anytime an ally lifesteals health from any source of damage, Wraith King gets a portion of the heal."
+"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura"					"Vampiric Aura"
+"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"		"Nearby allies restore health based on the damage they deal. Can be toggled on to make Vampiric Aura affect heroes only.\n<font color='#FF7800'>By Any Measure:</font> Allies also spellsteal when dealing magical or pure damage.\n<font color='#FF7800'>For The King:</font> Anytime an ally lifesteals health from any source of damage, Wraith King gets a portion of the heal."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Note0"            "Heals based on damage dealt after reductions."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Lore"              "Wraith King's blade drains his enemies' essence to feed his aura."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_radius"            "AURA RADIUS:"
@@ -78,8 +78,8 @@
 "DOTA_Tooltip_modifier_imba_reincarnation_Description"                  "Feeling the presence of Wraith King. Dying near him will trigger his Reincarnation effect on you!"
 
 // Wraith King's Reincarnation
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation"                  "Reincarnation"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "Wraith King's form regroups after death, allowing him to resurrect when killed in battle. Upon death, enemy units in a 900 radius will be slowed (handled by the Kingdom Come ability).\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time."
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation"					"Reincarnation"
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"		"Wraith King's form regroups after death, allowing him to resurrect when killed in battle. Upon death, enemy units in a 900 radius will be slowed (handled by the Kingdom Come ability).\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"            "Reincarnation will not trigger if its owner hasn't got enough mana for it."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note1"            "Even if Reincarnation is ready, it will trigger Kingdom Come."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Lore"              "Conspirators against the Wraith King wonder why he never stays dead."

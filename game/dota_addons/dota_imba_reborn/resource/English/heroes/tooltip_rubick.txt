@@ -56,8 +56,8 @@
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic Memory:</font> Stolen spells don't expire.\n<font color='#FF7800'>All Copy:</font> Spell Steal can also target creeps."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."
-"DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Monkey King's Wukong's Command or Timbersaw's Chakrams. Doing so sets Rubick's stolen ability slots to empty."
-"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\nAdditionally, copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Monkey King's Wukong's Command. Doing so sets Rubick's stolen ability slots to empty."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\n<font color='#FF7800'>Copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen.</font>"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_cooldown_scepter"			"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
