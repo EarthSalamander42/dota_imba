@@ -1,7 +1,7 @@
 ﻿"addon" {
 	"addonname" "Dota IMBA"
-	"average_ixp" "Average IXP:"
-	"average_mmr" "Average MMR:"
+	"average_ixp" "IXP médio:"
+	"average_mmr" "MMR médio:"
 	"battlepass" "Passe de batalha"
 	"battlepass_alchemist_taunt" "Provocação: Ogre Hop"
 	"battlepass_axe_immortal" "Axe Solto"
@@ -217,7 +217,7 @@
 	"companion_enabled" "Companheiro habilitado."
 	"companion_error" "Oops! Algo deu errado."
 	"companion_not_donator" "Esse recurso é apenas para doadores Patreon. Clique aqui para prometer!"
-	"companion_success" "Companion changed with:"
+	"companion_success" "Companheiro alterado com:"
 	"confirm_pick_button" "Selecione o herói"
 	"custom_end_screen_legend_battlepass_xp" "Passe de batalha XP"
 	"custom_end_screen_legend_mmr" "MMR"
@@ -554,6 +554,6 @@
 	"vote_gamemode_2" "Mutação"
 	"vote_gamemode_3" "Super Frantic"
 	"vote_gamemode_4" "Diretide"
-	"vote_gamemode_5" "Same Hero Selection"
+	"vote_gamemode_5" "Seleção do Mesmo Herói"
 	"welcome_label" "Bem vindo ao Dota IMBA!"
 }
