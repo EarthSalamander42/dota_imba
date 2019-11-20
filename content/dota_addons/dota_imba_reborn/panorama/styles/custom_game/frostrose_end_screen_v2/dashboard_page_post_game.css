@@ -8286,3 +8286,77 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	vertical-align: bottom;
 	horizontal-align: center;
 }
+
+// Battlepass XP
+
+.es-player-xp {
+	flow-children: none; 
+	width: 250px;
+	vertical-align: center;
+	background-color: black;
+	border: 1px solid #222;
+	height: 26px;
+	box-shadow: 0 0 5px 0 #00000022 inset;
+}
+
+.level-up {
+	animation-name: level_up;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-down {
+	animation-name: level_down;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+#es-player-xp-progress { 
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
+	border-radius: 1px;
+	width: 0%;
+	height: 24px;
+	transition-property: width;
+	transition-duration: 2s;
+}
+
+#es-player-xp-progress-diff { 
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #B2A603 ),  to( #857D05 ) );
+	border-radius: 1px;
+	width: 0%;
+	height: 24px;
+	transition-property: width;
+	transition-duration: 2s;
+}
+
+.es-player-xp Label {
+	color: #fff;
+	width: 100%;
+	font-size: 16px;
+	vertical-align: center;
+	padding: 2px 5px;
+}
+
+#es-player-xp-rank { text-align: right; }
+#es-player-xp-level { text-align: left; }
+#es-player-xp-xp { text-align: right; }
+
+#es-player-xp-rank-name {
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-player-xp-earned,
+#es-player-xp-booster {
+	width: 70px;
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-player-xp-booster {
+	color: white;
+}
