@@ -152,12 +152,19 @@ end
 
 function imba_luna_moon_glaive:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
 	if not IsServer() then return end
-
-	if hTarget then	
+	
+	if hTarget then
+		-- IMBAfication: Weighted Dual-Edge
+		self.damage_type = DAMAGE_TYPE_PHYSICAL
+		
+		-- if not hTarget:IsBuilding() and hTarget:GetMagicalArmorValue() < GetReductionFromArmor(hTarget:GetPhysicalArmorValue(false)) then
+			-- self.damage_type = DAMAGE_TYPE_MAGICAL
+		-- end
+	
 		local damageTable = {
 			victim 			= hTarget,
 			damage 			= self:GetCaster():GetAverageTrueAttackDamage(hTarget) * ((100 - self:GetSpecialValueFor("damage_reduction_percent")) * 0.01) ^ (ExtraData.bounces + 1),
-			damage_type		= DAMAGE_TYPE_PHYSICAL,
+			damage_type		= self.damage_type,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, --+ DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL, -- IMBAfication: Waning Gibbous
 			attacker 		= self:GetCaster(),
 			ability 		= self

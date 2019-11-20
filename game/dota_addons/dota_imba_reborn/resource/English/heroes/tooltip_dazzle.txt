@@ -102,6 +102,9 @@
 
 "dota_hud_error_ressurection_no_targets"							"No valid resurrection targets within selected area."
 
+"DOTA_Tooltip_modifier_imba_dazzle_ressurection"				"Ressurection"
+"DOTA_Tooltip_modifier_imba_dazzle_ressurection_Description"	"Target will be ressurected after this modifier expires. Cooldown and mana cost will be refunded if the target is alive or non-existent upon modifier expiry."
+
 // Dazzle's Custom Talents
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_1"         		"Shadow Wave now bounces with a 1 second delay"
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_2"				"Duality"

@@ -80,8 +80,6 @@ imba_broodmother_spin_web = imba_broodmother_spin_web or class({})
 function imba_broodmother_spin_web:OnUpgrade()
 	if not IsServer() then return end
 
-	local charges_start_count = nil
-
 	if self:GetLevel() == 1 then
 		LinkLuaModifier("modifier_charges", "components/modifiers/modifier_charges.lua", LUA_MODIFIER_MOTION_NONE)
 

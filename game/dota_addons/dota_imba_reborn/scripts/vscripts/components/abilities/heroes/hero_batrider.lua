@@ -741,7 +741,10 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 	
 	-- "Can be cast on Roshan, but he is neither disabled nor dragged (Upgradable by Aghanim's Scepter. nor damaged). Batrider is still disarmed."
 	if not target:IsRoshan() then
-		local lasso_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso", {duration = self:GetSpecialValueFor("duration")})
+		local lasso_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso", {
+			duration			= self:GetSpecialValueFor("duration"),
+			attacker_entindex	= self:GetCaster():entindex()
+		})
 		
 		if lasso_modifier then
 			lasso_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
@@ -753,7 +756,10 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 		
 		for _, enemy in pairs(enemies) do
 			if enemy ~= target and enemy:IsConsideredHero() then
-				local secondary_lasso_modifier = enemy:AddNewModifier(target, self, "modifier_imba_batrider_flaming_lasso", {duration = self:GetSpecialValueFor("duration")})
+				local secondary_lasso_modifier = enemy:AddNewModifier(target, self, "modifier_imba_batrider_flaming_lasso", {
+					duration			= self:GetSpecialValueFor("duration"),
+					attacker_entindex	= self:GetCaster():entindex()
+				})
 				
 				if secondary_lasso_modifier then
 					secondary_lasso_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
@@ -781,8 +787,14 @@ function modifier_imba_batrider_flaming_lasso:GetEffectName()
 	return "particles/units/heroes/hero_batrider/batrider_flaming_lasso_generic_smoke.vpcf"
 end
 
-function modifier_imba_batrider_flaming_lasso:OnCreated()
+function modifier_imba_batrider_flaming_lasso:OnCreated(params)
 	if not IsServer() then return end
+	
+	if params.attacker_entindex then
+		self.attacker = EntIndexToHScript(params.attacker_entindex)
+	else
+		self.attacker = self:GetCaster()
+	end
 	
 	self.drag_distance			= self:GetAbility():GetSpecialValueFor("drag_distance")
 	self.break_distance			= self:GetAbility():GetSpecialValueFor("break_distance")
@@ -806,7 +818,7 @@ function modifier_imba_batrider_flaming_lasso:OnCreated()
 		damage 			= self.damage,
 		damage_type		= self:GetAbility():GetAbilityDamageType(),
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
+		attacker 		= self.attacker,
 		ability 		= self:GetAbility()
 	}
 	
@@ -824,6 +836,10 @@ function modifier_imba_batrider_flaming_lasso:OnCreated()
 	self:AddParticle(self.lasso_particle, false, false, -1, false, false)
 	
 	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_batrider_flaming_lasso:OnRefresh(params)
+	self:OnCreated(params)
 end
 
 function modifier_imba_batrider_flaming_lasso:OnIntervalThink()

@@ -1600,7 +1600,7 @@ function imba_timbersaw_return_chakram:OnSpellStart()
 					bIsAttack 			= false,
 					bVisibleToEnemies 	= true,
 					bReplaceExisting 	= false,
-					flExpireTime 		= GameRules:GetGameTime() + 20.0,
+					-- flExpireTime 		= GameRules:GetGameTime() + 20.0,
 					bProvidesVision 	= false,
 					
 					ExtraData = ExtraData
@@ -1690,7 +1690,7 @@ function imba_timbersaw_return_chakram_2:OnSpellStart()
 					bIsAttack 			= false,
 					bVisibleToEnemies 	= true,
 					bReplaceExisting 	= false,
-					flExpireTime 		= GameRules:GetGameTime() + 20.0,
+					-- flExpireTime 		= GameRules:GetGameTime() + 20.0,
 					bProvidesVision 	= false,
 					
 					ExtraData = ExtraData
@@ -1918,7 +1918,7 @@ function modifier_imba_timbersaw_chakram_thinker:OnDestroy()
 			bIsAttack 			= false,
 			bVisibleToEnemies 	= true,
 			bReplaceExisting 	= false,
-			flExpireTime 		= GameRules:GetGameTime() + 20.0,
+			-- flExpireTime 		= GameRules:GetGameTime() + 20.0,
 			bProvidesVision 	= false,
 			
 			ExtraData = ExtraData

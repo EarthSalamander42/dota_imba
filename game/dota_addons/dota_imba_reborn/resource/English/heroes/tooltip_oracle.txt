@@ -26,7 +26,7 @@
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_Note0"						"The healing from Purifying Flames can be stacked with itself."
 
 "DOTA_Tooltip_ability_imba_oracle_alter_self"							"Alter Self"
-"DOTA_Tooltip_ability_imba_oracle_alter_self_Description"				"Oracle calls upon him form from the opposite spectrum, drastically altering his abilities to exert nearly opposite effects. Fortune's End, Fate's Edict, and Purifying Flames also have their cooldowns refreshed. Can be cast again to return to the standard form."
+"DOTA_Tooltip_ability_imba_oracle_alter_self_Description"				"Oracle calls upon his form from the opposite spectrum, drastically altering his abilities to exert nearly opposite effects. Fortune's End, Fate's Edict, and Purifying Flames also have their cooldowns refreshed. Can be cast again to return to the standard form."
 "DOTA_Tooltip_ability_imba_oracle_alter_self_Lore"						"In the infinite expanse of unforegone paths, there exists your self that is all but you."
 "DOTA_Tooltip_ability_imba_oracle_alter_self_Note0"						"Read the descriptions of Oracle's other abilities to see how Alter Self changes them."
 
