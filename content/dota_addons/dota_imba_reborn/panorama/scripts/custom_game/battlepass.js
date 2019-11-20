@@ -1121,14 +1121,15 @@ function SetupPanel() {
 }
 
 (function() {
-	var args = {
-		steamid: Game.GetLocalPlayerInfo().player_steamid,
-		language: $.Localize("Language"),
-	}
+	// prevent running an api call everytime this file is edited
+	if (!Game.IsInToolsMode()) {
+		var args = {
+			steamid: Game.GetLocalPlayerInfo().player_steamid,
+			language: $.Localize("lang"),
+		}
 
-	api.getPlayerPosition(args, function(players) {
-		$.Msg("Player Position: Success!")
-	});
+		api.getPlayerPosition(args, function(players) {});
+	}
 
 	if (game_type == "IMBA") {
 		// Update the game options display

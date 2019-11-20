@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-		<include src="s2r://panorama/styles/dashboard_page_post_game.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
 	</styles>
 
 	<Panel class="PlayerRowLegend">
@@ -16,7 +16,7 @@
 				<Label class="LegendGold" text="#dota_page_match_details_legend_net_worth" />
 			</Panel>
 			<Label class="LegendAbilities AbilitiesColumn" text="#dota_settings_abilities" />
-			<Label class="LegendItems ItemsColumn" text="#leaderboard_xp" /> <!-- Battlepass XP -->
+			<Label class="es-player-xp-container LegendItems ItemsColumn" text="#leaderboard_xp" /> <!-- Battlepass XP -->
 			<Label class="LegendItems ItemsColumn" text="#dota_page_match_details_legend_items" />
 			<Label class="LegendBackpackItems BackpackItemsColumn" text="#dota_page_match_details_legend_backpack_items" />
 			<Label class="LegendPermanentBuffs PermanentBuffsColumn" text="#dota_page_match_details_legend_permanent_buffs" />
@@ -25,7 +25,7 @@
 			<Label class="LegendDenies DeniesColumn" text="#dota_page_match_details_legend_denies" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_denies_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()" />
 			<Label class="LegendGoldPerMin GPMColumn" text="#dota_page_match_details_legend_gold_per_min" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_gold_per_min_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()" />
 			<Label class="LegendXPPerMin XPMColumn" text="#dota_page_match_details_legend_xp_per_min" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_xp_per_min_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()" />
-			<Label class="LegendHeroHealing HeroHealingColumn" text="#dota_page_match_details_legend_hero_healing" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_hero_healing_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()" />
+<!--			<Label class="LegendHeroHealing HeroHealingColumn" text="#dota_page_match_details_legend_hero_healing" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_hero_healing_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()" /> -->
 		</Panel>
 	</Panel>
 </root>

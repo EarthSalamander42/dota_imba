@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-		<include src="s2r://panorama/styles/dashboard_page_post_game.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
 	</styles>
 
 	<snippets>
@@ -29,8 +29,20 @@
 				<DOTAAbilityImage id="ADAbilityIcon2" class="ADAbilityIcon" />
 				<DOTAAbilityImage id="ADAbilityIcon3" class="ADAbilityIcon" />
 			</Panel>
-			<ProgressBar id="BattlepassXPContainer" class="ItemsColumn ItemsContainer" >
-			</ProgressBar>
+
+			<Panel class="es-player-xp-container ItemsColumn ItemsContainer ">
+				<Panel id="BattlepassXPContainer" class="es-player-xp">
+					<Panel id="es-player-xp-progress" />
+					<Panel id="es-player-xp-progress-diff" />
+					<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 
+					<Label id="es-player-xp-level" text="129" />
+					<Label id="es-player-xp-rank" text="1227 / 3000" /> 
+				</Panel> 
+
+				<Label id="es-player-xp-earned" class="es-player-line-text" text="+200" /> 
+				<Label id="es-player-xp-booster" class="es-player-line-text" text=" (100%)" /> 
+			</Panel> 
+
 			<Panel id="ItemsContainer" class="ItemsColumn ItemsContainer" >
 				<DOTAItemImage id="ItemIcon0" class="ItemIcon" />
 				<DOTAItemImage id="ItemIcon1" class="ItemIcon" />
@@ -61,7 +73,7 @@
 			<Label class="Denies DeniesColumn" text="{i:denies}" />
 			<Label class="GoldPerMin GPMColumn" text="{i:gold_per_min}" />
 			<Label class="XPPerMin XPMColumn" text="{i:xp_per_min}" />
-			<Label class="HeroHealing HeroHealingColumn" text="{i:hero_healing}" />
+<!--		<Label class="HeroHealing HeroHealingColumn" text="{i:hero_healing}" /> -->
 		</Panel>
 	</Panel>
 </root>

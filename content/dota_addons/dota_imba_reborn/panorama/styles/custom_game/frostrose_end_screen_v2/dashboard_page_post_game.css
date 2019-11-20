@@ -10,6 +10,15 @@
 @define slot8color: #004A13;
 @define slot9color: #5D3B00;
 
+@define COMMON_COLOR: #b0c3d9;
+@define UNCOMMON_COLOR: #5e98d9;
+@define RARE_COLOR: #4b69ff;
+@define MYTHICAL_COLOR: #8847ff;
+@define LEGENDARY_COLOR: #d32ce6;
+@define IMMORTAL_COLOR: #b28a33;
+@define ARCANA_COLOR: #ade55c;
+@define ANCIENT_COLOR: #eb4b4b;
+
 @define HeroTransitionDuration: 0.46s;
 
 /* Styling for Event Game types are split into separate files for ease of maintenance */
@@ -19,6 +28,168 @@
 @import url("file://{resources}/styles/dashboard_page_post_game_underhollow.css");
 @import url("file://{resources}/styles/dashboard_page_post_game_frostivus_2018.css");
 @import url("file://{resources}/styles/dashboard_page_post_game_jungle_spirits_2019.css");
+
+@keyframes 'fade_in'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+@keyframes 'level_up'
+{
+	0%
+	{
+		box-shadow: inset gold 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset gold 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset gold 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_rare'
+{
+	0%
+	{
+		box-shadow: inset RARE_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset RARE_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset RARE_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_mythical'
+{
+	0%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_legendary'
+{
+	0%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_immortal'
+{
+	0%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_arcana'
+{
+	0%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_ancient'
+{
+	0%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_down'
+{
+	0%
+	{
+		border: 0px solid red;
+	}
+
+	50%
+	{
+		border: 2px solid red;
+	}
+
+	100%
+	{
+		border: 0px solid red;
+	}
+}
 
 
 DOTAPostGame
@@ -144,20 +315,12 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 	width: 1392px;
 	height: 72px;
 	margin-top: 100px;
-	padding-right: 32px;
 	horizontal-align: center;
 }
 
 .ProgressVisible #HeaderRow
 {
 	visibility: visible;
-}
-
-#HeaderRowControls
-{
-	horizontal-align: right;
-	vertical-align: bottom;
-	flow-children: right;
 }
 
 #CloseButton
@@ -524,8 +687,7 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 {
 	flow-children: none;
 	width: 100%;
-	height: 800px;
-	margin-top: 150px;
+	height: 100%;
 	horizontal-align: center;
 	overflow: noclip;
 
@@ -731,7 +893,6 @@ Panel.TeamIdentificationRow Label
 {
 	padding-top: 1px;
 }
-
 
 .LobbyTeamIcon
 {
@@ -969,9 +1130,9 @@ Panel.PlayerRow
 
 Panel.PlayerRow Label, Panel.PlayerRow DOTAHeroImage
 {
-	margin-top: 5px;
 	margin-bottom: 0px;
 	vertical-align: middle;
+	text-align: center;
 	font-size: 18px;
 }
 
@@ -994,11 +1155,14 @@ Panel.PlayerRow DOTATalentDisplay
 
 .PlayerRowContainer
 {
-	height: 54px;
 	flow-children: right;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	background-color: #00000077;
+}
+
+.StatRowHeight .PlayerRowContainer {
+	height: 54px;
 }
 
 #NormalMatchPlayers .PlayerRowContainer
@@ -1127,6 +1291,7 @@ Panel.PlayerRow Label.GoldPerMin
 {
 	text-align: right;
 	color: #E7BA01;
+	text-overflow: shrink;
 }
 
 Panel.PlayerRow Label.XPPerMin,
@@ -2929,14 +3094,12 @@ Label.CommentText
 #ContainerCenter
 {
 	width: 100%;
-	height: 770px;
-	margin-top: 30px;
+	height: 100%;
 	background-color: #000000B7;
 	//overflow: scroll clip;
-	vertical-align: bottom;
 	//flow-children: right;
 	horizontal-align: center;
-	//opacity-mask: url("s2r://panorama/images/masks/armory_opacity_mask_png.vtex");
+//	opacity-mask: url("s2r://panorama/images/masks/armory_opacity_mask_png.vtex");
 }
 
 .PlusPerPlayerVisible #ContainerCenter,
@@ -2950,7 +3113,6 @@ Label.CommentText
 #DetailsScoreboardContainer
 {
 	width: 100%;
-	height: 740px;
 	flow-children: right;
 	overflow: scroll clip;
 	horizontal-align: center;
@@ -3991,6 +4153,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	overflow: noclip;
 }
 
+.GameTimeTextLabel,
 .VictoryTextLabel
 {
 
@@ -4006,6 +4169,11 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	width: 440px;
 	height: 72px;
 	text-overflow: shrink;
+}
+
+.GameTimeTextLabel {
+	color: white;
+	text-align: center center;
 }
 
 .VictoryBanner
@@ -6399,8 +6567,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 
 #PinnedHeroes
 {
-	vertical-align: bottom;
-	height: 770px;
+	height: 100%;
 	//width: 156px;
 	transform: translateX(-740px);
 	opacity: 0;
@@ -6476,8 +6643,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 .StatRowHeight
 {
 	height: 60px;
-	padding-bottom: 6px;
+}
 
+.StatRowHeight10v10
+{
+	height: 46px;
 }
 
 #PlayerItemsRowContainer
@@ -6567,6 +6737,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	//background-color: transparent;
 }
 
+.StatRowHeight10v10.TeamName,
 .StatRowHeight.TeamName
 {
 	background-color: #00000033;
@@ -8289,9 +8460,13 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 
 // Battlepass XP
 
+.es-player-xp-container {
+	width: 450px;
+}
+
 .es-player-xp {
 	flow-children: none; 
-	width: 250px;
+	width: 300px;
 	vertical-align: center;
 	background-color: black;
 	border: 1px solid #222;
@@ -8355,8 +8530,177 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	width: 70px;
 	vertical-align: center;
 	text-align: center;
+	text-overflow: shrink;
 }
 
 #es-player-xp-booster {
 	color: white;
+}
+
+.es-player-line-text {
+	font-size: 16px;
+}
+
+.es-legend-rank { width: 80px; }
+
+.es-text-red { color: #f03333; }
+.es-text-green { color: #72a144; }
+.es-text-white { color: #ffffff; }
+
+// End Screen Disconnect Button
+
+#DisconnectButton
+{
+	width: 330px;
+	height: 33px;
+
+	min-width: 330px;
+	min-height: 48px;
+
+	padding: 4px 12px 4px 12px;
+
+	margin-bottom: 5%;
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #722217 ), to( #DD4A29 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-size: 328px 50px;
+
+	border-top: 1px solid #ffffff05;
+	border-right: 1px solid #00000088;
+	border-left: 1px solid #ffffff05;
+	border-bottom: 1px solid #00000088;
+
+//	visibility: collapse;
+
+	align: center bottom;
+}
+
+#DisconnectButton Image
+{
+	wash-color: red;
+	width: 26px;
+	height: 26px;
+	margin: 2px;
+	margin-left: 6px;
+}
+
+.DisconnectLabel
+{
+	margin-top: 4px;
+	vertical-align: middle;
+	horizontal-align: center;
+}
+
+#DisconnectButton Label
+{
+	text-transform: uppercase;
+	color: white;
+	font-size: 26px;
+}
+
+#DisconnectButton:hover Label
+{
+	color: red;
+}
+
+#DisconnectButton:active
+{
+	sound: "ui_custom_lobby_quit";
+}
+
+// Reward panel
+
+#RewardContainer {
+	width: 100%;
+	padding: 1%;
+	align: center center;
+	flow-children: right;
+}
+
+.es-player-reward-container {
+	padding: 25px;
+	margin-right: 25%; /* not sure why this is required so panels don't overlap */
+	width: 24%;
+	animation-name: fade_in;
+	animation-duration: 1.25s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000aa ), to( #000000da ) );
+	border-radius: 20px;
+	flow-children: down;
+	align: center center;
+}
+
+.es-player-reward-description {
+	align: center center;
+	font-size: 24px;
+}
+
+.es-player-reward-name {
+	margin-top: 20px;
+	align: center center;
+}
+
+.es-player-reward-rarity {
+	margin-top: 20px;
+	align: center center;
+}
+
+.es-player-reward-image {
+	margin-top: 20px;
+	width: 250px;
+	height: 220px;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	align: center center;
+}
+
+.es-player-reward-button {
+	margin-top: 20px;
+	padding: 5px;
+	align: center center;
+	width: 50%;
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404040 ), to( #606060 ) );
+}
+
+.es-player-reward-button_label {
+	text-align: center;
+	width: 100%;
+}
+
+.level-rare {
+	animation-name: level_rare;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-mythical {
+	animation-name: level_mythical;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-immortal {
+	animation-name: level_immortal;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-arcana {
+	animation-name: level_arcana;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-ancient {
+	animation-name: level_ancient;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
 }

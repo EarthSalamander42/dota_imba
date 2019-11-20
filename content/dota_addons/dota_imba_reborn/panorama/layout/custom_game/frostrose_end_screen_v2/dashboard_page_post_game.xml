@@ -188,7 +188,6 @@
 	</snippets>
 
 	<DOTAPostGame>
-
 		<Panel id="ContainerLoading">
 			<Panel class="SummaryLoadingSpinner">
 				<Panel class="Spinner" />
@@ -201,29 +200,17 @@
 		</Panel>
 
 		<Panel id="ContainerLoaded">
-
 			<DOTAPostGameProgress id="PostGameProgress" />
 			<Panel id="MorokaiLogoBG" />
 			<Panel id="MorokaiLogoImage" />
 
 			<Panel id="HeaderRow" hittest="false">
-				<Panel id="HeaderRowControls" hittest="false">
-					<Button id="HideProgressButton" onactivate="DOTAPostGameProgressAnimationComplete()" onmouseover="UIShowTextTooltip( #dota_page_match_details_return_to_details )" onmouseout="UIHideTextTooltip()" />
-
-					<Panel id="ProgressScreenButtons" hittest="false">
-						<!-- Filled out by AddScreenLink function in post_game_progress.js -->
-					</Panel>
-
-					<Button id="CloseButton" class="CloseButton" onactivate="DOTAPostGameLeave()" onmouseover="UIShowTextTooltip( #dota_page_match_details_leave )" onmouseout="UIHideTextTooltip()" />
-				</Panel>
+				<Label id="GameTimeText" class="GameTimeTextLabel" text="" />
 			</Panel>
 
 			<Panel id="ContainerDetails" hittest="false">
-
 				<Panel id="ContainerCenter">
-
 					<Panel id="DetailsOverview" class="DetailsPanel TabSelected">
-						
 						<Panel id="NormalGameOverview">
 							<Panel id="OverviewTopSection">
 								
@@ -873,9 +860,6 @@
 									</Panel>
 								</Panel>
 							</Panel>
-							
-						
-							
 						</Panel>
 
 						<Button id="CommentsVisibleClearBox" onactivate="RemoveStyle( 'CommentsFlyout', 'CommentsVisible' ) RemoveStyle( 'NormalGameOverview', 'CommentsVisible' )  RemoveStyle( 'CommentsVisibleClearBox', 'CommentsVisible' )"/>
@@ -900,7 +884,6 @@
 					</Panel>
 
 					<Panel id="DetailsScoreboardContainer" class="DetailsPanel">
-
 						<Panel id="DetailsScoreboard" class="">
 							<Panel id="NormalMatchPlayers">
 								<Panel class="TeamIdentificationRow">
@@ -1316,13 +1299,10 @@
 								<Panel class="WinnerSides"/>
 								<Label class="WinnerTag" text="#DOTATournamentGameWinner"/>
 							</Panel>
-
 						</Panel>
 						<Panel id="PinnedDire" class="PinnedTeam TopBottomFlow" />
-
 					</Panel>
 					<Panel id="PinnedHeroesRightMargin"/>
-
 				</Panel>
 
 				<Panel id="PinnedStats" class="LeftRightFlow">
@@ -1349,8 +1329,12 @@
 					</Panel>
 				</Panel>
 
+				<Panel id="RewardContainer" class="LeftRightFlow"/>
 			</Panel>
 		</Panel>
 
+		<Button id="DisconnectButton" onactivate="Game.FinishGame()" onmouseover="UIShowTextTooltip( #dota_page_match_details_leave )" onmouseout="UIHideTextTooltip()">
+			<Label class="DisconnectLabel" text="#CustomEndScreenClose"/>
+		</Button>
 	</DOTAPostGame>
 </root>

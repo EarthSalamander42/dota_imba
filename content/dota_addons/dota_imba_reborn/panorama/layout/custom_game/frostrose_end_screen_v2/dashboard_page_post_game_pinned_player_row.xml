@@ -2,7 +2,7 @@
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="s2r://panorama/styles/dashboard_page_shared.vcss_c" />
-		<include src="s2r://panorama/styles/dashboard_page_post_game.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
 	</styles>
 
 	<Panel class="PlayerName StatRowHeight PinnedPlayerRow">
