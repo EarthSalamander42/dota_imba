@@ -1,0 +1,3 @@
+numchannels 4
+nonice 1
+dxt5 1

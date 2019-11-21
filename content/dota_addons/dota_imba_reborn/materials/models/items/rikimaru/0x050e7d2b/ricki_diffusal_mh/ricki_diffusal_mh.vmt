@@ -1,0 +1,27 @@
+"CustomHero"
+{
+	"$baseTexture"		"models/items/rikimaru/0x050e7d2b/ricki_diffusal_mh/ricki_diffusal_mh_color"
+	"$normalmap"		"models/items/rikimaru/0x050e7d2b/ricki_diffusal_mh/ricki_diffusal_mh_normal"
+	"$maskmap1"		"models/items/rikimaru/0x050e7d2b/ricki_diffusal_mh/ricki_diffusal_mh_mask1"
+	"$maskmap2"		"models/items/rikimaru/0x050e7d2b/ricki_diffusal_mh/ricki_diffusal_mh_mask2"
+	"$SPECULAREXPONENT"		"20"
+	"$AMBIENTSCALE"		"1"
+	"$SPECULARSCALE"		"5"
+	"$alphatest"		"1"
+	"$SPECULAR_BLOOM_SCALE"		"0"
+	"$RIMLIGHTSCALE"		"1"
+	"$RIMLIGHTCOLOR"		"[.85 1 1]"
+	"$CLOAK_BLUR_AMOUNT"		"0.005000"
+	"$refractamount"		"0.010000"
+	"$cloakintensity"		"0.750000"
+	"$cloakPassEnabled"		"1"
+	"Proxies"
+	{
+		"invis_proxy"
+		{
+		}
+		"status_proxy"
+		{
+		}
+	}
+}

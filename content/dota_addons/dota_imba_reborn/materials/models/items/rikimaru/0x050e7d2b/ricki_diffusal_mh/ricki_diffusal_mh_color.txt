@@ -1,0 +1,2 @@
+numchannels 4
+dxt5 1
