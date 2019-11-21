@@ -198,7 +198,7 @@ IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
-local global_gold = 250
+local global_gold = 200
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
