@@ -300,7 +300,7 @@ end
 function api:CheatDetector()
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
-			if not IsInToolsMode() then
+			if not IsInToolsMode() and log then
 				log.info("Cheats have been enabled, game don't count.")
 				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
@@ -348,6 +348,7 @@ function api:GetLoggingConfiguration(callback)
 end
 
 function api:Message(message, _type)
+	if not message or message == '' then return end
 
 	_type = _type or 1
 	local data = json.null
@@ -494,38 +495,12 @@ function api:RegisterGame(callback)
 
 			cool_hat[j] = {}
 			for k, v in pairs(data) do
-
-				-- temporary fix
-				if data[k]["file"] == '""' then
-					print("fix whitespace", cool_hats[j])
-					data[k]["file"] = "particles/dev/empty_particle.vpcf"
-				end
-
 				table.insert(cool_hat[j], data[k]["id"], data[k])
 			end
 
 			CustomNetTables:SetTableValue("battlepass", j, {cool_hat[j]})
 		end)
 	end
-end
-
-function api:IterateWinrateOrdering(callback)
-	self:Request("360-noscope", function(data)
-		-- What does the api returns (data.smth)
-
-		if IsInToolsMode() then
-			print(data)
-		end
-
-		if callback ~= nil then
-			callback()
-		end
-	end, nil, "POST", {
---		map = GetMapName(),
---		match_id = self:GetMatchID(),
-		players = self:GetAllPlayerSteamIds(),
---		cheat_mode = self:IsCheatGame(),
-	});
 end
 
 function api:CompleteGame(successCallback, failCallback)
@@ -578,14 +553,17 @@ function api:CompleteGame(successCallback, failCallback)
 	local rosh_hp
 	local rosh_max_hp
 
-	print("Cheat game?", api:IsCheatGame(), GameMode:GetCustomGamemode() == 4)
-	if api:IsCheatGame() == false and GameMode:GetCustomGamemode() == 4 then
-		rosh_lvl = ROSHAN_ENT:GetLevel()
-		rosh_hp = ROSHAN_ENT:GetHealth()
-		rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+	if CUSTOM_GAME_TYPE == "IMBA" then
+		print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
+
+		if api:IsCheatGame() == false and api:GetCustomGamemode() == 4 then
+			rosh_lvl = ROSHAN_ENT:GetLevel()
+			rosh_hp = ROSHAN_ENT:GetHealth()
+			rosh_max_hp = ROSHAN_ENT:GetMaxHealth()
+		end
 	end
 
-	print(rosh_lvl, rosh_hp, rosh_max_hp)
+--	print(rosh_lvl, rosh_hp, rosh_max_hp)
 
 	local payload = {
 		winner = winnerTeam,
@@ -594,6 +572,8 @@ function api:CompleteGame(successCallback, failCallback)
 		radiant_score = self:GetKillsForTeam(2),
 		dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
+		game_type = CUSTOM_GAME_TYPE,
+		gamemode = api:GetCustomGamemode(),
 		rosh_lvl = rosh_lvl,
 		rosh_hp = rosh_hp,
 		rosh_max_hp = rosh_max_hp,
@@ -615,5 +595,25 @@ function api:DiretideHallOfFame(successCallback, failCallback)
 		map = GetMapName(),
 	});
 end
+
+
+function api:SetCustomGamemode(iValue)
+	if iValue and type(iValue) == "number" then
+		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
+	end
+
+	return nil
+end
+
+function api:GetCustomGamemode()
+	local gamemode = CustomNetTables:GetTableValue("game_options", "gamemode")
+
+	if gamemode then
+		gamemode = gamemode["1"]
+	end
+
+	return gamemode
+end
+
 
 require("components/api/events")

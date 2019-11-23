@@ -18,8 +18,8 @@
 		"AbilityCastPoint"				"0.65"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
-		"AbilityCooldown"				"40"
-		"AbilityManaCost"				"70 80 90 100"
+		"AbilityCooldown"				"45.0 40.0 35.0 30.0"
+		"AbilityManaCost"				"70 85 100 115"
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -32,36 +32,54 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-60 -60 -50 -50"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+				"outgoing_damage"						"-70 -65 -60 -55"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"40 40 50 50"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+				"outgoing_damage_tooltip"				"30 35 40 45"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"225 175 175 175"
+				"incoming_damage"						"230 220 210 200"
+				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
+				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"325 275 275 275"
+				"tooltip_incoming_damage_total_pct"		"330 320 310 300"
+				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
+				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"images_count"							"2 3 3 4"
+				"images_count"							"3 3 3 3"
 				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"invuln_duration"						"0.3"
-			}		
+			}
+			"08"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"perfect_image_bonus_damage_incoming_pct"	"-5" // %
+			}
+			"09"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"perfect_image_bonus_damage_outgoing_pct"	"5" // %
+				"LinkedSpecialBonus"						"special_bonus_imba_naga_siren_mirror_image_perfect_image"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"perfect_image_max_stacks"				"10"
+			}
 		}
 	}
 
@@ -132,13 +150,13 @@
 		"AbilityTextureName"			"naga_siren_rip_tide"
 		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
 
-		"AbilityDamage"					"120 160 200 240"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastRange"				"320 350 380 410"
 
 		"AbilitySpecial"
 		{
@@ -146,27 +164,28 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"chance"					"17"
+				"LinkedSpecialBonus"		"special_bonus_imba_naga_siren_rip_tide_proc_chance"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-4 -6 -8 -10"
+				"armor_reduction"			"-2 -4 -6 -8"
 				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"30 45 60 75"
+				"damage"					"30 40 50 60"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"320 350 380 410"
+				"radius"					"300"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"8.0"
+				"duration"					"5.0"
 			}
 			"06"
 			{
@@ -192,7 +211,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_naga_siren"
 		"AbilityTextureName"			"naga_siren_song_of_the_siren"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"2"
@@ -225,33 +244,43 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"7.0 7.0 7.0"
+				"duration"					"7.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"animation_rate"			"0.55 0.55 0.55"
+				"animation_rate"			"0.55"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"scepter_regen_rate"		"10.0 13.0 16.0"
+				"scepter_regen_rate"		"10.0"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"scepter_regen_rate_self"	"10.0 13.0 16.0"
+				"scepter_regen_rate_self"	"10.0"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"regen_rate_tooltip_scepter"	"10 13 16"
+				"regen_rate_tooltip_scepter"	"10"
 				"RequiresScepter"				"1"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"aura_linger"				"0.4"
+			}
+			"08"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"siren_temptation_incoming_damage_pct"		"30" // %
+			}
+			"09"
+			{
+				"var_type"												"FIELD_INTEGER"
+				"siren_temptation_magical_resistance_reduction_pct"		"30" // %
 			}
 		}
 	}
@@ -273,10 +302,96 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
- 		"AbilityCastAnimation"			"ACT_INVALID"
+		"AbilityCastAnimation"			"ACT_INVALID"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.0"
+	}
+
+	// Talents
+
+	//=================================================================================================================
+	// Talent: X% Rip Tide Proc Chance
+	//=================================================================================================================
+	"special_bonus_imba_naga_siren_mirror_image_perfect_image" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_naga_siren_rip_tide"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: -X% Mirror Image Illusion damage taken
+	//=================================================================================================================
+	"special_bonus_imba_naga_siren_mirror_image_damage_taken" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_naga_siren_rip_tide"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: X% Rip Tide Proc Chance
+	//=================================================================================================================
+	"special_bonus_imba_naga_siren_rip_tide_proc_chance" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_naga_siren_rip_tide"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"13"
+			}
+		}
 	}
 }

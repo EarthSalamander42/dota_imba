@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.17e"
+GAME_VERSION = "7.18"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -616,10 +616,6 @@ IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
 
 if IMBA_PICK_SCREEN == false then
 	PRE_GAME_TIME = 60.0
-
-	if not IsInToolsMode() then
-		STRATEGY_TIME = 10.0
-	end
 end
 
 SAME_HERO_SELECTION = false
@@ -629,7 +625,3 @@ if GetMapName() == "imba_1v1" then
 end
 
 -- if IsInToolsMode() then SAME_HERO_SELECTION = true end
-
-if SAME_HERO_SELECTION == true then
-	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = SAME_HERO_SELECTION})
-end

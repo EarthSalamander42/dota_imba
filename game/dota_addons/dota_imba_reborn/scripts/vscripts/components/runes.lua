@@ -248,7 +248,7 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 						-- end
 
 						-- -- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-						-- if GameMode:GetCustomGamemode() > 1 then
+						-- if api:GetCustomGamemode() > 1 then
 							-- local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
 							-- -- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
 							-- alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))

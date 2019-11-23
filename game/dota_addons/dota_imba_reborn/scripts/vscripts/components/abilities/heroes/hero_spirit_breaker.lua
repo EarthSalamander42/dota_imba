@@ -80,12 +80,6 @@ function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 		ent_index = target:GetEntityIndex()
 	})
 	
-	-- ...yeah we're using this to remove the movespeed cap cause all the other built in stuff doesn't work
-	local movespeed_break_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
-	
-	-- Attempts to differentiate it from Bloodseeker's own Thirst modifier for edge case scenarios...
-	movespeed_break_modifier.charge_modifier = 1
-	
 	-- IDK how to replicate 0 second CD so gonna go with activation disabling as usual
 	self:SetActivated(false)
 end
@@ -155,14 +149,6 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	if not self:GetAbility() then
 		self:Destroy()
 		return
-	end
-	
-	-- Why is this dispellable
-	if not self:GetParent():FindModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster()) then
-		local movespeed_break_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_bloodseeker_thirst", {})
-		
-		-- Attempts to differentiate it from Bloodseeker's own Thirst modifier for edge case scenarios...
-		movespeed_break_modifier.charge_modifier = 1
 	end
 	
 	-- "If the target dies during the charge, it is transferred to the nearest valid target within 4000 range of the previous target."
@@ -341,15 +327,6 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnDestroy()
 	for _, mod in pairs(counter_modifiers) do
 		mod:Destroy()
 	end	
-	
-	-- Remove any RELATED movespeed break modifiers from the charge
-	local movespeed_break_modifiers = self:GetParent():FindAllModifiersByName("modifier_bloodseeker_thirst")
-	
-	for num = 1, #movespeed_break_modifiers do
-		if movespeed_break_modifiers[num].charge_modifier then
-			movespeed_break_modifiers[num]:Destroy()
-		end
-	end
 end
 
 -- This is so Spirit Breaker doesn't spaz out at random pathing while charging
@@ -362,7 +339,7 @@ end
 function modifier_imba_spirit_breaker_charge_of_darkness:DeclareFunctions()
 	local decFuncs = 
 	{
-		-- MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT, -- These don't even work
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
 		-- MODIFIER_PROPERTY_MOVESPEED_LIMIT,
 		
 		-- This violates the "When auto-attack is enabled, Spirit Breaker can automatically attack units when close enough, without cancelling the charge." clause, but Spirit Breaker runs in weird-ass directions when he aggros things he charges by so this is a...compromise
@@ -377,9 +354,9 @@ function modifier_imba_spirit_breaker_charge_of_darkness:DeclareFunctions()
 	return decFuncs
 end
 
--- function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierIgnoreMovespeedLimit()
-	-- return 10000
--- end
+function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierIgnoreMovespeedLimit()
+	return 1
+end
 
 -- function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierMoveSpeed_Limit()
 	-- return 10000

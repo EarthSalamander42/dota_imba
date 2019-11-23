@@ -883,12 +883,12 @@ function modifier_imba_empower_aura:GetAuraEntityReject(target)
 		end
 
 		-- -- Always on caster
-		-- if target == parent then
+		if target == parent then
 			-- if not parent:HasModifier("modifier_imba_empower_polarizer") then
 				-- parent:AddNewModifier(parent,ability,"modifier_imba_empower_polarizer",{})
 			-- end
-			-- return false
-		-- end
+			return false
+		end
 
 		return true
 	end

@@ -1,16 +1,22 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+-- Battlpeass System for Dota IMBA
+
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		if _G.Battlepass == nil then
 			_G.Battlepass = class({})
-			require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
 			require('components/battlepass/constants')
 			require('components/battlepass/util')
 			require('components/battlepass/donator_settings')
 			require('components/battlepass/donator')
 			require('components/battlepass/experience')
+
+			if CUSTOM_GAME_TYPE ~= "POG" then
+				require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+				Battlepass:Init()
+			end
 		end
 
-		Battlepass:Init()
 		Battlepass:GetPlayerInfoXP()
 	end
 end, nil)
@@ -31,7 +37,7 @@ ListenToGameEvent('npc_spawned', function(event)
 		end
 
 		-- The commented out lines here are what I used to test in tools mode
-		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
+		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or string.find(GetMapName(), "demo") then
 		-- if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or (IsInToolsMode()) then
 			npc:SetupHealthBarLabel()
 
@@ -44,13 +50,9 @@ ListenToGameEvent('npc_spawned', function(event)
 				if GetMapName() == "imba_demo" then return end
 				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
 					Timers:CreateTimer(1.5, function()
-						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
-
-						-- if api and api.GetPlayerCompanion and api:GetPlayerCompanion(npc:GetPlayerID()) then
-							-- Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
-						-- else
-							-- Battlepass:DonatorCompanion(npc:GetPlayerID(), nil)
-						-- end
+						if api:GetPlayerCompanion(npc:GetPlayerID()) then
+							Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
+						end
 					end)
 				end
 			end

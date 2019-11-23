@@ -66,9 +66,11 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 		else
 			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
 		end
-
+		
+		local parent = self:GetParent()
+		
 		Timers:CreateTimer(1.0, function()
-			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, parent)
 		end)
 	end
 end

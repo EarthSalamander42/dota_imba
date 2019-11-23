@@ -40,6 +40,7 @@ var api = {
 		toggleWinrate : "imba/toggle-winrate",
 		rankingsXp : "website/statistics/ranking/xp",
 		rankingsWinrate : "website/statistics/ranking/winrate",
+		PlayerPosition : "imba/trackme",
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
@@ -232,6 +233,25 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error finding top winrate " + JSON.stringify(err));
+			}
+		});
+	},
+	getPlayerPosition : function(data, callback) {
+		$.AsyncWebRequest(api.base + api.urls.PlayerPosition, {
+			type : "GET",
+			data : data,
+			dataType : "json",
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error)
+					$.Msg("Error finding player position");
+				else {
+					callback(obj.data);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error finding player position " + JSON.stringify(err));
 			}
 		});
 	},
@@ -1101,6 +1121,15 @@ function SetupPanel() {
 }
 
 (function() {
+	var args = {
+		steamid: Game.GetLocalPlayerInfo().player_steamid,
+		language: $.Localize("Language"),
+	}
+
+	api.getPlayerPosition(args, function(players) {
+		$.Msg("Player Position: Success!")
+	});
+
 	if (game_type == "IMBA") {
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");

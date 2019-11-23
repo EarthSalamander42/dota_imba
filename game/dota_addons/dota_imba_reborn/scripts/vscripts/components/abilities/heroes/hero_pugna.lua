@@ -861,6 +861,10 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 		-- Refresh the ability
 		ability:EndCooldown()
 
+		if cast_ability.GetAutoCastState and cast_ability:GetAutoCastState() and ability.GetAutoCastState and not ability:GetAutoCastState() then
+			ability:ToggleAutoCast()
+		end
+
 		local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
 		local target_point = target:GetAbsOrigin()
 		local ward_position = ward:GetAbsOrigin()

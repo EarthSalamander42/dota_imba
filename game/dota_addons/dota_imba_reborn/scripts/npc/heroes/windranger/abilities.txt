@@ -179,12 +179,12 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"godshot_stun_duration"	"0.7"
+				"godshot_stun_duration"	"0.9"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scattershot_min"		"35"
+				"scattershot_min"		"30"
 			}
 			"15"
 			{

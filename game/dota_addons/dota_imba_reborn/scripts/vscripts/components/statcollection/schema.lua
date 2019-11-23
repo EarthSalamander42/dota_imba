@@ -179,15 +179,7 @@ function GetItemSlotIMBA(hero, slot)
 end
 
 function GetCustomGameVote()
-	local vote = GameMode:GetCustomGamemode()
-
-	local gamemode = {}
-	gamemode[1] = "All Pick"
-	gamemode[2] = "Mutation"
-	gamemode[3] = "Super Frantic"
-	gamemode[4] = "Diretide"
-
-	return gamemode[vote]
+	return "#vote_gamemode_"..tostring(api:GetCustomGamemode())
 end
 
 function GetCustomGoldVote()

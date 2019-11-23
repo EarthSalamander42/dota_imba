@@ -37,6 +37,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
+			if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+				BOTS_ENABLED = false
+			end
+
 			if BOTS_ENABLED == true then
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')
@@ -88,7 +92,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- IDK how to get this to print only once
 		Timers:CreateTimer(FrameTime(), function()
-			Say(GameRules:GetGameModeEntity(), "Game Mode Selected: "..GetCustomGameVote(), false)
+			if api:GetCustomGamemode() == 5 then
+				GameMode:SetSameHeroSelection(true)
+			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -98,10 +104,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
---		api.imba.event(api.events.entered_pre_game)
-
-		api:InitDonatorTableJS()
-
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
@@ -113,6 +115,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
+
 		for _, fountainEnt in pairs(fountainEntities) do
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
@@ -196,14 +199,12 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		api.imba.event(api.events.started_game)
-
 		-- start rune timers
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
 			-- Controversial addition
-			-- if GameMode:GetCustomGamemode() > 1 then
+			-- if api:GetCustomGamemode() > 1 then
 				-- SpawnEasterEgg()
 			-- end
 
@@ -682,7 +683,6 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-same_heroes" then
 				GameRules:SetSameHeroSelectionEnabled( true )
 				CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = true})
-				print(GetMapName())
 			end
 		end
 
@@ -842,44 +842,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_cooldown_reduction_30",
 							}
 							upgraded = true
-						elseif string.find(text, 'timbersaw') and hero:GetName() == "npc_dota_hero_shredder" then
-							ability_set = {
-								[0] = "imba_timbersaw_whirling_death",
-								[1] = "imba_timbersaw_timber_chain",
-								[2] = "imba_timbersaw_reactive_armor",
-								[3] = "imba_timbersaw_chakram_2",
-								[4] = "imba_timbersaw_chakram_3",
-								[5] = "imba_timbersaw_chakram",
-								[6] = "imba_timbersaw_return_chakram",
-								[7] = "imba_timbersaw_return_chakram_2",
-								[8] = "special_bonus_hp_225",
-								[9] = "special_bonus_mp_regen_250",
-								[10] = "special_bonus_spell_amplify_10",
-								[11] = "special_bonus_imba_timbersaw_reactive_armor_max_stacks",
-								[12] = "special_bonus_strength_20",
-								[13] = "special_bonus_cooldown_reduction_15",
-								[14] = "special_bonus_imba_timbersaw_whirling_death_stat_loss_pct",
-								[15] = "special_bonus_imba_timbersaw_timber_chain_range",
-							}
-							upgraded = true
-						elseif string.find(text, 'oracle') and hero:GetName() == "npc_dota_hero_oracle" then
-							ability_set = {
-								[0] = "imba_oracle_fortunes_end",
-								[1] = "imba_oracle_fates_edict",
-								[2] = "imba_oracle_purifying_flames",
-								[3] = "imba_oracle_alter_self",
-								[4] = "generic_hidden",
-								[5] = "imba_oracle_false_promise",
-								[6] = "special_bonus_imba_oracle_fortunes_end_max_duration",
-								[7] = "special_bonus_exp_boost_25",
-								[8] = "special_bonus_cast_range_150",
-								[9] = "special_bonus_gold_income_120",
-								[10] = "special_bonus_movement_speed_45",
-								[11] = "special_bonus_imba_oracle_false_promise_invisibility",
-								[12] = "special_bonus_imba_oracle_fates_edict_cooldown",
-								[13] = "special_bonus_imba_oracle_false_promise_duration",
-							}
-							upgraded = true
 						elseif string.find(text, 'templar') and hero:GetName() == "npc_dota_hero_templar_assassin" then
 							ability_set = {
 								[0] = "imba_templar_assassin_refraction",
@@ -897,7 +859,17 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_imba_templar_assassin_meld_bash",
 								[13] = "special_bonus_imba_templar_assassin_refraction_instances"
 							}
-							upgraded = true							
+							upgraded = true
+						elseif string.find(text, 'slark') and hero:GetName() == "npc_dota_hero_slark" then
+							ability_set = {
+								[0] = "imba_slark_dark_pact",
+								[1] = "imba_slark_pounce",
+								[2] = "imba_slark_essence_shift",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_slark_shadow_dance"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
@@ -932,6 +904,8 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-phantom_lancer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
+			elseif str == "-vardor" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do

@@ -112,8 +112,8 @@ function HoverableLoadingScreen() {
 
 function OnVoteButtonPressed(category, vote)
 {
-	$.Msg("Category: ", category);
-	$.Msg("Vote: ", vote);
+//	$.Msg("Category: ", category);
+//	$.Msg("Vote: ", vote);
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
 }
 
@@ -125,30 +125,30 @@ function OnVotesReceived(data)
 //	$.Msg(data.table[id])
 
 	var vote_count = []
-	vote_count[1] = 0;
-	vote_count[2] = 0;
-	vote_count[3] = 0;
-	vote_count[4] = 0;
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
 	// Reset tooltips
-	for (var i = 1; i <= 3; i++) {
-		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+	for (var i = 1; i <= 5; i++) {
+		vote_count[i] = 0;
+		if ($("#VoteGameModeText" + i))
+			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
 	}
 
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
-		var gamemode = data.table[id]
+		var gamemode = data.table[id];
 		vote_count[gamemode]++;
 	}
 
 	// Modify tooltips based on voted gamemode
-	for (var i = 1; i <= 3; i++) {
+	for (var i = 1; i <= 5; i++) {
 		var vote_tooltip = "vote"
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"
-		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+
+		if ($("#VoteGameModeText" + i))
+			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
 	}
 
 //	if (data.category == "random_tower_abilities") {
@@ -163,8 +163,6 @@ function DisableVoting() {
 (function(){
 	HoverableLoadingScreen();
 	fetch();
-//	SetGameModeTooltips();
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();
-

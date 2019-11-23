@@ -75,7 +75,7 @@
 	
 	// Level 1 - Green Recipes
 	"basics"
-	{	
+	{
 		"item"		"item_imba_magic_wand"
 		"item"		"item_null_talisman"
 		"item"		"item_wraith_band"
@@ -89,6 +89,7 @@
  		"item"		"item_helm_of_the_dominator"	
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
+		"item"		"item_imba_iron_talon"
 		"item"		"item_imba_white_queen_cape"
 		"item"		"item_imba_shotgun"
 	}
@@ -111,6 +112,7 @@
 		"item"		"item_imba_pipe"
 		"item" 		"item_imba_guardian_greaves"
 		"item"		"item_imba_arcane_nexus"
+		"item"		"item_imba_ring_of_aquila"
 	}
 				
 	"magics"			
@@ -130,6 +132,7 @@
 		"item"		"item_refresher"
 		"item"		"item_imba_sheepstick"
 		"item"		"item_imba_octarine_core"
+		"item"		"item_imba_rod_of_atos_2"
 	}
 		
 	// Level 3 - Purple Recipes	
@@ -150,6 +153,8 @@
 		"item"		"item_sphere"
 		"item"		"item_imba_heart"
 		"item"		"item_imba_assault"
+		"item"		"item_imba_poor_mans_shield"
+		"item"		"item_imba_valiance"
 		"item"		"item_imba_hellblade"
 	}
 	
@@ -308,7 +313,6 @@
 	}
 	
 // Items that wouldn't fit properly in the shop UI...
-//		"item"		"item_imba_poor_mans_shield"
 //		"item"		"item_imba_blink_boots"
 //		"item"		"item_imba_lifesteal_boots"
 //		"item"		"item_imba_occult_mask"

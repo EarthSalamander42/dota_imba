@@ -59,5 +59,7 @@
 "DOTA_Tooltip_modifier_imba_tidehunter_anchor_smash"			"Anchor Smash"
 "DOTA_Tooltip_modifier_imba_tidehunter_anchor_smash_Description" "Damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%"
 
+"DOTA_Tooltip_ability_special_bonus_imba_tidehunter_gush_armor"						"-{s:value} Gush Armor"
+
 "DOTA_Tooltip_ability_special_bonus_imba_tidehunter_greater_hardening"				"Kraken Shell Greater Hardening"
 "DOTA_Tooltip_ability_special_bonus_imba_tidehunter_greater_hardening_Description"	"Every time Kraken Shell removes negative status effects, Tidehunter gains 10% magic resistance for 3 seconds. This effect can stack and refresh itself."

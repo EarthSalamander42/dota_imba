@@ -2,7 +2,6 @@ var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
 var GridCategories = FindDotaHudElement('GridCategories');
 //	var total = herocard.GetChildCount();
 var picked_heroes = [];
-var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
 
 //	$.Msg(herolist.customlist)
 //	$.Msg(GridCategories)
@@ -11,26 +10,27 @@ function FindDotaHudElement(panel) {
 	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(panel);
 }
 
-
 function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
 
 	if (same_selection && same_selection.value == 1) {
+		$.Schedule(0.5, SetPickButtonAlwaysEnabled)
+		$.Schedule(0.5, UpdatePickedHeroes)
+
+		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
+
 		pick_screen_title.style.marginTop = "30px";
 		pick_screen_title.style.height = "37px";
 		pick_screen_title.style.fontSize = "30px";
 		pick_screen_title.style.horizontalAlign = "left";
 		pick_screen_title.style.opacity = "1";
-		if (gamemode && gamemode[1] == 3)
-			pick_screen_title.text = $.Localize("pick_screen_same_hero_title") + " (" + $.Localize("DOTA_Tooltip_modifier_frantic") + ")";
-		else
-			pick_screen_title.text = $.Localize("pick_screen_same_hero_title");
-	} else {
-		if (gamemode && gamemode[1] == 3)
-			pick_screen_title.text = $.Localize("DOTA_Tooltip_modifier_frantic");
 	}
+
+	if (gamemode && typeof(gamemode[1]) == "number")
+		pick_screen_title.text = $.Localize("vote_gamemode_" + gamemode[1]);
 
 	var i = 0;
 
@@ -89,6 +89,8 @@ function OnUpdateHeroSelection() {
 		});
 	}
 */
+
+	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
 
 	if (same_selection && same_selection.value == 1)
 		$.Schedule(0.1, UpdatePickedHeroes)
@@ -213,12 +215,8 @@ function SetPickButtonAlwaysEnabled() {
 	$.Schedule(1.0, InitHeroSelection);
 //	$.Schedule(1.0, OnUpdateHeroSelection);
 
-	if (same_selection && same_selection.value == 1) {
-		$.Schedule(0.5, SetPickButtonAlwaysEnabled)
-		$.Schedule(0.5, UpdatePickedHeroes)
-
-		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
-	}
+	var clock_label = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ClockLabel");
+	clock_label.style.visibility = "visible";
 
 //	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
 })();

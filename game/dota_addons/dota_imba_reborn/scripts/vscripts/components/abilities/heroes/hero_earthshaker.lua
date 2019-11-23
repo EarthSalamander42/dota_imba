@@ -244,6 +244,7 @@ earthshaker_enchant_totem_lua = class({})
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_movement", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_BOTH )
+-- LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 
@@ -649,27 +650,39 @@ function modifier_earthshaker_enchant_totem_lua_leap:OnCreated( params )
 	if self:ApplyHorizontalMotionController() == false then 
 		self:Destroy()
 	end
+	
+	self.interval	= FrameTime()
+	
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_earthshaker_enchant_totem_lua_leap:OnIntervalThink()
+	local z_axis = (-1) * self:GetElapsedTime() * (self:GetElapsedTime() - self:GetDuration()) * 562 * 4
+	
+	-- self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
+
+	self:GetParent():SetOrigin( (self:GetParent():GetOrigin() * Vector(1, 1, 0)) + (((self.direction * self.speed * self.interval) * Vector(1, 1, 0)) + (Vector(0, 0, GetGroundHeight(self:GetParent():GetOrigin(), nil)) + Vector(0, 0, z_axis) )))
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnDestroy( kv )
 	if not IsServer() then return end
 	
-	EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
-	
 	self:GetParent():InterruptMotionControllers( true )
 	
-	if self:GetRemainingTime() <= 0 then
+	-- "However, getting hit by forced movement causes the ability to not apply Aftershock or the totem buff upon landing."
+	if not self.aftershock_interrupt then
+		EmitSoundOn("Hero_EarthShaker.Totem", self:GetCaster())
+	
 		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_earthshaker_enchant_totem_lua", {duration = self:GetAbility():GetDuration()})
 		
-		-- "However, getting hit by forced movement causes the ability to not apply Aftershock or the totem buff upon landing."
-		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") and not self.aftershock_interrupt then
+		if self:GetParent():HasModifier("modifier_earthshaker_aftershock_lua") then
 			self:GetParent():FindModifierByName("modifier_earthshaker_aftershock_lua"):CastAftershock()
 		end
 	end
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:UpdateHorizontalMotion( me, dt )
-	self:GetParent():SetOrigin( self:GetParent():GetOrigin() + (self.direction * self.speed * dt) )
+	-- self:GetParent():SetOrigin( self:GetParent():GetOrigin() + (self.direction * self.speed * dt) )
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnHorizontalMotionInterrupted()
@@ -680,6 +693,7 @@ end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
 	if IsServer() then
+		self.aftershock_interrupt = true
 		self:Destroy()
 	end
 end
@@ -687,15 +701,15 @@ end
 -- "The leap duration is always the same, so the speed adapts based on the targeted distance. The leap height is always 562 range."
 -- I'm forgetting all my parabola math, but multiplying height by 4 here sets it as the max height at mid-point; there's obviously a formula for this
 function modifier_earthshaker_enchant_totem_lua_leap:UpdateVerticalMotion( me, dt )
-	local z_axis = (-1) * self:GetElapsedTime() * (self:GetElapsedTime() - self:GetDuration()) * 562 * 4
+	-- local z_axis = (-1) * self:GetElapsedTime() * (self:GetElapsedTime() - self:GetDuration()) * 562 * 4
 	
-	self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
+	-- self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
-	if IsServer() then
-		self:Destroy()
-	end
+	-- if IsServer() then
+		-- self:Destroy()
+	-- end
 end
 
 function modifier_earthshaker_enchant_totem_lua_leap:DeclareFunctions()

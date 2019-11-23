@@ -70,6 +70,10 @@
 							<Label id="VoteGameModeText4" class="VoteGameModeText" text="#vote_gamemode_4" />
 						</Panel>
 -->
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode5" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 5)" />
+							<Label id="VoteGameModeText5" class="VoteGameModeText" text="#vote_gamemode_5" />
+						</Panel>
 					</Panel>
 				</Panel>
 			</Panel>

@@ -1301,7 +1301,7 @@ function modifier_imba_templar_assassin_psionic_trap:Explode(ability, radius, tr
 		end
 		
 		-- IMBAfication: Springboard
-		if self:GetParent():GetOwner():HasAbility("imba_templar_assassin_trap") and self:GetParent():GetOwner():FindAbilityByName("imba_templar_assassin_trap"):GetAutoCastState() and (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= radius then
+		if self:GetParent():GetOwner():HasAbility("imba_templar_assassin_trap") and self:GetParent():GetOwner():FindAbilityByName("imba_templar_assassin_trap"):GetAutoCastState() and (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= radius and not self:GetParent():GetOwner():IsRooted() then
 			local springboard_ability = self:GetParent():GetOwner():FindAbilityByName("imba_templar_assassin_trap")
 		
 			self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), springboard_ability, "modifier_imba_templar_assassin_trap_springboard", {

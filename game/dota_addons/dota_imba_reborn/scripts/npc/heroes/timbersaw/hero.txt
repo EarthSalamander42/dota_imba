@@ -9,7 +9,7 @@
 	{
 		"IsImba"					"1"
 		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability1"		"imba_timbersaw_whirling_death"
 		"Ability2"		"imba_timbersaw_timber_chain"

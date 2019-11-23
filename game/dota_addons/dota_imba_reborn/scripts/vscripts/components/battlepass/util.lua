@@ -52,13 +52,13 @@ function Battlepass:AddItemEffects(hero)
 	else
 		if CUSTOM_GAME_TYPE == "PW" then
 			Battlepass:SetItemEffects(hero)
-		else
+		elseif CUSTOM_GAME_TYPE ~= "POG" then
 			Battlepass:SetItemEffects(hero:GetPlayerID())
 		end
 	end
 
 	-- some effects override some items effects, need to call it after items setup
-	if CUSTOM_GAME_TYPE ~= "PW" then
+	if CUSTOM_GAME_TYPE ~= "PW" and CUSTOM_GAME_TYPE ~= "POG" then
 		Battlepass:GetHeroEffect(hero)
 	end
 end

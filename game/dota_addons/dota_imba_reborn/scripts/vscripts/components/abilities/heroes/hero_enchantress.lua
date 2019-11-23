@@ -151,7 +151,7 @@ function modifier_imba_enchantress_untouchable_slow:OnAttack(keys)
 	if self.parent == keys.attacker then
 		-- Wait frame time to check if the target is not Enchantress or if she was not killed to properly apply Regret stacks
 		Timers:CreateTimer(FrameTime(), function()
-			if keys.target ~= self.caster or self.caster:IsAlive() then
+			if (keys.target ~= self.caster or self.caster:IsAlive()) and self and not self:IsNull() then
 				if self:GetStackCount() > 1 then
 					self:DecrementStackCount()
 				else 

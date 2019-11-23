@@ -612,7 +612,7 @@ function modifier_imba_glimpse_movement_check_aura:IsPassive()	return true end
 function modifier_imba_glimpse_movement_check_aura:IsAura() return true end
 function modifier_imba_glimpse_movement_check_aura:IsAuraActiveOnDeath() return true end
 function modifier_imba_glimpse_movement_check_aura:GetAuraRadius() 	return self:GetAbility():GetSpecialValueFor("global_radius") end
-function modifier_imba_glimpse_movement_check_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_glimpse_movement_check_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 function modifier_imba_glimpse_movement_check_aura:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
 function modifier_imba_glimpse_movement_check_aura:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO end
 

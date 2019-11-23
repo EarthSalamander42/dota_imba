@@ -26,9 +26,9 @@
 "scoreboard_tool_tip_active_share_unit_hero"	"(SHARED)"
 "scoreboard_tool_tip_disable_help"				"Disable Help"
 "scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
-"custom_end_screen_legend_imr"					"IMR"
-"custom_end_screen_legend_imr10v10"				"IMR 10v10"
-"custom_end_screen_legend_imr1v1"				"IMR 1v1"
+"custom_end_screen_legend_mmr"					"MMR"
+"custom_end_screen_legend_mmr10v10"				"MMR 10v10"
+"custom_end_screen_legend_mmr1v1"				"MMR 1v1"
 "custom_end_screen_legend_battlepass_xp"		"Battlepass XP"
 
 //Combat Events
@@ -104,8 +104,8 @@
 "hero_name_filler"				"Lock In"
 "team_title_radiant"			"The Radiant"
 "team_title_dire"				"The Dire"
-"average_mmr"					"Average IMR: "
-"average_ixp"					"Average IXP: "
+"average_mmr"					"Average MMR:"
+"average_ixp"					"Average IXP:"
 "swap_vanilla_to_custom"		"Swap to Vanilla Heroes"
 "swap_custom_to_vanilla"		"Swap to Custom Heroes"
 "stats_swap"					"Toggle Stats Panel"
@@ -139,7 +139,6 @@
 
 "imba_radiant_team_title"                       "The Radiant"
 "imba_dire_team_title"                          "The Dire"
-"average_mmr"									"Average MMR: "
 
 //	"DOTA_GoodGuys"   								"Teal Tiger"
 //	"DOTA_BadGuys"    								"Yellow Monkey"

@@ -534,7 +534,6 @@
 "DOTA_Tooltip_Ability_special_bonus_unique_ember_spirit_2"        "+2s Searing Chains"
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_4"        "3 Sleight of Fist Charges"
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_5"        "-20 Remnant Charge Restore Time"
-"DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_2"        "+10 Flak Cannon attacks"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3"			"Soul Assumption Hits 5 Targets"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3_Description"	"Four additional Soul Assumptions are launched towards random enemy units within the cast range, prioritizing Heroes."
 

@@ -10,7 +10,7 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
-	if GameMode:GetCustomGamemode() == 4 then
+	if api:GetCustomGamemode() == 4 then
 		if Diretide.DIRETIDE_PHASE >= 3 then
 			return false
 		end
@@ -39,8 +39,8 @@ function GameMode:GoldFilter(keys)
 		if hero == nil then return end
 
 		-- Hand of Midas gold bonus (let's make it not affect hero kills)
-		if hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
-			keys.gold = keys.gold * 1.1
+		if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
+			keys.gold = keys.gold * 1.05
 		end
 
 		-- Lobby options adjustment

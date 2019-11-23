@@ -15,13 +15,13 @@
 		"Ability6"					"imba_naga_siren_song_of_the_siren"
 		"Ability7"					"imba_naga_siren_song_of_the_siren_cancel"
 
-		"Ability10"					"special_bonus_movement_speed_20"
-		"Ability11"					"special_bonus_unique_naga_siren_4"
-		"Ability12"					"special_bonus_agility_12"
-		"Ability13"					"special_bonus_strength_14"
-		"Ability14"					"special_bonus_unique_naga_siren_2"
+		"Ability10"					"special_bonus_imba_naga_siren_mirror_image_perfect_image"
+		"Ability11"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_unique_naga_siren_2"
+		"Ability13"					"special_bonus_imba_naga_siren_rip_tide_proc_chance"
+		"Ability14"					"special_bonus_evasion_30"
 		"Ability15"					"special_bonus_unique_naga_siren"
-		"Ability16"					"special_bonus_evasion_30"
+		"Ability16"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
 		"Ability17"					"special_bonus_unique_naga_siren_3"
 	}
 }

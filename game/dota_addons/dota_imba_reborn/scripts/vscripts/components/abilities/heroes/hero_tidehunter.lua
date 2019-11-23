@@ -1114,12 +1114,27 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_tidehunter_greater_hardening", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tidehunter_gush_armor", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tidehunter_greater_hardening	= class({})
+modifier_special_bonus_imba_tidehunter_greater_hardening	= modifier_special_bonus_imba_tidehunter_greater_hardening or class({})
 
 function modifier_special_bonus_imba_tidehunter_greater_hardening:IsHidden() 		return true end
 function modifier_special_bonus_imba_tidehunter_greater_hardening:IsPurgable() 		return false end
 function modifier_special_bonus_imba_tidehunter_greater_hardening:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_tidehunter_gush_armor	= modifier_special_bonus_imba_tidehunter_gush_armor or class({})
+
+function modifier_special_bonus_imba_tidehunter_gush_armor:IsHidden() 		return true end
+function modifier_special_bonus_imba_tidehunter_gush_armor:IsPurgable()		return false end
+function modifier_special_bonus_imba_tidehunter_gush_armor:RemoveOnDeath() 	return false end
+
+function imba_tidehunter_gush:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_gush_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_gush_armor") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_gush_armor"), "modifier_special_bonus_imba_tidehunter_gush_armor", {})
+	end
+end
 
 function imba_tidehunter_kraken_shell:OnOwnerSpawned()
 	if not IsServer() then return end

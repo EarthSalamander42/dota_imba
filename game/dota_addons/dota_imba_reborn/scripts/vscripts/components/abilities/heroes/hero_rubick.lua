@@ -18,11 +18,15 @@ function imba_rubick_telekinesis:IsNetherWardStealable() return true end
 function imba_rubick_telekinesis:CastFilterResultTarget(target)
 	if target == self:GetCaster() and self:GetCaster():IsRooted() then
 		return UF_FAIL_CUSTOM
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
 	end
 end
 
 function imba_rubick_telekinesis:GetCustomCastErrorTarget(target)
-	return "dota_hud_error_ability_disabled_by_root"
+	if target == self:GetCaster() and self:GetCaster():IsRooted() then
+		return "dota_hud_error_ability_disabled_by_root"
+	end
 end
 
 function imba_rubick_telekinesis:OnSpellStart( params )
@@ -1137,6 +1141,9 @@ function imba_rubick_spellsteal:OnSpellStart()
 	if self.spell_target:TriggerSpellAbsorb( self ) then
 		return
 	end
+	
+	-- Prevent weird stuff from happening if copied by Lotus Orb or duplicated through Grimstroke's Soulbind
+	if self:GetAbilityIndex() == 0 then return end
 
 	-- Get last used spell
 	self.stolenSpell = {}
@@ -1316,6 +1323,8 @@ imba_rubick_spellsteal.slot1 = "rubick_empty1"
 imba_rubick_spellsteal.slot2 = "rubick_empty2"
 -- Add new stolen spell
 function imba_rubick_spellsteal:SetStolenSpell( spellData )
+	if not spellData then return end
+
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents
@@ -1534,7 +1543,7 @@ function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	self.stolen_spell_amp = kv.spell_amp * 100
 
 	if self:GetParent():HasScepter() then
-		print("Spell Amp:", self.stolen_spell_amp)
+		-- print("Spell Amp:", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end
@@ -1542,7 +1551,7 @@ end
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
 	if self:GetParent():HasScepter() then
-		print("Spell Amp (refresh):", self.stolen_spell_amp)
+		-- print("Spell Amp (refresh):", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end

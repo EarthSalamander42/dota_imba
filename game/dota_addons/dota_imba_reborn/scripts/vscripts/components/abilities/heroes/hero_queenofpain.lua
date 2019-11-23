@@ -564,6 +564,8 @@ end
 LinkLuaModifier("modifier_imba_sonic_wave", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sonic_wave_daze", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
 imba_queenofpain_sonic_wave = class({})
 
 function imba_queenofpain_sonic_wave:GetAbilityTextureName()
@@ -645,7 +647,7 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 				bDeleteOnHit		= true,
 				vVelocity			= Vector(direction.x,direction.y,0) * projectile_speed,
 				bProvidesVision		= false,
-				ExtraData			= {damage = damage}
+				ExtraData			= {damage = damage, x = caster_loc.x, y = caster_loc.y, z = caster_loc.z}
 			}
 
 		ProjectileManager:CreateLinearProjectile(projectile)
@@ -669,6 +671,25 @@ function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location,
 	local caster = self:GetCaster()
 	if target then
 		ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		
+		local knockback_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		{
+			distance		= self:GetSpecialValueFor("knockback_distance"),
+			direction_x 	= location.x - ExtraData.x,
+			direction_y 	= location.y - ExtraData.y,
+			direction_z 	= location.z - ExtraData.z,
+			duration 		= self:GetSpecialValueFor("knockback_duration"),
+			bGroundStop 	= false,
+			bDecelerate 	= false,
+			bInterruptible 	= false,
+			bIgnoreTenacity	= false,
+			bDestroyTreesAlongPath	= true
+		})		
+		
+		if knockback_modifier then
+			knockback_modifier:SetDuration(self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()), true)
+		end
+		
 		if caster:HasScepter() then
 			target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = self:GetSpecialValueFor("orders_scepter")})
 		end

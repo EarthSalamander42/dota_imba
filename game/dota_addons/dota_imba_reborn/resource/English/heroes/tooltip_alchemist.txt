@@ -82,7 +82,7 @@
 // Alchemist's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_1"                   "+15% Sticky Acid Slow"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_2"                   "Unstable Concoction can grant allies Chemical Rage"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_2_Description"		"Chemical Rage duration is equal to the amount of time concoction is brewed."
+"DOTA_Tooltip_ability_special_bonus_imba_alchemist_2_Description"		"Chemical Rage duration is equal to {s:value}x the amount of time concoction is brewed."
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_3"                   "Bounty runes spawn gold bags"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_4"                   "Acid Spray victims drops gold bags"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_5"                   "Greed stacks increase Acid Spray damage"
