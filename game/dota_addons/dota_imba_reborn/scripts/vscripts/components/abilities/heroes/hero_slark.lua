@@ -5,7 +5,7 @@ LinkLuaModifier("modifier_imba_slark_dark_pact", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_slark_dark_pact_pulses", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slark_dark_pact_thinker", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_slark_pounce", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slark_pounce", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier("modifier_imba_slark_pounce_leash", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_slark_essence_shift", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
@@ -14,6 +14,7 @@ LinkLuaModifier("modifier_imba_slark_essence_shift_permanent_buff", "components/
 LinkLuaModifier("modifier_imba_slark_essence_shift_permanent_debuff", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_slark_shadow_dance_passive_regen", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slark_shadow_dance_aura", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slark_shadow_dance", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
 imba_slark_dark_pact								= imba_slark_dark_pact or class({})
@@ -25,19 +26,42 @@ imba_slark_pounce									= imba_slark_pounce or class({})
 modifier_imba_slark_pounce							= modifier_imba_slark_pounce or class({})
 modifier_imba_slark_pounce_leash					= modifier_imba_slark_pounce_leash or class({})
 
-imba_slark_essence_shift							= imba_slark_essence_shift or class({})
-modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class({})
-modifier_imba_slark_essence_shift_debuff			= modifier_imba_slark_essence_shift_debuff or class({})
-modifier_imba_slark_essence_shift_permanent_buff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
-modifier_imba_slark_essence_shift_permanent_debuff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
+-- imba_slark_essence_shift							= imba_slark_essence_shift or class({})
+-- modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class({})
+-- modifier_imba_slark_essence_shift_debuff			= modifier_imba_slark_essence_shift_debuff or class({})
+-- modifier_imba_slark_essence_shift_permanent_buff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
+-- modifier_imba_slark_essence_shift_permanent_debuff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
 
-imba_slark_shadow_dance								= imba_slark_shadow_dance or class({})
-modifier_imba_slark_shadow_dance_passive_regen		= modifier_imba_slark_shadow_dance_passive_regen or class({})
-modifier_imba_slark_shadow_dance					= modifier_imba_slark_shadow_dance or class({})
+imba_slark_essence_shift							= class({})
+modifier_imba_slark_essence_shift					= class({})
+modifier_imba_slark_essence_shift_debuff			= class({})
+modifier_imba_slark_essence_shift_permanent_buff	= class({})
+modifier_imba_slark_essence_shift_permanent_debuff	= class({})
+
+-- imba_slark_shadow_dance								= imba_slark_shadow_dance or class({})
+-- modifier_imba_slark_shadow_dance_passive_regen		= modifier_imba_slark_shadow_dance_passive_regen or class({})
+-- modifier_imba_slark_shadow_dance					= modifier_imba_slark_shadow_dance or class({})
+
+imba_slark_shadow_dance								= class({})
+modifier_imba_slark_shadow_dance_passive_regen		= class({})
+modifier_imba_slark_shadow_dance_aura				= class({})
+modifier_imba_slark_shadow_dance					= class({})
 
 --------------------------
 -- IMBA_SLARK_DARK_PACT --
 --------------------------
+
+function imba_slark_dark_pact:GetIntrinsicModifierName()
+	return "modifier_imba_slark_dark_pact_thinker"
+end
+
+function imba_slark_dark_pact:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_slark_dark_pact:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) - self:GetCaster():GetCastRangeBonus()
+end
 
 function imba_slark_dark_pact:OnSpellStart()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_dark_pact", {
@@ -46,7 +70,8 @@ function imba_slark_dark_pact:OnSpellStart()
 		radius			= self:GetSpecialValueFor("radius"),
 		total_damage	= self:GetTalentSpecialValueFor("total_damage"),
 		total_pulses	= self:GetSpecialValueFor("total_pulses"),
-		pulse_interval	= self:GetSpecialValueFor("pulse_interval")
+		pulse_interval	= self:GetSpecialValueFor("pulse_interval"),
+		premature_stack_activation	= self:GetSpecialValueFor("premature_stack_activation")
 	})
 end
 
@@ -54,6 +79,7 @@ end
 -- MODIFIER_IMBA_SLARK_DARK_PACT --
 -----------------------------------
 
+function modifier_imba_slark_dark_pact:IsHidden()	return true end
 function modifier_imba_slark_dark_pact:IsPurgable()	return false end
 
 function modifier_imba_slark_dark_pact:OnCreated(params)
@@ -65,13 +91,32 @@ function modifier_imba_slark_dark_pact:OnCreated(params)
 	self.total_damage	= params.total_damage
 	self.total_pulses	= params.total_pulses
 	self.pulse_interval	= params.pulse_interval
+	self.premature_stack_activation	= params.premature_stack_activation
+	
+	self.ability_damage_type	= self:GetAbility():GetAbilityDamageType()
+	
+	EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Hero_Slark.DarkPact.PreCast", self:GetParent())
+	
+	self.start_particle	= ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_slark/slark_dark_pact_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
+	ParticleManager:SetParticleControlEnt(self.start_particle, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.start_particle, 61, Vector(0, 0, 0))
+	self:AddParticle(self.start_particle, false, false, -1, false, false)
 end
 
 function modifier_imba_slark_dark_pact:OnDestroy()
 	if not IsServer() then return end
-	
+
 	if self:GetRemainingTime() <= 0 then
-	
+		self:GetParent():StartGesture(ACT_DOTA_CAST_ABILITY_1)
+
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_dark_pact_pulses", {
+			duration		= self.pulse_duration,
+			radius			= self.radius,
+			total_damage	= self.total_damage,
+			total_pulses	= self.total_pulses,
+			pulse_interval	= self.pulse_interval,
+			ability_damage_type	= self.ability_damage_type
+		})
 	end
 end
 
@@ -79,13 +124,87 @@ end
 -- MODIFIER_IMBA_SLARK_DARK_PACT_PULSES --
 ------------------------------------------
 
-function modifier_imba_slark_dark_pact_pulses:OnCreated()
+function modifier_imba_slark_dark_pact_pulses:IsHidden()		return true end
+function modifier_imba_slark_dark_pact_pulses:IsPurgable()		return false end
 
+function modifier_imba_slark_dark_pact_pulses:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.radius			= params.radius
+	self.total_damage	= params.total_damage
+	self.total_pulses	= params.total_pulses
+	self.pulse_interval	= params.pulse_interval
+	self.ability_damage_type	= params.ability_damage_type
+	self.premature_stack_activation	= params.premature_stack_activation
+	
+	self.premature_modifier	= self:GetCaster():FindModifierByName("modifier_imba_slark_dark_pact_thinker")
+	
+	self.damage_per_pulse	= self.total_damage / self.total_pulses
+	
+	self.damage_table	= {
+		victim 			= nil,
+		damage 			= self.damage_per_pulse,
+		damage_type		= self.ability_damage_type,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	}
+	
+	self.damage_table_self	= {
+		victim 			= self:GetParent(),
+		damage 			= self.damage_per_pulse * 0.5,
+		damage_type		= self.ability_damage_type,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NON_LETHAL,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	}
+	
+	self:GetParent():EmitSound("Hero_Slark.DarkPact.Cast")
+	
+	-- TODO: Needs to be visible to everyone even when invis
+	self.pulses_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_dark_pact_pulses.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.pulses_particle, 1, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.pulses_particle, 2, Vector(self.radius, 0, 0))
+	self:AddParticle(self.pulses_particle, false, false, -1, false, false)
+	
+	-- OKAY SO THIS THING ACTUALLY DESTROYS TREES IN A SMALL RADIUS AND THE WIKI SAYS NOTHING ABOUT THIS WTF
+	GridNav:DestroyTreesAroundPoint( self:GetParent():GetAbsOrigin(), 75, true )	
+	
+	-- IMBAfication: Premature Spawn
+	if self.premature_modifier then
+		if self.premature_modifier:GetStackCount() < self.premature_stack_activation then
+			self.premature_modifier:IncrementStackCount()
+		elseif self:GetAbility() and self:GetAbility():GetAutoCastState() then
+			local spawn_unit = CreateUnitByName("npc_dota_roshan_halloween_minion", self:GetParent():GetAbsOrigin() + RandomVector(128), true, self:GetParent(), self:GetParent(), self:GetParent():GetTeamNumber())
+			
+			if self:GetParent().GetPlayerID then
+				spawn_unit:SetControllableByPlayer(self:GetParent():GetPlayerID(), false)
+			end
+			
+			self.premature_modifier:SetStackCount(0)
+		end
+	end
+	
+	self:StartIntervalThink(self.pulse_interval)
+end
+
+function modifier_imba_slark_dark_pact_pulses:OnIntervalThink()
+	self:GetParent():Purge(false, true, false, true, true)
+
+	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		self.damage_table.victim = enemy
+		
+		ApplyDamage(self.damage_table)
+	end
+	
+	ApplyDamage(self.damage_table_self)
 end
 
 -------------------------------------------
 -- MODIFIER_IMBA_SLARK_DARK_PACT_THINKER --
 -------------------------------------------
+
+function modifier_imba_slark_dark_pact_thinker:IsHidden()	return self:GetStackCount() <= 0 end
 
 function modifier_imba_slark_dark_pact_thinker:OnCreated()
 
@@ -95,29 +214,235 @@ end
 -- IMBA_SLARK_POUNCE --
 -----------------------
 
-function imba_slark_pounce:OnSpellStart()
+function imba_slark_pounce:GetCooldown(level)
+	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") or IsClient() then
+		return self.BaseClass.GetCooldown(self, level)
+	elseif IsServer() then
+		return self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
+	end
+end
 
+function imba_slark_pounce:GetManaCost(level)
+	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") then
+		return self.BaseClass.GetManaCost(self, level)
+	else
+		return 0
+	end
+end
+
+function imba_slark_pounce:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Slark.Pounce.Cast")
+	
+	local pounce_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_pounce_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(pounce_particle)
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_slark" then
+		self:GetCaster():StartGesture(ACT_DOTA_SLARK_POUNCE)
+	end
+	
+	-- IMBAfication: Aerial Redirection
+	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_pounce", {duration = self:GetSpecialValueFor("pounce_distance") / self:GetSpecialValueFor("pounce_speed")})
+		self:EndCooldown()
+		self:StartCooldown(0.25)
+	else
+		self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()		
+		self:GetAbility():UseResources(false, false, true)
+	end
 end
 
 --------------------------------
 -- MODIFIER_IMBA_SLARK_POUNCE --
 --------------------------------
 
-function modifier_imba_slark_pounce:OnCreated()
+function modifier_imba_slark_pounce:IsHidden()		return true end
+function modifier_imba_slark_pounce:IsPurgable()	return false end
 
+function modifier_imba_slark_pounce:GetEffectName()
+	return "particles/units/heroes/hero_slark/slark_pounce_trail.vpcf"
+end
+
+function modifier_imba_slark_pounce:OnCreated()
+	if not IsServer() then return end
+
+	self.pounce_speed	= self:GetAbility():GetSpecialValueFor("pounce_speed")
+	-- self.pounce_acceleration	= self:GetAbility:GetSpecialValueFor("pounce_acceleration") -- I don't use this for anything
+	self.pounce_radius	= self:GetAbility():GetSpecialValueFor("pounce_radius")
+	self.leash_duration	= self:GetAbility():GetTalentSpecialValueFor("leash_duration")
+	self.leash_radius	= self:GetAbility():GetSpecialValueFor("leash_radius")
+	
+	self.duration		= self:GetAbility():GetSpecialValueFor("pounce_distance") / self.pounce_speed
+	self.direction		= self:GetParent():GetForwardVector()
+
+	-- I don't see notes on the height in wiki so gonna use arbitrary height of 125 for now
+	self.vertical_velocity		= 4 * 125 / self.duration
+	self.vertical_acceleration	= -(8 * 125) / (self.duration * self.duration)
+
+	if self:ApplyVerticalMotionController() == false then 
+		self:Destroy()
+	end
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+	end
+end
+
+function modifier_imba_slark_pounce:OnRemoved()
+	if not IsServer() then return end
+
+	if self:GetAbility() then
+		self:GetAbility():UseResources(false, false, true)
+	end
+end
+
+function modifier_imba_slark_pounce:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveHorizontalMotionController(self)
+	self:GetParent():RemoveVerticalMotionController(self)
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_slark" then
+		self:GetCaster():FadeGesture(ACT_DOTA_SLARK_POUNCE)
+	end
+	
+	-- "Pounce destroys trees within 100 radius around Slark upon landing."
+	GridNav:DestroyTreesAroundPoint( self:GetParent():GetAbsOrigin(), 100, true )
+end
+
+function modifier_imba_slark_pounce:UpdateHorizontalMotion(me, dt)
+	if not IsServer() then return end
+
+	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.pounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)) do
+		if enemy:IsRealHero() or enemy:IsClone() or enemy:IsTempestDouble() then
+			enemy:EmitSound("Hero_Slark.Pounce.Impact")
+			
+			local pounce_modifier = enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_slark_pounce_leash", {
+				duration 		= self.leash_duration,
+				leash_radius	= self.leash_radius
+			})
+			
+			if pounce_modifier then
+				pounce_modifier:SetDuration(10 * (1 - enemy:GetStatusResistance()), true)
+			end
+			
+			self:GetParent():MoveToTargetToAttack(enemy)
+			
+			-- IMBAfication: β/Remnants of Pounce
+			self:GetParent():PerformAttack(enemy, true, true, true, false, false, false, false)
+			
+			self:Destroy()
+			break
+		end
+	end
+
+	me:SetAbsOrigin( me:GetAbsOrigin() + self.pounce_speed * self.direction * dt )
+end
+
+function modifier_imba_slark_pounce:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_slark_pounce:UpdateVerticalMotion(me, dt)
+	if not IsServer() then return end
+	
+	me:SetAbsOrigin( me:GetAbsOrigin() + Vector(0, 0, self.vertical_velocity) * dt )
+	
+	self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
+end
+
+function modifier_imba_slark_pounce:OnVerticalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_slark_pounce:CheckState()
+	return {[MODIFIER_STATE_DISARMED] = true}
+end
+
+function modifier_imba_slark_pounce:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS}
+end
+
+function modifier_imba_slark_pounce:GetActivityTranslationModifiers()
+	return "leash"
 end
 
 --------------------------------------
 -- MODIFIER_IMBA_SLARK_POUNCE_LEASH --
 --------------------------------------
 
-function modifier_imba_slark_pounce_leash:OnCreated()
+function modifier_imba_slark_pounce_leash:IsPurgable()	return false end
 
+-- It's pretty annoying to try and figure out all the forced movement exceptions on Pounce, so I think I'm just gonna make it unbreakable and call it an IMBAfication -_-
+function modifier_imba_slark_pounce_leash:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.leash_radius	= params.leash_radius
+	
+	-- Okay there's like no wiki information on how the formula for movespeed limit actually works so I'm going to have to fudge something pretty badly
+	self.begin_slow_radius	= params.leash_radius * 80 * 0.01
+	
+	self.leash_position		= self:GetParent():GetAbsOrigin()
+	
+	self:GetParent():EmitSound("Hero_Slark.Pounce.Leash")
+	
+	self.ground_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_pounce_ground.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.ground_particle, 3, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.ground_particle, 4, Vector(self.leash_radius))
+	self:AddParticle(self.ground_particle, false, false, -1, false, false)
+	
+	self.leash_particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_pounce_leash.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.leash_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.leash_particle, 3, self:GetParent():GetAbsOrigin())
+	self:AddParticle(self.leash_particle, false, false, -1, false, false)
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_slark_pounce_leash:OnIntervalThink()
+	self.limit		= 0
+	self.move_speed	= self:GetParent():GetMoveSpeedModifier(self:GetParent():GetBaseMoveSpeed(), false)
+	self.limit		= ((self.leash_radius - (self:GetParent():GetAbsOrigin() - self.leash_position):Length2D()) / self.leash_radius) * self.move_speed
+	
+	-- Can't be exactly 0 because that makes the GetModifierMoveSpeed_Limit() function do nothing
+	if self.limit == 0 then
+		self.limit = -0.01
+	end
+end
+
+function modifier_imba_slark_pounce_leash:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Slark.Pounce.Leash")
+	self:GetParent():EmitSound("Hero_Slark.Pounce.End")
+	
+	-- "When the leash expires while a position changing effect is ongoing, it instantly cancels the position changing effect."
+	self:GetParent():InterruptMotionControllers(true)
+end
+
+function modifier_imba_slark_pounce_leash:CheckState()
+	return {[MODIFIER_STATE_TETHERED] = true}
+end
+
+function modifier_imba_slark_pounce_leash:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_LIMIT}
+end
+
+function modifier_imba_slark_pounce_leash:GetModifierMoveSpeed_Limit()
+	if not IsServer() then return end
+	
+	-- A R B I T R A R Y   A N G L E
+	if (self:GetParent():GetAbsOrigin() - self.leash_position):Length2D() >= self.begin_slow_radius and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetAbsOrigin() - self.leash_position).y, VectorToAngles(self:GetParent():GetForwardVector() ).y)) <= 85 then
+		return self.limit
+	end
 end
 
 ------------------------------
 -- IMBA_SLARK_ESSENCE_SHIFT --
 ------------------------------
+
+function imba_slark_essence_shift:GetIntrinsicModifierName()
+	return "modifier_imba_slark_essence_shift"
+end
 
 function imba_slark_essence_shift:OnSpellStart()
 
@@ -127,118 +452,473 @@ end
 -- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT --
 ---------------------------------------
 
-function modifier_imba_slark_essence_shift:OnCreated()
+function modifier_imba_slark_essence_shift:DestroyOnExpire()	return false end
+function modifier_imba_slark_essence_shift:IsHidden()			return self:GetStackCount() <= 0 end
 
+function modifier_imba_slark_essence_shift:OnCreated()
+	if not IsServer() then return end
+	
+	self.stack_table = {}
+	
+	-- What's laggier, a frame-time thinker with a hundred+ element table check, or potentially a hundred+ stacks that feed into the stack counter system? It is a mystery...
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_slark_essence_shift:OnIntervalThink()
+	Custom_ArrayRemove(self.stack_table, function(i, j)
+		return self.stack_table[i].apply_game_time and self.stack_table[i].duration and GameRules:GetDOTATime(true, true) - self.stack_table[i].apply_game_time <= self.stack_table[i].duration
+	end)
+	
+	if #self.stack_table ~= self:GetStackCount() then
+		self:SetStackCount(#self.stack_table)
+	end
+end
+
+function modifier_imba_slark_essence_shift:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_DEATH,
+		
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS
+	}
+end
+
+function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
+	if self:GetAbility():IsTrained() and keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
+		self.shift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_essence_shift.vpcf", PATTACH_POINT_FOLLOW, keys.target)
+		ParticleManager:ReleaseParticleIndex(self.shift_particle)
+	
+		table.insert(self.stack_table, {
+			apply_game_time	= GameRules:GetDOTATime(true, true),
+			duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
+		})
+		
+		self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration"), true)
+		self:IncrementStackCount()
+		
+		self.debuff_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_debuff", {duration = self:GetAbility():GetTalentSpecialValueFor("duration")})
+		
+		if self.debuff_modifier then
+			self.debuff_modifier:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+		end
+	end
+end
+
+function modifier_imba_slark_essence_shift:OnDeath(keys)
+	if keys.unit == self:GetParent() then
+		self.stack_table = {}
+		self:SetStackCount(0)
+	end
+end
+
+function modifier_imba_slark_essence_shift:GetModifierBonusStats_Agility()
+	return self:GetAbility():GetSpecialValueFor("agi_gain") * self:GetStackCount()
 end
 
 ----------------------------------------------
 -- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT_DEBUFF --
 ----------------------------------------------
 
-function modifier_imba_slark_essence_shift_debuff:OnCreated()
+function modifier_imba_slark_essence_shift_debuff:DestroyOnExpire()	return self:GetParent():GetHealthPercent() > 0 end
+function modifier_imba_slark_essence_shift_debuff:IsHidden()		return self:GetParent():GetHealthPercent() <= 0 end
+function modifier_imba_slark_essence_shift_debuff:IsPurgable()		return false end
+function modifier_imba_slark_essence_shift_debuff:RemoveOnDeath()	return false end
 
+function modifier_imba_slark_essence_shift_debuff:OnCreated()
+	if not self.stat_loss then
+		self.stat_loss	= self:GetAbility():GetSpecialValueFor("stat_loss")
+	end
+
+	if not IsServer() then return end
+	
+	if not self.stack_table then
+		self.stack_table = {}
+	end
+	
+	table.insert(self.stack_table, {
+		apply_game_time	= GameRules:GetDOTATime(true, true),
+		duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
+	})
+
+	self:IncrementStackCount()
+
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnIntervalThink()
+	Custom_ArrayRemove(self.stack_table, function(i, j)
+		return self.stack_table[i].apply_game_time and self.stack_table[i].duration and GameRules:GetDOTATime(true, true) - self.stack_table[i].apply_game_time <= self.stack_table[i].duration
+	end)
+	
+	if #self.stack_table ~= self:GetStackCount() then
+		self:SetStackCount(#self.stack_table)
+	end
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnDestroy()
+	if not IsServer() then return end
+	
+	
+end
+
+function modifier_imba_slark_essence_shift_debuff:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_RESPAWN,
+		
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
+		table.insert(self.stack_table, {
+			apply_game_time	= GameRules:GetDOTATime(true, true),
+			duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
+		})
+		
+		self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration"), true)
+		self:IncrementStackCount()
+	end
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnDeath(keys)
+	if keys.unit == self:GetParent() and keys.unit:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and keys.attacker:HasModifier("modifier_imba_slark_essence_shift") and ((keys.unit:GetAbsOrigin() - keys.attacker:GetAbsOrigin()):Length2D() <= 300 or keys.attacker == self:GetCaster()) and not keys.attacker:HasModifier("modifier_morphling_replicate") then
+		if self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating() then
+			self.bStealAgi = true
+			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_buff", {})
+		else
+			self:Destroy()
+		end
+	end
+end
+
+function modifier_imba_slark_essence_shift_debuff:OnRespawn(keys)
+	if keys.unit == self:GetParent() and self.bStealAgi then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_debuff", {})
+		self:Destroy()
+	end
+end
+
+function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Agility()
+	return self.stat_loss * (-1) * self:GetStackCount()
+end
+
+function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Intellect()
+	return self.stat_loss * (-1) * self:GetStackCount()
+end
+
+function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Strength()
+	return self.stat_loss * (-1) * self:GetStackCount()
 end
 
 ------------------------------------------------------
 -- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT_PERMANENT_BUFF --
 ------------------------------------------------------
 
-function modifier_imba_slark_essence_shift_permanent_buff:OnCreated()
+function modifier_imba_slark_essence_shift_permanent_buff:IsPurgable()		return false end
+function modifier_imba_slark_essence_shift_permanent_buff:RemoveOnDeath()	return false end
 
+function modifier_imba_slark_essence_shift_permanent_buff:OnCreated()
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_slark_essence_shift_permanent_buff:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_slark_essence_shift_permanent_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS
+	}
+end
+
+function modifier_imba_slark_essence_shift_permanent_buff:GetModifierBonusStats_Agility()
+	return self:GetStackCount()
 end
 
 --------------------------------------------------------
 -- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT_PERMANENT_DEBUFF --
 --------------------------------------------------------
 
-function modifier_imba_slark_essence_shift_permanent_debuff:OnCreated()
+function modifier_imba_slark_essence_shift_permanent_debuff:IsHidden()		return true end
+function modifier_imba_slark_essence_shift_permanent_debuff:IsPurgable()	return false end
+function modifier_imba_slark_essence_shift_permanent_debuff:RemoveOnDeath()	return false end
 
+function modifier_imba_slark_essence_shift_permanent_debuff:OnCreated()
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_slark_essence_shift_permanent_debuff:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_slark_essence_shift_permanent_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS
+	}
+end
+
+function modifier_imba_slark_essence_shift_permanent_debuff:GetModifierBonusStats_Agility()
+	return self:GetStackCount() * (-1)
 end
 
 -----------------------------
 -- IMBA_SLARK_SHADOW_DANCE --
 -----------------------------
 
-function imba_slark_shadow_dance:OnSpellStart()
+function imba_slark_shadow_dance:GetIntrinsicModifierName()
+	return "modifier_imba_slark_shadow_dance_passive_regen"
+end
 
+function imba_slark_shadow_dance:GetCastRange(location, target)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_aoe") - self:GetCaster():GetCastRangeBonus()
+	end
+end
+
+function imba_slark_shadow_dance:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self:GetSpecialValueFor("cooldown_scepter")
+	end
+end
+
+function imba_slark_shadow_dance:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Slark.ShadowDance")
+
+	if not self:GetAutoCastState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_shadow_dance_aura", {duration = self:GetTalentSpecialValueFor("duration")})
+	else
+		--npc_dota_slark_visual
+	end
 end
 
 ----------------------------------------------------
 -- MODIFIER_IMBA_SLARK_SHADOW_DANCE_PASSIVE_REGEN --
 ----------------------------------------------------
 
-function modifier_imba_slark_shadow_dance_passive_regen:OnCreated()
+function modifier_imba_slark_shadow_dance_passive_regen:IsHidden()
+	return self:GetStackCount() < 0
+end
 
+function modifier_imba_slark_shadow_dance_passive_regen:OnCreated()
+	if not IsServer() then return end
+	
+	-- self.bPassiveActive is redundant here cause I'm using stackcounts in order to control modifier visibility on client-side, but I'll leave it for reference
+	self.bPassiveActive	= true
+	self.bVisible		= false
+	self.counter		= 0
+	self.interval		= 0.1
+	
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
+	self.bVisible		= false
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+		if (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType()) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) then
+			self.bVisible	= true
+			break
+		end
+	end
+	
+	if self.bVisible and not self:GetParent():HasModifier("modifier_imba_slark_shadow_dance") then
+		self.bPassiveActive = false
+		self.counter		= 0
+		
+		self:SetStackCount(-1)
+	else
+		self.counter		= self.counter + self.interval
+		
+		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") then
+			self.bPassiveActive	= true
+			self:SetStackCount(0)
+		end
+	end
+end
+
+function modifier_imba_slark_shadow_dance_passive_regen:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
+	}
+end
+
+function modifier_imba_slark_shadow_dance_passive_regen:GetModifierMoveSpeedBonus_Percentage()
+	if not self:IsHidden() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
+end
+
+function modifier_imba_slark_shadow_dance_passive_regen:GetModifierHealthRegenPercentage()
+	if not self:IsHidden() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("bonus_regen_pct")
+	end
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_SLARK_SHADOW_DANCE_AURA --
+-------------------------------------------
+
+function modifier_imba_slark_shadow_dance_aura:IsHidden()				return true end
+
+function modifier_imba_slark_shadow_dance_aura:OnCreated()
+	self.scepter_aoe	= self:GetAbility():GetSpecialValueFor("scepter_aoe")
+
+	if not IsServer() then return end
+	
+	-- TODO: Make these particles visible to all somehow...
+	self.shadow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_shadow_dance.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.shadow_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.shadow_particle, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_eyeR", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.shadow_particle, 4, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_eyeL", self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(self.shadow_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_slark_shadow_dance_aura:IsAura() 				return true end
+function modifier_imba_slark_shadow_dance_aura:IsAuraActiveOnDeath()	return false end
+
+function modifier_imba_slark_shadow_dance_aura:GetAuraRadius()			return self.scepter_aoe or 0 end
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_slark_shadow_dance_aura:GetModifierAura()		return "modifier_imba_slark_shadow_dance" end
+
+function modifier_imba_slark_shadow_dance_aura:GetAuraEntityReject(target)
+	if not self:GetCaster():HasScepter() and target ~= self:GetCaster() then
+		return true
+	end
+end
+
+function modifier_imba_slark_shadow_dance_aura:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL
+	}
+end
+
+function modifier_imba_slark_shadow_dance_aura:GetActivityTranslationModifiers()
+	return "shadow_dance"
 end
 
 --------------------------------------
 -- MODIFIER_IMBA_SLARK_SHADOW_DANCE --
 --------------------------------------
 
-function modifier_imba_slark_shadow_dance:OnCreated()
+function modifier_imba_slark_shadow_dance:IsPurgable()	return false end
 
+function modifier_imba_slark_shadow_dance:GetStatusEffectName()
+	return "particles/status_fx/status_effect_slark_shadow_dance.vpcf"
 end
 
+function modifier_imba_slark_shadow_dance:OnCreated()
+	if not IsServer() then return end
+end
 
+function modifier_imba_slark_shadow_dance:CheckState()
+	return {
+		[MODIFIER_STATE_INVISIBLE]			= true,
+		[MODIFIER_STATE_TRUESIGHT_IMMUNE]	= true
+	}
+end
 
--- // SLARK
--- "DOTA_Tooltip_ability_slark_dark_pact"									"Dark Pact"
--- "DOTA_Tooltip_ability_slark_dark_pact_Description"						"After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n\nDISPEL TYPE: Strong Dispel"
--- "DOTA_Tooltip_ability_slark_dark_pact_Lore"								"Slithereen are capable of quickly regrowing appendages, in case of critical injury, to save their own lives."
--- "DOTA_Tooltip_ability_slark_dark_pact_Note0"							"%delay% seconds after cast, a series of %total_pulses% pulses separated by %pulse_interval% seconds deal the damage."
--- "DOTA_Tooltip_ability_slark_dark_pact_Note1"							"Each pulse also removes debuffs from Slark."
--- "DOTA_Tooltip_ability_slark_dark_pact_Note2"							"You can't kill yourself with this skill."
--- "DOTA_Tooltip_ability_slark_dark_pact_Note3"							"The pulses stop if Slark dies."
--- "DOTA_Tooltip_ability_slark_dark_pact_delay"							"DELAY:"
--- "DOTA_Tooltip_ability_slark_dark_pact_radius"							"RADIUS:"
--- "DOTA_Tooltip_ability_slark_dark_pact_total_damage"						"DAMAGE:"
--- "DOTA_Tooltip_ability_slark_pounce"										"Pounce"
--- "DOTA_Tooltip_ability_slark_pounce_Description"							"Slark leaps forward, grabbing the first hero he connects with.  That unit is leashed, and can only move a limited distance away from Slark's landing position."
--- "DOTA_Tooltip_ability_slark_pounce_Lore"								"Time in the Dark Reef made Slark a dangerous assassin; aggressive and fearless."
--- "DOTA_Tooltip_ability_slark_pounce_Note0"								"On cast, Slark leaps forward at a speed of %pounce_speed%, stopping when he latches onto an enemy hero or has traveled %pounce_distance% distance."
--- "DOTA_Tooltip_ability_slark_pounce_Note1"								"Spell Immune units cannot be leashed."
--- "DOTA_Tooltip_ability_slark_pounce_Note2"								"Trees will be destroyed around Slark's landing location."
--- "DOTA_Tooltip_ability_slark_pounce_pounce_distance"						"DISTANCE:"
--- "DOTA_Tooltip_ability_slark_pounce_leash_duration"						"LEASH DURATION:"
--- "DOTA_Tooltip_ability_slark_pounce_leash_radius"						"LEASH RADIUS:"
--- "DOTA_Tooltip_ability_slark_essence_shift"								"Essence Shift"
--- "DOTA_Tooltip_ability_slark_essence_shift_Description"					"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals %stat_loss% Agility."
--- "DOTA_Tooltip_ability_slark_essence_shift_Lore"							"With each strike at his adversaries, Slark's knowledge of their weaknesses improves."
--- "DOTA_Tooltip_ability_slark_essence_shift_Note0"						"Attributes cannot be dropped below 1."
--- "DOTA_Tooltip_ability_slark_essence_shift_Note1"						"Essence Shifted stats are returned to normal on death. The stat return for Slark and for the affected hero are separate."
--- "DOTA_Tooltip_ability_slark_essence_shift_Note2"						"To permanently steal Agility, Slark doesn't need to land the killing blow, as long as the enemy hero is killed within 300 range of Slark while having the Essence Shift debuff."
--- "DOTA_Tooltip_ability_slark_essence_shift_agi_gain"						"AGILITY GAINED:"
--- "DOTA_Tooltip_ability_slark_essence_shift_stat_loss"					"ALL ATTRIBUTE LOSS:"
--- "DOTA_Tooltip_ability_slark_essence_shift_duration"						"DURATION:"
--- "DOTA_Tooltip_ability_slark_shadow_dance"								"Shadow Dance"
--- "DOTA_Tooltip_ability_slark_shadow_dance_Description"					"When used, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark.  Passively, when not visible to the enemy team, Slark gains bonus movement speed and health regeneration."
--- "DOTA_Tooltip_ability_slark_shadow_dance_aghanim_description"			"Reduces cooldown and causes Shadow Dance active to be an area of effect ability, hiding nearby allied heroes underneath it. Allies do not gain bonus movement speed or health regeneration."
--- "DOTA_Tooltip_ability_slark_shadow_dance_Lore"							"The hidden Thirteenth is a slippery foe."
--- "DOTA_Tooltip_ability_slark_shadow_dance_Note0"							"If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds."
--- "DOTA_Tooltip_ability_slark_shadow_dance_Note1"							"The passive movement and health regeneration bonuses have a %activation_delay% second activation and deactivation delay."
--- "DOTA_Tooltip_ability_slark_shadow_dance_duration"						"DURATION:"
--- "DOTA_Tooltip_ability_slark_shadow_dance_bonus_movement_speed"			"%BONUS MOVEMENT SPEED:"
--- "DOTA_Tooltip_ability_slark_shadow_dance_bonus_regen_pct"				"%HEALTH GAINED PER SECOND:"
--- "DOTA_Tooltip_ability_slark_shadow_dance_scepter_aoe"   				"SCEPTER RADIUS:"
--- "DOTA_Tooltip_ability_slark_shadow_dance_cooldown_scepter"   			"SCEPTER COOLDOWN:"
+function modifier_imba_slark_shadow_dance:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL
+	}
+end
 
--- "DOTA_Tooltip_modifier_slark_pounce_leash"							"Leashed"
--- "DOTA_Tooltip_modifier_slark_pounce_leash_Description"				"Leashed to Slark, can only move a limited distance away."
--- "DOTA_Tooltip_modifier_slark_essence_shift"							"Essence Shift"					
--- "DOTA_Tooltip_modifier_slark_essence_shift_Description"				"Stealing %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% agility."
--- "DOTA_Tooltip_modifier_slark_essence_shift_debuff_counter"			"Essence Shift"
--- "DOTA_Tooltip_modifier_slark_essence_shift_debuff_counter_Description"	"Losing %dMODIFIER_PROPERTY_TOOLTIP% of each attribute."
--- "DOTA_Tooltip_modifier_slark_shadow_dance_passive_regen"				"Shadow Dance Regen"
--- "DOTA_Tooltip_modifier_slark_shadow_dance_passive_regen_Description"	"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% bonus movement speed and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max HP per second."
--- "DOTA_Tooltip_modifier_slark_shadow_dance"							"Shadow Dance"
--- "DOTA_Tooltip_modifier_slark_shadow_dance_Description"				"Invisible within your cloud of smoke."
+function modifier_imba_slark_shadow_dance:GetModifierInvisibilityLevel()
+	return 1
+end
 
--- "DOTA_Tooltip_modifier_slark_essence_shift_permanent_buff"	"Permanent Agility"
--- "DOTA_Tooltip_modifier_slark_essence_shift_permanent_buff_Description"	"Gained %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% permanent Agility."
--- "DOTA_Tooltip_modifier_slark_essence_shift_permanent_buff_PostGame"		"Gained permanent Agility."
+	-- //=================================================================================================================
+	-- // Slark Shadow Dance
+	-- //=================================================================================================================
+	-- "slark_shadow_dance"
+	-- {
+		-- // General
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "ID"							"5497"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		-- "AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		-- "FightRecapLevel"				"2"
+		-- "HasScepterUpgrade"				"1"
+		-- "AbilitySound"					"Hero_Slark.ShadowDance"
+		-- "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
--- "DOTA_Tooltip_modifier_slark_essence_shift_permanent_debuff"	"Agility Lost"
--- "DOTA_Tooltip_modifier_slark_essence_shift_permanent_debuff_Description"	"Permanently missing %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% Agility."
+		-- // Time		
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "AbilityCooldown"				"80 70 60"
+		
+		-- // Cost
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "AbilityManaCost"				"120 120 120"		
+
+		-- // Special
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "AbilitySpecial"
+		-- {
+			-- "01"
+			-- {
+				-- "var_type"					"FIELD_FLOAT"
+				-- "duration"					"4 4.25 4.5"
+				-- "LinkedSpecialBonus"	"special_bonus_unique_slark_3"
+			-- }
+			-- "02"
+			-- {
+				-- "var_type"					"FIELD_FLOAT"
+				-- "fade_time"					"0.0 0.0 0.0"
+			-- }
+			-- "03"
+			-- {
+				-- "var_type"					"FIELD_INTEGER"
+				-- "bonus_movement_speed"		"20 35 50"
+			-- }
+			-- "04"
+			-- {
+				-- "var_type"					"FIELD_INTEGER"
+				-- "bonus_regen_pct"			"5 6 7"
+			-- }
+			-- "05"
+			-- {
+				-- "var_type"					"FIELD_FLOAT"
+				-- "activation_delay"			"0.5 0.5 0.5"
+			-- }
+			-- "06"
+			-- {
+				-- "var_type"					"FIELD_FLOAT"
+				-- "neutral_disable"			"2.0 2.0 2.0"
+			-- }
+			-- "07"
+			-- {
+				-- "var_type"					"FIELD_INTEGER"
+				-- "scepter_aoe"						"425"
+				-- "RequiresScepter"	"1"
+			-- }
+			-- "08"
+			-- {
+				-- "var_type"					"FIELD_INTEGER"
+				-- "cooldown_scepter"			"30"
+				-- "RequiresScepter"	"1"
+			-- }
+		-- }
+	-- }
 
 	-- //=================================================================================================================
 	-- // Slark: Dark Pact
@@ -306,67 +986,6 @@ end
 		-- }
 	-- }
 
-	-- //=================================================================================================================
-	-- // Slark: Pounce
-	-- //=================================================================================================================
-	-- "slark_pounce"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5495"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		-- "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		-- "FightRecapLevel"				"1"
-		-- "AbilitySound"					"Hero_Slark.Pounce.Cast"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"20.0 16.0 12.0 8.0"
-
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"75 75 75 75"
-
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "pounce_distance"		"700"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "pounce_speed"			"933.33"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "pounce_acceleration"	"7000.0"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "pounce_radius"			"95"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "leash_duration"		"2.5 2.75 3 3.25"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_slark"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "leash_radius"			"400"
-			-- }
-		-- }
-		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	-- }
 
 	-- //=================================================================================================================
 	-- // Slark: Essence Shift
@@ -404,80 +1023,6 @@ end
 		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	-- }
 
-	-- //=================================================================================================================
-	-- // Slark Shadow Dance
-	-- //=================================================================================================================
-	-- "slark_shadow_dance"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5497"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		-- "FightRecapLevel"				"2"
-		-- "HasScepterUpgrade"				"1"
-		-- "AbilitySound"					"Hero_Slark.ShadowDance"
-		-- "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"80 70 60"
-		
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"120 120 120"		
-
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "duration"					"4 4.25 4.5"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_slark_3"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "fade_time"					"0.0 0.0 0.0"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "bonus_movement_speed"		"20 35 50"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "bonus_regen_pct"			"5 6 7"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "activation_delay"			"0.5 0.5 0.5"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "neutral_disable"			"2.0 2.0 2.0"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "scepter_aoe"						"425"
-				-- "RequiresScepter"	"1"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "cooldown_scepter"			"30"
-				-- "RequiresScepter"	"1"
-			-- }
-		-- }
-	-- }
 
 -- //=================================================================================================================
 	-- // Ability: Special Bonus
@@ -538,38 +1083,38 @@ end
 		
 		-- // Special
 		-- //-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"1"
-			}
-		}
-	}
+		-- "AbilitySpecial"
+		-- {
+			-- "01"
+			-- {
+				-- "var_type"					"FIELD_FLOAT"
+				-- "value"				"1"
+			-- }
+		-- }
+	-- }
 
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_slark_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6894"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	-- //=================================================================================================================
+	-- // Ability: Special Bonus
+	-- //=================================================================================================================
+	-- "special_bonus_unique_slark_4"
+	-- {
+		-- // General
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "ID"					"6894"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		-- "AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
+		-- // Special
+		-- //-------------------------------------------------------------------------------------------------------------
+		-- "AbilitySpecial"
+		-- {
+			-- "01"
+			-- {
+				-- "var_type"					"FIELD_INTEGER"
+				-- "value"				"80"
+			-- }
+		-- }
+	-- }
 
 
 

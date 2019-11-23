@@ -114,7 +114,8 @@ end
 function modifier_generic_motion_controller:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():InterruptMotionControllers(true)
+	self:GetParent():RemoveHorizontalMotionController(self)
+	self:GetParent():RemoveVerticalMotionController(self)
 	
 	if self:GetRemainingTime() <= 0 and self.treeRadius then
 		GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self.treeRadius, true )

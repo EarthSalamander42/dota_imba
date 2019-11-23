@@ -1252,3 +1252,37 @@ function RegisterGameEventListener(eventName, callback)
 	local listenerId = ListenToGameEvent(eventName, callback, nil)
 	table.insert(registeredGameEventListeners, listenerId)
 end
+
+-- Much more efficient implementation of table element removal than table.remove()
+-- Written by Mitch McMabers of StackOverflow
+-- https://stackoverflow.com/a/53038524
+
+-- Example Usage:
+-- local t = {
+    -- 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
+-- };
+
+-- ArrayRemove(t, function(t, i, j)
+    -- -- Return true to keep the value, or false to discard it.
+    -- local v = t[i];
+    -- return (v == 'a' or v == 'b' or v == 'f' or v == 'h');
+-- end);
+
+function Custom_ArrayRemove(t, fnKeep)
+    local j, n = 1, #t;
+
+    for i=1,n do
+        if (fnKeep(i, j)) then
+            -- Move i's kept value to j's position, if it's not already there.
+            if (i ~= j) then
+                t[j] = t[i];
+                t[i] = nil;
+            end
+            j = j + 1; -- Increment position of where we'll place the next kept value.
+        else
+            t[i] = nil;
+        end
+    end
+
+    return t;
+end

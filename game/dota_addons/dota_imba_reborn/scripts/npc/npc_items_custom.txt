@@ -193,7 +193,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_radius"			"2400"
+				"charge_radius"			"1200"
 			}
 			"03"
 			{
@@ -320,7 +320,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_radius"			"2400"
+				"charge_radius"			"1200"
 			}
 			"03"
 			{
@@ -429,7 +429,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1650"
+		"ItemCost"						"1750"
 		"ItemShopTags"					""
 		"ItemAliases"					"midas; hand of midas; hom"
 
@@ -468,7 +468,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"2150"
+		"ItemCost"						"2250"
 		"ItemShopTags"					"attack_speed;hard_to_tag"
 		"ItemQuality"					"common"
 		"ItemAliases"					"midas; hand of midas; hom"
@@ -497,7 +497,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"passive_gold_bonus"	"10"
+				"passive_gold_bonus"	"5"
 			}
 		}
 	}
@@ -2249,7 +2249,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
+				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
 			}
 			"03"
 			{
@@ -2406,7 +2406,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
+				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
 			}
 			"03"
 			{
@@ -2563,7 +2563,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
+				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
 			}
 			"03"
 			{
@@ -2720,7 +2720,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
+				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
 			}
 			"03"
 			{
@@ -2874,7 +2874,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
+				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
 			}
 			"03"
 			{
@@ -3454,7 +3454,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500"
+				"damage"				"400"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
@@ -4878,7 +4878,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"unholy_health_drain"		"45"
+				"unholy_health_drain"		"54"
 			}
 			"09"
 			{
@@ -6659,7 +6659,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"7"
+				"duration"				"6"
 			}
 			"11"
 			{
@@ -10226,7 +10226,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"425"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -10251,7 +10251,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"3800"
+		"ItemCost" 						"3500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
 		"ItemQuality"					"artifact"
@@ -15284,7 +15284,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"150"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15318,7 +15318,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2800"
+		"ItemCost"						"2550"
 		"ItemShopTags"					"hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"armlet of the dementor;dementor;mana armlet;marmlet"
@@ -15396,7 +15396,7 @@
 		"ItemResult"					"item_imba_lance_of_longinus"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_hurricane_pike;item_soul_booster;item_ring_of_tarrasque"
+			"01"						"item_imba_hurricane_pike;item_soul_booster"
 		}
 	}
 	
@@ -15427,7 +15427,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"9000"
+		"ItemCost"						"9300"
 		"ItemShopTags"					"damage;attack_speed;int;str;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"lance;longinus;lance of longinus"
@@ -15446,7 +15446,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"10.0"
+				"bonus_health_regen"	"6.0"
 			}
 			"03"
 			{
@@ -15513,12 +15513,12 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"800"
+				"bonus_health"			"700"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"800"
+				"bonus_mana"			"700"
 			}
 
 			
@@ -15719,8 +15719,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2335"
 		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
 		// Item Info
@@ -16474,7 +16474,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -16509,7 +16509,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"4450"
+		"ItemCost"						"4050"
 		"ItemShopTags"					"regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"valiance"
@@ -16570,7 +16570,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"counter_duration"		"2.0"
+				"counter_duration"		"2.2"
 			}
 			"11"
 			{
@@ -16664,7 +16664,7 @@
 		"ItemResult"					"item_imba_cyclone_2"
 		"ItemRequirements"
 		{
-			"01"						"item_cyclone;item_mystic_staff;item_imba_nether_wand;item_void_stone"
+			"01"						"item_cyclone;item_imba_nether_wand;item_void_stone"
 		}
 	}	
 		
@@ -16701,7 +16701,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"175"
-		"ItemCost"						"7550"
+		"ItemCost"						"4850"
 		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
@@ -16715,7 +16715,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"38"
+				"bonus_intellect"		"15"
 			}
 			"02"
 			{
@@ -16760,7 +16760,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tornado_pull_speed"	"125"
+				"tornado_pull_speed"	"150"
 			}
 			"10"
 			{
@@ -16780,12 +16780,12 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"disorient_status_resistance"	"40"
+				"disorient_status_resistance"	"50"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"disorient_duration"	"4"
+				"disorient_duration"	"5"
 			}
 		}
 		

@@ -248,7 +248,11 @@ function imba_naga_siren_ensnare:OnProjectileHit_ExtraData(hTarget, vLocation, h
 			hTarget:EmitSound("Hero_NagaSiren.Ensnare.Target")
 		end
 
-		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration")})
+		local mod = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration")})
+		
+		if mod then
+			mod:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+		end
 	end
 end
 
@@ -348,6 +352,10 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 					else
 						mod = victim:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
 						damage = damage + self:GetAbility():GetSpecialValueFor("wet_bonus_damage")
+					end
+					
+					if mod then
+						mod:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance()), true)
 					end
 
 					local damageTable = {

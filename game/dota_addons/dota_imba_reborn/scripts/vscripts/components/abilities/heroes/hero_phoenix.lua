@@ -848,10 +848,6 @@ function modifier_imba_phoenix_fire_spirits_debuff:IsPurgeException() 	return tr
 function modifier_imba_phoenix_fire_spirits_debuff:IsStunDebuff() 		return false end
 function modifier_imba_phoenix_fire_spirits_debuff:RemoveOnDeath() 		return true  end
 
-function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
-	self.attackspeed_slow	= self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
-end
-
 function modifier_imba_phoenix_fire_spirits_debuff:DeclareFunctions()
 	local decFuns =
 		{
@@ -864,17 +860,9 @@ function modifier_imba_phoenix_fire_spirits_debuff:GetTexture()
 	return "phoenix_fire_spirits"
 end
 
-function modifier_imba_phoenix_fire_spirits_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
-function modifier_imba_phoenix_fire_spirits_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_Constant()
-	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
-		return 0
-	else
-		return self:GetStackCount() * self.attackspeed_slow
-	end
-end
-
 function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
+	self.attackspeed_slow	= self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
+
 	if not IsServer() then
 		return
 	end
@@ -920,6 +908,16 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnIntervalThink()
 		ability = self:GetAbility(),
 	}
 	ApplyDamage(damageTable)
+end
+
+function modifier_imba_phoenix_fire_spirits_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
+function modifier_imba_phoenix_fire_spirits_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_Constant()
+	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
+		return 0
+	else
+		return self:GetStackCount() * self.attackspeed_slow
+	end
 end
 
 modifier_imba_phoenix_fire_spirits_buff = modifier_imba_phoenix_fire_spirits_buff or class({})

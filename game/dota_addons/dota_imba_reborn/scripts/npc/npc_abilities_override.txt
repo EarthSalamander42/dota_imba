@@ -7148,12 +7148,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"burn_amount"				"20 30 40 50 60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"burn_damage_conversion"	"60"
+				"burn_amount"				"30 40 50 60 70"
 			}
 		}
 	}

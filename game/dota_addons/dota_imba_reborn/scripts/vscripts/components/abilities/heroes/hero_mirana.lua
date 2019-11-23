@@ -464,6 +464,7 @@ function FireSacredArrow(caster, ability, spawn_point, direction)
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit = true,
 		vVelocity = direction * (arrow_speed + caster:FindTalentValue("special_bonus_imba_mirana_10")) * Vector(1, 1, 0),
+		fExpireTime = GameRules:GetGameTime() + 10.0,
 		bProvidesVision = true,
 		iVisionRadius = vision_radius,
 		iVisionTeamNumber = caster:GetTeamNumber(),
@@ -826,6 +827,11 @@ function imba_mirana_leap:OnSpellStart()
 	-- #6 Talent: Free Sacred Arrow after Leap ends
 	if caster:HasTalent("special_bonus_imba_mirana_6") then
 		local jump_speed = self:GetSpecialValueFor("jump_speed")
+
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if target_point == self:GetCaster():GetAbsOrigin() then
+			target_point = self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector()
+		end
 
 		-- Calculate the landing time
 		local distance = (caster:GetAbsOrigin() - target_point):Length2D()

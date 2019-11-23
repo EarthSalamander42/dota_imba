@@ -111,7 +111,7 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 	
 	-- "Shackleshot always prioritizes units over trees as a secondary target."
 	-- Check for units first
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("shackle_distance"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("shackle_distance"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_FARTHEST, false)
 	
 	for _, enemy in pairs(enemies) do
 		if enemy ~= target and not ignore_list[enemy] and math.abs(AngleDiff(target_angle, VectorToAngles(enemy:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then

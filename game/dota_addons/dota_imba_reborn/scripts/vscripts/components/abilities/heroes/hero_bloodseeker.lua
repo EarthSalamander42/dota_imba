@@ -116,13 +116,8 @@ if IsServer() then
 		end
 	end
 	function modifier_imba_bloodrage_buff_stats:OnDeath(params)
-		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit then
-
-			-- If the dead target is a building, do nothing
-			if params.unit:IsBuilding() then
-				return nil
-			end
-
+		-- "Bloodrage does not heal upon killing illusions, Arc Warden Tempest Double minimap icon.png Tempest Doubles, Roshan icon.png Roshan, wards, or buildings."
+		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit and not params.unit:IsIllusion() and not params.unit:IsTempestDouble() and not params.unit:IsRoshan() and not params.unit:IsOther() and not params.unit:IsBuilding() then
 			local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
 			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
 			params.attacker:Heal(heal, self:GetCaster())
@@ -505,7 +500,7 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then
 				enemy:RemoveModifierByName("modifier_imba_thirst_debuff_vision")
 			else
-				if enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
+				if enemy and not enemy:IsNull() and (enemy:IsRealHero() or enemy:IsClone()) and enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
 					if enemy:GetHealthPercent() < self.minhp then
 						local enemyHp = (self.minhp - enemy:GetHealthPercent())
 						if enemyHp > (self.minhp - self.maxhp) and not enemy:IsMagicImmune() then
@@ -578,11 +573,14 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 			end
 			if not confirmTheKill then
 				local modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thirst_haste", {duration = duration})
-				modifier.sourceUnit = params.unit
-				attackerCount = 1
-				if params.attacker == self:GetCaster() then attackerCount = 2 end
-				if modifier:GetStackCount() <= attackerCount then
-					modifier:SetStackCount(attackerCount)
+				
+				if modifier then
+					modifier.sourceUnit = params.unit
+					attackerCount = 1
+					if params.attacker == self:GetCaster() then attackerCount = 2 end
+					if modifier:GetStackCount() <= attackerCount then
+						modifier:SetStackCount(attackerCount)
+					end
 				end
 			end
 		end

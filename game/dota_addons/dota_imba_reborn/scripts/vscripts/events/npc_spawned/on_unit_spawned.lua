@@ -59,17 +59,10 @@ function GameMode:OnUnitFirstSpawn(unit)
 			if hero:HasAbility("clinkz_burning_army") then
 				unit:SetOwner(hero)
 				unit:AddNewModifier(hero, nil, "modifier_imba_burning_army", {})
+				unit:AddNewModifier(hero, nil, "modifier_kill", {duration = GetAbilitySpecial("clinkz_burning_army", "duration")})
 				break
 			end
 		end
-
-		Timers:CreateTimer(GetAbilitySpecial("clinkz_burning_army", "duration"), function()
-			if unit then
-				if unit:IsAlive() then
-					unit:ForceKill(false)
-				end
-			end
-		end)
 		
 		if unit and unit.HasAbility and unit:HasAbility("imba_clinkz_searing_arrows") and unit.GetOwner and unit:GetOwner() and unit:GetOwner():HasAbility("imba_clinkz_searing_arrows") then
 			unit:FindAbilityByName("imba_clinkz_searing_arrows"):SetLevel(unit:GetOwner():FindAbilityByName("imba_clinkz_searing_arrows"):GetLevel())

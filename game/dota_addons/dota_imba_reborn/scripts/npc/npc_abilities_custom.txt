@@ -35,6 +35,7 @@
 #base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
+#base heroes/slark/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/spectre/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
@@ -2706,7 +2707,19 @@
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"nova_damage"					"150 200 250 300"				
+				"nova_damage"					"150 200 250 300"
+				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_crystal_nova_damage"				
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction_pct"			"10"
+				"CalculateSpellDamageTooltip"	"0"				
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"health_regen"					"10"	
 			}
 		}
 	}
@@ -2860,7 +2873,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_spellpower"						"3 6 9 12"
+				"bonus_spellpower"						"4 6 8 10"
 			}			
 
 			"04"
@@ -3308,6 +3321,56 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"value"						"1.5"
+			}
+		}
+	}
+		
+	"special_bonus_imba_crystal_maiden_crystal_nova_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_crystal_maiden_crystal_nova"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"300"
+			}
+		}
+	}
+
+	"special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_crystal_maiden_brilliance_aura"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"14"
 			}
 		}
 	}
@@ -16005,21 +16068,34 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_scepter"		"40"
+				"RequiresScepter"		"1"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_scepter"		"390 500 610"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"orders_scepter"		"4"
+				"RequiresScepter"		"1"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"900"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"knockback_distance"	"350"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"knockback_duration" "1.4"
 			}
 		}
 	}
@@ -35806,7 +35882,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.5 1.6 1.7 1.8"
+				"stun_duration"			"1.8 1.9 2.0 2.1"
 			}
 			"03"
 			{
@@ -35895,7 +35971,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"armor_reduction"		"4 5 6 7"
+				"armor_reduction"		"5 7 9 11"
 				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_9"
 			}
 			"05"
@@ -35969,7 +36045,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"illusion_damage_in_pct"	"150"
+				"illusion_damage_in_pct"	"100"
 			}
 			
 			"05"
@@ -36047,6 +36123,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_stacks"				"100"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"1200"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_efficiency"			"25"
 			}
 		}
 	}

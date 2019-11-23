@@ -640,6 +640,7 @@ function modifier_imba_blinding_light_knockback:OnDestroy()
 	self.parent:FadeGesture(ACT_DOTA_FLAIL)
 	
 	self.parent:RemoveHorizontalMotionController( self )
+	-- self:GetParent():InterruptMotionControllers( true )
 	
 	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 end

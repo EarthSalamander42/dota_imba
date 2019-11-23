@@ -97,6 +97,8 @@ function modifier_imba_rancor:OnTakeDamage( params )
 			if params.damage > 0 and not parent:PassivesDisabled() and params.unit:IsRealHero() then
 				local ability = self:GetAbility()
 				local stack_receive_pct = ability:GetSpecialValueFor("stack_receive_pct")
+				
+				-- Check for Rancor Talent for allied damage
 				if params.unit:HasModifier("modifier_imba_rancor_allies") and not (parent == params.unit) then
 					if params.unit:FindModifierByNameAndCaster("modifier_imba_rancor_allies", parent) then
 						self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth())) * (parent:FindTalentValue("special_bonus_imba_vengefulspirit_4", "rate_pct") / 100)
@@ -104,6 +106,7 @@ function modifier_imba_rancor:OnTakeDamage( params )
 				else
 					self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth()))
 				end
+				
 				while (self.dmg_received_pct >= stack_receive_pct ) do
 					if parent:HasModifier("modifier_imba_rancor_stack") then
 						local modifier = parent:FindModifierByName("modifier_imba_rancor_stack")
@@ -141,6 +144,8 @@ function modifier_imba_rancor_stack:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_rancor_stack:OnCreated()
+	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+
 	if IsServer() then
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("stack_duration"))
 	end
@@ -173,6 +178,67 @@ end
 
 function modifier_imba_rancor_stack:GetModifierPreAttack_BonusDamage()
 	return (self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetStackCount())
+end
+
+function modifier_imba_rancor_stack:IsAura()				return true	end
+function modifier_imba_rancor_stack:IsAuraActiveOnDeath()	return true	end
+function modifier_imba_rancor_stack:GetModifierAura()		return "modifier_imba_rancor_ally_aura" end
+
+function modifier_imba_rancor_stack:GetAuraEntityReject(target) if target == self:GetCaster() then return true end end
+
+function modifier_imba_rancor_stack:GetAuraRadius()
+	if self:GetCaster():IsRealHero() then
+		return 1200 -- Make this KV
+	end
+end
+
+function modifier_imba_rancor_stack:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS end
+function modifier_imba_rancor_stack:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_rancor_stack:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO end
+
+------------------------------------
+-- MODIFIER_IMBA_RANCOR_ALLY_AURA --
+------------------------------------
+
+LinkLuaModifier("modifier_imba_rancor_ally_aura", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_rancor_ally_aura = modifier_imba_rancor_ally_aura or class({})
+
+function modifier_imba_rancor_ally_aura:OnCreated()
+	self.spell_power	= self:GetAbility():GetSpecialValueFor("spell_power") * self:GetAbility():GetSpecialValueFor("aura_efficiency") * 0.01
+	self.damage_pct		= self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetAbility():GetSpecialValueFor("aura_efficiency") * 0.01
+	
+	if not IsServer() then return end
+	
+	self.modifier		= self:GetAuraOwner():FindModifierByName("modifier_imba_rancor_stack")
+	
+	if not self.modifier then self:Destroy() end
+	
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_rancor_ally_aura:OnIntervalThink()
+	if self.modifier and not self.modifier:IsNull() then
+		self:SetStackCount(self.modifier:GetStackCount())
+	else
+		self:StartIntervalThink(-1)
+		self:Destroy()
+	end
+end
+
+function modifier_imba_rancor_ally_aura:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+	}
+end
+
+function modifier_imba_rancor_ally_aura:GetModifierSpellAmplify_Percentage()
+	return (self.spell_power * self:GetStackCount())
+end
+
+function modifier_imba_rancor_ally_aura:GetModifierPreAttack_BonusDamage()
+	return (self.damage_pct * self:GetStackCount())
 end
 
 -------------------------------------------
