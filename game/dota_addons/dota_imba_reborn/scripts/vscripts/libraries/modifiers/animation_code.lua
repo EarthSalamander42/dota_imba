@@ -539,7 +539,10 @@ _CODE_TO_ANIMATION_TRANSLATE = {
     [537] = "ti9_cache",
     [538] = "everblack",
     [539] = "egg",
-    [540] = "ti9_off"
+    [540] = "ti9_off",
+    [541] = "ti9_cape",
+    [542] = "TI9",
+    [543] = "dota_plus_back"
 }
 
 _ANIMATION_TRANSLATE_TO_CODE = {
@@ -1083,6 +1086,9 @@ _ANIMATION_TRANSLATE_TO_CODE = {
     ["ti9_cache"] = 537,
     ["everblack"] = 538,
     ["egg"] = 539,
-    ["ti9_off"] = 540
+    ["ti9_off"] = 540,
+    ["ti9_cape"] = 541,
+    ["TI9"] = 542,
+    ["dota_plus_back"] = 543
 }
 
