@@ -856,8 +856,8 @@ function ReconnectPlayer(player_id)
 		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
-		-- Stop redistributing gold to allies, if applicable
-		PlayerResource:StopAbandonGoldRedistribution(player_id)
+		-- Stop redistributing gold to allies, if applicable (Valve handle this now)
+--		PlayerResource:StopAbandonGoldRedistribution(player_id)
 	end
 end
 

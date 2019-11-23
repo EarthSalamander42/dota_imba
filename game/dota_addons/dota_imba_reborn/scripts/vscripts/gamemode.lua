@@ -8,6 +8,7 @@ require('addon_init')
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
 	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+	require('internal/eventtest')
 end
 
 require('libraries/animations')
@@ -79,6 +80,10 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
 	
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
+
+	if IsInToolsMode() then
+		Convars:RegisterCommand('events_test', function() GameMode:StartEventTest() end, "events test", FCVAR_CHEAT)
+	end
 end
 
 -- CAREFUL, FOR REASONS THIS FUNCTION IS ALWAYS CALLED TWICE

@@ -57,7 +57,11 @@ else
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
-POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
+if IsInToolsMode() then
+	POST_GAME_TIME = 60000.0				-- How long should we let people look at the scoreboard before closing the server automatically?
+else
+	POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
+end
 CAMERA_DISTANCE_OVERRIDE = -1
 GOLD_PER_TICK = 1
 
