@@ -8,6 +8,7 @@ var permanent_buffs = {
 	"modifier_item_imba_moon_shard_active": "items",
 	"modifier_imba_silencer_arcane_supremacy": "spellicons",
 	"modifier_slark_essence_shift_permanent_buff": "spellicons",
+	"modifier_imba_slark_essence_shift_permanent_buff": "spellicons",
 	"modifier_imba_singularity": "spellicons",
 	"modifier_imba_rubick_clandestine_librarian": "spellicons",
 	"modifier_legion_commander_duel_damage_boost": "spellicons",
