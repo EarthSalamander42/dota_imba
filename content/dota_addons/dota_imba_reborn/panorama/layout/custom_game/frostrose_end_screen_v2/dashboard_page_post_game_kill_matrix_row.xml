@@ -2,7 +2,7 @@
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="s2r://panorama/styles/dashboard_page_shared.vcss_c" />
-		<include src="s2r://panorama/styles/dashboard_page_post_game.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
 	</styles>
 
 	<DOTAPostGameKillMatrixRow class="StatRowHeight" >
@@ -27,8 +27,28 @@
 				<DOTAHeroImage id="VictimHero4" class="VictimHero" heroimagestyle="icon" />
 				<Label id="VictimDeathCount4" class="VictimDeathCount" text="#dota_page_match_details_victim4_count" html="true"/>
 			</Panel>
+			<Panel class="KillContainer">
+				<DOTAHeroImage id="VictimHero5" class="VictimHero" heroimagestyle="icon" />
+				<Label id="VictimDeathCount5" class="VictimDeathCount" text="#dota_page_match_details_victim5_count" html="true"/>
+			</Panel>
+			<Panel class="KillContainer">
+				<DOTAHeroImage id="VictimHero6" class="VictimHero" heroimagestyle="icon" />
+				<Label id="VictimDeathCount6" class="VictimDeathCount" text="#dota_page_match_details_victim6_count" html="true"/>
+			</Panel>
+			<Panel class="KillContainer">
+				<DOTAHeroImage id="VictimHero7" class="VictimHero" heroimagestyle="icon" />
+				<Label id="VictimDeathCount7" class="VictimDeathCount" text="#dota_page_match_details_victim7_count" html="true"/>
+			</Panel>
+			<Panel class="KillContainer">
+				<DOTAHeroImage id="VictimHero8" class="VictimHero" heroimagestyle="icon" />
+				<Label id="VictimDeathCount8" class="VictimDeathCount" text="#dota_page_match_details_victim8_count" html="true"/>
+			</Panel>
+			<Panel class="KillContainer">
+				<DOTAHeroImage id="VictimHero9" class="VictimHero" heroimagestyle="icon" />
+				<Label id="VictimDeathCount9" class="VictimDeathCount" text="#dota_page_match_details_victim9_count" html="true"/>
+			</Panel>
 			<Panel id="TotalKills" class="KillContainer">
-				<Label class="KillMatrixTotalKills" text="{d:total_kills}" />
+				<Label class="KillMatrixTotalKills" text="0" />
 			</Panel>		
 		</Panel>
 

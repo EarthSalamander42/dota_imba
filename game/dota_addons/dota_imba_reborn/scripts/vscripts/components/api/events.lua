@@ -50,3 +50,20 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		end)
 	end
 end, nil)
+
+ListenToGameEvent('dota_item_purchased', function(event)
+	-- itemcost, itemname, PlayerID, splitscreenplayer
+
+	PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
+
+--	if not PlayerResource.ItemTimer then PlayerResource.ItemTimer = {} end
+
+--	PlayerResource.ItemTimer = Timers:CreateTimer(10.0, CheckIfItemSold(event))
+end, nil)
+
+-- creepy way to check if an item was sold and fully refund
+function CheckIfItemSold(event)
+	if PlayerResource:GetSelectedHeroEntity(event.PlayerID):HasItemInInventory(event.itemname) then
+		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
+	end
+end

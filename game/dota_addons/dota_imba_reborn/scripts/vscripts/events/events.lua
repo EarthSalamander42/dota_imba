@@ -334,8 +334,8 @@ function GameMode:OnDisconnect(keys)
 
 				--				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
-				-- Start redistributing this player's gold to its allies
-				PlayerResource:StartAbandonGoldRedistribution(player_id)
+				-- Start redistributing this player's gold to its allies (Valve handle it now)
+--				PlayerResource:StartAbandonGoldRedistribution(player_id)
 				-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
@@ -556,6 +556,8 @@ function GameMode:OnPlayerLearnedAbility(keys)
 	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
 
+	PlayerResource:StoreAbilitiesLevelUpOrder(keys.PlayerID, abilityname)
+
 	-- If it the ability is Homing Missiles, wait a bit and set count to 1
 	if abilityname == "gyrocopter_homing_missile" then
 		Timers:CreateTimer(1, function()
@@ -596,8 +598,6 @@ function GameMode:OnConnectFull(keys)
 	local playerID = ply:GetPlayerID()
 
 	ReconnectPlayer(playerID)
-
-	--	PlayerResource:InitPlayerData(playerID)
 end
 
 -- This function is called whenever any player sends a chat message to team or All

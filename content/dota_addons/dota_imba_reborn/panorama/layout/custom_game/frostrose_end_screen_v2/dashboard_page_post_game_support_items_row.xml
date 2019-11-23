@@ -2,14 +2,14 @@
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="s2r://panorama/styles/dashboard_page_shared.vcss_c" />
-		<include src="s2r://panorama/styles/dashboard_page_post_game.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
 	</styles>
 
 	<DOTAPostGameSupportItemsRow class="StatRowHeight">
 		<Panel class="PlayerRowContainer">
 			<Panel id="SupportItemContainer" />
-			<Label id="SupportItemsValue" class="SupportItemsValue" text="{d:total_spend}" />
-			<Label id="SupportItemsCampsStacked" class="SupportItemsCampsStacked" text="{d:camps_stacked}" />
+			<Label id="SupportItemsValue" class="SupportItemsValue" text="0" />
+			<Label id="SupportItemsCampsStacked" class="SupportItemsCampsStacked" text="0" />
 		</Panel>
 	</DOTAPostGameSupportItemsRow>
 </root>

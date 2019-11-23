@@ -511,6 +511,12 @@ function api:CompleteGame(successCallback, failCallback)
 			local items = {}
 			local heroEntity = PlayerResource:GetSelectedHeroEntity(id)
 			local hero = json.null
+			local networth = 0
+			local healing = PlayerResource:GetHealing(id)
+			local damage_done_to_heroes = 0
+			local damage_done_to_buildings = 0
+			local kills_done_to_hero = {}
+			local items_bought = PlayerResource:GetItemsBought(id)
 
 			if heroEntity ~= nil then
 				hero = tostring(heroEntity:GetUnitName())
@@ -521,6 +527,20 @@ function api:CompleteGame(successCallback, failCallback)
 						table.insert(items, tostring(item:GetAbilityName()))
 					end
 				end
+
+				networth = heroEntity:GetNetworth()
+			end
+
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				damage_done_to_heroes = damage_done_to_heroes + PlayerResource:GetDamageDoneToHero(id, i)
+				kills_done_to_hero[i] = PlayerResource:GetKillsDoneToHero(id, i)
+			end
+
+			if IsInToolsMode() and id == 0 then
+--				print("CompleteGame: Items:", items)
+--				print("CompleteGame: Items Bought:", items_bought)
+--				print("CompleteGame: Support Items Bought:", PlayerResource:GetSupportItemsBought(id, items_bought))
+--				print("CompleteGame: Abilities Level Up Order:", PlayerResource:GetAbilitiesLevelUpOrder(id))
 			end
 
 			local player = {
@@ -531,7 +551,16 @@ function api:CompleteGame(successCallback, failCallback)
 				level = tonumber(PlayerResource:GetLevel(id)),
 				hero = hero,
 				team = tonumber(PlayerResource:GetTeam(id)),
-				items = items
+				items = items,
+				networth = networth,
+				healing = healing,
+				damage_done_to_heroes = damage_done_to_heroes,
+				damage_done_to_buildings = damage_done_to_buildings,
+				kills_done_to_hero = kills_done_to_hero,
+				items_bought = items_bought,
+				support_items = PlayerResource:GetSupportItemsBought(id, items_bought),
+				gold_spent_on_support = PlayerResource:GetGoldSpentOnSupport(id),
+				abilities_level_up_order = PlayerResource:GetAbilitiesLevelUpOrder(id),
 			}
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))
@@ -616,6 +645,5 @@ function api:GetCustomGamemode()
 
 	return gamemode
 end
-
 
 require("components/api/events")

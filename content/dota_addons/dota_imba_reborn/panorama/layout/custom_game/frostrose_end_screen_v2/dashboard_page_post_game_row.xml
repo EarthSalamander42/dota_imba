@@ -16,12 +16,12 @@
 	<Panel class="PlayerRow StatRowHeight">
 		<Panel class="PlayerRowContainer">
 			<DOTATalentDisplay id="TalentTree" class="TalentTree" />
-			<Label class="Level" text="{i:level}" />
-			<Label class="Kills KillsColumn" text="{i:kills}" />
-			<Label class="Deaths DeathsColumn" text="{i:deaths}" />
-			<Label class="Assists AssistsColumn" text="{i:assists}" />
-			<Label class="MMRChange MMRColumn" text="{s:mmr_change}" />
-			<Label class="NetWorth NetWorthColumn" text="{i:net_worth}" />
+			<Label class="Level" text="0" />
+			<Label class="Kills KillsColumn" text="0" />
+			<Label class="Deaths DeathsColumn" text="0" />
+			<Label class="Assists AssistsColumn" text="0" />
+			<Label class="MMRChange MMRColumn" text="0" />
+			<Label class="NetWorth NetWorthColumn" text="0" />
 			<Panel id="LoneDruid"/>
 			<Panel id="ADAbilitiesContainer" class="AbilitiesColumn ADAbilitiesContainer" >
 				<DOTAAbilityImage id="ADAbilityIcon0" class="ADAbilityIcon" />
@@ -34,12 +34,12 @@
 				<Panel id="BattlepassXPContainer" class="es-player-xp">
 					<Panel id="es-player-xp-progress" />
 					<Panel id="es-player-xp-progress-diff" />
-					<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 
-					<Label id="es-player-xp-level" text="129" />
-					<Label id="es-player-xp-rank" text="1227 / 3000" /> 
+					<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Rookie" /> 
+					<Label id="es-player-xp-level" text="1" />
+					<Label id="es-player-xp-rank" text="0 / 500" /> 
 				</Panel> 
 
-				<Label id="es-player-xp-earned" class="es-player-line-text" text="+200" /> 
+				<Label id="es-player-xp-earned" class="es-player-line-text" text="0" /> 
 				<Label id="es-player-xp-booster" class="es-player-line-text" text=" (100%)" /> 
 			</Panel> 
 
@@ -68,12 +68,12 @@
 			<Panel id="PermanentBuffs" class="PermanentBuffs PermanentBuffsColumn">
 				<!-- PermanentBuff snippets go here -->
 			</Panel>
-			<Label class="LastHits LastHitsColumn" text="{i:last_hits}" />
+			<Label class="LastHits LastHitsColumn" text="0" />
 			<Label class="BackSlash" text="/" />
-			<Label class="Denies DeniesColumn" text="{i:denies}" />
-			<Label class="GoldPerMin GPMColumn" text="{i:gold_per_min}" />
-			<Label class="XPPerMin XPMColumn" text="{i:xp_per_min}" />
-<!--		<Label class="HeroHealing HeroHealingColumn" text="{i:hero_healing}" /> -->
+			<Label class="Denies DeniesColumn" text="0" />
+			<Label class="GoldPerMin GPMColumn" text="0" />
+			<Label class="XPPerMin XPMColumn" text="0" />
+			<Label class="HeroHealing HeroHealingColumn" text="0" />
 		</Panel>
 	</Panel>
 </root>

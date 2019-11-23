@@ -157,23 +157,23 @@
 		
 		<snippet name="DetailsDamageReceivedPlayerRow">
 			<Panel class="PlayerRowContainer">
-				<Label id="DamageReceivedPreValue" text="{i:damage_received_pre}" />
-				<Label id="DamageReceivedPostValue" text="{s:damage_received_reduced_percent}" />
+				<Label id="DamageReceivedPreValue" text="0" />
+				<Label id="DamageReceivedPostValue" text="0" />
 				<Panel class="InfoIcon"/>
 			</Panel>
 		</snippet>
 
 		<snippet name="DetailsDamageDealtPlayerRow">
 			<Panel class="PlayerRowContainer">
-				<Label id="DamageDealtHeroValue" text="{i:damage_dealt_hero}" />
-				<Label id="DamageDealtBuildingValue" text="{i:damage_dealt_building}" />
+				<Label id="DamageDealtHeroValue" text="0" />
+				<Label id="DamageDealtBuildingValue" text="0" />
 			</Panel>
 		</snippet>
 
 		<snippet name="DetailsDeathStatsPlayerRow">
 			<Panel class="PlayerRowContainer">
-				<Label id="DeathStatsGoldValue" text="{i:death_stats_gold}" />
-				<Label id="DeathStatsTimeValue" text="{s:death_stats_time}" />
+				<Label id="DeathStatsGoldValue" text="0" />
+				<Label id="DeathStatsTimeValue" text="0" />
 			</Panel>
 		</snippet>
 
@@ -184,7 +184,7 @@
 				<Label id="EssenceCollectedLabel" text="#DOTA_TI9_PostGame_EssenceCollected" />
 			</Panel>
 		</snippet>
-		
+
 	</snippets>
 
 	<DOTAPostGame>
@@ -1029,7 +1029,7 @@
 								<Panel class="GoldIcon" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_support_gold_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()"/>
 								<Panel class="CampsStackedIcon" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_camps_stacked_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()"/>
 							</Panel>
-							<Panel class="SupportItemsTeamContainer" id="DireSupportItemsRow">
+							<Panel class="SupportItemsTeamContainer" id="DireSupportItemsRows">
 							</Panel>
 						</Panel>
 

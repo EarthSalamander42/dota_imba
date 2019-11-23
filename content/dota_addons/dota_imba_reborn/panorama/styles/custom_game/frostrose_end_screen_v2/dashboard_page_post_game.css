@@ -757,12 +757,12 @@ DOTAPostGame.EventGame #EventGameOverview
 	horizontal-align: center;
 }
 
-#NormalMatchPlayers					{ width: 2100px; }
-#NormalMatchPlayers.PermanentBuffs1 { width: 2208px; }
-#NormalMatchPlayers.PermanentBuffs2 { width: 2208px; }
-#NormalMatchPlayers.PermanentBuffs3 { width: 2258px; }
-#NormalMatchPlayers.PermanentBuffs4 { width: 2308px; }
-#NormalMatchPlayers.PermanentBuffs5 { width: 2358px; }
+#NormalMatchPlayers					{ width: 2182px; }
+#NormalMatchPlayers.PermanentBuffs1 { width: 2290px; }
+#NormalMatchPlayers.PermanentBuffs2 { width: 2290px; }
+#NormalMatchPlayers.PermanentBuffs3 { width: 2340px; }
+#NormalMatchPlayers.PermanentBuffs4 { width: 2390px; }
+#NormalMatchPlayers.PermanentBuffs5 { width: 2440px; }
 
 .GameModeAbilityDraft #NormalMatchPlayers				  { width: 1944px; }
 .GameModeAbilityDraft #NormalMatchPlayers.PermanentBuffs1 { width: 1952px; }
@@ -1162,7 +1162,7 @@ Panel.PlayerRow DOTATalentDisplay
 }
 
 .StatRowHeight .PlayerRowContainer {
-	height: 54px;
+	height: 100%;
 }
 
 #NormalMatchPlayers .PlayerRowContainer
@@ -3116,6 +3116,7 @@ Label.CommentText
 	flow-children: right;
 	overflow: scroll clip;
 	horizontal-align: center;
+	background-color: #000000B7;
 }
 
 #ContainerCenter HorizontalScrollBar
@@ -5381,20 +5382,20 @@ DOTAPostGameSupportItemsRow
 	flow-children: none;
 }
 
-DOTAPostGameSupportItemsItemEntry
+.ItemEntry
 {
 	//height: 60px;
 	margin-right: 16px;
 
 }
 
-DOTAPostGameSupportItemsItemEntry DOTAItemImage
+.ItemEntry DOTAItemImage
 {
 	vertical-align: center;
 	margin-bottom: 12px;
 }
 
-DOTAPostGameSupportItemsItemEntry .ItemIcon
+.ItemEntry .ItemIcon
 {
 	width: 36px;
 	height: 27px;
@@ -5528,7 +5529,7 @@ DOTAPostGameKillMatrixRow .KillContainer
 
 .VictimHero
 {
-	margin-top: 8px;
+	margin-top: 0px;
 	width: 35px;
 	height: 35px;
 	wash-color: #444444;
@@ -5546,7 +5547,12 @@ DOTAPostGameKillMatrixRow.Victim_0_Active #VictimHero0,
 DOTAPostGameKillMatrixRow.Victim_1_Active #VictimHero1,
 DOTAPostGameKillMatrixRow.Victim_2_Active #VictimHero2,
 DOTAPostGameKillMatrixRow.Victim_3_Active #VictimHero3,
-DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero4
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero4,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero5,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero6,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero7,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero8,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimHero9
 {
 	wash-color: none;
 	saturation: 1;
@@ -5585,7 +5591,12 @@ DOTAPostGameKillMatrixRow.Victim_0_Active #VictimDeathCount0,
 DOTAPostGameKillMatrixRow.Victim_1_Active #VictimDeathCount1,
 DOTAPostGameKillMatrixRow.Victim_2_Active #VictimDeathCount2,
 DOTAPostGameKillMatrixRow.Victim_3_Active #VictimDeathCount3,
-DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount4
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount4,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount5,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount6,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount7,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount8,
+DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount9
 {
 	visibility: visible;
 }
@@ -7460,6 +7471,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	width: 42px;
 	//border: 1px solid red;
 	margin-left: 32px;
+	text-overflow: shrink;
 }
 
 .MMRColumn
