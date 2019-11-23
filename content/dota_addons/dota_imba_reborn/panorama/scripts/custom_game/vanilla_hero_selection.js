@@ -21,16 +21,16 @@ function InitHeroSelection()  {
 		$.Schedule(0.5, UpdatePickedHeroes)
 
 		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
+	}
 
+	if (gamemode && typeof(gamemode[1]) == "number") {
+		pick_screen_title.text = ($.Localize("LobbySetting_GameMode") + ": " + $.Localize("vote_gamemode_" + gamemode[1])).toUpperCase();
 		pick_screen_title.style.marginTop = "30px";
 		pick_screen_title.style.height = "37px";
 		pick_screen_title.style.fontSize = "30px";
 		pick_screen_title.style.horizontalAlign = "left";
 		pick_screen_title.style.opacity = "1";
 	}
-
-	if (gamemode && typeof(gamemode[1]) == "number")
-		pick_screen_title.text = $.Localize("vote_gamemode_" + gamemode[1]);
 
 	var i = 0;
 
