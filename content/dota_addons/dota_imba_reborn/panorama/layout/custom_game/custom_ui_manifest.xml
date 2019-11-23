@@ -1,4 +1,8 @@
 <root> 
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/vanilla_keybinds.js" />
+	</scripts>
+
 	<script>
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );      //Time of day (clock).
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );     //Heroes and team score at the top of the HUD.
@@ -229,44 +233,14 @@
 			}
 		}
 */
+
 		function PlayHeroTaunt() {
 			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
 				ID : Players.GetLocalPlayer(),
 			});
 		}
 
-		// Credits: ark120202
-		// https://github.com/ark120202/angel-arena-black-star/blob/2c8854fcbeba025b1ec1f512b01b98b7d679c456/content/panorama/scripts/hotkey_tracker.js#L8-L13
-		function GetKeyBind(name) {
-			$.GetContextPanel().BCreateChildren('<DOTAHotkey keybind="' + name + '" />');
-			var keyElement = $.GetContextPanel().GetChild($.GetContextPanel().GetChildCount() - 1);
-			keyElement.DeleteAsync(0);
-			return keyElement.GetChild(0).text;
-		}
-
-		function SetupTauntKeyBind() {
-//			$.Msg("Attempt to gather taunt key for player: " + Players.GetLocalPlayer())
-			if (Players.GetLocalPlayer() != -1) {
-				$.RegisterKeyBind($.GetContextPanel(), 'key_' + GetKeyBind("HeroTaunt").toLowerCase(), function()
-				{
-					PlayHeroTaunt();
-				});
-
-				Game.CreateCustomKeyBind(GetKeyBind("HeroTaunt").toLowerCase(), "HeroTaunt");
-
-				Game.AddCommand("HeroTaunt", function() {
-					PlayHeroTaunt();
-				}, "", 0);
-
-				// Test to see if this function actually works and doesn't break vote system
-//				$.Msg("Taunt keybind of player ID " + Players.GetLocalPlayer() + ": " + GetKeyBind("HeroTaunt"))
-			} else {
-//				$.Msg("Local player nil, retry taunt key gathering...")
-				$.Schedule(1.0, SetupTauntKeyBind)
-			}
-		}
-
-		SetupTauntKeyBind();
+		GameUI.SetupVanillaKeyBinding("HeroTaunt", PlayHeroTaunt);
 
 		// Dota Plus kill graph
 //		if ($.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillCam")) {
@@ -307,5 +281,8 @@
 <!--	<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+
+		<!-- Credits: Dota 12v12 (Dota 2 Unofficial dev team) -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/dota_hud_chat_wheel.xml" />
 	</Panel>
 </root>

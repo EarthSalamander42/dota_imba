@@ -124,6 +124,14 @@ function Precache( context )
 --	end
 
 	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
+
+	-- Chat Wheel
+	PrecacheResource( "soundfile", "soundevents/custom_soundboard_soundevents.vsndevts", context )
+
+	local heroeskv = LoadKeyValues("scripts/heroes.txt")
+	for hero, _ in pairs(heroeskv) do
+		PrecacheResource( "soundfile", "soundevents/voscripts/game_sounds_vo_"..string.sub(hero,15)..".vsndevts", context )
+	end
 end
 
 function Activate()

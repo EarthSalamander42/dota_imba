@@ -31,6 +31,7 @@ require('internal/events')
 -- add components below the api
 require('components/abandon')
 require('components/battlepass/init')
+require('components/chat_wheel/init')
 require('components/courier/init')
 require("components/demo/init")
 require("components/frantic/init")
