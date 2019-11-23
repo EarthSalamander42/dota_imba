@@ -1,7 +1,12 @@
 ﻿"addon" {
 	"absolutely_perfect" "Absolutely Perfect"
 	"addonname" "Dota IMBA"
-
+	"all_dead" "They're all dead!"
+	"announcers" "Announcers"
+	"average_ixp" "Average IXP:"
+	"average_mmr" "Average MMR:"
+	"ay_ay_ay" "Ай-ай-ай-ай-ай, что сейчас произошло!"
+	"bai_tuo_shei_qu" "拜托谁去杀了他吧"
 	"battlepass" "Battlepass"
 	"battlepass2019" "BattlePass 2019"
 	"battlepass_alchemist_taunt" "Taunt: Ogre Hop"
@@ -659,6 +664,8 @@
 	"vote_gamemode_3" "Super Frantic"
 	"vote_gamemode_4" "Diretide"
 	"vote_gamemode_5" "Same Hero Selection"
+	"votooltip" "Hold 'L' to access the chat wheel"
+	"wan_bu_liao_la" "玩不了啦!"
 	"welcome_label" "Welcome to Dota IMBA!"
 	"whats_cooking" "You know what's cooking? BOOM!"
 	"what_just_happened" "I can't believe what we're seeing. What just happened?"
