@@ -1,12 +1,12 @@
-#Main {
-	width: 400px;
-}
-
 #Mutations {
 	flow-children: down;
 	box-shadow: none;
 	margin-top: 130px;
 	visibility: collapse;
+}
+
+.HUDFlipped .Main {
+	horizontal-align: right;
 }
 
 .DotaMutations {
