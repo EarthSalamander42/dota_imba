@@ -1410,9 +1410,9 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 		end
 		
 		if GameRules:IsDaytime() then
-			self:SetDuration(self:GetRemainingTime() + self.duration_day, true)
+			self:SetDuration(math.max(self.duration_day, self:GetRemainingTime()), true)
 		else
-			self:SetDuration(self:GetRemainingTime() + self.duration_night, true)
+			self:SetDuration(self.duration_night, true)
 		end
 	
 		-- Destroy/Release particle index and re-draw with updated radius (don't technically have to but it looks better)
