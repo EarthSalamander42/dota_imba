@@ -1,6 +1,6 @@
 // Crystal Maiden's Arcane Dynamo
 "DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo"                "Arcane Dynamo"
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Description"                "Crystal Maiden harnesses the flow of mana around her, increasing her control. Increases Crystal_Maiden's movespeed and spell amp based on her remaining mana pool. The bonuses scale linearly with the percentage of her max mana pool."
+"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Description"	"Crystal Maiden harnesses the flow of mana around her, increasing her control. Increases Crystal Maiden's move speed and spell amplification based on her remaining mana pool. The bonuses scale linearly with the percentage of her max mana pool."
 "DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Lore"          "The immense control that Crystal Maiden has over mana is something most sorcerers can only wish to achieve."
 "DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Note0"          "This means that when Crystal Maiden has full mana, she gains the max bonuses from Arcane Dynamo."
 "DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_bonus_movespeed_percent"    "%MAX MOVE SPEED BONUS:"
@@ -13,33 +13,31 @@
 "DOTA_Tooltip_modifier_imba_crystal_maiden_ability_slow_Description"                "Attack and movement speed slowed by 15/15%."
 
 // Crystal Maiden's Crystal Nova
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova"                "Crystal Nova"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Description"                 "A burst of damaging frost slows enemy movement and attack rate in the targeted area for %nova_slow_duration% seconds.\n<font color='#FF7800'>Hail Storm:</font> Creates a hail storm on the target location for %snowfield_duration% seconds, which increases allies' move speed while slowing and damaging enemies in it."
+"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova"					"Crystal Nova"
+"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Description"		"A burst of damaging frost slows enemy movement and attack rate in the targeted area for %nova_slow_duration% seconds.\n<font color='#FF7800'>Hail Storm:</font> Creates a hail storm on the target location for %snowfield_duration% seconds, Allies gain %snowfield_ally_buff%%% move speed, %damage_reduction_pct%%% damage reduction, and %health_regen% health regeneration, while enemies have %snowfield_enemy_slow%%% reduced move speed and take %snowfield_damage_per_tick% damage every %snowfield_damage_interval% seconds."
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Lore"            "The air temperature around Rylai drops rapidly, chilling all around her to the core."
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_slow_percentage"        "%NOVA SLOW:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_damage"                 "NOVA DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_damage_per_tick"   "HAIL STORM DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_enemy_slow"        "%HAIL STORM SLOW:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_ally_buff"         "%HAIL STORM SPEED:"
 
 "DOTA_Tooltip_modifier_imba_crystal_nova_slow"                          "Crystal Nova"
 "DOTA_Tooltip_modifier_imba_crystal_nova_slow_Description"              "Slowed by Crystal Maiden's icy blast."
 
 "DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_debuff"              "Hail Storm"
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_debuff_Description"              "Slowed and taking damage."
+"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_debuff_Description"	"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and taking damage periodically."
 
 "DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_buff"                "Hail Storm"
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_buff_Description"                "Move speed increased."
+"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_buff_Description"	"Move speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduction increased by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%, and health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
 
 // Crystal Maiden's Frostbite
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite"                    "Frostbite"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Description"                    "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Lasts longer on creeps.\n<font color='#FF7800'>Icy Touch:</font> Enemy heroes which damage Crystal Maiden will be affected by Frostbite. When triggered, this effect has to cool down for some seconds. Creeps cannot triger Icy Touch."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Note0"              "Frostbite's passive effect always uses the level 1 duration."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Lore"              "Rylai channels winds from the Blueheart Glacier, imprisoning attackers in thick blocks of ice."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_per_second_tooltip"      "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Description"		"Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Lasts longer on creeps.\n<font color='#FF7800'>Icy Touch:</font> Enemy heroes which damage Crystal Maiden will be affected by Frostbite. When triggered, this effect has to cool down for some seconds. Creeps cannot triger Icy Touch.\n<font color='#FF7800'>Merry Frost:</font> Can be set to auto-cast to allow Frostbite to target allies. Casting Frostbite in this fashion restores %heal_per_tick% health and %mana_per_tick% every %damage_interval% seconds, and reduces damage taken by %ally_damage_reduction%%% for Frostbite's duration."
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Note0"					"Frostbite's passive effect always uses the level 1 duration."
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Lore"					"Rylai channels winds from the Blueheart Glacier, imprisoning attackers in thick blocks of ice."
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_total_damage"			"HERO TOTAL DAMAGE:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_creep_total_damage"		"CREEP TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_interval"                "TICK INTERVAL:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_interval"                "DAMAGE INTERVAL:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration_passive_recharge"      "ICY TOUCH COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_passive_ready"                 "Icy Touch"
@@ -59,7 +57,7 @@
 
 // Crystal Maiden's Arcane Aura
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura"              "Arcane Aura"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Gives additional mana regeneration to all friendly units on the map. Arcane Aura's bonuses are %bonus_self%x as effective for Crystal Maiden.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants bonus spell amp to heroes with more than %spellpower_threshold_pct%%% remaining mana."
+"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Gives additional mana regeneration to all friendly units on the map. This bonus is increased by %bonus_self%x for Crystal Maiden.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes %bonus_int% bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants %bonus_spellpower%%% bonus spell amplification to heroes with more than %spellpower_threshold_pct%%% remaining mana."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Lore"                     "Cold temperatures promote the essence of magic, causing Rylai's presence to allow spell usage in abundance."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_mana_regen"               "BONUS MANA REGEN:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_int"                "BONUS INTELLIGENCE:"
@@ -70,9 +68,10 @@
 
 // Crystal Maiden's Freezing Field
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"              "Freezing Field"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "CHANNELED - Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage.  Lasts %duration% seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_aghanim_description"       "Allows Freezing Field to be cast on a target area up to 900 range away."
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"                     "The slow effect pierces Spell Immunity."
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "CHANNELED - Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage. Grants bonus armor while channeling. Lasts %abilitychanneltime% seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area."
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_aghanim_description"       "<font color='#FF7800'>Allows Freezing Field to be cast on a target area up to 900 range away.</font>"
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"						"The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second)."
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note1"						"Explosions occur every %explosion_interval% seconds."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Lore"          "Once the place of her exile, Thickset Venue has become an anchor for Rylai's frigid onslaught."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_radius"                    "FIELD RADIUS:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_explosion_radius"          "EXPLOSION RADIUS:"
@@ -100,3 +99,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_crystal_maiden_7"				"Freezing Field becomes an Ice Meteor"
 "DOTA_Tooltip_Ability_special_bonus_imba_crystal_maiden_7_Description"	"No longer drops explosions. At end of channel, every 0.1 seconds of channel time generates a shard to damage enemies."
 "DOTA_Tooltip_Ability_special_bonus_imba_crystal_maiden_8"				"+50% Freezing Field explosion rate"
+"DOTA_Tooltip_ability_special_bonus_imba_crystal_maiden_frostbite_duration"	"+{s:value}s Frostbite Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"		"+{s:value}% Manacost/Manaloss Reduction Aura"
+"DOTA_Tooltip_ability_special_bonus_imba_crystal_maiden_crystal_nova_damage"					"+{s:value} Crystal Nova Damage"
+

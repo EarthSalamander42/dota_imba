@@ -35,7 +35,7 @@ function modifier_custom_creep_scaling:OnCreated()
 	self.parent			= self:GetParent()
 	
 	-- Yeah let's not give Doom the bonuses
-	if not self.ability or not self.parent:IsCreep() then return end
+	if not self.ability or (not self.parent:IsCreep() and not string.find(self:GetParent():GetUnitName(), "living_tower")) then return end
 	
 	self.initialized	= false
 	

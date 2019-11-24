@@ -2,8 +2,7 @@
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
 			<!-- Those selection icons are not used, but Valve calls them, increasing loading time if they don't exist. -->
-
-			<!--
+<!--
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sohei.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -127,7 +126,7 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana1.png" hittest="false" />
 
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_malfurion.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_scaldris.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_sly_king.png" hittest="false" />
@@ -149,7 +148,6 @@
 
 			<Image src="file://panorama/images/custom_game/patreon.png" hittest="false" />
 
-
 			<Image src="file://panorama/images/custom_game/battlepass/alchemist_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/dark_willow_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/invoker_taunt.png" hittest="false" />
@@ -164,7 +162,14 @@
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
+
+			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style0.png" hittest="false" />
+			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style1.png" hittest="false" />
+			<Image src="file://{images}/spellicons/custom/arcane_supremacy.png" hittest="false" />
+			<Image src="file://{images}/spellicons/custom/imba_enigma_black_hole_immortal1.png" hittest="false" />
+			<Image src="file://{images}/spellicons/custom/imba_rubick_clandestine_librarian.png" hittest="false" />
+			<Image src="file://{images}/spellicons/custom/timbersaw/chakram_3.png" hittest="false" />
+		-->
 		</Panel>
 	</Panel>
-	-->
 </root>

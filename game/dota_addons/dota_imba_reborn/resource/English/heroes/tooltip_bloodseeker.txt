@@ -45,7 +45,7 @@
 
 // Bloodseeker's Rupture
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture"                        "Rupture"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of damage per 100 units moved. The damage is dealt through spell immunity.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of damage per 100 units moved. The damage is dealt through spell immunity.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Lore"                    "When the Bloodseeker hunts you, injuries become fatalities."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note0"                  "Moving more than 1300 units in under 0.25 seconds will cause Rupture to ignore that movement."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note1"                  "Scepter Rupture charges can be fully refreshed by using a Refresher."
@@ -62,15 +62,15 @@
 "DOTA_Tooltip_modifier_imba_rupture_charges_Description"                "Can cast Rupture whenever you have at least one charge."
 
 // Bloodseeker's Custom Talents
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1"                 "%value%%  Bloodrage Amplification Shift"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1_Description"		"Increases outgoing damage and reduces incoming damage for allies by %value%%, and vice-versa for enemies."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1"                 "10% Bloodrage Amplification Shift"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1_Description"		"Increases outgoing damage and reduces incoming damage for allies by 10%, and vice-versa for enemies."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2"                 "Bleeding Your Way Out"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2_Description"   	"Enemies hit by Blood Rite are pushed away from the circle and take Rupture damage for 0.3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_3"                 "Rupture heals for 100% of the damage dealt"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_4"                 "Blood Rite's silence debuff becomes unpurgable"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite Triplicate (left, right, and front of cast area)"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite Triplicate (left/right/front of cast area)"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_6"                 "+1700 Rupture Distance Trigger Cap"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7"                 "Blood Frenzy"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a %ms_bonus_pct%%  movespeed bonus for %duration% seconds."
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage Bonus +%value%%  Amp per %value2%%  Missing Health"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_9"					"-%value%s Blood Rite Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a 100% movespeed bonus for 3.5 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage Bonus +3% Amp per 5% Missing Health"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_9"					"-6s Blood Rite Cooldown"

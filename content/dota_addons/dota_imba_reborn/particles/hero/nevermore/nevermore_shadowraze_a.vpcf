@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -44,18 +44,6 @@
 	m_Initializers = 
 	[
 		{
-			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ 0.0, 0.0, 1024.0 ]
-			m_OffsetMax = [ 0.0, 0.0, 1024.0 ]
-		},
-		{
-			_class = "C_INIT_PositionPlaceOnGround"
-			m_flOffset = 4.0
-			m_bSetNormal = true
-			m_flMaxTraceLength = 2048.0
-			m_CollisionGroupName = "DEBRIS"
-		},
-		{
 			_class = "C_INIT_RandomRotation"
 		},
 		{
@@ -68,20 +56,45 @@
 			m_fRadiusMax = 70.0
 		},
 		{
-			_class = "C_INIT_RandomYawFlip"
-		},
-		{
 			_class = "C_INIT_RandomLifeTime"
 			m_fLifetimeMin = 3.0
 			m_fLifetimeMax = 4.0
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, 1024.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 1024.0 ]
+		},
+		{
+			_class = "C_INIT_PositionPlaceOnGround"
+			m_flOffset = 4.0
+			m_bSetNormal = true
+			m_flMaxTraceLength = 2048.0
+			m_CollisionGroupName = "DEBRIS"
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
 		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.0
-			m_flEmissionDuration = 0.15
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.15
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 50.0
+			}
 		},
 	]
 	m_controlPointConfigurations = 
@@ -99,4 +112,7 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 4
 }

@@ -17,7 +17,7 @@ function modifier_generic_motion_controller:IsPurgable()		return self:GetParent(
 function modifier_generic_motion_controller:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end -- This seems to allow proper interruption of stacking modifiers or something
 
 -- Function parameters:
--- distance, direction_x, direction_y, direction_z, duration, height, bGroundStop, bDecelerate, bIgnoreTenacity, treeRadius, bStun
+-- distance, direction_x, direction_y, direction_z, duration, height, bGroundStop, bDecelerate, bIgnoreTenacity, treeRadius, bStun, bDestroyTreesAlongPath
 
 -- bGroundStop makes the motion controller if the parent's vertical position would otherwise be lower than the ground position (similar to Techies' Blast Off!)
 -- bDecelerate makes the horizontal portion decelerate towards the destination rather than having constant velocity
@@ -36,6 +36,7 @@ function modifier_generic_motion_controller:OnCreated(params)
 	self.bIgnoreTenacity	= params.bIgnoreTenacity
 	self.treeRadius			= params.treeRadius
 	self.bStun				= params.bStun
+	self.bDestroyTreesAlongPath	= params.bDestroyTreesAlongPath
 	
 	-- Velocity = Displacement/Time
 	self.velocity		= self.direction * self.distance / self.duration
@@ -113,7 +114,8 @@ end
 function modifier_generic_motion_controller:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():InterruptMotionControllers(true)
+	self:GetParent():RemoveHorizontalMotionController(self)
+	self:GetParent():RemoveVerticalMotionController(self)
 	
 	if self:GetRemainingTime() <= 0 and self.treeRadius then
 		GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self.treeRadius, true )
@@ -128,6 +130,10 @@ function modifier_generic_motion_controller:UpdateHorizontalMotion(me, dt)
 	else
 		me:SetOrigin( me:GetOrigin() + (self.horizontal_velocity * dt) )
 		self.horizontal_velocity = self.horizontal_velocity + (self.direction * self.horizontal_acceleration * dt)
+	end
+	
+	if self.bDestroyTreesAlongPath and self.bDestroyTreesAlongPath == 1 then
+		GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self:GetParent():GetHullRadius(), true )
 	end
 	
 	if self.bInterruptible == 1 and self:GetParent():IsStunned() then

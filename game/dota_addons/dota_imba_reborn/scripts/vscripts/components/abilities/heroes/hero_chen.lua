@@ -335,11 +335,7 @@ end
 -- Man this is messy...
 function imba_chen_holy_persuasion:CastFilterResultTarget(hTarget)
 	if not IsServer() then return end
-	
-	if PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-		return UF_FAIL_DISABLE_HELP
-	end
-	
+
 	if hTarget == self:GetCaster() 
 	or (hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsRoshan()) and hTarget:GetLevel() <= self:GetSpecialValueFor("level_req") and (not hTarget:IsAncient() or (hTarget:IsAncient() and self:GetCaster():HasAbility("imba_chen_hand_of_god") and self:GetCaster():FindAbilityByName("imba_chen_hand_of_god"):IsTrained() and self:GetCaster():HasScepter()))
 	or (hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber() and (hTarget:IsRealHero() or hTarget:IsClone() or hTarget:GetOwnerEntity() == self:GetCaster() or (hTarget.GetPlayerID and self:GetCaster().GetPlayerID and hTarget:GetPlayerID() == self:GetCaster():GetPlayerID()) or hTarget:IsOther())) then
@@ -420,7 +416,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 			new_lane_creep:SetBaseDamageMax(target:GetBaseDamageMax())
 			new_lane_creep:SetMinimumGoldBounty(target:GetGoldBounty())
 			new_lane_creep:SetMaximumGoldBounty(target:GetGoldBounty())			
-			UTIL_Remove(target)
+			target:AddNoDraw()
+			target:ForceKill(false)
 			target = new_lane_creep
 		end
 		
@@ -879,16 +876,22 @@ end
 -- end
 
 function modifier_imba_chen_holy_persuasion_immortalized:OnIntervalThink()
-	if not IsServer() then return end
-	
-	self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	if not self:GetAbility() then
+		self:GetParent():ForceKill(false)
+	end
+	-- if ((self:GetCaster():GetAbsOrigin() + self.immortalize_vector) - self:GetParent():GetAbsOrigin()):Length2D() > self.distance then
+		-- self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	-- else
+		self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	-- end
 end
 
 -- Perhaps a bit overkill?
 function modifier_imba_chen_holy_persuasion_immortalized:CheckState()
 	local state = {
 		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+		-- [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_DOMINATED] = true,
 		[MODIFIER_STATE_FROZEN] = true,
@@ -917,7 +920,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 		
-		MODIFIER_EVENT_ON_DEATH
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ORDER
     }
 
     return decFuncs
@@ -933,6 +937,22 @@ end
 
 function modifier_imba_chen_holy_persuasion_immortalized:GetModifierModelScale()
 	return -20
+end
+
+function modifier_imba_chen_holy_persuasion_immortalized:OnOrder(keys)	
+	-- for _, key in pairs(keys) do
+		-- print(_, " ", key)
+	-- end
+	if keys.unit == self:GetParent() and keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+		local parent = self:GetParent()
+		local caster = self:GetCaster()
+	
+		Timers:CreateTimer(FrameTime(), function()
+			self:GetParent():Interrupt()
+			self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+		end)
+		-- self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+	end
 end
 
 -- If the immortalized creep dies (how, I don't know) or the caster dies, remove the relevant modifier from the caster as well (also make sure the creep dies)

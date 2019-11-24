@@ -18,12 +18,17 @@ function modifier_imba_haste_rune:GetTexture()
 	return "rune_haste"	-- "custom/imba_rune_haste"
 end
 
+function modifier_imba_haste_rune:CheckState()
+	return {[MODIFIER_STATE_UNSLOWABLE] = true}
+end
+
 -- Function declarations
 function modifier_imba_haste_rune:DeclareFunctions()
 	local funcs	=	{
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN, 
+		-- MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
 	}
 	return funcs
 end
@@ -43,9 +48,13 @@ function modifier_imba_haste_rune:GetModifierAttackSpeedBonus_Constant()
 end
 
 -- Minimum unslowable movement speed
-function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
-	--return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed_min
-	return self.ideal_speed
+-- function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
+	-- --return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed_min
+	-- return self.ideal_speed
+-- end
+
+function modifier_imba_haste_rune:GetModifierIgnoreMovespeedLimit()
+	return 1
 end
 
 -- Aura properties

@@ -464,6 +464,7 @@ function FireSacredArrow(caster, ability, spawn_point, direction)
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit = true,
 		vVelocity = direction * (arrow_speed + caster:FindTalentValue("special_bonus_imba_mirana_10")) * Vector(1, 1, 0),
+		fExpireTime = GameRules:GetGameTime() + 10.0,
 		bProvidesVision = true,
 		iVisionRadius = vision_radius,
 		iVisionTeamNumber = caster:GetTeamNumber(),
@@ -809,8 +810,8 @@ function imba_mirana_leap:OnSpellStart()
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 
-	-- Disjoint projectiles
-	ProjectileManager:ProjectileDodge(caster)
+	-- -- Disjoint projectiles
+	-- ProjectileManager:ProjectileDodge(caster)
 
 	-- Make Mirana face the target (relevant with #7 Talent)
 	caster:FaceTowards(target_point)
@@ -826,6 +827,11 @@ function imba_mirana_leap:OnSpellStart()
 	-- #6 Talent: Free Sacred Arrow after Leap ends
 	if caster:HasTalent("special_bonus_imba_mirana_6") then
 		local jump_speed = self:GetSpecialValueFor("jump_speed")
+
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if target_point == self:GetCaster():GetAbsOrigin() then
+			target_point = self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector()
+		end
 
 		-- Calculate the landing time
 		local distance = (caster:GetAbsOrigin() - target_point):Length2D()
@@ -1339,8 +1345,24 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 	if IsServer() then
 		self.modifier_dummy = self.parent:FindModifierByName("modifier_imba_moonlight_shadow_invis_dummy")
 
-		-- Set stack count to level 2
-		self:SetStackCount(2)
+		-- Look around for enemy heroes in the immunity radius
+		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.truesight_immunity_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+			FIND_ANY_ORDER,
+			false)
+
+		-- If an enemy hero was found, remove immunity
+		if #enemies > 0 then
+			self:SetStackCount(1)
+		else
+			-- Else, set it back
+			self:SetStackCount(2)
+		end
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)

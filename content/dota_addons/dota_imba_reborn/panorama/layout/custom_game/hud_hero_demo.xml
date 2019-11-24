@@ -283,7 +283,6 @@
 					</Panel>
 -->
 					<Panel class="Category">
-						<Label text="#Playback_ButtonCategory"/>
 						<Panel class="QuitPausePanel">
 							<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( PauseButtonPressed )">
 								<Label text="#PauseDemo_Button"/>

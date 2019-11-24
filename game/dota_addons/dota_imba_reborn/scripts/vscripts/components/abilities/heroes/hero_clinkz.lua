@@ -187,16 +187,16 @@ end
 function modifier_imba_strafe_aspd:GetModifierAttackRangeBonus()
 
 	-- 7.01, grants buff when not mounted, also 2x the bonus when mounted	
-	if self:GetCaster():HasModifier(self.modifier_mount) then 
-		return self.bonus_attack_range + self.bonus_attack_range
-	else
+	-- if self:GetCaster():HasModifier(self.modifier_mount) then 
+		-- return self.bonus_attack_range + self.bonus_attack_range
+	-- else
 		-- 7.01, talent grants buff when not mounted, also 4x the bonus when casted on self		
 		if self:GetCaster():HasModifier("modifier_imba_strafe_self_root") then
 			return self.bonus_attack_range * self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_5")
 		else
 			return self.bonus_attack_range
 		end
-	end
+	-- end
 	return nil 
 end
 
@@ -467,10 +467,13 @@ function modifier_imba_searing_arrows_passive:IsPurgable() return false end
 function modifier_imba_searing_arrows_passive:IsDebuff() return false end
 
 function modifier_imba_searing_arrows_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_START,
-					  MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+	}
 end
 
 function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
@@ -512,24 +515,47 @@ function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
 	end
 end
 
-
-function modifier_imba_searing_arrows_passive:GetModifierBaseAttack_BonusDamage()
-	-- If the ability is null, do nothing
-	if self:GetAbility():IsNull() then
-		return nil
+function modifier_imba_searing_arrows_passive:OnAttack(keys)
+	if keys.attacker == self:GetParent() and not keys.no_attack_cooldown and ((self:GetParent().HasTalent and self:GetParent():HasTalent("special_bonus_imba_clinkz_10")) or (self:GetParent().GetOwner and self:GetParent():GetOwner() and self:GetParent():GetOwner().HasTalent and self:GetParent():GetOwner():HasTalent("special_bonus_imba_clinkz_10"))) then
+		for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
+			if enemy ~= keys.target then
+				self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
+				break
+			end
+		end
 	end
-	
-	-- Ignore if it is a stolen ability
-	if self:GetAbility():IsStolen() then
-		return nil
-	end
-
-	if not self:GetCaster():PassivesDisabled() then
-		return self.bonus_damage -- + self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3")
-	end
-
-	return nil
 end
+
+function modifier_imba_searing_arrows_passive:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() then
+		ApplyDamage({
+			victim 			= keys.target,
+			damage 			= self:GetAbility():GetSpecialValueFor("bonus_damage"),
+			damage_type		= self:GetAbility():GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetParent(),
+			ability 		= self:GetAbility()
+		})
+	end
+end
+
+-- function modifier_imba_searing_arrows_passive:GetModifierBaseAttack_BonusDamage()
+	-- -- If the ability is null, do nothing
+	-- if self:GetAbility():IsNull() then
+		-- return nil
+	-- end
+	
+	-- -- Ignore if it is a stolen ability
+	-- if self:GetAbility():IsStolen() then
+		-- return nil
+	-- end
+
+	-- if not self:GetCaster():PassivesDisabled() then
+		-- return self.bonus_damage -- + self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3")
+	-- end
+
+	-- return nil
+-- end
 
 function SetArrowAttackProjectile(caster, searing_arrows)    
 	-- modifiers

@@ -57,6 +57,29 @@ function bubbleSort(A)
 	until hasChanged == false
 end
 
+function string.split(input, delimiter)
+	input = tostring(input)
+	delimiter = tostring(delimiter)
+	if (delimiter == "") then
+		return false
+	end
+	local pos, arr = 0, {}
+	-- for each divider found
+	for st, sp in function()
+		return string.find(input, delimiter, pos, true)
+	end do
+		table.insert(arr, string.sub(input, pos, st - 1))
+		pos = sp + 1
+	end
+	table.insert(arr, string.sub(input, pos))
+	return arr
+end
+
+function String2Vector(s)
+	local array = string.split(s, " ")
+	return Vector(array[1], array[2], array[3])
+end
+
 -- Map utils
 function MapRanked5v5() return "ranked_5v5" end
 function MapRanked10v10() return "ranked_10v10" end
@@ -833,8 +856,8 @@ function ReconnectPlayer(player_id)
 		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
-		-- Stop redistributing gold to allies, if applicable
-		PlayerResource:StopAbandonGoldRedistribution(player_id)
+		-- Stop redistributing gold to allies, if applicable (Valve handle this now)
+--		PlayerResource:StopAbandonGoldRedistribution(player_id)
 	end
 end
 
@@ -1028,6 +1051,169 @@ function SpawnEasterEgg()
 	end
 end
 
+function mysplit(inputstr, sep)
+	-- whitespace by default
+	if sep == nil then
+		sep = "%s"
+	end
+
+	local t = {}
+
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+
+	return t
+end
+
+function IsSaturday()
+	local check_date = {}
+	check_date.day = 28
+	check_date.month = 09
+	check_date.year = 19
+
+--	if IsInToolsMode() then
+		-- GetSystemDate returns MM/DD/AA format
+--		current_date = "03/28/20"
+--	end
+
+	local current_date_split = mysplit(GetSystemDate(), "/")
+	local current_date = {}
+	current_date.day = tonumber(current_date_split[2])
+	current_date.month = tonumber(current_date_split[1])
+	current_date.year = tonumber(current_date_split[3])
+	local day_count = 0
+	-- print(check_date, current_date)
+
+	if current_date.month == check_date.month and current_date.year == check_date.year then
+		-- print("Check/Current day:", check_date.day, current_date.day)
+		day_count = check_date.day - current_date.day
+		if day_count < 0 then day_count = day_count * (-1) end
+	else
+		for y = check_date.year, current_date.year do
+			-- print("Currently checking year:", y)
+			if check_date.year == current_date.year then
+				-- print("Check in same check/current year")
+				for i = check_date.month, current_date.month do
+					if i == check_date.month then
+						-- print("First month:", get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0))
+						day_count = day_count + get_remaining_days_in_month(check_date.month, check_date.day, check_date.year % 4 == 0)
+					elseif i == current_date.month then
+						-- print("last month:", get_remaining_days_in_month(current_date.month, current_date.day, current_date.year % 4 == 0))
+						day_count = day_count + current_date.day - 1
+					else
+						-- print("month between (full)", get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)	)
+						day_count = day_count + get_remaining_days_in_month(current_date.month, nil, current_date.year % 4 == 0)						
+					end
+				end
+			else
+				if y == check_date.year then
+					-- print("Remaining days in first year:", get_remaining_days_in_year(check_date.year, check_date.month, check_date.day))
+					day_count = day_count + get_remaining_days_in_year(check_date.year, check_date.month, check_date.day)
+				elseif y == current_date.year then
+					-- print("Remaining days in last year:", get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
+					day_count = day_count + (get_remaining_days_in_year(current_date.year) - get_remaining_days_in_year(current_date.year, current_date.month, current_date.day))
+				else
+					-- print("Year between (full):", get_remaining_days_in_year(check_date.year))
+					day_count = day_count + get_remaining_days_in_year(check_date.year)
+				end
+			end
+		end
+	end
+
+	-- print("Day count:", day_count, day_count % 7)
+
+	if day_count % 7 == 0 then
+		return true
+	else
+		return false
+	end
+end
+
+function get_remaining_days_in_month(iMonth, iDay, iLeapYear)
+	local count = 0
+	local days_in_months = {"31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"}
+	if iLeapYear and iMonth == 2 then count = 1 end
+
+	if iDay then
+		-- print("Total days/current day:", iMonth, days_in_months[iMonth], iDay)
+		count = count + (tonumber(days_in_months[iMonth]) - iDay) + 1
+	else
+		count = count + tonumber(days_in_months[iMonth])
+	end
+
+	return count
+end
+
+function get_remaining_days_in_year(iYear, iMonth, iDay)
+	local count = 0
+	local leap_year = false
+	if iYear % 4 == 0 then leap_year = true end
+
+	local starting_iteration = 1
+	if iMonth then starting_iteration = iMonth end
+
+	for i = starting_iteration, 12 do
+		if i == starting_iteration and iMonth then
+			-- print(i, get_remaining_days_in_month(i, iDay, leap_year))
+			count = count + get_remaining_days_in_month(i, iDay, leap_year)
+		else
+			count = count + get_remaining_days_in_month(i, nil, leap_year)
+			-- print(i, get_remaining_days_in_month(i, nil, leap_year))
+		end
+	end
+
+	return count
+end
+
+-- ALLOW MULTIPLE INTRINSIC MODIFIERS (table support for GetIntrinsicModifierName)
+--[[
+-- needs to be tested before using it
+original_GetIntrinsicModifierName = CDOTABaseAbility.GetIntrinsicModifierName
+CDOTABaseAbility.GetIntrinsicModifierName = function(self, sModifierName)
+    print("Ability/Item:", self)
+    if self == nil then return end
+
+    print("type:", type(sModifierName))
+    if type(sModifierName) == "table" then
+        print("Table of intrinsic modifiers! yay!")
+        for index, modifier_name in pairs(sModifierName) do
+            print(index, modifier_name)
+            if not self.intrinsic_modifiers then self.intrinsic_modifiers = {} end
+
+            local class = modifier_name.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
+            load(class)()
+
+            local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, modifier_name, {})
+            table.insert(self.intrinsic_modifiers, mod)
+        end
+    else
+        return original_GetIntrinsicModifierName(self, sModifierName)
+    end
+end
+
+-- Item added to inventory filter
+GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
+	local unit = EntIndexToHScript(event.inventory_parent_entindex_const)
+	if unit == nil then return end
+	if unit:IsRealHero() then if unit:GetPlayerID() == -1 then return end end
+	local item = EntIndexToHScript(event.item_entindex_const)
+
+    if not unit:HasItemInInventory(item:GetAbilityName()) then
+        if not unit:HasItemInInventory(item:GetAbilityName()) then
+            print("Dropped item has multiple intrinsic modifiers, removing them")
+            for index, modifier_name in pairs(item.intrinsic_modifiers) do
+                if unit:HasModifier(modifier_name) then
+                    unit:RemoveModifierByName(modifier_name)
+                end
+            end
+        end
+    end
+
+   	return true
+end, GameMode)
+--]]
+
 -- credits to yahnich for the following
 function ParticleManager:FireParticle(effect, attach, owner, cps)
 	local FX = ParticleManager:CreateParticle(effect, attach, owner)
@@ -1043,4 +1229,60 @@ function ParticleManager:FireParticle(effect, attach, owner, cps)
 		end
 	end
 	ParticleManager:ReleaseParticleIndex(FX)
+end
+
+-- credits to darklord (Dota 12v12) for the following
+for _, listenerId in ipairs(registeredCustomEventListeners or {}) do
+	CustomGameEventManager:UnregisterListener(listenerId)
+end
+registeredCustomEventListeners = {}
+function RegisterCustomEventListener(eventName, callback)
+	local listenerId = CustomGameEventManager:RegisterListener(eventName, function(_, args)
+		callback(args)
+	end)
+
+	table.insert(registeredCustomEventListeners, listenerId)
+end
+
+for _, listenerId in ipairs(registeredGameEventListeners or {}) do
+	StopListeningToGameEvent(listenerId)
+end
+registeredGameEventListeners = {}
+function RegisterGameEventListener(eventName, callback)
+	local listenerId = ListenToGameEvent(eventName, callback, nil)
+	table.insert(registeredGameEventListeners, listenerId)
+end
+
+-- Much more efficient implementation of table element removal than table.remove()
+-- Written by Mitch McMabers of StackOverflow
+-- https://stackoverflow.com/a/53038524
+
+-- Example Usage:
+-- local t = {
+    -- 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
+-- };
+
+-- ArrayRemove(t, function(t, i, j)
+    -- -- Return true to keep the value, or false to discard it.
+    -- local v = t[i];
+    -- return (v == 'a' or v == 'b' or v == 'f' or v == 'h');
+-- end);
+
+function Custom_ArrayRemove(t, fnKeep)
+    local j, n = 1, #t;
+
+    for i=1,n do
+        if (fnKeep(i, j)) then
+            -- Move i's kept value to j's position, if it's not already there.
+            if (i ~= j) then
+                t[j] = t[i];
+                t[i] = nil;
+            end
+            j = j + 1; -- Increment position of where we'll place the next kept value.
+        else
+            t[i] = nil;
+        end
+    end
+
+    return t;
 end

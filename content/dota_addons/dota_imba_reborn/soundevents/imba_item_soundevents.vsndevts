@@ -609,3 +609,164 @@
 		}
 	}
 }
+
+"Valiance.Cast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/item/valiance/valiance_cast.vsnd"
+						}
+					}
+					"volume"			{   "value"     "1.000000"  }
+					"pitch_rand_min"	{   "value"     "-0.03000"  }
+					"pitch_rand_max"	{   "value"     "0.030000"  }
+					"pitch"				{   "value"     "1.00000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Valiance.Dash"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/item/valiance/valiance_dash.vsnd"
+						}
+					}
+					"volume"			{   "value"     "1.000000"  }
+					"pitch_rand_min"	{   "value"     "-0.03000"  }
+					"pitch_rand_max"	{   "value"     "0.030000"  }
+					"pitch"				{   "value"     "1.00000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Valiance.Shield.Cast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/mars/shield_bash.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.800000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.050000"  }
+					"pitch"				{   "value"     "1.00000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Valiance.Shield.Cast.Small"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/mars/shield_bash_miss.vsnd"
+						}
+					}
+					"volume"			{   "value"     "1.000000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.000000"  }
+					"pitch"				{   "value"     "1.00000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Valiance.Shield.Crit"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/mars/shield_crit.vsnd"
+						}
+					}
+					"volume"			{   "value"     "1.000000"  }
+					"pitch_rand_min"	{   "value"     "0.10000"  }
+					"pitch_rand_max"	{   "value"     "0.150000"  }
+					"pitch"				{   "value"     "1.00000"  }
+					"soundlevel"		{   "value"     "84.00000" }
+					"distance_max"		{   "value"     "2500.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+

@@ -1,0 +1,79 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.css" />
+	</styles>
+
+	<snippets>
+		<snippet name="PermanentBuff">
+			<Panel class="PermanentBuff">
+				<Image id="PermanentBuffIcon" src="s2r://panorama/images/spellicons/empty_png.vtex" scaling="stretch-to-fit-y-preserve-aspect" />
+				<Label id="PermanentBuffStackCount" text="" hittest="false" />
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="PlayerRow StatRowHeight">
+		<Panel class="PlayerRowContainer">
+			<DOTATalentDisplay id="TalentTree" class="TalentTree" />
+			<Label class="Level" text="0" />
+			<Label class="Kills KillsColumn" text="0" />
+			<Label class="Deaths DeathsColumn" text="0" />
+			<Label class="Assists AssistsColumn" text="0" />
+			<Label class="MMRChange MMRColumn" text="0" />
+			<Label class="NetWorth NetWorthColumn" text="0" />
+			<Panel id="LoneDruid"/>
+			<Panel id="ADAbilitiesContainer" class="AbilitiesColumn ADAbilitiesContainer" >
+				<DOTAAbilityImage id="ADAbilityIcon0" class="ADAbilityIcon" />
+				<DOTAAbilityImage id="ADAbilityIcon1" class="ADAbilityIcon" />
+				<DOTAAbilityImage id="ADAbilityIcon2" class="ADAbilityIcon" />
+				<DOTAAbilityImage id="ADAbilityIcon3" class="ADAbilityIcon" />
+			</Panel>
+
+			<Panel class="es-player-xp-container ItemsColumn ItemsContainer ">
+				<Panel id="BattlepassXPContainer" class="es-player-xp">
+					<Panel id="es-player-xp-progress" />
+					<Panel id="es-player-xp-progress-diff" />
+					<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Rookie" /> 
+					<Label id="es-player-xp-level" text="1" />
+					<Label id="es-player-xp-rank" text="0 / 500" /> 
+				</Panel> 
+
+				<Label id="es-player-xp-earned" class="es-player-line-text" text="0" /> 
+				<Label id="es-player-xp-booster" class="es-player-line-text" text=" (100%)" /> 
+			</Panel> 
+
+			<Panel id="ItemsContainer" class="ItemsColumn ItemsContainer" >
+				<DOTAItemImage id="ItemIcon0" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon1" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon2" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon3" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon4" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon5" class="ItemIcon" />
+			</Panel>
+			<Panel id="LoneDruidBear"/>
+			<Panel id="AdditionalItemsContainer" class="ItemsColumn ItemsContainer" >
+				<DOTAItemImage id="AdditionalItemIcon0" class="ItemIcon" />
+				<DOTAItemImage id="AdditionalItemIcon1" class="ItemIcon" />
+				<DOTAItemImage id="AdditionalItemIcon2" class="ItemIcon" />
+				<DOTAItemImage id="AdditionalItemIcon3" class="ItemIcon" />
+				<DOTAItemImage id="AdditionalItemIcon4" class="ItemIcon" />
+				<DOTAItemImage id="AdditionalItemIcon5" class="ItemIcon" />
+			</Panel>
+			<Panel id="BackpackItemsContainer" class="BackpackItemsColumn BackpackItemsContainer" >
+				<DOTAItemImage id="ItemIcon6" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon7" class="ItemIcon" />
+				<DOTAItemImage id="ItemIcon8" class="ItemIcon" />
+			</Panel>
+			<Panel id="PermanentBuffs" class="PermanentBuffs PermanentBuffsColumn">
+				<!-- PermanentBuff snippets go here -->
+			</Panel>
+			<Label class="LastHits LastHitsColumn" text="0" />
+			<Label class="BackSlash" text="/" />
+			<Label class="Denies DeniesColumn" text="0" />
+			<Label class="GoldPerMin GPMColumn" text="0" />
+			<Label class="XPPerMin XPMColumn" text="0" />
+			<Label class="HeroHealing HeroHealingColumn" text="0" />
+		</Panel>
+	</Panel>
+</root>

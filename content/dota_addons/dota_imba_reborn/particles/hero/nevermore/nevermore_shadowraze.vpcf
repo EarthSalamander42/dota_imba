@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -13,6 +13,7 @@
 			m_flMaxSize = 0.25
 			m_hTexture = resource:"materials/particle/smoke/maya_wispy/wispy_v2.vtex"
 			m_flAnimationRate = 0.75
+			m_ColorScale = [ 255, 255, 255 ]
 		},
 	]
 	m_Operators = 
@@ -67,6 +68,11 @@
 			m_flRadiusMax = 48.0
 		},
 		{
+			_class = "C_INIT_RandomRotationSpeed"
+			m_flDegreesMin = 30.0
+			m_flDegreesMax = 40.0
+		},
+		{
 			_class = "C_INIT_RandomYawFlip"
 		},
 		{
@@ -74,17 +80,16 @@
 			m_OffsetMin = [ 0.0, 0.0, 15.0 ]
 			m_OffsetMax = [ 0.0, 0.0, 60.0 ]
 		},
-		{
-			_class = "C_INIT_RandomRotationSpeed"
-			m_flDegreesMin = 30.0
-			m_flDegreesMax = 40.0
-		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 10
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 10.0
+			}
 		},
 	]
 	m_ForceGenerators = 
@@ -96,7 +101,11 @@
 		{
 			_class = "C_OP_AttractToControlPoint"
 			m_fFalloffPower = -0.1
-			m_fForceAmount = 25.0
+			m_fForceAmount = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 25.0
+			}
 		},
 	]
 	m_Children = 
@@ -179,4 +188,6 @@
 			]
 		},
 	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 6
 }

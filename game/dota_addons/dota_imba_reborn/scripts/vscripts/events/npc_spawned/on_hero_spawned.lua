@@ -47,11 +47,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	HeroSelection:Attachments(hero)
 
-	-- Initializes player data if this is not a bot
-	if PlayerResource:GetConnectionState(hero:GetPlayerID()) == 2 then
-		PlayerResource:InitPlayerData(hero:GetPlayerID())
-	end
-
 	if IMBA_PICK_SCREEN == true then
 		-- Set up initial gold
 		-- local has_randomed = PlayerResource:HasRandomed(playerId)

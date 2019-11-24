@@ -64,7 +64,7 @@
 		"AbilityManaCost"			"110 120 130 140"
 		"AbilityTextureName"		"custom//malfurion/rejuvenation"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
 		"precache"
 		{
@@ -150,7 +150,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_damage_pct"		"40"
+				"splash_damage_pct"		"60"
 			}
 			"05"
 			{
@@ -203,7 +203,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityType"					"ABILITY_TYPE_ULTIMATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"			"6"
 		"RequiredLevel"					"6"
@@ -212,6 +212,7 @@
 		"AbilityCooldown"				"140.0 120.0 100.0"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange"				"600"
+		"HasScepterUpgrade"				"1"
 
 //		"precache"
 //		{
@@ -224,7 +225,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"2000 3000 4000"
+				"health"				"2000 3500 5000"
 			}
 			"02"
 			{
@@ -265,6 +266,18 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"30"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_health"		"3500 5000 7500"
+				"RequiresScepter"		"1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_duration"		"60"
+				"RequiresScepter"		"1"
 			}
 		}
 	}

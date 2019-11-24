@@ -19,13 +19,12 @@ function imba_phantom_assassin_stifling_dagger:GetAbilityTextureName()
 end
 
 function imba_phantom_assassin_stifling_dagger:OnSpellStart()
-
 	local caster 	= self:GetCaster()
 	local target 	= self:GetCursorTarget()
 	local scepter 	= caster:HasScepter()
 
 	--ability specials
-	self.scepter_knives_interval 	=	0.3
+	self.scepter_knives_interval 	=	self:GetSpecialValueFor("scepter_knives_interval")
 	self.cast_range					=	self:GetCastRange() + GetCastRangeIncrease(caster)
 	self.playbackrate				=	1 + self.scepter_knives_interval
 
@@ -53,7 +52,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 		-- TALENT: +1 Stifling Dagger bonus dagger (like aghs)
 		if not scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
-			secondary_knives_thrown = scepter_dagger_count
+			-- secondary_knives_thrown = scepter_dagger_count
 		elseif scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 		else
@@ -74,64 +73,75 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 			FIND_UNITS_EVERYWHERE,
 			false
 		)
-
-		for _, enemy in pairs (enemies) do
-			enemy.hit_by_pa_dagger = false
+		
+		for _, enemy in pairs(enemies) do
+			if enemy ~= target then
+				self:LaunchDagger(enemy, extra_data)
+				secondary_knives_thrown = secondary_knives_thrown + 1
+			end
+			
+			if secondary_knives_thrown >= scepter_dagger_count then
+				break
+			end
 		end
 
-		-- Mark the main target, set variables
-		target.hit_by_pa_dagger = true
-		local dagger_target_found
+		-- for _, enemy in pairs (enemies) do
+			-- enemy.hit_by_pa_dagger = false
+		-- end
 
-		-- Look for a secondary target to throw a knife at
-		Timers:CreateTimer(self.scepter_knives_interval, function()
-			-- Set variable for clear action
-			dagger_target_found = false
+		-- -- Mark the main target, set variables
+		-- target.hit_by_pa_dagger = true
+		-- local dagger_target_found
 
-			-- Look for a target in the cast range of the spell
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-				caster:GetAbsOrigin(),
-				nil,
-				self.cast_range,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-				FIND_ANY_ORDER,
-				false)
+		-- -- Look for a secondary target to throw a knife at
+		-- Timers:CreateTimer(self.scepter_knives_interval, function()
+			-- -- Set variable for clear action
+			-- dagger_target_found = false
 
-			-- Check if there's an enemy unit without a mark. Mark it and throw a dagger to it
-			for _, enemy in pairs (enemies) do
-				if not enemy.hit_by_pa_dagger then
-					enemy.hit_by_pa_dagger = true
-					dagger_target_found = true
+			-- -- Look for a target in the cast range of the spell
+			-- local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+				-- caster:GetAbsOrigin(),
+				-- nil,
+				-- self.cast_range,
+				-- DOTA_UNIT_TARGET_TEAM_ENEMY,
+				-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				-- DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+				-- FIND_ANY_ORDER,
+				-- false)
 
-					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, self.playbackrate)
+			-- -- Check if there's an enemy unit without a mark. Mark it and throw a dagger to it
+			-- for _, enemy in pairs (enemies) do
+				-- if not enemy.hit_by_pa_dagger then
+					-- enemy.hit_by_pa_dagger = true
+					-- dagger_target_found = true
 
-					self:LaunchDagger(enemy, extra_data)
-					break -- only hit the first enemy found
-				end
-			end
+					-- caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, self.playbackrate)
 
-			-- If all enemies were found with a mark, clear all marks from everyone
-			if not dagger_target_found then
-				for _, enemy in pairs (enemies) do
-					enemy.hit_by_pa_dagger = false
-				end
+					-- self:LaunchDagger(enemy, extra_data)
+					-- break -- only hit the first enemy found
+				-- end
+			-- end
 
-				-- Throw dagger at a random enemy
-				local enemy = enemies[RandomInt(1, #enemies)]
+			-- -- If all enemies were found with a mark, clear all marks from everyone
+			-- if not dagger_target_found then
+				-- for _, enemy in pairs (enemies) do
+					-- enemy.hit_by_pa_dagger = false
+				-- end
 
-				self:LaunchDagger(enemy, extra_data)
-			end
+				-- -- Throw dagger at a random enemy
+				-- local enemy = enemies[RandomInt(1, #enemies)]
 
-			-- Check if there are knives remaining
-			secondary_knives_thrown = secondary_knives_thrown + 1
-			if secondary_knives_thrown < scepter_dagger_count then
-				return self.scepter_knives_interval
-			else
-				return nil
-			end
-		end)
+				-- self:LaunchDagger(enemy, extra_data)
+			-- end
+
+			-- -- Check if there are knives remaining
+			-- secondary_knives_thrown = secondary_knives_thrown + 1
+			-- if secondary_knives_thrown < scepter_dagger_count then
+				-- return self.scepter_knives_interval
+			-- else
+				-- return nil
+			-- end
+		-- end)
 	end
 end
 
@@ -579,7 +589,7 @@ function modifier_imba_blur:OnCreated()
 
 	-- Ability specials
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
-	self.evasion = self:GetAbility():GetSpecialValueFor("evasion")
+	self.evasion = self:GetAbility():GetTalentSpecialValueFor("evasion")
 	self.ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
 
 	if IsServer() then
@@ -632,7 +642,7 @@ end
 function modifier_imba_blur:GetModifierIncomingDamage_Percentage()
 
 	--TALENT: Blur now grants +30% chance to evade any damage
-	if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_8")) then
+	if RollPseudoRandom(self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_8"), self) then
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, self.caster, 0, nil)
 		return -100
 	end
@@ -826,26 +836,37 @@ function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_blur_smoke:OnCreated()
-	if IsServer() then
-		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
-		self:StartIntervalThink(FrameTime())
+	if self:GetAbility() and not self:GetAbility():IsNull() then
+		self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
+		self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
+
+		if IsServer() then
+			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+			self:StartIntervalThink(FrameTime())
+		end
 	end
 end
 
 function modifier_imba_blur_smoke:OnIntervalThink()
 	if self.linger == true then return end
 
-	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("vanish_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- script error on enemies line
+	-- print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
+	-- print(self:GetParent():GetTeamNumber())
+	-- print(self:GetParent():GetAbsOrigin())
+
+	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	if #enemies > 0 then
 		self.linger = true
 		self:StartIntervalThink(-1)
-		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("fade_duration"), function()
+		Timers:CreateTimer(self.fade_duration, function()
 			self:Destroy()
 		end)
 	end
 end
 
+-- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
 function modifier_imba_blur_smoke:OnRemoved()
 	if IsServer() then
 		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
@@ -886,7 +907,6 @@ function modifier_imba_coup_de_grace:OnCreated()
 	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
 
 	-- Ability specials
-	self.crit_chance = self:GetAbility():GetSpecialValueFor("crit_chance")
 	self.crit_increase_duration = self:GetAbility():GetSpecialValueFor("crit_increase_duration")
 	self.crit_bonus = self:GetAbility():GetSpecialValueFor("crit_bonus")
 end
@@ -905,7 +925,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 	if IsServer() then
 		local target = keys.target							-- TALENT: +8 sec Coup de Grace bonus damage duration
 		local crit_duration = self.crit_increase_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")
-		local crit_chance_total = self.crit_chance
+		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
 		if target:IsBuilding() then
@@ -934,17 +954,18 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			}
 			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
 
-			-- If the caster doesn't have the stacks modifier, give it to him
-			if not self.caster:HasModifier(self.modifier_stacks) then
-				self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
-			end
+			-- -- IMBAfication: Die Hard
+			-- -- If the caster doesn't have the stacks modifier, give it to him
+			-- if not self.caster:HasModifier(self.modifier_stacks) then
+				-- self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
+			-- end
 
-			-- Find the modifier, increase a stack and refresh it
-			local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
-			if modifier_stacks_handler then
-				modifier_stacks_handler:IncrementStackCount()
-				modifier_stacks_handler:ForceRefresh()
-			end
+			-- -- Find the modifier, increase a stack and refresh it
+			-- local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)
+			-- if modifier_stacks_handler then
+				-- modifier_stacks_handler:IncrementStackCount()
+				-- modifier_stacks_handler:ForceRefresh()
+			-- end
 
 			-- TALENT: +100% Coup de Grace crit damage
 			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
@@ -1093,4 +1114,107 @@ end
 
 function modifier_imba_coup_de_grace_crit:GetModifierPreAttack_BonusDamage()
 	return self.crit_increase_damage * self:GetStackCount()
+end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_10", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_10		= class({})
+
+function modifier_special_bonus_imba_phantom_assassin_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_phantom_assassin_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_assassin_10:RemoveOnDeath() 	return false end
+
+function imba_phantom_assassin_blur:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_assassin_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_assassin_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_assassin_10"), "modifier_special_bonus_imba_phantom_assassin_10", {})
+	end
+end
+
+-- PA Arcana
+
+LinkLuaModifier("modifier_phantom_assassin_gravestone", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_phantom_assassin_gravestone = modifier_phantom_assassin_gravestone or class({})
+
+function modifier_phantom_assassin_gravestone:IsHidden() return not IsInToolsMode() end
+
+function modifier_phantom_assassin_gravestone:CheckState() return {
+	[MODIFIER_STATE_INVULNERABLE] = true,
+	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+	[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+} end
+
+function modifier_phantom_assassin_gravestone:OnCreated()
+	if not IsServer() then return end
+	self:StartIntervalThink(0.25)
+end
+
+function modifier_phantom_assassin_gravestone:OnIntervalThink()
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+--		print("Gravestone selected?", PlayerResource:IsUnitSelected(i, self:GetParent()), PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex())
+		if PlayerResource:IsUnitSelected(i, self:GetParent()) and PlayerResource:GetMainSelectedEntity(i) == self:GetParent():entindex() then
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "update_pa_arcana_tooltips", {
+				victim = self:GetStackCount(),
+				victim_id = self:GetParent().victim_id,
+				epitaph = self:GetParent().epitaph_number,
+			})
+		end
+	end
+end
+
+modifier_phantom_assassin_arcana = modifier_phantom_assassin_arcana or class({})
+
+function modifier_phantom_assassin_arcana:IsHidden() return not IsInToolsMode() end
+function modifier_phantom_assassin_arcana:RemoveOnDeath() return false end
+
+function modifier_phantom_assassin_arcana:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_HERO_KILLED,
+} end
+
+function modifier_phantom_assassin_arcana:OnHeroKilled(params)
+	if not IsServer() then return end
+
+	if params.attacker == self:GetParent() and params.target:IsRealHero() then
+		self:IncrementStackCount()
+		print("New arcana kill:", self:GetStackCount())
+
+		self.gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
+		self.gravestone:SetOwner(self:GetParent())
+		self.gravestone:AddNewModifier(self.gravestone, nil, "modifier_phantom_assassin_gravestone", {}):SetStackCount(params.target:entindex())
+		self.gravestone.epitaph_number = RandomInt(1, 13)
+		self.gravestone.victim_id = params.target:GetPlayerID()
+
+		-- hack to show the panel when clicking on the sword
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			self.gravestone:SetControllableByPlayer(i, false)
+		end
+
+		if self:GetStackCount() == 400 then
+			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 1)
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {image="file://{images}/econ/items/phantom_assassin/manifold_paradox/arcana_pa_style1.png", duration=5.0})
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {text="Style 1 unlocked!", duration = 10.0})
+		elseif self:GetStackCount() == 1000 then
+			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 2)
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {image="file://{images}/econ/items/phantom_assassin/manifold_paradox/arcana_pa_style2.png", duration=5.0})
+			Notifications:Bottom(self:GetParent():GetPlayerID(), {text="Style 2 unlocked!", duration = 10.0})
+		end
+
+		local style = 0
+
+		if self:GetStackCount() >= 400 then
+			style = 1
+		elseif self:GetStackCount() >= 1000 then
+			style = 2
+		end
+
+		self.gravestone:SetMaterialGroup(tostring(style))
+		self:StartIntervalThink(1.0)
+	end
 end

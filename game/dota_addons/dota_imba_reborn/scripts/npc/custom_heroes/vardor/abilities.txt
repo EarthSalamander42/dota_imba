@@ -1,149 +1,124 @@
 "DOTAAbilities"
 {
-	"vardor_celestial_yari"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-	    "BaseClass"                     "ability_datadriven"
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE |DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
-	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
-	    "AbilityTextureName"            "clinkz_searing_arrows"
-	    "AbilityCastPoint"              "0.0"
-	
-	    "AbilityCooldown"               "80.0 70.0 60.0"
-	
-	    "HasScepterUpgrade"         "1"
-	
-	    
-	    "precache"
-	    {
-	        "particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-	        "particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_b.vpcf"
-	        "particle"  "particles/econ/events/coal/coal_projectile_explosion_e.vpcf"
-	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-	    }
-	
-	    "AbilityManaCost"               "100 150 200"
-
-	    //Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	        "01"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "duration"              "10 15 20"
-	            "LinkedSpecialBonus"    "special_bonus_vardor_5"
-	        }
-	        "02"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "bonus_yari"            "1"
-	            "LinkedSpecialBonus"    "special_bonus_vardor_7"
-	        }
-	        "03"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "bonus_yari_scepter"    "2"
-	            "LinkedSpecialBonus"    "special_bonus_vardor_7"
-	        }
-	    }
-	    "OnUpgrade"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-	            "Function"      "InitYari"
-	        }
-	    }
-
-	    "OnSpellStart"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-	            "Function"      "AddYari"
-	        }
-	    }
-
-	    "OnUpgrade"
-	    {
-	        "RunScript"
-	        {
-	            "ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-	            "Function"      "ChangeSpear"
-	        }
-	    }
-
-	    "Modifiers"
-	    {
-	        "modifier_celestial_yari_bonus"
-	        {
-	            "Passive"            "0"
-	            "IsHidden"            "0"
-	            "IsDebuff"            "0"
-	    
-	            "OnCreated"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-	                    "Function"        "ShowYari"
-	                }
-	            }
-	            "OnDestroy"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-	                    "Function"        "RemoveYari"
-	                }
-	            }
-	        }
-	    }
-	}
-
-	"vardor_graceful_jump"
+	"vardor_piercing_shot"
 	{
 		"BaseClass"     					"ability_lua"
 		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-//		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityBehavior"    				"DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"    				"1"
-		"AbilityTextureName" 				"slark_pounce"
-		"AbilityCastPoint"   				"0.0"
-		"AbilityCooldown"    				"10.0 9.0 8.0 7.0"
-		"AbilityManaCost"    				"75"
-		"AbilityCastRange"   				"%range"
+		"AbilityTextureName" 				"phantom_lancer_spirit_lance"
+		"AbilityCastRange"					"750"
+		"AbilityCastPoint"   				"0.3 0.3 0.3 0.3"
+		"AbilityCooldown"    				"18 16 14 12"
 		"AbilityDamage" 					"%damage"
+		"AbilityManaCost"    				"70 80 90 100"
+		"AOERadius"     					"%AOE"
+
 		//Precache
 		//-------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"     					"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_ripple_fb_mid.vpcf"
-			"particle"     					"particles/generic_gameplay/generic_stunned.vpcf"
-			"soundfile"    					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"     					"particles/piercing_shot_ground_slow.vpcf"
+			"particle"     					"particles/piercing_shot_ground_root.vpcf"
+			"particle"  					"particles/piercing_shot_ground_impact.vpcf"
+			"particle"  					"particles/piercing_shot_debuff.vpcf"
+			"model"							"models/items/phantom_lancer/immortal_ti6/mesh/phantom_lancer_immortal_spear_mdoel.vmdl"
+			"model"							"models/spear.vmdl"
+			"soundfile"    					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
 		}
+
 		//AbilitySpecial
 		//-------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"    					"FIELD_FLOAT"
-				"short_range"  					"400 500 600 700"
+				"var_type"    					"FIELD_INTEGER"
+				"damage" 						"75 150 225 300"
 			}
 			"02"
 			{
-				"var_type"    					"FIELD_FLOAT"
-				"max_range"   					"1200 1500 1800 2100"
+				"var_type"    					"FIELD_INTEGER"
+				"damage_ground" 				"75 125 175 225"
 			}
+			"03"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"spear_duration"   				"7.0"
+			}
+			"04"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"think_interval"   				"1.0"
+			}
+			"05"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"radius" 						"300"
+			}
+			"06"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"slow"   						"-10 -20 -30 -40"
+			}
+			"07"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"root_duration"    				"1.0 1.5 2.0 2.5"
+			}
+			"08"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"spawn_delay"    				"0.2"
+			}
+		}
+	}
+
+	"vardor_graceful_jump"
+	{
+		"BaseClass"     					"ability_lua"
+		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
+//		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"    				"1"
+		"AbilityTextureName" 				"slark_pounce"
+		"AbilityCastRange"					"1200"
+		"AbilityCastPoint"   				"0.0"
+		"AbilityCooldown"    				"5.0"
+		"AbilityManaCost"    				"25"
+		"AbilityDamage" 					"%damage"
+
+		//Precache
+		//-------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"     					"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_ripple_fb_mid.vpcf"
+			"particle"     					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"    					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		}
+
+		//AbilitySpecial
+		//-------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+//			"01"
+//			{
+//				"var_type"    					"FIELD_FLOAT"
+//				"short_range"  					"400 500 600 700"
+//			}
+//			"02"
+//			{
+//				"var_type"    					"FIELD_FLOAT"
+//				"max_range"   					"1200 1500 1800 2100"
+//			}
 			"03"
 			{
 				"var_type"    					"FIELD_INTEGER"
@@ -207,7 +182,7 @@
 			"02"
 			{
 				"var_type"			    "FIELD_FLOAT"
-				"duration"			    "5.0 10.0 15.0 20.0"
+				"duration"			    "5.0"
 			}
 		}
 	
@@ -261,91 +236,23 @@
 		}
 	}
 
-	"vardor_piercing_shot"
-	{
-		"BaseClass"     					"ability_lua"
-		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityBehavior"    				"DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"    				"1"
-		"AbilityTextureName" 				"phantom_lancer_spirit_lance"
-		"AbilityCastPoint"   				"0.3 0.3 0.3 0.3"
-		"AbilityCooldown"    				"18 16 14 12"
-		"AbilityDamage" 					"%damage"
-		"AbilityManaCost"    				"70 80 90 100"
-		"AOERadius"     					"%AOE"
-
-		//Precache
-		//-------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"     					"particles/piercing_shot_ground_slow.vpcf"
-			"particle"     					"particles/piercing_shot_ground_root.vpcf"
-			"particle"  					"particles/piercing_shot_ground_impact.vpcf"
-			"particle"  					"particles/piercing_shot_debuff.vpcf"
-			"model"							"models/items/phantom_lancer/immortal_ti6/mesh/phantom_lancer_immortal_spear_mdoel.vmdl"
-			"model"							"models/spear.vmdl"
-		}
-
-		//AbilitySpecial
-		//-------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"damage" 						"25 50 75 100"
-			}
-			"02"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"damage_ground" 				"50 100 150 200"
-			}
-			"03"
-			{
-				"var_type"    					"FIELD_FLOAT"
-				"spear_duration"   				"7.0 7.0 7.0 7.0"
-			}
-			"04"
-			{
-				"var_type"    					"FIELD_FLOAT"
-				"think_interval"   				"1.7 1.2 0.9 0.7"
-			}
-			"05"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"radius" 						"300"
-			}
-			"06"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"slow"   						"-10 -20 -30 -40"
-			}
-			"07"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"root_duration"    				"1 1 2 2"
-			}
-			"08"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"cast_range"    				"750"
-				"LinkedSpecialBonus"			"special_bonus_vardor_3"
-			}
-		}
-	}
 	"vardor_return_of_the_yari"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMIDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityTextureName"			"phantom_lancer_spirit_lance"
 		"MaxLevel"						"1"
-		"AbilityCastPoint"				"0.35"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_yari_count"	"2"
+			}
+		}
 	
 		"OnSpellStart"
 		{
@@ -353,6 +260,109 @@
 			{
 				"ScriptFile"	"components/abilities/heroes/hero_vardor.lua"
 				"Function"		"ReturnYari"
+			}
+		}
+	}
+
+	"vardor_celestial_yari"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_datadriven"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"            "clinkz_searing_arrows"
+		"AbilityCooldown"               "80.0 70.0 60.0"
+
+		"HasScepterUpgrade"         "1"
+
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_b.vpcf"
+			"particle"  "particles/econ/events/coal/coal_projectile_explosion_e.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+
+		"AbilityManaCost"               "100 150 200"
+
+		//Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"duration"              "10.0 15.0 20.0"
+				"LinkedSpecialBonus"    "special_bonus_vardor_5"
+			}
+			"02"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"bonus_yari"            "1 1 2"
+				"LinkedSpecialBonus"    "special_bonus_vardor_7"
+			}
+			"03"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"bonus_yari_scepter"    "2 2 3"
+				"LinkedSpecialBonus"    "special_bonus_vardor_7"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
+				"Function"      "InitYari"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
+				"Function"      "AddYari"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
+				"Function"      "ChangeSpear"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_celestial_yari_bonus"
+			{
+				"Passive"            "0"
+				"IsHidden"            "0"
+				"IsDebuff"            "0"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
+						"Function"        "ShowYari"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
+						"Function"        "RemoveYari"
+					}
+				}
 			}
 		}
 	}
@@ -432,7 +442,7 @@
 		}
 	}
 	
-	"special_bonus_vardor_3" // Coil Unleashed
+	"special_bonus_vardor_3" // +250 range for Piercing Shot
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

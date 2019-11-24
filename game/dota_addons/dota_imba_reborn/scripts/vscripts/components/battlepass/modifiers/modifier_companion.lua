@@ -24,7 +24,6 @@ end
 function modifier_companion:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
-		MODIFIER_EVENT_ON_ATTACKED,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
@@ -112,30 +111,42 @@ function modifier_companion:OnIntervalThink()
 		if companion:GetPlayerOwner() == nil or companion:GetPlayerOwner():GetAssignedHero() == nil then return end
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion
-		local fountain
+		local fountain_abs
 
 		if GetMapName() == "imbathrow_3v3v3v3" then
-			fountain = Entities:FindByName(nil, "@overboss")
+			fountain_abs = Entities:FindByName(nil, "@overboss"):GetAbsOrigin()
 		elseif GetMapName() == "imba_demo" then
 			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
 				if ent:GetTeamNumber() == companion:GetTeamNumber() then
-					fountain = ent
+					fountain_abs = ent:GetAbsOrigin()
 					break
 				end
 			end
 		elseif GetMapName() == "pudgewars_new" then
-			fountain = _G.rune_spell_caster_good
+			fountain_abs = _G.rune_spell_caster_good:GetAbsOrigin()
+		elseif GetMapName() == "battle_royale_ffa" or "battle_royale_2v2v2v2v2" then
+			fountain_abs = Vector(0, 0, 0)
 		else
-			if hero:GetTeamNumber() == 2 then
-				fountain = GoodCamera
-			elseif hero:GetTeamNumber() == 3 then
-				fountain = BadCamera
+			if GoodCamera then
+				if hero:GetTeamNumber() == 2 then
+					fountain_abs = GoodCamera:GetAbsOrigin()
+				end
+			else
+				fountain_abs = Vector(0, 0, 0)
+			end
+
+			if BadCamera then
+				if hero:GetTeamNumber() == 3 then
+					fountain_abs = BadCamera:GetAbsOrigin()
+				end
+			else
+				fountain_abs = Vector(0, 0, 0)
 			end
 		end
 
 		local hero_origin = hero:GetAbsOrigin()
 		local hero_distance = (hero_origin - companion:GetAbsOrigin()):Length()
-		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
+		local fountain_distance = (fountain_abs - companion:GetAbsOrigin()):Length()
 		local min_distance = 250
 		local blink_distance = 750
 
@@ -189,7 +200,7 @@ function modifier_companion:OnIntervalThink()
 				companion:MoveToNPC(hero)
 			end
 		elseif fountain_distance > blink_distance and not hero:IsAlive() then -- min_distance is too high with fountain bound radius
-			FindClearSpaceForUnit(companion, fountain:GetAbsOrigin(), false)
+			FindClearSpaceForUnit(companion, fountain_abs, false)
 			companion:Stop()
 			return
 		end

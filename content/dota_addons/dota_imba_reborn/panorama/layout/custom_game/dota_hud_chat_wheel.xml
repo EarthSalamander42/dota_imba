@@ -1,0 +1,51 @@
+<root>
+	<styles>
+		<!--<include src="file://{resources}/styles/dotastyles.css" />-->
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/dota_hud_chat_wheel.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/dota_hud_chat_wheel.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="Phrase">
+			<Panel>
+				<Panel class="Phrase">
+					<Panel class="ChatWheelSoundIcon" />
+					<!--<Panel class="ChatWheelRequiredTierIcon PlusHeroBadgeIconSmall">
+						<Panel class="ChatWheelRequiredTierLockIconShadow" />
+						<Panel class="ChatWheelRequiredTierLockIcon" />
+					</Panel>
+					<Label class="ChatWheelAllPrefix" text="#dota_all_chat_label_prefix" />-->
+					<Label text="{s:phrase}" />
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<!--<DOTAChatWheel class="Hidden" hittest="false" hittestchildren="false">-->
+	<Panel hittest="false" class="MyWheel">
+			<Panel id="Wheel">
+				<Panel id="Arrow" class="Hidden" />
+				<Panel id="PointerContainer">
+					<Panel id="WheelPointer" />
+				</Panel>
+				<Panel id="WheelBG">
+					<Panel id="WheelCenter">
+						<Panel id="WheelBG2" />
+					</Panel>
+				</Panel>
+			</Panel>
+			<Panel id="Bubble">
+				<DOTAHeroImage id="HeroImage" heroimagestyle="icon" />
+			</Panel>
+			<Panel hittest="false" id="PhrasesContainer">
+				<!-- Filled in dynamically with Phrase snippets -->
+			</Panel>
+			<Label id="WHTooltip" text="#whtooltip" class="MyTooltip"/>
+	</Panel>
+	<!--</DOTAChatWheel>-->
+</root>

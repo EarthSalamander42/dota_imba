@@ -1,6 +1,6 @@
 // Donator Status
-"donator_label_1"		"IMBA Lead-dev"
-"donator_label_2"		"IMBA Dev"
+"donator_label_1"		"Lead-Developer"
+"donator_label_2"		"Developer"
 "donator_label_3"		"Administrator"
 "donator_label_4"		"Ember Donator"
 "donator_label_5"		"Golden Donator"

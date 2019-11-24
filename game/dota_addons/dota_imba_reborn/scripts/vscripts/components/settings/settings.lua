@@ -14,8 +14,8 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.16b"
-CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
+GAME_VERSION = "7.18"
+CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
 -- Picking screen constants
@@ -33,6 +33,7 @@ IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla resp
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
+	-- Might be worth setting something here to differentiate our workspaces, since you seem to like bots on, but I don't...
 	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
@@ -40,7 +41,9 @@ end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0
-STRATEGY_TIME = 0.0					-- How long should strategy time last?
+HERO_SELECTION_TIME = 60.0
+SELECT_PENALTY_TIME = 0.0
+STRATEGY_TIME = 10.0					-- How long should strategy time last?
 SHOWCASE_TIME = 0.0					-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() or GetMapName() == "imba_demo" then
@@ -54,7 +57,11 @@ else
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
-POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
+if IsInToolsMode() then
+	POST_GAME_TIME = 60000.0				-- How long should we let people look at the scoreboard before closing the server automatically?
+else
+	POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
+end
 CAMERA_DISTANCE_OVERRIDE = -1
 GOLD_PER_TICK = 1
 
@@ -84,6 +91,7 @@ DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
 LOSE_GOLD_ON_DEATH = true					-- Should we have players lose the normal amount of dota gold on death?
+ENABLE_TPSCROLL_ON_FIRST_SPAWN = true		-- Should heroes spawn with a TP Scroll?
 FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"		-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
 MAXIMUM_ATTACK_SPEED = 1000					-- What should we use for the maximum attack speed?
@@ -105,9 +113,10 @@ BUYBACK_COOLDOWN_MAXIMUM = 180												-- Maximum buyback cooldown
 BUYBACK_RESPAWN_PENALTY	= 15												-- Increased respawn time when dying after a buyback
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
-FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
+FULL_ABANDON_TIME = 5.0														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
+_G.GAME_ROSHAN_KILLER_TEAM = 0
 ROSHAN_RESPAWN_TIME_MIN = 3
 ROSHAN_RESPAWN_TIME_MAX = 6													-- Roshan respawn timer (in minutes)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
@@ -193,7 +202,7 @@ IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
-local global_gold = 250
+local global_gold = 200
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
@@ -279,25 +288,27 @@ BANNED_ITEMS[MapDiretide()] = {
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns"
+	-- "imba_tower_thorns"
 }
 TOWER_ABILITIES["tower2"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
-	"imba_tower_regeneration"
+	-- "imba_tower_thorns",
+	"imba_tower_regeneration",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
+	-- "imba_tower_multishot",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_tenacity",
-	"imba_tower_thorns",
+	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_splash_fire"
+	-- "imba_tower_splash_fire",
+	-- "imba_tower_multishot",
 }
 
 -- Update game mode net tables
@@ -607,28 +618,14 @@ IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
 IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
 
-IMBA_DIRETIDE = false -- Should we enable diretide?
-
 if IMBA_PICK_SCREEN == false then
 	PRE_GAME_TIME = 60.0
-
-	if not IsInToolsMode() then
-		STRATEGY_TIME = 10.0
-	end
 end
 
-if GetMapName() == MapDiretide() then
-	IMBA_DIRETIDE = true
-end
-
-IMBA_DIRETIDE_EASTER_EGG = false
-
-if IMBA_DIRETIDE == true then
-	IMBA_DIRETIDE_EASTER_EGG = false
-	require("components/diretide/diretide")
-end
-
-SAME_HERO_SELECTION = IMBA_PICK_SCREEN
+SAME_HERO_SELECTION = false
+-- SAME_HERO_SELECTION = IsSaturday()
 if GetMapName() == "imba_1v1" then
 	SAME_HERO_SELECTION = true
 end
+
+-- if IsInToolsMode() then SAME_HERO_SELECTION = true end

@@ -67,10 +67,10 @@
 "DOTA_Tooltip_modifier_imba_pudge_dismember_pull_Description"	"Being sucked in by a large mass..."
 
 "DOTA_Tooltip_modifier_imba_hook_sharp_stack"					"Power Hook"
-"DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Increases Meat Hook's damage"
+"DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Meat Hook's damage increased by %dMODIFIER_PROPERTY_TOOLTIP%."
 
 "DOTA_Tooltip_modifier_imba_hook_light_stack"					"Swift Hook"
-"DOTA_Tooltip_modifier_imba_hook_light_stack_Description"		"Increases Meat Hook's speed and range"
+"DOTA_Tooltip_modifier_imba_hook_light_stack_Description"		"Meat Hook's speed increased by %dMODIFIER_PROPERTY_TOOLTIP%. Meat Hook's range increased by %dMODIFIER_PROPERTY_TOOLTIP2%."
 
 "DOTA_Tooltip_modifier_imba_hook_target_enemy"					"Meat Hook"
 "DOTA_Tooltip_modifier_imba_hook_target_enemy_Description"		"Helpless, and flying towards a hungry Pudge"
@@ -87,10 +87,11 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_1"				"+10 Power and Swift stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_3"				"+60 Meat Hook width"
-"DOTA_Tooltip_ability_special_bonus_imba_pudge_4"				"+10 max stacks for Fat Boy"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_4"				"+10 Flesh Heap Fat Boy Max Stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_4_Description"	"+10 max limit Flesh Heap 'Fat Boy' stacks"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_5"				"+1000 Hook Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_6"				"+75 Rot Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Rupture Hook"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_7_Description"	"Meat Hook applies Rupture, dealing 0.05 damage per distance unit, 1500 distance cap."
-"DOTA_Tooltip_ability_special_bonus_imba_pudge_8"				"+3 sec Dismember Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_8"				"+3s Dismember Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_9"				"+20% Rot Slow"

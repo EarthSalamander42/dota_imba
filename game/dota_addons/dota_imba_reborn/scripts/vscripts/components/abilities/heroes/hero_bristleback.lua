@@ -254,12 +254,20 @@ function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnIntervalThink(
 
 	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.ability:IsInAbilityPhase() and not self.caster:IsHexed() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
 		if self.caster:HasScepter() then
-			self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerID())
+			if self.caster.GetPlayerID then
+				self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerID())
+			elseif self.caster.GetPlayerOwner and self.caster:GetPlayerOwner().GetPlayerID then
+				self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerOwner():GetPlayerID())
+			end	
 		else
 			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.caster), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
 			
 			if #enemies > 0 then
-				self.caster:CastAbilityOnTarget(enemies[1], self.ability, self.caster:GetPlayerID())
+				if self.caster.GetPlayerID then
+					self.caster:CastAbilityOnTarget(enemies[1], self.ability, self.caster:GetPlayerID())
+				elseif self.caster.GetPlayerOwner and self.caster:GetPlayerOwner().GetPlayerID then
+					self.caster:CastAbilityOnTarget(enemies[1], self.ability, self.caster:GetPlayerOwner():GetPlayerID())
+				end
 				
 				Timers:CreateTimer(self.ability:GetBackswingTime(), function()
 					-- This is just to prevent Bristleback from bricking up in super low CD situations, but he won't target people after cast then
@@ -485,7 +493,11 @@ function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
 	if not IsServer() then return end
 
 	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.caster:IsHexed() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
-		self.caster:CastAbilityImmediately(self.ability, self.caster:GetPlayerID())
+		if self.caster.GetPlayerID then
+			self.caster:CastAbilityImmediately(self.ability, self.caster:GetPlayerID())
+		elseif self.caster.GetPlayerOwner and self.caster:GetPlayerOwner().GetPlayerID then
+			self.caster:CastAbilityImmediately(self.ability, self.caster:GetPlayerOwner():GetPlayerID())
+		end
 	end
 	
 	-- IMBAfication: Cardio
@@ -647,8 +659,8 @@ function modifier_imba_bristleback_bristleback_has:OnCreated()
 	
 	if not IsServer() then return end
 
-	self.particle = ParticleManager:CreateParticle("particles/econ/items/pangolier/pangolier_ti8_immortal/pangolier_ti8_immortal_shield_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(self.particle, 1, self.parent:GetAbsOrigin())
+	self.particle = ParticleManager:CreateParticle("particles/econ/items/pangolier/pangolier_ti8_immortal/pangolier_ti8_immortal_shield_buff.vpcf", PATTACH_POINT_FOLLOW, self.parent)
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.particle, 3, Vector(50, 0, 0))
 	self:AddParticle(self.particle, false, false, -1, false, false)
 	

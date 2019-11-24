@@ -11,8 +11,8 @@
 		"battlepass",
 		"mutations",
 		"mutation_info",
-		"status_resistance",
 		"hero_wearables",
 		"other_available_items",
+		"selection",
 	]
 }

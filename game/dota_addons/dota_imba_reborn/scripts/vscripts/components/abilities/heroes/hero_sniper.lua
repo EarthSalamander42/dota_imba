@@ -602,8 +602,6 @@ function modifier_imba_headshot_attacks:OnCreated()
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.particle_slow = "particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
-		self.particle_stun = "particles/hero/sniper/perfectshot_stun.vpcf"
 		self.modifier_headshot_counter = "modifier_imba_headshot_counter"
 		self.modifier_imba_headshot_slow = "modifier_imba_headshot_slow"
 		self.modifier_imba_perfectshot_stun = "modifier_imba_perfectshot_stun"
@@ -678,7 +676,7 @@ function modifier_imba_headshot_attacks:OnAttackStart(keys)
 			end
 
 			-- If the target is a buidling, do nothing
-			if target and target:IsBuilding() then
+			if target and target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetParent():GetTeamNumber() then
 				return nil
 			end
 			
@@ -735,7 +733,7 @@ function modifier_imba_headshot_attacks:OnAttack(keys)
 		local target = keys.target
 
 		-- Only apply on caster's attacks
-		if attacker == self.caster then
+		if attacker == self.caster and not target:IsBuilding() and not target:IsOther() and target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 
 			-- Increment stack count as soon as the attack fires
 			if self.increment_stacks then
@@ -772,7 +770,7 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 		local target = keys.target
 
 		-- Only apply on caster's attacks
-		if attacker == self.caster and not keys.no_attack_cooldown then
+		if attacker == self.caster and not keys.no_attack_cooldown and not target:IsBuilding() and not target:IsOther() and target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			self.attacks = self.attacks + 1
 			
 			-- If target is magic immune, we won't get any headshot or perfectshot, because fuck logic
@@ -790,11 +788,6 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 				target:AddNewModifier(self.caster, self.ability, self.modifier_imba_headshot_slow, {duration = self.headshot_duration})
 				target:AddNewModifier(self.caster, self.ability, self.modifier_imba_perfectshot_stun, {duration = self.perfectshot_stun_duration})
 
-				-- Add Perfectshot particle effects
-				local particle_stun_fx = ParticleManager:CreateParticle(self.particle_stun, PATTACH_OVERHEAD_FOLLOW, target)
-				ParticleManager:SetParticleControl(particle_stun_fx, 0, target:GetAbsOrigin())
-				ParticleManager:SetParticleControl(particle_stun_fx, 1, target:GetAbsOrigin())
-
 				-- Knocknback enemy
 				local knockback = {
 					center_x = self.caster:GetAbsOrigin()[1]+1,
@@ -817,19 +810,9 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 					self.attacks = 0
 				end
 
-				-- Remove particles when they end
-				Timers:CreateTimer(self.headshot_duration, function()
-					ParticleManager:DestroyParticle(particle_stun_fx, false)
-					ParticleManager:ReleaseParticleIndex(particle_stun_fx)
-				end)
-
 				-- Not a Perfectshot, but might be a Headshot
 			elseif RollPseudoRandom(self.proc_chance, self) then
 				target:AddNewModifier(self.caster, self.ability, self.modifier_imba_headshot_slow, {duration = self.headshot_duration})
-
-				-- Add Headshot particle effects
-				local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_OVERHEAD_FOLLOW, target)
-				ParticleManager:SetParticleControl(particle_slow_fx, 0, target:GetAbsOrigin())
 
 				-- Knocknback enemy
 				local knockback = {
@@ -848,12 +831,6 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 				if knockback_modifier then
 					knockback_modifier:SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
 				end
-
-				-- Remove particles when they end
-				Timers:CreateTimer(self.headshot_duration, function()
-					ParticleManager:DestroyParticle(particle_slow_fx, false)
-					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
-				end)
 			end
 
 			-- #7 Talent: Take Aim's Aimed Assaults cause the target to bleed and lose vision
@@ -957,6 +934,13 @@ function modifier_imba_headshot_slow:OnCreated()
 	-- Ability specials
 	self.headshot_ms_slow_pct = self.ability:GetSpecialValueFor("headshot_ms_slow_pct")
 	self.headshot_as_slow = self.ability:GetSpecialValueFor("headshot_as_slow")
+	
+	if not IsServer() then return end
+	
+	-- Add Headshot particle effects
+	local particle_slow_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(particle_slow_fx, 0, self:GetParent():GetAbsOrigin())
+	self:AddParticle(particle_slow_fx, false, false, -1, false, true)
 end
 
 function modifier_imba_headshot_slow:DeclareFunctions()
@@ -988,6 +972,14 @@ function modifier_imba_perfectshot_stun:OnCreated()
 
 	-- Ability specials
 	self.perfectshot_stun_duration = self.ability:GetSpecialValueFor("perfectshot_stun_duration")
+	
+	if not IsServer() then return end
+	
+	-- Add Perfectshot particle effects
+	local particle_stun_fx = ParticleManager:CreateParticle("particles/hero/sniper/perfectshot_stun.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(particle_stun_fx, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_stun_fx, 1, self:GetParent():GetAbsOrigin())
+	self:AddParticle(particle_stun_fx, false, false, -1, false, true)
 end
 
 function modifier_imba_perfectshot_stun:CheckState()
@@ -1584,7 +1576,7 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 
 		-- If target has Linken's Sphere off cooldown, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(ability) then
+			if not self:GetCaster():HasScepter() and target:TriggerSpellAbsorb(ability) then
 				return nil
 			end
 		end
@@ -1631,6 +1623,12 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 				local particle_slow_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 				ParticleManager:SetParticleControl(particle_slow_fx, 0, target:GetAbsOrigin())
 
+				-- Remove particles when they end
+				Timers:CreateTimer(headshot_duration, function()
+					ParticleManager:DestroyParticle(particle_slow_fx, false)
+					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
+				end)
+
 				-- Knocknback enemy
 				local knockback = {
 					center_x 			= caster:GetAbsOrigin()[1]+1,
@@ -1643,13 +1641,11 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 					should_stun 		= 0
 				}
 
-				target:AddNewModifier(caster, head_shot_ability_handler, "modifier_knockback", knockback):SetDuration(knockback_duration * (1 - target:GetStatusResistance()), true)
-
-				-- Remove particles when they end
-				Timers:CreateTimer(headshot_duration, function()
-					ParticleManager:DestroyParticle(particle_slow_fx, false)
-					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
-				end)
+				local knockback_modifier = target:AddNewModifier(caster, head_shot_ability_handler, "modifier_knockback", knockback)
+				
+				if knockback_modifier then
+					knockback_modifier:SetDuration(knockback_duration * (1 - target:GetStatusResistance()), true)
+				end
 			end
 		end
 
@@ -1764,6 +1760,7 @@ function modifier_imba_assassinate_cross:GetAttributes()
 	return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
 end
 
+function modifier_imba_assassinate_cross:IgnoreTenacity() return true end
 function modifier_imba_assassinate_cross:IsHidden() return false end
 function modifier_imba_assassinate_cross:IsPurgable() return false end
 function modifier_imba_assassinate_cross:IsDebuff() return true end

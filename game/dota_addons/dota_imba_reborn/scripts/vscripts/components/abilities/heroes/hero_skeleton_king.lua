@@ -162,8 +162,9 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 
 		-- Main stun the target
 		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration})
-
-		if not extra_data.bTalent then
+		
+		-- IMBAfication: Behond the Wraith!
+		if extra_data.bTalent == 0 then
 			-- Split to enemies around
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 											  target:GetAbsOrigin(),
@@ -439,6 +440,16 @@ function imba_wraith_king_vampiric_aura:GetIntrinsicModifierName()
 	return "modifier_imba_vampiric_aura"
 end
 
+function imba_wraith_king_vampiric_aura:OnOwnerSpawned()
+	if self.toggle_state then
+		self:ToggleAbility()
+	end
+end
+
+function imba_wraith_king_vampiric_aura:OnOwnerDied()
+	self.toggle_state = self:GetToggleState()
+end
+
 -- Aura modifier
 modifier_imba_vampiric_aura = class({})
 
@@ -469,13 +480,15 @@ function modifier_imba_vampiric_aura:GetAuraSearchTeam()
 end
 
 function modifier_imba_vampiric_aura:GetAuraSearchType()
-	local toggle = self.ability:GetToggleState()
-
-	if toggle then
+	-- if self.ability:GetToggleState() then
+		-- return DOTA_UNIT_TARGET_HERO 
+	-- else
 		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	else
-		return DOTA_UNIT_TARGET_HERO
-	end
+	-- end
+end
+
+function modifier_imba_vampiric_aura:GetAuraEntityReject(target)
+	if self.ability:GetToggleState() and not target:IsConsideredHero() then return true end
 end
 
 function modifier_imba_vampiric_aura:GetModifierAura()
@@ -1208,11 +1221,6 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 
 		-- Use the Reincarnation's ability cooldown
 		BuffInfo.ability:UseResources(false, false, true)
-
-		-- THIS BLOCK FORCES NO CDR FOR """BALANCE""" REASONS IN MUTATION/FRANTIC
-		-- if GameMode:GetCustomGamemode() >= 1 then
-			-- BuffInfo.ability:StartCooldown(BuffInfo.ability:GetCooldown(BuffInfo.ability:GetLevel() - 1))
-		-- end
 
 		-- Play reincarnate sound
 		if BuffInfo.caster == unit then

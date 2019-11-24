@@ -56,26 +56,28 @@ function item_imba_spirit_vessel:OnSpellStart()
 		-- IMBAfication: Soul Sacrifice
 		if self:GetCurrentCharges() == 0 then
 			
-			-- Set the fountain as the damage dealer
-			local fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
+			-- -- Set the fountain as the damage dealer
+			-- local fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
 			
-			-- If the caster is on Radiant, the Dire fountain is the damage dealer
-			if self.caster:GetTeam() == 2 then
-				fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
-			end
+			-- -- If the caster is on Radiant, the Dire fountain is the damage dealer
+			-- if self.caster:GetTeam() == 2 then
+				-- fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
+			-- end
 			
-			local damageTableSelf = {
-				victim 			= self.caster,
-				damage 			= self.caster:GetMaxHealth() * (self.soul_sacrifice_max_health_pct / 100),
-				damage_type		= DAMAGE_TYPE_PURE,
-				damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NON_LETHAL,
-				attacker 		= fountain,
-				ability 		= self.ability
-			}
+			-- local damageTableSelf = {
+				-- victim 			= self.caster,
+				-- damage 			= self.caster:GetMaxHealth() * (self.soul_sacrifice_max_health_pct / 100),
+				-- damage_type		= DAMAGE_TYPE_PURE,
+				-- damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NON_LETHAL,
+				-- attacker 		= fountain,
+				-- ability 		= self.ability
+			-- }
 			
-			ApplyDamage(damageTableSelf)
+			-- ApplyDamage(damageTableSelf)
 			
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, self.caster, self.caster:GetMaxHealth() * (self.soul_sacrifice_max_health_pct / 100), nil)
+			-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, self.caster, self.caster:GetMaxHealth() * (self.soul_sacrifice_max_health_pct / 100), nil)
+			
+			self.caster:AddNewModifier(self.caster, self, "modifier_item_imba_spirit_vessel_damage", {duration = self.duration})
 		else
 			self:SetCurrentCharges(math.max(self:GetCurrentCharges() - 1, 0))
 		end
@@ -213,6 +215,8 @@ end
 -- SPIRIT VESSEL DAMAGE MODIFIER --
 -----------------------------------
 
+function modifier_item_imba_spirit_vessel_damage:IsDebuff()	return true end
+
 function modifier_item_imba_spirit_vessel_damage:GetEffectName()
 	return "particles/items4_fx/spirit_vessel_damage.vpcf"
 end
@@ -288,7 +292,7 @@ end
 function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	if not IsServer() then return end
 	
-	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 then
+	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 and not (self:GetParent():HasModifier("modifier_slark_dark_pact_pulses") or self:GetParent():HasModifier("modifier_imba_slark_dark_pact_pulses")) then
 		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = math.max(self:GetRemainingTime() - self.curse_activation_reduction, 0), curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
 	end
 end

@@ -53,7 +53,7 @@
 "DOTA_Tooltip_modifier_imba_life_stealer_infest_effect_Description"		"You should probably flail around or get friends to hit you to get this thing out (achieved at 0 stacks). You also probably don't want to let this reach %dMODIFIER_PROPERTY_TOOLTIP% stacks."
 
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate"							"Assimilate"
-"DOTA_Tooltip_ability_imba_life_stealer_assimilate_Description"							"Lifestealer swallows an allied hero, allowing them to hide within him. Any healing Lifestealer receives is shared with the hero within. When an assimilated hero leaves Lifestealer, they erupt outward, damaging nearby enemies.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>I'm So Hungry...:</font> Can Assimilate more than one hero at a time. Casting Eject will eject all assimilated heroes."
+"DOTA_Tooltip_ability_imba_life_stealer_assimilate_Description"							"Lifestealer swallows an allied hero, allowing them to hide within him. Any healing Lifestealer receives is shared with the hero within. When an assimilated hero leaves Lifestealer, they erupt outward, damaging nearby enemies.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>I'm So Hungry...:</font> Can Assimilate more than one hero at a time. Casting Eject will eject all assimilated heroes.\n<font color='#FF7800'>Big Gulp:</font> Can be set to auto-cast to make Assimilate a %consume_radius% radius ability, swallowing all valid units in radius at once."
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_damage"		"ERUPT DAMAGE:"
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_radius"		"ERUPT RADIUS:"		
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_Lore"		"How can Lifestealer resist the chance to sample an ally?"

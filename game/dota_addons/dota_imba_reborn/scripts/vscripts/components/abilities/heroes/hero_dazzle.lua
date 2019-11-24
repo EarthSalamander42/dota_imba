@@ -1697,8 +1697,18 @@ end
 -------------------------------------------------------------------------
 
 LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_dazzle_ressurection", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE )
 
 if imba_dazzle_ressurection == nil then imba_dazzle_ressurection = class({}) end
+modifier_imba_dazzle_ressurection	= modifier_imba_dazzle_ressurection or class({})
+
+function imba_dazzle_ressurection:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
+end
+
+function imba_dazzle_ressurection:GetAOERadius()
+	return self:GetSpecialValueFor("search_radius")
+end
 
 function imba_dazzle_ressurection:GetCastAnimation()
 	return ACT_DOTA_SHALLOW_GRAVE end
@@ -1724,43 +1734,58 @@ function imba_dazzle_ressurection:OnAbilityPhaseStart()
 end
 
 function imba_dazzle_ressurection:OnSpellStart()
-	if IsServer() then
-		local target = self.target
-		local caster = self:GetCaster()
-		local delay = self:GetSpecialValueFor("delay")
+	if self.target and self.target:GetPlayerID() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_ressurection", {
+			duration			= self:GetSpecialValueFor("delay"),
+			target_entindex		= self.target:entindex()
+		})
+	end
+end
 
-		if target and target:GetPlayerID() then
-			self:SetActivated(false)
+---------------------------------------
+-- MODIFIER_IMBA_DAZZLE_RESSURECTION --
+---------------------------------------
 
-			local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:ReleaseParticleIndex(castParticle)
-		
-			local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
-		
-			Timers:CreateTimer(delay, function()
-				if target:IsAlive() then
-					self:SetActivated(true)
-					EmitSoundOn("Imba.DazzleRessurectionFail", target)
+function modifier_imba_dazzle_ressurection:IsPurgable()		return false end
+function modifier_imba_dazzle_ressurection:RemoveOnDeath()	return false end
 
-					ParticleManager:DestroyParticle(screenParticle, true)
-					ParticleManager:ReleaseParticleIndex(screenParticle)
+function modifier_imba_dazzle_ressurection:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.target			= EntIndexToHScript(params.target_entindex)
+	self:GetAbility():SetActivated(false)
 
-					self:EndCooldown()
-					self:RefundManaCost()
-				else
-					self:SetActivated(true)
-					target:RespawnHero(false, false)
-					FindClearSpaceForUnit(target, caster:GetAbsOrigin(), true)
+	local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(castParticle)
+	
+	self.screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
+end
 
-					ParticleManager:DestroyParticle(screenParticle, true)
-					ParticleManager:ReleaseParticleIndex(screenParticle)
+function modifier_imba_dazzle_ressurection:OnDestroy()
+	if not IsServer() or not self:GetAbility() then return end
+	
+	self:GetAbility():SetActivated(true)
+	
+	if self.target and not self.target:IsNull() and not self.target:IsAlive() then
+		self.target:RespawnHero(false, false)
+		FindClearSpaceForUnit(self.target, self:GetCaster():GetAbsOrigin(), true)
 
-					local targetParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-					ParticleManager:ReleaseParticleIndex(targetParticle)
-					EmitGlobalSound("Imba.reincarnationGlobal")
-				end
-			end)
+		ParticleManager:DestroyParticle(self.screenParticle, true)
+		ParticleManager:ReleaseParticleIndex(self.screenParticle)
+
+		local targetParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
+		ParticleManager:ReleaseParticleIndex(targetParticle)
+		EmitGlobalSound("Imba.reincarnationGlobal")
+	else
+		if self.target and not self.target:IsNull() then
+			EmitSoundOn("Imba.DazzleRessurectionFail", self.target)
 		end
+		
+		ParticleManager:DestroyParticle(self.screenParticle, true)
+		ParticleManager:ReleaseParticleIndex(self.screenParticle)
+		
+		self:GetAbility():EndCooldown()
+		self:GetAbility():RefundManaCost()
 	end
 end
 

@@ -141,21 +141,6 @@ function imba_rubick_telekinesis:GetCastRange( location , target)
 	return self:GetSpecialValueFor("cast_range")
 end
 
-function imba_rubick_telekinesis:CastFilterResultTarget( target )
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
-end
-
 -------------------------------------------
 modifier_imba_telekinesis_caster = class({})
 function modifier_imba_telekinesis_caster:IsDebuff() return false end

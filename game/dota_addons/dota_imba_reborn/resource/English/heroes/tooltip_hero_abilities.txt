@@ -110,110 +110,6 @@
 //    "DOTA_Tooltip_ability_imba_chaos_knight_phantasm_aghanim_description"       "Reduces cooldown by 20 seconds and allows Phantoms to be cast on an allied hero. 1200 Cast Range"
 //    "DOTA_Tooltip_ability_imba_chaos_knight_phantasm_cooldown_scepter"          "SCEPTER COOLDOWN:"
 
-
-// Crystal Maiden
-////===============================================================================================================
-// Crystal Maiden's Arcane Dynamo
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo"                "Arcane Dynamo"
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Description"                "Crystal Maiden harnesses the flow of mana around her, increasing her control. Increases Crystal_Maiden's movespeed and spell amp based on her remaining mana pool. The bonuses scale linearly with the percentage of her max mana pool."
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Lore"          "The immense control that Crystal Maiden has over mana is something most sorcerers can only wish to achieve."
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_Note0"          "This means that when Crystal Maiden has full mana, she gains the max bonuses from Arcane Dynamo."
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_bonus_movespeed_percent"    "%MAX MOVE SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_arcane_dynamo_bonus_spellpower_percent"   "%MAX SPELL AMP BONUS:"
-
-"DOTA_Tooltip_modifier_imba_arcane_dynamo"                              "Arcane Dynamo"
-"DOTA_Tooltip_modifier_imba_arcane_dynamo_Description"                  "Increases move speed and spell amp for each stack of Arcane Dynamo."
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_ability_slow"                "Icewrack Chill"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_ability_slow_Description"                "Attack and movement speed slowed by 15/15%."
-
-////===============================================================================================================
-// Crystal Maiden's Crystal Nova
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova"                "Crystal Nova"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Description"                 "A burst of damaging frost slows enemy movement and attack rate in the targeted area for %nova_slow_duration% seconds.\n<font color='#FF7800'>Hail Storm:</font> Creates a hail storm on the target location for %snowfield_duration% seconds, which increases allies' move speed while slowing and damaging enemies in it."
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Lore"            "The air temperature around Rylai drops rapidly, chilling all around her to the core."
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_slow_percentage"        "%NOVA SLOW:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_damage"                 "NOVA DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_damage_per_tick"   "HAIL STORM DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_enemy_slow"        "%HAIL STORM SLOW:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_ally_buff"         "%HAIL STORM SPEED:"
-
-"DOTA_Tooltip_modifier_imba_crystal_nova_slow"                          "Crystal Nova"
-"DOTA_Tooltip_modifier_imba_crystal_nova_slow_Description"              "Slowed by Crystal Maiden's icy blast."
-
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_debuff"              "Hail Storm"
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_debuff_Description"              "Slowed and taking damage."
-
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_buff"                "Hail Storm"
-"DOTA_Tooltip_modifier_imba_crystal_nova_snowfield_buff_Description"                "Move speed increased."
-
-////===============================================================================================================
-// Crystal Maiden's Frostbite
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite"                    "Frostbite"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Description"                    "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Lasts longer on creeps.\n<font color='#FF7800'>Icy Touch:</font> Enemy heroes which damage Crystal Maiden will be affected by Frostbite. When triggered, this effect has to cool down for some seconds. Creeps cannot triger Icy Touch."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Note0"              "Frostbite's passive effect always uses the level 1 duration."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Lore"              "Rylai channels winds from the Blueheart Glacier, imprisoning attackers in thick blocks of ice."
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_per_second_tooltip"      "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_interval"                "TICK INTERVAL:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration_passive_recharge"      "ICY TOUCH COOLDOWN:"
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_passive_ready"                 "Icy Touch"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_passive_ready_Description"     "The next enemy hero to attack Crystal Maiden will be frozen."
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_passive_recharging"                "Icy Touch cooldown"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_passive_recharging_Description"    "Icy Touch is recharging and will be ready soon."
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_enemy"            "Frostbite"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_enemy_Description"             "Frozen! Rooted in place, unable to attack."
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_ally"              "Frostbite"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_ally_Description"              "Frozen! Rooted, Disarmed, but protected and regenerating."
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_enemy_talent"                  "Slowed"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_frostbite_enemy_talent_Description"      "Movement speed slowed. Slow decreases every second."
-
-////===============================================================================================================
-// Crystal Maiden's Arcane Aura
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura"              "Arcane Aura"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Grants bonus mana regeneration to all allied heroes. Arcane Aura's bonuses are doubled on Crystal Maiden herself.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants bonus spell amp to heroes with more than %spellpower_threshold_pct%% remaining mana."
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Lore"                     "Cold temperatures promote the essence of magic, causing Rylai's presence to allow spell usage in abundance."
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_mana_regen"               "BONUS MANA REGEN:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_int"                "BONUS INTELLIGENCE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_spellpower"         "BONUS SPELLPOWER:"
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura"            "Arcane Aura"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura_Description"             "Gaining bonus mana regeneration, intellect, and spell amp in Crystal Maiden's presence."
-
-////===============================================================================================================
-// Crystal Maiden's Freezing Field
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"              "Freezing Field"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage. Channeled, lasts up to 10 seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_aghanim_description"       "Allows Freezing Field to be cast on a target area up to 900 range away."
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"                     "The slow effect pierces Spell Immunity."
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Lore"          "Once the place of her exile, Thickset Venue has become an anchor for Rylai's frigid onslaught."
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_radius"                    "FIELD RADIUS:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_explosion_radius"          "EXPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_slow"          "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_damage"                    "EXPLOSION DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_frostbite_duration"        "FROSTBITE DURATION:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_duration"                  "MAX DURATION:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_bonus_cast_range"  "SCEPTER CAST RANGE:"
-
-"DOTA_Tooltip_modifier_imba_crystal_maiden_freezing_field_slow"                     "Freezing Field"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_freezing_field_slow_Description"         "Slowed by Freezing Field's icy howling winds."
-
 // Disruptor
 ////===============================================================================================================
 // Disruptor's Stormbearer
@@ -273,7 +169,7 @@
 // Disruptor's Static Storm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_static_storm"                      "Static Storm"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_Lore"                "A summer squall in Druud is a hardship that only an Oglodi can survive."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -282,7 +178,7 @@
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_max_damage"          "MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_max_damage"               "SCEPTER MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_damage_increase_enemy"            "BONUS DAMAGE PER ENEMY:"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"              "Increases maximum damage and duration, and mutes enemies inside the storm."
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"              "Mutes items and increases duration."
 
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
@@ -337,7 +233,7 @@
 // Elder Titan's Echo Stomp
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp"                  "Echo Stomp"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness.\n<font color='#FF7800'>Double Trouble:</font> Elder Titan's Echo Stomp and the Astral Spirit's Echo Stomp can both damage the same enemy."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Lore"               "The force of creation still echoes in the stomp of the Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_cast_time"            "CAST TIME:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
@@ -348,29 +244,33 @@
 "DOTA_Tooltip_modifier_imba_elder_titan_echo_stomp_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it damaged.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The Ancestral Spirit moves very swiftly, gaining very high movement speed."
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage, movement speed, and armor for each unit it passed through.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The spirit's movement speed is not set to Elder Titan's movement speed; the Ancestral Spirit instead moves at increased movement speed.\n<font color='#FF7800'>Spirit Delimiter:</font> No movement speed cap for the movement speed bonus.\n<font color='#FF7800'>Phase Through:</font> Overlapping with the Astral Spirit does not automatically return it to Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Lore"           "Like the four fundamentals, Elder Titan exists across all planes at once and can draw other aspects of himself to assist in times of need."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_spirit_duration"      "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_buff_duration"        "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_pass_damage"        "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_speed"            "MOVESPEED:"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_speed"            "SPIRIT MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_radius"           "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_creeps"      "%BONUS SPEED (CREEPS):"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_heroes"      "%BONUS SPEED (HEROES):"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_creeps"        "BONUS DAMAGE (CREEPS):"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_heroes"        "BONUS DAMAGE (HEROES):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_armor_creeps"        "BONUS ARMOR (CREEPS):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_armor_heroes"        "BONUS ARMOR (HEROES):"
 
-"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_aura"            "Ancestral Spirit Aura"
-"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_damage"          "Ancestral Spirit (Damage)"
-"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_damage_Description"    "Damage increased for each units hit."
-"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms"            "Ancestral Spirit (Movespeed)"
-"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms_Description"      "Movespeed increased for each units hit."
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_aura"					"Ancestral Spirit Aura"
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_damage"         		"Astral Titan Buff (Damage)"
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_damage_Description"    "Gaining %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms"					"Astral Titan Buff (Movement Speed)"
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms_Description"		"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% bonus movement speed."
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_armor"					"Astral Titan Buff (Armor)"
+"DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_armor_Description"		"Gaining %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% bonus armor."
 
 "DOTA_Tooltip_ability_imba_elder_titan_return_spirit"                  "Return Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
 
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order"               "Natural Order"
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. The armor reduction is centered around the hero, while the magic armor reduction is centered around Astral Spirit."
+"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Lore"              "As it was at the beginning, Elder Titan makes it so again."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Note0"             "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
@@ -381,7 +281,7 @@
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Lore"             "That which he created, the titan tears asunder."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_width"          "CRACK WIDTH:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_distance"       "CRACK LENGTH:"
@@ -389,7 +289,7 @@
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration"        "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_damage_pct"         "%MAX HP AS DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_pct"           "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_aghanim_description"      "Increases slow duration, and units pulled in by Earth Splitter are also disarmed."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_aghanim_description"      "<font color='#FF7800'>Increases slow duration, and units pulled in by Earth Splitter are also disarmed.</font>"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration_scepter"    "SCEPTER SLOW/DISARM DURATION:"
 
 "DOTA_Tooltip_modifier_imba_earth_splitter"								"Earth Splitter"
@@ -409,14 +309,14 @@
 ////===============================================================================================================
 // Elder Titan's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "Increase cast range on Astral Spirit to 2400"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "+1200 Astral Spirit Cast Range"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_2"               "+400 Astral Spirit movespeed"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_3"               "Astral Spirit roots targets hit"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by 25%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5"               "Natural Order reduces status resistance by 25%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_6"               "+3000 Earth Splitter crack distance"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_6"               "+3600 Earth Splitter Crack Length"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_7"               "Echo Stomp can no longer be interrupted"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8"               "Full Natural Order"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8_Description"         "Natural Order reduces both physical and magical resistance."
@@ -929,11 +829,12 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_1"          "-1s Nether Blast cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_2"          "+0.5 Nether Ward zap damage per mana used"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_3"          "+1s Decrepify duration"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_4"          "Life Drain can't be broken by distance for 1 second"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_3"          "+1s Decrepify Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_4"          "Life Drain can't be broken by distance for 2 seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_5"          "+10% Nether Blast secondary damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_6"          "Nether Ward casts decrepify self for 1 second"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "+3% Target current health as Life Drain's per sec damage"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "Life Drain Upgrade"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_7_Description"	"Life Drain additionally deals 3% of the target's current health as damage per second."
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+2 extra Nether Wards, duration reduced by 66%"
 
 ////===============================================================================================================
@@ -1003,11 +904,12 @@
 // Queen of Pain's Sonic Wave
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave"                      "Sonic Wave"
-"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Description"          "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake.\n<font color='#FF7800'>Joy of Pain:</font> Absorbs part of the damage dealt by Sonic Wave as health.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Description"          "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.\n<font color='#FF7800'>Joy of Pain:</font> Absorbs part of the damage dealt by Sonic Wave as health."
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Note0"                "Confusion does not pierce Spell Immunity."
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Lore"                "Her most exquisite of all of torments, Akasha's Sonic Wave puts her poor foes out of their misery."
-"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_aghanim_description"              "Improves Sonic Wave's cooldown and damage. Also confuses enemies hit by making them deafened. Their next 4 orders are inverted: movement and ground targeted spells are spun around 180 degrees, and unit targeted spells choose a random valid target in range. Other types of orders are ignored and do not count."
+"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_aghanim_description"              "Increases damage and decreases cooldown. <font color='#FF7800'>Also confuses enemies hit by making them deafened. Their next 4 orders are inverted: movement and ground targeted spells are spun around 180 degrees, and unit targeted spells choose a random valid target in range. Other types of orders are ignored and do not count.</font>"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_travel_distance"                  "TRAVEL DISTANCE:"
+"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_knockback_distance"				"KNOCKBACK DISTANCE:"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_start_radius"                     "STARTING RADIUS:"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_end_radius"          "FINAL RADIUS:"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -1023,13 +925,17 @@
 // Queen of Pain's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_1"       "Shadow Struck targets can be seen through fog"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2"       "Sonic Wave deals damage in 5 instances"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3"       "Damaging an enemy releases Shadow Strike's tick damage"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4"       "Delightful Torment procs grant bonus attack speed"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2"       "Sonic Wave deals damage in five instances"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_2_Description"       "The total damage is also split across the five instances."
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3"       "Enhanced Shadow Strike"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_3_Description"		"Whenever Queen of Pain damages an enemy with the Shadow Strike debuff, it will also deal its tick damage."
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4"       "Delightful Torment Bonus Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_4_Description"       "Proccing Delightful Torment also grants 10 bonus attack speed for 5 seconds. This buff stacks with, but does not refresh itself."
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_5"       "Blink can be used twice, with increased mana cost"
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_6"       "Shadow Struck enemies release SOP every tick"
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_7"       "Scream of Pain now causes confusion"
-"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8"       "Your abilities apply Shadow Strike to all enemies hit"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8"       "Shadow Strike Bonus Applications"
+"DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8_Description"       "Scream of Pain and Sonic Wave projectile impacts immediately apply the Shadow Strike debuff."
 
 ////===============================================================================================================
 // Riki's Smoke Screen
@@ -1098,7 +1004,7 @@
 // Riki's Tricks of the Trade
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -1115,19 +1021,23 @@
 ////===============================================================================================================
 // Riki's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_1"            	"Creates Smokescreens on Blink Strikes"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_1"            	"Creates 1s Smoke Screens on Blink Strikes"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2"				"Martyr Strike's Marks"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2_Description"	"Tricks of the Trade's Martyr Strikes mark struck targets for 6 seconds, making them more likely to be targetted by other Martyr Strikes."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3"            	"Cloak and Dagger Reveal"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to multiply the Backstab bonus agility multiplier by 2x, trading in invisibility for 6 seconds."
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Riki can apply Sidestab with reduced Agi multiplier bonus"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smokescreen grants Riki another form of Invisibility"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Cloak and Dagger Sidestab"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_4_Description"	"Riki can Sidestab at an angle of up to 285 degrees, with 0.2/0.3/0.4/0.5 Sidestab Damage per agility."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smoke Screen Cloak"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_5_Description"	"If Riki does not currently have Cloak and Dagger invisibility, Smoke Screen areas will put Riki into Cloak and Dagger invisibility after a 1.5 second delay."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Tricks of the Trade cooldown storage"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_6_Description"    "Ending Tricks of the Trade early reduces its cooldown proportionally to the remaining time, up to a minimum of 6 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_7"           		"Broken Back"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_7_Description"	"Landing four successive Backstabs on a target applies Break for 5 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8_Description"    "Riki gains a 20% chance on attack to cast Blink Strike on the target, backstabbing it."
+
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_blink_strike_cast_range"	"+{s:value} Blink Strike Cast Range"
 
 // Sand King
 ////===============================================================================================================
@@ -1343,13 +1253,13 @@
 // Skywrath Mage's Arcane Bolt
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt"                  "Arcane Bolt"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Lore"              "Within the Ghastly Eyrie's endless intrigue, only the clever and calm can hope to survive."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_projectile_speed_per_stack"    "BOLT SPEED PER STACK:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "INT MULTIPLIER PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "Casts a second Arcane Bolt at a random enemy in 700 range of the main target."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within 700 range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Each stack increases Arcane Bolt projectile speed and damage, and increases Mystic Nova's damage."
@@ -1358,7 +1268,7 @@
 // Skywrath Mage's Concussive Shot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot"              "Concussive Shot"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"          "Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "The slow debuff is always refreshed, and does not stacks with itself."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 40 Concussive Shot talent."
@@ -1367,7 +1277,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_slow_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_max_bounces"               "MAXIMUM GHASTLY PULSE BOUNCES:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "Casts a second Concussive shot on another random enemy in 1600 range, if possible."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow"                      "Concussive Shot"
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"          "Slowed."
@@ -1376,13 +1286,13 @@
 // Skywrath Mage's Ancient Seal
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal"                  "Ancient Seal"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Lore"            "A holy incantation, whosoever finds themselves touched by Avilliva's sigil must suffer in penitent silence."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Note0"            "The ground seal ignores targets that has the regular seal on them, but can apply it if the seal gets purged."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_seal_duration"                "SEAL DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_mr_reduction_pct"             "%MAGIC AMPLIFICATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_sigil_radius"                 "EMBEDDED SEAL RADIUS:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Casts a second Ancient Seal on a random enemy in 700 range."
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_ancient_seal_main"                          "Ancient Seal"
 "DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"              "Silenced, and taking increased magic damage."
@@ -1394,27 +1304,31 @@
 // Skywrath Mage's Mystic Flare
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare"                  "Mystic Flare"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"                  "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %damage_duration% seconds.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, huge amounts of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%% for each Arcane Wrath stack he has at the moment of explosion.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"            "Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_radius"                "FLARE RADIUS:"
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"             "NOVA RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_int_as_damage_pct"            "%INTELLIGENCE AS DAMAGE:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "Casts a second Mystic Flare on a random enemy in 700 range that is not inside the initial Mystic Flare."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within 700 range (that is not inside the initial Mystic Flare). Heroes will take priority."
 
 ////===============================================================================================================
 // Skywrath Mage's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_1"               "-25 Arcane Bolt mana cost"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_2"               "+1s Ancient Seal duration"
-"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-4s Ancient Seal cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-8s Ancient Seal Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_4"               "+100% Mystic Flare radius"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_5"               "-1s Arcane Bolt cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6"               "Mystic Flare deals the damage in half the duration"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6"               "-1.2s Mystic Flare Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6_Description"	"Total damage unchanged."
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_7"               "Skywrath gains permanent flying movement"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_8"               "Concussive Shot hits all visible heroes in range"
-
-
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_9"               "+1 Arcane Bolt Per Cast"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_10"              "+15% Ancient Seal Magic Resistance Reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11"              "Global Concussive Shot"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11_Description"	"Ghastly Pulse will not activate if the distance between Skywrath Mage and the target upon cast is greater than the standard cast range."
 
 
 
@@ -1800,7 +1714,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm"                "Rearm"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
-"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Arcane Boots, Black King Bar, Black Queen's Cape, Bloodstone, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
 "DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana."

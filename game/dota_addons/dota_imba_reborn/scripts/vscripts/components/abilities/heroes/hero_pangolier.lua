@@ -461,12 +461,16 @@ function modifier_imba_swashbuckle_buff:IsPurgable() return true end
 function modifier_imba_swashbuckle_buff:IsDebuff() return false end
 
 function modifier_imba_swashbuckle_buff:OnCreated()
+	if self:GetAbility() then
+		self.bonus_as = self:GetAbility():GetSpecialValueFor("bonus_attackspeed")
+	else
+		self.bonus_as = 0
+	end
+
 	if IsServer() then
 		--Ability properties
 
-
 		--Ability specials
-		self.bonus_as = self:GetAbility():GetSpecialValueFor("bonus_attackspeed")
 		self.max_attacks = self:GetAbility():GetSpecialValueFor("max_attacks")
 
 		--Set stacks to the max attacks
@@ -509,7 +513,7 @@ end
 -------------------------------------
 imba_pangolier_shield_crash = imba_pangolier_shield_crash or class({})
 LinkLuaModifier("modifier_imba_shield_crash_buff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Damage reduction
-LinkLuaModifier("modifier_imba_shield_crash_jump", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- movement
+LinkLuaModifier("modifier_imba_shield_crash_jump", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_BOTH) -- movement
 LinkLuaModifier("modifier_imba_shield_crash_block", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Talent #3: parry stacks
 LinkLuaModifier("modifier_imba_shield_crash_block_parry", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Pangolier parry (100% evasion)
 LinkLuaModifier("modifier_imba_shield_crash_block_miss", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Parried attack debuff (remove true strike during the attack)
@@ -584,7 +588,7 @@ function imba_pangolier_shield_crash:OnSpellStart()
 
 	-- Play cast sound
 	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
-
+	
 	--jump in the faced direction
 	local modifier_movement_handler = caster:AddNewModifier(caster, ability, modifier_movement, {})
 
@@ -785,7 +789,10 @@ function modifier_imba_shield_crash_buff:IsStealable() return true end
 
 
 --Shield crash jump movement modifier
-modifier_imba_shield_crash_jump = modifier_imba_shield_crash_jump or class({})
+modifier_imba_shield_crash_jump = class({})
+
+function modifier_imba_shield_crash_jump:IsHidden() return true end
+function modifier_imba_shield_crash_jump:IsPurgable() return false end
 
 function modifier_imba_shield_crash_jump:OnCreated()
 	-- Ability properties
@@ -803,224 +810,183 @@ function modifier_imba_shield_crash_jump:OnCreated()
 	self.hero_stacks = self:GetAbility():GetSpecialValueFor("hero_stacks")
 
 	if IsServer() then
+		self.distance	= self:GetAbility():GetSpecialValueFor("jump_horizontal_distance")
+		self.direction	= self:GetCaster():GetForwardVector()
+		self.duration	= self:GetAbility():GetSpecialValueFor("jump_duration")
+		self.height		= self:GetAbility():GetSpecialValueFor("jump_height")
+		
+		-- Velocity = Displacement/Time
+		self.velocity		= self.direction * self.distance / self.duration
 
-		-- Variables
-		self.time_elapsed = 0
-		self.jump_z = 0
-		self.no_horizontal = false
-
-		-- Wait one frame to get the target point from the ability's OnSpellStart, then calculate distance
-		Timers:CreateTimer(FrameTime(), function()
-			self.distance = (self:GetCaster():GetAbsOrigin() - self.target_point):Length2D()
-			self.jump_time = self.jump_duration
-			self.jump_speed = self.distance / self.jump_time
-
-			self.direction = (self.target_point - self:GetCaster():GetAbsOrigin()):Normalized()
-
-			self.frametime = FrameTime()
-			self:StartIntervalThink(self.frametime)
-		end)
-	end
-end
-
-function modifier_imba_shield_crash_jump:CheckState()
-	--becomes fully disabled if jumping while not rolling
-	if self:GetCaster():HasModifier(self.gyroshell) then
-		state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	else
-		state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-			[MODIFIER_STATE_STUNNED] = true,
-			--[MODIFIER_STATE_SILENCED] = true,
-			--[MODIFIER_STATE_MUTED] = true
-		}
-	end
-
-	return state
-end
-
-function modifier_imba_shield_crash_jump:OnIntervalThink()
-	-- Check motion controllers
-	if not self:CheckMotionControllers() then
-		self:Destroy()
-		return nil
-	end
-
-	-- Vertical Motion
-	self:VerticalMotion(self:GetCaster(), self.frametime)
-
-	-- Horizontal Motion only needed when Pangolier isn't rolling, won't gain horizontal movement
-	-- if Rolling Thunder end mid-jump
-	if not self.no_horizontal and not self:GetCaster():HasModifier("modifier_pangolier_gyroshell") then
-		self:HorizontalMotion(self:GetCaster(), self.frametime)
-	else
-		self.no_horizontal = true
-	end
-end
-
-function modifier_imba_shield_crash_jump:IsHidden() return true end
-function modifier_imba_shield_crash_jump:IsPurgable() return false end
-function modifier_imba_shield_crash_jump:IsDebuff() return false end
-function modifier_imba_shield_crash_jump:IgnoreTenacity() return true end
-function modifier_imba_shield_crash_jump:IsMotionController() return true end
-function modifier_imba_shield_crash_jump:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
-
-function modifier_imba_shield_crash_jump:VerticalMotion(me, dt)
-	if IsServer() then
-
-		-- Check if we're still jumping
-		self.time_elapsed = self.time_elapsed + dt
-		if self.time_elapsed < self.jump_time then
-
-			-- Check if we should be going up or down
-			if self.time_elapsed <= self.jump_time / 2 then
-				-- Going up
-				self.jump_z = self.jump_z + ((self.jump_height * dt) / (self.jump_time / 2))
-
-
-				self:GetCaster():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + Vector(0,0,self.jump_z))
-			else
-				-- Going down
-				self.jump_z = self.jump_z - ((self.jump_height * dt) / (self.jump_time / 2))
-				if self.jump_z > 0 then
-					self:GetCaster():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin(), self:GetCaster()) + Vector(0,0,self.jump_z))
-				end
-
-			end
-		else
+		self.vertical_velocity		= 4 * self.height / self.duration
+		self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
+		
+		self:GetParent():RemoveHorizontalMotionController(self)
+		
+		if self:ApplyVerticalMotionController() == false then 
+			self:Destroy()
+		end
+		
+		if not self:GetParent():HasModifier("modifier_pangolier_gyroshell") and self:ApplyHorizontalMotionController() == false then 
 			self:Destroy()
 		end
 	end
 end
 
-function modifier_imba_shield_crash_jump:HorizontalMotion(me, dt)
-	if IsServer() then
-		-- Check if we're still jumping
-		if self.time_elapsed < self.jump_time then
+function modifier_imba_shield_crash_jump:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():InterruptMotionControllers(true)
+	
+	--play the smash particle
+	local smash = ParticleManager:CreateParticle(self.smash_particle, PATTACH_WORLDORIGIN, nil)
+	ParticleManager:SetParticleControl(smash, 0, self:GetCaster():GetAbsOrigin())
 
-			-- Go forward
-			local new_location = self:GetCaster():GetAbsOrigin() + self.direction * self.jump_speed * dt
-			self:GetCaster():SetAbsOrigin(new_location)
+	-- Play smash sound
+	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), self.smash_sound, self:GetCaster())
+
+	-- Find heroes in AoE and track how many will be damaged
+	local enemy_heroes = FindUnitsInRadius(
+		self:GetCaster():GetTeamNumber(),
+		self:GetCaster():GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	local damaged_heroes = #enemy_heroes
+
+	--Talent: extra damage for each enemy hero damaged (REMOVED)
+	--local total_damage = self.damage + (damaged_heroes * self.talent_damage)
+
+	-- Find all enemies in AoE
+	local enemies = FindUnitsInRadius(
+		self:GetCaster():GetTeamNumber(),
+		self:GetCaster():GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	-- Deal damage to each enemy
+	for _,enemy in pairs(enemies) do
+		if not enemy:IsMagicImmune() then
+			damage_table = ({
+				victim = enemy,
+				attacker = self:GetCaster(),
+				ability = self:GetAbility(),
+				damage = self.damage,
+				damage_type = DAMAGE_TYPE_MAGICAL
+			})
+
+			ApplyDamage(damage_table)
 		end
 	end
-end
 
+	--Create the damage reduction modifier. If it already exist,
+	--upgrade its stacks if the new count is higher and refresh
+	if damaged_heroes > 0 then
 
-function modifier_imba_shield_crash_jump:OnRemoved()
-	if IsServer() then
-		self:GetCaster():SetUnitOnClearGround()
-
-		--play the smash particle
-		local smash = ParticleManager:CreateParticle(self.smash_particle, PATTACH_WORLDORIGIN, nil)
-		ParticleManager:SetParticleControl(smash, 0, self:GetCaster():GetAbsOrigin())
-
-		-- Play smash sound
-		EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), self.smash_sound, self:GetCaster())
-
-		-- Find heroes in AoE and track how many will be damaged
-		local enemy_heroes = FindUnitsInRadius(
-			self:GetCaster():GetTeamNumber(),
-			self:GetCaster():GetAbsOrigin(),
-			nil,
-			self.radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO,
-			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-			FIND_ANY_ORDER,
-			false
-		)
-
-		local damaged_heroes = #enemy_heroes
-
-		--Talent: extra damage for each enemy hero damaged (REMOVED)
-		--local total_damage = self.damage + (damaged_heroes * self.talent_damage)
-
-		-- Find all enemies in AoE
-		local enemies = FindUnitsInRadius(
-			self:GetCaster():GetTeamNumber(),
-			self:GetCaster():GetAbsOrigin(),
-			nil,
-			self.radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false
-		)
-
-		-- Deal damage to each enemy
-		for _,enemy in pairs(enemies) do
-			if not enemy:IsMagicImmune() then
-				damage_table = ({
-					victim = enemy,
-					attacker = self:GetCaster(),
-					ability = self:GetAbility(),
-					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL
-				})
-
-				ApplyDamage(damage_table)
-			end
+		--Talent #3: Earn stacks of parry based on the heroes hit with Shield Crash
+		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_3") then
+			local block_modifier_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
+			self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), block_modifier_stacks + damaged_heroes)
+			self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), block_modifier_stacks + damaged_heroes)
 		end
 
-		--Create the damage reduction modifier. If it already exist,
-		--upgrade its stacks if the new count is higher and refresh
-		if damaged_heroes > 0 then
+		if self:GetCaster():HasModifier(self.buff_modifier) then
+			local old_stacks = self:GetCaster():GetModifierStackCount(self.buff_modifier, self:GetCaster())
 
-			--Talent #3: Earn stacks of parry based on the heroes hit with Shield Crash
-			if self:GetCaster():HasTalent("special_bonus_imba_pangolier_3") then
-				local block_modifier_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
-				self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), block_modifier_stacks + damaged_heroes)
-				self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), block_modifier_stacks + damaged_heroes)
+			--Remove previous buff particles
+			local buff = self:GetCaster():FindModifierByName("modifier_imba_shield_crash_buff")
+
+			for k,v in pairs(buff.buff_particles) do
+				ParticleManager:DestroyParticle(v, false)
+				ParticleManager:ReleaseParticleIndex(v)
+				table.remove(buff.buff_particles, k)
 			end
 
-			if self:GetCaster():HasModifier(self.buff_modifier) then
-				local old_stacks = self:GetCaster():GetModifierStackCount(self.buff_modifier, self:GetCaster())
+			--remove modifier then reapply it to play update the particles
+			self:GetCaster():RemoveModifierByName(self.buff_modifier)
 
-				--Remove previous buff particles
-				local buff = self:GetCaster():FindModifierByName("modifier_imba_shield_crash_buff")
-
-				for k,v in pairs(buff.buff_particles) do
-					ParticleManager:DestroyParticle(v, false)
-					ParticleManager:ReleaseParticleIndex(v)
-					table.remove(buff.buff_particles, k)
-				end
-
-				--remove modifier then reapply it to play update the particles
-				self:GetCaster():RemoveModifierByName(self.buff_modifier)
-
-				if damaged_heroes > old_stacks / self.hero_stacks then
-					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
-				else
-					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
-				end
-			else
+			if damaged_heroes > old_stacks / self.hero_stacks then
 				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+			else
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
+			end
+		else
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+		end
+	end
+
+	--destroy and release particle indexes
+	ParticleManager:DestroyParticle(self.dust_particle, false)
+	ParticleManager:ReleaseParticleIndex(self.dust_particle)
+	ParticleManager:ReleaseParticleIndex(smash)
+	
+	--Needed for imba Rolling Thunder modifier
+	--[[function modifier_imba_shield_crash_jump:OnDestroy()
+		if IsServer() then
+			--boost rolling thunder turn rate
+			local gyroshell_handler = self:GetCaster():FindModifierByName(self.gyroshell)
+			if gyroshell_handler then
+				--plays bounce animation if rolling
+				self:GetCaster():StartGesture()
+				gyroshell_handler.boosted_turn = true
+				gyroshell_handler.boosted_turn_time = 0
+				gyroshell_handler:GetModifierTurnRate_Percentage()
 			end
 		end
+	end]]	
+end
 
-		--destroy and release particle indexes
-		ParticleManager:DestroyParticle(self.dust_particle, false)
-		ParticleManager:ReleaseParticleIndex(self.dust_particle)
-		ParticleManager:ReleaseParticleIndex(smash)
+function modifier_imba_shield_crash_jump:UpdateHorizontalMotion(me, dt)
+	me:SetOrigin( me:GetOrigin() + self.velocity * dt )
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_shield_crash_jump:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_shield_crash_jump:UpdateVerticalMotion(me, dt)
+	me:SetOrigin( me:GetOrigin() + Vector(0, 0, self.vertical_velocity) * dt )
+	
+	if GetGroundHeight(self:GetParent():GetAbsOrigin(), nil) > self:GetParent():GetAbsOrigin().z then
+		self:Destroy()
+	else
+		self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
 	end
 end
 
---Needed for imba Rolling Thunder modifier
---[[function modifier_imba_shield_crash_jump:OnDestroy()
-	if IsServer() then
-		--boost rolling thunder turn rate
-		local gyroshell_handler = self:GetCaster():FindModifierByName(self.gyroshell)
-		if gyroshell_handler then
-			--plays bounce animation if rolling
-			self:GetCaster():StartGesture()
-			gyroshell_handler.boosted_turn = true
-			gyroshell_handler.boosted_turn_time = 0
-			gyroshell_handler:GetModifierTurnRate_Percentage()
-		end
+-- -- This typically gets called if the caster uses a position breaking tool (ex. Earth Spike) while in mid-motion
+function modifier_imba_shield_crash_jump:OnVerticalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_shield_crash_jump:CheckState()
+	--becomes fully disabled if jumping while not rolling
+	if self:GetCaster():HasModifier(self.gyroshell) then
+		return {
+			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION]					= true
+		}
+	else
+		return {
+			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
+			[MODIFIER_STATE_STUNNED]							= true,
+		}
 	end
-end]]
+end
 
 --Talent #3 modifier: each stack will block an attack directed to Pangolier from an enemy hero and start a counterattack (1 Swashbuckle slash)
 modifier_imba_shield_crash_block = modifier_imba_shield_crash_block or class({})

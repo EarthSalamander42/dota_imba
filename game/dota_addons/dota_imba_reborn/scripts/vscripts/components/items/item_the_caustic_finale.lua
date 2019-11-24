@@ -27,11 +27,12 @@ end
 
 function item_the_caustic_finale:OnOwnerDied(params)
 	local hOwner = self:GetOwner()
-	if hOwner.IsImbaReincarnating and hOwner:IsImbaReincarnating() then
+	if hOwner.IsReincarnating and hOwner:IsReincarnating() then
 		return nil
 	end
 	hOwner:DropItemAtPositionImmediate(self, hOwner:GetAbsOrigin())
-	hOwner:LaunchLoot(false, 250, 0.5, hOwner:GetAbsOrigin() + RandomVector(RandomInt(50, 200)))
+	-- This is supposed to have the item as base, not hOwner
+	-- hOwner:LaunchLoot(false, 250, 0.5, hOwner:GetAbsOrigin() + RandomVector(RandomInt(50, 200)))
 end
 
 modifier_item_the_caustic_finale = class({})

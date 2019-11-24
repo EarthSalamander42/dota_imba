@@ -33,7 +33,7 @@ end
 
 modifier_fountain_aura_effect_lua = class({})
 
-function modifier_fountain_aura_effect_lua:IsHidden()	return true end
+function modifier_fountain_aura_effect_lua:IsHidden()	return false end
 function modifier_fountain_aura_effect_lua:IsPurgable() return false end
 
 function modifier_fountain_aura_effect_lua:DeclareFunctions()
@@ -66,9 +66,11 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 		else
 			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
 		end
-
+		
+		local parent = self:GetParent()
+		
 		Timers:CreateTimer(1.0, function()
-			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, parent)
 		end)
 	end
 end
@@ -78,18 +80,18 @@ function modifier_fountain_aura_effect_lua:OnIntervalThink()
 
 	if IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
 		-- self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
-
-		if self:GetParent():HasItemInInventory("item_bottle") then
-			local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
-
-			if bottle then
-				if bottle:GetCurrentCharges() < bottle:GetSpecialValueFor("max_charges") then
-					bottle:SetCurrentCharges(bottle:GetSpecialValueFor("max_charges"))
-				end
-			end
-		end
 	else
 		self:GetParent():RemoveModifierByName("modifier_fountain_invulnerable")
+	end
+
+	if self:GetParent():HasItemInInventory("item_bottle") then
+		local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
+
+		if bottle then
+			if bottle:GetCurrentCharges() < bottle:GetSpecialValueFor("max_charges") then
+				bottle:SetCurrentCharges(bottle:GetSpecialValueFor("max_charges"))
+			end
+		end
 	end
 end
 
@@ -126,6 +128,10 @@ modifier_fountain_invulnerable = class({})
 
 function modifier_fountain_invulnerable:IsPurgable() return false end
 function modifier_fountain_invulnerable:GetTexture() return "tower_armor_aura" end
+
+function modifier_fountain_invulnerable:CheckState()
+	return {[MODIFIER_STATE_INVULNERABLE] = true}
+end
 
 function modifier_fountain_invulnerable:DeclareFunctions()
 	local funcs = {
@@ -168,7 +174,13 @@ function modifier_imba_cursed_fountain:OnCreated()
 	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
 	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
 	
+	self.damage_outgoing	= -10
+	
 	self:SetStackCount(1)
+	
+	if self:GetParent():HasModifier("modifier_fountain_invulnerable") then
+		self:GetParent():FindModifierByName("modifier_fountain_invulnerable"):Destroy()
+	end
 	
 	self:StartIntervalThink(0.5)
 end
@@ -215,6 +227,8 @@ function modifier_imba_cursed_fountain:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS, 
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 
 		MODIFIER_EVENT_ON_HERO_KILLED
 	}
@@ -249,7 +263,13 @@ end
 function modifier_imba_cursed_fountain:GetModifierBonusStats_Intellect()
 	if not IsServer() or self:GetStackCount() < 2 then return end
 	
-	return self.intellect* (-1)
+	return self.intellect * (-1)
+end
+
+function modifier_imba_cursed_fountain:GetModifierTotalDamageOutgoing_Percentage()
+	if not IsServer() or self:GetStackCount() < 2 then return end
+	
+	return self.damage_outgoing * self:GetStackCount()
 end
 
 function modifier_imba_cursed_fountain:OnHeroKilled(params)

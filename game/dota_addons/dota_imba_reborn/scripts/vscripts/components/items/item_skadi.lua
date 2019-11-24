@@ -13,7 +13,7 @@
 -- limitations under the License.
 --
 -- Editors:
---
+--    naowin: 21.08.2019
 
 --	Author: Firetoad
 --	Date: 			16.12.2015
@@ -264,7 +264,10 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
 
 		-- Apply the slow
-		target:AddNewModifier(attacker, self:GetAbility(), "modifier_item_imba_skadi_slow", {duration = slow_duration}):SetDuration(slow_duration * (1 - target:GetStatusResistance()), true)
+		local slow_modifier = target:AddNewModifier(attacker, self:GetAbility(), "modifier_item_imba_skadi_slow", {duration = slow_duration})
+		if slow_modifier ~= nil then 
+			slow_modifier:SetDuration(slow_duration * (1 - target:GetStatusResistance()), true)
+		end
 	end
 end
 

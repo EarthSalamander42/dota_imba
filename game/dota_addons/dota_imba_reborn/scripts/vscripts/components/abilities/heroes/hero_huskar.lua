@@ -760,11 +760,7 @@ function imba_huskar_life_break:GetBehavior()
 end
 
 function imba_huskar_life_break:GetCastRange(location, target)
-	if IsClient() then
-		return self.BaseClass.GetCastRange(self, location, target)
-	else
-		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_unique_huskar")
-	end
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_huskar_life_break_cast_range")
 end
 
 -- Harakiri IMBAfication will be an "opt-out" add-on
@@ -986,7 +982,7 @@ end
 
 function modifier_imba_huskar_life_break_charge:OnCreated()
 	if IsServer() then
-		if Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
+		if BATTLEPASS_HUSKAR and Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
 			self:SetStackCount(1)
 			self.pfx = ParticleManager:CreateParticle(self:GetCaster().life_break_cast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 --			ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())
@@ -1156,8 +1152,21 @@ function modifier_imba_huskar_life_break_sac_dagger_tracker:OnTooltip()
 	return self:GetStackCount()
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
 
--- Nothing needed here for now.
+LinkLuaModifier("modifier_special_bonus_imba_huskar_life_break_cast_range", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_huskar_life_break_cast_range	= class({})
+
+function modifier_special_bonus_imba_huskar_life_break_cast_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_huskar_life_break_cast_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_huskar_life_break_cast_range:RemoveOnDeath() 	return false end
+
+function imba_huskar_life_break:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_huskar_life_break_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_huskar_life_break_cast_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_huskar_life_break_cast_range"), "modifier_special_bonus_imba_huskar_life_break_cast_range", {})
+	end
+end

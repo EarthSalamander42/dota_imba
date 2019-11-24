@@ -29,7 +29,7 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130 150 170 190"
+		"AbilityManaCost"				"130 140 150 160"
 
 		"precache"
 		{
@@ -64,7 +64,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"4 5 6 7"				
+				"armor_reduction"		"5 6 7 8"				
 			}
 			"05"
 			{
@@ -157,12 +157,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 250 350 450"
+				"damage"					"160 265 370 475"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"175"
+				"radius"					"200"
 			}
 			"06"
 			{
@@ -206,8 +206,6 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"MaxLevel" 						"4"
 
-		"HasScepterUpgrade"				"1"
-
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
@@ -233,12 +231,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"4 6 8 10"
+				"bonus_gold"			"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_bonus_gold"		"5"
+				"bonus_bonus_gold"		"4"
 			}
 			"04"
 			{
@@ -303,7 +301,8 @@
 		"AbilityTextureName"			"alchemist_chemical_rage"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"MaxLevel" 						"3"		
+		"MaxLevel" 						"3"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -360,8 +359,20 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"40 50 60"
+			}		
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_bonus_damage"		"30"
+				"RequiresScepter"			"1"
 			}
-		}		
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_spell_amp"		"6"
+				"RequiresScepter"			"1"
+			}			
+		}
 	}
 
 	//=================================================================================================================
@@ -445,7 +456,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"3.0"
+				"value"			"1.5"
 			}
 		}
 	}

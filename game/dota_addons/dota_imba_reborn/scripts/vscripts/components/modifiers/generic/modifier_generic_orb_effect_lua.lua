@@ -1,5 +1,7 @@
--- Generic Orb Effect Library created by Elfansoer
+-- Generic Orb Effect Library created by Elfansoer (with modifications by AltiV)
 -- See the reference at https://github.com/Elfansoer/dota-2-lua-abilities/blob/c3bfb93a32e8257f861a5e32e4d25231185a6ba4/scripts/vscripts/lua_abilities/generic/modifier_generic_orb_effect_lua.lua
+
+-- There's some weird bug that lets you bypass target flags if you level up the ability mid-attack -_-
 
 modifier_generic_orb_effect_lua = class({})
 
@@ -24,6 +26,9 @@ function modifier_generic_orb_effect_lua:OnCreated( kv )
 	self.ability = self:GetAbility()
 	self.cast = false
 	self.records = {}
+	
+	-- Test variable for proper projectile effect display
+	self.target = nil
 end
 
 function modifier_generic_orb_effect_lua:OnRefresh( kv )
@@ -104,7 +109,7 @@ function modifier_generic_orb_effect_lua:OnOrder( params )
 
 	if params.ability then
 		-- if this ability, cast
-		if params.ability==self:GetAbility() then
+		if params.ability==self:GetAbility() and not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) then
 			self.cast = true
 			return
 		end
@@ -142,7 +147,11 @@ end
 function modifier_generic_orb_effect_lua:GetModifierProjectileName( params )
 	if self.ability.GetProjectileName then
 		if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) then
-			return self.ability:GetProjectileName()
+			 self.target = self:GetParent():GetAttackTarget()
+
+			 if self.target and UnitFilter(self.target, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS then
+				return self.ability:GetProjectileName()
+			 end
 		end
 	end
 end

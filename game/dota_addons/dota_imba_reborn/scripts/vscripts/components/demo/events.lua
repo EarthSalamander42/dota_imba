@@ -407,7 +407,7 @@ end
 -- GameEvent: OnLeaveButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnLeaveButtonPressed( eventSourceIndex )
-	GAME_WINNER_TEAM = 2
+	GAME_WINNER_TEAM = 0
 	GameRules:SetGameWinner(GAME_WINNER_TEAM)
 	GameRules:SetSafeToLeave(true)
 end

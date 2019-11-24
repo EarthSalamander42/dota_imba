@@ -15,6 +15,20 @@ function imba_rubick_telekinesis:IsStealable() return true end
 function imba_rubick_telekinesis:IsNetherWardStealable() return true end
 -------------------------------------------
 
+function imba_rubick_telekinesis:CastFilterResultTarget(target)
+	if target == self:GetCaster() and self:GetCaster():IsRooted() then
+		return UF_FAIL_CUSTOM
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_rubick_telekinesis:GetCustomCastErrorTarget(target)
+	if target == self:GetCaster() and self:GetCaster():IsRooted() then
+		return "dota_hud_error_ability_disabled_by_root"
+	end
+end
+
 function imba_rubick_telekinesis:OnSpellStart( params )
 	local caster = self:GetCaster()
 	-- Handler on lifted targets
@@ -123,21 +137,6 @@ function imba_rubick_telekinesis:GetCastRange( location , target)
 		return 25000
 	end
 	return self:GetSpecialValueFor("cast_range")
-end
-
-function imba_rubick_telekinesis:CastFilterResultTarget( target )
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
 end
 
 -------------------------------------------
@@ -1050,8 +1049,6 @@ LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroe
 imba_rubick_spellsteal.banned_abilities = 
 {
 	"imba_sniper_headshot",
-	"imba_phoenix_sun_ray",
-	"imba_phoenix_sun_ray_toggle_move",
 	"imba_rubick_spellsteal",
 	"shredder_chakram",
 	"shredder_chakram_2",
@@ -1144,6 +1141,9 @@ function imba_rubick_spellsteal:OnSpellStart()
 	if self.spell_target:TriggerSpellAbsorb( self ) then
 		return
 	end
+	
+	-- Prevent weird stuff from happening if copied by Lotus Orb or duplicated through Grimstroke's Soulbind
+	if self:GetAbilityIndex() == 0 then return end
 
 	-- Get last used spell
 	self.stolenSpell = {}
@@ -1323,6 +1323,8 @@ imba_rubick_spellsteal.slot1 = "rubick_empty1"
 imba_rubick_spellsteal.slot2 = "rubick_empty2"
 -- Add new stolen spell
 function imba_rubick_spellsteal:SetStolenSpell( spellData )
+	if not spellData then return end
+
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents
@@ -1362,6 +1364,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.CurrentPrimarySpell:SetLevel( primarySpell:GetLevel() )
 		self.CurrentPrimarySpell:SetStolen( true )
 		
+		if self.CurrentPrimarySpell.OnStolen then
+			self.CurrentPrimarySpell:OnStolen(self.CurrentPrimarySpell)
+		end
+		
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentPrimarySpell:IsHiddenWhenStolen() then
 			self.CurrentPrimarySpell:SetHidden(true)
@@ -1374,6 +1380,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.CurrentSecondarySpell = self:GetCaster():AddAbility( secondarySpell:GetAbilityName() )
 		self.CurrentSecondarySpell:SetLevel( secondarySpell:GetLevel() )
 		self.CurrentSecondarySpell:SetStolen( true )
+
+		if self.CurrentSecondarySpell.OnStolen then
+			self.CurrentSecondarySpell:OnStolen(self.CurrentPrimarySpell)
+		end
 		
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
@@ -1413,17 +1423,26 @@ function imba_rubick_spellsteal:ForgetSpell()
 		for i = 0, self:GetCaster():GetAbilityCount() -1 do
 			local talent = self:GetCaster():FindAbilityByName("special_bonus_imba_"..string.gsub(self.CurrentSpellOwner, "npc_dota_hero_","").."_"..i)
 			if talent then
-				print(talent:GetAbilityName())
+				-- print(talent:GetAbilityName())
 				self:GetCaster():RemoveAbility( talent:GetAbilityName() )
 			end
 		end
 			
 	end
+	
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
+		if self.CurrentPrimarySpell.OnUnStolen then
+			self.CurrentPrimarySpell:OnUnStolen()
+		end
+	
 		--print("forgetting primary")
 		self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), true, false )
 		self:GetCaster():RemoveAbility( self.CurrentPrimarySpell:GetAbilityName() )
 		if self.CurrentSecondarySpell~=nil and not self.CurrentSecondarySpell:IsNull() then
+			if self.CurrentSecondarySpell.OnUnStolen then
+				self.CurrentSecondarySpell:OnUnStolen()
+			end
+		
 			--print("forgetting secondary")
 			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), true, false )
 			self:GetCaster():RemoveAbility( self.CurrentSecondarySpell:GetAbilityName() )
@@ -1524,7 +1543,7 @@ function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	self.stolen_spell_amp = kv.spell_amp * 100
 
 	if self:GetParent():HasScepter() then
-		print("Spell Amp:", self.stolen_spell_amp)
+		-- print("Spell Amp:", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end
@@ -1532,12 +1551,14 @@ end
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
 	if self:GetParent():HasScepter() then
-		print("Spell Amp (refresh):", self.stolen_spell_amp)
+		-- print("Spell Amp (refresh):", self.stolen_spell_amp)
 		self:SetStackCount(self.stolen_spell_amp)
 	end
 end
 
 function modifier_imba_rubick_spellsteal:OnDestroy( kv )
+	if not IsServer() then return end
+	
 	self:GetAbility():ForgetSpell() 
 end
 

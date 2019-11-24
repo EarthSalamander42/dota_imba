@@ -183,7 +183,11 @@ function modifier_imba_static_remnant:OnDestroy( params )
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 and not self.ballLightning then
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
+					local root_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
+					
+					if root_modifier then
+						root_modifier:SetDuration(pull_duration * (1 - enemy:GetStatusResistance()), true)
+					end
 				end
 			end
 		end
@@ -457,11 +461,6 @@ function modifier_imba_vortex_root:OnCreated( params )
 		self.speed							= (self.electric_vortex_pull_distance / self:GetDuration()) * FrameTime()
 
 		self:StartIntervalThink(FrameTime())
-		
-		-- Weird stuff with this not being affected by status resist so I'm forcing it here
-		Timers:CreateTimer(FrameTime(), function()
-			self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
-		end)
 	end
 end
 
@@ -670,6 +669,13 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					target_flag = target_flag + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 				end
 
+				-- Emit particle
+				local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, parent)
+				ParticleManager:SetParticleControl(particle_fx, 0, keys.target:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_fx)
+
+				keys.target:EmitSound("Hero_StormSpirit.Overload")
+
 				-- Find enemies around the target
 				local enemies	=	FindUnitsInRadius(	parent:GetTeamNumber(),
 					keys.target:GetAbsOrigin(),
@@ -697,10 +703,6 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					-- Apply debuff
 					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration} )
 
-					-- Emit particle
-					local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, parent)
-					ParticleManager:SetParticleControl(particle_fx, 0, keys.target:GetAbsOrigin())
-					ParticleManager:ReleaseParticleIndex(particle_fx)
 					-- Remove overload buff
 					self:Destroy()
 				end

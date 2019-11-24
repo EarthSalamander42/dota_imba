@@ -398,13 +398,16 @@ function imba_lion_hex:OnSpellStart()
 			end
 		end
 
-		-- Add particle effect
-		local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
-		ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
-		ParticleManager:ReleaseParticleIndex(particle_hex_fx)
-
-		-- Transform your enemy into a frog
-		target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		-- I don't really have an idea as to why this can reflect onto magic-immune enemies, but I guess I'll just put a guard here
+		if not target:IsMagicImmune() then
+			-- Add particle effect
+			local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
+			ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
+			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
+			
+			-- Transform your enemy into a frog
+			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		end
 	else
 		target = self:GetCursorPosition()
 	
@@ -1240,12 +1243,11 @@ function imba_lion_finger_of_death:OnSpellStart()
 			Timers:CreateTimer(FrameTime(), function()
 				ability:EndCooldown()
 				ability:StartCooldown(self:GetSpecialValueFor("triggerfinger_cooldown"))
-			end)		
+			end)
 		end
 	end)
-end 
+end
 
-	
 function FingerOfDeath(caster, ability, main_target, target, damage, enemies_frog_radius)
 	-- Ability properties
 	local sound_impact = "Hero_Lion.FingerOfDeathImpact"
@@ -1256,6 +1258,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 	local damage_delay = ability:GetSpecialValueFor("damage_delay")    
 	local enemies_frog_duration = ability:GetSpecialValueFor("enemies_frog_duration")
 	local damage_per_kill = ability:GetSpecialValueFor("damage_per_kill")
+	local kill_grace_duration = ability:GetSpecialValueFor("kill_grace_duration")
 	
 	-- Add particle effects
 	local particle_finger_fx = ParticleManager:CreateParticle(particle_finger, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -1296,7 +1299,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 			return nil
 		end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = ability:GetSpecialValueFor("kill_grace_duration")})
+		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration})
 		
 		-- Play impact sound
 		EmitSoundOn(sound_impact, target)

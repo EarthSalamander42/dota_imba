@@ -1293,15 +1293,21 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		local aura = "modifier_terrorital_hunter_aura"
 
 		-- Kill previous dummy, if exists
-		if ability.territorial_aura_modifier then
-			ability.territorial_aura_modifier:Destroy()
+		if ability.territorial_aura_modifier and not ability.territorial_aura_modifier:IsNull() then
+			if ability.territorial_aura_modifier.ForceKill then
+				ability.territorial_aura_modifier:ForceKill(false)
+			end
+			
+			if ability.territorial_aura_modifier.RemoveSelf then
+				ability.territorial_aura_modifier:RemoveSelf()
+			end
 		end
 
 		ability.territorial_tree = target
 
 		-- Create Modifier Thinker
 		ability.territorial_aura_modifier = CreateModifierThinker(caster, ability, aura, {}, ability.territorial_tree:GetAbsOrigin(), caster:GetTeamNumber(), false)
-		ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, false, false, true)
+		ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
 	end
 end
 
@@ -1312,7 +1318,6 @@ function modifier_terrorital_hunter_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.modifier_talent = "modifier_terrorital_hunter_talent_tenacity"
 
 	-- Ability specials
 	self.vision_range = self.ability:GetSpecialValueFor("vision_range")
@@ -1323,35 +1328,16 @@ end
 
 function modifier_terrorital_hunter_aura:OnIntervalThink()
 	if IsServer() then
-
 		-- Check if tree is cut down, kill dummy if it is
-		if not self.ability.territorial_tree:IsStanding() then
-			self.ability.territorial_aura_modifier:Destroy()
-			self.ability.territorial_aura_modifier = nil
-		end
-
-		-- #3 Talent: Territorial Hunter grants Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
-		if self:GetCaster():HasTalent("special_bonus_imba_ursa_3") then
-
-			-- Find if Ursa is in range of the aura
-			local distance = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D()
-
-			-- If Ursa is in aura range and doesn't have the Tenacity bonus, add it
-			if not self:GetCaster():HasModifier(self.modifier_talent) and distance <= self.vision_range then
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_talent , {})
-			end
-
-			-- If Ursa is too far and it has the Tenacity bonus, remove it
-			if self:GetCaster():HasModifier(self.modifier_talent) and distance > self.vision_range then
-				self:GetCaster():RemoveModifierByName(self.modifier_talent)
-			end
+		if not self.ability or not self.ability.territorial_tree:IsStanding() then
+			self:StartIntervalThink(-1)
+			self:GetParent():ForceKill(false)
+			self:Destroy()
 		end
 	end
 end
 
 function modifier_terrorital_hunter_aura:OnDestroy()
-	self:StartIntervalThink(-1)
-	
 	if IsServer() then
 		self:GetParent():RemoveSelf()
 	end
@@ -1370,7 +1356,7 @@ function modifier_terrorital_hunter_aura:GetAuraSearchFlags()
 end
 
 function modifier_terrorital_hunter_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY
+	return DOTA_UNIT_TARGET_TEAM_BOTH
 end
 
 function modifier_terrorital_hunter_aura:GetAuraSearchType()
@@ -1380,6 +1366,10 @@ end
 function modifier_terrorital_hunter_aura:GetModifierAura()
 	return "modifier_terrorital_hunter_fogvision"
 end
+
+-- Only apply to enemies and Ursa if applicable
+-- -- #3 Talent: Territorial Hunter grants Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
+function modifier_terrorital_hunter_aura:GetAuraEntityReject(hTarget)	return hTarget:GetTeamNumber() == self:GetParent():GetTeamNumber() and not hTarget:HasTalent("special_bonus_imba_ursa_3") end
 
 function modifier_terrorital_hunter_aura:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
@@ -1417,7 +1407,19 @@ end
 
 function modifier_terrorital_hunter_fogvision:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink(FrameTime())
+		if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+			self:StartIntervalThink(FrameTime())
+		else
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_terrorital_hunter_talent_tenacity" , {})
+		end
+	end
+end
+
+function modifier_terrorital_hunter_fogvision:OnDestroy()
+	if IsServer() then
+		if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() and self:GetParent():HasModifier("modifier_terrorital_hunter_talent_tenacity") and not self:GetParent():HasModifier("modifier_terrorital_hunter_fogvision") then
+			self:GetParent():RemoveModifierByName("modifier_terrorital_hunter_talent_tenacity")
+		end
 	end
 end
 
@@ -1431,24 +1433,28 @@ end
 
 -- Reveal from fog
 function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
-	return 1
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		return 1
+	end
 end
 
 -- Invis particle handling
 function modifier_terrorital_hunter_fogvision:OnStateChanged()
-	if self:GetParent():IsInvisible() and not self.applied_particle then
-		self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-		self.applied_particle = true
-	elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
-		ParticleManager:DestroyParticle(self.invis_particle_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
-		self.applied_particle = false
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		if self:GetParent():IsInvisible() and not self.applied_particle then
+			self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+			self.applied_particle = true
+		elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
+			ParticleManager:DestroyParticle(self.invis_particle_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
+			self.applied_particle = false
+		end
 	end
 end
 
 function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
-	if IsServer() then
+	if IsServer() and self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 		local attacker = keys.attacker
 		local target = keys.target
 
@@ -1482,4 +1488,24 @@ end
 
 function modifier_terrorital_hunter_talent_tenacity:GetModifierStatusResistanceStacking()
 	return self.tenacity_bonus
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_ursa_3", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_ursa_3	= class({})
+
+function modifier_special_bonus_imba_ursa_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_3:IsPurgable() 	return false end
+function modifier_special_bonus_imba_ursa_3:RemoveOnDeath() 	return false end
+
+function imba_ursa_territorial_hunter:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_ursa_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ursa_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ursa_3"), "modifier_special_bonus_imba_ursa_3", {})
+	end
 end

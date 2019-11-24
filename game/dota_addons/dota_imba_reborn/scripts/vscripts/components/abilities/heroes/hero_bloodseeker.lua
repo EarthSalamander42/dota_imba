@@ -116,13 +116,8 @@ if IsServer() then
 		end
 	end
 	function modifier_imba_bloodrage_buff_stats:OnDeath(params)
-		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit then
-
-			-- If the dead target is a building, do nothing
-			if params.unit:IsBuilding() then
-				return nil
-			end
-
+		-- "Bloodrage does not heal upon killing illusions, Arc Warden Tempest Double minimap icon.png Tempest Doubles, Roshan icon.png Roshan, wards, or buildings."
+		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit and not params.unit:IsIllusion() and not params.unit:IsTempestDouble() and not params.unit:IsRoshan() and not params.unit:IsOther() and not params.unit:IsBuilding() then
 			local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
 			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
 			params.attacker:Heal(heal, self:GetCaster())
@@ -505,7 +500,7 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then
 				enemy:RemoveModifierByName("modifier_imba_thirst_debuff_vision")
 			else
-				if enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
+				if enemy and not enemy:IsNull() and (enemy:IsRealHero() or enemy:IsClone()) and enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
 					if enemy:GetHealthPercent() < self.minhp then
 						local enemyHp = (self.minhp - enemy:GetHealthPercent())
 						if enemyHp > (self.minhp - self.maxhp) and not enemy:IsMagicImmune() then
@@ -578,11 +573,14 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 			end
 			if not confirmTheKill then
 				local modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thirst_haste", {duration = duration})
-				modifier.sourceUnit = params.unit
-				attackerCount = 1
-				if params.attacker == self:GetCaster() then attackerCount = 2 end
-				if modifier:GetStackCount() <= attackerCount then
-					modifier:SetStackCount(attackerCount)
+				
+				if modifier then
+					modifier.sourceUnit = params.unit
+					attackerCount = 1
+					if params.attacker == self:GetCaster() then attackerCount = 2 end
+					if modifier:GetStackCount() <= attackerCount then
+						modifier:SetStackCount(attackerCount)
+					end
 				end
 			end
 		end
@@ -737,10 +735,12 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-	if caster:HasScepter() and not self.from_blood_rite then
+	-- God damn spaghetti check for Grimstroke exception
+	if caster:HasScepter() and (not self.from_blood_rite or self:IsStolen()) and self:GetAbilityIndex() ~= 0 then
 		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
 		if modifier_rupture_charges_handler then
 			modifier_rupture_charges_handler:DecrementStackCount()
+			self:StartCooldown(0.25)
 		end
 	end
 
@@ -763,6 +763,9 @@ if IsServer() then
 		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self.parent:GetAbsOrigin()
+		
+		self.movedamage_think = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+		
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("damage_cap_interval") )
 	end
 
@@ -772,7 +775,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
 		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
-			self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+			self.movedamage = self.movedamage_think
 		
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
@@ -842,6 +845,8 @@ end
 function modifier_imba_rupture_charges:IsDebuff() return false end
 function modifier_imba_rupture_charges:IsPurgable() return false end
 function modifier_imba_rupture_charges:RemoveOnDeath() return false end
+-- Need this for the Grimstroke interaction
+function modifier_imba_rupture_charges:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_rupture_charges:OnCreated()
 	if IsServer() then
@@ -959,18 +964,16 @@ function modifier_imba_rupture_charges:OnStackCountChanged(old_stack_count)
 end
 
 function modifier_imba_rupture_charges:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-
-	return decFuncs
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 end
 
 function modifier_imba_rupture_charges:OnAbilityFullyCast(keys)
 	if IsServer() then
 		local ability = keys.ability
 		local unit = keys.unit
-
+		
 		-- If this was the caster casting Refresher, refresh charges
-		if unit == self.caster and ability:GetName() == "item_refresher" then
+		if unit == self.caster and (ability:GetName() == "item_refresher" or ability:GetName() == "item_refresher_shard") then
 			self:SetStackCount(self.max_charge_count)
 		end
 	end

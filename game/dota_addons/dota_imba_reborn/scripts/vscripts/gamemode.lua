@@ -8,9 +8,11 @@ require('addon_init')
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
 	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+	require('internal/eventtest')
 end
 
 require('libraries/animations')
+require('libraries/disable_help')
 require('libraries/keyvalues')
 require('libraries/modifiers')
 require('libraries/notifications')
@@ -29,9 +31,11 @@ require('internal/events')
 -- add components below the api
 require('components/abandon')
 require('components/battlepass/init')
+require('components/chat_wheel/init')
 require('components/courier/init')
 require("components/demo/init")
 require("components/frantic/init")
+require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')
@@ -57,17 +61,8 @@ function GameMode:OnFirstPlayerLoaded()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 
 		if GetMapName() ~= Map1v1() then
-			if IMBA_DIRETIDE == true then
-				ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-			else
-				if IMBA_DIRETIDE_EASTER_EGG == true then
-					local easter_egg = CreateUnitByName("npc_dota_diretide_easter_egg", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-					easter_egg:AddNewModifier(easter_egg, nil, "modifier_npc_dialog", {})
-				else
-					local roshan = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-					roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
-				end
-			end
+			ROSHAN_ENT = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+			ROSHAN_ENT:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
 		end
 	end
 end
@@ -86,34 +81,15 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
 	
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
+
+	if IsInToolsMode() then
+		Convars:RegisterCommand('events_test', function() GameMode:StartEventTest() end, "events test", FCVAR_CHEAT)
+	end
 end
 
 -- CAREFUL, FOR REASONS THIS FUNCTION IS ALWAYS CALLED TWICE
 function GameMode:InitGameMode()
 	self:_InitGameMode()
-end
-
-function GameMode:DonatorCompanionJS(event)
-	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
-end
-
-function GameMode:DonatorStatueJS(event)
-	-- need to update the current statue with the new one
---	Battlepass:DonatorCompanion(event.ID, event.unit, event.js)
-end
-
-function GameMode:DonatorEmblemJS(event)
-	local hero = PlayerResource:GetSelectedHeroEntity(event.ID)
-
-	if hero:HasModifier("modifier_patreon_donator") then
-		local modifier = hero:FindModifierByName("modifier_patreon_donator")
-
-		modifier.effect_name = event.unit
-	end
-end
-
-function GameMode:DonatorCompanionSkinJS(event)
-	DonatorCompanionSkin(event.ID, event.unit, event.skin)
 end
 
 function GameMode:SetupAncients()
@@ -250,7 +226,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
-		GameMode:SetCustomGamemode(1)
+		api:SetCustomGamemode(1)
 
 		if GameMode.VoteTable == nil then return end
 		local votes = GameMode.VoteTable
@@ -289,7 +265,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			-- Act on the winning vote
 			if category == "gamemode" then
-				GameMode:SetCustomGamemode(highest_key)
+				api:SetCustomGamemode(highest_key)
 			end
 
 			-- Act on the winning vote
@@ -297,7 +273,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				GameRules:SetCustomGameDifficulty(highest_key)
 			end
 
---			print(category .. ": " .. highest_key)
+			print(category .. ": " .. highest_key)
 		end
 	end
 end, nil)
@@ -313,7 +289,9 @@ function GameMode:OnSettingVote(keys)
 		GameMode.VoteTable[keys.category] = {}
 	end
 
-	GameMode.VoteTable[keys.category][pid] = keys.vote
+	if pid >= 0 then
+		GameMode.VoteTable[keys.category][pid] = keys.vote
+	end
 
 --	Say(nil, keys.category, false)
 --	Say(nil, tostring(keys.vote), false)
@@ -322,11 +300,7 @@ function GameMode:OnSettingVote(keys)
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
 
-function GameMode:SetCustomGamemode(iValue)
-	CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
-end
-
-function GameMode:GetCustomGamemode()
---	print("Gamemode:", CustomNetTables:GetTableValue("game_options", "gamemode")["1"])
-	return CustomNetTables:GetTableValue("game_options", "gamemode")["1"]
+function GameMode:SetSameHeroSelection(bEnabled)
+	GameRules:SetSameHeroSelectionEnabled(bEnabled)
+	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = bEnabled})
 end

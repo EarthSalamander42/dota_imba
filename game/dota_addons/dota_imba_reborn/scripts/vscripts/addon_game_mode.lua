@@ -1,4 +1,4 @@
-require('components/statcollection/init')
+-- require('components/statcollection/init')
 require('components/scoreboard_events')
 require('internal/util')
 require('gamemode')
@@ -21,14 +21,31 @@ function Precache( context )
 	LinkLuaModifier("modifier_wearable", "components/modifiers/modifier_wearable.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_invulnerable_hidden", "components/modifiers/modifier_invulnerable_hidden.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("components/modifiers/demo/lm_take_no_damage", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+
+	-- vanilla item override
+	LinkLuaModifier("modifier_item_imba_bottle_heal", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE) -- imba bottle using vanilla replacing modifier in ModifierFilter
+	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE) -- using vanilla aegis item with imba aegis modifier to keep combat events notifications on pickup/steal/deny
 
 	-- Battlepass precaching
-	Wearables:PrecacheWearables(context)
+--	Wearables:PrecacheWearables(context)
+
+	-- arcanas
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
-	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
+	PrecacheModel("models/items/pudge/arcana/pudge_arcana_base.vmdl", context)
+
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
+	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/earthshaker/earthshaker_arcana", context)
+	PrecacheModel("models/items/earthshaker/earthshaker_arcana/earthshaker_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/zeus/arcana_chariot", context)
+	PrecacheModel("models/heroes/zeus/zeus_arcana.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/wisp", context)
+	PrecacheModel("models/items/io/io_ti7/io_ti7.vmdl", context)
+
+	PrecacheResource("particle_folder", "particles/econ/items/lina/lina_head_headflame", context)
 	
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)
@@ -106,8 +123,14 @@ function Precache( context )
 --		end
 --	end
 
-	if IMBA_DIRETIDE == true then
-		PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
+	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
+
+	-- Chat Wheel
+	PrecacheResource( "soundfile", "soundevents/custom_soundboard_soundevents.vsndevts", context )
+
+	local heroeskv = LoadKeyValues("scripts/heroes.txt")
+	for hero, _ in pairs(heroeskv) do
+		PrecacheResource( "soundfile", "soundevents/voscripts/game_sounds_vo_"..string.sub(hero,15)..".vsndevts", context )
 	end
 end
 

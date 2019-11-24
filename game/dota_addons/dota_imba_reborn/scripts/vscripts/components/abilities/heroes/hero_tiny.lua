@@ -789,25 +789,8 @@ end
 
 imba_tiny_toss = imba_tiny_toss or class({})
 
-function imba_tiny_toss:GetAbilityTextureName()
-	return "tiny_toss"
-end
-
-function imba_tiny_toss:IsNetherWardStealable()
-	return false
-end
-
-function imba_tiny_toss:CastFilterResultTarget( hTarget )
-	if IsServer() then
-		print(PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()))
-		print(PlayerResource:IsDisableHelpSetForPlayerID(self:GetCaster():GetPlayerOwnerID(), hTarget:GetPlayerOwnerID()))
-		if hTarget:IsOpposingTeam(self:GetCaster():GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
-			return UF_FAIL_DISABLE_HELP
-		end
-		
-		return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	end
-end
+function imba_tiny_toss:GetAbilityTextureName() return "tiny_toss" end
+function imba_tiny_toss:IsNetherWardStealable() return false end
 
 function imba_tiny_toss:OnSpellStart()
 	self.tossPosition = self:GetCursorPosition()
@@ -840,8 +823,9 @@ function imba_tiny_toss:OnSpellStart()
 		damage = self:GetSpecialValueFor("toss_damage")
 	}
 
-	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
+	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
 
+	-- This can't be added to disable_help library, too specific.
 	for _, victim in pairs(tossVictims) do
 		if (PlayerResource:IsDisableHelpSetForPlayerID(victim:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID())) then
 			table.remove(tossVictims, _)
@@ -1026,7 +1010,7 @@ function modifier_tiny_toss_movement:TossLand()
 			-- end
 		end
 		if self.parent == caster then
-			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self.ability:GetSpecialValueFor("self_dmg_pct") * 0.01, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
+			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self.ability:GetSpecialValueFor("self_dmg_pct") * 0.01, damage_type = DAMAGE_TYPE_PURE, damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_HPLOSS, ability = self.ability})
 		end
 
 		EmitSoundOn("Ability.TossImpact", self.parent)

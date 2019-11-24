@@ -317,6 +317,19 @@ end
 
 modifier_imba_dragon_blood = modifier_imba_dragon_blood or class({})
 
+function modifier_imba_dragon_blood:OnCreated()
+	if not IsServer() then return end
+	
+	-- IMBAfication: Gold Hoard
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_dragon_blood:OnIntervalThink()
+	if self:GetParent().GetGold then
+		self:SetStackCount(self:GetParent():GetGold() / self:GetAbility():GetSpecialValueFor("gold_hoard_amount_per_inc"))
+	end
+end
+
 function modifier_imba_dragon_blood:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
@@ -329,18 +342,18 @@ end
 function modifier_imba_dragon_blood:GetModifierConstantHealthRegen()
 	if self:GetCaster():PassivesDisabled() then return end
 	if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
-		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") * 2
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") * 2 + self:GetStackCount()
 	else
-		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen") + self:GetStackCount()
 	end
 end
 
 function modifier_imba_dragon_blood:GetModifierPhysicalArmorBonus()
 	if self:GetCaster():PassivesDisabled() then return end
 	if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
-		return self:GetAbility():GetSpecialValueFor("bonus_armor") * 2
+		return self:GetAbility():GetSpecialValueFor("bonus_armor") * 2 + self:GetStackCount()
 	else
-		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+		return self:GetAbility():GetSpecialValueFor("bonus_armor") + self:GetStackCount()
 	end
 end
 
@@ -660,12 +673,12 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 		-- end
 
 		if self:GetParent():HasScepter() then
-			if self:GetParent():PassivesDisabled() then
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
-				self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
-			elseif not self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetAbility() and self:GetAbility():GetToggleState() then
+			-- if self:GetParent():PassivesDisabled() then
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
+				-- self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
+			if not self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetAbility() and self:GetAbility():GetToggleState() then
 				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end

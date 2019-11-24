@@ -10,13 +10,9 @@ function GameMode:_InitGameMode()
 
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
-	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
-	CustomGameEventManager:RegisterListener("change_statue", Dynamic_Wrap(self, "DonatorStatueJS"))
-	CustomGameEventManager:RegisterListener("change_emblem", Dynamic_Wrap(self, "DonatorEmblemJS"))
-	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
-	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
-	print("Vote Settings listener initialized.")
+--	print("Vote Settings listener initialized.")
 	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
+	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
 	self:SetupAncients()
 	self:SetupFountains()
@@ -24,7 +20,9 @@ function GameMode:_InitGameMode()
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( SAME_HERO_SELECTION ) -- Let server handle hero duplicates
-	GameRules:SetPreGameTime( PRE_GAME_TIME )
+	GameRules:SetHeroSelectionTime( HERO_SELECTION_TIME )
+	GameRules:SetHeroSelectPenaltyTime( SELECT_PENALTY_TIME )
+	GameRules:SetPreGameTime( 90 ) -- Some variable SOMEWHERE is messing this up and constantly forcing it to 60 seconds so I'm overriding it here
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )
 	GameRules:SetStrategyTime( STRATEGY_TIME )
@@ -46,12 +44,6 @@ function GameMode:_InitGameMode()
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_REGENERATION, true) --Regen
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ARCANE, true) --Arcane
 --	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_BOUNTY, false) --Bounty
-
-	-- State jumping fix
---	if IsInToolsMode() then
-		SendToServerConsole("dota_surrender_on_disconnect 0")
-		SendToServerConsole("customgamesetup_set_auto_launch_delay 300")
---	end
 
 	if IMBA_PICK_SCREEN == false then
 		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
@@ -106,9 +98,9 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, '_OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, '_OnConnectFull'), self)
 	ListenToGameEvent('player_disconnect', Dynamic_Wrap(self, 'OnDisconnect'), self)
-	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(self, 'OnItemPickedUp'), self)
+--	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(self, 'OnItemPickedUp'), self)
 --	ListenToGameEvent('player_connect', Dynamic_Wrap(self, 'PlayerConnect'), self)
-	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'OnAbilityUsed'), self)
+--	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'OnAbilityUsed'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, '_OnGameRulesStateChange'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(self, '_OnNPCSpawned'), self)
 	ListenToGameEvent("player_reconnected", Dynamic_Wrap(self, 'OnPlayerReconnect'), self)

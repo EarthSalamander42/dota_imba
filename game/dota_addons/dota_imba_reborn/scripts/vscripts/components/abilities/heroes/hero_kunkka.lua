@@ -268,6 +268,7 @@ end
 -------------------------------------------
 
 imba_kunkka_torrent = class({})
+LinkLuaModifier("modifier_imba_torrent_handler", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_cast", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_slow_tide", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_slow", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
@@ -277,6 +278,10 @@ LinkLuaModifier("modifier_imba_kunkka_torrent_talent_thinker", "components/abili
 
 function imba_kunkka_torrent:GetAbilityTextureName()
 	return "kunkka_torrent"
+end
+
+function imba_kunkka_torrent:GetIntrinsicModifierName()
+	return "modifier_imba_torrent_handler"
 end
 
 function imba_kunkka_torrent:OnSpellStart()
@@ -514,6 +519,53 @@ function imba_kunkka_torrent:GetCastRange( location , target)
 		range = range + self:GetSpecialValueFor("tide_low_range")
 	end
 	return range
+end
+
+-----------------------------------
+-- MODIFIER_IMBA_TORRENT_HANDLER --
+-----------------------------------
+
+modifier_imba_torrent_handler = class({})
+
+function modifier_imba_torrent_handler:IsHidden()	return true end
+
+function modifier_imba_torrent_handler:OnIntervalThink()
+	if not IsServer() then return end
+
+	if self:GetAbility():GetAutoCastState() and self:GetAbility():IsFullyCastable() and not self:GetAbility():IsInAbilityPhase() and not self:GetCaster():IsHexed() and not self:GetCaster():IsNightmared() and not self:GetCaster():IsOutOfGame() and not self:GetCaster():IsSilenced() and not self:GetCaster():IsStunned() and not self:GetCaster():IsChanneling() then
+		self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin())
+		self:GetAbility():CastAbility()
+	end
+end
+
+function modifier_imba_torrent_handler:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER, MODIFIER_PROPERTY_IGNORE_CAST_ANGLE, MODIFIER_PROPERTY_DISABLE_TURNING}
+	
+	return decFuncs
+end
+
+function modifier_imba_torrent_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() then return end
+	
+	if keys.ability == self:GetAbility() then
+		if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION and (keys.new_pos - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetCastRange(self:GetCaster():GetCursorPosition(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus() then
+			self.bActive = true
+		else
+			self.bActive = false
+		end
+	else
+		self.bActive = false
+	end
+end
+
+function modifier_imba_torrent_handler:GetModifierIgnoreCastAngle()
+	if not IsServer() or self.bActive == false then return end
+	return 1
+end
+
+function modifier_imba_torrent_handler:GetModifierDisableTurning()
+	if not IsServer() or self.bActive == false then return end
+	return 1
 end
 
 modifier_imba_torrent_phase = class({})
@@ -1269,21 +1321,6 @@ function imba_kunkka_x_marks_the_spot:OnUpgrade()
 			ability_handle:SetLevel(1)
 			ability_handle:SetActivated(false)
 		end
-	end
-end
-
-function imba_kunkka_x_marks_the_spot:CastFilterResultTarget(target)
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
 	end
 end
 

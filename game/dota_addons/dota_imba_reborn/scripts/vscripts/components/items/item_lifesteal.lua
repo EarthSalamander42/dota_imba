@@ -43,15 +43,17 @@ function modifier_imba_morbid_mask:OnCreated()
 	self.ability = self:GetAbility()
 	self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
 
-	-- Ability specials
-	self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
+	if self.ability then
+		-- Ability specials
+		self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
 
-	if IsServer() then
-		-- Change to lifesteal projectile, if there's nothing "stronger"
-		ChangeAttackProjectileImba(self.caster)
+		if IsServer() then
+			-- Change to lifesteal projectile, if there's nothing "stronger"
+			ChangeAttackProjectileImba(self.caster)
 
-		if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
-			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_morbid_mask_unique", {})
+			if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
+				self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_morbid_mask_unique", {})
+			end
 		end
 	end
 end

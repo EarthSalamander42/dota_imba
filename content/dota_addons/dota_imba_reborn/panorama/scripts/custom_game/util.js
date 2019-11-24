@@ -148,24 +148,30 @@ function HideIMR(panel) {
 }
 
 function OverrideTopBarHeroImage(args) {
+	var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
 	var arcana_level = undefined;
 	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-	if (ply_battlepass && ply_battlepass.arcana) {
-		if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] != undefined) {
-			arcana_level = ply_battlepass.arcana["npc_dota_hero_" + args.hero_name];
-		} else {
-			return;
+	if (herolist && herolist.customlist["npc_dota_hero_" + args.hero_name]) {
+		arcana_level = 7777
+	} else {
+		if (ply_battlepass && ply_battlepass.arcana) {
+			if (ply_battlepass.arcana["npc_dota_hero_" + args.hero_name] != undefined) {
+				arcana_level = ply_battlepass.arcana["npc_dota_hero_" + args.hero_name];
+			} else {
+//				$.Msg("No arcana found for this hero.")
+				return;
+			}
 		}
 	}
 
 	var team = "Radiant"
-	if (Players.GetTeam(Players.GetLocalPlayer()) == 3) {
+	if (Players.GetTeam(args.player_id) == 3) {
 		team = "Dire"
 	}
 
-	if (FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()) && arcana_level != undefined) {
-		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
+	if (FindDotaHudElement(team + "Player" + args.player_id) && arcana_level != undefined) {
+		var panel = FindDotaHudElement(team + "Player" + args.player_id).FindChildTraverse("HeroImage")
 		if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
 	}
 }
@@ -190,7 +196,10 @@ function OverrideHeroImage(arcana_level, panel, hero_name) {
 		var newheroimage = $.CreatePanel('Panel', panel, '');
 		newheroimage.style.width = "100%";
 		newheroimage.style.height = "100%";
-		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '_arcana' + arcana_level + '.png")';
+		if (arcana_level == 7777)
+			newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '.png")';
+		else
+			newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '_arcana' + arcana_level + '.png")';
 		newheroimage.style.backgroundSize = "cover";
 
 //		panel.style.border = "1px solid #99ff33";
@@ -206,7 +215,7 @@ function OverrideTopBarColor() {
 	var colors = CustomNetTables.GetTableValue("game_options", "player_colors")
 
 	for (var id in colors) {
-//		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
+		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
 		if (!Players.GetTeam(parseInt(id))) {return};
 		var team = "Radiant"
 
@@ -320,4 +329,20 @@ function GetDonatorColor(status) {
 	donator_colors[102] = "#871414";
 
 	return donator_colors[status];
+}
+
+GameEvents.Subscribe("toggle_ui", ToggleUI);
+
+var toggle_ui = true;
+
+function ToggleUI() {
+	if (toggle_ui == true) {
+		FindDotaHudElement("HUDElements").style.visibility = "collapse";
+		FindDotaHudElement("CustomUIRoot").style.visibility = "collapse";
+		toggle_ui = false;
+	} else {
+		FindDotaHudElement("HUDElements").style.visibility = "visible";
+		FindDotaHudElement("CustomUIRoot").style.visibility = "visible";
+		toggle_ui = true;
+	}
 }

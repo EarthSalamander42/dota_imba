@@ -4,14 +4,14 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                         "Tether"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both <font color='#FF7800'>and setting both to the faster unit's speed.</font color='#FF7800'> When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Magnetic Bond:</font> Io and the tethered target have hasted movement.\n<font color='#FF7800'>Entwine:</font color='#FF7800'> Enemies hit by tether have their movement and attack speed slowed.\n<font color='#FF7800'>Unsevered:</font> Tether pull is not interrupted if stunned during it."
-"DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 (2300 with talent) distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Entwine:</font color='#FF7800'> Enemies hit by tether have their movement and attack speed slowed.\n<font color='#FF7800'>Backpack Wisp:</font> When Io reaches Level %backpack_level_unlock%, Tether receives an auto-cast portion that reduces its cast range to %backpack_distance% (cannot be modified by cast range manipulating abilities), but will automatically latch the caster behind the target. Backpack Wisp is removed if Io is stunned, hexed, hidden, or rooted."
+"DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 700 distance or further away from Io, he will latch on and pull himself closer to the tethered unit (to a distance of 300)."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
 "DOTA_Tooltip_ability_imba_wisp_tether_radius"            		"MAX TETHER DISTANCE:"
 "DOTA_Tooltip_ability_imba_wisp_tether_movespeed"               "%MOVEMENT SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_wisp_tether_tether_heal_amp"         		"HP/MANA AMP:"
-"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"		"ATTACK / MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"		"ATTACK / % MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_wisp_tether_stun_duration" 			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 
 "DOTA_Tooltip_modifier_imba_wisp_tether_ally"					"Tethered"
@@ -23,6 +23,9 @@
 "DOTA_Tooltip_modifier_imba_wisp_tether_slow"				"Slowed"
 "DOTA_Tooltip_modifier_imba_wisp_tether_slow_description"	"Movement speed reduced while touched by tether! Effect lingers after exposure."
 
+"DOTA_Tooltip_modifier_imba_wisp_tether_backpack"				"Backpack Wisp"
+"DOTA_Tooltip_modifier_imba_wisp_tether_backpack_Description"	"Latched to the target's back."
+
 ////===============================================================================================================
 // Wisp's Tether Break
 ////===============================================================================================================
@@ -33,7 +36,7 @@
 // Wisp's Spirits
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_spirits"						"Spirits"
-"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging <font color='#FF7800'>and slowing</font> all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode. \n<font color='#FF7800'>Synergy</font color='#FF7800'>: Spirits disarm or silence on hit, toggle Swap Spirits ability to change the effect."
+"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode.\n<font color='#FF7800'>Balls to Face:</font> Spirit explosions also slow movement speed by %slow%%% for %slow_duration% seconds.\n<font color='#FF7800'>Synergy</font color='#FF7800'>: Spirits disarm or silence on hit; toggle Swap Spirits ability to change the effect."
 "DOTA_Tooltip_ability_imba_wisp_spirits_lore" 					"Io twists the particles of the universe with his unimaginable capabilities."
 "DOTA_Tooltip_ability_imba_wisp_spirits_creep_damage"          	"COLLISION DAMAGE:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_explosion_damage"		"EXPLOSION DAMAGE:"
@@ -81,19 +84,20 @@
 
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721"									"Overcharge"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_Lore"							"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Description"						"Io gains bonus attack speed and damage reduction. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants the following bonuses: \nProjectile Speed: + %bonus_missile_speed%<br>Cast Speed: + %bonus_cast_speed%%%<br>Attack Range: + %bonus_attack_range%"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Description"						"Io gains bonus attack speed and damage reduction. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants the following bonuses: \nProjectile Speed: + %bonus_missile_speed%<br>Cast Speed: + %bonus_cast_speed%%%"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Note0"							"Fundamental Shift does not increase the cast speed of Nature Prophet's Teleportation."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_attack_speed"					"ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_damage_pct"					"%INCOMING DAMAGE REDUCTION:"
 
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_aghanim_description"   	"Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff."
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_aghanim_description"   	"<font color='#FF7800'>Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff.</font>"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_radius"			"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_efficiency"		"SCEPTER EFFICIENCY:"
 
 "DOTA_Tooltip_modifier_imba_wisp_overcharge_721"								"Overcharged"
-"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Attack range also increased by %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS%, cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
 
 "DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura"								"Overcharged Proxy"
-"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Attack range also increased by %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS%, cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
 
 ////===============================================================================================================
 // Wisp's Relocate
@@ -124,7 +128,7 @@
 // Wisp's Swarp Spirits
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_swap_spirits"							"Swap Spirits"
-"DOTA_Tooltip_ability_imba_wisp_swap_spirits_description"				"When toggled to red, spirits will disarm heroes on hit. When toggled to pink, spirits will silence heroes on hit."
+"DOTA_Tooltip_ability_imba_wisp_swap_spirits_description"				"When toggled to pink, spirits will silence heroes on hit. When toggled to red, spirits will disarm heroes on hit."
 
 ////===============================================================================================================
 // Wisp's Talents
@@ -142,3 +146,5 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_10"						"Large Hadron Collider"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_10_Description"			"Increases Spirits cooldown by 50%. Doubles Spirits count, in/out move speed, and oscillation speed, and halves formation delay."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_11"						"+75 Spirits Hero Damage"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_12"						"Remnants of Overcharge"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_12_Description"			"Overcharge can now be toggled, at the cost of 6% of Io's current health and mana per second. Can set auto-cast on to revert to default logic."

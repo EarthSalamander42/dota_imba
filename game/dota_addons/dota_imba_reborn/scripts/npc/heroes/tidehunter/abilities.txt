@@ -59,7 +59,8 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"negative_armor"		"4 6 8 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
+				//"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
+				"LinkedSpecialBonus"	"special_bonus_imba_tidehunter_gush_armor"
 			}
 			"05"
 			{
@@ -95,7 +96,7 @@
 			"11"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"surf_speed_pct"	"20"
+				"surf_speed_pct"	"40"
 			}
 			"12"
 			{
@@ -234,7 +235,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"throw_range"			"675 725 775 825"
+				"throw_range"			"775 825 875 925"
 			}
 			"06"
 			{
@@ -286,7 +287,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"200 400 600"
+		"AbilityDamage"					"300 450 600"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -343,7 +344,22 @@
 				"var_type"			"FIELD_INTEGER"
 				"creeping_waves"	"4 5 6"
 			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"suggestive_armor_reduction"	"6 10 14"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"suggestive_duration"	"10"
+			}
 		}
+		
+		"precache"
+		{
+			"particle" 									"particles/units/heroes/hero_monkey_king/monkey_king_jump_armor_debuff_model.vpcf"
+		}		
 	}
 
 	//=================================================================================================================
@@ -375,6 +391,31 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_tidehunter_gush_armor" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_tidehunter_gush"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
 			}
 		}
 	}

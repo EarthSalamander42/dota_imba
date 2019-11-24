@@ -42,8 +42,8 @@
 "DOTA_Tooltip_modifier_imba_puck_dream_coil_visionary_Description"			"Cooldown of the enemy's ultimate ability being revealed as stack count."
 
 
-"DOTA_Tooltip_ability_special_bonus_imba_puck_illusory_orb_speed"			"+40% Illusory Orb Distance/Speed"
-"DOTA_Tooltip_ability_special_bonus_imba_puck_waning_rift_cooldown"			"-8s Waning Rift Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_puck_illusory_orb_speed"			"+50% Illusory Orb Distance/Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_puck_waning_rift_cooldown"			"-9s Waning Rift Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_puck_dream_coil_targets"			"Complex Dreamer"
 "DOTA_Tooltip_ability_special_bonus_imba_puck_dream_coil_targets_Description"		"-0.15 Rapid Fire Attack Interval; Dream Coil Affects Creeps"
 

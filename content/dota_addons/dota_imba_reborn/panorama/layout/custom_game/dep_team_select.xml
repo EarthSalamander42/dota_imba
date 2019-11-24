@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="file://{resources}/styles/dotastyles.css" />
-		<include src="file://{resources}/styles/play.css" />
+<!--		<include src="file://{resources}/styles/play.css" /> -->
 		<include src="file://{resources}/styles/custom_game/team_select.css" />
 	</styles>
 

@@ -46,7 +46,7 @@ function modifier_frantic:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_frantic:GetModifierPercentageCooldownStacking()
+function modifier_frantic:GetModifierPercentageCooldownStacking(keys)
 	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").frantic then
 		if keys.ability and self.ignore_frantic_cdr_abilities[keys.ability:GetName()] then
 			return nil

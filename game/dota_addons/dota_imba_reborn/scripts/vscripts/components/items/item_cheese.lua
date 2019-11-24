@@ -23,7 +23,13 @@ local function ConsumeCheese(parent, item)
 
 	-- If this was the last charge, remove the item
 	if item:GetCurrentCharges() == 0 then
-		parent:RemoveItem(item)
+		if not parent:IsClone() then
+			parent:RemoveItem(item)
+		else
+			if parent.GetCloneSource and parent:GetCloneSource() and parent:GetCloneSource():HasItemInInventory(item:GetName()) then
+				parent:GetCloneSource():RemoveItem(item)
+			end
+		end
 	else -- starting the cooldown manually is required for the auto-use
 		item:UseResources(false, false, true)
 	end
@@ -61,7 +67,7 @@ function modifier_item_imba_cheese_death_prevention:DeclareFunctions()
 end
 
 function modifier_item_imba_cheese_death_prevention:OnTakeDamage(keys)
-	if keys.unit:IsIllusion() or keys.unit ~= self:GetParent() then return end
+	if keys.unit:IsIllusion() or (keys.unit ~= self:GetParent() and not keys.unit:IsClone()) then return end
 	if keys.unit:HasModifier("modifier_imba_dazzle_shallow_grave") then return end
 
 	if keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection") then

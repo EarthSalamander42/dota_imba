@@ -17,7 +17,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}	
 
 	//=================================================================================
@@ -35,7 +35,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}	
 
 	//=================================================================================
@@ -53,7 +53,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}
 	
 	
@@ -72,7 +72,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}	
 
 	//=================================================================================
@@ -90,7 +90,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}	
 	//=================================================================================
 	// Creeps: Bad Tower 1 BOT
@@ -107,7 +107,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"		// Base health.
+		"StatusHealth"				"2400"		// Base health.
 	}	
 
 	//=================================================================================
@@ -115,91 +115,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower2_top"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -207,91 +135,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower2_mid"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -299,91 +155,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower2_bot"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -391,91 +175,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower3_top"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}
 
 	//=================================================================================
@@ -483,91 +195,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower3_mid"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}	
 
 	//=================================================================================
@@ -575,91 +215,19 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower3_bot"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good.vmdl"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}
 
 	//=================================================================================
@@ -667,183 +235,39 @@
 	//=================================================================================
 	"npc_dota_goodguys_tower4"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/tower_good"// Model.
-		"SoundSet"					"Tower.Water"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"4"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"40"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"490"		// Damage range min.
 		"AttackDamageMax"			"510"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.4"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
-		"HealthBarOffset"			"260"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"4000"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-	}	
+		"StatusHealth"				"4200"		// Base health.
+	}
 
 	//=================================================================================
 	// Creeps: Bad Tower 2 TOP
 	//=================================================================================
 	"npc_dota_badguys_tower2_top"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -851,91 +275,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower2_mid"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -943,91 +295,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower2_bot"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"2"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"27"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"220"		// Damage range min.
 		"AttackDamageMax"			"240"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2800"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3000"		// Base health.
 	}	
 
 	//=================================================================================
@@ -1035,91 +315,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower3_top"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}
 
 	//=================================================================================
@@ -1127,91 +335,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower3_mid"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}
 
 	//=================================================================================
@@ -1219,91 +355,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower3_bot"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower90"
-		"MinimapIconSize"			"320"
-		"Level"						"3"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"35"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"340"		// Damage range min.
 		"AttackDamageMax"			"360"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"3400"		// Base health.
 	}
 
 	//=================================================================================
@@ -1311,91 +375,19 @@
 	//=================================================================================
 	"npc_dota_badguys_tower4"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
-		"Model"						"models/props_structures/dire_tower002.vmdl"// Model.
-		"SoundSet"					"Tower.Fire"					// Name of sound set.
-		"MinimapIcon"				"minimap_tower45"
-		"MinimapIconSize"			"320"
-		"Level"						"4"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"40"		// Physical protection.
-		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"490"		// Damage range min.
 		"AttackDamageMax"			"510"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.4"		// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"700"		// Range within a target can be acquired.
-		"AttackRange"				"700"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"		// Particle system model for projectile.
-		"ProjectileSpeed"			"750"		// Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"			// Base strength
-		"AttributeStrengthGain"		"0"			// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"			// Base intelligence
-		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"			// Base agility
-		"AttributeAgilityGain"		"0"			// Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
-		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"120"
-		"HealthBarOffset"			"280"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"			// Speed
-		"MovementTurnRate"			"1.0"			// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"4000"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+		"StatusHealth"				"4200"		// Base health.
 	}
 
 	//=================================================================================
@@ -1403,88 +395,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_melee_rax_top"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_melee_barracks001.vmdl"    // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1492,88 +410,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_melee_rax_mid"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_melee_barracks001.vmdl"    // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks45"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1581,88 +425,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_melee_rax_bot"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_melee_barracks001.vmdl"    // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1670,88 +440,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_range_rax_top"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_ranged_barracks001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "20"		// Physical protection.
-		"MagicalResistance"         "0"			// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
+		"StatusHealth"              "2700"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1759,89 +455,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_range_rax_mid"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_ranged_barracks001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks45"
-		"HealthBarOffset"           "250"
-		
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
+		"ArmorPhysical"             "20"		// Physical protection.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
+		"StatusHealth"              "2700"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1849,88 +470,14 @@
 	//=================================================================================
 	"npc_dota_goodguys_range_rax_bot"
 	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/radiant_ranged_barracks001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
+		"ArmorPhysical"             "20"		// Physical protection.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
+		"StatusHealth"              "2700"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_GOODGUYS"            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -1938,266 +485,44 @@
 	//=================================================================================
 	"npc_dota_badguys_melee_rax_top"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_melee001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
-	}   
-	
+	}
 
 	//=================================================================================
 	// Creeps: Bad Guys Melee Rax MID
 	//=================================================================================
 	"npc_dota_badguys_melee_rax_mid"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_melee001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks45"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
-	}   
+	}
+	
 	//=================================================================================
 	// Creeps: Bad Guys Melee Rax BOT
 	//=================================================================================
 	"npc_dota_badguys_melee_rax_bot"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_melee001.vmdl"   // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "42"        // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3600"      // Base health.
+		"StatusHealth"              "3800"      // Base health.
 		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -2205,88 +530,14 @@
 	//=================================================================================
 	"npc_dota_badguys_range_rax_top"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_ranged001.vmdl"  // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
+		"ArmorPhysical"             "20"		// Physical protection.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
+		"StatusHealth"              "2700"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
 	//=================================================================================
@@ -2294,88 +545,14 @@
 	//=================================================================================
 	"npc_dota_badguys_range_rax_mid"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_ranged001.vmdl"  // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks45"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
+		"ArmorPhysical"             "20"		// Physical protection.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
-		"StatusHealthRegen"         "2"       // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
+		"StatusHealth"              "2700"      // Base health.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 	}   
 
 	//=================================================================================
@@ -2383,88 +560,14 @@
 	//=================================================================================
 	"npc_dota_badguys_range_rax_bot"
 	{
-		// General
-		//
-		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
-		"Model"                     "models/props_structures/dire_barracks_ranged001.vmdl"  // Model.
-		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
-		"MinimapIcon"               "minimap_racks90"
-		"HealthBarOffset"           "250"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"                  "backdoor_protection_in_base"           // Ability 1.
-		"Ability2"                  ""          // Ability 2.
-		"Ability3"                  ""          // Ability 3.
-		"Ability4"                  ""          // Ability 4.
-		"Ability5"                  ""          // Ability 5.
-		"Ability6"                  ""          // Ability 6 - Extra.
-		"Ability7"                  ""          // Ability 7 - Extra.
-		"Ability8"                  ""          // Ability 8 - Extra.
-
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"20"            // Physical protection.
-		"MagicalResistance"			"0"         // Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"         // Damage range min.
-		"AttackDamageMax"           "0"         // Damage range max.
-		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"                "0"         // Speed of attack.
-		"AttackAnimationPoint"      "0"         // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "0"         // Range within a target can be acquired.
-		"AttackRange"               "0"         // Range within a target can be attacked.
-		"ProjectileModel"           ""          // Particle system model for projectile.
-		"ProjectileSpeed"           "0"         // Speed of projectile.
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"     "0"         // Base strength
-		"AttributeStrengthGain"     "0"         // Strength bonus per level.
-		"AttributeBaseIntelligence" "0"         // Base intelligence
-		"AttributeIntelligenceGain" "0"         // Intelligence bonus per level.
-		"AttributeBaseAgility"      "0"         // Base agility
-		"AttributeAgilityGain"      "0"         // Agility bonus per level.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "0"     // Gold earned min.
-		"BountyGoldMax"             "0"     // Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"           // Hull type used for navigation/locomotion.
-		"RingRadius"                "220"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"           // Type of locomotion - ground, air
-		"MovementSpeed"             "0"         // Speed
-		"MovementTurnRate"          "0"         // Turning rate.
+		"ArmorPhysical"             "20"		// Physical protection.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "2500"      // Base health.
+		"StatusHealth"              "2700"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "0"         // Base mana.
-		"StatusManaRegen"           "0"         // Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_BADGUYS"         // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}
 
 	//=================================================================================
@@ -2492,6 +595,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee"
 	{	
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 	
@@ -2500,6 +605,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee_upgraded"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
+		
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
 
@@ -2508,6 +615,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee_upgraded_mega"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
 
@@ -2516,6 +625,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 
@@ -2524,6 +635,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged_upgraded"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
+		
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 	
@@ -2532,6 +645,8 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged_upgraded_mega"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
 
@@ -2564,6 +679,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 
@@ -2572,6 +689,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee_upgraded"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 	
@@ -2580,6 +699,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee_upgraded_mega"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 
@@ -2588,6 +709,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 
@@ -2596,6 +719,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged_upgraded"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 	
@@ -2604,6 +729,8 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged_upgraded_mega"
 	{
+		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
+	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
 
@@ -2629,5 +756,74 @@
 	"npc_dota_badguys_siege_upgraded_mega"
 	{
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
+	}
+
+	// PA Kill Event Gravestone
+	"npc_dota_phantom_assassin_gravestone"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"				// Class of entity of link to.
+//		"Model"						"models/heroes/attachto_ghost/pa_gravestone_ghost.vmdl"
+		"Model"						"models/heroes/phantom_assassin/weapon_fx.vmdl"
+		"Level"						"1"
+		"ModelScale" 				"1.0"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"			"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackRate"				"1.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"170"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"0"		// Turning rate.
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"		// Base health.
+		"StatusHealthRegen"			"0.25"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+		//Inventory
+		"HasInventory"				"0"
 	}
 }

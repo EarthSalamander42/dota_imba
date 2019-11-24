@@ -135,6 +135,13 @@
 	flow-children: down;
 }
 
+#BattlepassButtonContainer.PW
+{
+	margin-left: 10%;
+	margin-top: 0%;
+	align: left top;
+}
+
 #SafeToLeave {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -203,7 +210,7 @@
 	padding: 10px;	
 	transition-property: transform;
 	transition-duration: 0.1s;
-	transition-timing-function: ease-in;	
+	transition-timing-function: ease-in;
 }
 
 #BattlepassWindow.setvisible {
@@ -251,10 +258,10 @@
 	overflow:  squish scroll;
 }
 
-#LeaderboardMainContainer {
+.LeaderboardTableWrapper {
 	width: 100%;
 	background-color: #040c1850;
-	height: 490px;
+	height: 445px;
 	padding-bottom: 10px;
 	overflow:  squish scroll;
 	flow-children: down;
@@ -324,10 +331,23 @@
 
 .LeaderboardRank,
 .LeaderboardXP,
-.LeaderboardIMR,
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardIMR {
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;	
+}
+
+.LeaderboardAvatarDiretide {
+	width: 40%;
 	height: 100%;
 	text-align: center;
 	font-size: 19px;
@@ -371,7 +391,7 @@
 }
 
 .LeaderboardIMR {
-	width: 23%;	
+	width: 23%;
 	align:  center center;
 }
 
@@ -417,7 +437,7 @@
 	/* background-color: #414f62; */
 }
 
-#MiniTabButtonContainer {
+.MiniTabButtonContainer {
 	flow-children: right;
 	width: 100%;
 	align:  center top;
@@ -564,7 +584,7 @@
 	saturation: 0.6;
 }
 
-#Tops {
+.Tops {
 	width: 100%;
 	height: fit-children;
 	flow-children: down;
@@ -771,9 +791,10 @@
 	color: #99a8ad;
 	text-transform: uppercase;
 	text-align: center center;
-	font-size: 18px;
+	font-size: 16px;
 	align: left center;
 	margin-top:  2px;
+	text-overflow: shrink;
 }
 
 .BattlepassRow {
@@ -821,7 +842,7 @@
 .BattlepassRewardLabel {
 	width: 92%;
 	horizontal-align: left;
-	font-size: 12px;
+	font-size: 11px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;

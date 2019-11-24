@@ -214,3 +214,34 @@ Creature.FireBreath.Cast
 		}
 	}
 }
+
+"Diretide.RoshanBeg"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/diretide/roshan_beg.vsnd"
+						}
+					}
+					"volume"				{ "value"		"1.000000"		}
+					"pitch"					{ "value"		"0.950000"		}
+					"soundlevel"			{ "value"		"120.000000"	}
+					"mixgroup"				{ "value"		"Weapons"		}
+					"volume_falloff_max"	{ "value"		"10000.000000"	}
+					"spread_radius"			{ "value"		"900.000000"	}
+				}
+			}
+		}
+	}
+}

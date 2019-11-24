@@ -10,7 +10,7 @@ end
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		Timers:CreateTimer(0.5, function()
-			if GameMode:GetCustomGamemode() ~= 2 then return end
+			if api:GetCustomGamemode() ~= 2 then return end
 
 			require('components/mutation/util')
 			require('components/mutation/events')
@@ -27,7 +27,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	end
 
 	if GameRules:State_Get() > DOTA_GAMERULES_STATE_HERO_SELECTION then
-		if GameMode:GetCustomGamemode() ~= 2 then return end
+		if api:GetCustomGamemode() ~= 2 then return end
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
@@ -81,15 +81,19 @@ function Mutation:Init()
 
 	IMBA_MUTATION["imba"] = "frantic"
 
---	if IsInToolsMode() then
---		IMBA_MUTATION["positive"] = "ultimate_level"
---		IMBA_MUTATION["negative"] = "monkey_business"
---		IMBA_MUTATION["terrain"] = "river_flows"
---	else
+	if IsInToolsMode() then
+		-- IMBA_MUTATION["positive"] = "ultimate_level"
+		-- IMBA_MUTATION["negative"] = "monkey_business"
+		-- IMBA_MUTATION["terrain"] = "river_flows"
+
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
---	end
+	else
+		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
+		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+	end
 
 --	if IsInToolsMode() then
 --		print("Mutations:")
@@ -157,6 +161,8 @@ function Mutation:Init()
 		LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/modifiers/mutation/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["terrain"] == "wormhole" then
 		LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/modifiers/mutation/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["terrain"] == "hyper_blink" then
+		LinkLuaModifier("modifier_mutation_hyper_blink", "components/modifiers/mutation/modifier_mutation_hyper_blink", LUA_MODIFIER_MOTION_NONE )
 	end
 end
 

@@ -53,7 +53,10 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 
 		-- Increase the modifier's stack count
 		local modifier_curse_instance = enemy:FindModifierByName("modifier_imba_eleven_curses")
-		modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
+		
+		if modifier_curse_instance then
+			modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
+		end
 	end
 end
 

@@ -89,27 +89,26 @@ function modifier_diretide_candy_hp_loss:OnCreated()
 end
 
 function modifier_diretide_candy_hp_loss:OnIntervalThink()
-	if IsServer() then
-		-- Get the current amount of charges of this item and set the stack count accordingly        
-		if self.ability then
-			local charges = self.ability:GetCurrentCharges()
-			self:SetStackCount(charges)
-		end
+	-- Get the current amount of charges of this item and set the stack count accordingly        
+	if self.ability then
+		local charges = self.ability:GetCurrentCharges()
+		self:SetStackCount(charges)
+	end
 
-		-- Re-calculate health stats
-		self.caster:CalculateStatBonus()
+	-- Re-calculate health stats
+	self.caster:CalculateStatBonus()
 
-		if not self.caster.OverHeadJingu then 
-			self.caster.OverHeadJingu = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster)
-			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 0, self.caster:GetAbsOrigin())
-		end
-		if self:GetStackCount() < 10 then
-			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(0, self:GetStackCount(), 0))
-		elseif self:GetStackCount() >= 10 and self:GetStackCount() < 20 then
-			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(1, self:GetStackCount()-10, 0))
-		elseif self:GetStackCount() >= 20 and self:GetStackCount() < 30 then
-			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(2, self:GetStackCount()-20, 0))
-		end
+	if not self.caster.OverHeadJingu then 
+		self.caster.OverHeadJingu = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster)
+		ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 0, self.caster:GetAbsOrigin())
+	end
+
+	if self:GetStackCount() < 10 then
+		ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(0, self:GetStackCount(), 0))
+	elseif self:GetStackCount() >= 10 and self:GetStackCount() < 20 then
+		ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(1, self:GetStackCount()-10, 0))
+	elseif self:GetStackCount() >= 20 and self:GetStackCount() < 30 then
+		ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(2, self:GetStackCount()-20, 0))
 	end
 end
 
@@ -121,7 +120,7 @@ end
 
 function modifier_diretide_candy_hp_loss:GetModifierExtraHealthPercentage()
 	if IsServer() then
-		local hp_to_reduce = self.hp_loss_pct * 0.01 * self:GetStackCount() * (-1)
+		local hp_to_reduce = self.hp_loss_pct / 100 * self:GetStackCount() * (-1)
 		-- Make sure you don't go over 100%
 		if hp_to_reduce < -0.99 then
 			return -0.99
@@ -149,9 +148,9 @@ function modifier_diretide_candy_hp_loss:GetCustomCastErrorTarget(target)
 end
 
 function modifier_diretide_candy_hp_loss:OnDestroy()
-	self.caster = self:GetCaster()
+	if not IsServer() then return end
 
-	ParticleManager:DestroyParticle(self.caster.OverHeadJingu, false)
-	ParticleManager:ReleaseParticleIndex(self.caster.OverHeadJingu)
-	self.caster.OverHeadJingu = nil
+	ParticleManager:DestroyParticle(self:GetCaster().OverHeadJingu, false)
+	ParticleManager:ReleaseParticleIndex(self:GetCaster().OverHeadJingu)
+	self:GetCaster().OverHeadJingu = nil
 end

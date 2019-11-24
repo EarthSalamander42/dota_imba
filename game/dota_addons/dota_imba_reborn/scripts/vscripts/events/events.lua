@@ -37,6 +37,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
+			if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+				BOTS_ENABLED = true
+			end
+
 			if BOTS_ENABLED == true then
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')
@@ -88,7 +92,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- IDK how to get this to print only once
 		Timers:CreateTimer(FrameTime(), function()
-			Say(GameRules:GetGameModeEntity(), "Game Mode Selected: "..GetCustomGameVote(), false)
+			if api:GetCustomGamemode() == 5 then
+				GameMode:SetSameHeroSelection(true)
+			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -98,10 +104,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
---		api.imba.event(api.events.entered_pre_game)
-
-		api:InitDonatorTableJS()
-
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
@@ -113,14 +115,16 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
+
 		for _, fountainEnt in pairs(fountainEntities) do
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
-			
+
 			local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
 			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
+			ParticleManager:ReleaseParticleIndex(fountain_aura_pfx)
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen
@@ -195,15 +199,14 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		api.imba.event(api.events.started_game)
-
 		-- start rune timers
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if GameMode:GetCustomGamemode() > 1 then
-				SpawnEasterEgg()
-			end
+			-- Controversial addition
+			-- if api:GetCustomGamemode() > 1 then
+				-- SpawnEasterEgg()
+			-- end
 
 			ImbaRunes:Spawn()
 		end
@@ -331,8 +334,8 @@ function GameMode:OnDisconnect(keys)
 
 				--				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
-				-- Start redistributing this player's gold to its allies
-				PlayerResource:StartAbandonGoldRedistribution(player_id)
+				-- Start redistributing this player's gold to its allies (Valve handle it now)
+--				PlayerResource:StartAbandonGoldRedistribution(player_id)
 				-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
@@ -409,10 +412,6 @@ function GameMode:OnEntityKilled(keys)
 		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
 			GAME_WINNER_TEAM = 3
 			return
-		end
-
-		if IMBA_DIRETIDE == true then
-			Diretide:OnEntityKilled(killer, killed_unit)
 		end
 
 		-- Check if the dying unit was a player-controlled hero
@@ -543,7 +542,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	end
 	
 	-- Add some deprecated abilities back to heroes for that "IMBA" factor
-	local subAbilities = {"chen_test_of_faith", "keeper_of_the_light_mana_leak", "huskar_inner_vitality", "tusk_frozen_sigil"}
+	local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 	
 	for _, ability in ipairs(subAbilities) do 
 		if hero:HasAbility(ability) then
@@ -556,6 +555,8 @@ function GameMode:OnPlayerLearnedAbility(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
+
+	PlayerResource:StoreAbilitiesLevelUpOrder(keys.PlayerID, abilityname)
 
 	-- If it the ability is Homing Missiles, wait a bit and set count to 1
 	if abilityname == "gyrocopter_homing_missile" then
@@ -597,8 +598,6 @@ function GameMode:OnConnectFull(keys)
 	local playerID = ply:GetPlayerID()
 
 	ReconnectPlayer(playerID)
-
-	--	PlayerResource:InitPlayerData(playerID)
 end
 
 -- This function is called whenever any player sends a chat message to team or All
@@ -676,6 +675,15 @@ function GameMode:OnPlayerChat(keys)
 					end
 				end)
 			end
+
+			if str == "-toggle_ui" then
+				CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "toggle_ui", {})
+			end
+			
+			if str == "-same_heroes" then
+				GameRules:SetSameHeroSelectionEnabled( true )
+				CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = true})
+			end
 		end
 
 		if str == "-gg" then
@@ -709,6 +717,29 @@ function GameMode:OnPlayerChat(keys)
 			
 			Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
 			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
+		end
+		
+		if str == "-memory" then
+			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			-- print(package.loaded) -- This lags everything to absolute death
+		end
+		
+		if str == "-modifier_count" then
+			local all_entities = Entities:FindAllInSphere(Vector(0, 0, 0), 25000)
+			local modifier_count = 0
+
+			for ent = 1, #all_entities do
+				if all_entities[ent].FindAllModifiers then
+					modifier_count = modifier_count + #all_entities[ent]:FindAllModifiers()
+				end
+			end		
+		
+			Say(PlayerResource:GetPlayer(keys.playerid), "There are a total of "..modifier_count.." modifiers present.", true)
+		end		
+		
+		-- For the serial disconnectors
+		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
+			GameRules:SetGameWinner(caster:GetTeamNumber())
 		end
 		
 		-- Spooky (inefficiently coded) dev commands
@@ -792,66 +823,51 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'shaman') and hero:GetName() == "npc_dota_hero_shadow_shaman" then
+						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" then
 							ability_set = {
-								[0] = "imba_shadow_shaman_ether_shock",
-								[1] = "imba_shadow_shaman_voodoo",
-								[2] = "imba_shadow_shaman_shackles",
-								-- [3] = "imba_puck_ethereal_jaunt",
-								-- [4] = "generic_hidden",
-								-- [5] = "imba_puck_dream_coil",
-								[6] = "special_bonus_hp_300",
-								[7] = "special_bonus_exp_boost_30",
-								[8] = "special_bonus_cast_range_125",
-								[9] = "special_bonus_imba_shadow_shaman_hex_cooldown",
-								[10] = "special_bonus_imba_shadow_shaman_shackles_duration",
-								[11] = "special_bonus_imba_shadow_shaman_wards_movement",
-								[12] = "special_bonus_imba_shadow_shaman_ether_shock_damage",
-								[13] = "special_bonus_imba_shadow_shaman_3"
+								[0] = "imba_windranger_shackleshot",
+								[1] = "imba_windranger_powershot",
+								[2] = "imba_windranger_windrun",
+								[3] = "imba_windranger_backpedal",
+								[4] = "imba_windranger_focusfire_vanilla_enhancer",
+								-- [5] = "imba_windranger_focusfire",
+								[5] = "windrunner_focusfire",
+								[6] = "special_bonus_mp_regen_4",
+								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
+								[8] = "special_bonus_imba_windranger_powershot_damage",
+								[9] = "special_bonus_attack_range_125",
+								[10] = "special_bonus_imba_windranger_windrun_invisibility",
+								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
+								[12] = "special_bonus_unique_windranger_8",
+								[13] = "special_bonus_cooldown_reduction_30",
 							}
 							upgraded = true
-						elseif string.find(text, 'grimstroke') and hero:GetName() == "npc_dota_hero_grimstroke" then
+						elseif string.find(text, 'templar') and hero:GetName() == "npc_dota_hero_templar_assassin" then
 							ability_set = {
-								[0] = "imba_grimstroke_dark_artistry",
-								[1] = "imba_grimstroke_ink_creature",
-								[2] = "imba_grimstroke_spirit_walk",
-								[3] = "grimstroke_scepter",
-								[4] = "imba_grimstroke_ink_gods_incarnation",
-								-- [5] = "imba_grimstroke_soul_chain", -- not working do not enable this
-								[6] = "special_bonus_movement_speed_30",
-								[7] = "special_bonus_gold_income_15",
-								[8] = "special_bonus_spell_amplify_12",
-								[9] = "special_bonus_cast_range_125",
-								[10] = "special_bonus_imba_grimstroke_stroke_of_fate_cast_range",
-								[11] = "special_bonus_imba_grimstroke_phantoms_embrace_extra_hits",
-								[12] = "special_bonus_imba_grimstroke_ink_swell_radius",
-								[13] = "special_bonus_imba_grimstroke_stroke_of_fate_damage"
+								[0] = "imba_templar_assassin_refraction",
+								[1] = "imba_templar_assassin_meld",
+								[2] = "imba_templar_assassin_psi_blades",
+								[3] = "imba_templar_assassin_trap",
+								[4] = "imba_templar_assassin_trap_teleport",
+								[5] = "imba_templar_assassin_psionic_trap",
+								[6] = "special_bonus_attack_speed_25",
+								[7] = "special_bonus_evasion_15",
+								[8] = "special_bonus_movement_speed_25",
+								[9] = "special_bonus_imba_templar_assassin_psionic_trap_damage",
+								[10] = "special_bonus_imba_templar_assassin_meld_dispels",
+								[11] = "special_bonus_imba_templar_assassin_meld_armor_reduction",
+								[12] = "special_bonus_imba_templar_assassin_meld_bash",
+								[13] = "special_bonus_imba_templar_assassin_refraction_instances"
 							}
 							upgraded = true
-							
-							local soulbind_vanilla_enahncer_ability = hero:AddAbility("imba_grimstroke_soul_chain_vanilla_enhancer")
-							soulbind_vanilla_enahncer_ability:SetAbilityIndex(6)
-							soulbind_vanilla_enahncer_ability:OnHeroLevelUp()
-						
-						elseif string.find(text, 'life_stealer') and hero:GetName() == "npc_dota_hero_life_stealer" and (hero == caster) then
+						elseif string.find(text, 'slark') and hero:GetName() == "npc_dota_hero_slark" then
 							ability_set = {
-								[0] = "imba_life_stealer_rage",
-								[1] = "imba_life_stealer_feast",
-								[2] = "imba_life_stealer_open_wounds",
-								[3] = "imba_life_stealer_assimilate",
-								[4] = "imba_life_stealer_assimilate_eject",
-								[5] = "imba_life_stealer_infest",
-								[6] = "imba_life_stealer_control",
-								[7] = "imba_life_stealer_consume",
-								[8] = "generic_hidden",
-								[9] = "special_bonus_hp_200",
-								[10] = "special_bonus_attack_speed_20",
-								[11] = "special_bonus_attack_damage_30",
-								[12] = "special_bonus_movement_speed_25",
-								[13] = "special_bonus_evasion_20",
-								[14] = "special_bonus_unique_lifestealer_2",
-								[15] = "special_bonus_unique_lifestealer_3",
-								[16] = "special_bonus_unique_lifestealer"
+								[0] = "imba_slark_dark_pact",
+								[1] = "imba_slark_pounce",
+								[2] = "imba_slark_essence_shift",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_slark_shadow_dance"
 							}
 							upgraded = true
 						end
@@ -864,6 +880,15 @@ function GameMode:OnPlayerChat(keys)
 								
 								local new_ability = hero:AddAbility(ability_set[ability])
 								new_ability:SetLevel(old_ability_level)
+								
+								-- Remove this when done
+								if new_ability:GetName() == "imba_windranger_backpedal" or
+								new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" or
+								new_ability:GetName() == "imba_timbersaw_chakram_2" or
+								new_ability:GetName() == "imba_timbersaw_chakram_3" or 
+								new_ability:GetName() == "imba_oracle_alter_self" then
+									new_ability:SetLevel(1)
+								end
 							end
 						end
 						
@@ -877,8 +902,10 @@ function GameMode:OnPlayerChat(keys)
 						end
 					end
 				end
-			elseif str == "-dark_seer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
+			elseif str == "-phantom_lancer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
+			elseif str == "-vardor" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
@@ -941,15 +968,12 @@ function GameMode:OnPlayerChat(keys)
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end
-			elseif str == "-memory" then
-				Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
-				-- print(package.loaded) -- This lags everything to absolute death
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
 			
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
-				caster:SetAbsOrigin(pos)
+				FindClearSpaceForUnit(caster, pos, false)
 			end
 		end
 	end
@@ -1072,8 +1096,8 @@ function GameMode:OnThink()
 						if team == 3 then
 							abandon_text = "#imba_team_bad_abandon_message"
 						end
-						Notifications:BottomToAll({ text = abandon_text, duration = 1.0, style = { color = "DodgerBlue" } })
-						Notifications:BottomToAll({ text = " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" }, continue = true })
+						abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
+						Notifications:BottomToAll({text = abandon_text, duration = 1.0})
 					end
 
 					TEAM_ABANDON[team][2] = true

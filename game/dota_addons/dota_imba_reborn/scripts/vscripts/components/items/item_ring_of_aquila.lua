@@ -48,11 +48,15 @@ function modifier_item_imba_ring_of_aquila:GetAttributes()			return MODIFIER_ATT
 
 function modifier_item_imba_ring_of_aquila:OnCreated()
 	-- AbilitySpecials
-	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
-	self.bonus_strength		= self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.bonus_agility		= self:GetAbility():GetSpecialValueFor("bonus_agility")
-	self.bonus_intellect	= self:GetAbility():GetSpecialValueFor("bonus_intellect")
-	self.bonus_aspd			= self:GetAbility():GetSpecialValueFor("bonus_aspd")
+	if self:GetAbility() then
+		self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
+		self.bonus_strength		= self:GetAbility():GetSpecialValueFor("bonus_strength")
+		self.bonus_agility		= self:GetAbility():GetSpecialValueFor("bonus_agility")
+		self.bonus_intellect	= self:GetAbility():GetSpecialValueFor("bonus_intellect")
+		self.bonus_aspd			= self:GetAbility():GetSpecialValueFor("bonus_aspd")
+	else
+		self:Destroy()
+	end
 	
 	if not IsServer() then return end
 	
@@ -122,10 +126,16 @@ function modifier_item_imba_ring_of_aquila_aura_bonus:GetTexture()
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:OnCreated()
-	-- AbilitySpecials
-	self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
-	self.aura_bonus_armor	= self:GetAbility():GetSpecialValueFor("aura_bonus_armor")
-	self.aura_bonus_vision	= self:GetAbility():GetSpecialValueFor("aura_bonus_vision")
+	if self:GetAbility() then
+		-- AbilitySpecials
+		self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
+		self.aura_bonus_armor	= self:GetAbility():GetSpecialValueFor("aura_bonus_armor")
+		self.aura_bonus_vision	= self:GetAbility():GetSpecialValueFor("aura_bonus_vision")
+	else
+		self.aura_mana_regen	= 0
+		self.aura_bonus_armor	= 0
+		self.aura_bonus_vision	= 0
+	end
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:DeclareFunctions()
@@ -150,13 +160,13 @@ function modifier_item_imba_ring_of_aquila_aura_bonus:GetModifierPhysicalArmorBo
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:GetBonusDayVision()
-	if not self:GetParent():IsIllusion() then
+	if not self:GetParent():IsIllusion() and not self:GetParent():HasModifier("modifier_item_imba_aether_specs_aura_bonus") then
 		return self.aura_bonus_vision
 	end
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:GetBonusNightVision()
-	if not self:GetParent():IsIllusion() then
+	if not self:GetParent():IsIllusion() and not self:GetParent():HasModifier("modifier_item_imba_aether_specs_aura_bonus") then
 		return self.aura_bonus_vision
 	end
 end

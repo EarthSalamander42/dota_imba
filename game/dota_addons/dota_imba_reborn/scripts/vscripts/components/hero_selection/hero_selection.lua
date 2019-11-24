@@ -349,11 +349,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		HeroSelection:Attachments(hero)
 	end
 
-	-- Initializes player data if this is not a bot
-	if PlayerResource:GetConnectionState(playerId) == 2 then
-		PlayerResource:InitPlayerData(playerId)
-	end
-
 	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
 --	Timers:CreateTimer(0.5, function()
 --		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
@@ -367,7 +362,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	end)
 
 	Timers:CreateTimer(5.0, function()
-		if IMBA_DIRETIDE == true then
+		if api:GetCustomGamemode() == 4 then
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 		end
 	end)

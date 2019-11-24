@@ -184,7 +184,7 @@ function imba_crystal_maiden_crystal_nova:OnSpellStart()
 	-- Ability specials
 	local nova_radius = self:GetSpecialValueFor("nova_radius")
 	local nova_slow_duration = self:GetSpecialValueFor("nova_slow_duration")
-	local nova_damage = self:GetSpecialValueFor("nova_damage")
+	local nova_damage = self:GetTalentSpecialValueFor("nova_damage")
 	local snowfield_duration = self:GetSpecialValueFor("snowfield_duration")
 	local snowfield_vision_radius = self:GetSpecialValueFor("snowfield_vision_radius")
 
@@ -365,9 +365,12 @@ function modifier_imba_crystal_nova_snowfield_buff:OnCreated()
 
 	-- Ability specials
 	self.snowfield_ally_buff = self.ability:GetSpecialValueFor("snowfield_ally_buff")
-	-- Level 20 Talent : Crystal Nova's Snowfield grants 10% damage reduction and increases health regeneration by 20
-	self.damage_reduction_pct = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_3", "damage_reduction_pct") or 0 -- I know FindTalentValue returns 0 if it doesn't find anything, BUT...
-	self.health_regen = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_3", "health_regen") or 0 -- ...safer is better than safe
+	-- -- Level 20 Talent : Crystal Nova's Snowfield grants 10% damage reduction and increases health regeneration by 20
+	-- self.damage_reduction_pct = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_3", "damage_reduction_pct") or 0 -- I know FindTalentValue returns 0 if it doesn't find anything, BUT...
+	-- self.health_regen = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_3", "health_regen") or 0 -- ...safer is better than safe
+	
+	self.damage_reduction_pct	= self:GetAbility():GetSpecialValueFor("damage_reduction_pct") or 0
+	self.health_regen			= self:GetAbility():GetSpecialValueFor("health_regen") or 0
 end
 
 function modifier_imba_crystal_nova_snowfield_buff:IsHidden() return false end
@@ -429,6 +432,8 @@ function modifier_imba_crystal_nova_snowfield_debuff:GetEffectAttachType() retur
 ---------------------------------
 -- 		   Frost Bite          --
 ---------------------------------
+
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_handler", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_ready", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_recharging", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
@@ -443,28 +448,37 @@ end
 
 function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_frostbite_passive_ready" end
 
+-- function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
+	-- if IsServer() then
+		-- local caster = self:GetCaster()
+		-- local casterID = caster:GetPlayerID()
+		-- local targetID
+		-- if target:IsHero() then
+			-- targetID = target:GetPlayerID()
+		-- end
+
+		-- -- #2 Talent: Frostbite can be cast on allies, regenerating them.
+		-- if target:GetTeamNumber() == caster:GetTeamNumber() and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
+			-- return UF_SUCCESS
+		-- end
+
+		-- local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		-- return nResult
+	-- end
+-- end
+
+
 function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerID()
-		local targetID
-		if target:IsHero() then
-			targetID = target:GetPlayerID()
-		end
-
-		-- Disable help
-		if target ~= nil and targetID and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
-		-- #2 Talent: Frostbite can be cast on allies, regenerating them.
-		if target:GetTeamNumber() == caster:GetTeamNumber() and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
-			return UF_SUCCESS
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
+	-- IMBAfication: Merry Frost
+	if self:GetCaster():HasModifier("modifier_imba_crystal_maiden_frostbite_handler") then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
 	end
+end
+
+function imba_crystal_maiden_frostbite:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_crystal_maiden_frostbite:OnSpellStart()
@@ -472,9 +486,9 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
 		local position = self:GetCursorPosition()
-		local duration = self:GetSpecialValueFor("duration")
+		local duration = self:GetTalentSpecialValueFor("duration")
 
-		local duration_creep = self:GetSpecialValueFor("duration_creep")
+		local duration_creep = self:GetTalentSpecialValueFor("duration_creep")
 		local duration_stun = self:GetSpecialValueFor("duration_stun")
 		local damage_interval = self:GetSpecialValueFor("damage_interval")
 
@@ -485,16 +499,49 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:IsHero() or target:IsRoshan() or target:IsAncient() then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
+			local frostbite_modifier = nil
+			
+			if target:IsConsideredHero() or target:IsRoshan() or target:IsAncient() then
+				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
+				
+				if frostbite_modifier then
+					frostbite_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
+				end
 			else
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep })
+				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep })
+
+				if frostbite_modifier then
+					frostbite_modifier:SetDuration(duration_creep * (1 - target:GetStatusResistance()), true)
+				end
 			end
-		elseif target:IsHero() then
+			
+		else
 			target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_ally", { duration = duration})
 		end
+	end
+end
+
+----------------------------------------------------
+-- MODIFIER_IMBA_CRYSTAL_MAIDEN_FROSTBITE_HANDLER --
+----------------------------------------------------
+
+modifier_imba_crystal_maiden_frostbite_handler	= modifier_imba_crystal_maiden_frostbite_handler or class({})
+
+function modifier_imba_crystal_maiden_frostbite_handler:IsHidden()		return true end
+function modifier_imba_crystal_maiden_frostbite_handler:IsPurgable()	return false end
+function modifier_imba_crystal_maiden_frostbite_handler:RemoveOnDeath()	return false end
+
+function modifier_imba_crystal_maiden_frostbite_handler:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
+end
+
+function modifier_imba_crystal_maiden_frostbite_handler:OnOrder()
+	if not self:GetAbility() or self:GetAbility():IsNull() then
+		self:Destroy()
 	end
 end
 
@@ -503,7 +550,7 @@ end
 ---------------------------------
 modifier_imba_crystal_maiden_frostbite_enemy = class({})
 
-function modifier_imba_crystal_maiden_frostbite_enemy:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true,} end
+function modifier_imba_crystal_maiden_frostbite_enemy:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true, [MODIFIER_STATE_INVISIBLE] = false} end
 
 function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 	if IsServer() then
@@ -512,8 +559,18 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
-		self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
-		self.damage_per_tick = self.ability:GetSpecialValueFor("damage_per_tick")
+		self.damage_interval	= self.ability:GetSpecialValueFor("damage_interval")
+		
+		if self:GetParent():IsConsideredHero() or self:GetParent():IsRoshan() or self:GetParent():IsAncient() then
+			self.total_damage	= self.ability:GetSpecialValueFor("total_damage")
+			self.duration		= self.ability:GetTalentSpecialValueFor("duration")
+		else
+			self.total_damage	= self.ability:GetSpecialValueFor("creep_total_damage")
+			self.duration		= self.ability:GetTalentSpecialValueFor("duration_creep")
+		end
+		
+		self.total_ticks		= (self.duration / self.damage_interval) + 1
+		self.damage_per_tick	= self.total_damage / self.total_ticks
 
 		-- Immediately proc the first damage instance
 		self:OnIntervalThink()
@@ -522,7 +579,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
 
 		-- Get thinkin
-		self:StartIntervalThink(self.damage_interval)
+		self:StartIntervalThink(self.damage_interval * (1 - self:GetParent():GetStatusResistance()))
 	end
 end
 
@@ -589,33 +646,55 @@ function modifier_imba_crystal_maiden_frostbite_enemy_talent:IsPurgable() return
 ---------------------------------
 modifier_imba_crystal_maiden_frostbite_ally = class({})
 
-function modifier_imba_crystal_maiden_frostbite_ally:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true,} end
+function modifier_imba_crystal_maiden_frostbite_ally:GetEffectName() return "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf" end
+function modifier_imba_crystal_maiden_frostbite_ally:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+
+
 function modifier_imba_crystal_maiden_frostbite_ally:OnCreated()
+	self.heal_per_tick			= self:GetAbility():GetSpecialValueFor("heal_per_tick")
+	self.mana_per_tick			= self:GetAbility():GetSpecialValueFor("mana_per_tick")
+	self.ally_damage_reduction	= self:GetAbility():GetSpecialValueFor("ally_damage_reduction")
+	
 	if IsServer() then
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("damage_interval"))
 		--Play sound
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
 	end
 end
-function modifier_imba_crystal_maiden_frostbite_ally:DeclareFunctions()	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE} end
 
 function modifier_imba_crystal_maiden_frostbite_ally:OnIntervalThink()
-	if IsServer() then
-		--Heal/Give Mana, then show values overhead
-		self:GetParent():Heal(self:GetAbility():GetSpecialValueFor("heal_per_tick"),self:GetCaster())
-		self:GetParent():GiveMana(self:GetAbility():GetSpecialValueFor("mana_per_tick"))
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetAbility():GetSpecialValueFor("heal_per_tick"), nil)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self:GetParent(), self:GetAbility():GetSpecialValueFor("mana_per_tick"), nil)
-	end
+	--Heal/Give Mana, then show values overhead
+	self:GetParent():Heal(self.heal_per_tick, self:GetCaster())
+	self:GetParent():GiveMana(self.mana_per_tick)
+	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_tick, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self:GetParent(), self.mana_per_tick, nil)
 end
-function modifier_imba_crystal_maiden_frostbite_ally:GetEffectName() return "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf" end
-function modifier_imba_crystal_maiden_frostbite_ally:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-function modifier_imba_crystal_maiden_frostbite_ally:GetModifierIncomingDamage_Percentage()	return self:GetAbility():GetSpecialValueFor("ally_damage_reduction") end
+
+function modifier_imba_crystal_maiden_frostbite_ally:CheckState()
+	return {
+		[MODIFIER_STATE_ROOTED]		= true,
+		[MODIFIER_STATE_DISARMED]	= true
+	}
+end
+
+function modifier_imba_crystal_maiden_frostbite_ally:DeclareFunctions()
+	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+end
+
+function modifier_imba_crystal_maiden_frostbite_ally:GetModifierIncomingDamage_Percentage()
+	return self.ally_damage_reduction
+end
 
 ---------------------------------
 -- Icy Touch Ready Modifier
 ---------------------------------
 modifier_imba_crystal_maiden_frostbite_passive_ready = class({})
+
+function modifier_imba_crystal_maiden_frostbite_passive_ready:IsHidden() return false end
+function modifier_imba_crystal_maiden_frostbite_passive_ready:IsDebuff() return false end
+function modifier_imba_crystal_maiden_frostbite_passive_ready:IsPurgable() return false end
+function modifier_imba_crystal_maiden_frostbite_passive_ready:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_crystal_maiden_frostbite_passive_ready:OnCreated()
 	-- Ability properties
@@ -626,7 +705,7 @@ function modifier_imba_crystal_maiden_frostbite_passive_ready:OnCreated()
 	-- If the caster has modifier recharge, commit sudoku
 	if self.caster:HasModifier(self.modifier_recharge) then self:Destroy() end
 end
-function modifier_imba_crystal_maiden_frostbite_passive_ready:DeclareFunctions() return {MODIFIER_EVENT_ON_TAKEDAMAGE} end
+function modifier_imba_crystal_maiden_frostbite_passive_ready:DeclareFunctions() return {MODIFIER_EVENT_ON_TAKEDAMAGE, MODIFIER_EVENT_ON_ORDER} end
 function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
 	if IsServer() then
 		-- If this is Rubick and Frostbite is no longer present, do nothing and kill the modifier
@@ -657,9 +736,17 @@ function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
 		end
 	end
 end
-function modifier_imba_crystal_maiden_frostbite_passive_ready:IsHidden() return false end
-function modifier_imba_crystal_maiden_frostbite_passive_ready:IsDebuff() return false end
-function modifier_imba_crystal_maiden_frostbite_passive_ready:IsPurgable() return false end
+
+function modifier_imba_crystal_maiden_frostbite_passive_ready:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:GetParent():RemoveModifierByName("modifier_imba_crystal_maiden_frostbite_handler")
+	else
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_crystal_maiden_frostbite_handler", {})
+	end
+end
 
 ---------------------------------
 -- Icy Touch Recharging Modifier
@@ -727,8 +814,6 @@ function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsPurgable() retur
 ---------------------------------
 modifier_imba_crystal_maiden_brilliance_aura = class({})
 
-function modifier_imba_crystal_maiden_brilliance_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
 function modifier_imba_crystal_maiden_brilliance_aura:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -748,11 +833,11 @@ function modifier_imba_crystal_maiden_brilliance_aura:OnIntervalThink()
 	
 		-- Only apply if the parent has more than the spellpower threshold
 		if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then
-			if self.parent == self.caster then
-				self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self)
-			else
+			-- if self.parent == self.caster then
+				-- self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self)
+			-- else
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower"))
-			end
+			-- end
 		else
 			self:SetStackCount(0)
 		end
@@ -767,7 +852,9 @@ function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 	}
 	return funcs
 end
@@ -785,15 +872,19 @@ end
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
 
-	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self
-	else
+	-- if self.parent == self.caster then
+		-- return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self
+	-- else
 		return self:GetAbility():GetSpecialValueFor("bonus_int")
-	end
+	-- end
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Percentage()
 	return self:GetStackCount()
+end
+
+function modifier_imba_crystal_maiden_brilliance_aura:GetModifierPercentageManacostStacking()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction") or 0
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:IsHidden() return false end
@@ -1056,6 +1147,10 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 		if self.caster:HasModifier("modifier_imba_crystal_maiden_freezing_field_armor_bonus") then
 			self.caster:RemoveModifierByName("modifier_imba_crystal_maiden_freezing_field_armor_bonus")
 		end
+		
+		if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+			self.freezing_field_aura:ForceKill(false)
+		end
 	end
 end
 
@@ -1150,4 +1245,25 @@ end
 
 function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
+end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction	= modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction or class({})
+
+function modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction:IsPurgable() 		return false end
+function modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction:RemoveOnDeath() 	return false end
+
+function imba_crystal_maiden_brilliance_aura:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"), "modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction", {})
+	end
 end

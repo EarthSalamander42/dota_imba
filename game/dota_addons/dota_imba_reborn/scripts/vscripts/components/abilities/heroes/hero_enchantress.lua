@@ -1,5 +1,7 @@
 -- Creator:
 --	   AltiV, January 17th, 2019
+-- Primary Idea Giver:
+--     Acalia
 
 -----------------
 -- Untouchable --
@@ -55,8 +57,8 @@ end
 
 modifier_imba_enchantress_untouchable		= class({})
 
-function modifier_imba_enchantress_untouchable:IsHidden()		return true end
-function modifier_imba_enchantress_untouchable:IsPurgable()		return false end
+function modifier_imba_enchantress_untouchable:IsHidden()		return self:GetCaster() == self:GetParent() end
+function modifier_imba_enchantress_untouchable:IsPurgable()		return self:GetCaster() ~= self:GetParent()  end
 function modifier_imba_enchantress_untouchable:RemoveOnDeath()	return false end
 
 function modifier_imba_enchantress_untouchable:OnCreated()
@@ -83,15 +85,15 @@ end
 function modifier_imba_enchantress_untouchable:OnAttackStart(keys)
 	if not IsServer() then return end
 	
-    if self.caster == keys.target and not self.caster:PassivesDisabled() and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
-		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
+    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+		keys.attacker:AddNewModifier(self.parent, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
     end
 end
 
 function modifier_imba_enchantress_untouchable:OnHeroKilled(keys)
 	if not IsServer() then return end
 
-    if self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+    if self.caster == self.parent and self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
 		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {}):SetStackCount(self.regret_stacks)
     end
 end
@@ -111,6 +113,11 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase 		= self.ability:GetSpecialValueFor("stopgap_bat_increase")
+	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
+	
+	if self.ability:GetCaster() ~= self.caster then
+		self.slow_attack_speed = self.slow_attack_speed * (self.kindred_spirits_multiplier * 0.01)
+	end
 end
 
 function modifier_imba_enchantress_untouchable_slow:GetEffectName()
@@ -144,7 +151,7 @@ function modifier_imba_enchantress_untouchable_slow:OnAttack(keys)
 	if self.parent == keys.attacker then
 		-- Wait frame time to check if the target is not Enchantress or if she was not killed to properly apply Regret stacks
 		Timers:CreateTimer(FrameTime(), function()
-			if keys.target ~= self.caster or self.caster:IsAlive() then
+			if (keys.target ~= self.caster or self.caster:IsAlive()) and self and not self:IsNull() then
 				if self:GetStackCount() > 1 then
 					self:DecrementStackCount()
 				else 
@@ -267,7 +274,8 @@ function imba_enchantress_enchant:OnSpellStart()
 			new_lane_creep:SetBaseDamageMax(self.target:GetBaseDamageMax())
 			new_lane_creep:SetMinimumGoldBounty(self.target:GetGoldBounty())
 			new_lane_creep:SetMaximumGoldBounty(self.target:GetGoldBounty())
-			UTIL_Remove(self.target)
+			self.target:AddNoDraw()
+			self.target:ForceKill(false)
 			self.target = new_lane_creep
 		end
 
@@ -277,6 +285,11 @@ function imba_enchantress_enchant:OnSpellStart()
 		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_controlled", {duration = self.dominate_duration})
 		--self.target:AddNewModifier(self.caster, self, "modifier_dominated", {duration = self.dominate_duration}) -- This didn't work for me
 		self.target:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.dominate_duration})
+
+		-- IMBAfication: Kindred Spirits
+		if self:GetCaster():HasAbility("imba_enchantress_untouchable") and self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"):IsTrained() then
+			self.target:AddNewModifier(self.caster, self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"), "modifier_imba_enchantress_untouchable", {})
+		end
 
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
 			self.caster:EmitSound("enchantress_ench_ability_enchant_0"..math.random(1,3))
@@ -440,6 +453,19 @@ function imba_enchantress_natures_attendants:OnSpellStart()
 	self.caster		= self:GetCaster()
 	self.duration	= self:GetDuration()
 
+	-- Make Fundamental's Essence ordered instead of random
+	if not self.type then
+		self.type = 1
+	else
+		if not self.caster:HasModifier("modifier_imba_enchantress_natures_attendants") then
+			self.type = self.type + 1
+			
+			if self.type > 5 then
+				self.type = 1
+			end
+		end
+	end
+
 	self.caster:AddNewModifier(self.caster, self, "modifier_imba_enchantress_natures_attendants", {duration = self.duration})
 
 	if self.caster:GetName() == "npc_dota_hero_enchantress" then
@@ -500,7 +526,9 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	-- 3 Green: Amplifies all sources of healing by 20%
 	-- 4 Orange: Increase day/night vision by 250/750 respectively 
 	-- 5 Pink: Increases move speed by 5% and grants flying movement
-	self:SetStackCount(RandomInt(1, 5))
+	if self.ability.type then
+		self:SetStackCount(self.ability.type)
+	end
 	
 	-- PARTICLESSSS
 	-- 3/5/7/9 wisps based on level

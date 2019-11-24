@@ -353,6 +353,10 @@ end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:IsStunDebuff() 		return false end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:RemoveOnDeath() 		return true  end
 
+function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
+	self.slow_movement_speed_pct	= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
+end
+
 function modifier_imba_phoenix_icarus_dive_slow_debuff:DeclareFunctions()
 	local decFuns =
 		{
@@ -368,15 +372,17 @@ end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:GetEffectName()	return "particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf" end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus_Percentage()	return self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)  end
+function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus_Percentage()	return self.slow_movement_speed_pct end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
+	self.burn_tick_interval	= self:GetAbility():GetSpecialValueFor("burn_tick_interval")
+	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+
 	if not IsServer() then
 		return
 	end
-	local ability = self:GetAbility()
-	local tick = ability:GetSpecialValueFor("burn_tick_interval")
-	self:StartIntervalThink( tick )
+	
+	self:StartIntervalThink( self.burn_tick_interval )
 end
 
 
@@ -384,17 +390,15 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:OnIntervalThink()
 	if not IsServer() then
 		return
 	end
+	
 	if not self:GetParent():IsAlive() then
 		return
 	end
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local tick = ability:GetSpecialValueFor("burn_tick_interval")
-	local dmg = ability:GetSpecialValueFor("damage_per_second") * ( tick / 1.0 )
+	
 	local damageTable = {
 		victim = self:GetParent(),
-		attacker = caster,
-		damage = dmg,
+		attacker = self:GetCaster(),
+		damage = self.damage_per_second * ( self.burn_tick_interval / 1.0 ),
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
@@ -414,6 +418,9 @@ function modifier_imba_phoenix_icarus_dive_extend_burn:GetTexture() return "phoe
 function modifier_imba_phoenix_icarus_dive_extend_burn:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf" end
 
 function modifier_imba_phoenix_icarus_dive_extend_burn:OnCreated()
+	self.hit_radius		= self:GetAbility():GetSpecialValueFor("hit_radius")
+	self.burn_duration	= self:GetAbility():GetSpecialValueFor("burn_duration")
+
 	if not IsServer() then
 		return
 	end
@@ -434,14 +441,14 @@ function modifier_imba_phoenix_icarus_dive_extend_burn:OnIntervalThink()
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 		caster:GetAbsOrigin(),
 		nil,
-		ability:GetSpecialValueFor("hit_radius"),
+		self.hit_radius,
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
 	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = ability:GetSpecialValueFor("burn_duration")} )
+		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self.burn_duration} )
 	end
 end
 
@@ -853,17 +860,9 @@ function modifier_imba_phoenix_fire_spirits_debuff:GetTexture()
 	return "phoenix_fire_spirits"
 end
 
-function modifier_imba_phoenix_fire_spirits_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
-function modifier_imba_phoenix_fire_spirits_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_Constant()
-	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
-		return 0
-	else
-		return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
-	end
-end
-
 function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
+	self.attackspeed_slow	= self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
+
 	if not IsServer() then
 		return
 	end
@@ -871,8 +870,11 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
 	if self:GetStackCount() <= 1 then
 		self:SetStackCount(1)
 	end
-	local tick = ability:GetSpecialValueFor("tick_interval")
-	self:StartIntervalThink( tick )
+	
+	self.tick_interval		= self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+	
+	self:StartIntervalThink( self.tick_interval )
 end
 
 function modifier_imba_phoenix_fire_spirits_debuff:OnRefresh()
@@ -893,21 +895,29 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnIntervalThink()
 	if not IsServer() then
 		return
 	end
+	
 	if not self:GetParent():IsAlive() then
 		return
 	end
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local tick = ability:GetSpecialValueFor("tick_interval")
-	local dmg = ability:GetSpecialValueFor("damage_per_second") * ( tick / 1.0 )
+	
 	local damageTable = {
 		victim = self:GetParent(),
-		attacker = caster,
-		damage = dmg * self:GetStackCount(),
+		attacker = self:GetCaster(),
+		damage = (self.damage_per_second * ( self.tick_interval / 1.0 )) * self:GetStackCount(),
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
 	ApplyDamage(damageTable)
+end
+
+function modifier_imba_phoenix_fire_spirits_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
+function modifier_imba_phoenix_fire_spirits_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_Constant()
+	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
+		return 0
+	else
+		return self:GetStackCount() * self.attackspeed_slow
+	end
 end
 
 modifier_imba_phoenix_fire_spirits_buff = modifier_imba_phoenix_fire_spirits_buff or class({})
@@ -991,9 +1001,30 @@ LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_buff", "components/abilitie
 LinkLuaModifier("modifier_imba_phoenix_sun_ray_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_sun_ray_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
+function imba_phoenix_sun_ray:OnStolen(self)
+	if not self:GetCaster():HasAbility("imba_phoenix_sun_ray_stop") then
+		self:GetCaster():AddAbility("imba_phoenix_sun_ray_stop"):SetHidden(true)
+		self:GetCaster():FindAbilityByName("imba_phoenix_sun_ray_stop"):SetLevel(1)
+	end
+end
+
+-- SPAGHET
+function imba_phoenix_sun_ray:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_phoenix_sun_ray_stop") then		
+		if not self:GetCaster():FindAbilityByName("imba_phoenix_sun_ray_stop"):IsHidden() then
+			self:GetCaster():SwapAbilities(self:GetName(), "imba_phoenix_sun_ray_stop", true, false)
+		end
+		
+		self:GetCaster():RemoveAbility("imba_phoenix_sun_ray_stop")
+		self:GetCaster():RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
+	end
+end
+
 function imba_phoenix_sun_ray:OnSpellStart()
-	if not IsServer() then
-		return
+	-- SUPER rough Morphling check for now
+	if self:GetCaster():HasModifier("modifier_morphling_replicate") then
+		self:GetCaster():AddAbility("imba_phoenix_sun_ray_stop"):SetHidden(true)
+		self:GetCaster():FindAbilityByName("imba_phoenix_sun_ray_stop"):SetLevel(1)
 	end
 	
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
@@ -1171,15 +1202,7 @@ function imba_phoenix_sun_ray:OnUpgrade()
 		return
 	end
 	local caster = self:GetCaster()
-
-	-- I love Rubick
-	if self:IsStolen() then
-		caster:AddAbility("imba_phoenix_sun_ray_stop")
-		local stop = caster:FindAbilityByName("imba_phoenix_sun_ray_stop")
-		--stop:SetHidden(true)
-		stop:SetStolen(true)
-		stop:SetLevel(1)
-	end
+	
 	caster.sun_ray_is_moving = false
 
 	-- The ability to level up
@@ -1357,12 +1380,13 @@ function modifier_imba_phoenix_sun_ray_dummy_buff:IsStunDebuff() 			return false
 function modifier_imba_phoenix_sun_ray_dummy_buff:RemoveOnDeath() 			return true end
 
 function modifier_imba_phoenix_sun_ray_dummy_buff:OnCreated()
+	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
+
 	if not IsServer() then
 		return
 	end
-
-	local ability = self:GetAbility()
-	self:StartIntervalThink( ability:GetSpecialValueFor("tick_interval") )
+	
+	self:StartIntervalThink( self.tick_interval )
 end
 
 function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
@@ -1374,9 +1398,9 @@ function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
 	local caster = self:GetCaster()
 	local target = self:GetParent()
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = ability:GetSpecialValueFor("tick_interval") * 1.9 } )
+		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = self.tick_interval * 1.9 } )
 	else
-		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_buff", { duration = ability:GetSpecialValueFor("tick_interval") * 1.9 } )
+		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_buff", { duration = self.tick_interval * 1.9 } )
 	end
 end
 
@@ -1393,6 +1417,12 @@ function modifier_imba_phoenix_sun_ray_debuff:IgnoreTenacity() 			return true en
 function modifier_imba_phoenix_sun_ray_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf" end
 
 function modifier_imba_phoenix_sun_ray_debuff:OnCreated()
+	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.duration		= self:GetAbility():GetSpecialValueFor("duration")
+	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
+	self.hp_perc_damage	= self:GetAbility():GetSpecialValueFor("hp_perc_damage")
+	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
+
 	if not IsServer() then
 		return
 	end
@@ -1400,7 +1430,7 @@ function modifier_imba_phoenix_sun_ray_debuff:OnCreated()
 		self:SetStackCount(1)
 	end
 	local ability = self:GetAbility()
-	self:StartIntervalThink( ability:GetSpecialValueFor("tick_interval") )
+	self:StartIntervalThink( self.tick_interval )
 end
 
 function modifier_imba_phoenix_sun_ray_debuff:OnRefresh()
@@ -1424,12 +1454,12 @@ function modifier_imba_phoenix_sun_ray_debuff:OnIntervalThink()
 
 	local num_stack = caster:FindModifierByName("modifier_imba_phoenix_sun_ray_dummy_unit_thinker"):GetStackCount()
 	local taker = self:GetParent()
-	local tick_sum = ability:GetSpecialValueFor("duration") / ability:GetSpecialValueFor("tick_interval")
+	local tick_sum = self.duration / self.tick_interval
 
-	local base_dmg = ability:GetSpecialValueFor("base_damage")
+	local base_dmg = self.base_damage
 	base_dmg = base_dmg / tick_sum * num_stack
 
-	local pct_base_dmg = ability:GetSpecialValueFor("hp_perc_damage") / 100
+	local pct_base_dmg = self.hp_perc_damage / 100
 	pct_base_dmg = pct_base_dmg / tick_sum * num_stack
 	local taker_health = taker:GetMaxHealth()
 
@@ -1475,6 +1505,16 @@ function modifier_imba_phoenix_sun_ray_buff:IgnoreTenacity() 			return true end
 function modifier_imba_phoenix_sun_ray_buff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf" end
 
 function modifier_imba_phoenix_sun_ray_buff:OnCreated()
+	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.duration		= self:GetAbility():GetSpecialValueFor("duration")
+	self.base_heal		= self:GetAbility():GetSpecialValueFor("base_heal")
+	self.hp_perc_heal	= self:GetAbility():GetSpecialValueFor("hp_perc_heal")
+	self.explode_min_time	= self:GetAbility():GetSpecialValueFor("explode_min_time")
+	self.explode_dmg	= self:GetAbility():GetSpecialValueFor("explode_dmg")
+	self.explode_radius	= self:GetAbility():GetSpecialValueFor("explode_radius")
+	self.hp_cost_perc_per_second	= self:GetAbility():GetSpecialValueFor("hp_cost_perc_per_second")
+	
+	
 	if not IsServer() then
 		return
 	end
@@ -1482,7 +1522,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnCreated()
 		self:SetStackCount(1)
 	end
 	local ability = self:GetAbility()
-	self:StartIntervalThink( ability:GetSpecialValueFor("tick_interval") )
+	self:StartIntervalThink( self.tick_interval )
 end
 
 function modifier_imba_phoenix_sun_ray_buff:OnRefresh()
@@ -1506,12 +1546,12 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 
 	local num_stack = caster:FindModifierByName("modifier_imba_phoenix_sun_ray_dummy_unit_thinker"):GetStackCount()
 	local taker = self:GetParent()
-	local tick_sum = ability:GetSpecialValueFor("duration") / ability:GetSpecialValueFor("tick_interval")
+	local tick_sum = self.duration / self.tick_interval
 
-	local base_heal = ability:GetSpecialValueFor("base_heal")
+	local base_heal = self.base_heal
 	base_heal = base_heal / tick_sum * num_stack
 
-	local pct_base_heal = ability:GetSpecialValueFor("hp_perc_heal") / 100
+	local pct_base_heal = self.hp_perc_heal / 100
 	pct_base_heal = pct_base_heal / tick_sum * num_stack
 	local taker_health = taker:GetMaxHealth()
 
@@ -1525,18 +1565,18 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 		ParticleManager:SetParticleControlEnt( pfx, 1, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true )
 		ParticleManager:ReleaseParticleIndex( pfx )
 
-		local explode_stack = ability:GetSpecialValueFor("explode_min_time") / ability:GetSpecialValueFor("tick_interval")
+		local explode_stack = self.explode_min_time / self.tick_interval
 		local current_stack = self:GetStackCount()
 		if current_stack > explode_stack and taker:IsRealHero() then
 			local pfx_explode = ParticleManager:CreateParticle("particles/hero/phoenix/phoenix_sun_ray_explode.vpcf", PATTACH_POINT_FOLLOW, taker)
 			ParticleManager:SetParticleControlEnt(pfx_explode, 0, taker,PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true)
 			--ParticleManager:DestroyParticle(pfx_explode, false)
 			ParticleManager:ReleaseParticleIndex(pfx_explode)
-			local damage_this_tick = ability:GetSpecialValueFor("explode_dmg") / ( 1 / ability:GetSpecialValueFor("tick_interval") )
+			local damage_this_tick = self.explode_dmg / ( 1 / self.tick_interval )
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 				taker:GetAbsOrigin(),
 				nil,
-				ability:GetSpecialValueFor("explode_radius"),
+				self.explode_radius,
 				DOTA_UNIT_TARGET_TEAM_ENEMY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 				DOTA_UNIT_TARGET_FLAG_NONE,
@@ -1554,8 +1594,8 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 			end
 		end
 	else
-		local heal_cost_pct = ability:GetSpecialValueFor("hp_cost_perc_per_second") / 100
-		local tick_per_sec = 1 / ability:GetSpecialValueFor("tick_interval")
+		local heal_cost_pct = self.hp_cost_perc_per_second / 100
+		local tick_per_sec = 1 / self.tick_interval
 		local heal_cost_per_tick = heal_cost_pct / tick_per_sec
 		local heal_cost_this_time = caster:GetHealth() * heal_cost_per_tick
 		if caster:HasModifier("modifier_imba_phoenix_burning_wings_buff") then
@@ -1581,7 +1621,7 @@ function imba_phoenix_sun_ray_stop:IsHiddenWhenStolen() 	return true end
 function imba_phoenix_sun_ray_stop:IsRefreshable() 			return true end
 function imba_phoenix_sun_ray_stop:IsStealable() 			return false end
 function imba_phoenix_sun_ray_stop:IsNetherWardStealable() 	return false end
-function imba_phoenix_sun_ray_stop:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
+-- function imba_phoenix_sun_ray_stop:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
 function imba_phoenix_sun_ray_stop:GetAbilityTextureName()   return "phoenix_sun_ray_stop" end
 
@@ -1605,7 +1645,7 @@ function imba_phoenix_sun_ray_toggle_move:IsHiddenWhenStolen() 		return false en
 function imba_phoenix_sun_ray_toggle_move:IsRefreshable() 			return true end
 function imba_phoenix_sun_ray_toggle_move:IsStealable() 			return false end
 function imba_phoenix_sun_ray_toggle_move:IsNetherWardStealable() 	return false end
-function imba_phoenix_sun_ray_toggle_move:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
+-- function imba_phoenix_sun_ray_toggle_move:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
 function imba_phoenix_sun_ray_toggle_move:GetAbilityTextureName()   return "phoenix_sun_ray_toggle_move" end
 
@@ -1636,6 +1676,8 @@ LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown", "com
 LinkLuaModifier("modifier_imba_phoenix_supernova_egg_double", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_kill_no_timer", "modifier/modifier_kill_no_timer", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_phoenix_supernova_force_day", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+
 imba_phoenix_supernova = imba_phoenix_supernova or class({})
 
 function imba_phoenix_supernova:IsHiddenWhenStolen() 	return false end
@@ -1663,6 +1705,45 @@ function imba_phoenix_supernova:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	
+	-- Can't get forced daytime to work
+	-- if not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_force_day") and not GameRules:IsDaytime() then
+		-- -- if not self.day_start then
+			-- -- Establish some variables to mess with the day/night cycle
+			-- self.day_start			= 0.25
+			-- -- "Each day in Dota 2 is 10 minutes long, divided evenly between daytime and nighttime."
+			-- self.minutes_per_day	= 10
+			-- self.seconds_per_minute	= 60
+			
+			-- -- Calculate how many total seconds are in one day or one night
+			-- self.seconds_per_cycle	= (self.minutes_per_day / 2) * self.seconds_per_minute
+		-- -- end
+
+		-- self.current_time_of_day	= GameRules:GetTimeOfDay()
+
+		-- self.daytime_seconds = (GameRules:GetTimeOfDay() - self.day_start) * self.minutes_per_day * self.seconds_per_minute
+
+		-- if self.daytime_seconds < 0 then
+			-- self.daytime_seconds = self.daytime_seconds + (self.minutes_per_day * self.seconds_per_minute)
+		-- end
+		
+		-- -- Calculate the number of seconds until daytime (need to account for when Supernova is cast when there is less than "duration" seconds of nighttime remaining)
+		-- self.time_till_day			= (self.seconds_per_cycle - self.daytime_seconds) % self.seconds_per_cycle
+
+		-- -- Convert daytime back to dota format
+		-- self.dota_daytime = ((self.daytime_seconds + 50) / self.seconds_per_minute / self.minutes_per_day) + self.day_start
+		
+		-- GameRules:SetTimeOfDay(self.dota_daytime)
+		
+		-- GameRules:GetGameModeEntity():SetDaynightCycleDisabled(true)
+
+		-- local force_day_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_supernova_force_day", 
+		-- {
+			-- duration 			= math.min(self:GetSpecialValueFor("duration"), self.time_till_day),
+			-- current_time_of_day	= self.current_time_of_day
+		-- })
+	-- end
+	
 	local caster = self:GetCaster()
 	local ability = self
 	local location = caster:GetAbsOrigin()
@@ -2410,10 +2491,16 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 	if self:GetCaster():GetHealth() <= 1 then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = ability:GetSpecialValueFor("scepter_cooldown")})
-		local location = caster:GetAbsOrigin()
+		local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
+		local cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
 		local egg_duration = ability:GetSpecialValueFor("duration")
 		local extend_duration = ability:GetSpecialValueFor("scepter_additional_duration")
+
+		if cooldown_modifier ~= nil then 
+			cooldown_modifier:SetStackCount(scepter_cooldown + egg_duration + extend_duration)
+		end
+
+		local location = caster:GetAbsOrigin()
 
 		local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
 
@@ -2434,10 +2521,18 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		-- Set health to max here as compromise to prevent easy insta-gibs I guess
 		caster:SetHealth(caster:GetMaxHealth())
+
+		-- Add cooldown to scepter icon
+		for i = 0, 5 do 
+			local aghs = caster:GetItemInSlot(i)
+			if aghs ~= nil then
+				if aghs:GetName() == 'item_ultimate_scepter' then 
+					aghs:StartCooldown(scepter_cooldown + egg_duration + extend_duration)
+				end
+			end
+		end
 	end
-
 end
-
 
 modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class({})
 
@@ -2449,6 +2544,42 @@ function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff()
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPermanent() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() 	return false end
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated() 
+	if IsServer() then 
+		self:StartIntervalThink(1)
+	end
+end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnIntervalThink() 
+	if IsServer() then 
+		self:SetStackCount(self:GetStackCount() - 1)
+	end
+end
+
+----------------------------------
+-- SUPERNOVA FORCE DAY MODIFIER --
+----------------------------------
+
+modifier_imba_phoenix_supernova_force_day = class({})
+
+function modifier_imba_phoenix_supernova_force_day:IsHidden()		return true end
+function modifier_imba_phoenix_supernova_force_day:IsPurgable()		return false end
+function modifier_imba_phoenix_supernova_force_day:RemoveOnDeath()	return false end
+
+function modifier_imba_phoenix_supernova_force_day:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.duration				= params.duration
+	self.current_time_of_day	= params.current_time_of_day
+end
+
+function modifier_imba_phoenix_supernova_force_day:OnDestroy()
+	if not IsServer() then return end
+	
+	GameRules:SetTimeOfDay(self.current_time_of_day + self.duration)
+	
+	GameRules:GetGameModeEntity():SetDaynightCycleDisabled(false)
+end
 
 -------------------------------------------
 --			Burning Wings
@@ -2471,6 +2602,7 @@ function imba_phoenix_burning_wings:OnToggle()
 	if not IsServer() then
 		return
 	end
+
 	if self:GetToggleState() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_burning_wings_buff", {} )
 	else

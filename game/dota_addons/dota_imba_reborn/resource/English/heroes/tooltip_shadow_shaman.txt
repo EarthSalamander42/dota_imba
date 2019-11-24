@@ -19,7 +19,7 @@
 "DOTA_Tooltip_ability_imba_shadow_shaman_voodoo_Note3"								"Deprecation is applied as a standard aura."
 "DOTA_Tooltip_ability_imba_shadow_shaman_voodoo_duration"							"DURATION:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles"									"Shackles"
-"DOTA_Tooltip_ability_imba_shadow_shaman_shackles_Description"						"CHANNELED - Magically binds an enemy unit so that it cannot move or attack, while dealing damage over time.\n<font color='#FF7800'>Stronghold:</font> Also affects all valid targets within %stronghold_width% width between Shadow Shaman and the original target.\n<font color='#FF7800'>Swindle:</font> Steals %swindle_gold_per_tick% gold from affected targets per damage tick.\n<font color='#FF7800'>Chariot:</font> Can be set to auto-cast to allow Shackles to target allies, increasing its total channel time by %chariot_channel_multiplier%x. Casting Shackles in this fashion allows Shadow Shaman to latch on and be dragged along with the target, with the rope length being equal to Shackles' cast range. The channeling is broken if the target teleports more than %chariot_break_distance% distance."
+"DOTA_Tooltip_ability_imba_shadow_shaman_shackles_Description"						"CHANNELED - Magically binds an enemy unit so that it cannot move or attack, while dealing damage over time.\n<font color='#FF7800'>Stronghold:</font> Also affects all valid targets within %stronghold_width% width between Shadow Shaman and the original target.\n<font color='#FF7800'>Swindle:</font> Steals %swindle_gold_per_tick% gold from affected targets per damage tick.\n<font color='#FF7800'>Chariot:</font> Can be set to auto-cast to allow Shackles to target allies, increasing its total channel time by %chariot_channel_multiplier%x. Casting Shackles in this fashion allows Shadow Shaman to latch on and be dragged along with the target, with the rope length being equal to Shackles' cast range. The channeling is broken if the target teleports more than %chariot_break_distance% distance. The target gains %chariot_bonus_move_speed% bonus movement speed while affected by Chariot."
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles_Lore"								"A self-defense incantation, Rhasta developed shackles after his master was slain in the Bleeding Hills."
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles_total_damage"						"TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_shaman_shackles_channel_time"						"MAX DURATION:"
@@ -35,7 +35,7 @@
 "DOTA_Tooltip_modifier_imba_shadow_shaman_shackles"				"Shackles"
 "DOTA_Tooltip_modifier_imba_shadow_shaman_shackles_Description"	"Shackled.  Cannot move or attack."
 "DOTA_Tooltip_modifier_imba_shadow_shaman_shackles_chariot"				"Shackles Chariot"
-"DOTA_Tooltip_modifier_imba_shadow_shaman_shackles_chariot_Description"	"You are now a horse."
+"DOTA_Tooltip_modifier_imba_shadow_shaman_shackles_chariot_Description"	"You are now a horse. Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% bonus movement speed."
 
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_hex_cooldown"				"-5s Hex Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_wards_movement"				"+60 Mass Serpent Ward Movement Speed"

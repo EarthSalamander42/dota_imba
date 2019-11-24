@@ -81,17 +81,11 @@ function modifier_imba_delightful_torment_as_bonus:GetAttributes() return MODIFI
 -------------------------------------------
 
 function modifier_imba_delightful_torment_as_bonus:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-		}
-	return decFuns
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_delightful_torment_as_bonus:GetModifierAttackSpeedBonus_Constant()
-	if IsServer() then
-		return 10
-	end
+	return self:GetCaster():FindTalentValue("special_bonus_imba_queenofpain_4")
 end
 
 -------------------------------------------
@@ -241,6 +235,14 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 		end
 	end
 end
+
+-- "A unit with less than 25% of its maximum health can be denied when it has the Shadow Strike debuff on."
+function modifier_imba_shadow_strike_debuff:CheckState()
+	if self:GetParent():GetHealthPercent() < 25 then
+		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
+	end
+end
+
 
 function modifier_imba_shadow_strike_debuff:DeclareFunctions()
 	local decFuncs =
@@ -562,6 +564,8 @@ end
 LinkLuaModifier("modifier_imba_sonic_wave", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sonic_wave_daze", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
 imba_queenofpain_sonic_wave = class({})
 
 function imba_queenofpain_sonic_wave:GetAbilityTextureName()
@@ -643,7 +647,7 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 				bDeleteOnHit		= true,
 				vVelocity			= Vector(direction.x,direction.y,0) * projectile_speed,
 				bProvidesVision		= false,
-				ExtraData			= {damage = damage}
+				ExtraData			= {damage = damage, x = caster_loc.x, y = caster_loc.y, z = caster_loc.z}
 			}
 
 		ProjectileManager:CreateLinearProjectile(projectile)
@@ -667,6 +671,25 @@ function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location,
 	local caster = self:GetCaster()
 	if target then
 		ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		
+		local knockback_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		{
+			distance		= self:GetSpecialValueFor("knockback_distance"),
+			direction_x 	= location.x - ExtraData.x,
+			direction_y 	= location.y - ExtraData.y,
+			direction_z 	= location.z - ExtraData.z,
+			duration 		= self:GetSpecialValueFor("knockback_duration"),
+			bGroundStop 	= false,
+			bDecelerate 	= false,
+			bInterruptible 	= false,
+			bIgnoreTenacity	= false,
+			bDestroyTreesAlongPath	= true
+		})		
+		
+		if knockback_modifier then
+			knockback_modifier:SetDuration(self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()), true)
+		end
+		
 		if caster:HasScepter() then
 			target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = self:GetSpecialValueFor("orders_scepter")})
 		end
@@ -775,4 +798,24 @@ end
 
 function modifier_imba_sonic_wave_daze:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_queenofpain_4	= class({})
+
+function modifier_special_bonus_imba_queenofpain_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_4:IsPurgable() 	return false end
+function modifier_special_bonus_imba_queenofpain_4:RemoveOnDeath() 	return false end
+
+function imba_queenofpain_delightful_torment:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_queenofpain_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_queenofpain_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_queenofpain_4"), "modifier_special_bonus_imba_queenofpain_4", {})
+	end
 end

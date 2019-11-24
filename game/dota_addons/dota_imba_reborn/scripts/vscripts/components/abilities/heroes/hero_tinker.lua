@@ -110,6 +110,8 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			local forbidden_items = 
 			{
 				"item_aeon_disk",
+				"item_imba_aeon_disk",
+				"item_imba_aether_specs",
 				"item_imba_arcane_boots",
 				"item_black_king_bar",
 				"item_imba_bloodstone",

@@ -251,13 +251,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"260"
+		"MovementSpeed"				"280"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -311,8 +311,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"24"
-		"AttackDamageMax"			"32"
+		"AttackDamageMin"			"25"
+		"AttackDamageMax"			"33"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -329,13 +329,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"280"
+		"MovementSpeed"				"310"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -389,8 +389,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"32"
-		"AttackDamageMax"			"40"
+		"AttackDamageMin"			"34"
+		"AttackDamageMax"			"42"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -407,13 +407,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"300"
+		"MovementSpeed"				"340"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -467,8 +467,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"40"
-		"AttackDamageMax"			"48"
+		"AttackDamageMin"			"43"
+		"AttackDamageMax"			"51"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -485,13 +485,13 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"12"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"30"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"320"
+		"MovementSpeed"				"370"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -1645,7 +1645,7 @@
 		"AttackDamageMin"			"20"
 		"AttackDamageMax"			"20"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1.5"
+		"AttackRate"				"1.4"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"600"
@@ -1729,7 +1729,7 @@
 		"AttackDamageMin"			"30"
 		"AttackDamageMax"			"30"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1.5"
+		"AttackRate"				"1.4"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"750"
 		"AttackRange"				"750"
@@ -3850,7 +3850,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -3942,7 +3942,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4028,16 +4028,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"5"
+		"AbilityLayout"				"4"
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
 		"Ability3"					"necronomicon_warrior_sight"
 		"Ability4"					"black_dragon_dragonhide_aura"
-		"Ability5"					"granite_golem_hp_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"10"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4070,9 +4069,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"225"
-		"BountyGoldMin"				"225"
-		"BountyGoldMax"				"225"
+		"BountyXP"					"250"
+		"BountyGoldMin"				"250"
+		"BountyGoldMax"				"250"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4081,7 +4080,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"385"
+		"MovementSpeed"				"380"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -4123,17 +4122,16 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"6"
+		"AbilityLayout"				"5"
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
 		"Ability3"					"necronomicon_warrior_sight"
 		"Ability4"					"black_dragon_dragonhide_aura"
-		"Ability5"					"granite_golem_hp_aura"
-		"Ability6"					"spawnlord_aura"
+		"Ability5"					"spawnlord_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"12"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4166,9 +4164,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"250"
-		"BountyGoldMin"				"250"
-		"BountyGoldMax"				"250"
+		"BountyXP"					"300"
+		"BountyGoldMin"				"300"
+		"BountyGoldMax"				"300"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4177,7 +4175,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"400"
+		"MovementSpeed"				"390"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -4219,7 +4217,6 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_aoe"
-		"Ability2"					"necronomicon_archer_mana_burn"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4309,11 +4306,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_aoe"
-		"Ability2"					"necronomicon_archer_mana_burn"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4398,14 +4394,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_aoe"
-		"Ability2"					"necronomicon_archer_mana_burn"
-		"Ability3"					"necronomicon_archer_purge"
+		"Ability1"					"necronomicon_archer_purge"
+		"Ability2"					"necronomicon_archer_aoe"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4491,15 +4486,14 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_mana_burn"
+		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"necronomicon_archer_purge"
-		"Ability4"					"forest_troll_high_priest_mana_aura"
-		"Ability5"					"big_thunder_lizard_wardrums_aura"
+		"Ability3"					"forest_troll_high_priest_mana_aura"
+		"Ability4"					"big_thunder_lizard_wardrums_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"7"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4532,9 +4526,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"225"
-		"BountyGoldMin"				"225"
-		"BountyGoldMax"				"225"
+		"BountyXP"					"250"
+		"BountyGoldMin"				"250"
+		"BountyGoldMax"				"250"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4543,7 +4537,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"385"
+		"MovementSpeed"				"380"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -4585,16 +4579,15 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_mana_burn"
+		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"necronomicon_archer_purge"
-		"Ability4"					"forest_troll_high_priest_mana_aura"
-		"Ability5"					"big_thunder_lizard_wardrums_aura"
-		"Ability6"					"imba_necronomicon_archer_multishot"
+		"Ability3"					"forest_troll_high_priest_mana_aura"
+		"Ability4"					"big_thunder_lizard_wardrums_aura"
+		"Ability5"					"imba_necronomicon_archer_multishot"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"
+		"ArmorPhysical"				"4"
 		"MagicalResistance"			"40"
 
 		// Attack
@@ -4627,9 +4620,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"250"
-		"BountyGoldMin"				"250"
-		"BountyGoldMax"				"250"
+		"BountyXP"					"300"
+		"BountyGoldMin"				"300"
+		"BountyGoldMax"				"300"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4638,7 +4631,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"400"
+		"MovementSpeed"				"390"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -5719,6 +5712,10 @@
 
 	"npc_dota_visage_familiar1"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+	
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"			// Physical protection.
@@ -5735,6 +5732,10 @@
 
 	"npc_dota_visage_familiar2"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"			// Physical protection.
@@ -5751,6 +5752,10 @@
 
 	"npc_dota_visage_familiar3"
 	{
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_visage_summon_familiars_stone_form"			// Ability 2.	
+
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"			// Physical protection.
@@ -6954,6 +6959,13 @@
 		"StatusHealth"				"4"		// Base health.
 	}
 	
+	"npc_dota_rattletrap_cog"
+	{										
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	}		
+	
 	//=================================================================================
 	// Storm Spirit's Static Remnant
 	//=================================================================================
@@ -7797,13 +7809,13 @@
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability11"					"special_bonus_movement_speed_30"
+		"Ability12"					"special_bonus_attack_damage_100"
+		"Ability13"					"special_bonus_mp_400"
+		"Ability14"					"special_bonus_cast_range_200" 
 		"Ability15"					"special_bonus_spell_amplify_10"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_spell_block_15"
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
@@ -9960,8 +9972,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"300"
-		"AttackDamageMax"			"300"
+		"AttackDamageMin"			"600"
+		"AttackDamageMax"			"600"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.25"
 		"AttackAnimationPoint"		"0.2"
@@ -10404,5 +10416,61 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-	}	
+	}
+	
+	"npc_dota_aether_spec_ward"
+	{
+		// General
+		//
+		"BaseClass"					"npc_dota_ward_base"	// Class of entity of link to.
+		"Model"						"models/items/wards/eyeofforesight/eyeofforesight.vmdl"	// Model.
+		"SoundSet"					""					// Name of sound set.
+		"Level"						"0"
+		"ModelScale"				"1"
+		"MinimapIcon"				"minimap_ward_obs"
+		"MinimapIconSize"			"300"
+ 		"wearable"					"7555"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"140"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air 
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"16"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"100"		// Experience earn.
+		"BountyGoldMin"				"100"		// Gold earned min.
+		"BountyGoldMax"				"100"		// Gold earned max.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1000"		// Range of vision at night time.
+	}
+	
+	"npc_dota_templar_assassin_psionic_trap"
+	{
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"templar_assassin_self_trap"			// Ability 1
+		"Ability2"					"imba_templar_assassin_self_trap"		// Ability 2
+	}
 }

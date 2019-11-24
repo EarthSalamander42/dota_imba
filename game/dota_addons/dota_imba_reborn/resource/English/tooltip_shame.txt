@@ -62,12 +62,12 @@
 //=================================================================================================================
 "npc_dota_hero_abaddon"                                    "Abaddon (IMBA)"
 "npc_dota_hero_alchemist"                                  "Alchemist (IMBA)"
-"npc_dota_hero_ancient_apparition"                          "Ancient Apparition"
+"npc_dota_hero_ancient_apparition"                          "Ancient Apparition (IMBA)"
 "npc_dota_hero_antimage"                                    "Anti-Mage (IMBA)"
 "npc_dota_hero_arc_warden"                                  "Arc Warden"
 "npc_dota_hero_axe"                                        "Axe (IMBA)"
 "npc_dota_hero_bane"                                        "Bane (IMBA)"
-"npc_dota_hero_batrider"                                    "Batrider"
+"npc_dota_hero_batrider"                                    "Batrider (IMBA)"
 "npc_dota_hero_beastmaster"                                "Beastmaster"
 "npc_dota_hero_bloodseeker"                                "Bloodseeker (IMBA)"
 "npc_dota_hero_bounty_hunter"                              "Bounty Hunter (IMBA)"
@@ -103,7 +103,7 @@
 "npc_dota_hero_kunkka"                                      "Kunkka (IMBA)"
 "npc_dota_hero_legion_commander"                            "Legion Commander"
 "npc_dota_hero_leshrac"                                    "Leshrac"
-"npc_dota_hero_life_stealer"                                "Lifestealer"
+"npc_dota_hero_life_stealer"                                "Lifestealer (IMBA)"
 "npc_dota_hero_lich"                                        "Lich (IMBA)"
 "npc_dota_hero_lina"                                        "Lina (IMBA)"
 "npc_dota_hero_lion"                                        "Lion (IMBA)"
@@ -163,9 +163,9 @@
 "npc_dota_hero_viper"                                      "Viper"
 "npc_dota_hero_vengefulspirit"                              "Vengeful Spirit (IMBA)"
 "npc_dota_hero_venomancer"                                  "Venomancer (IMBA)"
-"npc_dota_hero_visage"                                      "Visage"
+"npc_dota_hero_visage"                                      "Visage (IMBA)"
 "npc_dota_hero_warlock"                                    "Warlock (IMBA)"
-"npc_dota_hero_weaver"                                      "Weaver"
+"npc_dota_hero_weaver"                                      "Weaver (IMBA)"
 "npc_dota_hero_skeleton_king"                              "Wraith King (IMBA)"
 "npc_dota_hero_windrunner"                                  "Windrunner"
 "npc_dota_hero_winter_wyvern"                              "Winter Wyvern (IMBA)"
@@ -534,13 +534,14 @@
 "DOTA_Tooltip_Ability_special_bonus_unique_ember_spirit_2"        "+2s Searing Chains"
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_4"        "3 Sleight of Fist Charges"
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_5"        "-20 Remnant Charge Restore Time"
-"DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_2"        "+10 Flak Cannon attacks"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3"			"Soul Assumption Hits 5 Targets"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3_Description"	"Four additional Soul Assumptions are launched towards random enemy units within the cast range, prioritizing Heroes."
 
 "DOTA_Tooltip_modifier_special_bonus_corruption_debuff_description"		"Armor currently corrupted by a talent."
 
 "DOTA_Tooltip_ability_special_bonus_unique_mars_spear_stun_duration"	"+1.5s Spear Stun"										
+
+"DOTA_Tooltip_ability_slark_essence_shift_Description"				"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals 1 Agility."
 
 //=================================================================================================================
 //=================================================================================================================

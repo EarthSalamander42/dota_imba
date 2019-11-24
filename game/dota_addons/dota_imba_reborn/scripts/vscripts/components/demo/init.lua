@@ -14,7 +14,7 @@ ListenToGameEvent('game_rules_state_change', function()
 --		SendToServerConsole( "dota_dev forcegamestart" )
 	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if not IsInToolsMode() then
-			Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
+			Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left or type -exit in chat to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
 		end
 	end
 end, nil)
@@ -26,9 +26,9 @@ function GameMode:InitDemo()
 	-- Set bot mode difficulty: can try GameRules:GetGameModeEntity():SetCustomGameDifficulty( 1 )
 
 	GameRules:SetUseUniversalShopMode(true)
-	GameRules:SetPreGameTime(10.0)
-	GameRules:SetStrategyTime(0.0)
-	GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
+	-- GameRules:SetPreGameTime(10.0)
+	-- GameRules:SetStrategyTime(0.0)
+	-- GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
 	GameRules:SetSafeToLeave(true)
 
 	-- Events

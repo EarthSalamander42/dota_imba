@@ -638,11 +638,18 @@ function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
 		local singularity = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 		if not singularity then return end
 		
-		if self:GetCaster():IsRooted() or self:GetCaster():IsSilenced() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or self:GetCaster():IsCommandRestricted() or not self:GetCaster():IsAlive() then
-			singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - self:GetSpecialValueFor("interrupt_disable_loss_pct")) * 0.01))
-		else
-			singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - self:GetSpecialValueFor("interrupt_manual_loss_pct")) * 0.01))
-		end
+		local caster	= self:GetCaster()
+		local d_pct		= self:GetSpecialValueFor("interrupt_disable_loss_pct")
+		local m_pct		= self:GetSpecialValueFor("interrupt_manual_loss_pct")
+		
+		-- Wait a frame to check for any disables that have been added on I guess...
+		Timers:CreateTimer(FrameTime(), function()
+			if caster:IsRooted() or caster:IsSilenced() or caster:IsStunned() or caster:IsHexed() or caster:IsCommandRestricted() or not caster:IsAlive() then
+				singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - d_pct) * 0.01))
+			else
+				singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - m_pct) * 0.01))
+			end
+		end)
 	end
 end
 
@@ -985,7 +992,10 @@ function modifier_imba_singularity:OnDeath(keys)
 		local extra_pull_radius = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
 		ability.radius = base_radius + extra_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
 		ability.pull_radius = base_pull_radius + extra_pull_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-		ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+		
+		Timers:CreateTimer(FrameTime(), function()
+			ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+		end)
 	end
 end
 

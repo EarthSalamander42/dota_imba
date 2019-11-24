@@ -197,14 +197,26 @@ function Wearables:PrintWearables( unit )
 	print("---------------------")
 	print("Wearable List of "..unit:GetUnitName())
 	print("Main Model: "..unit:GetModelName())
+	
+	wearable_list = {}
+	
 	local wearable = unit:FirstMoveChild()
 	while wearable ~= nil do
 		if wearable:GetClassname() == "dota_item_wearable" then
 			local model_name = wearable:GetModelName()
-			if model_name ~= "" then print(model_name) end
+			if model_name ~= "" then
+				print(model_name)
+				wearable_list[model_name] = true
+				
+				if unit:GetPlayerID() then
+					Notifications:Top(unit:GetPlayerID(), {text = model_name, duration = 3, style = {color = "Red"}})
+				end
+			end
 		end
 		wearable = wearable:NextMovePeer()
 	end
+	
+	return wearable_list
 end
 
 function Wearables:PrecacheWearables(context)

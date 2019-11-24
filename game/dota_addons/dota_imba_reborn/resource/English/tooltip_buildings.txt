@@ -39,7 +39,7 @@
 
 // Cursed Fountain
 "DOTA_Tooltip_modifier_imba_cursed_fountain"							"Cursed Fountain"
-"DOTA_Tooltip_modifier_imba_cursed_fountain_Description"				"Killing a hero while inside the fountain area increments a stack. If this reaches 2 or more stacks, attack damage, spell amplification, and stats are reverted to base, and the aggressor's vision becomes shared with the enemy. Dying or getting a kill while not under the fountain's effect removes the debuff."
+"DOTA_Tooltip_modifier_imba_cursed_fountain_Description"				"Killing a hero while inside the fountain area increments a stack. If this reaches 2 or more stacks, attack damage, spell amplification, and stats are reverted to base, and the aggressor's vision becomes shared with the enemy.<br><br>Additionally, outgoing damage is reduced by 10%% for each stack of Cursed Fountain.<br><br>Dying or getting a kill while not under the fountain's effect removes the debuff."
 
 //=================================================================================================================
 // Tier 1 tower abilities

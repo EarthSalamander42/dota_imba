@@ -38,6 +38,9 @@ UNIQUE_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
 UNIQUE_DONATOR_COMPANION["76561198065838676"] = "npc_donator_companion_miku"
 -- UNIQUE_DONATOR_COMPANION["76561198124080528"] = "npc_donator_companion_hastur"
 -- UNIQUE_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
+UNIQUE_DONATOR_COMPANION["76561198054347194"] = "npc_donator_companion_vivi"
+UNIQUE_DONATOR_COMPANION["76561198046078552"] = "npc_donator_companion_altivu"
+UNIQUE_DONATOR_COMPANION["76561198885326839"] = "npc_donator_companion_suthernfriend"	-- test string
 
 UNIQUE_DONATOR_STATUE = {}
 -- UNIQUE_DONATOR_STATUE["76561198015161808"] = "npc_donator_statue_cookies"

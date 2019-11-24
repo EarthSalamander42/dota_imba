@@ -629,7 +629,7 @@ function imba_omniknight_heavenly_grace:OnSpellStart()
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_omniknight_heavenly_grace", {duration = self:GetSpecialValueFor("duration")})
 	
 	-- "Applies a strong dispel on the target upon cast."
-	self:GetCaster():Purge(false, true, false, true, true)
+	self:GetCursorTarget():Purge(false, true, false, true, true)
 end
 
 -----------------------------
@@ -958,7 +958,8 @@ function modifier_imba_guardian_angel:OnCreated()
     self.modifier_shield = "modifier_imba_guardian_angel_shield"
 
     -- Ability specials
-    self.shield_duration = self.ability:GetSpecialValueFor("shield_duration")    
+    self.shield_duration	= self.ability:GetSpecialValueFor("shield_duration")
+	self.scepter_regen		= self.ability:GetSpecialValueFor("scepter_regen")
 
     -- If this is the caster, give him an halo and wings! He deserve them!
     if self.parent == self.caster then
@@ -989,13 +990,22 @@ function modifier_imba_guardian_angel:GetStatusEffectName()
 end
 
 function modifier_imba_guardian_angel:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL}
+    local decFuncs = {
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
 
     return decFuncs
 end
 
 function modifier_imba_guardian_angel:GetAbsoluteNoDamagePhysical()
     return 1
+end
+
+function modifier_imba_guardian_angel:GetModifierConstantHealthRegen()
+	if self:GetCaster():HasScepter() then
+		return self.scepter_regen
+	end
 end
 
 function modifier_imba_guardian_angel:IsHidden() return false end

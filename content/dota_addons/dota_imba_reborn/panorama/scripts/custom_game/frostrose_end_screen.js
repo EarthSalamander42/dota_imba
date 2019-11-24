@@ -63,6 +63,8 @@
 
 	EndScoreboard(args);
 */
+
+	GameEvents.Subscribe("diretide_hall_of_fame", HallOfFame);
 })();
 
 function RawTimetoGameTime(time) {
@@ -230,6 +232,10 @@ function EndScoreboard(args) {
 //			if (Game.IsInToolsMode())
 //				xpDiff = 300000;
 
+			// fail-safe to prevent text being grey
+			values.xp.earned.text = "0";
+			values.xp.earned.AddClass("es-text-white");
+
 			if (xpDiff > 0) {
 				if (ply_table && ply_table.player_xp == 1) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -262,9 +268,6 @@ function EndScoreboard(args) {
 						}
 					}
 				}
-			} else if (xpDiff == 0) {
-				values.xp.earned.text = "0";
-				values.xp.earned.AddClass("es-text-white");
 			} else {
 				values.xp.earned.text = new String(xpDiff);
 				values.xp.earned.AddClass("es-text-red");
@@ -376,4 +379,120 @@ function CreateBattlepassRewardPanel(level, levelup_count) {
 
 		Game.EmitSound(sound_name[battlepass_rarity])
 	}
+}
+
+function HallOfFame(args) {
+	var diretide_records = args.data.games;
+//	$.Msg(diretide_records)
+
+	if (diretide_records == undefined)
+		return;
+
+	var leaderboard_container = $("#LeaderboardInfoContainer");
+	if (Game.GetMapInfo().map_display_name == "imba_10v10")
+		leaderboard_container.style.width = "80%";
+	leaderboard_container.style.visibility = "visible";
+
+	var i = 0;
+
+	while (diretide_records[i] && i < 10) {
+		var j = 1;
+		var players = diretide_records[i]["players"];
+		var roshan_level = diretide_records[i]["rosh_lvl"];
+		var roshan_health = diretide_records[i]["rosh_hp"];
+		var roshan_max_health = diretide_records[i]["rosh_max_hp"];
+
+//		if ($("#player_" + i)) {
+//			$("#player_" + i).DeleteAsync(0);
+//		}
+
+		var row = $.CreatePanel("Panel", $('#Tops'), "row_" + i);
+		row.AddClass("LeaderboardGames");
+		var rank = $.CreatePanel("Label", row, "rank_" + i);
+		rank.AddClass("LeaderboardRank");
+		rank.text = i + 1;
+
+		var players_row = $.CreatePanel("Panel", row, "player_row_" + i);
+		players_row.AddClass("LeaderboardXP");
+		players_row.style.flowChildren = "right";
+		players_row.style.width = "fit-children";
+
+		while (players[j]) {
+			var steamid = players[j];
+//			$.Msg(steamid)
+			var panel_steam_id = $.CreatePanel("DOTAAvatarImage", players_row, "player_steamid_" + j);
+			panel_steam_id.AddClass("LeaderboardAvatar");
+			panel_steam_id.steamid = steamid;
+			panel_steam_id.style.width = "30px";
+			panel_steam_id.style.height = "30px";
+			panel_steam_id.style.marginLeft = "0.5%";
+			panel_steam_id.style.marginRight = "0.5%";
+			panel_steam_id.style.verticalAlign = "center";
+
+			j++;
+		}
+
+/*
+		var leaderboard_border = [];
+		leaderboard_border[1] = "darkred"
+		leaderboard_border[2] = "red"
+		leaderboard_border[3] = "blue"
+		leaderboard_border[4] = "darkred"
+		leaderboard_border[5] = "gold"
+		leaderboard_border[6] = "green"
+		leaderboard_border[7] = "purple"
+		leaderboard_border[8] = "dodgerblue"
+		leaderboard_border[9] = "brown"
+*/
+//		if (top_users[i - 1].donator_level)
+//			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
+//			steam_id.style.border = "2px solid " + leaderboard_border[i];
+//		else
+//			steam_id.style.border = "2px solid #3f464ecc";
+
+
+
+
+
+
+
+		var roshan_row = $.CreatePanel("Panel", row, "roshan_row_" + i);
+		roshan_row.AddClass("LeaderboardIMR");
+
+
+		var imbar_container = $.CreatePanel("Panel", roshan_row, "imbar_container_" + i);
+		imbar_container.AddClass("imbar-progress-bar");
+		var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
+		imbar.AddClass("imbar-progress-bar");
+		imbar.value = parseFloat(roshan_health / roshan_max_health);
+
+		var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
+		imbar_lvl.AddClass("imbar-lvl");
+		imbar_lvl.text = "Level: " + roshan_level;
+
+		var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank" + i);
+		imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
+
+		var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
+		imbar_rank_circle.AddClass("imbar-rank-cicle");
+		imbar_rank_circle.style.backgroundColor = "white";
+//		imbar_rank_circle.style.backgroundColor = top_users.title_color;
+
+		var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
+		imbar_rank.AddClass("imbar-rank");
+		imbar_rank.text = roshan_health + " / " + roshan_max_health;
+
+//		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+//		imbar_xp.AddClass("imbar-xp");
+//		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
+
+//		var imr = $.CreatePanel("Label", player, "rank_" + i);
+//		imr.AddClass("LeaderboardIMR");
+
+		i++
+	}
+}
+
+function ToggleHallofFame() {
+	$("#LeaderboardInfoContainer").style.visibility = "collapse";
 }

@@ -52,7 +52,11 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 
 	GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
 
-	local item = CreateItem("item_imba_aegis", nil, nil)
+	if keys.attacker and keys.attacker.GetTeamNumber then
+		_G.GAME_ROSHAN_KILLER_TEAM = keys.attacker:GetTeamNumber()
+	end
+
+	local item = CreateItem("item_aegis", nil, nil)
 	local pos = self:GetParent():GetAbsOrigin()
 	local drop = CreateItemOnPositionSync(pos, item)
 	item:LaunchLoot(false, 300, 0.5, pos)

@@ -1,41 +1,41 @@
 "use strict";
 
 function LightenDarkenColor(col, amt) {
-    var usePound = false;
+	var usePound = false;
   
-    if (col[0] == "#") {
-        col = col.slice(1);
-        usePound = true;
-    }
+	if (col[0] == "#") {
+		col = col.slice(1);
+		usePound = true;
+	}
  
-    var num = parseInt(col,16);
+	var num = parseInt(col,16);
  
-    var r = (num >> 16) + amt;
+	var r = (num >> 16) + amt;
  
-    if (r > 255) r = 255;
-    else if  (r < 0) r = 0;
+	if (r > 255) r = 255;
+	else if  (r < 0) r = 0;
  
-    var b = ((num >> 8) & 0x00FF) + amt;
+	var b = ((num >> 8) & 0x00FF) + amt;
  
-    if (b > 255) b = 255;
-    else if  (b < 0) b = 0;
+	if (b > 255) b = 255;
+	else if  (b < 0) b = 0;
  
-    var g = (num & 0x0000FF) + amt;
+	var g = (num & 0x0000FF) + amt;
  
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
- 	
- 	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
+	if (g > 255) g = 255;
+	else if (g < 0) g = 0;
+	
+	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
 
- 	var length = color.length;
+	var length = color.length;
 
- 	if ( length < 6 ) {
- 		for (var i = 0; i < (6-length); i++) {
- 			color = "0" + color;
- 		}
- 	}
+	if ( length < 6 ) {
+		for (var i = 0; i < (6-length); i++) {
+			color = "0" + color;
+		}
+	}
 
-    return (usePound?"#":"") + color;
+	return (usePound?"#":"") + color;
 }
 
 function rnd(min, max) {
@@ -127,27 +127,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
-/*
-	// load player data from api
-	LoadPlayerInfo(function (data) {
-		var thisPlayerInfo = null;
-		playerInfo.forEach(function (i) {
-			if (i.steamid == steamid)
-				thisPlayerInfo = i;
-		});
-
-		if (thisPlayerInfo == null) // wtf
-			return;
-
-		$.Msg(thisPlayerInfo)
-
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
-		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
-		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
-	});
-*/
 
 	// xp shown fix (temporary?)
 	var player_info = CustomNetTables.GetTableValue("battlepass", playerId.toString())
@@ -163,9 +142,16 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' - ');
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
-		_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.winrate);
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
 		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
+	}
+
+	var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
+
+	if (!player_info || player_info.winrate_toggle == 0) {
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
+	} else if (player_info.winrate_toggle == 1) {
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
 	}
 }
 
@@ -216,12 +202,9 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	if (player_table && player_table.donator_level && player_table.donator_color) {
 		if (player_table.donator_level < 10) {
 			if (player_table.in_game_tag == 1) {
-
 				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
 					is_donator_set.push( playerId.toString() );
-					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
-					
 
 					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
 					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
@@ -260,7 +243,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 						donatorPanel.BCreateChildren('<Panel id="particle-holder" />');
 						var holder = donatorPanel.FindChildTraverse("particle-holder");
 						var bubblecount = 30;
-					
+
 						for (var i = 0; i <= bubblecount; i++) {
 							var size = rnd(50, 80) / 10;
 
@@ -280,12 +263,9 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 							);
 						}
 					}
-					
 				}
 			} else {
 				if (is_donator_set.indexOf( playerId.toString() ) != -1) {
-					var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
-
 					var index = is_donator_set.indexOf( playerId.toString() );
 					is_donator_set.splice( index, 1 );
 					donatorTitlePanel.style.visibility = "collapse";

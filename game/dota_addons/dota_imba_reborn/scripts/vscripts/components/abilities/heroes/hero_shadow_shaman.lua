@@ -11,9 +11,11 @@ LinkLuaModifier("modifier_imba_shadow_shaman_ether_shock_joy_buzzer",  "componen
 LinkLuaModifier("modifier_imba_shadow_shaman_ether_shock_mute",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_shadow_shaman_voodoo",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_voodoo_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_shaman_voodoo_deprecation",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_shadow_shaman_shackles_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_shaman_shackles_target_handler",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_shaman_shackles",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_shaman_shackles_chariot",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
@@ -25,11 +27,13 @@ modifier_imba_shadow_shaman_ether_shock_joy_buzzer		= class({})
 modifier_imba_shadow_shaman_ether_shock_mute			= class({})
 
 imba_shadow_shaman_voodoo								= class({})
+modifier_imba_shadow_shaman_voodoo_handler				= class({})
 modifier_imba_shadow_shaman_voodoo						= class({})
 modifier_imba_shadow_shaman_voodoo_deprecation			= class({})
 
 imba_shadow_shaman_shackles								= class({})
 modifier_imba_shadow_shaman_shackles_handler			= class({})
+modifier_imba_shadow_shaman_shackles_target_handler		= class({})
 modifier_imba_shadow_shaman_shackles					= class({})
 modifier_imba_shadow_shaman_shackles_chariot			= class({})
 
@@ -128,6 +132,7 @@ end
 
 -- This is to manage fog vision tracking for the Dramatic Entrance IMBAfication
 function modifier_imba_shadow_shaman_ether_shock_handler:IsHidden()			return true end
+function modifier_imba_shadow_shaman_ether_shock_handler:IsPurgable()		return false end
 -- Grimstroke Soulbind exception (without this line the modifier disappears -_-)
 function modifier_imba_shadow_shaman_ether_shock_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -221,6 +226,10 @@ end
 -- VOODOO (HEX) --
 ------------------
 
+function imba_shadow_shaman_voodoo:GetIntrinsicModifierName()
+	return "modifier_imba_shadow_shaman_voodoo_handler"
+end
+
 function imba_shadow_shaman_voodoo:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
@@ -230,16 +239,12 @@ function imba_shadow_shaman_voodoo:GetCooldown(level)
 end
 
 function imba_shadow_shaman_voodoo:CastFilterResultTarget(target)
-	if not IsServer() then return end
-
+	if self:GetCaster():GetModifierStackCount("modifier_imba_shadow_shaman_voodoo_handler", self:GetCaster()) == 0 or target ~= self:GetCaster() then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
 	-- IMBAfication: Cucco
-	if self:GetAutoCastState() and target == self:GetCaster() then
 		return UF_SUCCESS
 	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	
-	return nResult
 end
 
 function imba_shadow_shaman_voodoo:OnSpellStart()
@@ -267,6 +272,30 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 		
 	local chicken_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(chicken_particle)
+end
+
+-----------------------------
+-- VOODOO HANDLER MODIFIER --
+-----------------------------
+
+function modifier_imba_shadow_shaman_voodoo_handler:IsHidden()		return true end
+function modifier_imba_shadow_shaman_voodoo_handler:IsPurgable()	return false end
+function modifier_imba_shadow_shaman_voodoo_handler:RemoveOnDeath()	return false end
+function modifier_imba_shadow_shaman_voodoo_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_shadow_shaman_voodoo_handler:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ORDER}
+end
+
+function modifier_imba_shadow_shaman_voodoo_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
 end
 
 ---------------------
@@ -482,16 +511,12 @@ function imba_shadow_shaman_shackles:GetIntrinsicModifierName()
 end
 
 function imba_shadow_shaman_shackles:CastFilterResultTarget(target)
-	if not IsServer() then return end
-
-	-- IMBAfication: Chariot
-	if self:GetAutoCastState() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target ~= self:GetCaster() then
+	if not self:GetCaster():HasModifier("modifier_imba_shadow_shaman_shackles_target_handler") or target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or target == self:GetCaster() then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
+		-- IMBAfication: Chariot
 		return UF_SUCCESS
 	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	
-	return nResult
 end
 
 function imba_shadow_shaman_shackles:GetChannelTime()
@@ -527,6 +552,8 @@ function imba_shadow_shaman_shackles:OnSpellStart()
 			for _, enemy in pairs(enemies) do
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles", {duration = self:GetChannelTime()})
 			end
+		else
+			self:GetCaster():Interrupt()
 		end
 	else
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_shackles_chariot", {duration = self:GetChannelTime()})
@@ -556,12 +583,14 @@ end
 -------------------------------
 
 function modifier_imba_shadow_shaman_shackles_handler:IsHidden()		return true end
+function modifier_imba_shadow_shaman_shackles_handler:IsPurgable()		return false end
 function modifier_imba_shadow_shaman_shackles_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED}
-	
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		MODIFIER_EVENT_ON_ORDER
+	}	
 end
 
 -- Going to use this hacky method to determine channel time on UI
@@ -575,6 +604,37 @@ function modifier_imba_shadow_shaman_shackles_handler:OnAbilityExecuted(keys)
 		else
 			self:GetCaster():SetModifierStackCount("modifier_imba_shadow_shaman_shackles_handler", self:GetCaster(), self:GetAbility():GetTalentSpecialValueFor("channel_time") * self:GetAbility():GetSpecialValueFor("chariot_channel_multiplier") * 100)
 		end
+	end
+end
+
+function modifier_imba_shadow_shaman_shackles_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:GetParent():RemoveModifierByName("modifier_imba_shadow_shaman_shackles_target_handler")
+	else
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_shackles_target_handler", {})
+	end
+end
+
+--------------------------------------
+-- SHACKLES TARGET HANDLER MODIFIER --
+--------------------------------------
+
+function modifier_imba_shadow_shaman_shackles_target_handler:IsHidden()			return true end
+function modifier_imba_shadow_shaman_shackles_target_handler:IsPurgable()		return false end
+function modifier_imba_shadow_shaman_shackles_target_handler:RemoveOnDeath()	return false end
+
+function modifier_imba_shadow_shaman_shackles_target_handler:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
+end
+
+function modifier_imba_shadow_shaman_shackles_target_handler:OnOrder()
+	if not self:GetAbility() or self:GetAbility():IsNull() then
+		self:Destroy()
 	end
 end
 
@@ -635,7 +695,7 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
 			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
 			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)
-			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+			SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_XP, self:GetCaster(), actual_gold_to_steal, nil)
 		end
 	end
 end
@@ -663,7 +723,8 @@ end
 function modifier_imba_shadow_shaman_shackles_chariot:GetAttributes() 		return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_shackles_chariot:OnCreated()
-	self.chariot_break_distance	= self:GetAbility():GetSpecialValueFor("chariot_break_distance")
+	self.chariot_break_distance		= self:GetAbility():GetSpecialValueFor("chariot_break_distance")
+	self.chariot_bonus_move_speed	= self:GetAbility():GetSpecialValueFor("chariot_bonus_move_speed")
 
 	if not IsServer() then return end
 	
@@ -707,6 +768,14 @@ function modifier_imba_shadow_shaman_shackles_chariot:OnDestroy()
 	if self:GetAbility() and self:GetAbility():IsChanneling() then
 		self:GetAbility():SetChanneling(false)
 	end
+end
+
+function modifier_imba_shadow_shaman_shackles_chariot:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
+end
+
+function modifier_imba_shadow_shaman_shackles_chariot:GetModifierMoveSpeedBonus_Constant()
+	return self.chariot_bonus_move_speed
 end
 
 --------------------------------
@@ -1013,8 +1082,7 @@ end
 function modifier_imba_mass_serpent_ward:OnDeath(keys)
 	if not IsServer() then return end
 	
-	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() then
-		
+	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() and not keys.unit:IsOther() and keys.unit:GetName() ~= "npc_dota_unit_undying_zombie" then	
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
 			for ward = 1, self.snake_charmer_creep_count do

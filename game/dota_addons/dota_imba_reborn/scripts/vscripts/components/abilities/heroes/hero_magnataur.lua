@@ -26,10 +26,6 @@ function modifier_imba_polarize_debuff:IsDebuff()
 	return true
 end
 
-function modifier_imba_polarize_debuff:IsPurgable()
-	return false
-end
-
 function modifier_imba_polarize_debuff:IsHidden()
 	return false
 end
@@ -95,10 +91,6 @@ modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or cla
 
 function modifier_imba_polarize_debuff_stack:IsDebuff()
 	return true
-end
-
-function modifier_imba_polarize_debuff_stack:IsPurgable()
-	return false
 end
 
 function modifier_imba_polarize_debuff_stack:IsHidden()
@@ -267,6 +259,11 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 					else
 						-- Else, launch the shockwave towards the nearest enemy
 						direction = (enemy:GetAbsOrigin() - parent:GetAbsOrigin()):Normalized()
+						
+						-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+						if enemy:GetAbsOrigin() == parent:GetAbsOrigin() then
+							direction = direction + RandomVector(1)
+						end	
 					end
 				end
 				-- If there are more than 1 enemies and the target is the parent, do nothing
@@ -554,7 +551,11 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 				if was_hit and not ExtraData.scepter_shockwave then
 					-- Apply secondary damage
 					ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.secondary_damage, damage_type = self:GetAbilityDamageType()})
-					target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration})
+					
+					-- Don't let Resonate origin targets apply Magnetize on themselves
+					if ExtraData.target_entindex ~= target:entindex() then
+						target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration})
+					end
 					-- Get if the target already has Magnetize debuff
 					local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff")
 					local magnetize_debuff = nil
@@ -625,7 +626,7 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 									bDeleteOnHit		= false,
 									vVelocity			= Vector(velocity.x,velocity.y,0),
 									bProvidesVision		= false,
-									ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
+									ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0, target_entindex = target:entindex()}
 								}
 							ProjectileManager:CreateLinearProjectile(projectile)
 						end
@@ -676,7 +677,7 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 			bDeleteOnHit		= false,
 			vVelocity			= Vector(ExtraData.direction_x * (-1), ExtraData.direction_y * (-1), 0) * ExtraData.speed,
 			bProvidesVision		= false,
-			ExtraData			= {index = ExtraData.index, damage = self:GetSpecialValueFor("damage"), secondary_damage = self:GetSpecialValueFor("secondary_damage"), spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = ExtraData.direction_x * (-1), direction_y = ExtraData.direction_y * (-1), radius = ExtraData.radius, magnetize_shockwave = ExtraData.magnetize_shockwave, talent = ExtraData.talent, caster_loc_x = location.x, caster_loc_y = location.y, scepter_shockwave = true}
+			ExtraData			= {index = ExtraData.index, damage = self:GetSpecialValueFor("damage"), secondary_damage = self:GetSpecialValueFor("secondary_damage"), spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = ExtraData.direction_x * (-1), direction_y = ExtraData.direction_y * (-1), radius = ExtraData.radius, magnetize_shockwave = ExtraData.magnetize_shockwave, talent = 0, caster_loc_x = location.x, caster_loc_y = location.y, scepter_shockwave = true}
 		}
 		
 		ProjectileManager:CreateLinearProjectile(projectile)
@@ -881,11 +882,11 @@ function modifier_imba_empower_aura:GetAuraEntityReject(target)
 			end
 		end
 
-		-- Always on caster
+		-- -- Always on caster
 		if target == parent then
-			if not parent:HasModifier("modifier_imba_empower_polarizer") then
-				parent:AddNewModifier(parent,ability,"modifier_imba_empower_polarizer",{})
-			end
+			-- if not parent:HasModifier("modifier_imba_empower_polarizer") then
+				-- parent:AddNewModifier(parent,ability,"modifier_imba_empower_polarizer",{})
+			-- end
 			return false
 		end
 
@@ -1054,7 +1055,7 @@ function modifier_imba_empower:OnCreated( params )
 		local ability = self:GetAbility()
 		local caster = self:GetCaster()
 		parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_particle", {})
-		parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_polarizer", {})
+		-- parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_polarizer", {})
 		if caster ~= parent then
 			self.interval = 0.1
 			if params.isProvidedByAura then

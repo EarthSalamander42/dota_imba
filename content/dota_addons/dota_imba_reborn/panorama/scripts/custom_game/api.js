@@ -103,9 +103,10 @@ var api = {
 };
 
 if (Game.IsInToolsMode()) {
+/*
 	var info = {
 		steamid: "76561198057206770",
-		hero: "npc_hero_gafu",
+		hero: "npc_dota_hero_zuus",
 	};
 
 	api.get_player_armory(info).then(function (data) {
@@ -114,7 +115,7 @@ if (Game.IsInToolsMode()) {
 		$.Msg(err)
 	});
 
-/*
+
 	var info = {
 		steamid: "76561198057206770",
 		item_id: "13042",

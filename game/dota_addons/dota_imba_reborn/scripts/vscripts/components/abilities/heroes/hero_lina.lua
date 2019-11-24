@@ -100,6 +100,10 @@ function imba_lina_dragon_slave:GetAbilityTextureName()
 	return "custom/imba_lina_dragon_slave_arcana_"..self:GetCaster().arcana_style
 end
 
+function imba_lina_dragon_slave:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_lina_10")
+end
+
 function imba_lina_dragon_slave:OnUpgrade()
 	self.cast_point = self.cast_point or self:GetCastPoint()
 end
@@ -300,12 +304,6 @@ function imba_lina_dragon_slave:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_lina_dragon_slave:GetCooldown( nLevel )
-	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
-	local caster = self:GetCaster()
-	return cooldown
-end
-
 -------------------------------------------
 --			LIGHT STRIKE ARRAY
 -------------------------------------------
@@ -357,13 +355,13 @@ function imba_lina_light_strike_array:OnSpellStart()
 		end
 
 		for i=0, array_count-1, 1 do
-			local distance = i
-			local count = i
-			local next_distance = i+1
+			-- local distance = i
+			-- local count = i
+			-- local next_distance = i+1
 			local array_strike = i+1
 
-			distance = radius * (distance + rings_distance)
-			next_distance = radius * (next_distance + rings_distance)
+			-- distance = radius * (distance + rings_distance)
+			-- next_distance = radius * (next_distance + rings_distance)
 
 			--if i == 0 then
 			--	distance = 0
@@ -377,7 +375,7 @@ function imba_lina_light_strike_array:OnSpellStart()
 			--end
 			--end
 
-			local delay = math.abs(distance / (radius * 2)) * cast_delay
+			-- local delay = math.abs(distance / (radius * 2)) * cast_delay
 			-- local position = target_loc + distance * direction
 
 			-- Create 6 LSA rings around the explosion
@@ -445,8 +443,11 @@ function imba_lina_light_strike_array:OnHit( target, damage, stun_duration )
 	end
 	target:RemoveModifierByName("modifier_imba_blazing_fire")
 	
-	target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
-
+	local stun_modifier = target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
+	
+	if stun_modifier then
+		stun_modifier:SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
+	end
 end
 
 function imba_lina_light_strike_array:GetAOERadius()
@@ -542,11 +543,12 @@ function imba_lina_fiery_soul:GetAbilityTextureName()
 	return "custom/imba_lina_fiery_soul_arcana_"..self:GetCaster().arcana_style
 end
 
+function imba_lina_fiery_soul:GetCastRange(location, target)	
+	return self:GetSpecialValueFor("immolation_aoe") - self:GetCaster():GetCastRangeBonus()
+end
+
 function imba_lina_fiery_soul:GetCooldown()
-	if self:GetBehavior() ~= DOTA_ABILITY_BEHAVIOR_PASSIVE then
-		return self:GetTalentSpecialValueFor("active_cooldown")
-	end
-	return 0
+	return self:GetSpecialValueFor("active_cooldown")
 end
 
 function imba_lina_fiery_soul:OnSpellStart()
@@ -562,12 +564,19 @@ function imba_lina_fiery_soul:OnSpellStart()
 			end
 		end)
 
+		-- -- Parameters
+		-- local immolation_damage_min = caster:FindTalentValue("special_bonus_imba_lina_3")
+		-- local immolation_damage_max = caster:FindTalentValue("special_bonus_imba_lina_3","value2")
+		-- local immolation_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","aoe")
+		-- local min_damage_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","min_damage_aoe")
+		-- local max_damage_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","max_damage_aoe")
+
 		-- Parameters
-		local immolation_damage_min = caster:FindTalentValue("special_bonus_imba_lina_3")
-		local immolation_damage_max = caster:FindTalentValue("special_bonus_imba_lina_3","value2")
-		local immolation_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","aoe")
-		local min_damage_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","min_damage_aoe")
-		local max_damage_aoe = caster:FindTalentValue("special_bonus_imba_lina_3","max_damage_aoe")
+		local immolation_damage_min	= self:GetSpecialValueFor("immolation_damage_min")
+		local immolation_damage_max = self:GetSpecialValueFor("immolation_damage_max")
+		local immolation_aoe		= self:GetSpecialValueFor("immolation_aoe")
+		local min_damage_aoe		= self:GetSpecialValueFor("min_damage_aoe")
+		local max_damage_aoe		= self:GetSpecialValueFor("max_damage_aoe")
 
 		-- Emit particle + sound
 		EmitSoundOnLocationWithCaster( caster_loc, "Hero_Phoenix.SuperNova.Explode", caster )
@@ -656,7 +665,7 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 						if fiery_counter then
 							-- Get the ability cooldown
 							local cooldown_remaining = caster_ability:GetCooldownTimeRemaining()
-							local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cdr_pct") * fiery_counter:GetStackCount()
+							local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cdr_pct") -- * fiery_counter:GetStackCount()
 
 							caster_ability:EndCooldown()
 							if cooldown_remaining > cooldown_reduction then
@@ -691,6 +700,10 @@ function modifier_imba_fiery_soul_talent:IsHidden() return true end
 modifier_imba_fiery_soul_counter = class({})
 
 function modifier_imba_fiery_soul_counter:OnCreated()
+	self.bonus_as		= self:GetAbility():GetTalentSpecialValueFor("bonus_as")
+	self.bonus_ms_pct	= self:GetAbility():GetSpecialValueFor("bonus_ms_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_lina_9", "value2")
+	self.animation_pct	= self:GetAbility():GetTalentSpecialValueFor("animation_pct")
+
 	if IsServer() then
 		local caster = self:GetCaster()
 		self:SetStackCount(1)
@@ -700,9 +713,9 @@ function modifier_imba_fiery_soul_counter:OnCreated()
 		ParticleManager:SetParticleControl(self.particle, 3, Vector(1,0,0))
 		ParticleManager:SetParticleControl(self.particle, 4, Vector(1,0,0))
 
-		if caster:HasTalent("special_bonus_imba_lina_3") then 
+		-- if caster:HasTalent("special_bonus_imba_lina_3") then 
 			caster:AddNewModifier(caster , self:GetAbility(), "modifier_imba_fiery_soul_talent", {})
-		end
+		-- end
 	end
 end
 
@@ -713,20 +726,25 @@ function modifier_imba_fiery_soul_counter:OnRefresh()
 	local ability 		= self:GetAbility()
 	local stacks 		= self:GetStackCount()
 	local max_stacks 	= ability:GetTalentSpecialValueFor("max_stacks")
+
+	self.bonus_as		= self:GetAbility():GetTalentSpecialValueFor("bonus_as")
+	self.bonus_ms_pct	= self:GetAbility():GetSpecialValueFor("bonus_ms_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_lina_9", "value2")
+	self.animation_pct	= self:GetAbility():GetTalentSpecialValueFor("animation_pct")
+	
 	if IsServer() then
-		if stacks < max_stacks then
+		if stacks < max_stacks and not caster:PassivesDisabled() then
 			self:SetStackCount(stacks+1)
 			ParticleManager:SetParticleControl(self.particle, 3, Vector(stacks,0,0))
 			ParticleManager:SetParticleControl(self.particle, 4, Vector(stacks,0,3 ))
 		end
 
-		if caster:HasTalent("special_bonus_imba_lina_3") then 
+		-- if caster:HasTalent("special_bonus_imba_lina_3") then 
 			caster:AddNewModifier(caster, ability, "modifier_imba_fiery_soul_talent", {})
-		end
+		-- end
 	end
 
 	local stacks = self:GetStackCount()
-	if caster:HasModifier("modifier_imba_fiery_soul_talent") then
+	-- if caster:HasModifier("modifier_imba_fiery_soul_talent") then
 		if stacks == max_stacks  then -- inject function calls clientside and serverside (but this is not run on clientside?)
 			-- Change behavior
 			ability.GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_IMMEDIATE end
@@ -741,7 +759,7 @@ function modifier_imba_fiery_soul_counter:OnRefresh()
 			ability:GetBehavior()
 			ability:GetCooldown()
 		end
-	end
+	-- end
 end
 
 -- When selecting #3 Talent while having max stacks, refresh the modifier to inject function calls
@@ -793,17 +811,15 @@ function modifier_imba_fiery_soul_counter:DeclareFunctions()
 end
 
 function modifier_imba_fiery_soul_counter:GetModifierAttackSpeedBonus_Constant()
-	local speed = self:GetAbility():GetTalentSpecialValueFor("bonus_as")
-	return speed * self:GetStackCount()
+	return self.bonus_as * self:GetStackCount()
 end
 
 function modifier_imba_fiery_soul_counter:GetModifierMoveSpeedBonus_Percentage()
-	local speed = self:GetAbility():GetSpecialValueFor("bonus_ms_pct")
-	return speed * self:GetStackCount()
+	return self.bonus_ms_pct * self:GetStackCount()
 end
 
 function modifier_imba_fiery_soul_counter:GetModifierPercentageCasttime()
-	return self:GetAbility():GetSpecialValueFor("animation_pct") * self:GetStackCount()
+	return self.animation_pct * self:GetStackCount()
 end
 
 --function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
@@ -992,4 +1008,34 @@ end
 
 function imba_lina_laguna_blade:IsHiddenWhenStolen()
 	return false
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lina_9", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lina_10", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lina_9	= class({})
+modifier_special_bonus_imba_lina_10	= class({})
+
+function modifier_special_bonus_imba_lina_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_lina_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lina_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_lina_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_10:RemoveOnDeath() 	return false end
+
+function imba_lina_dragon_slave:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_lina_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lina_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lina_10"), "modifier_special_bonus_imba_lina_10", {})
+	end
+end
+
+function imba_lina_fiery_soul:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_lina_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lina_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lina_9"), "modifier_special_bonus_imba_lina_9", {})
+	end
 end

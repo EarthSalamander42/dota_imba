@@ -1,0 +1,886 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Shredder: Whirling Death
+	//=================================================================================================================
+	"imba_timbersaw_whirling_death"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_whirling_death"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Shredder.WhirlingDeath.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_radius"			"300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_damage"			"100 150 200 250"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tree_damage_scale"			"12 18 24 30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"whirling_tick"				"0.3"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stat_loss_pct"				"13 15 17 19"
+				//"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
+				"LinkedSpecialBonus"		"special_bonus_imba_timbersaw_whirling_death_stat_loss_pct"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"14.0"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blood_oil_convert_pct"		"100"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blood_oil_duration"		"6"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"revving_down_instances"	"3"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"revving_down_interval"		"0.4"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"revving_down_efficacy"		"40"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Shredder: Timber Chain
+	//=================================================================================================================
+	"imba_timbersaw_timber_chain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_timber_chain"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Shredder.TimberChain.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCastRange"				"900 1200 1500 1800"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 70 80 90"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chain_radius"		"90 90 90 90"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"900 1200 1500 1800"
+				//"LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
+				"LinkedSpecialBonus"	"special_bonus_imba_timbersaw_timber_chain_range"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"		"225 250 275 300"
+			}
+			"04"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1600 2400 3200 4000"
+			}
+			"05"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"120 180 240 300"
+			}
+			
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"whirling_chain_stat_loss_pct"	"4 5 6 7"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"side_hooks_damage_reduction"	"50"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"side_hooks_drag_pct"	"50"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Shredder: Reactive Armor
+	//=================================================================================================================
+	"imba_timbersaw_reactive_armor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_reactive_armor"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_armor"						"1.0 1.2 1.4 1.6"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_hp_regen"							"1.0 1.2 1.4 1.6"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_limit"						"6 12 18 24"
+				//"LinkedSpecialBonus"				"special_bonus_unique_timbersaw_2"
+				"LinkedSpecialBonus"				"special_bonus_imba_timbersaw_reactive_armor_max_stacks"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_duration"					"10 15 20 25"
+			}
+			
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"emergency_bunker_debuff_duration"	"42"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"emergency_bunker_debuff_cooldown"	"90"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"emergency_bunker_debuff_mana_cost"	"130"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Shredder: Chakram
+	//=================================================================================================================
+	"imba_timbersaw_chakram"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_chakram"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"			"1"
+		"AbilitySound"					"Hero_Shredder.Chakram.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0 6.0 4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 140 200"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"900.0 1050.0 1200.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"200.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"120 180 240"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"75 125 175"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"5 6 7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"break_distance"		"3000.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_per_second"		"16 23 30"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"1.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_health_percentage"	"5"
+			}			
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"observe_tick_scale"	"4"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"observe_max_scale"		"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shredder: Chakram 2
+	//=================================================================================================================
+	"imba_timbersaw_chakram_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_chakram_2"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"		
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"3"
+		"IsGrantedByScepter"			"1"
+		"HasScepterUpgrade"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0 6.0 4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 140 200"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"900.0 1050.0 1200.0"
+				"RequiresScepter"	"1"				
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"200.0"
+				"RequiresScepter"	"1"				
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"120 180 240"
+				"RequiresScepter"	"1"			
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"75 125 175"
+				"RequiresScepter"	"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"5 6 7"
+				"RequiresScepter"	"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+				"RequiresScepter"	"1"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"break_distance"		"3000.0"
+				"RequiresScepter"	"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_per_second"		"16 23 30"
+				"RequiresScepter"	"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"1.0"
+				"RequiresScepter"	"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_health_percentage"	"5"
+				"RequiresScepter"	"1"
+			}			
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"observe_tick_scale"	"4"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"observe_max_scale"		"40"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Shredder: Return Chakram
+	//=================================================================================================================
+	"imba_timbersaw_return_chakram"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_return_chakram"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0"
+	}
+
+	//=================================================================================================================
+	// Shredder: Return Chakram
+	//=================================================================================================================
+	"imba_timbersaw_return_chakram_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"shredder_return_chakram_2"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"		
+		"MaxLevel"						"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0"
+	}
+
+	//=================================================================================================================
+	// Shredder: Chakram 3
+	//=================================================================================================================
+	"imba_timbersaw_chakram_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_timbersaw"
+		"AbilityTextureName"			"custom/timbersaw/chakram_3"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0 8.0 8.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 105 150"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"1800.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"200.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"200 300 400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"5 6 7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"1.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_health_percentage"	"5"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"trees_to_activate"		"1000"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cast_range_per_extra"		"1"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Reactive Armor Stacks
+	//=================================================================================================================
+	"special_bonus_imba_timbersaw_reactive_armor_max_stacks" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_timbersaw_reactive_armor"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X% Whirling Death Attribute Reduction
+	//=================================================================================================================
+	"special_bonus_imba_timbersaw_whirling_death_stat_loss_pct" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_timbersaw_whirling_death"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Timber Chain Range
+	//=================================================================================================================
+	"special_bonus_imba_timbersaw_timber_chain_range" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_timbersaw_timber_chain"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1400"
+			}
+		}
+	}	
+	
+	// Vanilla overrides just in case
+	//=================================================================================================================
+	// Timbersaw: Whirling Death
+	//=================================================================================================================
+	"shredder_whirling_death"
+	{
+		"AbilityCastRange"					"300 325 350 375"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_radius"			"300 325 350 375"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_damage"			"100 150 200 250"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stat_loss_pct"				"13 15 17 19"
+				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw: Timber Chain
+	//=================================================================================================================
+	"shredder_timber_chain"
+	{
+		"AbilityCastRange"			"800 1200 1600 2000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chain_radius"		"130"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"800 1200 1600 2000"
+				"LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"225 250 275 300"
+			}
+			"04"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1600 2400 3200 4000"
+			}
+			"05"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 185 270 355"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw: Reactive Armor
+	//=================================================================================================================
+	"shredder_reactive_armor"
+	{
+		"MaxLevel"					"4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_armor"			"1.0 1.2 1.4 1.6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_hp_regen"		"1.0 1.2 1.4 1.6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"10 15 20 25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw: Chakram
+	//=================================================================================================================
+	"shredder_chakram"
+	{
+		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCooldown"				"8 6 4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"900 1050 1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200 225 250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"100 200 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"100 200 300"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"5 6 7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_distance"		"3000"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_second"		"15 20 25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw: Chakram 2
+	//=================================================================================================================
+	"shredder_chakram_2"
+	{
+		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCooldown"				"8 6 4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"900 1050 1200"
+				"RequiresScepter"	"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200 225 250"
+				"RequiresScepter"	"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"100 200 300"
+				"RequiresScepter"	"1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"100 200 300"
+				"RequiresScepter"	"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"5 6 7"
+				"RequiresScepter"	"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+				"RequiresScepter"	"1"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_distance"		"3000"
+				"RequiresScepter"	"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_second"		"15 20 25"
+				"RequiresScepter"	"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"1"
+				"RequiresScepter"	"1"
+			}
+		}
+	}	
+	
+}

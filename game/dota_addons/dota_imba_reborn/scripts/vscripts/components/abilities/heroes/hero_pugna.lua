@@ -225,24 +225,11 @@ end
 imba_pugna_decrepify = class({})
 LinkLuaModifier("modifier_imba_decrepify", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_pugna_decrepify:GetAbilityTextureName()
-	return "pugna_decrepify"
-end
-
-function imba_pugna_decrepify:IsHiddenWhenStolen()
-	return false
-end
+function imba_pugna_decrepify:GetAbilityTextureName() return "pugna_decrepify" end
+function imba_pugna_decrepify:IsHiddenWhenStolen() return false end
 
 function imba_pugna_decrepify:CastFilterResultTarget(target)
 	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
-
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
-
 		-- If the target is either a nether ward or a tombstone, approve
 		if string.find(target:GetUnitName(),"npc_dota_unit_tombstone") or string.find(target:GetUnitName(), "npc_imba_pugna_nether_ward")then
 			return UF_SUCCESS
@@ -873,6 +860,10 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 
 		-- Refresh the ability
 		ability:EndCooldown()
+
+		if cast_ability.GetAutoCastState and cast_ability:GetAutoCastState() and ability.GetAutoCastState and not ability:GetAutoCastState() then
+			ability:ToggleAutoCast()
+		end
 
 		local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
 		local target_point = target:GetAbsOrigin()

@@ -34,3 +34,7 @@ game/dota_addons/dota_imba/models/rosh*
 .settings
 .DS_Store
 .idea
+
+# Imbathrow
+content/dota_addons/dota_imba_reborn/materials/models/courier/*
+*.vjs_c
