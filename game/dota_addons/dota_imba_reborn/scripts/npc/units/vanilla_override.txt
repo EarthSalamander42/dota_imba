@@ -595,7 +595,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee"
 	{	
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -605,7 +605,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee_upgraded"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
 		
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
@@ -615,7 +615,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_melee_upgraded_mega"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_melee_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
@@ -625,7 +625,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -635,7 +635,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged_upgraded"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
 		
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -645,7 +645,7 @@
 	//=================================================================================
 	"npc_dota_creep_goodguys_ranged_upgraded_mega"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_chameleon_radiant/ti9_chameleon_radiant_ranged_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}
@@ -679,7 +679,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -689,7 +689,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee_upgraded"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -699,7 +699,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_melee_upgraded_mega"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_melee_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -709,7 +709,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -719,7 +719,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged_upgraded"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	
@@ -729,7 +729,7 @@
 	//=================================================================================
 	"npc_dota_creep_badguys_ranged_upgraded_mega"
 	{
-		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
+//		"Model"						"models/creeps/lane_creeps/ti9_crocodilian_dire/ti9_crocodilian_dire_ranged_mega.vmdl"	// Model.
 	
 		"Ability1"					"custom_creep_scaling"			// Ability 1.
 	}	

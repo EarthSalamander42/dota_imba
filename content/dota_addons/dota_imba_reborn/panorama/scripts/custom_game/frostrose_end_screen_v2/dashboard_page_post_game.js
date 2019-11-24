@@ -385,11 +385,13 @@ function EndScoreboard(args) {
 
 	$("#DetailsAbilities").style.visibility = "visible";
 
+	var row_height = "56px";
+	var row_marginBottom = "3.5px";
+	var opposite_team = 3;
+
 //	$.Msg(args.players)
 
 	for (var team_number = 2; team_number <= 3; team_number++) {
-		var opposite_team = 3;
-
 		if (team_number == 3)
 			opposite_team = 2;
 
@@ -416,6 +418,23 @@ function EndScoreboard(args) {
 		var panel_abilities_row_container = $("#Abilities" + team_name[team_number] + "PlayerRows");
 
 //		if (Game.GetTeamDetails(team_number).team_num_players > 0) {
+			// Set Team name and score
+			$("#HeroIconsColumn").FindChildTraverse(team_name[team_number] + "TeamName").text = $.Localize(team_localization_name[team_number]);
+			$("#" + team_name[team_number] + "TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
+
+			if (Game.GetGameWinner() == team_number)
+				$("#" + team_name[team_number] + "Winner").style.visibility = "visible";
+
+			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+
+			if (IsRanked)
+				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible"
+
+			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
+
+			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
+			$("#" + team_name[team_number] + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
+
 			$.Each(Game.GetPlayerIDsOnTeam(team_number), function(id) {
 //				$.Msg("Player ID " + id + " in team " + team_number)
 				var player_info = Game.GetPlayerInfo(id);
@@ -440,9 +459,6 @@ function EndScoreboard(args) {
 				// Set middle bar player informations
 				var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
 				PlayerRowContainer.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row.xml", false, false);
-
-				var row_height = "56px";
-				var row_marginBottom = "3.5px";
 
 				if (IsRanked)
 					PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0].style.visibility = "visible";
@@ -778,23 +794,6 @@ function EndScoreboard(args) {
 
 				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
 			}
-
-			// Set Team name and score
-			$("#HeroIconsColumn").FindChildTraverse(team_name[team_number] + "TeamName").text = $.Localize(team_localization_name[team_number]);
-			$("#" + team_name[team_number] + "TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
-
-			if (Game.GetGameWinner() == team_number)
-				$("#" + team_name[team_number] + "Winner").style.visibility = "visible";
-
-			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
-
-			if (IsRanked)
-				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible"
-
-			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
-
-			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
-			$("#" + team_name[team_number] + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 //		}
 	}
 }

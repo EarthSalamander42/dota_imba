@@ -202,7 +202,7 @@
 	horizontal-align: center;
 	vertical-align: center;
 	width: 100%;
-	text-overflow: clip;
+	text-overflow: shrink;
 }
 
 .HeroSelectPlayerRoot.hero_highlighted #PlayerPortrait

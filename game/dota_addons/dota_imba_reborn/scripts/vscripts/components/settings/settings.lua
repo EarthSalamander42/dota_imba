@@ -179,6 +179,10 @@ elseif string.find(GetMapName(), "10v10") then
 	PLAYER_COLORS[21] = { 255, 89, 255 }
 	PLAYER_COLORS[22] = { 203, 255, 89 }
 	PLAYER_COLORS[23] = { 108, 167, 255 }
+elseif GetMapName() == "imba_demo" then
+	IMBA_PLAYERS_ON_GAME = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 end
 
 -------------------------------------------------------------------------------------------------

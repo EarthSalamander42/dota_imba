@@ -49,7 +49,7 @@ function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callb
 			Game.AddCommand("+" + sName, callback_function, "", 0);
 			Game.AddCommand("-" + sName, secondary_callback_function, "", 0);
 		} else {
-			$.Msg("Keybind: On Pressed")
+//			$.Msg("Keybind: On Pressed")
 			Game.AddCommand(sName, callback_function, "", 0);
 		}
 

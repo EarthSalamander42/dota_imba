@@ -189,7 +189,7 @@ function ToggleInvokerTooltip() {
 		DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(7).style.visibility = "visible"
 	}
 }
-init_invoker_tooltips()
+
 function init_invoker_tooltips() {
 	// Handle Invoked spell in slot 4
     var ability3 = DotaHud.FindChildTraverse("Ability3");

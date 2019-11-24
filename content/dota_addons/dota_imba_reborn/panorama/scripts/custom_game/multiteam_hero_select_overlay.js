@@ -79,6 +79,9 @@ function UpdatePlayer( teamPanel, playerId )
 		playerPanel.BLoadLayout( "file://{resources}/layout/custom_game/multiteam_hero_select_overlay_player.xml", false, false );
 		playerPanel.AddClass( "PlayerPanel" );
 
+		if (Game.GetMapInfo().map_display_name == "imba_1v1")
+			return;
+
 		if (player_table && player_table.IMR) {
 //			$.Msg(player_table)
 			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
@@ -256,10 +259,12 @@ function UpdateTimer()
 			}
 		}
 
-		if (imr_calculation != 0) {
-			imr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
-			teamPanel.FindChildTraverse("IMRAverage").GetParent().style.visibility = "visible";
-			teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + imr_calculation;
+		if (Game.GetMapInfo().map_display_name != "imba_1v1") {
+			if (imr_calculation != 0) {
+				imr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
+				teamPanel.FindChildTraverse("IMRAverage").GetParent().style.visibility = "visible";
+				teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + imr_calculation;
+			}
 		}
 	}
 
@@ -276,4 +281,14 @@ function UpdateTimer()
 	}
 
 	UpdateTimer();
+
+	if (Game.GetMapInfo().map_display_name == "imba_1v1") {
+		var opposite_team = 2;
+
+		if (Game.GetPlayerInfo(Players.GetLocalPlayer()).player_team_id == 2)
+			opposite_team = 3;
+
+		if ($("#team_" + opposite_team))
+			$("#team_" + opposite_team).style.visibility = "collapse";
+	}
 })();

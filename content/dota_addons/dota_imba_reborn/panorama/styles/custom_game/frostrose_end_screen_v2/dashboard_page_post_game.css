@@ -29,6 +29,24 @@
 @import url("file://{resources}/styles/dashboard_page_post_game_frostivus_2018.css");
 @import url("file://{resources}/styles/dashboard_page_post_game_jungle_spirits_2019.css");
 
+@keyframes 'color_transition'
+{
+	0%
+	{
+		opacity:  0.2;
+	}
+
+	50%
+	{
+		opacity:  0.4;
+	}
+
+	100%
+	{
+		opacity:  0.2;
+	}
+}
+
 @keyframes 'fade_in'
 {
 	0%
