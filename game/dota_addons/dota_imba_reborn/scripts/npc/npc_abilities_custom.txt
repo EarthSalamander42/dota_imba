@@ -51,6 +51,8 @@
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 
+#base heroes/invoker/abilities.txt
+
 "DOTAAbilities"
 {
 	"Version"		"1"
