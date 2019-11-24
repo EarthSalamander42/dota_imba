@@ -150,7 +150,7 @@ function api:GetPlayerEmblem(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		if type(self.players[steamid].emblem_id) == "number" then
+		if type(self.players[steamid].emblem_id) == "number" and CustomNetTables:GetTableValue("battlepass", "emblems") then
 			return CustomNetTables:GetTableValue("battlepass", "emblems")["1"][tostring(self.players[steamid].emblem_id)].file
 		else
 			return ""

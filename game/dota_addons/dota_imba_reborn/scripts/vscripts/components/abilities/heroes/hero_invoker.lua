@@ -27,8 +27,11 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 		imba_invoker_quas = class({})
 		LinkLuaModifier("modifier_imba_invoker_quas", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
 		function imba_invoker_quas:GetAbilityTextureName()
-			return "invoker_quas"
+			if not IsClient() then return end
+			if not self:GetCaster().arcana_style then return "invoker_quas" end
+			return "invoker_quas_persona1"
 		end
 
 		function imba_invoker_quas:OnSpellStart()
@@ -41,7 +44,7 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_quas", "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf")
+				imba_invoker:update_orbs(caster, self, "imba_invoker_quas", caster.quas_orb)
 			end
 		end
 
@@ -68,14 +71,6 @@ imba_invoker = imba_invoker or class({})
 			}
 
 			return funcs
-		end
-
-		function modifier_imba_invoker_quas:GetAbilityTextureName()
-			return "invoker_quas"
-		end
-
-		function modifier_imba_invoker_quas:GetTexture()
-			return "invoker_quas"
 		end
 
 		function modifier_imba_invoker_quas:OnCreated(kv)
@@ -108,8 +103,11 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 		imba_invoker_wex = class({})
 		LinkLuaModifier("modifier_imba_invoker_wex", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
 		function imba_invoker_wex:GetAbilityTextureName()
-			return "invoker_wex"
+			if not IsClient() then return end
+			if not self:GetCaster().arcana_style then return "invoker_wex" end
+			return "invoker_wex_persona1"
 		end
 
 		function imba_invoker_wex:OnSpellStart()
@@ -122,7 +120,7 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_wex", "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf")
+				imba_invoker:update_orbs(caster, self, "imba_invoker_wex", caster.wex_orb)
 			end
 		end
 
@@ -150,15 +148,6 @@ imba_invoker = imba_invoker or class({})
 			}
 
 			return funcs
-		end
-
-
-		function modifier_imba_invoker_wex:GetAbilityTextureName()
-			return "invoker_wex"
-		end
-
-		function modifier_imba_invoker_wex:GetTexture()
-			return "invoker_wex"
 		end
 
 		function modifier_imba_invoker_wex:OnCreated(kv)
@@ -198,8 +187,11 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 		imba_invoker_exort = class({})
 		LinkLuaModifier("modifier_imba_invoker_exort", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
 		function imba_invoker_exort:GetAbilityTextureName()
-			return "invoker_exort"
+			if not IsClient() then return end
+			if not self:GetCaster().arcana_style then return "invoker_exort" end
+			return "invoker_exort_persona1"
 		end
 
 		function imba_invoker_exort:OnSpellStart()
@@ -212,7 +204,7 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_exort", "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf")
+				imba_invoker:update_orbs(caster, self, "imba_invoker_exort", caster.exort_orb)
 			end
 		end
 
@@ -239,14 +231,6 @@ imba_invoker = imba_invoker or class({})
 			}
 
 			return funcs
-		end
-
-		function modifier_imba_invoker_exort:GetAbilityTextureName()
-			return "invoker_exort"
-		end
-
-		function modifier_imba_invoker_exort:GetTexture()
-			return "invoker_exort"
 		end
 
 		function modifier_imba_invoker_exort:OnCreated(kv)
@@ -399,40 +383,37 @@ imba_invoker = imba_invoker or class({})
 		end	
 
 		function imba_invoker:update_base_attack(caster) 
-				
-				local quas 	= 0 
-				local wex 	= 0 
-				local exort = 0 
+			local quas 	= 0 
+			local wex 	= 0 
+			local exort = 0 
 
-				-- Dont override item-effects
-				if (not string.find(caster:GetRangedProjectileName(), 'invoker', 1, true)) then
-					return 
+			-- Dont override item-effects
+			if (not string.find(caster:GetRangedProjectileName(), 'invoker', 1, true)) then
+				return 
+			end
+
+			for _,orb in pairs(caster.invoked_orbs) do 
+				local orb_type = orb:GetAbilityName() 
+
+				if orb_type == 'imba_invoker_quas' then 
+					quas = quas + 1
+				elseif orb_type == 'imba_invoker_wex' then
+					wex = wex + 1
+				elseif orb_type == 'imba_invoker_exort' then
+					exort = exort + 1
 				end
+			end
 
-				for _,orb in pairs(caster.invoked_orbs) do 
-					local orb_type = orb:GetAbilityName() 
-
-					if orb_type == 'imba_invoker_quas' then 
-						quas = quas + 1
-					elseif orb_type == 'imba_invoker_wex' then
-						wex = wex + 1
-					elseif orb_type == 'imba_invoker_exort' then
-						exort = exort + 1
-					end
-				end
-
-				if quas >= 2 then 
-					caster:SetRangedProjectileName('particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf')
-				elseif wex >= 2 then 
-					caster:SetRangedProjectileName('particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf')
-				elseif exort >= 2 then 
-					caster:SetRangedProjectileName('particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf')
-				elseif quas == 1 and wex == 1 and exort == 1 then 
-					caster:SetRangedProjectileName('particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf')
-				end
+			if quas >= 2 then 
+				caster:SetRangedProjectileName(caster.quas_attack)
+			elseif wex >= 2 then 
+				caster:SetRangedProjectileName(caster.wex_attack)
+			elseif exort >= 2 then 
+				caster:SetRangedProjectileName(caster.exort_attack)
+			elseif quas == 1 and wex == 1 and exort == 1 then 
+				caster:SetRangedProjectileName(caster.all_attack)
+			end
 		end	
-
-
 
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's empty slo1 
@@ -442,12 +423,6 @@ imba_invoker = imba_invoker or class({})
 			return "rubick_empty1"
 		end
 
-		function imba_invoker_empty1:GetTexture()
-			return "rubick_empty1"
-		end
-
-
-
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's empty slo2
 	---------------------------------------------------------------------------------------------------------------------
@@ -455,12 +430,6 @@ imba_invoker = imba_invoker or class({})
 		function imba_invoker_empty2:GetAbilityTextureName()
 			return "rubick_empty1"
 		end
-
-		function imba_invoker_empty2:GetTexture()
-			return "rubick_empty1"
-		end
-
-
 
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's aghs... triggers +1 to all orbs on creation

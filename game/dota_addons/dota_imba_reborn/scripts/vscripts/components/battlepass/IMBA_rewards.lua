@@ -656,6 +656,15 @@ function Battlepass:GetHeroEffect(hero)
 		hero.life_break_cast_effect = "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
 		hero.life_break_start_effect = "particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf"
 		hero.life_break_effect = "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
+		hero.quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+		hero.wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+		hero.exort_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+		hero.all_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+
+		hero.quas_orb = "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
+		hero.wex_orb = "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+		hero.exort_orb = "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 		hero.blade_dance_effect = "particles/units/heroes/hero_juggernaut/juggernaut_crit_tgt.vpcf"
 		hero.blade_dance_sound = "Hero_Juggernaut.BladeDance"
@@ -871,6 +880,17 @@ function Battlepass:GetHeroEffect(hero)
 		elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["invoker_legendary"] then
 				Wearable:_WearProp(hero, "13042", "persona_selector")
+
+				hero.quas_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
+				hero.wex_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
+				hero.exort_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
+				hero.all_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
+
+				hero.quas_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_quas_orb.vpcf"
+				hero.wex_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_wex_orb.vpcf"
+				hero.exort_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_exort_orb.vpcf"
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then

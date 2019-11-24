@@ -1760,6 +1760,11 @@ end
 function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 	print("SetHeroWearablesTable")
 
+	if hUnit:GetUnitName() == "npc_dota_hero_invoker" then
+		Wearable:RemoveWearables(hUnit)
+		return
+	end
+
 	print("Default Wearables:")
 	for i, child in ipairs(hUnit:GetChildren()) do
 		if IsValidEntity(child) and child:GetClassname() == "dota_item_wearable" then

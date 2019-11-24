@@ -1282,7 +1282,7 @@ for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 end
 
 -- Arcana handler
-modifier_axe_arcana = modifier_axe_arcana or class ({})
+modifier_axe_arcana = modifier_axe_arcana or class({})
 
 function modifier_axe_arcana:RemoveOnDeath()
 	return false

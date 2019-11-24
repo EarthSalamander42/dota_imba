@@ -101,7 +101,7 @@
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_damage"					"DAMAGE(<font color='#E68A00'>EXORT</font>):\n"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_mana"					"MANA(<font color='#E68A00'>EXORT</font>):\n"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_armor"					"ARMOR(<font color='#E68A00'>EXORT</font>):\n"
-"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_attack_range"			"ATTACK RANGE(<font color='#0066FF'>QUAS</font>):\"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_attack_range"			"ATTACK RANGE(<font color='#0066FF'>QUAS</font>):\n"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_hp"						"HEALTH(<font color='#0066FF'>QUAS</font>):\n"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_duration"				"DURATION(<font color='#0066FF'>QUAS</font>):\n"
 
@@ -208,4 +208,4 @@
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7_description"			"Releases %number_of_blasts% Deafening Blasts around Invoker in a Spiral pattern.\nAt the end a second volley is triggered dealing half damage."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8"						"Empowered Tornado"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8_description"			"Tornados cooldown is reduced by -%cooldown_reduction% seconds.\nEnemies hit have their passives dissabled for 3 seconds uppon landing."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8_description"			"Tornados cooldown is reduced by -%cooldown_reduction% seconds.\nEnemies hit have their passives disabled for 3 seconds uppon landing."
