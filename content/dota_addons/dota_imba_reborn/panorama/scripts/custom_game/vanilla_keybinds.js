@@ -33,19 +33,19 @@ GameUI.CustomUIConfig().RegisterKeyBind = RegisterKeyBind;
 */
 
 function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callback_function) {
-	$.Msg("Attempt to gather vanilla keybinding for player: " + Players.GetLocalPlayer())
-	$.Msg(sName)
-	$.Msg(callback_function)
-	$.Msg(bHold)
-	$.Msg(secondary_callback_function)
+//	$.Msg("Attempt to gather vanilla keybinding for player: " + Players.GetLocalPlayer())
+//	$.Msg(sName)
+//	$.Msg(callback_function)
+//	$.Msg(bHold)
+//	$.Msg(secondary_callback_function)
 	if (Players.GetLocalPlayer() != -1) {
 		var vanilla_keybind = GetKeyBind(sName).toLowerCase();
 		$.RegisterKeyBind($.GetContextPanel(), 'key_' + vanilla_keybind, callback_function);
 		Game.CreateCustomKeyBind(vanilla_keybind, sName);
 
 		if (bHold) {
-			$.Msg("Keybind: On Hold")
-			$.Msg("+" + sName)
+//			$.Msg("Keybind: On Hold")
+//			$.Msg("+" + sName)
 			Game.AddCommand("+" + sName, callback_function, "", 0);
 			Game.AddCommand("-" + sName, secondary_callback_function, "", 0);
 		} else {
@@ -53,9 +53,9 @@ function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callb
 			Game.AddCommand(sName, callback_function, "", 0);
 		}
 
-		$.Msg(sName + " keybind of player ID " + Players.GetLocalPlayer() + ": " + vanilla_keybind);
+//		$.Msg(sName + " keybind of player ID " + Players.GetLocalPlayer() + ": " + vanilla_keybind);
 	} else {
-	  $.Msg("Local player nil, retry taunt key gathering...")
+//		$.Msg("Local player nil, retry taunt key gathering...")
 		$.Schedule(2.0, function() {
 			SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callback_function)
 		})
