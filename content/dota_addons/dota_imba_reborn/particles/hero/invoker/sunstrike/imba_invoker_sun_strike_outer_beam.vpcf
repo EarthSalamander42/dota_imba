@@ -1,0 +1,217 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 16
+	m_flCullRadius = -1.0
+	m_flConstantRadius = 64.0
+	m_ConstantColor = [ 254, 248, 218, 55 ]
+	m_nConstantSequenceNumber = 5
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderRopes"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
+			m_flOverbrightFactor = 6.0
+			m_flAddSelfAmount = 2.0
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/beam_energy_01.vtex"
+			m_flRadiusScale = 0.5
+			m_flFinalTextureScaleU = -1.0
+			m_flFinalTextureOffsetU = 1.0
+			m_flTextureVWorldSize = 999.999939
+			m_flTextureVScrollRate = 99.999992
+			m_nMaxTesselation = 3
+			m_nMinTesselation = 3
+			m_ColorScale = [ 255, 255, 255 ]
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_MaintainSequentialPath"
+			m_flNumToAssign = 16.0
+			m_PathParams = 
+			{
+				m_nEndControlPointNumber = 3
+			}
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 0.95
+		},
+		{
+			_class = "C_OP_PercentageBetweenCPs"
+			m_flInputMax = 0.1
+			m_nFieldOutput = "16"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 255, 251, 234, 255 ]
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.1
+			m_flStartScale = 2.0
+			m_flEndTime = 0.85
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 1.8
+			m_fLifetimeMin = 1.8
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMax = 10
+			m_nAlphaMin = 10
+		},
+		{
+			_class = "C_INIT_CreateSequentialPathV2"
+			m_flNumToAssign = 16.0
+			m_PathParams = 
+			{
+				m_nEndControlPointNumber = 3
+			}
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_flInputMax = 10.0
+			m_flOutputMax = 10.0
+		},
+		{
+			_class = "C_INIT_RemapParticleCountToScalar"
+			m_flOutputMax = 0.0
+			m_flOutputMin = 1.0
+			m_nFieldOutput = "7"
+			m_nInputMax = 8
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 16.0
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_b_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_glow_small_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_glow_large_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_edge_c_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_light_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_blastup_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_big_ray_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_c_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_sphere_model_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_dark_proj_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_dark_arts_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_glow_small.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_blastup.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_dark_arts.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_c.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray.vpcf"
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_SetControlPointPositions"
+			m_vecCP4Pos = [ 0.0, 0.0, 0.0 ]
+			m_vecCP3Pos = [ 0.0, 0.0, 0.0 ]
+			m_vecCP2Pos = [ 0.0, 0.0, 0.0 ]
+			m_nCP1 = 2
+			m_vecCP1Pos = [ 0.0, 0.0, 0.0 ]
+			m_nCP2 = 5
+			m_nCP3 = 5
+			m_nCP4 = 5
+		},
+		{
+			_class = "C_OP_SetControlPointPositions"
+			m_nHeadLocation = 2
+			m_nCP4 = 5
+			m_nCP3 = 5
+			m_nCP2 = 5
+			m_vecCP1Pos = [ 0.0, 0.0, 3000.0 ]
+			m_vecCP2Pos = [ 0.0, 0.0, 0.0 ]
+			m_vecCP3Pos = [ 0.0, 0.0, 0.0 ]
+			m_vecCP4Pos = [ 0.0, 0.0, 0.0 ]
+			m_nCP1 = 3
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 3
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 1.0, 1.0, 1.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}
