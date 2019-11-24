@@ -228,49 +228,54 @@ CUSTOM_XP_BONUS[MapDiretide()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
+local global_starting_level = 3
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
-HERO_STARTING_LEVEL["imba_5v5"] = 5
-HERO_STARTING_LEVEL[MapRanked5v5()] = 5
-HERO_STARTING_LEVEL[MapRanked10v10()] = 5
-HERO_STARTING_LEVEL[Map10v10()] = 5
-HERO_STARTING_LEVEL[MapTournament()] = 5
-HERO_STARTING_LEVEL[MapOverthrow()] = 5
-HERO_STARTING_LEVEL[MapDiretide()] = 5
+HERO_STARTING_LEVEL["imba_5v5"] = global_starting_level
+HERO_STARTING_LEVEL[MapRanked5v5()] = global_starting_level
+HERO_STARTING_LEVEL[MapRanked10v10()] = global_starting_level
+HERO_STARTING_LEVEL[Map10v10()] = global_starting_level
+HERO_STARTING_LEVEL[MapTournament()] = global_starting_level
+HERO_STARTING_LEVEL[MapOverthrow()] = global_starting_level
+HERO_STARTING_LEVEL[MapDiretide()] = global_starting_level
 HERO_STARTING_LEVEL["imba_demo"] = 1
 
+local global_max_level = 42
 MAX_LEVEL = {}
-MAX_LEVEL[Map1v1()] = 42
-MAX_LEVEL["imba_5v5"] = 42
-MAX_LEVEL[MapRanked5v5()] = 42
-MAX_LEVEL[MapRanked10v10()] = 42
-MAX_LEVEL[Map10v10()] = 42
-MAX_LEVEL[MapTournament()] = 42
-MAX_LEVEL[MapOverthrow()] = 42
-MAX_LEVEL[MapDiretide()] = 42
-MAX_LEVEL["imba_demo"] = 42
+MAX_LEVEL[Map1v1()] = global_max_level
+MAX_LEVEL["imba_5v5"] = global_max_level
+MAX_LEVEL[MapRanked5v5()] = global_max_level
+MAX_LEVEL[MapRanked10v10()] = global_max_level
+MAX_LEVEL[Map10v10()] = global_max_level
+MAX_LEVEL[MapTournament()] = global_max_level
+MAX_LEVEL[MapOverthrow()] = global_max_level
+MAX_LEVEL[MapDiretide()] = global_max_level
+MAX_LEVEL["imba_demo"] = global_max_level
 
+local starting_gold_5v5 = 1700
+local starting_gold_10v10 = 2300
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD[Map1v1()] = 1400
-HERO_INITIAL_GOLD["imba_5v5"] = 1400
-HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
-HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
-HERO_INITIAL_GOLD[Map10v10()] = 2500
-HERO_INITIAL_GOLD[MapTournament()] = 1400
-HERO_INITIAL_GOLD[MapOverthrow()] = 2500
-HERO_INITIAL_GOLD[MapDiretide()] = 2500
+HERO_INITIAL_GOLD[Map1v1()] = starting_gold_5v5
+HERO_INITIAL_GOLD["imba_5v5"] = starting_gold_5v5
+HERO_INITIAL_GOLD[MapRanked5v5()] = starting_gold_5v5
+HERO_INITIAL_GOLD[MapRanked10v10()] = starting_gold_5v5
+HERO_INITIAL_GOLD[Map10v10()] = starting_gold_10v10
+HERO_INITIAL_GOLD[MapTournament()] = starting_gold_5v5
+HERO_INITIAL_GOLD[MapOverthrow()] = starting_gold_10v10
+HERO_INITIAL_GOLD[MapDiretide()] = starting_gold_10v10
 HERO_INITIAL_GOLD["imba_demo"] = 99999
 
+local global_gold_tick_time = 0.6
 GOLD_TICK_TIME = {}
-GOLD_TICK_TIME[Map1v1()] = 0.6
-GOLD_TICK_TIME["imba_5v5"] = 0.6
-GOLD_TICK_TIME[MapRanked5v5()] = 0.6
-GOLD_TICK_TIME[MapRanked10v10()] = 0.4
-GOLD_TICK_TIME[Map10v10()] = 0.4
-GOLD_TICK_TIME[MapTournament()] = 0.6
-GOLD_TICK_TIME[MapOverthrow()] = 0.4
-GOLD_TICK_TIME[MapDiretide()] = 0.4
-GOLD_TICK_TIME["imba_demo"] = 0.4
+GOLD_TICK_TIME[Map1v1()] = global_gold_tick_time
+GOLD_TICK_TIME["imba_5v5"] = global_gold_tick_time
+GOLD_TICK_TIME[MapRanked5v5()] = global_gold_tick_time
+GOLD_TICK_TIME[MapRanked10v10()] = global_gold_tick_time
+GOLD_TICK_TIME[Map10v10()] = global_gold_tick_time
+GOLD_TICK_TIME[MapTournament()] = global_gold_tick_time
+GOLD_TICK_TIME[MapOverthrow()] = global_gold_tick_time
+GOLD_TICK_TIME[MapDiretide()] = global_gold_tick_time
+GOLD_TICK_TIME["imba_demo"] = global_gold_tick_time
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {
@@ -279,12 +284,12 @@ BANNED_ITEMS[Map1v1()] = {
 	"item_soul_ring",
 	"item_tome_of_knowledge",
 }
-
+--[[
 BANNED_ITEMS[MapDiretide()] = {
 	"item_recipe_imba_jarnbjorn",
 	"item_imba_jarnbjorn",
 }
-
+--]]
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_tenacity",

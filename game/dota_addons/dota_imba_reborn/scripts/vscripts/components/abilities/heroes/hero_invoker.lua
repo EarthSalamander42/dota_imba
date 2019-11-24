@@ -416,22 +416,6 @@ imba_invoker = imba_invoker or class({})
 		end	
 
 	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker's empty slo1 
-	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_empty1 = class({})
-		function imba_invoker_empty1:GetAbilityTextureName()
-			return "rubick_empty1"
-		end
-
-	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker's empty slo2
-	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_empty2 = class({})
-		function imba_invoker_empty2:GetAbilityTextureName()
-			return "rubick_empty1"
-		end
-
-	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's aghs... triggers +1 to all orbs on creation
 	---------------------------------------------------------------------------------------------------------------------
 		modifier_imba_invoker_aghanim_buff = class({})
@@ -477,8 +461,8 @@ imba_invoker = imba_invoker or class({})
 			local ability 				= self
 			local ability_level 		= ability:GetLevel() -1
 			local max_invoked_spells 	= ability:GetLevelSpecialValueFor("max_invoked_spells", ability_level)
-			local invoker_empty1 		= "imba_invoker_empty1"
-			local invoker_empty2 		= "imba_invoker_empty2"
+			local invoker_empty1 		= "invoker_empty1"
+			local invoker_empty2 		= "invoker_empty2"
 			local spell_to_be_invoked
 
 			local quas_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_quas")
@@ -623,8 +607,8 @@ imba_invoker = imba_invoker or class({})
 		if IsServer() then 
 			local ability 				= caster:FindAbilityByName("invoker_invoke")
 			local ability_level 		= ability:GetLevel() -1
-			local invoker_empty1 		= "imba_invoker_empty1"
-			local invoker_empty2 		= "imba_invoker_empty2"
+			local invoker_empty1 		= "invoker_empty1"
+			local invoker_empty2 		= "invoker_empty2"
 			local spell_to_be_invoked
 			
 			local quas_orbs 		= caster:FindAllModifiersByName("modifier_invoker_quas_instance")
@@ -725,6 +709,8 @@ imba_invoker = imba_invoker or class({})
 			self.magic_resist 			= self.ability:GetLevelSpecialValueFor("magic_resistance_pct", invoke_lvl)
 			self.cooldown_reduction 	= self.ability:GetLevelSpecialValueFor("cooldown_reduction_pct", invoke_lvl)
 			self.spell_lifesteal 		= self.ability:GetLevelSpecialValueFor("spell_lifesteal", invoke_lvl)
+
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(self.caster:GetPlayerID()), "invoker_helper", {ability_index = self.ability:GetAbilityIndex()})
 		end
 	end
 

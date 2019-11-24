@@ -252,11 +252,6 @@
 //			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.visibility = "collapse";
 //			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillGraph").style.transform = "TranslateX(-1000px)";
 //		}
-
-		GameEvents.Subscribe("init_imba_invoker_tooltip", function(data) 
-		{
-			init_invoker_tooltips()
-		})
 	</script>
 
 	<Panel>

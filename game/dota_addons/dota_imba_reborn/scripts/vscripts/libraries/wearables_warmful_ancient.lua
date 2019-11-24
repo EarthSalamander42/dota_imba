@@ -819,21 +819,32 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 		local sDefaultAnim = Wearable:SpecialFixAnim(hUnit, sItemDef)
 		local hModel = nil
 		if sDefaultAnim then
-			hModel =
-				SpawnEntityFromTableSynchronous(
-				sPropClass,
-				{
-					model = sModel_player,
-					DefaultAnim = sDefaultAnim
-				}
-			)
+--			hModel =
+--				SpawnEntityFromTableSynchronous(
+--				sPropClass,
+--				{
+--					model = sModel_player,
+--					DefaultAnim = sDefaultAnim
+--				}
+--			)
+
+			hModel = CreateUnitByName("wearable_dummy", hUnit:GetAbsOrigin(), false, nil, nil, hUnit:GetTeam())
 		else
-			hModel = SpawnEntityFromTableSynchronous(sPropClass, {model = sModel_player})
+--			hModel = SpawnEntityFromTableSynchronous(sPropClass, {model = sModel_player})
+			hModel = CreateUnitByName("wearable_dummy", hUnit:GetAbsOrigin(), false, nil, nil, hUnit:GetTeam())
+--			hModel:AddNewModifier(self, ability, "modifier_illusion", { duration = duration })
+--			hModel:MakeIllusion()
+			-- hModel:SetRenderColor(100,100,255)
 		end
+
+		hModel:SetOriginalModel(sModel_player)
+		hModel:SetModel(sModel_player)
+		hModel:AddNewModifier(nil, nil, "modifier_wearable", {})
 		hModel:SetOwner(hUnit)
 		hModel:SetParent(hUnit, "")
 		hModel:FollowEntity(hUnit, true)
 		hWear["model"] = hModel
+
 		if hItem.visuals and hItem.visuals.skin then
 			hModel:SetSkin(hItem.visuals.skin)
 		end

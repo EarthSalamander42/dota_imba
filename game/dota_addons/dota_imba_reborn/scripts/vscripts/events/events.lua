@@ -497,6 +497,9 @@ end
 	-- end
 -- end
 
+-- Add some deprecated abilities back to heroes for that "IMBA" factor
+local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
+
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
@@ -536,13 +539,6 @@ function GameMode:OnPlayerLevelUp(keys)
 
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
-
-	if hero:GetUnitName() == "npc_dota_hero_invoker" then
-		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6 + 1), 4))
-	end
-	
-	-- Add some deprecated abilities back to heroes for that "IMBA" factor
-	local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 	
 	for _, ability in ipairs(subAbilities) do 
 		if hero:HasAbility(ability) then

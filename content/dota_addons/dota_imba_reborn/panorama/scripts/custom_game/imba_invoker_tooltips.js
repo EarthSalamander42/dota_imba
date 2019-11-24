@@ -83,12 +83,12 @@ function ColorizeInvokerTooltip(slot_number)
 				if(ability_slot) 
 				{
 					var ability_name = Abilities.GetAbilityName(ability_slot);
-					if (ability_name && ability_name.indexOf('imba_invoker_empty1') > -1) 
+					if (ability_name && ability_name.indexOf('invoker_empty1') > -1) 
 					{
 						return
 					}
 
-					if (ability_name && ability_name.indexOf('imba_invoker_empty2') > -1) 
+					if (ability_name && ability_name.indexOf('invoker_empty2') > -1) 
 					{
 						return
 					}
@@ -189,7 +189,7 @@ function ToggleInvokerTooltip() {
 		DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(7).style.visibility = "visible"
 	}
 }
-
+init_invoker_tooltips()
 function init_invoker_tooltips() {
 	// Handle Invoked spell in slot 4
     var ability3 = DotaHud.FindChildTraverse("Ability3");
@@ -232,22 +232,22 @@ function init_invoker_tooltips() {
 	{
 		for(var i = 0; i < 10; i++) 
 		{
-			spell_card_icons[i].SetPanelEvent(
-			  	"onmouseover", 
-			  	function(){
-				}
-			)
-			spell_card_icons[i].SetPanelEvent(
-				"onmouseout", 
-			  	function(){
-		  		})
+			var ability = spell_card_icons[i];
+			var ability_name = spell_card_icons[i].abilityname;
+
+			(function (ability, ability_name) {
+				ability.SetPanelEvent("onmouseover", function () {
+					$.DispatchEvent("DOTAShowAbilityTooltip", ability, "imba_" + ability_name);
+				})
+				ability.SetPanelEvent("onmouseout", function () {
+					$.DispatchEvent("DOTAHideAbilityTooltip", ability);
+				})
+			})(ability, ability_name);
 		}
 	}
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-	module.exports.init_invoker_tooltips = init_invoker_tooltips;
-}
+GameEvents.Subscribe("invoker_helper", init_invoker_tooltips);
 
 //print(DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse("AbilityName").text)
 //print(DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityExtraAttributes'))
