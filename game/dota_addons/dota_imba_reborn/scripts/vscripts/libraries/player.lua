@@ -863,3 +863,138 @@ function CDOTA_BaseNPC:SetAverageBaseDamage(average, variance) -- variance is in
 	self:SetBaseDamageMax(math.ceil(average*(1+(var/100))))
 	self:SetBaseDamageMin(math.floor(average*(1-(var/100))))
 end
+
+-- Check if the unit is under forced movement (this is mostly just for Sniper's Headshot but may potentially be used for general checks)
+-- This function will naturally be faulty due to requiring manual add of every modifier that has forced movement but as many cases as possible will be covered
+function CDOTA_BaseNPC:Custom_IsUnderForcedMovement()
+	-- Using https://dota2.gamepedia.com/Forced_movement as reference
+	local forced_movement_modifiers = {
+		["modifier_knockback"]									= true,
+		["modifier_generic_motion_controller"]					= true,
+		
+		["modifier_pudge_dismember"]							= true,
+		["modifier_imba_dismember"]								= true,
+		["modifier_faceless_void_chronosphere_freeze"]			= true,
+		["modifier_imba_faceless_void_chronosphere_handler"]	= true,
+		
+		-- Fully disabling forced movement
+		["modifier_batrider_flaming_lasso"]						= true,
+		["modifier_imba_batrider_flaming_lasso"]				= true,
+		["modifier_beastmaster_prima_roar_push"]				= true,
+		["modifier_brewmaster_primal_split"]					= true,
+		["modifier_rattletrap_cog_push"]						= true,
+		["modifier_imba_rattletrap_cog_push"]					= true,
+		["modifier_dark_seer_vacuum"]							= true,
+		["modifier_imba_dark_seer_vacuum"]						= true,
+		["modifier_earthshaker_enchant_totem_leap"]				= true,
+		["modifier_earthshaker_enchant_totem_lua_leap"]			= true,
+		["modifier_imba_earthshaker_enchant_totem_leap"]		= true,
+		["modifier_enigma_black_hole_pull"]						= true,
+		["modifier_imba_enigma_black_hole"]						= true,
+		["modifier_eul_cyclone"]								= true,
+		["modifier_faceless_void_time_walk"]					= true,
+		["modifier_imba_faceless_void_time_walk_cast"]			= true,
+		["modifier_invoker_tornado"]							= true,
+		["modifier_imba_invoker_tornado"]						= true,
+		["modifier_kunkka_torrent"]								= true,
+		["modifier_life_stealer_infest_effect"]					= true,
+		["modifier_imba_life_stealer_infest_effect"]			= true,
+		["modifier_life_stealer_assimilate_effect"]				= true,
+		["modifier_imba_life_stealer_infest_effect"]			= true,
+		["modifier_lion_impale"]								= true,
+		["modifier_imba_earthspike_death_spike"]				= true,
+		["modifier_magnataur_skewer_movement"]					= true,
+		["modifier_imba_skewer_motion_controller"]				= true,
+		["modifier_mars_spear"]									= true,
+		["modifier_monkey_king_tree_dance_activity"]			= true,
+		["modifier_monkey_king_bounce_leap"]					= true,
+		["modifier_morphling_adaptive_strike"]					= true,
+		["modifier_nyx_assassin_impale"]						= true,
+		["modifier_imba_swashbuckle_dash"]						= true,
+		["modifier_imba_shield_crash_jump"]						= true,
+		["modifier_pangolier_gyroshell"]						= true,
+		["modifier_pudge_meat_hook"]							= true,
+		["modifier_imba_hook_target_enemy"]						= true,
+		["modifier_imba_hook_target_ally"]						= true,
+		["modifier_rubick_telekinesis"]							= true,
+		["modifier_imba_telekinesis"]							= true,
+		["modifier_sandking_impale"]							= true,
+		["modifier_sandking_burrowstrike"]						= true,
+		["modifier_imba_burrowstrike_burrow"]					= true,
+		["modifier_brewmaster_storm_cyclone"]					= true,
+		["modifier_storm_spirit_electric_vortex_pull"]			= true,
+		["modifier_imba_vortex_pull"]							= true,
+		["modifier_techies_suicide_leap"]						= true,
+		["modifier_imba_techies_suicide_leap"]					= true,
+		["modifier_tidehunter_ravage"]							= true,
+		["modifier_tiny_toss"]									= true,
+		["modifier_tiny_toss_movement"]							= true,
+		["modifier_tusk_snowball_movement"]						= true,
+		["modifier_tusk_snowball_movement_friendly"]			= true,
+		["modifier_tusk_walrus_punch_air_time"]					= true,
+		["modifier_tusk_walrus_kick_air_time"]					= true,
+		
+		-- Non-disabling forced movement
+		["modifier_flamebreak_knockback"]						= true,
+		["modifier_rattletrap_hookshot"]						= true,
+		["modifier_imba_rattletrap_hookshot"]					= true,
+		["modifier_drowranger_wave_of_silence_knockback"]		= true,
+		["modifier_imba_gust_movement"]							= true,
+		["modifier_earth_spirit_boulder_smash"]					= true,
+		["modifier_imba_boulder_smash_push"]					= true,
+		["modifier_earth_spirit_rolling_boulder_caster"]		= true,
+		["modifier_imba_rolling_boulder"]						= true,
+		["modifier_earth_spirit_geomagnetic_grip"]				= true,
+		["modifier_imba_geomagnetic_grip_pull"]					= true,
+		["modifier_ember_spirit_fire_remnant"]					= true,
+		["modifier_item_forcestaff_active"]						= true,
+		["modifier_item_imba_force_staff_active"]				= true,
+		["modifier_item_hurricane_pike_active"]					= true,
+		["modifier_item_hurricane_pike_active_alternate"]		= true,
+		["modifier_item_imba_hurricane_pike_force_ally"]		= true,
+		["modifier_item_imba_hurricane_pike_force_enemy"]		= true,
+		["modifier_item_imba_lance_of_longinus_force_ally"]		= true,
+		["modifier_item_imba_lance_of_longinus_force_enemy_ranged"]	= true,
+		["modifier_item_imba_lance_of_longinus_force_enemy_melee"]	= true,
+		["modifier_item_imba_lance_of_longinus_force_self_ranged"]	= true,
+		["modifier_item_imba_lance_of_longinus_force_self_melee"]	= true,
+		["modifier_huskar_life_break_charge"]					= true,
+		["modifier_imba_huskar_life_break_charge"]				= true,
+		["modifier_invoker_deafening_blast_knockback"]			= true,
+		["modifier_imba_invoker_deafening_blast_knockback"]		= true,
+		["modifier_wisp_tether"]								= true,
+		["modifier_imba_wisp_tether_latch"]						= true,
+		["modifier_blinding_light_knockback"]					= true,
+		["modifier_imba_blinding_light_knockback"]				= true,
+		["modifier_kunkka_ghost_ship_knockback"]				= true,
+		["modifier_imba_ghostship_drag"]						= true,
+		["modifier_mirana_leap"]								= true,
+		["modifier_imba_leap_movement"]							= true,
+		["modifier_morphling_waveform"]							= true,
+		["modifier_phoenix_icarus_dive"]						= true,
+		["modifier_imba_phoenix_icarus_dive_dash_dummy"]		= true,
+		["modifier_phoenix_sun_ray"]							= true,
+		["imba_phoenix_sun_ray_toggle_move"]					= true,
+		["modifier_slark_pounce"]								= true,
+		["modifier_imba_slark_pounce"]							= true,
+		["modifier_spirit_breaker_charge_of_darkness"]			= true,
+		["modifier_imba_spirit_breaker_charge_of_darkness"]		= true,
+		["modifier_imba_spirit_breaker_charge_of_darkness_clothesline"]	= true,
+		["modifier_imba_spirit_breaker_charge_of_darkness_taxi"]		= true,
+		["modifier_storm_spirit_ball_lightning"]				= true,
+		["modifier_imba_ball_lightning"]						= true,
+		["modifier_shredder_timber_chain"]						= true,
+		["modifier_imba_timbersaw_timber_chain"]				= true	
+	}
+	
+	local bForcedMovement = false
+
+	for _, modifier in pairs(self:FindAllModifiers()) do
+		if forced_movement_modifiers[modifier:GetName()] then
+			bForcedMovement = true
+			break
+		end
+	end
+	
+	return bForcedMovement
+end

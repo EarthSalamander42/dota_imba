@@ -502,6 +502,15 @@ function GameMode:OrderFilter( keys )
 		return nil
 	end
 	if unit == nil then return end
+	
+	-- Don't let couriers be controlled when multi-selected
+	if keys.units then
+		for k, v in pairs(keys.units) do
+			if k ~= "0" and EntIndexToHScript(v) and EntIndexToHScript(v):IsCourier() then
+				return false
+			end
+		end
+	end
 
 	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
 	-- is actually doing this order
@@ -662,6 +671,11 @@ function GameMode:OrderFilter( keys )
 			-- end)
 			
 			local ability = EntIndexToHScript(keys["entindex_ability"])
+			
+			-- Don't let frozen players mess with courier either
+			if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 or (IMBA_PUNISHED and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(keys.issuer_player_id_const)]) then
+				return false
+			end
 
 			if keys.issuer_player_id_const then
 				-- Attempts at locking courier to one player at a time

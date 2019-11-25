@@ -39,6 +39,11 @@
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_scepter_aoe"   				"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_cooldown_scepter"   			"SCEPTER COOLDOWN:"
 
+"DOTA_Tooltip_modifier_imba_slark_dark_pact_thinker"					"Premature Spawn"
+"DOTA_Tooltip_modifier_imba_slark_dark_pact_thinker_Description"		"After two Dark Pacts, the next Dark Pact with auto-cast on will summon a minature Slark."
+
+"npc_dota_slark_spawn"													"Slark Spawn"
+
 "DOTA_Tooltip_modifier_imba_slark_pounce_leash"							"Leashed"
 "DOTA_Tooltip_modifier_imba_slark_pounce_leash_Description"				"Leashed to Slark, can only move a limited distance away."
 "DOTA_Tooltip_modifier_imba_slark_essence_shift"							"Essence Shift"					

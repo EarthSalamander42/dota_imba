@@ -60,9 +60,9 @@ modifier_imba_visage_become_familiar					= class({})
 -- GRAVE CHILL --
 -----------------
 
-function imba_visage_grave_chill:GetIntrinsicModifierName()
-	return "modifier_imba_visage_grave_chill_aura"
-end
+-- function imba_visage_grave_chill:GetIntrinsicModifierName()
+	-- return "modifier_imba_visage_grave_chill_aura"
+-- end
 
 function imba_visage_grave_chill:OnSpellStart()
 	local target = self:GetCursorTarget()
@@ -899,8 +899,12 @@ function imba_visage_summon_familiars:OnSpellStart()
 	-- Baseline familiars
 	local unit_count = self:GetSpecialValueFor("initial_familiar_count")
 	
+	if self:GetCaster():GetLevel() >= 25 then
+		unit_count = self:GetSpecialValueFor("familiars_at_level_25")
+	end
+	
 	if self:GetCaster():HasScepter() then
-		unit_count = self:GetSpecialValueFor("tooltip_scepter_total_familiars")
+		unit_count = unit_count + 1
 	end
 	
 	-- Probably don't need one of these since I'm making more of them innate

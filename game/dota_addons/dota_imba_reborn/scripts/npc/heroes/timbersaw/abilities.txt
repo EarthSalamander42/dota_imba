@@ -91,7 +91,7 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"revving_down_efficacy"		"40"
+				"revving_down_efficacy"		"42"
 			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -167,12 +167,12 @@
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"side_hooks_damage_reduction"	"50"
+				"side_hooks_damage_reduction"	"70"
 			}
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"side_hooks_drag_pct"	"50"
+				"side_hooks_drag_pct"	"70"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -234,6 +234,12 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"emergency_bunker_debuff_mana_cost"	"130"
+			}
+			
+			"08"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"ally_hit_additional_stacks"		"1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"

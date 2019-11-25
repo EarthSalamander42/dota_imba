@@ -876,7 +876,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"1000"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -934,7 +934,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"17"
+				"vampiric_aura"			"15"
 			}
 			"03"
 			{
@@ -950,12 +950,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"1.0"
+				"mana_regen_aura"		"1.5"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"4"
+				"var_type"				"FIELD_FLOAT"
+				"hp_regen_aura"			"2.5"
 			}
 			"07"
 			{
@@ -1008,12 +1008,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"22"
+				"vampiric_aura"			"20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"25"
+				"damage_aura"			"20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -1024,12 +1024,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"3.5"
+				"mana_regen_aura"		"3.75"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"12"
+				"var_type"				"FIELD_FLOAT"
+				"hp_regen_aura"			"10.5"
 			}
 			"07"
 			{
@@ -3481,6 +3481,12 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aura_linger_duration"	"1.0"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_intellect"		"12"
 			}
 		}
 	}
@@ -7714,7 +7720,9 @@
 		"ItemStockMax"					"2"
 		"ItemStockTime"					"300.0"
 		"SideShop"						"0"
+		"ItemSupport"					"1"
 		"IsTempestDoubleClonable"		"0"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9330,6 +9338,8 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ItemShopTags"					"dust;appearance;detection"
 		"ItemAliases"					"dust;dust of appearance;invis;reveal"
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemQuality"					"common"
 		"ItemInitialCharges"			"3"
 		"ItemPermanent"					"1"
@@ -9337,6 +9347,7 @@
 		"ItemDisplayCharges"			"1"
 		"ItemKillable" 					"1" 
 		"ItemSellable" 					"1"
+		"ItemSupport"					"1"
 
 		"AbilitySpecial"
 		{
@@ -10387,6 +10398,7 @@
 		"ItemAliases"					"hood;defiance"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
+		"AbilitySharedCooldown"			"hood"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10487,6 +10499,7 @@
 		"ItemAliases"					"pipe"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
+		"AbilitySharedCooldown"			"hood"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

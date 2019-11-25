@@ -5,10 +5,6 @@
 	//=================================================================================================================
 	"imba_visage_grave_chill"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_visage"
 		"AbilityTextureName"			"visage_grave_chill"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -35,6 +31,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"650 700 750 800"
 
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_visage"
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -288,7 +288,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_familiar_count"	"3"
+				"initial_familiar_count"	"2"
 			}
 			"07"
 			{
@@ -304,6 +304,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"petrifying_breath_duration"		"3"
+			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiars_at_level_25"		"3"
 			}
 		}
 	}

@@ -1065,6 +1065,13 @@ function modifier_imba_faceless_void_chronosphere_aura:GetAuraRadius()
 	return self.total_radius
 end
 
+-- "Faceless Void and illusions of him (be it his own, enemy or allied illusions) are never disabled by any Chronosphere."
+function modifier_imba_faceless_void_chronosphere_aura:GetAuraEntityReject(target)
+	if target ~= self:GetCaster() and target:GetName() == "npc_dota_hero_faceless_void" then
+		return true
+	end
+end
+
 function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 	if IsServer() then
 		self.caster = self:GetCaster()

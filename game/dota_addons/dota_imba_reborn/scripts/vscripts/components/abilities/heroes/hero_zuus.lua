@@ -138,7 +138,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 
 					-- Check if any of them heroes have a static charge... (and havent been hit yet)
 					for _,hero in pairs(heroes) do 
-						if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero then
+						if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero and hero:GetTeamNumber() ~= caster:GetTeamNumber() then
 							if imba_zuus_arc_lightning:HitCheck(caster, hero, hit_list) then 
 							-- Get the closest one!
 								local distance = (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D()

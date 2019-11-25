@@ -1,6 +1,6 @@
 // SHREDDER
 "DOTA_Tooltip_ability_imba_timbersaw_whirling_death"							"Whirling Death"
-"DOTA_Tooltip_ability_imba_timbersaw_whirling_death_Description"				"Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area.  If an enemy hero is affected, it loses some of its primary attribute for a short duration.  Whirling Death will deal bonus damage per tree destroyed.\n<font color='#FF7800'>Blood to Oil:</font> Grants %blood_oil_convert_pct%%% of the reduced primary attribute to Timbersaw for %blood_oil_duration% seconds.\n<font color='#FF7800'>Revving Down:</font> Can be set to auto-cast to make Whirling Death cast %revving_down_instances% times with a %revving_down_interval% second delay between each, with each spin at %revving_down_efficacy%%% of its standard damage and stat reduction efficacy."
+"DOTA_Tooltip_ability_imba_timbersaw_whirling_death_Description"				"Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area.  If an enemy hero is affected, it loses some of its primary attribute for a short duration.  Whirling Death will deal bonus damage per tree destroyed.\n<font color='#FF7800'>Blood to Oil:</font> Grants %blood_oil_convert_pct%%% of the reduced primary attribute to Timbersaw for %blood_oil_duration% seconds.\n<font color='#FF7800'>Revving Down:</font> Can be set to auto-cast to make Whirling Death cast %revving_down_instances% times with a %revving_down_interval% second delay between each, with each spin at %revving_down_efficacy%%% of its standard damage and stat reduction efficiency."
 "DOTA_Tooltip_ability_imba_timbersaw_whirling_death_Lore"						"In the case that Rizzrack gets surrounded by the the vines and plants of his nightmares, he has an immediate chainsaw defense."
 "DOTA_Tooltip_ability_imba_timbersaw_whirling_death_whirling_damage"			"DAMAGE:"
 "DOTA_Tooltip_ability_imba_timbersaw_whirling_death_tree_damage_scale"		"TREE BONUS DAMAGE:"
@@ -24,7 +24,7 @@
 "DOTA_Tooltip_modifier_imba_timbersaw_timber_chain_side_hooks_Description"	"Being dragged by someone else's Timber Chain."
 
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor"							"Reactive Armor"
-"DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Description"				"Each time Timbersaw is attacked, he gains increased health regen and armor.\n<font color='#FF7800'>C'mon, HIT ME!:</font> Can be set to auto-cast to make Timbersaw fully deniable."
+"DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Description"				"Each time Timbersaw is attacked, he gains increased health regen and armor.\n<font color='#FF7800'>C'mon, HIT ME!:</font> Can be set to auto-cast to make Timbersaw fully deniable. Getting hit by allies grants %ally_hit_additional_stacks% additional stack of Reactive Armor."
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Lore"						"The saw-suit is equipped to react to the slightest touch with fortified defenses."
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_bonus_armor"				"BONUS ARMOR:"
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_bonus_hp_regen"			"BONUS HP REGEN:"

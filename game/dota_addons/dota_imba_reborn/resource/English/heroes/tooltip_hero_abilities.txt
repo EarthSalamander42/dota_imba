@@ -1480,7 +1480,7 @@
 // Sniper's Headshot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sniper_headshot"                            "Headshot"
-"DOTA_Tooltip_ability_imba_sniper_headshot_Description"                "Sniper increases his accuracy, giving him a chance to deal extra damage and briefly stop the movements of his enemies.\n<font color='#FF7800'>Perfect Shot:</font> When Sniper accumulates %perfectshot_attacks% attacks, Sniper lands a Perfect Shot on his next attack, dealing critical damage and stunning the enemy for %perfectshot_stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_sniper_headshot_Description"                "Sniper increases his accuracy, giving him a chance to deal extra damage and briefly stop the movements of his enemies.\n<font color='#FF7800'>Perfect Shot:</font> Applies a Perfect Shot every %perfectshot_attacks% attacks, dealing %perfectshot_critical_dmg_pct%%% critical damage and stunning the enemy for %perfectshot_stun_duration% seconds."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Lore"                        "Taking potshots at steepstalkers in his childhood has been thoroughly refined into perfect leads on enemy combatants."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Note0"                      "Headshot attacks are accumulated and kept forever, even if Sniper changes targets."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Note1"                      "When landing a Perfect Shot, it also lands a Headshot, dealing bonus damage and slowing."
@@ -1488,7 +1488,9 @@
 "DOTA_Tooltip_ability_imba_sniper_headshot_proc_chance"						"%CHANCE:"
 "DOTA_Tooltip_ability_imba_sniper_headshot_headshot_damage"					"HEADSHOT DAMAGE:"
 "DOTA_Tooltip_ability_imba_sniper_headshot_headshot_ms_slow_pct"			"%HEADSHOT MOVE/ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_sniper_headshot_perfectshot_critical_dmg_pct"	"%PERFECT SHOT CRITICAL DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_sniper_headshot"							"Perfect Shot Counter"
+"DOTA_Tooltip_modifier_imba_sniper_headshot_Description"				"After eight attacks, the next attack will apply a Perfect Shot."
 
 "DOTA_Tooltip_modifier_imba_headshot_slow"                              "Headshot"
 "DOTA_Tooltip_modifier_imba_headshot_slow_Description"                  "Slowed by Headshot."
@@ -1503,7 +1505,7 @@
 // Sniper's Take Aim
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sniper_take_aim"                            "Take Aim"
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When the skill is off cooldown and set to auto cast, Sniper's attack range dramatically increases. When he fires his next attack, it deals guaranteed Perfect Shot critical damage. The ability then goes into a cooldown."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When off cooldown and cast or attacking with auto-cast on, increses Sniper's attack range even further, and applies a Headshot Perfect Shot if appilcable."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Lore"                        "Kardel always takes it upon himself to stay as far from harm as he can while still performing his role - taking perfect aim."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Note0"                      "A Perfect Shot can only proc if Headshot is leveled. Otherwise, Sniper will only benefit from the bonus range."
 "DOTA_Tooltip_ability_imba_sniper_take_aim_Note1"                      "Aimed Assault's range bonus stacks fully with the passive bonus range."
@@ -1514,7 +1516,7 @@
 // Sniper's Assassinate
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sniper_assassinate"                          "Assassinate"
-"DOTA_Tooltip_ability_imba_sniper_assassinate_Description"              "Sniper locks onto a target enemy unit and, after %charge_time% seconds, fires a devastating shot that deals damage to the target and ministuns it.\n<font color='#FF7800'>Armor Piercing Bullet:</font> The shot also deals damage and fully affects all enemies in its path.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_Description"              "Sniper locks onto a target enemy unit and, after a short aiming duration of %charge_time% seconds, fires a devastating shot that deals damage at long range and mini-stuns the target.\n<font color='#FF7800'>Armor Piercing Bullet:</font> The shot also deals damage and fully affects all enemies in its path."
 "DOTA_Tooltip_ability_imba_sniper_assassinate_Lore"                    "In order to fulfill the prophecy and return to his home town, Kardel must make another shot as perfect as the one on the day of his ancient test."
 "DOTA_Tooltip_ability_imba_sniper_assassinate_Note0"                    "Crosshair effect is visible only to allies. While the crosshair is in effect, targets are revealed to your team."
 "DOTA_Tooltip_ability_imba_sniper_assassinate_Note1"                    "Only primary targets can block the shot with a Linken Sphere. Enemies that stand in the path of the bullet are always hit."

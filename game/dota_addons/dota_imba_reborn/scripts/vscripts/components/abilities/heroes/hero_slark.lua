@@ -9,7 +9,7 @@ LinkLuaModifier("modifier_imba_slark_pounce", "components/abilities/heroes/hero_
 LinkLuaModifier("modifier_imba_slark_pounce_leash", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_slark_essence_shift", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_slark_essence_shift_debuff", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slark_essence_shift_debuff_counter", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slark_essence_shift_permanent_buff", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slark_essence_shift_permanent_debuff", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
@@ -28,13 +28,13 @@ modifier_imba_slark_pounce_leash					= modifier_imba_slark_pounce_leash or class
 
 -- imba_slark_essence_shift							= imba_slark_essence_shift or class({})
 -- modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class({})
--- modifier_imba_slark_essence_shift_debuff			= modifier_imba_slark_essence_shift_debuff or class({})
+-- modifier_imba_slark_essence_shift_debuff_counter			= modifier_imba_slark_essence_shift_debuff_counter or class({})
 -- modifier_imba_slark_essence_shift_permanent_buff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
 -- modifier_imba_slark_essence_shift_permanent_debuff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
 
 imba_slark_essence_shift							= class({})
 modifier_imba_slark_essence_shift					= class({})
-modifier_imba_slark_essence_shift_debuff			= class({})
+modifier_imba_slark_essence_shift_debuff_counter	= class({})
 modifier_imba_slark_essence_shift_permanent_buff	= class({})
 modifier_imba_slark_essence_shift_permanent_debuff	= class({})
 
@@ -56,7 +56,11 @@ function imba_slark_dark_pact:GetIntrinsicModifierName()
 end
 
 function imba_slark_dark_pact:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	if self:GetCaster():IsHero() then
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return self.BaseClass.GetBehavior(self)
+	end
 end
 
 function imba_slark_dark_pact:GetCastRange(location, target)
@@ -64,6 +68,8 @@ function imba_slark_dark_pact:GetCastRange(location, target)
 end
 
 function imba_slark_dark_pact:OnSpellStart()
+	EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Slark.DarkPact.PreCast", self:GetCaster())
+	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_dark_pact", {
 		duration		= self:GetSpecialValueFor("delay"),
 		pulse_duration	= self:GetSpecialValueFor("pulse_duration"),
@@ -95,8 +101,6 @@ function modifier_imba_slark_dark_pact:OnCreated(params)
 	
 	self.ability_damage_type	= self:GetAbility():GetAbilityDamageType()
 	
-	EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Hero_Slark.DarkPact.PreCast", self:GetParent())
-	
 	self.start_particle	= ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_slark/slark_dark_pact_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
 	ParticleManager:SetParticleControlEnt(self.start_particle, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.start_particle, 61, Vector(0, 0, 0))
@@ -115,7 +119,8 @@ function modifier_imba_slark_dark_pact:OnDestroy()
 			total_damage	= self.total_damage,
 			total_pulses	= self.total_pulses,
 			pulse_interval	= self.pulse_interval,
-			ability_damage_type	= self.ability_damage_type
+			ability_damage_type	= self.ability_damage_type,
+			premature_stack_activation	= self.premature_stack_activation
 		})
 	end
 end
@@ -175,10 +180,24 @@ function modifier_imba_slark_dark_pact_pulses:OnCreated(params)
 		if self.premature_modifier:GetStackCount() < self.premature_stack_activation then
 			self.premature_modifier:IncrementStackCount()
 		elseif self:GetAbility() and self:GetAbility():GetAutoCastState() then
-			local spawn_unit = CreateUnitByName("npc_dota_roshan_halloween_minion", self:GetParent():GetAbsOrigin() + RandomVector(128), true, self:GetParent(), self:GetParent(), self:GetParent():GetTeamNumber())
+			local spawn_unit = CreateUnitByName("npc_dota_slark_spawn", self:GetParent():GetAbsOrigin() + RandomVector(128), true, self:GetParent(), self:GetParent(), self:GetParent():GetTeamNumber())
 			
 			if self:GetParent().GetPlayerID then
 				spawn_unit:SetControllableByPlayer(self:GetParent():GetPlayerID(), false)
+			end
+			
+			spawn_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = 30})
+			
+			if spawn_unit:HasAbility("imba_slark_dark_pact") and self:GetCaster():HasAbility("imba_slark_dark_pact") then
+				spawn_unit:FindAbilityByName("imba_slark_dark_pact"):SetLevel(self:GetCaster():FindAbilityByName("imba_slark_dark_pact"):GetLevel())
+			end
+			
+			if spawn_unit:HasAbility("imba_slark_pounce") and self:GetCaster():HasAbility("imba_slark_pounce") then
+				spawn_unit:FindAbilityByName("imba_slark_pounce"):SetLevel(self:GetCaster():FindAbilityByName("imba_slark_pounce"):GetLevel())
+			end
+			
+			if spawn_unit:HasAbility("imba_slark_essence_shift") and self:GetCaster():HasAbility("imba_slark_essence_shift") then
+				spawn_unit:FindAbilityByName("imba_slark_essence_shift"):SetLevel(self:GetCaster():FindAbilityByName("imba_slark_essence_shift"):GetLevel())
 			end
 			
 			self.premature_modifier:SetStackCount(0)
@@ -218,7 +237,7 @@ function imba_slark_pounce:GetCooldown(level)
 	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") or IsClient() then
 		return self.BaseClass.GetCooldown(self, level)
 	elseif IsServer() then
-		return self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
+		return (self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
 	end
 end
 
@@ -247,7 +266,7 @@ function imba_slark_pounce:OnSpellStart()
 		self:StartCooldown(0.25)
 	else
 		self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()		
-		self:GetAbility():UseResources(false, false, true)
+		self:UseResources(false, false, true)
 	end
 end
 
@@ -322,7 +341,7 @@ function modifier_imba_slark_pounce:UpdateHorizontalMotion(me, dt)
 			})
 			
 			if pounce_modifier then
-				pounce_modifier:SetDuration(10 * (1 - enemy:GetStatusResistance()), true)
+				pounce_modifier:SetDuration(self.leash_duration * (1 - enemy:GetStatusResistance()), true)
 			end
 			
 			self:GetParent():MoveToTargetToAttack(enemy)
@@ -496,7 +515,7 @@ function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
 		self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration"), true)
 		self:IncrementStackCount()
 		
-		self.debuff_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_debuff", {duration = self:GetAbility():GetTalentSpecialValueFor("duration")})
+		self.debuff_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_debuff_counter", {duration = self:GetAbility():GetTalentSpecialValueFor("duration")})
 		
 		if self.debuff_modifier then
 			self.debuff_modifier:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
@@ -516,15 +535,15 @@ function modifier_imba_slark_essence_shift:GetModifierBonusStats_Agility()
 end
 
 ----------------------------------------------
--- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT_DEBUFF --
+-- MODIFIER_imba_slark_essence_shift_debuff_counter --
 ----------------------------------------------
 
-function modifier_imba_slark_essence_shift_debuff:DestroyOnExpire()	return self:GetParent():GetHealthPercent() > 0 end
-function modifier_imba_slark_essence_shift_debuff:IsHidden()		return self:GetParent():GetHealthPercent() <= 0 end
-function modifier_imba_slark_essence_shift_debuff:IsPurgable()		return false end
-function modifier_imba_slark_essence_shift_debuff:RemoveOnDeath()	return false end
+function modifier_imba_slark_essence_shift_debuff_counter:DestroyOnExpire()	return self:GetParent():GetHealthPercent() > 0 end
+function modifier_imba_slark_essence_shift_debuff_counter:IsHidden()		return self:GetParent():GetHealthPercent() <= 0 end
+function modifier_imba_slark_essence_shift_debuff_counter:IsPurgable()		return false end
+function modifier_imba_slark_essence_shift_debuff_counter:RemoveOnDeath()	return false end
 
-function modifier_imba_slark_essence_shift_debuff:OnCreated()
+function modifier_imba_slark_essence_shift_debuff_counter:OnCreated()
 	if not self.stat_loss then
 		self.stat_loss	= self:GetAbility():GetSpecialValueFor("stat_loss")
 	end
@@ -545,11 +564,11 @@ function modifier_imba_slark_essence_shift_debuff:OnCreated()
 	self:StartIntervalThink(FrameTime())
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnRefresh()
+function modifier_imba_slark_essence_shift_debuff_counter:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnIntervalThink()
+function modifier_imba_slark_essence_shift_debuff_counter:OnIntervalThink()
 	Custom_ArrayRemove(self.stack_table, function(i, j)
 		return self.stack_table[i].apply_game_time and self.stack_table[i].duration and GameRules:GetDOTATime(true, true) - self.stack_table[i].apply_game_time <= self.stack_table[i].duration
 	end)
@@ -559,13 +578,13 @@ function modifier_imba_slark_essence_shift_debuff:OnIntervalThink()
 	end
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnDestroy()
+function modifier_imba_slark_essence_shift_debuff_counter:OnDestroy()
 	if not IsServer() then return end
 	
 	
 end
 
-function modifier_imba_slark_essence_shift_debuff:DeclareFunctions()
+function modifier_imba_slark_essence_shift_debuff_counter:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_DEATH,
@@ -573,11 +592,13 @@ function modifier_imba_slark_essence_shift_debuff:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		
+		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnAttackLanded(keys)
+function modifier_imba_slark_essence_shift_debuff_counter:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
 		table.insert(self.stack_table, {
 			apply_game_time	= GameRules:GetDOTATime(true, true),
@@ -589,7 +610,7 @@ function modifier_imba_slark_essence_shift_debuff:OnAttackLanded(keys)
 	end
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnDeath(keys)
+function modifier_imba_slark_essence_shift_debuff_counter:OnDeath(keys)
 	if keys.unit == self:GetParent() and keys.unit:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and keys.attacker:HasModifier("modifier_imba_slark_essence_shift") and ((keys.unit:GetAbsOrigin() - keys.attacker:GetAbsOrigin()):Length2D() <= 300 or keys.attacker == self:GetCaster()) and not keys.attacker:HasModifier("modifier_morphling_replicate") then
 		if self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating() then
 			self.bStealAgi = true
@@ -600,22 +621,26 @@ function modifier_imba_slark_essence_shift_debuff:OnDeath(keys)
 	end
 end
 
-function modifier_imba_slark_essence_shift_debuff:OnRespawn(keys)
+function modifier_imba_slark_essence_shift_debuff_counter:OnRespawn(keys)
 	if keys.unit == self:GetParent() and self.bStealAgi then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_debuff", {})
 		self:Destroy()
 	end
 end
 
-function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Agility()
+function modifier_imba_slark_essence_shift_debuff_counter:GetModifierBonusStats_Agility()
 	return self.stat_loss * (-1) * self:GetStackCount()
 end
 
-function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Intellect()
+function modifier_imba_slark_essence_shift_debuff_counter:GetModifierBonusStats_Intellect()
 	return self.stat_loss * (-1) * self:GetStackCount()
 end
 
-function modifier_imba_slark_essence_shift_debuff:GetModifierBonusStats_Strength()
+function modifier_imba_slark_essence_shift_debuff_counter:GetModifierBonusStats_Strength()
+	return self.stat_loss * (-1) * self:GetStackCount()
+end
+
+function modifier_imba_slark_essence_shift_debuff_counter:OnTooltip()
 	return self.stat_loss * (-1) * self:GetStackCount()
 end
 
@@ -795,7 +820,7 @@ function modifier_imba_slark_shadow_dance_aura:IsAuraActiveOnDeath()	return fals
 function modifier_imba_slark_shadow_dance_aura:GetAuraRadius()			return self.scepter_aoe or 0 end
 function modifier_imba_slark_shadow_dance_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
 
-function modifier_imba_slark_shadow_dance_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_slark_shadow_dance_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
 function modifier_imba_slark_shadow_dance_aura:GetModifierAura()		return "modifier_imba_slark_shadow_dance" end
 
