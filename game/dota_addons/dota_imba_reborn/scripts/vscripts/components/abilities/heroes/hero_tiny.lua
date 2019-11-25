@@ -9,7 +9,7 @@ imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
 LinkLuaModifier("imba_tiny_tree_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_damage_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_tiny_tree_animation_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_tree_animation", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 function imba_tiny_tree_grab:OnSpellStart()
 	if IsServer() then 
 		local caster = self:GetCaster()
@@ -30,19 +30,18 @@ function imba_tiny_tree_grab:OnSpellStart()
 		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
 		
 		-- Add tree model + animation
-		caster:AddNewModifier(caster, self, "imba_tiny_tree_animation_modifier", {})
+		caster:AddNewModifier(caster, self, "modifier_imba_tiny_tree_animation", {})
 	end
 end
-
 
 
 ----------------------------------------------
 --     Tree Model and Animation modifier	--
 ----------------------------------------------
-imba_tiny_tree_animation_modifier = class({})
-function imba_tiny_tree_animation_modifier:IsHidden() return true end
-function imba_tiny_tree_animation_modifier:IsPurgable() return false end
-function imba_tiny_tree_animation_modifier:OnCreated()
+modifier_imba_tiny_tree_animation = class({})
+function modifier_imba_tiny_tree_animation:IsHidden() return true end
+function modifier_imba_tiny_tree_animation:IsPurgable() return false end
+function modifier_imba_tiny_tree_animation:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local grow = caster:FindAbilityByName("imba_tiny_grow")
@@ -54,9 +53,15 @@ function imba_tiny_tree_animation_modifier:OnCreated()
 			UTIL_Remove(caster.tree)
 			caster.tree = nil
 		end
-		
+
+		local tree_model = "models/heroes/tiny_01/tiny_01_tree.vmdl"
+
+		if string.find(self:GetCaster():GetModelName(), "tiny_prestige") then
+			tree_model = "models/items/tiny/tiny_prestige/tiny_prestige_sword.vmdl"
+		end
+
 		-- Create the tree model
-		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/tiny_01/tiny_01_tree.vmdl"})
+		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = tree_model})
 		-- Bind it to caster bone 
 		self.tree:FollowEntity(self:GetCaster(), true)
 		-- Find the Coordinates for model position on left hand
@@ -95,7 +100,7 @@ function imba_tiny_tree_animation_modifier:OnCreated()
 	end
 end
 
-function imba_tiny_tree_animation_modifier:OnRemoved()
+function modifier_imba_tiny_tree_animation:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
 		-- stop tree animation
@@ -236,7 +241,7 @@ function imba_tiny_tree_modifier:OnRemoved()
 			caster:RemoveModifierByName("imba_tiny_tree_damage_modifier")
 		end
 
-		caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
+		caster:RemoveModifierByName("modifier_imba_tiny_tree_animation")
 	end
 end
 
@@ -368,7 +373,7 @@ function imba_tiny_tree_throw:OnSpellStart()
 		end
 
 		caster:RemoveModifierByName("imba_tiny_tree_modifier")
-		caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
+		caster:RemoveModifierByName("modifier_imba_tiny_tree_animation")
 	end
 end
 
@@ -1429,47 +1434,52 @@ function imba_tiny_grow:GetIntrinsicModifierName()
 end
 
 function imba_tiny_grow:OnUpgrade()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local reapply_craggy = false 
+	if not IsServer() then return end
 
-		local rolling_stone = self:GetCaster():FindModifierByName("modifier_imba_tiny_rolling_stone")
-		rolling_stone.growscale = self:GetSpecialValueFor("rolling_stone_scale_reduction")
-		local old_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 2 )
-		local new_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 1 )
-		if old_stacks == new_stacks then old_stacks = 0 end
-		rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
-		local level = self:GetLevel() + 1
-		if level < 5 and caster:GetModelName() ~= "models/creeps/ice_biome/storegga/storegga.vmdl" then -- model bullshit
+	local reapply_craggy = false 
+
+	local rolling_stone = self:GetCaster():FindModifierByName("modifier_imba_tiny_rolling_stone")
+	rolling_stone.growscale = self:GetSpecialValueFor("rolling_stone_scale_reduction")
+	local old_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 2 )
+	local new_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 1 )
+	if old_stacks == new_stacks then old_stacks = 0 end
+	rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
+	local level = self:GetLevel() + 1
+	local model_path = "models/heroes/tiny_0"..level.."/tiny_0"..level
+
+	if level < 5 then -- model bullshit
+		if string.find(self:GetCaster():GetModelName(), "tiny_prestige") then
+			self:GetCaster():SetOriginalModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_0"..level..".vmdl")
+			self:GetCaster():SetModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_0"..level..".vmdl")
+		else
 			-- Set new model
-			self:GetCaster():SetOriginalModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
-			self:GetCaster():SetModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
+			self:GetCaster():SetOriginalModel(model_path..".vmdl")
+			self:GetCaster():SetModel(model_path..".vmdl")
 			-- Remove old wearables
 			UTIL_Remove(self.head)
 			UTIL_Remove(self.rarm)
 			UTIL_Remove(self.larm)
 			UTIL_Remove(self.body)
 			-- Set new wearables
-			self.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/tiny_0"..level.."/tiny_0"..level.."_head.vmdl"})
-			self.rarm = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/tiny_0"..level.."/tiny_0"..level.."_right_arm.vmdl"})
-			self.larm = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/tiny_0"..level.."/tiny_0"..level.."_left_arm.vmdl"})
-			self.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/tiny_0"..level.."/tiny_0"..level.."_body.vmdl"})
+			self.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = model_path.."_head.vmdl"})
+			self.rarm = SpawnEntityFromTableSynchronous("prop_dynamic", {model = model_path.."_right_arm.vmdl"})
+			self.larm = SpawnEntityFromTableSynchronous("prop_dynamic", {model = model_path.."_left_arm.vmdl"})
+			self.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = model_path.."_body.vmdl"})
 			-- lock to bone
 			self.head:FollowEntity(self:GetCaster(), true)
 			self.rarm:FollowEntity(self:GetCaster(), true)
 			self.larm:FollowEntity(self:GetCaster(), true)
 			self.body:FollowEntity(self:GetCaster(), true)
-		else
-			caster:SetModelScale((level * 0.2) + 0.5)
 		end
-		-- Effects
-		self:GetCaster():StartGesture(ACT_TINY_GROWL)
-		EmitSoundOn("Tiny.Grow", self:GetCaster())
-		
-		local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
-		ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(grow)
 	end
+
+	-- Effects
+	self:GetCaster():StartGesture(ACT_TINY_GROWL)
+	EmitSoundOn("Tiny.Grow", self:GetCaster())
+		
+	local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
+	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(grow)
 end
 
 LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)

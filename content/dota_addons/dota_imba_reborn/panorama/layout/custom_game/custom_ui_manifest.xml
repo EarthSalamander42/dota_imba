@@ -274,7 +274,7 @@
 -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/battlepass.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
-	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" />
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" />
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->

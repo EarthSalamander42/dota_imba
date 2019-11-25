@@ -185,7 +185,7 @@
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1"						"Rechargable E.M.P"
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1_description"			"When EMP successfuly drains %threshold% targets it will recharge and repeat a second time at %effect_reduction%%% reduced efficiency."
 
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2"						"Tripple Meteors"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2"						"Triple Meteors"
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2_description"			"Drops 3 chaos meteors on the target location."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3"						" +%additional_spirits% Forged Spirit Summoned"

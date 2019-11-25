@@ -1673,8 +1673,16 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's Ghost Walk
 	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_ghost_walk = class({})
 		LinkLuaModifier("modifier_imba_invoker_ghost_walk", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+		imba_invoker_ghost_walk = class({})
+
+		function imba_invoker_ghost_walk:GetAbilityTextureName()
+			if not IsClient() then return end
+			if not self:GetCaster().arcana_style then return "invoker_ghost_walk" end
+			return "invoker_ghost_walk_persona1"
+		end
+
 		function imba_invoker_ghost_walk:GetCastAnimation()
 		 	return ACT_DOTA_CAST_GHOST_WALK
 		end
@@ -2214,8 +2222,16 @@ imba_invoker = imba_invoker or class({})
 	--------------------------------------------------------------------------------------------------------------------
 	--	Invoker's Forge Spirit
 	--------------------------------------------------------------------------------------------------------------------
-		imba_invoker_forge_spirit = class({})
 		LinkLuaModifier("modifier_imba_invoker_forge_spirit", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+		imba_invoker_forge_spirit = class({})
+
+		function imba_invoker_forge_spirit:GetAbilityTextureName()
+			if not IsClient() then return end
+			if not self:GetCaster().arcana_style then return "invoker_forge_spirit" end
+			return "invoker_forge_spirit_persona1"
+		end
+
 		function imba_invoker_forge_spirit:GetCastAnimation()
 		 	return ACT_DOTA_CAST_FORGE_SPIRIT
 		end
@@ -2281,6 +2297,13 @@ imba_invoker = imba_invoker or class({})
 				-- Summon new Spirits
 				for i = 1, spirit_count do
 					local forged_spirit = CreateUnitByName(spirit_name, caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeamNumber())
+					print("Has persona?", Battlepass:HasArcana(self:GetCaster(), "invoker"))
+					if Battlepass and Battlepass:HasArcana(self:GetCaster(), "invoker") then
+						forged_spirit:SetOriginalModel("models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl")
+						forged_spirit:SetModel("models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl")
+						forged_spirit:SetRangedProjectileName("particles/units/heroes/hero_invoker_kid/invoker_kid_forged_spirit_projectile.vpcf")
+					end
+
 					-- Remove forge_spirit's base ability and add IMBA molten strike
 					--forged_spirit:RemoveAbility("forged_spirit_melting_strike")
 					forged_spirit:AddAbility("imba_forged_spirit_melting_strike") 

@@ -66,10 +66,12 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				"axe",
 				"earthshaker",
 				"juggernaut",
+				"invoker",
 				"lina",
 				"nevermore",
 				"pudge",
 				"terrorblade",
+				"tiny",
 				"wisp",
 				"zuus",
 			}

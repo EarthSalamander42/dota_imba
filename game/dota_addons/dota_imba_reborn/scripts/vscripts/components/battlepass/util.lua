@@ -75,8 +75,18 @@ function Battlepass:HasArcana(ID, hero_name)
 			return 0
 		end
 	-- axe immortal topbar icon handling
-	elseif BattlepassHeroes[hero_name][hero_name.."_immortal"] then
-		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name][hero_name.."_immortal"] then
+	elseif BattlepassHeroes[hero_name]["axe_immortal"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["axe_immortal"] then
+			return 0
+		end
+	-- invoker legendary persona topbar icon handling
+	elseif BattlepassHeroes[hero_name]["invoker_legendary"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["invoker_legendary"] then
+			return 0
+		end
+	-- tiny storegga topbar icon handling
+	elseif BattlepassHeroes[hero_name]["tiny_immortal"] then
+		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["tiny_immortal"] then
 			return 0
 		end
 	end

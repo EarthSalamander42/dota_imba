@@ -880,7 +880,11 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 					hWear["additional_wearable"] = {}
 				end
 				local sModel = am_table.asset
-				local hModel = SpawnEntityFromTableSynchronous("prop_dynamic", {model = sModel})
+--				local hModel = SpawnEntityFromTableSynchronous("prop_dynamic", {model = sModel})
+				local hModel = CreateUnitByName("wearable_dummy", hUnit:GetAbsOrigin(), false, nil, nil, hUnit:GetTeam())
+				hModel:SetOriginalModel(sModel_player)
+				hModel:SetModel(sModel_player)
+				hModel:AddNewModifier(nil, nil, "modifier_wearable", {})
 				hModel:SetOwner(hUnit)
 				hModel:SetParent(hUnit, "")
 				hModel:FollowEntity(hUnit, true)

@@ -472,7 +472,7 @@ function EndScoreboard(args) {
 				if (player_result && player_result.networth)
 					PlayerRowContainer.FindChildrenWithClassTraverse("NetWorth")[0].text = player_result.networth;
 
-				SetDonatorRow(PlayerRowContainer, id, player_table)
+				SetDonatorRow(PlayerRowContainer.GetChild(0), id, player_table)
 
 				var panel_progress_bar = PlayerRowContainer.FindChildTraverse("es-player-xp-progress");
 				var panel_xp_text = PlayerRowContainer.FindChildTraverse("es-player-xp-rank");

@@ -97,7 +97,7 @@ function fetch() {
 	});
 	*/
 
-	$.Schedule(1.0, function(){
+	$.Schedule(2.0, function(){
 		$("#VoteGameMode1").checked = true;
 		OnVoteButtonPressed("gamemode", 1);
 	});

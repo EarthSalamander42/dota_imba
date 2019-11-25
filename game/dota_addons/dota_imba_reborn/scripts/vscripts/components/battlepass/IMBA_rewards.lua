@@ -104,6 +104,7 @@ BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
 if IsInToolsMode() then
+	BATTLEPASS_LEVEL_REWARD[190]	= {"tiny_immortal", "immortal"}
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
 	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
 end
@@ -149,6 +150,9 @@ function Battlepass:Init()
 	BattlepassHeroes["skywrath_mage"] = {}
 --	BattlepassHeroes["terrorblade"] = {}
 --	BattlepassHeroes["tidehunter"] = {}
+	if IsInToolsMode() then
+		BattlepassHeroes["tiny"] = {}
+	end
 	BattlepassHeroes["ursa"] = {}
 	BattlepassHeroes["vengefulspirit"] = {}
 	BattlepassHeroes["wisp"] = {}
@@ -1055,6 +1059,16 @@ function Battlepass:GetHeroEffect(hero)
 --				hero.offhand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_offhand_wh/tidehunter_offhand_wh.vmdl"})
 --				hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/tidehunter/Celth_AzhagTidehunter/tidehunter_weapon_wh/tidehunter_weapon_wh.vmdl"})
 --			end
+		elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
+			if IsInToolsMode() then
+				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["tiny_immortal"] then
+					hero.is_storegga = true
+					hero:SetModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_01.vmdl")
+					hero:SetOriginalModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_01.vmdl")
+					hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
+--					Wearable:_WearProp(hero, "13541", "weapon")
+				end
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_ursa" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["ursa_immortal"] then
 				Wearable:_WearProp(hero, "4212", "head")
