@@ -6,12 +6,18 @@
 --          Tree Grab                --
 ---------------------------------------
 
-LinkLuaModifier("imba_tiny_tree_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_tiny_tree_damage_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_tree", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_tree_damage", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_animation", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
+
+function imba_tiny_tree_grab:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "tiny_craggy_exterior" end
+	return "tiny/ti9_immortal/tiny_tree_grab_immortal"
+end
 
 function imba_tiny_tree_grab:OnSpellStart()
 	if IsServer() then 
@@ -21,9 +27,9 @@ function imba_tiny_tree_grab:OnSpellStart()
 		-- Destroy targeted tree
 		GridNav:DestroyTreesAroundPoint(target_point, 1, false)
 
-		local damage_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_damage_modifier", {})
+		local damage_modifier = caster:AddNewModifier(caster, self, "modifier_imba_tiny_tree_damage", {})
 		damage_modifier:SetStackCount(self:GetSpecialValueFor("bonus_damage"))
-		local tree_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_modifier", {})
+		local tree_modifier = caster:AddNewModifier(caster, self, "modifier_imba_tiny_tree", {})
 		tree_modifier:SetStackCount(5)
 
 		local ability_slot3 = self
@@ -34,6 +40,8 @@ function imba_tiny_tree_grab:OnSpellStart()
 		
 		-- Add tree model + animation
 		caster:AddNewModifier(caster, self, "modifier_imba_tiny_tree_animation", {})
+
+		caster:EmitSound(caster.tree_grab_sound)
 	end
 end
 
@@ -59,14 +67,8 @@ function modifier_imba_tiny_tree_animation:OnCreated()
 			caster.tree = nil
 		end
 
-		local tree_model = "models/heroes/tiny_01/tiny_01_tree.vmdl"
-
-		if string.find(self:GetCaster():GetModelName(), "tiny_prestige") then
-			tree_model = "models/items/tiny/tiny_prestige/tiny_prestige_sword.vmdl"
-		end
-
 		-- Create the tree model
-		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = tree_model})
+		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = caster.tree_model})
 		-- Bind it to caster bone 
 		self.tree:FollowEntity(self:GetCaster(), true)
 		-- Find the Coordinates for model position on left hand
@@ -77,31 +79,36 @@ function modifier_imba_tiny_tree_animation:OnCreated()
 		-- Apply diffrent positions of the tree depending on growth model...
 		if grow_lvl == 3 then
 			--Adjust poition to match grow lvl 3
-	        local pos = origin + (fv * 50)
-	        self.tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
+			local pos = origin + (fv * 50)
+			self.tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
 		
 		elseif grow_lvl == 2 then
 			-- Adjust poition to match grow lvl 2
-	        local pos = origin + (fv * 35)
-	        self.tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
+			local pos = origin + (fv * 35)
+			self.tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
 
-	    elseif grow_lvl == 1 then
-	    	-- Adjust poition to match grow lvl 1
-	        local pos = origin + (fv * 35) 
-	        self.tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
+		elseif grow_lvl == 1 then
+			-- Adjust poition to match grow lvl 1
+			local pos = origin + (fv * 35) 
+			self.tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
 
-	    elseif grow_lvl == 0 then
-	    	-- Adjust poition to match original no grow model
-	        local pos = origin - (fv * 25) 
-	        self.tree:SetAbsOrigin(Vector(pos.x - 20, pos.y - 30 , origin.z))
-	        self.tree:SetAngles(60, 60, -60)
-	    end
+		elseif grow_lvl == 0 then
+			-- Adjust poition to match original no grow model
+			local pos = origin - (fv * 25) 
+			self.tree:SetAbsOrigin(Vector(pos.x - 20, pos.y - 30 , origin.z))
+			self.tree:SetAngles(60, 60, -60)
+		end
 
 		-- Save model to caster
-	    caster.tree = self.tree
+		caster.tree = self.tree
 
-	    -- Change animation now that we have a huge ass tree in our hand.
-        StartAnimation(caster, { duration = -1, activity = ACT_DOTA_ATTACK_EVENT , rate = 2, translate = "tree" })
+		if caster.tree_ambient_effect ~= "" then
+			local tree_pfx = ParticleManager:CreateParticle(caster.tree_ambient_effect, PATTACH_ABSORIGIN_FOLLOW, self.tree)
+			ParticleManager:ReleaseParticleIndex(tree_pfx)
+		end
+
+		-- Change animation now that we have a huge ass tree in our hand.
+		StartAnimation(caster, { duration = -1, activity = ACT_DOTA_ATTACK_EVENT , rate = 2, translate = "tree" })
 	end
 end
 
@@ -118,31 +125,40 @@ end
 --        Tree Grabb modifier        --
 ---------------------------------------
 
-imba_tiny_tree_modifier = imba_tiny_tree_modifier or class({})
+modifier_imba_tiny_tree = modifier_imba_tiny_tree or class({})
 
-function imba_tiny_tree_modifier:IsHidden() return false end
-function imba_tiny_tree_modifier:IsBuff() return true end
-function imba_tiny_tree_modifier:IsPurgable() return false end
-function imba_tiny_tree_modifier:DeclareFunctions()
+function modifier_imba_tiny_tree:IsHidden() return false end
+function modifier_imba_tiny_tree:IsBuff() return true end
+function modifier_imba_tiny_tree:IsPurgable() return false end
+function modifier_imba_tiny_tree:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS, 
 	}
 	return funcs
 end
 
-function imba_tiny_tree_modifier:DeclareFunctions()
+function modifier_imba_tiny_tree:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK_START,
-		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
 	}
 	return funcs
 end
 
-function imba_tiny_tree_modifier:GetModifierAttackRangeBonus()
+function modifier_imba_tiny_tree:GetAttackSound()
+	if self:GetCaster().arcana_style then
+		return "Hero_Tiny.Tree.Attack"
+	else
+		return "Hero_Tiny_Prestige.Attack"
+	end
+end
+
+function modifier_imba_tiny_tree:GetModifierAttackRangeBonus()
 	return self.attack_range
 end
 
-function imba_tiny_tree_modifier:OnCreated()
+function modifier_imba_tiny_tree:OnCreated()
 	local caster = self:GetCaster()
 	if caster ~= nil then 
 		local attack_range = self:GetAbility():GetSpecialValueFor("attack_range");
@@ -156,7 +172,7 @@ function imba_tiny_tree_modifier:OnCreated()
 	end
 end
 
-function imba_tiny_tree_modifier:OnAttackStart(keys)
+function modifier_imba_tiny_tree:OnAttackStart(keys)
 	-- Add extra dps vs buildings
 	if keys.attacker == self:GetCaster() then 
 		if keys.target ~= nil and keys.target:IsBuilding() then
@@ -167,7 +183,7 @@ function imba_tiny_tree_modifier:OnAttackStart(keys)
 	end
 end
 
-function imba_tiny_tree_modifier:OnAttack(keys)
+function modifier_imba_tiny_tree:OnAttackLanded(keys)
 	local caster = self:GetCaster()
 	if IsServer() then 
 		-- Checking for keys.no_attack_cooldown == false is to prevent Tree Volley (aghs ability) from consuming tree charges
@@ -210,20 +226,20 @@ function imba_tiny_tree_modifier:OnAttack(keys)
 			end
 
 			-- Check if we ran out of stacks...
-			if caster:HasModifier("imba_tiny_tree_modifier") then
-				local modifier = caster:FindModifierByName("imba_tiny_tree_modifier")
+			if caster:HasModifier("modifier_imba_tiny_tree") then
+				local modifier = caster:FindModifierByName("modifier_imba_tiny_tree")
 				local stacks = modifier:GetStackCount() -1 
 				if stacks > 0 then
 					modifier:SetStackCount(stacks)
 				else
-					caster:RemoveModifierByName("imba_tiny_tree_modifier")
+					caster:RemoveModifierByName("modifier_imba_tiny_tree")
 				end
 			end
 		end
 	end
 end
 
-function imba_tiny_tree_modifier:OnRemoved()
+function modifier_imba_tiny_tree:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability_slot3 = caster:FindAbilityByName("imba_tiny_tree_throw")
@@ -244,8 +260,8 @@ function imba_tiny_tree_modifier:OnRemoved()
 			self:GetAbility().tree:Destroy()
 		end
 
-		if caster:HasModifier("imba_tiny_tree_damage_modifier") then
-			caster:RemoveModifierByName("imba_tiny_tree_damage_modifier")
+		if caster:HasModifier("modifier_imba_tiny_tree_damage") then
+			caster:RemoveModifierByName("modifier_imba_tiny_tree_damage")
 		end
 
 		caster:RemoveModifierByName("modifier_imba_tiny_tree_animation")
@@ -256,19 +272,19 @@ end
 --       Tree Damage modifier        --
 ---------------------------------------
 
-imba_tiny_tree_damage_modifier = imba_tiny_tree_damage_modifier or class({})
+modifier_imba_tiny_tree_damage = modifier_imba_tiny_tree_damage or class({})
 
-function imba_tiny_tree_damage_modifier:IsHidden() return true end
-function imba_tiny_tree_damage_modifier:IsBuff() return true end
-function imba_tiny_tree_damage_modifier:IsPurgable() return false end
-function imba_tiny_tree_damage_modifier:DeclareFunctions()
+function modifier_imba_tiny_tree_damage:IsHidden() return true end
+function modifier_imba_tiny_tree_damage:IsBuff() return true end
+function modifier_imba_tiny_tree_damage:IsPurgable() return false end
+function modifier_imba_tiny_tree_damage:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 	}
 	return funcs
 end
 
-function imba_tiny_tree_damage_modifier:GetModifierPreAttack_BonusDamage()
+function modifier_imba_tiny_tree_damage:GetModifierPreAttack_BonusDamage()
 	return self:GetStackCount()
 end
 
@@ -298,6 +314,12 @@ end
 
 imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
 
+function imba_tiny_tree_throw:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "tiny_tree_throw" end
+	return "tiny/ti9_immortal/tiny_toss_tree_immortal"
+end
+
 LinkLuaModifier("modifier_imba_tree_throw", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_throw_knockback", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
@@ -326,7 +348,7 @@ function imba_tiny_tree_throw:OnSpellStart()
 		if target == nil then 
 			local projectile =  
 			{
-				EffectName 			= "particles/units/heroes/hero_tiny/tiny_tree_linear_proj.vpcf",
+				EffectName 			= caster.tree_linear_effect,
 				Ability 			= self,
 				vSpawnOrigin 		= caster_position,
 				fDistance 			= distance,
@@ -358,7 +380,7 @@ function imba_tiny_tree_throw:OnSpellStart()
 			-- Create tracking projectile if we have target
 			local projectile =  
 			{
-				EffectName 			= "particles/units/heroes/hero_tiny/tiny_tree_proj.vpcf",
+				EffectName 			= caster.tree_tracking_effect,
 				Ability 			= self,
 				fDistance 			= distance,
 				fStartRadius 		= collision_radius,
@@ -385,8 +407,10 @@ function imba_tiny_tree_throw:OnSpellStart()
 			ProjectileManager:CreateTrackingProjectile(projectile)
 		end
 
-		caster:RemoveModifierByName("imba_tiny_tree_modifier")
+		caster:RemoveModifierByName("modifier_imba_tiny_tree")
 		caster:RemoveModifierByName("modifier_imba_tiny_tree_animation")
+
+		caster:EmitSound(caster.tree_throw_sound)
 	end
 end
 
@@ -398,6 +422,8 @@ function imba_tiny_tree_throw:OnProjectileHit_ExtraData(target, location, ExtraD
 		
 		local hit_location = target:GetAbsOrigin()
 		local caster = self:GetCaster()
+
+		caster:EmitSound(caster.tree_throw_target_sound)
 
 		-- Add tree toss bonus modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_tree_throw", {})
@@ -452,8 +478,8 @@ function imba_tiny_tree_throw:KnockBack(caster, target,knockback_center)
 			center_z 			= knockback_center.z, 
 			duration 			= knockback_duration,
 			knockback_duration 	= knockback_duration,
-	        knockback_distance 	= knockback_distance,
-	        knockback_height 	= 0
+			knockback_distance 	= knockback_distance,
+			knockback_height 	= 0
 		})
 	end
 end
@@ -472,7 +498,7 @@ local state = {
 end
 
 function modifier_imba_tiny_tree_throw_knockback:GetOverrideAnimation()
-  	return ACT_DOTA_DISABLED
+	return ACT_DOTA_DISABLED
 end
 
 modifier_imba_tree_throw = modifier_imba_tree_throw or class({})
@@ -500,7 +526,9 @@ end
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:GetAbilityTextureName()
-	return "custom/imba_tiny_rolling_stone"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "custom/imba_tiny_rolling_stone" end
+--	return "tiny/ti9_immortal/tiny_toss_tree_immortal"
 end
 
 function imba_tiny_rolling_stone:IsInnateAbility()
@@ -617,7 +645,9 @@ end
 imba_tiny_avalanche = imba_tiny_avalanche or class({})
 
 function imba_tiny_avalanche:GetAbilityTextureName()
-	return "tiny_avalanche"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "tiny_avalanche" end
+	return "tiny/ti9_immortal/tiny_avalanche_immortal"
 end
 
 function imba_tiny_avalanche:GetAOERadius()
@@ -641,28 +671,28 @@ if IsServer() then
 		local delay = self:GetSpecialValueFor("projectile_duration")
 		local casterPos = caster:GetAbsOrigin()
 		local distance = (vPos - casterPos):Length2D()
-		local direction = (vPos - casterPos):Normalized()
-		local velocity = distance/delay * direction
+		self.direction = (vPos - casterPos):Normalized()
+		local velocity = distance / delay * self.direction
 		local ticks = 1 / self:GetSpecialValueFor("tick_interval")
 		velocity.z = 0
 
 		local wearables = caster:GetChildren()
 		for _,wearable in pairs(wearables) do
-            if wearable:GetClassname() == "dota_item_wearable" then
-                if wearable:GetModelName():match("tree") then
+			if wearable:GetClassname() == "dota_item_wearable" then
+				if wearable:GetModelName():match("tree") then
 --					print("Tree", (wearable:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized(), wearable:GetAngles())
-                end
-            end
+				end
+			end
 		end
 
-		if caster.tree ~= nil then
-			caster.tree:RemoveEffects(EF_NODRAW)
-		end
+--		if caster.tree ~= nil then
+--			caster.tree:RemoveEffects(EF_NODRAW)
+--		end
 
 		caster:StartGesture(ACT_TINY_AVALANCHE)
 
 		local info = {
-			EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
+			EffectName = self:GetCaster().avalance_projectile_effect,
 			Ability = self,
 			vSpawnOrigin = self:GetCaster():GetOrigin(),
 			fStartRadius = 0,
@@ -689,9 +719,10 @@ if IsServer() then
 			radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		end
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		local avalanche = ParticleManager:CreateParticle(self:GetCaster().avalanche_effect, PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(avalanche, 0, vLocation)
 		ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
+		ParticleManager:SetParticleControlForward( avalanche, 0, self.direction)
 		local offset = 0
 		local ticks = extradata.ticks
 		if self:GetCaster():HasAbility("special_bonus_imba_tiny_3") then
@@ -788,7 +819,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 				local ticks = self:GetAbility():GetTalentSpecialValueFor("passive_ticks")
 
 				local info = {
-					EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
+					EffectName = self:GetCaster().avalance_projectile_effect,
 					Ability = self:GetAbility(),
 					vSpawnOrigin = self:GetCaster():GetOrigin(),
 					fStartRadius = 0,
@@ -813,7 +844,12 @@ end
 
 imba_tiny_toss = imba_tiny_toss or class({})
 
-function imba_tiny_toss:GetAbilityTextureName() return "tiny_toss" end
+function imba_tiny_toss:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "tiny_toss" end
+	return "tiny/ti9_immortal/tiny_toss_immortal"
+end
+
 function imba_tiny_toss:IsNetherWardStealable() return false end
 
 function imba_tiny_toss:OnSpellStart()
@@ -1267,10 +1303,6 @@ function imba_tiny_craggy_exterior:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_craggy_exterior_passive"
 end
 
-function imba_tiny_craggy_exterior:GetAbilityTextureName()
-	return "tiny_craggy_exterior"
-end
-
 LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_tiny_craggy_exterior_passive = class({})
@@ -1320,7 +1352,7 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
-					local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker)
+					local avalanche = ParticleManager:CreateParticle(caster.avalanche_effect, PATTACH_CUSTOMORIGIN, params.attacker)
 					ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 					ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 					Timers:CreateTimer(0.2, function()
@@ -1392,11 +1424,17 @@ end
 imba_tiny_grow = imba_tiny_grow or class({})
 
 function imba_tiny_grow:GetAbilityTextureName()
-	return "tiny_grow"
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "tiny_grow" end
+	return "tiny/ti9_immortal/tiny_grow_prestige"
 end
 
 function imba_tiny_grow:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_grow_passive"
+end
+
+function imba_tiny_grow:OnOwnerSpawned()
+	self:OnUpgrade()
 end
 
 function imba_tiny_grow:OnUpgrade()
@@ -1443,7 +1481,7 @@ function imba_tiny_grow:OnUpgrade()
 	self:GetCaster():StartGesture(ACT_TINY_GROWL)
 	EmitSoundOn("Tiny.Grow", self:GetCaster())
 		
-	local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
+	local grow = ParticleManager:CreateParticle(self:GetCaster().grow_effect, PATTACH_POINT_FOLLOW, self:GetCaster()) 
 	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(grow)
 end
@@ -1452,23 +1490,8 @@ LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/
 
 modifier_imba_tiny_grow_passive = class({})
 
-function modifier_imba_tiny_grow_passive:OnCreated()
-	self.cleave_pct = self:GetAbility():GetSpecialValueFor("bonus_cleave_damage_scepter")
-	self.cleave_distance = self:GetAbility():GetSpecialValueFor("cleave_distance")
-	self.cleave_startwidth = self:GetAbility():GetSpecialValueFor("cleave_starting_width")
-	self.cleave_endwidth = self:GetAbility():GetSpecialValueFor("cleave_ending_width")
-	self.attackrange = self:GetAbility():GetSpecialValueFor("bonus_range_scepter")
-	self.buildingdmg = self:GetAbility():GetSpecialValueFor("bonus_building_damage_scepter")
-	self.tree = nil
-end
-
-function modifier_imba_tiny_grow_passive:IsHidden()
-	return true
-end
-
-function modifier_imba_tiny_grow_passive:RemoveOnDeath()
-	return false
-end
+function modifier_imba_tiny_grow_passive:IsHidden() return true end
+function modifier_imba_tiny_grow_passive:RemoveOnDeath() return false end
 
 function modifier_imba_tiny_grow_passive:DeclareFunctions()
 	local funcs = {

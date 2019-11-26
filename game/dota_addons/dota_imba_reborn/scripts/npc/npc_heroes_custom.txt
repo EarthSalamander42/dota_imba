@@ -1841,11 +1841,11 @@
 
 		"Ability1"					"imba_tiny_avalanche"
 		"Ability2"					"imba_tiny_toss"
-//		"Ability3"					"imba_tiny_tree_grab"
-//		"Ability4"					"tiny_tree_channel"
+		"Ability3"					"imba_tiny_tree_grab"
+		"Ability4"					"tiny_tree_channel"
 		"Ability5"					"imba_tiny_rolling_stone"
 		"Ability6"					"imba_tiny_grow"
-//		"Ability7"					"imba_tiny_tree_throw"
+		"Ability7"					"imba_tiny_tree_throw"
 
 		"Ability10"					"special_bonus_imba_tiny_1"
 		"Ability11"					"special_bonus_imba_tiny_2"
