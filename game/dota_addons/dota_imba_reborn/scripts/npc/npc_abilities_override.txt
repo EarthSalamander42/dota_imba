@@ -4742,12 +4742,6 @@
 				"scepter_buffer"			"10"
 				"RequiresScepter"		"1"
 			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"buffer_tooltip_scepter"	"10"
-				"RequiresScepter"		"1"
-			}
 		}
 	}
 

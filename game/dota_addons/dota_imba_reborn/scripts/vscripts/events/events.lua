@@ -867,11 +867,19 @@ function GameMode:OnPlayerChat(keys)
 								[2] = "imba_slark_essence_shift",
 								[3] = "generic_hidden",
 								[4] = "generic_hidden",
-								[5] = "imba_slark_shadow_dance"
+								[5] = "imba_slark_shadow_dance",
+								[6] = "special_bonus_strength_10",
+								[7] = "special_bonus_agility_6",
+								[8] = "special_bonus_attack_speed_30",
+								[9] = "special_bonus_lifesteal_20",
+								[10] = "special_bonus_imba_slark_pounce_duration",
+								[11] = "special_bonus_imba_slark_dark_pact_damage",
+								[12] = "special_bonus_imba_slark_shadow_dance_duration",
+								[13] = "special_bonus_imba_slark_essence_shift_duration"
 							}
 							upgraded = true
 						end
-							
+						
 						for ability = 0, 23 do
 							if hero:GetAbilityByIndex(ability) and ability_set[ability] then
 								local old_ability_level = hero:GetAbilityByIndex(ability):GetLevel()

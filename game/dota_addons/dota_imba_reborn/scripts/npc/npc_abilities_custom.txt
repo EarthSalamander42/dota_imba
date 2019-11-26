@@ -8749,7 +8749,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"split_delay"				"0.8"
+				"split_delay"				"0.7"
 			}
 			"11"
 			{
@@ -8948,12 +8948,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"immolation_damage_min"		"100"
+				"immolation_damage_min"		"100 150 200 250"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"immolation_damage_max"		"450"
+				"immolation_damage_max"		"450 480 510 540"
 			}
 			"10"
 			{
@@ -39770,7 +39770,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_attacks"				"4 10 16"
+				"max_attacks"				"6 11 16"
 			}
 			"03"
 			{
@@ -39917,7 +39917,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"160 180 200 220"
+				"crit_damage"				"170 190 210 230"
 			}
 			"06"
 			{
