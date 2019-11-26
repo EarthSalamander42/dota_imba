@@ -956,12 +956,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"hp_regen_aura"			"12"
 			}
-			"05"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_min"			"3000"
 			}
-			"06"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed_base"			"550"
@@ -1428,7 +1428,42 @@
 				"poison_duration"		"4.0"
 			}			
 		}
+	}
 
+	//=================================================================================================================
+	// Recipe: Fallen Sky
+	//=================================================================================================================
+	"item_recipe_fallen_sky"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_imba_blink;item_imba_meteor_hammer;"
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Trident
+	//=================================================================================================================
+	"item_recipe_trident"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_imba_kaya;item_imba_sange;item_imba_yasha;"
+			"02"						"item_imba_kaya_and_sange;item_imba_yasha;"
+			"03"						"item_imba_sange_and_yasha;item_imba_kaya;"
+			"04"						"item_imba_yasha_and_kaya;item_imba_sange;"
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Holy Locket
+	//=================================================================================================================
+	"item_recipe_holy_locket"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_ring_of_tarrasque;item_energy_booster;item_imba_magic_wand"
+		}
 	}
 
 	//=================================================================================================================
@@ -1436,71 +1471,6 @@
 	// 								HERO OVERRIDES
 	//-----------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================
-
-	//=================================================================================================================
-	// Ancient Apparition: Cold Feet
-	//=================================================================================================================
-	"ancient_apparition_cold_feet"
-	{
-		"AbilityCastRange"				"700 900 1050 1150"
-		"AbilityManaCost"				"120"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 70 95 115"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"740 860 980 1100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.5 3.0 3.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Apparition: Ice Vortex
-	//=================================================================================================================
-	"ancient_apparition_ice_vortex"
-	{
-		"AbilityCastRange"				"3000"
-		"AbilityCooldown"				"4.0"
-		"AbilityDuration"				"16 20 24 28"
-		"AbilityManaCost"				"80 70 60 50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300 400 500 600"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_resist_pct"	"-15 -20 -25 -30"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"			"350"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Ancient Apparition: bonus Ice Vortex slow/magic amp
@@ -1516,96 +1486,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Ancient Apparition: Chilling Touch
-	//=================================================================================================================
-	"ancient_apparition_chilling_touch"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 85 120 155"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.8"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"60 120 180 240"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Apparition: Ice Blast
-	//=================================================================================================================
-	"ancient_apparition_ice_blast"
-	{
-		"AbilityDamage"					"250 450 650"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_min"			"300 367 425"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_grow"			"50 55 60"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_max"			"1200"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"275 300 325"
-			}
-			"05"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"frostbite_duration"	"10 12 14"
-			}
-			"06"
-			{	
-				"var_type"				"FIELD_FLOAT"
-				"dot_damage"			"14.0 26.0 38.0"
-			}
-			"07"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1500 1750 2000"
-			}
-			"08"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"kill_pct"				"10 12 14"
-				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_5"
-			}
-			"10"
-			{	
-				"var_type"						"FIELD_INTEGER"
-				"frostbite_duration_scepter"	"20"
-				"RequiresScepter"		"1"
-			}
-		}
-	}	
 
 	//=================================================================================================================
 	// Arc Warden: Flux
@@ -1987,22 +1867,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"6"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"self_attack_chance"		"20 30 40 50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ignite_dps"				"30 40 50 60"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 30 35 40"
-			}
-			"06"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"400 450 500 550"
@@ -2414,16 +2279,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"pull_distance"				"300 400 500 600"
 			}		
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 40 55 70"
-			}		
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"50 80 110 140"
-			}		
 		}
 	}
 
@@ -2498,12 +2353,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"vision_radius"				"400"
 			}	
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"80"
-				"RequiresScepter"			"1"
-			}		
 		}
 	}
 
@@ -2654,8 +2503,6 @@
 	//=================================================================================================================
 	"doom_bringer_devour"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"60 50 40 30"
 
 		"AbilitySpecial"
@@ -2666,7 +2513,7 @@
 				"bonus_gold"			"30 80 130 180"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
 			}
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"regen"					"5 10 15 20"
@@ -3233,94 +3080,6 @@
 	}
 
 	//=================================================================================================================
-	// Lifestealer: Rage
-	//=================================================================================================================
-	"life_stealer_rage"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"50 80 110 140"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lifestealer: Feast
-	//=================================================================================================================
-	"life_stealer_feast"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"2 3 4 5"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lifestealer: Open Wounds
-	//=================================================================================================================
-	"life_stealer_open_wounds"
-	{
-		"AbilityCastRange"				"225 350 475 600"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_steps"			"-70 -70 -60 -50 -40 -30 -20 -10" 
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"50 60 70 80"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_tooltip"			"70"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"225 350 475 600"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lifestealer: Infest
-	//=================================================================================================================
-	"life_stealer_infest"
-	{
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"180 360 540"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lifestealer: Assimilate ( scepter ability )
-	//=================================================================================================================
-	"life_stealer_assimilate"
-	{
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"30"
-	}
-
-	//=================================================================================================================
 	// Lone Druid: Summon Spirit Bear
 	//=================================================================================================================
 	"lone_druid_spirit_bear"
@@ -3471,27 +3230,7 @@
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"base_attack_time"			"1.5 1.4 1.3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"5 10 15"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_hp"					"450 900 1350"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_loss"				"25"
-			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"transformation_time"		"0.8"
@@ -4249,12 +3988,6 @@
 				"scepter_buffer"			"10"
 				"RequiresScepter"		"1"
 			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"buffer_tooltip_scepter"	"10"
-				"RequiresScepter"		"1"
-			}
 		}
 	}
 
@@ -4652,20 +4385,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"8 12 16 20"
-				"LinkedSpecialBonus"	"special_bonus_unique_razor_3"
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_pct"		"8 12 16 20"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"passive_area_damage"	"60 100 140 180"		
-				"LinkedSpecialBonus"	"special_bonus_unique_razor_4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"passive_area_interval"	"5 4 3 2"		
+				"var_type"					"FIELD_INTEGER"
+				"self_movement_speed_pct"	"8 12 16 20"
 			}
 		}
 	}
@@ -4682,22 +4408,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"500 575 650"
 			}
-			"03"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"strike_interval"			"0.70 0.55 0.40"
 				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"
 			}
-			"05"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"40 65 80"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"strike_interval_scepter"	"0.60 0.45 0.30"
-				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"	
 			}
 		}
 	}
@@ -5498,17 +5218,17 @@
 				"var_type"					"FIELD_INTEGER"
 				"movement_slow"				"-20 -28 -36 -42"
 			}
-			"04"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"500 625 750 875"
 			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"5.25 5.50 5.75 6.00"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_speed"			"400 450 500 550"
@@ -5525,23 +5245,7 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_count"			"4 6 8 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_treant"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"4 10 16 22"
-			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50 70 90 110"
-			}
-			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"15 20 25 30"
@@ -6157,71 +5861,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1400"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Undying: Flesh Golem
-	//=================================================================================================================
-	"undying_flesh_golem"
-	{
-		"AbilityCooldown"					"75 65 55"
-
-		"AbilitySpecial"
-		{
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"750 900 1050"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Poison Attack
-	//=================================================================================================================
-	"viper_poison_attack"
-	{
-		"AbilityManaCost"						"40 30 20 10"
-		"AbilityCooldown"						"3 2 1 0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"3 3.5 4.0 4.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"damage"						"0.5 1.0 1.5 2.0"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_movement_speed"			"-25 -35 -45 -55"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"-25 -40 -55 -70"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Nethertoxin
-	//=================================================================================================================
-	"viper_nethertoxin"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"45 60 75 90"
 			}
 		}
 	}
@@ -7809,21 +7448,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Holy Locket
-	//=================================================================================================================
-	"item_holy_locket"
-	{
-		"AbilitySpecial"
-		{
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_increase"			"33"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Ability: Clinkz Burning Army
@@ -8037,7 +7661,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"700"
 			}
-			"07"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage_vs_heroes"	"75"

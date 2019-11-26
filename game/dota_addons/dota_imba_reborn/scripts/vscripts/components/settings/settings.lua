@@ -209,6 +209,7 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 local global_gold = 200
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
+CUSTOM_GOLD_BONUS["dota"] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
@@ -222,6 +223,7 @@ CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
 local global_xp = 300
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS[Map1v1()] = global_xp
+CUSTOM_XP_BONUS["dota"] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp
 CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
 CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
@@ -235,6 +237,7 @@ CUSTOM_XP_BONUS["imba_demo"] = global_xp
 local global_starting_level = 3
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
+HERO_STARTING_LEVEL["dota"] = global_starting_level
 HERO_STARTING_LEVEL["imba_5v5"] = global_starting_level
 HERO_STARTING_LEVEL[MapRanked5v5()] = global_starting_level
 HERO_STARTING_LEVEL[MapRanked10v10()] = global_starting_level
@@ -244,9 +247,10 @@ HERO_STARTING_LEVEL[MapOverthrow()] = global_starting_level
 HERO_STARTING_LEVEL[MapDiretide()] = global_starting_level
 HERO_STARTING_LEVEL["imba_demo"] = 1
 
-local global_max_level = 42
+local global_max_level = 30
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = global_max_level
+MAX_LEVEL["dota"] = global_max_level
 MAX_LEVEL["imba_5v5"] = global_max_level
 MAX_LEVEL[MapRanked5v5()] = global_max_level
 MAX_LEVEL[MapRanked10v10()] = global_max_level
@@ -260,6 +264,7 @@ local starting_gold_5v5 = 1700
 local starting_gold_10v10 = 2300
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = starting_gold_5v5
+HERO_INITIAL_GOLD["dota"] = starting_gold_5v5
 HERO_INITIAL_GOLD["imba_5v5"] = starting_gold_5v5
 HERO_INITIAL_GOLD[MapRanked5v5()] = starting_gold_5v5
 HERO_INITIAL_GOLD[MapRanked10v10()] = starting_gold_5v5
@@ -272,6 +277,7 @@ HERO_INITIAL_GOLD["imba_demo"] = 99999
 local global_gold_tick_time = 0.6
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = global_gold_tick_time
+GOLD_TICK_TIME["dota"] = global_gold_tick_time
 GOLD_TICK_TIME["imba_5v5"] = global_gold_tick_time
 GOLD_TICK_TIME[MapRanked5v5()] = global_gold_tick_time
 GOLD_TICK_TIME[MapRanked10v10()] = global_gold_tick_time
@@ -620,7 +626,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = true -- Should we use vanilla couriers?
+USE_TEAM_COURIER = true -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

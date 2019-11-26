@@ -694,6 +694,9 @@ function Battlepass:GetHeroEffect(hero)
 	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
 
 	elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
+		hero.ambient_pfx_effect = "particles/units/heroes/hero_tiny/tiny_ambient.vpcf"
+		hero.death_pfx = "particles/units/heroes/hero_tiny/tiny01_death.vpcf"
+
 		hero.avalanche_effect = "particles/units/heroes/hero_tiny/tiny_avalanche.vpcf"
 		hero.avalance_projectile_effect = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf"
 
@@ -704,15 +707,11 @@ function Battlepass:GetHeroEffect(hero)
 		hero.tree_grab_sound = "Hero_Tiny.Tree.Grab"
 		hero.tree_throw_sound = "Hero_Tiny.Tree.Throw"
 		hero.tree_throw_target_sound = "Hero_Tiny.Tree.Target"
+		hero.tree_channel_target_sound = "Hero_Tiny.TreeChannel.Target"
 
 		hero.grow_effect = "particles/units/heroes/hero_tiny/tiny_transform.vpcf"
 
 		hero.tree_cleave_effect = "particles/units/heroes/hero_tiny/tiny_craggy_cleave.vpcf"
-
-		---------------------------------------
-
---		hero.tree_model = "models/items/tiny/tiny_prestige/tiny_prestige_sword.vmdl"
---		hero.tree_ambient_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_ambient.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
 		hero.tether_effect = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		hero.spirits_effect = "particles/units/heroes/hero_wisp/wisp_guardian.vpcf"
@@ -1079,11 +1078,35 @@ function Battlepass:GetHeroEffect(hero)
 --			end
 		elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["tiny_immortal"] then
+				-- attempt to fix tree throw pfx being vanilla (whatever you have equipped in your armory). not fixing it
+				Wearable:RemoveWearables(hero)
+
+				hero.ambient_pfx_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_lvl1_ambient.vpcf"
+				hero.death_pfx = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_lvl1_death.vpcf"
+
+				hero.avalanche_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_avalanche.vpcf"
+				hero.avalance_projectile_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_avalanche_projectile.vpcf"
+
+				hero.tree_model = "models/items/tiny/tiny_prestige/tiny_prestige_sword.vmdl"
+				hero.tree_ambient_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_ambient.vpcf"
+				hero.tree_linear_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_linear_proj.vpcf"
+				hero.tree_tracking_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_proj.vpcf"
+				hero.tree_grab_sound = "Hero_Tiny.Prestige.Grab"
+				hero.tree_throw_sound = "Hero_Tiny.Prestige.Throw"
+				hero.tree_throw_target_sound = "Hero_Tiny.Prestige.Target"
+				hero.tree_channel_target_sound = "Hero_Tiny.Prestige.Target"
+
+				hero.grow_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_transform.vpcf"
+
+				hero.tree_cleave_effect = "particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_melee_hit.vpcf"
+
 				hero.is_storegga = true
 				hero:SetModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_01.vmdl")
 				hero:SetOriginalModel("models/items/tiny/tiny_prestige/tiny_prestige_lvl_01.vmdl")
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 --				Wearable:_WearProp(hero, "13541", "weapon")
+
+				hero.ambient_pfx = ParticleManager:CreateParticle(hero.ambient_pfx_effect, PATTACH_ABSORIGIN_FOLLOW, hero)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_ursa" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["ursa_immortal"] then

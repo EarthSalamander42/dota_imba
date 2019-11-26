@@ -314,11 +314,10 @@ function StopWheel() {
 
 function OnSelect(num) {
 	var newnum = rings[nowselect][2][num];
-	$.Msg(newnum)
+//	$.Msg(newnum)
 
-//	var ply_bp = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer().toString());
-	var ply_bp = undefined;
-	$.Msg(ply_bp);
+	var ply_bp = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer().toString());
+//	$.Msg(ply_bp);
 
 	// misc, available to everyone
 	if (newnum != 0 && newnum != 11 && newnum != 18 && newnum != 20 && newnum != 21 && newnum != 22 && newnum != 23 && newnum != 24) {
@@ -326,13 +325,13 @@ function OnSelect(num) {
 			if (ply_bp.donator_level) {
 
 			} else {
-				$.Msg("Not a donator!")
+//				$.Msg("Not a donator!")
 				$("#WHTooltip").style.visibility = "visible";
 				$("#WHTooltip").text = "Available to donators only!";
 				return;
 			}
 		} else {
-			$.Msg("Not a donator! (2)")
+//			$.Msg("Not a donator! (2)")
 			$("#WHTooltip").style.visibility = "visible";
 			$("#WHTooltip").text = "Available to donators only!";
 			return;
@@ -460,7 +459,7 @@ function OnMouseOut(num) {
 	//$("#HeroImage").heroname = hero;
 	for ( var i = 0; i < 8; i++ )
 	{
-		$.Msg(phrase_color[i])
+//		$.Msg(phrase_color[i])
 		$("#PhrasesContainer").BCreateChildren("<Button id='Phrase"+i+"' class='MyPhrases' onmouseactivate='OnSelect("+i+")' onmouseover='OnMouseOver("+i+")' onmouseout='OnMouseOut("+i+")' />");//class='Phrase HasSound RequiresHeroBadgeTier BronzeTier'
 		$("#Phrase"+i).BLoadLayoutSnippet("Phrase");
 		$("#Phrase"+i).GetChild(0).GetChild(0).visible = rings[0][1][i];

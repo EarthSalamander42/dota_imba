@@ -465,86 +465,6 @@
 	// VANILLA OVERRIDES //
 	//===================//
 
-	//=================================================================================================================
-	// Batrider: Sticky Napalm
-	//=================================================================================================================
-	"batrider_sticky_napalm"
-	{
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"3.0 2.8 2.6 2.4"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"12 18 24 30"
-				"CalculateSpellDamageTooltip"	"1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400 450 500 600"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-4 -6 -8 -10"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Flamebreak
-	//=================================================================================================================
-	"batrider_flamebreak"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"25 40 65 80"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"damage_duration"				"7"
-				"CalculateSpellDamageTooltip"	"0"
-				"LinkedSpecialBonus"			"special_bonus_unique_batrider_3"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_total_tooltip"	"175 280 455 560"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"explosion_radius"		"375 425 475 525"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"150"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1000 1100 1200"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"knockback_max_distance"	"550"
-			}	
-		}
-	}
 
 	//=================================================================================================================
 	//	Batrider: bonus Flamebreak aoe
@@ -557,37 +477,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"15"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Firefly
-	//=================================================================================================================
-	"batrider_firefly"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 60 90 120"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"18 22 26 30"
-				"LinkedSpecialBonus"	"special_bonus_unique_batrider_1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tree_radius"			"300"
 			}
 		}
 	}
@@ -618,45 +507,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Batrider: Flaming Lasso
-	//=================================================================================================================
-	"batrider_flaming_lasso"
-	{
-		"AbilityCastRange"				"300 375 450"
-		"AbilityCooldown"				"90 60 30"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 4.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"3000"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"600"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius_scepter"	"800"
-				"RequiresScepter"		"1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"40 60 80"
 			}
 		}
 	}

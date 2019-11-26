@@ -154,6 +154,12 @@ function GameMode:SetupShrines()
 			shrine:SetAbsOrigin(abs)
 		end
 	end
+
+	LinkLuaModifier("modifier_imba_shrine_passive_aura", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
+
+	for _, shrine in pairs(Entities:FindAllByClassname("npc_dota_filler")) do
+		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+	end
 end
 
 function GameMode:SetupContributors()

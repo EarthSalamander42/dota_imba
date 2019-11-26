@@ -406,11 +406,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed_bonus"			"40"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"22"
-			}
 		}
 	}
 	

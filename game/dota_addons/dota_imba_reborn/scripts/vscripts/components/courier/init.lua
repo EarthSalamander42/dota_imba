@@ -35,7 +35,7 @@ TURBO_COURIER_POSITION[3][9] = Vector(7100, 6700, 256)
 TURBO_COURIER_POSITION[3][10] = Vector(7000, 6800, 256)
 
 ListenToGameEvent("npc_spawned", function(keys)
-	if USE_TEAM_COURIER then return end
+	if USE_TEAM_COURIER == true or USE_TEAM_COURIER == nil then return end
 
 	local hero = EntIndexToHScript(keys.entindex)
 	
@@ -56,7 +56,6 @@ function TurboCourier:SpawnTurboCourier(hero, pos)
 	self.COURIER_PLAYER[heroID] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
 	self.COURIER_PLAYER[heroID].courier_count = self.courier_counter[hero:GetTeamNumber()]
 	self.courier_counter[hero:GetTeamNumber()] = self.courier_counter[hero:GetTeamNumber()] + 1
-	self.COURIER_PLAYER[heroID]:UpgradeToFlyingCourier()
 	self.COURIER_PLAYER[heroID].return_position = pos
 
 	-- Let's give 'em different colours...

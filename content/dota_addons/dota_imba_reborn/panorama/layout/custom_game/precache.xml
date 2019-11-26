@@ -162,6 +162,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/tiny_immortal.png" hittest="false" />
 
 			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style0.png" hittest="false" />
 			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style1.png" hittest="false" />

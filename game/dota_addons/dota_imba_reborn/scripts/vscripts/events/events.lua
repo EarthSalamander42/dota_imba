@@ -138,7 +138,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 					if pos[i] then
 						COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
-						COURIER_TEAM[i]:UpgradeToFlyingCourier()
 						COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
 						COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
 						COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
@@ -217,6 +216,19 @@ function GameMode:OnGameRulesStateChange(keys)
 		for _, tower in pairs(towers) do
 			SetupTower(tower)
 		end
+
+		-- temporary gold earning through old tick time, until couriers are fixed
+		Timers:CreateTimer(function()
+			if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
+
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:IsValidPlayerID(i) then
+					PlayerResource:ModifyGold(i, 1, true, DOTA_ModifyGold_GameTick)
+				end
+			end
+
+			return GOLD_TICK_TIME[GetMapName()]
+		end)
 	end
 end
 

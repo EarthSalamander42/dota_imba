@@ -122,6 +122,8 @@
 	"npc_dota_hero_wisp" 				"1"
 	"npc_dota_hero_witch_doctor" 		"1"
 	"npc_dota_hero_zuus" 				"1"
+	"npc_dota_hero_void_spirit"			"1"
+	"npc_dota_hero_snapfire"			"1"
 
 	// Custom Heroes
 	"npc_dota_hero_hell_empress" 		"1"

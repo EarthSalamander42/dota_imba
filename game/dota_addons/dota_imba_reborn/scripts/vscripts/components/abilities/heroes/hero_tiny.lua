@@ -6,10 +6,108 @@
 --          Tree Grab                --
 ---------------------------------------
 
+LinkLuaModifier("modifier_imba_tiny_death_handler", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_damage", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_animation", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_tiny_death_handler = modifier_imba_tiny_death_handler or class({})
+
+function modifier_imba_tiny_death_handler:IsHidden() return true end
+function modifier_imba_tiny_death_handler:IsPurgable() return false end
+function modifier_imba_tiny_death_handler:IsPurgeException() return false end
+function modifier_imba_tiny_death_handler:RemoveOnDeath() return false end
+
+function modifier_imba_tiny_death_handler:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_DEATH,
+} end
+
+function modifier_imba_tiny_death_handler:OnDeath(params)
+	if not IsServer() then return end
+	if params.unit ~= self:GetParent() then return end
+
+	local grow_ability = self:GetParent():FindAbilityByName("imba_tiny_grow")
+	local grow_level = 1
+
+	if grow_ability then
+		grow_level = grow_ability:GetLevel() + 1
+	end
+
+	local pfx_name = string.gsub(self:GetParent().death_pfx, "lvl1", "lvl"..grow_level)
+
+	local death_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(death_pfx, 0, self:GetParent():GetAbsOrigin())
+end
+
+modifier_imba_tiny_tree_animation = modifier_imba_tiny_tree_animation or class({})
+
+function modifier_imba_tiny_tree_animation:OnCreated()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local grow = caster:FindAbilityByName("imba_tiny_grow")
+		local grow_lvl = grow:GetLevel()
+
+		-- If we allrdy have a tree... destroy it and create new. 
+		if caster.tree ~= nil then
+			caster.tree:AddEffects(EF_NODRAW)
+			UTIL_Remove(caster.tree)
+			caster.tree = nil
+		end
+
+		-- Create the tree model
+		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = caster.tree_model})
+		-- Bind it to caster bone 
+		self.tree:FollowEntity(self:GetCaster(), true)
+		-- Find the Coordinates for model position on left hand
+		local origin = caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_attack2"))
+		-- Forward Vector!
+		local fv = caster:GetForwardVector()
+		
+		-- Apply diffrent positions of the tree depending on growth model...
+		if grow_lvl == 3 then
+			--Adjust poition to match grow lvl 3
+			local pos = origin + (fv * 50)
+			self.tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
+		
+		elseif grow_lvl == 2 then
+			-- Adjust poition to match grow lvl 2
+			local pos = origin + (fv * 35)
+			self.tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
+
+		elseif grow_lvl == 1 then
+			-- Adjust poition to match grow lvl 1
+			local pos = origin + (fv * 35) 
+			self.tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
+
+		elseif grow_lvl == 0 then
+			-- Adjust poition to match original no grow model
+			local pos = origin - (fv * 25) 
+			self.tree:SetAbsOrigin(Vector(pos.x - 20, pos.y - 30 , origin.z))
+			self.tree:SetAngles(60, 60, -60)
+		end
+
+		-- Save model to caster
+		caster.tree = self.tree
+
+		if caster.tree_ambient_effect ~= "" then
+			local tree_pfx = ParticleManager:CreateParticle(caster.tree_ambient_effect, PATTACH_ABSORIGIN_FOLLOW, self.tree)
+			ParticleManager:ReleaseParticleIndex(tree_pfx)
+		end
+
+		-- Change animation now that we have a huge ass tree in our hand.
+		StartAnimation(caster, { duration = -1, activity = ACT_DOTA_ATTACK_EVENT , rate = 2, translate = "tree" })
+	end
+end
+
+function modifier_imba_tiny_tree_animation:OnRemoved()
+	if IsServer() then
+		local caster = self:GetCaster()
+		-- stop tree animation
+		EndAnimation(caster)
+		caster.tree:AddEffects(EF_NODRAW)
+	end
+end
 
 imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
 
@@ -148,9 +246,9 @@ end
 
 function modifier_imba_tiny_tree:GetAttackSound()
 	if self:GetCaster().arcana_style then
-		return "Hero_Tiny.Tree.Attack"
-	else
 		return "Hero_Tiny_Prestige.Attack"
+	else
+		return "Hero_Tiny_Tree.Attack"
 	end
 end
 
@@ -221,6 +319,15 @@ function modifier_imba_tiny_tree:OnAttackLanded(keys)
 					if enemy ~= keys.target then
 						damage_table.victim = enemy
 						ApplyDamage(damage_table)
+
+						EmitSoundOn("Hero_Tiny.Tree.Target", caster)
+
+						-- credits: Boss Hunters (Sidearms92)
+						local nfx = ParticleManager:CreateParticle(caster.tree_cleave_effect, PATTACH_POINT, caster)
+						ParticleManager:SetParticleControl(nfx, 0, enemy:GetAbsOrigin())
+						ParticleManager:SetParticleControl(nfx, 1, enemy:GetAbsOrigin())
+						ParticleManager:SetParticleControlForward(nfx, 2, caster:GetForwardVector())
+						ParticleManager:ReleaseParticleIndex(nfx)
 					end
 				end
 			end
@@ -316,7 +423,7 @@ imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
 
 function imba_tiny_tree_throw:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "tiny_tree_throw" end
+	if not self:GetCaster().arcana_style then return "tiny_toss_tree" end
 	return "tiny/ti9_immortal/tiny_toss_tree_immortal"
 end
 
@@ -417,13 +524,14 @@ end
 function imba_tiny_tree_throw:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
 		if not target then
+			EmitSoundOnLocationWithCaster(location, self:GetCaster().tree_throw_target_sound, self:GetCaster())
 			return nil
 		end
-		
+
 		local hit_location = target:GetAbsOrigin()
 		local caster = self:GetCaster()
 
-		caster:EmitSound(caster.tree_throw_target_sound)
+		target:EmitSound(caster.tree_throw_target_sound)
 
 		-- Add tree toss bonus modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_tree_throw", {})
@@ -443,7 +551,8 @@ function imba_tiny_tree_throw:OnProjectileHit_ExtraData(target, location, ExtraD
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			0,
 			0,
-			false) 
+			false
+		) 
 
 		for _,enemy in pairs(enemies) do
 			-- Dont deal damage to main target twice
@@ -528,7 +637,7 @@ imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 function imba_tiny_rolling_stone:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().arcana_style then return "custom/imba_tiny_rolling_stone" end
---	return "tiny/ti9_immortal/tiny_toss_tree_immortal"
+	return "custom/imba_tiny_rolling_stone_immortal"
 end
 
 function imba_tiny_rolling_stone:IsInnateAbility()
@@ -1171,7 +1280,6 @@ function modifier_tiny_toss_scepter_bounce:IsDebuff() return true end
 function modifier_tiny_toss_scepter_bounce:IsStunDebuff() return true end
 function modifier_tiny_toss_scepter_bounce:RemoveOnDeath() return false end
 function modifier_tiny_toss_scepter_bounce:IsHidden() return true end
-function modifier_tiny_toss_scepter_bounce:RemoveOnDeath() return false end
 function modifier_tiny_toss_scepter_bounce:IsMotionController() return true end
 function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 -- Without this it seems like server just straight crashes on Hellblade transfer
@@ -1480,10 +1588,21 @@ function imba_tiny_grow:OnUpgrade()
 	-- Effects
 	self:GetCaster():StartGesture(ACT_TINY_GROWL)
 	EmitSoundOn("Tiny.Grow", self:GetCaster())
-		
+
+	local grow_pfx_name = string.gsub(self:GetCaster().grow_effect, "lvl1", "lvl"..level)
+
 	local grow = ParticleManager:CreateParticle(self:GetCaster().grow_effect, PATTACH_POINT_FOLLOW, self:GetCaster()) 
 	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(grow)
+
+	if self:GetCaster().ambient_pfx then
+		ParticleManager:DestroyParticle(self:GetCaster().ambient_pfx, true)
+		ParticleManager:ReleaseParticleIndex(self:GetCaster().ambient_pfx)
+	end
+
+	local pfx_name = string.gsub(self:GetCaster().ambient_pfx_effect, "lvl1", "lvl"..level)
+
+	self:GetCaster().ambient_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster()) 
 end
 
 LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
