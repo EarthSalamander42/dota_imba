@@ -116,6 +116,7 @@
 	"battlepass_skywrath_mage_immortal" "Flight of Epiphany"
 	"battlepass_skywrath_mage_immortal2" "Golden Flight of Epiphany"
 	"battlepass_slark_taunt" "Drwina: Brzytwobrót!"
+	"battlepass_tiny_immortal" "Majesty of the Colossus"
 	"battlepass_ursa_immortal" "Zestaw: Górski Tropiciel"
 	"battlepass_vengefulspirit_immortal" "Żałobna Zaduma"
 	"battlepass_vengefulspirit_taunt" "Drwina: Królewski kurak"

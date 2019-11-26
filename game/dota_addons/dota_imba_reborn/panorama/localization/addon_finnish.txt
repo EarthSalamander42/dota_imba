@@ -116,6 +116,7 @@
 	"battlepass_skywrath_mage_immortal" "Flight of Epiphany"
 	"battlepass_skywrath_mage_immortal2" "Golden Flight of Epiphany"
 	"battlepass_slark_taunt" "Pilkka: Veitsivoltti!"
+	"battlepass_tiny_immortal" "Majesty of the Colossus"
 	"battlepass_ursa_immortal" "Alppien vaanija -kokoelma"
 	"battlepass_vengefulspirit_immortal" "Mournful Reverie"
 	"battlepass_vengefulspirit_taunt" "Pilkka: Vattuilua"

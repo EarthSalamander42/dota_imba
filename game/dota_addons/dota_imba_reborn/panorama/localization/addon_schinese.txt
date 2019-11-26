@@ -116,6 +116,7 @@
 	"battlepass_skywrath_mage_immortal" "顿悟翔翼"
 	"battlepass_skywrath_mage_immortal2" "纯金顿悟翔翼"
 	"battlepass_slark_taunt" "嘲讽：小刀翻转！"
+	"battlepass_tiny_immortal" "Majesty of the Colossus"
 	"battlepass_ursa_immortal" "高山行者套装"
 	"battlepass_vengefulspirit_immortal" "悲恸之幻"
 	"battlepass_vengefulspirit_taunt" "嘲讽：皇家之蔑"

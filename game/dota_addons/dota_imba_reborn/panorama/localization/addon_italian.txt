@@ -116,6 +116,7 @@
 	"battlepass_skywrath_mage_immortal" "Flight of Epiphany"
 	"battlepass_skywrath_mage_immortal2" "Golden Flight of Epiphany"
 	"battlepass_slark_taunt" "Provocazione: Balzo col Coltello!"
+	"battlepass_tiny_immortal" "Majesty of the Colossus"
 	"battlepass_ursa_immortal" "Set \"Il Cacciatore Alpino\""
 	"battlepass_vengefulspirit_immortal" "Fantasia Funeraria"
 	"battlepass_vengefulspirit_taunt" "Provocazione: L'Ostentazione Regale"

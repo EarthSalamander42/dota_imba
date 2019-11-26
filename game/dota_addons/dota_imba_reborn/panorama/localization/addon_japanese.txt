@@ -116,6 +116,7 @@
 	"battlepass_skywrath_mage_immortal" "Flight of Epiphany"
 	"battlepass_skywrath_mage_immortal2" "Golden Flight of Epiphany"
 	"battlepass_slark_taunt" "Taunt: RazorFlip!"
+	"battlepass_tiny_immortal" "Majesty of the Colossus"
 	"battlepass_ursa_immortal" "The Alpine Stalker's セット"
 	"battlepass_vengefulspirit_immortal" "Mournful Reverie"
 	"battlepass_vengefulspirit_taunt" "Taunt: The Royal Raspberry"
