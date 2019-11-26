@@ -5,11 +5,14 @@
 ---------------------------------------
 --          Tree Grab                --
 ---------------------------------------
-imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
+
 LinkLuaModifier("imba_tiny_tree_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_damage_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_animation", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
+imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
+
 function imba_tiny_tree_grab:OnSpellStart()
 	if IsServer() then 
 		local caster = self:GetCaster()
@@ -34,13 +37,15 @@ function imba_tiny_tree_grab:OnSpellStart()
 	end
 end
 
-
 ----------------------------------------------
 --     Tree Model and Animation modifier	--
 ----------------------------------------------
+
 modifier_imba_tiny_tree_animation = class({})
+
 function modifier_imba_tiny_tree_animation:IsHidden() return true end
 function modifier_imba_tiny_tree_animation:IsPurgable() return false end
+
 function modifier_imba_tiny_tree_animation:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -112,7 +117,9 @@ end
 ---------------------------------------
 --        Tree Grabb modifier        --
 ---------------------------------------
+
 imba_tiny_tree_modifier = imba_tiny_tree_modifier or class({})
+
 function imba_tiny_tree_modifier:IsHidden() return false end
 function imba_tiny_tree_modifier:IsBuff() return true end
 function imba_tiny_tree_modifier:IsPurgable() return false end
@@ -248,7 +255,9 @@ end
 ---------------------------------------
 --       Tree Damage modifier        --
 ---------------------------------------
+
 imba_tiny_tree_damage_modifier = imba_tiny_tree_damage_modifier or class({})
+
 function imba_tiny_tree_damage_modifier:IsHidden() return true end
 function imba_tiny_tree_damage_modifier:IsBuff() return true end
 function imba_tiny_tree_damage_modifier:IsPurgable() return false end
@@ -266,7 +275,9 @@ end
 ---------------------------------------
 -- Tree Damage vs budilding modifier --
 ---------------------------------------
+
 imba_tiny_tree_building_modifier = imba_tiny_tree_building_modifier or class({})
+
 function imba_tiny_tree_building_modifier:IsHidden() return true end
 function imba_tiny_tree_building_modifier:IsBuff() return true end
 function imba_tiny_tree_building_modifier:IsPurgable() return false end
@@ -284,9 +295,12 @@ end
 ---------------------------------------
 --          Tree Throw               --
 ---------------------------------------
+
 imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
+
 LinkLuaModifier("modifier_imba_tree_throw", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_throw_knockback", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 function imba_tiny_tree_throw:OnSpellStart()
 	if IsServer() then
 		local target_point 		= self:GetCursorPosition()
@@ -340,7 +354,6 @@ function imba_tiny_tree_throw:OnSpellStart()
 			}				
 
 			ProjectileManager:CreateLinearProjectile(projectile)
-
 		else
 			-- Create tracking projectile if we have target
 			local projectile =  
@@ -446,9 +459,11 @@ function imba_tiny_tree_throw:KnockBack(caster, target,knockback_center)
 end
 
 modifier_imba_tiny_tree_throw_knockback = class({})
+
 function modifier_imba_tiny_tree_throw_knockback:IsHidden() return false end
 function modifier_imba_tiny_tree_throw_knockback:IsDebuff() return true end
 function modifier_imba_tiny_tree_throw_knockback:IsPurgable() return false end
+
 function modifier_imba_tiny_tree_throw_knockback:CheckState()
 local state = {
 		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
@@ -461,9 +476,11 @@ function modifier_imba_tiny_tree_throw_knockback:GetOverrideAnimation()
 end
 
 modifier_imba_tree_throw = modifier_imba_tree_throw or class({})
+
 function modifier_imba_tree_throw:IsHidden() return true end
 function modifier_imba_tree_throw:IsBuff() return true end
 function modifier_imba_tree_throw:IsPurgable() return false end
+
 function modifier_imba_tree_throw:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
@@ -479,6 +496,7 @@ end
 ---------------------------------------
 --          ROLLING STONE            --
 ---------------------------------------
+
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:GetAbilityTextureName()
@@ -493,8 +511,8 @@ function imba_tiny_rolling_stone:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_rolling_stone"
 end
 
-
 LinkLuaModifier("modifier_imba_tiny_rolling_stone", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_tiny_rolling_stone = class({})
 
 function modifier_imba_tiny_rolling_stone:OnCreated()
@@ -591,7 +609,6 @@ function modifier_imba_tiny_rolling_stone:GetModifierModelScale()
 		return scale
 	end
 end
-
 
 ---------------------------------------
 --             AVALANCH              --
@@ -724,7 +741,9 @@ function imba_tiny_avalanche:GetIntrinsicModifierName()
 end
 
 LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_tiny_avalanche_passive = class({})
+
 function modifier_imba_tiny_avalanche_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("passive_chance")
 	self.prng = -10
@@ -877,42 +896,16 @@ end
 LinkLuaModifier("modifier_tiny_toss_movement", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 modifier_tiny_toss_movement = modifier_tiny_toss_movement or class({})
-function modifier_tiny_toss_movement:IsDebuff()
-	return true
-end
 
---------------------------------------------------------------------------------
-
-function modifier_tiny_toss_movement:IsStunDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_tiny_toss_movement:RemoveOnDeath()
-	return false
-end
-
-function modifier_tiny_toss_movement:IsHidden()
-	return true
-end
-
-function modifier_tiny_toss_movement:IgnoreTenacity()
-	return true
-end
-
-function modifier_tiny_toss_movement:IsMotionController()
-	return true
-end
-
-function modifier_tiny_toss_movement:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
-end
-
+function modifier_tiny_toss_movement:IsDebuff() return true end
+function modifier_tiny_toss_movement:IsStunDebuff() return true end
+function modifier_tiny_toss_movement:RemoveOnDeath() return false end
+function modifier_tiny_toss_movement:IsHidden() return true end
+function modifier_tiny_toss_movement:IgnoreTenacity() return true end
+function modifier_tiny_toss_movement:IsMotionController() return true end
+function modifier_tiny_toss_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 -- Without this Tiny can fly to world origin with Hellblade transfer
-function modifier_tiny_toss_movement:IsPurgable()
-	return false
-end
+function modifier_tiny_toss_movement:IsPurgable() return false end
 
 --------------------------------------------------------------------------------
 
@@ -1036,8 +1029,6 @@ function modifier_tiny_toss_movement:OnDestroy()
 	end
 end
 
-
-
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:DeclareFunctions()
@@ -1055,6 +1046,7 @@ function modifier_tiny_toss_movement:GetOverrideAnimation( params )
 end
 
 --------------------------------------------------------------------------------
+
 function modifier_tiny_toss_movement:GetEffectName()
 	return "particles/units/heroes/hero_tiny/tiny_toss_blur.vpcf"
 end
@@ -1138,42 +1130,16 @@ end
 LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
 
 modifier_tiny_toss_scepter_bounce = modifier_tiny_toss_scepter_bounce or class({})
-function modifier_tiny_toss_scepter_bounce:IsDebuff()
-	return true
-end
 
---------------------------------------------------------------------------------
-
-function modifier_tiny_toss_scepter_bounce:IsStunDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_tiny_toss_scepter_bounce:RemoveOnDeath()
-	return false
-end
-
-function modifier_tiny_toss_scepter_bounce:IsHidden()
-	return true
-end
-
-function modifier_tiny_toss_scepter_bounce:RemoveOnDeath()
-	return false
-end
-
-function modifier_tiny_toss_scepter_bounce:IsMotionController()
-	return true
-end
-
-function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
-end
-
+function modifier_tiny_toss_scepter_bounce:IsDebuff() return true end
+function modifier_tiny_toss_scepter_bounce:IsStunDebuff() return true end
+function modifier_tiny_toss_scepter_bounce:RemoveOnDeath() return false end
+function modifier_tiny_toss_scepter_bounce:IsHidden() return true end
+function modifier_tiny_toss_scepter_bounce:RemoveOnDeath() return false end
+function modifier_tiny_toss_scepter_bounce:IsMotionController() return true end
+function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 -- Without this it seems like server just straight crashes on Hellblade transfer
-function modifier_tiny_toss_scepter_bounce:IsPurgable()
-	return false
-end
+function modifier_tiny_toss_scepter_bounce:IsPurgable() return false end
 
 --------------------------------------------------------------------------------
 
@@ -1306,7 +1272,9 @@ function imba_tiny_craggy_exterior:GetAbilityTextureName()
 end
 
 LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_tiny_craggy_exterior_passive = class({})
+
 function modifier_imba_tiny_craggy_exterior_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("stun_chance")
 	self.damage = self:GetAbility():GetSpecialValueFor("damage")
@@ -1323,13 +1291,8 @@ function modifier_imba_tiny_craggy_exterior_passive:OnRefresh()
 	self.reduction_duration = self:GetAbility():GetSpecialValueFor("reduction_duration")
 end
 
-function modifier_imba_tiny_craggy_exterior_passive:IsHidden()
-	return true
-end
-
-function modifier_imba_tiny_craggy_exterior_passive:RemoveOnDeath()
-	return false
-end
+function modifier_imba_tiny_craggy_exterior_passive:IsHidden() return true end
+function modifier_imba_tiny_craggy_exterior_passive:RemoveOnDeath() return false end
 
 function modifier_imba_tiny_craggy_exterior_passive:DeclareFunctions()
 	local funcs = {
@@ -1398,7 +1361,9 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 end
 
 LinkLuaModifier("modifier_craggy_exterior_blunt", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 modifier_craggy_exterior_blunt = class({})
+
 function modifier_craggy_exterior_blunt:OnCreated()
 	self.caster = self:GetCaster()
 	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
@@ -1423,6 +1388,7 @@ end
 ---------------------------------------
 --          	  GROW 		         --
 ---------------------------------------
+
 imba_tiny_grow = imba_tiny_grow or class({})
 
 function imba_tiny_grow:GetAbilityTextureName()
@@ -1483,6 +1449,7 @@ function imba_tiny_grow:OnUpgrade()
 end
 
 LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_tiny_grow_passive = class({})
 
 function modifier_imba_tiny_grow_passive:OnCreated()

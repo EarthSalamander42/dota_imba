@@ -271,7 +271,7 @@ var phrase_color = [
 	GetDonatorColor(3), // Announcers (Ember Donator)
 	GetDonatorColor(6), // Favourites (not working)
 	GetDonatorColor(5), // Any hero (Icefrog Donator)
-	GetDonatorColor(1), // Misc (Donator)
+	"white", // Misc (Available to everyone)
 	GetDonatorColor(6), // Battlepass 2019 (not working)
 	GetDonatorColor(4), // Dota Plus 2 (Salamander Donator)
 	GetDonatorColor(2), // Dota Plus 2 (Golden Donator)
@@ -279,8 +279,8 @@ var phrase_color = [
 
 function StartWheel() {
 	if ($("#Wheel").visible == false) {
-		$.Msg("Open Chat Wheel!")
-		$.Msg($("#Wheel").visible)
+//		$.Msg("Open Chat Wheel!")
+//		$.Msg($("#Wheel").visible)
 		$("#Wheel").visible = true;
 		$("#Bubble").visible = true;
 		$("#PhrasesContainer").visible = true;
@@ -292,7 +292,7 @@ function StartWheel() {
 function StopWheel() {
 	$("#Wheel").visible = false;
 
-	$.Msg("Close Chat Wheel!")
+//	$.Msg("Close Chat Wheel!")
 	$("#Wheel").visible = false;
 	$("#Bubble").visible = false;
 	$("#PhrasesContainer").visible = false;
@@ -313,8 +313,32 @@ function StopWheel() {
 }
 
 function OnSelect(num) {
-	$.Msg(num)
 	var newnum = rings[nowselect][2][num];
+	$.Msg(newnum)
+
+//	var ply_bp = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer().toString());
+	var ply_bp = undefined;
+	$.Msg(ply_bp);
+
+	// misc, available to everyone
+	if (newnum != 0 && newnum != 11 && newnum != 18 && newnum != 20 && newnum != 21 && newnum != 22 && newnum != 23 && newnum != 24) {
+		if (ply_bp) {
+			if (ply_bp.donator_level) {
+
+			} else {
+				$.Msg("Not a donator!")
+				$("#WHTooltip").style.visibility = "visible";
+				$("#WHTooltip").text = "Available to donators only!";
+				return;
+			}
+		} else {
+			$.Msg("Not a donator! (2)")
+			$("#WHTooltip").style.visibility = "visible";
+			$("#WHTooltip").text = "Available to donators only!";
+			return;
+		}
+	}
+
 	if (rings[nowselect][1][num])
 	{
 		GameEvents.SendCustomGameEventToServer("SelectVO", {num: newnum});

@@ -766,9 +766,6 @@ imba_invoker = imba_invoker or class({})
 		imba_invoker_emp = class({})
 		LinkLuaModifier("modifier_imba_invoker_emp", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_emp_overload", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
-		function imba_invoker_emp:GetAbilityTextureName()
-			return "invoker_emp"
-		end
 
 		function imba_invoker_emp:GetCastAnimation()
 	 		return ACT_DOTA_CAST_EMP
@@ -952,12 +949,6 @@ imba_invoker = imba_invoker or class({})
 				kv.unit:SetMana(current_mana - kv.gain);
 			end
 		end
-
-		function modifier_imba_invoker_emp_overload:GetAbilityTextureName()
-			return "invoker_emp"
-		end
-
-
 
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's Sun Strike
@@ -1542,14 +1533,6 @@ imba_invoker = imba_invoker or class({})
 			return funcs
 		end
 
-		function modifier_imba_invoker_cold_snap:GetAbilityTextureName()
-			return "invoker_cold_snap"
-		end
-
-		function modifier_imba_invoker_cold_snap:GetTExture()
-			return "invoker_cold_snap"
-		end
-
 		function modifier_imba_invoker_cold_snap:OnTakeDamage(kv) 
 			if IsServer() then
 				local caster 			= self:GetCaster()
@@ -1744,14 +1727,6 @@ imba_invoker = imba_invoker or class({})
 			return funcs
 		end
 
-		function modifier_imba_invoker_ghost_walk:GetAbilityTextureName()
-			return "invoker_ghost_walk"
-		end
-
-		function modifier_imba_invoker_ghost_walk:GetTexture()
-			return "invoker_ghost_walk"
-		end
-
 		function modifier_imba_invoker_ghost_walk:GetModifierMoveSpeed_Max()
 			return self.max_movement_speed
 		end
@@ -1884,14 +1859,6 @@ imba_invoker = imba_invoker or class({})
 			return 100
 		end
 
-		function modifier_invis_fade_ghost_walk:GetAbilityTextureName()
-			return "invoker_ghost_walk"
-		end
-
-		function modifier_invis_fade_ghost_walk:GetTexture()
-			return "invoker_ghost_walk"
-		end
-
 		--------------------------------------------------------------------------------------------------------------------
 		--	Ghost Walk - SlowAura
 		--------------------------------------------------------------------------------------------------------------------
@@ -1906,14 +1873,6 @@ imba_invoker = imba_invoker or class({})
 			}
 			
 			return funcs
-		end
-
-		function modifier_imba_invoker_ghost_walk_aura:GetAbilityTextureName()
-			return "invoker_ghost_walk"
-		end
-
-		function modifier_imba_invoker_ghost_walk_aura:GetTexture()
-			return "invoker_ghost_walk"
 		end
 
 		function modifier_imba_invoker_ghost_walk_aura:OnCreated(kv)
@@ -2472,14 +2431,6 @@ imba_invoker = imba_invoker or class({})
 			return funcs
 		end
 
-		function modifier_imba_forged_spirit_melting_strike:GetAbilityTextureName()
-			return "forged_spirit_melting_strike"
-		end
-
-		function modifier_imba_forged_spirit_melting_strike:GetTexture()
-			return "forged_spirit_melting_strike"
-		end
-
 		function modifier_imba_forged_spirit_melting_strike:OnCreated(kv)
 			if IsServer() then
 				self.max_armor_removed 		= kv.max_armor_removed
@@ -2509,11 +2460,6 @@ imba_invoker = imba_invoker or class({})
 		imba_forged_spirit_death = class({})
 		function imba_forged_spirit_death:IsHidden() return false end
 		function imba_forged_spirit_death:IsPassive() return true  end
-		function imba_forged_spirit_death:GetAbilityTextureName()
-			return "invoker_forge_spirit"
-		end
-
-
 
 	--------------------------------------------------------------------------------------------------------------------
 	--	Invoker's: Tornado

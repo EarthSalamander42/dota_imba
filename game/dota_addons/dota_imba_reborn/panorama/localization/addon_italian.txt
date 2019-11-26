@@ -127,6 +127,7 @@
 	"bozhe_ti_posmotri" "Боже, ты посмотри вокруг, что происходит!"
 	"brutal" "Brutal. Savage. Rekt."
 	"changehero_button" "Select New Hero"
+	"chat_wheel_donator_required" "Available to {s:donators} only!"
 	"chest" "ITEM"
 	"chineseannouncer" "Chinese Announcer"
 	"chineseannouncer2" "Chinese Announcer 2"
