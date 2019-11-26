@@ -1,5 +1,7 @@
 LinkLuaModifier("modifier_imba_shrine_passive", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
 
+modifier_imba_shrine_passive_aura = modifier_imba_shrine_passive_aura or class({})
+
 function modifier_imba_shrine_passive_aura:IsHidden() 				return true end
 function modifier_imba_shrine_passive_aura:IsAura() 				return true end
 
