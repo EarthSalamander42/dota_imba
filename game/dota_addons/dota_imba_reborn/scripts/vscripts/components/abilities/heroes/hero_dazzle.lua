@@ -1721,7 +1721,7 @@ function imba_dazzle_ressurection:OnAbilityPhaseStart()
 
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_point, nil, search_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD, FIND_CLOSEST , false)
 		for _,target in pairs(targets) do
-			if not target:IsAlive() then
+			if target:IsRealHero() and not target:IsAlive() then
 				self.target = target
 				return true
 			end

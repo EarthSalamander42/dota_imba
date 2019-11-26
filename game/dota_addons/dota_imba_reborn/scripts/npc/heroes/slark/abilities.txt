@@ -72,6 +72,36 @@
 				"var_type"				"FIELD_INTEGER"
 				"premature_stack_activation"		"2"
 			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_spawn_duration"		"10"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_health_pct"		"100"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_attack_pct"		"30"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_base_health"		"800"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_base_attack_min"		"32"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"premature_base_attack_max"		"40"
+			}
 		}
 	}
 
@@ -254,13 +284,19 @@
 				"cooldown_scepter"			"30"
 				"RequiresScepter"	"1"
 			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dark_reef_radius"			"2600"
+			}
 		}
 	}
 	
 	//=================================================================================================================
 	//
 	//=================================================================================================================
-	"special_bonus_imba_oracle_fortunes_end_max_duration" 
+	"special_bonus_imba_slark_pounce_duration" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -270,7 +306,7 @@
 		
 		"LinkedAbility"
 		{
-			"01" 	"imba_oracle_fortunes_end"
+			"01" 	"imba_slark_pounce"
 		}
 		
 		// Special
@@ -281,6 +317,90 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_slark_dark_pact_damage" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_slark_dark_pact"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"150"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_slark_shadow_dance_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_slark_shadow_dance"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_slark_essence_shift_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_slark_essence_shift"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"80"
 			}
 		}
 	}

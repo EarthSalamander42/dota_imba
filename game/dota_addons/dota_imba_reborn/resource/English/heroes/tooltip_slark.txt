@@ -1,11 +1,12 @@
 // SLARK
 "DOTA_Tooltip_ability_imba_slark_dark_pact"									"Dark Pact"
-"DOTA_Tooltip_ability_imba_slark_dark_pact_Description"						"After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n\nDISPEL TYPE: Strong Dispel"
+"DOTA_Tooltip_ability_imba_slark_dark_pact_Description"						"After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Premature Spawn: </font>Dark Pact can be set to auto-cast. After %premature_stack_activation% successful casts of Dark Pact, the next Dark Pact cast with auto-cast on spawns a miniature Slark for %premature_spawn_duration% seconds. This spawn has the Dark Pact and Pounce abilities, with level equal to the caster's levels in those abilities.<br><br>The spawn has %premature_base_health% base health and %premature_base_attack_min%~%premature_base_attack_max% attack damage, which is further boosted based on how much health was lost during the Dark Pacts which charged the spawn:<br><br>% of damage taken to bonus health: %premature_health_pct%%%<br>% of damage taken to bonus attack damage: %premature_attack_pct%%%"
 "DOTA_Tooltip_ability_imba_slark_dark_pact_Lore"								"Slithereen are capable of quickly regrowing appendages, in case of critical injury, to save their own lives."
 "DOTA_Tooltip_ability_imba_slark_dark_pact_Note0"							"%delay% seconds after cast, a series of %total_pulses% pulses separated by %pulse_interval% seconds deal the damage."
 "DOTA_Tooltip_ability_imba_slark_dark_pact_Note1"							"Each pulse also removes debuffs from Slark."
 "DOTA_Tooltip_ability_imba_slark_dark_pact_Note2"							"You can't kill yourself with this skill."
 "DOTA_Tooltip_ability_imba_slark_dark_pact_Note3"							"The pulses stop if Slark dies."
+"DOTA_Tooltip_ability_imba_slark_dark_pact_Note4"							"Premature Spawn's charge damage storage takes the higher of actual damage taken during Dark Pact and Dark Pact's self-damage before any damage manipulation."
 "DOTA_Tooltip_ability_imba_slark_dark_pact_delay"							"DELAY:"
 "DOTA_Tooltip_ability_imba_slark_dark_pact_radius"							"RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_dark_pact_total_damage"						"DAMAGE:"
@@ -28,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_slark_essence_shift_stat_loss"					"ALL ATTRIBUTE LOSS:"
 "DOTA_Tooltip_ability_imba_slark_essence_shift_duration"						"DURATION:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance"								"Shadow Dance"
-"DOTA_Tooltip_ability_imba_slark_shadow_dance_Description"					"When used, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark.  Passively, when not visible to the enemy team, Slark gains bonus movement speed and health regeneration."
+"DOTA_Tooltip_ability_imba_slark_shadow_dance_Description"					"When used, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark.  Passively, when not visible to the enemy team, Slark gains bonus movement speed and health regeneration.\n<font color='#FF7800'>Welcome to Dark Reef: </font>Shadow Dance can be set to auto-cast. Casting Shadow Dance in this manner creates a %dark_reef_radius% radius cloud at the cast location, which hides both allies and enemies for the duration."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_aghanim_description"			"Reduces cooldown and causes Shadow Dance active to be an area of effect ability, hiding nearby allied heroes underneath it. Allies do not gain bonus movement speed or health regeneration."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Lore"							"The hidden Thirteenth is a slippery foe."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Note0"							"If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds."
@@ -38,6 +39,11 @@
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_bonus_regen_pct"				"%HEALTH GAINED PER SECOND:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_scepter_aoe"   				"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_cooldown_scepter"   			"SCEPTER COOLDOWN:"
+
+"DOTA_Tooltip_modifier_imba_slark_dark_pact_thinker"					"Premature Spawn"
+"DOTA_Tooltip_modifier_imba_slark_dark_pact_thinker_Description"		"After two Dark Pacts, the next Dark Pact with auto-cast on will summon a minature Slark."
+
+"npc_dota_slark_spawn"													"Slark Spawn"
 
 "DOTA_Tooltip_modifier_imba_slark_pounce_leash"							"Leashed"
 "DOTA_Tooltip_modifier_imba_slark_pounce_leash_Description"				"Leashed to Slark, can only move a limited distance away."
@@ -56,3 +62,8 @@
 
 "DOTA_Tooltip_modifier_imba_slark_essence_shift_permanent_debuff"	"Agility Lost"
 "DOTA_Tooltip_modifier_imba_slark_essence_shift_permanent_debuff_Description"	"Permanently missing %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% Agility."
+
+"DOTA_Tooltip_ability_special_bonus_imba_slark_pounce_duration"			"+{s:value}s Pounce Leash"
+"DOTA_Tooltip_ability_special_bonus_imba_slark_dark_pact_damage"		"+{s:value} Dark Pact Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_slark_shadow_dance_duration"	"+{s:value}s Shadow Dance Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_slark_essence_shift_duration"	"+{s:value} Essence Shift Duration"

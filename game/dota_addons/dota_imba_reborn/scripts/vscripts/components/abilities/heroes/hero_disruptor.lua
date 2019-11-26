@@ -1560,7 +1560,12 @@ function modifier_imba_static_storm_debuff:OnCreated()
 	self.target = self:GetParent()	
 	self.scepter = self.caster:HasScepter()		
 	self.debuff = "modifier_imba_static_storm_debuff_linger"		
-	self.linger_time = self.ability:GetSpecialValueFor("linger_time")
+	
+	if self.ability then
+		self.linger_time = self.ability:GetSpecialValueFor("linger_time")
+	else
+		self.linger_time = 1
+	end
 end
 
 function modifier_imba_static_storm_debuff:GetEffectName()	return "particles/generic_gameplay/generic_silenced.vpcf" end

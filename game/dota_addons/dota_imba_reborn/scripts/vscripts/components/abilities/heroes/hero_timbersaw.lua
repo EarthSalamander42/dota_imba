@@ -843,6 +843,12 @@ function modifier_imba_timbersaw_reactive_armor:OnAttackLanded(keys)
 	
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_reactive_armor_stack", {duration = self:GetAbility():GetSpecialValueFor("stack_duration")})
 		self:SetDuration(self:GetAbility():GetSpecialValueFor("stack_duration"), true)
+		
+		if keys.attacker:GetTeamNumber() == self:GetParent():GetTeamNumber() then
+			for additional_stacks = 1, self:GetAbility():GetSpecialValueFor("ally_hit_additional_stacks") do
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_reactive_armor_stack", {duration = self:GetAbility():GetSpecialValueFor("stack_duration")})
+			end
+		end
 	end
 end
 

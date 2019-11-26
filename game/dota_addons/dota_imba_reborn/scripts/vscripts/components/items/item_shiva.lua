@@ -23,6 +23,7 @@ LinkLuaModifier("modifier_imba_shiva_handler", "components/items/item_shiva.lua"
 LinkLuaModifier("modifier_imba_shiva_aura", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shiva_debuff", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_shivas_blast_slow", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_shiva_frost_goddess_breath", "components/items/item_shiva", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_shivas_guard:GetIntrinsicModifierName()
 	return "modifier_imba_shiva_handler"
@@ -126,6 +127,13 @@ function modifier_imba_shiva_handler:RemoveOnDeath() return false end
 function modifier_imba_shiva_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shiva_handler:OnCreated()
+	if self:GetAbility() then
+		self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+	else
+		self:Destroy()
+		return
+	end
+
 	self:StartIntervalThink(1.0)
 	self:OnIntervalThink()
 
@@ -181,6 +189,16 @@ function modifier_imba_shiva_handler:OnDestroy()
 		end
 	end
 end
+
+function modifier_imba_shiva_handler:IsAura() 				return true end
+function modifier_imba_shiva_handler:IsAuraActiveOnDeath()	return false end
+
+function modifier_imba_shiva_handler:GetAuraRadius()			return self.aura_radius end
+function modifier_imba_shiva_handler:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_shiva_handler:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_shiva_handler:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_shiva_handler:GetModifierAura()			return "modifier_item_imba_shiva_frost_goddess_breath" end
 
 ------------------------------------------
 -- Shiva's Guard Passive Aura (Handler) --
@@ -299,4 +317,30 @@ end
 
 function modifier_item_imba_shivas_blast_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("slow_stack") * self:GetStackCount()
+end
+
+----------------------------------------------
+-- modifier_item_imba_shiva_frost_goddess_breath --
+----------------------------------------------
+
+modifier_item_imba_shiva_frost_goddess_breath	= modifier_item_imba_shiva_frost_goddess_breath or class({})
+
+function modifier_item_imba_shiva_frost_goddess_breath:GetTexture()
+	if not self:GetCaster().shiva_icon_client then
+		return "item_shivas_guard"
+	else
+		return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
+	end
+end
+
+function modifier_item_imba_shiva_frost_goddess_breath:OnCreated()
+	self.aura_intellect	= self:GetAbility():GetSpecialValueFor("aura_intellect")
+end
+
+function modifier_item_imba_shiva_frost_goddess_breath:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+end
+
+function modifier_item_imba_shiva_frost_goddess_breath:GetModifierBonusStats_Intellect()
+	return self.aura_intellect
 end

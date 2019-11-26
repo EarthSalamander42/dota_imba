@@ -58,7 +58,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	Timers:CreateTimer(jump_delay, function() 
 		-- Find targets to chain too
 		for _,enemy in pairs(nearby_enemy_units) do 
-			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
+			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
 				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
 				-- Abort when we find something to chain too
 				break
@@ -138,7 +138,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 
 					-- Check if any of them heroes have a static charge... (and havent been hit yet)
 					for _,hero in pairs(heroes) do 
-						if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero then
+						if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero and hero:GetTeamNumber() ~= caster:GetTeamNumber() then
 							if imba_zuus_arc_lightning:HitCheck(caster, hero, hit_list) then 
 							-- Get the closest one!
 								local distance = (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D()

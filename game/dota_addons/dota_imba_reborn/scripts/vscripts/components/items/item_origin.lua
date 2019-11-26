@@ -26,15 +26,15 @@ end
 -- end
 
 function item_imba_origin:CastFilterResultTarget(target)
-	if IsServer() then
-		if target == self:GetCaster() then
-			return UF_SUCCESS
-		elseif (self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 1 or self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 3) and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and target:IsMagicImmune() then
-			return UF_FAIL_MAGIC_IMMUNE_ENEMY
-		end
-
-		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	if target == self:GetCaster() then
+		return UF_SUCCESS
+	elseif (self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 1 or self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 3) and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and target:IsMagicImmune() then
+		return UF_FAIL_MAGIC_IMMUNE_ENEMY
+	elseif self:GetCaster():GetModifierStackCount("modifier_item_imba_origin", self:GetCaster()) == 3 and target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber() )
 	end
+
+	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber() )
 end
 
 function item_imba_origin:GetAbilityTextureName()
@@ -102,7 +102,7 @@ function item_imba_origin:OnSpellStart()
 				active_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_origin_health", {duration = active_duration})
 			end
 			
-			if active_modifier then
+			if active_modifier and active_modifier:IsDebuff() then
 				active_modifier:SetDuration(active_duration * (1 - target:GetStatusResistance()), true)
 			end
 		end
@@ -239,6 +239,8 @@ end
 -- ORIGIN CHAOS ACTIVE MODIFIER --
 ----------------------------------
 
+function modifier_item_imba_origin_chaos:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_item_imba_origin_chaos:GetEffectName()
 	return "particles/econ/items/silencer/silencer_ti6/silencer_last_word_status_ti6.vpcf"
 end
@@ -259,6 +261,10 @@ function modifier_item_imba_origin_chaos:OnCreated()
 	-- AbilitySpecials
 	self.chaos_radius			= self.ability:GetSpecialValueFor("chaos_radius")
 	self.chaos_dmg_pct			= self.ability:GetSpecialValueFor("chaos_dmg_pct")
+	
+	if self.parent:GetTeamNumber() == self.caster:GetTeamNumber() then
+		self.chaos_dmg_pct		= self.chaos_dmg_pct * 0.5
+	end
 end
 
 function modifier_item_imba_origin_chaos:DeclareFunctions()

@@ -54,9 +54,9 @@ function modifier_imba_static_remnant:OnCreated( params )
 		self.ballLightning		=	params.ballLightning or false
 		
 		--Ability paramaters
-		local activation_delay = self.ability:GetSpecialValueFor("big_remnant_activation_delay")
+		self.activation_delay = self.ability:GetSpecialValueFor("big_remnant_activation_delay")
 		if self:GetCaster():HasTalent("special_bonus_imba_storm_spirit_6") then
-			activation_delay = activation_delay - 0.3 -- self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_6") -- doesn't work with FindTalentValue for reasons..
+			self.activation_delay = self.activation_delay - 0.3 -- self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_6") -- doesn't work with FindTalentValue for reasons..
 		end
 
 		local check_interval = self.ability:GetSpecialValueFor("explosion_check_interval")
@@ -69,18 +69,12 @@ function modifier_imba_static_remnant:OnCreated( params )
 		ParticleManager:SetParticleControl(self.remnant_particle_fx, 2, Vector(RandomInt(37, 52), 1, 100) )
 		ParticleManager:SetParticleControl(self.remnant_particle_fx, 11, self.caster_location)
 
-		--Create a timer to delay the remnant explosion
-		Timers:CreateTimer(activation_delay, function()
-				if not self:IsNull() then 
-					--Start checking for nearby enemies
-					self:StartIntervalThink(check_interval)
-				end
-			end)
+		self:StartIntervalThink(check_interval)
 	end
 end
 
 function modifier_imba_static_remnant:OnIntervalThink()
-	if IsServer() then
+	if self:GetElapsedTime() >= self.activation_delay then
 
 		-- ReplaceHeroWith and Rubick stuff
 		if self.ability:IsNull() then
@@ -978,7 +972,7 @@ function modifier_imba_ball_lightning:OnCreated()
 end
 
 function modifier_imba_ball_lightning:OnIntervalThink()
-	if not self:GetAbility() then
+	if not self:GetAbility() or self:GetAbility():IsNull() then
 		self:Destroy()
 	end
 end

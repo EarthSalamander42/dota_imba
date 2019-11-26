@@ -42,8 +42,10 @@ function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	
 	-- ...Also wtf who puts logic in the GetIntrinsicModifierName function
 	Timers:CreateTimer(FrameTime(), function()
-		for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_imba_lance_of_longinus")) do
-			modifier:SetStackCount(_)
+		if self and self.GetParent and self:GetParent() then
+			for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_imba_lance_of_longinus")) do
+				modifier:SetStackCount(_)
+			end
 		end
 	end)
 	
