@@ -153,20 +153,20 @@ ListenToGameEvent('entity_killed', function(keys)
 	end
 
 	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
-		local newItem = CreateItem("item_tombstone", hero, hero)
-		newItem:SetPurchaseTime(0)
-		newItem:SetPurchaser(hero)
-
-		local tombstone = SpawnEntityFromTableSynchronous("dota_item_tombstone_drop", {})
-		tombstone:SetContainedItem(newItem)
-		tombstone:SetAngles(0, RandomFloat(0, 360), 0)
-		FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
-
-		hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
-
 		if hero:IsImbaReincarnating() then
---			print("Hero is reincarnating!")
-			hero.reincarnation = true
+			print("Hero is reincarnating!")
+			hero.reincarnation = true 
+		else
+			local newItem = CreateItem("item_tombstone", hero, hero)
+			newItem:SetPurchaseTime(0)
+			newItem:SetPurchaser(hero)
+
+			local tombstone = SpawnEntityFromTableSynchronous("dota_item_tombstone_drop", {})
+			tombstone:SetContainedItem(newItem)
+			tombstone:SetAngles(0, RandomFloat(0, 360), 0)
+			FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
+
+			hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
 		end
 	end
 
