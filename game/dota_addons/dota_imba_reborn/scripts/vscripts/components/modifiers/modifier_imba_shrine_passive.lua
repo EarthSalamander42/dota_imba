@@ -31,17 +31,19 @@ function modifier_imba_shrine_passive_aura:GetModifierAura()		return "modifier_i
 
 modifier_imba_shrine_passive = modifier_imba_shrine_passive or class({})
 
+function modifier_imba_shrine_passive:IsHidden()	return true end
+
 function modifier_imba_shrine_passive:OnCreated()
 	if not IsServer() then return end
 
-	print(self:GetParent(), self:GetParent():GetUnitName())
+	-- print(self:GetParent(), self:GetParent():GetUnitName())
 
 	self:StartIntervalThink(1.0)
 end
 
 function modifier_imba_shrine_passive:OnIntervalThink()
-	print(self:GetAbility():IsCooldownReady(), self:GetParent():HasItemInInventory("item_bottle"))
-	if self:GetAbility():IsCooldownReady() and self:GetParent():HasItemInInventory("item_bottle") then
+	-- print(self:GetAbility():IsCooldownReady(), self:GetParent():HasItemInInventory("item_bottle"))
+	if self.GetAbility and self:GetAbility() and self:GetAbility().IsCooldownReady and self:GetAbility():IsCooldownReady() and self.GetParent and self:GetParent() and self:GetParent().HasItemInInventory and self:GetParent():HasItemInInventory("item_bottle") then
 		local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
 
 		if bottle then

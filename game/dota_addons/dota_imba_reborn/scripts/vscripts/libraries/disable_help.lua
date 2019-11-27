@@ -51,6 +51,7 @@ local disabledAbilities = {
 	imba_rubick_telekinesis = true,
 	imba_vengefulspirit_nether_swap = true,
 	imba_winter_wyvern_cold_embrace = true,
+	imba_weaver_time_lapse = true,
 	imba_wisp_tether = true,
 
 	-- items

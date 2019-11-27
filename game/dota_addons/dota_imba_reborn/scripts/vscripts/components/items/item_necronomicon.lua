@@ -71,6 +71,7 @@ function Necronomicon( keys )
 		"spawnlord_aura"
 	}
 	local ranged_abilities = {
+		"necronomicon_archer_purge",
 		"necronomicon_archer_mana_burn",
 		"necronomicon_archer_aoe",
 		"forest_troll_high_priest_mana_aura",

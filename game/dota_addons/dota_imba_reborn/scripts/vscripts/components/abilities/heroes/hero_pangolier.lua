@@ -805,7 +805,7 @@ function modifier_imba_shield_crash_jump:OnCreated()
 	-- Ability specials
 	-- self.jump_height passed by the ability
 	self.damage = self:GetAbility():GetSpecialValueFor("damage")
-	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.buff_duration = self:GetAbility():GetSpecialValueFor("duration")
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 	self.hero_stacks = self:GetAbility():GetSpecialValueFor("hero_stacks")
 
@@ -894,7 +894,6 @@ function modifier_imba_shield_crash_jump:OnDestroy()
 	--Create the damage reduction modifier. If it already exist,
 	--upgrade its stacks if the new count is higher and refresh
 	if damaged_heroes > 0 then
-
 		--Talent #3: Earn stacks of parry based on the heroes hit with Shield Crash
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_3") then
 			local block_modifier_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
@@ -918,12 +917,12 @@ function modifier_imba_shield_crash_jump:OnDestroy()
 			self:GetCaster():RemoveModifierByName(self.buff_modifier)
 
 			if damaged_heroes > old_stacks / self.hero_stacks then
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.buff_duration, stacks = damaged_heroes})
 			else
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.buff_duration, stacks = old_stacks / self.hero_stacks})
 			end
 		else
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.buff_duration, stacks = damaged_heroes})
 		end
 	end
 
