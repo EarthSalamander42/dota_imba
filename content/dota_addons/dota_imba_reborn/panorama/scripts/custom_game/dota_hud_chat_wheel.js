@@ -319,6 +319,9 @@ function OnSelect(num) {
 	var ply_bp = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer().toString());
 //	$.Msg(ply_bp);
 
+	if (Game.IsInToolsMode())
+		$.Msg($.Localize("#hero_chat_wheel_donator"))
+
 	// misc, available to everyone
 	if (newnum != 0 && newnum != 11 && newnum != 18 && newnum != 20 && newnum != 21 && newnum != 22 && newnum != 23 && newnum != 24) {
 		if (ply_bp) {

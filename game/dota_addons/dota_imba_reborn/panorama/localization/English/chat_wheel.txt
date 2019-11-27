@@ -35,7 +35,7 @@
 "whtooltip"							"Type '-ch {d:num}' to play this sound"
 "votooltip"							"Hold 'L' to access the chat wheel"
 "whtooltipff"						"Right click a sound to add it to the favorites menu"
-"chat_wheel_donator_required"		"Available to {s:donators} only!"
+"hero_chat_wheel_donator"			"Available to {s:donators} only!"
 
 //No need to localize
 //en
