@@ -130,9 +130,9 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	if not self:GetParent():IsIllusion() then
+	-- if not self:GetParent():IsIllusion() then
 		return self:GetStackCount()
-	end
+	-- end
 end
 
 function modifier_item_imba_heart_unique:OnTakeDamage(keys)

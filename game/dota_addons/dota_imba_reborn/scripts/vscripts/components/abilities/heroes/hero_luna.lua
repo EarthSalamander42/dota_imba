@@ -154,12 +154,12 @@ function imba_luna_moon_glaive:OnProjectileHit_ExtraData(hTarget, vLocation, Ext
 	if not IsServer() then return end
 	
 	if hTarget then
-		-- IMBAfication: Weighted Dual-Edge
+		-- -- IMBAfication: Weighted Dual-Edge
 		self.damage_type = DAMAGE_TYPE_PHYSICAL
 
-		if not hTarget:IsBuilding() and hTarget:GetMagicalArmorValue() < GetReductionFromArmor(hTarget:GetPhysicalArmorValue(false)) then
-			self.damage_type = DAMAGE_TYPE_MAGICAL
-		end
+		-- if not hTarget:IsBuilding() and hTarget:GetMagicalArmorValue() < GetReductionFromArmor(hTarget:GetPhysicalArmorValue(false)) then
+			-- self.damage_type = DAMAGE_TYPE_MAGICAL
+		-- end
 	
 		local damageTable = {
 			victim 			= hTarget,

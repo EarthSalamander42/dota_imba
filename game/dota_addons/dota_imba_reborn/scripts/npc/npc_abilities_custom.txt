@@ -2715,13 +2715,13 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_pct"			"10"
+				"damage_reduction_pct"			"20"
 				"CalculateSpellDamageTooltip"	"0"				
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_regen"					"10"	
+				"health_regen"					"20"	
 			}
 		}
 	}
