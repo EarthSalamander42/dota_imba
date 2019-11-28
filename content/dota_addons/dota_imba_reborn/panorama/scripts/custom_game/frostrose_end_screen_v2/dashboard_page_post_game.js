@@ -585,7 +585,7 @@ function EndScoreboard(args) {
 					for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
 						var item = player_items.inventory[i];
 
-						if (item)
+						if (item && PlayerRowContainer.FindChildTraverse("ItemIcon" + i))
 							PlayerRowContainer.FindChildTraverse("ItemIcon" + i).itemname = item.item_name;
 					}
 				}
