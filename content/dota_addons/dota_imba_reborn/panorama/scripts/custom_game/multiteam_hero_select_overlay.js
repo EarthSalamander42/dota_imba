@@ -82,15 +82,18 @@ function UpdatePlayer( teamPanel, playerId )
 		if (Game.GetMapInfo().map_display_name == "imba_1v1")
 			return;
 
-		if (player_table && player_table.IMR) {
-//			$.Msg(player_table)
+		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+		if (gamemode) gamemode = gamemode["1"];
+
+		if ((Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr != undefined) {
+			$.Msg("MMR: " + player_table.mmr)
 			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
 			playerIMR.AddClass("PlayerIMR");
-			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + player_table.IMR;
-		} else if (Game.IsInToolsMode()) {
-			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
-			playerIMR.AddClass("PlayerIMR");
-			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + 3000;			
+			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + player_table.mmr;
+//		} else if (Game.IsInToolsMode()) {
+//			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
+//			playerIMR.AddClass("PlayerIMR");
+//			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + 3000;			
 		}
 	}
 
@@ -108,15 +111,6 @@ function UpdatePlayer( teamPanel, playerId )
 	if ( playerId == localPlayerInfo.player_id )
 	{
 		playerPanel.AddClass( "is_local_player" );
-	}
-
-//	$.Msg(player_table.donator_level)
-//	$.Msg(player_table.donator_color)
-
-	if (player_table && player_table.donator_level && player_table.donator_color) {
-		if (player_table.donator_level < 10) {
-			playerPortrait.style.border = "1px solid " + player_table.donator_color;
-		}
 	}
 
 	if ( playerInfo.player_selected_hero !== "" )
@@ -138,6 +132,15 @@ function UpdatePlayer( teamPanel, playerId )
 
 	var playerName = playerPanel.FindChildInLayoutFile( "PlayerName" );
 	playerName.text = playerInfo.player_name;
+
+//	$.Msg(player_table.donator_level)
+//	$.Msg(player_table.donator_color)
+
+	if (player_table && player_table.donator_level && player_table.donator_color) {
+		if (player_table.donator_level < 10) {
+			playerName.style.color = player_table.donator_color
+		}
+	}
 
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );
 }
@@ -253,8 +256,8 @@ function UpdateTimer()
 			if (Game.IsInToolsMode())
 				imr_calculation += 3000;
 			else {
-				if (player_table && player_table.IMR) {
-					imr_calculation += player_table.IMR;
+				if (player_table != undefined && player_table.mmr != undefined) {
+					imr_calculation += player_table.mmr;
 				}
 			}
 		}

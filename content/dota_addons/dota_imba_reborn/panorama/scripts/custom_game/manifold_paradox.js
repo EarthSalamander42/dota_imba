@@ -26,6 +26,21 @@ function UpdateTooltip(args) {
 
 		if (args.epitaph)
 			gravestone_ui.FindChildTraverse("title").text = $.Localize("DOTA_PhantomAssassin_Gravestone_Epitaph_" + args.epitaph)
+
+		if (args.cdp_damage) {
+			if (parseInt(args.cdp_damage) > 0)
+				gravestone_ui.FindChildTraverse("critDamage").text = parseInt(args.cdp_damage).toFixed(0);
+			else
+				gravestone_ui.FindChildTraverse("critDamage").text = args.cdp_damage;
+
+			gravestone_ui.FindChildTraverse("damageRow").style.visibility = "visible";
+
+			if (args.cdp_damage == "Fatality!")
+				gravestone_ui.FindChildTraverse("damage").style.visibility = "collapse";
+			else
+				gravestone_ui.FindChildTraverse("damage").style.visibility = "visible";				
+		} else
+			gravestone_ui.FindChildTraverse("damageRow").style.visibility = "collapse";
 	}
 }
 

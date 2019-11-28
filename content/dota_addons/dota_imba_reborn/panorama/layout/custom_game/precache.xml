@@ -125,6 +125,7 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_zuus_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana1.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_phantom_assassin_arcana0.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -163,6 +164,8 @@
 			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/tiny_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/phantom_assassin_arcana.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/nevermore_arcana.png" hittest="false" />
 
 			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style0.png" hittest="false" />
 			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style1.png" hittest="false" />

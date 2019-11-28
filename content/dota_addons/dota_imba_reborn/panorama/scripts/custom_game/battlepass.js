@@ -785,6 +785,8 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
+	var battlepass_hero_icon = CustomNetTables.GetTableValue("battlepass", "hero_rewards");
+
 	for (var i = 1; i <= 1000; i++) {
 		if (BattlepassRewards[i] != undefined) {
 			var bp_reward = BattlepassRewards[i][1];
@@ -811,8 +813,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			reward_label.AddClass(bp_rarity + "_text");
 
 			var hero_name = bp_reward.replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "").replace("2", "");
-			// WARNING: The following line is NSFW. Later on use GetTableValue("battlepass", "hero_name")
-			if (hero_name == "axe" || hero_name == "bristleback" || hero_name == "centaur" || hero_name == "chen" || hero_name == "dark_seer" || hero_name == "death_prophet" || hero_name == "drow_ranger" || hero_name == "earthshaker" || hero_name == "enigma" || hero_name == "huskar" || hero_name == "juggernaut" || hero_name == "leshrac" || hero_name == "life_stealer" || hero_name == "lina" || hero_name == "nyx_assassin" || hero_name == "pudge" || hero_name == "skywrath_mage" || hero_name == "vengefulspirit" || hero_name == "wisp" || hero_name == "zuus") {
+			if (battlepass_hero_icon != undefined && battlepass_hero_icon[hero_name]) {
 				var reward_hero_icon = $.CreatePanel("Panel", reward_icon, bp_reward + "_icon");
 				reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
 				reward_hero_icon.AddClass("BattlepassRewardHeroIcon");

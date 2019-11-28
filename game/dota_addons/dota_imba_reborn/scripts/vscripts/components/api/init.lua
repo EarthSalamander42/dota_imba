@@ -271,6 +271,28 @@ function api:GetPlayerWinrate(player_id)
 	end
 end
 
+function api:GetPlayerMMR(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+		native_print("api:GetPlayerMMR: Player ID not valid!")
+		return false
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+		native_print("api:GetPlayerMMR() self.players == nil")
+		return false
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid]["mmr"]
+	else
+		native_print("api:GetPlayerMMR: api players steamid not valid!")
+		return false
+	end
+end
+
 function api:GetPhantomAssassinArcanaKills(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
 --		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
@@ -543,6 +565,12 @@ function api:CompleteGame(successCallback, failCallback)
 --				print("CompleteGame: Abilities Level Up Order:", PlayerResource:GetAbilitiesLevelUpOrder(id))
 			end
 
+			local increment_pa_arcana_kills = false
+
+			if hero and hero == "npc_dota_hero_phantom_assassin" and Battlepass and Battlepass:HasArcana(id, "phantom_assassin") then
+				increment_pa_arcana_kills = true
+			end
+
 			local player = {
 				id = id,
 				kills = tonumber(PlayerResource:GetKills(id)),
@@ -561,6 +589,7 @@ function api:CompleteGame(successCallback, failCallback)
 				support_items = PlayerResource:GetSupportItemsBought(id, items_bought),
 				gold_spent_on_support = PlayerResource:GetGoldSpentOnSupport(id),
 				abilities_level_up_order = PlayerResource:GetAbilitiesLevelUpOrder(id),
+				increment_pa_arcana_kills = increment_pa_arcana_kills,
 				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
 			}
 

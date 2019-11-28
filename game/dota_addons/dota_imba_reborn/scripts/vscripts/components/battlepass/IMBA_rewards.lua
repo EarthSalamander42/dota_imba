@@ -83,9 +83,7 @@ BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
 BATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
-if IsInToolsMode() then
 BATTLEPASS_LEVEL_REWARD[135]	= {"phantom_assassin_arcana", "arcana"}
-end
 BATTLEPASS_LEVEL_REWARD[136]	= {"bottle4", "common"}
 BATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
 BATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
@@ -155,6 +153,9 @@ function Battlepass:Init()
 	BattlepassHeroes["vengefulspirit"] = {}
 	BattlepassHeroes["wisp"] = {}
 	BattlepassHeroes["zuus"] = {}
+
+	-- used to add a hero icon in BP reward windows
+	CustomNetTables:SetTableValue("battlepass", "hero_rewards", BattlepassHeroes)
 
 	BattlepassItems = {}
 	BattlepassItems["blink"] = {}
@@ -689,6 +690,18 @@ function Battlepass:GetHeroEffect(hero)
 	elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 		hero.spiked_carapace_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
 		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
+		hero.stifling_dagger_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+		hero.stifling_dagger_debuff_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+		hero.stifling_dagger_silence_effect = "particles/generic_gameplay/generic_silenced.vpcf"
+
+		hero.phantom_strike_start_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
+		hero.phantom_strike_end_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+
+		hero.fatality_screen_blood_splatter = "particles/hero/phantom_assassin/screen_blood_splatter.vpcf"
+		hero.coup_de_grace_crit_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+
+		hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace"
 	elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
@@ -1006,15 +1019,25 @@ function Battlepass:GetHeroEffect(hero)
 			-- custom icons
 			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 		elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
-			if not IsInToolsMode() then return end
-
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["phantom_assassin_arcana"] then
 				LinkLuaModifier("modifier_phantom_assassin_arcana", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
+				hero.stifling_dagger_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_arcana.vpcf"
+				hero.stifling_dagger_debuff_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_debuff_arcana.vpcf"
+				hero.stifling_dagger_silence_effect = "particles/econ/items/storm_spirit/storm_spirit_orchid_hat/storm_orchid_silenced.vpcf"
+
+				hero.phantom_strike_start_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_start.vpcf"
+				hero.phantom_strike_end_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_end.vpcf"
+
+				hero.fatality_screen_blood_splatter = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_screen_blood_splatter.vpcf"
+				hero.coup_de_grace_crit_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_crit_arcana_swoop.vpcf"
+
+				hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace.Arcana"
+
 				local style = 0
-				print("Arcana kills:")
+--				print("Arcana kills:")
 				local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
-				print(pa_arcana_kills)
+--				print(pa_arcana_kills)
 				hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
 
 				if tonumber(pa_arcana_kills) >= 400 then
@@ -1024,6 +1047,8 @@ function Battlepass:GetHeroEffect(hero)
 				end
 
 				Wearable:_WearProp(hero, "7247", "weapon", style)
+
+				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana"] then
