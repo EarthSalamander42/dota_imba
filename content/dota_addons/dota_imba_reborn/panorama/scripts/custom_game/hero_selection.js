@@ -618,7 +618,7 @@ function SetupTopBar() {
 	TopBarDireTeam.style.width = '100%'; // 540px
 
 	for (var tbg of TopBarRadiantTeam.FindChildrenWithClassTraverse("TeamBackground")) {
-		tbg.style.width = "90%";
+		tbg.style.width = "100%";
 		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 			tbbg.style.backgroundSize = '0%';
 			tbbg.style.backgroundColor = '#000000da';
@@ -626,7 +626,7 @@ function SetupTopBar() {
 	}
 
 	for (var tbg of TopBarDireTeam.FindChildrenWithClassTraverse("TeamBackground")) {
-		tbg.style.width = "90%";
+		tbg.style.width = "100%";
 		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 			tbbg.style.backgroundSize = '0%';
 			tbbg.style.backgroundColor = '#000000da';

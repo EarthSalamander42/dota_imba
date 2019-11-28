@@ -1,16 +1,16 @@
 // test for PA Manifold Paradox UI
-var hide_panel = {};
+var hide_panel = true;
+var i = 3;
 
 function UpdateTooltip(args) {
 //	$.Msg(args)
 //	$.Msg(args.victim)
-//	$.Msg(hide_panel[Players.GetLocalPlayer()])
+//	$.Msg(hide_panel)
+	i = 3;
 
 	var query_panel = FindDotaHudElement("QueryUnit");
 
 	if (args.victim_id != undefined) {
-		hide_panel[Players.GetLocalPlayer()] = false;
-
 		query_panel.RemoveClass("Hidden");
 
 		var gravestone_ui = query_panel.FindChildTraverse("pa_gravestone");
@@ -26,18 +26,30 @@ function UpdateTooltip(args) {
 
 		if (args.epitaph)
 			gravestone_ui.FindChildTraverse("title").text = $.Localize("DOTA_PhantomAssassin_Gravestone_Epitaph_" + args.epitaph)
-	} else {
-		if (hide_panel[Players.GetLocalPlayer()] == false) {
-			ClosePanel(query_panel);
-			hide_panel[Players.GetLocalPlayer()] = true;
-		}
 	}
 }
 
+function Countdown() {
+//	$.Msg("i = " + i)
+	i--;
+
+	if (i < 0) {
+		ClosePanel(FindDotaHudElement("QueryUnit"));
+		hide_panel = true;
+		i = 0;
+	}
+
+	$.Schedule(1.0, function(i){
+		Countdown()
+	});
+}
+
 function ClosePanel(panel) {
-	panel.AddClass("Hidden");
+	if (!panel.BHasClass("Hidden"))
+		panel.AddClass("Hidden");
 }
 
 (function() {
+	Countdown();
 	GameEvents.Subscribe("update_pa_arcana_tooltips", UpdateTooltip);
 })();

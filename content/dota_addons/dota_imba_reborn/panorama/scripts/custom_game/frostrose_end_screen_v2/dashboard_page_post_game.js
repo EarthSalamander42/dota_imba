@@ -451,6 +451,12 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_pinned_player_row.xml", false, false);
 				PinnedPlayerRow.AddClass("PlayerName");
 
+				if (bTenvTen) {
+					PinnedPlayerRow.AddClass("StatRowHeight10v10");
+				} else {
+					PinnedPlayerRow.AddClass("StatRowHeight5v5");
+				}
+
 				PinnedPlayerRow.FindChildTraverse("HeroImage").heroname = Players.GetPlayerSelectedHero(id);
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").GetChild(0).text = player_info.player_name;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
@@ -646,7 +652,7 @@ function EndScoreboard(args) {
 					iteration++;
 					var enemy_info = Game.GetPlayerInfo(enemy_id);
 
-					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0) {
+					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
 						panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
 						panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
 					}
@@ -787,10 +793,10 @@ function EndScoreboard(args) {
 					panel_abilities_row_container.GetChild(child).style.marginBottom = "2.5px"
 				}
 			} else {
-				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-					pinned_team_container.GetChild(child).AddClass("StatRowHeight");
-					pinned_team_container.GetChild(child).style.height = row_height;
-				}
+//				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
+//					pinned_team_container.GetChild(child).AddClass("StatRowHeight");
+//					pinned_team_container.GetChild(child).style.height = row_height;
+//				}
 
 				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
 			}

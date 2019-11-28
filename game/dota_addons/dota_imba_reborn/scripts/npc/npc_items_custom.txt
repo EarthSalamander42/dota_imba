@@ -6223,7 +6223,7 @@
 		"ID"							"2199"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_desolator.lua"
-		"AbilityTextureName"			"custom/imba_desolator_2"
+		"AbilityTextureName"			"item_desolator_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"

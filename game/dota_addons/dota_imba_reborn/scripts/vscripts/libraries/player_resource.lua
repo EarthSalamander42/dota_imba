@@ -31,7 +31,7 @@ ListenToGameEvent('npc_spawned', function(event)
 --		PlayerResource.PlayerData[npc:GetPlayerID()]["has_repicked"] = false -- not used atm
 		PlayerResource.PlayerData[npc:GetPlayerID()]["items_bought"] = {}
 		PlayerResource.PlayerData[npc:GetPlayerID()]["abilities_level_up_order"] = {}
-		print("player data set up for player with ID "..npc:GetPlayerID())
+--		print("player data set up for player with ID "..npc:GetPlayerID())
 	end
 end, nil)
 

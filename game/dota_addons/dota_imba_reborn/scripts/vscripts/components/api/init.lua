@@ -273,7 +273,7 @@ end
 
 function api:GetPhantomAssassinArcanaKills(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
-		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
+--		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
 		return false
 	end
 
@@ -281,14 +281,14 @@ function api:GetPhantomAssassinArcanaKills(player_id)
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
-		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
+--		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
 		return false
 	end
 
 	if self.players[steamid] ~= nil then
 		return self.players[steamid]["pa_arcana_kills"]
 	else
-		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
+--		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
 		return false
 	end
 end
@@ -561,6 +561,7 @@ function api:CompleteGame(successCallback, failCallback)
 				support_items = PlayerResource:GetSupportItemsBought(id, items_bought),
 				gold_spent_on_support = PlayerResource:GetGoldSpentOnSupport(id),
 				abilities_level_up_order = PlayerResource:GetAbilitiesLevelUpOrder(id),
+				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
 			}
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))

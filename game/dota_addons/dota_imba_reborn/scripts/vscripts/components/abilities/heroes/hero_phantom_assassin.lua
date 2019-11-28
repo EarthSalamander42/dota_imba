@@ -1149,6 +1149,7 @@ function modifier_phantom_assassin_gravestone:CheckState() return {
 	[MODIFIER_STATE_INVULNERABLE] = true,
 	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 	[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 } end
 
 function modifier_phantom_assassin_gravestone:OnCreated()
@@ -1183,7 +1184,7 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 
 	if params.attacker == self:GetParent() and params.target:IsRealHero() then
 		self:IncrementStackCount()
-		print("New arcana kill:", self:GetStackCount())
+--		print("New arcana kill:", self:GetStackCount())
 
 		self.gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
 		self.gravestone:SetOwner(self:GetParent())
@@ -1208,7 +1209,7 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 
 		local style = 0
 
-		if self:GetStackCount() >= 400 then
+		if self:GetStackCount() >= 400 and self:GetStackCount() < 1000 then
 			style = 1
 		elseif self:GetStackCount() >= 1000 then
 			style = 2
