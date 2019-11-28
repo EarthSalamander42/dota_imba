@@ -60,7 +60,30 @@ function modifier_courier_turbo:OnCreated()
 		-- If the courier would otherwise be locked to one particular player for 8 or more seconds, release the lock
 		self.counter				= 0
 		self.player_id_reset_time	= 8
-		
+
+		local chocobo = false
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:GetTeam() == self:GetParent():GetTeam() and tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == "76561198015161808" then
+				chocobo = true
+				break
+			end
+		end
+
+		if chocobo == true then
+			self:GetParent():SetModel("models/items/courier/chocobo/chocobo_flying.vmdl")
+			self:GetParent():SetOriginalModel("models/items/courier/chocobo/chocobo_flying.vmdl")
+
+			Timers:CreateTimer(1.0, function()
+				local pfx = ParticleManager:CreateParticle("particles/econ/courier/courier_wyvern_hatchling/courier_wyvern_hatchling_fire.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+				ParticleManager:SetParticleControl(pfx, 0, self:GetParent():GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(pfx)
+			end)
+		else
+			self:GetParent():SetModel("models/props_gameplay/donkey_wings.vmdl")
+			self:GetParent():SetOriginalModel("models/props_gameplay/donkey_wings.vmdl")
+		end
+
 		self:StartIntervalThink(0.1)
 	end
 end
