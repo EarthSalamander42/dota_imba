@@ -837,12 +837,13 @@
 		"Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
 		"Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
 		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
-		"Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
+		"Ability14"					"special_bonus_armor_10"
 		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
 		"Ability16"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
 		"Ability17"					"special_bonus_imba_juggernaut_10" // Omnislash increased duration
 		
 		// Removed Talents
+		// "Ability14"				"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
 		// "Ability16"				"special_bonus_imba_juggernaut_9" // Omnislash EX
 	}
 
