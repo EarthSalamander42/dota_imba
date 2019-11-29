@@ -75,11 +75,11 @@ function imba_doom_bringer_doom:OnSpellStart()
 				local doom_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = self:GetSpecialValueFor("duration")})
 				
 				if doom_modifier then
-					if not self:GetCaster():HasScepter() then
+					-- if not self:GetCaster():HasScepter() then
 						doom_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-					else
-						doom_modifier:SetDuration(self:GetSpecialValueFor("duration"), true)
-					end
+					-- else
+						-- doom_modifier:SetDuration(self:GetSpecialValueFor("duration"), true)
+					-- end
 				end
 			end
 		end
@@ -219,9 +219,9 @@ function modifier_imba_doom_bringer_doom_enemies:OnCreated()
 	-- This is to track Aghanim's Scepter duration and tick mechanics 
 	self.reentered = nil
 	
-	if self:GetAbility() and self:GetCaster():HasScepter() and not self:GetAbility():GetAutoCastState() then
-		self:GetParent():Purge(true, false, false, false, false)
-	end
+	-- if self:GetAbility() and self:GetCaster():HasScepter() and not self:GetAbility():GetAutoCastState() then
+		-- self:GetParent():Purge(true, false, false, false, false)
+	-- end
 	
 	self:OnIntervalThink()
 	
@@ -262,9 +262,9 @@ function modifier_imba_doom_bringer_doom_enemies:CheckState()
 		[MODIFIER_STATE_SILENCED] = true,
 	}
 	
-	if self:GetCaster():HasScepter() then
-		state[MODIFIER_STATE_PASSIVES_DISABLED] = true
-	end
+	-- if self:GetCaster():HasScepter() then
+		-- state[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	-- end
 	
 	if self:GetParent():GetHealthPercent() <= self.deniable_pct then
 		state[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
@@ -277,21 +277,21 @@ function modifier_imba_doom_bringer_doom_enemies:OnIntervalThink()
 	if IsServer() then
 		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
 		
-		if self:GetAbility() and not self:GetAbility():GetAutoCastState() and self:GetCaster():HasScepter() and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 900 and self:GetCaster():IsAlive() then
-			if self.reentered == nil then
-				self.reentered = true
-			end
+		-- if self:GetAbility() and not self:GetAbility():GetAutoCastState() and self:GetCaster():HasScepter() and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 900 and self:GetCaster():IsAlive() then
+			-- if self.reentered == nil then
+				-- self.reentered = true
+			-- end
 			
-			if self.reentered and self:GetElapsedTime() >= self.duration * (1 - self:GetParent():GetStatusResistance()) then
-				self:Destroy()
-			else
-				self.reentered = nil
-				self:SetDuration(self:GetRemainingTime() + 1.0, true)
-				self:StartIntervalThink(1.0)
-			end
-		else
+			-- if self.reentered and self:GetElapsedTime() >= self.duration * (1 - self:GetParent():GetStatusResistance()) then
+				-- self:Destroy()
+			-- else
+				-- self.reentered = nil
+				-- self:SetDuration(self:GetRemainingTime() + 1.0, true)
+				-- self:StartIntervalThink(1.0)
+			-- end
+		-- else
 			self.reentered = false
 			self:StartIntervalThink(1.0 * (1 - self:GetParent():GetStatusResistance()))
-		end
+		-- end
 	end
 end

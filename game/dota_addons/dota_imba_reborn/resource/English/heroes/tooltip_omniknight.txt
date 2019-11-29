@@ -84,5 +84,5 @@
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_6"                  "Repel affects all nearby allies in 600 AoE"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_7"                  "-40s Guardian Angel cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_8"                  "+200 Purification Damage/Heal"
-"DOTA_Tooltip_ability_special_bonus_imba_omniknight_9"                  "+75 Purification AoE"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_9"                  "+{s:value} Purification AoE"
 "DOTA_Tooltip_ability_special_bonus_imba_omniknight_10"                  "-8s Heavenly Grace Cooldown"

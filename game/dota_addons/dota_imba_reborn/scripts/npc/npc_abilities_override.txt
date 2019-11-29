@@ -920,26 +920,6 @@
 	}
 
 	//=================================================================================================================
-	// Helm of Iron Will
-	//=================================================================================================================
-	"item_helm_of_iron_will"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_regen"			"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Helm of the Dominator
 	//=================================================================================================================
 	"item_helm_of_the_dominator"
@@ -985,21 +965,11 @@
 		"ItemCost"						"625"
 
 		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"2"
-			}			
+		{		
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_health_regen"		"4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
 			}
 		}
 	}
@@ -2503,14 +2473,14 @@
 	//=================================================================================================================
 	"doom_bringer_devour"
 	{
-		"AbilityCooldown"				"60 50 40 30"
+		"AbilityCooldown"				"60"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"30 80 130 180"
+				"bonus_gold"			"40 100 160 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
 			}
 			"02"
@@ -2547,11 +2517,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_movement_speed_pct"	"12 14 16 18"
 				"LinkedSpecialBonus"		"special_bonus_unique_doom_6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"10 13 16 19"
 			}
 		}
 	}
@@ -4753,7 +4718,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_width"		"75 90 105 120"
+				"attack_spill_width"		"90 100 110 120"
 			}
 		}
 	}

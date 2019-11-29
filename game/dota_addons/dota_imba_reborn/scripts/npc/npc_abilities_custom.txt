@@ -2179,7 +2179,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"16 32 48 64"
+				"damage"				"16 36 56 76"
 				"LinkedSpecialBonus"	"special_bonus_imba_centaur_9"
 			}
 			"02"
@@ -2568,7 +2568,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"80"
+				"value"						"90"
 			}
 		}
 	}
@@ -2715,7 +2715,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_pct"			"20"
+				"damage_reduction_pct"			"15"
 				"CalculateSpellDamageTooltip"	"0"				
 			}
 			"13"
@@ -2868,23 +2868,28 @@
 
 			"02"
 			{
+				"var_type"			"FIELD_INTEGER"
+				"magic_resistance"		"5 6 7 8"
+			}
+			"03"
+			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_int"								"4 6 8 10"
 			}
 
-			"03"
+			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_spellpower"						"4 6 8 10"
 			}			
 
-			"04"
+			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"spellpower_threshold_pct"				"60"
 			}
 
-			"05"
+			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_self"							"2"
@@ -4209,6 +4214,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"talent_4_slow_pct"			"100"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"			"0.1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_amount"			"100"
 			}			
 		}
 	}
@@ -9653,7 +9669,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"20 24 28 32"
+				"movespeed"			"20 25 30 35"
 			}
 		}
 	}
@@ -13522,7 +13538,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"75"
+				"value"						"100"
 			}
 		}
 	}
@@ -15971,7 +15987,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"475"
+				"radius"				"525"
 			}
 			"03"
 			{
@@ -24758,7 +24774,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 		"MaxLevel"						"3"
 
 		// Casting
@@ -24876,28 +24892,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_mana_burn"			"28 40 52 64"				
+				"base_mana_burn"			"25 30 35 40"				
 			}
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit_pct"		"2 3 4 5"
+			}
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"threshold_difference"		"50"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"blast_aoe"					"380"
 			}
-			"07"
+			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"max_mana_blast"				"7 8 9 10"
 				"CalculateSpellDamageTooltip"   "1"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusions_efficiency_pct"	"40"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_percentage"		"50"
 			}
 		}
 	}
@@ -25039,7 +25065,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
@@ -25099,7 +25124,7 @@
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"scepter_cooldown_increase"			"70.0"
+				"scepter_cooldown_increase"			"100.0"
 			}
 			"06"
 			{
@@ -25760,7 +25785,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_bonus_allies_pct"	"16 18 20"
+				"ms_bonus_allies_pct"	"16 20 24"
 			}
 			"03"
 			{
@@ -29529,6 +29554,34 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_blade_fury_movement_speed"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_blade_fury"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Mirana's Starfall
@@ -33121,7 +33174,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"25"
+				"value"			"30"
 			}
 		}
 	}		

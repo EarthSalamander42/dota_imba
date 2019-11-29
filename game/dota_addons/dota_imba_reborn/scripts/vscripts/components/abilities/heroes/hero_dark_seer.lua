@@ -55,6 +55,14 @@ function imba_dark_seer_vacuum:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
+function imba_dark_seer_vacuum:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self:GetSpecialValueFor("scepter_cooldown")
+	end
+end
+
 function imba_dark_seer_vacuum:OnSpellStart()
 	if not IsServer() then return end
 	

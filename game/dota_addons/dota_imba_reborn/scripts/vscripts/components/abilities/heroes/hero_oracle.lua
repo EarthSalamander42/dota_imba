@@ -59,7 +59,19 @@ function imba_oracle_fortunes_end:GetBehavior()
 end
 
 function imba_oracle_fortunes_end:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
+	if not self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("radius")
+	else
+		return self:GetSpecialValueFor("radius") + self:GetSpecialValueFor("scepter_bonus_radius")
+	end
+end
+
+function imba_oracle_fortunes_end:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetSpecialValueFor("scepter_bonus_range")
+	end
 end
 
 function imba_oracle_fortunes_end:OnSpellStart()
@@ -162,12 +174,19 @@ function imba_oracle_fortunes_end:OnProjectileHit_ExtraData(target, location, da
 end
 
 function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_particle_name, modifier_name, charge_pct)
+	local radius = self:GetSpecialValueFor("radius")
+	
+	if self:GetCaster():HasScepter() then
+		radius = self:GetSpecialValueFor("radius") + self:GetSpecialValueFor("scepter_bonus_radius")
+	end
+	
 	EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), target_sound, self:GetCaster())
 	
 	if aoe_particle_name then
 		self.aoe_particle = ParticleManager:CreateParticle(aoe_particle_name, PATTACH_WORLDORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(self.aoe_particle, 0, target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.aoe_particle, 2, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius")))
+		
+		ParticleManager:SetParticleControl(self.aoe_particle, 2, Vector(radius, radius, radius))
 		ParticleManager:ReleaseParticleIndex(self.aoe_particle)
 	end
 	
@@ -185,7 +204,7 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 		target:RemoveModifierByName("modifier_imba_oracle_fates_edict_alter")
 	end
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_fortune_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControl(self.damage_particle, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.damage_particle, 3, enemy:GetAbsOrigin())
@@ -263,10 +282,18 @@ function modifier_imba_oracle_fortunes_end_purge:GetEffectName()
 end
 
 function modifier_imba_oracle_fortunes_end_purge:CheckState()
-	return {
-		[MODIFIER_STATE_ROOTED]		= true,
-		[MODIFIER_STATE_INVISIBLE]	= false -- This might not be technically correct
-	}
+	if self:GetAbility() and self:GetCaster():HasScepter() and (self:GetElapsedTime() / (self:GetElapsedTime() + self:GetRemainingTime())) <= self:GetAbility():GetSpecialValueFor("scepter_stun_percentage") * 0.01 then
+		return {
+			[MODIFIER_STATE_STUNNED]	= true,
+			[MODIFIER_STATE_ROOTED]		= true,
+			[MODIFIER_STATE_INVISIBLE]	= false -- This might not be technically correct
+		}
+	else
+		return {
+			[MODIFIER_STATE_ROOTED]		= true,
+			[MODIFIER_STATE_INVISIBLE]	= false -- This might not be technically correct
+		}
+	end
 end
 
 ---------------------------------------------------
@@ -296,10 +323,18 @@ function modifier_imba_oracle_fortunes_end_purge_alter:OnCreated()
 end
 
 function modifier_imba_oracle_fortunes_end_purge_alter:CheckState()
-	return {
-		[MODIFIER_STATE_COMMAND_RESTRICTED]	= true,
-		[MODIFIER_STATE_INVISIBLE]			= false -- This might not be technically correct
-	}
+	if self:GetAbility() and self:GetCaster():HasScepter() and (self:GetElapsedTime() / (self:GetElapsedTime() + self:GetRemainingTime())) <= self:GetAbility():GetSpecialValueFor("scepter_stun_percentage") * 0.01 then
+		return {
+			[MODIFIER_STATE_STUNNED]				= true,
+			[MODIFIER_STATE_COMMAND_RESTRICTED]		= true,
+			[MODIFIER_STATE_INVISIBLE]				= false -- This might not be technically correct
+		}
+	else
+		return {
+			[MODIFIER_STATE_COMMAND_RESTRICTED]		= true,
+			[MODIFIER_STATE_INVISIBLE]				= false -- This might not be technically correct
+		}
+	end
 end
 
 -----------------------------

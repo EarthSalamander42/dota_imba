@@ -15,7 +15,7 @@
 		"Ability1"		"imba_rattletrap_battery_assault"
 		"Ability2"		"imba_rattletrap_power_cogs"
 		"Ability3"		"imba_rattletrap_rocket_flare"
-		"Ability4"		"generic_hidden"
+		"Ability4"		"rattletrap_overclocking"
 		"Ability5"		"generic_hidden"
 		"Ability6"		"imba_rattletrap_hookshot"
 		

@@ -69,7 +69,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_7"            "+8s Coup de Grace's Die Hard duration"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_8"            "Blur now grants a 25% chance to evade any damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_9"			"+10% Coup de Grace chance"
-"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_10"			"+25% Blur Evasion"
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_10"			"+{s:value}% Blur Evasion"
 
 // Arcana
 "npc_dota_phantom_assassin_gravestone"					"#{npc_dota_phantomassassin_gravestone}"

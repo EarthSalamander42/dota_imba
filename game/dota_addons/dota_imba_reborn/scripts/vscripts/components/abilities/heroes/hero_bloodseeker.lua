@@ -29,21 +29,24 @@ if IsServer() then
 	function modifier_imba_bloodrage_buff_stats:OnCreated()
 		self.modifier_frenzy = "modifier_imba_bloodrage_blood_frenzy"
 
-		self.ampin = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
-		self.ampout = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
-		self.damageout = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
+		self.damage_increase_outgoing_pct = self:GetAbility():GetSpecialValueFor("damage_increase_outgoing_pct")
+		self.damage_increase_incoming_pct = self:GetAbility():GetSpecialValueFor("damage_increase_incoming_pct")
+		
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
+			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
+				self.damage_increase_incoming_pct = self.damage_increase_incoming_pct - self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.damage_increase_outgoing_pct = self.damage_increase_outgoing_pct + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+			else
+				self.damage_increase_incoming_pct = self.damage_increase_incoming_pct + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.damage_increase_outgoing_pct = self.damage_increase_outgoing_pct -	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+			end
+		end
+		
+		self.health_bonus_aoe	= self:GetAbility():GetSpecialValueFor("health_bonus_aoe")
+		self.health_bonus_share_percent	= self:GetAbility():GetSpecialValueFor("health_bonus_share_percent")
 		self.damage = self:GetAbility():GetSpecialValueFor("aoe_damage")
 		self.radius = self:GetAbility():GetSpecialValueFor("aoe_radius")
 		self.alliedpct = self:GetAbility():GetSpecialValueFor("allied_damage") / 100
-		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
-			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
-				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
-				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
-			else
-				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
-				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
-			end
-		end
 		
 		local tick_interval = 1
 		
@@ -80,19 +83,21 @@ if IsServer() then
 	end
 
 	function modifier_imba_bloodrage_buff_stats:DeclareFunctions()
-		local funcs = {
-			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE ,
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE ,
+		return {
+			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 			MODIFIER_EVENT_ON_DEATH,
 		}
-		return funcs
 	end
+	
 	function modifier_imba_bloodrage_buff_stats:GetModifierTotalDamageOutgoing_Percentage(params)
-		if params.attacker == self:GetParent() then
-			local outamp = self.ampout
+		if params.attacker == self:GetParent() and bit.band(params.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+			local outamp = self.damage_increase_outgoing_pct
+			
 			if CalcDistanceBetweenEntityOBB(params.target, params.attacker) > self:GetAbility():GetSpecialValueFor("red_val_distance") then
 				outamp = outamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
+			
 			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
 				local ampPct = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 				local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 -- missing hp in pct
@@ -101,9 +106,10 @@ if IsServer() then
 			return outamp
 		end
 	end
+	
 	function modifier_imba_bloodrage_buff_stats:GetModifierIncomingDamage_Percentage(params)
 		if params.target == self:GetParent() then
-			local inamp = self.ampin
+			local inamp = self.damage_increase_incoming_pct
 			if CalcDistanceBetweenEntityOBB(params.target, params.attacker) > self:GetAbility():GetSpecialValueFor("red_val_distance") then
 				inamp = inamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
@@ -115,14 +121,25 @@ if IsServer() then
 			return inamp
 		end
 	end
+	
 	function modifier_imba_bloodrage_buff_stats:OnDeath(params)
-		-- "Bloodrage does not heal upon killing illusions, Arc Warden Tempest Double minimap icon.png Tempest Doubles, Roshan icon.png Roshan, wards, or buildings."
-		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit and not params.unit:IsIllusion() and not params.unit:IsTempestDouble() and not params.unit:IsRoshan() and not params.unit:IsOther() and not params.unit:IsBuilding() then
-			local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
-			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
-			params.attacker:Heal(heal, self:GetCaster())
-			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
-			ParticleManager:ReleaseParticleIndex(healFX)
+		-- "Bloodrage does not heal upon killing illusions, Arc Warden Tempest Doubles, Roshan, wards, or buildings."
+		if not params.unit:IsIllusion() and not params.unit:IsTempestDouble() and not params.unit:IsRoshan() and not params.unit:IsOther() and not params.unit:IsBuilding() then
+			if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit then
+				local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
+				
+				SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
+				params.attacker:Heal(heal, self:GetCaster())
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+				ParticleManager:ReleaseParticleIndex(healFX)
+			elseif params.unit:IsRealHero() and (self:GetParent():GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= self.health_bonus_aoe then
+				local heal = params.unit:GetMaxHealth() * (self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100) * (self.health_bonus_share_percent * 0.01)
+				
+				SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent():GetAbsOrigin(), heal, self:GetCaster() )
+				self:GetCaster():Heal(heal, self:GetParent())
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+				ParticleManager:ReleaseParticleIndex(healFX)
+			end
 		end
 
 		-- If the caster has #7 Talent, grant a Blood Frenzy to it
@@ -679,6 +696,10 @@ function imba_bloodseeker_rupture:GetAbilityTextureName()
 	return "bloodseeker_rupture"
 end
 
+function imba_bloodseeker_rupture:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_rupture_cast_range")
+end
+
 function imba_bloodseeker_rupture:GetCooldown( nLevel )
 	-- Scepter grants charges, no cooldown needed
 	if self:GetCaster():HasScepter() then
@@ -986,4 +1007,24 @@ end
 --------------------------------------------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bloodseeker", MotionController)
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bloodseeker_rupture_cast_range	= modifier_special_bonus_imba_bloodseeker_rupture_cast_range or class({})
+
+function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:RemoveOnDeath() 	return false end
+
+function imba_bloodseeker_rupture:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_rupture_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_rupture_cast_range"), "modifier_special_bonus_imba_bloodseeker_rupture_cast_range", {})
+	end
 end

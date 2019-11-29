@@ -54,6 +54,15 @@ function item_imba_abyssal_blade:OnSpellStart()
 			return nil
 		end
 	end
+	
+	-- This isn't the right particle but I don't want to spend forever looking for this when there are a million other changes to work on
+	local blink_start_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(blink_start_particle)
+	
+	FindClearSpaceForUnit(self:GetCaster(), target:GetAbsOrigin() - self:GetCaster():GetForwardVector() * 56, false)
+	
+	local blink_end_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(blink_end_particle)
 
 	-- Add particle effect
 	local particle_abyssal_fx = ParticleManager:CreateParticle(particle_abyssal, PATTACH_ABSORIGIN_FOLLOW, target)

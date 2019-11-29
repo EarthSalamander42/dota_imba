@@ -128,7 +128,7 @@
 // Disruptor's Thunder Strike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike"                    "Thunder Strike"
-"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
+"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"		"Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and applies an extremely short high duration slow.  Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Note0"              "Creeps and magic immune heroes are not counted."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Lore"              "Disruptor's charged coils occasionally overload, and a singed armor plate or tuft of fur is the result on the enemy."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_damage"            "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

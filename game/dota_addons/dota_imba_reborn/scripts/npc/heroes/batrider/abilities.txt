@@ -19,7 +19,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"550 600 650 700"
-		"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+		"AbilityCastPoint"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-4 -6 -8 -10"
+				"movement_speed_pct"	"-3 -5 -7 -9"
 			}
 			"05"
 			{
@@ -98,7 +98,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0"
+		"AbilityCooldown"				"18 17 16 15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -115,54 +115,59 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 40 50 60"
+				"damage_impact"			"50 75 100 125"
 			}
 			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"40"
+			}
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"4.5 6.0 7.5 9.0"
 				"CalculateSpellDamageTooltip"	"0"
 				"LinkedSpecialBonus"	"special_bonus_unique_batrider_3"
 			}			
-			"03"
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_total_tooltip"		"120 200 300 420"
 			}
-			"04"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"explosion_radius"		"375 425 475 525"
+				"explosion_radius"		"525"
 			}
-			"05"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"collision_radius"		"100 100 100 100"
 			}
-			"06"
+			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"0.5 0.5 0.5 0.5"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1000 1100 1200"
-			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_max_distance"	"400"
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
 			}
 			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_distance"	"300"
+			}
+			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"knockback_height"		"100 100 100 100"
 			}
-			"10"
+			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.25 0.25 0.25 0.25"
+				"knockback_duration"	"0.35 0.35 0.35 0.35"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -210,7 +215,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"4 7 10 13"
+				"movement_speed"		"5 10 15 20"
 			}
 			"03"
 			{
@@ -233,8 +238,13 @@
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"100 100 100 100"
 			}
-
 			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_vision"			"200 400 600 800"
+			}
+
+			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"quiet_flight_multi"	"2.5"
@@ -455,7 +465,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"13"
+				"value"					"10"
 			}
 		}
 	}

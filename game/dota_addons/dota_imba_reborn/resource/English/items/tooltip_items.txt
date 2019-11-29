@@ -118,6 +118,7 @@
 "DOTA_Tooltip_ability_item_imba_assault_Note0"                          "Assault Aura does not stack with itself, and is overriden by Siege Aura."
 "DOTA_Tooltip_ability_item_imba_assault_bonus_armor"                    "+$armor"
 "DOTA_Tooltip_ability_item_imba_assault_bonus_as"                      "+$attack"
+"DOTA_Tooltip_ability_item_imba_assault_bonus_all_stats"				"+$all"
 
 "DOTA_Tooltip_modifier_imba_assault_cuirass_aura_positive_effect"                   "Assault Aura"
 "DOTA_Tooltip_modifier_imba_assault_cuirass_aura_positive_effect_Description"       "Armor enhanced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%.\nAttack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -238,7 +239,7 @@
 
 // Crimson Guard
 "DOTA_Tooltip_Ability_item_imba_crimson_guard"                  "Crimson Guard"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_Description"		"<h1>Active: Guard</h1> For %duration% seconds, grant nearby allied heroes and buildings +%active_armor% armor, a %block_chance_active%%% chance to block %block_damage_melee_active% damage from each incoming attack, <font color='#FF7800'>and %damage_reduction%%% damage reduction for heroes.</font><br><br>Units may only be affected by Guard once every %tooltip_reapply_time% seconds.<br><br>Radius: %bonus_aoe_radius%\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Parry</font></h1> Also reduces all incoming damage by %damage_reduction%%%. Passive damage reduction does not stack with Guard's damage reduction."
+"DOTA_Tooltip_ability_item_imba_crimson_guard_Description"		"<h1>Active: Guard</h1> For %duration% seconds, grant nearby allied heroes and buildings <font color='#FF7800'>+%active_armor% armor</font>, a %block_chance_active%%% chance to block %block_damage_melee_active% damage from each incoming attack, <font color='#FF7800'>and %damage_reduction%%% damage reduction for heroes.</font><br><br>Units may only be affected by Guard once every %tooltip_reapply_time% seconds.<br><br>Radius: %bonus_aoe_radius%\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Parry</font></h1> Also reduces all incoming damage by %damage_reduction%%%. Passive damage reduction does not stack with Guard's damage reduction."
 "DOTA_Tooltip_ability_item_imba_crimson_guard_Lore"				"A cuirass originally built to protect against the dreaded Year Beast."
 "DOTA_Tooltip_ability_item_imba_crimson_guard_Note0"			"Multiple sources of damage block and Crimson Guard series damage reduction do not stack."
 "DOTA_Tooltip_ability_item_imba_crimson_guard_health"			"+$health"
@@ -391,7 +392,7 @@
 
 // Divine Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier"                        "Divine Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font>"
+"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font> \n\n <h1> Passive: True Strike</h1> Your attacks cannot miss."
 "DOTA_Tooltip_ability_item_imba_rapier_Lore"                    "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_bonus_damage"            "+$damage"
 
@@ -514,6 +515,8 @@
 "DOTA_Tooltip_ability_item_imba_heart_aura_radius"              "AURA RANGE:"
 "DOTA_Tooltip_ability_item_imba_heart_bonus_strength"          "+$str"
 "DOTA_Tooltip_ability_item_imba_heart_bonus_health"            "+$health"
+"DOTA_Tooltip_ability_item_imba_heart_fixed_health_regen"		"+$hp_regen"
+
 "DOTA_Tooltip_ability_item_imba_heart_hp_regen_amp"				"%+Health Regen Amplification"
 "DOTA_Tooltip_Ability_item_imba_heart_regen_cooldown_melee"                 "MELEE COOLDOWN:"
 "DOTA_Tooltip_Ability_item_imba_heart_regen_cooldown_ranged"                "RANGED COOLDOWN:"
@@ -690,14 +693,14 @@
 
 // Mekansm
 "DOTA_Tooltip_Ability_item_imba_mekansm"                        "Mekansm"
-"DOTA_Tooltip_ability_item_imba_mekansm_Description"            "<h1>Active: Restore</h1> Heals allies in %heal_radius% radius for %heal_amount% HP immediately, <font color='#FF7800'>then grants them %heal_percentage%%% health regeneration and %heal_bonus_armor% armor for %heal_duration% seconds</font>.\n<h1>Passive: Tranquility Aura </h1> Grants nearby allies %aura_health_regen% bonus HP regen per second."
-"DOTA_Tooltip_ability_item_imba_mekansm_Lore"                  "A glowing jewel formed out of assorted parts that somehow fit together perfectly."
-"DOTA_Tooltip_ability_item_imba_mekansm_Note0"                  "The initial heal scales with spell amp."
+"DOTA_Tooltip_ability_item_imba_mekansm_Description"            "<h1>Active: Restore</h1>Heals %heal_amount% health to allied units in a %heal_radius% radius, <font color='#FF7800'>then grants them %heal_percentage%%% health regeneration and %heal_bonus_armor% armor for %heal_duration% seconds</font>.\n<h1>Passive: Mekansm Aura</h1>Grants %aura_health_regen% health regeneration to allied units in a %aura_radius% radius."
+"DOTA_Tooltip_ability_item_imba_mekansm_Lore"					"A glowing jewel formed out of assorted parts that somehow fit together perfectly."
+"DOTA_Tooltip_ability_item_imba_mekansm_Note0"					"Multiple instances of Mekansm Aura do not stack."
 "DOTA_Tooltip_ability_item_imba_mekansm_bonus_all_stats"                    "+$all"
 "DOTA_Tooltip_ability_item_imba_mekansm_bonus_armor"            "+$armor"
 
-"DOTA_Tooltip_modifier_item_imba_mekansm_aura"                  "Tranquility Aura"
-"DOTA_Tooltip_modifier_item_imba_mekansm_aura_Description"                  "Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
+"DOTA_Tooltip_modifier_item_imba_mekansm_aura"                  "Mekansm Aura"
+"DOTA_Tooltip_modifier_item_imba_mekansm_aura_Description"		"Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
 
 "DOTA_Tooltip_modifier_item_imba_mekansm_heal"                  "Restoration"
 "DOTA_Tooltip_modifier_item_imba_mekansm_heal_Description"                  "Gaining %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE% bonus armor and regenerating %fMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max health per second."
@@ -1173,7 +1176,7 @@
 // Trinity Rapier
 
 "DOTA_Tooltip_Ability_item_imba_rapier_2"                      "Trinity Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font>"
+"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font> \n\n <h1> Passive: True Strike</h1> Your attacks cannot miss."
 "DOTA_Tooltip_ability_item_imba_rapier_2_Lore"                  "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_2_bonus_damage"          "+$damage"
 
@@ -1232,7 +1235,7 @@
 
 // Vladmir's Blood
 "DOTA_Tooltip_Ability_item_imba_vladmir_2"                      "Vladmir's Blood"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants lifesteal (%vampiric_aura%%% for melee heroes and ranged heroes), %hp_regen_aura% health regeneration, %mana_regen_aura% mana regeneration, %damage_aura%%% bonus attack damage, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants %vampiric_aura%%% lifesteal, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Lore"                "An eerie mask possessed by a fallen vampire's mighty bloodlust."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Note0"                "Vladmir's Aura is completely overriden and does not stack with Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"          "+$all"
@@ -1242,7 +1245,7 @@
 
 // Vladmir's Offering
 "DOTA_Tooltip_Ability_item_imba_vladmir"                        "Vladmir's Offering"
-"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1>Grants lifesteal (%vampiric_aura%%% for melee heroes <font color='#FF7800'>and ranged heroes</font>), <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, %damage_aura%%% bonus attack damage, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1>Grants %vampiric_aura%%% lifesteal, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
 "DOTA_Tooltip_ability_item_imba_vladmir_Lore"                  "An eerie mask that is haunted with the malice of a fallen vampire."
 "DOTA_Tooltip_ability_item_imba_vladmir_Note0"                  "Vladmir's Aura is completely overriden and does not stack with Vladmir's Blood's Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_stat_bonus"            "+$all"

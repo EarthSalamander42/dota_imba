@@ -103,6 +103,10 @@ function modifier_imba_divine_rapier:OnCreated()
 	end
 end
 
+function modifier_imba_divine_rapier:CheckState()
+	return {[MODIFIER_STATE_CANNOT_MISS] = true}
+end
+
 function modifier_imba_divine_rapier:GetModifierPreAttack_BonusDamage(keys)
 	if not keys.target or (IsServer() and (keys.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF) then
 		return self.bonus_damage
@@ -163,6 +167,11 @@ end
 function modifier_imba_divine_rapier_2:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
+
+function modifier_imba_divine_rapier_2:CheckState()
+	return {[MODIFIER_STATE_CANNOT_MISS] = true}
+end
+
 -------------------------------------------
 --			  ARCANE RAPIER
 -------------------------------------------

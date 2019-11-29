@@ -167,6 +167,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"scepter_acceleration_horizontal"	"3000"
 			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"75"
+			}
 		}
 	}
 

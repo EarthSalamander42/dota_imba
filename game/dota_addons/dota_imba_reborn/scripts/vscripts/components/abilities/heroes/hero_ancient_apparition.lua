@@ -387,6 +387,14 @@ function imba_ancient_apparition_chilling_touch:GetCastRange()
 	return self:GetCaster():Script_GetAttackRange() + self:GetSpecialValueFor("attack_range_bonus")
 end
 
+function imba_ancient_apparition_chilling_touch:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return 0
+	end
+end
+
 function imba_ancient_apparition_chilling_touch:OnOrbFire()
 	self:GetCaster():EmitSound("Hero_Ancient_Apparition.ChillingTouch.Cast")
 end

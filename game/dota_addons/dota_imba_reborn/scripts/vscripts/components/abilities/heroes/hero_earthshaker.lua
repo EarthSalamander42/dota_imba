@@ -376,6 +376,8 @@ end
 function modifier_earthshaker_enchant_totem_lua:OnCreated( kv )
 	-- references
 	self.bonus = self:GetAbility():GetSpecialValueFor( "totem_damage_percentage" ) -- special value
+	self.bonus_attack_range	= self:GetAbility():GetSpecialValueFor("bonus_attack_range")
+	
 	if IsServer() then
 		self:PlayEffects()
 	end
@@ -398,6 +400,7 @@ function modifier_earthshaker_enchant_totem_lua:DeclareFunctions()
 		MODIFIER_PROPERTY_PROCATTACK_FEEDBACK,
 --		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 	}
 
 	return funcs
@@ -422,6 +425,10 @@ function modifier_earthshaker_enchant_totem_lua:GetModifierProcAttack_Feedback( 
 
 		self:Destroy()
 	end
+end
+
+function modifier_earthshaker_enchant_totem_lua:GetModifierAttackRangeBonus()
+	return self.bonus_attack_range
 end
 
 --------------------------------------------------------------------------------
@@ -660,6 +667,13 @@ function modifier_earthshaker_enchant_totem_lua_leap:OnIntervalThink()
 	local z_axis = (-1) * self:GetElapsedTime() * (self:GetElapsedTime() - self:GetDuration()) * 562 * 4
 	
 	-- self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
+
+	-- -- Okay so IDK how to check if Earthshaker is stunned to interrupt this, without catching the stun that this modifier itself provides...
+	-- if self:GetParent():IsStunned() or self:GetParent():IsRooted() then
+		-- self.aftershock_interrupt = true
+		-- self:Destroy()
+		-- return
+	-- end
 
 	self:GetParent():SetOrigin( (self:GetParent():GetOrigin() * Vector(1, 1, 0)) + (((self.direction * self.speed * self.interval) * Vector(1, 1, 0)) + (Vector(0, 0, GetGroundHeight(self:GetParent():GetOrigin(), nil)) + Vector(0, 0, z_axis) )))
 end

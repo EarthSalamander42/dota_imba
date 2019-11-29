@@ -32,7 +32,7 @@
 "DOTA_Tooltip_ability_imba_rattletrap_hookshot_tooltip_range"						"RANGE:"
 "DOTA_Tooltip_ability_imba_rattletrap_hookshot_damage"								"DAMAGE:"
 "DOTA_Tooltip_ability_imba_rattletrap_hookshot_cooldown_scepter"						"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_rattletrap_hookshot_aghanim_description"					"Decreases cooldown."
+"DOTA_Tooltip_ability_imba_rattletrap_hookshot_aghanim_description"					"<font color='#FF7800'>Decreases cooldown.</font>"
 
 "DOTA_Tooltip_modifier_imba_rattletrap_battery_assault"				"Battery Assault"
 "DOTA_Tooltip_modifier_imba_rattletrap_battery_assault_Description"	"Doing periodic damage to nearby units."

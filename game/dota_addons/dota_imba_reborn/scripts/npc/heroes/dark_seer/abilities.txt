@@ -18,6 +18,8 @@
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Dark_Seer.Vacuum"
 
+		"HasScepterUpgrade"			"1"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"450 500 550 600"
@@ -67,6 +69,12 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"wormhole_duration"		"1.75"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cooldown"				"12"
+				"RequiresScepter"		"1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -445,7 +453,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"0.6"
+				"value"						"0.4"
 			}
 		}
 	}

@@ -85,8 +85,13 @@ function modifier_imba_mana_break_passive:OnAttackStart(keys)
 
 			-- Calculate mana to burn
 			local target_mana_burn = target:GetMana()
-			if (target_mana_burn > self.base_mana_burn) then
-				target_mana_burn = self.base_mana_burn
+			
+			if (target_mana_burn > self.base_mana_burn + (target:GetMaxMana() * self:GetAbility():GetSpecialValueFor("mana_per_hit_pct") * 0.01)) then
+				target_mana_burn = self.base_mana_burn + (target:GetMaxMana() * self:GetAbility():GetSpecialValueFor("mana_per_hit_pct") * 0.01)
+			end
+			
+			if self:GetParent():IsIllusion() then
+				target_mana_burn = target_mana_burn * self:GetAbility():GetSpecialValueFor("illusion_percentage") * 0.01
 			end
 
 			-- Get the target's current mana percentage
@@ -135,9 +140,12 @@ function modifier_imba_mana_break_passive:OnAttackLanded(keys)
 
 			-- Calculate and burn mana
 			local target_mana_burn = target:GetMana()
-			if (target_mana_burn > self.base_mana_burn) then
-				target_mana_burn = self.base_mana_burn
-
+			if (target_mana_burn > self.base_mana_burn + (target:GetMaxMana() * self:GetAbility():GetSpecialValueFor("mana_per_hit_pct") * 0.01)) then
+				target_mana_burn = self.base_mana_burn + (target:GetMaxMana() * self:GetAbility():GetSpecialValueFor("mana_per_hit_pct") * 0.01)
+			end
+			
+			if self:GetParent():IsIllusion() then
+				target_mana_burn = target_mana_burn * self:GetAbility():GetSpecialValueFor("illusion_percentage") * 0.01
 			end
 
 			target:ReduceMana(target_mana_burn)

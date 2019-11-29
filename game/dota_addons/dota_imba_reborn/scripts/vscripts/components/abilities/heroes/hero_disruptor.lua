@@ -93,6 +93,7 @@ end
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_thunder_strike_debuff"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_thunder_strike_slow"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
@@ -160,7 +161,7 @@ function modifier_imba_thunder_strike_debuff:IsDebuff()	return true end
 function modifier_imba_thunder_strike_debuff:IsPurgable()	return true end
 function modifier_imba_thunder_strike_debuff:IgnoreTenacity()	return true end
 
-function modifier_imba_thunder_strike_debuff:OnCreated()	
+function modifier_imba_thunder_strike_debuff:OnCreated()
 	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
@@ -175,7 +176,9 @@ function modifier_imba_thunder_strike_debuff:OnCreated()
 		self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
 		self.strike_interval = self.ability:GetSpecialValueFor("strike_interval")
 		self.add_strikes_interval = self.ability:GetSpecialValueFor("add_strikes_interval")
-		self.talent_4_slow_duration = self.ability:GetSpecialValueFor("talent_4_slow_duration")	
+		self.talent_4_slow_duration = self.ability:GetSpecialValueFor("talent_4_slow_duration")
+		
+		self.slow_duration	= self:GetAbility():GetSpecialValueFor("slow_duration")
 
 		-- #8 Talent: Thunder Strike interval reduction
 		self.strike_interval = self.strike_interval - self.caster:FindTalentValue("special_bonus_imba_disruptor_8", "value2")
@@ -293,13 +296,51 @@ function ThunderStrikeBoltStrike(self)
 								damage_type = DAMAGE_TYPE_MAGICAL}
 								
 			ApplyDamage(damageTable)			
-				
+			
+			local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thunder_strike_slow", {duration = self.slow_duration})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
+			end
+			
 			-- Give a Stormbearer stack to caster			
 			if self.caster:HasModifier(stormbearer_buff) and enemy:IsRealHero() then
 				IncrementStormbearerStacks(self.caster)
 			end
 		end
 	end
+end
+
+---------------------------------------
+-- MODIFIER_IMBA_THUNDER_STRIKE_SLOW --
+---------------------------------------
+
+modifier_imba_thunder_strike_slow	= modifier_imba_thunder_strike_slow or class({})
+
+function modifier_imba_thunder_strike_slow:IsHidden()	return true end
+
+function modifier_imba_thunder_strike_slow:OnCreated()
+	if self:GetAbility() then
+		self.slow_amount	= self:GetAbility():GetSpecialValueFor("slow_amount")
+	else
+		self.slow_amount	= 100
+	end
+end
+
+function modifier_imba_thunder_strike_slow:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT 
+	}
+end
+
+function modifier_imba_thunder_strike_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow_amount * (-1)
+end
+
+-- Attack speed percentage function when
+function modifier_imba_thunder_strike_slow:GetModifierAttackSpeedBonus_Constant()
+	return -999999
 end
 
 -------------------------------------------

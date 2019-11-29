@@ -1,6 +1,6 @@
 //BATRIDER
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm"						"Sticky Napalm"
-"DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Description"			"Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies in the area.  Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks.  The extra damage is halved against creeps.\n<font color='#FF7800'>Oil Slick:</font> Can be cast without having to face towards the targeted area.\n<font color='#FF7800'>Oil Leak:</font> Can be set to auto-cast to automatically cast Sticky Napalm at the caster's location when off-cooldown and fully castable. Sticky Napalm has no cast point when activated in this fashion."
+"DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Description"			"Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies in the area.  Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks.  The extra damage is halved against creeps.\n<font color='#FF7800'>Oil Leak:</font> Can be set to auto-cast to automatically cast Sticky Napalm at the caster's location when off-cooldown and fully castable. Sticky Napalm has no cast point when activated in this fashion."
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Lore"					"It's not uncommon to hear the Rider cackle while he increases the flammability of his opponents."
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Note0"					"All damage from Batrider gets amplified, except for Radiance, Orb of Venom, and Urn of Shadows."
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_damage"				"EXTRA DAMAGE:"
@@ -12,13 +12,14 @@
 "DOTA_Tooltip_ability_imba_batrider_flamebreak"							"Flamebreak"
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_Description"				"Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, and dealing damage over time to enemies in the area.\n<font color='#FF7800'>Potent Molotov:</font> Knockback is not affected by status resistance.\n<font color='#FF7800'>Remnants of Flamebreak:</font> Flamebreak stuns for the knockback duration."
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_Lore"						"A molotov cocktail is the weapon of choice for Batrider."
+"DOTA_Tooltip_ability_imba_batrider_flamebreak_damage_impact"					"IMPACT DAMAGE:"
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_damage_per_second"					"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_damage_duration"				"BURN DURATION:"	
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_damage_total_tooltip"			"TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_batrider_flamebreak_explosion_radius"			"RADIUS:"
 
 "DOTA_Tooltip_ability_imba_batrider_firefly"								"Firefly"
-"DOTA_Tooltip_ability_imba_batrider_firefly_Description"					"Batrider takes to the skies, laying down a trail of flames from the air.  The fire damages any enemies it touches, and destroys trees below Batrider. While flying, Batrider gains unobstructed movement and vision.\n<font color='#FF7800'>Methane Boost:</font> Activates usage of the Methane Boost ability, which allows for a short burst in speed forwards.\n<font color='#FF7800'>Quiet Flight:</font> Can be set to auto-cast prior to casting Firefly to suppress flame dropping and tree destruction, as well as increase the bonus movement speed by %quiet_flight_multi%x. Turning auto-cast off while Firefly is active reactivates the flame dropping and tree destruction."
+"DOTA_Tooltip_ability_imba_batrider_firefly_Description"					"Batrider takes to the skies, laying down a trail of flames from the air.  The fire damages any enemies it touches, and destroys trees below Batrider. While flying, Batrider gains unobstructed movement and vision.\n<font color='#FF7800'>Methane Boost:</font> Activates usage of the Methane Boost ability, which allows for a short burst in speed forwards.\n<font color='#FF7800'>Quiet Flight:</font> Can be set to auto-cast prior to casting Firefly to suppress flame dropping and tree destruction, as well as gain flying vision and increase the bonus movement speed by %quiet_flight_multi%x. Turning auto-cast off while Firefly is active reactivates the flame dropping and tree destruction."
 "DOTA_Tooltip_ability_imba_batrider_firefly_Lore"						"When an enemy escapes into the Yama Raskav Jungle, most would cut through the brush to find the fugitive.  Batrider just chooses to destroy the jungle along with his foes."
 "DOTA_Tooltip_ability_imba_batrider_firefly_Note0"						"During this the Batrider can fly above units, trees and impassable terrain."
 "DOTA_Tooltip_ability_imba_batrider_firefly_Note1"						"If duration ends when above impassable terrain, the Batrider can get stuck."
@@ -29,6 +30,7 @@
 "DOTA_Tooltip_ability_imba_batrider_firefly_movement_speed"				"%MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_batrider_firefly_radius"						"RADIUS:"
 "DOTA_Tooltip_ability_imba_batrider_firefly_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_batrider_firefly_bonus_vision"				"BONUS VISION:"
 
 "DOTA_Tooltip_ability_imba_batrider_methane_boost"						"Methane Boost"
 "DOTA_Tooltip_ability_imba_batrider_methane_boost_Description"			"Immediately boosts forward a short distance. Can only be cast once per Firefly cast."
@@ -60,6 +62,6 @@
 "DOTA_Tooltip_modifier_imba_batrider_flaming_lasso_self"					"Flaming Lasso Damage Reduction"
 "DOTA_Tooltip_modifier_imba_batrider_flaming_lasso_self_Description"		"Can attack while Lasso is active, but attack damage is reduced by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%%."
 
-"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_methane_boost_distance"	"+225 Methane Boost Distance"
-"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_firefly_truesight"			"Firefly Grants 250 True Sight Radius"
-"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_flamebreak_cooldown"		"-13s Flamebreak Cooldown"
+"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_methane_boost_distance"	"+{s:value} Methane Boost Distance"
+"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_firefly_truesight"			"Firefly Grants {s:value} True Sight Radius"
+"DOTA_Tooltip_ability_special_bonus_unique_imba_batrider_flamebreak_cooldown"		"-{s:value}s Flamebreak Cooldown"

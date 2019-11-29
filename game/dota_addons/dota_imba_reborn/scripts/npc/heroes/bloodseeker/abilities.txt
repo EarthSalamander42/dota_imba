@@ -58,40 +58,57 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_increase_pct"		"25 30 35 40"
+				"damage_increase_outgoing_pct"		"12 18 24 30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_bonus_pct"			"18 22 26 30"
-			}
+				"damage_increase_incoming_pct"		"10 14 18 22"
+				"CalculateSpellDamageTooltip"	"0"
+			}			
+			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aoe_damage"			    "12 20 28 36"
+				"health_bonus_pct"			"18 22 26 30"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aoe_radius"		   		"350"
+				"health_bonus_aoe"	"300"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"allied_damage"			   	"50"
+				"health_bonus_share_percent"	"50"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"800 900 1000 1100"
+				"aoe_damage"			    "12 20 28 36"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"red_val_distance"			"2200"
+				"aoe_radius"		   		"350"
 			}
 			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"allied_damage"			   	"50"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"800 900 1000 1100"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"red_val_distance"			"2200"
+			}
+			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"red_val_amount"			"50"
@@ -157,7 +174,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"delay"						"2.2"
+				"delay"						"2.6"
 			}
 			"05"
 			{
@@ -311,7 +328,7 @@
 
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"800"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -324,7 +341,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"12"
+				"duration"					"10 11 12"
 			}
 			"02"
 			{
@@ -371,6 +388,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_charge_replenish_rate"	"40"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"abilitycastrange"			""
+				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_rupture_cast_range"
 			}
 		}
 	}
@@ -617,6 +640,31 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"6"
+			}
+		}
+	}
+	
+	"special_bonus_imba_bloodseeker_rupture_cast_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bloodseeker_rupture"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"600"
 			}
 		}
 	}

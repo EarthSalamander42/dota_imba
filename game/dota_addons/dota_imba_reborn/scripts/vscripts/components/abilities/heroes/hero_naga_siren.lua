@@ -85,7 +85,7 @@ function modifier_imba_naga_siren_mirror_image_invulnerable:CheckState() return 
 	[MODIFIER_STATE_INVULNERABLE] = true,
 	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 	[MODIFIER_STATE_STUNNED] = true,
-	[MODIFIER_STATE_OUT_OF_GAME] = true,
+	-- [MODIFIER_STATE_OUT_OF_GAME] = true,
 } end
 
 modifier_imba_naga_siren_mirror_image_perfect_image = modifier_imba_naga_siren_mirror_image_perfect_image or class({})

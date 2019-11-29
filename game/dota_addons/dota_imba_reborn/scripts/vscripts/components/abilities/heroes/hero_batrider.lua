@@ -316,17 +316,31 @@ function imba_batrider_flamebreak:OnProjectileHit_ExtraData(target, location, da
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("explosion_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
+	if not self.initial_damage_table then
+		self.initial_damage_table	= {
+			victim 			= nil,
+			damage 			= self:GetSpecialValueFor("damage_impact"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
+	end
+
 	for _, enemy in pairs(enemies) do
 		-- "Does not affect Roshan."
 		if not enemy:IsRoshan() then
+			self.initial_damage_table.victim = enemy
+			ApplyDamage(self.initial_damage_table)
+			
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 			{
-				distance		= self:GetSpecialValueFor("knockback_max_distance") - (enemy:GetAbsOrigin() - location):Length2D(),
+				distance		= self:GetSpecialValueFor("knockback_distance"),
 				direction_x 	= (enemy:GetAbsOrigin() - location):Normalized().x,
 				direction_y 	= (enemy:GetAbsOrigin() - location):Normalized().y,
 				direction_z 	= (enemy:GetAbsOrigin() - location):Normalized().z,
 				duration 		= self:GetSpecialValueFor("knockback_duration"),
-				height			= self:GetSpecialValueFor("knockback_height") * ((enemy:GetAbsOrigin() - location):Length2D() / self:GetSpecialValueFor("knockback_max_distance")),
+				height			= self:GetSpecialValueFor("knockback_height") * ((enemy:GetAbsOrigin() - location):Length2D() / self:GetSpecialValueFor("knockback_distance")),
 				bGroundStop 	= false,
 				bDecelerate 	= false,
 				bInterruptible 	= false,
@@ -494,6 +508,7 @@ function modifier_imba_batrider_firefly:RemoveOnDeath()	return false end
 
 function modifier_imba_batrider_firefly:OnCreated()
 	self.movement_speed		= self:GetAbility():GetSpecialValueFor("movement_speed")
+	self.bonus_vision		= self:GetAbility():GetSpecialValueFor("bonus_vision")
 	self.quiet_flight_multi	= self:GetAbility():GetSpecialValueFor("quiet_flight_multi")
 	
 	if not IsServer() then return end
@@ -609,13 +624,20 @@ function modifier_imba_batrider_firefly:OnDestroy()
 end
 
 function modifier_imba_batrider_firefly:CheckState()
-	if self:GetStackCount() >= 0 then
+	if self:GetStackCount() == 1 then
+		return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	elseif self:GetStackCount() == 0 then
 		return {[MODIFIER_STATE_FLYING]	= true}
 	end
 end
 
 function modifier_imba_batrider_firefly:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_ORDER}
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_BONUS_DAY_VISION,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_batrider_firefly:GetModifierMoveSpeedBonus_Percentage()
@@ -624,6 +646,14 @@ function modifier_imba_batrider_firefly:GetModifierMoveSpeedBonus_Percentage()
 	elseif self:GetStackCount() == 0 then
 		return self.movement_speed * self.quiet_flight_multi
 	end
+end
+
+function modifier_imba_batrider_firefly:GetBonusDayVision()
+	return self.bonus_vision
+end
+
+function modifier_imba_batrider_firefly:GetBonusNightVision()
+	return self.bonus_vision
 end
 
 function modifier_imba_batrider_firefly:OnOrder(keys)
