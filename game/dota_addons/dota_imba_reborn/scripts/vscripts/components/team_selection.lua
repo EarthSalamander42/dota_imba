@@ -88,8 +88,8 @@ end
 -----------------------------------
 
 function ManualTeamSelection()
-	print("Initializing manual team selection")
-	print("Skipping. Manual Team Selection is performed by legacy code")
+	TextDebug("Initializing manual team selection")
+	TextDebug("Skipping. Manual Team Selection is performed by legacy code")
 end
 
 -----------------------------------
@@ -98,7 +98,7 @@ end
 
 local PlayerWithHostPrivileges = nil
 local TeamSelectionListeners = {}
-
+--[[
 function Random5v5TeamSelection()
 
 	print("Initializing 5v5 random team selection")
@@ -126,7 +126,7 @@ end
 
 function Random5v5TeamSelectionFinalize(response)
 
-	print("recieved response from server")
+	print("received response from server")
 
 	-- catch errors
 	if not response.ok then
@@ -160,7 +160,7 @@ function Random5v5TeamSelectionFinalize(response)
 	-- will cleanup event handlers on the client / ui changes
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
 end
-
+--]]
 -----------------------------------
 -- 10v10 Keep Teams
 -----------------------------------
@@ -168,10 +168,20 @@ end
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
 local TeamSelectionComputedTotal = 10
+local live_debug = true
+
+
+local function TextDebug(text)
+	if live_debug == true then
+		CustomGameEventManager:Send_ServerToAllClients("loading_screen_debug", {text = text})
+	else
+		print(text)
+	end
+end
 
 function KeepTeams10v10TeamSelection()
 
---	print("Initializing keep-teams 10v10 team selection")
+	TextDebug("Initializing keep-teams 10v10 team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -183,7 +193,7 @@ function KeepTeams10v10TeamSelection()
 end
 
 function KeepTeams10v10TeamSelectionReady(obj, event)
---	print("We got notification from host")
+	TextDebug("We got notification from host")
 
 	-- save the playerid of the privileged client / volvos function is unreliable
 	PlayerWithHostPrivileges = event.PlayerID
@@ -253,7 +263,7 @@ function PreAssignPlayers(iteration)
 	
 	-- skip if the player ids are stupid
 	if (radiantPlayerId > PlayerResource:GetPlayerCount() or direPlayerId > PlayerResource:GetPlayerCount()) then
-		print("Skipping team pre assignment cause player count is too low")
+		TextDebug("Skipping team pre assignment cause player count is too low")
 		return
 	end
 	
@@ -301,7 +311,7 @@ end
 
 function KeepTeams10v10TeamSelectionDone()
 
---	print("Team selection complete")
+	TextDebug("Team selection complete")
 
 	-- unregister listener and send complete event
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
@@ -317,17 +327,17 @@ function TeamSelectionFallbackAssignment()
 	TeamSelectionUnassignTeams()
 
 	-- send failure event
---	print("Sending failure event to clients")
+	TextDebug("Sending failure event to clients")
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end
 
 function KeepTeams10v10TeamSelectionFinalize(response)
 
-	print("recieved response from server")
+	TextDebug("received response from server")
 
 	-- catch errors
 	if not response.ok then
-		print("error")
+		TextDebug("error")
 		print(response)
 		TeamSelectionFallbackAssignment()
 		return

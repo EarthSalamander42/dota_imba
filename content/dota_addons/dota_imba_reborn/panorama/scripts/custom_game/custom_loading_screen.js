@@ -24,6 +24,11 @@ function isInt(n) {
    return n % 1 === 0;
 }
 
+function LoadingScreenDebug(args) {
+	$.Msg(args)
+	view.text.text = view.text.text + ". \n\n" + args.text;
+}
+
 function fetch() {
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
@@ -164,5 +169,6 @@ function DisableVoting() {
 	HoverableLoadingScreen();
 	fetch();
 
+	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();
