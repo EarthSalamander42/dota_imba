@@ -305,7 +305,7 @@ function UpdateGameState() {
 	// -------------------------
 	if ((Game.GetMapInfo().map_display_name == "imba_5v5") || (Game.GetMapInfo().map_display_name == "imba_10v10")) {
 		$.Msg("Skipping legacy team select on map " + Game.GetMapInfo().map_display_name + ", Imba Matchmaking enabled.");
-//		return;
+		return;
 	}
 
 	/* TODO: COMMENT THIS: 
