@@ -67,10 +67,17 @@ function InitializeTeamSelection()
 	-- 10v10              parties will be kept
 	-- mutation, imbathrow normal manual procedure
 
-	if GetMapName() == MapRanked5v5() then
-		Random5v5TeamSelection()
-	elseif GetMapName() == MapRanked10v10() then
-		KeepTeams10v10TeamSelection()
+--	if GetMapName() == MapRanked5v5() then
+--		Random5v5TeamSelection()
+	if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" then
+		-- let time for bots to join
+--		if IsInToolsMode() then
+--			Timers:CreateTimer(5.0, function()
+--				KeepTeams10v10TeamSelection()
+--			end)
+--		else
+			KeepTeams10v10TeamSelection()
+--		end
 	else
 		ManualTeamSelection()
 	end
@@ -164,7 +171,7 @@ local TeamSelectionComputedTotal = 10
 
 function KeepTeams10v10TeamSelection()
 
-	print("Initializing keep-teams 10v10 team selection")
+--	print("Initializing keep-teams 10v10 team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -176,7 +183,7 @@ function KeepTeams10v10TeamSelection()
 end
 
 function KeepTeams10v10TeamSelectionReady(obj, event)
-	print("We got notification from host")
+--	print("We got notification from host")
 
 	-- save the playerid of the privileged client / volvos function is unreliable
 	PlayerWithHostPrivileges = event.PlayerID
@@ -241,8 +248,8 @@ function PreAssignPlayers(iteration)
 	local radiantPlayerId = PreAssignPlayersSchema[iteration + 1].radiant
 	local direPlayerId = PreAssignPlayersSchema[iteration + 1].dire
 	
-	print("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
-	print("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
+--	print("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
+--	print("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
 	
 	-- skip if the player ids are stupid
 	if (radiantPlayerId > PlayerResource:GetPlayerCount() or direPlayerId > PlayerResource:GetPlayerCount()) then
@@ -261,10 +268,11 @@ end
 
 function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
-	print("Compute complete")
+--	print("Compute complete")
 
 	-- gather team composition by creating a snapshot
 	local comp = KeepTeams10v10TeamSelectionGetTeamComposition();
+--	print("COMPUTE RESULT:", comp)
 	table.insert(TeamSelectionComputed, comp)
 
 	-- unassign the teams
@@ -293,27 +301,23 @@ end
 
 function KeepTeams10v10TeamSelectionDone()
 
-	print("Team selection complete")
+--	print("Team selection complete")
 
 	-- unregister listener and send complete event
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
 
 	-- perform api request
-	api.imba.matchmaking.imr_10v10_teams(
-		TeamSelectionGetAllPlayers(),
-		TeamSelectionComputed,
-		KeepTeams10v10TeamSelectionFinalize
-	)
+	api:SendTeamConfiguration(TeamSelectionGetAllPlayers(), TeamSelectionComputed, KeepTeams10v10TeamSelectionFinalize)
 end
 
 function TeamSelectionFallbackAssignment()
 
 	-- unassign teams
-	print("Unassigning teams")
+--	print("Unassigning teams")
 	TeamSelectionUnassignTeams()
 
 	-- send failure event
-	print("Sending failure event to clients")
+--	print("Sending failure event to clients")
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end
 
@@ -324,6 +328,7 @@ function KeepTeams10v10TeamSelectionFinalize(response)
 	-- catch errors
 	if not response.ok then
 		print("error")
+		print(response)
 		TeamSelectionFallbackAssignment()
 		return
 	end

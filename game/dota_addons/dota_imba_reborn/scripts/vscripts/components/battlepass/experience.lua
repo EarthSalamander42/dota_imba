@@ -104,6 +104,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				IMR_5v5_change = 0,
 				arcana = arcana,
 				mmr = api:GetPlayerMMR(ID),
+				mmr_title = api:GetPlayerRankMMR(ID),
 			})
 		end
 	end

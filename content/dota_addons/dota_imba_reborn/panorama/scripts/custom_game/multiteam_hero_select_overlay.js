@@ -85,11 +85,11 @@ function UpdatePlayer( teamPanel, playerId )
 		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 		if (gamemode) gamemode = gamemode["1"];
 
-		if ((Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr != undefined) {
-			$.Msg("MMR: " + player_table.mmr)
+		if ((Game.IsInToolsMode() && Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+			$.Msg("mmr_title: " + player_table.mmr_title)
 			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
 			playerIMR.AddClass("PlayerIMR");
-			playerIMR.text = $.Localize("#custom_end_screen_legend_mmr") + ": " + player_table.mmr;
+			playerIMR.text = player_table.mmr_title;
 //		} else if (Game.IsInToolsMode()) {
 //			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
 //			playerIMR.AddClass("PlayerIMR");
@@ -189,6 +189,9 @@ function UpdateTimer()
 	var nTeams = Game.GetAllTeamIDs().length
 //	$.Msg( nTeams );
 
+	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	if (gamemode) gamemode = gamemode["1"];
+
 	for ( var teamId of Game.GetAllTeamIDs() )
 	{
 		var teamPanelToUse = null;
@@ -247,26 +250,26 @@ function UpdateTimer()
 		}
 		nTeamsCreated = nTeamsCreated + 1;
 
-		var imr_calculation = 0;
+		var mmr_calculation = 0;
 
 		for (var i = 0; i < Game.GetPlayerIDsOnTeam(teamId).length; i++) {
 			var player_id = Game.GetPlayerIDsOnTeam(teamId)[i];
 			var player_table = CustomNetTables.GetTableValue("battlepass", player_id.toString());
 
-			if (Game.IsInToolsMode())
-				imr_calculation += 3000;
-			else {
+//			if (Game.IsInToolsMode())
+//				mmr_calculation += 3000;
+//			else {
 				if (player_table != undefined && player_table.mmr != undefined) {
-					imr_calculation += player_table.mmr;
+					mmr_calculation += player_table.mmr;
 				}
-			}
+//			}
 		}
 
-		if (Game.GetMapInfo().map_display_name != "imba_1v1") {
-			if (imr_calculation != 0) {
-				imr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
+		if ((Game.IsInToolsMode() && Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+			if (mmr_calculation != 0) {
+				mmr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
 				teamPanel.FindChildTraverse("IMRAverage").GetParent().style.visibility = "visible";
-				teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + imr_calculation;
+				teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + mmr_calculation;
 			}
 		}
 	}
@@ -278,8 +281,8 @@ function UpdateTimer()
 	GameEvents.Subscribe( "dota_player_hero_selection_dirty", OnUpdateHeroSelection );
 	GameEvents.Subscribe( "dota_player_update_hero_selection", OnUpdateHeroSelection );
 
-	if (CustomNetTables.GetTableValue("game_options", "gamemode")) {
-		if (CustomNetTables.GetTableValue("game_options", "gamemode")[1] == 2)
+	if (gamemode) {
+		if (gamemode[1] == 2)
 			$("#Mutations").style.visibility = "visible";
 	}
 
@@ -294,4 +297,10 @@ function UpdateTimer()
 		if ($("#team_" + opposite_team))
 			$("#team_" + opposite_team).style.visibility = "collapse";
 	}
+
+//	$("team_2").SetPanelEvent("onactivate", function(){});
+//	$("team_3").SetPanelEvent("onactivate", function(){});
+
+//	$("team_2").FindChildTraverse("TeamGroup").SetPanelEvent("onactivate", function(){});
+//	$("team_3").FindChildTraverse("TeamGroup").SetPanelEvent("onactivate", function(){});
 })();

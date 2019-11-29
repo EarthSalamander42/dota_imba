@@ -70,6 +70,7 @@
 				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
 				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
 				Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
+
 				if (Game.IsInToolsMode() == false) {
 					Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
 					Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
@@ -260,6 +261,7 @@
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanilla_hero_selection.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
+		<CustomUIElement type="CustomGameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_hero_demo.xml" />
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 

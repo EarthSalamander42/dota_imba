@@ -286,7 +286,29 @@ function api:GetPlayerMMR(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		return self.players[steamid]["mmr"]
+		return self.players[steamid]["mmr_value"]
+	else
+		native_print("api:GetPlayerMMR: api players steamid not valid!")
+		return false
+	end
+end
+
+function api:GetPlayerRankMMR(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+		native_print("api:GetPlayerMMR: Player ID not valid!")
+		return false
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+		native_print("api:GetPlayerMMR() self.players == nil")
+		return false
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid]["mmr_title"]
 	else
 		native_print("api:GetPlayerMMR: api players steamid not valid!")
 		return false
@@ -674,6 +696,23 @@ function api:GetCustomGamemode()
 	end
 
 	return gamemode
+end
+
+function api:SendTeamConfiguration(players, combinations, callback)
+	local data = {
+		players = players,
+		team_combinations = combinations,
+		map = GetMapName(),
+	}
+
+	print(players)
+	print(team_combinations)
+
+	self:Request("teambalance", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", data)
 end
 
 require("components/api/events")

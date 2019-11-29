@@ -42,7 +42,7 @@ require('components/mutation/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
--- require('components/team_selection')
+require('components/team_selection')
 
 require('events/events')
 require('filters')
