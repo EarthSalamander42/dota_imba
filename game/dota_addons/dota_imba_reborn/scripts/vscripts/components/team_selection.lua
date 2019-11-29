@@ -168,8 +168,7 @@ end
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
 local TeamSelectionComputedTotal = 10
-local live_debug = true
-
+local live_debug = false
 
 local function TextDebug(text)
 	if live_debug == true then

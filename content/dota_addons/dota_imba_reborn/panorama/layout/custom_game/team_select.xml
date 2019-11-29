@@ -17,7 +17,7 @@
 
 			<!--Teams List, left hand panel -->
 
-<!--
+
 			<Panel id="TeamsList">
 				<Panel id="TeamsListGroup">
 					<Panel id="TeamListHeader">
@@ -31,7 +31,6 @@
 					</Button>
 				</Panel>
 			</Panel>
--->
 
 			<!--Game Info and Unassigned players, right hand panel -->
 			<Panel id="GameAndPlayersRoot">

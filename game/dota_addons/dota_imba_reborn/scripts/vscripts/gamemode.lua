@@ -7,9 +7,10 @@ require('addon_init')
 
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
-	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 	require('internal/eventtest')
 end
+
+require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 
 require('libraries/animations')
 require('libraries/disable_help')
@@ -42,7 +43,9 @@ require('components/mutation/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
-require('components/team_selection')
+if GetMapName() == "imba_10v10" then
+	require('components/team_selection')
+end
 
 require('events/events')
 require('filters')
