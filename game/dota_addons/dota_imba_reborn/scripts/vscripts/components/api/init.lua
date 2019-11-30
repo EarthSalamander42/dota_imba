@@ -533,10 +533,6 @@ function api:RegisterGame(callback)
 
 	for i, j in pairs(cool_hats) do
 		self:Request(j, function(data)
-			if callback ~= nil then
-				callback()
-			end
-
 			cool_hat[j] = {}
 			for k, v in pairs(data) do
 				table.insert(cool_hat[j], data[k]["id"], data[k])

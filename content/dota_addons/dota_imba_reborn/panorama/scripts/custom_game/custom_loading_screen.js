@@ -101,12 +101,27 @@ function fetch() {
 		$.Msg(reason);
 	});
 	*/
-
-	$.Schedule(2.0, function(){
-		$("#VoteGameMode1").checked = true;
-		OnVoteButtonPressed("gamemode", 1);
-	});
 };
+
+function AllPlayersLoaded() {
+//	$.Msg("ALL PLAYERS LOADED IN!")
+	for (var i = 1; i <= $("#vote-content").GetChildCount(); i++) {
+		var panel = $("#vote-content").GetChild(i - 1);
+		var gamemode = panel.GetChild(0).id.replace("VoteGameMode", "");
+
+		if (!panel.BHasClass("Active"))
+			panel.AddClass("Active");
+
+		(function (panel, gamemode) {
+			panel.SetPanelEvent("onactivate", function () {
+				OnVoteButtonPressed('gamemode', gamemode);
+			})
+		})(panel, gamemode);
+	}
+
+	$("#VoteGameMode1").checked = true;
+	OnVoteButtonPressed("gamemode", 1);
+}
 
 function HoverableLoadingScreen() {
 	if (Game.GameStateIs(2))
@@ -171,4 +186,5 @@ function DisableVoting() {
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
+	GameEvents.Subscribe("all_players_loaded", AllPlayersLoaded);
 })();

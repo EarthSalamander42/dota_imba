@@ -52,8 +52,8 @@
 				<Panel class="down">
 					<Label id="loading-title-text-vote" text="#vote_gamemode"/>
 					<Panel id="vote-content">
-					<Panel class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 1)" />
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength"/>
 							<Label id="VoteGameModeText1" class="VoteGameModeText" text="#vote_gamemode_1" />
 						</Panel>
 						<Panel class="VoteButton" hittest="false">

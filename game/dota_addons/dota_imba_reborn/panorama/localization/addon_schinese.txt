@@ -648,7 +648,7 @@
 	"unassigned" "未知队伍"
 	"vanilla_hero" "原版英雄"
 	"vote_gamemode" "游戏模式投票"
-	"vote_gamemode_1" "标准模式"
+	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "突变模式"
 	"vote_gamemode_3" "Frantic模式"
 	"vote_gamemode_4" "夜魇暗潮"

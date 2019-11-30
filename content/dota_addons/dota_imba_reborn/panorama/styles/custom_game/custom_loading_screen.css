@@ -62,7 +62,7 @@
 #imba-loading-title,
 #imba-loading-title-patreon,
 #imba-loading-title-promote,
-#imba-loading-title-vote, {
+#imba-loading-title-vote {
 	width: 1400px;
 	margin-top: 20px;
 	margin-left: 70px;
@@ -87,6 +87,7 @@
 #imba-loading-title-vote, {
 	background-color: COLOR_INFO_BACKGROUND_GREY;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	flow-children: none;
 }
 
 #loading-title-text,
@@ -251,29 +252,34 @@
 	font-size: 16px;
 	letter-spacing: 1px;
 	text-shadow: 2px 2px 2px black;
+	visibility: collapse;
 }
 
-#VoteGameModeText1
+.Active .VoteGameModeText {
+	visibility: visible;
+}
+
+.Active #VoteGameModeText1
 {
 	color: yellow;
 }
 
-#VoteGameModeText2
+.Active #VoteGameModeText2
 {
 	color: orange;
 }
 
-#VoteGameModeText3
+.Active #VoteGameModeText3
 {
 	color: red;
 }
 
-#VoteGameModeText4
+.Active #VoteGameModeText4
 {
 	color: darkred;
 }
 
-#VoteGameModeText5
+.Active #VoteGameModeText5
 {
 	color: darkred;
 }
@@ -282,4 +288,9 @@
 {
 	width: 100%;
 	z-index: 2;
+	visibility: collapse;
+}
+
+.Active .CGSRadio {
+	visibility: visible;
 }

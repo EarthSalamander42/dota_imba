@@ -780,32 +780,34 @@ end
 
 modifier_imba_blur_blur = class({})
 
-function modifier_imba_blur_blur:OnCreated()
-	self.blur_particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-end
+function modifier_imba_blur_blur:IsHidden() return true end
+function modifier_imba_blur_blur:IsDebuff() return false end
+function modifier_imba_blur_blur:IsPurgable() return false end
+function modifier_imba_blur_blur:StatusEffectPriority()  return 11 end
 
 function modifier_imba_blur_blur:GetStatusEffectName()
 	return "particles/hero/phantom_assassin/blur_status_fx.vpcf"
 end
 
-function modifier_imba_blur_blur:StatusEffectPriority()  return 11 end
+function modifier_imba_blur_blur:OnCreated()
+	if not IsServer() then return end
 
-function modifier_imba_blur_blur:CheckState()
-	local states = { [MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true, }
-	return states
+	-- looks so ugly m8
+--	self.blur_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 end
 
-function modifier_imba_blur_blur:OnRemoved()
-	ParticleManager:DestroyParticle(self.blur_particle, false)
-end
+function modifier_imba_blur_blur:CheckState() return {
+	[MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true,
+} end
 
 function modifier_imba_blur_blur:OnDestroy()
-	ParticleManager:ReleaseParticleIndex(self.blur_particle)
-end
+	if not IsServer() then return end
 
-function modifier_imba_blur_blur:IsHidden() return true end
-function modifier_imba_blur_blur:IsDebuff() return false end
-function modifier_imba_blur_blur:IsPurgable() return false end
+	if self.blur_particle then
+		ParticleManager:DestroyParticle(self.blur_particle, false)
+		ParticleManager:ReleaseParticleIndex(self.blur_particle)
+	end
+end
 
 -------------------------------------------
 -- Blur invuln modifier
@@ -1187,7 +1189,7 @@ LinkLuaModifier("modifier_phantom_assassin_gravestone", "components/abilities/he
 
 modifier_phantom_assassin_gravestone = modifier_phantom_assassin_gravestone or class({})
 
-function modifier_phantom_assassin_gravestone:IsHidden() return not IsInToolsMode() end
+function modifier_phantom_assassin_gravestone:IsHidden() return false end
 
 function modifier_phantom_assassin_gravestone:CheckState() return {
 	[MODIFIER_STATE_INVULNERABLE] = true,
@@ -1233,18 +1235,20 @@ function modifier_phantom_assassin_arcana:DeclareFunctions() return {
 function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 	if not IsServer() then return end
 
-	if params.attacker == self:GetParent() and params.target:IsRealHero() then
+	if params.attacker == self:GetParent() and params.target:IsRealHero() and params.attacker:GetTeam() ~= params.target:GetTeam() then
 		self:IncrementStackCount()
 --		print("New arcana kill:", self:GetStackCount())
 
 		local gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
 		gravestone:SetOwner(self:GetParent())
+
+--		print("CDP damage (pre):", self:GetParent().cdp_damage)
 		-- required for CDP damage to be valid
---			print("CDP damage (pre):", self:GetParent().cdp_damage)
 		Timers:CreateTimer(FrameTime(), function()
 			gravestone:AddNewModifier(gravestone, nil, "modifier_phantom_assassin_gravestone", {cdp_damage = params.attacker.cdp_damage}):SetStackCount(params.target:entindex())
 --			print("CDP damage (post):", self:GetParent().cdp_damage)
 		end)
+
 		gravestone.epitaph_number = RandomInt(1, 13)
 		gravestone.victim_id = params.target:GetPlayerID()
 

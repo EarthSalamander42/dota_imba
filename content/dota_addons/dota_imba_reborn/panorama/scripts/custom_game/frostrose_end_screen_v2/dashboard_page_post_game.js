@@ -362,7 +362,16 @@ function EndScoreboard(args) {
 //	$.Msg(args)
 
 	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
-	var IsRanked = Game.IsInToolsMode();
+//	var IsRanked = Game.IsInToolsMode();
+	var IsRanked = false;
+
+	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	if (gamemode) gamemode = gamemode["1"];
+
+	if (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") {
+		if (gamemode && gamemode == 1)
+			IsRanked = true;
+	}
 
 	if (bTenvTen == false) {
 		$("#DetailsScoreboardContainer").style.marginTop = "15%";
@@ -439,7 +448,7 @@ function EndScoreboard(args) {
 			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
 
 			if (IsRanked)
-				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible"
+				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
 			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
 
@@ -452,9 +461,11 @@ function EndScoreboard(args) {
 				var player_items = Game.GetPlayerItems(id);
 				var player_table = CustomNetTables.GetTableValue("battlepass", id.toString());
 				var player_result = args.players[player_info.player_steamid];
+				var player_backend_result = args.data.players[player_info.player_steamid];
 
 //				$.Msg(player_info)
 //				$.Msg(player_table)
+//				$.Msg(player_result)
 
 				// Set left bar player informations
 				var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
@@ -473,11 +484,11 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
 
 				if (IsRanked) {
-					if (player_result && player_result.mmr_title) {
+					if (player_table && player_table.mmr_title) {
 						PinnedPlayerRow.FindChildTraverse("RankTierContainer").style.visibility = "visible";
 
-						var short_title = player_result.mmr_title.substring(0, player_result.mmr_title.length - 2);
-						var title_stars = player_result.mmr_title[player_result.mmr_title.length -1];
+						var short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+						var title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
 
 						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
 						PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
@@ -540,8 +551,9 @@ function EndScoreboard(args) {
 				var panel_xp_diff_text = PlayerRowContainer.FindChildTraverse("es-player-xp-earned");
 
 				// setup Battlepass XP diff and booster
-				if (player_result != null) {
-					var xpDiff = Math.floor(player_result.xp_change);
+				if (player_backend_result != null) {
+					$.Msg("XP earned: " + player_backend_result.xp_change)
+					var xpDiff = Math.floor(player_backend_result.xp_change);
 //					if (Game.IsInToolsMode())
 //						xpDiff = 1000000;
 
@@ -589,8 +601,8 @@ function EndScoreboard(args) {
 						panel_xp_diff_text.AddClass("es-text-white");
 					}
 
-					if (player_table && player_table.in_game_tag == 1 && player_result && player_result.xp_multiplier) {
-						var multiplier = Math.round(player_result.xp_multiplier * 100.0);
+					if (player_table && player_table.in_game_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
+						var multiplier = Math.round(player_backend_result.xp_multiplier * 100.0);
 						panel_xp_booster_text.text = " (" + multiplier + "%)";
 					} else {
 						panel_xp_booster_text.text = " (100%)";
@@ -906,7 +918,6 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 		var args = {
 			"players":{
 				"76561198015161808":{
-					"mmr_title": "Archon 4",
 					"xp_multiplier": 10,
 					"xp": "0",
 					"xp_change": 200,

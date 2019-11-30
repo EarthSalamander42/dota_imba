@@ -648,7 +648,7 @@
 	"unassigned" "Non Assignés"
 	"vanilla_hero" "Lazy"
 	"vote_gamemode" "Vote mode de jeu:"
-	"vote_gamemode_1" "Standard"
+	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "Mutation"
 	"vote_gamemode_3" "Super Frantic"
 	"vote_gamemode_4" "Diretide"

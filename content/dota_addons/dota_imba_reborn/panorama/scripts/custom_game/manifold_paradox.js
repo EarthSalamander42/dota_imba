@@ -1,6 +1,6 @@
 // test for PA Manifold Paradox UI
 var hide_panel = true;
-var i = 3;
+var i = 0;
 
 function UpdateTooltip(args) {
 	$.Msg(args)

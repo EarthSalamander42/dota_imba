@@ -85,8 +85,9 @@ function UpdatePlayer( teamPanel, playerId )
 		var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 		if (gamemode) gamemode = gamemode["1"];
 
-		if ((Game.IsInToolsMode() && Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
-			$.Msg("mmr_title: " + player_table.mmr_title)
+//		if ((Game.IsInToolsMode() && Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+		if ((Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+//			$.Msg("mmr_title: " + player_table.mmr_title)
 			playerIMR = $.CreatePanel( "Label", playerPanel, playerPanelName + "_imr" );
 			playerIMR.AddClass("PlayerIMR");
 			playerIMR.text = player_table.mmr_title;
@@ -136,7 +137,7 @@ function UpdatePlayer( teamPanel, playerId )
 //	$.Msg(player_table.donator_level)
 //	$.Msg(player_table.donator_color)
 
-	if (player_table && player_table.donator_level && player_table.donator_color) {
+	if (player_table && player_table.donator_level && player_table.donator_color && player_table.in_game_tag && player_table.in_game_tag == 1) {
 		if (player_table.donator_level < 10) {
 			playerName.style.color = player_table.donator_color
 		}
@@ -265,11 +266,12 @@ function UpdateTimer()
 //			}
 		}
 
-		if ((Game.IsInToolsMode() && Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+//		if ((Game.IsInToolsMode() && (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10")) && gamemode == 1 && player_table != undefined && player_table.mmr_title != undefined) {
+		if ((Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") && gamemode == 1) {
 			if (mmr_calculation != 0) {
 				mmr_calculation /= Game.GetPlayerIDsOnTeam(teamId).length;
 				teamPanel.FindChildTraverse("IMRAverage").GetParent().style.visibility = "visible";
-				teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + mmr_calculation;
+				teamPanel.FindChildTraverse("IMRAverage").text = $.Localize("#average_mmr") + " " + mmr_calculation.toFixed(0);
 			}
 		}
 	}
