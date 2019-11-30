@@ -1272,6 +1272,5 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		end
 
 		gravestone:SetMaterialGroup(tostring(style))
-		self:StartIntervalThink(1.0)
 	end
 end
