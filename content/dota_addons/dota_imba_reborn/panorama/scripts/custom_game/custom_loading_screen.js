@@ -142,8 +142,8 @@ function OnVotesReceived(data)
 
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
-		var gamemode = data.table[id];
-		vote_count[gamemode]++;
+		var gamemode = data.table[id][1];
+		vote_count[gamemode] = vote_count[gamemode] + data.table[id][2];
 	}
 
 	// Modify tooltips based on voted gamemode

@@ -1094,7 +1094,6 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 
 		-- Only apply on attacks against the caster
 		if unit == self.caster then
-
 			-- If it was a no reflection damage, do nothing
 			if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
 				return nil
@@ -1114,7 +1113,7 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 			if attacker:GetTeam() == unit:GetTeam() then
 				return nil
 			end
-			
+
 			-- If the attacking unit has Nyx's Carapace as well, do nothing
 			if attacker:HasModifier("modifier_imba_spiked_carapace") then
 				return nil
@@ -1125,7 +1124,6 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 
 			-- Only apply if the caster has Vendetta as ability
 			if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
-
 				-- Convert damage to vendetta charges
 				if not self.caster:HasModifier(self.modifier_vendetta) then
 					self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
@@ -1175,7 +1173,9 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 			end
 
 			-- Stun it
-			attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
+			if attacker:IsAlive() then
+				attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
+			end
 		end
 	end
 end

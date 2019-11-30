@@ -1218,8 +1218,9 @@ end
 
 modifier_phantom_assassin_arcana = modifier_phantom_assassin_arcana or class({})
 
-function modifier_phantom_assassin_arcana:IsHidden() return not IsInToolsMode() end
 function modifier_phantom_assassin_arcana:RemoveOnDeath() return false end
+function modifier_phantom_assassin_arcana:IsPurgable() return false end
+function modifier_phantom_assassin_arcana:IsPurgeException() return false end
 
 function modifier_phantom_assassin_arcana:GetTexture()
 	return "phantom_assassin_arcana_coup_de_grace"

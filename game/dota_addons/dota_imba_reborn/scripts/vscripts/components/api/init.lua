@@ -19,7 +19,7 @@ function api:GetUrl(endpoint)
 end
 
 function api:IsDonator(player_id)
-	if self:GetDonatorStatus(player_id) ~= 0 then
+	if self:GetDonatorStatus(player_id) ~= 0 and self:GetDonatorStatus(player_id) ~= 10 then
 		return true
 	else
 		return false
@@ -28,7 +28,7 @@ end
 
 function api:IsDeveloper(player_id)
 	local status = self:GetDonatorStatus(player_id);
-	if status == 1 or status == 2 or status == 3 then
+	if status == 1 or status == 2 then
 		return true
 	else
 		return false

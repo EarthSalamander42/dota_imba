@@ -362,7 +362,7 @@ function EndScoreboard(args) {
 //	$.Msg(args)
 
 	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
-	var IsRanked = false;
+	var IsRanked = Game.IsInToolsMode();
 
 	if (bTenvTen == false) {
 		$("#DetailsScoreboardContainer").style.marginTop = "15%";
@@ -388,6 +388,17 @@ function EndScoreboard(args) {
 	var row_height = "56px";
 	var row_marginBottom = "3.5px";
 	var opposite_team = 3;
+
+	var mmr_rank_to_medals = {
+		Herald: 1,
+		Guardian: 2,
+		Crusader: 3,
+		Archon: 4,
+		Legend: 5,
+		Ancient: 6,
+		Divine: 7,
+		Immortal: 8,
+	}
 
 //	$.Msg(args.players)
 
@@ -441,7 +452,6 @@ function EndScoreboard(args) {
 				var player_items = Game.GetPlayerItems(id);
 				var player_table = CustomNetTables.GetTableValue("battlepass", id.toString());
 				var player_result = args.players[player_info.player_steamid];
-//				$.Msg(player_result)
 
 //				$.Msg(player_info)
 //				$.Msg(player_table)
@@ -461,6 +471,18 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").GetChild(0).text = player_info.player_name;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
+
+				if (IsRanked) {
+					if (player_result && player_result.mmr_title) {
+						PinnedPlayerRow.FindChildTraverse("RankTierContainer").style.visibility = "visible";
+
+						var short_title = player_result.mmr_title.substring(0, player_result.mmr_title.length - 2);
+						var title_stars = player_result.mmr_title[player_result.mmr_title.length -1];
+
+						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
+						PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+					}
+				}
 
 				// Set middle bar player informations
 				var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
@@ -884,6 +906,7 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 		var args = {
 			"players":{
 				"76561198015161808":{
+					"mmr_title": "Archon 4",
 					"xp_multiplier": 10,
 					"xp": "0",
 					"xp_change": 200,

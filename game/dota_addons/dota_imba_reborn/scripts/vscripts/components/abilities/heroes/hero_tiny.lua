@@ -1542,7 +1542,7 @@ function imba_tiny_grow:GetIntrinsicModifierName()
 end
 
 function imba_tiny_grow:OnOwnerSpawned()
-	self:OnUpgrade()
+	self:SetupModel(self:GetLevel() + 1)
 end
 
 function imba_tiny_grow:OnUpgrade()
@@ -1557,6 +1557,30 @@ function imba_tiny_grow:OnUpgrade()
 	if old_stacks == new_stacks then old_stacks = 0 end
 	rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
 	local level = self:GetLevel() + 1
+
+	self:SetupModel(level)
+
+	-- Effects
+	self:GetCaster():StartGesture(ACT_TINY_GROWL)
+	EmitSoundOn("Tiny.Grow", self:GetCaster())
+
+	local grow_pfx_name = string.gsub(self:GetCaster().grow_effect, "lvl1", "lvl"..level)
+
+	local grow = ParticleManager:CreateParticle(self:GetCaster().grow_effect, PATTACH_POINT_FOLLOW, self:GetCaster()) 
+	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(grow)
+
+	if self:GetCaster().ambient_pfx then
+		ParticleManager:DestroyParticle(self:GetCaster().ambient_pfx, true)
+		ParticleManager:ReleaseParticleIndex(self:GetCaster().ambient_pfx)
+	end
+
+	local pfx_name = string.gsub(self:GetCaster().ambient_pfx_effect, "lvl1", "lvl"..level)
+
+	self:GetCaster().ambient_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster()) 
+end
+
+function imba_tiny_grow:SetupModel(level)
 	local model_path = "models/heroes/tiny_0"..level.."/tiny_0"..level
 
 	if level < 5 then -- model bullshit
@@ -1584,25 +1608,6 @@ function imba_tiny_grow:OnUpgrade()
 			self.body:FollowEntity(self:GetCaster(), true)
 		end
 	end
-
-	-- Effects
-	self:GetCaster():StartGesture(ACT_TINY_GROWL)
-	EmitSoundOn("Tiny.Grow", self:GetCaster())
-
-	local grow_pfx_name = string.gsub(self:GetCaster().grow_effect, "lvl1", "lvl"..level)
-
-	local grow = ParticleManager:CreateParticle(self:GetCaster().grow_effect, PATTACH_POINT_FOLLOW, self:GetCaster()) 
-	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(grow)
-
-	if self:GetCaster().ambient_pfx then
-		ParticleManager:DestroyParticle(self:GetCaster().ambient_pfx, true)
-		ParticleManager:ReleaseParticleIndex(self:GetCaster().ambient_pfx)
-	end
-
-	local pfx_name = string.gsub(self:GetCaster().ambient_pfx_effect, "lvl1", "lvl"..level)
-
-	self:GetCaster().ambient_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster()) 
 end
 
 LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)

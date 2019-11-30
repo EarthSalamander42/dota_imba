@@ -253,7 +253,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
 				if v > highest_vote then
-					highest_key = k
+					highest_key = k[1]
 					highest_vote = v
 				end
 			end
@@ -287,19 +287,31 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	end
 end, nil)
 
+local donator_list = {}
+donator_list[1] = true -- Lead-Dev
+donator_list[2] = true -- Dev
+-- donator_list[3] = true -- Administrator
+donator_list[4] = true -- Ember Donator
+donator_list[7] = true -- Salamander Donator
+donator_list[8] = true -- Icefrog Donator
+donator_list[9] = true -- Gaben Donator
+
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
-	if not GameMode.VoteTable then
-		GameMode.VoteTable = {}
-	end
-
-	if not GameMode.VoteTable[keys.category] then
-		GameMode.VoteTable[keys.category] = {}
-	end
+	if not GameMode.VoteTable then GameMode.VoteTable = {} end
+	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
 
 	if pid >= 0 then
-		GameMode.VoteTable[keys.category][pid] = keys.vote
+		if not GameMode.VoteTable[keys.category][pid] then GameMode.VoteTable[keys.category][pid] = {} end
+
+		GameMode.VoteTable[keys.category][pid][1] = keys.vote
+
+		if donator_list[api:GetDonatorStatus(pid)] == true then
+			GameMode.VoteTable[keys.category][pid][2] = 2
+		else
+			GameMode.VoteTable[keys.category][pid][2] = 1
+		end
 	end
 
 --	Say(nil, keys.category, false)

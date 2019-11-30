@@ -22,7 +22,9 @@
 	]]
 
 item_imba_aegis = item_imba_aegis or class({})
+
 LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_aegis_pfx", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_aegis:GetAbilityTextureName()
 	return "custom/imba_aegis"
@@ -36,7 +38,8 @@ function modifier_item_imba_aegis:OnCreated()
 	-- Parameters
 	self:SetDuration(GetAbilitySpecial("item_imba_aegis", "disappear_time"), true)
 	self.reincarnate_time = GetAbilitySpecial("item_imba_aegis", "reincarnate_time")
-	self.vision_radius = GetAbilitySpecial("item_imba_aegis", "vision_radius")
+
+	self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_aegis_pfx", {})
 end
 
 function modifier_item_imba_aegis:DeclareFunctions()
@@ -58,8 +61,6 @@ end
 
 function modifier_item_imba_aegis:ReincarnateTime()
 	if IsServer() then
-		local parent = self:GetParent()
-		
 		-- Commenting out ability refreshing
 		
 		-- Refresh all your abilities
@@ -71,12 +72,8 @@ function modifier_item_imba_aegis:ReincarnateTime()
 				-- current_ability:EndCooldown()
 			-- end
 		-- end
-		self:GetAbility():CreateVisibilityNode(parent:GetAbsOrigin(), self.vision_radius, self.reincarnate_time)
-		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-		ParticleManager:SetParticleControl(particle, 1, Vector(self.reincarnate_time,0,0))
-		ParticleManager:SetParticleControl(particle, 3, parent:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(particle)
 	end
+
 	return self.reincarnate_time
 end
 
@@ -88,28 +85,63 @@ function modifier_item_imba_aegis:OnDeath(keys)
 	end
 end
 
-function modifier_item_imba_aegis:IsDebuff() return false end
-function modifier_item_imba_aegis:IsHidden() return false end
 function modifier_item_imba_aegis:IsPurgable() return false end
 function modifier_item_imba_aegis:IsPurgeException() return false end
-function modifier_item_imba_aegis:IsStunDebuff() return false end
 function modifier_item_imba_aegis:RemoveOnDeath() return false end
 
 function modifier_item_imba_aegis:OnDestroy()
-	if IsServer() then
-		local item = self:GetAbility()
+	if not IsServer() then return end
 
-		if self:GetParent():IsAlive() then
-			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_regen_rune", {duration = GetItemKV("item_imba_rune_regen", "RuneDuration")})
-			self:GetParent():EmitSound("Aegis.Expire")
-		end
+	local item = self:GetAbility()
 
-		if item then
-			if item.GetContainer then
-				UTIL_Remove(item:GetContainer())
-			end
-
-			UTIL_Remove(item)
-		end
+	if self:GetParent():IsAlive() then
+		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_regen_rune", {duration = GetItemKV("item_imba_rune_regen", "RuneDuration")})
+		self:GetParent():EmitSound("Aegis.Expire")
+		self:GetParent():RemoveModifierByName("modifier_item_imba_aegis_pfx")
 	end
+
+	if item then
+		if item.GetContainer then
+			UTIL_Remove(item:GetContainer())
+		end
+
+		UTIL_Remove(item)
+	end
+end
+
+modifier_item_imba_aegis_pfx = modifier_item_imba_aegis_pfx or class({})
+
+function modifier_item_imba_aegis_pfx:IsHidden() return true end
+function modifier_item_imba_aegis_pfx:IsPurgable() return false end
+function modifier_item_imba_aegis_pfx:IsPurgeException() return false end
+function modifier_item_imba_aegis_pfx:RemoveOnDeath() return false end
+
+function modifier_item_imba_aegis_pfx:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_RESPAWN,
+} end
+
+function modifier_item_imba_aegis_pfx:OnCreated()
+	if not IsServer() then return end
+
+	self.reincarnate_time = GetAbilitySpecial("item_imba_aegis", "reincarnate_time")
+	self.vision_radius = GetAbilitySpecial("item_imba_aegis", "vision_radius")
+end
+
+function modifier_item_imba_aegis_pfx:OnRespawn(keys)
+	if not IsServer() then return end
+
+	if keys.unit == self:GetParent() then
+		self:PlayEffects()
+		self:Destroy()
+	end
+end
+
+function modifier_item_imba_aegis_pfx:PlayEffects(keys)
+	if not IsServer() then return end
+
+	AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_radius, self.reincarnate_time, false)
+	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(particle, 1, Vector(0, 0, 0))
+	ParticleManager:SetParticleControl(particle, 3, self:GetParent():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle)
 end

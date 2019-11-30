@@ -45,6 +45,9 @@ function Precache( context )
 	PrecacheResource("particle_folder", "particles/econ/items/wisp", context)
 	PrecacheModel("models/items/io/io_ti7/io_ti7.vmdl", context)
 
+	PrecacheResource("particle_folder", "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith", context)
+	PrecacheModel("models/heroes/phantom_assassin/pa_arcana.vmdl", context)
+
 	PrecacheResource("particle_folder", "particles/econ/items/lina/lina_head_headflame", context)
 	
 	-- Battlepass Blink effects
