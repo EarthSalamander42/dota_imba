@@ -49,7 +49,10 @@ function Precache( context )
 	PrecacheModel("models/heroes/phantom_assassin/pa_arcana.vmdl", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/lina/lina_head_headflame", context)
-	
+
+	PrecacheModel("models/heroes/invoker_kid/invoker_kid.vmdl", context)
+	PrecacheResource("particle_folder", "models/heroes/invoker_kid", context)
+
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf", context)

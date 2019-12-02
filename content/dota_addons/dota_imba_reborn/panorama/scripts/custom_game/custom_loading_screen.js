@@ -158,7 +158,9 @@ function OnVotesReceived(data)
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
 		var gamemode = data.table[id][1];
-		vote_count[gamemode] = vote_count[gamemode] + data.table[id][2];
+		var amount_of_votes = data.table[id][2];
+//		$.Msg(gamemode + " / "+ amount_of_votes)
+		vote_count[gamemode] = vote_count[gamemode] + amount_of_votes;
 	}
 
 	// Modify tooltips based on voted gamemode

@@ -245,6 +245,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local voteCounts = {}
 			for pid, vote in pairs(pidVoteTable) do
 				if not voteCounts[vote] then voteCounts[vote] = 0 end
+				print(pid, vote)
 				voteCounts[vote] = voteCounts[vote] + 1
 			end
 
@@ -252,17 +253,19 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_vote = 0
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
+				print(k, v)
 				if v > highest_vote then
 					highest_key = k[1]
-					highest_vote = v
+					highest_vote = k[2]
 				end
 			end
 
 			-- Check for a tie by counting how many values have the highest number of votes
 			local tieTable = {}
 			for k, v in pairs(voteCounts) do
+				print(k, v)
 				if v == highest_vote then
-					table.insert(tieTable, k)
+					table.insert(tieTable, k[1])
 				end
 			end
 
