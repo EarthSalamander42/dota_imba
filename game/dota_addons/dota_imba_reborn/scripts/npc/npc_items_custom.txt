@@ -14448,7 +14448,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"1"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -14485,7 +14485,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"6150"
+		"ItemCost"						"6151"
 		"ItemShopTags"					"damage;str;agi;int;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"triumvirate;sky;kys"
