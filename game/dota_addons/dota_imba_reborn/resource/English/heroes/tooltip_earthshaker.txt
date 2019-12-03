@@ -19,6 +19,7 @@
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_totem_damage_percentage"	"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_totem_damage_percentage}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_tooltip_duration"			"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_tooltip_duration}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_distance_scepter"			"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_distance_scepter}"
+"DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_bonus_attack_range"			"BONUS ATTACK RANGE:"
 
 "DOTA_Tooltip_modifier_earthshaker_enchant_totem_lua"				"#{DOTA_Tooltip_modifier_earthshaker_enchant_totem}"
 "DOTA_Tooltip_modifier_earthshaker_enchant_totem_lua_Description"	"#{DOTA_Tooltip_modifier_earthshaker_enchant_totem_Description}"

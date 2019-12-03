@@ -60,6 +60,6 @@
 ////===============================================================================================================
 // Shadow Shaman's talents
 ////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_1"                   "+4 Mass Serpent Wards"
-"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_2"                   "+2 Mass Serpent Wards health"
-"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_3"                   "+50 Serpent Wards Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_1"                   "+{s:value} Mass Serpent Wards"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_2"                   "+{s:value} Mass Serpent Wards health"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_3"                   "+{s:value} Wards Attack Damage"

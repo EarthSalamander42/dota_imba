@@ -850,9 +850,11 @@ end
 
 function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 	local funcs = {
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 	}
@@ -863,9 +865,19 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaReg
 	if not self:GetAbility() then return end
 
 	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("mana_regen")* self.bonus_self
+		return self:GetAbility():GetSpecialValueFor("mana_regen") * self.bonus_self
 	else
 		return self:GetAbility():GetSpecialValueFor("mana_regen")
+	end
+end
+
+function modifier_imba_crystal_maiden_brilliance_aura:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
+
+	if self.parent == self.caster then
+		return self:GetAbility():GetSpecialValueFor("magic_resistance") * self.bonus_self
+	else
+		return self:GetAbility():GetSpecialValueFor("magic_resistance")
 	end
 end
 

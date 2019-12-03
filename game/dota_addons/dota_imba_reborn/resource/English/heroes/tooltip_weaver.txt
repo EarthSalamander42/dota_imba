@@ -44,8 +44,8 @@
 "DOTA_Tooltip_modifier_imba_weaver_shukuchi"							"Shukuchi"
 "DOTA_Tooltip_modifier_imba_weaver_shukuchi_Description"				"Invisible and doing damage to units passed through."
 
-"DOTA_Tooltip_ability_special_bonus_imba_weaver_shukuchi_damage"				"+75 Shukuchi Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_weaver_the_swarm_armor_reduction"		"+0.5 Swarm Armor Reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_weaver_the_swarm_destroy_attacks"		"+2 Swarm Attacks to Kill"
-"DOTA_Tooltip_ability_special_bonus_imba_weaver_shukuchi_hasted_speed"			"+250 Shukuchi Movement Speed"
-"DOTA_Tooltip_ability_special_bonus_imba_weaver_geminate_attack_tooltip_attack"	"+1 Geminate Attack"
+"DOTA_Tooltip_ability_special_bonus_imba_weaver_shukuchi_damage"				"+{s:value} Shukuchi Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_weaver_the_swarm_armor_reduction"		"+{s:value} Swarm Armor Reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_weaver_the_swarm_destroy_attacks"		"+{s:value} Swarm Attacks to Kill"
+"DOTA_Tooltip_ability_special_bonus_imba_weaver_shukuchi_hasted_speed"			"+{s:value} Shukuchi Movement Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_weaver_geminate_attack_tooltip_attack"	"+{s:value} Geminate Attack"

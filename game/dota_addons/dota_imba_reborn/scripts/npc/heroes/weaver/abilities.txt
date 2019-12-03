@@ -141,23 +141,23 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"175 175 175 175"
+				"speed"					"225"
+				"LinkedSpecialBonus"	"special_bonus_imba_weaver_shukuchi_hasted_speed"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"0.25 0.25 0.25 0.25"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"175 175 175 175"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.0 4.0 4.0"
+				"fade_time"				"0.25 0.25 0.25 0.25"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"hasted_speed"			"550"
-				"LinkedSpecialBonus"	"special_bonus_imba_weaver_shukuchi_hasted_speed"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.0 4.0 4.0"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -364,7 +364,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"250"
+				"value"					"200"
 			}
 		}
 	}
@@ -394,113 +394,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"value"					"1"
 			}
-		}
-	}	
-	
-	//=====================
-	// VANILLA OVERRIDES ==
-	//=====================
-
-	//=================================================================================================================
-	// Weaver: The Swarm
-	//=================================================================================================================
-	"weaver_the_swarm"
-	{
-		"MaxLevel"						"4"
-		"AbilityCooldown"				"36 28 20 14"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"20 26 32 38"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"1.1 0.9 0.7 0.5"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"600 800 1000 1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Weaver: Shukuchi
-	//=================================================================================================================
-	"weaver_shukuchi"
-	{
-		"AbilityManaCost"				"60 50 40 30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 140 180 220"
-				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Weaver: Shukuchi bonus movement speed
-	//=================================================================================================================
-	"special_bonus_unique_weaver_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Ability: Weaver's Geminate Attack
-	//=================================================================================================================
-	"weaver_geminate_attack"
-	{
-		"AbilityCooldown"				"6.0 4.5 3.0 1.5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"0.2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15 30 45 60"
-			}
-		}		
-	}
-
-	//=================================================================================================================
-	// Ability: Weaver's Time Lapse
-	//=================================================================================================================
-	"weaver_time_lapse"
-	{
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_BOTH"
-		
-		"AbilityCooldown"						"50 35 20"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"15"
-				"RequiresScepter"		"1"
-			}			
 		}
 	}	
 }

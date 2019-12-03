@@ -631,11 +631,11 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 					end
 				end
 				
-				-- IMBAfication: Dark Moon
-				if not enemy:IsAlive() and (not enemy.IsReincarnating or (enemy.IsReincarnating and not enemy:IsReincarnating())) then
-					self.beams			= self.beams + self.dark_moon_additional_beams
-					self.beams_scepter	= self.beams_scepter + self.dark_moon_additional_beams
-				end
+				-- -- IMBAfication: Dark Moon
+				-- if not enemy:IsAlive() and (not enemy.IsReincarnating or (enemy.IsReincarnating and not enemy:IsReincarnating())) then
+					-- self.beams			= self.beams + self.dark_moon_additional_beams
+					-- self.beams_scepter	= self.beams_scepter + self.dark_moon_additional_beams
+				-- end
 			end
 			
 			valid_targets = true

@@ -53,6 +53,7 @@ function modifier_item_imba_heart:OnCreated()
 	-- Ability specials
 	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
 	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")
+	self.fixed_health_regen	= self:GetAbility():GetSpecialValueFor("fixed_health_regen")
 
 	if IsServer() then
 		-- If this is the first heart, add the unique modifier
@@ -72,9 +73,11 @@ function modifier_item_imba_heart:OnDestroy()
 end
 
 function modifier_item_imba_heart:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_HEALTH_BONUS}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
 end
 
 function modifier_item_imba_heart:GetModifierBonusStats_Strength()
@@ -83,6 +86,10 @@ end
 
 function modifier_item_imba_heart:GetModifierHealthBonus()
 	return self.bonus_health
+end
+
+function modifier_item_imba_heart:GetModifierConstantHealthRegen()
+	return self.fixed_health_regen
 end
 
 -- Strength aura modifier, regenerations
@@ -100,6 +107,7 @@ function modifier_item_imba_heart_unique:OnCreated()
 	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
 	self.hp_regen_amp = self:GetAbility():GetSpecialValueFor("hp_regen_amp")
+	self.alive_illusion_pct	= self:GetAbility():GetSpecialValueFor("alive_illusion_pct")
 	
 	self:StartIntervalThink(FrameTime())
 end
@@ -130,9 +138,12 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	-- if not self:GetParent():IsIllusion() then
+	if not self:GetParent():IsIllusion() then
 		return self:GetStackCount()
-	-- end
+	else
+		-- IMBAfication: We Are All Alive
+		return self:GetStackCount() * self.alive_illusion_pct * 0.01
+	end
 end
 
 function modifier_item_imba_heart_unique:OnTakeDamage(keys)

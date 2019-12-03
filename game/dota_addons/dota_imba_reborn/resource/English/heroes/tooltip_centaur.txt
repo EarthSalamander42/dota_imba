@@ -91,4 +91,4 @@
 "Dota_Tooltip_Ability_special_bonus_imba_centaur_6_Description"			"Allied heroes within 1200 range of Centaur gain the Return Damage aspect of Retaliate."
 "Dota_Tooltip_Ability_special_bonus_imba_centaur_7"                     "Retaliate triggers on spell damage above 100"
 "Dota_Tooltip_Ability_special_bonus_imba_centaur_8"                     "+1 second Stampede duration for every hero trampled"
-"Dota_Tooltip_Ability_special_bonus_imba_centaur_9"                     "+80 Retaliate Damage"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_9"                     "+{s:value} Retaliate Damage"

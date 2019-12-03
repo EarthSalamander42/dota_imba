@@ -128,7 +128,7 @@
 // Disruptor's Thunder Strike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike"                    "Thunder Strike"
-"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
+"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"		"Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and applies a %slow_duration% second duration %slow_amount%%% movement and attack speed slow.  Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Note0"              "Creeps and magic immune heroes are not counted."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Lore"              "Disruptor's charged coils occasionally overload, and a singed armor plate or tuft of fur is the result on the enemy."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_damage"            "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -392,7 +392,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
@@ -808,16 +808,16 @@
 // Pugna's Life Drain
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_life_drain"                            "Life Drain"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_Description"                "Latches to an enemy, draining its health over time while healing Pugna for the same amount. Can be cast on allies to drain life into them. If the unit being healed has maximum health, it will recover mana instead.\n<font color='#FF7800'>Soul Master:</font> Does not require channeling. Can still be interrupted by silences and stuns.\n<font color='#FF7800'>Oblivion's Reach:</font> The break distance is extended with any cast range increases that the user wields (%break_distance_extend% above standard cast range).\n<font color='#FF7800'>Essence of Life:</font> Immediately slows enemy targets. Every second ramps the slow up, until the link is severed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_pugna_life_drain_Description"                "Latches to an enemy, draining its health over time while healing Pugna for the same amount. Can be cast on allies to drain life into them. If the unit being healed has maximum health, it will recover mana instead.\n<font color='#FF7800'>Soul Master:</font> Does not require channeling. Can still be interrupted by silences and stuns.\n<font color='#FF7800'>Oblivion's Reach:</font> The break distance is extended with any cast range increases that the user wields (%break_distance_extend% above standard cast range).\n<font color='#FF7800'>Essence of Life:</font> Immediately slows enemy targets. Every second ramps the slow up, until the link is severed."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Lore"                      "Pugna has truly become more powerful than even the grandmaster of Oblivion."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note0"                      "The link will break if the target becomes invisible, out of world, invulnerable, go into the fog of war, or goes farther than the break distance."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note1"                      "Healing is proportional to the damage done, and can be reduced or amplified by magic damage reduction/amplification on the target."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_health_drain"              "HEALTH PER SECOND:"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"                   "SCEPTER HEALTH PER SECOND:"
+//"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"                   "SCEPTER HEALTH PER SECOND:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_duration"                  "MAX LENGTH:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_base_slow_pct"              "%BASE SLOW:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_slow_per_second"            "%SLOW PER SECOND:"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"                    "Removes the cooldown, allowing Life Drain to be used on multiple targets simultaneously, and increases damage per second."
+"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_cast_range"                "CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_pugna_life_drain_end"                        "Life Drain Cancel"
@@ -1318,7 +1318,7 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_1"               "-25 Arcane Bolt mana cost"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_2"               "+1s Ancient Seal duration"
-"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-8s Ancient Seal Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_3"               "-{s:value}s Ancient Seal Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_4"               "+100% Mystic Flare radius"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_5"               "-1s Arcane Bolt cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_6"               "-1.2s Mystic Flare Duration"
@@ -1716,7 +1716,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm"                "Rearm"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
-"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Bloodstone, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
 "DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana."
@@ -2066,13 +2066,14 @@
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_2"                     "Upheaval also reduces attack speed"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_2_Description"			"Static attack speed reduction is equal to movement speed slow percentage."
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_3"                     "+7% Fatal Bonds shared damage"
-"DOTA_Tooltip_ability_special_bonus_imba_warlock_4"                     "+30 Chaotic Offering Golems Armor"
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_4"                     "+{s:value} Chaotic Offering Golems Armor"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_5"                     "+4 Shadow Word duration"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_6"                     "Upheaval is channeled by a demon in steed"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_7"                     "Golems share damage taken to all linked enemies"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_8"                     "Golems gain Spell Immunity"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_9"                     "Summons a Warlock Golem on Death"
 "DOTA_Tooltip_ability_special_bonus_imba_warlock_9_Description"			"Contract of the Black Grimoire applies to death golems, but is reduced to 75% efficacy."
+"DOTA_Tooltip_ability_special_bonus_imba_warlock_chaotic_offering_magic_resistance"	"100% Magic Resistance for Chaotic Offering Golems"
 
 ////===============================================================================================================
 // Warlock's summoned units: Chaotic Golem, Ascension Demon, Upheaval Demon

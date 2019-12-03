@@ -167,11 +167,11 @@ function imba_night_stalker_void:GetCastRange(location, target)
 end
 
 function imba_night_stalker_void:GetCooldown(level)
-	if not self:GetCaster():HasScepter() then
+	-- if not self:GetCaster():HasScepter() then
 		return self.BaseClass.GetCooldown(self, level)
-	else
-		return self.BaseClass.GetCooldown(self, level) - self:GetSpecialValueFor("scepter_cooldown_reduction")
-	end
+	-- else
+		-- return self.BaseClass.GetCooldown(self, level) - self:GetSpecialValueFor("scepter_cooldown_reduction")
+	-- end
 end
 
 function imba_night_stalker_void:IsHiddenWhenStolen()

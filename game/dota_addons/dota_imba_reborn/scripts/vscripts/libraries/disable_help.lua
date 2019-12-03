@@ -38,6 +38,7 @@ end
 
 local disabledAbilities = {
 	imba_bane_nightmare = true,
+	imba_bloodseeker_bloodrage = true,
 	imba_crystal_maiden_frostbite = true,
 	imba_chen_holy_persuasion = true,
 	imba_earth_spirit_boulder_smash = true,
@@ -46,6 +47,8 @@ local disabledAbilities = {
 	imba_keeper_of_the_light_recall = true,
 	imba_kunkka_x_marks_the_spot = true,
 	imba_obsidian_destroyer_astral_imprisonment = true,
+	imba_oracle_fates_edict = true,
+	imba_oracle_purifying_flames = true,
 	imba_puck_phase_shift = true,
 	imba_pugna_decrepify = true,
 	imba_rubick_telekinesis = true,

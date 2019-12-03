@@ -192,19 +192,47 @@ end
 
 function modifier_item_imba_valiance_guard:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+		
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 end
 
-function modifier_item_imba_valiance_guard:GetModifierIncomingDamage_Percentage(keys)
+
+function modifier_item_imba_valiance_guard:GetAbsoluteNoDamagePhysical(keys)
+	if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
+		return 1
+	end
+end
+
+function modifier_item_imba_valiance_guard:GetAbsoluteNoDamageMagical(keys)
+	if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
+		return 1
+	end
+end
+
+-- Since the pure function seems to run last when compared to the physical and magical ones above (but before the GetModifierIncomingDamage_Percentage), I guess it makes sense to put the actual logic here? Seems kinda hacky...
+function modifier_item_imba_valiance_guard:GetAbsoluteNoDamagePure(keys)
 	if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
 		self.damage_counter = self.damage_counter + keys.original_damage
 		self:SetStackCount(self.damage_counter)
 		
-		return self.guard_damage_reduction
+		return 1
 	end
 end
+
+-- function modifier_item_imba_valiance_guard:GetModifierIncomingDamage_Percentage(keys)
+	-- if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
+		-- self.damage_counter = self.damage_counter + keys.original_damage
+		-- self:SetStackCount(self.damage_counter)
+		
+		-- return self.guard_damage_reduction
+	-- end
+-- end
 
 function modifier_item_imba_valiance_guard:GetModifierStatusResistanceStacking()
 	return self.guard_status_resistance

@@ -1,6 +1,6 @@
 //DARK SEER
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum"											"Vacuum"
-"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Description"								"Dark Seer creates a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage.\n<font color='#FF7800'>Potent Suction:</font> Unaffected by status resistance.\n<font color='#FF7800'>Wormhole:</font> For %wormhole_duration% seconds after casting Vacuum, gain the additional ability to cast Wormhole. Any units that have recently been affected by Vacuum are instantly ported to the Wormhole location and forced outwards. Ability values are similar to Vacuum. <font color='#FF0000'>Cannot directly port enemies into or out of the fountain danger zone area.</font>"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Description"								"Dark Seer creates a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage. <font color='#FF0000'>Does not work against invulnerable/sleeping targets.</font>\n<font color='#FF7800'>Potent Suction:</font> Unaffected by status resistance.\n<font color='#FF7800'>Wormhole:</font> For %wormhole_duration% seconds after casting Vacuum, gain the additional ability to cast Wormhole. Any units that have recently been affected by Vacuum are instantly ported to the Wormhole location and forced outwards. Ability values are similar to Vacuum. <font color='#FF0000'>Cannot directly port enemies into or out of the fountain danger zone area.</font>"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Lore"									"Ish'Kafel modifies the center of gravity to a place of his choosing."
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note0"									"This ability interrupts channeling."
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note1"									"Pulls units over a short duration before dealing damage."
@@ -10,6 +10,8 @@
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_radius"									"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_damage"									"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_cast_range_tooltip"						"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_scepter_cooldown"						"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_aghanim_description"					"Reduces cooldown."
 
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole"											"Wormhole"
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_Description"								"Dark Seer creates a wormhole over the target area that teleports enemy units affected by Vacuum's Wormhole modifier to it and pushes them outwards, disrupting them and dealing damage. Unaffected by status resistance. <font color='#FF0000'>Cannot directly port enemies into or out of the fountain danger zone area.</font>"
@@ -79,7 +81,7 @@
 "DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow"					"Prismatic Bisector Slow"
 "DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow_Description"		"Move speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and being attacked by yourself."
 
-"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_surge_cast_range"							"+400 Surge Cast Range"
-"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_vacuum_increased_duration"					"+0.6s Vacuum/Wormhole Pull/Push Duration"
-"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"		"+1.5s Prismatic Bisector Slow Duration"
-"DOTA_Tooltip_ability_special_bonus_imba_dark_seer_ion_shell_damage"							"+150 Ion Shell Damage"
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_surge_cast_range"							"+{s:value} Surge Cast Range"
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_vacuum_increased_duration"					"+{s:value}s Vacuum/Wormhole Pull/Push Duration"
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"		"+{s:value}s Prismatic Bisector Slow Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_dark_seer_ion_shell_damage"							"+{s:value} Ion Shell Damage"

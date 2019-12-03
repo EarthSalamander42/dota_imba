@@ -1240,12 +1240,12 @@ function modifier_imba_life_drain:OnCreated()
 		self.is_ally = false
 	end
 
-	-- Set the damage for the duration
-	if self.scepter then
-		self.drain_amount = self.scepter_health_drain
-	else
+	-- -- Set the damage for the duration
+	-- if self.scepter then
+		-- self.drain_amount = self.scepter_health_drain
+	-- else
 		self.drain_amount = self.health_drain
-	end
+	-- end
 
 
 	-- Add appropriate particle effect

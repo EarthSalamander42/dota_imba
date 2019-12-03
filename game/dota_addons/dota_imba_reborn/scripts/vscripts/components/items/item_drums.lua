@@ -137,12 +137,12 @@ function modifier_imba_drums:OnCreated()
 	self.bonus_mana_regen = self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
 	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
 
-	-- if IsServer() then
-		-- -- If it is the first drums in inventory, add the aura modifier
-		-- if not self:GetCaster():HasModifier("modifier_imba_drums_aura") then
-			-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drums_aura", {})
-		-- end
-	-- end
+	if IsServer() then
+		-- If it is the first drums in inventory, add the aura modifier
+		if not self:GetCaster():HasModifier("modifier_imba_drums_aura") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drums_aura", {})
+		end
+	end
 end
 
 function modifier_imba_drums:IsHidden() return true end
@@ -183,14 +183,14 @@ function modifier_imba_drums:GetModifierMoveSpeedBonus_Constant()
 	return self.bonus_movement_speed
 end
 
--- function modifier_imba_drums:OnDestroy()
-	-- if IsServer() then
-		-- -- If it is the last drums in inventory, remove the aura modifier
-		-- if not self:GetCaster():HasModifier("modifier_imba_drums") then
-			-- self:GetCaster():RemoveModifierByName("modifier_imba_drums_aura")
-		-- end
-	-- end
--- end
+function modifier_imba_drums:OnDestroy()
+	if IsServer() then
+		-- If it is the last drums in inventory, remove the aura modifier
+		if not self:GetCaster():HasModifier("modifier_imba_drums") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_drums_aura")
+		end
+	end
+end
 
 
 -- Drums aura modifier
@@ -255,17 +255,15 @@ function modifier_imba_drums_aura_effect:IsPurgable() return false end
 function modifier_imba_drums_aura_effect:IsDebuff() return false end
 
 function modifier_imba_drums_aura_effect:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	return {
+		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return decFuncs
 end
 
-function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Percentage()
-	return self.aura_ms
-end
+-- function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
+	-- return self.aura_ms
+-- end
 
 function modifier_imba_drums_aura_effect:GetModifierAttackSpeedBonus_Constant()
 	return self.aura_as

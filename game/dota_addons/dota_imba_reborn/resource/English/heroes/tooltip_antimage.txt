@@ -3,8 +3,10 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_break"                        "Mana Break"
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Description"            "Burns an opponent's mana on each attack. Mana Break deals %damage_per_burn% damage per mana burned as damage to the target.\n<font color='#FF7800'>Energy Blast:</font> When Anti Mage deals mana burn that causes the current mana pool of the target to fall below a multiplication of %threshold_difference%%, its mana becomes unstable and explodes violently, damaging the target and all nearby enemies in %blast_aoe% radius. The damage is equal to a portion of the target's maximum mana pool. This effect always occurs if the enemy has no mana after the attack is complete."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"                  "Does not work on structures, units naturally without mana, or magic immune targets."
+"DOTA_Tooltip_ability_imba_antimage_mana_break_Note1"                  "Mana Break only has %illusion_percentage%%% effect by illusions."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Lore"                    "Thy mana's weight, in life pay."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_base_mana_burn"          "MANA BURNED:"
+"DOTA_Tooltip_ability_imba_antimage_mana_break_mana_per_hit_pct"		"%MAX MANA BURNED PER HIT:"
 "DOTA_Tooltip_ability_imba_antimage_mana_break_max_mana_blast"          "%ENERGY BLAST DAMAGE:"
 
 // Anti Mage's Blink
@@ -26,7 +28,7 @@
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                  "Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                  "%MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                   "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_antimage_spell_shield_aghanim_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 6 seconds."
+//"DOTA_Tooltip_ability_imba_antimage_spell_shield_aghanim_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 6 seconds."
 
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect"                  "Spell Shield"
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect_Description"                  "Counter and reflect every spell for a short duration"
@@ -77,3 +79,4 @@
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_9_Description"		"After blinking, an uncontrollable illusion is created at Anti-Mage's original location.  Deals 25%% damage, takes 250%% damage, and lasts 10 seconds."
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_10"                    "-2.5s Blink Cooldown"
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_11"                    "+25% Counterspell Magic Resistance"
+"DOTA_Tooltip_ability_special_bonus_imba_antimage_blink_range"			"+{s:value} Blink Cast Range"
