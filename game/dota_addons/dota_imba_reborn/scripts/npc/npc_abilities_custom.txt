@@ -38125,17 +38125,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 205 290 375" 	
+				"damage"					"140 200 260 320" 	
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.2 1.6 2.0 2.4"
+				"stun_duration"				"1.4 1.6 1.8 2.0"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"travel_distance"			"600 700 800 900"
+				"travel_distance"			"625 700 775 850"
 			}
 			"06"
 			{
@@ -38550,7 +38550,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.05"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"1000"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -38581,12 +38581,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wave_speed"				"2000"
+				"wave_speed"				"1600"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wave_distance"				"1200"
+				"wave_distance"				"1000"
 			}
 			"04"
 			{
@@ -38618,7 +38618,7 @@
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
 		"AbilityTextureName"			"custom/scaldris_cold_front"
-		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

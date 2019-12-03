@@ -106,7 +106,7 @@
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_projectile_speed"	"1350"
+				"bonus_projectile_speed"	"800"
 			}
 			"16"
 			{

@@ -4891,12 +4891,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"500 575 650"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"strike_interval"			"0.70 0.55 0.40"
-				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"
-			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -6568,7 +6562,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shackle_angle"			"30 35 40 45"
+				"shackle_angle"			"25 27 29 31"
 			}
 		}
 	}
@@ -6586,13 +6580,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"powershot_damage"		"180 260 340 420"
+				"powershot_damage"		"200 300 400 500"
 				"LinkedSpecialBonus"	"special_bonus_unique_windranger_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.2 0.15 0.1 0.05"
+				"damage_reduction"		"20 15 10 5"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -6616,7 +6610,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus_pct"		"60 70 80 90"		
+				"movespeed_bonus_pct"		"60"		
 			}
 			"03"
 			{
@@ -6642,12 +6636,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
+				"bonus_attack_speed"			"500 600 700"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-45 -30 -15"
+				"focusfire_damage_reduction"	"-50 -40 -30"
 				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
 		}
@@ -8534,7 +8528,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"1500"
+				"projectile_speed"			"1100"
 			}
 			"05"
 			{
@@ -8577,7 +8571,7 @@
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"180 260 340 420"
+		"AbilityDamage"					"140 220 300 380"
 	}
 
 	//=================================================================================================================
@@ -8617,7 +8611,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorb_per_hero_hit"	"100 150 200 250"
+				"absorb_per_hero_hit"	"40 60 80 100"
 			}
 		}
 	}
@@ -8634,7 +8628,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3"
+				"max_charges"			"2"
 				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_9"
 			}
 			"03"
@@ -8651,7 +8645,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_travel_distance"	"1000 1200 1400"
+				"max_travel_distance"	"800 1000 1200"
 			}
 			"06"
 			{

@@ -955,6 +955,18 @@ function modifier_imba_jet_blaze_rush:IsStunDebuff() return false end
 function modifier_imba_jet_blaze_rush:IsMotionController() return true end
 function modifier_imba_jet_blaze_rush:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
+function modifier_imba_jet_blaze_rush:CheckState() return {
+	[MODIFIER_STATE_STUNNED] = true,
+} end
+
+function modifier_imba_jet_blaze_rush:DeclareFunctions() return {
+	MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+} end
+
+function modifier_imba_jet_blaze_rush:GetOverrideAnimation()
+	return ACT_DOTA_CAST_GHOST_WALK
+end
+
 function modifier_imba_jet_blaze_rush:OnCreated(keys)
 	if IsServer() then
 		self:StartIntervalThink(0.03)
@@ -1074,8 +1086,9 @@ function imba_scaldris_ice_floes:OnSpellStart()
 			bDeleteOnHit		= false,
 			vVelocity			= Vector(direction.x, direction.y, 0) * projectile_speed,
 			bProvidesVision		= false,
-			ExtraData			= {x = target_loc.x, y = target_loc.y}
+			ExtraData			= {x = target_loc.x, y = target_loc.y, has_hit = false},
 		}
+		self.hit_check = false
 		ProjectileManager:CreateLinearProjectile(ice_projectile)
 	end
 end
@@ -1087,7 +1100,8 @@ end
 
 function imba_scaldris_ice_floes:OnProjectileThink_ExtraData(location, extra_data)
 	if IsServer() then
-		if (location - Vector(extra_data.x, extra_data.y, location.z)):Length2D() <= 16 then
+		if (location - Vector(extra_data.x, extra_data.y, location.z)):Length2D() <= 16 and self.hit_check == false then
+			self.hit_check = true
 
 			-- Teleport sound
 			local caster = self:GetCaster()
