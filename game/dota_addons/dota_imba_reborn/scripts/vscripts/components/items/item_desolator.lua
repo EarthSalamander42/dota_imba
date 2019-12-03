@@ -29,10 +29,7 @@ LinkLuaModifier( "modifier_item_imba_blight_stone", "components/items/item_desol
 LinkLuaModifier( "modifier_item_imba_blight_stone_debuff", "components/items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
 
 function item_imba_blight_stone:GetIntrinsicModifierName()
-	return "modifier_item_imba_blight_stone" end
-
-function item_imba_blight_stone:GetAbilityTextureName()
-	return "custom/imba_blight_stone"
+	return "modifier_item_imba_blight_stone"
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -141,10 +138,6 @@ function modifier_item_imba_blight_stone_debuff:GetBonusNightVision()
 if item_imba_desolator == nil then item_imba_desolator = class({}) end
 LinkLuaModifier( "modifier_item_imba_desolator", "components/items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_desolator_debuff", "components/items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )		-- Armor/vision debuff
-
-function item_imba_desolator:GetAbilityTextureName()
-	return "custom/imba_desolator"
-end
 
 function item_imba_desolator:GetIntrinsicModifierName()
 	return "modifier_item_imba_desolator" end
@@ -328,10 +321,6 @@ function modifier_item_imba_desolator_debuff:GetBonusNightVision()
 if item_imba_desolator_2 == nil then item_imba_desolator_2 = class({}) end
 LinkLuaModifier( "modifier_item_imba_desolator_2", "components/items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_desolator_2_debuff", "components/items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
-
-function item_imba_desolator_2:GetAbilityTextureName()
-	return "custom/imba_desolator_2"
-end
 
 function item_imba_desolator_2:GetIntrinsicModifierName()
 	return "modifier_item_imba_desolator_2" end

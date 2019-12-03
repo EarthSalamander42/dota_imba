@@ -648,7 +648,7 @@
 	"unassigned" "Не определившиеся"
 	"vanilla_hero" "Обычный"
 	"vote_gamemode" "Голосование за режим игры"
-	"vote_gamemode_1" "Стандарт"
+	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "Мутации"
 	"vote_gamemode_3" "Супер безумие"
 	"vote_gamemode_4" "Восстание тьмы"

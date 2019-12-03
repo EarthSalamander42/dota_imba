@@ -1095,7 +1095,7 @@ end
 		-- local unit = keys.unit
 		-- local original_damage = keys.original_damage
 		-- local damage_flags = keys.damage_flags
-
+		
 		-- -- Only apply on attacks against the caster
 		-- if unit == self.caster then
 
@@ -1113,7 +1113,7 @@ end
 			-- if attacker:IsBuilding() then
 				-- return nil
 			-- end
-	
+			
 			-- -- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
 			-- if attacker:GetTeam() == unit:GetTeam() then
 				-- return nil
@@ -1207,7 +1207,6 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 
 			-- Only apply if the caster has Vendetta as ability
 			if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
-
 				-- Convert damage to vendetta charges
 				if not self:GetCaster():HasModifier(self.modifier_vendetta) then
 					self:GetCaster():AddNewModifier(self:GetCaster(), self.vendetta_ability, self.modifier_vendetta, {})

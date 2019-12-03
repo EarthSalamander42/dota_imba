@@ -5396,7 +5396,8 @@ DOTAPostGameSupportItemsRow
 {
 	flow-children: right;
 	vertical-align: middle;
-	margin-top: 8px;
+	margin-top: 3%;
+	margin-bottom: 3%;
 }
 
 #SupportItemsValue
@@ -5428,7 +5429,6 @@ DOTAPostGameSupportItemsRow
 .ItemEntry DOTAItemImage
 {
 	vertical-align: center;
-	margin-bottom: 12px;
 }
 
 .ItemEntry .ItemIcon
@@ -6392,6 +6392,14 @@ DOTAPostGameHeroStats .BotIcon
 	background-size: contain;
 
 	visibility: collapse;
+}
+
+.PinnedPlayerRow .StatRowHeight5v5 {
+	height: 40px;
+}
+
+.PinnedPlayerRow .StatRowHeight10v10 {
+	height: 40px;
 }
 
 .BotDifficulty_Passive.IsBot .BotIcon,

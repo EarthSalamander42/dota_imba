@@ -597,7 +597,7 @@ function SetupBackgroundImage() {
 }
 
 function SetupTopBar() {
-	$.Msg("10v10 top bar")
+//	$.Msg("10v10 top bar")
 	$.GetContextPanel().SetHasClass('TenVTen', true);
 	var topbar = FindDotaHudElement('topbar');
 	topbar.style.width = '1550px';
@@ -622,6 +622,7 @@ function SetupTopBar() {
 		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 			tbbg.style.backgroundSize = '0%';
 			tbbg.style.backgroundColor = '#000000da';
+			tbbg.style.width = "100%";
 		}
 	}
 
@@ -630,6 +631,7 @@ function SetupTopBar() {
 		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 			tbbg.style.backgroundSize = '0%';
 			tbbg.style.backgroundColor = '#000000da';
+			tbbg.style.width = "100%";
 		}
 	}
 }

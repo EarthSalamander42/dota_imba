@@ -441,12 +441,16 @@ function imba_lina_light_strike_array:OnHit( target, damage, stun_duration )
 			end
 		end
 	end
+
 	target:RemoveModifierByName("modifier_imba_blazing_fire")
+
+	-- more fail-safe, AddNewModifier attempt to index a nil value
+	if target:IsAlive() then
+		local stun_modifier = target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
 	
-	local stun_modifier = target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
-	
-	if stun_modifier then
-		stun_modifier:SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
+		if stun_modifier then
+			stun_modifier:SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
+		end
 	end
 end
 

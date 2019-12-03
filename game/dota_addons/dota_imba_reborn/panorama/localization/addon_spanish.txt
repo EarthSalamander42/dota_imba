@@ -648,7 +648,7 @@
 	"unassigned" "Equipo sin asignar"
 	"vanilla_hero" "Perezoso"
 	"vote_gamemode" "Votación de modo de juego"
-	"vote_gamemode_1" "Estándar"
+	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "Mutación"
 	"vote_gamemode_3" "Super frenético"
 	"vote_gamemode_4" "Diretide"

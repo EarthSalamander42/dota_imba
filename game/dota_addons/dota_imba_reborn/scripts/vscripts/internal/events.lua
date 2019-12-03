@@ -9,9 +9,10 @@ function GameMode:_OnGameRulesStateChange(keys)
 		self.bSeenWaitForPlayers = true
 	elseif newState == DOTA_GAMERULES_STATE_INIT then
 		--Timers:RemoveTimer("alljointimer")
+	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		GameMode:OnAllPlayersLoaded()
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		GameMode:PostLoadPrecache()
-		GameMode:OnAllPlayersLoaded()
 	end
 
 	GameMode._reentrantCheck = true

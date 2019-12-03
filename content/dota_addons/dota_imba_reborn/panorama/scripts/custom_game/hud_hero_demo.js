@@ -675,13 +675,11 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 }
 
 function ShowDemoPanel() {
-	$.Msg("Enter Function ShowDemoPanel");
+//	$.Msg("Enter Function ShowDemoPanel");
 	$.GetContextPanel().FindChildTraverse('ControlPanel').AddClass("visible");
 }
 
 (function () {
-	MAX_SLOT = 10;
-
 	$.RegisterEventHandler('DOTAUIHeroPickerHeroSelected', $('#SelectEnemyHeroContainer'), SpawnEnemyNewHero);
 	$.RegisterEventHandler('DOTAUIHeroPickerHeroSelected', $('#SelectAllyHeroContainer'), SpawnAllyNewHero);
 	GameEvents.Subscribe('UpdateWearable', UpdateWearable);

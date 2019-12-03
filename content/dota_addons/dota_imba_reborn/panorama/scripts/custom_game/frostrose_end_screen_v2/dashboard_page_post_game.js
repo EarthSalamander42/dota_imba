@@ -362,7 +362,16 @@ function EndScoreboard(args) {
 //	$.Msg(args)
 
 	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
+//	var IsRanked = Game.IsInToolsMode();
 	var IsRanked = false;
+
+	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	if (gamemode) gamemode = gamemode["1"];
+
+	if (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") {
+		if (gamemode && gamemode == 1)
+			IsRanked = true;
+	}
 
 	if (bTenvTen == false) {
 		$("#DetailsScoreboardContainer").style.marginTop = "15%";
@@ -388,6 +397,17 @@ function EndScoreboard(args) {
 	var row_height = "56px";
 	var row_marginBottom = "3.5px";
 	var opposite_team = 3;
+
+	var mmr_rank_to_medals = {
+		Herald: 1,
+		Guardian: 2,
+		Crusader: 3,
+		Archon: 4,
+		Legend: 5,
+		Ancient: 6,
+		Divine: 7,
+		Immortal: 8,
+	}
 
 //	$.Msg(args.players)
 
@@ -428,7 +448,7 @@ function EndScoreboard(args) {
 			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
 
 			if (IsRanked)
-				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible"
+				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
 			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
 
@@ -441,20 +461,39 @@ function EndScoreboard(args) {
 				var player_items = Game.GetPlayerItems(id);
 				var player_table = CustomNetTables.GetTableValue("battlepass", id.toString());
 				var player_result = args.players[player_info.player_steamid];
-//				$.Msg(player_result)
+				var player_backend_result = args.data.players[player_info.player_steamid];
 
 //				$.Msg(player_info)
 //				$.Msg(player_table)
+//				$.Msg(player_result)
 
 				// Set left bar player informations
 				var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
 				PinnedPlayerRow.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_pinned_player_row.xml", false, false);
 				PinnedPlayerRow.AddClass("PlayerName");
 
+				if (bTenvTen) {
+					PinnedPlayerRow.AddClass("StatRowHeight10v10");
+				} else {
+					PinnedPlayerRow.AddClass("StatRowHeight5v5");
+				}
+
 				PinnedPlayerRow.FindChildTraverse("HeroImage").heroname = Players.GetPlayerSelectedHero(id);
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").GetChild(0).text = player_info.player_name;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
+
+				if (IsRanked) {
+					if (player_table && player_table.mmr_title) {
+						PinnedPlayerRow.FindChildTraverse("RankTierContainer").style.visibility = "visible";
+
+						var short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+						var title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+
+						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
+						PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+					}
+				}
 
 				// Set middle bar player informations
 				var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
@@ -512,8 +551,9 @@ function EndScoreboard(args) {
 				var panel_xp_diff_text = PlayerRowContainer.FindChildTraverse("es-player-xp-earned");
 
 				// setup Battlepass XP diff and booster
-				if (player_result != null) {
-					var xpDiff = Math.floor(player_result.xp_change);
+				if (player_backend_result != null) {
+					$.Msg("XP earned: " + player_backend_result.xp_change)
+					var xpDiff = Math.floor(player_backend_result.xp_change);
 //					if (Game.IsInToolsMode())
 //						xpDiff = 1000000;
 
@@ -561,8 +601,8 @@ function EndScoreboard(args) {
 						panel_xp_diff_text.AddClass("es-text-white");
 					}
 
-					if (player_table && player_table.in_game_tag == 1 && player_result && player_result.xp_multiplier) {
-						var multiplier = Math.round(player_result.xp_multiplier * 100.0);
+					if (player_table && player_table.in_game_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
+						var multiplier = Math.round(player_backend_result.xp_multiplier * 100.0);
 						panel_xp_booster_text.text = " (" + multiplier + "%)";
 					} else {
 						panel_xp_booster_text.text = " (100%)";
@@ -579,7 +619,7 @@ function EndScoreboard(args) {
 					for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
 						var item = player_items.inventory[i];
 
-						if (item)
+						if (item && PlayerRowContainer.FindChildTraverse("ItemIcon" + i))
 							PlayerRowContainer.FindChildTraverse("ItemIcon" + i).itemname = item.item_name;
 					}
 				}
@@ -646,7 +686,7 @@ function EndScoreboard(args) {
 					iteration++;
 					var enemy_info = Game.GetPlayerInfo(enemy_id);
 
-					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0) {
+					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
 						panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
 						panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
 					}
@@ -787,10 +827,10 @@ function EndScoreboard(args) {
 					panel_abilities_row_container.GetChild(child).style.marginBottom = "2.5px"
 				}
 			} else {
-				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-					pinned_team_container.GetChild(child).AddClass("StatRowHeight");
-					pinned_team_container.GetChild(child).style.height = row_height;
-				}
+//				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
+//					pinned_team_container.GetChild(child).AddClass("StatRowHeight");
+//					pinned_team_container.GetChild(child).style.height = row_height;
+//				}
 
 				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
 			}

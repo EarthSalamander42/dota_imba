@@ -73,3 +73,6 @@
 
 // Arcana
 "npc_dota_phantom_assassin_gravestone"					"#{npc_dota_phantomassassin_gravestone}"
+
+"DOTA_Tooltip_modifier_phantom_assassin_arcana"					"Arcana kill counter"
+"DOTA_Tooltip_modifier_phantom_assassin_arcana_Description"		"Store across every games won. Reach 400 kills to unlock style 2. Reach 1000 kills to unlock style 3."

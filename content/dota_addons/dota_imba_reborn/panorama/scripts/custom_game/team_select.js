@@ -282,7 +282,7 @@ CustomNetTables.SubscribeNetTableListener("game_options", OnGameStateUpdated)
 function UpdateGameState() {
 
 	// do nothing on ranked maps
-	if (Game.GetMapInfo().map_display_name == "ranked_5v5" || Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
+	if (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10")
 		return;
 
 	if (Game.GameStateIsBefore(DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME)) {
@@ -296,15 +296,16 @@ function UpdateGameState() {
 // Entry point called when the team select panel is created
 // --------------------------------------------------------------------------------------------------
 (function () {
+	$.Msg("Game state: " + Game.GetState())
 	if (Game.GetState() != 2)
 		return;
 	
 	// -------------------------
 	// auto_team_select is used on 5v5 and 10v10
 	// -------------------------
-	if ((Game.GetMapInfo().map_display_name == "ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
+	if ((Game.GetMapInfo().map_display_name == "imba_5v5") || (Game.GetMapInfo().map_display_name == "imba_10v10")) {
 		$.Msg("Skipping legacy team select on map " + Game.GetMapInfo().map_display_name + ", Imba Matchmaking enabled.");
-		return;
+//		return;
 	}
 
 	/* TODO: COMMENT THIS: 
@@ -338,7 +339,7 @@ function UpdateGameState() {
 	if (bShowSpectatorTeam) {
 		allTeamIDs.unshift(g_TEAM_SPECATOR);
 	}
-
+/*
 	for (var teamId of allTeamIDs) {
 		var teamNode = $.CreatePanel("Panel", teamsListRootNode, "");
 		teamNode.AddClass("team_" + teamId); // team_1, etc.
@@ -349,7 +350,7 @@ function UpdateGameState() {
 		// later to update it
 		g_TeamPanels.push(teamNode);
 	}
-
+*/
 	// Automatically assign players to teams.
 	if (bAutoAssignTeams) {
 		Game.AutoAssignPlayersToTeams();

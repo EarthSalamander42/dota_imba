@@ -24,6 +24,11 @@ function isInt(n) {
    return n % 1 === 0;
 }
 
+function LoadingScreenDebug(args) {
+	$.Msg(args)
+	view.text.text = view.text.text + ". \n\n" + args.text;
+}
+
 function fetch() {
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
@@ -96,12 +101,27 @@ function fetch() {
 		$.Msg(reason);
 	});
 	*/
-
-	$.Schedule(2.0, function(){
-		$("#VoteGameMode1").checked = true;
-		OnVoteButtonPressed("gamemode", 1);
-	});
 };
+
+function AllPlayersLoaded() {
+//	$.Msg("ALL PLAYERS LOADED IN!")
+	for (var i = 1; i <= $("#vote-content").GetChildCount(); i++) {
+		var panel = $("#vote-content").GetChild(i - 1);
+		var gamemode = panel.GetChild(0).id.replace("VoteGameMode", "");
+
+		if (!panel.BHasClass("Active"))
+			panel.AddClass("Active");
+
+		(function (panel, gamemode) {
+			panel.SetPanelEvent("onactivate", function () {
+				OnVoteButtonPressed('gamemode', gamemode);
+			})
+		})(panel, gamemode);
+	}
+
+	$("#VoteGameMode1").checked = true;
+	OnVoteButtonPressed("gamemode", 1);
+}
 
 function HoverableLoadingScreen() {
 	if (Game.GameStateIs(2))
@@ -137,8 +157,10 @@ function OnVotesReceived(data)
 
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
-		var gamemode = data.table[id];
-		vote_count[gamemode]++;
+		var gamemode = data.table[id][1];
+		var amount_of_votes = data.table[id][2];
+//		$.Msg(gamemode + " / "+ amount_of_votes)
+		vote_count[gamemode] = vote_count[gamemode] + amount_of_votes;
 	}
 
 	// Modify tooltips based on voted gamemode
@@ -164,5 +186,7 @@ function DisableVoting() {
 	HoverableLoadingScreen();
 	fetch();
 
+	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
+	GameEvents.Subscribe("all_players_loaded", AllPlayersLoaded);
 })();

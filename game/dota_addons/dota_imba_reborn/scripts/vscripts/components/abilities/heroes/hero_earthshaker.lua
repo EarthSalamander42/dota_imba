@@ -758,8 +758,9 @@ end
 
 --------------------------------------------------------------------------------
 
-earthshaker_aftershock_lua = class({})
 LinkLuaModifier( "modifier_earthshaker_aftershock_lua", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
+
+earthshaker_aftershock_lua = class({})
 
 function earthshaker_aftershock_lua:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -838,10 +839,12 @@ end
 
 function modifier_earthshaker_aftershock_lua:OnAbilityFullyCast( params )
 	if IsServer() then
-		if params.unit~=self:GetParent() or params.ability:IsItem() then return end
+		if params.unit ~= self:GetParent() or params.ability:IsItem() then return end
 
-		-- Handle that manually
-		if self:GetParent():HasScepter() and params.ability:GetAbilityName() == "earthshaker_enchant_totem_lua" then
+		print(params.ability:GetAbilityName())
+
+		-- Handle that manually + prevent casting aftershock when channeling outpost
+		if self:GetParent():HasScepter() and params.ability:GetAbilityName() == "earthshaker_enchant_totem_lua" or params.ability:GetAbilityName() == "ability_capture" then
 			return
 		end
 

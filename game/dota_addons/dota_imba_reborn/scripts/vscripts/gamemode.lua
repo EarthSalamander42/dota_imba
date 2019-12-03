@@ -7,9 +7,10 @@ require('addon_init')
 
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
-	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 	require('internal/eventtest')
 end
+
+require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 
 require('libraries/animations')
 require('libraries/disable_help')
@@ -42,7 +43,9 @@ require('components/mutation/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
--- require('components/team_selection')
+if GetMapName() == "imba_10v10" then
+	require('components/team_selection')
+end
 
 require('events/events')
 require('filters')
@@ -242,6 +245,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local voteCounts = {}
 			for pid, vote in pairs(pidVoteTable) do
 				if not voteCounts[vote] then voteCounts[vote] = 0 end
+				print(pid, vote)
 				voteCounts[vote] = voteCounts[vote] + 1
 			end
 
@@ -249,17 +253,19 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_vote = 0
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
+				print(k, v)
 				if v > highest_vote then
-					highest_key = k
-					highest_vote = v
+					highest_key = k[1]
+					highest_vote = k[2]
 				end
 			end
 
 			-- Check for a tie by counting how many values have the highest number of votes
 			local tieTable = {}
 			for k, v in pairs(voteCounts) do
+				print(k, v)
 				if v == highest_vote then
-					table.insert(tieTable, k)
+					table.insert(tieTable, k[1])
 				end
 			end
 
@@ -284,19 +290,31 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	end
 end, nil)
 
+local donator_list = {}
+donator_list[1] = true -- Lead-Dev
+donator_list[2] = true -- Dev
+-- donator_list[3] = true -- Administrator
+donator_list[4] = true -- Ember Donator
+donator_list[7] = true -- Salamander Donator
+donator_list[8] = true -- Icefrog Donator
+donator_list[9] = true -- Gaben Donator
+
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
-	if not GameMode.VoteTable then
-		GameMode.VoteTable = {}
-	end
-
-	if not GameMode.VoteTable[keys.category] then
-		GameMode.VoteTable[keys.category] = {}
-	end
+	if not GameMode.VoteTable then GameMode.VoteTable = {} end
+	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
 
 	if pid >= 0 then
-		GameMode.VoteTable[keys.category][pid] = keys.vote
+		if not GameMode.VoteTable[keys.category][pid] then GameMode.VoteTable[keys.category][pid] = {} end
+
+		GameMode.VoteTable[keys.category][pid][1] = keys.vote
+
+		if donator_list[api:GetDonatorStatus(pid)] == true then
+			GameMode.VoteTable[keys.category][pid][2] = 2
+		else
+			GameMode.VoteTable[keys.category][pid][2] = 1
+		end
 	end
 
 --	Say(nil, keys.category, false)

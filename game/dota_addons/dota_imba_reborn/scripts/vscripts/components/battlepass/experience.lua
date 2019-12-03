@@ -69,6 +69,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				"invoker",
 				"lina",
 				"nevermore",
+				"phantom_assassin",
 				"pudge",
 				"terrorblade",
 				"tiny",
@@ -101,7 +102,9 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				winrate_toggle = api:GetPlayerWinrateShown(ID),
 				XP_change = 0,
 				IMR_5v5_change = 0,
-				arcana = arcana
+				arcana = arcana,
+				mmr = api:GetPlayerMMR(ID),
+				mmr_title = api:GetPlayerRankMMR(ID),
 			})
 		end
 	end

@@ -19,7 +19,7 @@ function api:GetUrl(endpoint)
 end
 
 function api:IsDonator(player_id)
-	if self:GetDonatorStatus(player_id) ~= 0 then
+	if self:GetDonatorStatus(player_id) ~= 0 and self:GetDonatorStatus(player_id) ~= 10 then
 		return true
 	else
 		return false
@@ -28,7 +28,7 @@ end
 
 function api:IsDeveloper(player_id)
 	local status = self:GetDonatorStatus(player_id);
-	if status == 1 or status == 2 or status == 3 then
+	if status == 1 or status == 2 then
 		return true
 	else
 		return false
@@ -271,9 +271,9 @@ function api:GetPlayerWinrate(player_id)
 	end
 end
 
-function api:GetPhantomAssassinArcanaKills(player_id)
+function api:GetPlayerMMR(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
-		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
+		native_print("api:GetPlayerMMR: Player ID not valid!")
 		return false
 	end
 
@@ -281,14 +281,58 @@ function api:GetPhantomAssassinArcanaKills(player_id)
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
-		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
+		native_print("api:GetPlayerMMR() self.players == nil")
+		return false
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid]["mmr_value"]
+	else
+		native_print("api:GetPlayerMMR: api players steamid not valid!")
+		return false
+	end
+end
+
+function api:GetPlayerRankMMR(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+		native_print("api:GetPlayerMMR: Player ID not valid!")
+		return false
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+		native_print("api:GetPlayerMMR() self.players == nil")
+		return false
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid]["mmr_title"]
+	else
+		native_print("api:GetPlayerMMR: api players steamid not valid!")
+		return false
+	end
+end
+
+function api:GetPhantomAssassinArcanaKills(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+--		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
+		return false
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+--		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
 		return false
 	end
 
 	if self.players[steamid] ~= nil then
 		return self.players[steamid]["pa_arcana_kills"]
 	else
-		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
+--		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
 		return false
 	end
 end
@@ -489,10 +533,6 @@ function api:RegisterGame(callback)
 
 	for i, j in pairs(cool_hats) do
 		self:Request(j, function(data)
-			if callback ~= nil then
-				callback()
-			end
-
 			cool_hat[j] = {}
 			for k, v in pairs(data) do
 				table.insert(cool_hat[j], data[k]["id"], data[k])
@@ -543,6 +583,12 @@ function api:CompleteGame(successCallback, failCallback)
 --				print("CompleteGame: Abilities Level Up Order:", PlayerResource:GetAbilitiesLevelUpOrder(id))
 			end
 
+			local increment_pa_arcana_kills = false
+
+			if hero and hero == "npc_dota_hero_phantom_assassin" and Battlepass and Battlepass:HasArcana(id, "phantom_assassin") then
+				increment_pa_arcana_kills = true
+			end
+
 			local player = {
 				id = id,
 				kills = tonumber(PlayerResource:GetKills(id)),
@@ -561,6 +607,8 @@ function api:CompleteGame(successCallback, failCallback)
 				support_items = PlayerResource:GetSupportItemsBought(id, items_bought),
 				gold_spent_on_support = PlayerResource:GetGoldSpentOnSupport(id),
 				abilities_level_up_order = PlayerResource:GetAbilitiesLevelUpOrder(id),
+				increment_pa_arcana_kills = increment_pa_arcana_kills,
+				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
 			}
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))
@@ -644,6 +692,23 @@ function api:GetCustomGamemode()
 	end
 
 	return gamemode
+end
+
+function api:SendTeamConfiguration(players, combinations, callback)
+	local data = {
+		players = players,
+		team_combinations = combinations,
+		map = GetMapName(),
+	}
+
+	print(players)
+	print(team_combinations)
+
+	self:Request("teambalance", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", data)
 end
 
 require("components/api/events")
