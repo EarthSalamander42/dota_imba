@@ -1423,16 +1423,16 @@ end
 function modifier_imba_zuus_thundergods_awakening:OnAttackLanded(keys)
 	if IsServer() then
 		local caster = self:GetCaster()
-		if keys.attacker:GetTeam() ~= caster:GetTeam() and keys.attacker:IsAlive() and keys.target == caster and not keys.attacker:IsBuilding() then
+		if keys.attacker:GetTeam() ~= caster:GetTeam() and keys.attacker:IsAlive() and keys.target == caster and not keys.attacker:IsBuilding() and not keys.attacker:IsMagicImmune() then
 			--print("Attacked!", keys.attacker:IsCreep(), keys.attacker:IsHero())
 			local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
 			ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
 			ParticleManager:SetParticleControl(lightningBolt, 1, Vector(keys.attacker:GetAbsOrigin().x, keys.attacker:GetAbsOrigin().y, keys.attacker:GetAbsOrigin().z + keys.attacker:GetBoundingMaxs().z ))
 
-			--7.21 changes (why you gotta complicate things Valve)
-			if caster:HasModifier("modifier_imba_zuus_static_field") then
-				caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(keys.attacker)
-			end
+			-- --7.21 changes (why you gotta complicate things Valve)
+			-- if caster:HasModifier("modifier_imba_zuus_static_field") then
+				-- caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(keys.attacker)
+			-- end
 
 			local damage_table 			= {}
 			damage_table.attacker 		= caster

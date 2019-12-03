@@ -2721,7 +2721,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_regen"					"20"	
+				"health_regen"					"15 20 25 30"
 			}
 		}
 	}
@@ -6301,7 +6301,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"path_duration"			"2.0 3.0 4.0 5.0"
+				"path_duration"			"1.5 2.0 2.5 3.0"
 				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_3"
 			}
 			"03"
@@ -6482,6 +6482,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration_scepter"			"30"
+				"RequiresScepter"			"1"
 			}
 			"03"
 			{
@@ -6497,6 +6498,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range_scepter"				"2500"
+				"RequiresScepter"			"1"
 			}
 			"06"
 			{
@@ -6527,6 +6529,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"150 215 280"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -6617,7 +6620,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"4"
+				"value"						"1.25"
 			}
 		}
 	}
@@ -11955,8 +11958,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"3"
@@ -15514,7 +15516,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_drain"				"150 250 350"
+				"health_drain"				"175 275 375"
 			}
 			"02"
 			{
@@ -18733,7 +18735,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"		 "750"
+		"AbilityCastRange"		 "700 750 800 850"
 		"AbilityCastPoint" 		 "0.1"
 
 		// Time
@@ -18955,7 +18957,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"8"
+				"value"						"9"
 			}
 		}
 	}
@@ -19422,7 +19424,7 @@
 			"12"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"scepter_puddle_radius"		"550"
+				"scepter_puddle_radius"		"600"
 				"RequiresScepter"	"1"
 			}			
 		}
@@ -22639,7 +22641,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_aspeed_per_agi"	"1"
+				"bonus_aspeed_per_agi"	"0.5"
 			}
 			"15"
 			{
@@ -22902,7 +22904,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "30"
+				"value"	                    "25"
 			}
 		}
 	}
@@ -23028,6 +23030,31 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"	                    "1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_warlock_chaotic_offering_magic_resistance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_warlock_rain_of_chaos"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "0"
 			}
 		}
 	}
@@ -23215,7 +23242,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"witch_doctor_maledict"
 		"ScriptFile"				"components/abilities/heroes/hero_witch_doctor"
@@ -24969,7 +24996,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blink_range"				"925 1075 1175 1225"
+				"blink_range"				"925 1000 1075 1150"
+				"LinkedSpecialBonus"		"special_bonus_imba_antimage_blink_range"
 			}
 			"02"
 			{
@@ -25006,7 +25034,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"antimage_spell_shield"
 		"ScriptFile"				"components/abilities/heroes/hero_antimage"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -25065,7 +25093,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"antimage_mana_void"
@@ -25125,11 +25153,13 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"scepter_cooldown_increase"			"100.0"
+				"RequiresScepter"					"1"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"scepter_ministun"			"1.3"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -25460,6 +25490,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_antimage_blink_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"400"
 			}
 		}
 	}

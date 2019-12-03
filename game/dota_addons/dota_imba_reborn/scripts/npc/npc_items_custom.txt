@@ -3369,6 +3369,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"fixed_health_regen"		"10"
 			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"alive_illusion_pct"	"50"
+			}
 		}
 	}
 

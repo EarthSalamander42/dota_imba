@@ -1107,7 +1107,8 @@ function modifier_imba_oracle_false_promise_timer:GetModifierIncomingDamage_Perc
 		self:SetStackCount(math.abs(self.damage_counter - self.heal_counter))
 	end
 	
-	return -100
+	-- Overkill? Meh
+	return -99999999
 end
 
 function modifier_imba_oracle_false_promise_timer:OnHealReceived(keys)

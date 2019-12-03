@@ -31,10 +31,11 @@ function modifier_imba_mana_break_passive:IsPurgable()
 end
 
 function modifier_imba_mana_break_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_START,
+	return {
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
-	return decFuncs
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+	}
 end
 
 function modifier_imba_mana_break_passive:OnCreated()
@@ -304,7 +305,7 @@ function imba_antimage_blink:OnSpellStart()
 
 		local distance = target_point - caster_position
 
-		self.blink_range = self:GetSpecialValueFor("blink_range")
+		self.blink_range = self:GetTalentSpecialValueFor("blink_range")
 		self.percent_mana_burn = self:GetSpecialValueFor("percent_mana_burn")
 		self.percent_damage = self:GetSpecialValueFor("percent_damage")
 		self.radius = self:GetSpecialValueFor("radius")
@@ -772,12 +773,11 @@ function modifier_imba_spell_shield_buff_passive:IsDebuff()
 end
 
 function modifier_imba_spell_shield_buff_passive:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		MODIFIER_PROPERTY_ABSORB_SPELL,
-		MODIFIER_PROPERTY_REFLECT_SPELL
+		-- MODIFIER_PROPERTY_ABSORB_SPELL,
+		-- MODIFIER_PROPERTY_REFLECT_SPELL
 	}
-	return decFuncs
 end
 
 function modifier_imba_spell_shield_buff_passive:OnCreated()
@@ -815,41 +815,41 @@ function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBon
 	end
 end
 
-function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
-			if not self:GetParent():PassivesDisabled() then
+-- function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
+	-- if IsServer() then
+		-- local parent = self:GetParent()
+		-- if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
+			-- if not self:GetParent():PassivesDisabled() then
 
-				-- If the targets are too far apart, do nothing
-				local distance = (parent:GetAbsOrigin() - params.ability:GetCaster():GetAbsOrigin()):Length2D()
-				if distance > self.spellshield_max_distance then
-					return nil
-				end
+				-- -- If the targets are too far apart, do nothing
+				-- local distance = (parent:GetAbsOrigin() - params.ability:GetCaster():GetAbsOrigin()):Length2D()
+				-- if distance > self.spellshield_max_distance then
+					-- return nil
+				-- end
 
-				-- Apply the spell reflect
-				return SpellReflect(parent, params)
-			end
-		end
-	end
-end
+				-- -- Apply the spell reflect
+				-- return SpellReflect(parent, params)
+			-- end
+		-- end
+	-- end
+-- end
 
-function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
-			if not self:GetParent():PassivesDisabled() then
+-- function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
+	-- if IsServer() then
+		-- local parent = self:GetParent()
+		-- if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
+			-- if not self:GetParent():PassivesDisabled() then
 
-				-- Start the internal recharge modifier
-				self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_recharge, {duration = self.internal_cooldown})
+				-- -- Start the internal recharge modifier
+				-- self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_recharge, {duration = self.internal_cooldown})
 
-				-- Apply Spell Absorption
-				return SpellAbsorb(parent, params)
-			end
-		end
-		return false
-	end
-end
+				-- -- Apply Spell Absorption
+				-- return SpellAbsorb(parent, params)
+			-- end
+		-- end
+		-- return false
+	-- end
+-- end
 
 function modifier_imba_spell_shield_buff_passive:OnDestroy()
 	-- If for some reason this modifier is destroyed (Rubick losing it, for instance), remove the scepter modifier
@@ -877,11 +877,10 @@ function modifier_imba_spell_shield_buff_reflect:IsPurgable()
 end
 
 function modifier_imba_spell_shield_buff_reflect:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_ABSORB_SPELL,
 		MODIFIER_PROPERTY_REFLECT_SPELL
 	}
-	return decFuncs
 end
 
 -- Initialize old-spell-checker
@@ -945,18 +944,20 @@ end
 modifier_imba_spellshield_scepter_ready = modifier_imba_spellshield_scepter_ready or class({})
 
 function modifier_imba_spellshield_scepter_ready:IsHidden()
-	-- If the caster doesn't have scepter, hide
-	if not self:GetParent():HasScepter() then
-		return true
-	end
+	-- -- If the caster doesn't have scepter, hide
+	-- if not self:GetParent():HasScepter() then
+		-- return true
+	-- end
 
-	-- If the caster is recharging its scepter reflect, hide
-	if self:GetParent():HasModifier("modifier_imba_spellshield_scepter_recharge") then
-		return true
-	end
+	-- -- If the caster is recharging its scepter reflect, hide
+	-- if self:GetParent():HasModifier("modifier_imba_spellshield_scepter_recharge") then
+		-- return true
+	-- end
 
-	-- Otherwise, show normally
-	return false
+	-- -- Otherwise, show normally
+	-- return false
+	
+	return true
 end
 
 function modifier_imba_spellshield_scepter_ready:IsPurgable() return false end
@@ -968,12 +969,14 @@ function modifier_imba_spellshield_scepter_ready:RemoveOnDeath() return false en
 modifier_imba_spellshield_scepter_recharge = modifier_imba_spellshield_scepter_recharge or class({})
 
 function modifier_imba_spellshield_scepter_recharge:IsHidden()
-	-- If the caster doesn't has scepter, hide it
-	if not self:GetParent():HasScepter() then
-		return true
-	end
+	-- -- If the caster doesn't has scepter, hide it
+	-- if not self:GetParent():HasScepter() then
+		-- return true
+	-- end
 
-	return false
+	-- return false
+	
+	return true
 end
 
 function modifier_imba_spellshield_scepter_recharge:IsPurgable() return false end

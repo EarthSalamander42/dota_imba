@@ -132,9 +132,9 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_antimage_mana_void"
 
-		"Ability10"					"special_bonus_strength_12"
+		"Ability10"					"special_bonus_strength_13"
 		"Ability11"					"special_bonus_attack_speed_25"
-		"Ability12"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability12"					"special_bonus_imba_antimage_blink_range"
 		"Ability13"					"special_bonus_agility_15"
 		"Ability14"					"special_bonus_imba_antimage_9" // Blink Uncontrollable Illusion
 		"Ability15"					"special_bonus_imba_antimage_10" // -Xs Blink Cooldown
@@ -145,6 +145,7 @@
 		// "Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		// "Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
 		// "Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		// "Ability12"					""special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
 		// "Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
 		// "Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
 		// "Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
@@ -810,12 +811,18 @@
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
-		"Ability12"					"special_bonus_imba_jakiro_3"
+		"Ability12"					"special_bonus_exp_boost_50"
 		"Ability13"					"special_bonus_spell_amplify_12"
 		"Ability14"					"special_bonus_imba_jakiro_7"
 		"Ability15"					"special_bonus_imba_jakiro_6"
-		"Ability16"					"special_bonus_imba_jakiro_5"
+		"Ability16"					"special_bonus_imba_jakiro_3"
 		"Ability17"					"special_bonus_imba_jakiro_9"
+		
+		// Removed Talents
+		// "Ability13"				"special_bonus_imba_jakiro_4" // +X Liquid Fire cast range
+		// "Ability16"				"special_bonus_imba_jakiro_5" // +Xs Ice Path stun duration
+		// "Ability17"				"special_bonus_imba_jakiro_8" // Macropyre slows enemies (X% * Y% per tick)
+		
 	}
 
 	//=================================================================================================================
@@ -836,7 +843,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_juggernaut_omni_slash"
 
-		"Ability10"					"special_bonus_all_stats_5"
+		"Ability10"					"special_bonus_all_stats_6"
 		"Ability11"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
 		"Ability12"					"special_bonus_imba_juggernaut_blade_fury_movement_speed"
 		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
@@ -1857,7 +1864,7 @@
 		"Ability11"					"special_bonus_imba_tiny_2"
 		"Ability12"					"special_bonus_hp_500"
 		"Ability13"					"special_bonus_imba_tiny_6"
-		"Ability14"					"special_bonus_unique_tiny_4"
+		"Ability14"					"special_bonus_strength_20"
 		"Ability15"					"special_bonus_imba_tiny_avalanche_cooldown"
 		"Ability16"					"special_bonus_imba_tiny_7"
 		"Ability17"					"special_bonus_imba_tiny_8"
@@ -1870,6 +1877,7 @@
 		// "Ability12"					"special_bonus_imba_tiny_3" // Avalanche 400 Unit Projectile (what even is this talent...)
 		// "Ability13"					"special_bonus_imba_tiny_4" // -7s Tree Grab Cooldown (replaced with vanilla talent)
 		// "Ability14"					"special_bonus_imba_tiny_5" // Tree Throw knockbacks enemies on impact (vanilla ability now, plus wtf this talent is dumpster)
+		// "Ability14"					"special_bonus_unique_tiny_4"
 	}
 
 	//=================================================================================================================
@@ -2053,11 +2061,12 @@
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"
 		"Ability15"					"special_bonus_imba_warlock_5" // "+4 Shadow Word duration"
 		"Ability16"					"special_bonus_imba_warlock_4" // "+X Golem armor"
-		"Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
+		"Ability17"					"special_bonus_imba_warlock_chaotic_offering_magic_resistance"
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_warlock_2" // "Upheaval also reduces attack speed"
 		// "Ability16"					"special_bonus_imba_warlock_7" // "Golems share damage taken to all linked enemies"
+		// "Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
 	}
 
 	//=================================================================================================================

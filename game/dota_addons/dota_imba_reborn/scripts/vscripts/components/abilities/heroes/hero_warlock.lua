@@ -1107,6 +1107,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 		end
 
 		-- Attack speed (needs to be done through a modifier):
+		-- I'm also going to attach the 100% magic resistance talent onto this modifier
 		local modifier_attackspeed_handler = golem:AddNewModifier(self:GetCaster(), ability, "modifier_imba_rain_of_chaos_golem_as", {})
 		if modifier_attackspeed_handler then
 			modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
@@ -1173,15 +1174,27 @@ function modifier_imba_rain_of_chaos_golem_as:IsHidden() return true end
 function modifier_imba_rain_of_chaos_golem_as:IsPurgable() return false end
 function modifier_imba_rain_of_chaos_golem_as:IsDebuff() return false end
 
-function modifier_imba_rain_of_chaos_golem_as:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+function modifier_imba_rain_of_chaos_golem_as:OnCreated()
+	if self:GetAbility() and self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasTalent("special_bonus_imba_warlock_chaotic_offering_magic_resistance") then
+		self.magic_resistance = 100
+	else
+		self.magic_resistance = 0
+	end
+end
 
-	return decFuncs
+function modifier_imba_rain_of_chaos_golem_as:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
 end
 
 function modifier_imba_rain_of_chaos_golem_as:GetModifierAttackSpeedBonus_Constant()
-	local stacks = self:GetStackCount()
-	return stacks
+	return self:GetStackCount()
+end
+
+function modifier_imba_rain_of_chaos_golem_as:GetModifierMagicalResistanceBonus()
+	return self.magic_resistance
 end
 
 -- Golem move speed bonus modifier
@@ -1192,14 +1205,11 @@ function modifier_imba_rain_of_chaos_golem_ms:IsPurgable() return false end
 function modifier_imba_rain_of_chaos_golem_ms:IsDebuff() return false end
 
 function modifier_imba_rain_of_chaos_golem_ms:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_rain_of_chaos_golem_ms:GetModifierMoveSpeedBonus_Constant()
-	local stacks = self:GetStackCount()
-	return stacks
+	return self:GetStackCount()
 end
 
 
@@ -1713,3 +1723,23 @@ end
 function modifier_imba_golem_spell_immunity:IsHidden() return false end
 function modifier_imba_golem_spell_immunity:IsPurgable() return false end
 function modifier_imba_golem_spell_immunity:IsDebuff() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance					= class({})
+
+function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:IsPurgable() 		return false end
+function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:RemoveOnDeath() 	return false end
+
+function imba_warlock_rain_of_chaos:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_warlock_chaotic_offering_magic_resistance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_warlock_chaotic_offering_magic_resistance"), "modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", {})
+	end
+end

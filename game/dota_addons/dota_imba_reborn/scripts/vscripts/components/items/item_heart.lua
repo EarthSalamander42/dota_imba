@@ -107,6 +107,7 @@ function modifier_item_imba_heart_unique:OnCreated()
 	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
 	self.hp_regen_amp = self:GetAbility():GetSpecialValueFor("hp_regen_amp")
+	self.alive_illusion_pct	= self:GetAbility():GetSpecialValueFor("alive_illusion_pct")
 	
 	self:StartIntervalThink(FrameTime())
 end
@@ -137,9 +138,12 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	-- if not self:GetParent():IsIllusion() then
+	if not self:GetParent():IsIllusion() then
 		return self:GetStackCount()
-	-- end
+	else
+		-- IMBAfication: We Are All Alive
+		return self:GetStackCount() * self.alive_illusion_pct * 0.01
+	end
 end
 
 function modifier_item_imba_heart_unique:OnTakeDamage(keys)

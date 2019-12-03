@@ -202,7 +202,7 @@ function modifier_imba_abyssal_blade_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
 					  --MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 					  MODIFIER_EVENT_ON_ATTACK,
-					  MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL}
+					  MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL}
 
 	return decFuncs
 end
@@ -323,7 +323,7 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
 	end
 end
 
-function modifier_imba_abyssal_blade_unique:GetModifierProcAttack_BonusDamage_Magical()
+function modifier_imba_abyssal_blade_unique:GetModifierProcAttack_BonusDamage_Physical()
 	if self.bash_proc then
 		return self.bash_damage
 	end
