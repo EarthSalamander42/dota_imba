@@ -71,6 +71,7 @@
 		"item"		"item_shadow_amulet"	
 		"item"		"item_imba_ghost"
 		"item"		"item_imba_blink"
+		"item"		"item_third_eye"
 	}
 	
 	// Level 1 - Green Recipes

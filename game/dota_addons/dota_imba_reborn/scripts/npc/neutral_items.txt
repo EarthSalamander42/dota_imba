@@ -79,7 +79,7 @@
 			"item_enchanted_quiver"			  "1"
 			"item_paladin_sword"			  "1"
 			"item_orb_of_destruction"		  "1"
-			"item_third_eye"				  "1"
+//			"item_third_eye"				  "1"
 			"item_titan_sliver"				  "1"
 		}
 	}
