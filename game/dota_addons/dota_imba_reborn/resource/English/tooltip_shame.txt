@@ -88,7 +88,7 @@
 "npc_dota_hero_earthshaker"                                "Earthshaker"
 "npc_dota_hero_earth_spirit"                                "Earth Spirit (IMBA)"
 "npc_dota_hero_elder_titan"                                "Elder Titan (IMBA)"
-"npc_dota_hero_enchantress"                                "Enchantress (IMBA)"
+"npc_dota_hero_enchantress"                                "Enchantress (IMBA) (Pre 7.23)"
 "npc_dota_hero_enigma"                                      "Enigma (IMBA)"
 "npc_dota_hero_ember_spirit"                                "Ember Spirit (IMBA)"
 "npc_dota_hero_faceless_void"                              "Faceless Void (IMBA)"
