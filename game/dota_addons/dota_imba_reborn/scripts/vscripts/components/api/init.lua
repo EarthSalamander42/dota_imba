@@ -541,6 +541,9 @@ function api:RegisterGame(callback)
 			CustomNetTables:SetTableValue("battlepass", j, {cool_hat[j]})
 		end)
 	end
+
+	print("ALL PLAYERS LOADED IN!")
+	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 end
 
 function api:CompleteGame(successCallback, failCallback)
