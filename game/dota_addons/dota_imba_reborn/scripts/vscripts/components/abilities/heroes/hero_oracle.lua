@@ -586,34 +586,38 @@ function imba_oracle_purifying_flames:OnSpellStart()
 	self.target:EmitSound("Hero_Oracle.PurifyingFlames")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_oracle" then
-		if self.target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and RollPercentage(30) then
-			if not self.responses_allied then
-				self.responses_allied = 
-				{
-					"oracle_orac_purifyingflames_01",
-					"oracle_orac_purifyingflames_02",
-					"oracle_orac_purifyingflames_03",
-					"oracle_orac_purifyingflames_04",
-					"oracle_orac_purifyingflames_05",
-					"oracle_orac_purifyingflames_08",
-					"oracle_orac_purifyingflames_09",
-					"oracle_orac_purifyingflames_11"
-				}
+		if self.target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+			if RollPercentage(30) then
+				if not self.responses_allied then
+					self.responses_allied = 
+					{
+						"oracle_orac_purifyingflames_01",
+						"oracle_orac_purifyingflames_02",
+						"oracle_orac_purifyingflames_03",
+						"oracle_orac_purifyingflames_04",
+						"oracle_orac_purifyingflames_05",
+						"oracle_orac_purifyingflames_08",
+						"oracle_orac_purifyingflames_09",
+						"oracle_orac_purifyingflames_11"
+					}
+				end
+				
+				self:GetCaster():EmitSound(self.responses_allied[RandomInt(1, #self.responses_allied)])
 			end
-			
-			self:GetCaster():EmitSound(self.responses_allied[RandomInt(1, #self.responses_allied)])
-		elseif RollPercentage(25) then
-			if not self.responses_allied then
-				self.responses_enemy = 
-				{
-					"oracle_orac_purifyingflames_06",
-					"oracle_orac_purifyingflames_07",
-					"oracle_orac_purifyingflames_10",
-					"oracle_orac_purifyingflames_12"
-				}
+		else
+			if RollPercentage(25) then
+				if not self.responses_enemy then
+					self.responses_enemy = 
+					{
+						"oracle_orac_purifyingflames_06",
+						"oracle_orac_purifyingflames_07",
+						"oracle_orac_purifyingflames_10",
+						"oracle_orac_purifyingflames_12"
+					}
+				end
+				
+				self:GetCaster():EmitSound(self.responses_enemy[RandomInt(1, #self.responses_enemy)])
 			end
-			
-			self:GetCaster():EmitSound(self.responses_enemy[RandomInt(1, #self.responses_enemy)])
 		end
 	end
 

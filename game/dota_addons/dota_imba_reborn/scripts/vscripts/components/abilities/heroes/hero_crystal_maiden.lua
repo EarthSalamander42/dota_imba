@@ -963,8 +963,8 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 			self.explosion_interval = self.explosion_interval * self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_8")
 		end
 
-		-- Plays the channeling animation
-		StartAnimation(self.caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
+		-- -- Plays the channeling animation
+		-- StartAnimation(self.caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
 
 		-- Find all enemies that would be in the freezing field
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -1248,17 +1248,19 @@ end
 
 
 function modifier_imba_crystal_maiden_freezing_field_armor_bonus:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
 end
 
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetOverrideAnimation()
+	return ACT_DOTA_CAST_ABILITY_4
+end
 
 ---------------------
 -- TALENT HANDLERS --

@@ -677,6 +677,15 @@ function GameMode:OrderFilter( keys )
 				return false
 			end
 
+			-- Rough code to drop neutral items on the ground
+			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability.GetName and ability:GetName() == "courier_return_stash_items" then
+				for i = 0, 8 do
+					if unit:GetItemInSlot(i) and unit:GetItemInSlot(i).GetPurchaser and not unit:GetItemInSlot(i):GetPurchaser() then
+						unit:DropItemAtPositionImmediate(unit:GetItemInSlot(i), unit:GetAbsOrigin() + RandomVector(RandomInt(0, 100)))
+					end
+				end
+			end
+
 			if keys.issuer_player_id_const then
 				-- Attempts at locking courier to one player at a time
 				--  How it works: When the player issues a transfer item command, the courier will have its issuer_player_id_const variable set to keys.issuer_player_id_const, which will only turn nil once that player issues a different courier command OR the courier inventory contents change
