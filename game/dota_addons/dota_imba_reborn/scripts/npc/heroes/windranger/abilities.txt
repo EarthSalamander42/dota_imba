@@ -70,7 +70,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"shackle_angle"			"23 28 33 38"
+				"shackle_angle"			"25 27 29 31"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -115,7 +115,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"powershot_damage"		"150 250 350 450"
+				"powershot_damage"		"200 300 400 500"
 				//"LinkedSpecialBonus"	"special_bonus_unique_windranger_3"
 				"LinkedSpecialBonus"	"special_bonus_imba_windranger_powershot_damage"
 			}
@@ -244,7 +244,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 14 13 12"
+		"AbilityCooldown"				"14 13 12 11"
 		"AbilityDuration"				"3 4 5 6"
 	
 		// Cost
@@ -262,7 +262,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"60 65 70 75"		
+				"movespeed_bonus_pct"	"60"		
 			}
 			"02"
 			{
@@ -388,12 +388,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
+				"bonus_attack_speed"			"500 600 700"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -35 -20"
+				"focusfire_damage_reduction"	"-50 -40 -30"
 				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
 			

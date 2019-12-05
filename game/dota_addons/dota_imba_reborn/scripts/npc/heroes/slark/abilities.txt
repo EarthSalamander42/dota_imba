@@ -121,6 +121,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 		"AbilitySound"					"Hero_Slark.Pounce.Cast"
 
 		// Time		
@@ -166,6 +167,24 @@
 				"var_type"				"FIELD_INTEGER"
 				"leash_radius"			"400"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"2"
+				"RequiresScepter"	"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"			"20 16 12 8"
+				"RequiresScepter"	"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pounce_distance_scepter"		"1400"
+				"RequiresScepter"	"1"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -184,6 +203,10 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -224,13 +247,13 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 		"AbilitySound"					"Hero_Slark.ShadowDance"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80 70 60"
+		"AbilityCooldown"				"70 60 50"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -288,7 +311,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dark_reef_radius"			"2600"
+				"dark_reef_radius"			"2600" // Do NOT change this
 			}
 		}
 	}

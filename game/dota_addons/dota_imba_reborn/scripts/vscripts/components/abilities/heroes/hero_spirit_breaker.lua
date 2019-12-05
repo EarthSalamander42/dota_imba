@@ -337,8 +337,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:CheckState()
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
 		-- MODIFIER_PROPERTY_MOVESPEED_LIMIT,
 		
@@ -350,8 +349,6 @@ function modifier_imba_spirit_breaker_charge_of_darkness:DeclareFunctions()
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_EVENT_ON_ORDER
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierIgnoreMovespeedLimit()
@@ -395,7 +392,8 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnOrder(keys)
 			[DOTA_UNIT_ORDER_STOP]				= true
 		}
 		
-		if cancel_commands[keys.order_type] then
+		-- Testing something to try and stop randomly cancelled charges but IDK what the issue is
+		if cancel_commands[keys.order_type] and self:GetElapsedTime() >= 0.1 then
 			self:Destroy()
 		end
 	-- IMBAfication: Taxi!
