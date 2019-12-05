@@ -352,18 +352,23 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				end
 			end
 
-			-- Check for a tie by counting how many values have the highest number of votes
-			local tieTable = {}
-			for k, v in pairs(voteCounts) do
-				if v == highest_vote then
-					table.insert(tieTable, k)
+			-- if vote count is lower than player count / 4, default to standard
+			if highest_vote < 5 then
+				highest_key = 1
+			else
+				-- Check for a tie by counting how many values have the highest number of votes
+				local tieTable = {}
+				for k, v in pairs(voteCounts) do
+					if v == highest_vote then
+						table.insert(tieTable, k)
+					end
 				end
-			end
 
-			-- Resolve a tie by selecting a random value from those with the highest votes
-			if table.getn(tieTable) > 1 then
-				--print("TIE!")
-				highest_key = tieTable[math.random(table.getn(tieTable))]
+				-- Resolve a tie by selecting a random value from those with the highest votes
+				if table.getn(tieTable) > 1 then
+					--print("TIE!")
+					highest_key = tieTable[math.random(table.getn(tieTable))]
+				end
 			end
 
 			-- Act on the winning vote
@@ -372,9 +377,9 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			end
 
 			-- Act on the winning vote
-			if category == "difficulty" then
-				GameRules:SetCustomGameDifficulty(highest_key)
-			end
+--			if category == "difficulty" then
+--				GameRules:SetCustomGameDifficulty(highest_key)
+--			end
 
 			print(category .. ": " .. highest_key)
 		end
