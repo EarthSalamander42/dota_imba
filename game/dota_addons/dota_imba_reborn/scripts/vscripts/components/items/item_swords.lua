@@ -365,15 +365,31 @@ function modifier_item_imba_kaya:IsPurgable() return false end
 function modifier_item_imba_kaya:IsPermanent() return true end
 function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_kaya:OnCreated()
+	if not IsServer() then return end
+
+	-- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiple Kayas
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
+end
+
+function modifier_item_imba_kaya:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_kaya:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 	}
-	return funcs
 end
 
 function modifier_item_imba_kaya:GetModifierSpellAmplify_PercentageUnique()
@@ -383,7 +399,10 @@ end
 
 function modifier_item_imba_kaya:GetModifierPercentageManacost()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	
+	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	end
 end
 
 function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
@@ -392,7 +411,9 @@ function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
 end
 
 function modifier_item_imba_kaya:GetModifierPercentageCooldown()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	end
 end
 
 modifier_item_imba_kaya_active = modifier_item_imba_kaya_active or class({})

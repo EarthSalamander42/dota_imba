@@ -104,6 +104,20 @@ function imba_faceless_void_time_walk:GetIntrinsicModifierName()
 	end
 end
 
+function imba_faceless_void_time_walk:GetBehavior()
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetBehavior(self)
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES + DOTA_ABILITY_BEHAVIOR_AOE
+	end
+end
+
+function imba_faceless_void_time_walk:GetAOERadius()
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("radius_scepter")
+	end
+end
+
 function imba_faceless_void_time_walk:OnUpgrade()
 	if IsServer() then
 		-- No reason for this to exist if stolen
@@ -204,8 +218,7 @@ function modifier_imba_faceless_void_time_walk_buff_as:IsDebuff()	return false e
 function modifier_imba_faceless_void_time_walk_buff_as:IsHidden()	return true end
 
 function modifier_imba_faceless_void_time_walk_buff_as:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, }
-	return funcs
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_faceless_void_time_walk_buff_as:GetModifierAttackSpeedBonus_Constant()
@@ -221,8 +234,7 @@ function modifier_imba_faceless_void_time_walk_buff_ms:IsDebuff()	return false e
 function modifier_imba_faceless_void_time_walk_buff_ms:IsHidden()	return true end
 
 function modifier_imba_faceless_void_time_walk_buff_ms:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, }
-	return funcs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_faceless_void_time_walk_buff_ms:GetModifierMoveSpeedBonus_Constant()
@@ -247,15 +259,16 @@ function modifier_imba_faceless_void_time_walk_cast:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
 function modifier_imba_faceless_void_time_walk_cast:CheckState()
-	if IsServer() then
-		local state = {	[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_INVULNERABLE] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true, }
-		return state
-	end
+	return {
+		[MODIFIER_STATE_STUNNED]			= true,
+		[MODIFIER_STATE_INVULNERABLE]		= true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true
+	}
 end
 
 function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
+	self.radius_scepter	= self:GetAbility():GetSpecialValueFor("radius_scepter")
+
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -349,6 +362,12 @@ function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
 		asBuff:SetStackCount(self.as_stolen)
 		msBuff:SetStackCount(self.ms_stolen)
 
+		if self:GetCaster():HasScepter() and self:GetCaster():HasModifier("modifier_imba_faceless_void_time_lock_720") then
+			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+				self:GetCaster():FindModifierByName("modifier_imba_faceless_void_time_lock_720"):ApplyTimeLock(enemy)
+			end
+		end
+		
 		-- Timer because it has a slight offset otherwise
 		Timers:CreateTimer(0.1, function()
 			-- Play particle around landing point
@@ -960,8 +979,10 @@ end
 
 function imba_faceless_void_chronosphere:GetCooldown( level )
 	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cooldown") end
-	return self.BaseClass.GetCooldown( self, level )
+		return self:GetSpecialValueFor("scepter_cooldown")
+	else
+		return self.BaseClass.GetCooldown( self, level )
+	end
 end
 
 function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_location )
@@ -1370,12 +1391,9 @@ end
 function modifier_imba_faceless_void_time_lock_720:IsHidden()	return true end
 
 function modifier_imba_faceless_void_time_lock_720:DeclareFunctions()
-	local funcs =
-	{
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-	
-	return funcs
 end
 
 function modifier_imba_faceless_void_time_lock_720:OnAttackLanded(keys)

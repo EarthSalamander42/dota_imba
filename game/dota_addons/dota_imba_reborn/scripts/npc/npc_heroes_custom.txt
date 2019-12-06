@@ -871,9 +871,11 @@
 		"Ability1"					"imba_kunkka_torrent"		
 		"Ability2"					"imba_kunkka_tidebringer"	
 		"Ability3"					"imba_kunkka_x_marks_the_spot"
-		"Ability4"					"imba_kunkka_return"
+		"Ability4"					"kunkka_torrent_storm"
 		"Ability5"					"imba_kunkka_ebb_and_flow"
 		"Ability6"					"imba_kunkka_ghostship"
+		"Ability7"					"imba_kunkka_return"
+		"Ability8"					"kunkka_torrent"
 
 		"Ability10"					"special_bonus_imba_kunkka_1"
 		"Ability11"					"special_bonus_imba_kunkka_2"
@@ -1807,7 +1809,7 @@
 
 		"Ability1"					"imba_sven_storm_bolt"
 		"Ability2"					"imba_sven_great_cleave"
-		"Ability3"					"imba_sven_warcry"
+		"Ability3"					"imba_sven_warcry_723"
 		"Ability4"					"imba_sven_colossal_slash"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_sven_gods_strength"
@@ -1987,7 +1989,7 @@
 
 		"Ability1"					"imba_vengefulspirit_magic_missile"
 		"Ability2"					"imba_vengefulspirit_wave_of_terror"
-		"Ability3"					"imba_vengefulspirit_command_aura"
+		"Ability3"					"imba_vengefulspirit_command_aura_723"
 		"Ability4"					"imba_vengefulspirit_rancor"
 		"Ability5"					"imba_vengefulspirit_swap_back"
 		"Ability6"					"imba_vengefulspirit_nether_swap"
@@ -1995,15 +1997,17 @@
 		"Ability10"					"special_bonus_magic_resistance_15"
 		"Ability11"					"special_bonus_imba_vengefulspirit_2" // -Xs Nether Swap Swapback Delay
 		"Ability12"					"special_bonus_agility_15"
-		"Ability13"					"special_bonus_imba_vengefulspirit_10" // -Xs Wave of Terror Cooldown
-		"Ability14"					"special_bonus_imba_vengefulspirit_11" // -Xs Magic Missile Cooldown
-		"Ability15"					"special_bonus_imba_vengefulspirit_3" // +X% Vengeance Aura Damage
-		"Ability16"					"special_bonus_imba_vengefulspirit_1" // +X Magic Missile Damage
+		"Ability13"					"special_bonus_imba_vengefulspirit_11" // -Xs Magic Missile Cooldown
+		"Ability14"					"special_bonus_imba_vengefulspirit_1" // +X Magic Missile Damage
+		"Ability15"					"special_bonus_imba_vengefulspirit_command_aura_attributes"			
+		"Ability16"					"special_bonus_unique_vengeful_spirit_7"
 		"Ability17"					"special_bonus_imba_vengefulspirit_5" // Magic Missile Pierces Spell Immunity
 		
 		// Removed Talents
 		//"Ability13"					"special_bonus_imba_vengefulspirit_4" // Allied Rancor
+		//"Ability13"					"special_bonus_imba_vengefulspirit_10" // -Xs Wave of Terror Cooldown
 		//"Ability15"					"special_bonus_imba_vengefulspirit_6" // Nether Missile
+		//"Ability15"					"special_bonus_imba_vengefulspirit_3" // +X% Vengeance Aura Damage
 		//"Ability16"					"special_bonus_imba_vengefulspirit_7" // -X% buyback cost, -X% buyback cooldown
 		//"Ability17"					"special_bonus_imba_vengefulspirit_8" // Full-blown Vengeance
 	}

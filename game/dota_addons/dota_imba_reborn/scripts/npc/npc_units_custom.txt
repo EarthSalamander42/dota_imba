@@ -10344,8 +10344,8 @@
 	{
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"70"		// Damage range min.
-		"AttackDamageMax"			"75"		// Damage range max.
+		"AttackDamageMin"			"60"		// Damage range min.
+		"AttackDamageMax"			"65"		// Damage range max.
 
 		// Bounty
 		//----------------------------------------------------------------

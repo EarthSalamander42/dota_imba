@@ -6897,6 +6897,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_kunkka"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7206,7 +7207,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"ScriptFile"				"components/abilities/heroes/hero_kunkka"
 		"AbilityTextureName"			"kunkka_return"
@@ -7254,7 +7255,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 50 40"
+		"AbilityCooldown"				"70 60 50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8001,6 +8002,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"             "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8022,7 +8024,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.9 2.2 2.5 2.8"
+				"duration"			"1.8 2.1 2.4 2.7"
 			}
 			"02"
 			{
@@ -8048,7 +8050,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sacrifice_mana_pct"	"55 70 85 100"
+				"sacrifice_mana_pct"	"40 55 70 85"
 			}
 			"07"
 			{
@@ -8064,7 +8066,18 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"creep_channel_reduction"	"50"
-			}			
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_drain"		"10 15 20 25"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_scepter"		"400"
+				"RequiresScepter"		"1"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	}
@@ -8079,7 +8092,7 @@
 		"BaseClass"                     "ability_lua"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"            "lich_dark_ritual"
 		"ScriptFile"				"components/abilities/heroes/hero_lich.lua"
@@ -8197,7 +8210,7 @@
 		"MaxLevel"                      "3"
 		"LevelsBetweenUpgrades"         "6"
 		"ScriptFile"				"components/abilities/heroes/hero_lich.lua"
-		"HasScepterUpgrade"             "1"
+		//"HasScepterUpgrade"             "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8249,7 +8262,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "325 525 725"
+				"damage"                    "275 475 675"
 			}
 			"06"
 			{
@@ -8280,6 +8293,11 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"cold_front_stacks"         "2"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_jump_damage"		"15 20 25"
 			}
 		}
 	}
@@ -23807,23 +23825,28 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"18 22 26 30"
+				"lifesteal_pct"			"12 16 20 24"
 				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spellsteal_pct"		"5 10 15 20"
+				"spellsteal_pct"		"4 6 8 10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"caster_heal"			"20 30 40 50"
+				"caster_heal"			"10 20 30 40"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_delay"			"0.2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"6 12 18 24"
 			}
 		}
 	}
@@ -28073,6 +28096,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -28131,6 +28155,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_time"			"2"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"				"250"
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -28319,7 +28350,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.75"
+				"duration"				"0.65"
 			}
 			"02"
 			{
@@ -28403,7 +28434,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.35"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-		"AbilityCooldown"				"140 125 110"
+		"AbilityCooldown"				"140 130 120"
 		"AbilityManaCost"				"150 225 300"
 
 		"HasScepterUpgrade"				"1"
@@ -28455,7 +28486,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_cooldown"					"60"
+				"scepter_cooldown"					"90"
 			}
 
 			"08"
@@ -28781,7 +28812,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"500"
+				"value"						"450"
 			}
 		}
 	}	
@@ -36100,7 +36131,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"vision_duration"		"4.0"
 			}
 			"08"
 			{
@@ -36184,6 +36215,77 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Vengeful Spirit's Vengeance Aura
+	//=================================================================================================================
+	"imba_vengefulspirit_command_aura_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              			"ability_lua"
+		"ScriptFile"						"components/abilities/heroes/hero_vengefulspirit.lua"
+		"AbilityTextureName"    	 		"vengefulspirit_command_aura"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attributes"	"4 7 10 13"
+				//"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_command_aura_attributes"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attack_range"	"60 90 120 150"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
+			}			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"100"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"100"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_upgrade_level"	"25"
+			}				
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_illusions_on_death_upgrade"	"2"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"3 7 11 15"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
 	//=================================================================================================================
 	// Vengeful Spirit's Rancor
 	//=================================================================================================================
@@ -36264,7 +36366,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellDispellableType"				"SPELL_DISPELLABLE_YES_STRONG"
@@ -36328,7 +36430,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"cooldown_scepter"					"10"
+				"cooldown_scepter"					"30"
 			}
 			"07"
 			{
@@ -36348,9 +36450,21 @@
 			"10"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"charge_restore_time_scepter"	"10"
+				"charge_restore_time_scepter"	"30"
 				"RequiresScepter"		"1"
-			}			
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_radius"	"700"
+				"RequiresScepter"		"1"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"scepter_duration"	"2"
+				"RequiresScepter"		"1"
+			}
 		}
 	}
 
@@ -36406,7 +36520,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"400"
+				"value"						"200"
 			}
 		}
 	}
@@ -36706,8 +36820,36 @@
 		{
 			"01"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// +X Vengeance Aura Attributes
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_command_aura_attributes"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_command_aura_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
+				"value"						"8"
 			}
 		}
 	}	

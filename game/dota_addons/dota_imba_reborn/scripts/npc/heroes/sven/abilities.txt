@@ -19,10 +19,11 @@
 		"AbilityTextureName"			"sven_storm_bolt"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 650 700 750"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AOERadius"						"%radius"
@@ -86,6 +87,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bolt_speed"			"1000"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range_bonus_scepter"		"500"		
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -241,6 +248,153 @@
 			}
 		}
 	}
+	
+
+	//=================================================================================================================
+	// Sven's Warcry
+	//=================================================================================================================
+	"imba_sven_warcry"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_sven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"sven_warcry"
+		"MaxLevel"						"4"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36 32 28 24"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+			"particle"					"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			"particle"					"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+			"particle"					"particles/items_fx/black_king_bar_avatar.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_bonus_pct"			"10 15 20 25"
+				"LinkedSpecialBonus"	"special_bonus_imba_sven_3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_shield"				"80 110 140 170"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hp_shield_str_mult"	"1.0 1.5 2.0 2.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tenacity_bonus_pct"	"10 15 20 25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Warcry
+	//=================================================================================================================
+	"imba_sven_warcry_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_sven"
+		"AbilityTextureName"			"sven_warcry"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilitySound"					"Hero_Sven.WarCry"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_OVERRIDE_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36 32 28 24"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"8 12 16 20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"8 11 14 17"		
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage"		"14 18 22 26"		
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"		"700"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"		"10"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knightly_bonus_status_resistance"	"10 15 20 25"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Sven's God's Strength
@@ -305,7 +459,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ally_bonus_dmg_pct_scepter"	"80 120 160"
+				"ally_bonus_dmg_pct_scepter"	"20 30 40"
 				"RequiresScepter"				"1"
 			}
 			"04"
@@ -314,6 +468,12 @@
 				"aura_radius_scepter"			"1200"
 				"RequiresScepter"				"1"
 			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gods_strength_bonus_str"		"10 20 30"		
+				//"LinkedSpecialBonus"		"special_bonus_unique_sven_2"
+			}	
 		}
 	}
 

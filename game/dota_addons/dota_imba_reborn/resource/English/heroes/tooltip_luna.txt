@@ -11,6 +11,7 @@
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_range"									"BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_bounces"									"BOUNCES:"
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_damage_reduction_percent"				"%DAMAGE REDUCTION PER BOUNCE:"
+
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing"										"Lunar Blessing"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_Lore"									"The Goddess of the Moon smiles upon her kin."
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_Description"							"Increases the primary attribute for Luna and nearby allied heroes. Luna is also blessed with increased vision range at night.\n<font color='#FF7800'>Full Moon:</font> Can be activated at any time when off cooldown to boost all attributes and grant the bonus night vision to all affected allies for %full_moon_duration% seconds.\n<font color='#FF7800'>Ultimate Blessing:</font> If Eclipse is cast on a unit, that unit gains %eclipse_pure_damage% bonus pure attack damage for its duration."
@@ -18,6 +19,17 @@
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_radius"								"BLESSING RADIUS:"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_primary_attribute"					"BONUS PRIMARY ATTRIBUTE:"
 "DOTA_Tooltip_ability_imba_luna_lunar_blessing_bonus_night_vision"					"BONUS NIGHT VISION:"
+
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723"										"Lunar Blessing"
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_Lore"									"The Goddess of the Moon smiles upon her kin."
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_Description"							"Increases the attack damage and armor for Luna and nearby allied ranged player units. Luna is also blessed with increased vision range at night.\n<font color='#FF7800'>Full Moon:</font> Can be activated at any time when off cooldown to make Lunar Blessing global, affect melee player units, and grant the bonus night vision to all affected allies for %full_moon_duration% seconds.\n<font color='#FF7800'>Ultimate Blessing:</font> If Eclipse is cast on a unit, that unit gains %eclipse_pure_damage% bonus pure attack damage for its duration."
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_radius"								"BLESSING RADIUS:"
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_damage_pct"					"%DAMAGE BONUS:"
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_armor_pct"					"%ARMOR BONUS:"
+"DOTA_Tooltip_ability_imba_luna_lunar_blessing_723_bonus_night_vision"					"NIGHT VISION:"
+"DOTA_Tooltip_ability_luna_lunar_grace"										"Lunar Blessing"
+"DOTA_Tooltip_ability_luna_lunar_grace_Lore"								"The Goddess of the Moon smiles upon her kin."
+
 "DOTA_Tooltip_ability_imba_luna_eclipse"												"Eclipse"
 "DOTA_Tooltip_ability_imba_luna_eclipse_Lore"										"In times of great need, Selemene herself descends into the world, blocking out the light and hope of the opposed."
 "DOTA_Tooltip_ability_imba_luna_eclipse_description"								"Showers random nearby enemies with strikes from Luna's current level of Lucent Beam. These beams do not stun their targets, and there is a maximum number of times that a single target can be struck. Also turns day into night for %night_duration% seconds.\n<font color='#FF7800'>Selemene's Wrath:</font> Beams do not stop if Luna is killed.\n<font color='#FF7800'>Moonscraper:</font> Every beam also fires an arc wall of %moonscraper_beams% refraction beams around the edge of Eclipse's radius, starting at a random angle and circling counter-clockwise each pulse. Each refraction beam is separated by %moonscraper_spread% degrees."
@@ -40,6 +52,10 @@
 "DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura"				"Lunar Blessing"
 //"DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura_Description"	"Increasing Agility +%dMODIFIER_PROPERTY_STATS_AGILITY_BONUS%; Strength +%dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%; Intelligence +%dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS%"
 "DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura_Description"	"Increasing primary attribute by +%dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%. All attributes are increased when Full Moon is activated."
+
+"DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura_723"				"Lunar Blessing"
+"DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura_723_Description"	"Increasing Armor by +%dMODIFIER_PROPERTY_TOOLTIP%%% and Damage by +%dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%"
+
 "DOTA_Tooltip_modifier_imba_luna_eclipse"							"Eclipse"
 "DOTA_Tooltip_modifier_imba_luna_eclipse_Description"				"Striking nearby targets with Lucent Beam."
 

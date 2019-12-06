@@ -58,6 +58,20 @@ function modifier_imba_item_nether_wand_passive:OnCreated()
 	if self.parent:IsHero() and self.item then
 		self.spell_amp = self.item:GetSpecialValueFor("spell_amp")
 	end
+	
+	if not IsServer() then return end
+	
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
+end
+
+function modifier_imba_item_nether_wand_passive:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_imba_item_nether_wand_passive:DeclareFunctions()
@@ -69,7 +83,9 @@ function modifier_imba_item_nether_wand_passive:DeclareFunctions()
 end
 
 function modifier_imba_item_nether_wand_passive:GetModifierSpellAmplify_Percentage()
-	return self.spell_amp
+	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") and not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and not self:GetParent():HasModifier("modifier_item_imba_cyclone_2") and not self:GetParent():HasModifier("modifier_imba_aether_lens_passive") and not self:GetParent():HasModifier("modifier_item_imba_aether_specs") then
+		return self.spell_amp
+	end
 end
 
 -------------------------------------------
@@ -117,6 +133,20 @@ function modifier_item_imba_arcane_nexus_passive:OnCreated()
 		self.burn_duration = self.item:GetSpecialValueFor("burn_duration")
 		self.bonus_cdr = self.item:GetSpecialValueFor("bonus_cdr")
 	end
+	
+	if not IsServer() then return end
+	
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
+end
+
+function modifier_item_imba_arcane_nexus_passive:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_arcane_nexus_passive:DeclareFunctions()
@@ -149,9 +179,13 @@ function modifier_item_imba_arcane_nexus_passive:GetModifierBonusStats_Intellect
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageCooldown()
-	return self.bonus_cdr
+	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_imba_octarine_core_unique") then
+		return self.bonus_cdr
+	end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageManacost()
-	return self.bonus_cdr
+	if self:GetAbility():GetSecondaryCharges() == 1 then
+		return self.bonus_cdr
+	end
 end

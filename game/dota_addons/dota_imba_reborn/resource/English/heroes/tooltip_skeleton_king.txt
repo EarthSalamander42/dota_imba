@@ -20,20 +20,19 @@
 
 // Wraith King's Vampiric Aura
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura"					"Vampiric Aura"
-"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"		"Nearby allies restore health based on the damage they deal. Can be toggled on to make Vampiric Aura affect heroes only.\n<font color='#FF7800'>By Any Measure:</font> Allies also spellsteal when dealing magical or pure damage.\n<font color='#FF7800'>For The King:</font> Anytime an ally lifesteals health from any source of damage, Wraith King gets a portion of the heal."
+"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"		"Nearby friendly melee units deal bonus damage (half values for skeletons) and restore health based on the damage they deal when attacking enemy units. <font color='#FF7800'>Affects allied creeps.</font>\n<font color='#FF7800'>Brute Vampirism:</font> All physical type damage also heals for standard lifesteal values.\n<font color='#FF7800'>By Any Measure:</font> Allies also spellsteal %spellsteal_pct%%% when dealing magical or pure damage.\n<font color='#FF7800'>For The King:</font> Anytime an ally lifesteals health from any source of damage, Wraith King gets %caster_heal%%% of the heal."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Note0"            "Heals based on damage dealt after reductions."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Lore"              "Wraith King's blade drains his enemies' essence to feed his aura."
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_radius"            "AURA RADIUS:"
 "DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_lifesteal_pct"                 "%PHYSICAL LIFESTEAL:"
-"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_spellsteal_pct"                "%MAGICAL SPELLSTEAL:"
-"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_caster_heal"                   "%FOR THE KING HEAL:"
+"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_damage" "BONUS DAMAGE:"
 
 "DOTA_Tooltip_modifier_imba_vampiric_aura_buff"                        "Vampiric Aura"
-"DOTA_Tooltip_modifier_imba_vampiric_aura_buff_Description"            "You will be healed whenever you deal any damage to an enemy."
+"DOTA_Tooltip_modifier_imba_vampiric_aura_buff_Description"            "You will be healed whenever you deal any damage to an enemy. Increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
 
 // Wraith King's Mortal Strike
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike"                  "Mortal Strike"
-"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"Wraith King passively gains a chance to deal bonus damage on an attack. Every two kills on an enemy unit adds a skeleton charge, <font color='#FF7800'>spawning %skeletons_per_charge% skeletons each with 70-75 attack damage.</font> Skeletons respawn once when killed. \n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage. Otherwise, deals bonus critical damage.\n<font color='#FF7800'>One Button King No Longer:</font> Skeletons do not have any (artificial) intelligence or command restrictions, allowing Wraith King free control of his minions."
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"Wraith King passively gains a chance to deal bonus damage on an attack. Every two kills on an enemy unit adds a skeleton charge, <font color='#FF7800'>spawning %skeletons_per_charge% skeletons each with 60-65 attack damage.</font> Skeletons respawn once when killed. \n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage. Otherwise, deals bonus critical damage.\n<font color='#FF7800'>One Button King No Longer:</font> Skeletons do not have any (artificial) intelligence or command restrictions, allowing Wraith King free control of his minions."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"            "Each stack represents 10 health, and it is also rounded up when calculating stacks."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Lore"              "One blow to crush a foe."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_chance"                   "%CRIT CHANCE:"

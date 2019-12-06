@@ -817,11 +817,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"min_damage"			"65"
 			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_charges"		"5"
-			}
 		}
 	}
 
@@ -3264,6 +3259,28 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Kunkka: Torrent (keeping these KVs around for the Torrent Storm Aghanim's Scepter ability)
+	//=================================================================================================================
+	"kunkka_torrent"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"torrent_damage"			"100 200 300 400"
+				"LinkedSpecialBonus"		"special_bonus_unique_kunkka_2"
 			}
 		}
 	}

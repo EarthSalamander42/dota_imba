@@ -275,7 +275,7 @@ function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_
 		self.caster = self.caster or self:GetCaster()
 		self.ability = self.ability or self:GetAbility()
 
-		if self.caster:IsIllusion() then --prevent ability from becoming nil if the illusion is dead for to long
+		if self and self.caster and self.caster:IsIllusion() then --prevent ability from becoming nil if the illusion is dead for to long
 			if not self.caster:IsAlive() then
 				self.caster = self.caster:GetPlayerOwner():GetAssignedHero()
 				self.ability = self.caster:FindAbilityByName("imba_alchemist_acid_spray")
@@ -332,7 +332,9 @@ function modifier_imba_acid_spray_debuff_dot:OnStackCountChanged(old_stack_count
 	local stack_count = self:GetStackCount()
 	
 	if self.caster:HasModifier("modifier_imba_chemical_rage_buff_haste") and self.max_stacks then
-		self.max_stacks = self.max_stacks + self.max_stacks
+		if self:GetAbility() then
+			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks") * 2
+		end
 	end
 	if stack_count > self.max_stacks then
 		self:SetStackCount(self.max_stacks)
@@ -344,7 +346,8 @@ function modifier_imba_acid_spray_debuff_dot:GetTexture()
 end
 
 function modifier_imba_acid_spray_debuff_dot:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
 end
@@ -360,6 +363,7 @@ function modifier_imba_acid_spray_debuff_dot:GetModifierMoveSpeedBonus_Percentag
 		return self.movespeed_slow
 	end
 end
+
 -------------------------------------------
 --          UNSTABLE CONCOCTION
 -------------------------------------------

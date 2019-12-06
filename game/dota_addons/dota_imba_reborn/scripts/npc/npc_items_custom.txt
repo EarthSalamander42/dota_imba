@@ -10143,7 +10143,7 @@
 		"ItemResult"					"item_imba_urn_of_shadows"
 		"ItemRequirements"
 		{
-			"01"						"item_infused_raindrop;item_circlet;item_ring_of_protection"
+			"01"						"item_sobi_mask;item_circlet;item_ring_of_protection"
 		}
 	}
 
@@ -10159,7 +10159,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"775"
+		"ItemCost" 						"865"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
 		"ItemQuality"					"artifact"
@@ -12949,7 +12949,7 @@
 		"ItemResult"					"item_imba_bloodstone_720"
 		"ItemRequirements"
 		{
-			"01"						"item_pers;item_soul_booster" // Temporary item
+			"01"						"item_imba_kaya;item_soul_booster"
 		}
 	}
 
@@ -13001,53 +13001,79 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"8.0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"			"21"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"4.5"
+				"var_type"				"FIELD_INTEGER"
+				"manacost_reduction"			"12"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_regen_multiplier"		"200"
-			}
+				"spell_amp"			"16"
+			}	
 			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen_multiplier"		"100"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"regen_per_charge"		"0.5"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"death_charges"				"3"
-			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"kill_charges"			"1"
+				"var_type"				"FIELD_FLOAT"
+				"amp_per_charge"		"0.35"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_range"			"1600"
+				"death_charges"				"3"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"initial_charges_tooltip" "16"
+				"kill_charges"			"1"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_percentage" "30"
+				"charge_range"			"1600"
 			}
 			"12"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges_tooltip" "14"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_percentage" "30"
+			}
+			"14"
+			{
 				"var_type"				"FIELD_FLOAT"
 				"restore_duration" "2.0"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cdr" 			"12"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_cdr" 			"25"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration" 		"4"
 			}
 		}
 	}
@@ -13718,7 +13744,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2975"
+		"ItemCost"						"2965"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"sv;spirit vessel"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"

@@ -14,7 +14,7 @@
 		
 		"Ability1"		"imba_luna_lucent_beam"
 		"Ability2"		"imba_luna_moon_glaive"
-		"Ability3"		"imba_luna_lunar_blessing"
+		"Ability3"		"imba_luna_lunar_blessing_723"
 		"Ability4"		"generic_hidden"
 		"Ability5"		"generic_hidden"
 		"Ability6"		"imba_luna_eclipse"

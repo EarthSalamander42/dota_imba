@@ -1,6 +1,12 @@
 -- Editors:
 --     Firetoad
 --     AtroCty, 23.04.2017
+--     AltiV 05.12.2019
+
+LinkLuaModifier("modifier_imba_sven_warcry_723", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+
+imba_sven_warcry_723			= imba_sven_warcry_723 or class({})
+modifier_imba_sven_warcry_723	= modifier_imba_sven_warcry_723 or class({})
 
 -------------------------------------------
 --            STORM BOLT
@@ -18,6 +24,14 @@ function imba_sven_storm_bolt:GetAbilityTextureName()
 	return "sven_storm_bolt"
 end
 -------------------------------------------
+
+function imba_sven_storm_bolt:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetSpecialValueFor("cast_range_bonus_scepter")
+	end
+end
 
 function imba_sven_storm_bolt:OnSpellStart()
 	if IsServer() then
@@ -106,6 +120,10 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 						enemy:Purge(true, false, false, false, false)
 					end
 				end
+			end
+			
+			if self:GetCaster():HasScepter() then
+				self:GetCaster():PerformAttack(target, true, true, true, true, true, false, false)
 			end
 		end
 	end
@@ -519,6 +537,105 @@ function modifier_imba_warcry_immunity:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
 
+--------------------------
+-- IMBA_SVEN_WARCRY_723	--
+--------------------------
+
+function imba_sven_warcry_723:GetCastRange(location, target)
+	return self:GetSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
+end
+
+function imba_sven_warcry_723:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Sven.WarCry")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_sven" then
+		self:GetCaster():EmitSound("sven_sven_ability_warcry_0"..RandomInt(1,4))
+	end
+	
+	local warcry_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_sven" then
+		ParticleManager:SetParticleControlEnt(warcry_cast_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_eyes", self:GetCaster():GetAbsOrigin(), true)
+	else
+		ParticleManager:SetParticleControlEnt(warcry_cast_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	end
+	
+	ParticleManager:ReleaseParticleIndex(warcry_cast_particle)
+	
+	-- IMBAfication: WAAARGH!
+	self:GetCaster():Purge(false, true, false, false, false)
+	
+	for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_sven_warcry_723", {duration = self:GetSpecialValueFor("duration")})
+	end
+	
+	-- Talent: "Warcry grants spell immunity for X seconds"
+	if self:GetCaster():HasTalent("special_bonus_imba_sven_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_warcry_immunity", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_sven_7")})
+	end
+end
+
+-----------------------------------
+-- MODIFIER_IMBA_SVEN_WARCRY_723 --
+-----------------------------------
+
+function modifier_imba_sven_warcry_723:OnCreated()
+	self.movespeed		= self:GetAbility():GetSpecialValueFor("movespeed")
+	self.bonus_armor	= self:GetAbility():GetSpecialValueFor("bonus_armor")
+	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
+	
+	self.knightly_bonus_status_resistance	= self:GetAbility():GetSpecialValueFor("knightly_bonus_status_resistance")
+	
+	if not IsServer() then return end
+	
+	if not self.warcry_particle then
+		self.warcry_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.warcry_particle, 1, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.warcry_particle, false, false, -1, false, true)
+	end
+end
+
+function modifier_imba_sven_warcry_723:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_sven_warcry_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		
+		-- IMBAfication: Knightly Presence
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+	}
+end
+
+function modifier_imba_sven_warcry_723:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent() == self:GetCaster() then
+		return self.movespeed
+	end
+end
+
+function modifier_imba_sven_warcry_723:GetModifierPhysicalArmorBonus()
+	return self.bonus_armor
+end
+
+function modifier_imba_sven_warcry_723:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage
+end
+
+function modifier_imba_sven_warcry_723:GetModifierStatusResistanceStacking()
+	return self.knightly_bonus_status_resistance
+end
+
+function modifier_imba_sven_warcry_723:GetActivityTranslationModifiers()
+	if self:GetParent():GetName() == "npc_dota_hero_sven" then
+		return "sven_warcry"
+	end
+end
+
 -------------------------------------------
 --			GOD'S STRENGTH
 -------------------------------------------
@@ -580,6 +697,31 @@ function modifier_imba_god_strength:IsStunDebuff() return false end
 function modifier_imba_god_strength:RemoveOnDeath() return true end
 -------------------------------------------
 
+function modifier_imba_god_strength:OnCreated()
+	self.bonus_dmg_pct = self:GetAbility():GetTalentSpecialValueFor("bonus_dmg_pct")
+	self.gods_strength_bonus_str	= self:GetAbility():GetSpecialValueFor("gods_strength_bonus_str")
+	self.aura_radius_scepter = self:GetAbility():GetSpecialValueFor("aura_radius_scepter")
+
+	if IsServer() then
+		local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_sven/sven_spell_gods_strength_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+		ParticleManager:SetParticleControlEnt( nFXIndex, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_weapon" , self:GetParent():GetOrigin(), true )
+		ParticleManager:SetParticleControlEnt( nFXIndex, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_head" , self:GetParent():GetOrigin(), true )
+		self:AddParticle( nFXIndex, false, false, -1, false, true )
+		self:GetCaster():FindAbilityByName("imba_sven_colossal_slash"):SetActivated(true)
+	end
+end
+
+function modifier_imba_god_strength:OnRefresh()
+	self.bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("gods_strength_damage")
+	self.aura_radius_scepter = self:GetAbility():GetSpecialValueFor("aura_radius_scepter")
+end
+
+function modifier_imba_god_strength:OnDestroy()
+	if IsServer() then
+		self:GetCaster():FindAbilityByName("imba_sven_colossal_slash"):SetActivated(false)
+	end
+end
+
 function modifier_imba_god_strength:IsAura()
 	if IsServer() then
 		return self:GetCaster():HasScepter()
@@ -589,15 +731,6 @@ end
 
 function modifier_imba_god_strength:GetAttackSound()
 	return "Hero_Sven.GodsStrength.Attack"
-end
-
-function modifier_imba_god_strength:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
-		}
-	return decFuncs
 end
 
 function modifier_imba_god_strength:GetHeroEffectName()
@@ -645,32 +778,21 @@ function modifier_imba_god_strength:GetAuraEntityReject( target )
 	return false
 end
 
+function modifier_imba_god_strength:DeclareFunctions()
+	return {
+			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+			
+			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
+		}
+end
+
 function modifier_imba_god_strength:GetModifierBaseDamageOutgoing_Percentage()
 	return self.bonus_dmg_pct
 end
 
-function modifier_imba_god_strength:OnCreated()
-	self.bonus_dmg_pct = self:GetAbility():GetTalentSpecialValueFor("bonus_dmg_pct")
-	self.aura_radius_scepter = self:GetAbility():GetSpecialValueFor("aura_radius_scepter")
-
-	if IsServer() then
-		local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_sven/sven_spell_gods_strength_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
-		ParticleManager:SetParticleControlEnt( nFXIndex, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_weapon" , self:GetParent():GetOrigin(), true )
-		ParticleManager:SetParticleControlEnt( nFXIndex, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_head" , self:GetParent():GetOrigin(), true )
-		self:AddParticle( nFXIndex, false, false, -1, false, true )
-		self:GetCaster():FindAbilityByName("imba_sven_colossal_slash"):SetActivated(true)
-	end
-end
-
-function modifier_imba_god_strength:OnRefresh()
-	self.bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("gods_strength_damage")
-	self.aura_radius_scepter = self:GetAbility():GetSpecialValueFor("aura_radius_scepter")
-end
-
-function modifier_imba_god_strength:OnDestroy()
-	if IsServer() then
-		self:GetCaster():FindAbilityByName("imba_sven_colossal_slash"):SetActivated(false)
-	end
+function modifier_imba_god_strength:GetModifierBonusStats_Strength()
+	return self.gods_strength_bonus_str
 end
 
 -------------------------------------------

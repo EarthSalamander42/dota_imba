@@ -90,7 +90,7 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
-		if RollPseudoRandom(proc_chance, ability) then
+		if not keys.target:IsMagicImmune() and RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
@@ -184,7 +184,7 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
-		if RollPseudoRandom(proc_chance, ability) then
+		if not keys.target:IsMagicImmune() and RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
@@ -444,7 +444,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
-		if RollPseudoRandom(proc_chance, ability) then
+		if not keys.target:IsMagicImmune() and RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 
