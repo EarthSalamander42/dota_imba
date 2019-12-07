@@ -11720,19 +11720,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"0.5"
+				"mana_regen"			"0.4"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_regen"			"0.5"
+				"health_regen"			"0.4"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_multiplier"		"5"
+				"hero_multiplier"		"6"
 			}
 			"04"
 			{
@@ -11741,8 +11741,8 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_minimum"			"7"
+				"var_type"				"FIELD_FLOAT"
+				"regen_minimum"			"6.5"
 			}
 		}
 	}
@@ -11839,8 +11839,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"necrolyte_sadist"
 		"ScriptFile"				"components/abilities/heroes/hero_necrolyte"
-		"MaxLevel"						"4"
-		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11882,7 +11881,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"magic_amp_pct"			"25"
+				"magic_amp_pct"			"40"
 			}
 			"04"
 			{
@@ -11899,6 +11898,13 @@
 				"var_type"				"FIELD_FLOAT"
 				"healing_amp_tooltip"	"37.5 40 42.5 45"
 			}
+			
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cooldown_scepter"		"10" 
+				"RequiresScepter"		"1"
+			} 	
 		}
 	}
 
@@ -11918,8 +11924,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"necrolyte_heartstopper_aura"
 		"ScriptFile"				"components/abilities/heroes/hero_necrolyte"
-		"MaxLevel"						"4"
-		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11960,6 +11965,13 @@
 				"var_type"			"FIELD_FLOAT"
 				"tick_rate"			"0.2"
 			}
+			
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"scepter_multiplier"		"2" 
+				"RequiresScepter"		"1"
+			} 
 		}
 	}
 
@@ -12053,7 +12065,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"60 50 40"
+				"scepter_cooldown"			"60"
 			}
 		}
 	}

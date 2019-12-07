@@ -356,13 +356,15 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud"                      "Ghost Shroud"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Description"          "Become ethereal, taking %magic_amp_pct%%% additional magic damage, but gaining immunity to physical damage and slowing nearby enemies.\n<font color='#FF7800'>Convalescence:</font> Increases all healing received by allies in the area. The effect is doubled on Necrophos."
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Description"          "Necrophos slips into the realm that separates the living from the dead. Unable to attack or be attacked, he emits an aura that slows enemies around him. He takes additional magic damage in this form, but his restorative powers are amplified.\n<font color='#FF7800'>Convalescence:</font> Also increases healing received by allies within the radius by half the standard amount."
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Lore"                "Rotund'jere slips into the realm that separates the living from the dead, then navigates it with practiced ease."
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_pct"                  "%SELF HEAL AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_tooltip"              "%ALLIES HEAL AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_pct"            "%RESTORATION AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_magic_amp_pct"            "%INCREASED MAGIC DAMAGE:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_slow_pct"            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_aghanim_description"						"Reduces Ghost Shroud cooldown."
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_cooldown_scepter"						"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_ghost_shroud_active"                  "Ghost Shroud"
 "DOTA_Tooltip_modifier_imba_ghost_shroud_active_Description"                   "Immune to physical damage, but taking more magical damage. Slows nearby enemies and increases healing received by nearby allies."
@@ -383,6 +385,8 @@
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Lore"            "Those who come within a short distance of Necrolyte can feel pestilence and plague in the air."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_damage_pct"                  "%HEALTH LOSS PER SECOND:"
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALING REDUCTION:"
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_aghanim_description"			"Increases Heartstopper Aura damage while Ghost Shroud is active."
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_scepter_multiplier"			"SCEPTER DAMAGE MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage"                  "Heartstopper Aura"
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage_Description"                   "Losing health over time. Natural health regen and received healing decreased by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%."
@@ -393,7 +397,7 @@
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp."
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage_reduction_pct"           "%DAMAGE REDUCTION:"
