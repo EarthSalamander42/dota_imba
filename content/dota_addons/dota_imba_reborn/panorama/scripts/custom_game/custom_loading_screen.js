@@ -119,8 +119,8 @@ function AllPlayersLoaded() {
 		})(panel, gamemode);
 	}
 
-	$("#VoteGameMode1").checked = true;
-	OnVoteButtonPressed("gamemode", 1);
+//	$("#VoteGameMode1").checked = true;
+//	OnVoteButtonPressed("gamemode", 1);
 }
 
 function HoverableLoadingScreen() {

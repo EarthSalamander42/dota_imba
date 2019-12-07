@@ -66,6 +66,22 @@ function modifier_item_imba_cyclone_2:OnCreated()
 	self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
 	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
 	self.bonus_spell_amp		= self:GetAbility():GetSpecialValueFor("bonus_spell_amp")
+	
+	if not IsServer() then return end
+	
+    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
+function modifier_item_imba_cyclone_2:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		modifier:SetStackCount(_)
+		modifier:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 -- Declare modifier events/properties
@@ -90,8 +106,19 @@ function modifier_item_imba_cyclone_2:GetModifierMoveSpeedBonus_Constant()
 	return self.bonus_movement_speed
 end
 
+-- As of 7.23, the items that Nether Wand's tree contains are as follows:
+--   - Nether Wand
+--   - Aether Lens
+--   - Aether Specs
+--   - Eul's Scepter of Divinity EX
+--   - Armlet of Dementor
+--   - Arcane Nexus
 function modifier_item_imba_cyclone_2:GetModifierSpellAmplify_Percentage()
-	return self.bonus_spell_amp
+	if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_spell_amp
+    end
 end
 
 -------------------------------------------

@@ -647,7 +647,7 @@
 	"toggle_winrate" "Activer/Désactiver la visibilité de mon winrate"
 	"unassigned" "Non Assignés"
 	"vanilla_hero" "Lazy"
-	"vote_gamemode" "Vote mode de jeu:"
+	"vote_gamemode" "Gamemode Vote (Votes count must be higher than 5)"
 	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "Mutation"
 	"vote_gamemode_3" "Super Frantic"

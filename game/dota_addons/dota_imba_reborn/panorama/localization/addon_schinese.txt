@@ -647,7 +647,7 @@
 	"toggle_winrate" "Toggle Winrate visibility"
 	"unassigned" "未知队伍"
 	"vanilla_hero" "原版英雄"
-	"vote_gamemode" "游戏模式投票"
+	"vote_gamemode" "Gamemode Vote (Votes count must be higher than 5)"
 	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "突变模式"
 	"vote_gamemode_3" "Frantic模式"

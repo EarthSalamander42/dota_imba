@@ -2060,8 +2060,8 @@
 
 		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
 		"Ability11"					"special_bonus_cast_range_150"
-		"Ability12"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
-		"Ability13"					"special_bonus_imba_warlock_6" // "Upheaval is channeled by a demon in steed"
+		"Ability12"					"special_bonus_exp_boost_50"
+		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"
 		"Ability15"					"special_bonus_imba_warlock_5" // "+4 Shadow Word duration"
 		"Ability16"					"special_bonus_imba_warlock_4" // "+X Golem armor"
@@ -2069,6 +2069,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_warlock_2" // "Upheaval also reduces attack speed"
+		// "Ability13"					"special_bonus_imba_warlock_6" // "Upheaval is channeled by a demon in steed"
 		// "Ability16"					"special_bonus_imba_warlock_7" // "Golems share damage taken to all linked enemies"
 		// "Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
 	}

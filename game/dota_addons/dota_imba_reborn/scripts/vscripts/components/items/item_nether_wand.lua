@@ -61,35 +61,46 @@ function modifier_imba_item_nether_wand_passive:OnCreated()
 	
 	if not IsServer() then return end
 	
-	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		mod:GetAbility():SetSecondaryCharges(_)
-	end
+    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_imba_item_nether_wand_passive:OnDestroy()
 	if not IsServer() then return end
 	
-	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		mod:GetAbility():SetSecondaryCharges(_)
-	end
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_imba_item_nether_wand_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+	}
 end
 
+-- As of 7.23, the items that Nether Wand's tree contains are as follows:
+--   - Nether Wand
+--   - Aether Lens
+--   - Aether Specs
+--   - Eul's Scepter of Divinity EX
+--   - Armlet of Dementor
+--   - Arcane Nexus
 function modifier_imba_item_nether_wand_passive:GetModifierSpellAmplify_Percentage()
-	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") and not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and not self:GetParent():HasModifier("modifier_item_imba_cyclone_2") and not self:GetParent():HasModifier("modifier_imba_aether_lens_passive") and not self:GetParent():HasModifier("modifier_item_imba_aether_specs") then
-		return self.spell_amp
-	end
+    if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_imba_aether_lens_passive") and 
+	not self:GetParent():HasModifier("modifier_item_imba_aether_specs") and 
+	not self:GetParent():HasModifier("modifier_item_imba_cyclone_2") and 
+	not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.spell_amp
+    end
 end
 
 -------------------------------------------
---			ELDER STAFF
+--			ARCANE NEXUS
 -------------------------------------------
 item_imba_arcane_nexus = item_imba_arcane_nexus or class({})
 -------------------------------------------
@@ -136,34 +147,43 @@ function modifier_item_imba_arcane_nexus_passive:OnCreated()
 	
 	if not IsServer() then return end
 	
-	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		mod:GetAbility():SetSecondaryCharges(_)
-	end
+    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 	if not IsServer() then return end
 	
-	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		mod:GetAbility():SetSecondaryCharges(_)
-	end
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-			MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-			MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
+	}
 end
 
-function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_PercentageUnique()
-	return self.spell_amp
+
+-- As of 7.23, the items that Nether Wand's tree contains are as follows:
+--   - Nether Wand
+--   - Aether Lens
+--   - Aether Specs
+--   - Eul's Scepter of Divinity EX
+--   - Armlet of Dementor
+--   - Arcane Nexus
+function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_Percentage()
+    if self:GetAbility():GetSecondaryCharges() == 1 then
+        return self.spell_amp
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPreAttack_BonusDamage()
