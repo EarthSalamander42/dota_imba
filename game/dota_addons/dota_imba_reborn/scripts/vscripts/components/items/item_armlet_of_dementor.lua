@@ -68,22 +68,6 @@ function modifier_item_imba_armlet_of_dementor_active:OnCreated()
 	self.mind_bonus_magic_res	=	self.ability:GetSpecialValueFor("mind_bonus_magic_res")
 	self.mind_bonus_spell_amp	=	self.ability:GetSpecialValueFor("mind_bonus_spell_amp")
 	self.mind_mana_drain_mult	=	self.ability:GetSpecialValueFor("mind_mana_drain_mult")
-	
-	if not IsServer() then return end
-	
-    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
-end
-
-function modifier_item_imba_armlet_of_dementor_active:OnDestroy()
-	if not IsServer() then return end
-	
-	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		modifier:SetStackCount(_)
-		modifier:GetAbility():SetSecondaryCharges(_)
-	end
 end
 
 function modifier_item_imba_armlet_of_dementor_active:DeclareFunctions()
@@ -108,21 +92,8 @@ function modifier_item_imba_armlet_of_dementor_active:GetModifierMagicalResistan
 	return self.mind_bonus_magic_res
 end
 
--- As of 7.23, the items that Nether Wand's tree contains are as follows:
---   - Nether Wand
---   - Aether Lens
---   - Aether Specs
---   - Eul's Scepter of Divinity EX
---   - Armlet of Dementor
---   - Arcane Nexus
 function modifier_item_imba_armlet_of_dementor_active:GetModifierSpellAmplify_Percentage()
-	if self.parent:IsIllusion() then return 0 end
-
-	if self:GetAbility():GetSecondaryCharges() == 1 and 
-	not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and
-	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.mind_bonus_spell_amp
-    end
+	return self.mind_bonus_spell_amp
 end
 
 function modifier_item_imba_armlet_of_dementor_active:OnManaGained(keys)
@@ -160,6 +131,11 @@ function modifier_item_imba_armlet_of_dementor:OnCreated()
 	if self.parent:IsIllusion() and self.parent:GetPlayerOwner():GetAssignedHero():HasModifier("modifier_item_imba_armlet_of_dementor_active") then
 		self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_armlet_of_dementor_active", {})
 	end
+	
+    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 -- This is just to make sure the CD modifier doesn't stack with itself or frantic modifier, without having to make an additional modifier to check
@@ -168,26 +144,33 @@ function modifier_item_imba_armlet_of_dementor:OnDestroy()
 	
 	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
 		modifier:SetStackCount(_)
+		modifier:GetAbility():SetSecondaryCharges(_)
 	end
 end
 
 function modifier_item_imba_armlet_of_dementor:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE, --GetModifierSpellAmplify_Percentage
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING, --GetModifierPercentageCooldownStacking
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS, --GetModifierMagicalResistanceBonus
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT	-- GetModifierConstantManaRegen
 	}
-
-	return funcs
 end
 
+-- As of 7.23, the items that Nether Wand's tree contains are as follows:
+--   - Nether Wand
+--   - Aether Lens
+--   - Aether Specs
+--   - Eul's Scepter of Divinity EX
+--   - Armlet of Dementor
+--   - Arcane Nexus
 function modifier_item_imba_armlet_of_dementor:GetModifierSpellAmplify_Percentage()
-	if self:GetStackCount() ~= 1 then
-		return 0
-	else
-		return self.bonus_spell_amp
-	end
+	if self.parent:IsIllusion() then return 0 end
+
+	if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_spell_amp
+    end
 end
 
 function modifier_item_imba_armlet_of_dementor:GetModifierPercentageCooldownStacking()
