@@ -557,6 +557,11 @@ function GameMode:OnPlayerLevelUp(keys)
 			hero:FindAbilityByName(ability):SetLevel(min(math.floor(level / 3), 4))
 		end
 	end
+	
+	-- Invoker custom thing
+	if hero:HasAbility("invoker_invoke") then
+		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6) + 1, 4))
+	end
 end
 
 function GameMode:OnPlayerLearnedAbility(keys)

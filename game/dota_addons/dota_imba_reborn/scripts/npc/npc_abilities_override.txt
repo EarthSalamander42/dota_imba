@@ -2841,11 +2841,8 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"RequiredLevel"					"0"
 		"MaxLevel"						"4"
 		"AbilityCooldown"				"4 3 2 2"
-		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
