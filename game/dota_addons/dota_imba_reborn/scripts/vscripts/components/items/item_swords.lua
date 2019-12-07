@@ -365,34 +365,67 @@ function modifier_item_imba_kaya:IsPurgable() return false end
 function modifier_item_imba_kaya:IsPermanent() return true end
 function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_kaya:OnCreated()
+	self.spell_amp	= self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr	= self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_int	= self:GetAbility():GetSpecialValueFor("bonus_int")
+
+    if not IsServer() then return end
+
+    -- Use Secondary Charges system to make CDR not stack with multiple Kayas
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
+function modifier_item_imba_kaya:OnDestroy()
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_kaya:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 	}
-	return funcs
 end
 
+-- GetModifierSpellAmplify_PercentageUnique seems to be working fine in preventing stacking, but GetModifierPercentageCooldown was broken on the onset of 7.23 and I don't know when it will be fixed (if ever), so I will have to do some ugly manual exception handling to prevent this
 function modifier_item_imba_kaya:GetModifierSpellAmplify_PercentageUnique()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("spell_amp")
+	return self.spell_amp
 end
 
 function modifier_item_imba_kaya:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	return self.bonus_cdr
 end
 
 function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_int")
+	return self.bonus_int
 end
 
+-- As of 7.23, the items that Kaya's tree contains are as follows:
+--   - Kaya
+--   - Yasha and Kaya (will consider this higher than KnS in terms of priority for now)
+--   - Bloodstone
+--   - Kaya and Sange
+--   - The Triumvirate
+--   - Arcane Nexus
+--   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_kaya:GetModifierPercentageCooldown()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+    if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
+	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and 
+	not self:GetParent():HasModifier("modifier_item_imba_kaya_and_sange") and 
+	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_cdr
+    end
 end
 
 modifier_item_imba_kaya_active = modifier_item_imba_kaya_active or class({})
@@ -410,30 +443,29 @@ function modifier_item_imba_kaya_active:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function modifier_item_imba_kaya_active:OnCreated()
+	self.bonus_cdr_active = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+end
+
 function modifier_item_imba_kaya_active:DeclareFunctions()
-	local funcs =
-	{
+	return {
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_kaya_active:GetModifierPercentageCooldown()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_kaya_active:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_kaya_active:OnAbilityFullyCast(keys)
 	if keys.unit == self:GetParent() and not keys.ability:IsItem() and not keys.ability:IsToggle() then
-		self:GetParent():RemoveModifierByName("modifier_item_imba_kaya_active")
+		self:Destroy()
 	end
 end
 
@@ -585,9 +617,33 @@ function modifier_item_imba_kaya_and_sange:IsPurgable() return false end
 function modifier_item_imba_kaya_and_sange:IsPermanent() return true end
 function modifier_item_imba_kaya_and_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_kaya_and_sange:OnCreated()
+	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	self.bonus_damage				= self:GetAbility():GetSpecialValueFor("bonus_damage")
+	self.bonus_strength				= self:GetAbility():GetSpecialValueFor("bonus_strength")
+	self.bonus_status_resistance	= self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
+	
+    if not IsServer() then return end
+
+    -- Use Secondary Charges system to make CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
+function modifier_item_imba_kaya_and_sange:OnDestroy()
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_kaya_and_sange:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -596,42 +652,48 @@ function modifier_item_imba_kaya_and_sange:DeclareFunctions()
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierSpellAmplify_PercentageUnique()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("spell_amp")
+	return self.spell_amp
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierBonusStats_Intellect()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	return self.bonus_intellect
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierPreAttack_BonusDamage()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	return self.bonus_damage
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierBonusStats_Strength()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	return self.bonus_strength
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierStatusResistanceStacking()
-	return self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
+	return self.bonus_status_resistance
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	return self.bonus_cdr
 end
 
+-- As of 7.23, the items that Kaya's tree contains are as follows:
+--   - Kaya
+--   - Yasha and Kaya (will consider this higher than KnS in terms of priority for now)
+--   - Bloodstone
+--   - Kaya and Sange
+--   - The Triumvirate
+--   - Arcane Nexus
+--   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_kaya_and_sange:GetModifierPercentageCooldown()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+    if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
+	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_cdr
+    end
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -654,13 +716,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_kaya_and_sange_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_kaya_and_sange_active:GetModifierStatusResistanceStacking()
@@ -706,61 +766,83 @@ function modifier_item_imba_yasha_and_kaya:IsPurgable() return false end
 function modifier_item_imba_yasha_and_kaya:IsPermanent() return true end
 function modifier_item_imba_yasha_and_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_yasha_and_kaya:OnCreated()
+	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	self.bonus_agility				= self:GetAbility():GetSpecialValueFor("bonus_agility")
+	self.bonus_attack_speed			= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	self.bonus_ms					= self:GetAbility():GetSpecialValueFor("bonus_ms")
+	
+    if not IsServer() then return end
+
+    -- Use Secondary Charges system to make CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
+function modifier_item_imba_yasha_and_kaya:OnDestroy()
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 	}
-
-	return funcs
-end
-
-function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("spell_amp")
-end
-
-function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
-end
-
-function modifier_item_imba_yasha_and_kaya:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierAttackSpeedBonus_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	return self.bonus_attack_speed
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierMoveSpeedBonus_Percentage_Unique()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_ms")
+	return self.bonus_ms
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Agility()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	return self.bonus_agility
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Intellect()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	return self.bonus_intellect
 end
 
--- function modifier_item_imba_yasha_and_kaya:GetModifierEvasion_Constant()
-	-- if not self:GetAbility() then return end
-	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
--- end
+function modifier_item_imba_yasha_and_kaya:GetModifierPercentageManacost()
+	return self.bonus_cdr
+end
+
+-- As of 7.23, the items that Kaya's tree contains are as follows:
+--   - Kaya
+--   - Yasha and Kaya (will consider this higher than KnS in terms of priority for now)
+--   - Bloodstone
+--   - Kaya and Sange
+--   - The Triumvirate
+--   - Arcane Nexus
+--   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
+function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
+    if self:GetAbility():GetSecondaryCharges() == 1 and
+	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_cdr
+    end
+end
+
+function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
+	return self.spell_amp
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	kaya and Yasha magic amp debuff (stackable)

@@ -2,7 +2,7 @@
 
 // Abyssal Blade
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade"					"Abyssal Blade"
-"DOTA_Tooltip_Ability_item_imba_abyssal_blade_Description"		"<h1>Active: Overwhelm</h1> Stuns a target enemy unit for %active_stun_duration% seconds, <font color='#FF7800'>and breaks them for %actual_break_duration% seconds.</font><br><br>Pierces Spell Immunity.<br><br>Range: %abilitycastrange%\n<h1>Passive: Bash</h1> Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %stun_duration% seconds and deal %bash_damage% bonus magical damage.  Bash chance for ranged heroes is %bash_chance_ranged%%%.\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Abyssal Skull Crash</font></h1> When a bash occurs, grants a %insta_skull_break_chance_pct%%% chance to immediately break the target. If the bash doesn't break, the target's skull becomes fragile for %skull_break_duration% seconds. Bashing the same target again with Abyssal Blade will cause its skull to completely break, applying Break to it for the duration of the stun."
+"DOTA_Tooltip_Ability_item_imba_abyssal_blade_Description"		"<h1>Active: Overwhelm</h1> Blinks to and stuns a target enemy unit for %active_stun_duration% seconds, <font color='#FF7800'>and breaks them for %actual_break_duration% seconds.</font><br><br>Pierces Spell Immunity.<br><br>Range: %abilitycastrange%\n<h1>Passive: Bash</h1> Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %stun_duration% seconds and deal %bash_damage% bonus magical damage.  Bash chance for ranged heroes is %bash_chance_ranged%%%.\n<h1>Passive: Damage Block</h1> Grants a <font color='#FF7800'>%block_chance%%%</font> chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1><font color='#FF7800'>Passive: Abyssal Skull Crash</font></h1> When a bash occurs, grants a %insta_skull_break_chance_pct%%% chance to immediately break the target. If the bash doesn't break, the target's skull becomes fragile for %skull_break_duration% seconds. Bashing the same target again with Abyssal Blade will cause its skull to completely break, applying Break to it for the duration of the stun."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Lore"             "The lost blade of the Commander of the Abyss, this edge cuts into an enemy's soul."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note0"             "Applying Skull Break consumes the fragility preparation modifier."
 "DOTA_Tooltip_Ability_item_imba_abyssal_blade_Note1"             "Heroes with a built in Bash ability cannot use Abyssal Blade."
@@ -827,6 +827,7 @@
 "DOTA_Tooltip_ability_item_imba_nether_wand_bonus_as"          "+$attack"
 "DOTA_Tooltip_ability_item_imba_nether_wand_bonus_intellect"                "+$int"
 "DOTA_Tooltip_ability_item_imba_nether_wand_spell_amp"            "%+Spell Amplification"
+"DOTA_Tooltip_ability_item_imba_nether_wand_Note0"				"Spell damage amplification from multiple Nether Wand-based items do not stack."
 
 // Occult Mask
 "DOTA_Tooltip_Ability_item_imba_occult_mask"                    "Occult Mask"
@@ -1235,7 +1236,7 @@
 
 // Vladmir's Blood
 "DOTA_Tooltip_Ability_item_imba_vladmir_2"                      "Vladmir's Blood"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants %vampiric_aura%%% lifesteal, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants %vampiric_aura%%% lifesteal <font color='#FF7800'>and spell steal</font>, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Lore"                "An eerie mask possessed by a fallen vampire's mighty bloodlust."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Note0"                "Vladmir's Aura is completely overriden and does not stack with Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"          "+$all"

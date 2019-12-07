@@ -126,11 +126,10 @@ function modifier_imba_octarine_core_unique:IsPurgable() return false end
 function modifier_imba_octarine_core_unique:RemoveOnDeath() return false end
 
 function modifier_imba_octarine_core_unique:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_SPENT_MANA,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()

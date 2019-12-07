@@ -14542,7 +14542,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"10"
+				"bonus_cdr"				"16"
 			}
 			"11"
 			{
