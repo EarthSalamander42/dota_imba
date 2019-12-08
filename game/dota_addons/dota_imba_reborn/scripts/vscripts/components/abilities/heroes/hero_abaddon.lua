@@ -138,10 +138,6 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 	end
 end
 
-function imba_abaddon_mist_coil:GetCooldown()
-	return self:GetSpecialValueFor("cooldown")
-end
-
 function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()

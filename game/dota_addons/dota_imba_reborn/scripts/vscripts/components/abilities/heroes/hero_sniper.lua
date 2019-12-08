@@ -1398,25 +1398,9 @@ end
 imba_sniper_assassinate = class({})
 LinkLuaModifier("modifier_imba_assassinate_cross", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_ministun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sniper_assassinate_critical", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_sniper_assassinate:GetAbilityTextureName()
-	return "sniper_assassinate"
-end
 
 function imba_sniper_assassinate:IsHiddenWhenStolen()
 	return false
-end
-
-function imba_sniper_assassinate:GetBehavior()
-	local caster = self:GetCaster()
-	local scepter = caster:HasScepter()
-
-	if scepter then
-		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN + DOTA_ABILITY_BEHAVIOR_AOE
-	else
-		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN
-	end
 end
 
 function imba_sniper_assassinate:GetCastPoint()
@@ -1425,46 +1409,30 @@ function imba_sniper_assassinate:GetCastPoint()
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
 		cast_point = cast_point + self:GetCaster():FindTalentValue("special_bonus_imba_sniper_6", "cast_point_increase")
-		
+
 		-- What is this balancing in my IMBA game
 		-- (Make Overcharge not boost this speed cause it gets way too crazy)
 		if IsServer() == true and self:GetCaster():HasModifier("modifier_imba_wisp_overcharge_721_aura") or self:GetCaster():HasModifier("modifier_imba_wisp_overcharge_721") and self:GetCaster().FindModifierByName then
 			local overcharge_modifier = self:GetCaster():FindModifierByName("modifier_imba_wisp_overcharge_721") or self:GetCaster():FindModifierByName("modifier_imba_wisp_overcharge_721_aura")
-		
+
 			if overcharge_modifier.bonus_cast_speed then
 				cast_point = cast_point / ((100 - math.min(overcharge_modifier.bonus_cast_speed, 99.99)) * 0.01)
 			end
 		end
 	end
-	
+
+--[[	
 	-- #6 Talent: Assassination's cast point decreases.
 	if self:GetCaster():HasTalent("special_bonus_imba_sniper_9") then
 		cast_point = cast_point - self:GetCaster():FindTalentValue("special_bonus_imba_sniper_9")
 	end
-	
+--]]
+
+	if self:GetCaster():HasScepter() then
+		cast_point = cast_point - self:GetSpecialValueFor("scepter_cast_time")
+	end
+
 	return cast_point
-end
-
-function imba_sniper_assassinate:GetCastAnimation()
-	if not self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
-		return ACT_DOTA_CAST_ABILITY_4
-	end
-end
-
-function imba_sniper_assassinate:GetAOERadius()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local scepter = caster:HasScepter()
-
-	-- Ability specials
-	local scepter_radius = ability:GetSpecialValueFor("scepter_radius")
-
-	if scepter then
-		return scepter_radius
-	end
-
-	return 0
 end
 
 function imba_sniper_assassinate:GetAssociatedSecondaryAbilities()
@@ -1477,11 +1445,9 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 	local ability = self
 	local cast_response = {"sniper_snip_ability_assass_02", "sniper_snip_ability_assass_06", "sniper_snip_ability_assass_07", "sniper_snip_ability_assass_08"}
 	local modifier_cross = "modifier_imba_assassinate_cross"
-	local scepter = caster:HasScepter()
 
 	-- Ability specials
 	local sight_duration = ability:GetSpecialValueFor("sight_duration")
-	local scepter_radius = ability:GetSpecialValueFor("scepter_radius")
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	-- Reset the animation before Sniper shoots
@@ -1495,6 +1461,14 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 				caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
 			end
 		end)
+	else
+		local playback_rate = 1.0
+
+		if caster:HasScepter() then
+			playback_rate = 2.0
+		end
+
+		caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4, playback_rate)		
 	end
 
 	-- Initialize index table
@@ -1506,21 +1480,7 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 	local targets = {}
 
 	-- Get targets
-	if not scepter then
-		targets[1] = self:GetCursorTarget()
-	else
-		-- Find all enemies in AoE
-		local target_point = self:GetCursorPosition()
-		targets = FindUnitsInRadius(caster:GetTeamNumber(),
-			target_point,
-			nil,
-			scepter_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-			FIND_ANY_ORDER,
-			false)
-	end
+	targets[1] = self:GetCursorTarget()
 
 	-- Play prepare cast response
 	EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
@@ -1578,27 +1538,15 @@ function imba_sniper_assassinate:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local scepter = caster:HasScepter()
 
 	-- Ability specials
-	local scepter_radius = ability:GetSpecialValueFor("scepter_radius")
 	local projectiles = ability:GetSpecialValueFor("projectiles")
 
 	-- Targets
 	local targets = {}
 
 	-- Get targets
-	if not scepter then
-		targets[1] = self:GetCursorTarget()
-	else
-		-- Find all enemies that were marked in the AoE
-		for _,enemy in pairs(self.enemy_table) do
-			table.insert(targets, enemy)
-		end
-
-		-- Clear the enemy table for the next use
-		self.enemy_table = nil
-	end
+	targets[1] = self:GetCursorTarget()
 
 	-- Make up a table of enemies hit by the current cast
 	self.enemies_hit = {}
@@ -1636,7 +1584,6 @@ function imba_sniper_assassinate:FireAssassinateProjectile(targets, projectile_n
 		local particle_projectile = "particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
 		local sound_assassinate = "Ability.Assassinate"
 		local sound_assassinate_launch = "Hero_Sniper.AssassinateProjectile"
-
 
 		-- Play assassinate sound
 		EmitSoundOn(sound_assassinate, caster)
@@ -1725,11 +1672,14 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 	local modifier_perfectshot = "modifier_imba_perfectshot_stun"
 	local modifier_headshot = "modifier_imba_headshot_slow"
 	local head_shot_ability = "imba_sniper_headshot"
-	local scepter = caster:HasScepter()
 
 	-- Ability special
 	local damage = ability:GetSpecialValueFor("damage")
 	local ministun_duration = ability:GetSpecialValueFor("ministun_duration")
+
+	if caster:HasScepter() then
+		ministun_duration = ability:GetSpecialValueFor("scepter_stun_duration")
+	end
 
 	-- Add table key to target
 	local target_key = target:entindex()..tostring(projectile_num)
@@ -1749,7 +1699,7 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 
 		-- If target has Linken's Sphere off cooldown, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
-			if not self:GetCaster():HasScepter() and target:TriggerSpellAbsorb(ability) then
+			if target:TriggerSpellAbsorb(ability) then
 				return nil
 			end
 		end
@@ -1765,80 +1715,19 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 		ParticleManager:ReleaseParticleIndex(particle_light_fx)
 	end
 
-	if not scepter then
-		-- Deal damage to target, if it's not magic immune
-		if not target:IsMagicImmune() then
-			local damageTable = {victim = target,
-				attacker = caster,
-				damage = damage,
-				damage_type = DAMAGE_TYPE_MAGICAL,
-				ability = ability
-			}
+	-- Deal damage to target, if it's not magic immune
+	if not target:IsMagicImmune() then
+		local damageTable = {victim = target,
+			attacker = caster,
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = ability
+		}
 
-			ApplyDamage(damageTable)
+		ApplyDamage(damageTable)
 
-			-- Apply a ministun to the target
-			target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
-		end
-	else
-		-- Calculate the damage based on the attack damage of the caster, plus Perfectshot critical damage bonus
-		if caster:HasAbility(head_shot_ability) then
-			local head_shot_ability_handler = caster:FindAbilityByName(head_shot_ability)
-			if head_shot_ability_handler then
-				-- Get headshot ability specials
-				local headshot_duration		= head_shot_ability_handler:GetSpecialValueFor("headshot_duration")
-				local knockback_distance	= head_shot_ability_handler:GetSpecialValueFor("knockback_distance")
-				local knockback_duration	= head_shot_ability_handler:GetSpecialValueFor("knockback_duration")
-				
-				target:AddNewModifier(caster, head_shot_ability_handler, "modifier_imba_headshot_slow", {duration = headshot_duration})
-
-				-- Add Headshot particle effects
-				local particle_slow_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-				ParticleManager:SetParticleControl(particle_slow_fx, 0, target:GetAbsOrigin())
-
-				-- Remove particles when they end
-				Timers:CreateTimer(headshot_duration, function()
-					ParticleManager:DestroyParticle(particle_slow_fx, false)
-					ParticleManager:ReleaseParticleIndex(particle_slow_fx)
-				end)
-
-				-- Knocknback enemy
-				local knockback = {
-					center_x 			= caster:GetAbsOrigin()[1]+1,
-					center_y 			= caster:GetAbsOrigin()[2]+1,
-					center_z 			= caster:GetAbsOrigin()[3],
-					duration 			= self.knockback_duration,
-					knockback_duration 	= knockback_duration,
-					knockback_distance 	= knockback_distance,
-					knockback_height 	= 0,
-					should_stun 		= 0
-				}
-
-				local knockback_modifier = target:AddNewModifier(caster, head_shot_ability_handler, "modifier_knockback", knockback)
-				
-				if knockback_modifier then
-					knockback_modifier:SetDuration(knockback_duration * (1 - target:GetStatusResistance()), true)
-				end
-			end
-		end
-
-		-- See if Take Aim is ready before the attack
-		local take_aim_ability_handler = caster:FindAbilityByName("imba_sniper_take_aim")
-		local take_aim_ready = false
-		if take_aim_ability_handler then
-			if take_aim_ability_handler:IsCooldownReady() then
-				take_aim_ready = true
-			end
-		end
-		
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_sniper_assassinate_critical", {})
-		caster:PerformAttack(target, false, true, true, true, false, false, true)
-		target:RemoveModifierByName("modifier_imba_sniper_assassinate_critical")
-
-		-- If after the attack Take Aim got reset, refresh its cooldown quickly
-		if take_aim_ready then
-			take_aim_ability_handler:EndCooldown()
-		end
+		-- Apply a ministun to the target
+		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
 	end
 
 	-- #2 Talent: Assassinate now knockbacks all units hit
@@ -1975,62 +1864,6 @@ end
 function modifier_imba_assassinate_ministun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
------------------------------------
--- ASSASSINATE CRITICAL MODIFIER --
------------------------------------
-
-modifier_imba_sniper_assassinate_critical = class({})
-
-function modifier_imba_sniper_assassinate_critical:OnCreated()
-	if self:GetAbility() then
-		self.scepter_crit_bonus	= self:GetAbility():GetSpecialValueFor("scepter_crit_bonus")
-	else
-		self:Destroy()
-		return
-	end
-
-	if not IsServer() then return end
-
-	self.headshot_damage = 0
-	
-	local headshot_ability = self:GetCaster():FindAbilityByName("imba_sniper_headshot")
-	
-	if headshot_ability and headshot_ability:IsTrained() then
-		self.headshot_damage = headshot_ability:GetSpecialValueFor("headshot_damage")
-	end
-end
-
-function modifier_imba_sniper_assassinate_critical:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE -- This is part of the Headshot logic because the thing was programmed so poorly I have to put it here again
-	}
-
-	return decFuncs
-end
-
-function modifier_imba_sniper_assassinate_critical:GetModifierPreAttack_Target_CriticalStrike(keys)
-	if keys.attacker == self:GetCaster() then
-		return self.scepter_crit_bonus
-	else
-		return 0
-	end
-end
-
-function modifier_imba_sniper_assassinate_critical:GetModifierPreAttack_BonusDamage(keys)
-	if keys.attacker == self:GetCaster() then
-		return self.scepter_crit_bonus
-	else
-		return 0
-	end
-end
-
--- function modifier_imba_headshot_attacks:GetModifierPreAttack_BonusDamage()
-	-- if IsServer() then
-		-- return self.headshot_damage
-	-- end
--- end
 
 ---------------------
 -- TALENT HANDLERS --

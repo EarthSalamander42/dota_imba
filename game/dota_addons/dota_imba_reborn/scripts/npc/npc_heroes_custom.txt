@@ -1454,6 +1454,7 @@
 		"Ability4"					"imba_pudge_sharp_hook"
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
+		"Ability7"					"imba_pudge_eject"
 
 		"Ability10"					"special_bonus_exp_boost_40"
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
@@ -1751,7 +1752,7 @@
 		"Ability12"					"special_bonus_attack_speed_40"
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
-		"Ability15"					"special_bonus_imba_sniper_9"
+		"Ability15"					"special_bonus_movement_speed_40"
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
 		
