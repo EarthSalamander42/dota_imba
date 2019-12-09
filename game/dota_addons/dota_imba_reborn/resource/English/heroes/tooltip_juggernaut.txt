@@ -98,7 +98,7 @@
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_9"                  "Omnislash EX"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_9_Description"		"Sets cast point of Omnislash to 0 and doubles slashes rate multiplier."
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_10"					"+1s Omnislash Duration"
-
+"Dota_Tooltip_ability_special_bonus_imba_juggernaut_blade_fury_movement_speed"	"+{s:value} Blade Fury Movement Speed"
 
 // Juggernaut's summoned unit: Healing Ward, Healing Totem
 "npc_imba_juggernaut_healing_ward"										"Healing Ward"

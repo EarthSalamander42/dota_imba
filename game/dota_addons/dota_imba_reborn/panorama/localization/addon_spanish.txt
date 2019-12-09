@@ -647,7 +647,7 @@
 	"toggle_winrate" "Alternar visibilidad de porcentaje de victorias"
 	"unassigned" "Equipo sin asignar"
 	"vanilla_hero" "Perezoso"
-	"vote_gamemode" "Votación de modo de juego"
+	"vote_gamemode" "Gamemode Vote (Votes count must be higher than 5)"
 	"vote_gamemode_1" "Ranked"
 	"vote_gamemode_2" "Mutación"
 	"vote_gamemode_3" "Super frenético"

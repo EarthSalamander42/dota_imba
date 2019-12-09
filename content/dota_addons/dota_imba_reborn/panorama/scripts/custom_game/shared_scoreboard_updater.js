@@ -147,12 +147,14 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	}
 
 	var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
-
+/*
 	if (!player_info || player_info.winrate_toggle == 0) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 	} else if (player_info.winrate_toggle == 1) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
 	}
+*/
+	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
 }
 
 var is_donator_set = [];

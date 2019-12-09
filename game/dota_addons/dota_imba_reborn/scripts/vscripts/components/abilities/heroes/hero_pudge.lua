@@ -1049,6 +1049,7 @@ LinkLuaModifier("modifier_imba_pudge_dismember_handler","components/abilities/he
 LinkLuaModifier("modifier_imba_dismember","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_buff","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_pull", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_dismember_scepter", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_pudge_dismember:GetIntrinsicModifierName()
 	return "modifier_imba_pudge_dismember_handler"
@@ -1056,6 +1057,27 @@ end
 
 function imba_pudge_dismember:GetChannelTime()
 	return self:GetCaster():GetModifierStackCount("modifier_imba_pudge_dismember_handler", self:GetCaster()) * 0.01
+end
+
+function imba_pudge_dismember:CastFilterResultTarget(hTarget)
+	if not IsServer() then return end
+
+	if not self:GetCaster():HasScepter() then
+		if self:GetCaster():GetTeam() == hTarget:GetTeam() then
+			return UF_FAIL_FRIENDLY
+		end
+	end
+
+	local nResult = UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+	return nResult
+end
+
+function imba_pudge_dismember:GetCooldown(iLevel)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, iLevel)
+	end
 end
 
 function imba_pudge_dismember:OnSpellStart()
@@ -1066,6 +1088,11 @@ function imba_pudge_dismember:OnSpellStart()
 			self:GetCaster():Interrupt()
 			return nil
 		end
+	else
+		self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", false, true)
+		self.swallowed_target = target
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember_scepter", {})
+		return
 	end
 
 --	self:GetCaster():StartGesture(ACT_DOTA_CHANNEL_ABILITY_4)
@@ -1271,6 +1298,96 @@ function modifier_imba_pudge_dismember_pull:OnDestroy()
 	if not IsServer() then return end
 	
 	self.parent:RemoveHorizontalMotionController( self )
+end
+
+modifier_imba_dismember_scepter = modifier_imba_dismember_scepter or class({})
+
+function modifier_imba_dismember_scepter:CheckState() return {
+	[MODIFIER_STATE_INVULNERABLE] = true,
+	[MODIFIER_STATE_OUT_OF_GAME] = true,
+	[MODIFIER_STATE_DISARMED] = true,
+	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+	[MODIFIER_STATE_UNSELECTABLE] = true
+} end
+
+function modifier_imba_dismember_scepter:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_ORDER,
+	MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+} end
+
+function modifier_imba_dismember_scepter:OnCreated()
+	if not IsServer() then return end
+
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+
+	self:GetParent():AddNoDraw()
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_dismember_scepter:OnIntervalThink()
+	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin())
+end
+
+function modifier_imba_dismember_scepter:OnOrder(params)
+	if not IsServer() then return end
+
+	if params.unit == self:GetParent() then
+		local valid_orders = {
+			DOTA_UNIT_ORDER_MOVE_TO_POSITION,
+			DOTA_UNIT_ORDER_MOVE_TO_TARGET,
+			DOTA_UNIT_ORDER_ATTACK_MOVE,
+			DOTA_UNIT_ORDER_ATTACK_TARGET,
+			DOTA_UNIT_ORDER_CAST_POSITION,
+			DOTA_UNIT_ORDER_CAST_TARGET,
+			DOTA_UNIT_ORDER_CAST_TARGET_TREE,
+			DOTA_UNIT_ORDER_CAST_NO_TARGET,
+			DOTA_UNIT_ORDER_DROP_ITEM,
+			DOTA_UNIT_ORDER_GIVE_ITEM,
+			DOTA_UNIT_ORDER_PICKUP_ITEM,
+			DOTA_UNIT_ORDER_PICKUP_RUNE,
+		}
+
+		for k, v in pairs(valid_orders) do
+			if params.order_type == v then
+				self:Destroy()
+				break
+			end
+		end
+	end
+end
+
+function modifier_imba_dismember_scepter:GetModifierHealthRegenPercentage()
+	return self:GetAbility():GetSpecialValueFor("scepter_healing_pct")
+end
+
+function modifier_imba_dismember_scepter:OnDestroy()
+	if not IsServer() then return end
+
+	self:GetParent():RemoveNoDraw()
+	self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", true, false)
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow_release.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(pfx)
+end
+
+imba_pudge_eject = imba_pudge_eject or class({})
+
+function imba_pudge_eject:IsInnateAbility() return true end
+
+function imba_pudge_eject:OnSpellStart()
+	if not IsServer() then return end
+
+	local dismember = self:GetCaster():FindAbilityByName("imba_pudge_dismember")
+
+	if dismember and dismember.swallowed_target then
+		dismember.swallowed_target:RemoveModifierByName("modifier_imba_dismember_scepter")
+		dismember.swallowed_target = nil
+	end
 end
 
 -- util

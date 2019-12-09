@@ -921,26 +921,6 @@
 	}
 
 	//=================================================================================================================
-	// Helm of Iron Will
-	//=================================================================================================================
-	"item_helm_of_iron_will"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_regen"			"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Helm of the Dominator
 	//=================================================================================================================
 	"item_helm_of_the_dominator"
@@ -986,21 +966,11 @@
 		"ItemCost"						"625"
 
 		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"2"
-			}			
+		{		
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_health_regen"		"4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
 			}
 		}
 	}
@@ -2343,17 +2313,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"incoming_damage_tooltip"	"250 225 200"
-			}		
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"invuln_duration"			"0.5"
 			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"400"
-			}	
 		}
 	}
 
@@ -2504,14 +2464,14 @@
 	//=================================================================================================================
 	"doom_bringer_devour"
 	{
-		"AbilityCooldown"				"60 50 40 30"
+		"AbilityCooldown"				"60"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"30 80 130 180"
+				"bonus_gold"			"40 100 160 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
 			}
 			"02"
@@ -2548,11 +2508,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_movement_speed_pct"	"12 14 16 18"
 				"LinkedSpecialBonus"		"special_bonus_unique_doom_6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"10 13 16 19"
 			}
 		}
 	}
@@ -2886,11 +2841,8 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"RequiredLevel"					"0"
 		"MaxLevel"						"4"
 		"AbilityCooldown"				"4 3 2 2"
-		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -4891,12 +4843,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"500 575 650"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"strike_interval"			"0.70 0.55 0.40"
-				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"
-			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -5236,7 +5182,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_width"		"75 90 105 120"
+				"attack_spill_width"		"90 100 110 120"
 			}
 		}
 	}
@@ -6374,6 +6320,72 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Undying: Flesh Golem
+	//=================================================================================================================
+	"undying_flesh_golem"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"25 35 45"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"str_percentage"			"50 60 70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Viper: Poison Attack
+	//=================================================================================================================
+	"viper_poison_attack"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"4.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"damage"						"8 12 16 20"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"			"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Viper: Nethertoxin
+	//=================================================================================================================
+	"viper_nethertoxin"
+	{	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"90 120 150 180"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Viper: Corrosive Skin
@@ -6423,7 +6435,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 166 233"
+				"damage"				"100 160 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_viper_2"
 			}
 			"03"
@@ -6434,7 +6446,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"-40 -80 -160"
+				"bonus_attack_speed"	"-40 -80 -120"
 			}
 		}
 	}
@@ -6568,7 +6580,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shackle_angle"			"30 35 40 45"
+				"shackle_angle"			"25 27 29 31"
 			}
 		}
 	}
@@ -6586,13 +6598,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"powershot_damage"		"180 260 340 420"
+				"powershot_damage"		"200 300 400 500"
 				"LinkedSpecialBonus"	"special_bonus_unique_windranger_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.2 0.15 0.1 0.05"
+				"damage_reduction"		"20 15 10 5"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -6616,7 +6628,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus_pct"		"60 70 80 90"		
+				"movespeed_bonus_pct"		"60"		
 			}
 			"03"
 			{
@@ -6642,12 +6654,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
+				"bonus_attack_speed"			"500 600 700"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-45 -30 -15"
+				"focusfire_damage_reduction"	"-50 -40 -30"
 				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
 		}
@@ -7423,6 +7435,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"activation_delay"			"1.25"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_restore_time"		"18"
 			}
 		}
 	}
@@ -8525,7 +8542,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"10.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8534,7 +8551,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"1500"
+				"projectile_speed"			"1100"
 			}
 			"05"
 			{
@@ -8544,7 +8561,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"activation_delay"		"0.2"
+				"activation_delay"		"0.4"
 			}
 			"09"
 			{
@@ -8577,7 +8594,7 @@
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"180 260 340 420"
+		"AbilityDamage"					"140 220 300 380"
 	}
 
 	//=================================================================================================================
@@ -8617,7 +8634,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorb_per_hero_hit"	"100 150 200 250"
+				"absorb_per_hero_hit"	"40 60 80 100"
 			}
 		}
 	}
@@ -8634,7 +8651,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3"
+				"max_charges"			"2"
 				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_9"
 			}
 			"03"
@@ -8651,7 +8668,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_travel_distance"	"1000 1200 1400"
+				"max_travel_distance"	"800 1000 1200"
 			}
 			"06"
 			{
@@ -8661,7 +8678,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pop_damage"			"300 500 700"
+				"pop_damage"			"200 300 400"
 			}
 			"08"
 			{
@@ -8670,5 +8687,17 @@
 			}
 		}
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Third Eye
+	//=================================================================================================================
+	"item_third_eye"
+	{
+		"ItemCost"						"2400"
+		"ItemPurchasable"				"1"
+		"ItemStockMax"					"2"
+		"ItemStockTime"					"210.0"
+//		"ItemInitialCharges"			"3"
 	}
 }

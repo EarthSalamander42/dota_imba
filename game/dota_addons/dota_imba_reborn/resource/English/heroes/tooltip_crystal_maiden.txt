@@ -57,14 +57,15 @@
 
 // Crystal Maiden's Arcane Aura
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura"              "Arcane Aura"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Gives additional mana regeneration to all friendly units on the map. This bonus is increased by %bonus_self%x for Crystal Maiden.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes %bonus_int% bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants %bonus_spellpower%%% bonus spell amplification to heroes with more than %spellpower_threshold_pct%%% remaining mana."
+"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Gives additional mana regeneration and magic resistance to all friendly units on the map. This bonus is increased by %bonus_self%x for Crystal Maiden.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes %bonus_int% bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants %bonus_spellpower%%% bonus spell amplification to heroes with more than %spellpower_threshold_pct%%% remaining mana."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Lore"                     "Cold temperatures promote the essence of magic, causing Rylai's presence to allow spell usage in abundance."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_mana_regen"               "BONUS MANA REGEN:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_magic_resistance"			"%MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_int"                "BONUS INTELLIGENCE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_spellpower"         "%BONUS SPELLPOWER:"
 
-"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura"            "Arcane Aura"
-"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura_Description"             "Gaining bonus mana regeneration, intellect, and spell amp in Crystal Maiden's presence."
+"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura"					"Arcane Aura"
+"DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura_Description"		"Gaining bonus mana regeneration, magic resistance, intellect, and spell amp in Crystal Maiden's presence."
 
 // Crystal Maiden's Freezing Field
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"              "Freezing Field"

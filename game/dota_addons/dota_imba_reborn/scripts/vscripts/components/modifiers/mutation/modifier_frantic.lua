@@ -20,22 +20,32 @@ end
 function modifier_frantic:OnCreated()
 	self.ignore_frantic_cdr_abilities = {
 		["imba_venomancer_plague_ward"]	= true,
-		["imba_puck_phase_shift"] = true
+		["imba_puck_phase_shift"] = true,
+		["imba_magnataur_skewer"] = true,
 	}
+
+	self.cooldown_reduction	= self:GetParent():GetCooldownReduction()
+
+	-- This IntervalThink is primarily to manually handle cooldown percentages, and to cap CDR at 40% ONLY EXCEPT when base CDR exceeds that, in which case it would be as though this modifier did not provide any CDR
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_frantic:OnIntervalThink()
+	self.cooldown_reduction	= 0
+	self.cooldown_reduction	= self:GetParent():GetCooldownReduction()
 end
 
 function modifier_frantic:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		-- MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE,
 		
 		-- MODIFIER_EVENT_ON_ABILITY_START,
 		-- MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 	}
-
-	return funcs
 end
 
 function modifier_frantic:GetEffectName()
@@ -51,7 +61,12 @@ function modifier_frantic:GetModifierPercentageCooldownStacking(keys)
 		if keys.ability and self.ignore_frantic_cdr_abilities[keys.ability:GetName()] then
 			return nil
 		else
-			return self:GetStackCount()
+			-- return self:GetStackCount()
+			
+			if self.cooldown_reduction then
+				-- Big brain math
+				return math.max(((self:GetStackCount() - 100) / self.cooldown_reduction) + 100, 0)
+			end
 		end
 	end
 end
@@ -61,7 +76,11 @@ function modifier_frantic:GetModifierPercentageCooldown(keys)
 		if keys.ability and self.ignore_frantic_cdr_abilities[keys.ability:GetName()] then
 			return nil
 		else
-			return self:GetStackCount()
+			-- return self:GetStackCount()
+			
+			if self.cooldown_reduction then
+				return math.max(((self:GetStackCount() - 100) / self.cooldown_reduction) + 100, 0)
+			end
 		end
 	end
 end
@@ -70,7 +89,11 @@ function modifier_frantic:GetModifierPercentageManacost()
 	return self:GetStackCount()
 end
 
-function modifier_frantic:GetModifierStatusResistanceStacking()
+-- function modifier_frantic:GetModifierStatusResistanceStacking()
+	-- return self:GetStackCount()
+-- end
+
+function modifier_frantic:GetModifierStatusResistance()
 	return self:GetStackCount()
 end
 

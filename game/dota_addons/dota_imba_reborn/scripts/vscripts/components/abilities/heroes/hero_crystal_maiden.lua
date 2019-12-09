@@ -850,9 +850,11 @@ end
 
 function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 	local funcs = {
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 	}
@@ -863,9 +865,19 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaReg
 	if not self:GetAbility() then return end
 
 	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("mana_regen")* self.bonus_self
+		return self:GetAbility():GetSpecialValueFor("mana_regen") * self.bonus_self
 	else
 		return self:GetAbility():GetSpecialValueFor("mana_regen")
+	end
+end
+
+function modifier_imba_crystal_maiden_brilliance_aura:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
+
+	if self.parent == self.caster then
+		return self:GetAbility():GetSpecialValueFor("magic_resistance") * self.bonus_self
+	else
+		return self:GetAbility():GetSpecialValueFor("magic_resistance")
 	end
 end
 
@@ -951,8 +963,8 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 			self.explosion_interval = self.explosion_interval * self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_8")
 		end
 
-		-- Plays the channeling animation
-		StartAnimation(self.caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
+		-- -- Plays the channeling animation
+		-- StartAnimation(self.caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
 
 		-- Find all enemies that would be in the freezing field
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -1236,17 +1248,19 @@ end
 
 
 function modifier_imba_crystal_maiden_freezing_field_armor_bonus:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
 end
 
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetOverrideAnimation()
+	return ACT_DOTA_CAST_ABILITY_4
+end
 
 ---------------------
 -- TALENT HANDLERS --

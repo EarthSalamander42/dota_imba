@@ -612,7 +612,7 @@
 		"ItemResult"					"item_imba_mekansm"
 		"ItemRequirements"
 		{
-			"01"						"item_headdress;item_buckler"
+			"01"						"item_headdress;item_chainmail"
 		}
 	}
 
@@ -632,7 +632,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
+		"AbilityCastRange"				"1925"
 		"AbilityCooldown"				"65"
 		"AbilityManaCost"				"225"
 		"AbilitySharedCooldown"			"mekansm"
@@ -658,7 +658,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"5"
+				"bonus_armor"			"6"
 			}
 			"03"
 			{
@@ -712,7 +712,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1800"
+		"ItemCost"						"1600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -749,7 +749,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5355"
+		"ItemCost"						"4675"
 		"ItemShopTags"					"agi;int;str;armor;regen_health;boost_health;move_speed;boost_mana;mana_pool"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"guardian greaves"
@@ -852,7 +852,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"350"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -861,7 +861,8 @@
 		"ItemResult"					"item_imba_vladmir"
 		"ItemRequirements"
 		{
-			"01"						"item_headdress;item_ring_of_basilius;item_imba_morbid_mask"
+			//"01"						"item_headdress;item_ring_of_basilius;item_imba_morbid_mask"
+			"01"						"item_buckler;item_ring_of_basilius;item_imba_morbid_mask"
 		}
 	}
 
@@ -903,7 +904,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2325"
+		"ItemCost"						"2055"
 		"ItemShopTags"					"lifesteal;damage;armor;regen_mana"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"vladmir's offering;vlads"
@@ -934,12 +935,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"15"
+				"vampiric_aura"			"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"15"
+				"damage_aura"			"5"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -960,7 +961,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_bonus"			"2"
+				"stat_bonus"			"6"
 			}
 		}
 	}
@@ -1008,12 +1009,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"20"
+				"vampiric_aura"			"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"20"
+				"damage_aura"			"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -1034,7 +1035,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_bonus"			"3"
+				"stat_bonus"			"8"
 			}
 		}
 	}
@@ -3012,7 +3013,7 @@
 		"ItemResult"					"item_imba_assault"
 		"ItemRequirements"
 		{
-			"01"						"item_platemail;item_hyperstone;item_chainmail"
+			"01"						"item_platemail;item_hyperstone;item_buckler"
 		}
 	}
 
@@ -3031,7 +3032,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5250"
+		"ItemCost"						"5100"
 		"ItemShopTags"					"attack_speed;armor;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"ac;assault cuirass"
@@ -3054,19 +3055,24 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_as_ally"			"25"
+				"bonus_all_stats"	"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_armor_ally"		"5"
+				"aura_as_ally"			"25"
 			}
 			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_armor_ally"		"5"
+			}
+			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_armor_reduction_enemy"	"5"
 			}
-			"06"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1200"
@@ -3143,19 +3149,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"7"
+				"bonus_int"					"11"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_str"					"7"
+				"bonus_str"					"11"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"7"
+				"bonus_agi"					"11"
 			}
 
 			"04"
@@ -3357,6 +3363,17 @@
 				"var_type"				"FIELD_INTEGER"
 				"hp_regen_amp"			"50"
 			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fixed_health_regen"		"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"alive_illusion_pct"	"50"
+			}
 		}
 	}
 
@@ -3402,6 +3419,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -3414,7 +3432,6 @@
 		"ItemShopTags"					"int;armor;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"shiva's guard"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Special
@@ -4059,7 +4076,7 @@
 		"ItemResult"					"item_imba_crimson_guard"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_vanguard;item_buckler"
+			"01"						"item_imba_vanguard;item_helm_of_iron_will"
 		}
 	}
 
@@ -4116,7 +4133,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"5"
+				"armor"					"6"
 			}
 			"05"
 			{
@@ -4138,7 +4155,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
+				"active_armor"			"3"
 			}
 			"09"
 			{
@@ -4803,7 +4820,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"550"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4972,7 +4989,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"22"
+				"bonus_damage"				"27"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -5082,7 +5099,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30"
+				"bonus_damage"				"36"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -6567,7 +6584,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"800"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -6576,7 +6593,8 @@
 		"ItemResult"					"item_imba_ancient_janggo"
 		"ItemRequirements"
 		{
-			"01"						"item_crown;item_sobi_mask;item_wind_lace"
+			//"01"						"item_crown;item_sobi_mask;item_wind_lace"
+			"01"						"item_crown;item_wind_lace;item_gloves"
 		}
 	}
 
@@ -8360,7 +8378,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"10"
+				"bonus_damage"			"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
@@ -9334,14 +9352,14 @@
 
 		// Item
 		//--------------------------------------------
-		"ItemCost"						"180"
+		"ItemCost"						"60"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ItemShopTags"					"dust;appearance;detection"
 		"ItemAliases"					"dust;dust of appearance;invis;reveal"
 		"ItemStackable"					"1"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemQuality"					"common"
-		"ItemInitialCharges"			"3"
+		"ItemInitialCharges"			"1"
 		"ItemPermanent"					"1"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
@@ -9904,7 +9922,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCooldown"				"22"
+		"AbilityCooldown"				"16"
 		"AbilityManaCost"				"25"
 
 		// Precache
@@ -9949,7 +9967,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_duration"				"8"
+				"berserk_duration"				"6"
 			}
 			"07"
 			{
@@ -10519,7 +10537,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"7"
+				"bonus_health_regen"			"10"
 			}
 			"02"
 			{
@@ -10569,7 +10587,7 @@
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"stat_bonus"					"2"
+				"stat_bonus"					"3"
 			}
 		}
 	}	
@@ -10919,7 +10937,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"600"
 		"AbilityCooldown"				"35"
 
 		"AbilitySpecial"
@@ -14430,7 +14448,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"1"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -14467,7 +14485,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"6150"
+		"ItemCost"						"6151"
 		"ItemShopTags"					"damage;str;agi;int;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"triumvirate;sky;kys"
@@ -14524,7 +14542,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"10"
+				"bonus_cdr"				"16"
 			}
 			"11"
 			{

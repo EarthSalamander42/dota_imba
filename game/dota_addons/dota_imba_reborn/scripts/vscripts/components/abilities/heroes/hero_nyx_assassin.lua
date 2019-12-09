@@ -1075,108 +1075,191 @@ function modifier_imba_spiked_carapace:IsPurgable() return false end
 function modifier_imba_spiked_carapace:IsDebuff() return false end
 
 function modifier_imba_spiked_carapace:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_EVENT_ON_TAKEDAMAGE,
+		
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE
+	}
 end
 
-function modifier_imba_spiked_carapace:GetModifierIncomingDamage_Percentage( kv )
-	return -100
+-- function modifier_imba_spiked_carapace:GetModifierIncomingDamage_Percentage( kv )
+	-- return -100
+-- end
+
+-- function modifier_imba_spiked_carapace:OnTakeDamage(keys)
+	-- if IsServer() then
+		-- local attacker = keys.attacker
+		-- local unit = keys.unit
+		-- local original_damage = keys.original_damage
+		-- local damage_flags = keys.damage_flags
+		
+		-- -- Only apply on attacks against the caster
+		-- if unit == self.caster then
+
+			-- -- If it was a no reflection damage, do nothing
+			-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
+				-- return nil
+			-- end
+
+			-- -- If this has a HP loss flag, do nothing
+			-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then
+				-- return nil
+			-- end
+
+			-- -- If the unit is a building, do nothing
+			-- if attacker:IsBuilding() then
+				-- return nil
+			-- end
+			
+			-- -- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
+			-- if attacker:GetTeam() == unit:GetTeam() then
+				-- return nil
+			-- end
+			
+			-- -- If the attacking unit has Nyx's Carapace as well, do nothing
+			-- if attacker:HasModifier("modifier_imba_spiked_carapace") then
+				-- return nil
+			-- end
+
+			-- -- Calculate damage to reflect
+			-- local damage = original_damage * self.damage_reflection_pct * 0.01
+
+			-- -- Only apply if the caster has Vendetta as ability
+			-- if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
+
+				-- -- Convert damage to vendetta charges
+				-- if not self.caster:HasModifier(self.modifier_vendetta) then
+					-- self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
+				-- end
+
+				-- -- Only stores damage from heroes (including illusions)
+				-- if attacker:IsHero() then
+					-- -- Get modifier handler
+					-- local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
+					-- if modifier_vendetta_handler then
+						-- -- Calculate stacks
+						-- local stacks = damage * self.damage_to_vendetta_pct * 0.01
+
+						-- -- Set Vendetta stacks
+						-- modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + stacks)
+					-- end
+				-- end
+			-- end
+
+			-- -- If the attacker is magic immune or invulnerable, do nothing
+			-- if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
+				-- return nil
+			-- end
+
+			-- -- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
+			-- -- still stuns the target, even if we skip dealing damage to it
+			-- local skip_damage = false
+			-- if not self.reflect_all_damage and self.enemiesHit[attacker:entindex()] then
+				-- skip_damage = true
+			-- end
+
+			-- if not skip_damage then
+				-- -- if the table is nil, we're reflecting everything and housekeeping isn't needed
+				-- if self.enemiesHit ~= nil then
+					-- self.enemiesHit[attacker:entindex()] = true
+				-- end
+
+				-- local damageTable = {victim = attacker,
+					-- attacker = self.caster,
+					-- damage = damage,
+					-- damage_type = keys.damage_type,
+					-- damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
+					-- ability = self.ability
+				-- }
+
+				-- ApplyDamage(damageTable)
+			-- end
+
+			-- -- Stun it
+			-- attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
+		-- end
+	-- end
+-- end
+
+
+function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePhysical(keys)
+	if keys.attacker and keys.damage and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+		return 1
+	end
 end
 
-function modifier_imba_spiked_carapace:OnTakeDamage(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local unit = keys.unit
-		local original_damage = keys.original_damage
-		local damage_flags = keys.damage_flags
+function modifier_imba_spiked_carapace:GetAbsoluteNoDamageMagical(keys)
+	if keys.attacker and keys.damage and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+		return 1
+	end
+end
 
-		-- Only apply on attacks against the caster
-		if unit == self.caster then
-			-- If it was a no reflection damage, do nothing
-			if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
-				return nil
-			end
-
-			-- If this has a HP loss flag, do nothing
-			if bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then
-				return nil
-			end
-
-			-- If the unit is a building, do nothing
-			if attacker:IsBuilding() then
-				return nil
-			end
-	
-			-- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
-			if attacker:GetTeam() == unit:GetTeam() then
-				return nil
-			end
-
-			-- If the attacking unit has Nyx's Carapace as well, do nothing
-			if attacker:HasModifier("modifier_imba_spiked_carapace") then
-				return nil
-			end
-
+-- Since the pure function seems to run last when compared to the physical and magical ones above (but before the GetModifierIncomingDamage_Percentage), I guess it makes sense to put the actual logic here? Seems kinda hacky...
+function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
+	if keys.attacker and keys.damage and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+		
+		if not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			-- Calculate damage to reflect
-			local damage = original_damage * self.damage_reflection_pct * 0.01
+			local damage = keys.original_damage * self.damage_reflection_pct * 0.01
 
 			-- Only apply if the caster has Vendetta as ability
 			if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
 				-- Convert damage to vendetta charges
-				if not self.caster:HasModifier(self.modifier_vendetta) then
-					self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
+				if not self:GetCaster():HasModifier(self.modifier_vendetta) then
+					self:GetCaster():AddNewModifier(self:GetCaster(), self.vendetta_ability, self.modifier_vendetta, {})
 				end
 
 				-- Only stores damage from heroes (including illusions)
-				if attacker:IsHero() then
+				if keys.attacker:IsHero() then
 					-- Get modifier handler
-					local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
+					local modifier_vendetta_handler = self:GetCaster():FindModifierByName(self.modifier_vendetta)
+					
 					if modifier_vendetta_handler then
-						-- Calculate stacks
-						local stacks = damage * self.damage_to_vendetta_pct * 0.01
-
 						-- Set Vendetta stacks
-						modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + stacks)
+						modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + (damage * self.damage_to_vendetta_pct * 0.01))
 					end
 				end
 			end
 
 			-- If the attacker is magic immune or invulnerable, do nothing
-			if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
-				return nil
-			end
-
-			-- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
-			-- still stuns the target, even if we skip dealing damage to it
-			local skip_damage = false
-			if not self.reflect_all_damage and self.enemiesHit[attacker:entindex()] then
-				skip_damage = true
-			end
-
-			if not skip_damage then
-				-- if the table is nil, we're reflecting everything and housekeeping isn't needed
-				if self.enemiesHit ~= nil then
-					self.enemiesHit[attacker:entindex()] = true
+			if not keys.attacker:IsMagicImmune() and not keys.attacker:IsInvulnerable() then
+				-- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
+				-- still stuns the target, even if we skip dealing damage to it
+				local skip_damage = false
+				
+				if not self.reflect_all_damage and self.enemiesHit[keys.attacker:entindex()] then
+					skip_damage = true
 				end
 
-				local damageTable = {victim = attacker,
-					attacker = self.caster,
-					damage = damage,
-					damage_type = keys.damage_type,
-					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
-					ability = self.ability
-				}
+				if not skip_damage then
+					-- if the table is nil, we're reflecting everything and housekeeping isn't needed
+					if self.enemiesHit ~= nil then
+						self.enemiesHit[keys.attacker:entindex()] = true
+					end
 
-				ApplyDamage(damageTable)
-			end
+					ApplyDamage({
+						victim			= keys.attacker,
+						attacker		= self:GetCaster(),
+						damage			= damage,
+						damage_type		= keys.damage_type,
+						damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
+						ability			= self.ability
+					})
+				end
 
-			-- Stun it
-			if attacker:IsAlive() then
-				attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
+				-- Stun it
+				local stun_modifier = keys.attacker:AddNewModifier(self:GetCaster(), self.ability, self.modifier_stun, {duration = self.stun_duration})
+				
+				if stun_modifier then
+					stun_modifier:SetDuration(self.stun_duration * (1 - keys.attacker:GetStatusResistance()), true)
+				end
 			end
 		end
+	
+		return 1
 	end
 end
 

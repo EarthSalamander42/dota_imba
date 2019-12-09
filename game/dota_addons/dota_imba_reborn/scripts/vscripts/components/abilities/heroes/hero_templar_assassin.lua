@@ -246,10 +246,47 @@ function modifier_imba_templar_assassin_refraction_absorb:OnStackCountChanged(iS
 end
 
 function modifier_imba_templar_assassin_refraction_absorb:DeclareFunctions()
-	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	return {
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE
+	}
 end
 
-function modifier_imba_templar_assassin_refraction_absorb:GetModifierIncomingDamage_Percentage(keys)
+-- function modifier_imba_templar_assassin_refraction_absorb:GetModifierIncomingDamage_Percentage(keys)
+	-- -- "Damage below 5 (after reductions) is completely ignored. It is neither blocked, nor wastes any block instances."
+	-- -- "Refraction negates all 3 damage types. It does not negate damage flagged as HP Removal."
+	-- if keys.attacker and keys.damage and keys.damage >= self.damage_threshold and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		-- self:GetParent():EmitSound("Hero_TemplarAssassin.Refraction.Absorb")
+		
+		-- local warp_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_templar_assassin/templar_assassin_refract_plasma_contact_warp.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- ParticleManager:ReleaseParticleIndex(warp_particle)
+		
+		-- local hit_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_templar_assassin/templar_assassin_refract_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- ParticleManager:SetParticleControlEnt(hit_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		-- ParticleManager:ReleaseParticleIndex(hit_particle)
+		
+		-- self:DecrementStackCount()
+		-- return -100
+	-- end
+-- end
+
+function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamagePhysical(keys)
+	if keys.attacker and keys.damage and keys.damage >= self.damage_threshold and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		return 1
+	end
+end
+
+function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamageMagical(keys)
+	if keys.attacker and keys.damage and keys.damage >= self.damage_threshold and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		return 1
+	end
+end
+
+-- Since the pure function seems to run last when compared to the physical and magical ones above (but before the GetModifierIncomingDamage_Percentage), I guess it makes sense to put the actual logic here? Seems kinda hacky...
+function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamagePure(keys)
 	-- "Damage below 5 (after reductions) is completely ignored. It is neither blocked, nor wastes any block instances."
 	-- "Refraction negates all 3 damage types. It does not negate damage flagged as HP Removal."
 	if keys.attacker and keys.damage and keys.damage >= self.damage_threshold and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
@@ -263,7 +300,7 @@ function modifier_imba_templar_assassin_refraction_absorb:GetModifierIncomingDam
 		ParticleManager:ReleaseParticleIndex(hit_particle)
 		
 		self:DecrementStackCount()
-		return -100
+		return 1
 	end
 end
 

@@ -232,10 +232,25 @@ function modifier_item_imba_the_triumvirate_v2:OnCreated()
 	self.bonus_status_resistance_active	=	self.ability:GetSpecialValueFor("bonus_status_resistance_active")
 	self.bonus_evasion_active			=	self.ability:GetSpecialValueFor("bonus_evasion_active")
 	self.bonus_cdr_active				=	self.ability:GetSpecialValueFor("bonus_cdr_active")
+	
+	if IsServer() then return end
+	
+    -- Use Secondary Charges system to make CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+end
+
+function modifier_item_imba_the_triumvirate_v2:OnDestroy()
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_the_triumvirate_v2:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -250,8 +265,6 @@ function modifier_item_imba_the_triumvirate_v2:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_the_triumvirate_v2:GetModifierBonusStats_Strength()
@@ -294,7 +307,18 @@ function modifier_item_imba_the_triumvirate_v2:GetModifierPercentageManacost()
 	return self.manacost_reduction
 end
 
-
+-- As of 7.23, the items that Kaya's tree contains are as follows:
+--   - Kaya
+--   - Yasha and Kaya (will consider this higher than KnS in terms of priority for now)
+--   - Bloodstone
+--   - Kaya and Sange
+--   - The Triumvirate
+--   - Arcane Nexus
+--   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_the_triumvirate_v2:GetModifierPercentageCooldown()
-	return self.bonus_cdr
+    if self:GetAbility():GetSecondaryCharges() == 1 and
+	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.bonus_cdr
+    end
 end

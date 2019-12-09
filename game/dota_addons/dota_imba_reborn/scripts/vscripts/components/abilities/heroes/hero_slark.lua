@@ -7,6 +7,7 @@ LinkLuaModifier("modifier_imba_slark_dark_pact_thinker", "components/abilities/h
 
 LinkLuaModifier("modifier_imba_slark_pounce", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier("modifier_imba_slark_pounce_leash", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slark_pounce_charge_counter", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_slark_essence_shift", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slark_essence_shift_debuff_counter", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
@@ -28,6 +29,7 @@ modifier_imba_slark_dark_pact_thinker				= modifier_imba_slark_dark_pact_thinker
 imba_slark_pounce									= imba_slark_pounce or class({})
 modifier_imba_slark_pounce							= modifier_imba_slark_pounce or class({})
 modifier_imba_slark_pounce_leash					= modifier_imba_slark_pounce_leash or class({})
+modifier_imba_slark_pounce_charge_counter					= modifier_imba_slark_pounce_charge_counter or class({})
 
 -- imba_slark_essence_shift							= imba_slark_essence_shift or class({})
 -- modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class({})
@@ -254,6 +256,36 @@ function modifier_imba_slark_dark_pact_pulses:OnCreated(params)
 			self.premature_modifier:SetStackCount(0)
 			self.premature_modifier.store_health_loss	= 0
 			self.bStoreHealth	= false
+			
+			-- Let's have some fun with random equipment
+			
+			if not self.weapon_table then
+				self.weapon_table = {
+					"models/heroes/slark/weapon.vmdl",
+					"models/items/slark/ancient_imbued_spinal_blade/ancient_imbued_spinal_blade.vmdl",
+					"models/items/slark/anuxi_encore_dagger/anuxi_encore_dagger.vmdl",
+					"models/items/slark/barb_of_skadi/barb_of_skadi.vmdl",
+					"models/items/slark/crawblade/crawblade.vmdl",
+					"models/items/slark/dark_reef_weapon/dark_reef_weapon.vmdl",
+					"models/items/slark/deep_warden_scimitar/deep_warden_scimitar.vmdl",
+					"models/items/slark/deepscoundrel_weapon/deepscoundrel_weapon.vmdl",
+					"models/items/slark/golden_barb_of_skadi/golden_barb_of_skadi.vmdl",
+					"models/items/slark/hydrakan_latch/mesh/hydrkan_latch_model.vmdl",
+					"models/items/slark/oceanconquerer_weapon/oceanconquerer_weapon.vmdl",
+					"models/items/slark/pale_justice/pale_justice.vmdl",
+					"models/items/slark/shell_dagger/shell_dagger.vmdl",
+					"models/items/slark/slicer_of_the_depths/slicer_of_the_depths.vmdl",
+					"models/items/slark/spanky_daggerfish/spanky_daggerfish.vmdl",
+					"models/items/slark/the_silent_ripper/the_silent_ripper.vmdl",
+					"models/items/slark/ti9_cache_slark_jungle_rule_weapon/ti9_cache_slark_jungle_rule_weapon.vmdl",
+					"models/items/slark/tidal_blade/tidal_blade.vmdl"
+				}
+			end
+			
+			
+			self.weapon	 = SpawnEntityFromTableSynchronous("prop_dynamic", {model = self.weapon_table[RandomInt(1, #self.weapon_table)]})
+			-- lock to bone
+			self.weapon:FollowEntity(spawn_unit, true)
 		else
 			self.bStoreHealth	= false
 		end
@@ -307,11 +339,19 @@ end
 -- IMBA_SLARK_POUNCE --
 -----------------------
 
+function imba_slark_pounce:GetIntrinsicModifierName()
+	return "modifier_imba_slark_pounce_charge_counter"
+end
+
 function imba_slark_pounce:GetCooldown(level)
-	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") or IsClient() then
-		return self.BaseClass.GetCooldown(self, level)
-	elseif IsServer() then
-		return (self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
+	if not self:GetCaster():HasScepter() then
+		if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") or IsClient() then
+			return self.BaseClass.GetCooldown(self, level)
+		elseif IsServer() then
+			return (self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
+		end
+	else
+		return 0
 	end
 end
 
@@ -335,11 +375,21 @@ function imba_slark_pounce:OnSpellStart()
 	
 	-- IMBAfication: Aerial Redirection
 	if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_pounce", {duration = self:GetSpecialValueFor("pounce_distance") / self:GetSpecialValueFor("pounce_speed")})
+		if not self:GetCaster():HasScepter() then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_pounce", {duration = self:GetSpecialValueFor("pounce_distance") / self:GetSpecialValueFor("pounce_speed")})
+		else
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_pounce", {duration = self:GetSpecialValueFor("pounce_distance_scepter") / (self:GetSpecialValueFor("pounce_speed") * 2)})
+		end
+		
 		self:EndCooldown()
-		self:StartCooldown(0.25)
+		self:StartCooldown(0.1)
 	else
-		self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()		
+		if self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").redirect_pos then
+			self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = (self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").redirect_pos - self:GetCaster():GetAbsOrigin()):Normalized()
+		else
+			self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()		
+		end
+		
 		self:UseResources(false, false, true)
 	end
 end
@@ -367,6 +417,11 @@ function modifier_imba_slark_pounce:OnCreated()
 	self.duration		= self:GetAbility():GetSpecialValueFor("pounce_distance") / self.pounce_speed
 	self.direction		= self:GetParent():GetForwardVector()
 
+	if self:GetCaster():HasScepter() then
+		self.pounce_speed	= self:GetAbility():GetSpecialValueFor("pounce_speed") * 2
+		self.duration		= self:GetAbility():GetSpecialValueFor("pounce_distance_scepter") / self.pounce_speed
+	end
+
 	-- I don't see notes on the height in wiki so gonna use arbitrary height of 125 for now
 	self.vertical_velocity		= 4 * 125 / self.duration
 	self.vertical_acceleration	= -(8 * 125) / (self.duration * self.duration)
@@ -384,7 +439,15 @@ function modifier_imba_slark_pounce:OnRemoved()
 	if not IsServer() then return end
 
 	if self:GetAbility() then
-		self:GetAbility():UseResources(false, false, true)
+		if not self:GetCaster():HasScepter() then
+			self:GetAbility():UseResources(false, false, true)
+		else
+			if self:GetCaster():GetModifierStackCount("modifier_imba_slark_pounce_charge_counter", self:GetCaster()) == 0 then
+				self:GetAbility():StartCooldown(self:GetCaster():FindModifierByName("modifier_imba_slark_pounce_charge_counter"):GetRemainingTime())
+			else
+				self:GetAbility():UseResources(false, false, true)
+			end
+		end
 	end
 end
 
@@ -408,7 +471,11 @@ function modifier_imba_slark_pounce:UpdateHorizontalMotion(me, dt)
 	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.pounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)) do
 		if enemy:IsRealHero() or enemy:IsClone() or enemy:IsTempestDouble() then
 			enemy:EmitSound("Hero_Slark.Pounce.Impact")
-			
+
+			if self:GetParent():GetName() == "npc_dota_hero_slark" then
+				self:GetParent():EmitSound("slark_slark_pounce_0"..RandomInt(1, 6))
+			end	
+
 			local pounce_modifier = enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_slark_pounce_leash", {
 				duration 		= self.leash_duration,
 				leash_radius	= self.leash_radius
@@ -452,11 +519,35 @@ function modifier_imba_slark_pounce:CheckState()
 end
 
 function modifier_imba_slark_pounce:DeclareFunctions()
-	return {MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS}
+	return {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_slark_pounce:GetActivityTranslationModifiers()
 	return "leash"
+end
+
+function modifier_imba_slark_pounce:OnOrder(keys)
+	if keys.unit == self:GetParent() then
+		local redirection_commands = 
+		{
+			[DOTA_UNIT_ORDER_MOVE_TO_POSITION] 	= true,
+			[DOTA_UNIT_ORDER_MOVE_TO_TARGET] 	= true,
+			[DOTA_UNIT_ORDER_ATTACK_MOVE] 		= true,
+			[DOTA_UNIT_ORDER_ATTACK_TARGET] 	= true,
+			[DOTA_UNIT_ORDER_CAST_POSITION]		= true,
+			[DOTA_UNIT_ORDER_CAST_TARGET]		= true,
+			[DOTA_UNIT_ORDER_CAST_TARGET_TREE]	= true,
+		}
+		
+		-- Testing something to try and stop randomly cancelled charges but IDK what the issue is
+		if redirection_commands[keys.order_type] and keys.new_pos then
+			self.redirect_pos = keys.new_pos
+		end
+	end
 end
 
 --------------------------------------
@@ -529,6 +620,88 @@ function modifier_imba_slark_pounce_leash:GetModifierMoveSpeed_Limit()
 	end
 end
 
+-----------------------------------------------
+-- MODIFIER_IMBA_SLARK_POUNCE_CHARGE_COUNTER --
+-----------------------------------------------
+
+function modifier_imba_slark_pounce_charge_counter:IsHidden()			return not self:GetCaster():HasScepter() end
+function modifier_imba_slark_pounce_charge_counter:DestroyOnExpire()	return false end
+function modifier_imba_slark_pounce_charge_counter:RemoveOnDeath()		return false end
+
+function modifier_imba_slark_pounce_charge_counter:OnCreated()
+	if not IsServer() then return end
+
+	-- Sphaget way of getting this working but it's hardcode (doesn't read the server-side value if RequiresScepter flag is on and scepter is not held)
+	self:SetStackCount(math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2))
+	self:CalculateCharge()
+end
+
+function modifier_imba_slark_pounce_charge_counter:OnIntervalThink()
+	self:IncrementStackCount()
+	self:StartIntervalThink(-1)
+	self:CalculateCharge()
+end
+
+function modifier_imba_slark_pounce_charge_counter:CalculateCharge()	
+	if self:GetStackCount() >= math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2) then
+		self:SetDuration(-1, true)
+		self:StartIntervalThink(-1)
+	else
+		if self:GetRemainingTime() <= 0.05 then			
+			self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction())
+			self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction(), true)
+		end
+		
+		-- if self:GetStackCount() == 0 then
+			-- self:GetAbility():StartCooldown(self:GetRemainingTime())
+		-- else
+			self:GetAbility():StartCooldown(0.1)
+		-- end
+	end
+end
+
+function modifier_imba_slark_pounce_charge_counter:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+end
+
+function modifier_imba_slark_pounce_charge_counter:OnAbilityFullyCast(params)
+	if params.unit ~= self:GetParent() or not self:GetParent():HasScepter() then return end
+	
+	if params.ability == self:GetAbility() then
+		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
+		local wtf_mode = true
+		
+		if not GameRules:IsCheatMode() then
+			wtf_mode = false
+		else
+			for ability = 0, 24 - 1 do
+				if self:GetParent():GetAbilityByIndex(ability) and self:GetParent():GetAbilityByIndex(ability):GetCooldownTimeRemaining() > 0 then
+					wtf_mode = false
+					break
+				end
+			end
+
+			if wtf_mode == false then
+				for item = 0, 15 do
+					if self:GetParent():GetItemInSlot(item) and self:GetParent():GetItemInSlot(item):GetCooldownTimeRemaining() > 0 then
+						wtf_mode = false
+						break
+					end
+				end
+			end
+		end
+		
+		if wtf_mode == false then
+			self:DecrementStackCount()
+			self:CalculateCharge()
+		end
+	elseif params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
+		self:StartIntervalThink(-1)
+		self:SetDuration(-1, true)
+		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+	end
+end
+
 ------------------------------
 -- IMBA_SLARK_ESSENCE_SHIFT --
 ------------------------------
@@ -593,6 +766,12 @@ function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
 		
 		if self.debuff_modifier then
 			self.debuff_modifier:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+		end
+		
+		-- IMBAfication: Shivved
+		if self:GetAbility():IsCooldownReady() then
+			self:GetAbility():StartCooldown(self:GetAbility():GetCooldown(self:GetAbility():GetLevel() - 1) * self:GetParent():GetCooldownReduction())
+			self:GetParent():PerformAttack(keys.target, true, true, true, false, false, true, false)
 		end
 	end
 end
@@ -786,20 +965,21 @@ function imba_slark_shadow_dance:GetBehavior()
 end
 
 function imba_slark_shadow_dance:GetCastRange(location, target)
-	if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
-		return self:GetSpecialValueFor("scepter_aoe") - self:GetCaster():GetCastRangeBonus()
-	elseif self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
+	-- if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
+		-- return self:GetSpecialValueFor("scepter_aoe") - self:GetCaster():GetCastRangeBonus()
+	-- elseif self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
+	if self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
 		return self:GetSpecialValueFor("dark_reef_radius") - self:GetCaster():GetCastRangeBonus()
 	end
 end
 
-function imba_slark_shadow_dance:GetCooldown(level)
-	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
-	else
-		return self:GetSpecialValueFor("cooldown_scepter")
-	end
-end
+-- function imba_slark_shadow_dance:GetCooldown(level)
+	-- if not self:GetCaster():HasScepter() then
+		-- return self.BaseClass.GetCooldown(self, level)
+	-- else
+		-- return self:GetSpecialValueFor("cooldown_scepter")
+	-- end
+-- end
 
 function imba_slark_shadow_dance:OnOwnerSpawned()
 	if not IsServer() then return end
@@ -811,6 +991,22 @@ end
 
 function imba_slark_shadow_dance:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Slark.ShadowDance")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_slark" and RollPercentage(30) then
+		if not self.responses then
+			self.responses = 
+			{
+				"slark_slark_dark_pact_05",
+				"slark_slark_dark_pact_06",
+				"slark_slark_shadow_dance_01",
+				"slark_slark_shadow_dance_02",
+				"slark_slark_shadow_dance_03",
+				"slark_slark_shadow_dance_04"
+			}
+		end
+		
+		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+	end	
 
 	if not self:GetAutoCastState() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_shadow_dance_aura", {duration = self:GetTalentSpecialValueFor("duration")})
@@ -847,33 +1043,51 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnCreated()
 	self.counter		= 0
 	self.interval		= 0.1
 	
+	self.bHitByNeutral		= false
+	self.neutral_counter	= 0
+	
 	self:StartIntervalThink(self.interval)
 end
 
 function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
+	if self.bHitByNeutral then
+		self.neutral_counter	= self.neutral_counter	+ self.interval
+		
+		if self.neutral_counter >= self:GetAbility():GetSpecialValueFor("neutral_disable") then
+			self.bHitByNeutral		= false
+			self.neutral_counter	= 0
+		end
+	end
+
 	self.bVisible		= false
 	
 	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
-		if (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType()) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) then
+		-- Random 7.23 building can see everything in the world or something wtf...
+		if (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType()) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) and enemy:GetName() ~= "npc_dota_watch_tower" then
 			self.bVisible	= true
 			break
 		end
 	end
 	
 	-- Slark is visible and passive is on its way to being disabled
-	if self.bPassiveActive and self.bVisible and not self:GetParent():HasModifier("modifier_imba_slark_shadow_dance") then
-		self.counter		= self.counter + self.interval
+	if ((self.bPassiveActive and self.bVisible) or self.bHitByNeutral) and not self:GetParent():HasModifier("modifier_imba_slark_shadow_dance") then
+		if not self.bHitByNeutral then
+			self.counter		= self.counter + self.interval
+		end
 		
-		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") then
+		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") or self.bHitByNeutral then
 			self.bPassiveActive	= false
 			self:SetStackCount(-1)
-			self.counter		= 0
+			
+			if not self.bHitByNeutral then
+				self.counter		= 0
+			end
 		end
 	-- Slark is not visible and passive is on its way to being re-enabled
 	elseif not self.bPassiveActive and not self.bVisible then
 		self.counter		= self.counter + self.interval
 		
-		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") then
+		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") and not self.bHitByNeutral then
 			self.bPassiveActive	= true
 			self:SetStackCount(0)
 			self.counter		= 0
@@ -885,6 +1099,7 @@ function modifier_imba_slark_shadow_dance_passive_regen:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		
 		MODIFIER_EVENT_ON_ORDER
 	}
@@ -899,6 +1114,13 @@ end
 function modifier_imba_slark_shadow_dance_passive_regen:GetModifierHealthRegenPercentage()
 	if not self:IsHidden() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() then
 		return self:GetAbility():GetSpecialValueFor("bonus_regen_pct")
+	end
+end
+
+function modifier_imba_slark_shadow_dance_passive_regen:OnTakeDamage(keys)
+	if keys.unit == self:GetParent() and (keys.attacker.IsNeutralUnitType and keys.attacker:IsNeutralUnitType()) then
+		self.bHitByNeutral 		= true
+		self.neutral_counter	= 0
 	end
 end
 
@@ -937,12 +1159,12 @@ function modifier_imba_slark_shadow_dance_aura:OnCreated(params)
 	
 		local shadow_particle_name = "particles/units/heroes/hero_slark/slark_shadow_dance_dummy.vpcf"
 	
-		if not self:GetCaster():HasScepter() then
+		-- if not self:GetCaster():HasScepter() then
 			self.aoe	= 0
-		else
-			self.aoe = self:GetAbility():GetSpecialValueFor("scepter_aoe")
-			shadow_particle_name = "particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf"
-		end
+		-- else
+			-- self.aoe = self:GetAbility():GetSpecialValueFor("scepter_aoe")
+			-- shadow_particle_name = "particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf"
+		-- end
 		
 		self.shadow_dummy_particle = ParticleManager:CreateParticle(shadow_particle_name, PATTACH_ABSORIGIN_FOLLOW, visual_unit)
 		ParticleManager:SetParticleControlEnt(self.shadow_dummy_particle, 1, visual_unit, PATTACH_POINT_FOLLOW, nil, visual_unit:GetAbsOrigin(), true)
@@ -1086,292 +1308,6 @@ function modifier_imba_slark_visual:CheckState()
 	}
 end
 
-	-- //=================================================================================================================
-	-- // Slark Shadow Dance
-	-- //=================================================================================================================
-	-- "slark_shadow_dance"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5497"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		-- "FightRecapLevel"				"2"
-		-- "HasScepterUpgrade"				"1"
-		-- "AbilitySound"					"Hero_Slark.ShadowDance"
-		-- "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"80 70 60"
-		
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"120 120 120"		
-
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "duration"					"4 4.25 4.5"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_slark_3"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "fade_time"					"0.0 0.0 0.0"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "bonus_movement_speed"		"20 35 50"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "bonus_regen_pct"			"5 6 7"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "activation_delay"			"0.5 0.5 0.5"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "neutral_disable"			"2.0 2.0 2.0"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "scepter_aoe"						"425"
-				-- "RequiresScepter"	"1"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "cooldown_scepter"			"30"
-				-- "RequiresScepter"	"1"
-			-- }
-		-- }
-	-- }
-
-	-- //=================================================================================================================
-	-- // Slark: Dark Pact
-	-- //=================================================================================================================
-	-- "slark_dark_pact"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5494"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		-- "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		-- "FightRecapLevel"				"1"
-		-- "AbilitySound"					"Hero_Slark.DarkPact.Cast"
-
-		-- // Casting
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCastAnimation"			"ACT_INVALID"
-		-- "AbilityCastPoint"				"0.001 0.001 0.001 0.001"
-		-- "AbilityCastRange"				"325"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"9.0 8.0 7.0 6.0"
-
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"60"	
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "delay"					"1.5"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "pulse_duration"		"1.0"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "radius"				"325"
-			-- }	
-			-- "04"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "total_damage"			"75 150 225 300"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_slark_2"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "total_pulses"			"10"
-			-- }	
-			-- "06"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "pulse_interval"		"0.1"
-			-- }			
-		-- }
-	-- }
-
-
-	-- //=================================================================================================================
-	-- // Slark: Essence Shift
-	-- //=================================================================================================================
-	-- "slark_essence_shift"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5496"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "agi_gain"				"3"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "stat_loss"				"1"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "duration"				"15 30 60 100"
-				-- "LinkedSpecialBonus"	"special_bonus_unique_slark_4"
-			-- }
-		-- }
-		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	-- }
-
-
--- //=================================================================================================================
-	-- // Ability: Special Bonus
-	-- //=================================================================================================================
-	-- "special_bonus_unique_slark"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"					"6147"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "value"				"1"
-			-- }
-		-- }
-	-- }
-
-	-- //=================================================================================================================
-	-- // Ability: Special Bonus
-	-- //=================================================================================================================
-	-- "special_bonus_unique_slark_2"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"					"6892"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "value"				"150"
-			-- }
-		-- }
-	-- }
-
-	-- //=================================================================================================================
-	-- // Ability: Special Bonus
-	-- //=================================================================================================================
-	-- "special_bonus_unique_slark_3"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"					"6893"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "value"				"1"
-			-- }
-		-- }
-	-- }
-
-	-- //=================================================================================================================
-	-- // Ability: Special Bonus
-	-- //=================================================================================================================
-	-- "special_bonus_unique_slark_4"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"					"6894"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "value"				"80"
-			-- }
-		-- }
-	-- }
-
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
-
--- LinkLuaModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
-
--- modifier_special_bonus_imba_timbersaw_timber_chain_range	= class({})
-
--- function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsHidden() 		return true end
--- function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable()	 	return false end
--- function modifier_special_bonus_imba_timbersaw_timber_chain_range:RemoveOnDeath() 	return false end
-
--- function imba_timbersaw_timber_chain:OnOwnerSpawned()
-	-- if not IsServer() then return end
-
-	-- if self:GetCaster():HasTalent("special_bonus_imba_timbersaw_timber_chain_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_timbersaw_timber_chain_range"), "modifier_special_bonus_imba_timbersaw_timber_chain_range", {})
-	-- end
--- end
+---------------------
+-- TALENT HANDLERS --
+---------------------

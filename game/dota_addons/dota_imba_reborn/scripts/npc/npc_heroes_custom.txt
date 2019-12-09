@@ -132,9 +132,9 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_antimage_mana_void"
 
-		"Ability10"					"special_bonus_strength_12"
+		"Ability10"					"special_bonus_strength_13"
 		"Ability11"					"special_bonus_attack_speed_25"
-		"Ability12"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability12"					"special_bonus_imba_antimage_blink_range"
 		"Ability13"					"special_bonus_agility_15"
 		"Ability14"					"special_bonus_imba_antimage_9" // Blink Uncontrollable Illusion
 		"Ability15"					"special_bonus_imba_antimage_10" // -Xs Blink Cooldown
@@ -145,6 +145,7 @@
 		// "Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		// "Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
 		// "Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		// "Ability12"					""special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
 		// "Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
 		// "Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
 		// "Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
@@ -254,16 +255,19 @@
 
 		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
 		"Ability11"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
-		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
+		"Ability12"					"special_bonus_hp_300"
 		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
-		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
+		"Ability14"					"special_bonus_imba_bloodseeker_rupture_cast_range"
 		"Ability15"					"special_bonus_lifesteal_25"
 		"Ability16"					"special_bonus_imba_bloodseeker_9" //-6s Blood Rite Cooldown
 		"Ability17"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
 		
 //		Removed Abilities
-//		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase		
+//		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
+//		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
+//		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
 //		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker	
+//
 	}
 
 	//=================================================================================================================
@@ -423,8 +427,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_crystal_maiden_freezing_field"
 
-		"Ability10"					"special_bonus_imba_crystal_maiden_2" //Frostbite can be cast on allies to regen health and mana and reduce damage taken
-		"Ability11"					"special_bonus_imba_crystal_maiden_5" //Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds
+		"Ability10"					"special_bonus_hp_300"
+		"Ability11"					"special_bonus_cast_range_100"
 		"Ability12"					"special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"
 		"Ability13"					"special_bonus_imba_crystal_maiden_4" //Double Arcane Dynamo's bonuses
 		"Ability14"					"special_bonus_attack_speed_250"
@@ -807,12 +811,18 @@
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
-		"Ability12"					"special_bonus_imba_jakiro_3"
+		"Ability12"					"special_bonus_exp_boost_50"
 		"Ability13"					"special_bonus_spell_amplify_12"
 		"Ability14"					"special_bonus_imba_jakiro_7"
 		"Ability15"					"special_bonus_imba_jakiro_6"
-		"Ability16"					"special_bonus_imba_jakiro_5"
+		"Ability16"					"special_bonus_imba_jakiro_3"
 		"Ability17"					"special_bonus_imba_jakiro_9"
+		
+		// Removed Talents
+		// "Ability13"				"special_bonus_imba_jakiro_4" // +X Liquid Fire cast range
+		// "Ability16"				"special_bonus_imba_jakiro_5" // +Xs Ice Path stun duration
+		// "Ability17"				"special_bonus_imba_jakiro_8" // Macropyre slows enemies (X% * Y% per tick)
+		
 	}
 
 	//=================================================================================================================
@@ -833,9 +843,9 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_juggernaut_omni_slash"
 
-		"Ability10"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
-		"Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
-		"Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
+		"Ability10"					"special_bonus_all_stats_6"
+		"Ability11"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
+		"Ability12"					"special_bonus_imba_juggernaut_blade_fury_movement_speed"
 		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
 		"Ability14"					"special_bonus_armor_10"
 		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
@@ -843,7 +853,9 @@
 		"Ability17"					"special_bonus_imba_juggernaut_10" // Omnislash increased duration
 		
 		// Removed Talents
-		// "Ability14"				"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
+		// "Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
+		// "Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
+		// "Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
 		// "Ability16"				"special_bonus_imba_juggernaut_9" // Omnislash EX
 	}
 
@@ -931,7 +943,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_lina_laguna_blade"
 
-		"Ability10"					"special_bonus_attack_damage_30" // Additional Dragon Slaves
+		"Ability10"					"special_bonus_attack_damage_35"
 		"Ability11"					"special_bonus_cast_range_125"
 		"Ability12"					"special_bonus_hp_400"
 		"Ability13"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
@@ -1205,7 +1217,7 @@
 		"Ability11"					"special_bonus_mp_225"
 		"Ability12"					"special_bonus_strength_15"
 		"Ability13"					"special_bonus_lifesteal_15"
-		"Ability14"					"special_bonus_movement_speed_45"
+		"Ability14"					"special_bonus_movement_speed_40"
 		"Ability15"					"special_bonus_attack_damage_50"
 		"Ability16"					"special_bonus_imba_night_stalker_9"
 		"Ability17"					"special_bonus_imba_night_stalker_10"
@@ -1442,6 +1454,7 @@
 		"Ability4"					"imba_pudge_sharp_hook"
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
+		"Ability7"					"imba_pudge_eject"
 
 		"Ability10"					"special_bonus_exp_boost_40"
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
@@ -1739,7 +1752,7 @@
 		"Ability12"					"special_bonus_attack_speed_40"
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
-		"Ability15"					"special_bonus_imba_sniper_9"
+		"Ability15"					"special_bonus_movement_speed_40"
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
 		
@@ -1852,7 +1865,7 @@
 		"Ability11"					"special_bonus_imba_tiny_2"
 		"Ability12"					"special_bonus_hp_500"
 		"Ability13"					"special_bonus_imba_tiny_6"
-		"Ability14"					"special_bonus_unique_tiny_4"
+		"Ability14"					"special_bonus_strength_20"
 		"Ability15"					"special_bonus_imba_tiny_avalanche_cooldown"
 		"Ability16"					"special_bonus_imba_tiny_7"
 		"Ability17"					"special_bonus_imba_tiny_8"
@@ -1865,6 +1878,7 @@
 		// "Ability12"					"special_bonus_imba_tiny_3" // Avalanche 400 Unit Projectile (what even is this talent...)
 		// "Ability13"					"special_bonus_imba_tiny_4" // -7s Tree Grab Cooldown (replaced with vanilla talent)
 		// "Ability14"					"special_bonus_imba_tiny_5" // Tree Throw knockbacks enemies on impact (vanilla ability now, plus wtf this talent is dumpster)
+		// "Ability14"					"special_bonus_unique_tiny_4"
 	}
 
 	//=================================================================================================================
@@ -2043,16 +2057,18 @@
 
 		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
 		"Ability11"					"special_bonus_cast_range_150"
-		"Ability12"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
-		"Ability13"					"special_bonus_imba_warlock_6" // "Upheaval is channeled by a demon in steed"
+		"Ability12"					"special_bonus_exp_boost_50"
+		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"
 		"Ability15"					"special_bonus_imba_warlock_5" // "+4 Shadow Word duration"
 		"Ability16"					"special_bonus_imba_warlock_4" // "+X Golem armor"
-		"Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
+		"Ability17"					"special_bonus_imba_warlock_chaotic_offering_magic_resistance"
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_warlock_2" // "Upheaval also reduces attack speed"
+		// "Ability13"					"special_bonus_imba_warlock_6" // "Upheaval is channeled by a demon in steed"
 		// "Ability16"					"special_bonus_imba_warlock_7" // "Golems share damage taken to all linked enemies"
+		// "Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
 	}
 
 	//=================================================================================================================

@@ -163,10 +163,12 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' - ');
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
-		_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.winrate);
+//		_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.winrate);
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
 		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
 	}
+
+	_ScoreboardUpdater_SetValueSafe(playerPanel, "Rank", player_info.mmr_title);
 }
 
 var is_donator_set = [];

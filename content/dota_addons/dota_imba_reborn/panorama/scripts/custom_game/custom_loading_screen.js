@@ -119,8 +119,8 @@ function AllPlayersLoaded() {
 		})(panel, gamemode);
 	}
 
-	$("#VoteGameMode1").checked = true;
-	OnVoteButtonPressed("gamemode", 1);
+//	$("#VoteGameMode1").checked = true;
+//	OnVoteButtonPressed("gamemode", 1);
 }
 
 function HoverableLoadingScreen() {
@@ -136,6 +136,8 @@ function OnVoteButtonPressed(category, vote)
 //	$.Msg("Vote: ", vote);
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
 }
+
+/* new system, double votes for donators
 
 function OnVotesReceived(data)
 {
@@ -161,6 +163,47 @@ function OnVotesReceived(data)
 		var amount_of_votes = data.table[id][2];
 //		$.Msg(gamemode + " / "+ amount_of_votes)
 		vote_count[gamemode] = vote_count[gamemode] + amount_of_votes;
+	}
+
+	// Modify tooltips based on voted gamemode
+	for (var i = 1; i <= 5; i++) {
+		var vote_tooltip = "vote"
+		if (vote_count[i] > 1)
+			vote_tooltip = "votes"
+
+		if ($("#VoteGameModeText" + i))
+			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+	}
+
+//	if (data.category == "random_tower_abilities") {
+
+//	}
+}
+
+*/
+
+function OnVotesReceived(data)
+{
+//	$.Msg(data)
+//	$.Msg(data.vote.toString())
+//	$.Msg(data.table)
+//	$.Msg(data.table[id])
+
+	var vote_count = []
+
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
+
+	// Reset tooltips
+	for (var i = 1; i <= 5; i++) {
+		vote_count[i] = 0;
+		if ($("#VoteGameModeText" + i))
+			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+	}
+
+	// Check number of votes for each gamemodes
+	for (var id in data.table){
+		var gamemode = data.table[id];
+		vote_count[gamemode]++;
 	}
 
 	// Modify tooltips based on voted gamemode

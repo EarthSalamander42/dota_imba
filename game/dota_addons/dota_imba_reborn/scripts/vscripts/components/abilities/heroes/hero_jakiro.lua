@@ -496,7 +496,7 @@ function imba_jakiro_ice_path:OnSpellStart()
 	
 		local caster = self:GetCaster()
 		-- Create thinker to apply modifiers to enemies on path
-		CreateModifierThinker( caster, self, "modifier_imba_ice_path_thinker", kv, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
+		CreateModifierThinker( caster, self, "modifier_imba_ice_path_thinker", {duration = self:GetSpecialValueFor("path_delay") + self:GetTalentSpecialValueFor("path_duration")}, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
 	end
 end
 
@@ -547,16 +547,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 1, end_pos )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 2, Vector(path_duration, 0, 0) ) --Shorter duration as it needs to melt
 		self:AddParticle(pfx_ice_path_blob, false, false, -1, false, false)
-
-		-- Create ice path flash
-		Timers:CreateTimer(path_delay, function()
-			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
-			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
-			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
-			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
-			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )
-		end)
-
+		
 		-- Create ice path icicles
 		particle_name = "particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
 		local pfx_icicles = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
@@ -578,8 +569,14 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		local direction_vector = (end_pos - start_pos):Normalized()
 		------------------------------
 
-		-- Apply affect after delay
+		-- Create ice path flash and apply affect after delay
 		Timers:CreateTimer(path_delay, function()
+			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
+			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
+			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
+			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
+			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )
+			
 			-- Create flying vision nodes
 			local current_point = start_pos
 			for i=1,viewpoint_amount do
@@ -595,43 +592,48 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 end
 
 function modifier_imba_ice_path_thinker:OnIntervalThink()
-	if IsServer() then
-		local current_game_time = GameRules:GetGameTime()
-		local ice_path_end_time = self.ice_path_end_time
+	local current_game_time = GameRules:GetGameTime()
+	local ice_path_end_time = self.ice_path_end_time
 
-		if current_game_time >= ice_path_end_time then
-			-- Remove dummy thinker if ice path has ended
-			UTIL_Remove( self:GetParent() )
-		else
+	-- if current_game_time >= ice_path_end_time then
+		-- -- Remove dummy thinker if ice path has ended
+		-- UTIL_Remove( self:GetParent() )
+	-- else
 
-			local stun_duration 	= self.stun_duration
-			local frozen_enemy_set 	= self.frozen_enemy_set
-			local caster 			= self:GetCaster()
-			local ability			= self:GetAbility()
-			local modifier_freeze 	= self.modifier_freeze
+	local stun_duration 	= self.stun_duration
+	local frozen_enemy_set 	= self.frozen_enemy_set
+	local caster 			= self:GetCaster()
+	local ability			= self:GetAbility()
+	local modifier_freeze 	= self.modifier_freeze
 
-			local time_diff = ice_path_end_time - current_game_time
+	-- local time_diff = ice_path_end_time - current_game_time
 
-			-- Stun duration does not last longer than the time left for ice path (follows original ice path)
-			local stun_duration_left
-			if time_diff > stun_duration then
-				stun_duration_left = stun_duration
-			else
-				stun_duration_left = time_diff
+	-- -- Stun duration does not last longer than the time left for ice path (follows original ice path)
+	-- local stun_duration_left
+	-- if time_diff > stun_duration then
+		-- stun_duration_left = stun_duration
+	-- else
+		-- stun_duration_left = time_diff
+	-- end
+
+	local enemies = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
+
+	for _, enemy in pairs(enemies) do
+		if not frozen_enemy_set[enemy] then
+			-- Freeze enemy if they touch ice path the first time
+			frozen_enemy_set[enemy] = true
+			local stun_modifier = enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = self:GetRemainingTime() })
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self:GetRemainingTime() * (1 - enemy:GetStatusResistance()), true)
 			end
-
-			local enemies = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
-
-			for _, enemy in pairs(enemies) do
-				if not frozen_enemy_set[enemy] then
-					-- Freeze enemy if they touch ice path the first time
-					frozen_enemy_set[enemy] = true
-					enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = stun_duration_left })
-				else
-					if not enemy:FindModifierByNameAndCaster(modifier_freeze, caster) then
-						-- Slow enemy after the freeze expires
-						enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 })
-					end
+		else
+			if not enemy:FindModifierByNameAndCaster(modifier_freeze, caster) then
+				-- Slow enemy after the freeze expires
+				local slow_modifier = enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 })
+				
+				if slow_modifier then
+					slow_modifier:SetDuration(1.0 * (1 - enemy:GetStatusResistance()), true)
 				end
 			end
 		end
@@ -958,12 +960,10 @@ function modifier_imba_liquid_fire_debuff:_SubClassOnCreated()
 end
 
 function modifier_imba_liquid_fire_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return funcs
 end
 
 function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow * (-1) end

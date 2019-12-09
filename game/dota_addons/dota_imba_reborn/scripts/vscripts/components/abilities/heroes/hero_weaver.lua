@@ -445,7 +445,7 @@ end
 
 function modifier_imba_weaver_shukuchi:OnCreated()
 	self.fade_time		= self:GetAbility():GetSpecialValueFor("fade_time")
-	self.hasted_speed	= self:GetAbility():GetTalentSpecialValueFor("hasted_speed")
+	self.speed			= self:GetAbility():GetTalentSpecialValueFor("speed")
 	
 	if not IsServer() then return end
 	
@@ -489,18 +489,21 @@ function modifier_imba_weaver_shukuchi:CheckState()
 	if self:GetElapsedTime() >= self.fade_time then
 		return {
 			[MODIFIER_STATE_INVISIBLE]			= true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION]	= true
+			[MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
+			[MODIFIER_STATE_UNSLOWABLE]			= true
 		}
 	else
 		return {
-			[MODIFIER_STATE_NO_UNIT_COLLISION]	= true
+			[MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
+			[MODIFIER_STATE_UNSLOWABLE]			= true
 		}
 	end
 end
 
 function modifier_imba_weaver_shukuchi:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 		
 		MODIFIER_EVENT_ON_ATTACK,
@@ -508,8 +511,12 @@ function modifier_imba_weaver_shukuchi:DeclareFunctions()
 	}
 end
 
-function modifier_imba_weaver_shukuchi:GetModifierMoveSpeed_AbsoluteMin()
-	return self.hasted_speed
+function modifier_imba_weaver_shukuchi:GetModifierIgnoreMovespeedLimit()
+	return 1
+end
+
+function modifier_imba_weaver_shukuchi:GetModifierMoveSpeedBonus_Constant()
+	return self.speed
 end
 
 function modifier_imba_weaver_shukuchi:GetModifierInvisibilityLevel()

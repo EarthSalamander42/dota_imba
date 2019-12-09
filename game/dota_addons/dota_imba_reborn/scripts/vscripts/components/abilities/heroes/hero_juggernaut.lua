@@ -77,6 +77,7 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.deflect = true
 
 	self.damage_penalty	= self:GetAbility():GetTalentSpecialValueFor("damage_penalty")
+	self.talent_movespeed	= self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_blade_fury_movement_speed")
 
 	if IsServer() then
 		if self:GetCaster():IsAlive() then
@@ -91,7 +92,7 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 
 			self:StartIntervalThink(self.tick)
 			self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStart")
-			StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
+			-- StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
 			
 			-- Disable Omnislash during Blade Fury (vanilla)
 			if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
@@ -387,16 +388,26 @@ function modifier_imba_juggernaut_blade_fury:CheckState()
 end
 
 function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE  
+	return {
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
-	return funcs
 end
 
 function modifier_imba_juggernaut_blade_fury:GetModifierDamageOutgoing_Percentage(keys)
 	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
 		return self.damage_penalty
 	end
+end
+
+function modifier_imba_juggernaut_blade_fury:GetModifierMoveSpeedBonus_Constant()
+	return self.talent_movespeed
+end
+
+function modifier_imba_juggernaut_blade_fury:GetOverrideAnimation()
+	return ACT_DOTA_OVERRIDE_ABILITY_1
 end
 
 -- Deflected kill credited to the caster.
@@ -2308,3 +2319,24 @@ function modifier_juggernaut_arcana_kill:OnCreated(keys)
 		end
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed	= class({})
+
+function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:IsPurgable() 	return false end
+function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:RemoveOnDeath() 	return false end
+
+function imba_juggernaut_blade_fury:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_blade_fury_movement_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_blade_fury_movement_speed"), "modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed", {})
+	end
+end
+

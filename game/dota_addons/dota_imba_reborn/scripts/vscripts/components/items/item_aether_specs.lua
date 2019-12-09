@@ -108,6 +108,13 @@ function modifier_item_imba_aether_specs:OnCreated()
 		self.bonus_intellect	= 0
 		self.bonus_aspd			= 0
 	end
+
+	if not IsServer() then return end
+	
+    -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_aether_specs:OnDestroy()
@@ -115,11 +122,12 @@ function modifier_item_imba_aether_specs:OnDestroy()
 	
 	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
 		modifier:SetStackCount(_)
+		modifier:GetAbility():SetSecondaryCharges(_)
 	end
 end
 
 function modifier_item_imba_aether_specs:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
@@ -131,8 +139,6 @@ function modifier_item_imba_aether_specs:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_aether_specs:GetModifierManaBonus()
@@ -151,12 +157,20 @@ function modifier_item_imba_aether_specs:GetModifierCastRangeBonusStacking()
 	end
 end
 
+-- As of 7.23, the items that Nether Wand's tree contains are as follows:
+--   - Nether Wand
+--   - Aether Lens
+--   - Aether Specs
+--   - Eul's Scepter of Divinity EX
+--   - Armlet of Dementor
+--   - Arcane Nexus
 function modifier_item_imba_aether_specs:GetModifierSpellAmplify_Percentage()
-	if self:GetStackCount() ~= 1 then
-		return 0
-	else
-		return self.spell_power
-	end
+    if self:GetAbility():GetSecondaryCharges() == 1 and 
+	not self:GetParent():HasModifier("modifier_item_imba_cyclone_2") and 
+	not self:GetParent():HasModifier("modifier_item_imba_armlet_of_dementor") and
+	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+        return self.spell_power
+    end
 end
 
 function modifier_item_imba_aether_specs:GetModifierPreAttack_BonusDamage()

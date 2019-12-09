@@ -51,6 +51,7 @@ function modifier_imba_assault_cuirass:OnCreated()
 	-- Abiltiy specials
 	self.bonus_as = self.ability:GetSpecialValueFor("bonus_as")
 	self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")
+	self.bonus_all_stats	= self.ability:GetSpecialValueFor("bonus_all_stats")
 
 	if IsServer() then
 		-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
@@ -62,9 +63,14 @@ function modifier_imba_assault_cuirass:OnCreated()
 end
 
 function modifier_imba_assault_cuirass:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,	
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+	}
 end
 
 function modifier_imba_assault_cuirass:GetModifierAttackSpeedBonus_Constant()
@@ -75,6 +81,18 @@ end
 function modifier_imba_assault_cuirass:GetModifierPhysicalArmorBonus()
 	if not self.ability then return nil end
 	return self.bonus_armor
+end
+
+function modifier_imba_assault_cuirass:GetModifierBonusStats_Strength()
+	return self.bonus_all_stats
+end
+
+function modifier_imba_assault_cuirass:GetModifierBonusStats_Agility()
+	return self.bonus_all_stats
+end
+
+function modifier_imba_assault_cuirass:GetModifierBonusStats_Intellect()
+	return self.bonus_all_stats
 end
 
 function modifier_imba_assault_cuirass:IsHidden() return true end

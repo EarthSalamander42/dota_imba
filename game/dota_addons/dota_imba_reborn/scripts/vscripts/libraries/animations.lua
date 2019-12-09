@@ -630,9 +630,11 @@ function StartAnimation(unit, table)
       unit:SetModifierStackCount("modifier_animation_translate", unit, _ANIMATION_TRANSLATE_TO_CODE[translate2])
     end
 
-    unit._animationEnd = GameRules:GetGameTime() + duration
-    unit:AddNewModifier(unit, nil, "modifier_animation", {duration=duration, translate=translate})
-    unit:SetModifierStackCount("modifier_animation", unit, stacks)
+	if duration then
+		unit._animationEnd = GameRules:GetGameTime() + duration
+		unit:AddNewModifier(unit, nil, "modifier_animation", {duration=duration, translate=translate})
+		unit:SetModifierStackCount("modifier_animation", unit, stacks)
+	end
   end
 end
 

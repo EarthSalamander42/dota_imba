@@ -478,7 +478,7 @@ function imba_witch_doctor_maledict:OnSpellStart()
 	local vPosition = self:GetCursorPosition()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("duration")
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPosition, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPosition, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl( aoe_pfx, 0, vPosition )
 	ParticleManager:SetParticleControl( aoe_pfx, 1, Vector(radius, radius, radius) )
@@ -562,7 +562,11 @@ end
 function modifier_imba_maledict:OnIntervalThink()
 	local hParent = self:GetParent()
 	self.counter = self.counter + self.tick_time_main
-	ApplyDamage({victim = hParent, attacker = self:GetCaster(), damage = self.main_damage, damage_type = self:GetAbility():GetAbilityDamageType()})
+	
+	if not self:GetParent():IsMagicImmune() then
+		ApplyDamage({victim = hParent, attacker = self:GetCaster(), damage = self.main_damage, damage_type = self:GetAbility():GetAbilityDamageType()})
+	end
+	
 	if self.counter >= self.tick_time_sec then
 
 		self.counter = 0
@@ -622,7 +626,11 @@ function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 		end)
 	end
 	local hpDiffDamage = (self.healthComparator - newHP) * self.bonus_damage_pct
-	ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = hpDiffDamage, damage_type = hAbility:GetAbilityDamageType()})
+	
+	if not self:GetParent():IsMagicImmune() then
+		ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = hpDiffDamage, damage_type = hAbility:GetAbilityDamageType()})
+	end
+	
 	EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", hTarget)
 
 	-- #1 TALENT: Maledict deals additional damage based on it's own damage, spread between enemies around the target.
