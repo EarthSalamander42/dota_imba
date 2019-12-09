@@ -450,7 +450,7 @@
 	"lanecreepson_msg" "兵线：开"
 	"lang" "cn"
 	"leaderboard" "排行榜"
-	"leaderboard_donator" "Donator"
+	"leaderboard_donator" "捐赠者"
 	"leaderboard_loading" "正在读取数据，请稍候"
 	"leaderboard_rank" "排名"
 	"leaderboard_steam_avatar" "Steam"
