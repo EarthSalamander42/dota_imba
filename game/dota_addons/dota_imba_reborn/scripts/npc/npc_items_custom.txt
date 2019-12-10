@@ -13022,7 +13022,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"regen_per_charge"		"0.5"
+				"regen_per_charge"		"0.3"
 			}
 			"08"
 			{

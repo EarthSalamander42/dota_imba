@@ -4857,7 +4857,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -4986,6 +4986,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
+		"HasScepterUpgrade"				"1"
 
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.4"
@@ -5060,7 +5061,14 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"armor_heroes"					"1.5 3 4.5 6"
-			}			
+			}
+			
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_magic_immune_per_hero"	"2"
+				"RequiresScepter"				"1"
+			}
 		}
 	}
 
@@ -35388,13 +35396,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-		"AbilityCastRange"				"385"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"9 8 7 6"
+		"AbilityDuration"				"4.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -35493,6 +35501,22 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"enrage_bonus_dmg_pct"		"100"
+			}
+			
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hop_distance"					"250"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hop_duration"		"0.25"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hop_height"		"83"
 			}
 		}
 	}
@@ -35649,7 +35673,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50.0 40.0 30.0"
+		"AbilityCooldown"				"60 50 40"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -36378,7 +36402,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellDispellableType"				"SPELL_DISPELLABLE_YES_STRONG"
@@ -37019,6 +37043,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"1 2 3 4"
 			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen_reduction"		"15 20 25 30"
+			}	
 		}
 	}
 
@@ -37150,7 +37180,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"magic_amp_pct"				"0.8"
+				"magic_amp_pct"				"0.6"
 				"LinkedSpecialBonus"		"special_bonus_imba_venomancer_3"
 			}
 		}
@@ -37171,7 +37201,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"venomancer_poison_nova"
@@ -37234,7 +37264,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_threshold_pct"			"50 40 30"
+				"health_threshold_pct"			"50"
 			}
 			"07"
 			{
@@ -37250,11 +37280,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"main_damage_scepter"			"75 100 125"
+				"RequiresScepter"		"1"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"cooldown_scepter"				"120 90 60"
+				"RequiresScepter"				"1"
 			}
 		}
 	}
@@ -41236,6 +41268,42 @@
 				"var_type"			"FIELD_INTEGER"
 				"expansion_pct"		"100"
 			}			
+		}
+	}
+	
+
+	//=================================================================================================================
+	// Form Change (7.23+ Ability for Swapping)
+	//=================================================================================================================
+	"imba_form_change"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
 		}
 	}
 }

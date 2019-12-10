@@ -194,21 +194,34 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_bane_enfeeble"
-		"Ability2"					"imba_bane_brain_sap"
+		"Ability1"					"imba_bane_enfeeble_723"
+		"Ability2"					"imba_bane_brain_sap_723"
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_bane_fiends_grip"
+		"Ability6"					"imba_bane_fiends_grip_723"		
 
-		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
-		"Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
-		"Ability12"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
+		"Ability10"					"special_bonus_armor_7"
+		"Ability11"					"special_bonus_cast_range_100"
+		"Ability12"					"special_bonus_spell_amplify_8"
 		"Ability13"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
-		"Ability14"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
+		"Ability14"					"special_bonus_spell_lifesteal_20"
 		"Ability15"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
-		"Ability16"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
-		"Ability17"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
+		"Ability16"					"special_bonus_imba_bane_brain_sap_damage"
+		"Ability17"					"special_bonus_imba_bane_fiends_grip_duration"
+		
+		// Removed Abilities
+		// "Ability1"					"imba_bane_enfeeble"
+		// "Ability2"					"imba_bane_brain_sap"
+		// "Ability6"					"imba_bane_fiends_grip"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
+		// "Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
+		// "Ability12"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
+		// "Ability14"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
+		// "Ability16"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+		// "Ability17"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
 	}
 
 	//=================================================================================================================
@@ -389,6 +402,8 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"clinkz_burning_army"
+		
+		"Ability9"					"imba_form_change"
 
 		"Ability10"					"special_bonus_magic_resistance_15"
 		"Ability11"					"special_bonus_armor_6"

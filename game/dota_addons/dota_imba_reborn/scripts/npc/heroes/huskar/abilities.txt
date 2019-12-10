@@ -208,7 +208,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_cost"					"15"
+				"health_cost"					"4"
 			}
 			"02"
 			{
@@ -325,7 +325,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDuration"				"4 5 6"
+		"AbilityDuration"				"3 4 5"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -345,6 +345,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"health_damage_scepter"		"0.65"
+				"RequiresScepter"			"1"
 			}
 			"04"
 			{
@@ -370,17 +371,19 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_durtion_tooltip"		"4 5 6"
+				"slow_durtion_tooltip"		"3 4 5"
 			}
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"tooltip_health_damage_scepter"		"65"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"cooldown_scepter"			"4"
+				"RequiresScepter"			"1"
 			}
 			
 			"11"
@@ -406,7 +409,14 @@
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"sac_dagger_dmg_pct"		"40"
+				"sac_dagger_dmg_pct"		"30"
+			}
+			
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"taunt_duration"		"2.5"
+				"RequiresScepter"		"1"
 			}
 		}
 	}

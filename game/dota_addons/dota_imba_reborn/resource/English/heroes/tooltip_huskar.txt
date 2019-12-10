@@ -20,11 +20,11 @@
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_knockback_distance"					"KNOCKBACK TO:"
 
 "DOTA_Tooltip_ability_imba_huskar_burning_spear"										"Burning Spear"
-"DOTA_Tooltip_ability_imba_huskar_burning_spear_Description"							"Huskar sets his spears aflame, dealing damage over time with his regular attack.  Multiple attacks will stack additional damage.  Each attack drains some of Huskar's health.  Lasts 8 seconds.\n<font color='#FF7800'>Know My Pain!: </font>Any time Huskar takes damage, whoever is affected by Burning Spear also receives a portion of that damage equal to %pain_reflection_per_stack%x the number of Burning Spear stacks."
+"DOTA_Tooltip_ability_imba_huskar_burning_spear_Description"							"Huskar sets his spears aflame, dealing damage over time with his regular attack.  Multiple attacks will stack additional damage.  Each attack drains some of Huskar's health.  Lasts %abilityduration% seconds.\n<font color='#FF7800'>Know My Pain!: </font>Any time Huskar takes damage, whoever is affected by Burning Spear also receives a portion of that damage equal to %pain_reflection_per_stack%x the number of Burning Spear stacks."
 "DOTA_Tooltip_ability_imba_huskar_burning_spear_Lore"								"The Sacred Warrior ignites his weaponry after marking it with his own blood - causing far greater pain than he himself feels."
 "DOTA_Tooltip_ability_imba_huskar_burning_spear_Note0"								"Burning Spear stacks additively when used multiple times on one target.  There is no cap."
 "DOTA_Tooltip_ability_imba_huskar_burning_spear_Note1"								"Huskar cannot kill himself with this skill."
-"DOTA_Tooltip_ability_imba_huskar_burning_spear_health_cost"							"HEALTH COST:"
+"DOTA_Tooltip_ability_imba_huskar_burning_spear_health_cost"							"%HEALTH COST:"
 "DOTA_Tooltip_ability_imba_huskar_burning_spear_burn_damage"							"BURN DAMAGE:"
 
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood"									"Berserker's Blood"
@@ -52,9 +52,11 @@
 "DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_cost_percent"			"%DAMAGE TAKEN:"
 "DOTA_Tooltip_ability_imba_huskar_life_break_movespeed"								"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_huskar_life_break_slow_durtion_tooltip"								"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_huskar_life_break_cooldown_scepter"						"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_damage_scepter"			"%SCEPTER DAMAGE DEALT:"
-"DOTA_Tooltip_ability_imba_huskar_life_break_aghanim_description"					"Increases damage dealt, reduces cooldown."
+//"DOTA_Tooltip_ability_imba_huskar_life_break_cooldown_scepter"						"SCEPTER COOLDOWN:"
+//"DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_damage_scepter"			"%SCEPTER DAMAGE DEALT:"
+//"DOTA_Tooltip_ability_imba_huskar_life_break_aghanim_description"					"Increases damage dealt, reduces cooldown."
+"DOTA_Tooltip_ability_imba_huskar_life_break_aghanim_description"					"Forces the enemy target to attack you."
+"DOTA_Tooltip_ability_imba_huskar_life_break_taunt_duration"						"TAUNT DURATION:"		
 
 "DOTA_Tooltip_modifier_imba_huskar_inner_vitality"					"Inner Vitality"
 "DOTA_Tooltip_modifier_imba_huskar_inner_vitality_Description"		"Restoring %fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health a second."
@@ -70,6 +72,8 @@
 
 "DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker"					"Sacrificial Dagger"
 "DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker_Description"		"A flaming dagger is rotating around you, dealing physical and magical damage on contact every frame, up to %dMODIFIER_PROPERTY_TOOLTIP% damage a second."
+
+"DOTA_Tooltip_modifier_imba_huskar_life_break_taunt"								"Taunted"
 
 "DOTA_Tooltip_modifier_imba_huskar_inner_fire_disarm"	"Inner Fire"
 "DOTA_Tooltip_modifier_imba_huskar_inner_fire_disarm_Description"	"Disarmed by Huskar's Inner Fire"

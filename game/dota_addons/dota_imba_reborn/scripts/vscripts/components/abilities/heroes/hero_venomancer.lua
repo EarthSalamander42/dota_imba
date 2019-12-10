@@ -497,29 +497,29 @@ function modifier_imba_poison_sting_debuff:IsStunDebuff() return false end
 function modifier_imba_poison_sting_debuff:RemoveOnDeath() return true end
 -------------------------------------------
 
-function modifier_imba_poison_sting_debuff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuns
-end
-
 function modifier_imba_poison_sting_debuff:OnCreated(params)
 	local ability = self:GetAbility()
 	self.damage = ability:GetSpecialValueFor("damage")
 	self.movement_speed_pct = ability:GetSpecialValueFor("movement_speed_pct")
 	self.stack_damage = ability:GetSpecialValueFor("stack_damage")
+	self.hp_regen_reduction	= ability:GetSpecialValueFor("hp_regen_reduction") * (-1)
+	
 	self:StartIntervalThink(1)
 	self:DamageTick(true)
 end
 
 function modifier_imba_poison_sting_debuff:OnRefresh(params)
+	self.hp_regen_reduction	= ability:GetSpecialValueFor("hp_regen_reduction") * (-1)
+	
 	if not IsServer() then return end
 	
 	self:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - self:GetParent():GetStatusResistance()), true)
 
 	self:OnCreated(params)
+end
+
+function modifier_imba_poison_sting_debuff:OnIntervalThink()
+	self:DamageTick()
 end
 
 function modifier_imba_poison_sting_debuff:DamageTick(bFirstHit)
@@ -544,12 +544,19 @@ function modifier_imba_poison_sting_debuff:DamageTick(bFirstHit)
 	end
 end
 
+function modifier_imba_poison_sting_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE 
+	}
+end
+
 function modifier_imba_poison_sting_debuff:GetModifierMoveSpeedBonus_Percentage()
 	return (self.movement_speed_pct + (self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_2") * self:GetStackCount())) * (-1)
 end
 
-function modifier_imba_poison_sting_debuff:OnIntervalThink()
-	self:DamageTick()
+function modifier_imba_poison_sting_debuff:GetModifierHPRegenAmplify_Percentage()
+	return self.hp_regen_reduction
 end
 
 function modifier_imba_poison_sting_debuff:GetEffectName()
@@ -841,11 +848,11 @@ function imba_venomancer_poison_nova:OnSpellStart()
 
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
-			local poison = enemy:FindModifierByNameAndCaster("modifier_imba_poison_nova",caster)
-			if poison and not caster:HasScepter() then
-				-- Delete old poison and re-apply
-				poison:Destroy()
-			end
+			-- local poison = enemy:FindModifierByNameAndCaster("modifier_imba_poison_nova",caster)
+			-- if poison and not caster:HasScepter() then
+				-- -- Delete old poison and re-apply
+				-- poison:Destroy()
+			-- end
 			enemy:AddNewModifier(caster, self, "modifier_imba_poison_nova", {
 				duration = duration + 2*FrameTime(),
 				main_damage = main_damage,
@@ -895,10 +902,14 @@ function modifier_imba_poison_nova:DealDamage(bFirst)
 	local parent = self:GetParent()
 	local caster = self:GetCaster()
 	local current_health_pct = parent:GetHealth() / parent:GetMaxHealth()
-	-- Damage Calculation
-	local damage = self.main_damage * (1 + ((math.max(0, current_health_pct - self.health_threshold_pct)/self.health_pct) * self.damage_pct))
-	ApplyDamage({victim = parent, attacker = caster, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, parent, damage, nil)
+	
+	if not parent:IsMagicImmune() then
+		-- Damage Calculation
+		local damage = self.main_damage * (1 + ((math.max(0, current_health_pct - self.health_threshold_pct)/self.health_pct) * self.damage_pct))
+		ApplyDamage({victim = parent, attacker = caster, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, parent, damage, nil)
+	end
+	
 	-- Spread if it wasn't the impact-tick
 	if not bFirst then
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.contagion_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)

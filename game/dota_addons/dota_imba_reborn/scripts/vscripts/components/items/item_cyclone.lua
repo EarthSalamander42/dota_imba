@@ -36,15 +36,15 @@ function item_imba_cyclone_2:OnSpellStart()
 	if not target:TriggerSpellAbsorb(self) then
 		target:EmitSound("DOTA_Item.Cyclone.Activate")
 		
+		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cyclone_2_movement", {duration = self:GetSpecialValueFor("cyclone_duration")})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_eul_cyclone", {duration = self:GetSpecialValueFor("cyclone_duration")}):SetDuration(self:GetSpecialValueFor("cyclone_duration"), true)
+
 		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			target:Purge(true, false, false, false, false)
 		else
 			target:Purge(false, true, false, false, false)
 		end
-		
-		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cyclone_2_movement", {duration = self:GetSpecialValueFor("cyclone_duration")})
-		target:AddNewModifier(self:GetCaster(), self, "modifier_eul_cyclone", {duration = self:GetSpecialValueFor("cyclone_duration")}):SetDuration(self:GetSpecialValueFor("cyclone_duration"), true)
-		
+
 		for tornado = 1, self:GetSpecialValueFor("tornado_count") do
 			CreateModifierThinker(self:GetCaster(), self, "modifier_item_imba_cyclone_2_thinker", 
 			{

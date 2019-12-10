@@ -28,7 +28,7 @@
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"120 235 350 465"
+		"AbilityDamage"					"110 220 330 440"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -124,8 +124,9 @@
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_waning_rift"	
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE" // Don't know to replicate vanilla behavior without this flag
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
@@ -134,6 +135,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+		"AbilityCastRange"				"350"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -161,7 +163,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 240 360 480"
+				"damage"					"110 220 330 440"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
 			
@@ -285,42 +287,50 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"coil_stun_duration"		"2.0 2.8 3.6"
+				"var_type"					"FIELD_INTEGER"
+				"coil_initial_damage"		"100 150 200"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage"			"300 450 600"
+				"var_type"					"FIELD_FLOAT"
+				"coil_stun_duration"		"2.0 2.8 3.6"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
+				"coil_break_damage"			"300 450 600"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
 				"coil_radius"				"375 400 425"
 			}			
-			"07"
+			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"coil_duration_scepter"		"8"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage_scepter"	"400 600 800"
+				"RequiresScepter"			"1"
 			}
 			"09"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"coil_break_damage_scepter"	"400 600 800"
+				"RequiresScepter"			"1"
+			}
+			"10"
+			{
 				"var_type"					"FIELD_FLOAT"
 				"coil_stun_duration_scepter"		"3.0 4.2 5.4"
+				"RequiresScepter"			"1"
 			}
 			
-			"10"
+			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"rapid_fire_interval"		"1.05 0.8 0.55"
 				"LinkedSpecialBonus"		"special_bonus_imba_puck_dream_coil_targets"
 			}
-			"11"
+			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"rapid_fire_max_distance"		"775"
@@ -408,6 +418,35 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"value"						"-0.15"
+			}
+		}
+	}
+
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_puck_phase_shift_attacks"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_puck_phase_shift"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}

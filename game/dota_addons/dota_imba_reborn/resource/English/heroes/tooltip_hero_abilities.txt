@@ -239,13 +239,14 @@
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_stomp_damage"           "STOMP DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_sleep_duration"         "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
+//"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
 
-"DOTA_Tooltip_modifier_imba_elder_titan_echo_stomp_magic_immune"	"Spell Immunity"
+"DOTA_Tooltip_modifier_imba_elder_titan_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage, movement speed, and armor for each unit it passed through.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The spirit's movement speed is not set to Elder Titan's movement speed; the Ancestral Spirit instead moves at increased movement speed.\n<font color='#FF7800'>Spirit Delimiter:</font> No movement speed cap for the movement speed bonus.\n<font color='#FF7800'>Phase Through:</font> Overlapping with the Astral Spirit does not automatically return it to Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Lore"           "Like the four fundamentals, Elder Titan exists across all planes at once and can draw other aspects of himself to assist in times of need."
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_aghanim_description"		"Causes you to become Spell Immune for %scepter_magic_immune_per_hero% seconds per affected enemy hero when the spirit returns to you."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_spirit_duration"      "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_buff_duration"        "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_pass_damage"        "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
