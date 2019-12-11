@@ -5595,30 +5595,7 @@
 	//=================================================================================================================
 	"treant_natures_guise"
 	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"265 310 355 400"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"25 30 35 40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.0 1.6 2.2 2.8"
-				"LinkedSpecialBonus"		"special_bonus_unique_treant_4"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"total_damage"				"60 160 260 360"
-			}
-		}
+	
 	}
 	
 	//=================================================================================================================

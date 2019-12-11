@@ -131,7 +131,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 
 		-- Refresh TP on first spawn
-		local teleport_scroll = hero:GetItemInSlot(15)
+		local teleport_scroll = hero:GetItemInSlot(16)
 		
 		if teleport_scroll then
 			teleport_scroll:EndCooldown()

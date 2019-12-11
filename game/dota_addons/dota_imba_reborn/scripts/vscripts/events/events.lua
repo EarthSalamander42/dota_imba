@@ -924,7 +924,9 @@ function GameMode:OnPlayerChat(keys)
 					end
 				end
 			elseif str == "-phantom_lancer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")	
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")
+			elseif str == "-chaos_knight" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_chaos_knight")
 			elseif str == "-vardor" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
 			-- Yeah best not to call this ever but if you really think lag is bad or something...

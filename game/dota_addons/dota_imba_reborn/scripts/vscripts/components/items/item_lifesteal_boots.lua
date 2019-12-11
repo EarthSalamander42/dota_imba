@@ -233,9 +233,29 @@ function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeedBonus_Percentage
 end
 
 function modifier_imba_lifesteal_boots_buff:GetModifierIgnoreMovespeedLimit()
+	
 	return 1
 end
 
+-- https://dota2.gamepedia.com/Movement_speed
 function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_Limit()
-	return self.ms_limit
+	if not self:GetParent():HasModifier("modifier_imba_thirst_passive") and
+	not (self:GetParent():HasModifier("modifier_brewmaster_primal_split_duration") and self:GetParent():HasScepter()) and 
+	not (self:GetParent():HasModifier("modifier_broodmother_spin_web") and self:GetParent():HasScepter()) and 
+	not (self:GetParent():HasModifier("modifier_clinkz_wind_walk") and self:GetParent():HasScepter()) and 
+	not (self:GetParent():HasModifier("modifier_imba_skeleton_walk_invis") and self:GetParent():HasScepter()) and 
+	not (self:GetParent():HasModifier("modifier_imba_clinkz_wind_walk_723") and self:GetParent():HasScepter()) and 
+	not self:GetParent():HasModifier("modifier_dark_seer_surge") and
+	not self:GetParent():HasModifier("modifier_imba_dark_seer_surge") and
+	not self:GetParent():HasModifier("modifier_wisp_tether_haste") and
+	not self:GetParent():HasModifier("modifier_imba_wisp_tether") and
+	not self:GetParent():HasModifier("modifier_slardar_sprint_river") and
+	not self:GetParent():HasModifier("modifier_imba_guardian_sprint_river") and
+	not self:GetParent():HasModifier("modifier_spirit_breaker_charge_of_darkness") and
+	not self:GetParent():HasModifier("modifier_imba_spirit_breaker_charge_of_darkness") and
+	not (self:GetParent():HasModifier("modifier_windrunner_windrun") and self:GetParent():HasScepter()) and
+	not (self:GetParent():HasModifier("modifier_imba_windranger_windrun") and self:GetParent():HasScepter()) and
+	not (self:GetParent():HasModifier("modifier_imba_hunter_in_the_night") and self:GetParent():PassivesDisabled() and IsDaytime and not IsDaytime()) then
+		return self.ms_limit
+	end
 end
