@@ -20,6 +20,8 @@ ListenToGameEvent('npc_spawned', function(keys)
 --		print("Frantic: On Hero First Spawn")
 		hero.first_spawn_frantic = true
 
-		hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
+		if not hero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
+		end
 	end
 end, nil)

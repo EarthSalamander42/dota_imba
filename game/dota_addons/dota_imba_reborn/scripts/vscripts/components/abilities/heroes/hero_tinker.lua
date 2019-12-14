@@ -162,7 +162,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			end
 
 			-- Refresh items
-			for i = 0, 8 do
+			for i = 0, 9 do
 				local current_item = caster:GetItemInSlot(i)
 				local should_refresh = true
 
@@ -180,7 +180,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			end
 			
 			-- Refresh TP slot as well
-			local teleport_scroll = caster:GetItemInSlot(15)
+			local teleport_scroll = caster:GetItemInSlot(16)
 			
 			if teleport_scroll then
 				teleport_scroll:EndCooldown()
