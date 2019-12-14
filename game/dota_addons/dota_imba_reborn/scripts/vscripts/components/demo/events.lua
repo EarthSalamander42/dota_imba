@@ -145,7 +145,9 @@ function Think_InitializePlayerHero( hPlayerHero )
 	end
 
 	if GameMode.m_bfranticEnabled then
-		hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
+		if not hPlayerHero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hPlayerHero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+			hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
+		end
 	end
 
 	return
