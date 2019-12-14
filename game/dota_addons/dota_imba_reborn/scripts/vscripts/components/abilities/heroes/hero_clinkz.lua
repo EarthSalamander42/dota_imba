@@ -311,6 +311,195 @@ function modifier_imba_strafe_self_root:OnRemoved()
 	end
 end
 
+--------------------------------
+-- IMBA_CLINKZ_DEATH_PACT_723 --
+--------------------------------
+
+LinkLuaModifier("modifier_imba_clinkz_death_pact_723", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_clinkz_death_pact_723_enemy", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_clinkz_death_pact_723_permanent_buff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+imba_clinkz_death_pact_723							= imba_clinkz_death_pact_723 or class({})
+modifier_imba_clinkz_death_pact_723					= modifier_imba_clinkz_death_pact_723 or class({})
+modifier_imba_clinkz_death_pact_723_enemy			= modifier_imba_clinkz_death_pact_723_enemy or class({})
+modifier_imba_clinkz_death_pact_723_permanent_buff	= modifier_imba_clinkz_death_pact_723_permanent_buff or class({})
+
+function imba_clinkz_death_pact_723:GetIntrinsicModifierName()
+	return "modifier_imba_clinkz_death_pact_723_permanent_buff"
+end
+
+function imba_clinkz_death_pact_723:CastFilterResultTarget(hTarget)
+	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() <= self:GetSpecialValueFor("neutral_level") or
+	hTarget:GetClassname() == "npc_dota_clinkz_skeleton_archer" and hTarget:GetModifierStackCount("modifier_imba_burning_army", self:GetCaster()) == 0 then
+		return UF_SUCCESS
+		
+	-- IMBAfication: Soul High
+	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsConsideredHero() and hTarget:GetLevel() <= self:GetCaster():GetLevel() then
+		return UF_SUCCESS
+	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
+		return UF_FAIL_CUSTOM
+	else
+		return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_clinkz_death_pact_723:GetCustomCastErrorTarget(hTarget)
+	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
+		return "#dota_hud_error_cant_cast_creep_level"
+	end
+end
+
+function imba_clinkz_death_pact_723:OnSpellStart()
+	local target = self:GetCursorTarget()
+	
+	self:GetCaster():EmitSound("Hero_Clinkz.DeathPact.Cast")
+	target:EmitSound("Hero_Clinkz.DeathPact")
+	
+	local pact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(pact_particle, 1, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(pact_particle)
+	
+	if not target:IsConsideredHero() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_clinkz_death_pact_723", {duration = self:GetSpecialValueFor("duration")})
+	
+		target:Kill(self, self:GetCaster())
+	else
+		-- IMBAfication: Soul High
+		local health_to_convert = target:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("soul_high_hp_damage") * 0.01
+		
+		if self:GetCaster():HasModifier("modifier_imba_clinkz_death_pact_723") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_clinkz_death_pact_723")
+		end
+		
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_clinkz_death_pact_723", {duration = self:GetSpecialValueFor("soul_high_duration"), bonus_attack = health_to_convert * self:GetSpecialValueFor("soul_high_hp_to_attack") * 0.01})
+	
+		ApplyDamage({
+			victim 			= target,
+			damage 			= health_to_convert,
+			damage_type		= DAMAGE_TYPE_PURE,
+			damage_flags 	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	end
+end
+
+-----------------------------------------
+-- MODIFIER_IMBA_CLINKZ_DEATH_PACT_723 --
+-----------------------------------------
+
+function modifier_imba_clinkz_death_pact_723:GetEffectName()
+	return "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+end
+
+function modifier_imba_clinkz_death_pact_723:OnCreated(params)
+	self.health_gain		= self:GetAbility():GetTalentSpecialValueFor("health_gain")
+	self.permanent_bonus	= self:GetAbility():GetSpecialValueFor("permanent_bonus")
+	self.debuff_duration	= self:GetAbility():GetSpecialValueFor("debuff_duration")
+	self.armor_reduction	= self:GetAbility():GetSpecialValueFor("armor_reduction")
+
+	
+	if not IsServer() or not params.bonus_attack then return end
+		self:SetStackCount(params.bonus_attack)
+	end
+end
+
+function modifier_imba_clinkz_death_pact_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+	}
+end
+
+function modifier_imba_clinkz_death_pact_723:GetModifierExtraHealthBonus()
+	return self.health_gain
+end
+
+function modifier_imba_clinkz_death_pact_723:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and keys.target:IsRealHero() then		
+		local pact_modifier	= keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_death_pact_723_enemy", {
+			duration		= self.debuff_duration,
+			armor_reduction	= self.armor_reduction,
+			permanent_bonus	= self.permanent_bonus
+		})
+		
+		if pact_modifier then
+			pact_modifier:SetDuration(self.debuff_duration * (1 - keys.target:GetStatusResistance()), true)
+		end
+	end
+end
+
+function modifier_imba_clinkz_death_pact_723:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
+
+-----------------------------------------------
+-- MODIFIER_IMBA_CLINKZ_DEATH_PACT_723_ENEMY --
+-----------------------------------------------
+
+function modifier_imba_clinkz_death_pact_723_enemy:RemoveOnDeath()	return false end
+
+function modifier_imba_clinkz_death_pact_723_enemy:OnCreated(params)
+	if self:GetAbility() then
+		self.armor_reduction	= self:GetAbility():GetSpecialValueFor("armor_reduction") * (-1)
+		self.permanent_bonus	= self:GetAbility():GetSpecialValueFor("permanent_bonus")
+	elseif params then
+		self.armor_reduction	= params.armor_reduction * (-1)
+		self.permanent_bonus	= params.permanent_bonus
+	else
+		self.armor_reduction	= -2
+		self.permanent_bonus	= 5
+	end
+end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:GetModifierPhysicalArmorBonus()
+	return self.armor_reduction
+end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:OnDeath(keys)
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then		
+		local pact_modifier	= self:GetCaster():FindModifierByName("modifier_imba_clinkz_death_pact_723_permanent_buff")
+		
+		if pact_modifier then
+			pact_modifier:IncrementStackCount()
+			
+			if pact_modifier:GetAbility() then
+				pact_modifier:GetAbility():EndCooldown()
+			end
+		end
+		
+		self:Destroy()
+	end
+end
+
+--------------------------------------------------------
+-- MODIFIER_IMBA_CLINKZ_DEATH_PACT_723_PERMANENT_BUFF --
+--------------------------------------------------------
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:IsHidden()		return self:GetStackCount() <= 0 end
+function modifier_imba_clinkz_death_pact_723_permanent_buff:IsPurgable()	return false end
+function modifier_imba_clinkz_death_pact_723_permanent_buff:RemoveOnDeath()	return false end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:OnCreated()
+
+end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+end
+
+function modifier_imba_clinkz_death_pact_723_permanent_buff:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
 
 -----------------------------
 --     SEARING ARROWS      --
@@ -738,6 +927,7 @@ end
 
 imba_clinkz_skeleton_walk = class({})
 LinkLuaModifier("modifier_imba_skeleton_walk_invis", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_clinkz_burning_army_skeleton_custom", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skeleton_walk_spook", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skeleton_walk_talent_root", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skeleton_walk_talent_ms", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
@@ -986,6 +1176,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 				-- todo: spawn them on left and right of clinkz pos
 				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)
 				local archer = CreateUnitByName("npc_dota_clinkz_skeleton_archer", pos, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+				archer:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("clinkz_burning_army"), "modifier_imba_clinkz_burning_army_skeleton_custom", {})
 			end
 
 			if self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
@@ -1044,6 +1235,36 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 			EmitSoundOn("Imba.ClinkzSpooky", self:GetParent())
 		end
 	end
+end
+
+-------------------------------------------------------
+-- MODIFIER_IMBA_CLINKZ_BURNING_ARMY_SKELETON_CUSTOM --
+-------------------------------------------------------
+
+modifier_imba_clinkz_burning_army_skeleton_custom	= modifier_imba_clinkz_burning_army_skeleton_custom or class({})
+
+function modifier_imba_clinkz_burning_army_skeleton_custom:IsHidden()	return true end
+function modifier_imba_clinkz_burning_army_skeleton_custom:IsPurgable()	return true end
+
+function modifier_imba_clinkz_burning_army_skeleton_custom:OnCreated()
+	if not IsServer() then return end
+	
+	self:SetStackCount((self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) - (self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) * self:GetAbility():GetSpecialValueFor("damage_percent") * 0.01)
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_clinkz_burning_army_skeleton_custom:OnIntervalThink()
+	if self:GetAbility() then
+		self:SetStackCount((self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) - (self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) * self:GetAbility():GetSpecialValueFor("damage_percent") * 0.01)
+	end
+end
+
+function modifier_imba_clinkz_burning_army_skeleton_custom:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+end
+
+function modifier_imba_clinkz_burning_army_skeleton_custom:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
 end
 
 -- Spook modifier

@@ -396,14 +396,14 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"imba_clinkz_strafe"
+		"Ability1"					"imba_clinkz_death_pact_723"
 		"Ability2"					"imba_clinkz_searing_arrows"
-		"Ability3"					"imba_clinkz_skeleton_walk"
-		"Ability4"					"generic_hidden"
+		"Ability3"					"imba_clinkz_skeleton_walk_723"
+		"Ability4"					"clinkz_death_pact"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"clinkz_burning_army"
 		
-		"Ability9"					"imba_form_change"
+		"Ability9"					"imba_form_change_clinkz"
 
 		"Ability10"					"special_bonus_magic_resistance_15"
 		"Ability11"					"special_bonus_armor_6"
@@ -413,6 +413,10 @@
 		"Ability15"					"special_bonus_hp_regen_16"
 		"Ability16"					"special_bonus_imba_clinkz_9"
 		"Ability17"					"special_bonus_imba_clinkz_10" // Searing Arrows Multishot
+		
+		// Form Change Abilities
+		// "Ability1"					"imba_clinkz_strafe"
+		// "Ability3"					"imba_clinkz_skeleton_walk"
 		
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period

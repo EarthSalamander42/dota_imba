@@ -106,12 +106,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"status_resistance_reduction"	"15 20 25 30"
+				"status_resistance_reduction"	"20 25 30 35"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"magic_resistance_reduction"	"4 8 12 16"
+				"magic_resistance_reduction"	"6 10 14 18"
 			}
 			"03"
 			{
@@ -122,7 +122,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"discomfort_status_resistance_reduction_per_stack"	"4 5 6 7"
+				"discomfort_status_resistance_reduction_per_stack"	"5 6 7 8"
 			}
 			"05"
 			{

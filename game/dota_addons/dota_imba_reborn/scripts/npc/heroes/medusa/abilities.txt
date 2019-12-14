@@ -176,58 +176,73 @@
 				"var_type"				"FIELD_FLOAT"
 				"stone_form_scepter_increment"		"0.3"
 			}
-			
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"myotoxin_duration"		"3"
+				"movement_slow"			"30"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"myotoxin_stack_deal"	"1"
+				"turn_slow"			"50"
 			}
 			"13"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"myotoxin_stack_take"	"2"
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"		"3"
 			}
+			
 			"14"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"myotoxin_duration_inc"	"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_duration"		"3"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"myotoxin_base_aspd"	"-30"
+				"myotoxin_stack_deal"	"1"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"myotoxin_stack_aspd"	"-2"
+				"myotoxin_stack_take"	"2"
 			}
 			"17"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"myotoxin_base_cast"	"-10"
+				"var_type"				"FIELD_FLOAT"
+				"myotoxin_duration_inc"	"0.1"
 			}
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"myotoxin_stack_cast"	"-1"
+				"myotoxin_base_aspd"	"-30"
 			}
 			"19"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"innate_cooldown"		"7"
+				"myotoxin_stack_aspd"	"-2"
 			}
 			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_thief_steal"		"5"
+				"myotoxin_base_cast"	"-10"
 			}
 			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_stack_cast"	"-1"
+			}
+			"22"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"innate_cooldown"		"7"
+			}
+			"23"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_thief_steal"		"5"
+			}
+			"24"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"quick_snake_speed"		"400"
@@ -267,7 +282,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"absorption_tooltip"		"60"
+				"absorption_tooltip"		"70"
 			}
 		
 			"03"
@@ -334,7 +349,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1000 1000 1000"
+				"radius"					"1200"
 			}
 			"02"
 			{
@@ -372,45 +387,51 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
+				"speed_boost"		"35"
+			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
 				"red_eyes_radius"			"500"
 			}
-			"09"
+			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"red_eyes_vision_cone"		"0.06"
 			}
-			"10"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"red_eyes_duration"			"6"
 			}
-			"11"
+			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"red_eyes_max_slow"			"30 35 40"
 			}
-			"12"
+			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"red_eyes_stone_duration"	"3"
 			}
 			
-			"13"
+			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stiff_joints_duration"		"15 25 35"
 			}
-			"14"
+			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stiff_joints_movespeed"	"-50 -65 -80"
 			}
-			"15"
+			"16"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stiff_joints_turnspeed"	"-50 -65 -80"
 			}
-			"16"
+			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stiff_joints_orders"		"20 40 60"

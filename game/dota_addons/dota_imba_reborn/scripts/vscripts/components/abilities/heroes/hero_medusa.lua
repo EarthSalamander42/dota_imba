@@ -7,6 +7,7 @@ LinkLuaModifier("modifier_imba_medusa_split_shot", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_medusa_serpent_shot", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_medusa_enchanted_aim", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_medusa_mystic_snake_slow", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_medusa_mystic_snake_tracker", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_medusa_mana_shield_meditate", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
@@ -25,6 +26,7 @@ modifier_imba_medusa_serpent_shot				= class({})
 modifier_imba_medusa_enchanted_aim				= class({})
 
 imba_medusa_mystic_snake						= class({})
+modifier_imba_medusa_mystic_snake_slow			= class({})
 modifier_imba_medusa_mystic_snake_tracker		= class({})
 
 imba_medusa_mana_shield							= class({})
@@ -487,8 +489,15 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 				end
 			end
 			
+			slow_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_slow", {duration = self:GetSpecialValueFor("slow_duration")})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(self:GetSpecialValueFor("slow_duraton") * (1 - hTarget:GetStatusResistance()), true)
+			end
+			
 			-- This is an IMBAfication branching off a somewhat necessary modifier, as this is used to make sure one mystic snake doesn't hit the same target more than once
 			local tracker_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_tracker", {duration = self:GetSpecialValueFor("myotoxin_duration")})
+			
 			
 			if tracker_modifier then
 				tracker_modifier.number = ExtraData.particle_snake
@@ -606,6 +615,30 @@ function imba_medusa_mystic_snake:Return(hTarget, vLocation, ExtraData)
 		}
 
 	ProjectileManager:CreateTrackingProjectile(snake)
+end
+
+--------------------------------------------
+-- MODIFIER_IMBA_MEDUSA_MYSTIC_SNAKE_SLOW --
+--------------------------------------------
+
+function modifier_imba_medusa_mystic_snake_slow:OnCreated()
+	self.movement_slow	= self:GetAbility():GetSpecialValueFor("movement_slow") * (-1)
+	self.turn_slow		= self:GetAbility():GetSpecialValueFor("turn_slow") * (-1)
+end
+
+function modifier_imba_medusa_mystic_snake_slow:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
+	}
+end
+
+function modifier_imba_medusa_mystic_snake_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_slow
+end
+
+function modifier_imba_medusa_mystic_snake_slow:GetModifierTurnRate_Percentage()
+	return self.turn_slow
 end
 
 -----------------------------------
@@ -861,6 +894,7 @@ function modifier_imba_medusa_stone_gaze:OnCreated()
 	self.face_duration			= self:GetAbility():GetSpecialValueFor("face_duration")
 	self.vision_cone			= self:GetAbility():GetSpecialValueFor("vision_cone") -- It's 0.08715 in the abilityspecial for some reason...w/e I'll just use it
 	self.bonus_physical_damage	= self:GetAbility():GetSpecialValueFor("bonus_physical_damage")
+	self.speed_boost			= self:GetAbility():GetSpecialValueFor("speed_boost")
 	self.stiff_joints_duration	= self:GetAbility():GetSpecialValueFor("stiff_joints_duration")
 	
 	self.tick_interval	= 0.1
@@ -908,11 +942,14 @@ function modifier_imba_medusa_stone_gaze:OnDestroy()
 end
 
 function modifier_imba_medusa_stone_gaze:DeclareFunctions()
-	local decFuncs = {
+    return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
     }
+end
 
-    return decFuncs
+function modifier_imba_medusa_stone_gaze:GetModifierMoveSpeedBonus_Percentage()
+	return self.speed_boost
 end
 
 function modifier_imba_medusa_stone_gaze:GetOverrideAnimation()
@@ -1007,14 +1044,18 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 end
 
 function modifier_imba_medusa_stone_gaze_facing:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-
-    return decFuncs
+    return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_medusa_stone_gaze_facing:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount() * (-1)
+end
+
+
+function modifier_imba_medusa_stone_gaze_facing:GetModifierAttackSpeedBonus_Constant()
 	return self:GetStackCount() * (-1)
 end
 
@@ -1046,21 +1087,17 @@ function modifier_imba_medusa_stone_gaze_stone:OnCreated(params)
 end
 
 function modifier_imba_medusa_stone_gaze_stone:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_FROZEN] = true,
 		[MODIFIER_STATE_STUNNED] = true
 	}
-
-	return state
 end
 
 function modifier_imba_medusa_stone_gaze_stone:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT -- IMBAfication: Become Sediment
     }
-	
-	return decFuncs
 end
 
 function modifier_imba_medusa_stone_gaze_stone:GetModifierIncomingPhysicalDamage_Percentage(keys)
@@ -1159,11 +1196,7 @@ function modifier_imba_medusa_stone_gaze_red_eyes_facing:OnDestroy()
 end
 
 function modifier_imba_medusa_stone_gaze_red_eyes_facing:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-
-    return decFuncs
+    return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_medusa_stone_gaze_red_eyes_facing:GetModifierMoveSpeedBonus_Percentage()
@@ -1191,14 +1224,12 @@ function modifier_imba_medusa_stone_gaze_stiff_joints:OnCreated(params)
 end
 
 function modifier_imba_medusa_stone_gaze_stiff_joints:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_EVENT_ON_ORDER 
     }
-	
-	return decFuncs
 end
 
 function modifier_imba_medusa_stone_gaze_stiff_joints:GetModifierIncomingPhysicalDamage_Percentage(keys)
@@ -1248,11 +1279,7 @@ function modifier_special_bonus_imba_medusa_bonus_mana:OnCreated()
 end
 
 function modifier_special_bonus_imba_medusa_bonus_mana:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MANA_BONUS
-    }
-
-    return decFuncs
+    return {MODIFIER_PROPERTY_MANA_BONUS}
 end
 
 function modifier_special_bonus_imba_medusa_bonus_mana:GetModifierManaBonus()

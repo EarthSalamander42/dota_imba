@@ -26302,6 +26302,94 @@
 	}
 
 	//=================================================================================================================
+	// Clinkz: Death Pact (7.23)
+	//=================================================================================================================
+	"imba_clinkz_death_pact_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_clinkz"
+		"AbilityTextureName"            "clinkz_death_pact"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Clinkz.DeathPact"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"55"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_gain"			"300 400 500 600"
+				"LinkedSpecialBonus"		"special_bonus_unique_clinkz_6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_gain"		"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"permanent_bonus"		"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_duration"		"3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"3 4 5 6"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"neutral_level"		"3 4 5 6"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_high_hp_damage"		"10"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_high_hp_to_attack"	"66"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"soul_high_duration"		"6.66"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Clinkz's Searing Arrows
 	//=================================================================================================================
 	"imba_clinkz_searing_arrows"
@@ -26460,11 +26548,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_bonus"		"30"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_skeleton_count"		"2"
+				"RequiresScepter"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Clinkz's Skeleton Walk (7.23)
+	//=================================================================================================================
+	"imba_clinkz_skeleton_walk_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                         "imba_clinkz_skeleton_walk"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"70 100 130 160"
 			}
 		}
 	}
@@ -41303,7 +41414,30 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+	
+	"imba_form_change_clinkz"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
 		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
 		}
 	}
 }
