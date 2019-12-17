@@ -48,7 +48,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tree_damage_scale"			"12 18 24 30"
+				"tree_damage_scale"			"24 32 40 48"
 			}
 			"04"
 			{
@@ -86,12 +86,12 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"revving_down_interval"		"0.4"
+				"revving_down_interval"		"0.35"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"revving_down_efficacy"		"42"
+				"revving_down_efficacy"		"45"
 			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -151,12 +151,12 @@
 			"04"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"1600 2400 3200 4000"
+				"speed"				"1900 2600 3300 4000"
 			}
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"120 180 240 300"
+				"damage"			"120 190 260 330"
 			}
 			
 			"06"
@@ -525,7 +525,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200 1300 1400"
+		"AbilityCastRange"				"1200 1400 1600"
 		"AbilityCastPoint"				"0.3 0.3 0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
 
@@ -555,7 +555,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"200 300 400"
+				"pass_damage"			"400 500 600"
 			}
 			"04"
 			{

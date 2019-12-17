@@ -259,7 +259,7 @@ function modifier_imba_urn_of_shadows_active_ally:RemoveOnDeath() return true en
 
 function modifier_imba_urn_of_shadows_active_ally:OnCreated( params )
 	if IsServer() then
-		self.health_regen = params.heal / params.duration
+		self.health_regen = (params.heal or self:GetAbility():GetSpecialValueFor("heal")) / params.duration
 	end
 end
 

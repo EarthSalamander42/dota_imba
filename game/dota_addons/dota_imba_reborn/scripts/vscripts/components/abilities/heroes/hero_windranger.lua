@@ -12,7 +12,7 @@ LinkLuaModifier("modifier_imba_windranger_windrun_handler", "components/abilitie
 LinkLuaModifier("modifier_imba_windranger_windrun_slow", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_windranger_windrun_invis", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_windranger_backpedal", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_windranger_advancement", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
 LinkLuaModifier("modifier_imba_windranger_focusfire_vanilla_enhancer", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
@@ -33,8 +33,8 @@ modifier_imba_windranger_windrun			= class({})
 modifier_imba_windranger_windrun_slow		= class({})
 modifier_imba_windranger_windrun_invis		= class({})
 
-imba_windranger_backpedal					= class({})
-modifier_imba_windranger_backpedal			= class({})
+imba_windranger_advancement					= class({})
+modifier_imba_windranger_advancement		= class({})
 
 imba_windranger_focusfire_vanilla_enhancer	= class({})
 modifier_imba_windranger_focusfire_vanilla_enhancer	= class({})
@@ -303,8 +303,8 @@ function imba_windranger_powershot:OnSpellStart()
 	end
 	
 	-- TODO: REMOVE THIS WHEN DONE WITH EVERYTHING
-	if self:GetCaster():HasAbility("imba_windranger_backpedal") then
-		self:GetCaster():FindAbilityByName("imba_windranger_backpedal"):SetLevel(1)
+	if self:GetCaster():HasAbility("imba_windranger_advancement") then
+		self:GetCaster():FindAbilityByName("imba_windranger_advancement"):SetLevel(1)
 	end
 	
 	if self:GetCaster():HasAbility("imba_windranger_focusfire_vanilla_enhancer") then
@@ -804,75 +804,35 @@ function modifier_imba_windranger_windrun_invis:OnAttack(keys)
 end
 
 function modifier_imba_windranger_windrun_invis:OnAbilityFullyCast(keys)
-	-- Let Backpedal not break this invis?
-	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and keys.ability:GetName() ~= "imba_windranger_backpedal" then
+	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and keys.ability:GetName() ~= "imba_windranger_advancement" then
 		self:Destroy()
 	end
 end
 
--------------------------------
--- IMBA_WINDRANGER_BACKPEDAL --
--------------------------------
+---------------------------------
+-- IMBA_WINDRANGER_ADVANCEMENT --
+---------------------------------
 
 -- TODO: This needs an ability icon
 
-function imba_windranger_backpedal:IsInnateAbility()	return true end
+function imba_windranger_advancement:IsInnateAbility()	return true end
 
-function imba_windranger_backpedal:OnToggle()
-	if self:GetToggleState() and not self:GetCaster():HasModifier("modifier_imba_windranger_backpedal") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_backpedal", {})
-	elseif not self:GetToggleState() and self:GetCaster():HasModifier("modifier_imba_windranger_backpedal") then
-		self:GetCaster():RemoveModifierByName("modifier_imba_windranger_backpedal")
-	end
-end
+function imba_windranger_advancement:OnSpellStart()
+	ProjectileManager:ProjectileDodge(self:GetCaster())
 
-----------------------------------------
--- MODIFIER_IMBA_WINDRANGER_BACKPEDAL --
-----------------------------------------
-
-function modifier_imba_windranger_backpedal:IsPurgable()	return false end
-
-function modifier_imba_windranger_backpedal:OnCreated()
-	self.backpedal_distance	= self:GetAbility():GetSpecialValueFor("backpedal_distance")
-	self.backpedal_height	= self:GetAbility():GetSpecialValueFor("backpedal_height")
-	self.backpedal_duration	= self:GetAbility():GetSpecialValueFor("backpedal_duration")
-end
-
-function modifier_imba_windranger_backpedal:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-end
-
-function modifier_imba_windranger_backpedal:OnAbilityFullyCast(keys)
-	if keys.unit == self:GetParent() and keys.ability ~= self:GetAbility() and bit.band(keys.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET and not keys.ability:IsItem() then
-		-- For the sake of "usability" I'm going to make this not activate on no-target abilities, but will keep a bit of this redundant code in in case things change
-		local direction_vector = self:GetParent():GetForwardVector() * (-1)
-	
-		if keys.ability:GetCursorPosition() and bit.band(keys.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
-			if keys.ability:GetCursorPosition() == self:GetParent():GetAbsOrigin() then
-				direction_vector = (keys.ability:GetCursorPosition() + self:GetParent():GetForwardVector() - self:GetParent():GetAbsOrigin()):Normalized() * (-1)
-			else
-				direction_vector = (keys.ability:GetCursorPosition() - self:GetParent():GetAbsOrigin()):Normalized() * (-1)
-			end
-		end
-		
-		if not self:GetParent():IsRooted() then
-			ProjectileManager:ProjectileDodge(self:GetParent())
-		
-			self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
-			{
-				distance		= self.backpedal_distance,
-				direction_x 	= direction_vector.x,
-				direction_y 	= direction_vector.y,
-				direction_z 	= direction_vector.z,
-				duration 		= self.backpedal_duration,
-				height 			= self.backpedal_height,
-				bGroundStop 	= true,
-				bDecelerate 	= false,
-				bInterruptible 	= false,
-				bIgnoreTenacity	= true
-			})
-		end
-	end
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+	{
+		distance		= self:GetSpecialValueFor("advancement_distance"),
+		direction_x 	= self:GetCaster():GetForwardVector().x,
+		direction_y 	= self:GetCaster():GetForwardVector().y,
+		direction_z 	= self:GetCaster():GetForwardVector().z,
+		duration 		= self:GetSpecialValueFor("advancement_duration"),
+		height 			= self:GetSpecialValueFor("advancement_height"),
+		bGroundStop 	= true,
+		bDecelerate 	= false,
+		bInterruptible 	= false,
+		bIgnoreTenacity	= true
+	})
 end
 
 ------------------------------------------------

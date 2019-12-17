@@ -2892,7 +2892,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_self"							"2"
+				"bonus_self"							"3"
 			}
 		}	
 	}
@@ -10351,6 +10351,73 @@
 	}
 
 	//=================================================================================================================
+	// Lycan: Howl (7.23)
+	//=================================================================================================================
+	"imba_lycan_howl_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_lycan"
+		"AbilityTextureName"     	"lycan_howl"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilitySound"					"Hero_Lycan.Howl"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"24 22 20 18"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"	"5"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"howl_duration"		"5 6 7 8"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_damage_reduction"		"25 30 35 40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"			"5 6 7 8"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"			"2000"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"20 30 40 50"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastGestureSlot"	"DEFAULT" 
+	}
+	
+	//=================================================================================================================
 	// Lycan's Feral Impulse
 	//=================================================================================================================
 	"imba_lycan_feral_impulse"
@@ -10430,6 +10497,7 @@
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"lycan_shapeshift"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
+		"HasScepterUpgrade"			"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -26343,7 +26411,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_gain"			"300 400 500 600"
-				"LinkedSpecialBonus"		"special_bonus_unique_clinkz_6"
+				//"LinkedSpecialBonus"		"special_bonus_unique_clinkz_6"
+				"LinkedSpecialBonus"	"special_bonus_imba_clinkz_death_pact_723_health"
 			}
 			"03"
 			{
@@ -26566,16 +26635,96 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                         "imba_clinkz_skeleton_walk"
+		"BaseClass"                         "ability_lua"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"                "clinkz_wind_walk"
+		"ScriptFile"				"components/abilities/heroes/hero_clinkz.lua"
+		"HasScepterUpgrade"                 "1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"                   "20 19 18 17"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"                   "75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"                      "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+			"particle"                      "particles/hero/clinkz/spooked/spooky_skull.vpcf"
+			"soundfile"                     "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"ms_bonus_pct"          "15 25 35 45"
+			}
+			"02"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"duration"              "20 25 30 35"
+			}
+			"03"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"spook_radius"          "350"
+			}
+			"04"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"base_spook_duration"   "1.0"
+			}
+			"05"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"spook_distance_inc"    "30"
+			}
+			"06"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"spook_added_duration"  "0.25"
+			}
+			"07"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"08"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_bonus"		"30"
+				"RequiresScepter"			"1"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_skeleton_count"		"2"
+				"RequiresScepter"			"1"
+			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"70 100 130 160"
+				"attack_speed_duration"					"4"
+				//"LinkedSpecialBonus"		"special_bonus_unique_clinkz_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"100 140 180 220"
 			}
 		}
 	}
@@ -26929,6 +27078,56 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"0"
+			}
+		}
+	}
+
+	"special_bonus_imba_clinkz_death_pact_723_health"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"350"
+			}
+		}
+	}
+
+	"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"4"
 			}
 		}
 	}
@@ -27626,6 +27825,75 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Drow Ranger	Frost Arrows (7.23)
+	//=================================================================================================================
+	"imba_drow_ranger_frost_arrows_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+		"AbilityTextureName"			"drow_ranger_frost_arrows"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_DrowRanger.FrostArrows"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+		"AbilityDuration"				"1.5"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 0 0 0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"12 12 12 12"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_arrows_movement_speed"	"-16 -32 -48 -64"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"	"5 10 15 20"
+				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_frost_arrows_damage"
+				
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stacks_to_freeze"				"4"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"freeze_duration"				"0.6 1 1.4 1.8"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
 	// Drow Ranger's Gust
 	//=================================================================================================================
 	"imba_drow_ranger_gust"
@@ -27696,7 +27964,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_distance"					"350"
+				"max_distance"					"450"
 				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_9"
 			}
 
@@ -27816,7 +28084,99 @@
 				"melee_fencing_efficiency"	"20"
 			}
 		}
-	}	
+	}
+	
+	//=================================================================================================================
+	// Ability: Drow Ranger: Multishot
+	//=================================================================================================================
+	"imba_drow_ranger_multishot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"	
+		"AbilityTextureName"			"drow_ranger_multishot"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityChannelTime"			"1.75"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"26 24 22 20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_count"				"12" // Divide by 3 to get number of arrows per salvo
+			}			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_damage_pct"			"90 115 140 165"
+				"LinkedSpecialBonus"		"special_bonus_unique_drow_ranger_1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_slow_duration"		"1 2 3 4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_width"					"90"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_speed"					"1200"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_range_multiplier"	"2"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_angle"					"50"
+			}
+			
+			// These should really be vanilla KVs...
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"volley_interval"			"0.55"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_interval"			"0.033"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"initial_delay"				"0.1"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+	}
 	
 
 	//=================================================================================================================
@@ -27881,6 +28241,88 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"bonus_damage"						"120 130 140"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Drow Ranger's Marksmanship
+	//=================================================================================================================
+	"imba_drow_ranger_marksmanship_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+		"AbilityTextureName"			"drow_ranger_marksmanship"		
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastRange"				"400"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"HasScepterUpgrade"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"chance"	"20 30 40"
+				"LinkedSpecialBonus"		"special_bonus_unique_drow_ranger_3"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"	"70 80 90"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_multiplier"		"35 40 45"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_range"		"1200"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"split_count_scepter"			"2"
+				"RequiresScepter"		"1"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_range"					"375"
+				"RequiresScepter"		"1"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction_scepter"		"50"
+				"RequiresScepter"		"1"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"disable_range"		"400"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"range_bonus"						"25 75 125"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"instakill_threshold"				"13"
 			}
 		}
 	}
@@ -28175,7 +28617,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"550"
+				"value"					"400"
 			}
 		}
 	}
@@ -28203,8 +28645,33 @@
 				"value"					"25"
 			}
 		}
-	}	
+	}
+	
+	"special_bonus_imba_drow_ranger_frost_arrows_damage"	// +X Frost Arrows Bonus Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_frost_arrows_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"30"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Faceless Void's Time Walk
 	//=================================================================================================================
@@ -41426,8 +41893,97 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"imba_form_change"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
 		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_drow_ranger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_life_stealer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

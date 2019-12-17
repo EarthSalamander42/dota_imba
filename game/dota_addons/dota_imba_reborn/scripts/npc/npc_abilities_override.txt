@@ -207,6 +207,10 @@
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
 	"item_imba_soul_of_truth"				"REMOVE"
+	"item_recipe_imba_curseblade"			"REMOVE"
+	"item_imba_curseblade"					"REMOVE"
+	"item_recipe_imba_hellblade"			"REMOVE"
+	"item_imba_hellblade"					"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -3771,6 +3775,28 @@
 	}
 
 	//=================================================================================================================
+	// Lycan: Shapeshift (keeping these KVs around for the Torrent Storm Aghanim's Scepter ability)
+	//=================================================================================================================
+	"lycan_shapeshift"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"				"700"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
 	// Meepo: Earthbind
 	//=================================================================================================================
 	"meepo_earthbind"
@@ -5320,6 +5346,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"25 28 31 34"
 			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"700"
+			}
 		}
 	}
 
@@ -5351,13 +5382,13 @@
 			}
 			"04"
 			{
-				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage"					"240 210 180 150"
+				"var_type"									"FIELD_FLOAT"
+				"illusion_incoming_damage"					"220 195 170 145"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage_total_tooltip"	"340 310 280 250"
+				"illusion_incoming_damage_total_tooltip"	"320 295 270 245"
 			}		
 		}
 	}
@@ -6227,15 +6258,10 @@
 				"hits_to_destroy_tooltip"	"5 7 9 11"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1250 1500 1750 2000"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_threshold"			"250 350 450 550"
+				"health_threshold"			"500 750 1000 1250"
 			}
 			"06"
 			{
@@ -6250,29 +6276,12 @@
 	//=================================================================================================================
 	"undying_tombstone_zombie_aura"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"725 1175 1600 2000"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 350 450 550"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"4.5 4.0 3.5 3.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"100"
+				"health_threshold"		"500 750 1000 1250"
 			}
 		}
 	}
@@ -6287,7 +6296,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 350 450 550"
+				"health_threshold"		"500 750 1000 1250"
 			}
 			"03"
 			{
@@ -6297,12 +6306,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"100"
+				"bonus_attack_speed"	"200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1400"
+				"radius"				"1200"
 			}
 		}
 	}
@@ -6316,15 +6325,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"25 35 45"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_percentage"			"50 60 70"
+				"str_percentage"			"55 65 75"
 			}
 		}
 	}

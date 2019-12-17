@@ -381,9 +381,6 @@ function modifier_imba_frost_arrows_slow:OnCreated()
 	self.as_slow = self.ability:GetSpecialValueFor("as_slow")
 	self.stacks_to_freeze = self.ability:GetSpecialValueFor("stacks_to_freeze")
 	self.freeze_duration = self.ability:GetSpecialValueFor("freeze_duration")
-
-	self.pfx = ParticleManager:CreateParticle(self.caster.frost_arrows_debuff_pfx, PATTACH_POINT_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(self.pfx, 0, self.parent:GetAbsOrigin())
 end
 
 function modifier_imba_frost_arrows_slow:OnRemoved()
@@ -395,11 +392,6 @@ function modifier_imba_frost_arrows_slow:OnRemoved()
 			self.caster:RemoveModifierByName(self.caster_modifier)
 		else
 			self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - target_stacks)
-		end
-
-		if self.pfx then
-			ParticleManager:DestroyParticle(self.pfx, false)
-			ParticleManager:ReleaseParticleIndex(self.pfx)
 		end
 	end
 end
@@ -452,10 +444,10 @@ function modifier_imba_frost_arrows_slow:OnStackCountChanged()
 end
 
 function modifier_imba_frost_arrows_slow:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFunc
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_frost_arrows_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -482,9 +474,10 @@ end
 modifier_imba_frost_arrows_freeze = class({})
 
 function modifier_imba_frost_arrows_freeze:CheckState()
-	local state = {[MODIFIER_STATE_ROOTED] = true,
-		[MODIFIER_STATE_DISARMED] = true}
-	return state
+	return {
+		[MODIFIER_STATE_ROOTED]		= true,
+		[MODIFIER_STATE_DISARMED]	= true
+	}
 end
 
 function modifier_imba_frost_arrows_freeze:GetEffectName()
@@ -511,10 +504,7 @@ end
 modifier_imba_frost_arrows_buff = class({})
 
 function modifier_imba_frost_arrows_buff:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT ,
-		MODIFIER_EVENT_ON_HERO_KILLED}
-	return funcs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_frost_arrows_buff:IsPermanent() return true end
@@ -533,6 +523,69 @@ end
 
 function modifier_imba_frost_arrows_buff:GetModifierMoveSpeedBonus_Constant()
 	return self.bonus_movespeed * self:GetStackCount()
+end
+
+---------------------------------------
+-- IMBA_DROW_RANGER_FROST_ARROWS_723 --
+---------------------------------------
+
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_frost_arrows_723_bonus_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+imba_drow_ranger_frost_arrows_723						= imba_drow_ranger_frost_arrows_723 or class({})
+modifier_imba_drow_ranger_frost_arrows_723_bonus_damage	= modifier_imba_drow_ranger_frost_arrows_723_bonus_damage or class({})
+
+function imba_drow_ranger_frost_arrows_723:GetIntrinsicModifierName()
+	return "modifier_generic_orb_effect_lua"
+end
+
+function imba_drow_ranger_frost_arrows_723:GetProjectileName()
+	return "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+end
+
+function imba_drow_ranger_frost_arrows_723:OnOrbRecord()
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_drow_ranger_frost_arrows_723_bonus_damage", {})
+end
+
+function imba_drow_ranger_frost_arrows_723:OnOrbFire()
+	self:GetCaster():EmitSound("Hero_DrowRanger.FrostArrows")
+end
+
+function imba_drow_ranger_frost_arrows_723:OnOrbImpact( keys )
+	-- Apply slow effect if the target didn't suddenly become magic immune
+	if not keys.target:IsMagicImmune() then
+		local modifier_slow_handler = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_frost_arrows_slow", {duration = self:GetDuration()})
+		
+		if modifier_slow_handler then
+			modifier_slow_handler:SetDuration(self:GetDuration() * (1 - keys.target:GetStatusResistance()), true)
+			modifier_slow_handler:IncrementStackCount()
+		end
+	end
+end
+
+function imba_drow_ranger_frost_arrows_723:OnOrbRecordDestroy()
+	self:GetCaster():RemoveModifierByName("modifier_imba_drow_ranger_frost_arrows_723_bonus_damage")
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_FROST_ARROWS_723_BONUS_DAMAGE --
+-------------------------------------------------------------
+
+function modifier_imba_drow_ranger_frost_arrows_723_bonus_damage:IsHidden()		return true end
+function modifier_imba_drow_ranger_frost_arrows_723_bonus_damage:IsPurgable()	return false end
+
+function modifier_imba_drow_ranger_frost_arrows_723_bonus_damage:OnCreated()
+	if not IsServer() then return end
+	
+	self.damage	= self:GetAbility():GetTalentSpecialValueFor("damage")
+end
+
+function modifier_imba_drow_ranger_frost_arrows_723_bonus_damage:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+end
+
+function modifier_imba_drow_ranger_frost_arrows_723_bonus_damage:GetModifierPreAttack_BonusDamage()
+	return self.damage
 end
 
 ----------------------------
@@ -823,8 +876,8 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 
 
 		-- if appropriate, apply chill stacks (only if Frost Arrows were learned)
-		if caster:HasAbility(frost_arrow_ability) then
-			local frost_ability = caster:FindAbilityByName(frost_arrow_ability)
+		if caster:HasAbility(frost_arrow_ability) or caster:HasAbility("imba_drow_ranger_frost_arrows_723") then
+			local frost_ability = caster:FindAbilityByName(frost_arrow_ability) or caster:FindAbilityByName("imba_drow_ranger_frost_arrows_723")
 			if frost_ability:GetLevel() > 0 then
 
 				-- Apply stacks or increase stacks if already exists
@@ -847,8 +900,7 @@ end
 modifier_imba_gust_silence = class({})
 
 function modifier_imba_gust_silence:CheckState()
-	local state = {[MODIFIER_STATE_SILENCED] = true}
-	return state
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 -- Movement modifier (#1 talent only)
@@ -1267,6 +1319,146 @@ function modifier_imba_trueshot_talent_buff:IsHidden() return false end
 
 
 
+--------------------------------
+-- IMBA_DROW_RANGER_MULTISHOT --
+--------------------------------
+
+LinkLuaModifier("modifier_imba_drow_ranger_multishot", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+imba_drow_ranger_multishot			= imba_drow_ranger_multishot or class({})
+modifier_imba_drow_ranger_multishot	= modifier_imba_drow_ranger_multishot or class({})
+
+function imba_drow_ranger_multishot:OnSpellStart()
+	self.targets_hit = {}
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_drow_ranger_multishot", {duration = self:GetChannelTime()})
+end
+
+function imba_drow_ranger_multishot:OnChannelFinish(bInterrupted)
+	self:GetCaster():RemoveModifierByName("modifier_imba_drow_ranger_multishot")
+end
+
+function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if not self.targets_hit[ExtraData.volley_index] then
+		self.targets_hit[ExtraData.volley_index] = {}
+	end
+		
+	if target and not self.targets_hit[ExtraData.volley_index][target:entindex()] then
+		target:EmitSound("Hero_DrowRanger.ProjectileImpact")
+	
+		if self:GetCaster():HasAbility("imba_drow_ranger_frost_arrows_723") and self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"):IsTrained() then
+			if not target:IsMagicImmune() then
+				local frost_modifier = target:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"), "modifier_imba_frost_arrows_slow", {duration = self:GetSpecialValueFor("arrow_slow_duration")})
+				
+				if frost_modifier then
+					frost_modifier:SetDuration(self:GetSpecialValueFor("arrow_slow_duration") * (1 - target:GetStatusResistance()), true)
+					frost_modifier:IncrementStackCount()
+				end
+			end
+		end
+	
+		ApplyDamage({
+			victim 			= target,
+			damage 			= ((self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2)  * self:GetSpecialValueFor("arrow_damage_pct") * 0.01,
+			damage_type		= DAMAGE_TYPE_PHYSICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_BYPASSES_BLOCK,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+		
+		self.targets_hit[ExtraData.volley_index][target:entindex()] = true
+		
+		return true
+	end
+end
+
+-- function imba_drow_ranger_multishot:GetPlaybackRateOverride()
+	-- return 2
+-- end
+
+-----------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_MULTISHOT --
+-----------------------------------------
+
+-- "Releases the waves in a 0.55-second interval .The first wave starts 0.1 seconds after channel begin. "
+function modifier_imba_drow_ranger_multishot:OnCreated()
+	self.arrow_count			= self:GetAbility():GetSpecialValueFor("arrow_count")
+	self.arrow_damage_pct		= self:GetAbility():GetTalentSpecialValueFor("arrow_damage_pct")
+	self.arrow_slow_duration	= self:GetAbility():GetSpecialValueFor("arrow_slow_duration")
+	self.arrow_width			= self:GetAbility():GetSpecialValueFor("arrow_width")
+	self.arrow_speed			= self:GetAbility():GetSpecialValueFor("arrow_speed")
+	self.arrow_range_multiplier	= self:GetAbility():GetSpecialValueFor("arrow_range_multiplier")
+	self.arrow_angle			= self:GetAbility():GetSpecialValueFor("arrow_angle")
+	
+	self.volley_interval		= self:GetAbility():GetSpecialValueFor("volley_interval")
+	self.arrow_interval			= self:GetAbility():GetSpecialValueFor("arrow_interval")
+	self.initial_delay			= self:GetAbility():GetSpecialValueFor("initial_delay")
+
+	if not IsServer() then return end
+	
+	self.arrows_per_salvo		= math.floor(self.arrow_count / 3)
+	-- "The cone's angle is calculated as if 6 arrows get released per wave. If 6 arrows would get released, the cone's angle would be 50°."
+	-- "However, since only 4 arrows get released, the cone's angle is 33.33°, with an angle of 8.33° between each arrow."
+	self.angle_per_arrow		= (self.arrow_angle / 6) / 2
+	self.adjusted_angle			= (self.angle_per_arrow * self.arrows_per_salvo)
+
+	self.num_arrow_in_salvo		= 0
+	self.volley_index			= 1
+	
+	self:GetParent():EmitSound("Hero_DrowRanger.Multishot.Channel")
+
+	self.first_salvo = true
+	
+	self:StartIntervalThink(self.initial_delay)
+end
+
+function modifier_imba_drow_ranger_multishot:OnIntervalThink()	
+	self:GetParent():EmitSound("Hero_DrowRanger.Multishot.Attack")
+	-- self:GetParent():EmitSound("Hero_DrowRanger.Multishot.FrostArrows")
+	
+	ProjectileManager:CreateLinearProjectile({
+		Ability				= self:GetAbility(),
+		EffectName			= "particles/units/heroes/hero_drow/drow_multishot_proj_linear_proj.vpcf",
+		vSpawnOrigin		= self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment("attach_attack1")),
+		fDistance			= self:GetParent():Script_GetAttackRange() * self.arrow_range_multiplier,
+		fStartRadius		= self.arrow_width,
+		fEndRadius			= self.arrow_width,
+		Source				= self:GetParent(),
+		bHasFrontalCone		= false,
+		bReplaceExisting	= false,
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		fExpireTime 		= GameRules:GetGameTime() + 10.0,
+		bDeleteOnHit		= true,
+		vVelocity			= RotatePosition(Vector(0, 0, 0), QAngle(0, - self.adjusted_angle + (self.angle_per_arrow * self.num_arrow_in_salvo * 2), 0), self:GetParent():GetForwardVector()) * self.arrow_speed,
+		bProvidesVision		= true,
+		iVisionRadius		= 100,
+		iVisionTeamNumber	= self:GetCaster():GetTeamNumber(),
+		
+		ExtraData			=
+		{
+			volley_index	= self.volley_index
+		}
+	})
+	
+	if self.num_arrow_in_salvo < 3 then
+		self:StartIntervalThink(self.arrow_interval)
+	else
+		-- "Releases the waves in a 0.55-second interval .The first wave starts 0.1 seconds after channel begin. "
+		self:StartIntervalThink((self.volley_interval - (self.arrow_interval * 3)))
+		self.volley_index	= self.volley_index + 1
+	end
+	
+	self.num_arrow_in_salvo	= ((self.num_arrow_in_salvo + 1) % self.arrows_per_salvo)
+end
+
+function modifier_imba_drow_ranger_multishot:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_DrowRanger.Multishot.Channel")
+end
+
 ----------------------------
 --	  MARKSMANSHIP        --
 ----------------------------
@@ -1605,9 +1797,7 @@ function modifier_imba_marksmanship_scepter_dmg_reduction:OnCreated()
 end
 
 function modifier_imba_marksmanship_scepter_dmg_reduction:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
-
-	return decFunc
+	return {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
 end
 
 function modifier_imba_marksmanship_scepter_dmg_reduction:GetModifierBaseDamageOutgoing_Percentage()
@@ -1681,9 +1871,7 @@ end
 modifier_imba_markmanship_buff = class({})
 
 function modifier_imba_markmanship_buff:DeclareFunctions()
-	local decfunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decfunc
+	return {MODIFIER_EVENT_ON_ATTACK_LANDED}
 end
 
 function modifier_imba_markmanship_buff:OnCreated()
@@ -1776,6 +1964,295 @@ function modifier_imba_markmanship_slow:IsDebuff()
 	return true
 end
 
+---------------------------------------
+-- IMBA_DROW_RANGER_MARKSMANSHIP_723 --
+---------------------------------------
+
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_aura_bonus", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_armor", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+imba_drow_ranger_marksmanship_723						= imba_drow_ranger_marksmanship_723 or class({})
+modifier_imba_drow_ranger_marksmanship_723				= modifier_imba_drow_ranger_marksmanship_723 or class({})
+modifier_imba_drow_ranger_marksmanship_723_aura_bonus	= modifier_imba_drow_ranger_marksmanship_723_aura_bonus or class({})
+
+modifier_imba_drow_ranger_marksmanship_723_proc_damage	= modifier_imba_drow_ranger_marksmanship_723_proc_damage or class({})
+modifier_imba_drow_ranger_marksmanship_723_proc_armor	= modifier_imba_drow_ranger_marksmanship_723_proc_armor or class({})
+
+function imba_drow_ranger_marksmanship_723:GetIntrinsicModifierName()
+	return "modifier_imba_drow_ranger_marksmanship_723"
+end
+
+------------------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_MARKSMANSHIP_723 --
+------------------------------------------------
+
+function modifier_imba_drow_ranger_marksmanship_723:OnCreated()
+	self.procs						= {}
+	
+	if not IsServer() then return end
+
+	self.marksmanship_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_drow/drow_marksmanship.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.marksmanship_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.marksmanship_particle, 3, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.marksmanship_particle, 5, self:GetParent():GetAbsOrigin())
+
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:OnIntervalThink()
+	if #FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("disable_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD +  DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false) >= 1 then
+		if self.marksmanship_particle then
+			ParticleManager:SetParticleControl(self.marksmanship_particle, 2, Vector(1, 0, 0))
+		end
+		
+		self.start_particle = nil
+		self:SetStackCount(-1)
+	elseif not self.start_particle then
+		self.start_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(self.start_particle)
+		self:SetStackCount(0)
+		
+		ParticleManager:SetParticleControl(self.marksmanship_particle, 2, Vector(2, 0, 0))
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_RECORD,
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
+		
+		-- IMBAfication: Perfect Ranger
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:OnAttackRecord(keys)
+	if keys.attacker == self:GetParent() then
+		if not self:GetParent():PassivesDisabled() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
+			self.procs[keys.record] = true
+			
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_damage", {})
+		else
+		end
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:OnAttack(keys)
+	if keys.attacker == self:GetParent() and self.procs[keys.record] then
+		self:GetParent():RemoveModifierByName("modifier_imba_drow_ranger_marksmanship_723_proc_damage")
+		
+		if self:GetParent():HasAbility("imba_drow_ranger_frost_arrows_723") and not self.frost_arrow_modifier then
+			for _, mod in pairs(self:GetParent():FindAllModifiersByName("modifier_generic_orb_effect_lua")) do
+				if mod:GetAbility():GetName() == "imba_drow_ranger_frost_arrows_723" then
+					self.frost_arrow_modifier = mod
+					break
+				end
+			end
+		end
+		
+		if not keys.no_attack_cooldown then
+			if self.frost_arrow_modifier and self.frost_arrow_modifier.cast and self.frost_arrow_modifier:GetAbility() and self.frost_arrow_modifier:GetAbility():IsFullyCastable() then
+				self.projectile_name = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
+			else
+				self.projectile_name = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+			end
+			
+			ProjectileManager:CreateTrackingProjectile({
+				Target 				= keys.target,
+				-- Source 				= self:GetCaster(),
+				Ability 			= self:GetAbility(),
+				EffectName 			= self.projectile_name,
+				iMoveSpeed			= self:GetParent():GetProjectileSpeed(),
+				vSourceLoc 			= self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment("attach_attack1")),
+				bDrawsOnMinimap 	= false,
+				bDodgeable 			= true,
+				bIsAttack 			= true,
+				bVisibleToEnemies 	= true,
+				bReplaceExisting 	= false,
+				flExpireTime 		= GameRules:GetGameTime() + 10.0,
+				bProvidesVision 	= false,
+				
+				iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+			})
+		end
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() then
+		if self.procs[keys.record] then
+			keys.target:EmitSound("Hero_DrowRanger.Marksmanship.Target")
+		
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_armor", {})
+		end
+		
+		if self:GetParent():HasScepter() and not self:GetParent():PassivesDisabled() and self.start_particle and not keys.no_attack_cooldown then
+			local splinter_counter = 0
+
+			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), keys.target:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("scepter_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
+				if enemy ~= keys.target then 
+					if splinter_counter < self:GetAbility():GetSpecialValueFor("split_count_scepter") then
+						if self.frost_arrow_modifier and self.frost_arrow_modifier:GetAbility() and (self.frost_arrow_modifier.cast or self.frost_arrow_modifier:GetAbility():GetAutoCastState()) and self.frost_arrow_modifier:GetAbility():IsFullyCastable() then 
+							self.frost_arrow_modifier:GetAbility():UseResources(true, false, false)
+							
+							self.bFrost = true
+							self.splinter_projectile_name = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+						else
+							self.bFrost = false
+							self.splinter_projectile_name = self:GetParent():GetRangedProjectileName()
+						end
+						
+						TrackingProjectiles:Projectile({
+							hTarget				= enemy,
+							hCaster				= keys.target,
+							hAbility			= self:GetAbility(),
+							iMoveSpeed			= self:GetParent():GetProjectileSpeed(),
+							EffectName			= self.splinter_projectile_name,
+							SoundName			= "",
+							flRadius			= 1,
+							bDodgeable			= true,
+							bDestroyOnDodge 	= true,
+							iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+							bFrost				= self.bFrost,
+							OnProjectileHitUnit = function(params, projectileID)
+								self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_marksmanship_scepter_dmg_reduction", {})
+								self:GetParent():PerformAttack(enemy, false, true, true, true, false, false, false)
+								self:GetParent():RemoveModifierByName("modifier_imba_marksmanship_scepter_dmg_reduction")
+
+								if params.bFrost then 
+									self.frost_arrow_modifier:GetAbility():OnOrbImpact({target = enemy})
+								end
+							end
+						})
+						
+						splinter_counter = splinter_counter + 1
+					else
+						break
+					end
+				end
+			end
+		end
+		
+		-- IMBAfication: Perfect Shot
+		if keys.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") and not keys.target:IsRoshan() and not keys.target:HasModifier("modifier_oracle_false_promise_timer") and not keys.target:HasModifier("modifier_imba_oracle_false_promise_timer") then
+			keys.target:Kill(self:GetAbility(), self:GetParent())
+		end
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:OnAttackRecordDestroy(keys)
+	if keys.attacker == self:GetParent() and self.procs[keys.record] then
+		self.procs[keys.record] = nil
+		
+		keys.target:RemoveModifierByName("modifier_imba_drow_ranger_marksmanship_723_proc_armor")
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:GetModifierAttackRangeBonus()
+	if not self:GetParent():PassivesDisabled() and self:GetStackCount() == 0 then
+		return self:GetAbility():GetSpecialValueFor("range_bonus")
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723:IsHidden()					return true end
+
+function modifier_imba_drow_ranger_marksmanship_723:IsAura()					return not self:GetParent():IsIllusion() end
+function modifier_imba_drow_ranger_marksmanship_723:IsAuraActiveOnDeath() 		return false end
+
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("agility_range") end
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
+
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_drow_ranger_marksmanship_723:GetModifierAura()			return "modifier_imba_drow_ranger_marksmanship_723_aura_bonus" end
+
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraEntityReject(hTarget)	return not self:GetAbility():IsTrained() or not hTarget:IsRangedAttacker() or self:GetParent():PassivesDisabled() or not self.start_particle end
+
+-----------------------------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_MARKSMANSHIP_723_AURA_BONUS --
+-----------------------------------------------------------
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnCreated()
+	self.agility_multiplier	= self:GetAbility():GetSpecialValueFor("agility_multiplier") * 0.01
+	
+	self.agility_to_add = self:GetCaster():GetAgility() * self.agility_multiplier
+	
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnRefresh()
+	self.agility_multiplier	= self:GetAbility():GetSpecialValueFor("agility_multiplier") * 0.01
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnIntervalThink()
+	self.agility_to_add = 0
+	
+	if self:GetCaster() and not self:GetCaster():IsNull() then
+		self.agility_to_add = self:GetCaster():GetAgility() * self.agility_multiplier
+	end
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:CheckState()
+	return {[MODIFIER_STATE_CANNOT_MISS] = true}
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_AGILITY_BONUS}
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:GetModifierBonusStats_Agility()
+	return self.agility_to_add
+end
+
+------------------------------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_MARKSMANSHIP_723_PROC_DAMAGE --
+------------------------------------------------------------
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_damage:IsHidden()		return true end
+function modifier_imba_drow_ranger_marksmanship_723_proc_damage:IsPurgable()	return false end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_damage:OnCreated()
+	if not IsServer() then return end
+
+	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_damage:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_POST_CRIT}
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_damage:GetModifierPreAttack_BonusDamagePostCrit()
+	return self.bonus_damage
+end
+
+-----------------------------------------------------------
+-- MODIFIER_IMBA_DROW_RANGER_MARKSMANSHIP_723_PROC_ARMOR --
+-----------------------------------------------------------
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_armor:IsHidden()	return true end
+function modifier_imba_drow_ranger_marksmanship_723_proc_armor:IsPurgable()	return false end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_armor:OnCreated()
+	self.base_armor = self:GetParent():GetPhysicalArmorBaseValue() * (-1)
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_armor:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+end
+
+function modifier_imba_drow_ranger_marksmanship_723_proc_armor:GetModifierPhysicalArmorBonus()
+	return self.base_armor
+end
+
+------------------------
+-- TRUESHOT AURA 7.20 --
+------------------------
+
 LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720_global", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720_aura", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1784,10 +2261,6 @@ imba_drow_ranger_trueshot_720 					= class({})
 modifier_imba_drow_ranger_trueshot_720			= class({})
 -- modifier_imba_drow_ranger_trueshot_720_global 	= class({})
 modifier_imba_drow_ranger_trueshot_720_aura 	= class({})
-
-------------------------
--- TRUESHOT AURA 7.20 --
-------------------------
 
 function imba_drow_ranger_trueshot_720:GetIntrinsicModifierName()
 	return "modifier_imba_drow_ranger_trueshot_720"

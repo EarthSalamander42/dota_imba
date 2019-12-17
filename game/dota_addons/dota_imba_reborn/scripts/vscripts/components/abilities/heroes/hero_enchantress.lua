@@ -74,18 +74,16 @@ function modifier_imba_enchantress_untouchable:OnRefresh()
 end
 
 function modifier_imba_enchantress_untouchable:DeclareFunctions()
-    local decFuncs = {
+    return {
         MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_HERO_KILLED -- IMBAfication: Regret
     }
-
-    return decFuncs
 end
 
 function modifier_imba_enchantress_untouchable:OnAttackStart(keys)
 	if not IsServer() then return end
 	
-    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsBuilding() then
 		keys.attacker:AddNewModifier(self.parent, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
     end
 end
@@ -93,7 +91,7 @@ end
 function modifier_imba_enchantress_untouchable:OnHeroKilled(keys)
 	if not IsServer() then return end
 
-    if self.caster == self.parent and self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsMagicImmune() and not keys.attacker:IsBuilding() then
+    if self.caster == self.parent and self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsBuilding() then
 		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {}):SetStackCount(self.regret_stacks)
     end
 end
@@ -286,6 +284,8 @@ function imba_enchantress_enchant:OnSpellStart()
 		--self.target:AddNewModifier(self.caster, self, "modifier_dominated", {duration = self.dominate_duration}) -- This didn't work for me
 		self.target:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.dominate_duration})
 
+		self.target:Heal(self.target:GetMaxHealth(), self.caster)
+
 		-- IMBAfication: Kindred Spirits
 		if self:GetCaster():HasAbility("imba_enchantress_untouchable") and self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"):IsTrained() then
 			self.target:AddNewModifier(self.caster, self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"), "modifier_imba_enchantress_untouchable", {})
@@ -326,6 +326,9 @@ function modifier_imba_enchantress_enchant_controlled:OnCreated()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
 	
+	self.enchant_health	= self.ability:GetSpecialValueFor("enchant_health")
+	self.enchant_damage	= self.ability:GetSpecialValueFor("enchant_damage")
+	
 	if not IsServer() then return end
 	
 	self.remaining_hp	= 	self.parent:GetHealth()
@@ -338,20 +341,27 @@ function modifier_imba_enchantress_enchant_controlled:OnCreated()
 end
 
 function modifier_imba_enchantress_enchant_controlled:CheckState()
-	local state = {
-	[MODIFIER_STATE_DOMINATED] = true
+	return {
+		[MODIFIER_STATE_DOMINATED] = true
 	}
-
-	return state
 end
 
 function modifier_imba_enchantress_enchant_controlled:DeclareFunctions()
-    local decFuncs = {
+    return {
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE, -- Talent 4
         MODIFIER_EVENT_ON_TAKEDAMAGE
     }
+end
 
-    return decFuncs
+function modifier_imba_enchantress_enchant_controlled:GetModifierExtraHealthBonus()
+	return self.enchant_health
+end
+
+function modifier_imba_enchantress_enchant_controlled:GetModifierPreAttack_BonusDamage()
+	return self.enchant_damage
 end
 
 function modifier_imba_enchantress_enchant_controlled:GetBonusVisionPercentage(keys)
@@ -1031,26 +1041,135 @@ function modifier_imba_enchantress_impetus_huntmastery_timer:IsPurgable()		retur
 function modifier_imba_enchantress_impetus_huntmastery_timer:RemoveOnDeath()	return false end -- Destroys itself rather promptly
 
 function modifier_imba_enchantress_impetus_huntmastery_timer:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_DEATH
     }
-
-    return decFuncs
 end
 
 function modifier_imba_enchantress_impetus_huntmastery_timer:OnDeath(keys)
 	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then
-		self.caster	= self:GetCaster()
-		
-		local impetus_modifier	= self.caster:FindModifierByName("modifier_imba_enchantress_impetus")
-		
-		if impetus_modifier then
-			impetus_modifier:IncrementStackCount()
+		if self:GetAbility():GetName() == "imba_enchantress_impetus_723" then
+			if not self:GetCaster():HasModifier("modifier_imba_enchantress_impetus_723") then
+				local impetus_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enchantress_impetus_723", {})
+				
+				if impetus_modifier then
+					impetus_modifier:IncrementStackCount()
+				end
+			else
+				self:GetCaster():FindModifierByName("modifier_imba_enchantress_impetus_723"):IncrementStackCount()
+			end
+		else
+			self.caster	= self:GetCaster()
 			
-			if self.caster:GetName() == "npc_dota_hero_enchantress" then
-				self.caster:EmitSound("enchantress_ench_ability_impetus_0"..math.random(1,7))
+			local impetus_modifier	= self.caster:FindModifierByName("modifier_imba_enchantress_impetus")
+			
+			if impetus_modifier then
+				impetus_modifier:IncrementStackCount()
 			end
 		end
+		
+		if self:GetCaster():GetName() == "npc_dota_hero_enchantress" then
+			self:GetCaster():EmitSound("enchantress_ench_ability_impetus_0"..math.random(1,7))
+		end
+	end
+end
+
+----------------------------------
+-- IMBA_ENCHANTRESS_IMPETUS_723 --
+----------------------------------
+
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_impetus_723", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
+
+imba_enchantress_impetus_723						= imba_enchantress_impetus_723 or class({})
+modifier_imba_enchantress_impetus_723				= modifier_imba_enchantress_impetus_723 or class({})
+
+function imba_enchantress_impetus_723:IsStealable()	return false end
+
+function imba_enchantress_impetus_723:OnUpgrade()
+	if not self:GetCaster():HasModifier("modifier_imba_enchantress_impetus_723") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_enchantress_impetus_723", {})
+	end
+end
+
+function imba_enchantress_impetus_723:GetIntrinsicModifierName() 
+	return "modifier_generic_orb_effect_lua"
+end
+
+function imba_enchantress_impetus_723:GetProjectileName()
+	return "particles/units/heroes/hero_enchantress/enchantress_impetus.vpcf"
+end
+
+function imba_enchantress_impetus_723:OnOrbFire()
+	self:GetCaster():EmitSound("Hero_Enchantress.Impetus")
+end
+
+function imba_enchantress_impetus_723:OnOrbImpact( keys )
+	if not keys.target:IsMagicImmune() and keys.target:IsAlive() then
+		keys.target:EmitSound("Hero_Enchantress.ImpetusDamage")
+
+		-- IMBAfication: Huntmastery
+		keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_enchantress_impetus_huntmastery_timer", {duration = self:GetSpecialValueFor("huntmastery_grace_period")})
+				
+		-- Remove distance cap on damage
+		-- Note that CalcDistanceBetweenEntityOBB(self:Getcaster(), keys.target) actually gives different / "wrong" results...
+		--local distance 			= math.min(CalcDistanceBetweenEntityOBB(self:GetCaster(), keys.target), self.distance_cap)
+		local distance 			= (self:GetCaster():GetAbsOrigin() - keys.target:GetAbsOrigin()):Length()
+		local impetus_damage	= distance * self:GetTalentSpecialValueFor("distance_damage_pct") / 100
+		
+		ApplyDamage({
+			victim			= keys.target,
+			damage			= impetus_damage,
+			damage_type 	= DAMAGE_TYPE_PURE,
+			damage_flags	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, impetus_damage, nil)
+	end
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_ENCHANTRESS_IMPETUS_723 --
+-------------------------------------------
+
+function modifier_imba_enchantress_impetus_723:IsHidden()		return self:GetStackCount() <= 0 end
+function modifier_imba_enchantress_impetus_723:IsPurgable()		return false end
+function modifier_imba_enchantress_impetus_723:RemoveOnDeath()	return false end
+
+function modifier_imba_enchantress_impetus_723:DeclareFunctions()
+    return {
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+    }
+end
+
+function modifier_imba_enchantress_impetus_723:GetModifierCastRangeBonusStacking()
+	if self:GetAbility() then
+		local cast_range = self:GetStackCount() * self:GetAbility():GetSpecialValueFor("attack_cast_stack")
+
+		-- if self:GetParent():HasScepter() then
+			-- cast_range = cast_range + self.bonus_attack_range_scepter
+		-- end
+		
+		return cast_range
+	else
+		self:Destroy()
+	end
+end
+
+function modifier_imba_enchantress_impetus_723:GetModifierAttackRangeBonus()
+	if self:GetAbility() then
+		local attack_range = self:GetStackCount() * self:GetAbility():GetSpecialValueFor("attack_cast_stack")
+
+		-- if self:GetParent():HasScepter() then
+			-- attack_range = attack_range + self.bonus_attack_range_scepter
+		-- end
+		
+		return attack_range
+	else
+		self:Destroy()
 	end
 end
 
@@ -1187,12 +1306,10 @@ function modifier_special_bonus_imba_enchantress_3:OnCreated()
 end
 
 function modifier_special_bonus_imba_enchantress_3:DeclareFunctions()
-	local decFuncs = {
-	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+  	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
 	}
-
-  	return decFuncs
 end
 
 function modifier_special_bonus_imba_enchantress_3:GetModifierPreAttack_BonusDamage()

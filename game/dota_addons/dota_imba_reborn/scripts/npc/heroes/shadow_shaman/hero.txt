@@ -21,7 +21,7 @@
 		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
 		
 		"Ability10"					"special_bonus_hp_300"
-		"Ability11"					"special_bonus_exp_boost_30"
+		"Ability11"					"special_bonus_spell_amplify_10"
 		"Ability12"					"special_bonus_cast_range_125"
 		"Ability13"					"special_bonus_imba_shadow_shaman_hex_cooldown"
 		"Ability14"					"special_bonus_imba_shadow_shaman_shackles_duration"

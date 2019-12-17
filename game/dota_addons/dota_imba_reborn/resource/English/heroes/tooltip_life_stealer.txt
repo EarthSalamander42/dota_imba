@@ -1,10 +1,21 @@
 //LIFESTEALER
-"DOTA_Tooltip_ability_imba_life_stealer_rage"										"Rage"
+"DOTA_Tooltip_ability_imba_life_stealer_rage"										"Rage (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_life_stealer_rage_Description"							"Launch into a maddened rage, becoming Spell Immune and gaining increased attack speed.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Insanity:</font> Attacking enemies while Rage is active applies %insanity_attack_stacks% stacks of Insanity for %insanity_stack_duration% seconds, while any other source of damage after modifier application increments the stacks by %insanity_other_stacks%. If this modifier reaches %insanity_stack_activation% stacks, the target attempts to attack the closest unit that is not on the same team as Lifestealer within %insanity_active_range% radius for %insanity_active_duration% seconds."
 "DOTA_Tooltip_ability_imba_life_stealer_rage_Lore"									"The madness and brutality of N'aix makes him a vicious and unrelenting foe in combat."
 //"DOTA_Tooltip_ability_imba_life_stealer_rage_Note0"										"Upon casting, many buffs and debuffs will be removed."
 "DOTA_Tooltip_ability_imba_life_stealer_rage_Note0"										"Insanity cannot be purged."
 "DOTA_Tooltip_ability_imba_life_stealer_rage_Note1"										"If the target of Insanity's attacks dies, the attacker will continue to search for targets while Insanity's active is on."
+"DOTA_Tooltip_ability_imba_life_stealer_rage_attack_speed_bonus"						"ATTACK SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_life_stealer_rage_duration"								"DURATION:"
+
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723"										"Rage"
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_Description"							"Launch into a maddened rage, becoming Spell Immune, and gaining increased movement speed.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Insanity:</font> Attacking enemies while Rage is active applies %insanity_attack_stacks% stacks of Insanity for %insanity_stack_duration% seconds, while any other source of damage after modifier application increments the stacks by %insanity_other_stacks%. If this modifier reaches %insanity_stack_activation% stacks, the target attempts to attack the closest unit that is not on the same team as Lifestealer within %insanity_active_range% radius for %insanity_active_duration% seconds."
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_Lore"									"The madness and brutality of N'aix makes him a vicious and unrelenting foe in combat."
+//"DOTA_Tooltip_ability_imba_life_stealer_rage_723_Note0"										"Upon casting, many buffs and debuffs will be removed."
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_Note0"										"Insanity cannot be purged."
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_Note1"										"If the target of Insanity's attacks dies, the attacker will continue to search for targets while Insanity's active is on."
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_movement_speed_bonus"						"%MOVE SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_life_stealer_rage_723_duration"								"DURATION:"
 
 "DOTA_Tooltip_modifier_imba_life_stealer_rage_insanity"								"Insanity Stacks"
 "DOTA_Tooltip_modifier_imba_life_stealer_rage_insanity_Description"					"You feel your brain trembling...<br><br>Try not to let this reach %dMODIFIER_PROPERTY_TOOLTIP% stacks."
@@ -13,9 +24,7 @@
 "DOTA_Tooltip_modifier_imba_life_stealer_rage_insanity_target"						"Insanity Target"
 "DOTA_Tooltip_modifier_imba_life_stealer_rage_insanity_target_Description"			"Someone insane is coming after you..."
 
-"DOTA_Tooltip_ability_imba_life_stealer_rage_attack_speed_bonus"						"ATTACK SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_life_stealer_rage_duration"								"DURATION:"
-"DOTA_Tooltip_ability_imba_life_stealer_feast"										"Feast"
+"DOTA_Tooltip_ability_imba_life_stealer_feast"										"Feast (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_life_stealer_feast_Description"							"Lifestealer's attacks damage enemies and heal himself for a percentage of his target's max health.\n<font color='#FF7800'>Engorge:</font> For each individual unit attacked, if Feast would otherwise heal past max health, %engorge_pct%%% of the overheal will be converted to bonus max health for %engorge_duration% seconds. Individual stacks do not refresh on consecutive attacks.\n<font color='#FF7800'>Banquet:</font> Feast can be cast as a point-target ability to place a meal down with %banquet_base_health% base health. Any Engorge stacks are also removed and fed into the meal, further increasing its health. This meal takes %destroy_attacks% hits to be consumed/destroyed (allies use deny-mechanics); heroes count for %hero_attack_multiplier% hits, and allied heroes will heal for the damage dealt to the meal."
 "DOTA_Tooltip_ability_imba_life_stealer_feast_Lore"									"After escaping from his cell in Devarque, N'aix subsisted on flesh and bones of those unfortunate to cross his path."
 "DOTA_Tooltip_ability_imba_life_stealer_feast_Note0"									"Does not affect Roshan."
@@ -24,6 +33,17 @@
 "DOTA_Tooltip_ability_imba_life_stealer_feast_Note3"									"Stacks additively with other sources of Lifesteal."
 "DOTA_Tooltip_ability_imba_life_stealer_feast_Note4"									"Engorge is purgable."
 "DOTA_Tooltip_ability_imba_life_stealer_feast_hp_leech_percent"						"%LIFE STEAL:"
+
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723"										"Feast"
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Description"							"Lifestealer's attacks heal himself for a percentage of his target's max health. Increases attack speed.\n<font color='#FF7800'>Engorge:</font> For each individual unit attacked, if Feast would otherwise heal past max health, %engorge_pct%%% of the overheal will be converted to bonus max health for %engorge_duration% seconds. Individual stacks do not refresh on consecutive attacks.\n<font color='#FF7800'>Banquet:</font> Feast can be cast as a point-target ability to place a meal down with %banquet_base_health% base health. Any Engorge stacks are also removed and fed into the meal, further increasing its health. This meal takes %destroy_attacks% hits to be consumed/destroyed (allies use deny-mechanics); heroes count for %hero_attack_multiplier% hits, and allied heroes will heal for the damage dealt to the meal."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Lore"									"After escaping from his cell in Devarque, N'aix subsisted on flesh and bones of those unfortunate to cross his path."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Note0"									"Does not affect Roshan."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Note1"									"Affects Spell Immune units."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Note2"									"The heal is independent of the damage."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Note3"									"Stacks additively with other sources of Lifesteal."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_Note4"									"Engorge is purgable."
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_hp_leech_percent"						"%MAX HEALTH LIFE STEAL:"
+"DOTA_Tooltip_ability_imba_life_stealer_feast_723_attack_speed_bonus"					"ATTACK SPEED:"
 
 "npc_dota_life_stealer_banquet"														"Feast Meal"
 
@@ -36,7 +56,7 @@
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_cross_contamination"				"Cross-Contamination"
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_cross_contamination_Description"	"Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% additional damage from multiple units digging at your wounds."
 
-"DOTA_Tooltip_ability_imba_life_stealer_infest"										"Infest"
+"DOTA_Tooltip_ability_imba_life_stealer_infest"										"Infest (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_life_stealer_infest_Lore"									"With this infestation, N'aix consumes the life blood of the host, restoring him back to full unholy power."
 "DOTA_Tooltip_ability_imba_life_stealer_infest_Description"							"Lifestealer infests the body of a target unit, becoming undetectable inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and when consumed the creep will heal Lifestealer's health equal to the creep's current health.  Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>If It Fits...:</font> Can be cast on any non-invulnerable unit.\n<font color='#FF7800'>Chestburster:</font> Casting this on enemy heroes sets a debuff which starts at %chestburster_starting_stacks% stacks.\nIf this debuff reaches %chestburster_success_stacks% stacks, Lifestealer instantly kills the hero. The stacks tick up every %chestburster_tick_up_rate% second, and also tick up for every %chestburster_orders_to_tick_up% orders Lifestealer makes.\nIf this debuff reaches %chestburster_failure_stacks% stacks, Lifestealer is forcibly ejected and stunned for %chestburster_fail_stun_duration% seconds. The stacks tick down for every %chestburster_orders_to_tick_down% order the targeted hero makes, and also tick down by %chestburster_ticks_per_damage% if they are attacked by an allied unit (deniable).\nConsume cannot be manually cast until %chestburster_min_eject_time% seconds after infesting the targeted hero, which casts with standard mechanics."
 "DOTA_Tooltip_ability_imba_life_stealer_infest_Note0"								"If the infested unit dies before Lifestealer consumes it, no health is gained."
@@ -44,8 +64,26 @@
 "DOTA_Tooltip_ability_imba_life_stealer_infest_Note2"								"Creeps that are controlled while Infested share Lifestealer's movement speed."
 "DOTA_Tooltip_ability_imba_life_stealer_infest_damage"								"DAMAGE:"
 "DOTA_Tooltip_ability_imba_life_stealer_infest_radius"								"DAMAGE RADIUS:"
+
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723"										"Infest"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Lore"									"With this infestation, N'aix consumes the life blood of the host, restoring him back to full unholy power."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Description"							"Lifestealer infests the body of a target unit, becoming undetectable inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he will automatically take control of the unit's ability to move and attack. While infested, Lifestealer heals for a percentage of max health per second, and the unit infested unit gains bonus movement speed and health. Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>If It Fits...:</font> Can be cast on any non-invulnerable unit.\n<font color='#FF7800'>Chestburster:</font> Casting this on enemy heroes sets a debuff which starts at %chestburster_starting_stacks% stacks. Check Alt Notes for more information."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Note0"								"If the infested unit dies before Lifestealer consumes it, no health is gained."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Note1"								"Lifestealer gains experience while under the effects of Infest."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Note2"								"Creeps that are controlled while Infested share Lifestealer's movement speed."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_Note3"								"<font color='#FF7800'>Chestburster:</font> If this debuff reaches %chestburster_success_stacks% stacks, Lifestealer instantly kills the hero. The stacks tick up every %chestburster_tick_up_rate% second, and also tick up for every %chestburster_orders_to_tick_up% orders Lifestealer makes.\nIf this debuff reaches %chestburster_failure_stacks% stacks, Lifestealer is forcibly ejected and stunned for %chestburster_fail_stun_duration% seconds. The stacks tick down for every %chestburster_orders_to_tick_down% order the targeted hero makes, and also tick down by %chestburster_ticks_per_damage% if they are attacked by an allied unit (deniable).\nConsume cannot be manually cast until %chestburster_min_eject_time% seconds after infesting the targeted hero, which casts with standard mechanics."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_damage"								"DAMAGE:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_radius"								"DAMAGE RADIUS:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_self_regen"								"%SELF MAX HP REGEN:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_bonus_movement_speed"					"%MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_bonus_health"							"HEALTH BONUS:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_cooldown_scepter"						"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_cast_range_scepter"					"SCEPTER CAST RANGE:"
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_aghanim_description"					"Reduces Infest cooldown, increases cast range, and applies Rage buff to the infested unit."
+
 "DOTA_Tooltip_ability_imba_life_stealer_control"										"Control"
 "DOTA_Tooltip_ability_imba_life_stealer_control_Description"							"Lifestealer seizes control of the host body's nervous system, allowing him to issue movement and attack orders from within.  Controlled units share Lifestealer's movement speed.  Cannot be used on heroes."
+
 "DOTA_Tooltip_ability_imba_life_stealer_consume"										"Consume"
 "DOTA_Tooltip_ability_imba_life_stealer_consume_Description"							"Lifestealer eats the host body from the inside out, exploding from within."
 
@@ -53,7 +91,7 @@
 "DOTA_Tooltip_modifier_imba_life_stealer_infest_effect_Description"		"You should probably flail around or get friends to hit you to get this thing out (achieved at 0 stacks). You also probably don't want to let this reach %dMODIFIER_PROPERTY_TOOLTIP% stacks."
 
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate"							"Assimilate"
-"DOTA_Tooltip_ability_imba_life_stealer_assimilate_Description"							"Lifestealer swallows an allied hero, allowing them to hide within him. Any healing Lifestealer receives is shared with the hero within. When an assimilated hero leaves Lifestealer, they erupt outward, damaging nearby enemies.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>I'm So Hungry...:</font> Can Assimilate more than one hero at a time. Casting Eject will eject all assimilated heroes.\n<font color='#FF7800'>Big Gulp:</font> Can be set to auto-cast to make Assimilate a %consume_radius% radius ability, swallowing all valid units in radius at once."
+"DOTA_Tooltip_ability_imba_life_stealer_assimilate_Description"							"<font color='#E03E2E'>This ability is only granted if you are using the pre 7.23 ability set.</font> Lifestealer swallows an allied hero, allowing them to hide within him. Any healing Lifestealer receives is shared with the hero within. When an assimilated hero leaves Lifestealer, they erupt outward, damaging nearby enemies.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>I'm So Hungry...:</font> Can Assimilate more than one hero at a time. Casting Eject will eject all assimilated heroes.\n<font color='#FF7800'>Big Gulp:</font> Can be set to auto-cast to make Assimilate a %consume_radius% radius ability, swallowing all valid units in radius at once."
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_damage"		"ERUPT DAMAGE:"
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_radius"		"ERUPT RADIUS:"		
 "DOTA_Tooltip_ability_imba_life_stealer_assimilate_Lore"		"How can Lifestealer resist the chance to sample an ally?"
@@ -67,13 +105,13 @@
 
 "DOTA_Tooltip_modifier_imba_life_stealer_infest"										"Infesting a host"
 "DOTA_Tooltip_modifier_imba_life_stealer_rage" "Rage"
-"DOTA_Tooltip_modifier_imba_life_stealer_rage_Description" "Gained attack speed, spell immunity, and 100%% resistant to magic damage type."
+"DOTA_Tooltip_modifier_imba_life_stealer_rage_Description" "Gained attack speed (pre 7.23) or movement speed, spell immunity, and 100%% resistant to magic damage type."
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds" "Open Wounds"
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_Description"	"Movement speed decreased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%"
 "DOTA_Tooltip_modifier_imba_life_stealer_assimilate" "Assimilated"
 "DOTA_Tooltip_modifier_imba_life_stealer_assimilate_Description"	"Hiding within Lifestealer. Any healing Lifestealer receives is shared.\n\nMoving, casting an ability, or clicking on this icon will cause you to erupt from Lifestealer and damage nearby enemies."
 
-"DOTA_Tooltip_ability_imba_life_stealer_open_wounds"						"#{DOTA_Tooltip_ability_life_stealer_open_wounds}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds"						"#{DOTA_Tooltip_ability_life_stealer_open_wounds} (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_Description"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Description}\n<font color='#FF7800'>Cross-Contamination:</font> The Open Wounds target takes %cross_contamination_pct%%% increased damage for each additional unit that deals damage to them while this debuff is active."
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_Lore"					"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Lore}"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_Note0"					"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Note0}"
@@ -85,3 +123,13 @@
 
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds" 						"#{DOTA_Tooltip_modifier_life_stealer_open_wounds}"
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_Description"			"#{DOTA_Tooltip_modifier_life_stealer_open_wounds_Description}"
+
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723"						"#{DOTA_Tooltip_ability_life_stealer_open_wounds}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_Description"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Description}\n<font color='#FF7800'>Cross-Contamination:</font> The Open Wounds target takes %cross_contamination_pct%%% increased damage for each additional unit that deals damage to them while this debuff is active."
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_Lore"					"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Lore}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_Note0"					"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Note0}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_Note1"					"#{DOTA_Tooltip_ability_life_stealer_open_wounds_Note1}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_heal_percent"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_heal_percent}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_slow_tooltip"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_slow_tooltip}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_duration"				"#{DOTA_Tooltip_ability_life_stealer_open_wounds_duration}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_tooltip_range"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_tooltip_range}"

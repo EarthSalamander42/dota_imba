@@ -102,11 +102,12 @@ function modifier_generic_motion_controller:OnCreated(params)
 		self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
 	end
 	
-	if self:ApplyVerticalMotionController() == false then 
+	if self:ApplyHorizontalMotionController() == false then 
 		self:Destroy()
 	end
 	
-	if self:ApplyHorizontalMotionController() == false then 
+	-- What is this Tusk stuff crashing the game...
+	if self:GetParent():HasModifier("modifier_tusk_walrus_punch_air_time") or self:GetParent():HasModifier("modifier_tusk_walrus_kick_air_time") or self:ApplyVerticalMotionController() == false then 
 		self:Destroy()
 	end
 end
@@ -178,11 +179,9 @@ function modifier_generic_motion_controller:CheckState()
 end
 
 function modifier_generic_motion_controller:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 	}
-
-	return funcs
 end
 
 function modifier_generic_motion_controller:GetOverrideAnimation( params )

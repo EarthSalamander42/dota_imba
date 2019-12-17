@@ -365,7 +365,7 @@ function imba_clinkz_death_pact_723:OnSpellStart()
 		target:Kill(self, self:GetCaster())
 	else
 		-- IMBAfication: Soul High
-		local health_to_convert = target:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("soul_high_hp_damage") * 0.01
+		local health_to_convert = target:GetMaxHealth() * self:GetSpecialValueFor("soul_high_hp_damage") * 0.01
 		
 		if self:GetCaster():HasModifier("modifier_imba_clinkz_death_pact_723") then
 			self:GetCaster():RemoveModifierByName("modifier_imba_clinkz_death_pact_723")
@@ -400,8 +400,8 @@ function modifier_imba_clinkz_death_pact_723:OnCreated(params)
 
 	
 	if not IsServer() or not params.bonus_attack then return end
-		self:SetStackCount(params.bonus_attack)
-	end
+	
+	self:SetStackCount(params.bonus_attack)
 end
 
 function modifier_imba_clinkz_death_pact_723:DeclareFunctions()
@@ -1076,9 +1076,10 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 end
 
 function modifier_imba_skeleton_walk_invis:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-				   [MODIFIER_STATE_INVISIBLE] = true}
-	return state
+	return {
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_INVISIBLE] = true
+	}
 end
 
 function modifier_imba_skeleton_walk_invis:GetPriority()
@@ -1086,13 +1087,11 @@ function modifier_imba_skeleton_walk_invis:GetPriority()
 end
 
 function modifier_imba_skeleton_walk_invis:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 					  MODIFIER_PROPERTY_MOVESPEED_MAX,
 					  MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 					  MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 					  MODIFIER_EVENT_ON_ATTACK}
-
-	return decFuncs
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeed_Max()
@@ -1233,6 +1232,10 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 		if #enemies > 0 and RollPercentage(spook_likelihood) then
 			-- sPo0kY sCaRy sKeLeToNs
 			EmitSoundOn("Imba.ClinkzSpooky", self:GetParent())
+		end
+		
+		if self:GetAbility() and self:GetAbility():GetName() == "imba_clinkz_skeleton_walk_723" then
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_skeleton_walk_723_strafe", {duration = self:GetAbility():GetTalentSpecialValueFor("attack_speed_duration")})
 		end
 	end
 end
@@ -1399,8 +1402,26 @@ function modifier_imba_skeleton_walk_talent_ms:GetModifierMoveSpeedBonus_Percent
 	return self.ms_bonus_pct
 end
 
+LinkLuaModifier("modifier_imba_clinkz_skeleton_walk_723_strafe", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
+imba_clinkz_skeleton_walk_723 = imba_clinkz_skeleton_walk
+modifier_imba_clinkz_skeleton_walk_723_strafe	= modifier_imba_clinkz_skeleton_walk_723_strafe or class({})
 
+---------------------------------------------------
+-- MODIFIER_IMBA_CLINKZ_SKELETON_WALK_723_STRAFE --
+---------------------------------------------------
+
+function modifier_imba_clinkz_skeleton_walk_723_strafe:OnCreated()
+	self.attack_speed_bonus_pct	= self:GetAbility():GetSpecialValueFor("attack_speed_bonus_pct")
+end
+
+function modifier_imba_clinkz_skeleton_walk_723_strafe:DeclareFunctions()
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+end
+
+function modifier_imba_clinkz_skeleton_walk_723_strafe:GetModifierAttackSpeedBonus_Constant()
+	return self.attack_speed_bonus_pct
+end
 
 -----------------------------
 --       DEATH PACT        --

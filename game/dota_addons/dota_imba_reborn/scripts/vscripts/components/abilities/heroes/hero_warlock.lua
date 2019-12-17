@@ -1108,13 +1108,13 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 
 		-- Attack speed (needs to be done through a modifier):
 		-- I'm also going to attach the 100% magic resistance talent onto this modifier
-		local modifier_attackspeed_handler = golem:AddNewModifier(self:GetCaster(), ability, "modifier_imba_rain_of_chaos_golem_as", {})
+		local modifier_attackspeed_handler = golem:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_golem_as", {})
 		if modifier_attackspeed_handler then
 			modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
 		end
 
 		-- Move speed (needs to be done through a modifier):
-		local modifier_movespeed_handler = golem:AddNewModifier(self:GetCaster(), ability, "modifier_imba_rain_of_chaos_golem_ms", {})
+		local modifier_movespeed_handler = golem:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_golem_ms", {})
 		if modifier_movespeed_handler then
 			modifier_movespeed_handler:SetStackCount(bonus_move_speed)
 		end
@@ -1728,7 +1728,7 @@ function modifier_imba_golem_spell_immunity:IsDebuff() return false end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance					= class({})
 

@@ -420,7 +420,7 @@ end
 function modifier_item_imba_kaya:GetModifierPercentageCooldown()
     if self:GetAbility():GetSecondaryCharges() == 1 and 
 	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
-	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and 
+	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and 
 	not self:GetParent():HasModifier("modifier_item_imba_kaya_and_sange") and 
 	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
@@ -689,7 +689,7 @@ end
 function modifier_item_imba_kaya_and_sange:GetModifierPercentageCooldown()
     if self:GetAbility():GetSecondaryCharges() == 1 and 
 	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
-	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
 	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
         return self.bonus_cdr
@@ -833,7 +833,7 @@ end
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
     if self:GetAbility():GetSecondaryCharges() == 1 and
-	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
 	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
         return self.bonus_cdr

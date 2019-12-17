@@ -387,7 +387,14 @@ function modifier_item_imba_hurricane_pike_force_enemy:IgnoreTenacity()	return t
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
 	if not IsServer() then return end
-	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	
+	local particle_name = "particles/items_fx/force_staff.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	end	
+	
+	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -430,7 +437,14 @@ function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriorit
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
 	if not IsServer() then return end
-	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"], PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	
+	local particle_name = "particles/items_fx/force_staff.vpcf"
+	
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	end	
+	
+	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()

@@ -11,7 +11,7 @@ function modifier_meepo_divided_we_stand_lua:IsPermanent()
 end
 
 function modifier_meepo_divided_we_stand_lua:OnCreated()
-	if IsServer() then
+	if IsServer() then	
 		self:StartIntervalThink(FrameTime() * 2) -- could use frametime but i'm not sure if it affects FPS somehow
 	end
 end
@@ -79,27 +79,175 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 		end
 
 		local found_boots = self:GetParent():GetCloneSource().main_boots
-
+		
 		-- Pair of boots found, do something
 		if break_loop == true then
 --			print("Boots found in main meepo:", found_boots:GetAbilityName())
 			if not self:GetParent():HasItemInInventory(found_boots:GetAbilityName()) then
-				self:GetParent():AddItemByName(found_boots:GetAbilityName())
+				self.cloned_boots = self:GetParent():AddItemByName(found_boots:GetAbilityName())
+				
+				if self.cloned_boots and self:GetParent():HasItemInInventory(found_boots:GetAbilityName()) and self.cloned_boots:GetItemSlot() ~= found_boots:GetItemSlot() then
+					self:GetParent():SwapItems(self.cloned_boots:GetItemSlot(), found_boots:GetItemSlot())
+				end
 			end
 		else
 			for _, boots_name in pairs(boots) do
 				self:GetParent():RemoveItemByName(boots_name)
 			end
 		end
-
-		-- Mega Treads fix (not working kappa)
---		if found_boots and found_boots:GetAbilityName() == "item_imba_power_treads_2" then
---			print(found_boots.state.." / "..self:GetParent():FindItemInInventory("item_imba_power_treads_2").state)
---			if found_boots.state ~= self:GetParent():FindItemInInventory("item_imba_power_treads_2").state then
---				found_boots.state = self:GetParent():FindItemInInventory("item_imba_power_treads_2").state
---			end
---		end
+		
+		-- Mega Treads fix
+		-- The Mega Treads lua file has a crapton of garbage code along with lines that expilcitly forbid clones from getting the bonus modifiers or something...so I guess I'll just leave it
+		if found_boots and found_boots:GetAbilityName() == "item_imba_power_treads_2" then
+			-- print(found_boots.state.." / "..self:GetParent():FindItemInInventory("item_imba_power_treads_2").state)
+			if found_boots.state ~= self:GetParent():FindItemInInventory("item_imba_power_treads_2").state then
+				self:GetParent():FindItemInInventory("item_imba_power_treads_2").state = found_boots.state
+				
+				if self:GetParent():HasModifier("modifier_imba_power_treads_2") and self:GetParent():GetCloneSource():HasModifier("modifier_imba_power_treads_2") then
+					self:GetParent():FindModifierByName("modifier_imba_power_treads_2"):SetStackCount(self:GetParent():GetCloneSource():FindModifierByName("modifier_imba_power_treads_2"):GetStackCount())
+				end
+			end
+		end
 
 		self:GetParent():CalculateStatBonus()
+	end
+end
+
+function modifier_meepo_divided_we_stand_lua:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+end
+
+function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
+	if not IsServer() then return end
+
+	print(keys.ability:IsItem())
+	print(self:GetParent().GetCloneSource)
+	print(keys.unit)
+	print(self:GetParent():GetCloneSource())
+	
+	if keys.ability:IsItem() and self:GetParent().GetCloneSource and keys.unit == self:GetParent():GetCloneSource() or (keys.target == self:GetParent():GetCloneSource() and keys.unit:GetTeamNumber() == self:GetParent():GetCloneSource():GetTeamNumber()) then
+		local modifier_name			= nil
+		local modifier_duration		= nil
+	
+		-- Garbage case-by-case basis here
+		if keys.ability:GetName() == "item_black_king_bar" or keys.ability:GetName() == "item_imba_white_queen_cape" then
+			modifier_name		= "modifier_black_king_bar_immune"
+			modifier_duration	= keys.ability:GetLevelSpecialValueFor("duration", keys.ability:GetLevel() - 1)
+		elseif keys.ability:GetName() == "item_imba_black_queen_cape" then
+			modifier_name		= "modifier_imba_black_queen_cape_active_bkb"
+			modifier_duration	= keys.ability:GetLevelSpecialValueFor("duration", keys.ability:GetLevel() - 1)
+			
+		-- Angelic Alliance
+		elseif keys.ability:GetName() == "item_imba_angelic_alliance" then
+			modifier_name		= "modifier_imba_angelic_alliance_buff"
+			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
+		-- Blademail
+		elseif keys.ability:GetName() == "item_imba_blade_mail" or keys.ability:GetName() == "item_imba_bladestorm_mail" then
+			modifier_name		= "modifier_item_imba_blade_mail_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
+		-- Butterfly
+		elseif keys.ability:GetName() == "item_imba_butterfly" then
+			modifier_name		= "modifier_item_imba_butterfly_flutter"
+			modifier_duration	= keys.ability:GetSpecialValueFor("flutter_duration")
+		-- Jarnbjorn
+		elseif keys.ability:GetName() == "item_imba_jarnbjorn" then
+			modifier_name		= "modifier_item_imba_jarnbjorn_static"
+			modifier_duration	= keys.ability:GetSpecialValueFor("static_duration")
+		-- KYS
+		elseif keys.ability:GetName() == "item_imba_sange" then
+			modifier_name		= "modifier_item_imba_sange_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_heavens_halberd" then
+			modifier_name		= "modifier_item_imba_heavens_halberd_ally_buff"
+			modifier_duration	= keys.ability:GetSpecialValueFor("buff_duration")
+		elseif keys.ability:GetName() == "item_imba_yasha" then
+			modifier_name		= "modifier_item_imba_yasha_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_kaya" or keys.ability:GetName() == "item_imba_arcane_nexus" then
+			modifier_name		= "modifier_item_imba_kaya_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_sange_yasha" then
+			modifier_name		= "modifier_item_imba_sange_yasha_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_kaya_and_sange" then
+			modifier_name		= "modifier_item_imba_kaya_and_sange_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_yasha_and_kaya" then
+			modifier_name		= "modifier_item_imba_yasha_and_kaya_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		elseif keys.ability:GetName() == "item_imba_sange_yasha" then
+			modifier_name		= "modifier_item_imba_sange_yasha_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		-- Linken's Sphere
+		elseif keys.ability:GetName() == "item_sphere" then
+			modifier_name		= "modifier_item_sphere_target"
+			modifier_duration	= keys.ability:GetSpecialValueFor("block_cooldown")
+		-- Lotus Orb
+		elseif keys.ability:GetName() == "item_lotus_orb" then
+			modifier_name		= "modifier_item_lotus_orb_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		-- Mask of Madness
+		elseif keys.ability:GetName() == "item_imba_mask_of_madness" then
+			modifier_name		= "modifier_imba_mask_of_madness_berserk"
+			modifier_duration	= keys.ability:GetSpecialValueFor("berserk_duration")
+		-- Mjollnir
+		elseif keys.ability:GetName() == "item_imba_mjollnir" then
+			modifier_name		= "modifier_item_imba_mjollnir_static"
+			modifier_duration	= keys.ability:GetSpecialValueFor("static_duration")
+		-- Satanic
+		elseif keys.ability:GetName() == "item_imba_satanic" then
+			modifier_name		= "modifier_item_imba_sange_yasha_active"
+			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
+		-- Spirit Vessel
+		elseif keys.ability:GetName() == "item_imba_spirit_vessel" then
+			modifier_name		= "modifier_item_imba_spirit_vessel_heal"
+			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
+		-- Urn of Shadows
+		elseif keys.ability:GetName() == "item_imba_urn_of_shadows" then
+			modifier_name		= "modifier_imba_urn_of_shadows_active_ally"
+			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
+		-- Valiance
+		elseif keys.ability:GetName() == "item_imba_valiance" and not self:GetParent():GetCloneSource():HasModifier("modifier_item_imba_valiance_counter") then
+			modifier_name		= "modifier_item_imba_valiance_guard"
+			modifier_duration	= keys.ability:GetSpecialValueFor("guard_duration")
+		end
+		
+		-- Apply the modifier from above
+		if modifier_name and modifier_duration then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, modifier_name, {duration = modifier_duration})
+		end
+		
+		-- Special exceptions
+		if keys.ability:GetName() == "item_imba_the_triumvirate_v2" then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_the_triumvirate_v2_sange", {duration = keys.ability:GetSpecialValueFor("active_duration")})
+			Timers:CreateTimer(FrameTime(), function()
+				self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_the_triumvirate_v2_yasha", {duration = keys.ability:GetSpecialValueFor("active_duration")})
+				Timers:CreateTimer(FrameTime(), function()
+					self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_the_triumvirate_v2_kaya", {duration = keys.ability:GetSpecialValueFor("active_duration")})
+				end)
+			end)
+		elseif keys.ability:GetName() == "item_imba_bloodstone_720" then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_bloodstone_active_720", {duration = keys.ability:GetSpecialValueFor("restore_duration")})
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_bloodstone_active_cdr_720", {duration = keys.ability:GetSpecialValueFor("active_duration")})
+		elseif keys.ability:GetName() == "item_imba_glimmerdark_shield" then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_glimmerdark_shield_prism", {duration = keys.ability:GetSpecialValueFor("prism_duration")})
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_gem_of_true_sight", {duration = keys.ability:GetSpecialValueFor("prism_duration")})
+		elseif keys.ability:GetName() == "item_imba_shadow_blade" then
+			Timers:CreateTimer(keys.ability:GetSpecialValueFor("invis_fade_time"), function()
+				local particle_invis_start_fx = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+				ParticleManager:SetParticleControl(particle_invis_start_fx, 0, self:GetParent():GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
+
+				self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_shadow_blade_invis", {duration = keys.ability:GetSpecialValueFor("invis_duration")})
+			end)	
+		elseif keys.ability:GetName() == "item_imba_silver_edge" then
+			Timers:CreateTimer(keys.ability:GetSpecialValueFor("invis_fade_time"), function()
+				local particle_invis_start_fx = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+				ParticleManager:SetParticleControl(particle_invis_start_fx, 0, self:GetParent():GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
+
+				self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_silver_edge_invis", {duration = keys.ability:GetSpecialValueFor("invis_duration")})
+			end)
+		end
 	end
 end

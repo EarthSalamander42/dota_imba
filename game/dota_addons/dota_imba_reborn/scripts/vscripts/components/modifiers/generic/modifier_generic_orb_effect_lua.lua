@@ -41,7 +41,8 @@ end
 --------------------------------------------------------------------------------
 -- Modifier Effects
 function modifier_generic_orb_effect_lua:DeclareFunctions()
-	local funcs = {
+	return {
+		MODIFIER_EVENT_ON_ATTACK_RECORD,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_PROPERTY_PROCATTACK_FEEDBACK,
@@ -51,9 +52,34 @@ function modifier_generic_orb_effect_lua:DeclareFunctions()
 
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
 	}
-
-	return funcs
 end
+
+function modifier_generic_orb_effect_lua:OnAttackRecord( params )
+	if params.attacker~=self:GetParent() then return end
+
+	-- check autocast
+	if self.ability:GetAutoCastState() then
+		-- filter whether target is valid 
+		if UnitFilter(
+			params.target,
+			self.ability:GetAbilityTargetTeam(),
+			self.ability:GetAbilityTargetType(),
+			self.ability:GetAbilityTargetFlags(),
+			self:GetCaster():GetTeamNumber()
+		) == UF_SUCCESS then
+			self.cast = true
+		else
+			self.cast = false
+		end
+	end
+
+	-- register attack if being cast and fully castable
+	if self.cast and self.ability:IsFullyCastable() then
+		-- run OrbRecord script if available
+		if self.ability.OnOrbRecord then self.ability:OnOrbRecord( params ) end
+	end
+end
+
 
 function modifier_generic_orb_effect_lua:OnAttack( params )
 	if params.attacker~=self:GetParent() then return end
@@ -61,14 +87,13 @@ function modifier_generic_orb_effect_lua:OnAttack( params )
 	-- check autocast
 	if self.ability:GetAutoCastState() then
 		-- filter whether target is valid 
-		local nResult = UnitFilter(
+		if UnitFilter(
 			params.target,
 			self.ability:GetAbilityTargetTeam(),
 			self.ability:GetAbilityTargetType(),
 			self.ability:GetAbilityTargetFlags(),
 			self:GetCaster():GetTeamNumber()
-		)
-		if nResult == UF_SUCCESS then
+		) == UF_SUCCESS then
 			self.cast = true
 		end
 	end
@@ -102,6 +127,9 @@ end
 function modifier_generic_orb_effect_lua:OnAttackRecordDestroy( params )
 	-- destroy attack record
 	self.records[params.record] = nil
+	
+	-- run OrbRecordDestroy script if available
+	if self.ability.OnOrbRecordDestroy then self.ability:OnOrbRecordDestroy( params ) end
 end
 
 function modifier_generic_orb_effect_lua:OnOrder( params )

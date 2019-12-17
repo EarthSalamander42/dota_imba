@@ -116,7 +116,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"	"8"
+				"duration"	"10"
 			}
 			
 			"04"
@@ -132,7 +132,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"terror_night_vision_reduction_per_stack"	"220"
+				"terror_night_vision_reduction_per_stack"	"300"
 			}
 		}
 	}

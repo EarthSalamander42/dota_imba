@@ -399,7 +399,7 @@
 		"Ability1"					"imba_clinkz_death_pact_723"
 		"Ability2"					"imba_clinkz_searing_arrows"
 		"Ability3"					"imba_clinkz_skeleton_walk_723"
-		"Ability4"					"clinkz_death_pact"
+		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"clinkz_burning_army"
 		
@@ -410,13 +410,17 @@
 		"Ability12"					"special_bonus_imba_clinkz_8"
 		"Ability13"					"special_bonus_strength_15"
 		"Ability14"					"special_bonus_attack_range_125"
-		"Ability15"					"special_bonus_hp_regen_16"
-		"Ability16"					"special_bonus_imba_clinkz_9"
+		"Ability15"					"special_bonus_imba_clinkz_death_pact_723_health"
+		"Ability16"					"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
 		"Ability17"					"special_bonus_imba_clinkz_10" // Searing Arrows Multishot
 		
 		// Form Change Abilities
 		// "Ability1"					"imba_clinkz_strafe"
 		// "Ability3"					"imba_clinkz_skeleton_walk"
+		
+		// Form Change Talents
+		// "Ability15"					"special_bonus_hp_regen_16"
+		// "Ability16"					"special_bonus_imba_clinkz_9"
 		
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
@@ -598,21 +602,35 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 		
-		"Ability1"					"imba_drow_ranger_frost_arrows"
+		"Ability1"					"imba_drow_ranger_frost_arrows_723"
 		"Ability2"					"imba_drow_ranger_gust"
-		"Ability3"					"imba_drow_ranger_trueshot_720"
+		"Ability3"					"imba_drow_ranger_multishot"
 		"Ability4"					"imba_drow_ranger_deadeye"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_drow_ranger_marksmanship"
+		"Ability6"					"imba_drow_ranger_marksmanship_723"
+		
+		"Ability9"					"imba_form_change_drow_ranger"
 
 		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
 		"Ability11"					"special_bonus_all_stats_6"
-		"Ability12"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by x%.
+		"Ability12"					"special_bonus_agility_12"
 		"Ability13"					"special_bonus_imba_drow_ranger_9" //+x Gust Distance/Knockback
-		"Ability14"					"special_bonus_evasion_25"
-		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
-		"Ability16"					"special_bonus_imba_drow_ranger_10" // +25% Precision Aura Attack Speed
-		"Ability17"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for x seconds. This small gust wave pushes the main target back x units for x seconds, deals no damage, and does not silence.
+		"Ability14"					"special_bonus_unique_drow_ranger_1"
+		"Ability15"					"special_bonus_imba_drow_ranger_frost_arrows_damage"
+		"Ability16"					"special_bonus_unique_drow_ranger_3"
+		"Ability17"					"special_bonus_cooldown_reduction_40"
+	
+		// Form Change Abilities
+		// "Ability1"					"imba_drow_ranger_frost_arrows"
+		// "Ability3"					"imba_drow_ranger_trueshot_720"
+		// "Ability6"					"imba_drow_ranger_marksmanship"
+		
+		// Form Change Talents
+		// "Ability12"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by x%.
+		// "Ability14"					"special_bonus_evasion_25"
+		// "Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		// "Ability16"					"special_bonus_imba_drow_ranger_10" // +25% Precision Aura Attack Speed
+		// "Ability17"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for x seconds. This small gust wave pushes the main target back x units for x seconds, deals no damage, and does not silence.
 		
 		// Removed Abilities
 		// "Ability3"				"imba_drow_ranger_trueshot"
@@ -642,13 +660,18 @@
 		"Ability6"					"imba_earth_spirit_magnetize"
 
 		"Ability10"					"special_bonus_imba_earth_spirit_1"
-		"Ability11"					"special_bonus_imba_earth_spirit_2"
+		"Ability11"					"special_bonus_attack_damage_50"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
-		"Ability13"					"special_bonus_imba_earth_spirit_4"
-		"Ability14"					"special_bonus_imba_earth_spirit_5"
-		"Ability15"					"special_bonus_imba_earth_spirit_6"
+		"Ability13"					"special_bonus_armor_8"
+		"Ability14"					"special_bonus_spell_amplify_15"
+		"Ability15"					"special_bonus_imba_earth_spirit_5"
 		"Ability16"					"special_bonus_imba_earth_spirit_7"
-		"Ability17"					"special_bonus_imba_earth_spirit_8"
+		"Ability17"					"special_bonus_imba_earth_spirit_2"
+		
+		// Removed Talents
+		// "Ability13"					"special_bonus_imba_earth_spirit_4"
+		// "Ability15"					"special_bonus_imba_earth_spirit_6"
+		// "Ability17"					"special_bonus_imba_earth_spirit_8"
 	}
 
 	//=================================================================================================================
@@ -830,7 +853,7 @@
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
-		"Ability12"					"special_bonus_exp_boost_50"
+		"Ability12"					"special_bonus_hp_350"
 		"Ability13"					"special_bonus_spell_amplify_12"
 		"Ability14"					"special_bonus_imba_jakiro_7"
 		"Ability15"					"special_bonus_imba_jakiro_6"
@@ -1027,12 +1050,14 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_lycan_summon_wolves"
-		"Ability2"					"imba_lycan_howl"
+		"Ability2"					"imba_lycan_howl_723"
 		"Ability3"					"imba_lycan_feral_impulse"
-		"Ability4"					"imba_lycan_wolfsbane"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"lycan_wolf_bite"
+		"Ability5"					"imba_lycan_wolfsbane"
 		"Ability6"					"imba_lycan_shapeshift"
-
+		
+		"Ability9"					"lycan_shapeshift"
+		
 		"Ability10"					"special_bonus_imba_lycan_5"
 		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_imba_lycan_3"
@@ -1041,6 +1066,9 @@
 		"Ability15"					"special_bonus_imba_lycan_6"
 		"Ability16"					"special_bonus_imba_lycan_9"
 		"Ability17"					"special_bonus_imba_lycan_10"
+		
+		// Removed Abilities
+		// "Ability2"					"imba_lycan_howl"
 
 		// Removed Talents
 		// "Ability16"					"special_bonus_imba_lycan_7" // Shapeshift hasted speed increased to 1200
@@ -1448,14 +1476,17 @@
 		"Ability8"					"imba_phoenix_icarus_dive_stop"
 		"Ability9"					"imba_phoenix_sun_ray_stop"
 
-		"Ability10"					"special_bonus_imba_phoenix_1" // Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive
-		"Ability11"					"special_bonus_imba_phoenix_2" // Icarus Dive stuns for 0.5 seconds
+		"Ability10"					"special_bonus_imba_phoenix_2" // Icarus Dive stuns for 0.5 seconds
+		"Ability11"					"special_bonus_spell_amplify_8"
 		"Ability12"					"special_bonus_imba_phoenix_7" // Fire Spirits duration halved, maximum charges removed, costs 100 mana to cast.
 		"Ability13"					"special_bonus_imba_phoenix_4" // Sun Ray applies a strong dispell on allies on end
 		"Ability14"					"special_bonus_imba_phoenix_5" // If egg dies, Phoenix and the ally will rebirth at 10% of max HP and MP with refreshed abilities
 		"Ability15"					"special_bonus_imba_phoenix_6" // Creates another egg with allies, egg health decreased by 25%
 		"Ability16"					"special_bonus_imba_phoenix_3" // Fire spirits can stack up to 3
 		"Ability17"					"special_bonus_imba_phoenix_8" // Can move freely when casting Sun Ray
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_phoenix_1" // Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive
 	}
 
 	//========================================================================================================
@@ -1476,7 +1507,7 @@
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
 
-		"Ability10"					"special_bonus_exp_boost_40"
+		"Ability10"					"special_bonus_armor_5"
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
 		"Ability12"					"special_bonus_spell_lifesteal_13"
 		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
@@ -1691,7 +1722,7 @@
 		"Ability6"					"imba_skywrath_mage_mystic_flare"
 
 		"Ability10"					"special_bonus_movement_speed_25"
-		"Ability11"					"special_bonus_exp_boost_40"
+		"Ability11"					"special_bonus_spell_lifesteal_8"
 		"Ability12"					"special_bonus_imba_skywrath_mage_3" // "-Xs Ancient Seal Cooldown"
 		"Ability13"					"special_bonus_imba_skywrath_mage_9" // "+1 Arcane Bolt Per Cast"
 		"Ability14"					"special_bonus_imba_skywrath_mage_11" // "Global Concussive Shot"
@@ -1938,25 +1969,9 @@
 	//=================================================================================================================
 	"npc_dota_hero_tusk"
 	{
-	
-	
 		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
-	
-		"Ability1"		"tusk_ice_shards"
-		"Ability2"		"tusk_snowball"
-		"Ability3"		"tusk_tag_team"
-		"Ability4"		"tusk_walrus_kick"
+
 		"Ability5"		"tusk_frozen_sigil"
-		"Ability6"		"tusk_walrus_punch"
-		"Ability7"		"tusk_launch_snowball"
-		
-		"Ability10"		"special_bonus_exp_boost_40"
-		"Ability12"		"special_bonus_hp_350"
-		"Ability13"		"special_bonus_unique_tusk_2"
-		"Ability14"		"special_bonus_unique_tusk_3"
-		"Ability15"		"special_bonus_unique_tusk"
-		"Ability16"		"special_bonus_unique_tusk_4"
-		"Ability17"		"special_bonus_unique_tusk_5"
 	}
 
 	//=================================================================================================================
@@ -1985,14 +2000,17 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_ursa_enrage"
 
-		"Ability10"					"special_bonus_imba_ursa_1" // Enrage is activated automatically after taking enough damage. Resets after a few seconds
-		"Ability11"					"special_bonus_imba_ursa_2" // Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
+		"Ability10"					"special_bonus_imba_ursa_2" // Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
+		"Ability11"					"special_bonus_strength_10"
 		"Ability12"					"special_bonus_imba_ursa_3" // Territorial Hunter grants 25% Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
 		"Ability13"					"special_bonus_imba_ursa_4" // Fury Swipes' Devastating Blow reduces the armor of the target. Stackable and refreshable.
 		"Ability14"					"special_bonus_imba_ursa_5" // If the target has more than the threshold, Devastating Blow deals a bonus of the target's maximum health.
 		"Ability15"					"special_bonus_imba_ursa_6" // Overpower also roots targets in addition to disarming them.
 		"Ability16"					"special_bonus_imba_ursa_7" // Enrage adds a portion of your current health as damage.
 		"Ability17"					"special_bonus_imba_ursa_8" // Overpower becomes a passive, granting Ursa free attacks for 4 seconds whenever he starts an attack and Overpower is off cooldown.
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_ursa_1" // Enrage is activated automatically after taking enough damage. Resets after a few seconds
 	}
 
 	//=================================================================================================================
@@ -2079,7 +2097,7 @@
 
 		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
 		"Ability11"					"special_bonus_cast_range_150"
-		"Ability12"					"special_bonus_exp_boost_50"
+		"Ability12"					"special_bonus_armor_10"
 		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"
 		"Ability15"					"special_bonus_imba_warlock_5" // "+4 Shadow Word duration"

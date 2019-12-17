@@ -234,6 +234,14 @@ end
 ----------------------------------------------------
 imba_silencer_glaives_of_wisdom = imba_silencer_glaives_of_wisdom or class({})
 
+LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_multiple", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_buff_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_debuff_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_silencer_glaives_of_wisdom_multiple		= modifier_imba_silencer_glaives_of_wisdom_multiple or class({})
+modifier_imba_silencer_glaives_of_wisdom_buff_counter	= modifier_imba_silencer_glaives_of_wisdom_buff_counter or class({})
+modifier_imba_silencer_glaives_of_wisdom_debuff_counter	= modifier_imba_silencer_glaives_of_wisdom_debuff_counter or class({})
+
 function imba_silencer_glaives_of_wisdom:GetAbilityTextureName()
 	return "silencer_glaives_of_wisdom"
 end
@@ -270,12 +278,12 @@ function modifier_imba_silencer_glaives_of_wisdom:IsPurgable() return false end
 function modifier_imba_silencer_glaives_of_wisdom:IsDebuff() return false end
 
 function modifier_imba_silencer_glaives_of_wisdom:DeclareFunctions()
-	local decFunc = {MODIFIER_EVENT_ON_ATTACK_START,
+	return {
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_ORDER}
-
-	return decFunc
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnCreated()
@@ -383,11 +391,21 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 		if self.caster == attacker then
 
 			if target:IsAlive() and self.glaive_attack then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
+					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
+				})
+
+				target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
+					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
+				})
+			
 				local glaive_pure_damage = attacker:GetIntellect() * self.intellect_damage_pct / 100
 
-				if attacker:HasScepter() and (target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence")) then
-					glaive_pure_damage = glaive_pure_damage * (1 + (self.scepter_damage_multiplier * 0.01))
-				end
+				-- if attacker:HasScepter() and (target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence")) then
+					-- glaive_pure_damage = glaive_pure_damage * (1 + (self.scepter_damage_multiplier * 0.01))
+				-- end
 
 				local damage_table = {
 					victim = target,
@@ -400,48 +418,49 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, glaive_pure_damage, nil)
 				ApplyDamage( damage_table )
-				if not target:IsAlive() then return end
+				
+				-- if not target:IsAlive() then return end
 
-				if target:HasModifier("modifier_imba_silencer_global_silence") then
-					local global_silence_duration_increase = attacker:FindTalentValue("special_bonus_imba_silencer_5")
-					if global_silence_duration_increase > 0 then
-						local modifier = target:FindModifierByName("modifier_imba_silencer_global_silence")
-						modifier:SetDuration(modifier:GetRemainingTime() + global_silence_duration_increase, true)
-					end
-				end
+				-- if target:HasModifier("modifier_imba_silencer_global_silence") then
+					-- local global_silence_duration_increase = attacker:FindTalentValue("special_bonus_imba_silencer_5")
+					-- if global_silence_duration_increase > 0 then
+						-- local modifier = target:FindModifierByName("modifier_imba_silencer_global_silence")
+						-- modifier:SetDuration(modifier:GetRemainingTime() + global_silence_duration_increase, true)
+					-- end
+				-- end
 
-				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
-				if not hit_counter then
-					hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
-				end
+				-- local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
+				-- if not hit_counter then
+					-- hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
+				-- end
 
-				if hit_counter then
-					hit_counter:IncrementStackCount()
-					hit_counter:SetDuration(self.hit_count_duration, true)
-				end
+				-- if hit_counter then
+					-- hit_counter:IncrementStackCount()
+					-- hit_counter:SetDuration(self.hit_count_duration, true)
+				-- end
 
-				local int_damage = target:FindModifierByName(self.modifier_int_damage)
-				if not int_damage then
-					int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
-				end
+				-- local int_damage = target:FindModifierByName(self.modifier_int_damage)
+				-- if not int_damage then
+					-- int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
+				-- end
 
-				int_damage:IncrementStackCount()
-				int_damage:SetDuration(self.int_reduction_duration, true)
+				-- int_damage:IncrementStackCount()
+				-- int_damage:SetDuration(self.int_reduction_duration, true)
 
-				if attacker:HasTalent("special_bonus_imba_silencer_6") then
-					if not target:HasModifier("modifier_imba_silencer_glaives_talent_effect_procced") then
-						local arcaneSupremacy = attacker:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-						if arcaneSupremacy then
-							local stolenInt = arcaneSupremacy:GetStackCount()
-							if int_damage.target_intelligence ~= nil then
-								stolenInt = stolenInt + int_damage.target_intelligence
-							end
+				-- if attacker:HasTalent("special_bonus_imba_silencer_6") then
+					-- if not target:HasModifier("modifier_imba_silencer_glaives_talent_effect_procced") then
+						-- local arcaneSupremacy = attacker:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
+						-- if arcaneSupremacy then
+							-- local stolenInt = arcaneSupremacy:GetStackCount()
+							-- if int_damage.target_intelligence ~= nil then
+								-- stolenInt = stolenInt + int_damage.target_intelligence
+							-- end
 
-							local talentEffectModifier = target:AddNewModifier(attacker, self.ability, "modifier_imba_silencer_glaives_talent_effect", {duration = attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration")})
-							talentEffectModifier:SetStackCount(stolenInt)
-						end
-					end
-				end
+							-- local talentEffectModifier = target:AddNewModifier(attacker, self.ability, "modifier_imba_silencer_glaives_talent_effect", {duration = attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration")})
+							-- talentEffectModifier:SetStackCount(stolenInt)
+						-- end
+					-- end
+				-- end
 
 				EmitSoundOn(self.sound_hit, target)
 			end
@@ -453,7 +472,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnOrder(keys)
 	local order_type = keys.order_type
 
 	-- On any order apart from attacking target, clear the forced frost arrow variable.
-	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET and self.ability then
 		self.ability.force_glaive = nil
 	end
 end
@@ -560,7 +579,7 @@ function SetGlaiveAttackProjectile(caster, is_glaive_attack)
 		caster:SetRangedProjectileName(deso_projectile)
 		return
 
-			Lifesteal
+			-- Lifesteal
 	elseif has_lifesteal then
 		caster:SetRangedProjectileName(lifesteal_projectile)
 
@@ -712,6 +731,93 @@ end
 function modifier_imba_silencer_glaives_talent_effect_procced:GetModifierBonusStats_Intellect()
 	return -9999999999 end
 
+-------------------------------------------------------
+-- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_MULTIPLE --
+-------------------------------------------------------
+
+function modifier_imba_silencer_glaives_of_wisdom_multiple:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_silencer_glaives_of_wisdom_multiple:IgnoreTenacity()	return true end
+function modifier_imba_silencer_glaives_of_wisdom_multiple:IsHidden()		return true end
+function modifier_imba_silencer_glaives_of_wisdom_multiple:IsPurgable()		return false end
+
+function modifier_imba_silencer_glaives_of_wisdom_multiple:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.int_steal	= params.int_steal
+	
+	if self:GetCaster() == self:GetParent() then
+		self.buff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_buff_counter", {
+			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+			int_steal	= self.int_steal
+		})
+	else
+		self.debuff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff_counter", {
+			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+			int_steal	= self.int_steal
+		})
+	end
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_multiple:OnDestroy()
+	if not IsServer() then return end
+	
+	if self.buff_modifier and not self.buff_modifier:IsNull() then
+		self.buff_modifier:SetStackCount(self.buff_modifier:GetStackCount() - self.int_steal)
+	elseif self.debuff_modifier and not self.debuff_modifier:IsNull() then
+		self.debuff_modifier:SetStackCount(self.debuff_modifier:GetStackCount() - self.int_steal)
+	end
+end
+
+-----------------------------------------------------------
+-- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_BUFF_COUNTER --
+-----------------------------------------------------------
+
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:IgnoreTenacity()	return true end
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:IsPurgable()		return false end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:OnCreated(params)
+	if not IsServer() then return end
+	
+	self:SetStackCount(self:GetStackCount() + params.int_steal)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:OnRefresh(params)
+	self:OnCreated(params)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff_counter:GetModifierBonusStats_Intellect()
+	return self:GetStackCount()
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_DEBUFF_COUNTER --
+-------------------------------------------------------------
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:IgnoreTenacity()	return true end
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:IsPurgable()		return false end
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:OnCreated(params)
+	if not IsServer() then return end
+	
+	self:SetStackCount(self:GetStackCount() + params.int_steal)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:OnRefresh(params)
+	self:OnCreated(params)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:GetModifierBonusStats_Intellect()
+	return self:GetStackCount() * (-1)
+end
+
 --------------------------------------------------
 -- Last Word
 --------------------------------------------------
@@ -721,20 +827,40 @@ function imba_silencer_last_word:GetAbilityTextureName()
 	return "silencer_last_word"
 end
 
+function imba_silencer_last_word:GetBehavior()
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetBehavior(self)
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
+	end
+end
+
+function imba_silencer_last_word:GetAOERadius()
+	if not self:GetCaster():HasScepter() then
+		return 0
+	else
+		return self:GetSpecialValueFor("scepter_radius")
+	end
+end
+
 function imba_silencer_last_word:OnSpellStart()
 	local target = self:GetCursorTarget()
 	local caster = self:GetCaster()
 
-	if IsServer() then
+	EmitSoundOn("Hero_Silencer.LastWord.Cast", caster)
+
+	if not self:GetCaster():HasScepter() then
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
-
-		EmitSoundOn("Hero_Silencer.LastWord.Cast", caster)
-
+		
 		target:AddNewModifier(caster, self, "modifier_imba_silencer_last_word_debuff", {duration = self:GetDuration()})
+	else
+		for _, enemy in pairs(FindUnitsInRadius(caster:GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_last_word_debuff", {duration = self:GetDuration()})
+		end
 	end
 end
 
@@ -809,11 +935,9 @@ function imba_silencer_last_word_silence_aura:OnCreated( kv )
 end
 
 function imba_silencer_last_word_silence_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 	}
-
-	return funcs
 end
 
 function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
@@ -855,6 +979,7 @@ function modifier_imba_silencer_last_word_debuff:IsPurgable() return true end
 function modifier_imba_silencer_last_word_debuff:OnCreated( kv )
 	self.caster = self:GetCaster()
 	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct")
+	self.int_multiplier		= self:GetAbility():GetSpecialValueFor("int_multiplier")
 	
 	if IsServer() then
 		EmitSoundOn("Hero_Silencer.LastWord.Target", self:GetParent())
@@ -869,10 +994,22 @@ function modifier_imba_silencer_last_word_debuff:OnDestroy( kv )
 	if not self:GetParent():IsMagicImmune() then
 		if IsServer() then
 			EmitSoundOn("Hero_Silencer.LastWord.Damage", self:GetParent())
+			
+			local target_intellect		= 0
+			local intellect_difference	= 0
+			
+			if self:GetParent().GetIntellect and self:GetParent():GetIntellect() then
+				target_intellect = self:GetParent():GetIntellect()
+			end
+			
+			if self:GetCaster().GetIntellect and self:GetCaster():GetIntellect() then
+				intellect_difference = math.max(self:GetCaster():GetIntellect() - target_intellect, 0)
+			end
+			
 			local damage_table = {
 				victim = self:GetParent(),
 				attacker = self.caster,
-				damage = self.damage,
+				damage = self.damage + (intellect_difference * self.int_multiplier),
 				damage_type = self:GetAbility():GetAbilityDamageType(),
 				ability = self:GetAbility()
 			}

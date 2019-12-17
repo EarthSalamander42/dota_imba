@@ -6727,7 +6727,7 @@
 		"ItemResult"					"item_imba_veil_of_discord"
 		"ItemRequirements"
 		{
-			"01"						"item_helm_of_iron_will;item_crown"
+			"01"						"item_ring_of_basilius;item_crown"
 		}
 	}
 
@@ -6769,59 +6769,40 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"15"
+				"bonus_all_stats"		"9"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_str"				"6"
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"1.25"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"6"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"6"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_damage"	"6"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"active_aoe"			"600"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"active_resis"			"-25"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"debuff_duration"		"16"
-			}
-			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_radius"			"1200"
 			}
-			"10"
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_amp"				"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"debuff_radius"			"600"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"resist_debuff_duration"	"16.0"
+			}
+			
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_resist"			"-5"
 			}
-			"11"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_spell_power"		"5"
