@@ -998,22 +998,21 @@ function modifier_imba_silencer_last_word_debuff:OnDestroy( kv )
 			local target_intellect		= 0
 			local intellect_difference	= 0
 			
-			if self:GetParent().GetIntellect and self:GetParent():GetIntellect() then
+			if self:GetRemainingTime() <= 0 and self:GetParent().GetIntellect and self:GetParent():GetIntellect() then
 				target_intellect = self:GetParent():GetIntellect()
+				
+				if self:GetCaster().GetIntellect and self:GetCaster():GetIntellect() then
+					intellect_difference = math.max(self:GetCaster():GetIntellect() - target_intellect, 0)
+				end
 			end
 			
-			if self:GetCaster().GetIntellect and self:GetCaster():GetIntellect() then
-				intellect_difference = math.max(self:GetCaster():GetIntellect() - target_intellect, 0)
-			end
-			
-			local damage_table = {
+			ApplyDamage({
 				victim = self:GetParent(),
 				attacker = self.caster,
 				damage = self.damage + (intellect_difference * self.int_multiplier),
 				damage_type = self:GetAbility():GetAbilityDamageType(),
 				ability = self:GetAbility()
-			}
-			ApplyDamage(damage_table)
+			})
 		end
 	end
 end
