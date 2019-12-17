@@ -51,7 +51,7 @@
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 
-//	#base heroes/invoker/abilities.txt
+#base heroes/invoker/abilities.txt
 
 "DOTAAbilities"
 {

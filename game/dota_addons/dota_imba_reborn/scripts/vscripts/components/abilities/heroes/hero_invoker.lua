@@ -256,8 +256,6 @@ imba_invoker = imba_invoker or class({})
 		  	return MODIFIER_ATTRIBUTE_MULTIPLE
 		end
 
-
-
 	---------------------------------------------------------------------------------------------------------------------
 	--	Utility / Help Functions for orb control
 	---------------------------------------------------------------------------------------------------------------------
@@ -437,7 +435,6 @@ imba_invoker = imba_invoker or class({})
 			end
 		end
 
-
 -------------------------------------------------------------------------------------------------------------------------
 --	Invoker's Invoke
 -------------------------------------------------------------------------------------------------------------------------
@@ -453,7 +450,6 @@ imba_invoker = imba_invoker or class({})
 			return self.BaseClass.GetCooldown(self, invoke_level)
 		end
 	end
-
 
 	function imba_invoker_invoke:OnSpellStart()
 		if IsServer() then
@@ -472,9 +468,10 @@ imba_invoker = imba_invoker or class({})
 			local num_wex_orbs 		= table.getn(wex_orbs)
 			local num_exort_orbs 	= table.getn(exort_orbs)
 
+			caster:EmitSound("Hero_Invoker.Invoke")
+
 			-- If we have 3 invoked orbs then we can invoke spells!
 			if num_quas_orbs + num_wex_orbs + num_exort_orbs == 3 then
-
 				-- Change the Invoke particle effect color depending on invoked orbs.
 				local quas_particle_effect_color 	= Vector(0, 0, 255)
 				local wex_particle_effect_color 	= Vector(255, 0, 255)
@@ -568,7 +565,7 @@ imba_invoker = imba_invoker or class({})
 	end
 
 	---------------------------------------------------------------------------------------------------------------------
-	-- This method is run each time "invoke" reaches a new lvl. Invoker's Invoke ability is abit speciall and gets auto-leveled 
+	-- This method is run each time "invoke" reaches a new lvl. Invoker's Invoke ability is abit special and gets auto-leveled 
 	-- by a call from events.lua/OnPlayerLevelUp() at lvl 6, 12 and 18.
 	---------------------------------------------------------------------------------------------------------------------
 	function imba_invoker_invoke:OnUpgrade() 
@@ -597,7 +594,6 @@ imba_invoker = imba_invoker or class({})
 		end
 	end
 
-
 	--[[
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's Fake Invoke
@@ -610,17 +606,15 @@ imba_invoker = imba_invoker or class({})
 			local invoker_empty1 		= "invoker_empty1"
 			local invoker_empty2 		= "invoker_empty2"
 			local spell_to_be_invoked
-			
+
 			local quas_orbs 		= caster:FindAllModifiersByName("modifier_invoker_quas_instance")
 			local wex_orbs 			= caster:FindAllModifiersByName("modifier_invoker_wex_instance")
 			local exort_orbs 		= caster:FindAllModifiersByName("modifier_invoker_exort_instance")
 			local num_quas_orbs 	= table.getn(quas_orbs)
 			local num_wex_orbs 		= table.getn(wex_orbs)
 			local num_exort_orbs 	= table.getn(exort_orbs)
-			
+
 			if num_quas_orbs + num_wex_orbs + num_exort_orbs == 3  then
-			
-			
 				-- Determine the spell depending on invoked orbs.
 				if num_quas_orbs == 3 then
 					spell_to_be_invoked = "imba_invoker_cold_snap"
@@ -840,7 +834,8 @@ imba_invoker = imba_invoker or class({})
 				end
 
 				-- Play EMP Sound!
-				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.EMP.Cast", self.caster)
+				EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), "Hero_Invoker.EMP.Cast", self.caster)
+				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.EMP.Charge", self.caster)
 
 				-- Create EMP Effect
 				self.emp_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
@@ -1224,7 +1219,6 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function imba_invoker_sun_strike:OnHit(caster, ability, enemies_hit, damage) 
-
 			-- Initialize damage table
 			local damage_table 			= {}
 			damage_table.attacker 		= caster
@@ -1279,7 +1273,7 @@ imba_invoker = imba_invoker or class({})
 
 		function modifier_imba_invoker_sun_strike:OnIntervalThink()
 			if IsServer() then
-				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.SunStrike.Charge", self.caster)
+--				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.SunStrike.Charge", self.caster)
 				
 				-- upper beam
 				local small_target_point = self.target_point + (self.direction * self.mini_beam_radius)
@@ -1333,6 +1327,9 @@ imba_invoker = imba_invoker or class({})
 				if enemies_hit > 1 then 
 					imba_invoker_sun_strike:OnHit(self.caster, self.ability, hit_table, self.damage)
 				end
+
+				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.SunStrike.Ignite", self.caster)
+				self.caster:StopSound("Hero_Invoker.SunStrike.Charge")
 
 				local sun_strike_crater = ParticleManager:CreateParticleForPlayer(imba_invoker_sun_strike.ability_particle_effect, PATTACH_POINT, self.target, PlayerResource:GetPlayer(self.target:GetPlayerID()))
 				ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
@@ -2459,15 +2456,17 @@ imba_invoker = imba_invoker or class({})
 		--------------------------------------------------------------------------------------------------------------------
 		imba_forged_spirit_death = class({})
 		function imba_forged_spirit_death:IsHidden() return false end
-		function imba_forged_spirit_death:IsPassive() return true  end
+		function imba_forged_spirit_death:IsPassive() return true end
 
 	--------------------------------------------------------------------------------------------------------------------
 	--	Invoker's: Tornado
 	--------------------------------------------------------------------------------------------------------------------
 		imba_invoker_tornado = class({})
 		imba_invoker_tornado.loop_interval = 0.03
-		imba_invoker_tornado.ability_effect_path 			= "particles/econ/items/invoker/invoker_ti6/invoker_tornado_ti6.vpcf"
-		imba_invoker_tornado.ability_effect_cyclone_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_tornado_child_ti6.vpcf"
+		imba_invoker_tornado.ability_effect_path 			= "particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
+--		imba_invoker_tornado.ability_effect_path 			= "particles/econ/items/invoker/invoker_ti6/invoker_tornado_ti6.vpcf"
+		imba_invoker_tornado.ability_effect_cyclone_path 	= "particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+--		imba_invoker_tornado.ability_effect_cyclone_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_tornado_child_ti6.vpcf"
 		LinkLuaModifier("modifier_imba_invoker_tornado", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_tornado_cyclone", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_tornado_empower_debuff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
@@ -3494,7 +3493,8 @@ imba_invoker = imba_invoker or class({})
 	--------------------------------------------------------------------------------------------------------------------
 		imba_invoker_deafening_blast = class({})
 		imba_invoker_deafening_blast.knockback_interval = 0.03
-		imba_invoker_deafening_blast.ability_effect_path 			= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_ti6.vpcf"
+		imba_invoker_deafening_blast.ability_effect_path 			= "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+--		imba_invoker_deafening_blast.ability_effect_path 			= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_ti6.vpcf"
 		imba_invoker_deafening_blast.ability_effect_path_aoe		= "particles/hero/invoker/deafeningblast/imba_invoker_deafening_blast.vpcf"
 		imba_invoker_deafening_blast.ability_disarm_effect_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_disarm_ti6_debuff.vpcf"
 		imba_invoker_deafening_blast.ability_knockback_effect_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_ti6_knockback_debuff.vpcf"

@@ -33,7 +33,7 @@
 #base heroes/zeus/hero.txt
 // #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-//	#base heroes/invoker/hero.txt
+#base heroes/invoker/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
