@@ -65,10 +65,13 @@ end
 
 function item_imba_power_treads_2:GetAbilityTextureName()
 	if IsClient() then
-		local caster = self:GetCaster()
-		if not caster:IsHero() or not self.state then return "custom/imba_power_treads" end
+		-- if not self.state then return "custom/imba_power_treads" end
 
-		return "custom/imba_mega_treads_"..self.state
+		if self.state then
+			return "custom/imba_mega_treads_"..self.state
+		else
+			return "custom/imba_mega_treads_"..self:GetStackCount()
+		end
 	end
 end
 

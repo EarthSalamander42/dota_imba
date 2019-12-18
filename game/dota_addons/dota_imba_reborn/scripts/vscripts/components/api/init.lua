@@ -449,7 +449,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 
 	if IsDedicatedServer() then
 		header_key = GetDedicatedServerKeyV2("2")
-	else
+	elseif LoadKeyValues("scripts/vscripts/components/api/backend_key.kv") then
 		header_key = LoadKeyValues("scripts/vscripts/components/api/backend_key.kv").server_key
 	end
 

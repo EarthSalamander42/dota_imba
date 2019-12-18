@@ -2892,7 +2892,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_self"							"2"
+				"bonus_self"							"3"
 			}
 		}	
 	}
@@ -4857,7 +4857,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -4986,6 +4986,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
+		"HasScepterUpgrade"				"1"
 
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.4"
@@ -5060,7 +5061,14 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"armor_heroes"					"1.5 3 4.5 6"
-			}			
+			}
+			
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_magic_immune_per_hero"	"2"
+				"RequiresScepter"				"1"
+			}
 		}
 	}
 
@@ -6897,6 +6905,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_kunkka"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7206,7 +7215,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"ScriptFile"				"components/abilities/heroes/hero_kunkka"
 		"AbilityTextureName"			"kunkka_return"
@@ -7254,7 +7263,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 50 40"
+		"AbilityCooldown"				"70 60 50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8001,6 +8010,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"             "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8022,7 +8032,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.9 2.2 2.5 2.8"
+				"duration"			"1.8 2.1 2.4 2.7"
 			}
 			"02"
 			{
@@ -8048,7 +8058,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sacrifice_mana_pct"	"55 70 85 100"
+				"sacrifice_mana_pct"	"40 55 70 85"
 			}
 			"07"
 			{
@@ -8064,7 +8074,18 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"creep_channel_reduction"	"50"
-			}			
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_drain"		"10 15 20 25"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_scepter"		"400"
+				"RequiresScepter"		"1"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	}
@@ -8079,7 +8100,7 @@
 		"BaseClass"                     "ability_lua"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"            "lich_dark_ritual"
 		"ScriptFile"				"components/abilities/heroes/hero_lich.lua"
@@ -8197,7 +8218,7 @@
 		"MaxLevel"                      "3"
 		"LevelsBetweenUpgrades"         "6"
 		"ScriptFile"				"components/abilities/heroes/hero_lich.lua"
-		"HasScepterUpgrade"             "1"
+		//"HasScepterUpgrade"             "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8249,7 +8270,7 @@
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "325 525 725"
+				"damage"                    "275 475 675"
 			}
 			"06"
 			{
@@ -8280,6 +8301,11 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"cold_front_stacks"         "2"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_jump_damage"		"15 20 25"
 			}
 		}
 	}
@@ -10325,6 +10351,73 @@
 	}
 
 	//=================================================================================================================
+	// Lycan: Howl (7.23)
+	//=================================================================================================================
+	"imba_lycan_howl_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_lycan"
+		"AbilityTextureName"     	"lycan_howl"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilitySound"					"Hero_Lycan.Howl"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"24 22 20 18"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"	"5"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"howl_duration"		"5 6 7 8"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_damage_reduction"		"25 30 35 40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"			"5 6 7 8"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"			"2000"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"20 30 40 50"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastGestureSlot"	"DEFAULT" 
+	}
+	
+	//=================================================================================================================
 	// Lycan's Feral Impulse
 	//=================================================================================================================
 	"imba_lycan_feral_impulse"
@@ -10404,6 +10497,7 @@
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"lycan_shapeshift"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
+		"HasScepterUpgrade"			"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11712,19 +11806,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"0.5"
+				"mana_regen"			"0.4"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_regen"			"0.5"
+				"health_regen"			"0.4"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_multiplier"		"5"
+				"hero_multiplier"		"6"
 			}
 			"04"
 			{
@@ -11733,8 +11827,8 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_minimum"			"7"
+				"var_type"				"FIELD_FLOAT"
+				"regen_minimum"			"6.5"
 			}
 		}
 	}
@@ -11831,8 +11925,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"necrolyte_sadist"
 		"ScriptFile"				"components/abilities/heroes/hero_necrolyte"
-		"MaxLevel"						"4"
-		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11874,7 +11967,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"magic_amp_pct"			"25"
+				"magic_amp_pct"			"40"
 			}
 			"04"
 			{
@@ -11891,6 +11984,13 @@
 				"var_type"				"FIELD_FLOAT"
 				"healing_amp_tooltip"	"37.5 40 42.5 45"
 			}
+			
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cooldown_scepter"		"10" 
+				"RequiresScepter"		"1"
+			} 	
 		}
 	}
 
@@ -11910,8 +12010,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"necrolyte_heartstopper_aura"
 		"ScriptFile"				"components/abilities/heroes/hero_necrolyte"
-		"MaxLevel"						"4"
-		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11952,6 +12051,13 @@
 				"var_type"			"FIELD_FLOAT"
 				"tick_rate"			"0.2"
 			}
+			
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"scepter_multiplier"		"2" 
+				"RequiresScepter"		"1"
+			} 
 		}
 	}
 
@@ -12045,7 +12151,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"60 50 40"
+				"scepter_cooldown"			"60"
 			}
 		}
 	}
@@ -23860,23 +23966,28 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"18 22 26 30"
+				"lifesteal_pct"			"12 16 20 24"
 				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spellsteal_pct"		"5 10 15 20"
+				"spellsteal_pct"		"4 6 8 10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"caster_heal"			"20 30 40 50"
+				"caster_heal"			"10 20 30 40"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_delay"			"0.2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"6 12 18 24"
 			}
 		}
 	}
@@ -26312,6 +26423,95 @@
 	}
 
 	//=================================================================================================================
+	// Clinkz: Death Pact (7.23)
+	//=================================================================================================================
+	"imba_clinkz_death_pact_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_clinkz"
+		"AbilityTextureName"            "clinkz_death_pact"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Clinkz.DeathPact"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"55"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_gain"			"300 400 500 600"
+				//"LinkedSpecialBonus"		"special_bonus_unique_clinkz_6"
+				"LinkedSpecialBonus"	"special_bonus_imba_clinkz_death_pact_723_health"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_gain"		"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"permanent_bonus"		"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_duration"		"3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"3 4 5 6"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"neutral_level"		"3 4 5 6"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_high_hp_damage"		"10"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_high_hp_to_attack"	"66"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"soul_high_duration"		"6.66"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Clinkz's Searing Arrows
 	//=================================================================================================================
 	"imba_clinkz_searing_arrows"
@@ -26470,11 +26670,114 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_bonus"		"30"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_skeleton_count"		"2"
+				"RequiresScepter"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Clinkz's Skeleton Walk (7.23)
+	//=================================================================================================================
+	"imba_clinkz_skeleton_walk_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                         "ability_lua"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"                "clinkz_wind_walk"
+		"ScriptFile"				"components/abilities/heroes/hero_clinkz.lua"
+		"HasScepterUpgrade"                 "1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"                   "20 19 18 17"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"                   "75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"                      "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+			"particle"                      "particles/hero/clinkz/spooked/spooky_skull.vpcf"
+			"soundfile"                     "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"ms_bonus_pct"          "15 25 35 45"
+			}
+			"02"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"duration"              "20 25 30 35"
+			}
+			"03"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"spook_radius"          "350"
+			}
+			"04"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"base_spook_duration"   "1.0"
+			}
+			"05"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"spook_distance_inc"    "30"
+			}
+			"06"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"spook_added_duration"  "0.25"
+			}
+			"07"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"08"
+			{
+				"var_type"              "FIELD_FLOAT"
+				"max_spook_duration"    "2 2.25 2.5 2.75"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_bonus"		"30"
+				"RequiresScepter"			"1"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_skeleton_count"		"2"
+				"RequiresScepter"			"1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_duration"					"4"
+				//"LinkedSpecialBonus"		"special_bonus_unique_clinkz_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"100 140 180 220"
 			}
 		}
 	}
@@ -26828,6 +27131,56 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"0"
+			}
+		}
+	}
+
+	"special_bonus_imba_clinkz_death_pact_723_health"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"350"
+			}
+		}
+	}
+
+	"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"4"
 			}
 		}
 	}
@@ -27525,6 +27878,75 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Drow Ranger	Frost Arrows (7.23)
+	//=================================================================================================================
+	"imba_drow_ranger_frost_arrows_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+		"AbilityTextureName"			"drow_ranger_frost_arrows"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_DrowRanger.FrostArrows"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+		"AbilityDuration"				"1.5"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 0 0 0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"12 12 12 12"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_arrows_movement_speed"	"-16 -32 -48 -64"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"	"5 10 15 20"
+				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_frost_arrows_damage"
+				
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stacks_to_freeze"				"4"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"freeze_duration"				"0.6 1 1.4 1.8"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
 	// Drow Ranger's Gust
 	//=================================================================================================================
 	"imba_drow_ranger_gust"
@@ -27595,7 +28017,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_distance"					"350"
+				"max_distance"					"450"
 				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_9"
 			}
 
@@ -27715,7 +28137,99 @@
 				"melee_fencing_efficiency"	"20"
 			}
 		}
-	}	
+	}
+	
+	//=================================================================================================================
+	// Ability: Drow Ranger: Multishot
+	//=================================================================================================================
+	"imba_drow_ranger_multishot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"	
+		"AbilityTextureName"			"drow_ranger_multishot"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityChannelTime"			"1.75"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"26 24 22 20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_count"				"12" // Divide by 3 to get number of arrows per salvo
+			}			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_damage_pct"			"90 115 140 165"
+				"LinkedSpecialBonus"		"special_bonus_unique_drow_ranger_1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_slow_duration"		"1 2 3 4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_width"					"90"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_speed"					"1200"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_range_multiplier"	"2"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"arrow_angle"					"50"
+			}
+			
+			// These should really be vanilla KVs...
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"volley_interval"			"0.55"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"arrow_interval"			"0.033"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"initial_delay"				"0.1"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+	}
 	
 
 	//=================================================================================================================
@@ -27780,6 +28294,88 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"bonus_damage"						"120 130 140"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Drow Ranger's Marksmanship
+	//=================================================================================================================
+	"imba_drow_ranger_marksmanship_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_drow_ranger"
+		"AbilityTextureName"			"drow_ranger_marksmanship"		
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastRange"				"400"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"HasScepterUpgrade"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"chance"	"20 30 40"
+				"LinkedSpecialBonus"		"special_bonus_unique_drow_ranger_3"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"	"70 80 90"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_multiplier"		"35 40 45"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_range"		"1200"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"split_count_scepter"			"2"
+				"RequiresScepter"		"1"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_range"					"375"
+				"RequiresScepter"		"1"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction_scepter"		"50"
+				"RequiresScepter"		"1"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"disable_range"		"400"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"range_bonus"						"25 75 125"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"instakill_threshold"				"13"
 			}
 		}
 	}
@@ -28074,7 +28670,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"550"
+				"value"					"400"
 			}
 		}
 	}
@@ -28102,8 +28698,33 @@
 				"value"					"25"
 			}
 		}
-	}	
+	}
+	
+	"special_bonus_imba_drow_ranger_frost_arrows_damage"	// +X Frost Arrows Bonus Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_frost_arrows_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"30"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Faceless Void's Time Walk
 	//=================================================================================================================
@@ -28126,6 +28747,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -28184,6 +28806,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_time"			"2"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"				"250"
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -28372,7 +29001,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.75"
+				"duration"				"0.65"
 			}
 			"02"
 			{
@@ -28456,7 +29085,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.35"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-		"AbilityCooldown"				"140 125 110"
+		"AbilityCooldown"				"140 130 120"
 		"AbilityManaCost"				"150 225 300"
 
 		"HasScepterUpgrade"				"1"
@@ -28508,7 +29137,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_cooldown"					"60"
+				"scepter_cooldown"					"90"
 			}
 
 			"08"
@@ -28834,7 +29463,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"500"
+				"value"						"450"
 			}
 		}
 	}	
@@ -33477,6 +34106,74 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Riki: Smoke Screen (7.23)
+	//=================================================================================================================
+	"imba_riki_smoke_screen_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki"
+		"AbilityTextureName"			"riki_smoke_screen"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Riki.Smoke_Screen"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550"
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 17 14 11"
+		"AbilityDuration"				"6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"280 310 340 370"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"miss_rate"					"25 35 45 55"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_movespeed_slow"	"8 12 16 20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_vision"			"200"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"solid_turn_rate_slow"		"15"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
 
 	//=================================================================================================================
 	// Riki's Blink Strike
@@ -33569,6 +34266,109 @@
 			}			
 		}
 	}
+	
+	//=================================================================================================================
+	// Riki's Blink Strike (7.23)
+	//=================================================================================================================
+	"imba_riki_blink_strike_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_riki"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"		
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"riki_blink_strike"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityCastPoint"				"0.3"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"				"75 90 105 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"turn_rate_slow_pct"	"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_range"			"700"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_jumps"				"1 2 3 4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_interval_frames"	"12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"abilitycastrange"					""
+				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charges"				"2"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"charge_restore_time"		"25 20 15 10"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Riki's Cloak and Dagger
@@ -33645,6 +34445,65 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Riki's Cloak and Dagger (7.23)
+	//=================================================================================================================
+	"imba_riki_cloak_and_dagger_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
+		"AbilityTextureName"			"riki_permanent_invisibility"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4 3 2"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
+			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
+			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"fade_time"							"4 3 2"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"backstab_angle"					"120"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"agility_damage_multiplier"			"1.4 1.8 2.2"
+				"LinkedSpecialBonus"				"special_bonus_imba_riki_cloak_and_dagger_damage"
+				"CalculateSpellDamageTooltip"		"0"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Riki's Tricks of the Trade
@@ -33654,8 +34513,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki.lua"
 		"AbilityTextureName"			"riki_tricks_of_the_trade"
+		
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -33663,11 +34523,10 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"FightRecapLevel"				"2"
 		"HasScepterUpgrade"				"1"
-
-
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.3"		
+		"AbilityCastPoint"				"0.3"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -33728,6 +34587,111 @@
 				"var_type"				"FIELD_INTEGER"
 				"martyr_aspd_pct"		"40"
 			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Riki's Tricks of the Trade (7.23)
+	//=================================================================================================================
+	"imba_riki_tricks_of_the_trade_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki"
+		"AbilityTextureName"			"riki_tricks_of_the_trade"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"2.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityChannelAnimation"		"ACT_DOTA_CHANNEL_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21 18 15 12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"450 500 550"				
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_interval"		"0.6 0.55 0.5"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"channel_duration"		"2.0"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"martyr_aspd_pct"		"40"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_count"	"4"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"	"70 80 90 100"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_duration"				"3"
+				"RequiresScepter"		"1"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_attacks"				"6"
+				"RequiresScepter"		"1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_cast_range"				"1000"
+				"RequiresScepter"		"1"
+			}
 		}
 	}
 
@@ -33991,7 +34955,107 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_riki_cloak_and_dagger_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.8"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_smokescreen_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_smoke_screen_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_cloak_and_dagger_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_tricks_of_the_trade_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_tricks_of_the_trade_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"7"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Sniper's Shrapnel
 	//=================================================================================================================
@@ -35389,13 +36453,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-		"AbilityCastRange"				"385"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"9 8 7 6"
+		"AbilityDuration"				"4.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -35494,6 +36558,22 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"enrage_bonus_dmg_pct"		"100"
+			}
+			
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hop_distance"					"250"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hop_duration"		"0.25"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hop_height"		"83"
 			}
 		}
 	}
@@ -35650,7 +36730,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50.0 40.0 30.0"
+		"AbilityCooldown"				"60 50 40"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -36144,7 +37224,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"vision_duration"		"4.0"
 			}
 			"08"
 			{
@@ -36228,6 +37308,77 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Vengeful Spirit's Vengeance Aura
+	//=================================================================================================================
+	"imba_vengefulspirit_command_aura_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              			"ability_lua"
+		"ScriptFile"						"components/abilities/heroes/hero_vengefulspirit.lua"
+		"AbilityTextureName"    	 		"vengefulspirit_command_aura"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attributes"	"4 7 10 13"
+				//"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_command_aura_attributes"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attack_range"	"60 90 120 150"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
+			}			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"100"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"100"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_upgrade_level"	"25"
+			}				
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_illusions_on_death_upgrade"	"2"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"3 7 11 15"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
 	//=================================================================================================================
 	// Vengeful Spirit's Rancor
 	//=================================================================================================================
@@ -36308,7 +37459,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellDispellableType"				"SPELL_DISPELLABLE_YES_STRONG"
@@ -36372,7 +37523,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"cooldown_scepter"					"10"
+				"cooldown_scepter"					"30"
 			}
 			"07"
 			{
@@ -36392,9 +37543,21 @@
 			"10"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"charge_restore_time_scepter"	"10"
+				"charge_restore_time_scepter"	"30"
 				"RequiresScepter"		"1"
-			}			
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_radius"	"700"
+				"RequiresScepter"		"1"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"scepter_duration"	"2"
+				"RequiresScepter"		"1"
+			}
 		}
 	}
 
@@ -36450,7 +37613,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"400"
+				"value"						"200"
 			}
 		}
 	}
@@ -36750,8 +37913,36 @@
 		{
 			"01"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// +X Vengeance Aura Attributes
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_command_aura_attributes"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_command_aura_723"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
+				"value"						"8"
 			}
 		}
 	}	
@@ -36909,6 +38100,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"1 2 3 4"
 			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen_reduction"		"15 20 25 30"
+			}	
 		}
 	}
 
@@ -37040,7 +38237,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"magic_amp_pct"				"0.8"
+				"magic_amp_pct"				"0.6"
 				"LinkedSpecialBonus"		"special_bonus_imba_venomancer_3"
 			}
 		}
@@ -37061,7 +38258,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"venomancer_poison_nova"
@@ -37124,7 +38321,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_threshold_pct"			"50 40 30"
+				"health_threshold_pct"			"50"
 			}
 			"07"
 			{
@@ -37140,11 +38337,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"main_damage_scepter"			"75 100 125"
+				"RequiresScepter"		"1"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"cooldown_scepter"				"120 90 60"
+				"RequiresScepter"				"1"
 			}
 		}
 	}
@@ -37504,12 +38703,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"125 225 325 425"
+				"base_damage"			"150 250 350 450"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage"			"2.0 3.0 4.0 5.0"
+				"bonus_damage"			"3.0 4.0 5.0 6.0"
 			}
 			"03"
 			{
@@ -37519,7 +38718,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"900"
+				"bolt_speed"			"1100"
 			}
 		}
 	}
@@ -37557,7 +38756,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hellbolt_cdr"			"1.0"
+				"hellbolt_cdr"			"1.5"
 			}
 		}
 	}
@@ -37627,7 +38826,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_radius"			"450"
+				"hurl_radius"			"500"
 			}
 			"02"
 			{
@@ -37647,7 +38846,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"debuff_duration"		"2.0 2.8 3.6"
+				"debuff_duration"		"2.8 3.4 4.0"
 			}
 			"06"
 			{
@@ -41126,6 +42325,190 @@
 				"var_type"			"FIELD_INTEGER"
 				"expansion_pct"		"100"
 			}			
+		}
+	}
+	
+
+	//=================================================================================================================
+	// Form Change (7.23+ Ability for Swapping)
+	//=================================================================================================================
+	"imba_form_change"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+	
+	"imba_form_change_clinkz"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_drow_ranger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_life_stealer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_riki"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
 		}
 	}
 }

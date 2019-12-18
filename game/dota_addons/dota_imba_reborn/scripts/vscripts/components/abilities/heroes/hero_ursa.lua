@@ -7,6 +7,7 @@
 
 imba_ursa_earthshock = class({})
 
+LinkLuaModifier("modifier_imba_earthshock_movement", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier("modifier_imba_earthshock_slow", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_prevent", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -16,7 +17,28 @@ function imba_ursa_earthshock:GetAbilityTextureName()
 	return "ursa_earthshock"
 end
 
+function imba_ursa_earthshock:GetCastRange(location, target)
+	return self:GetSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
+end
+
 function imba_ursa_earthshock:OnSpellStart()
+	if not self:GetCaster():HasModifier("modifier_imba_earthshock_movement") then
+		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
+		
+		local direction_vector = self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("hop_distance")
+
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
+			duration		= self:GetSpecialValueFor("hop_duration"),
+			distance		= self:GetSpecialValueFor("hop_distance"),
+			direction_x		= direction_vector.x,
+			direction_y 	= direction_vector.y,
+			diretion_z 		= direction_vector.z,
+			height			= self:GetSpecialValueFor("hop_height")
+		})
+	end
+end
+
+function imba_ursa_earthshock:ApplyEarthShock()
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -149,6 +171,77 @@ function modifier_imba_earthshock_slow:OnCreated()
 		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance) -- final slow value
 	end
 end
+
+
+----------------------------------
+-- EARTHSHOCK MOVEMENT MODIFIER --
+----------------------------------
+
+modifier_imba_earthshock_movement	= modifier_imba_earthshock_movement or class({})
+
+-- Gonna copy-paste my generic motion controller code here cause there's too many changes that need to be made (and I can't copy the class itself for some reason)
+
+function modifier_imba_earthshock_movement:IsHidden()		return true end
+function modifier_imba_earthshock_movement:IsPurgable()		return false end
+
+function modifier_imba_earthshock_movement:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.distance			= params.distance
+	self.direction			= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
+	self.duration			= params.duration
+	self.height				= params.height
+
+	self.velocity		= self.direction * self.distance / self.duration
+	
+	self.vertical_velocity		= 4 * self.height / self.duration
+	self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
+	
+	if self:ApplyVerticalMotionController() == false then 
+		self:Destroy()
+	end
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+	end
+end
+
+function modifier_imba_earthshock_movement:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveHorizontalMotionController(self)
+	self:GetParent():RemoveVerticalMotionController(self)
+	
+	if self:GetAbility() and self:GetAbility().ApplyEarthShock and self:GetRemainingTime() <= 0 then
+		self:GetAbility():ApplyEarthShock()
+	end
+end
+
+function modifier_imba_earthshock_movement:UpdateHorizontalMotion(me, dt)
+	if not IsServer() then return end
+	
+	me:SetAbsOrigin(me:GetAbsOrigin() + self.velocity * dt)
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_earthshock_movement:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_earthshock_movement:UpdateVerticalMotion(me, dt)
+	if not IsServer() then return end
+	
+	me:SetAbsOrigin(me:GetAbsOrigin() + Vector(0, 0, self.vertical_velocity) * dt)
+
+	self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
+end
+
+-- -- This typically gets called if the caster uses a position breaking tool (ex. Earth Spike) while in mid-motion
+function modifier_imba_earthshock_movement:OnVerticalMotionInterrupted()
+	self:Destroy()
+end
+
+
 
 function modifier_imba_earthshock_slow:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_earthshock_modifier.vpcf"

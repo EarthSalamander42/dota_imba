@@ -227,7 +227,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			return GOLD_TICK_TIME[GetMapName()]
+			return GOLD_TICK_TIME[GetMapName()] / (CUSTOM_GOLD_BONUS[GetMapName()] * 0.01)
 		end)
 	end
 end
@@ -841,7 +841,7 @@ function GameMode:OnPlayerChat(keys)
 								[0] = "imba_windranger_shackleshot",
 								[1] = "imba_windranger_powershot",
 								[2] = "imba_windranger_windrun",
-								[3] = "imba_windranger_backpedal",
+								[3] = "imba_windranger_advancement",
 								[4] = "imba_windranger_focusfire_vanilla_enhancer",
 								-- [5] = "imba_windranger_focusfire",
 								[5] = "windrunner_focusfire",

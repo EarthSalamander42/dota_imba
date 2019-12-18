@@ -61,7 +61,13 @@ function imba_axe_berserkers_call:OnSpellStart()
 	for _,target in pairs(enemies_in_radius) do
 
 		if target:IsCreep() then
+			-- This line works for lane/neutral creeps but not for player-controlled units (vanilla and custom included)
 			target:SetForceAttackTarget(caster)
+			
+			-- This line works for player-controlled units
+			target:MoveToTargetToAttack(caster)
+			
+			-- Essentially, it seems like both of these lines are required
 		else
 			target:Stop()
 			target:Interrupt()

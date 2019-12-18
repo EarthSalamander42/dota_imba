@@ -54,8 +54,8 @@ end
 function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 	if IsServer() then
-		if self:GetCaster():HasModifier("modifier_imba_elder_titan_echo_stomp_magic_immune") then
-			self:GetCaster():RemoveModifierByName("modifier_imba_elder_titan_echo_stomp_magic_immune")
+		if self:GetCaster():HasModifier("modifier_imba_elder_titan_magic_immune") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_elder_titan_magic_immune")
 		end
 	
 		if interrupted then
@@ -107,17 +107,17 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 				end
 			end
 			
-			if self:GetCaster():HasScepter() then
-				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = heroes_hit * 2})
-			end
+			-- if self:GetCaster():HasScepter() then
+				-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = heroes_hit * 2})
+			-- end
 		end
 	end
 end
 
 function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
-	if self:GetCaster():HasScepter() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_echo_stomp_magic_immune", {duration = self:GetChannelTime()})
-	end
+	-- if self:GetCaster():HasScepter() then
+		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = self:GetChannelTime()})
+	-- end
 
 	if astral_spirit == nil then
 	else
@@ -188,27 +188,25 @@ function imba_elder_titan_echo_stomp:OnSpellStart()
 	end
 end
 
---------------------------------------
--- ECHO STOMP MAGIC IMMUNE MODIFIER --
---------------------------------------
+--------------------------------------------
+-- MODIFIER_IMBA_ELDER_TITAN_MAGIC_IMMUNE --
+--------------------------------------------
 
-LinkLuaModifier("modifier_imba_elder_titan_echo_stomp_magic_immune", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_magic_immune", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_elder_titan_echo_stomp_magic_immune = class({})
+modifier_imba_elder_titan_magic_immune = class({})
 
 -- IDK what the texture name is called
--- function modifier_imba_elder_titan_echo_stomp_magic_immune:GetTexture()
+-- function modifier_imba_elder_titan_magic_immune:GetTexture()
 	-- return "spell_immunity"
 -- end
 
-function modifier_imba_elder_titan_echo_stomp_magic_immune:GetEffectName()
+function modifier_imba_elder_titan_magic_immune:GetEffectName()
 	return "particles/items_fx/black_king_bar_avatar.vpcf"
 end
 
-function modifier_imba_elder_titan_echo_stomp_magic_immune:CheckState()
-	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
-	
-	return state
+function modifier_imba_elder_titan_magic_immune:CheckState()
+	return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 end
 
 
@@ -398,6 +396,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 	self.speed_creeps = self:GetAbility():GetSpecialValueFor("move_pct_creeps")
 	self.armor_creeps = self:GetAbility():GetSpecialValueFor("armor_creeps")
 	self.armor_heroes = self:GetAbility():GetSpecialValueFor("armor_heroes")
+	self.scepter_magic_immune_per_hero	= self:GetAbility():GetSpecialValueFor("scepter_magic_immune_per_hero")
 	
 	self.bonus_damage = 0
 	self.bonus_ms = 0
@@ -406,6 +405,9 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 	self.targets_hit = {}
 
 	if IsServer() then
+	
+	self.real_hero_counter = 0
+	
 		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Spawn", self:GetParent())
 		self:StartIntervalThink(0.1)
 		
@@ -468,6 +470,8 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 				self.bonus_damage	= self.bonus_damage + self.damage_heroes
 				self.bonus_ms		= self.bonus_ms + self.speed_heroes
 				self.bonus_armor	= self.bonus_armor + self.armor_heroes
+				
+				self.real_hero_counter = self.real_hero_counter + 1
 			else
 				self.bonus_damage	= self.bonus_damage + self.damage_creeps
 				self.bonus_ms		= self.bonus_ms + self.speed_creeps
@@ -497,6 +501,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 	if self.return_timer - 10.0 > self.duration or 
 	(self:GetParent().is_returning == true and (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length() < 180) then
 		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+		
 		if self.bonus_damage > 0 then
 			local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
 			damage_mod:SetStackCount(self.bonus_damage)
@@ -511,7 +516,11 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			local armor_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_armor", {duration = self.buff_duration})
 			armor_mod:SetStackCount(self.bonus_armor * 10)
 		end
-
+		
+		if self:GetParent():GetOwner():HasScepter() then
+			self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_magic_immune", {duration = self.real_hero_counter * self.scepter_magic_immune_per_hero})
+		end
+		
 		self:GetParent():RemoveSelf()
 		astral_spirit = nil
 		return nil

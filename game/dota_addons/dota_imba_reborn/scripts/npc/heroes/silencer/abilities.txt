@@ -166,6 +166,17 @@
 				"var_type"					"FIELD_FLOAT"
 				"scepter_damage_multiplier"	"100"				 // 100 = +100%
 			}
+			
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"int_steal"		"1 1 2 3"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"int_steal_duration"		"10 20 30 40"
+			}
 		}
 	}
 
@@ -186,6 +197,7 @@
 		"AbilityUnitTargetFlags" 				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"					"silencer_last_word"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
+		"HasScepterUpgrade"					"1"
 
 		// Precache
 		//---------------------------------------------
@@ -199,7 +211,7 @@
 
 		// Damage
 		//---------------------------------------------
-		"AbilityDamage"					"200 250 350 400"
+		"AbilityDamage"					"100 160 220 280"
 
 		// Casting
 		//---------------------------------------------
@@ -243,6 +255,18 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"m_regen_reduct_pct"	"5.0"
+			}
+			
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"int_multiplier"	"1.5 2 2.5 3"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_radius"		"600"
+				"RequiresScepter"			"1"
 			}
 		}
 	}

@@ -653,6 +653,124 @@ function modifier_imba_howl_flying_movement_talent:GetTexture()
 	return "custom/howl_batwolf"
 end
 
+-------------------------
+-- IMBA_LYCAN_HOWL_723 --
+-------------------------
+
+LinkLuaModifier("modifier_imba_lycan_howl_723", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lycan_howl_723_phased", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+
+imba_lycan_howl_723					= imba_lycan_howl_723 or class({})
+modifier_imba_lycan_howl_723		= modifier_imba_lycan_howl_723 or class({})
+modifier_imba_lycan_howl_723_phased	= modifier_imba_lycan_howl_723_phased or class({})
+
+function imba_lycan_howl_723:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_lycan_howl_723:OnSpellStart()
+	EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Lycan.Howl", self:GetCaster())
+	
+	-- Add Lycan's cast particles
+	local particle_lycan_howl_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 0 , self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControlEnt(particle_lycan_howl_fx, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_mouth", self:GetCaster():GetAbsOrigin(), true)
+
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		local howl_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration")})
+		
+		if howl_modifier then
+			howl_modifier:SetDuration(self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()), true)
+		end
+		
+		-- IMBAfication: Moon Phase
+		if not GameRules:IsDaytime() and self:GetAutoCastState() then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", {duration = self:GetSpecialValueFor("howl_duration")})
+		end
+	end
+
+	for _, creature in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+									self:GetCaster():GetAbsOrigin(),
+									nil,
+									25000,
+									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+									DOTA_UNIT_TARGET_BASIC,
+									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+									FIND_ANY_ORDER,
+									false)) do 
+		for i = 1, 6 do									 -- #3 TALENT: Alpha wolf gesture
+			if creature:GetUnitName() == "npc_lycan_wolf"..i or "npc_lycan_summoned_wolf_talent" then 
+				-- Perform howl cast animation for wolves	
+				if creature:IsIdle() then
+					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)		
+				else
+					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+				end				
+				
+				-- Add wolves cast particles
+				local particle_wolves_howl_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_howl_cast_wolves.vpcf", PATTACH_ABSORIGIN, creature)
+				ParticleManager:SetParticleControl(particle_wolves_howl_fx, 1, creature:GetAbsOrigin())
+				
+				for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), creature:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+					local howl_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration")})
+					
+					if howl_modifier then
+						howl_modifier:SetDuration(self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()), true)
+					end
+				end
+				
+				-- IMBAfication: Moon Phase
+				if not GameRules:IsDaytime() and self:GetAutoCastState() then
+					creature:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", {duration = self:GetSpecialValueFor("howl_duration")})
+				end
+			end
+		end
+	end	
+end
+
+----------------------------------
+-- MODIFIER_IMBA_LYCAN_HOWL_723 --
+----------------------------------
+
+function modifier_imba_lycan_howl_723:GetEffectName()
+	return "particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+end
+
+function modifier_imba_lycan_howl_723:OnCreated()
+	self.attack_damage_reduction	= self:GetAbility():GetSpecialValueFor("attack_damage_reduction") * (-1)
+	self.armor						= self:GetAbility():GetSpecialValueFor("armor") * (-1)
+	self.move_speed					= self:GetAbility():GetSpecialValueFor("move_speed") * (-1)
+end
+
+function modifier_imba_lycan_howl_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		
+		-- IMBAfication: The Wolf Is At Your Door
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
+	}
+end
+
+function modifier_imba_lycan_howl_723:GetModifierBaseDamageOutgoing_Percentage()
+	return self.attack_damage_reduction
+end
+
+function modifier_imba_lycan_howl_723:GetModifierPhysicalArmorBonus()
+	return self.armor
+end
+
+function modifier_imba_lycan_howl_723:GetModifierMoveSpeedBonus_Constant()
+	return self.move_speed
+end
+
+-----------------------------------------
+-- MODIFIER_IMBA_LYCAN_HOWL_723_PHASED --
+-----------------------------------------
+
+function modifier_imba_lycan_howl_723_phased:CheckState()
+	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+end
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -861,6 +979,13 @@ function imba_lycan_shapeshift:OnOwnerSpawned()
 	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_lycan_7") and self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_7"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lycan_7", {})
+	end
+end
+
+-- For vanilla Wolf Bite
+function imba_lycan_shapeshift:OnUpgrade()
+	if self:GetCaster():HasAbility("lycan_shapeshift") then
+		self:GetCaster():FindAbilityByName("lycan_shapeshift"):SetLevel(self:GetLevel())
 	end
 end
 

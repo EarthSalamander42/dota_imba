@@ -18,11 +18,17 @@
 // Silencer's Glaives of Wisdom
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom"                  "Glaives of Wisdom"
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"                  "Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds.\n<font color='#FF7800'>Debate Me:</font> Each glaive hit on enemy heroes increases the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%%% for %int_reduction_duration% seconds, up to a minimum of 1 intelligence point. Stacks and refreshes the duration each hit.\n\nUpgradable by Aghanim's Scepter."
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Note0"            "Target must be hit within 10 seconds from the last hit for the hit to count towards the silence requirement."
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"                  "Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence. Silencer temporarily steals his target's Intelligence with each hit.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds."
+
+//<font color='#FF7800'>Debate Me:</font> Each glaive hit on enemy heroes increases the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%%% for %int_reduction_duration% seconds, up to a minimum of 1 intelligence point. Stacks and refreshes the duration each hit."
+//"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Note0"            "Target must be hit within 10 seconds from the last hit for the hit to count towards the silence requirement."
+
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Lore"            "Although lacking in traditional incantations, Nortrom's pedigree of the Aeol Drias gives him uncanny wisdom, which he applies to debates with his opponents."
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_intellect_damage_pct"         "%INT TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_aghanim_description"          "Glaives deal 100% bonus damage on silenced targets. Also causes Glaives to pierce spell immunity."
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_int_steal"					"INT STEAL:"
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_int_steal_duration"		"INT STEAL DURATION:"
+		
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_aghanim_description"          "<font color='#FF7800'>Causes Glaives to pierce spell immunity.</font>"
 
 "DOTA_Tooltip_modifier_imba_silencer_glaives_int_damage"                "Decreased Intelligence"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_int_damage_Description"                "Temporarily, your arguments are no match for Nortrom."
@@ -33,15 +39,27 @@
 "DOTA_Tooltip_modifier_imba_silencer_glaives_talent_effect_procced"                 "Mind Bomb"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_talent_effect_procced_Description"     "All your intelligence - drained."
 
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_buff_counter"		"Glaives of Wisdom"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_buff_counter_Description"		"Temporarily Stealing Intelligence"
+
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_multiple"					"Glaives of Wisdom"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_multiple_Description"		"Total intelligence stolen"
+
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter"	"Glaives of Wisdom"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter_Description"	"Temporarily losing intelligence"
+
 ////===============================================================================================================
 // Silencer's Last Word
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_last_word"                          "Last Word"
-"DOTA_Tooltip_ability_imba_silencer_last_word_Description"              "Enchants a target, causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires.\n<font color='#FF7800'>Damned If You Do:</font> If the target casts a spell, Last Word will be recast on them after the silence expires (or is purged).\n<font color='#FF7800'>Damned If You Don't:</font> Reduces the target's mana regeneration by %m_regen_reduct_pct%x for the duration of the initial cast."
+"DOTA_Tooltip_ability_imba_silencer_last_word_Description"              "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires. Deals extra damage based on the difference in intelligence between Silencer and the target if the timer expires naturally.\n<font color='#FF7800'>Damned If You Do:</font> If the target casts a spell, Last Word will be recast on them after the silence expires (or is purged).\n<font color='#FF7800'>Damned If You Don't:</font> Reduces the target's mana regeneration by %m_regen_reduct_pct%x for the duration of the initial cast."
 "DOTA_Tooltip_ability_imba_silencer_last_word_Lore"                    "Nortrom ensures that spells uttered by his opponents will be their last."
 "DOTA_Tooltip_ability_imba_silencer_last_word_duration"                "INITIAL DURATION:"
 "DOTA_Tooltip_ability_imba_silencer_last_word_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_silencer_last_word_int_multiplier"							"INT MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_silencer_last_word_silence_duration"                     "SILENCE DURATION:"
+"DOTA_Tooltip_ability_imba_silencer_last_word_scepter_radius"					"SCEPTER RADIUS:"
+"DOTA_Tooltip_ability_imba_silencer_last_word_aghanim_description"				"Causes Last Word to become an AoE ability."
 
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff"                  "Last Word"
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff_Description"                  "Reducing mana regeneration by %fMODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE%%%. Casting spells will repeat Last Word after silence ends."

@@ -210,7 +210,7 @@ function modifier_imba_malfurion_strength_of_the_wild:DeclareFunctions()
 end
 
 function modifier_imba_malfurion_strength_of_the_wild:GetModifierDamageOutgoing_Percentage(keys)
-	if keys.target and not keys.target:IsRealHero() and not self:GetParent():PassivesDisabled() then
+	if keys.target and keys.target.IsRealHero and not keys.target:IsRealHero() and not self:GetParent():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("bonus_damage_percentage")
 	end
 end

@@ -50,6 +50,8 @@ function modifier_custom_creep_scaling:OnCreated()
 		self.multiplier	= self.ability:GetSpecialValueFor("mega_mult")
 	end
 	
+	self.game_time		= math.floor(GameRules:GetDOTATime(false, false) / 60)
+	
 	-- AbilitySpecials (Gonna use one set to deal with all creep types at first test)
 	self.melee_attack	= self.ability:GetSpecialValueFor("melee_attack")	
 	self.melee_aspd		= self.ability:GetSpecialValueFor("melee_aspd")
@@ -59,6 +61,8 @@ function modifier_custom_creep_scaling:OnCreated()
 	self.melee_hp		= self.ability:GetSpecialValueFor("melee_hp")
 	self.melee_regen 	= self.ability:GetSpecialValueFor("melee_regen")
 	
+	self:StartIntervalThink(1)
+	
 	if not IsServer() then return end
 	
 	-- For Jungle Creeps
@@ -66,21 +70,31 @@ function modifier_custom_creep_scaling:OnCreated()
 		self.parent:SetMinimumGoldBounty(self.parent:GetMinimumGoldBounty() + (self:GetStackCount() * self.ability:GetSpecialValueFor("jungle_bounty")))
 		self.parent:SetMaximumGoldBounty(self.parent:GetMaximumGoldBounty() + (self:GetStackCount() * self.ability:GetSpecialValueFor("jungle_bounty")))
 	end
-	
-	self:StartIntervalThink(1)
 end
 
 function modifier_custom_creep_scaling:OnIntervalThink()
-	-- For Jungle Creeps
-	if string.find(self:GetParent():GetUnitName(), "_neutral_") then
-		self:GetParent():SetMinimumGoldBounty(9999)
-		self:GetParent():SetMaximumGoldBounty(9999)
-	end
+	-- -- For Jungle Creeps
+	-- if string.find(self:GetParent():GetUnitName(), "_neutral_") then
+		-- self:GetParent():SetMinimumGoldBounty(9999)
+		-- self:GetParent():SetMaximumGoldBounty(9999)
+	-- end
+
+	if self:GetParent():IsNull() then self:StartIntervalThink(-1) return 0 end
+
+	-- self.multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
+	
+	-- if string.find(self:GetParent():GetUnitName(), "upgraded") then 
+		-- self.multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
+	-- elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
+		-- self.multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	-- end
+	
+	self.game_time		= math.floor(GameRules:GetDOTATime(false, false) / 60)
 end
 
 -- Seems like I might need to somewhat hard code this stuff cause it's NOT WORKING PROPERLY
 function modifier_custom_creep_scaling:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
         MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -92,78 +106,36 @@ function modifier_custom_creep_scaling:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
     }
-
-    return decFuncs
 end
 
 function modifier_custom_creep_scaling:GetModifierPreAttack_BonusDamage()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_attack then
+		return self.melee_attack * self.game_time * self.multiplier
 	end
-
-	return self:GetAbility():GetSpecialValueFor("melee_attack") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierAttackSpeedBonus_Constant()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_aspd then
+		return self.melee_aspd * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_aspd") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierPhysicalArmorBonus()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_armor then
+		return self.melee_armor * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_armor") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierMagicalResistanceBonus()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_mres then
+		return self.melee_mres * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_mres") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierMoveSpeedBonus_Constant()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_ms then
+		return self.melee_ms * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_ms") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 -- function modifier_custom_creep_scaling:GetModifierHealthBonus()
@@ -171,31 +143,15 @@ end
 -- end
 
 function modifier_custom_creep_scaling:GetModifierConstantHealthRegen()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_regen then
+		return self.melee_regen * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_regen") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 function modifier_custom_creep_scaling:GetModifierExtraHealthBonus()
-	if self:GetParent():IsNull() then return 0 end
-
-	local multiplier = self:GetAbility():GetSpecialValueFor("base_mult")
-	
-	if string.find(self:GetParent():GetUnitName(), "upgraded") then 
-		multiplier	= self:GetAbility():GetSpecialValueFor("super_mult")
-	elseif string.find(self:GetParent():GetUnitName(), "upgraded_mega") then
-		multiplier	= self:GetAbility():GetSpecialValueFor("mega_mult")
+	if self.melee_hp then
+		return self.melee_hp * self.game_time * self.multiplier
 	end
-
-    return self:GetAbility():GetSpecialValueFor("melee_hp") * math.floor(GameRules:GetDOTATime(false, false) / 60)	* multiplier
 end
 
 -- function modifier_custom_creep_scaling:OnUnitMoved(keys)

@@ -488,7 +488,7 @@ function modifier_imba_vampiric_aura:GetAuraSearchType()
 end
 
 function modifier_imba_vampiric_aura:GetAuraEntityReject(target)
-	if self.ability:GetToggleState() and not target:IsConsideredHero() then return true end
+	if (self.ability:GetToggleState() and not target:IsConsideredHero()) or target:IsRangedAttacker() then return true end
 end
 
 function modifier_imba_vampiric_aura:GetModifierAura()
@@ -521,7 +521,8 @@ function modifier_imba_vampiric_aura_buff:OnCreated()
 	self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
 	self.spellsteal_pct = self.ability:GetSpecialValueFor("spellsteal_pct")
 	self.caster_heal = self.ability:GetSpecialValueFor("caster_heal")
-	self.heal_delay = self.ability:GetSpecialValueFor("heal_delay")    
+	self.heal_delay = self.ability:GetSpecialValueFor("heal_delay")
+	self.damage	= self.ability:GetSpecialValueFor("damage")
 end
 
 function modifier_imba_vampiric_aura_buff:OnRefresh()
@@ -533,9 +534,18 @@ function modifier_imba_vampiric_aura_buff:IsPurgable() return false end
 function modifier_imba_vampiric_aura_buff:IsDebuff() return false end
 
 function modifier_imba_vampiric_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+end
 
-	return decFuncs
+function modifier_imba_vampiric_aura_buff:GetModifierPreAttack_BonusDamage()
+	if not self:GetParent():HasModifier("modifier_imba_mortal_strike_skeleton") and not self:GetParent():HasModifier("modifier_mortal_strike_skeleton") then
+		return self.damage
+	else
+		return self.damage * 0.5
+	end
 end
 
 function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)

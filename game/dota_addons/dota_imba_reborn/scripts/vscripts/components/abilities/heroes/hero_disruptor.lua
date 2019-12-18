@@ -1614,12 +1614,12 @@ function modifier_imba_static_storm_debuff:GetEffectAttachType() return PATTACH_
 function modifier_imba_static_storm_debuff:IsDebuff() return true end
 function modifier_imba_static_storm_debuff:IsHidden() return false end
 function modifier_imba_static_storm_debuff:IsPurgable()	return false end
-function modifier_imba_static_storm_debuff:OnDestroy()
-	if IsServer() then
-		-- Apply linger debuff for linger duration		
-		self.target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.linger_time})
-	end	
-end
+-- function modifier_imba_static_storm_debuff:OnDestroy()
+	-- if IsServer() then
+		-- -- Apply linger debuff for linger duration		
+		-- self.target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.linger_time})
+	-- end	
+-- end
 
 function modifier_imba_static_storm_debuff:CheckState()	
 	if self.scepter then

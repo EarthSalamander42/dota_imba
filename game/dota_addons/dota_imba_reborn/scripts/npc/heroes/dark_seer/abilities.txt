@@ -389,7 +389,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_width"				"1300"
+				"scepter_width"				"2000"
 				"RequiresScepter"			"1"
 			}
 			"15"

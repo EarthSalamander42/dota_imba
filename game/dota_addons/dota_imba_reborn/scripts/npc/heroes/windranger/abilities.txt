@@ -319,19 +319,27 @@
 	}
 
 	//=================================================================================================================
-	// Windranger: Backpedal
+	// Windranger: Advancement
 	//=================================================================================================================
-	"imba_windranger_backpedal"
+	"imba_windranger_advancement"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_windranger"
-		"AbilityTextureName"			"custom/windranger/backpedal"
+		"AbilityTextureName"			"custom/windranger/advancement"
 		"MaxLevel"						"1"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -339,17 +347,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"backpedal_distance"	"230"
+				"advancement_distance"	"260"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"backpedal_height"		"75"
+				"advancement_height"		"75"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"backpedal_duration"		"0.35"
+				"advancement_duration"		"0.35"
 			}
 		}
 	}

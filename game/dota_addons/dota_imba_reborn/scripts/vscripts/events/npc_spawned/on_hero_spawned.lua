@@ -20,6 +20,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 		return
 	end -- Illusions will not be affected by scripts written under this line
 
+	-- Let's try to make Meepo a bit more playable
+	-- Ensure the Meepos get buffs like custom mechanics
+	if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
+		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_meepo_divided_we_stand_lua", {})
+		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_custom_mechanics", {})
+	end
+	
 	if hero == nil or hero:IsFakeHero() then return end
 
 	-- Set up initial level
@@ -145,12 +152,7 @@ function GameMode:OnHeroSpawned(hero)
 		Mutation:OnHeroSpawn(hero)
 	end
 
-	-- Let's try to make Meepo a bit more playable
-	if hero:GetUnitName() == "npc_dota_hero_meepo" then
-		local caster = hero
-		if hero:IsClone() then caster = hero:GetCloneSource() end
-		hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
-	elseif hero:IsTempestDouble() then
+	if hero:IsTempestDouble() then
 		local clone_shared_buffs = {
 			"modifier_frantic",
 			"modifier_item_imba_moon_shard_active",

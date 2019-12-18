@@ -164,12 +164,10 @@ function modifier_imba_rancor_stack:OnIntervalThink()
 end
 
 function modifier_imba_rancor_stack:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+	}
 end
 
 function modifier_imba_rancor_stack:GetModifierSpellAmplify_Percentage()
@@ -870,6 +868,278 @@ function modifier_imba_command_aura_negative_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
+---
+
+LinkLuaModifier("modifier_imba_vengefulspirit_command_aura_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vengefulspirit_command_aura_effect_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_effect_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+
+imba_vengefulspirit_command_aura_723							= imba_vengefulspirit_command_aura_723 or class({})
+modifier_imba_vengefulspirit_command_aura_723					= modifier_imba_vengefulspirit_command_aura_723 or class({})
+modifier_imba_vengefulspirit_command_aura_effect_723			= modifier_imba_vengefulspirit_command_aura_effect_723 or class({})
+modifier_imba_vengefulspirit_command_negative_aura_723			= modifier_imba_vengefulspirit_command_negative_aura_723 or class({})
+modifier_imba_vengefulspirit_command_negative_aura_effect_723	= modifier_imba_vengefulspirit_command_negative_aura_effect_723 or class({})
+
+------------------------------------------
+-- IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 -- 
+------------------------------------------
+
+function imba_vengefulspirit_command_aura_723:GetIntrinsicModifierName()
+	return "modifier_imba_vengefulspirit_command_aura_723"
+end
+
+function imba_vengefulspirit_command_aura_723:OnOwnerDied()
+	if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
+		local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
+		local bounty_base				= self:GetCaster():GetIllusionBounty()
+		
+		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
+			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
+		end
+		
+		if self:GetCaster():HasScepter() then
+			bounty_base					= 0
+		end
+		
+		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
+		{
+			outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
+			incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
+			bounty_base					= bounty_base,
+			bounty_growth				= nil,
+			outgoing_damage_structure	= nil,
+			outgoing_damage_roshan		= nil,
+			duration					= nil
+		}
+		, num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
+	
+		for _, illusion in pairs(super_illusions) do
+			illusion:SetHealth(illusion:GetMaxHealth())
+			illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+			-- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
+			FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
+			
+			PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
+		end
+	end
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 --
+---------------------------------------------------
+
+function modifier_imba_vengefulspirit_command_aura_723:OnCreated()
+
+end
+
+function modifier_imba_vengefulspirit_command_aura_723:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_imba_vengefulspirit_command_aura_723:OnDeath(keys)
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() then
+		keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_vengefulspirit_command_negative_aura_723", {})
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_723:IsHidden()					return true end
+
+function modifier_imba_vengefulspirit_command_aura_723:IsAura()						return true end
+function modifier_imba_vengefulspirit_command_aura_723:IsAuraActiveOnDeath() 		return false end
+
+function modifier_imba_vengefulspirit_command_aura_723:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_vengefulspirit_command_aura_723:GetModifierAura()			return "modifier_imba_vengefulspirit_command_aura_effect_723" end
+function modifier_imba_vengefulspirit_command_aura_723:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() end
+
+----------------------------------------------------------
+-- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_AURA_EFFECT_723 --
+----------------------------------------------------------
+
+-- Using bootleg way to deal with client/server interaction for strength/agility/intellect
+-- On serverside, set the stack count to the attribute number (strength = 0, agility = 1, intellect = 2)
+-- By the time a frame passes, hypothetically speaking the client side should be able to read the proper stack count, which will then store the value in a variable before setting the stack count back to nothing since vanilla doesn't have a stack number
+function modifier_imba_vengefulspirit_command_aura_effect_723:OnCreated()
+	self.initialized = false
+
+	self:StartIntervalThink(FrameTime())
+	
+	if not IsServer() then return end
+	
+	if self:GetParent().GetPrimaryAttribute then
+		self:SetStackCount(self:GetParent():GetPrimaryAttribute() or 0)
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:OnIntervalThink()
+	if not self.initialized then 
+		self.hero_primary_attribute = self:GetStackCount()
+		self:SetStackCount(0)
+		self.initialized = true
+		if IsServer() then
+			self:StartIntervalThink(0.5)
+		else
+			self:StartIntervalThink(-1)
+		end
+	end
+	
+	if IsServer() and self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Strength()
+	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_attributes")
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Agility()
+	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_attributes")
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Intellect()
+	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_attributes")
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierAttackRangeBonus()
+	if self:GetAbility() and self:GetParent():IsRangedAttacker() then
+		return self:GetAbility():GetSpecialValueFor("bonus_attack_range")
+	end
+end
+
+function modifier_imba_vengefulspirit_command_aura_effect_723:OnTooltip()
+	if self:GetAbility() then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_attributes")
+	end
+end
+
+------------------------------------------------------------
+-- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_NEGATIVE_AURA_723 --
+------------------------------------------------------------
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_RESPAWN
+	}
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:OnRespawn(keys)
+	if keys.unit == self:GetCaster() then
+		self:Destroy()
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsHidden()						return true end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsAura()						return true end
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsAuraActiveOnDeath() 			return false end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraRadius()					return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetModifierAura()				return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
+
+-------------------------------------------------------------------
+-- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_NEGATIVE_AURA_EFFECT_723 --
+-------------------------------------------------------------------
+
+-- Using bootleg way to deal with client/server interaction for strength/agility/intellect
+-- On serverside, set the stack count to the attribute number (strength = 0, agility = 1, intellect = 2)
+-- By the time a frame passes, hypothetically speaking the client side should be able to read the proper stack count, which will then store the value in a variable before setting the stack count back to nothing since vanilla doesn't have a stack number
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnCreated()
+	self.bonus_attributes	= self:GetAbility():GetTalentSpecialValueFor("bonus_attributes") * (-1)
+	self.bonus_attack_range	= self:GetAbility():GetSpecialValueFor("bonus_attack_range") * (-1)
+
+	self.initialized = false
+
+	self:StartIntervalThink(FrameTime())
+	
+	if not IsServer() then return end
+	
+	if self:GetParent().GetPrimaryAttribute then
+		self:SetStackCount(self:GetParent():GetPrimaryAttribute() or 0)
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnIntervalThink()
+	if not self.initialized then 
+		self.hero_primary_attribute = self:GetStackCount()
+		self:SetStackCount(0)
+		self.initialized = true
+		if IsServer() then
+			self:StartIntervalThink(0.5)
+		else
+			self:StartIntervalThink(-1)
+		end
+	end
+	
+	if IsServer() and self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
+end
+
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Strength()
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
+		return self.bonus_attributes
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Agility()
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY then
+		return self.bonus_attributes
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Intellect()
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
+		return self.bonus_attributes
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierAttackRangeBonus()
+	if self:GetParent():IsRangedAttacker() then
+		return self.bonus_attack_range
+	end
+end
+
+function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnTooltip()
+	return self.bonus_attributes
+end
+
 -------------------------------------------
 --            NETHER SWAP
 -------------------------------------------
@@ -894,21 +1164,31 @@ function imba_vengefulspirit_nether_swap:GetIntrinsicModifierName()
 end
 
 function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerOwnerID()
-		local targetID = target:GetPlayerOwnerID()
+	-- local casterID = caster:GetPlayerOwnerID()
+	-- local targetID = target:GetPlayerOwnerID()
 
-		if target ~= nil and target == caster then
-			return UF_FAIL_OTHER
-		end
+	if target ~= nil and target == self:GetCaster() then
+		return UF_FAIL_OTHER
+	end
 
-		if target ~= nil and (not target:IsHero()) and (not caster:HasScepter()) then
-			return UF_FAIL_CREEP
-		end
+	if target ~= nil and (not target:IsHero()) and (not self:GetCaster():HasScepter()) then
+		return UF_FAIL_CREEP
+	end
+	
+	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, self:GetCaster():GetTeamNumber())
+end
 
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
-		return nResult
+-- function imba_vengefulspirit_nether_swap:GetBehavior()
+	-- if not self:GetCaster():HasScepter() then
+		-- return self.BaseClass.GetBehavior(self)
+	-- else
+		-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
+	-- end
+-- end
+
+function imba_vengefulspirit_nether_swap:GetAOERadius()
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_radius")
 	end
 end
 
@@ -1001,7 +1281,7 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 		end
 
 		-- Swap positions
-		Timers:CreateTimer(FrameTime(), function()
+		-- Timers:CreateTimer(FrameTime(), function()
 			FindClearSpaceForUnit(caster, target_loc, true)
 			FindClearSpaceForUnit(target, caster_loc, true)
 
@@ -1019,7 +1299,18 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 					caster:EmitSound(sound)
 				end
 			end
-		end)
+		-- end)
+
+		if self:GetCaster():HasScepter() then
+			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target_loc, nil, self:GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+				-- Vanilla modifier
+				local fear_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_wave_of_terror_fear", {duration = self:GetSpecialValueFor("scepter_duration")})
+				
+				if fear_modifier then
+					fear_modifier:SetDuration(self:GetSpecialValueFor("scepter_duration") * (1 - enemy:GetStatusResistance()), true)
+				end
+			end
+		end
 
 		-- Destroy trees around start and end areas
 		GridNav:DestroyTreesAroundPoint(caster_loc, tree_radius, false)
@@ -1223,6 +1514,7 @@ LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_8", "components/abil
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_9", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_10", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_11", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_command_aura_attributes", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_vengefulspirit_3 = class({})
 function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() 		return true end
@@ -1249,6 +1541,11 @@ function modifier_special_bonus_imba_vengefulspirit_11:IsHidden() 		return true 
 function modifier_special_bonus_imba_vengefulspirit_11:IsPurgable() 	return false end
 function modifier_special_bonus_imba_vengefulspirit_11:RemoveOnDeath() 	return false end
 
+modifier_special_bonus_imba_vengefulspirit_command_aura_attributes = class({})
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsPurgable() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:RemoveOnDeath() 	return false end
+
 function imba_vengefulspirit_magic_missile:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_11") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_11"), "modifier_special_bonus_imba_vengefulspirit_11", {})
@@ -1272,5 +1569,11 @@ function imba_vengefulspirit_command_aura:OnOwnerSpawned()
 	
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_8") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_8"), "modifier_special_bonus_imba_vengefulspirit_8", {})
+	end
+end
+
+function imba_vengefulspirit_command_aura_723:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_command_aura_attributes") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_command_aura_attributes") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_command_aura_attributes"), "modifier_special_bonus_imba_vengefulspirit_command_aura_attributes", {})
 	end
 end

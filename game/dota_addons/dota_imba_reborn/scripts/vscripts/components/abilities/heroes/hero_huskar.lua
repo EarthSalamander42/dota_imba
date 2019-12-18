@@ -20,6 +20,7 @@ LinkLuaModifier("modifier_imba_huskar_life_break_charge", "components/abilities/
 LinkLuaModifier("modifier_imba_huskar_life_break_slow", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_life_break_sac_dagger", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_life_break_sac_dagger_tracker", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_huskar_life_break_taunt", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
 imba_huskar_inner_fire									= class({})
 modifier_imba_huskar_inner_fire_knockback				= class({})
@@ -44,6 +45,7 @@ modifier_imba_huskar_life_break_charge					= class({})
 modifier_imba_huskar_life_break_slow					= class({})
 modifier_imba_huskar_life_break_sac_dagger				= class({})
 modifier_imba_huskar_life_break_sac_dagger_tracker		= class({})
+modifier_imba_huskar_life_break_taunt					= class({})
 
 ----------------
 -- INNER FIRE --
@@ -284,7 +286,7 @@ function imba_huskar_burning_spear:OnOrbFire()
 	self:GetCaster():EmitSound("Hero_Huskar.Burning_Spear.Cast")
 	
 	-- Vanilla version doesn't actually show Huskar taking damage so I assume it's a SetHealth thing
-	self:GetCaster():SetHealth(math.max(self:GetCaster():GetHealth() - self:GetSpecialValueFor("health_cost"), 1))
+	self:GetCaster():SetHealth(math.max(self:GetCaster():GetHealth() - (self:GetCaster():GetHealth() * self:GetSpecialValueFor("health_cost") * 0.01), 1))
 end
 
 function imba_huskar_burning_spear:OnOrbImpact( keys )
@@ -770,13 +772,13 @@ function imba_huskar_life_break:OnUpgrade()
 	end
 end
 
-function imba_huskar_life_break:GetCooldown(level)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cooldown_scepter")
-	else
-		return self.BaseClass.GetCooldown(self, level)
-	end
-end
+-- function imba_huskar_life_break:GetCooldown(level)
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cooldown_scepter")
+	-- else
+		-- return self.BaseClass.GetCooldown(self, level)
+	-- end
+-- end
 
 function imba_huskar_life_break:OnSpellStart()
 	if not IsServer() then return end
@@ -817,6 +819,8 @@ function modifier_imba_huskar_life_break:OnCreated(params)
 	self.sac_dagger_rotation_speed	= self.ability:GetSpecialValueFor("sac_dagger_rotation_speed")
 	self.sac_dagger_contact_radius	= self.ability:GetSpecialValueFor("sac_dagger_contact_radius")
 	self.sac_dagger_dmg_pct			= self.ability:GetSpecialValueFor("sac_dagger_dmg_pct")
+	
+	self.taunt_duration				= self.ability:GetSpecialValueFor("taunt_duration")
 
 	if not IsServer() then return end
 
@@ -884,9 +888,9 @@ function modifier_imba_huskar_life_break:OnDestroy()
 
 		local enemy_damage_to_use = self.health_damage
 		
-		if self.parent:HasScepter() then
-			enemy_damage_to_use = self.health_damage_scepter
-		end
+		-- if self.parent:HasScepter() then
+			-- enemy_damage_to_use = self.health_damage_scepter
+		-- end
 
 		-- Deal damage to enemy and self
 		local damageTable_enemy = {
@@ -919,6 +923,16 @@ function modifier_imba_huskar_life_break:OnDestroy()
 		-- This is optional I guess but it replicates vanilla Life Break being reflected by Lotus Orb a bit closer (cause the target starts attacking you)
 		self.parent:MoveToTargetToAttack( self.target )
 		
+		-- 7.23 Aghanim's Scepter effect
+		if self.caster:HasScepter() then
+			local taunt_modifier = self.target:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_life_break_taunt", {duration = self.taunt_duration})
+			
+			if taunt_modifier then
+				taunt_modifier:SetDuration(self.taunt_duration * (1 - self.target:GetStatusResistance()), true)
+			end
+		end
+		
+		-- IMBAfication: Sacrificial Dagger
 		local random_angle	= RandomInt(0, 359)
 
 		CreateModifierThinker(self.parent, self.ability, "modifier_imba_huskar_life_break_sac_dagger", {
@@ -1152,6 +1166,42 @@ function modifier_imba_huskar_life_break_sac_dagger_tracker:OnTooltip()
 	return self:GetStackCount()
 end
 
+-------------------------------------------
+-- MODIFIER_IMBA_HUSKAR_LIFE_BREAK_TAUNT --
+-------------------------------------------
+
+function modifier_imba_huskar_life_break_taunt:IsPurgable()	return false end
+
+function modifier_imba_huskar_life_break_taunt:GetStatusEffectName()
+	return "particles/status_fx/status_effect_beserkers_call.vpcf"
+end
+
+function modifier_imba_huskar_life_break_taunt:OnCreated()
+	if not IsServer() then return end
+	
+	-- This line works for lane/neutral creeps but not for player-controlled units (vanilla and custom included)
+	self:GetParent():SetForceAttackTarget(self:GetCaster())
+	
+	-- This line works for player-controlled units
+	self:GetParent():MoveToTargetToAttack(self:GetCaster())
+	
+	-- In case there's like multiple taunts going on or something
+	self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_huskar_life_break_taunt:OnIntervalThink()
+	self:GetParent():SetForceAttackTarget(self:GetCaster())
+end
+
+function modifier_imba_huskar_life_break_taunt:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():SetForceAttackTarget(nil)
+end
+
+function modifier_imba_huskar_life_break_taunt:CheckState()
+	return {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+end
 
 ---------------------
 -- TALENT HANDLERS --

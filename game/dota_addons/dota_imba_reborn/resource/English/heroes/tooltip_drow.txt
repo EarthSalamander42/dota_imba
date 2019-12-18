@@ -9,7 +9,7 @@
 "DOTA_Tooltip_modifier_imba_deadeye_vision_Description"                "Increased vision range."
 
 // Drow Ranger's Frost Arrows
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows"                    "Frost Arrows"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows"                    "Frost Arrows (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Description"                    "Adds a freezing effect to Drow's attacks, slowing enemy movement and attack speed.\n<font color='#FF7800'>Chill:</font> Adds a stack of Chill with each attack; when %stacks_to_freeze% stacks accumulate, the target will be frozen in place for a short duration."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note0"              "The movement slow lasts much longer on creeps."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note1"              "Stacks reset when freezing an enemy, but are not removed."
@@ -28,6 +28,15 @@
 
 "DOTA_Tooltip_modifier_imba_frost_arrows_buff"                          "Hasting chill"
 "DOTA_Tooltip_modifier_imba_frost_arrows_buff_Description"              "Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% extra movement speed from stacks of Chill applied to enemy heroes."
+
+//DROW RANGER
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723"									"Frost Arrows"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_Description"						"Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.\n<font color='#FF7800'>Chill:</font> Adds a stack of Chill with each attack; when %stacks_to_freeze% stacks accumulate, the target will be frozen in place for a short duration."
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_Lore"							"Ice-encased arrows pierce the silence, chilling their victims to the core."
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_Note0"							"The slow duration is refreshed on successive casts."
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_frost_arrows_movement_speed"		"%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_damage"		"BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_723_frost_arrows_abilityduration"	"DURATION:"
 
 // Drow Ranger's Gust
 "DOTA_Tooltip_ability_imba_drow_ranger_gust"                            "Gust"
@@ -74,8 +83,18 @@
 "DOTA_Tooltip_modifier_imba_trueshot_talent_buff"                      "Precision Frenzy"
 "DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Temporarily gaining a percentage of the total Agility of your teammates."
 
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot"									"Multishot"
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_Description"						"Channeling. Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying longer duration Frost Arrows. Lasts up to %abilitychanneltime% seconds.\n<font color='#FF7800'>Chill Extension:</font> Also applies Frost Arrow's Chill IMBAfication."
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_count"						"ARROW COUNT:"
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_damage_pct"					"%ARROW BASE DAMAGE BONUS:"
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_slow_duration"				"ARROW SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_range_multiplier"				"ARROW RANGE MULTIPLIER:"
+
+"DOTA_Tooltip_modifier_imba_drow_ranger_multishot"						"Multishot"
+"DOTA_Tooltip_modifier_imba_drow_ranger_multishot_Description"						"Channeling Attacks"
+
 // Drow Ranger's Marksmanship
-"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship"						"Marksmanship"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship"						"Marksmanship (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Description"			"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, <font color='#FF7800'>ignoring their armor entirely</font>. Instantly kills creeps <font color='#FF7800'>(including ancient creeps)</font> and deals %bonus_damage% bonus proc physical damage to heroes. This ability is disabled if there is an enemy hero within %radius% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills heroes if their health is below %instakill_threshold%%%.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note0"					"Drow's attack range is increased regardless of enemy presence. Invisible enemies can also end Marksmanship's effects."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note1"					"Splinters are counted as regular attacks, but they cannot trigger on hit effects."
@@ -91,6 +110,21 @@
 "DOTA_Tooltip_modifier_imba_markmanship_slow"							"Lesser Chill"
 "DOTA_Tooltip_modifier_imba_markmanship_slow_Description"				"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% from Drow allies."
 
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723"									"Marksmanship"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Description"						"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. Grants Drow and nearby ranged heroes with bonus agility based on Drow's current agility. This ability is disabled if there is an enemy hero within %disable_range% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants %range_bonus% bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills targets if their health is below %instakill_threshold%%%."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_aghanim_description"				"Causes Drow Ranger's attacks to splinter on the target, hitting nearby units with normal attacks that deal reduced damage."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_split_count_scepter"				"SCEPTER SPLIT COUNT:"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_damage_reduction_scepter"		"%SCEPTER DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Lore"							"The Drow Ranger is the epitome of archery prowess."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Note0"							"Marksmanship procs have true strike."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_chance"		"%CHANCE:"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_bonus_damage"		"BONUS PROC DAMAGE:"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_agility_multiplier"		"%AGILITY BONUS:"
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_agility_range"		"AGILITY RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_drow_ranger_marksmanship_723_aura_bonus"						"Marksmanship"
+"DOTA_Tooltip_modifier_imba_drow_ranger_marksmanship_723_aura_bonus_Description"			"Granting bonus agility."
+
 // Drow Ranger's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1"                 "Gust Self Cast"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1_Description"		"Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally."
@@ -105,5 +139,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6_Description"     "While Precision Aura is cast/active, Drow gains agility equal to 3% of every allied hero's agility."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"                 "Deadeye passively affects allied heroes as well"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"                 "Marksmanship no longer disabled by distance"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_9"                 "+550 Gust Distance/Knockback"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_9"                 "+{s:value} Gust Distance/Knockback"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+25% Precision Aura Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_frost_arrows_damage"				"+{s:value} Frost Arrows Bonus Damage"
+
+

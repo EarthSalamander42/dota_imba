@@ -74,6 +74,68 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Ability: Bane Enfeeble (7.23)
+	//=================================================================================================================
+	"imba_bane_enfeeble_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_bane"
+		"AbilityTextureName"			"bane_enfeeble"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilitySound"					"Hero_Bane.Enfeeble"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+		"AbilityManaCost"				"50 75 100 125"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"status_resistance_reduction"	"20 25 30 35"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_resistance_reduction"	"6 10 14 18"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"	"10"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"discomfort_status_resistance_reduction_per_stack"	"5 6 7 8"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"discomfort_magic_resistance_reduction_per_stack"	"4 5 6 7"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"terror_night_vision_reduction_per_stack"	"300"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Bane Brain Sap
@@ -147,6 +209,71 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Ability: Bane Brain Sap (7.23)
+	//=================================================================================================================
+	"imba_bane_brain_sap_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_bane"
+		"AbilityTextureName"			"bane_brain_sap"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Bane.BrainSap"
+		"HasScepterUpgrade"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"				"600"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14 12 10 8"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 95 120 145"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"brain_sap_damage"				"110 220 330 440"
+				//"LinkedSpecialBonus"			"special_bonus_unique_bane_2"
+				"LinkedSpecialBonus"			"special_bonus_imba_bane_brain_sap_damage"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"cooldown_scepter"				"1.5"
+				"RequiresScepter"		"1"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"castpoint_scepter"				"0.2"
+				"RequiresScepter"		"1"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"addlebrain_duration"		"3.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
 	//=================================================================================================================
 	// Bane Nightmare
 	//=================================================================================================================
@@ -333,6 +460,74 @@
 				"var_type"								"FIELD_INTEGER"
 				"cast_range"							"625 675 725"
 			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Bane Friends Grip (7.23)
+	//=================================================================================================================
+	"imba_bane_fiends_grip_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_bane"
+		"AbilityTextureName"			"bane_fiends_grip"
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Bane.FiendsGrip"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"7.5 7.5 7.5"
+		"AbilityCooldown"				"100 90 80"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 300 400"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"fiend_grip_tick_interval"		"0.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiend_grip_mana_drain"			"5 6 7"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"abilitychanneltime"			""
+				//"LinkedSpecialBonus"		"special_bonus_unique_bane_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_fiends_grip_duration"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiend_grip_damage"				"100 200 300"
+			}
 		}
 	}
 
@@ -542,6 +737,59 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_imba_bane_brain_sap_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bane_brain_sap"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"250"
+			}
+		}
+	}
+
+	"special_bonus_imba_bane_fiends_grip_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bane_fiends_grip"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"7"
 			}
 		}
 	}

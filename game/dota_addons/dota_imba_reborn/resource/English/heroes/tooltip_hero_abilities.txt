@@ -169,11 +169,14 @@
 // Disruptor's Static Storm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_static_storm"                      "Static Storm"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed."
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed."
+
+//\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.
+
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_Lore"                "A summer squall in Druud is a hardship that only an Oglodi can survive."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_linger_time"          "ELECTROCUTION DURATION:"
+//"DOTA_Tooltip_ability_imba_disruptor_static_storm_linger_time"          "ELECTROCUTION DURATION:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_duration"                 "SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_max_damage"          "MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_max_damage"               "SCEPTER MAX DAMAGE:"
@@ -239,13 +242,14 @@
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_stomp_damage"           "STOMP DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_sleep_duration"         "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
+//"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
 
-"DOTA_Tooltip_modifier_imba_elder_titan_echo_stomp_magic_immune"	"Spell Immunity"
+"DOTA_Tooltip_modifier_imba_elder_titan_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage, movement speed, and armor for each unit it passed through.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The spirit's movement speed is not set to Elder Titan's movement speed; the Ancestral Spirit instead moves at increased movement speed.\n<font color='#FF7800'>Spirit Delimiter:</font> No movement speed cap for the movement speed bonus.\n<font color='#FF7800'>Phase Through:</font> Overlapping with the Astral Spirit does not automatically return it to Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Lore"           "Like the four fundamentals, Elder Titan exists across all planes at once and can draw other aspects of himself to assist in times of need."
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_aghanim_description"		"Causes you to become Spell Immune for %scepter_magic_immune_per_hero% seconds per affected enemy hero when the spirit returns to you."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_spirit_duration"      "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_buff_duration"        "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_pass_damage"        "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -356,13 +360,15 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud"                      "Ghost Shroud"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Description"          "Become ethereal, taking %magic_amp_pct%%% additional magic damage, but gaining immunity to physical damage and slowing nearby enemies.\n<font color='#FF7800'>Convalescence:</font> Increases all healing received by allies in the area. The effect is doubled on Necrophos."
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Description"          "Necrophos slips into the realm that separates the living from the dead. Unable to attack or be attacked, he emits an aura that slows enemies around him. He takes additional magic damage in this form, but his restorative powers are amplified.\n<font color='#FF7800'>Convalescence:</font> Also increases healing received by allies within the radius by half the standard amount."
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_Lore"                "Rotund'jere slips into the realm that separates the living from the dead, then navigates it with practiced ease."
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_pct"                  "%SELF HEAL AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_tooltip"              "%ALLIES HEAL AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_pct"            "%RESTORATION AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_magic_amp_pct"            "%INCREASED MAGIC DAMAGE:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_slow_pct"            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_aghanim_description"						"Reduces Ghost Shroud cooldown."
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_cooldown_scepter"						"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_ghost_shroud_active"                  "Ghost Shroud"
 "DOTA_Tooltip_modifier_imba_ghost_shroud_active_Description"                   "Immune to physical damage, but taking more magical damage. Slows nearby enemies and increases healing received by nearby allies."
@@ -383,6 +389,8 @@
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Lore"            "Those who come within a short distance of Necrolyte can feel pestilence and plague in the air."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_damage_pct"                  "%HEALTH LOSS PER SECOND:"
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALING REDUCTION:"
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_aghanim_description"			"Increases Heartstopper Aura damage while Ghost Shroud is active."
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_scepter_multiplier"			"SCEPTER DAMAGE MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage"                  "Heartstopper Aura"
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage_Description"                   "Losing health over time. Natural health regen and received healing decreased by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%."
@@ -393,7 +401,7 @@
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp."
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage_reduction_pct"           "%DAMAGE REDUCTION:"
@@ -940,7 +948,7 @@
 ////===============================================================================================================
 // Riki's Smoke Screen
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_riki_smoke_screen"                          "Smoke Screen"
+"DOTA_Tooltip_ability_imba_riki_smoke_screen"                          "Smoke Screen (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_Description"              "Throws down a smoke bomb, silencing enemies, causing them to miss attacks, and slowing their movement.\n<font color='#FF7800'>Solid Fog:</font> Also slows enemies' turn rate, and reduces their vision range. Vision reduction is stronger at the center of the cloud."
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_Note0"                    "Multiple smoke screens do not stack."
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_Lore"                      "Since his escape during the night of his betrayal, Riki has valued the use of a simple smoke screen to confuse his opponents"
@@ -957,10 +965,23 @@
 "DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator"				"Stealth Smoke"
 "DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator_Description"	"Gaining Invisibility from Smoke Screen."
 
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723"										"Smoke Screen"
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_Description"							"Throws down a smoke bomb, silencing enemies, and causing them to miss attacks.\n<font color='#FF7800'>Remnants of Smokescreen:</font> Also reeduces movement speed by %remnants_movespeed_slow%%%, and vision to %remnants_vision%.\n<font color='#FF7800'>Solid Fog:</font> Also reduces turn rate by %solid_turn_rate_slow%%%."
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_Lore"									"Since his escape during the night of his betrayal, Riki has valued the use of a simple smoke screen to confuse his opponents."
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_Note0"									"Doesn't prevent the use of active items."
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_radius"									"RADIUS:"
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_miss_rate"								"%MISS RATE:"
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_723_duration"								"DURATION:"
+
+"DOTA_Tooltip_modifier_imba_riki_smoke_screen_723"				"Smoke Screen"
+"DOTA_Tooltip_modifier_imba_riki_smoke_screen_723_Description"	"Silenced. Vision Reduced. Missing %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%% of attacks. Move Speed slowed."
+
+"DOTA_Tooltip_modifier_imba_riki_smoke_screen_723_buff"				"Smoke Screen Invisibility"
+
 ////===============================================================================================================
 // Riki's Blink Strike
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_riki_blink_strike"                          "Blink Strike"
+"DOTA_Tooltip_ability_imba_riki_blink_strike"                          "Blink Strike (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_riki_blink_strike_Description"              "Teleports behind the target unit, striking it with bonus damage.\n<font color='#FF7800'>Shadowstruck:</font> If the target is an enemy, its turn rate is reduced for %duration% seconds.\n<font color='#FF7800'>Through the Ball Room:</font> If the target is out of reach, Blink Strike will attempt to use units on the way as platforms to jump off of in order to reach it."
 "DOTA_Tooltip_ability_imba_riki_blink_strike_Note0"                    "Will always try to find the shortest path possible."
 "DOTA_Tooltip_ability_imba_riki_blink_strike_Note1"                    "While travelling through the ball room, the caster is invulnerable."
@@ -972,13 +993,23 @@
 "DOTA_Tooltip_ability_imba_riki_blink_strike_max_jumps"					"MAXIMUM TARGET JUMPS:"
 
 "DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn"					"Blink Struck"
-"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn_Description"		"Turn rate decreased by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%."
+"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn_Description"		"Turn rate decreased by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723"										"Blink Strike"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_Description"							"Teleports behind the target unit, striking for bonus damage if it is an enemy.\n<font color='#FF7800'>Shadowstruck:</font> If the target is an enemy, its turn rate is reduced by %turn_rate_slow_pct%%% for %duration% seconds.\n<font color='#FF7800'>Through the Ball Room:</font> If the target is out of reach, Blink Strike will attempt to use units on the way as platforms to jump off of in order to reach it. Maximum of %max_jumps% jumps."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_Lore"									"The Stealth Assassin's agile movement makes him impossible to escape."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_Note0"									"Riki's first attack after Blink Strike will be a backstab."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_Note1"									"Blink Strike's damage is dealt before the next attack."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_Note2"									"You can Blink Strike to allies, but no damage is dealt."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_abilitycastrange"							"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_bonus_damage"							"BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_723_max_charges"							"CHARGES:"
 
 
 ////===============================================================================================================
 // Riki's Cloak and Dagger
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger"                      "Cloak and Dagger"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger"                      "Cloak and Dagger (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Description"          "Riki fades into the shadows, becoming invisible. Every time he strikes an enemy from behind, he deals bonus damage based on his agility. Becomes visible after attacking.\n<font color='#FF7800'>Sucker Punch:</font> Breaking invisibility with an attack will increase the bonus damage by %invis_break_agility_multiplier% for that attack.\n<font color='#FF7800'>Facestab:</font> Enemies inside Riki's Smoke Screen can be backstabbed from any angle, although at a lower damage bonus."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Note0"                "Only breaking the invisibility provided by Cloak and Dagger will provide an increased damage bonus. Other sources of invisibility do not provide this effect."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Note1"                "Attacking from the back inside Smoke Screen will still apply the full damage bonus."
@@ -1000,11 +1031,19 @@
 "DOTA_Tooltip_modifier_imba_riki_backbroken"                            "Backbroken"
 "DOTA_Tooltip_modifier_imba_riki_backbroken_Description"                "Back broken by Backstab."
 
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723"								"Cloak and Dagger"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Description"					"Riki fades into the shadows, becoming invisible. Every time Riki strikes his enemy from behind, he deals bonus damage based on his Agility. When Riki attacks, he becomes visible.\n<font color='#FF7800'>Sucker Punch:</font> Breaking invisibility with an attack will increase the bonus damage by %invis_break_agility_multiplier% for that attack."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_agility_damage_multiplier"			"AGI DAMAGE MULT:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_fade_time"			"FADE DELAY:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Lore"							"Riki comes for you."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Note0"						"Illusions of Riki will play Backstab animations, but not deal any bonus damage."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Note1"						"Bonus damage from Backstab can't be evaded."
+
 ////===============================================================================================================
 // Riki's Tricks of the Trade
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade (Pre 7.23)"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -1017,6 +1056,19 @@
 
 "DOTA_Tooltip_modifier_imba_martyrs_mark"                              "Martyr's Mark"
 "DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting strike by Martyr's Strike."
+
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_aghanim_description"				"Increases duration, attacks, cast range and allows you to target an allied hero, hiding inside them for the duration."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Lore"							"The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Note0"							"Moving while phased out will cancel the ability."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_area_of_effect"							"RADIUS:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_attack_count"					"ATTACK COUNT:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_damage_pct"					"%ATTACK DAMAGE:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_abilitychanneltime"    			"DURATION:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_scepter_duration"		"SCEPTER DURATION:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_scepter_attacks"			"SCEPTER ATTACKS:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_scepter_cast_range"		"SCEPTER CAST RANGE:"
 
 ////===============================================================================================================
 // Riki's Custom Talents
@@ -1621,7 +1673,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm"                "Rearm"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
-"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Bloodstone, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
 "DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana."

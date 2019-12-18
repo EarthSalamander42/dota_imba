@@ -15,7 +15,7 @@
 "DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"              "Whenever a wolf dies, a stack is consumed and another wolf joins Lycan."
 
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane"									"Wolfsbane"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Passively increases Lycan and his wolves' damage whenever Lycan is near an enemy hero kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full Moon:</font> Also decreases Shapeshift's cooldown with each stack of Wolfsbane.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Passively increases Lycan and his wolves' damage whenever Lycan is near an enemy hero kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full Moon:</font> Also decreases Shapeshift's cooldown with each stack of Wolfsbane."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"							"Lycan himself is ignored for the minimum ally count requirement, even when he holds a scepter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note1"							"If Lycan is Broken, Wolfsbane's damage bonus is removed from everyone benefitting it."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"							"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter."
@@ -50,6 +50,16 @@
 "DOTA_Tooltip_modifier_imba_howl_flying_movement_talent"				"Batwolf"
 "DOTA_Tooltip_modifier_imba_howl_flying_movement_talent_Description"	"Has flying movement"
 
+"DOTA_Tooltip_ability_imba_lycan_howl_723"											"Howl"
+"DOTA_Tooltip_ability_imba_lycan_howl_723_Lore"										"Blood-curdling wolf cries signal to opponents that Banehallow is among them."		
+"DOTA_Tooltip_ability_imba_lycan_howl_723_Description"								"Strikes fear into enemies, reducing armor and attack damage to all enemies within %radius% range of Lycan and his wolves.\n<font color='#FF7800'>The Wolf Is At Your Door:</font> Also reduces movement speed by %move_speed%.\n<font color='#FF7800'>Moon Phase:</font> When toggled on and cast at night, Howl also grants phased movement."
+"DOTA_Tooltip_ability_imba_lycan_howl_723_howl_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_lycan_howl_723_attack_damage_reduction"					"%ATTACK DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_lycan_howl_723_armor"										"ARMOR REDUCTION:"
+
+"DOTA_Tooltip_modifier_imba_lycan_howl_723"							"Howl"
+"DOTA_Tooltip_modifier_imba_lycan_howl_723_Description"				"Damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%, Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
+
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse"							"#{DOTA_Tooltip_ability_lycan_feral_impulse}"
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"				"#{DOTA_Tooltip_ability_lycan_feral_impulse_Description}\n<font color='#FF7800'>Welcome to the Pack:</font> The more units and heroes affected by the aura, the stronger its effects become. Heroes grant double the bonus."
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse_Note0"					"Lycan is ignored when counting units affected by Feral Impulse."
@@ -69,6 +79,7 @@
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_duration"					"#{DOTA_Tooltip_ability_lycan_shapeshift_duration}"
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_night_vision_bonus"			"#{DOTA_Tooltip_ability_lycan_shapeshift_bonus_night_vision}"
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_absolute_speed"				"HASTED SPEED:"
+"DOTA_Tooltip_ability_imba_lycan_shapeshift_aghanim_description"		"Grants new ability: Wolf Bite. Bite an ally, granting them Shapeshift properties."
 
 "DOTA_Tooltip_modifier_imba_shapeshift"									"Shapeshift"
 "DOTA_Tooltip_modifier_imba_shapeshift_Description"						"Unslowable, and moving beyond normal maximum speed. Attacks have a chance to crit."

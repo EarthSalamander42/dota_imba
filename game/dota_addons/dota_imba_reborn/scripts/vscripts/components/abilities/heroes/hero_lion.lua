@@ -460,7 +460,7 @@ function modifier_imba_lion_hex:OnCreated()
 	self.maximum_hex_enemies = self.maximum_hex_enemies + self.caster:FindTalentValue("special_bonus_imba_lion_6")
 
 	-- If the parent is an illusion, pop it and exit
-	if self.parent:IsIllusion() then
+	if self.parent:IsIllusion() and (not self.parent.Custom_IsStrongIllusion or (self.parent.Custom_IsStrongIllusion and not self.parent:Custom_IsStrongIllusion())) then
 		self.parent:Kill(self.ability, self.caster)
 		return nil
 	end
@@ -895,7 +895,7 @@ function modifier_imba_manadrain_debuff:OnCreated()
 		self.particle_drain = "particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
 
 		-- Destroy the target if it is an illusion
-		if self.parent:IsIllusion() then
+		if self.parent:IsIllusion() and (not self.parent.Custom_IsStrongIllusion or (self.parent.Custom_IsStrongIllusion and not self.parent:Custom_IsStrongIllusion())) then
 		self.parent:Kill(self.ability, self.caster)
 			return nil
 		end

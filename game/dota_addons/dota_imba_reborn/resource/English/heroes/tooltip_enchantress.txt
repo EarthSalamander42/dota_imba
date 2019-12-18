@@ -12,13 +12,13 @@
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note1"							"The slow is applied on the attacking unit when the attack starts, not when damage is applied."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note2"							"Peace on Earth does not interrupt Teleport Scroll or Boots of Travel."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_slow_attack_speed"				"ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_enchantress_untouchable_aghanim_description"				"Peace on Earth now affects ALL enemy units."
+"DOTA_Tooltip_ability_imba_enchantress_untouchable_aghanim_description"				"Grants new ability: Sproink. Enchantress leaps backward and dodges incoming projectiles. <font color='#FF7800'>Peace on Earth now affects ALL enemy units.</font>"
 
 //---------------------------------------------------------------------------
 //      Enchant
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_ability_imba_enchantress_enchant"										"Enchant"
-"DOTA_Tooltip_ability_imba_enchantress_enchant_Description"							"Enchantress charms an enemy. If the enemy is a hero, they are slowed. If the enemy is a creep, she brings it under her control. If cast on a creep already under her control, she refreshes its enchant duration.\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Innate Charms: </font>Enchantress can enchant ancients at Level 20.\n<font color='#FF7800'>Instant Karma: </font>Killing a unit affected by Enchant's charm inflicts pure retaliation damage equal to how much the attacker overkilled the target on the killing blow. This damage is not affected by spell amplification or lifesteal.\n<font color='#FF7800'>\"Don't Run Off!\": </font>Enemies affected by Enchant's slow are visible in the fog of war.\n<font color='#FF7800'>Kindred Spirits:</font> Controlled enemies also receive the Untouchable ability modifier at %kindred_spirits_multiplier%%% efficacy. This modifier is purgable."
+"DOTA_Tooltip_ability_imba_enchantress_enchant_Description"							"Enchantress charms an enemy. If the enemy is a hero, they are slowed. If the enemy is a creep, she brings it under her control. <font color='#FF7800'>If cast on a creep already under her control, she refreshes its enchant duration.</font>\n\nDISPEL TYPE: Basic Dispel\n<font color='#FF7800'>Remnants of Enchant:</font> Enchant can control more than one unit.\n<font color='#FF7800'>Innate Charms: </font>Enchantress can enchant ancients at Level 20.\n<font color='#FF7800'>Instant Karma: </font>Killing a unit affected by Enchant's charm inflicts pure retaliation damage equal to how much the attacker overkilled the target on the killing blow. This damage is not affected by spell amplification or lifesteal.\n<font color='#FF7800'>\"Don't Run Off!\": </font>Enemies affected by Enchant's slow are visible in the fog of war.\n<font color='#FF7800'>Kindred Spirits:</font> Controlled enemies also receive the Untouchable ability modifier at %kindred_spirits_multiplier%%% efficacy. This modifier is purgable."
 "DOTA_Tooltip_ability_imba_enchantress_enchant_Lore"								"A true steward of the forest, Aiushtha befriends all within it - from lowly trolls to powerful centaurs."
 "DOTA_Tooltip_ability_imba_enchantress_enchant_Note0"								"Illusions can be converted."
 "DOTA_Tooltip_ability_imba_enchantress_enchant_slow_movement_speed"					"%HERO MOVE SLOW:"
@@ -58,6 +58,18 @@
 "DOTA_Tooltip_ability_imba_enchantress_impetus_bonus_attack_range_scepter"			"SCEPTER BONUS RANGE:"
 "DOTA_Tooltip_ability_imba_enchantress_impetus_aghanim_description"					"Increases attack range, and cast range of <font color='#FF7800'>all abilities.</font>"
 
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723"										"Impetus"
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723_Description"							"Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. <font color='#FF7800'>The damage has no distance cap.</font>\n<font color='#FF7800'>Huntmastery: </font>If an enemy is killed within %huntmastery_grace_period% seconds of being hit by Impetus, Enchantress's attack and cast range is permanently increased by %attack_cast_stack%."
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723_Lore"								"While Aiushtha favors peaceful means, she is capable of a magical onslaught from a distance, her spears gaining energy from the natural life around her."
+//"DOTA_Tooltip_ability_imba_enchantress_impetus_723_Note0"								"The damage is capped at 1750 distance."
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723_Note1"								"Distance to target is measured when the projectile hits."
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723_distance_damage_pct"					"%DISTANCE DAMAGE:"
+"DOTA_Tooltip_ability_imba_enchantress_impetus_723_bonus_attack_range_scepter"			"SCEPTER BONUS RANGE:"
+//"DOTA_Tooltip_ability_imba_enchantress_impetus_723_aghanim_description"					"<font color='#FF7800'>Increases attack range, and cast range of all abilities.</font>"
+
+"DOTA_Tooltip_modifier_imba_enchantress_impetus_723"									"Impetus Huntmastery"
+"DOTA_Tooltip_modifier_imba_enchantress_impetus_723_Description"						"Gaining %dMODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING% additional cast and attack range."
+
 //---------------------------------------------------------------------------
 //      Modifiers
 //---------------------------------------------------------------------------
@@ -93,7 +105,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_3"					"+50 Damage<br>+10% Spell Amp"
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_4"					"+300% Bonus Vision on Charmed Units"
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_5"					"Peace Was Always An Option"
-"DOTA_Tooltip_Ability_special_bonus_imba_enchantress_5_Description"		"+125 Untouchable Slow; Peace on Earth now bypasses status resistance."
+"DOTA_Tooltip_Ability_special_bonus_imba_enchantress_5_Description"		"+{s:value} Untouchable Slow; Peace on Earth now bypasses status resistance."
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_6"					"+3s/3x Enchant Slow/Charm Duration"
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_7"					"Armament Equivalency"
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_7_Description"		"A percentage of Impetus damage is also dealt as physical/magical damage based on 100%%/25%% of the target's spell amp/attack damage values respectively."

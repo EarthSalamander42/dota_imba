@@ -12,20 +12,24 @@
 
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
-		"Ability3"		"imba_life_stealer_open_wounds"
-		
-		"Ability1"		"imba_life_stealer_rage"
-		"Ability2"		"imba_life_stealer_feast"
-		"Ability3"		"imba_life_stealer_open_wounds"
+		"Ability1"		"imba_life_stealer_rage_723"
+		"Ability2"		"imba_life_stealer_feast_723"
+		"Ability3"		"imba_life_stealer_open_wounds_723"
 		"Ability4"		"imba_life_stealer_assimilate"
 		"Ability5"		"imba_life_stealer_assimilate_eject"
-		"Ability6"		"imba_life_stealer_infest"
+		"Ability6"		"imba_life_stealer_infest_723"
 		"Ability7"		"imba_life_stealer_control"
 		"Ability8"		"imba_life_stealer_consume"
-		"Ability9"		"generic_hidden"
+		"Ability9"		"imba_form_change_life_stealer"
+		
+		// Form Change Abilities
+		// "Ability1"		"imba_life_stealer_rage"
+		// "Ability2"		"imba_life_stealer_feast"
+		// "Ability3"		"imba_life_stealer_open_wounds"
+		// "Ability6"		"imba_life_stealer_infest"
 		
 		"Ability10"		"special_bonus_hp_200"
-		"Ability11"		"special_bonus_attack_speed_20"
+		"Ability11"		"special_bonus_attack_speed_30"
 		"Ability12"		"special_bonus_attack_damage_30"
 		"Ability13"		"special_bonus_movement_speed_25"
 		"Ability14"		"special_bonus_evasion_20"

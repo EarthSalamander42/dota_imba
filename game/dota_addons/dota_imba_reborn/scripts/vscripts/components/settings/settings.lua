@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.18b"
+GAME_VERSION = "7.19"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -274,7 +274,7 @@ HERO_INITIAL_GOLD[MapOverthrow()] = starting_gold_10v10
 HERO_INITIAL_GOLD[MapDiretide()] = starting_gold_10v10
 HERO_INITIAL_GOLD["imba_demo"] = 99999
 
-local global_gold_tick_time = 0.6
+local global_gold_tick_time = 0.7
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = global_gold_tick_time
 GOLD_TICK_TIME["dota"] = global_gold_tick_time

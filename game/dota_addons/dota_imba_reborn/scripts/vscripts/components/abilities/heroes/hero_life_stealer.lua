@@ -32,19 +32,27 @@ modifier_imba_life_stealer_rage_insanity					= class({})
 modifier_imba_life_stealer_rage_insanity_active				= class({})
 modifier_imba_life_stealer_rage_insanity_target				= class({})
 
+imba_life_stealer_rage_723									= imba_life_stealer_rage
+
 imba_life_stealer_feast										= class({})
 modifier_imba_life_stealer_feast							= class({})
 modifier_imba_life_stealer_feast_engorge					= class({})
 modifier_imba_life_stealer_feast_engorge_counter			= class({})
 modifier_imba_life_stealer_feast_banquet					= class({})
 
+imba_life_stealer_feast_723									= imba_life_stealer_feast
+
 imba_life_stealer_open_wounds								= class({})
 modifier_imba_life_stealer_open_wounds						= class({})
 modifier_imba_life_stealer_open_wounds_cross_contamination	= class({})
 
+imba_life_stealer_open_wounds_723							= imba_life_stealer_open_wounds
+
 imba_life_stealer_infest 									= class({})
 modifier_imba_life_stealer_infest 							= class({})
 modifier_imba_life_stealer_infest_effect					= class({})
+
+imba_life_stealer_infest_723								= imba_life_stealer_infest
 
 imba_life_stealer_control 									= class({})
 modifier_imba_life_stealer_control	 						= class({})
@@ -83,7 +91,8 @@ function modifier_imba_life_stealer_rage:GetStatusEffectName()
 end
 
 function modifier_imba_life_stealer_rage:OnCreated()
-	self.attack_speed_bonus	= self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
+	self.attack_speed_bonus		= self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
+	self.movement_speed_bonus	= self:GetAbility():GetSpecialValueFor("movement_speed_bonus")
 	
 	self.insanity_attack_stacks		= self:GetAbility():GetSpecialValueFor("insanity_attack_stacks")
 	self.insanity_other_stacks		= self:GetAbility():GetSpecialValueFor("insanity_other_stacks")
@@ -104,26 +113,27 @@ function modifier_imba_life_stealer_rage:OnRefresh()
 end
 
 function modifier_imba_life_stealer_rage:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true
 	}
-	
-	return state
 end
 
 function modifier_imba_life_stealer_rage:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		
 		-- IMBAfication: Insanity
 		MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_life_stealer_rage:GetModifierAttackSpeedBonus_Constant()
 	return self.attack_speed_bonus
+end
+
+function modifier_imba_life_stealer_rage:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_speed_bonus
 end
 
 function modifier_imba_life_stealer_rage:OnTakeDamage(keys)
@@ -355,14 +365,13 @@ end
 function modifier_imba_life_stealer_feast:IsHidden()	return true end
 
 function modifier_imba_life_stealer_feast:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, -- 7.23 version
 		
 		--IMBAfication: Engorge
 		MODIFIER_PROPERTY_HEALTH_BONUS
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Physical(keys)
@@ -399,8 +408,14 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 		
 		self:GetParent():Heal(heal_amount, self:GetCaster())
 		
-		return heal_amount
+		if self:GetAbility() and self:GetAbility():GetName() == "imba_life_stealer_feast" then
+			return heal_amount
+		end
 	end
+end
+
+function modifier_imba_life_stealer_feast:GetModifierAttackSpeedBonus_Constant()
+	return self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
 end
 
 function modifier_imba_life_stealer_feast:GetModifierHealthBonus()
@@ -760,6 +775,22 @@ function imba_life_stealer_infest:OnAbilityPhaseStart()
 	end
 end
 
+function imba_life_stealer_infest:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() or not self:GetName() == "imba_life_stealer_infest_723" then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("cast_range_scepter")
+	end
+end
+
+function imba_life_stealer_infest:GetCooldown(level)
+	if not self:GetCaster():HasScepter() or not self:GetName() == "imba_life_stealer_infest_723" then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self:GetSpecialValueFor("cooldown_scepter")
+	end
+end
+
 function imba_life_stealer_infest:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
@@ -820,15 +851,21 @@ function imba_life_stealer_infest:OnSpellStart()
 		infest_effect_modifier.infest_modifier	= infest_modifier
 	end
 	
+	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+		target:Heal(self:GetSpecialValueFor("bonus_health"), self:GetCaster())
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetSpecialValueFor("bonus_health"), nil)
+	end
+	
 	-- Don't throw selection to the target if it's an enemy hero
 	if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() and target:IsConsideredHero() then
 		PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), target)
 	end
 	
 	-- Hide Rage and Feast abilities
-	local rage_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_rage")
+	local rage_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_rage") or self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 		
-	local feast_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_feast")
+	local feast_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_feast") or self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
 
 	if rage_ability then
 		rage_ability:SetHidden(true)
@@ -872,12 +909,27 @@ function imba_life_stealer_infest:OnSpellStart()
 		if infest_modifier then
 			infest_modifier.ability_to_swap = ability_to_swap
 		end
+		
+		if control_ability:IsActivated() and self:GetName() == "imba_life_stealer_infest_723" then
+			control_ability:OnSpellStart()
+		end
 	end	
 	
 	local consume_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_consume")
 	
 	if consume_ability then		
 		self:GetCaster():SwapAbilities(self:GetName(), consume_ability:GetName(), false, true)
+	end
+
+	if self:GetCaster():HasAbility("imba_life_stealer_rage_723") and self:GetCaster():HasScepter() and self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+		local rage_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
+		
+		target:EmitSound("Hero_LifeStealer.Rage")
+		
+		-- "Applies spell immunity for the duration and a basic dispel upon cast."
+		target:Purge(false, true, false, false, false)
+		
+		target:AddNewModifier(self:GetCaster(), rage_ability, "modifier_imba_life_stealer_rage", {duration = rage_ability:GetTalentSpecialValueFor("duration")})
 	end
 end
 
@@ -890,6 +942,7 @@ function modifier_imba_life_stealer_infest:IsPurgable()	return false end
 function modifier_imba_life_stealer_infest:OnCreated(params)
 	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage	= self:GetAbility():GetSpecialValueFor("damage")
+	self.self_regen	= self:GetAbility():GetSpecialValueFor("self_regen")
 	
 	if not IsServer() then return end
 	
@@ -950,9 +1003,9 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 	end
 
 	-- Unhide Rage and Feast abilities
-	local rage_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_rage")
+	local rage_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_rage") or self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 		
-	local feast_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_feast")
+	local feast_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_feast") or self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
 
 	if rage_ability then
 		rage_ability:SetHidden(false)
@@ -962,7 +1015,7 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 		feast_ability:SetHidden(false)
 	end
 
-	if self:GetCaster():HasScepter() then
+	if self:GetCaster():HasScepter() and self:GetCaster():HasAbility("imba_life_stealer_infest") then
 		-- Also need to unhide Assimilate and Eject now
 		local assimilate_ability	= self:GetCaster():FindAbilityByName("imba_life_stealer_assimilate")
 			
@@ -991,6 +1044,10 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 	if consume_ability and self:GetAbility() then
 		self:GetCaster():SwapAbilities(self:GetAbility():GetName(), consume_ability:GetName(), true, false)
 	end
+	
+	if self:GetAbility():GetName() == "imba_life_stealer_infest_723" then
+		self:GetAbility():UseResources(false, false, true) 
+	end
 end
 
 function modifier_imba_life_stealer_infest:CheckState(keys)
@@ -1016,6 +1073,14 @@ function modifier_imba_life_stealer_infest:CheckState(keys)
 	return state
 end
 
+function modifier_imba_life_stealer_infest:DeclareFunctions()
+	return {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE}
+end
+
+function modifier_imba_life_stealer_infest:GetModifierHealthRegenPercentage()
+	return self.self_regen
+end
+
 ----------------------------
 -- INFEST EFFECT MODIFIER --
 ----------------------------
@@ -1032,6 +1097,9 @@ function modifier_imba_life_stealer_infest_effect:GetAttributes()			return MODIF
 function modifier_imba_life_stealer_infest_effect:ShouldUseOverheadOffset() return true end
 
 function modifier_imba_life_stealer_infest_effect:OnCreated()
+	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	self.bonus_health			= self:GetAbility():GetSpecialValueFor("bonus_health")
+	
 	-- IMBAfication: Chestburster
 	self.chestburster_tick_up_rate				= self:GetAbility():GetSpecialValueFor("chestburster_tick_up_rate")
 	self.chestburster_orders_to_tick_up			= self:GetAbility():GetSpecialValueFor("chestburster_orders_to_tick_up")
@@ -1159,15 +1227,28 @@ function modifier_imba_life_stealer_infest_effect:CheckState()
 end
 
 function modifier_imba_life_stealer_infest_effect:DeclareFunctions()
-	local decFuncs = {		
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+	
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ORDER,
 		
 		MODIFIER_PROPERTY_TOOLTIP,
 		MODIFIER_PROPERTY_TOOLTIP_2
-    }
+	}
+end
 
-    return decFuncs
+function modifier_imba_life_stealer_infest_effect:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.bonus_movement_speed
+	end
+end
+
+function modifier_imba_life_stealer_infest_effect:GetModifierExtraHealthBonus(keys)
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.bonus_health
+	end
 end
 
 function modifier_imba_life_stealer_infest_effect:OnAttackLanded(keys)
@@ -1318,26 +1399,24 @@ end
 
 function modifier_imba_life_stealer_control:CheckState()
 	if self.fake_ally then
-		local state = {
+		return {
 			[MODIFIER_STATE_FAKE_ALLY]	= true,
 			[MODIFIER_STATE_DOMINATED]	= true -- This doesn't really do anything
 		}
-		
-		return state
 	end
 end
 
 function modifier_imba_life_stealer_control:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_EVENT_ON_ORDER
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_life_stealer_control:GetModifierMoveSpeed_Absolute()
-	return self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed(), false)
+	if self:GetCaster().HasAbility and self:GetCaster():HasAbility("imba_life_stealer_infest") then
+		return self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed(), false)
+	end
 end
 
 function modifier_imba_life_stealer_control:OnOrder(keys)
@@ -1386,8 +1465,11 @@ function imba_life_stealer_consume:OnSpellStart()
 			local infest_effect_modifier_parent = infest_modifier.infest_effect_modifier:GetParent()
 			
 			if infest_effect_modifier_parent and infest_effect_modifier_parent:IsCreep() and not infest_effect_modifier_parent:IsRoshan() and (infest_effect_modifier_parent:GetTeamNumber() ~= caster:GetTeamNumber() or infest_effect_modifier_parent:FindModifierByNameAndCaster("modifier_imba_life_stealer_control", caster) or infest_effect_modifier_parent:FindModifierByNameAndCaster("modifier_imba_life_stealer_control", caster:GetOwner())) then
-				caster:Heal(infest_effect_modifier_parent:GetHealth(), caster)
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, infest_effect_modifier_parent:GetHealth(), nil)
+				
+				if infest_modifier:GetAbility():GetName() == "imba_life_stealer_infest" then
+					caster:Heal(infest_effect_modifier_parent:GetHealth(), caster)
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, infest_effect_modifier_parent:GetHealth(), nil)
+				end
 				
 				infest_effect_modifier_parent:Kill(self, caster)
 	
@@ -1418,7 +1500,7 @@ function imba_life_stealer_assimilate:GetBehavior()
 end
 
 function imba_life_stealer_assimilate:OnInventoryContentsChanged()
-	if self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
+	if self:GetCaster():HasAbility("imba_life_stealer_infest") and self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
 		self:SetHidden(false)
 		
 		if not self:IsTrained() then
@@ -1638,11 +1720,9 @@ end
 
 
 function modifier_imba_life_stealer_assimilate:DeclareFunctions()
-	local decFuncs = {		
+    return {		
 		MODIFIER_EVENT_ON_ORDER
     }
-
-    return decFuncs
 end
 
 function modifier_imba_life_stealer_assimilate:OnOrder(keys)
@@ -1747,7 +1827,7 @@ end
 function imba_life_stealer_assimilate_eject:IsStealable()	return false end
 
 function imba_life_stealer_assimilate_eject:OnInventoryContentsChanged()
-	if self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
+	if self:GetCaster():HasAbility("imba_life_stealer_infest") and self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
 		self:SetHidden(false)
 		
 		if not self:IsTrained() then

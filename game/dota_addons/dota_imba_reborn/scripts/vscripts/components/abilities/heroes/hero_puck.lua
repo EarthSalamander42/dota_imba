@@ -200,6 +200,18 @@ end
 -- WANING RIFT --
 -----------------
 
+function imba_puck_waning_rift:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_puck_waning_rift:CastFilterResultTarget(target)
+	return UF_SUCCESS
+end
+
+function imba_puck_waning_rift:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+end
+
 function imba_puck_waning_rift:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_puck_waning_rift_cooldown")
 end
@@ -214,6 +226,8 @@ function imba_puck_waning_rift:OnSpellStart()
 	local rift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_waning_rift.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(rift_particle, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
 	ParticleManager:ReleaseParticleIndex(rift_particle)
+	
+	FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
@@ -264,9 +278,7 @@ function modifier_imba_puck_waning_rift:OnCreated()
 end
 
 function modifier_imba_puck_waning_rift:CheckState()
-	local state = {[MODIFIER_STATE_SILENCED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 -- IMBAfication: Pocket Glitter
@@ -376,6 +388,12 @@ function imba_puck_phase_shift:OnSpellStart()
 	
 	-- "The buff lingers for one server tick once the channeling ends or is interrupted, which allows using items while still invulnerable and hidden."
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_phase_shift", {duration = self:GetSpecialValueFor("duration") + FrameTime()})
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_puck_phase_shift_attacks") then
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetAbsOrigin(), nil, self:GetCaster():Script_GetAttackRange() + 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
+			self:GetCaster():PerformAttack(enemy, true, true, true, false, true, false, false)
+		end
+	end
 end
 
 function imba_puck_phase_shift:OnChannelFinish(interrupted)
@@ -584,7 +602,20 @@ function imba_puck_dream_coil:OnSpellStart(refreshDuration)
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("coil_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, target_flag, FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
-		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")}):SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("coil_initial_damage"),
+			damage_type		= self:GetAbilityDamageType(),
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+		
+		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
+		
+		if stun_modifier then
+			stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
+		end
 	
 		local coil_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_dream_coil", 
 		{

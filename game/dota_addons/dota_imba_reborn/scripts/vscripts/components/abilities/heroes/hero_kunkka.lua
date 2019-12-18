@@ -284,6 +284,13 @@ function imba_kunkka_torrent:GetIntrinsicModifierName()
 	return "modifier_imba_torrent_handler"
 end
 
+-- For vanilla Torrent Storm
+function imba_kunkka_torrent:OnUpgrade()
+	if self:GetCaster():HasAbility("kunkka_torrent") then
+		self:GetCaster():FindAbilityByName("kunkka_torrent"):SetLevel(self:GetLevel())
+	end
+end
+
 function imba_kunkka_torrent:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1454,6 +1461,7 @@ function modifier_imba_x_marks_the_spot_return:OnCreated( params )
 		local ability_handle = self:GetCaster():FindAbilityByName("imba_kunkka_return")
 		if ability_handle then
 			ability_handle:SetActivated(true)
+			self:GetCaster():SwapAbilities("imba_kunkka_x_marks_the_spot", "imba_kunkka_return", false, true)
 		end
 	end
 end
@@ -1465,6 +1473,7 @@ function modifier_imba_x_marks_the_spot_return:OnDestroy( params )
 		local ability = self:GetAbility()
 		if not caster:HasModifier("modifier_imba_x_marks_the_spot_return") and caster:HasAbility("imba_kunkka_return") then
 			caster:FindAbilityByName("imba_kunkka_return"):SetActivated(false)
+			caster:SwapAbilities("imba_kunkka_x_marks_the_spot", "imba_kunkka_return", true, false)
 		end
 	end
 end

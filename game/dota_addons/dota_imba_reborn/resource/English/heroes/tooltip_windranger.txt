@@ -38,18 +38,14 @@
 
 "DOTA_Tooltip_modifier_imba_windranger_windrun_handler"								"WINDRUN CHARGES"
 
-"DOTA_Tooltip_Ability_imba_windranger_backpedal"									"Backpedal"
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Description"						"When toggled on, any targeted ability cast causes Windranger to jump a short distance in the opposite direction of the cast position. Disjoints projectiles."
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Lore"								"Lyralei's extensive training in the enchanted woods has taught her extensive methods of evasion; one cannot rely on the wind alone."
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Note0"								"Backpedal will not work if the caster is rooted."
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Note1"								"Backpedal toggles do not break invisibility granted by the Windrun Invisibility talent."
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_Note2"								"Does not activate on items."
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_distance"					"BACKPEDAL DISTANCE:"
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_height"					"BACKPEDAL HEIGHT:"
-"DOTA_Tooltip_Ability_imba_windranger_backpedal_backpedal_duration"					"BACKPEDAL DURATION:"
-
-"DOTA_Tooltip_modifier_imba_windranger_backpedal"									"Backpedal"
-"DOTA_Tooltip_modifier_imba_windranger_backpedal_Description"						"Leaping backwards when casting a targeted ability."
+"DOTA_Tooltip_Ability_imba_windranger_advancement"									"Advancement"
+"DOTA_Tooltip_Ability_imba_windranger_advancement_Description"						"Causes Windranger to jump a short distance forward. Disjoints projectiles."
+"DOTA_Tooltip_Ability_imba_windranger_advancement_Lore"								"Lyralei's extensive training in the enchanted woods has taught her extensive methods of evasion; one cannot rely on the wind alone."
+"DOTA_Tooltip_Ability_imba_windranger_advancement_Note0"								"Advancement cannot be cast while rooted."
+"DOTA_Tooltip_Ability_imba_windranger_advancement_Note1"								"Advancement does not break invisibility granted by the Windrun Invisibility talent."
+"DOTA_Tooltip_Ability_imba_windranger_advancement_advancement_distance"					"ADVANCEMENT DISTANCE:"
+"DOTA_Tooltip_Ability_imba_windranger_advancement_advancement_height"					"ADVANCEMENT HEIGHT:"
+"DOTA_Tooltip_Ability_imba_windranger_advancement_advancement_duration"					"ADVANCEMENT DURATION:"
 
 // "DOTA_Tooltip_ability_windrunner_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds.\n<font color='#FF7800'>Pincushion:</font> Windranger has a %ministun_chance%%% chance to mini-stun Focus Fire targets."
 

@@ -71,15 +71,13 @@ function modifier_item_imba_ring_of_aquila:OnCreated()
 end
 
 function modifier_item_imba_ring_of_aquila:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_ring_of_aquila:GetModifierPreAttack_BonusDamage()
@@ -139,14 +137,12 @@ function modifier_item_imba_ring_of_aquila_aura_bonus:OnCreated()
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_BONUS_DAY_VISION,
 		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:GetModifierConstantManaRegenUnique()

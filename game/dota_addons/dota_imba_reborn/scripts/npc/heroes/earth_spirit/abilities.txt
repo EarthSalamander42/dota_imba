@@ -151,7 +151,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.75 1.5 2.25 3"				
+				"stun_duration"			"1.1 1.5 1.9 2.3"
 			}
 			"08"
 			{
@@ -231,7 +231,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"remnant_slow_duration"	"1.0 1.5 2.0 2.5"				
+				"remnant_slow_duration"	"1.2 1.7 2.2 2.7"				
 			}
 			"07"
 			{
@@ -367,7 +367,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"300"
 		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"100 80 60"
+		"AbilityCooldown"				"100 90 80"
 		"AbilityManaCost"				"80"
 
 		// Precache
@@ -402,7 +402,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"80 150 220"				
+				"damage_per_sec"			"60 130 200"				
 			}
 			"05"
 			{

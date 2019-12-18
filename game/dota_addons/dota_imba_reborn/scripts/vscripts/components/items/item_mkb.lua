@@ -118,7 +118,7 @@ function modifier_item_imba_javelin:OnAttackRecord(keys)
 			self.pierce_proc = false
 		end
 	
-		if RollPseudoRandom(self.bonus_chance, self) then
+		if (not keys.target:IsMagicImmune() or self:GetName() == "modifier_item_imba_monkey_king_bar") and RollPseudoRandom(self.bonus_chance, self) then
 			self.pierce_proc = true
 		end
 	end

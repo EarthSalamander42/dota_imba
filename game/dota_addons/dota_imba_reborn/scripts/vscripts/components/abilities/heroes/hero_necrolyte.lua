@@ -360,6 +360,14 @@ function imba_necrolyte_ghost_shroud:GetAbilityTextureName()
 	return "necrolyte_sadist"
 end
 
+function imba_necrolyte_ghost_shroud:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return self:GetSpecialValueFor("cooldown_scepter")
+	end
+end
+
 function imba_necrolyte_ghost_shroud:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -686,6 +694,7 @@ function modifier_imba_heartstopper_aura_damage:OnCreated()
 		self.radius = self:GetAbility():GetSpecialValueFor("radius")
 		self.damage_pct = self:GetAbility():GetTalentSpecialValueFor("damage_pct")
 		self.tick_rate	= self:GetAbility():GetTalentSpecialValueFor("tick_rate")
+		self.scepter_multiplier	= self:GetAbility():GetSpecialValueFor("scepter_multiplier")
 		
 		if self:GetParent():CanEntityBeSeenByMyTeam(self:GetCaster()) then
 			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct"))
@@ -712,6 +721,11 @@ function modifier_imba_heartstopper_aura_damage:OnIntervalThink()
 		if not caster:PassivesDisabled() then
 			-- Calculates damage
 			local damage = self.parent:GetMaxHealth() * (self.damage_pct * self.tick_rate) / 100
+			
+			if caster:HasModifier("modifier_imba_ghost_shroud_active") then
+				damage = damage * self.scepter_multiplier
+			end
+			
 			ApplyDamage({attacker = caster, victim = self.parent, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
 			
 			if (math.random(1,1000) <= 1) and (caster:GetName() == "npc_dota_hero_necrolyte") then

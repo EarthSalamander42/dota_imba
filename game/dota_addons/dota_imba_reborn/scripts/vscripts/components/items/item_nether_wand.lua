@@ -199,9 +199,13 @@ function modifier_item_imba_arcane_nexus_passive:GetModifierBonusStats_Intellect
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageCooldown()
-	return self.bonus_cdr
+	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_imba_octarine_core_unique") then
+		return self.bonus_cdr
+	end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageManacost()
-	return self.bonus_cdr
+	if self:GetAbility():GetSecondaryCharges() == 1 then
+		return self.bonus_cdr
+	end
 end

@@ -1413,7 +1413,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 					local unitMark = unit:FindModifierByName("modifier_imba_earths_mark")
 					if unitMark then
 						unitMark:IncrementStackCount()
-						self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
+						-- self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 					else
 						unit:AddNewModifier(unit, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - unit:GetStatusResistance()), true)
 					end
@@ -1422,7 +1422,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 				-- increase mark stacks and stun -or- add the modifier
 				if mark then
 					mark:IncrementStackCount()
-					self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
+					-- self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 				else
 					mark = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - self.parent:GetStatusResistance()), true)
 				end

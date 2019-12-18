@@ -144,7 +144,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"pounce_speed"			"933.33"
+				"pounce_speed"			"933.33 1066.67 1200.0 1333.33"
 			}
 			"03"
 			{

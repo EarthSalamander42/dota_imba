@@ -37,6 +37,22 @@
 "DOTA_Tooltip_modifier_imba_command_aura_negative"					        "Vengeance Aura"
 "DOTA_Tooltip_modifier_imba_command_aura_negative_Description"          "Reduced attack damage and spell amp"
 
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723"								"Vengeance Aura"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Description"					"Vengeful Spirit's presence increases the ranged attack range and primary attribute of nearby friendly units. Spawns a Strong Illusion when of Vengeful Spirit when she dies that lasts until it is killed or Vengeful Spirit revives.\n<font color='#FF7800'>Remnants of Vengeance Aura:</font> If Vengeful Spirit is slain, her killer will be possessed with a reversed version of Vengeance Aura until Vengeful Spirit revives.\n<font color='#FF7800'>Growing Reprisal:</font> When Vengeful Spirit reaches Level %illusion_upgrade_level%, Vengeful Spirit will instead spawn %num_illusions_on_death_upgrade% Vengeance Illusions upon death."
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Lore"							"Although they may not share her undying passion for revenge, allies do draw on her fanaticism in combat."
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Note0"						"Vengeance Illusion keeps providing the Vengeance Aura after Vengeful Spirit's death."
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Note1"						"Strong Illusions are not instantly killed by spells."
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_bonus_attack_range"			"BONUS ATTACK RANGE:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_bonus_attributes"			"PRIMARY ATTRIBUTE BONUS:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_aura_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_illusion_damage_out_pct" "%ILLUSION DAMAGE DEALT:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_illusion_damage_in_pct" "%ILLUSION DAMAGE TAKEN:"
+
+"DOTA_Tooltip_modifier_imba_vengefulspirit_command_aura_effect_723"				"Vengeance Aura"
+"DOTA_Tooltip_modifier_imba_vengefulspirit_command_aura_effect_723_Description"	"Providing +%dMODIFIER_PROPERTY_TOOLTIP% Primary Attribute and +%dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS% attack range."
+"DOTA_Tooltip_modifier_imba_vengefulspirit_command_negative_aura_effect_723"		"Vengeance Aura"
+"DOTA_Tooltip_modifier_imba_vengefulspirit_command_negative_aura_effect_723_Description"	"Reducing %dMODIFIER_PROPERTY_TOOLTIP% Primary Attribute and %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS% attack range."
+
 // Vengeful Spirit's Rancor
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor"					        "Rancor"
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Description"          "Whenever Vengeful Spirit takes damage, she accumulates her hatred for her foes. Every %stack_receive_pct%%% health she loses through damage grants a stack of Rancor, granting her bonus attack damage and spell amplification. Stacks decay over time while being alive. Rancor stacks cannot exceed %max_stacks% stacks.\nRancor also affects allied heroes within %aura_radius% radius at %aura_efficiency%%% efficacy."
@@ -54,9 +70,9 @@
 
 // Vengeful Spirit's Nether Swap / Swapback
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap"					    "Nether Swap"
-"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_Description"					    "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target if it is an enemy.\n<font color='#FF7800'>Swapback:</font> Allows the Vengeful Spirit to go back to her initial position after a delay when Swapping. Can only swap back within a limited period of time."
+"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_Description"			"Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target if it is an enemy.\n<font color='#FF7800'>Swapback:</font> Allows the Vengeful Spirit to go back to her initial position after a delay when Swapping. Can only swap back within a limited period of time."
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_Lore"            "Martyrdom is a small price to pay for vengeance."
-"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_aghanim_description"          "Decreases Nether Swap charge restore time, allows swapping of non-hero units."
+"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_aghanim_description"          "After a Nether Swap, enemies around Vengeful Spirit are Feared. <font color='#FF7800'>Decreases Nether Swap charge restore time, allows swapping of non-hero units.</font>"
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_range"            "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_max_charges"					"MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_charge_restore_time"			"CHARGE RESTORE TIME:"
@@ -65,15 +81,17 @@
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_swapback_delay"					 "SWAPBACK DELAY:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_swapback_duration"            "SWAPBACK MAXIMUM DELAY:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_cooldown_scepter"             "SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_tooltip_illu_dmg_scepter"     "%ILLUSION DAMAGE DEALT:"
-"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_tooltip_illu_amp_scepter"     "%ILLUSION DAMAGE TAKEN:"
+//"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_tooltip_illu_dmg_scepter"     "%ILLUSION DAMAGE DEALT:"
+//"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_tooltip_illu_amp_scepter"     "%ILLUSION DAMAGE TAKEN:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_scepter_radius"		"SCEPTER FEAR RADIUS:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_nether_swap_scepter_duration"		"SCEPTER FEAR DURATION:"
 
 "DOTA_Tooltip_ability_imba_vengefulspirit_swap_back"					      "Swapback"
 "DOTA_Tooltip_ability_imba_vengefulspirit_swap_back_Description"					      "Activate to swap back to your original position."
 "DOTA_Tooltip_ability_imba_vengefulspirit_swap_back_Lore"					"The Vengeful Spirit navigates the spirit world's shortcuts with practiced grace."
 
 // Vengeful Spirit's Custom Talents
-"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_1"					"+400 Magic Missile Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_1"					"+{s:value} Magic Missile Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_2"					"-1.25s Nether Swap Swapback Delay"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_3"					"+15% Vengeance Aura Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_4"					"Allied Rancor"
@@ -84,6 +102,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_7"					"-50% buyback cost, -100% buyback cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_8"					"Full-blown Vengeance"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_8_Description"		"Vengeance Aura now increases all attack damage (instead of base damage)."
-"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_9"					"-2 Wave of Terror Armor"
-"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_10"					"-6s Wave of Terror Cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_11"					"-6s Magic Missile Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_9"					"-{s:value} Wave of Terror Armor"
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_10"					"-{s:value}s Wave of Terror Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_11"					"-{s:value}s Magic Missile Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_command_aura_attributes"	"+{s:value} Vengeance Aura Attributes"

@@ -4,7 +4,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                         "Tether"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Entwine:</font color='#FF7800'> Enemies hit by tether have their movement and attack speed slowed.\n<font color='#FF7800'>Backpack Wisp:</font> When Io reaches Level %backpack_level_unlock%, Tether receives an auto-cast portion that reduces its cast range to %backpack_distance% (cannot be modified by cast range manipulating abilities), but will automatically latch the caster behind the target. Backpack Wisp is removed if Io is stunned, hexed, hidden, or rooted."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Enemies hit by tether have their movement and attack speed slowed.\n<font color='#FF7800'>Backpack Wisp:</font> When Io reaches Level %backpack_level_unlock%, Tether receives an auto-cast portion that reduces its cast range to %backpack_distance% (cannot be modified by cast range manipulating abilities), but will automatically latch the caster behind the target. Backpack Wisp is removed if Io is stunned, hexed, hidden, or rooted."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 700 distance or further away from Io, he will latch on and pull himself closer to the tethered unit (to a distance of 300)."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
@@ -59,7 +59,7 @@
 ////===============================================================================================================
 // Wisp's Overcharge
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_wisp_overcharge"          				"Overcharge"
+"DOTA_Tooltip_ability_imba_wisp_overcharge"          				"Overcharge (Pre 7.23)"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_description" 			"Io gains bonus attack speed and damage reduction, at the cost of draining a percentage of its current health and mana per second. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants increased: missile speed, cast speed, and attack range."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_lore"					"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_speed"      "ATTACK SPEED:"

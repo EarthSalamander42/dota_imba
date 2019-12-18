@@ -32,9 +32,6 @@ function item_imba_veil_of_discord:OnSpellStart()
 	local caster        =   self:GetCaster()
 	local target_loc    =   self:GetCursorPosition()
 	local particle      =   "particles/items2_fx/veil_of_discord.vpcf"
-	-- Ability parameters
-	local radius            =   self:GetSpecialValueFor("active_aoe")
-	local debuff_duration   =   self:GetSpecialValueFor("debuff_duration")
 
 	-- Emit sound
 	caster:EmitSound("DOTA_Item.VeilofDiscord.Activate")
@@ -42,29 +39,35 @@ function item_imba_veil_of_discord:OnSpellStart()
 	-- Emit the particle
 	local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_fx, 0, target_loc)
-	ParticleManager:SetParticleControl(particle_fx, 1, Vector(radius,1 ,1 ))
+	ParticleManager:SetParticleControl(particle_fx, 1, Vector(self:GetSpecialValueFor("debuff_radius"), 1, 1))
 	ParticleManager:ReleaseParticleIndex(particle_fx)
 
 	-- Find units around the target point
 	local enemies =   FindUnitsInRadius(caster:GetTeamNumber(),
 		target_loc,
 		nil,
-		radius,
+		self:GetSpecialValueFor("debuff_radius"),
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		0,
 		FIND_ANY_ORDER,
 		false)
 
+	local debuff_modifier = nil
+
 	-- Iterate through the unit table and give each unit its respective modifier
 	for _,enemy in pairs(enemies) do
 		-- Give enemies a debuff
-		enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = debuff_duration})
+		debuff_modifier = enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = self:GetSpecialValueFor("resist_debuff_duration")})
+		
+		if debuff_modifier then
+			debuff_modifier:SetDuration(self:GetSpecialValueFor("resist_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
+		end
 	end
 end
 
 function item_imba_veil_of_discord:GetAOERadius()
-	return self:GetSpecialValueFor("active_aoe")
+	return self:GetSpecialValueFor("debuff_radius")
 end
 
 function item_imba_veil_of_discord:GetIntrinsicModifierName()
@@ -80,19 +83,27 @@ function modifier_veil_active_debuff:IsHidden() return false end
 function modifier_veil_active_debuff:IsPurgable() return true end
 
 function modifier_veil_active_debuff:OnCreated()
-	self.magic_resis    =   self:GetAbility():GetSpecialValueFor("active_resis")
+	self.spell_amp    =   self:GetAbility():GetSpecialValueFor("spell_amp")
 end
 
+-- TODO: Check that this works
 function modifier_veil_active_debuff:DeclareFunctions()
-	local funcs =   {
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP
 	}
-	return funcs
 end
 
-function modifier_veil_active_debuff:GetModifierMagicalResistanceBonus()
-	return self.magic_resis
+function modifier_veil_active_debuff:GetModifierIncomingDamage_Percentage(keys)
+	if keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL then
+		return self.spell_amp
+	end
 end
+
+function modifier_veil_active_debuff:OnTooltip()
+	return self.spell_amp
+end
+
 
 function modifier_veil_active_debuff:GetEffectName()
 	return "particles/items2_fx/veil_of_discord_debuff.vpcf"
@@ -124,34 +135,24 @@ function modifier_veil_passive:OnCreated()
 
 	-- Ability parameters
 	if self:GetParent():IsHero() and ability then
-		self.int_bonus              =   ability:GetSpecialValueFor("bonus_int")
-		self.str_bonus              =   ability:GetSpecialValueFor("bonus_str")
-		self.agi_bonus              =   ability:GetSpecialValueFor("bonus_agi")
-		self.hp_regen_bonus         =   ability:GetSpecialValueFor("bonus_health_regen")
-		self.armor_bonus            =   ability:GetSpecialValueFor("bonus_armor")
-		self.attack_damage_bonus    =   ability:GetSpecialValueFor("bonus_attack_damage")
+		self.bonus_all_stats              =   ability:GetSpecialValueFor("bonus_all_stats")
 		self:CheckUnique(true)
 	end
 end
 
 -- Various stat bonuses
 function modifier_veil_passive:DeclareFunctions()
-	local funcs =   {
+	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
 	}
-	return funcs
 end
 
 -- Stats
-function modifier_veil_passive:GetModifierBonusStats_Intellect() return self.int_bonus end
-function modifier_veil_passive:GetModifierBonusStats_Agility() return self.agi_bonus end
-function modifier_veil_passive:GetModifierBonusStats_Strength() return self.str_bonus end
-function modifier_veil_passive:GetModifierConstantHealthRegen() return self.hp_regen_bonus end
-function modifier_veil_passive:GetModifierPhysicalArmorBonus() return self.armor_bonus end
+function modifier_veil_passive:GetModifierBonusStats_Intellect() return self.bonus_all_stats end
+function modifier_veil_passive:GetModifierBonusStats_Agility() return self.bonus_all_stats end
+function modifier_veil_passive:GetModifierBonusStats_Strength() return self.bonus_all_stats end
 
 --- DEBUFF AURA
 function modifier_veil_passive:GetAuraSearchTeam()
@@ -185,17 +186,16 @@ function modifier_veil_debuff_aura_modifier:IsHidden() return false end
 function modifier_veil_debuff_aura_modifier:IsPurgable() return false end
 
 function modifier_veil_debuff_aura_modifier:OnCreated()
-	self.magic_resis    =   self:GetAbility():GetSpecialValueFor("aura_resist")
+	self.aura_resist    =   self:GetAbility():GetSpecialValueFor("aura_resist")
 end
-function modifier_veil_debuff_aura_modifier:DeclareFunctions()
-	local funcs =   {
+function modifier_veil_debuff_aura_modifier:DeclareFunctions()  
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 	}
-	return funcs
 end
 
 function modifier_veil_debuff_aura_modifier:GetModifierMagicalResistanceBonus()
-	return self.magic_resis
+	return self.aura_resist
 end
 
 -----------------
@@ -215,7 +215,7 @@ function modifier_veil_buff_aura:GetAuraSearchTeam()
 end
 
 function modifier_veil_buff_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_veil_buff_aura:GetModifierAura()
@@ -235,18 +235,21 @@ function modifier_veil_buff_aura_modifier:IsHidden() return false end
 function modifier_veil_buff_aura_modifier:IsPurgable() return true end
 
 function modifier_veil_buff_aura_modifier:OnCreated()
-	if self:GetAbility() then
-		self.spell_power    =   self:GetAbility():GetSpecialValueFor("aura_spell_power")
-	end
+	self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
+	self.aura_spell_power	= self:GetAbility():GetSpecialValueFor("aura_spell_power")
 end
 
 function modifier_veil_buff_aura_modifier:DeclareFunctions()
-	local funcs =   {
+	return {
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
 	}
-	return funcs
+end
+
+function modifier_veil_buff_aura_modifier:GetModifierConstantManaRegen()
+	return self.aura_mana_regen
 end
 
 function modifier_veil_buff_aura_modifier:GetModifierSpellAmplify_Percentage()
-	return self.spell_power
+	return self.aura_spell_power
 end
