@@ -51,7 +51,7 @@
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 
-//	#base heroes/invoker/abilities.txt
+#base heroes/invoker/abilities.txt
 
 "DOTAAbilities"
 {
@@ -11246,7 +11246,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"26.0 24.0 22.0 20.0"
+		"AbilityCooldown"				"26 24 22 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11311,20 +11311,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"pardon_extra_dmg"		"80 100 120 140"
 			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_radius"			"125"
-			}
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_cooldown"		"4.0"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_point_reduction"	"50" // %
+				"skewer_radius"			"125"
 			}
 		}
 	}
@@ -14719,10 +14709,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"ScriptFile"						"components/abilities/heroes/hero_pudge.lua"
+		"ScriptFile"				"components/abilities/heroes/hero_pudge.lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
@@ -14788,23 +14778,13 @@
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"				"FIELD_INTEGER"
 				"pull_units_per_second"		"75"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"				"FIELD_INTEGER"
 				"pull_distance_limit"		"125"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"11"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_healing_pct"		"4" // %
 			}
 		}
 	}
@@ -14880,39 +14860,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_range"				"15"
 			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pudge's Eject
-	//=================================================================================================================
-	"imba_pudge_eject"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_pudge.lua"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"pudge_eject"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"1"
-		"FightRecapLevel"				"1"
-		"IsGrantedByScepter"			"1"
-		"HasScepterUpgrade"				"1"
-		"AbilitySound"					"Hero_Enchantress.EnchantCreep"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-			"particle"					"particles/units/heroes/hero_pudge/pudge_swallow.vpcf"
-			"particle"					"particles/units/heroes/hero_pudge/pudge_swallow_release.vpcf"
 		}
 	}
 
@@ -34232,7 +34179,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sniper_assassinate"
-		"ScriptFile"					"components/abilities/heroes/hero_sniper.lua"
+		"ScriptFile"				"components/abilities/heroes/hero_sniper.lua"
 		"HasScepterUpgrade"				"1"
 
 		// Casting
@@ -34267,50 +34214,59 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"320 485 650"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"ministun_duration"			"0.03"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bullet_radius"				"200 250 300"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"travel_speed"				"2500"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"sight_duration"			"4"
 			}
+
 			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius"			"400"
+			}
+
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"charge_time"				"2"
 			}
-			"07"
+
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"2000 2500 3000"
 			}
-			"08"
+			
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectiles"				"1"
 			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_cast_time"			"1.0"
-			}
+			
 			"10"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_stun_duration"		"1.8"
+				"var_type"					"FIELD_INTEGER"
+				"scepter_crit_bonus"		"280"
 			}
 		}
 	}

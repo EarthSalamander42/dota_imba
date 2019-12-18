@@ -684,6 +684,10 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 	end
 end
 
+function imba_magnataur_shockwave:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel )
+end
+
 modifier_imba_shockwave_root = class({})
 
 function modifier_imba_shockwave_root:IsHidden() return false end
@@ -1484,29 +1488,6 @@ function imba_magnataur_skewer:GetBehavior()
 	end
 end
 
-function imba_magnataur_skewer:GetCastPoint()
-	if self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCastPoint(self) * self:GetSpecialValueFor("cast_point_reduction") / 100
-	end
-
-	return self.BaseClass.GetCastPoint(self)
-end
-
-function imba_magnataur_skewer:GetCooldown(iLevel)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cooldown")
-	end
-
-	return self.BaseClass.GetCooldown(self, iLevel)
-end
-
-function imba_magnataur_skewer:GetManaCost(iLevel)
-	if self:GetCaster():HasScepter() then
-		return 0
-	end
-
-	return self.BaseClass.GetManaCost(self, iLevel)
-end
 
 function imba_magnataur_skewer:OnSpellStart()
 	if IsServer() then
@@ -1578,6 +1559,10 @@ function imba_magnataur_skewer:GetAbilityTextureName()
 	else
 		return "magnataur_skewer"
 	end
+end
+
+function imba_magnataur_skewer:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel )
 end
 
 modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class({})

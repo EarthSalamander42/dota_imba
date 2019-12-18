@@ -38,13 +38,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 	-- Initialize innate hero abilities
 	hero:InitializeInnateAbilities()
 
-	-- Initialize Invoker's innate invoke buff
-	-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
-	if hero:HasAbility("invoker_invoke") then
-		LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
-		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
-	end
-
 	HeroSelection:Attachments(hero)
 
 	if IMBA_PICK_SCREEN == true then
@@ -131,7 +124,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 
 		-- Refresh TP on first spawn
-		local teleport_scroll = hero:GetItemInSlot(15)
+		local teleport_scroll = hero:GetItemInSlot(16)
 		
 		if teleport_scroll then
 			teleport_scroll:EndCooldown()

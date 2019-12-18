@@ -183,25 +183,25 @@
 "DOTA_Tooltip_modifier_imba_invoker_ghost_walk_aura_description"				"Near a ghost! Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%"
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1"						"Rechargable E.M.P"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1_description"			"When EMP successfuly drains %threshold% targets it will recharge and repeat a second time at %effect_reduction%%% reduced efficiency."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1_description"			"When EMP successfuly drains {s:threshold} targets it will recharge and repeat a second time at {s:effect_reduction}% reduced efficiency."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2"						"Triple Meteors"
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2_description"			"Drops 3 chaos meteors on the target location."
 
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3"						" +%additional_spirits% Forged Spirit Summoned"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3_description"				"Summons %additional_spirits% additional Forged Spirit.\nDuration for each spirit is reduced by %reduced_duration%"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3"						" +{s:additional_spirits} Forged Spirit Summoned"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3_description"			"Summons {s:additional_spirits} additional Forged Spirit.\nDuration for each spirit is reduced by {s:reduced_duration}"
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_4"						"THICC icewall"
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_4_description"			"it's sooo THICC!"
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_5"						"Cataclysm"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_5_description"			"Launched when doubble tapped! Puts SunStrike on %cooldown% second cooldown.\nCreates 2 visible Sun Strikes within %minimum_range%-%maximum_range% range of each enemy hero."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_5_description"			"Launched when doubble tapped! Puts SunStrike on {s:cooldown} second cooldown.\nCreates 2 visible Sun Strikes within {s:minimum_range}-{s:maximum_range} range of each enemy hero."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_6"						"Global Alacrity"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_6_description"			"Alacrity becomes global affecting all friendly heros. Cooldown is increaesd to 45 seconds."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_6_description"			"Alacrity becomes global affecting all friendly heroes. Cooldown is increaesd to 45 seconds."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7"						"Spiral Deafening Blast"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7_description"			"Releases %number_of_blasts% Deafening Blasts around Invoker in a Spiral pattern.\nAt the end a second volley is triggered dealing half damage."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7_description"			"Releases {s:number_of_blasts} Deafening Blasts around Invoker in a Spiral pattern.\nAt the end a second volley is triggered dealing half damage."
 
 "DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8"						"Empowered Tornado"
-"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8_description"			"Tornados cooldown is reduced by -%cooldown_reduction% seconds.\nEnemies hit have their passives disabled for 3 seconds uppon landing."
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8_description"			"Tornados cooldown is reduced by -{s:cooldown_reduction} seconds.\nEnemies hit have their passives disabled for 3 seconds uppon landing."

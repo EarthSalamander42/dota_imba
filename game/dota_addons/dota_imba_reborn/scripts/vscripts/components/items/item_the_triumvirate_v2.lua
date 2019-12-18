@@ -233,7 +233,7 @@ function modifier_item_imba_the_triumvirate_v2:OnCreated()
 	self.bonus_evasion_active			=	self.ability:GetSpecialValueFor("bonus_evasion_active")
 	self.bonus_cdr_active				=	self.ability:GetSpecialValueFor("bonus_cdr_active")
 	
-	if IsServer() then return end
+	if not IsServer() then return end
 	
     -- Use Secondary Charges system to make CDR not stack with multiples
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do

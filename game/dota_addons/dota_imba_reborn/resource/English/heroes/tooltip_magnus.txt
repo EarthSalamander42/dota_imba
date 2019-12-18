@@ -40,7 +40,7 @@
 "DOTA_Tooltip_modifier_imba_ubercharged_indicator_Description"		"Ubercharge has a 1 second cooldown interval when applying Mini-shockwaves."
 
 "DOTA_Tooltip_ability_imba_magnataur_skewer"						"#{DOTA_Tooltip_ability_magnataur_skewer}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_Description"			"#{DOTA_Tooltip_ability_magnataur_skewer_Description}\n<font color='#FF7800'>Quantum Entanglement:</font> If more than one polarized enemy is caught in Skewer, all of them become temporarily entangled together, stuck inside each other.\n<font color='#FF7800'>Beg my pardon... And my horn:</font> Skewer can be re-activated mid-movement. If triggered in this manner, it ends instantly, launching affected targets %pardon_min_range% units away from Magnus, dealing bonus damage and slow.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
+"DOTA_Tooltip_ability_imba_magnataur_skewer_Description"			"#{DOTA_Tooltip_ability_magnataur_skewer_Description}\n<font color='#FF7800'>Quantum Entanglement:</font> If more than one polarized enemy is caught in Skewer, all of them become temporarily entangled together, stuck inside each other.\n<font color='#FF7800'>Beg my pardon... And my horn:</font> Skewer can be re-activated mid-movement. If triggered in this manner, it ends instantly, launching affected targets %pardon_min_range% units away from Magnus, dealing bonus damage and slow."
 "DOTA_Tooltip_ability_imba_magnataur_skewer_Note0"					"Magnus charges at 950 speed."
 "DOTA_Tooltip_ability_imba_magnataur_skewer_Lore"					"#{DOTA_Tooltip_ability_magnataur_skewer_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_damage"					"#{DOTA_Tooltip_ability_magnataur_skewer_skewer_damage}"
@@ -51,7 +51,6 @@
 "DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_entangle_dur"			"ENTANGLE DURATION:"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_extra_dmg"		"BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_magnataur_aghanim_description"			"Reduces Skewer cooldown to %scepter_cooldown% seconds, cast point by %cast_point_reduction% and removes mana cost"
 
 "DOTA_Tooltip_modifier_imba_skewer_slow"							"Skewered"
 "DOTA_Tooltip_modifier_imba_skewer_slow_Description"				"Slowed by Skewer. Ouch...ouch...ouch..."

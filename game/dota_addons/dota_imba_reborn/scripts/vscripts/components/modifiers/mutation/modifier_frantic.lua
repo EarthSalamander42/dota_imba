@@ -20,12 +20,11 @@ end
 function modifier_frantic:OnCreated()
 	self.ignore_frantic_cdr_abilities = {
 		["imba_venomancer_plague_ward"]	= true,
-		["imba_puck_phase_shift"] = true,
-		["imba_magnataur_skewer"] = true,
+		["imba_puck_phase_shift"] = true
 	}
-
+	
 	self.cooldown_reduction	= self:GetParent():GetCooldownReduction()
-
+	
 	-- This IntervalThink is primarily to manually handle cooldown percentages, and to cap CDR at 40% ONLY EXCEPT when base CDR exceeds that, in which case it would be as though this modifier did not provide any CDR
 	self:StartIntervalThink(0.1)
 end
