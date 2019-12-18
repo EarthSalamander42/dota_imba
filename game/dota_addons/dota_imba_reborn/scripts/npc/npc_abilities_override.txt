@@ -8689,5 +8689,72 @@
 		"ItemStockMax"					"2"
 		"ItemStockTime"					"210.0"
 //		"ItemInitialCharges"			"3"
+
+		"ItemIsNeutralDrop"				"0"
 	}
+	
+		"item_keen_optic"				  {"ItemIsNeutralDrop"				"0"}
+		//"item_poor_mans_shield"		  {"ItemIsNeutralDrop"				"0"}
+		//"item_iron_talon"				  {"ItemIsNeutralDrop"				"0"}
+		"item_recipe_ironwood_tree"		  {"ItemIsNeutralDrop"				"0"}
+		"item_royal_jelly"				  {"ItemIsNeutralDrop"				"0"}
+		"item_mango_tree"				  {"ItemIsNeutralDrop"				"0"}
+		"item_ocean_heart"				  {"ItemIsNeutralDrop"				"0"}
+		"item_broom_handle"				  {"ItemIsNeutralDrop"				"0"}
+		"item_trusty_shovel"			  {"ItemIsNeutralDrop"				"0"}
+		"item_faded_broach"				  {"ItemIsNeutralDrop"				"0"}
+		"item_arcane_ring"				  {"ItemIsNeutralDrop"				"0"}
+		
+		"item_grove_bow"				  {"ItemIsNeutralDrop"				"0"}
+		"item_vampire_fangs"			  {"ItemIsNeutralDrop"				"0"}
+		//"item_ring_of_aquila"			  {"ItemIsNeutralDrop"				"0"}
+		"item_pupils_gift"				  {"ItemIsNeutralDrop"				"0"}
+		"item_imp_claw"					  {"ItemIsNeutralDrop"				"0"}
+		"item_philosophers_stone"		  {"ItemIsNeutralDrop"				"0"}
+		"item_nether_shawl"				  {"ItemIsNeutralDrop"				"0"}
+		"item_dragon_scale"				  {"ItemIsNeutralDrop"				"0"}
+		"item_essence_ring"				  {"ItemIsNeutralDrop"				"0"}
+		"item_recipe_vambrace"			  {"ItemIsNeutralDrop"				"0"}
+		"item_clumsy_net"				  {"ItemIsNeutralDrop"				"0"}
+		
+		"item_helm_of_the_undying"		  {"ItemIsNeutralDrop"				"0"}
+		"item_repair_kit"				  {"ItemIsNeutralDrop"				"0"}
+		"item_craggy_coat"				  {"ItemIsNeutralDrop"				"0"}
+		"item_greater_faerie_fire"		  {"ItemIsNeutralDrop"				"0"}
+		"item_quickening_charm"			  {"ItemIsNeutralDrop"				"0"}
+		"item_mind_breaker"				  {"ItemIsNeutralDrop"				"0"}
+		"item_spider_legs"				  {"ItemIsNeutralDrop"				"0"}
+		"item_enchanted_quiver"			  {"ItemIsNeutralDrop"				"0"}
+		"item_paladin_sword"			  {"ItemIsNeutralDrop"				"0"}
+		"item_orb_of_destruction"		  {"ItemIsNeutralDrop"				"0"}
+//		"item_third_eye"			      {"ItemIsNeutralDrop"				"0"}
+		"item_titan_sliver"				  {"ItemIsNeutralDrop"				"0"}
+		
+		"item_witless_shako"			  {"ItemIsNeutralDrop"				"0"}
+		"item_timeless_relic"			  {"ItemIsNeutralDrop"				"0"}
+		"item_spell_prism"				  {"ItemIsNeutralDrop"				"0"}
+		"item_princes_knife"			  {"ItemIsNeutralDrop"				"0"}
+		"item_flicker"					  {"ItemIsNeutralDrop"				"0"}
+		"item_spy_gadget"				  {"ItemIsNeutralDrop"				"0"}
+		"item_ninja_gear"				  {"ItemIsNeutralDrop"				"0"}
+		"item_illusionsts_cape"			  {"ItemIsNeutralDrop"				"0"}
+		"item_havoc_hammer"				  {"ItemIsNeutralDrop"				"0"}
+		"item_panic_button"				  {"ItemIsNeutralDrop"				"0"}
+		"item_the_leveller"				  {"ItemIsNeutralDrop"				"0"}
+		"item_minotaur_horn"			  {"ItemIsNeutralDrop"				"0"}
+		
+		"item_force_boots"				  {"ItemIsNeutralDrop"				"0"}
+//		"item_desolator_2"				  {"ItemIsNeutralDrop"				"0"}
+		"item_phoenix_ash"				  {"ItemIsNeutralDrop"				"0"}
+		"item_seer_stone"				  {"ItemIsNeutralDrop"				"0"}
+		"item_mirror_shield"			  {"ItemIsNeutralDrop"				"0"}
+		"item_fusion_rune"				  {"ItemIsNeutralDrop"				"0"}
+		"item_apex"						  {"ItemIsNeutralDrop"				"0"}
+		"item_ballista"					  {"ItemIsNeutralDrop"				"0"}
+		"item_woodland_striders"		  {"ItemIsNeutralDrop"				"0"}
+		"item_recipe_trident"			  {"ItemIsNeutralDrop"				"0"}
+		"item_demonicon"				  {"ItemIsNeutralDrop"				"0"}
+		"item_recipe_fallen_sky"		  {"ItemIsNeutralDrop"				"0"}
+		"item_pirate_hat"				  {"ItemIsNeutralDrop"				"0"}
+		"item_ex_machina"				  {"ItemIsNeutralDrop"				"0"}
 }

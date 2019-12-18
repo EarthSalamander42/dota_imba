@@ -353,7 +353,12 @@ function imba_antimage_blink:OnSpellStart()
 			
 			for _, illusion in pairs(illusions) do
 				illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_antimage_blink_command_restricted", {})
-			end			
+				
+				-- Rough fix to not keep selecting a command restricted unit
+				Timers:CreateTimer(FrameTime(), function()
+					PlayerResource:RemoveFromSelection(self:GetCaster():GetPlayerID(), illusion)
+				end)
+			end
 		end
 
 		-- Adding an extreme small timer for the particles, else they will only appear at the dest

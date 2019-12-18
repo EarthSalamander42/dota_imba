@@ -12,7 +12,7 @@
 "DOTA_Tooltip_modifier_imba_eleven_curses_Description"          "Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% bonus damage from all sources."
 
 "DOTA_Tooltip_ability_imba_empress_hellbolt"              "Hellbolt"
-"DOTA_Tooltip_ability_imba_empress_hellbolt_Description"        "Launches a Hellbolt towards all nearby enemies, dealing damage. <font color='#C00000'>Cursed</font> enemies receive extra damage based on their health and amount of curse stacks. This effects consumes the enemy's <font color='#C00000'>curse</font>."
+"DOTA_Tooltip_ability_imba_empress_hellbolt_Description"        "Launches a Hellbolt towards all nearby enemies, dealing damage. <font color='#C00000'>Cursed</font> enemies receive extra damage based the amount of curse stacks. This effects consumes the enemy's <font color='#C00000'>curse</font>."
 "DOTA_Tooltip_ability_imba_empress_hellbolt_Lore"           "A Bolt of chaotic energy seeps from the depths towards the unfortunate enemies of Hellion."
 "DOTA_Tooltip_ability_imba_empress_hellbolt_base_damage"        "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_empress_hellbolt_bonus_damage"       "%BONUS DAMAGE PER STACK:"
@@ -23,7 +23,7 @@
 "DOTA_Tooltip_ability_imba_empress_royal_wrath_Lore"          "Eye for an eye is the only justice in Hell. Or both eyes for a slight scratch, that works, too."
 
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell"             "Hurl Through Hell"
-"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Description"       "Sends all enemies in the area to the depths of Hell, where they are invulnerable for %hurl_duration% seconds. After coming back, the effects of the trip manifest: enemies take magical damage, are affected by <font color='#C00000'>Eleven Curses</font>, and are afflicted with two random debuffs from the following list:\n\nDisarm, Root, Silence, Mute, Break, or %slow_pct%%% attack/movement slow."
+"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Description"       "Sends all enemies in the area to the depths of Hell, where they are invulnerable for %hurl_duration% seconds (ignores status resistance). After coming back, the effects of the trip manifest: enemies are affected by <font color='#C00000'>Eleven Curses</font>, take magical damage, and are afflicted with two random debuffs from the following list:\n\nDisarm, Root, Silence, Mute, Break, or %slow_pct%%% attack/movement slow."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Lore"            "Hellion's poor enemies benefit from a quick trip to the Eight Circle, where every cell of their being screams against the anathema of lava, biting cold, acid fog and ear-splitting wailing. Reactions vary, but are always dramatic."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Note0"           "Hurl Through Hell's initial effect and debuffs pierce spell immunity."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_radius"       "EFFECT RADIUS:"

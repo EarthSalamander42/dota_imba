@@ -308,6 +308,182 @@ function modifier_imba_smoke_screen_vision:GetBonusVisionPercentage()
 	return self:GetStackCount() * -1
 end
 
+--------------------------------
+-- IMBA_RIKI_SMOKE_SCREEN_723 --
+--------------------------------
+
+LinkLuaModifier("modifier_imba_riki_smoke_screen_723_aura", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_riki_smoke_screen_723", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_riki_smoke_screen_723_aura_buff", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_riki_smoke_screen_723_buff", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+
+imba_riki_smoke_screen_723					= imba_riki_smoke_screen_723 or class({})
+modifier_imba_riki_smoke_screen_723_aura	= modifier_imba_riki_smoke_screen_723_aura or class({})
+modifier_imba_riki_smoke_screen_723			= modifier_imba_riki_smoke_screen_723 or class({})
+
+modifier_imba_riki_smoke_screen_723_aura_buff		= modifier_imba_riki_smoke_screen_723_aura_buff or class({})
+modifier_imba_riki_smoke_screen_723_buff			= modifier_imba_riki_smoke_screen_723_buff or class({})
+
+function imba_riki_smoke_screen_723:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_riki_smoke_screen_723:OnUpgrade()
+	if self:GetCaster():HasAbility("imba_riki_blink_strike_723") and self:GetCaster():FindAbilityByName("imba_riki_blink_strike_723"):GetLevel() == 1 and not self.bUpgradeResponse and self:GetCaster():GetName() == "npc_dota_hero_riki" then
+		self:GetCaster():EmitSound("riki_riki_ability_invis_04")
+		
+		self.bUpgradeResponse = true
+	end
+end
+
+function imba_riki_smoke_screen_723:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Riki.Smoke_Screen")
+
+	if self:GetCaster():GetName() == "npc_dota_hero_riki" then
+		if RollPercentage(15) then
+			if not self.uncommon_responses then
+				self.uncommon_responses = {
+					"riki_riki_ability_smokescreen_03",
+					"riki_riki_ability_smokescreen_05"
+				}
+			end
+		
+			self:GetCaster():EmitSound(self.uncommon_responses[RandomInt(1, #self.uncommon_responses)])
+		elseif RollPercentage(75) then
+			if not self.responses then
+				self.responses = {
+					"riki_riki_ability_smokescreen_01",
+					"riki_riki_ability_smokescreen_02",
+					"riki_riki_ability_smokescreen_04"
+				}
+			end
+		
+			self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+		end
+	end
+
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_riki_smoke_screen_723_aura", {duration = self:GetSpecialValueFor("duration")}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_RIKI_SMOKE_SCREEN_723_AURA --
+----------------------------------------------
+
+function modifier_imba_riki_smoke_screen_723_aura:OnCreated()
+	self.radius		= self:GetAbility():GetSpecialValueFor("radius")
+	
+	self.smoke_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_riki/riki_smokebomb.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.smoke_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.smoke_particle, 1, Vector(self.radius, self.radius, self.radius))
+	self:AddParticle(self.smoke_particle, false, false, -1, false, false)
+end
+
+function modifier_imba_riki_smoke_screen_723_aura:IsAura() 				return true end
+function modifier_imba_riki_smoke_screen_723_aura:IsAuraActiveOnDeath()	return false end
+
+function modifier_imba_riki_smoke_screen_723_aura:GetAuraRadius()			return self.radius or 0 end
+function modifier_imba_riki_smoke_screen_723_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_riki_smoke_screen_723_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
+function modifier_imba_riki_smoke_screen_723_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_riki_smoke_screen_723_aura:GetModifierAura()			return "modifier_imba_riki_smoke_screen_723" end
+
+-- function modifier_imba_riki_smoke_screen_723_aura:GetAuraEntityReject(target) end
+
+-----------------------------------------
+-- MODIFIER_IMBA_RIKI_SMOKE_SCREEN_723 --
+-----------------------------------------
+
+function modifier_imba_riki_smoke_screen_723:GetEffectName()		return "particles/generic_gameplay/generic_silenced.vpcf" end
+function modifier_imba_riki_smoke_screen_723:GetEffectAttachType()	return PATTACH_OVERHEAD_FOLLOW end
+	
+function modifier_imba_riki_smoke_screen_723:OnCreated()
+	if self:GetAbility() then
+		self.miss_rate					= self:GetAbility():GetSpecialValueFor("miss_rate")
+		self.remnants_movespeed_slow	= self:GetAbility():GetSpecialValueFor("remnants_movespeed_slow") * (-1)
+		self.remnants_vision			= self:GetAbility():GetSpecialValueFor("remnants_vision")
+		self.solid_turn_rate_slow		= self:GetAbility():GetSpecialValueFor("solid_turn_rate_slow") * (-1)
+	else
+		self.miss_rate					= 0
+		self.remnants_movespeed_slow	= 0
+		self.remnants_vision_reduction	= 0
+		self.solid_turn_rate_slow		= 0
+	end
+end
+
+function modifier_imba_riki_smoke_screen_723:CheckState()
+	return {[MODIFIER_STATE_SILENCED] = true}
+end
+
+function modifier_imba_riki_smoke_screen_723:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MISS_PERCENTAGE,
+		
+		-- Remnants of Smokescren
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_FIXED_DAY_VISION,
+		MODIFIER_PROPERTY_FIXED_NIGHT_VISION,
+		
+		-- Solid Fog
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
+	}
+end
+
+function modifier_imba_riki_smoke_screen_723:GetModifierMiss_Percentage()
+	return self.miss_rate
+end
+
+function modifier_imba_riki_smoke_screen_723:GetModifierMoveSpeedBonus_Percentage()
+	return self.remnants_movespeed_slow
+end
+
+function modifier_imba_riki_smoke_screen_723:GetFixedDayVision()
+	return self.remnants_vision
+end
+
+function modifier_imba_riki_smoke_screen_723:GetFixedNightVision()
+	return self.remnants_vision
+end
+
+function modifier_imba_riki_smoke_screen_723:GetModifierTurnRate_Percentage()
+	return self.solid_turn_rate_slow
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_RIKI_SMOKE_SCREEN_723_AURA_BUFF --
+---------------------------------------------------
+
+function modifier_imba_riki_smoke_screen_723_aura_buff:OnCreated()
+	self.radius		= self:GetAbility():GetSpecialValueFor("radius")
+end
+
+function modifier_imba_riki_smoke_screen_723_aura_buff:IsAura() 				return true end
+function modifier_imba_riki_smoke_screen_723_aura_buff:IsAuraActiveOnDeath()	return false end
+
+function modifier_imba_riki_smoke_screen_723_aura_buff:GetAuraRadius()			return self.radius or 0 end
+function modifier_imba_riki_smoke_screen_723_aura_buff:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_riki_smoke_screen_723_aura_buff:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
+function modifier_imba_riki_smoke_screen_723_aura_buff:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_riki_smoke_screen_723_aura_buff:GetModifierAura()		return "modifier_imba_riki_smoke_screen_723_buff" end
+
+----------------------------------------------
+-- MODIFIER_IMBA_RIKI_SMOKE_SCREEN_723_BUFF --
+----------------------------------------------
+
+function modifier_imba_riki_smoke_screen_723_buff:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = true}
+end
+
+function modifier_imba_riki_smoke_screen_723_buff:DeclareFunctions()
+	return {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+end
+
+function modifier_imba_riki_smoke_screen_723_buff:GetModifierInvisibilityLevel()
+	return 1
+end
+
 ---------------------------------------------------------------------
 -------------------------	Blink Strike	-------------------------
 ---------------------------------------------------------------------
@@ -459,7 +635,7 @@ function imba_riki_blink_strike:OnSpellStart()
 		if self.hTarget:TriggerSpellAbsorb(self) then return end
 
 		-- Parameters
-		self.damage = self:GetSpecialValueFor("damage")
+		self.damage = self:GetSpecialValueFor("bonus_damage") or self:GetSpecialValueFor("damage")
 		self.duration = self:GetTalentSpecialValueFor("duration")
 		local jump_duration = 0
 		local cast_sound = "Hero_Riki.Blink_Strike"
@@ -1013,7 +1189,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 					if blink_strike_ability then
 						turn_debuff_duration = blink_strike_ability:GetSpecialValueFor("duration")
 						target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", {duration = turn_debuff_duration})
-						ApplyDamage({victim = target, attacker = attacker, damage = blink_strike_ability:GetSpecialValueFor("damage"), damage_type = blink_strike_ability:GetAbilityDamageType()})
+						ApplyDamage({victim = target, attacker = attacker, damage = blink_strike_ability:GetSpecialValueFor("bonus_damage") or blink_strike_ability:GetSpecialValueFor("damage"), damage_type = blink_strike_ability:GetAbilityDamageType()})
 					end
 
 					-- Emit Blink Strike sound
@@ -1360,7 +1536,8 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		local buttsecks_sound = "Imba.RikiSurpriseButtsex"
 
 		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
-		if #heroes >= PlayerResource:GetPlayerCount() * 0.35 then
+		
+		if #heroes >= PlayerResource:GetPlayerCount() * 0.35 and self:GetName() == "imba_riki_tricks_of_the_trade" then
 			-- caster:EmitSound(buttsecks_sound)
 			EmitSoundOn(buttsecks_sound, caster)
 		end
@@ -1401,7 +1578,11 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 		if backstab_ability and backstab_ability:GetLevel() > 0 then backstab_ability:EndCooldown() end
 
 		StopSoundEvent("Hero_Riki.TricksOfTheTrade", caster)
-		StopSoundEvent("Imba.RikiSurpriseButtsex", caster)
+		
+		if self:GetName() == "imba_riki_tricks_of_the_trade" then
+			StopSoundEvent("Imba.RikiSurpriseButtsex", caster)
+		end
+		
 		ParticleManager:DestroyParticle(self.TricksParticle, false)
 		ParticleManager:ReleaseParticleIndex(self.TricksParticle)
 		self.TricksParticle = nil
@@ -1415,11 +1596,7 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 		-- #6 Talent: Tricks of the Trade refunds cooldown proportional to the channel duration remaining_duration
 		if caster:HasTalent("special_bonus_imba_riki_6") then
 			local channel_time = GameRules:GetGameTime() - self.channel_start_time
-			local channel_duration = self:GetSpecialValueFor("channel_duration")
-			if caster:HasScepter() then
-				channel_duration = self:GetSpecialValueFor("scepter_duration")
-			end
-			local portion_refunded = channel_time/channel_duration
+			local portion_refunded = channel_time/self:GetChannelTime()
 			local new_cooldown = self:GetCooldownTimeRemaining() * (portion_refunded)
 			if new_cooldown < caster:FindTalentValue("special_bonus_imba_riki_6") and new_cooldown ~= 0 then
 				new_cooldown = caster:FindTalentValue("special_bonus_imba_riki_6")
@@ -1476,8 +1653,15 @@ end
 function modifier_imba_riki_tricks_of_the_trade_primary:OnCreated()
 	if IsServer() then
 		local ability = self:GetAbility()
-		local interval = ability:GetSpecialValueFor("attack_interval")
+		
+		local interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("attack_count")  or ability:GetSpecialValueFor("attack_interval")
+		
+		if self:GetCaster():HasScepter() and self:GetAbility():GetName() == "imba_riki_tricks_of_the_trade_723" then
+			interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("scepter_attacks")
+		end
+		
 		self:OnIntervalThink()
+		
 		self:StartIntervalThink(interval)
 	end
 end
@@ -1496,7 +1680,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 
 		local aoe = ability:GetSpecialValueFor("area_of_effect")
 
-		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
+		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger") or caster:FindAbilityByName("imba_riki_cloak_and_dagger_723")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
 
@@ -1508,7 +1692,15 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() and not unit:IsAttackImmune() then
-				caster:PerformAttack(unit, true, true, true, false, false, false, false)
+				
+				if self:GetAbility():GetName() == "imba_riki_tricks_of_the_trade_723" then
+					caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_riki_tricks_of_the_trade_723_damage_reduction", {})
+					caster:PerformAttack(unit, true, true, true, false, false, false, false)
+					caster:RemoveModifierByName("modifier_imba_riki_tricks_of_the_trade_723_damage_reduction")
+				else
+					caster:PerformAttack(unit, true, true, true, false, false, false, false)
+				end
+				
 
 				if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 					local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
@@ -1567,7 +1759,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 
 		local aoe = ability:GetSpecialValueFor("area_of_effect")
 
-		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
+		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger") or caster:FindAbilityByName("imba_riki_cloak_and_dagger_723")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
 
@@ -1667,7 +1859,14 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 		end
 	end
 
-	caster:PerformAttack(target, true, true, true, false, false, false, false)
+	if self:GetAbility():GetName() == "imba_riki_tricks_of_the_trade_723" then
+		caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_riki_tricks_of_the_trade_723_damage_reduction", {})
+		caster:PerformAttack(target, true, true, true, false, false, false, false)
+		caster:RemoveModifierByName("modifier_imba_riki_tricks_of_the_trade_723_damage_reduction")
+	else
+		caster:PerformAttack(target, true, true, true, false, false, false, false)
+	end
+	
 
 	if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 		local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
@@ -1724,6 +1923,51 @@ for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_riki", MotionController)
 end
 -------------------------------------------
+
+--------------------------------
+-- IMBA_RIKI_BLINK_STRIKE_723 --
+--------------------------------
+
+LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
+
+imba_riki_blink_strike_723			= imba_riki_blink_strike
+
+function imba_riki_blink_strike_723:GetIntrinsicModifierName()
+	return "modifier_generic_charges"
+end
+
+---------------------------------------
+-- IMBA_RIKI_TRICKS_OF_THE_TRADE_723 --
+---------------------------------------
+
+LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_723_damage_reduction", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+
+imba_riki_tricks_of_the_trade_723							= imba_riki_tricks_of_the_trade
+modifier_imba_riki_tricks_of_the_trade_723_damage_reduction	= modifier_imba_riki_tricks_of_the_trade_723_damage_reduction or class({})
+-----------------------------------------------------------------
+-- MODIFIER_IMBA_RIKI_TRICKS_OF_THE_TRADE_723_DAMAGE_REDUCTION --
+-----------------------------------------------------------------
+
+function modifier_imba_riki_tricks_of_the_trade_723_damage_reduction:IsHidden()		return true end
+function modifier_imba_riki_tricks_of_the_trade_723_damage_reduction:IsPurgable()	return false end
+
+function modifier_imba_riki_tricks_of_the_trade_723_damage_reduction:OnCreated()
+	self.damage_pct	= self:GetAbility():GetSpecialValueFor("damage_pct") - 100
+end
+
+function modifier_imba_riki_tricks_of_the_trade_723_damage_reduction:DeclareFunctions()
+	return {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
+end
+
+function modifier_imba_riki_tricks_of_the_trade_723_damage_reduction:GetModifierBaseDamageOutgoing_Percentage()
+	return self.damage_pct
+end
+
+------------------------------------
+-- IMBA_RIKI_CLOAK_AND_DAGGER_723 --
+------------------------------------
+
+imba_riki_cloak_and_dagger_723		= imba_riki_cloak_and_dagger
 
 ---------------------
 -- TALENT HANDLERS --

@@ -693,6 +693,8 @@ function GameMode:OrderFilter( keys )
 				if unit.issuer_player_id_const then
 					if keys.issuer_player_id_const == unit.issuer_player_id_const then
 						unit.issuer_player_id_const = nil
+					elseif keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM then
+						return true
 					else
 						DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to "..PlayerResource:GetPlayerName(unit.issuer_player_id_const))
 						return false

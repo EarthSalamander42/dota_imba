@@ -34103,6 +34103,21 @@
 				"var_type"					"FIELD_INTEGER"
 				"miss_rate"					"25 35 45 55"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_movespeed_slow"	"8 12 16 20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_vision"			"200"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"solid_turn_rate_slow"		"15"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -34198,6 +34213,109 @@
 			}			
 		}
 	}
+	
+	//=================================================================================================================
+	// Riki's Blink Strike (7.23)
+	//=================================================================================================================
+	"imba_riki_blink_strike_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_riki"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"		
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"riki_blink_strike"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityCastPoint"				"0.3"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"				"75 90 105 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"turn_rate_slow_pct"	"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_range"			"700"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_jumps"				"1 2 3 4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_interval_frames"	"12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"abilitycastrange"					""
+				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charges"				"2"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"charge_restore_time"		"25 20 15 10"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Riki's Cloak and Dagger
@@ -34274,6 +34392,65 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Riki's Cloak and Dagger (7.23)
+	//=================================================================================================================
+	"imba_riki_cloak_and_dagger_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
+		"AbilityTextureName"			"riki_permanent_invisibility"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4 3 2"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
+			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
+			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"fade_time"							"4 3 2"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"backstab_angle"					"120"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"agility_damage_multiplier"			"1.4 1.8 2.2"
+				"LinkedSpecialBonus"				"special_bonus_imba_riki_cloak_and_dagger_damage"
+				"CalculateSpellDamageTooltip"		"0"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Riki's Tricks of the Trade
@@ -34283,8 +34460,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki.lua"
 		"AbilityTextureName"			"riki_tricks_of_the_trade"
+		
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -34292,11 +34470,10 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"FightRecapLevel"				"2"
 		"HasScepterUpgrade"				"1"
-
-
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.3"		
+		"AbilityCastPoint"				"0.3"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -34357,6 +34534,111 @@
 				"var_type"				"FIELD_INTEGER"
 				"martyr_aspd_pct"		"40"
 			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Riki's Tricks of the Trade (7.23)
+	//=================================================================================================================
+	"imba_riki_tricks_of_the_trade_723"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki"
+		"AbilityTextureName"			"riki_tricks_of_the_trade"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"2.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityChannelAnimation"		"ACT_DOTA_CHANNEL_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21 18 15 12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"450 500 550"				
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_interval"		"0.6 0.55 0.5"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"channel_duration"		"2.0"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"martyr_aspd_pct"		"40"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_count"	"4"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"	"70 80 90 100"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_duration"				"3"
+				"RequiresScepter"		"1"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_attacks"				"6"
+				"RequiresScepter"		"1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_cast_range"				"1000"
+				"RequiresScepter"		"1"
+			}
 		}
 	}
 
@@ -34620,7 +34902,107 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_riki_cloak_and_dagger_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.8"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_smokescreen_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_smoke_screen_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_cloak_and_dagger_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_riki_tricks_of_the_trade_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_tricks_of_the_trade_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"7"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Sniper's Shrapnel
 	//=================================================================================================================
@@ -38277,12 +38659,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"125 225 325 425"
+				"base_damage"			"150 250 350 450"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage"			"2.0 3.0 4.0 5.0"
+				"bonus_damage"			"3.0 4.0 5.0 6.0"
 			}
 			"03"
 			{
@@ -38292,7 +38674,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"900"
+				"bolt_speed"			"1100"
 			}
 		}
 	}
@@ -38330,7 +38712,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hellbolt_cdr"			"1.0"
+				"hellbolt_cdr"			"1.5"
 			}
 		}
 	}
@@ -38400,7 +38782,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_radius"			"450"
+				"hurl_radius"			"500"
 			}
 			"02"
 			{
@@ -38420,7 +38802,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"debuff_duration"		"2.0 2.8 3.6"
+				"debuff_duration"		"2.8 3.4 4.0"
 			}
 			"06"
 			{
@@ -42015,6 +42397,42 @@
 	}
 
 	"imba_form_change_life_stealer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_riki"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

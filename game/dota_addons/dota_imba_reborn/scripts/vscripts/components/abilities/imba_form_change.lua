@@ -181,3 +181,30 @@ function imba_form_change_life_stealer:OnChannelFinish(bInterrupted)
 	end
 end
 
+---------------------------
+-- IMBA_FORM_CHANGE_RIKI --
+---------------------------
+
+imba_form_change_riki = imba_form_change
+
+function imba_form_change_riki:OnChannelFinish(bInterrupted)
+	if not bInterrupted then
+		if not self.current_abilities then
+			self.current_abilities = {"imba_riki_smoke_screen_723", "imba_riki_blink_strike_723", "imba_riki_tricks_of_the_trade_723", "imba_riki_cloak_and_dagger_723"}
+		end
+		
+		if not self.previous_abilities then
+			self.previous_abilities = {"imba_riki_smoke_screen", "imba_riki_blink_strike", "imba_riki_cloak_and_dagger", "imba_riki_tricks_of_the_trade"}
+		end
+	
+		if self:GetCaster():GetModifierStackCount("modifier_imba_form_change", self:GetCaster()) == 0 then
+			self:FormChange(self.current_abilities, self.previous_abilities)
+		
+			self:GetCaster():SetModifierStackCount("modifier_imba_form_change", self:GetCaster(), -1)
+		else
+			self:FormChange(self.previous_abilities, self.current_abilities)
+
+			self:GetCaster():SetModifierStackCount("modifier_imba_form_change", self:GetCaster(), 0)
+		end
+	end
+end

@@ -56,6 +56,7 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 		
 		if modifier_curse_instance then
 			modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
+			modifier_curse_instance:SetDuration(stack_duration * (1 - enemy:GetStatusResistance()), true)
 		end
 	end
 end
@@ -75,11 +76,9 @@ function modifier_imba_eleven_curses:OnCreated()
 end
 
 function modifier_imba_eleven_curses:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
-
-	return funcs
 end
 
 function modifier_imba_eleven_curses:GetModifierIncomingDamage_Percentage()
@@ -134,11 +133,14 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 
 		-- Calculate and deal damage
 		if target:HasModifier(modifier_curse) then
-			bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01 * target:GetHealth()
+			-- bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01 * target:GetHealth()
+			bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01
 		else
 			bonus_damage = 0
 		end
-		local damage = base_damage + bonus_damage
+		-- local damage = base_damage + bonus_damage
+		local damage = base_damage * (1 + bonus_damage)
+		
 		local actual_damage = ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, actual_damage, nil)
 		target:RemoveModifierByName(modifier_curse)
@@ -166,11 +168,9 @@ function modifier_imba_royal_wrath:IsDebuff() return false end
 function modifier_imba_royal_wrath:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT end
 
 function modifier_imba_royal_wrath:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
-
-	return funcs
 end
 
 function modifier_imba_royal_wrath:OnTakeDamage( keys )
@@ -260,19 +260,18 @@ end
 ------------------------------------
 modifier_imba_hurl_through_hell = class({})
 
+function modifier_imba_hurl_through_hell:IgnoreTenacity()	return true end
 function modifier_imba_hurl_through_hell:IsHidden() return true end
 function modifier_imba_hurl_through_hell:IsPurgable() return false end
 function modifier_imba_hurl_through_hell:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_OUT_OF_GAME] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_STUNNED] = true
 	}
-
-	return state
 end
 
 function modifier_imba_hurl_through_hell:OnCreated()
