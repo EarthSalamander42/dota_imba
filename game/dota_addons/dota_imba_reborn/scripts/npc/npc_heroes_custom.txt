@@ -1513,7 +1513,7 @@
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
 		"Ability12"					"special_bonus_spell_lifesteal_13"
 		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
-		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
+		"Ability14"					"special_bonus_gold_income_180" // +Xs Dismember Duration
 		"Ability15"					"special_bonus_cooldown_reduction_15"
 		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
 		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
@@ -1521,6 +1521,7 @@
 		// Removed Talents
 		// "Ability12"					"special_bonus_armor_10" // +10 armor
 		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
+		// "Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
 		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
 	}
 

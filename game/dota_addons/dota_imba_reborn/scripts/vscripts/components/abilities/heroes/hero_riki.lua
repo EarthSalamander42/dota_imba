@@ -1932,9 +1932,9 @@ LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifi
 
 imba_riki_blink_strike_723			= imba_riki_blink_strike
 
-function imba_riki_blink_strike_723:GetIntrinsicModifierName()
-	return "modifier_generic_charges"
-end
+-- function imba_riki_blink_strike_723:GetIntrinsicModifierName()
+	-- return "modifier_generic_charges"
+-- end
 
 ---------------------------------------
 -- IMBA_RIKI_TRICKS_OF_THE_TRADE_723 --

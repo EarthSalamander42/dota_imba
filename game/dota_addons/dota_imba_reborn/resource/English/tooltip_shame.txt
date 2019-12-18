@@ -96,7 +96,7 @@
 "npc_dota_hero_grimstroke"                             		"Grimstroke (IMBA)"
 "npc_dota_hero_gyrocopter"                                  "Gyrocopter"
 "npc_dota_hero_huskar"                                      "Huskar (IMBA)"
-"npc_dota_hero_invoker"                                    "Invoker"
+"npc_dota_hero_invoker"                                    "Invoker (IMBA)"
 "npc_dota_hero_jakiro"                                      "Jakiro (IMBA)"
 "npc_dota_hero_juggernaut"                                  "Juggernaut (IMBA)"
 "npc_dota_hero_keeper_of_the_light"                        "Keeper of the Light (IMBA)"

@@ -25,8 +25,7 @@ end
 function modifier_frantic:OnCreated()
 	self.ignore_frantic_cdr_abilities = {
 		["imba_venomancer_plague_ward"]	= true,
-		["imba_puck_phase_shift"] = true,
-		["imba_magnataur_skewer"] = true,
+		["imba_puck_phase_shift"] = true
 	}
 	
 	-- This may get updated by Valve over-time, in which case it will have to manually updated...zzz

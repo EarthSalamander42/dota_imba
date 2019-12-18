@@ -1502,7 +1502,7 @@ end
 
 function imba_magnataur_skewer:GetManaCost(iLevel)
 	if self:GetCaster():HasScepter() then
-		return 0
+		return self:GetSpecialValueFor("skewer_manacost")
 	end
 
 	return self.BaseClass.GetManaCost(self, iLevel)
@@ -1519,7 +1519,7 @@ function imba_magnataur_skewer:OnSpellStart()
 		local distance = (target_loc - caster_loc):Length2D()
 		local direction = (target_loc - caster_loc):Normalized()
 		local current_cooldown = self:GetCooldownTimeRemaining()
-		self:EndCooldown()
+		-- self:EndCooldown()
 
 		if distance > range then
 			distance = range
@@ -1654,7 +1654,7 @@ end
 function modifier_imba_skewer_motion_controller:OnDestroy()
 	if IsServer() then
 		local caster = self:GetCaster()
-		self:GetAbility():StartCooldown(self.cooldown)
+		-- self:GetAbility():StartCooldown(self.cooldown)
 
 		ParticleManager:DestroyParticle(self.skewer_fx, false)
 		ParticleManager:ReleaseParticleIndex(self.skewer_fx)

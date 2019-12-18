@@ -561,6 +561,8 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- Invoker custom thing
 	if hero:HasAbility("invoker_invoke") then
 		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6) + 1, 4))
+	elseif hero:HasAbility("imba_invoker_invoke") then
+		hero:FindAbilityByName("imba_invoker_invoke"):SetLevel(min(math.floor(level / 6) + 1, 4))
 	end
 end
 
