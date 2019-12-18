@@ -59,6 +59,11 @@
 "DOTA_Tooltip_ability_imba_pudge_dismember_dismember_damage"			"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_strength_damage"				"%STRENGTH DAMAGE BONUS:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_spell_lifesteal"				"%SPELL LIFESTEAL:"
+"DOTA_Tooltip_ability_imba_pudge_dismember_aghanim_description"			"Reduces Dismember cooldown to %scepter_cooldown%. Allows you to target an ally with Dismember, instantly swallowing them in your belly and healing them for %scepter_healing_pct%% of their max health per second. The ally can exit whenever they want by issuing a command."
+
+// Unable to gather dota 2 vanilla tooltips for reasons
+"DOTA_Tooltip_ability_imba_pudge_eject"					"Eject"
+"DOTA_Tooltip_ability_imba_pudge_eject_Description"		"Ejects the swallowed allied hero inside of you."
 
 "DOTA_Tooltip_modifier_imba_dismember"								"Dismember"
 "DOTA_Tooltip_modifier_imba_dismember_Description"					"FRESH MEAT!!!"
