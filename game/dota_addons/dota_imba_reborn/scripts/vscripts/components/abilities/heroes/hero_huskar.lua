@@ -924,7 +924,7 @@ function modifier_imba_huskar_life_break:OnDestroy()
 		self.parent:MoveToTargetToAttack( self.target )
 		
 		-- 7.23 Aghanim's Scepter effect
-		if self.caster:HasScepter() then
+		if self.caster:HasScepter() and self.caster ~= self.target then
 			local taunt_modifier = self.target:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_life_break_taunt", {duration = self.taunt_duration})
 			
 			if taunt_modifier then

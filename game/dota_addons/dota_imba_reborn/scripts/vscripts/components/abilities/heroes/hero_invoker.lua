@@ -341,9 +341,11 @@ imba_invoker = imba_invoker or class({})
 		 				oldest = modifiers[i]
 		 			end
 				end
-
-				-- turns out this removes the oldest running modifier by name
-				caster:RemoveModifierByName(oldest:GetName())
+				
+				if oldest then
+					-- turns out this removes the oldest running modifier by name
+					caster:RemoveModifierByName(oldest:GetName())
+				end
 			end
 			
 			local new_orb = ability:GetName()
@@ -956,6 +958,11 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_sun_strike_cataclysm", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_sun_strike_beam_only", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_sun_strike_incinerate", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+		
+		LinkLuaModifier("modifier_imba_invoker_sun_strike_thinker", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+		
+		modifier_imba_invoker_sun_strike_thinker	= modifier_imba_invoker_sun_strike_thinker or class({})
+		
 		function imba_invoker_sun_strike:GetCastAnimation()
 		 	return ACT_DOTA_CAST_SUN_STRIKE
 		end
@@ -1115,6 +1122,16 @@ imba_invoker = imba_invoker or class({})
 					end
 				end
 			end
+
+			-- CreateModifierThinker(kv.caster, kv.ability, "modifier_imba_invoker_sun_strike_thinker", {
+				-- duration 			= kv.ability:GetSpecialValueFor("delay"),
+				-- area_of_effect 		= kv.ability:GetSpecialValueFor("area_of_effect"),
+				-- target_point_x		= kv.target_point.x,
+				-- target_point_y		= kv.target_point.y,
+				-- target_point_z		= kv.target_point.z,
+				-- incinerate_duration	= kv.ability:GetSpecialValueFor("incinerate_duration"),
+				-- damage				= kv.ability:GetLevelSpecialValueFor("damage", kv.caster:FindAbilityByName("imba_invoker_exort"):GetLevel() - 1)
+			-- }, kv.target_point, kv.caster:GetTeamNumber(), false)
 		end
 
 		function imba_invoker_sun_strike:CastCataclysmSunStrike(kv)
@@ -1454,7 +1471,62 @@ imba_invoker = imba_invoker or class({})
 			end
 		end
 
+		----------------------------------------------
+		-- MODIFIER_IMBA_INVOKER_SUN_STRIKE_THINKER --
+		----------------------------------------------
+		
+		function modifier_imba_invoker_sun_strike_thinker:OnCreated(kv)
+			if not IsServer() then return end
+			
+			self.area_of_effect 		= kv.area_of_effect
+			self.incinerate_duration	= kv.incinerate_duration
+			self.damage					= kv.damage
+			
+			if (kv.target_point_x and kv.target_point_y and kv.target_point_z) then
+				self.target_point = Vector(kv.target_point_x, kv.target_point_y, kv.target_point_z)
+			end
 
+			local sun_strike_beam = nil
+			
+			if self.target_point then
+				sun_strike_beam = ParticleManager:CreateParticleForTeam("particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_immortal1.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
+				ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
+				ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect, 0, 0))
+				ParticleManager:ReleaseParticleIndex(sun_strike_beam)
+			else
+				
+			end
+		end
+		
+		function modifier_imba_invoker_sun_strike_thinker:OnDestroy()
+			if not IsServer() then return end
+		
+			local sun_strike_crater = ParticleManager:CreateParticle("particles/econ/items/invoker/invoker_apex/invoker_sun_strike_immortal1.vpcf", PATTACH_POINT, self:GetCaster())
+			ParticleManager:SetParticleControl(sun_strike_crater, 0, self.target_point)
+			ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
+			ParticleManager:ReleaseParticleIndex(sun_strike_crater)
+			
+							-- Check if we hit stuff
+				local nearby_enemy_units = FindUnitsInRadius(
+					self:GetCaster():GetTeamNumber(),
+					self.target_point, 
+					nil, 
+					self.area_of_effect, 
+					DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+					FIND_ANY_ORDER, 
+					false)
+
+				if nearby_enemy_units ~= nil then
+					-- Add incinerate to enemies hit
+					for _,hero in pairs(nearby_enemy_units) do
+						hero:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration, damage = self.damage})
+					end	
+					-- Damage is shared between all units hit
+					imba_invoker_sun_strike:OnHit(self:GetCaster(), self:GetAbility(), nearby_enemy_units, self.damage)
+				end
+		end
 
 	---------------------------------------------------------------------------------------------------------------------
 	--	Invoker's Cold Snap

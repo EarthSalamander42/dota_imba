@@ -787,9 +787,9 @@ function modifier_imba_slark_essence_shift:GetModifierBonusStats_Agility()
 	return self:GetAbility():GetSpecialValueFor("agi_gain") * self:GetStackCount()
 end
 
-----------------------------------------------
--- MODIFIER_imba_slark_essence_shift_debuff_counter --
-----------------------------------------------
+------------------------------------------------------
+-- MODIFIER_IMBA_SLARK_ESSENCE_SHIFT_DEBUFF_COUNTER --
+------------------------------------------------------
 
 function modifier_imba_slark_essence_shift_debuff_counter:DestroyOnExpire()	return self:GetParent():GetHealthPercent() > 0 end
 function modifier_imba_slark_essence_shift_debuff_counter:IsHidden()		return self:GetParent():GetHealthPercent() <= 0 end

@@ -391,10 +391,13 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 		if self.caster == attacker then
 
 			if target:IsAlive() and self.glaive_attack then
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
-					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
-					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
-				})
+				
+				if keys.target.IsRealHero and (keys.target:IsRealHero() or keys.target:IsTempestDouble()) and not keys.target:IsClone() then
+					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
+						duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+						int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
+					})
+				end
 
 				target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
 					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),

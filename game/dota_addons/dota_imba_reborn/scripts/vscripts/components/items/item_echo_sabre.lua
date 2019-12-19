@@ -120,8 +120,8 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 				end
 			end
 		end
-			
-		if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+		
+		if parent:HasModifier("modifier_imba_echo_rapier_haste") and (not parent:HasAbility("imba_slark_essence_shift") or parent:FindAbilityByName("imba_slark_essence_shift"):GetCooldownTime() < parent:FindAbilityByName("imba_slark_essence_shift"):GetEffectiveCooldown(parent:FindAbilityByName("imba_slark_essence_shift"):GetLevel())) then
 			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
 			mod:DecrementStackCount()
 			if mod:GetStackCount() < 1 then
@@ -235,7 +235,7 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 			end
 		end
 			
-		if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+		if parent:HasModifier("modifier_imba_echo_rapier_haste") and (not parent:HasAbility("imba_slark_essence_shift") or parent:FindAbilityByName("imba_slark_essence_shift"):GetCooldownTime() < parent:FindAbilityByName("imba_slark_essence_shift"):GetEffectiveCooldown(parent:FindAbilityByName("imba_slark_essence_shift"):GetLevel())) then
 			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
 			mod:DecrementStackCount()
 			if mod:GetStackCount() < 1 then

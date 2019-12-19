@@ -1060,16 +1060,28 @@ function imba_pudge_dismember:GetChannelTime()
 end
 
 function imba_pudge_dismember:CastFilterResultTarget(hTarget)
-	if not IsServer() then return end
+	-- if not IsServer() then return end
 
-	if not self:GetCaster():HasScepter() then
-		if self:GetCaster():GetTeam() == hTarget:GetTeam() then
-			return UF_FAIL_FRIENDLY
-		end
+	-- if not self:GetCaster():HasScepter() then
+		-- if self:GetCaster():GetTeam() == hTarget:GetTeam() then
+			-- return UF_FAIL_FRIENDLY
+		-- end
+	-- end
+
+	-- local nResult = UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+	-- return nResult
+
+	if hTarget == self:GetCaster() then
+		return UF_FAIL_CUSTOM
+	elseif not self:GetCaster():HasScepter() then
+		return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
 	end
+end
 
-	local nResult = UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
-	return nResult
+function imba_pudge_dismember:GetCustomCastErrorTarget(hTarget)
+	return "#dota_hud_error_cant_cast_on_self"
 end
 
 function imba_pudge_dismember:GetCooldown(iLevel)
@@ -1177,11 +1189,14 @@ function modifier_imba_dismember:IsDebuff() return true end
 function modifier_imba_dismember:IsHidden() return false end
 
 function modifier_imba_dismember:OnCreated()
-	self:StartIntervalThink(1.0)
-
-	self:OnIntervalThink()
-
 	if IsServer() then
+	
+		self.damage_ticks = 0
+		
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("tick_rate") * (1 - self:GetParent():GetStatusResistance()))
+
+		self:OnIntervalThink()
+		
 		-- Add the pull towards modifier
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {duration = self:GetAbility():GetChannelTime()})
 	end
@@ -1189,17 +1204,22 @@ end
 
 function modifier_imba_dismember:OnIntervalThink()
 	if not IsServer() then return end
-	local ability = self:GetAbility()
-	local dmg = ability:GetSpecialValueFor("dismember_damage") + self:GetCaster():GetStrength() * ability:GetSpecialValueFor("strength_damage") * 0.01
-	local damageTable = {
-		victim = self:GetParent(),
-		attacker = self:GetCaster(),
-		damage = dmg,
-		damage_type = DAMAGE_TYPE_MAGICAL,
-		damage_flags = DOTA_DAMAGE_FLAG_NONE,
-		ability = self:GetAbility(),
-	}
-	ApplyDamage(damageTable)
+	
+	if self.damage_ticks < 3 then
+		local ability = self:GetAbility()
+		local dmg = ability:GetSpecialValueFor("dismember_damage") + self:GetCaster():GetStrength() * ability:GetSpecialValueFor("strength_damage") * 0.01
+		local damageTable = {
+			victim = self:GetParent(),
+			attacker = self:GetCaster(),
+			damage = dmg,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			ability = self:GetAbility(),
+		}
+		ApplyDamage(damageTable)
+	
+		self.damage_ticks = self.damage_ticks + 1
+	end
 end
 
 function modifier_imba_dismember:OnDestroy()

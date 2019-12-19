@@ -519,7 +519,10 @@ function modifier_imba_windranger_powershot_overstretch:OnDestroy()
 end
 
 function modifier_imba_windranger_powershot_overstretch:CheckState()
-	return {[MODIFIER_STATE_ROOTED] = true}
+	return {
+		[MODIFIER_STATE_ROOTED]		= true,
+		[MODIFIER_STATE_DISARMED]	= true
+	}
 end
 
 function modifier_imba_windranger_powershot_overstretch:DeclareFunctions()

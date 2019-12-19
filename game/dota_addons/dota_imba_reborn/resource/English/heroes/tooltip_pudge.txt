@@ -89,6 +89,9 @@
 "DOTA_Tooltip_modifier_imba_flesh_heap_stacks"					"Flesh Heap"
 "DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and health regeneration"
 
+"DOTA_Tooltip_modifier_imba_dismember_scepter"					"Swallowed"		
+"DOTA_Tooltip_modifier_imba_dismember_scepter_Description"		"Swallowed by pudge and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% health per second. Issue a command to eject."
+
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_1"				"+10 Power and Swift stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_3"				"+60 Meat Hook width"

@@ -180,7 +180,7 @@ end
 --   - Eul's Scepter of Divinity EX
 --   - Armlet of Dementor
 --   - Arcane Nexus
-function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_PercentageUnique()
     if self:GetAbility():GetSecondaryCharges() == 1 then
         return self.spell_amp
     end

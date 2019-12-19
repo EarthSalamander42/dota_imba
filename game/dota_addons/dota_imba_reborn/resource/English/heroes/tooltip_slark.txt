@@ -22,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_slark_pounce_leash_radius"						"LEASH RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_pounce_aghanim_description"				"Provides %max_charges% charges and increases pounce range."
 "DOTA_Tooltip_ability_imba_slark_essence_shift"								"Essence Shift"
-"DOTA_Tooltip_ability_imba_slark_essence_shift_Description"					"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals %stat_loss% Agility.\n<font color='#FF7800'>Shivved:</font> When off cooldown, Essence Shift applies a fake attack immediately after an attack which triggers Essence Shift's passive."
+"DOTA_Tooltip_ability_imba_slark_essence_shift_Description"					"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals 1 Agility.\n<font color='#FF7800'>Shivved:</font> When off cooldown, Essence Shift applies a fake attack immediately after an attack which triggers Essence Shift's passive."
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Lore"							"With each strike at his adversaries, Slark's knowledge of their weaknesses improves."
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Note0"						"Attributes cannot be dropped below 1."
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Note1"						"Essence Shifted stats are returned to normal on death. The stat return for Slark and for the affected hero are separate."
