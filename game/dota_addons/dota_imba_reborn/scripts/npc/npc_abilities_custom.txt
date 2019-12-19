@@ -826,7 +826,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"reduction_multiplier"					"20"
+				"reduction_multiplier"					"25"
 			}
 		}
 

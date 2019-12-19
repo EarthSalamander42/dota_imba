@@ -16,7 +16,7 @@
 "DOTA_Tooltip_modifier_imba_strafe_self_root_Description"              "Rooted. Dramatically increased Strafe's attack range bonus."
 
 "DOTA_Tooltip_ability_imba_clinkz_death_pact_723"										"Death Pact"
-"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Description"							"Clinkz consumes the target enemy unit or skeleton, gaining max health and armor reduction on attack. If you kill an enemy hero during the buff, Clinkz will gain a permanent damage bonus and Death Pact will be refreshed.\n<font color='#FF7800'>Soul High:</font> Can also be cast on enemy heroes, dealing %soul_high_hp_damage%%% of the target's maximum health as pure, unamplifiable damage and reducing the buff duration to %soul_high_duration% seconds, but also granting %soul_high_hp_to_attack%%% of the health damage as bonus attack damage for its duration."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Description"							"Clinkz consumes the target enemy unit or skeleton, gaining max health and armor reduction on attack. If you kill an enemy hero during the buff, Clinkz will gain a permanent damage bonus and Death Pact will be refreshed.\n<font color='#FF7800'>Soul High:</font> Can also be cast on enemy heroes if Clinkz is equal to or a higher level than them, dealing %soul_high_hp_damage%%% of the target's maximum health as pure, unamplifiable damage and reducing the buff duration to %soul_high_duration% seconds, but also granting %soul_high_hp_to_attack%%% of the health damage as bonus attack damage for its duration."
 "DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Lore"									"Sutherex' bond of life and death has become a part of Clinkz, and his old bones are refreshed with repetition of the pact on lesser beings."
 "DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Note0"									"If the target is an enemy, Clinkz will gain the correct experience and gold."
 "DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Note1"									"Increases Clinkz' current and max HP."
@@ -33,6 +33,8 @@
 "DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_enemy_Description"			"Soul Feast."
 "DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_permanent_buff"			"Death Pact Damage"
 "DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_permanent_buff_Description"	"Permanently increased damage gained from killing heroes during Death Pact"
+
+"dota_hud_error_cant_cast_hero_level"									"Ability Can't Target Heroes of This Level"
 
 // Clinkz's Searing Arrows
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows"                      "Searing Arrows"

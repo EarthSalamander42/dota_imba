@@ -219,11 +219,11 @@ function modifier_item_imba_moon_shard_active:OnCreated()
 		self.consume_vision_2	= self:GetAbility():GetSpecialValueFor("consume_vision_2")
 		self.consume_as_3		= self:GetAbility():GetSpecialValueFor("consume_as_3")
 	else
-		self.consume_as_1		= 0
-		self.consume_vision_1	= 0
-		self.consume_as_2		= 0
-		self.consume_vision_2	= 0
-		self.consume_as_3		= 0
+		self.consume_as_1		= 70
+		self.consume_vision_1	= 250
+		self.consume_as_2		= 50
+		self.consume_vision_2	= 150
+		self.consume_as_3		= 30
 	end
 end
 

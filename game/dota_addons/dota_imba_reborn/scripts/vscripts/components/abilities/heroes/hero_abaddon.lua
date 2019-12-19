@@ -1027,14 +1027,18 @@ function modifier_over_channel_reduction:OnRefresh()
     self:IncrementStackCount()
 end
 
-function modifier_over_channel_reduction:DeclareFunctions()
-    local funcs    =    {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
+function modifier_over_channel_reduction:DeclareFunctions() 
+    return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
     }
-    return funcs
 end
 
-function modifier_over_channel_reduction:GetModifierPercentageCooldownStacking()
+function modifier_over_channel_reduction:GetModifierAttackSpeedBonus_Constant()
+    return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
+end
+
+function modifier_over_channel_reduction:GetModifierMoveSpeedBonus_Constant()
     return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
 end
 

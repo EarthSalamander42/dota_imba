@@ -127,7 +127,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_armor"				"-4 -6 -8 -10"
-				"LinkedSpecialBonus"		"special_bonus_unique_templar_assassin_2"
+				//"LinkedSpecialBonus"		"special_bonus_unique_templar_assassin_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_templar_assassin_meld_armor_reduction"
 			}
 			"03"
 			{

@@ -334,8 +334,12 @@ function imba_clinkz_death_pact_723:CastFilterResultTarget(hTarget)
 		return UF_SUCCESS
 		
 	-- IMBAfication: Soul High
-	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsConsideredHero() and hTarget:GetLevel() <= self:GetCaster():GetLevel() then
-		return UF_SUCCESS
+	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsConsideredHero() then
+		if hTarget:GetLevel() <= self:GetCaster():GetLevel() then
+			return UF_SUCCESS
+		else
+			return UF_FAIL_CUSTOM
+		end
 	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
 		return UF_FAIL_CUSTOM
 	else
@@ -344,8 +348,12 @@ function imba_clinkz_death_pact_723:CastFilterResultTarget(hTarget)
 end
 
 function imba_clinkz_death_pact_723:GetCustomCastErrorTarget(hTarget)
-	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
-		return "#dota_hud_error_cant_cast_creep_level"
+	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		if hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
+			return "#dota_hud_error_cant_cast_creep_level"
+		elseif hTarget:IsConsideredHero() and hTarget:GetLevel() > self:GetCaster():GetLevel() then
+			return "#dota_hud_error_cant_cast_hero_level"
+		end
 	end
 end
 
@@ -454,23 +462,23 @@ function modifier_imba_clinkz_death_pact_723_enemy:OnCreated(params)
 	end
 end
 
-function modifier_imba_clinkz_death_pact_723_permanent_buff:DeclareFunctions()
+function modifier_imba_clinkz_death_pact_723_enemy:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_EVENT_ON_DEATH
 	}
 end
 
-function modifier_imba_clinkz_death_pact_723_permanent_buff:GetModifierPhysicalArmorBonus()
+function modifier_imba_clinkz_death_pact_723_enemy:GetModifierPhysicalArmorBonus()
 	return self.armor_reduction
 end
 
-function modifier_imba_clinkz_death_pact_723_permanent_buff:OnDeath(keys)
-	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then		
+function modifier_imba_clinkz_death_pact_723_enemy:OnDeath(keys)
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) then
 		local pact_modifier	= self:GetCaster():FindModifierByName("modifier_imba_clinkz_death_pact_723_permanent_buff")
 		
 		if pact_modifier then
-			pact_modifier:IncrementStackCount()
+			pact_modifier:SetStackCount(pact_modifier:GetStackCount() + self.permanent_bonus)
 			
 			if pact_modifier:GetAbility() then
 				pact_modifier:GetAbility():EndCooldown()
@@ -1233,10 +1241,14 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 			-- sPo0kY sCaRy sKeLeToNs
 			EmitSoundOn("Imba.ClinkzSpooky", self:GetParent())
 		end
-		
-		if self:GetAbility() and self:GetAbility():GetName() == "imba_clinkz_skeleton_walk_723" then
-			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_skeleton_walk_723_strafe", {duration = self:GetAbility():GetTalentSpecialValueFor("attack_speed_duration")})
-		end
+	end
+end
+
+function modifier_imba_skeleton_walk_invis:OnDestroy()
+	if not IsServer() or not self:GetParent():IsAlive() then return end
+
+	if self:GetAbility() and self:GetAbility():GetName() == "imba_clinkz_skeleton_walk_723" then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_skeleton_walk_723_strafe", {duration = self:GetAbility():GetTalentSpecialValueFor("attack_speed_duration")})
 	end
 end
 

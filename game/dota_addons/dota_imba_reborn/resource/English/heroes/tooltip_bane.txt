@@ -39,7 +39,7 @@
 "DOTA_Tooltip_modifier_imba_brain_sap_mana_Description"                "Losing your mana pool and int."
 
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723"											"Brain Sap"
-"DOTA_Tooltip_ability_imba_bane_brain_sap_723_Description"								"Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0 for a short duration."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_723_Description"								"Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0 for %addlebrain_duration% seconds."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_brain_sap_damage"							"DAMAGE:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_tooltip_brain_sap_heal_amt"				"HEAL AMOUNT:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_cooldown_scepter"				            "SCEPTER COOLDOWN:"

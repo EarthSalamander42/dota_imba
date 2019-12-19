@@ -864,10 +864,10 @@ function modifier_imba_slark_essence_shift_debuff_counter:OnAttackLanded(keys)
 end
 
 function modifier_imba_slark_essence_shift_debuff_counter:OnDeath(keys)
-	if keys.unit == self:GetParent() and keys.unit:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and keys.attacker:HasModifier("modifier_imba_slark_essence_shift") and ((keys.unit:GetAbsOrigin() - keys.attacker:GetAbsOrigin()):Length2D() <= 300 or keys.attacker == self:GetCaster()) and not keys.attacker:HasModifier("modifier_morphling_replicate") then
-		if self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating() then
+	if keys.unit == self:GetParent() and (keys.unit == self:GetParent() or keys.unit:GetTeamNumber() ~= keys.attacker:GetTeamNumber()) and self:GetCaster():HasModifier("modifier_imba_slark_essence_shift") and ((keys.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 300 or keys.attacker == self:GetCaster()) and not self:GetCaster():HasModifier("modifier_morphling_replicate") then
+		if not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating()) then
 			self.bStealAgi = true
-			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_buff", {})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_buff", {})
 		else
 			self:Destroy()
 		end
@@ -877,8 +877,9 @@ end
 function modifier_imba_slark_essence_shift_debuff_counter:OnRespawn(keys)
 	if keys.unit == self:GetParent() and self.bStealAgi then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_debuff", {})
-		self:Destroy()
 	end
+	
+	self:Destroy()
 end
 
 function modifier_imba_slark_essence_shift_debuff_counter:GetModifierBonusStats_Agility()
