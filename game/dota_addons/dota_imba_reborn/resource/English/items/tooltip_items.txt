@@ -493,19 +493,6 @@
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_Note0"            "Midas' touch does not stack with itself."
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_bonus_attack_speed"           "+$attack"
 
-// Haste Boots
-"DOTA_Tooltip_Ability_item_imba_haste_boots"                    "Haste Boots"
-"DOTA_Tooltip_Ability_item_imba_haste_boots_Description"                    "<h1>Active: Demonic Haste</h1> Grants the bearer phased movement, %phase_ms%%% movespeed bonus, and increases the move speed limit to %ms_limit%.<font color='#FF7800'> While phased, passing through units drains %drain_damage% health from them and grants it to the caster.</font> Lasts %phase_duration% seconds."
-"DOTA_Tooltip_Ability_item_imba_haste_boots_Note0"              "Can only pass through each unit once per cast."
-"DOTA_Tooltip_Ability_item_imba_haste_boots_Note1"              "Drain deals magical damage to enemies affected."
-"DOTA_Tooltip_Ability_item_imba_haste_boots_Lore"              "Demonic Boots that are themselves the the incarnation of the devil."
-"DOTA_Tooltip_Ability_item_imba_haste_boots_bonus_movement_speed"           "+$move_speed"
-"DOTA_Tooltip_Ability_item_imba_haste_boots_bonus_damage"                   "+$damage"
-"DOTA_Tooltip_Ability_item_imba_haste_boots_bonus_strength"                 "+$str"
-
-"DOTA_Tooltip_modifier_imba_haste_boots_buff"                  "Demonic Haste"
-"DOTA_Tooltip_modifier_imba_haste_boots_buff_Description"                   "Phased, drastically increased move speed, and dealing damage to enemies you pass through."
-
 // Heart of Tarrasque
 "DOTA_Tooltip_Ability_item_imba_heart"                          "Heart of Tarrasque"
 "DOTA_Tooltip_ability_item_imba_heart_Description"				"<h1>Passive: Heart of the Dragon</h1> Restores %noncombat_regen%%% of the bearer's max health every second. The regeneration is reduced to %base_regen%%% for a few seconds after taking damage from heroes or Roshan. The cooldown is higher on ranged heroes.\n<h1><font color='#FF7800'>Passive: Tarrasque Breath</font></h1> Increases nearby heroes' strength by %aura_str%.\n<h1><font color='#FF7800'>Passive: We Are All Alive</font></h1>Health regeneration works on illusions at %alive_illusion_pct%%% efficiency.\n<h1><font color='#FF7800'>Passive: Heart Fountain</font></h1>Health regen amplification from multiple Heart of Tarrasques fully stacks."
@@ -902,19 +889,6 @@
 
 "DOTA_Tooltip_modifier_item_imba_poor_mans_shield_active"				"Damage Block Bonus"
 "DOTA_Tooltip_modifier_item_imba_poor_mans_shield_active_Description"	"Blocking additional attack damage."
-
-// Planck's Artifact
-"DOTA_Tooltip_Ability_item_imba_plancks_artifact"             "Planck's Artifact"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_Description"       "<h1><font color='#FF7800'>Active: Implosion</font></h1> Instantly causes you to die dealing %implosion_damage_percent_tooltip%%% of your current mana as pure damage in a %implosion_radius% range. Damage is applied after suicide.\n<h1>Passive: Nuclear pact</h1> Gains a charge each time an enemy hero dies within %stack_gain_radius% range. Each charge grants +%mana_regen_per_charge% <font color='#FF7800'>base mana regen</font>, and reduces respawn time by %respawn_time_reduction% seconds. If the bearer dies, nearby allies are healed for %heal_on_death_base% + %heal_on_death_per_charge% per charge, and Planck's Artifact loses %on_death_loss_tooltip%%% of its charges.\n<h1>Passive: Planck's will</h1> Grants %spell_lifesteal%%% spell lifesteal and %bonus_cooldown%%% cooldown reduction.\n"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_Lore"            "Billion of year's ago, three ancient items collided into an articact carried by the conqueror of death."
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_health"        "+$health"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_mana"        "+$mana"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_mana_regen"      "+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_strength"      "+$str"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_agility"       "+$agi"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_intelligence"    "+$int"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_bonus_cooldown"      "%COOLDOWN REDUCTION:"
-"DOTA_Tooltip_ability_item_imba_plancks_artifact_spell_lifesteal"     "%SPELL LIFESTEAL:"
 
 // Purgeblade
 "DOTA_Tooltip_Ability_item_imba_diffusal_blade_2"              "Purgeblade"

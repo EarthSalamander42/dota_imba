@@ -70,7 +70,7 @@ end
 function item_imba_blink:GetAbilityTextureName()
 	if not IsClient() then return end
 	local caster = self:GetCaster()
-	if not caster.blink_icon_client then return "custom/imba_blink" end
+	if not caster.blink_icon_client then return "item_blink" end
 	return "custom/imba_blink"..caster.blink_icon_client
 end
 

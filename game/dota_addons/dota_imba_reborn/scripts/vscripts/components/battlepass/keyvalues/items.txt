@@ -1,0 +1,10 @@
+"BattlepassHeroes"
+{
+	"10888" // Antipode Couriers (Radiant)
+	{
+		"item_cost"					"1500" // poggers cost
+		"item_name"					"Angelic Recruit" // todo: string in addon_english.txt
+		"item_rarity"				"mythical" // not required if item rarity is same than vanilla
+		"item_type"					"courier" // or courier_flying
+	}
+}

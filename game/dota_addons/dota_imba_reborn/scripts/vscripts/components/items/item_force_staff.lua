@@ -57,7 +57,7 @@ end
 
 function item_imba_force_staff:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "custom/imba_force_staff" end
+	if not self:GetCaster().force_staff_icon_client then return "item_force_staff" end
 
 	return "custom/imba_force_staff"..self:GetCaster().force_staff_icon_client
 end
@@ -187,7 +187,7 @@ LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "components/it
 
 function item_imba_hurricane_pike:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "custom/imba_hurricane_pike" end
+	if not self:GetCaster().force_staff_icon_client then return "item_hurricane_pike" end
 	return "custom/imba_hurricane_pike"..self:GetCaster().force_staff_icon_client
 end
 

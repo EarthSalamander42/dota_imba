@@ -2,6 +2,7 @@ ItemsGame = ItemsGame or class({})
 
 function ItemsGame:Init()
 	ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
+	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
 
 --	for k, v in pairs(ItemsGame.kv) do
 --		print(k, v)
@@ -94,7 +95,74 @@ function ItemsGame:GetItemKV(item_id)
 	return ItemsGame.kv["items"][item_id]
 end
 
+function ItemsGame:GetItemVisuals(item_id)
+	return ItemsGame.kv["items"][item_id]["visuals"]
+end
+
+function ItemsGame:GetItemName(item_id)
+	if ItemsGame.custom_kv[item_id] and ItemsGame.custom_kv[item_id]["item_name"] then
+		return ItemsGame.custom_kv[item_id]["item_name"]
+	end
+
+	return ItemsGame.kv[item_id]["item_name"]
+end
+
+function ItemsGame:GetItemRarity(item_id)
+	if ItemsGame.custom_kv[item_id] and ItemsGame.custom_kv[item_id]["item_rarity"] then
+		return ItemsGame.custom_kv[item_id]["item_rarity"]
+	end
+
+	return ItemsGame.kv[item_id]["item_rarity"]
+end
+
+function ItemsGame:GetItemType(item_id)
+	if ItemsGame.custom_kv[item_id] and ItemsGame.custom_kv[item_id]["item_type"] then
+		return ItemsGame.custom_kv[item_id]["item_type"]
+	end
+
+	return nil
+end
+
+function ItemsGame:GetItemTeam(item_id)
+	if ItemsGame.custom_kv[item_id] and ItemsGame.custom_kv[item_id]["item_team"] then
+		return ItemsGame.custom_kv[item_id]["item_team"]
+	end
+
+	return "radiant" -- let's default to radiant for now
+end
+
+function ItemsGame:GetItemModel(item_id)
+	local item_team = ItemsGame:GetItemTeam(item_id)
+	local item_type = ItemsGame:GetItemType(item_id)
+	local item_visuals = ItemsGame:GetItemVisuals(item_id)
+
+	if item_visuals then
+		for k, v in pairs(item_visuals) do
+			print(v["asset"], item_team)
+			print(v["type"], item_type)
+			if v["asset"] and v["asset"] == item_team then
+				if v["type"] and v["type"] == item_type then
+					print("FOUND MODEL:", v["modifier"])
+					return v["modifier"]
+				end
+			end
+		end
+	end
+
+	return nil
+end
+
+--[[
+function GetItemInfo(item_id)
+	local info = {}
+	info.rarity = ItemsGame:GetItemRarity()
+
+	return info
+end
+--]]
+
 ItemsGame:Init()
 
-print("Axe Unleashed KV:")
-PrintTable(ItemsGame:GetItemKV("12964"))
+-- print("Antipode Couriers KV:")
+-- PrintTable(ItemsGame:GetItemKV("10888"))
+-- print(ItemsGame:GetItemModel("10888"))
