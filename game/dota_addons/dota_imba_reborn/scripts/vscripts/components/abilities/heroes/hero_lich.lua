@@ -2062,23 +2062,29 @@ function imba_lich_sinister_gaze:OnSpellStart()
 
 		self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
 		self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
-
-		IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
-	else
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
 		
-		if #enemies == 0 then
+		if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+			IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
+		end
+	else
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_CLOSEST, false)
+		
+		if #units == 0 then
 			self.end_channel = true 
 		else	
-			for _, enemy in pairs(enemies) do
-				if _ == 1 then
-					self.target = enemy
+			for _, unit in pairs(units) do
+				if unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or (unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() and unit:IsCreep() and not unit:IsConsideredHero()) then
+					if _ == 1 then
+						self.target = unit
+					end
+				
+					unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
+					unit:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
+					
+					if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+						IncreaseStacksColdFront(self.caster, unit, self.cold_front_stacks)
+					end
 				end
-			
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
-				enemy:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
-
-				IncreaseStacksColdFront(self.caster, enemy, self.cold_front_stacks)
 			end
 		end
 	end

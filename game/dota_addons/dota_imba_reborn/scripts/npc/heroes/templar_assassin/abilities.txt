@@ -273,7 +273,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trap_bonus_damage"			"250 450 650"
-				"LinkedSpecialBonus"	"special_bonus_unique_templar_assassin_3"
+				//"LinkedSpecialBonus"	"special_bonus_unique_templar_assassin_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_templar_assassin_psionic_trap_damage"
 			}
 			"07"
 			{
@@ -366,7 +367,8 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trap_bonus_damage"			"300 425 550"
+				"trap_bonus_damage"			"250 450 650"
+				"LinkedSpecialBonus"		"special_bonus_imba_templar_assassin_psionic_trap_damage"
 			}
 			"04"
 			{
@@ -463,6 +465,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trap_bonus_damage"			"250 450 650"
+				"LinkedSpecialBonus"		"special_bonus_imba_templar_assassin_psionic_trap_damage"
 				"RequiresScepter"		"1"
 			}
 			"04"
@@ -546,6 +549,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trap_bonus_damage"			"250 450 650"
+				"LinkedSpecialBonus"		"special_bonus_imba_templar_assassin_psionic_trap_damage"
 			}
 			"04"
 			{

@@ -437,7 +437,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1" // Doesn't matter what this value is because using the Gem of True Sight modifier bases its radius on the ability radius KV
+				"value"					"250" // If this is changed, change radius in Firefly KV as well to match
 			}
 		}
 	}

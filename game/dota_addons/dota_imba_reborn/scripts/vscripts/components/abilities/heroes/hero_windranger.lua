@@ -554,6 +554,14 @@ end
 	-- self:OnInventoryContentsChanged()
 -- end
 
+function imba_windranger_windrun:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return 0
+	end
+end
+
 function imba_windranger_windrun:OnSpellStart()
 	self:GetCaster():EmitSound("Ability.Windrun")
 
@@ -607,7 +615,7 @@ function modifier_imba_windranger_windrun_handler:CalculateCharge()
 		self:SetDuration(-1, true)
 		self:StartIntervalThink(-1)
 	else
-		if self:GetRemainingTime() <= 0.05 then			
+		if self:GetRemainingTime() <= 0.05 then
 			self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction())
 			self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction(), true)
 		end
@@ -641,7 +649,7 @@ function modifier_imba_windranger_windrun_handler:OnAbilityFullyCast(params)
 				end
 			end
 
-			if wtf_mode == false then
+			if wtf_mode ~= false then
 				for item = 0, 15 do
 					if self:GetParent():GetItemInSlot(item) and self:GetParent():GetItemInSlot(item):GetCooldownTimeRemaining() > 0 then
 						wtf_mode = false
@@ -724,10 +732,12 @@ function modifier_imba_windranger_windrun:DeclareFunctions()
 end
 
 function modifier_imba_windranger_windrun:GetModifierMoveSpeedBonus_Percentage()
-	if not self:GetCaster():HasScepter() then
-		return self.movespeed_bonus_pct
-	else
-		return self.movespeed_bonus_pct + self.scepter_bonus_movement
+	if self:GetCaster() then
+		if not self:GetCaster():HasScepter() then
+			return self.movespeed_bonus_pct
+		else
+			return self.movespeed_bonus_pct + self.scepter_bonus_movement
+		end
 	end
 end
 
@@ -736,7 +746,7 @@ function modifier_imba_windranger_windrun:GetModifierEvasion_Constant()
 end
 
 function modifier_imba_windranger_windrun:GetModifierIgnoreMovespeedLimit()
-	if self:GetCaster():HasScepter() then
+	if self:GetCaster() and self:GetCaster():HasScepter() then
 		return 1
 	end
 end
@@ -786,6 +796,10 @@ end
 --------------------------------------------
 -- MODIFIER_IMBA_WINDRANGER_WINDRUN_INVIS --
 --------------------------------------------
+
+function modifier_imba_windranger_windrun_invis:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = true}
+end
 
 function modifier_imba_windranger_windrun_invis:DeclareFunctions()
 	return {
