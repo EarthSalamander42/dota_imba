@@ -1418,7 +1418,7 @@ imba_invoker = imba_invoker or class({})
 				self.damage 			= kv.damage
 				self.burn_dps 			= ((self.damage / 100) * self.incinerate_damage) / 5
 
-				self:StartIntervalThink(0.2)
+				self:StartIntervalThink(0.2 * (1 - self:GetParent():GetStatusResistance()))
 			end
 		end
 
@@ -1478,9 +1478,11 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_sun_strike_thinker:OnCreated(kv)
 			if not IsServer() then return end
 			
-			self.area_of_effect 		= kv.area_of_effect
-			self.incinerate_duration	= kv.incinerate_duration
-			self.damage					= kv.damage
+			self.area_of_effect 		= self:GetAbility():GetSpecialValueFor("area_of_effect")
+			self.damage					= self:GetAbility():GetLevelSpecialValueFor("damage", exort_level)
+			
+			self.incinerate_duration	= self:GetAbility():GetSpecialValueFor("incinerate_duration")
+			self.mini_beam_radius 		= self:GetAbility():GetSpecialValueFor("incinerate_beam_radius")
 			
 			if (kv.target_point_x and kv.target_point_y and kv.target_point_z) then
 				self.target_point = Vector(kv.target_point_x, kv.target_point_y, kv.target_point_z)
@@ -1492,9 +1494,39 @@ imba_invoker = imba_invoker or class({})
 				sun_strike_beam = ParticleManager:CreateParticleForTeam("particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_immortal1.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
 				ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
 				ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect, 0, 0))
-				ParticleManager:ReleaseParticleIndex(sun_strike_beam)
+				self:AddParticle(sun_strike_beam, false, false, -1, false, false)
 			else
 				
+			end
+			
+			self.direction 			= (self.target_point - self:GetCaster():GetAbsOrigin()):Normalized()
+			self.degrees 			= 180 / 6
+			self.fierd_sunstrikes 	= 0
+			
+			self.sun_strike_beam	= nil
+			self.sun_strike_beam2	= nil
+			
+			self:StartIntervalThink(0.1)
+		end
+
+		function modifier_imba_invoker_sun_strike:OnIntervalThink()
+--			EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.SunStrike.Charge", self.caster)
+			
+			-- upper beam
+			self.sun_strike_beam = ParticleManager:CreateParticleForPlayer("particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
+			ParticleManager:SetParticleControl(self.sun_strike_beam, 0, self.target_point + (self.direction * self.mini_beam_radius))
+			self:AddParticle(self.sun_strike_beam, false, false, -1, false, false)
+			
+			-- mirrored bottom beam
+			self.sun_strike_beam2 = ParticleManager:CreateParticleForPlayer("particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
+			ParticleManager:SetParticleControl(self.sun_strike_beam2, 0, self.target_point - (self.direction * self.mini_beam_radius))
+			self:AddParticle(self.sun_strike_beam2, false, false, -1, false, false)
+
+			self.fierd_sunstrikes = self.fierd_sunstrikes + 2
+			self.direction = RotatePosition(Vector(0,0,0), QAngle(0, self.degrees, 0), self.direction)
+
+			if self.fierd_sunstrikes == 12 then 
+				self:StartIntervalThink(-1)
 			end
 		end
 		
@@ -1506,26 +1538,41 @@ imba_invoker = imba_invoker or class({})
 			ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
 			ParticleManager:ReleaseParticleIndex(sun_strike_crater)
 			
-							-- Check if we hit stuff
-				local nearby_enemy_units = FindUnitsInRadius(
-					self:GetCaster():GetTeamNumber(),
-					self.target_point, 
-					nil, 
-					self.area_of_effect, 
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
-					FIND_ANY_ORDER, 
-					false)
+			local nearby_enemy_units = FindUnitsInRadius(
+				self:GetCaster():GetTeamNumber(),
+				self.target_point, 
+				nil, 
+				self.area_of_effect + (self.mini_beam_radius / 2),
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 
+				FIND_ANY_ORDER, 
+				false)
+			
+			local incinerate_modifier = nil
 
-				if nearby_enemy_units ~= nil then
-					-- Add incinerate to enemies hit
-					for _,hero in pairs(nearby_enemy_units) do
-						hero:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration, damage = self.damage})
-					end	
-					-- Damage is shared between all units hit
-					imba_invoker_sun_strike:OnHit(self:GetCaster(), self:GetAbility(), nearby_enemy_units, self.damage)
+			if #nearby_enemy_units > 0 then
+				-- Add incinerate to enemies hit
+				for _, enemy in pairs(nearby_enemy_units) do					
+					
+					if (GetGroundPosition(enemy:GetAbsOrigin(), nil) - self.target_point):Length2D() <= self.area_of_effect then
+						ApplyDamage({
+							victim 			= enemy,
+							damage 			= self.damage / #nearby_enemy_units,
+							damage_type		= DAMAGE_TYPE_PURE,
+							damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+							attacker 		= self:GetCaster(),
+							ability 		= self:GetAbility()
+						})
+					end
+					
+					incinerate_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_invoker_sun_strike_incinerate", {duration = self.incinerate_duration, damage = self.damage})
+					
+					if incinerate_modifier then
+						incinerate_modifier:SetDuration(self.incinerate_duration * (1 - enemy:GetStatusResistance()), true)
+					end
 				end
+			end
 		end
 
 	---------------------------------------------------------------------------------------------------------------------

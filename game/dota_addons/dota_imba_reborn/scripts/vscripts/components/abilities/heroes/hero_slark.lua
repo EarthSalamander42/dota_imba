@@ -422,6 +422,17 @@ function modifier_imba_slark_pounce:OnCreated()
 		self.duration		= self:GetAbility():GetSpecialValueFor("pounce_distance_scepter") / self.pounce_speed
 	end
 
+	self.redirection_commands = 
+	{
+		[DOTA_UNIT_ORDER_MOVE_TO_POSITION] 	= true,
+		[DOTA_UNIT_ORDER_MOVE_TO_TARGET] 	= true,
+		[DOTA_UNIT_ORDER_ATTACK_MOVE] 		= true,
+		[DOTA_UNIT_ORDER_ATTACK_TARGET] 	= true,
+		[DOTA_UNIT_ORDER_CAST_POSITION]		= true,
+		[DOTA_UNIT_ORDER_CAST_TARGET]		= true,
+		[DOTA_UNIT_ORDER_CAST_TARGET_TREE]	= true,
+	}
+
 	-- I don't see notes on the height in wiki so gonna use arbitrary height of 125 for now
 	self.vertical_velocity		= 4 * 125 / self.duration
 	self.vertical_acceleration	= -(8 * 125) / (self.duration * self.duration)
@@ -532,20 +543,13 @@ end
 
 function modifier_imba_slark_pounce:OnOrder(keys)
 	if keys.unit == self:GetParent() then
-		local redirection_commands = 
-		{
-			[DOTA_UNIT_ORDER_MOVE_TO_POSITION] 	= true,
-			[DOTA_UNIT_ORDER_MOVE_TO_TARGET] 	= true,
-			[DOTA_UNIT_ORDER_ATTACK_MOVE] 		= true,
-			[DOTA_UNIT_ORDER_ATTACK_TARGET] 	= true,
-			[DOTA_UNIT_ORDER_CAST_POSITION]		= true,
-			[DOTA_UNIT_ORDER_CAST_TARGET]		= true,
-			[DOTA_UNIT_ORDER_CAST_TARGET_TREE]	= true,
-		}
-		
 		-- Testing something to try and stop randomly cancelled charges but IDK what the issue is
-		if redirection_commands[keys.order_type] and keys.new_pos then
-			self.redirect_pos = keys.new_pos
+		if self.redirection_commands[keys.order_type] then
+			if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and keys.new_pos then
+				self.redirect_pos = keys.new_pos
+			elseif keys.target then
+				self.redirect_pos = keys.target:GetAbsOrigin()
+			end
 		end
 	end
 end
@@ -1030,6 +1034,9 @@ end
 ----------------------------------------------------
 -- MODIFIER_IMBA_SLARK_SHADOW_DANCE_PASSIVE_REGEN --
 ----------------------------------------------------
+
+function modifier_imba_slark_shadow_dance_passive_regen:IsPurgable()	return false end
+function modifier_imba_slark_shadow_dance_passive_regen:RemoveOnDeath()	return false end
 
 function modifier_imba_slark_shadow_dance_passive_regen:IsHidden()
 	return self:GetStackCount() < 0 and not self:GetParent():HasModifier("modifier_imba_slark_shadow_dance")
