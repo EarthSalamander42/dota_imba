@@ -10470,8 +10470,8 @@
 	{
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"templar_assassin_self_trap"			// Ability 1
-		"Ability2"					"imba_templar_assassin_self_trap"		// Ability 2
+		//"Ability1"					"templar_assassin_self_trap"			// Ability 1
+		"Ability1"					"imba_templar_assassin_self_trap"		// Ability 2
 	}
 	
 	"npc_dota_slark_spawn"
