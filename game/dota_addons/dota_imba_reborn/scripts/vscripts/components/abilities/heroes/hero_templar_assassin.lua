@@ -105,6 +105,8 @@ end
 -------------------------------------------------------
 
 function modifier_imba_templar_assassin_refraction_handler:IsHidden()		return true end
+function modifier_imba_templar_assassin_refraction_handler:IsPurgable()		return false end
+function modifier_imba_templar_assassin_refraction_handler:RemoveOnDeath()	return false end
 function modifier_imba_templar_assassin_refraction_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_templar_assassin_refraction_handler:DeclareFunctions()

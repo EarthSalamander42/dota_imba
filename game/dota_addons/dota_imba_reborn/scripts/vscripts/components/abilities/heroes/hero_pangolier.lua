@@ -43,6 +43,7 @@ end
 imba_pangolier_swashbuckle = imba_pangolier_swashbuckle or class({})
 LinkLuaModifier("modifier_imba_swashbuckle_dash", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_swashbuckle_slashes", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swashbuckle_damage_control", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_swashbuckle_buff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pangolier_swashbuckle:GetAbilityTextureName()
@@ -406,25 +407,29 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 				ParticleManager:SetParticleControl(blood_particle, 0, enemy:GetAbsOrigin()) --origin of particle
 				ParticleManager:SetParticleControl(blood_particle, 2, self.direction * 500) --direction and speed of the blood spills
 
-				--Talent #8: Swashbuckle also uses a % of Pangolier attack damage
-				if self:GetCaster():HasTalent("special_bonus_imba_pangolier_8") then
-					self.damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
-				end
+				-- --Talent #8: Swashbuckle also uses a % of Pangolier attack damage
+				-- if self:GetCaster():HasTalent("special_bonus_imba_pangolier_8") then
+					-- self.damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
+				-- end
 
-				--Apply the damage from the slash
-				local damageTable = {victim = enemy,
-					damage = self.damage,
-					damage_type = DAMAGE_TYPE_PHYSICAL,
-					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-					attacker = self:GetCaster(),
-					ability = nil
-				}
+				-- --Apply the damage from the slash
+				-- local damageTable = {victim = enemy,
+					-- damage = self.damage,
+					-- damage_type = DAMAGE_TYPE_PHYSICAL,
+					-- damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+					-- attacker = self:GetCaster(),
+					-- ability = nil
+				-- }
 
-				ApplyDamage(damageTable)
-				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_DAMAGE, enemy, self.damage, nil)
+				-- ApplyDamage(damageTable)
+				-- -- SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_DAMAGE, enemy, self.damage, nil)
 
-				--Apply on-hit effects
-				self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)
+				-- --Apply on-hit effects
+				-- self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)
+
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_swashbuckle_damage_control", {})
+				self:GetCaster():PerformAttack(enemy, true, true, true, true, false, false, true)
+				self:GetCaster():RemoveModifierByName("modifier_imba_swashbuckle_damage_control")
 			end
 		end
 
@@ -447,10 +452,39 @@ function modifier_imba_swashbuckle_slashes:OnRemoved()
 end
 
 function modifier_imba_swashbuckle_slashes:CheckState()
-	state = {[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_CANNOT_MISS] = true}
+	return {[MODIFIER_STATE_STUNNED] = true}
+end
 
-	return state
+----------------------------------------------
+-- MODIFIER_IMBA_SWASHBUCKLE_DAMAGE_CONTROL --
+----------------------------------------------
+
+modifier_imba_swashbuckle_damage_control	= modifier_imba_swashbuckle_damage_control or class({})
+
+function modifier_imba_swashbuckle_damage_control:IsHidden()	return true end
+function modifier_imba_swashbuckle_damage_control:IsPurgable()	return false end
+
+function modifier_imba_swashbuckle_damage_control:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetAbility() then
+		--Talent #8: Swashbuckle also uses a % of Pangolier attack damage
+		if not self:GetCaster():HasTalent("special_bonus_imba_pangolier_8") then
+			self.damage	= self:GetAbility():GetSpecialValueFor("damage")
+		else
+			self.damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
+		end
+	else
+		self.damage = 0
+	end
+end
+
+function modifier_imba_swashbuckle_damage_control:DeclareFunctions()
+	return {MODIFIER_PROPERTY_OVERRIDE_ATTACK_DAMAGE}
+end
+
+function modifier_imba_swashbuckle_damage_control:GetModifierOverrideAttackDamage()
+	return self.damage
 end
 
 --Swashbuckle attack speed buff

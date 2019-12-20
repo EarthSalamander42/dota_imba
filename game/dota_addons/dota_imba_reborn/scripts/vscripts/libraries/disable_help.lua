@@ -56,6 +56,7 @@ local disabledAbilities = {
 	imba_winter_wyvern_cold_embrace = true,
 	imba_weaver_time_lapse = true,
 	imba_wisp_tether = true,
+	imba_pudge_dismember = true,
 
 	-- items
 	item_imba_force_staff = true,

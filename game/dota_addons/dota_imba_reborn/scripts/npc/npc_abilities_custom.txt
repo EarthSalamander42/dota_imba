@@ -14915,12 +14915,20 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"11"
+				"scepter_healing_pct"		"4" // %
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"order_lock_duration"		"3"
+				"RequiresScepter"			"1"
+			}
+			"11"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_healing_pct"		"4" // %
+				"scepter_cooldown"			"11"
+				"RequiresScepter"			"1"
 			}
 		}
 	}

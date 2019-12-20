@@ -1327,7 +1327,8 @@ function modifier_imba_dismember_scepter:CheckState() return {
 	[MODIFIER_STATE_OUT_OF_GAME] = true,
 	[MODIFIER_STATE_DISARMED] = true,
 	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-	[MODIFIER_STATE_UNSELECTABLE] = true
+	[MODIFIER_STATE_UNSELECTABLE] = true,
+	[MODIFIER_STATE_COMMAND_RESTRICTED] = self:GetElapsedTime() <= self.order_lock_duration
 } end
 
 function modifier_imba_dismember_scepter:DeclareFunctions() return {
@@ -1336,6 +1337,8 @@ function modifier_imba_dismember_scepter:DeclareFunctions() return {
 } end
 
 function modifier_imba_dismember_scepter:OnCreated()
+	self.order_lock_duration	= self:GetAbility():GetSpecialValueFor("order_lock_duration")
+
 	if not IsServer() then return end
 
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())

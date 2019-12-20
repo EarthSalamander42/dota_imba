@@ -19,6 +19,10 @@ function modifier_generic_orb_effect_lua:IsPurgable()
 	return false
 end
 
+function modifier_generic_orb_effect_lua:RemoveOnDeath()
+	return false
+end
+
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_generic_orb_effect_lua:OnCreated( kv )
@@ -58,7 +62,9 @@ function modifier_generic_orb_effect_lua:OnAttackRecord( params )
 	if params.attacker~=self:GetParent() then return end
 
 	-- check autocast
-	if self.ability:GetAutoCastState() then
+	if (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) or self.cast then
+		self.bPrimed = true
+	
 		-- filter whether target is valid 
 		if UnitFilter(
 			params.target,
@@ -71,6 +77,8 @@ function modifier_generic_orb_effect_lua:OnAttackRecord( params )
 		else
 			self.cast = false
 		end
+	else
+		self.bPrimed = false
 	end
 
 	-- register attack if being cast and fully castable
@@ -84,22 +92,22 @@ end
 function modifier_generic_orb_effect_lua:OnAttack( params )
 	if params.attacker~=self:GetParent() then return end
 
-	-- check autocast
-	if self.ability:GetAutoCastState() then
-		-- filter whether target is valid 
-		if UnitFilter(
-			params.target,
-			self.ability:GetAbilityTargetTeam(),
-			self.ability:GetAbilityTargetType(),
-			self.ability:GetAbilityTargetFlags(),
-			self:GetCaster():GetTeamNumber()
-		) == UF_SUCCESS then
-			self.cast = true
-		end
-	end
+	-- -- check autocast
+	-- if self.ability:GetAutoCastState() then
+		-- -- filter whether target is valid 
+		-- if UnitFilter(
+			-- params.target,
+			-- self.ability:GetAbilityTargetTeam(),
+			-- self.ability:GetAbilityTargetType(),
+			-- self.ability:GetAbilityTargetFlags(),
+			-- self:GetCaster():GetTeamNumber()
+		-- ) == UF_SUCCESS then
+			-- self.cast = true
+		-- end
+	-- end
 
 	-- register attack if being cast and fully castable
-	if self.cast and self.ability:IsFullyCastable() then
+	if (self.cast and self.ability:IsFullyCastable()) or self.bPrimed then
 		-- use mana and cd
 		self.ability:UseResources( true, false, true )
 
@@ -137,7 +145,8 @@ function modifier_generic_orb_effect_lua:OnOrder( params )
 
 	if params.ability then
 		-- if this ability, cast
-		if params.ability==self:GetAbility() and not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) then
+		-- if params.ability==self:GetAbility() and not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) then
+		if params.ability==self:GetAbility() and (not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) or (self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) and not self:GetAbility():GetAutoCastState())) then -- Remember that logic is reversed such that not being detected here usually mean it's on
 			self.cast = true
 			return
 		end
