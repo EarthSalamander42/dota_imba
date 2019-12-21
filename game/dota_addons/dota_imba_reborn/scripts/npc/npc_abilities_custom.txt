@@ -42203,7 +42203,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_aspd"		"3"
+				"melee_aspd"		"0"
 			}
 			"03"
 			{
@@ -42218,12 +42218,12 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_ms"			"3.0"
+				"melee_ms"			"3"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_hp"			"16"
+				"melee_hp"			"20"
 			}
 			"07"
 			{

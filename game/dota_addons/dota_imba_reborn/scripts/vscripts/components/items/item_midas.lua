@@ -96,7 +96,8 @@ function item_imba_hand_of_midas:GetAbilityTextureName()
 		["npc_dota_lone_druid_bear7"] = true,
 		["npc_dota_hero_broodmother"] = true,
 		["npc_dota_hero_lycan"] = true,
-		["npc_dota_hero_ursa"] = true
+		["npc_dota_hero_ursa"] = true,
+		["npc_dota_hero_malfurion"] = true,
 	}
 
 	if animal_heroes[caster_name] then

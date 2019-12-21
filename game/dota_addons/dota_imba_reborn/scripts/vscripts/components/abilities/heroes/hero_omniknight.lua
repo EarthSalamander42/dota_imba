@@ -119,9 +119,9 @@ function Purification(caster, ability, target)
 
     -- Get spell power
     local spell_power = caster:GetSpellAmplification(false)
-
+	
     -- Calculate final heal/damage values
-    local heal = heal_amount * (1+ (spell_power * 0.01))
+    local heal = heal_amount
     local damage = heal
 
     -- Heal target
@@ -147,7 +147,7 @@ function Purification(caster, ability, target)
                                  attacker = caster, 
                                  damage = damage,
                                  damage_type = DAMAGE_TYPE_PURE,
-                                 damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+                                 damage_flags = DOTA_DAMAGE_FLAG_NONE,
                                  ability = ability
                                 }
         

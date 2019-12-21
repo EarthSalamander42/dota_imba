@@ -37,9 +37,30 @@ function GameMode:OnUnitFirstSpawn(unit)
 		unit:AddAbility("custom_creep_scaling")
 	end
 	
-	if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" then
+	-- Gotta do it manually here because the ability/modifier doesn't work on server-side for some godforsaken reason
+	if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" or string.find(unit:GetUnitName(), "_neutral_") then
 		if unit:HasAbility("custom_creep_scaling") then
-			unit:FindAbilityByName("custom_creep_scaling"):SetLevel(1)
+			local creep_scaling_ability = unit:FindAbilityByName("custom_creep_scaling")
+			creep_scaling_ability:SetLevel(1)
+			
+			local multiplier		= creep_scaling_ability:GetSpecialValueFor("base_mult")
+			
+			if string.find(unit:GetUnitName(), "upgraded") then 
+				multiplier	= creep_scaling_ability:GetSpecialValueFor("super_mult")
+			elseif string.find(unit:GetUnitName(), "upgraded_mega") then
+				multiplier	= creep_scaling_ability:GetSpecialValueFor("mega_mult")
+			end
+			
+			local game_time		= math.floor(GameRules:GetDOTATime(false, false) / 60)
+			
+			unit:SetBaseDamageMin(unit:GetBaseDamageMin() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
+			unit:SetBaseDamageMax(unit:GetBaseDamageMax() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
+			-- unit:SetBaseAttackTime(unit:GetBaseAttackTime() - creep_scaling_ability:GetSpecialValueFor("melee_aspd") * game_time * multiplier)
+			unit:SetBaseMoveSpeed(unit:GetBaseMoveSpeed() + creep_scaling_ability:GetSpecialValueFor("melee_ms") * game_time * multiplier) -- Works but doesn't show on client side (wtf...)
+			unit:SetMaxHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier) -- Works
+			unit:SetBaseMaxHealth(unit:GetBaseMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier) -- Works
+			unit:SetHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier) -- Works
+			unit:SetBaseHealthRegen(unit:GetBaseHealthRegen() + creep_scaling_ability:GetSpecialValueFor("melee_regen") * game_time * multiplier) -- Works
 		end
 	
 		if IMBA_GREEVILING == true then
