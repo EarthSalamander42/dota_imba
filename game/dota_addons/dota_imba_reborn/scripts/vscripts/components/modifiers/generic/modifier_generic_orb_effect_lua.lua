@@ -62,9 +62,7 @@ function modifier_generic_orb_effect_lua:OnAttackRecord( params )
 	if params.attacker~=self:GetParent() then return end
 
 	-- check autocast
-	if (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) or self.cast then
-		self.bPrimed = true
-	
+	if (self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self:GetParent():IsSilenced()) or self.cast then
 		-- filter whether target is valid 
 		if UnitFilter(
 			params.target,
@@ -73,8 +71,10 @@ function modifier_generic_orb_effect_lua:OnAttackRecord( params )
 			self.ability:GetAbilityTargetFlags(),
 			self:GetCaster():GetTeamNumber()
 		) == UF_SUCCESS then
+			self.bPrimed = true
 			self.cast = true
 		else
+			self.bPrimed = false
 			self.cast = false
 		end
 	else
@@ -82,7 +82,7 @@ function modifier_generic_orb_effect_lua:OnAttackRecord( params )
 	end
 
 	-- register attack if being cast and fully castable
-	if self.cast and self.ability:IsFullyCastable() then
+	if self.cast and self.ability:IsFullyCastable() and not self:GetParent():IsSilenced() then
 		-- run OrbRecord script if available
 		if self.ability.OnOrbRecord then self.ability:OnOrbRecord( params ) end
 	end
@@ -107,7 +107,7 @@ function modifier_generic_orb_effect_lua:OnAttack( params )
 	-- end
 
 	-- register attack if being cast and fully castable
-	if (self.cast and self.ability:IsFullyCastable()) or self.bPrimed then
+	if (self.cast and self.ability:IsFullyCastable() and not self:GetParent():IsSilenced() and UnitFilter(params.target, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS) or self.bPrimed then	
 		-- use mana and cd
 		self.ability:UseResources( true, false, true )
 
@@ -146,7 +146,7 @@ function modifier_generic_orb_effect_lua:OnOrder( params )
 	if params.ability then
 		-- if this ability, cast
 		-- if params.ability==self:GetAbility() and not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) then
-		if params.ability==self:GetAbility() and (not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) or (self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) and not self:GetAbility():GetAutoCastState())) then -- Remember that logic is reversed such that not being detected here usually mean it's on
+		if params.ability==self:GetAbility() and ((not self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) and params.target and UnitFilter(params.target, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS) or (self:FlagExist( params.order_type, DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO ) and not self:GetAbility():GetAutoCastState())) then -- Remember that logic is reversed such that not being detected here usually mean it's on
 			self.cast = true
 			return
 		end
@@ -183,7 +183,7 @@ end
 -- This isn't perfect because it will still show the orb if you autocast it against a magic immune target, even if the orb cannot be cast on them
 function modifier_generic_orb_effect_lua:GetModifierProjectileName( params )
 	if self.ability.GetProjectileName then
-		if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) then
+		if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self:GetParent():IsSilenced()) then
 			 self.target = self:GetParent():GetAttackTarget()
 
 			 if self.target and UnitFilter(self.target, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS then

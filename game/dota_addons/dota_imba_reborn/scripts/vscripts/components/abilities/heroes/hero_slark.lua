@@ -1221,7 +1221,7 @@ function modifier_imba_slark_shadow_dance_aura:IsAura() 				return true end
 function modifier_imba_slark_shadow_dance_aura:IsAuraActiveOnDeath()	return false end
 
 function modifier_imba_slark_shadow_dance_aura:GetAuraRadius()			return self.aoe or 0 end
-function modifier_imba_slark_shadow_dance_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
 
 function modifier_imba_slark_shadow_dance_aura:GetAuraSearchTeam()
 	if not self:GetParent():GetName() == "npc_dota_thinker" then
@@ -1245,6 +1245,7 @@ end
 --------------------------------------
 
 function modifier_imba_slark_shadow_dance:IsPurgable()	return false end
+function modifier_imba_slark_shadow_dance:GetPriority()	return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_slark_shadow_dance:GetStatusEffectName()
 	return "particles/status_fx/status_effect_slark_shadow_dance.vpcf"

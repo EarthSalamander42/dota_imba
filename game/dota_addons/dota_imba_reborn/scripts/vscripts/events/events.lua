@@ -549,7 +549,7 @@ function GameMode:OnPlayerLevelUp(keys)
 			hero:FindModifierByName("modifier_imba_war_veteran_" .. hero_attribute):SetStackCount(math.min(hero:GetLevel() - 25, 17))
 		end
 
-		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+		-- hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
 	
 	for _, ability in ipairs(subAbilities) do 
