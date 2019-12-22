@@ -14,7 +14,7 @@
 
 // Abaddon's Aphotic Shield
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"                      "Aphotic Shield"
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it. Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Summons dark energies around an ally unit, creating a shield that absorbs a set amount of damage before expiring. When the shield is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it. Removes certain types of negative buffs and stuns on cast.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Lore"                "The powers of the black mist rise to absorb attacks like the black mist absorbs light."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -52,7 +52,7 @@
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note0"                  "Health costs are lethal."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note1"                  "Level upgrades with Borrowed Time."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_dmg"              "DAMAGE/HEALTH COST:"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_shield_health"                "EXTRA SHIELD (IN ADDITION TO ABOVE):"
+//"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_shield_health"                "EXTRA SHIELD (IN ADDITION TO ABOVE):"
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_mist_duration"                "EXTRA MIST DURATION:"
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_curse_of_avernus_multiplier"        "CURSE COST/DAMAGE MULTIPLIER:"
 
@@ -64,8 +64,8 @@
 
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> %redirect%%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "Increases duration. While Borrowed Time is active, anytime an ally takes more than a certain threshold of damage while within a certain range of Abaddon, an individual Mist Coil will automatically fire towards that ally. <font color='#FF0000'>These Mist Coils do not benefit from Overchannel.</font>\n\n<font color='#FF7800'>IMBA:</font> While Borrowed Time is active, Curse of Avernus's Health Hex applies to all allies in Borrowed Pain's radius, healing them as well."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> %redirect%%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active.</font>"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "Increases duration. While Borrowed Time is active, anytime an ally takes more than a certain threshold of damage while within a certain range of Abaddon, an individual Mist Coil will automatically fire towards that ally. <font color='#FF0000'>These Mist Coils do not benefit from Overchannel.</font>\n<font color='#FF7800'>While Borrowed Time is active, Curse of Avernus's Health Hex applies to all allies in Borrowed Pain's radius, healing them as well.</font>"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                 "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."
@@ -92,7 +92,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2"						"Curse of the Seer"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2_Description"			"+%value%%% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3"						"Aphotic Bulwark"
-"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3_Description"			"During the first second of Aphotic Shield, all damage done to it is absorbed and added to its health and damage."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3_Description"			"During the first {s:value} seconds of Aphotic Shield, all damage done to it is absorbed and added to its health and damage."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4"						"Smiting of Avernus"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4_Description"			"Curse of Avernus can be activated to sacrifice %health_cost_pct%%% of max health as extra physical damage on attack. Cooldown of %active_cooldown% seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_5"						"Blessing of Avernus"

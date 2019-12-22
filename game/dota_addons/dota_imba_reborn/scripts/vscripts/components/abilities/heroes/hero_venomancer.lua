@@ -509,7 +509,7 @@ function modifier_imba_poison_sting_debuff:OnCreated(params)
 end
 
 function modifier_imba_poison_sting_debuff:OnRefresh(params)
-	self.hp_regen_reduction	= ability:GetSpecialValueFor("hp_regen_reduction") * (-1)
+	self.hp_regen_reduction	= self:GetAbility():GetSpecialValueFor("hp_regen_reduction") * (-1)
 	
 	if not IsServer() then return end
 	

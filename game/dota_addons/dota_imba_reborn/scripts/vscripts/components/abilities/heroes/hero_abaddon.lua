@@ -57,7 +57,7 @@ local function getOverChannelShieldIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) + over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
+			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) --+ over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
 		end
 	end
 
@@ -103,11 +103,12 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
 
 			local health_cost = self:GetSpecialValueFor("self_damage")
-			health_cost = health_cost + getOverChannelDamageIncrease(caster)
-
-			if health_cost > 0 then
-				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
+			
+			if getOverChannelDamageIncrease then
+				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = getOverChannelDamageIncrease(caster), damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
 			end
+			
+			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL})
 		end
 
 		-- Use up overchannel
@@ -151,6 +152,8 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 		if not special_cast then
 			mist_duration = mist_duration + self.overchannel_mist_increase
 		end
+
+		if not self.overchannel_damage_increase then return end
 
 		if target:GetTeam() ~= caster:GetTeam() then
 			-- If target has Linken Sphere, block effect entirely
@@ -339,7 +342,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		-- Check health cost required due to over channel
 		local health_cost = getOverChannelDamageIncrease(caster)
 		if health_cost > 0 then
-			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
+			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS })
 		end
 
 		-- Strong Dispel
@@ -364,11 +367,9 @@ modifier_imba_aphotic_shield_buff_block = modifier_imba_aphotic_shield_buff_bloc
 })
 
 function modifier_imba_aphotic_shield_buff_block:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 	}
-
-	return funcs
 end
 
 function modifier_imba_aphotic_shield_buff_block:OnCreated()
@@ -505,7 +506,7 @@ function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(
 		local original_shield_amount	= self.shield_remaining
 		local shield_hit_particle 		= "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		-- Avoid blocking when borrowed time is active						--No need for block when there is no damage
-		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 then
+		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 
 			if self.has_talent and not self.invulnerability_expired then
 				-- damage_absorbtion_end is calculated in OnCreated

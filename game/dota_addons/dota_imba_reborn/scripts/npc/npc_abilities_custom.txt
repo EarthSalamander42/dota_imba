@@ -580,7 +580,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50 60 70 80"
+		"AbilityManaCost"								"50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -594,7 +594,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"130 220 310 400"
+				"damage"								"130 200 270 340"
 			}
 			
 			"03"
@@ -663,7 +663,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"								"0.3"
+		"AbilityCastPoint"								"0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -686,7 +686,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"shield"								"110 165 220 275"
+				"shield"								"110 155 200 245"
 			}
 			"03"
 			{
@@ -877,7 +877,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"4.0 5.5 7.0"
+				"duration"								"4.0 5.0 6.0"
 			}
 			"03"
 			{
@@ -893,16 +893,19 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ally_threshold_scepter"			"525"
+				"RequiresScepter"			"1"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range_scepter"				"1600"
+				"RequiresScepter"			"1"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration_scepter"			"5.0 6.0 7.0"
+				"RequiresScepter"			"1"
 			}
 		}
 
@@ -979,7 +982,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 3: During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
+	// Abaddon Talent 3: During the first X seconds of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_3"
 	{
@@ -1001,7 +1004,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.0"
+				"value"						"0.5"
 			}
 		}
 	}
