@@ -1654,14 +1654,17 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnCreated()
 	if IsServer() then
 		local ability = self:GetAbility()
 		
-		local interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("attack_count")  or ability:GetSpecialValueFor("attack_interval")
+		local interval = ability:GetSpecialValueFor("attack_interval")
 		
-		if self:GetCaster():HasScepter() and self:GetAbility():GetName() == "imba_riki_tricks_of_the_trade_723" then
-			interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("scepter_attacks")
+		if self:GetAbility():GetName() == "imba_riki_tricks_of_the_trade_723" then
+			if not self:GetCaster():HasScepter() then
+				interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("attack_count")
+			else
+				interval = self:GetAbility():GetChannelTime() / ability:GetSpecialValueFor("scepter_attacks")
+			end
 		end
 		
 		self:OnIntervalThink()
-		
 		self:StartIntervalThink(interval)
 	end
 end
