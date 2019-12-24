@@ -1901,10 +1901,10 @@ end
 function modifier_imba_timbersaw_chakram_thinker:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():InterruptMotionControllers(true)
-	
 	self:GetParent():StopSound("Hero_Shredder.Chakram")
 	EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_Shredder.Chakram.Return", self:GetCaster())
+	
+	self:GetParent():InterruptMotionControllers(true)
 	
 	if self:GetAbility() then
 		local ExtraData			= {

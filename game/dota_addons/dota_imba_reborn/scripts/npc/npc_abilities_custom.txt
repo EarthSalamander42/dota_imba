@@ -31,7 +31,7 @@
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/puck/abilities.txt
-// #base heroes/phantom_lancer/abilities.txt
+#base heroes/phantom_lancer/abilities.txt
 #base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
@@ -594,13 +594,13 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"130 200 270 340"
+				"damage"								"130 210 290 360"
 			}
 			
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"heal"									"130 220 310 400"
+				"heal"									"130 210 290 360"
 			}
 			"04"
 			{
@@ -33936,119 +33936,6 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"30"
-			}
-		}
-	}		
-
-	//=================================================================================================================
-	// Phantom Lancer's Spirit Lance
-	//=================================================================================================================
-	"imba_phantom_lancer_spirit_lance"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_phantom_lancer"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilityTextureName"			"phantom_lancer_spirit_lance"		
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-
-		"HasScepterUpgrade"				"1"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"			
-			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"750"				
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7"		
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 130 135 140"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"10 20 30 40"
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_in_damage"	"400 300 200 100"
-			}
-
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_out_damage"	"20 30 40 50"
-			}
-
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_duration"		"8"
-			}
-
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"3.25"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_bounce_range"	"625"
-			}
-
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_bounce_count"	"10"
-			}
-
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"projectile_speed"		"1000"
-			}
-
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_spawn_distance"	"58"
-			}
-
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_lance_cast_range"	"675"
 			}
 		}
 	}

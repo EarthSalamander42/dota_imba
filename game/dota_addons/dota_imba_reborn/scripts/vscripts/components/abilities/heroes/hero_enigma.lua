@@ -377,26 +377,29 @@ function modifier_imba_enigma_eidolon:OnCreated( keys )
 	self.parent = self.parent or self:GetCaster()
 	self.trans_pct = ability:GetSpecialValueFor("shard_percentage")
 	self.wave = keys.wave
+	
+	self.armor_bonus		= self.parent:GetPhysicalArmorValue(false) * self.trans_pct * 0.01
+	self.movespeed_bonus	= self.parent:GetIdealSpeed() * self.trans_pct * 0.01
+	self.attack_speed_bonus	= (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * self.trans_pct * 0.01
+	
+	if not IsServer() then return end
+	
+	self.health_bonus		= self.parent:GetMaxHealth() * self.trans_pct * 0.01
+	
+	if self.parent:HasModifier("modifier_imba_echo_rapier_haste") then
+		local echo_buf = self.parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+		self.attack_speed_bonus = ((self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) - echo_buf.attack_speed_buff) * self.trans_pct * 0.01
+	end
+	
+	self.damage_bonus		= self.trans_pct * self.parent:GetAverageTrueAttackDamage(self.parent) * 0.01
+	self:SetStackCount(self.damage_bonus)
 end
 
-function modifier_imba_enigma_eidolon:GetModifierExtraHealthBonus() if IsServer() then return self.parent:GetMaxHealth() * self.trans_pct * 0.01 end end
-function modifier_imba_enigma_eidolon:GetModifierPhysicalArmorBonus() return self.parent:GetPhysicalArmorValue(false) * self.trans_pct * 0.01 end
-function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() return self.parent:GetIdealSpeed() * self.trans_pct * 0.01 end
-function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant()
-	if self.parent:HasModifier("modifier_imba_echo_rapier_haste") and IsServer() then
-		local echo_buf = self.parent:FindModifierByName("modifier_imba_echo_rapier_haste")
-		return ((self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) - echo_buf.attack_speed_buff) * self.trans_pct * 0.01
-	end
-	return (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * self.trans_pct * 0.01
-end
-function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage()
-	if IsServer() then
-		local attack = self.trans_pct * self.parent:GetAverageTrueAttackDamage(self.parent)
-		self:SetStackCount(attack)
-	end
-	local number = self:GetStackCount() * 0.01
-	return number
-end
+function modifier_imba_enigma_eidolon:GetModifierExtraHealthBonus() if IsServer() then return self.health_bonus end end
+function modifier_imba_enigma_eidolon:GetModifierPhysicalArmorBonus() return self.armor_bonus end
+function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() return self.movespeed_bonus end
+function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant() return self.attack_speed_bonus end
+function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage() return self:GetStackCount() end
 
 function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 	if not IsServer() then return end

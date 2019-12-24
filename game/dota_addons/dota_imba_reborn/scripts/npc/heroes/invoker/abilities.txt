@@ -397,12 +397,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"195"
+				"area_of_effect"		"175"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"250 350 450 550 650 750 950 1150"
+				"damage"				"100 162.5 225 287.5 350 412.5 475 537.5"
 				"levelkey"				"exortlevel"
 			}
 			"04"
@@ -418,14 +418,34 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"incinerate_dmg"		"10"
+				"cataclysm_cooldown"		"90"
 			}
 			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cataclysm_min_range"		"160"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cataclysm_max_range"		"200"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"4.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"incinerate_dmg"		"10"
+			}
+			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"incinerate_duration"	"3.0"
 			}
-			"08"
+			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"incinerate_beam_radius"		"175"

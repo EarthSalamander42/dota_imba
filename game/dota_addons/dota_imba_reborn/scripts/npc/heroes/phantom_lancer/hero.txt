@@ -7,16 +7,17 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_lancer"
 	{
-		//
-		// "IsImba"					"0"
-		
+		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 		
-		// "Ability4"		"imba_phantom_lancer_spirit_lance_passive"
-		// "Ability6"		"imba_phantom_lancer_juxtapose"
-
+		"Ability1"		"imba_phantom_lancer_spirit_lance"
+		"Ability2"		"imba_phantom_lancer_doppelwalk"
+		"Ability3"		"imba_phantom_lancer_phantom_edge"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_phantom_lancer_juxtapose"
+		
 		// Removed Abilities
-		// "Ability6"		"phantom_lancer_juxtapose"
 
 		// Removed Talents
 	}

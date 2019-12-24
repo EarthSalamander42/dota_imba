@@ -551,27 +551,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12_Description" 	"Eye for an Eye modifier must be recreated after this talent is acquired for changes to apply."
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_13" 				"+10% Impale Relive Suffering damage"
 
-// Phantom Lancer
-////===============================================================================================================
-// Phantom Lancer's Spirit Lance
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance"             "Spirit Lance"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_Description"       "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_Lore"          "Azwraith's proficiency at spearing his family's meal of fish is proving quite useful in the battlefield."
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_Note0"         "Nearby illusions will mimic the cast animation."
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_aghanim_description"   "Causes Spirit Lance to bounce on nearby enemies."
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_slow_duration"     "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_ms_slow_pct"       "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_illusion_duration"   "ILLUSION DURATION:"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_illusion_out_damage"   "%ILLUSION DAMAGE:"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_illusion_in_damage"    "%ILLUSION DAMAGE TAKEN:"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_scepter_bounce_range"  "SCEPTER BOUNCE RADIUS:"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_scepter_bounce_count"  "SCEPTER BOUNECS:"
-"DOTA_Tooltip_ability_imba_phantom_lancer_spirit_lance_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-
-"DOTA_Tooltip_modifier_imba_spirit_lance_slow"                  "Spirit Lance"
-"DOTA_Tooltip_modifier_imba_spirit_lance_slow_Description"            "Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
-
 // Phoenix
 ////===============================================================================================================
 // Phoenix's Icarus Dive

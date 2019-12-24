@@ -38,7 +38,7 @@
 
 // Cold Snap
 "DOTA_Tooltip_ability_imba_invoker_cold_snap"									"#{DOTA_Tooltip_ability_invoker_cold_snap}"
-"DOTA_Tooltip_ability_imba_invoker_cold_snap_description"						"#{DOTA_Tooltip_ability_invoker_cold_snap_Description}\n<font color='#FF7800'>Pnas Dloc:</font> Cold Snap can be cast on allies with reversed effect. Attacking enemies will take damage and be briefly frozen"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_description"						"#{DOTA_Tooltip_ability_invoker_cold_snap_Description}\n<font color='#FF7800'>Pnas Dloc:</font> Cold Snap can be cast on allies with reversed effect, causing enemies that attack the target to take damage and be briefly frozen."
 "DOTA_Tooltip_ability_imba_invoker_cold_snap_lore"								"#{DOTA_Tooltip_ability_invoker_cold_snap_Lore}"
 "DOTA_Tooltip_ability_imba_invoker_cold_snap_note0"								"#{DOTA_Tooltip_ability_invoker_cold_snap_Note0}"
 "DOTA_Tooltip_ability_imba_invoker_cold_snap_duration"							"#{DOTA_Tooltip_ability_invoker_cold_snap_duration}"
@@ -46,15 +46,21 @@
 "DOTA_Tooltip_ability_imba_invoker_cold_snap_freeze_damage"						"#{DOTA_Tooltip_ability_invoker_cold_snap_freeze_damage}"
 "DOTA_Tooltip_ability_imba_invoker_cold_snap_freeze_cooldown"					"#{DOTA_Tooltip_ability_invoker_cold_snap_freeze_cooldown}"
 
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap_buff"								"Pnas Dloc"
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap_buff_Description"					"When attacked, the target will take additional damage and will be frozen briefly."
+
 // Ghost Walk
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk"									"#{DOTA_Tooltip_ability_invoker_ghost_walk}"
-"DOTA_Tooltip_ability_imba_invoker_ghost_walk_description"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_Description}\n<font color='#FF7800'>Shadowsteps:</font> Invisibility lingers a short duration when broken."
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_description"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_Description}\n<font color='#FF7800'>Shadowsteps:</font> Invisibility lingers for %invis_fade_time% seconds after being broken by an ability cast."
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_lore"								"#{DOTA_Tooltip_ability_invoker_ghost_walk_Lore}"
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_note0"							"#{DOTA_Tooltip_ability_invoker_ghost_walk_Note0}."
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_duration"							"#{DOTA_Tooltip_ability_invoker_ghost_walk_duration}"
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_self_slow"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_self_slow}"
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_area_of_effect"					"#{DOTA_Tooltip_ability_invoker_ghost_walk_area_of_effect}"
 "DOTA_Tooltip_ability_imba_invoker_ghost_walk_enemy_slow"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_enemy_slow}"
+
+"DOTA_Tooltip_modifier_invis_fade_ghost_walk"									"Shadowsteps"
+"DOTA_Tooltip_modifier_invis_fade_ghost_walk_Description"						"Still invisible."
 
 // Ice wall
 "DOTA_Tooltip_ability_imba_invoker_ice_wall"									"#{DOTA_Tooltip_ability_invoker_ice_wall}"

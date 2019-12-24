@@ -105,7 +105,7 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 			local health_cost = self:GetSpecialValueFor("self_damage")
 			
 			if getOverChannelDamageIncrease then
-				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = getOverChannelDamageIncrease(caster), damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
+				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = getOverChannelDamageIncrease(caster), damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
 			end
 			
 			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL})
@@ -342,7 +342,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		-- Check health cost required due to over channel
 		local health_cost = getOverChannelDamageIncrease(caster)
 		if health_cost > 0 then
-			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS })
+			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
 		end
 
 		-- Strong Dispel
@@ -707,7 +707,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 			self.damage = health_lost * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_to_damage_ratio")
 			self.ability.curse_of_avernus_target = kv.target
 			
-			ApplyDamage({ victim = caster, attacker = caster, damage = self.damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+			ApplyDamage({ victim = caster, attacker = caster, damage = self.damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
 			
 			-- Start cooldown
 			self.ability:UseResources(false, false, true)

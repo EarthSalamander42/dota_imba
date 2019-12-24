@@ -268,7 +268,7 @@ function modifier_imba_wisp_tether:OnHealReceived(keys)
 end
 
 function modifier_imba_wisp_tether:OnManaGained(keys)
-	if keys.unit == self:GetParent() then
+	if keys.unit == self:GetParent() and self.target.GiveMana then
 		self.target:GiveMana(keys.gain * self.tether_heal_amp)
 		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
 		self.total_gained_mana = self.total_gained_mana + keys.gain
