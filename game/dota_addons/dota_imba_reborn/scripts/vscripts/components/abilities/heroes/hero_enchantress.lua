@@ -83,7 +83,8 @@ end
 function modifier_imba_enchantress_untouchable:OnAttackStart(keys)
 	if not IsServer() then return end
 	
-    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsBuilding() then
+	-- "Does not work against wards, buildings and allies."
+    if self.parent == keys.target and not self.parent:PassivesDisabled() and not keys.attacker:IsOther() and not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() then
 		keys.attacker:AddNewModifier(self.parent, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
     end
 end
