@@ -35,11 +35,11 @@ function GameMode:OnHeroFirstSpawn(hero)
 	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 	if starting_level == nil then starting_level = 1 end
 	if starting_level and starting_level > 1 then
-		for level = 2, starting_level do
-			hero:HeroLevelUp(true)
-		end
+		-- for level = 2, starting_level do
+			-- hero:HeroLevelUp(true)
+		-- end
 		
-		-- hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_Unspecified, false, true)
+		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_Unspecified, false, true)
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[starting_level])
 	else
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])

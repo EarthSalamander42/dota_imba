@@ -491,9 +491,9 @@ function GameMode:OnEntityKilled(keys)
 end
 
 -- This block won't work anymore because I changed the "IMBA_ABILITIES_IGNORE_CDR" variable and changed the logic in modifier_frantic
--- function GameMode:OnAbilityUsed(keys)
-	-- local player = PlayerResource:GetPlayer(keys.PlayerID)
-	-- local abilityname = keys.abilityname
+function GameMode:OnAbilityUsed(keys)
+	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	local abilityname = keys.abilityname
 
 	-- for _, ability in pairs(IMBA_ABILITIES_IGNORE_CDR) do
 		-- if ability == abilityname then
@@ -507,7 +507,64 @@ end
 			-- break
 		-- end
 	-- end
--- end
+	
+	-- Tiny Prestige Sword (This is only a temporary pseudo-fix until the ability is customized correctly; it only gives the sword model and doesn't fix antyhing else like ability icons or other particles / tree toss models)
+	if player:GetAssignedHero() and player:GetAssignedHero().tree_model == "models/items/tiny/tiny_prestige/tiny_prestige_sword.vmdl" then
+		if keys.abilityname == "tiny_tree_grab" then
+			local grow_lvl = 0 
+			
+			if player:GetAssignedHero():FindAbilityByName("imba_tiny_grow") then
+				grow_lvl = player:GetAssignedHero():FindAbilityByName("imba_tiny_grow"):GetLevel()
+			end
+			
+			-- If we allrdy have a tree... destroy it and create new. 
+			if player:GetAssignedHero().tree ~= nil then
+				player:GetAssignedHero().tree:AddEffects(EF_NODRAW)
+				UTIL_Remove(player:GetAssignedHero().tree)
+				player:GetAssignedHero().tree = nil
+			end
+			
+			-- Create the tree model
+			local tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = player:GetAssignedHero().tree_model})
+			-- Bind it to player:GetAssignedHero() bone 
+			tree:FollowEntity(player:GetAssignedHero(), true)
+			-- Find the Coordinates for model position on left hand
+			local origin = player:GetAssignedHero():GetAttachmentOrigin(player:GetAssignedHero():ScriptLookupAttachment("attach_attack2"))
+			-- Forward Vector!
+			local fv = player:GetAssignedHero():GetForwardVector()
+			
+			-- Apply diffrent positions of the tree depending on growth model...
+			if grow_lvl == 3 then
+				--Adjust poition to match grow lvl 3
+				local pos = origin + (fv * 50)
+				tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
+			
+			elseif grow_lvl == 2 then
+				-- Adjust poition to match grow lvl 2
+				local pos = origin + (fv * 35)
+				tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
+
+			elseif grow_lvl == 1 then
+				-- Adjust poition to match grow lvl 1
+				local pos = origin + (fv * 35) 
+				tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
+
+			elseif grow_lvl == 0 then
+				-- Adjust poition to match original no grow model
+				local pos = origin - (fv * 25) 
+				tree:SetAbsOrigin(Vector(pos.x - 20, pos.y - 30 , origin.z))
+				tree:SetAngles(60, 60, -60)
+			end
+
+			-- Save model to player:GetAssignedHero()
+			player:GetAssignedHero().tree = tree
+		elseif keys.abilityname == "tiny_toss_tree" and player:GetAssignedHero().tree ~= nil then
+			player:GetAssignedHero().tree:AddEffects(EF_NODRAW)
+			UTIL_Remove(player:GetAssignedHero().tree)
+			player:GetAssignedHero().tree = nil
+		end
+	end
+end
 
 -- Add some deprecated abilities back to heroes for that "IMBA" factor
 local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
