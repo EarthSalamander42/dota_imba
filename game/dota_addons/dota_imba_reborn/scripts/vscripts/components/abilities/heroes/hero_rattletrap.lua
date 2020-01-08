@@ -1330,10 +1330,6 @@ end
 
 function modifier_imba_rattletrap_hookshot:UpdateHorizontalMotion( me, dt )
 	if not IsServer() then return end
-
-	self.distance	= (self.target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
-	
-	me:SetOrigin( me:GetOrigin() + self.distance * self.speed * dt )
 	
 	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
@@ -1377,6 +1373,10 @@ function modifier_imba_rattletrap_hookshot:UpdateHorizontalMotion( me, dt )
 			end
 		end
 	end
+	
+	self.distance	= (self.target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+	
+	me:SetOrigin( me:GetOrigin() + self.distance * self.speed * dt )
 	
 	-- IDK what conditionals they use for collision detection so w/e let's use a random one
 	if (self:GetCaster():GetAbsOrigin() - self.target:GetAbsOrigin()):Length2D() <= self.latch_radius then

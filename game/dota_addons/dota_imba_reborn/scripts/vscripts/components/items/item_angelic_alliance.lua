@@ -199,6 +199,10 @@ function modifier_imba_angelic_alliance_debuff:GetTexture() 			return "custom/im
 function modifier_imba_angelic_alliance_debuff:GetEffectName()			return "particles/item/angelic_alliance/angelic_alliance_debuff.vpcf" end
 function modifier_imba_angelic_alliance_debuff:GetEffectAttachType()	return PATTACH_OVERHEAD_FOLLOW end
 
+function modifier_imba_angelic_alliance_debuff:GetPriority()
+	return MODIFIER_PRIORITY_ULTRA
+end
+
 function modifier_imba_angelic_alliance_debuff:OnCreated()
 	self.armor_change				= self:GetAbility():GetSpecialValueFor("armor_change") * (-1)
 	self.target_movement_speed		= self:GetAbility():GetSpecialValueFor("target_movement_speed") * (-1)
@@ -206,7 +210,10 @@ function modifier_imba_angelic_alliance_debuff:OnCreated()
 end
 
 function modifier_imba_angelic_alliance_debuff:CheckState()
-	return {[MODIFIER_STATE_DISARMED] = true}
+	return {
+		[MODIFIER_STATE_DISARMED]	= true,
+		[MODIFIER_STATE_INVISIBLE]	= false,
+	}
 end
 
 function modifier_imba_angelic_alliance_debuff:DeclareFunctions()
@@ -260,6 +267,7 @@ function modifier_imba_angelic_alliance_buff:OnCreated()
 	self.target_movement_speed		= self:GetAbility():GetSpecialValueFor("target_movement_speed")
 	self.target_attack_speed		= self:GetAbility():GetSpecialValueFor("target_attack_speed")
 	self.target_status_resistance	= self:GetAbility():GetSpecialValueFor("target_status_resistance")
+	self.target_evasion				= self:GetAbility():GetSpecialValueFor("target_evasion")
 end
 
 function modifier_imba_angelic_alliance_buff:DeclareFunctions()
@@ -267,7 +275,8 @@ function modifier_imba_angelic_alliance_buff:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_EVASION_CONSTANT
 	}
 end
 
@@ -291,6 +300,12 @@ end
 
 function modifier_imba_angelic_alliance_buff:GetModifierStatusResistanceStacking()
 	return self.target_status_resistance
+end
+
+function modifier_imba_angelic_alliance_buff:GetModifierEvasion_Constant()
+	if self:GetParent() ~= self:GetCaster() then
+		return self.target_evasion
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------

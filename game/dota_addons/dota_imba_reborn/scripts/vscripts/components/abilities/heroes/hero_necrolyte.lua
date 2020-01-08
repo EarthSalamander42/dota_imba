@@ -514,20 +514,26 @@ function modifier_imba_ghost_shroud_buff:IsHidden()
 end
 function modifier_imba_ghost_shroud_buff:IsDebuff()	return false end
 
-function modifier_imba_ghost_shroud_buff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
-		}
-	return decFuncs
+function modifier_imba_ghost_shroud_buff:OnCreated()
+	self.healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
+	
+	if self:GetCaster() ~= self:GetParent() then
+		self.healing_amp_pct = self.healing_amp_pct * 0.5
+	end
 end
 
-function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
-	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
-	if self:GetCaster() ~= self:GetParent() then
-		healing_amp_pct = healing_amp_pct / 2
-	end
-	return healing_amp_pct
+-- function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	-- return {
+		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
+	-- }
+-- end
+
+-- function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
+	-- return self.healing_amp_pct
+-- end
+
+function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+	return self.healing_amp_pct
 end
 
 ----------------------------------------

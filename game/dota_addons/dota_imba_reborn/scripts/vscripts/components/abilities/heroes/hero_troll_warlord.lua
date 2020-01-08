@@ -770,6 +770,12 @@ function imba_troll_warlord_battle_trance:GetBehavior()
 	end
 end
 
+function imba_troll_warlord_battle_trance:OnUpgrade()
+	if self:GetLevel() == 1 then
+		self:ToggleAutoCast()
+	end
+end
+
 function imba_troll_warlord_battle_trance:OnSpellStart()
 	if IsServer() then
 		local caster	= self:GetCaster()
@@ -791,6 +797,10 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 			for _,ally in ipairs(allies) do
 				local mod = ally:AddNewModifier(caster, self, "modifier_imba_battle_trance", {duration = duration})
 				mod.sound = sound
+				
+				if ally.GetAttackTarget and ally:GetAttackTarget() then
+					ally:GetAttackTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_battle_trance_vision_720", {duration = duration})
+				end
 			end
 		else
 			--The new Battle Trance
@@ -826,12 +836,10 @@ function modifier_imba_battle_trance:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_battle_trance:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
+	}
 end
 
 function modifier_imba_battle_trance:OnCreated()
@@ -1024,8 +1032,7 @@ function modifier_imba_battle_trance_720:CheckState()
 end
 
 function modifier_imba_battle_trance_720:DeclareFunctions()
-	local decFuns =
-	{
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
@@ -1035,8 +1042,6 @@ function modifier_imba_battle_trance_720:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
 	}
-	
-	return decFuns
 end
 
 -- Custom function made in IMBA library and not in DeclareFunctions
@@ -1074,14 +1079,31 @@ end
 
 modifier_imba_battle_trance_vision_720 = class({})
 
-function modifier_imba_battle_trance_vision_720:IsPurgable()	return false end
+function modifier_imba_battle_trance_vision_720:IsPurgable()		return false end
+function modifier_imba_battle_trance_vision_720:IgnoreTenacity()	return false end
+
+function modifier_imba_battle_trance_vision_720:GetPriority()	return MODIFIER_PRIORITY_ULTRA end
+
+function modifier_imba_battle_trance_vision_720:GetEffectName()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_battle_trance_upgrade") then
+		return "particles/items2_fx/true_sight_debuff.vpcf"
+	end
+end
+
+function modifier_imba_battle_trance_vision_720:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_battle_trance_vision_720:CheckState()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_battle_trance_upgrade") then
+		return {[MODIFIER_STATE_INVISIBLE] = false}
+	end
+end
 
 function modifier_imba_battle_trance_vision_720:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+	}
 end
 
 function modifier_imba_battle_trance_vision_720:GetModifierProvidesFOWVision()
@@ -1091,8 +1113,10 @@ end
 -- Client-side helper functions
 
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_5", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_troll_warlord_5		= class({})
+modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade	= modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade or class({})
 
 --------------------------------
 -- WHIRLING AXES CD REDUCTION --
@@ -1104,5 +1128,15 @@ function modifier_special_bonus_imba_troll_warlord_5:RemoveOnDeath() 	return fal
 function imba_troll_warlord_whirling_axes_ranged:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_5"), "modifier_special_bonus_imba_troll_warlord_5", {})
+	end
+end
+
+function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:RemoveOnDeath() 	return false end
+
+function imba_troll_warlord_battle_trance:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_battle_trance_upgrade") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_battle_trance_upgrade"), "modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade", {})
 	end
 end

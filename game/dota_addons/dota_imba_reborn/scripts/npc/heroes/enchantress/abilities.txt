@@ -133,7 +133,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_cast_stack"			"20"
+				"attack_cast_stack"			"16"
 			}
 			"05"
 			{

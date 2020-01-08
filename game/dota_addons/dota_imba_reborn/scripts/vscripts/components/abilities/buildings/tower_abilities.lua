@@ -912,8 +912,9 @@ end
 modifier_imba_tower_toughness_aura_buff = modifier_imba_tower_toughness_aura_buff or class({})
 
 function modifier_imba_tower_toughness_aura_buff:OnCreated()
-	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then return end
-	if not self:GetParent():IsRealHero() then self:Destroy() return end
+	-- Why
+	-- if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then return end
+	-- if not self:GetParent():IsRealHero() then self:Destroy() return end
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -931,18 +932,18 @@ function modifier_imba_tower_toughness_aura_buff:OnCreated()
 	self.health_per_protective = self.ability:GetSpecialValueFor("health_per_protective")
 
 	if IsServer() then
-		-- Start thinking
-		self:StartIntervalThink(0.2)
+		-- -- Start thinking
+		-- self:StartIntervalThink(0.2)
 	end
 end
 
-function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
-	if IsServer() then
-		if not self:GetParent():IsNull() then
-			self:GetParent():CalculateStatBonus()
-		end
-	end
-end
+-- function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
+	-- if IsServer() then
+		-- if not self:GetParent():IsNull() then
+			-- self:GetParent():CalculateStatBonus()
+		-- end
+	-- end
+-- end
 
 function modifier_imba_tower_toughness_aura_buff:OnRefresh()
 	self:OnCreated()
@@ -953,9 +954,7 @@ function modifier_imba_tower_toughness_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_HEALTH_BONUS}
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
@@ -3037,7 +3036,9 @@ function modifier_imba_tower_essence_drain_debuff:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			if self:GetParent().CalculateStatBonus then
+				self:GetParent():CalculateStatBonus()
+			end
 
 			-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -3147,7 +3148,9 @@ function modifier_imba_tower_essence_drain_buff:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			if self:GetParent().CalculateStatBonus then
+				self:GetParent():CalculateStatBonus()
+			end
 
 			-- If there are no stacks on the table, just remove the modifier.
 		else

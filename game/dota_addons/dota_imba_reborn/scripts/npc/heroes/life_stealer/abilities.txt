@@ -181,7 +181,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"2.0 3.0 4.0 5.0"
+				"hp_leech_percent"		"1.5 2.25 3 3.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
 			}
 

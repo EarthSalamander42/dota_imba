@@ -164,6 +164,8 @@ function modifier_item_imba_monkey_king_bar:OnCreated()
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	
+	if not self.ability then return end
+	
 	-- AbilitySpecials
 	self.bonus_damage			= self.ability:GetSpecialValueFor("bonus_damage")
 	self.bonus_range			= self.ability:GetSpecialValueFor("bonus_range")

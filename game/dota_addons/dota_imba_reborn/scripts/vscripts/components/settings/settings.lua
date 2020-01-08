@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.19"
+GAME_VERSION = "7.19b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -83,6 +83,7 @@ BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?
 
 USE_NONSTANDARD_HERO_GOLD_BOUNTY = false	-- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
 USE_NONSTANDARD_HERO_XP_BOUNTY = true		-- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
+-- Currently setting USE_NONSTANDARD_HERO_XP_BOUNTY to true due to map multipliers making the vanilla values give way too insane level boosts
 
 ENABLE_TOWER_BACKDOOR_PROTECTION = true		-- Should we enable backdoor protection for our towers?
 REMOVE_ILLUSIONS_ON_DEATH = false			-- Should we remove all illusions if the main hero dies?
@@ -206,7 +207,7 @@ IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
-local global_gold = 200
+local global_gold = 225
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["dota"] = global_gold
@@ -247,7 +248,7 @@ HERO_STARTING_LEVEL[MapOverthrow()] = global_starting_level
 HERO_STARTING_LEVEL[MapDiretide()] = global_starting_level
 HERO_STARTING_LEVEL["imba_demo"] = 1
 
-local global_max_level = 30
+local global_max_level = 30 -- Currently custom level boolean is set to off because this is the same as vanilla
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = global_max_level
 MAX_LEVEL["dota"] = global_max_level
@@ -333,7 +334,7 @@ CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK
 CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 
-USE_CUSTOM_HERO_LEVELS = true	-- Should we allow heroes to have custom levels?
+USE_CUSTOM_HERO_LEVELS = false	-- Should we allow heroes to have custom levels?
 
 -- Vanilla xp increase per level
 local vanilla_xp = {}
@@ -396,6 +397,11 @@ RESPAWN_TIME_VANILLA[22] = 85
 RESPAWN_TIME_VANILLA[23] = 90
 RESPAWN_TIME_VANILLA[24] = 95
 RESPAWN_TIME_VANILLA[25] = 100
+RESPAWN_TIME_VANILLA[26] = 100
+RESPAWN_TIME_VANILLA[27] = 100
+RESPAWN_TIME_VANILLA[28] = 100
+RESPAWN_TIME_VANILLA[29] = 100
+RESPAWN_TIME_VANILLA[30] = 100
 
 -- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
 HERO_XP_BOUNTY_PER_LEVEL = {}
@@ -425,17 +431,22 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_item_imba_silver_edge_invis",
 	"modifier_item_glimmer_cape_fade",
 	"modifier_weaver_shukuchi",
+	"modifier_imba_weaver_shukuchi",
 	"modifier_treant_natures_guise_invis",
 	"modifier_templar_assassin_meld",
+	"modifier_imba_templar_assassin_meld",
 	"modifier_imba_skeleton_walk_dummy",
 	"modifier_invoker_ghost_walk_self",
 	"modifier_rune_invis",
 	"modifier_imba_skeleton_walk_invis",
 	"modifier_imba_riki_invisibility",
+	"modifier_imba_riki_cloak_and_dagger_723",
+	"modifier_imba_riki_smoke_screen_723_buff",
 	"modifier_imba_shadow_walk_buff_invis",
 	"modifier_imba_invisibility_rune",
 	"modifier_imba_blur_smoke",
-	"modifier_windrunner_windrun_invis"
+	"modifier_windrunner_windrun_invis",
+	"modifier_imba_windranger_windrun_invis"
 }
 
 IMBA_REINCARNATION_MODIFIERS = {

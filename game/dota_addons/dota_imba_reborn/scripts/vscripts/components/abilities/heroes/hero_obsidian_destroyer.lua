@@ -1912,11 +1912,9 @@ end
 function modifier_imba_obsidian_destroyer_equilibrium:IsHidden()	return true end
 
 function modifier_imba_obsidian_destroyer_equilibrium:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE
     }
-
-    return decFuncs
 end
 
 function modifier_imba_obsidian_destroyer_equilibrium:OnTakeDamage(keys)

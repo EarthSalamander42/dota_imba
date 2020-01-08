@@ -971,7 +971,7 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 		-- Check if the souls cap is correct and reset it in case it's wrong 
 		--(happens with a bug that reset the extra max souls cap from talent #3 on death and when dropping/selling aghanim scepter)
 		
-		if self.caster:HasTalent("special_bonus_imba_nevermore_3") then
+		if self.caster:HasTalent("special_bonus_imba_nevermore_3") and self.ability.hero_killed then
 			if self.total_max_souls ~= self.max_souls + self.ability.hero_killed then
 				self.total_max_souls = self.max_souls + self.ability.hero_killed
 			end
@@ -1233,7 +1233,7 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 
 
 		-- If the caster was the one who died, he loses half his stacks (unless he has #7 Talent)
-		if self.caster == target and not target:IsIllusion() then
+		if self.caster == target and not target:IsIllusion() and (not self.caster.IsReincarnating or (self.caster.IsReincarnating and not self.caster:IsReincarnating())) then
 			local stacks = self:GetStackCount()
 			local stacks_lost = math.floor(stacks * (self.souls_lost_on_death_pct * 0.01))
 
@@ -1702,7 +1702,6 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 
 	-- Apply the debuff on enemies hit
 	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration})
-
 	-- If the caster still has the Soul Harvest buff, increase it
 	if caster:HasModifier(modifier_harvest) and target:IsRealHero() then
 		local modifier_harvest_handler = caster:FindModifierByName(modifier_harvest)
@@ -1848,8 +1847,8 @@ function modifier_imba_reqiuem_debuff:OnCreated()
 	self.particle_black_screen = "particles/hero/nevermore/screen_requiem_indicator.vpcf"
 
 	-- Ability specials
-	self.damage_reduction_pct = self.ability:GetSpecialValueFor("damage_reduction_pct")
-	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+	self.damage_reduction_pct = self.ability:GetSpecialValueFor("damage_reduction_pct") * (-1)
+	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct") * (-1)
 
 	if IsServer() then
 		self.scepter = self.caster:HasScepter()
@@ -1867,18 +1866,18 @@ function modifier_imba_reqiuem_debuff:IsPurgable() return true end
 function modifier_imba_reqiuem_debuff:IsDebuff() return true end
 
 function modifier_imba_reqiuem_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-					  MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_reqiuem_debuff:GetModifierBaseDamageOutgoing_Percentage()
-	return self.damage_reduction_pct * (-1)
+	return self.damage_reduction_pct
 end
 
 function modifier_imba_reqiuem_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_slow_pct * (-1)
+	return self.ms_slow_pct
 end
 
 

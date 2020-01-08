@@ -227,7 +227,9 @@ function imba_puck_waning_rift:OnSpellStart()
 	ParticleManager:SetParticleControl(rift_particle, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
 	ParticleManager:ReleaseParticleIndex(rift_particle)
 	
-	FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
+	if not self:GetCaster():IsRooted() then
+		FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
+	end
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
@@ -391,7 +393,9 @@ function imba_puck_phase_shift:OnSpellStart()
 	
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_phase_shift_attacks") then
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetAbsOrigin(), nil, self:GetCaster():Script_GetAttackRange() + 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
-			self:GetCaster():PerformAttack(enemy, true, true, true, false, true, false, false)
+			if enemy:GetName() ~= "npc_dota_unit_undying_zombie" then
+				self:GetCaster():PerformAttack(enemy, true, true, true, false, true, false, false)
+			end
 		end
 	end
 end

@@ -58,12 +58,11 @@ function modifier_imba_ancient_defense:OnIntervalThink()
 end
 
 function modifier_imba_ancient_defense:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
 	}
-	return funcs
 end
 
 function modifier_imba_ancient_defense:GetModifierConstantHealthRegen()
@@ -129,10 +128,9 @@ function modifier_imba_ancient_last_resort_debuff:IsPurgeException() return fals
 function modifier_imba_ancient_last_resort_debuff:IsStunDebuff() return false end
 
 function modifier_imba_ancient_last_resort_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
-	return funcs
 end
 
 function modifier_imba_ancient_last_resort_debuff:GetModifierTotalDamageOutgoing_Percentage()
@@ -284,10 +282,8 @@ function modifier_imba_fountain_danger_zone_debuff:IsStunDebuff() return false e
 function modifier_imba_fountain_danger_zone_debuff:IgnoreTenacity()	return true end
 
 function modifier_imba_fountain_danger_zone_debuff:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
-
-	return state
 end

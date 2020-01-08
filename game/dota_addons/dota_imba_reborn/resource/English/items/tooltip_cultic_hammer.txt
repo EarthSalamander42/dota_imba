@@ -1,0 +1,25 @@
+"DOTA_Tooltip_ability_item_recipe_imba_cultic_hammer"								"Cultic Hammer Recipe"
+
+"DOTA_Tooltip_ability_item_imba_cultic_hammer"								"Cultic Hammer"
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Description"					"<h1>Active: Wretched Slam</h1> CHANNELED: Drenches a %wretched_radius% radius area with dark energies during the channel time (%abilitychanneltime% seconds), pulling caught enemies at a speed of %wretched_pull_speed% towards the center.<br><br>If the channel successfully completes, the area explodes, removing %wretched_hp_damage_pct%%% of enemies' current health and dealing %wretched_base_damage% pure, HP Removal damage. Affected enemies have their status resistance reduced by %wretched_status_resistance%%% for %wretched_status_duration% seconds and are rooted for %wretched_root_duration% seconds.<br><br>Destroys trees around impact radius.\n<h1>Passive: Tortured Spirits</h1> Drains %soul_drain_health% health and %soul_drain_mana% mana from nearby enemies every second, giving it to the item wielder. Works on illusions at %soul_drain_illusion_efficiency%%% efficiency.<br><br>Aura Radius: %soul_drain_radius%"
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Lore"								"A cursed hammer feeding off the sins of all those it crushes, as well as its worshippers."
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Note0"							"Wretched Slam's status resistance reduction is unpurgable and unaffected by status resistance."
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Note1"							"Wretched Slam's root is purgable and affected by status resistance (applied after the status resistance reduction)."
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Note2"							"Tortured Spirits from multiple Cultic Hammers do not stack."
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_Note3"							"Does not work on buildings."
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_bonus_str"						"+$str"
+"DOTA_Tooltip_ability_item_imba_cultic_hammer_bonus_damage"						"+$damage"
+
+"DOTA_Tooltip_modifier_item_imba_cultic_hammer_aura"							"Tortured Spirits"
+"DOTA_Tooltip_modifier_item_imba_cultic_hammer_aura_Description"				"Being drained of health and mana."
+
+"DOTA_Tooltip_modifier_item_imba_cultic_hammer_pull"							"Wretched Slam Pull"
+"DOTA_Tooltip_modifier_item_imba_cultic_hammer_pull_Description"				"Being dragged towards the center of demise."
+
+"DOTA_Tooltip_modifier_item_imba_cultic_status_resistance"						"Wretched Slam"
+"DOTA_Tooltip_modifier_item_imba_cultic_status_resistance_Description"			"Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+
+"DOTA_Tooltip_modifier_item_imba_cultic_status_resistance"						"Wretched Slam"
+"DOTA_Tooltip_modifier_item_imba_cultic_status_resistance_Description"			"Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+
+"DOTA_Tooltip_modifier_item_imba_cultic_root"									"Wretched Slam Root"

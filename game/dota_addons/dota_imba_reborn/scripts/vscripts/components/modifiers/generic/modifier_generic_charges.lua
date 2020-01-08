@@ -6,7 +6,7 @@ modifier_generic_charges = class({})
 --------------------------------------------------------------------------------
 -- Classifications
 function modifier_generic_charges:IsHidden()
-	return false
+	return self:GetAbility():GetLevel() >= 1 and self:GetAbility():GetSpecialValueFor("max_charges") == 0 and self:GetAbility():GetSpecialValueFor("max_charges_scepter") ~= 0 and not self:GetCaster():HasScepter()
 end
 
 function modifier_generic_charges:IsDebuff()
@@ -28,19 +28,24 @@ end
 -- Initializations
 function modifier_generic_charges:OnCreated()
 	if not IsServer() then return end
-	
-	self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
-	self:CalculateCharge()
+
+	if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
+		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter"))
+
+		self:CalculateCharge()
+	elseif self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 then
+		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
+
+		self:CalculateCharge()
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Modifier Effects
 function modifier_generic_charges:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 	}
-
-	return funcs
 end
 
 function modifier_generic_charges:OnAbilityFullyCast( params )
@@ -77,7 +82,12 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 	elseif params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
 		self:StartIntervalThink(-1)
 		self:SetDuration( -1, true )
-		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
+		
+		if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter"))
+		else
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
+		end
 	end
 end
 --------------------------------------------------------------------------------
@@ -88,8 +98,10 @@ function modifier_generic_charges:OnIntervalThink()
 	self:CalculateCharge()
 end
 
-function modifier_generic_charges:CalculateCharge()	
-	if self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges") then
+function modifier_generic_charges:CalculateCharge()
+	if self:IsHidden() then return end
+
+	if (self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter")) or (self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges")) then
 		-- stop charging
 		self:SetDuration( -1, true )
 		self:StartIntervalThink( -1 )

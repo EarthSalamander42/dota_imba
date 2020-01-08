@@ -751,7 +751,7 @@ end
 
 -- function imba_mirana_leap:GetCastRange(location, target)
 -- --	if IsServer() then return end
-	-- local leap_range = self:GetSpecialValueFor("leap_range")
+	-- local leap_range = 
 	-- local night_leap_range_bonus = self:GetSpecialValueFor("night_leap_range_bonus")
 
 	-- if IsDaytime() then
@@ -760,6 +760,17 @@ end
 		-- return leap_range + night_leap_range_bonus
 	-- end
 -- end
+
+
+function imba_mirana_leap:GetCastRange(location, target)
+	if IsClient() then
+		if IsDaytime() then
+			return self:GetSpecialValueFor("leap_range") + self:GetCaster():GetCastRangeBonus()
+		else
+			return self:GetSpecialValueFor("leap_range") + self:GetSpecialValueFor("night_leap_range_bonus") + self:GetCaster():GetCastRangeBonus()
+		end
+	end
+end
 
 function imba_mirana_leap:IsHiddenWhenStolen()
 	return false

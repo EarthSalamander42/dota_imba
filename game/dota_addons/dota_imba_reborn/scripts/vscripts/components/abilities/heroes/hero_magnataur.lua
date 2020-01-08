@@ -1492,6 +1492,12 @@ function imba_magnataur_skewer:GetCastPoint()
 	return self.BaseClass.GetCastPoint(self)
 end
 
+function imba_magnataur_skewer:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()
+	end
+end
+
 function imba_magnataur_skewer:GetCooldown(iLevel)
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cooldown")

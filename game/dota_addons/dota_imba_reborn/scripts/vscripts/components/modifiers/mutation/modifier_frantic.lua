@@ -24,8 +24,9 @@ end
 -- (it would be best to also update their tooltips in the respective separate files)
 function modifier_frantic:OnCreated()
 	self.ignore_frantic_cdr_abilities = {
-		["imba_venomancer_plague_ward"]	= true,
-		["imba_puck_phase_shift"] = true
+		["imba_venomancer_plague_ward"]			= true,
+		["imba_puck_phase_shift"] 				= true,
+		["imba_riki_tricks_of_the_trade_723"] 	= true
 	}
 	
 	-- This may get updated by Valve over-time, in which case it will have to manually updated...zzz

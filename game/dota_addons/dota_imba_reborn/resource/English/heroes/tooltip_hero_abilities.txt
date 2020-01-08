@@ -384,11 +384,11 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura"                "Heartstopper Aura"
-"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Description"                 "Necrophos stills the hearts of his opponents. Enemies in %radius% radius lose a percentage of their maximum health over time.\n<font color='#FF7800'>Heart Attack:</font> Deals pure damage.\n<font color='#FF7800'>Can't Stop the Rot:</font> Decreases affected enemies' received healing."
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Description"                 "Necrophos stills the hearts of his opponents. Enemies in %radius% radius lose a percentage of their maximum health over time.\n<font color='#FF7800'>Heart Attack:</font> Deals pure damage.\n<font color='#FF7800'>Can't Stop the Rot:</font> Reduces affected enemies' health regeneration."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Note0"          "Damage is dealt as HP removal, and cannot be prevented or reduced."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Lore"            "Those who come within a short distance of Necrolyte can feel pestilence and plague in the air."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_damage_pct"                  "%HEALTH LOSS PER SECOND:"
-"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALING REDUCTION:"
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALTH REGEN REDUCTION:"
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_aghanim_description"			"Increases Heartstopper Aura damage while Ghost Shroud is active."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_scepter_multiplier"			"SCEPTER DAMAGE MULTIPLIER:"
 
@@ -924,6 +924,10 @@
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8"       "Shadow Strike Bonus Applications"
 "DOTA_Tooltip_ability_special_bonus_imba_queenofpain_8_Description"       "Scream of Pain and Sonic Wave projectile impacts immediately apply the Shadow Strike debuff."
 
+"DOTA_Tooltip_ability_special_bonus_imba_queen_of_pain_shadow_strike_aoe"		"{s:value} AoE Shadow Strike"
+"DOTA_Tooltip_ability_special_bonus_imba_queen_of_pain_scream_of_pain_fear"		"Scream of Pain {s:value}s Fear"
+"DOTA_Tooltip_ability_special_bonus_imba_queen_of_pain_scream_of_pain_fear_Description"		"Enemies damaged by Scream of Pain are forced to run towards their fountain for {s:value} seconds. Only applies to standard Scream of Pain casts."
+
 ////===============================================================================================================
 // Riki's Smoke Screen
 ////===============================================================================================================
@@ -1011,18 +1015,19 @@
 "DOTA_Tooltip_modifier_imba_riki_backbroken_Description"                "Back broken by Backstab."
 
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723"								"Cloak and Dagger"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Description"					"Riki fades into the shadows, becoming invisible. Every time Riki strikes his enemy from behind, he deals bonus damage based on his Agility. When Riki attacks, he becomes visible.\n<font color='#FF7800'>Sucker Punch:</font> Breaking invisibility with an attack will increase the bonus damage by %invis_break_agility_multiplier% for that attack."
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_agility_damage_multiplier"			"AGI DAMAGE MULT:"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_fade_time"			"FADE DELAY:"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Lore"							"Riki comes for you."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Description"					"Riki fades into the shadows, becoming invisible. Every time Riki strikes his enemy from behind, he deals bonus damage based on his Agility. When Riki attacks, he becomes visible.\n<font color='#FF7800'>Spy's Regards:</font> If Cloak and Dagger's invisibility is active and Riki is standing still, he regenerates %regards_health_regen_pct%%% of his max health and %regards_mana_regen_pct%%% of his max mana every second, and does not show on the enemy's minimap. Does not work while Tricks of the Trade is active."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_damage_multiplier"			"AGI DAMAGE MULT:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_fade_delay"				"FADE DELAY:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Lore"						"Riki comes for you."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Note0"						"Illusions of Riki will play Backstab animations, but not deal any bonus damage."
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_723_Note1"						"Bonus damage from Backstab can't be evaded."
+
+"DOTA_Tooltip_modifier_imba_riki_cloak_and_dagger_723"					"Invisible"
 
 ////===============================================================================================================
 // Riki's Tricks of the Trade
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade (Pre 7.23)"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -1037,7 +1042,7 @@
 "DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting strike by Martyr's Strike."
 
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_aghanim_description"				"Increases duration, attacks, cast range and allows you to target an allied hero, hiding inside them for the duration."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Lore"							"The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Note0"							"Moving while phased out will cancel the ability."
@@ -1068,7 +1073,14 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8_Description"    "Riki gains a 20% chance on attack to cast Blink Strike on the target, backstabbing it."
 
+
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_smokescreen_cooldown"		"-{s:value}s Smoke Screen Cooldown"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_blink_strike_cast_range"	"+{s:value} Blink Strike Cast Range"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_cloak_and_dagger_damage"	"+{s:value} Backstab Multiplier"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_cloak_and_dagger_damage_Description"	"Increases Cloak and Dagger's agility damage multiplier by {s:value}."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_tricks_of_the_trade_cooldown"	"-{s:value} Tricks of the Trade Cooldown"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_cloak_and_dagger_invis"		"Cloak and Dagger Doesn't Reveal"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_cloak_and_dagger_invis_Description"	"No actions take Riki out of invisibility, only revealed by sources of True Sight. Cloak and Dagger becomes a toggle ability; toggle on to remove invisibility."
 
 // Sand King
 ////===============================================================================================================
@@ -1818,13 +1830,13 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance"                "Battle Trance"
-"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Description"                 "Troll's presence on the battlefield increases the attack speed of himself and all allied heroes.\n<font color='#FF7800'>Faster, faster!:</font> Also improves their base attack time.\n<font color='#FF7800'>Jesus Take The Wheel:</font> Can be set to auto-cast. Casting Battle Trance in this fashion uses the updated version (does not affect allies):\nTroll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you %lifesteal%%% bonus lifesteal, %attack_speed% attack speed and %movement_speed%%% movement speed. Applies a <font color='#FF7800'>Strong Dispel (can be cast while disabled)</font>. Lasts %trance_duration% seconds.\n<font color='#FF7800'>Cooldown and mana costs match the team version of Battle Trance.</font>\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Description"                 "Troll's presence on the battlefield increases the attack speed of himself and all allied heroes.\n<font color='#FF7800'>Faster, faster!:</font> Also improves their base attack time.\n<font color='#FF7800'>Jesus Take The Wheel:</font> Can be set to auto-cast. Casting Battle Trance in this fashion uses the updated version (does not affect allies):\nTroll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you %lifesteal%%% bonus lifesteal, %attack_speed% attack speed and %movement_speed%%% movement speed. Applies a <font color='#FF7800'>Strong Dispel (can be cast while disabled)</font>. Lasts %trance_duration% seconds.\n<font color='#FF7800'>Cooldown and mana costs match the team version of Battle Trance.</font>"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Lore"            "Trololololo, trololo, lololo... TROLOLOLOLOLOOH!"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Note0"          "Faster, faster! has no effect on heroes whose BAT is already lower."
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_as"                    "ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_buff_duration"               "TRANCE DURATION:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_bat"                   "BASE ATTACK TIME:"
-"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active."
+"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active.</font>"
 
 "DOTA_Tooltip_modifier_imba_battle_trance"                              "Battle Trance"
 "DOTA_Tooltip_modifier_imba_battle_trance_Description"                  "Increased attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -1850,6 +1862,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "-0.2 Battle Trance BAT improvement"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9"               "Remnants of Berserker's Rage"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9_Description"	"Replaces ensnare with bash chance for 20/30/40/50 magical damage, piercing spell immunity. Can no longer use other passive bash abilities."
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_battle_trance_upgrade"					"Battle Trance True Sight"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_battle_trance_upgrade_Description"		"Any attack targets of allies upon being buffed by Battle Trance become visible through invisibility and the fog of war. Applies constantly for the self-cast version."
 
 // Visage
 ////===============================================================================================================

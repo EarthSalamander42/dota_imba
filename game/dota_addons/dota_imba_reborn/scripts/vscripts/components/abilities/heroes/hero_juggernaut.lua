@@ -1952,7 +1952,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 			self.parent:FaceTowards(enemy:GetAbsOrigin())
 			
 			-- Provide vision of the target for a short duration
-			self:GetAbility():CreateVisibilityNode(current_position, 300, 1.0)
+			AddFOWViewer(self:GetCaster():GetTeamNumber(), enemy:GetAbsOrigin(), 200, 1, false)
 
 			-- Perform the slash
 			self.slash = true

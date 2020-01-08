@@ -252,7 +252,7 @@ function modifier_item_imba_spirit_vessel_damage:OnCreated(params)
 	self.duration					= self.ability:GetSpecialValueFor("duration")
 	self.soul_release_range_tooltip	= self.ability:GetSpecialValueFor("soul_release_range_tooltip")
 	-- Field m_flHealthThinkRegen tried to quantize an out-of-range value (-101287.726563, range is -100.000000->1000.000000), clamping.
-	self.hp_regen_reduction_enemy	= self.ability:GetSpecialValueFor("hp_regen_reduction_enemy") * self.debuff_multiplier
+	self.hp_regen_reduction_enemy	= self.ability:GetSpecialValueFor("hp_regen_reduction_enemy") * self.debuff_multiplier * (-1)
 	self.enemy_hp_drain				= self.ability:GetSpecialValueFor("enemy_hp_drain") * self.debuff_multiplier
 	self.curse_activation_reduction	= self.ability:GetSpecialValueFor("curse_activation_reduction")
 	
@@ -297,16 +297,25 @@ function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	end
 end
 
-function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
-    }
+-- function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()
+	-- local decFuncs = {
+		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		-- MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE -- Valve still not linking up their functions zzz...
+    -- }
 
-    return decFuncs
-end
+    -- return decFuncs
+-- end
 
-function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
-	return self.hp_regen_reduction_enemy * (-1)
+-- function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
+	-- return self.hp_regen_reduction_enemy
+-- end
+
+-- function modifier_item_imba_spirit_vessel_damage:GetModifierLifestealRegenAmplify_Percentage()
+	-- return self.hp_regen_reduction_enemy
+-- end
+
+function modifier_item_imba_spirit_vessel_damage:Custom_AllHealAmplify_Percentage()
+	return self.hp_regen_reduction_enemy
 end
 
 ----------------------------

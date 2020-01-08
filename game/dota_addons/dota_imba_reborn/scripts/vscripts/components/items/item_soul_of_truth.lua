@@ -33,6 +33,18 @@ function item_imba_soul_of_truth:GetAbilityTextureName()
 end
 -------------------------------------------
 
+function item_imba_soul_of_truth:CastFilterResult()
+	if self:GetCaster():HasModifier("modifier_imba_soul_of_truth_buff") then
+		return UF_FAIL_CUSTOM
+	end
+end
+
+function item_imba_soul_of_truth:GetCustomCastError()
+	if self:GetCaster():HasModifier("modifier_imba_soul_of_truth_buff") then
+		return "#dota_hud_error_soul_of_truth_already_active"
+	end
+end
+
 function item_imba_soul_of_truth:OnSpellStart()
 	if IsServer() then
 		-- Parameters
@@ -44,7 +56,6 @@ function item_imba_soul_of_truth:OnSpellStart()
 		self:Destroy()
 	end
 end
-
 
 -------------------------------------------
 modifier_imba_soul_of_truth_buff = modifier_imba_soul_of_truth_buff or class({})
@@ -77,23 +88,21 @@ function modifier_imba_soul_of_truth_buff:OnCreated()
 end
 
 function modifier_imba_soul_of_truth_buff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_RESPAWN
-		}
-	return decFuns
+	return {
+		-- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		-- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_RESPAWN
+	}
 end
 
-function modifier_imba_soul_of_truth_buff:GetModifierPhysicalArmorBonus()
-	return self.armor
-end
+-- function modifier_imba_soul_of_truth_buff:GetModifierPhysicalArmorBonus()
+	-- return self.armor
+-- end
 
-function modifier_imba_soul_of_truth_buff:GetModifierConstantHealthRegen()
-	return self.health_regen
-end
+-- function modifier_imba_soul_of_truth_buff:GetModifierConstantHealthRegen()
+	-- return self.health_regen
+-- end
 
 function modifier_imba_soul_of_truth_buff:OnDeath(keys)
 	if (keys.unit == self:GetParent()) and (not keys.reincarnate) then
@@ -102,6 +111,7 @@ function modifier_imba_soul_of_truth_buff:OnDeath(keys)
 			ParticleManager:DestroyParticle( self.eye_pfx, false )
 			ParticleManager:ReleaseParticleIndex(self.eye_pfx)
 			self.eye_pfx = nil
+			
 			self:Destroy()
 		end
 	end
@@ -119,7 +129,15 @@ end
 function modifier_imba_soul_of_truth_buff:OnDestroy()
 	if IsServer() then
 		-- If this is destroyed, it means the user died for real. Remove gem modifier
-		self:GetParent():RemoveModifierByName("modifier_item_gem_of_true_sight")
+		for _, true_sight_modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_gem_of_true_sight")) do
+			if true_sight_modifier.GetAbility and (true_sight_modifier:GetAbility() == self:GetAbility() or true_sight_modifier:GetAbility():GetName() == "item_imba_soul_of_truth") then
+				true_sight_modifier:Destroy()
+			end
+		end
+		
+		local gem = CreateItem("item_gem", nil, nil)
+		gem:SetOwner(nil)
+		CreateItemOnPositionSync(self:GetParent():GetAbsOrigin(), gem)
 	end
 end
 

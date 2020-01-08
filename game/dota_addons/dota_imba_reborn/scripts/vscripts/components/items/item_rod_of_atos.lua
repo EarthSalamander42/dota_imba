@@ -243,11 +243,9 @@ function modifier_item_imba_rod_of_atos_debuff:GetEffectName()
 end
 
 function modifier_item_imba_rod_of_atos_debuff:CheckState(keys)
-	local state = {
-	[MODIFIER_STATE_ROOTED] = true
+	return {
+		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 --------------------------

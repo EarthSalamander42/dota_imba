@@ -4225,3 +4225,67 @@
 		}
 	}
 }
+
+"Hero_Phantom_Lancer.Sun_Catcher"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/phantom_lancer/sun_catcher.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Hero_Sniper.Boom_Headshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/sniper/boom_headshot_1.vsnd"
+							"value1"	"sounds/hero/sniper/boom_headshot_2.vsnd"
+							"value2"	"sounds/hero/sniper/boom_headshot_3.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "7.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "90.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}

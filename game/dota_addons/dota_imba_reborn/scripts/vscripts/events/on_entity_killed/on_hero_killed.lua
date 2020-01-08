@@ -11,6 +11,7 @@ function GameMode:OnHeroDeath(killer, victim)
 	end
 
 	local buyback_cooldown = BUYBACK_COOLDOWN_MAXIMUM
+	-- Custom buyback cost is currently disabled so everything concerning that should be doing nothing...emphasis on SHOULD
 	local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 

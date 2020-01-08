@@ -34,6 +34,12 @@ function item_imba_blink:GetIntrinsicModifierName()
 	return "modifier_imba_blink_dagger_handler"
 end
 
+function item_imba_blink:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetSpecialValueFor("max_blink_range") - self:GetCaster():GetCastRangeBonus()
+	end
+end
+
 function item_imba_blink:OnSpellStart()
 	local caster = self:GetCaster()
 	local origin_point = caster:GetAbsOrigin()

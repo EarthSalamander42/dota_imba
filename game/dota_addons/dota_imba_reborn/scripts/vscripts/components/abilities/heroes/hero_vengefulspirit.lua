@@ -270,14 +270,10 @@ function imba_vengefulspirit_magic_missile:GetCooldown(level)
 end
 
 function imba_vengefulspirit_magic_missile:CastFilterResultTarget( target )
-	if IsServer() then
-
-		if target ~= nil and target:IsMagicImmune() and ( not self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_5") ) then
-			return UF_FAIL_MAGIC_IMMUNE_ENEMY
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
+	if not self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_5") then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
 	end
 end
 
@@ -889,49 +885,45 @@ function imba_vengefulspirit_command_aura_723:GetIntrinsicModifierName()
 	return "modifier_imba_vengefulspirit_command_aura_723"
 end
 
-function imba_vengefulspirit_command_aura_723:OnOwnerDied()
-	if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
-		local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
-		local bounty_base				= self:GetCaster():GetIllusionBounty()
+-- function imba_vengefulspirit_command_aura_723:OnOwnerDied()
+	-- if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
+		-- local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
+		-- local bounty_base				= self:GetCaster():GetIllusionBounty()
 		
-		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
-			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
-		end
+		-- if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
+			-- num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
+		-- end
 		
-		if self:GetCaster():HasScepter() then
-			bounty_base					= 0
-		end
+		-- if self:GetCaster():HasScepter() then
+			-- bounty_base					= 0
+		-- end
 		
-		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
-		{
-			outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
-			incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
-			bounty_base					= bounty_base,
-			bounty_growth				= nil,
-			outgoing_damage_structure	= nil,
-			outgoing_damage_roshan		= nil,
-			duration					= nil
-		}
-		, num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
+		-- local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
+		-- {
+			-- outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
+			-- incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
+			-- bounty_base					= bounty_base,
+			-- bounty_growth				= nil,
+			-- outgoing_damage_structure	= nil,
+			-- outgoing_damage_roshan		= nil,
+			-- duration					= nil
+		-- }
+		-- , num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
 	
-		for _, illusion in pairs(super_illusions) do
-			illusion:SetHealth(illusion:GetMaxHealth())
-			illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
-			-- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
-			FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
+		-- for _, illusion in pairs(super_illusions) do
+			-- illusion:SetHealth(illusion:GetMaxHealth())
+			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+			-- -- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
+			-- FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
 			
-			PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
-		end
-	end
-end
+			-- PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
+		-- end
+	-- end
+-- end
 
 ---------------------------------------------------
 -- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 --
 ---------------------------------------------------
-
-function modifier_imba_vengefulspirit_command_aura_723:OnCreated()
-
-end
 
 function modifier_imba_vengefulspirit_command_aura_723:DeclareFunctions()
 	return {
@@ -947,15 +939,15 @@ end
 
 function modifier_imba_vengefulspirit_command_aura_723:IsHidden()					return true end
 
-function modifier_imba_vengefulspirit_command_aura_723:IsAura()						return true end
-function modifier_imba_vengefulspirit_command_aura_723:IsAuraActiveOnDeath() 		return false end
+-- function modifier_imba_vengefulspirit_command_aura_723:IsAura()						return true end
+-- function modifier_imba_vengefulspirit_command_aura_723:IsAuraActiveOnDeath() 		return false end
 
-function modifier_imba_vengefulspirit_command_aura_723:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("aura_radius") end
-function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_vengefulspirit_command_aura_723:GetModifierAura()			return "modifier_imba_vengefulspirit_command_aura_effect_723" end
-function modifier_imba_vengefulspirit_command_aura_723:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("aura_radius") end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetModifierAura()			return "modifier_imba_vengefulspirit_command_aura_effect_723" end
+-- function modifier_imba_vengefulspirit_command_aura_723:GetAuraEntityReject(hTarget)	return self:GetCaster():PassivesDisabled() end
 
 ----------------------------------------------------------
 -- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_AURA_EFFECT_723 --
@@ -1510,6 +1502,7 @@ end
 
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_3", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_5", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_8", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_9", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_10", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
@@ -1520,6 +1513,11 @@ modifier_special_bonus_imba_vengefulspirit_3 = class({})
 function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() 		return true end
 function modifier_special_bonus_imba_vengefulspirit_3:IsPurgable() 		return false end
 function modifier_special_bonus_imba_vengefulspirit_3:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_vengefulspirit_5 = class({})
+function modifier_special_bonus_imba_vengefulspirit_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_vengefulspirit_5:RemoveOnDeath() 	return false end
 
 modifier_special_bonus_imba_vengefulspirit_8 = class({})
 function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() 		return true end
@@ -1547,6 +1545,10 @@ function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsPu
 function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:RemoveOnDeath() 	return false end
 
 function imba_vengefulspirit_magic_missile:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_5"), "modifier_special_bonus_imba_vengefulspirit_5", {})
+	end
+
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_11") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_11"), "modifier_special_bonus_imba_vengefulspirit_11", {})
 	end

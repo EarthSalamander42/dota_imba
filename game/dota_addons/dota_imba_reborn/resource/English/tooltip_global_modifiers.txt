@@ -56,7 +56,7 @@
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 
 "DOTA_Tooltip_modifier_frantic"									"Frantic"
-"DOTA_Tooltip_modifier_frantic_Description"						"%dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% Cooldown Reduction, Mana Cost, Status Resistance and Respawn Time reduction. Cooldown reduction and mana cost reduction does not stack with items, but does stack with talents."
+"DOTA_Tooltip_modifier_frantic_Description"						"%dMODIFIER_PROPERTY_MANACOST_PERCENTAGE%%% Cooldown Reduction, Mana Cost, Status Resistance and Respawn Time reduction. Cooldown reduction and mana cost reduction does not stack with items, but does stack with talents."
 
 "DOTA_Tooltip_modifier_mutation_danger_zone"					"Call Down"
 "DOTA_Tooltip_modifier_mutation_danger_zone_Description"		"Rockets periodically fall onto the battlefield. Watch out!"
@@ -81,7 +81,7 @@
 "DOTA_Tooltip_modifier_mutation_monkey_business_transform_Description"	"This unit is disguised."
 
 "DOTA_Tooltip_modifier_fountain_invulnerable"					"God's Protection"
-"DOTA_Tooltip_modifier_fountain_invulnerable_Description"		"Invulnerable!"
+"DOTA_Tooltip_modifier_fountain_invulnerable_Description"		"Taking 0 damage from physical, magical, and pure damage, and is invulnerable if no enemy hero is within 3000 radius. Buff is lost upon leaving the fountain area."
 
 "DOTA_Tooltip_modifier_mutation_speed_freaks"					"Speed Freaks"
 "DOTA_Tooltip_modifier_mutation_speed_freaks_Description"		"Movespeed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%, projectile speed increased by 500 and max movespeed capped at 1000."

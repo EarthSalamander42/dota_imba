@@ -274,9 +274,10 @@ end
 
 function imba_nian_crushing_leap:GetCastRange(location, target)
 	if IsServer() then
-		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cast_range")
+		--return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cast_range")
+		return 999999 -- can't do 0 here cause it causes issues or something
 	else
-		return self.BaseClass.GetCastRange(self, location, target)
+		return self:GetTalentSpecialValueFor("max_distance")
 	end
 end
 
@@ -297,12 +298,12 @@ function imba_nian_crushing_leap:OnSpellStart()
 	
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_crushing_leap_movement", 
 	{
-		distance		= direction_vector:Length2D(),
+		distance		= math.min(direction_vector:Length2D(), self:GetTalentSpecialValueFor("max_distance") + self:GetCaster():GetCastRangeBonus()),
 		direction_x 	= direction_vector.x,
 		direction_y 	= direction_vector.y,
 		direction_z 	= direction_vector.z,
 		duration 		= self:GetSpecialValueFor("duration"),
-		height 			= self:GetSpecialValueFor("min_height") + ((self:GetSpecialValueFor("max_height") - self:GetSpecialValueFor("min_height")) * (1 - direction_vector:Length2D() / (self:GetCastRange(self:GetCursorPosition(), self:GetCaster()) + GetCastRangeIncrease(self:GetCaster())))),
+		height 			= self:GetSpecialValueFor("min_height") + ((self:GetSpecialValueFor("max_height") - self:GetSpecialValueFor("min_height")) * (1 - (math.min(direction_vector:Length2D(), self:GetTalentSpecialValueFor("max_distance") + self:GetCaster():GetCastRangeBonus())) / (self:GetTalentSpecialValueFor("max_distance") + self:GetCaster():GetCastRangeBonus()))),
 		bGroundStop 	= true,
 		bDecelerate 	= false,
 		bInterruptible 	= false,

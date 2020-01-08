@@ -351,9 +351,10 @@ function modifier_imba_dazzle_shallow_grave:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
 function modifier_imba_dazzle_shallow_grave:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MIN_HEALTH,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_MIN_HEALTH,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_dazzle_shallow_grave:GetMinHealth()

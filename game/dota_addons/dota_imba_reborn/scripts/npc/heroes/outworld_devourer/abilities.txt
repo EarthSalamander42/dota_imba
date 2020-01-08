@@ -1,0 +1,397 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Outworld Devourer: Arcane Orb
+	//=================================================================================================================
+	"imba_outworld_devourer_arcane_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_outworld_devourer"
+		"AbilityTextureName"			"obsidian_destroyer_arcane_orb"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_ObsidianDestroyer.ArcaneOrb"
+
+		"AbilityCastRange"				"450"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 140 170 200"
+		"AbilityCooldown"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_pool_damage_pct"	"5 7 9 11"
+				//"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer"
+				"LinkedSpecialBonus"	"special_bonus_imba_outworld_devourer_arcane_orb_damage"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"counter_duration"	"35"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"universe_bonus_dmg"	"100 300 500 700"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"universe_splash_radius"	"400 475 550 625"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}	
+
+	//=================================================================================================================
+	// Outworld Devourer: Astral Imprisonment
+	//=================================================================================================================
+	"imba_outworld_devourer_astral_imprisonment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_outworld_devourer"
+		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_ObsidianDestroyer.AstralImprisonment"
+		"HasScepterUpgrade"			"1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"4.0"
+		"AbilityCooldown"				"24 20 16 12"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"525 600 675 750"
+		"AbilityCastPoint"				"0.25 0.25 0.25 0.25"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"140 160 180 200"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5" // applies multiple modifiers
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"prison_duration"		"4.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"		"150 250 350 450"
+				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"		"400 450 500 550"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges_scepter"		"2"
+				"RequiresScepter"			"1"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_restore_time_scepter"		"12"
+				"RequiresScepter"			"1"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_range_bonus"	"300"
+				"RequiresScepter"			"1"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"counter_duration"	"35"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"universal_movespeed"	"250"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Outworld Devourer: Essence Flux
+	//=================================================================================================================
+	"imba_outworld_devourer_essence_flux"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_outworld_devourer"
+		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+						
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"proc_chance"		"25"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_restore"	"25 35 45 55"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movement_slow"		"11 22 33 44"
+				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_2"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"		"1.75"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"7"
+			}
+			
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"equal_atk_speed_diff"	"3 4 5 6"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Outworld Devourer: Astral Imprisonment Movement
+	//=================================================================================================================
+	"imba_outworld_devourer_astral_imprisonment_movement"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_outworld_devourer"
+		"AbilityTextureName"			"custom/outworld_devourer/astral_imprisonment_movement"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"MaxLevel"						"1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"universal_movespeed"		"250"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Obsidian Destroyer: Sanity's Eclipse
+	//=================================================================================================================
+	"imba_outworld_devourer_sanity_eclipse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_outworld_devourer"
+		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.25 0.25 0.25"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_ObsidianDestroyer.SanityEclipse"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"140"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"175 250 325"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_damage"				"150 225 300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_bonus_damage"					"60 80 100"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400 600 800"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"					"700"
+			}			
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_multiplier"	"0.5"
+				//"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier"
+			}	
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stack_mana"	"40 50 60"
+			}	
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"counter_duration"	"35"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_mana_burn_pct"				"30"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_outworld_devourer_sanity_eclipse"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.1"
+			}
+		}
+	}
+	
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_outworld_devourer_arcane_orb_damage" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_outworld_devourer_arcane_orb"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+}

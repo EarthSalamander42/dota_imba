@@ -42,7 +42,7 @@
 "DOTA_Tooltip_modifier_imba_winter_wyvern_cold_embrace_freeze_Description"		"Frozen in retaliation for attempting to break the Icy Cocoon."
 
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse"						"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse}"
-"DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Description"			"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse_Description}\n<font color='#FF7800'>Queen's Resolve:</font> Winter's Curse ignores tenacity."
+"DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Description"			"Winter Wyvern freezes an enemy in place while striking those nearby with a maddening curse which causes them to attack their frozen ally with increased attack speed. The frozen ally and those cursed to attack their ally are immune to all damage from their enemies with the exception of Winter Wyvern or her controlled units.\n<font color='#FF7800'>Queen's Resolve:</font> Winter's Curse ignores status resistance."
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Lore"				"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse_Lore}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Note0"				"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse_Note0}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Note1"				"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse_Note1}"

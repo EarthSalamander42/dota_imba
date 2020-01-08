@@ -21,20 +21,34 @@ function imba_ursa_earthshock:GetCastRange(location, target)
 	return self:GetSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
 end
 
+function imba_ursa_earthshock:GetCastPoint()
+	if not self:GetCaster():IsRooted() then
+		self.bRootCast = false
+		return 0
+	else
+		self.bRootCast = true
+		return self:GetSpecialValueFor("hop_duration")
+	end
+end
+
 function imba_ursa_earthshock:OnSpellStart()
 	if not self:GetCaster():HasModifier("modifier_imba_earthshock_movement") then
 		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
 		
 		local direction_vector = self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("hop_distance")
-
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
-			duration		= self:GetSpecialValueFor("hop_duration"),
-			distance		= self:GetSpecialValueFor("hop_distance"),
-			direction_x		= direction_vector.x,
-			direction_y 	= direction_vector.y,
-			diretion_z 		= direction_vector.z,
-			height			= self:GetSpecialValueFor("hop_height")
-		})
+		
+		if not self.bRootCast and not self:GetCaster():IsRooted() then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
+				duration		= self:GetSpecialValueFor("hop_duration"),
+				distance		= self:GetSpecialValueFor("hop_distance"),
+				direction_x		= direction_vector.x,
+				direction_y 	= direction_vector.y,
+				diretion_z 		= direction_vector.z,
+				height			= self:GetSpecialValueFor("hop_height")
+			})
+		else
+			self:ApplyEarthShock()
+		end
 	end
 end
 
@@ -207,7 +221,7 @@ function modifier_imba_earthshock_movement:OnCreated(params)
 end
 
 function modifier_imba_earthshock_movement:OnDestroy()
-	if not IsServer() then return end
+	if not IsServer() or self:GetParent():IsRooted() then return end
 	
 	self:GetParent():RemoveHorizontalMotionController(self)
 	self:GetParent():RemoveVerticalMotionController(self)

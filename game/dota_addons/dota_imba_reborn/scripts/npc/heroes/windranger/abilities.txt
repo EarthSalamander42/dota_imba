@@ -115,7 +115,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"powershot_damage"		"200 300 400 500"
+				"powershot_damage"		"160 260 360 460"
 				//"LinkedSpecialBonus"	"special_bonus_unique_windranger_3"
 				"LinkedSpecialBonus"	"special_bonus_imba_windranger_powershot_damage"
 			}
@@ -174,7 +174,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"godshot_damage_pct"	"140"
+				"godshot_damage_pct"	"130"
 			}
 			"13"
 			{

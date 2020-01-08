@@ -75,11 +75,10 @@ function modifier_imba_aeon_disk_basic:IsPurgable() return false end
 function modifier_imba_aeon_disk_basic:IsPermanent() return true end
 function modifier_imba_aeon_disk_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_aeon_disk_basic:DeclareFunctions()
-	local funcs = {	
-			MODIFIER_PROPERTY_MANA_BONUS,
-			MODIFIER_PROPERTY_HEALTH_BONUS,
-		}
-	return funcs
+	return {	
+		MODIFIER_PROPERTY_MANA_BONUS,
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+	}
 end
 
 function modifier_imba_aeon_disk_basic:OnCreated()
@@ -108,13 +107,16 @@ function modifier_imba_aeon_disk_basic:OnDestroy()
 end
 
 function modifier_imba_aeon_disk_basic:GetModifierManaBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana") 
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana")
+	end
 end
 
 function modifier_imba_aeon_disk_basic:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_health") 
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
-
 
 -----------------------------------------------------------------------------------------------------------
 --	Unique modifier definition
@@ -126,10 +128,9 @@ function modifier_imba_aeon_disk_unique:IsPurgable() return false end
 function modifier_imba_aeon_disk_unique:RemoveOnDeath() return false end
 
 function modifier_imba_aeon_disk_unique:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
@@ -150,6 +151,9 @@ function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
 				
 					parent:Purge( false, true, false, true, true )
 					local aeon_disc = parent:AddNewModifier(parent, ability, "modifier_imba_aeon_disk", {duration = buff_duration})
+					
+					parent:SetHealth(math.min(parent:GetHealth(), parent:GetMaxHealth() * health_threshold_pct))
+					
 					ability:UseResources(false, false, true)
 					
 					return -100

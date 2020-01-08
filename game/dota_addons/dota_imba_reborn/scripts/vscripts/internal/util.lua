@@ -1262,10 +1262,10 @@ end
     -- 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
 -- };
 
--- ArrayRemove(t, function(t, i, j)
+-- Custom_ArrayRemove(t, function(t, i, j)
     -- -- Return true to keep the value, or false to discard it.
     -- local v = t[i];
-    -- return (v == 'a' or v == 'b' or v == 'f' or v == 'h');
+    -- return (v == 'a' or v == 'b' or v == 'f' or v == 'h'); // This keeps a, b, f, and h in the array while removing everything else
 -- end);
 
 function Custom_ArrayRemove(t, fnKeep)

@@ -40,10 +40,16 @@ function item_imba_dust_of_appearance:OnSpellStart()
 	local particle = ParticleManager:CreateParticle("particles/items_fx/dust_of_appearance.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 1, Vector(aoe, aoe, aoe))
 
+	local true_sight_modifier = nil
+
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
-		if unit:IsImbaInvisible() then foundInvis = foundInvis + 1 end
-		unit:AddNewModifier(caster, self, "modifier_imba_dust_of_appearance", {duration = duration})
+		if unit:IsInvisible() or unit:IsImbaInvisible() then foundInvis = foundInvis + 1 end
+		true_sight_modifier = unit:AddNewModifier(caster, self, "modifier_imba_dust_of_appearance", {duration = duration})
+		
+		if true_sight_modifier then
+			true_sight_modifier:SetDuration(duration * (1 - unit:GetStatusResistance()), true)
+		end
 	end
 
 	local chance = self:GetSpecialValueFor("meme_chance") * foundInvis
@@ -66,12 +72,39 @@ end
 if modifier_imba_dust_of_appearance == nil then modifier_imba_dust_of_appearance = class({}) end
 function modifier_imba_dust_of_appearance:IsDebuff() return true end
 function modifier_imba_dust_of_appearance:IsHidden() return false end
+-- IMBAfication: Dust Fortune
 function modifier_imba_dust_of_appearance:IsPurgable() return false end
 
+function modifier_imba_dust_of_appearance:GetTexture()
+	return "item_dust"
+end
+
+function modifier_imba_dust_of_appearance:OnCreated()
+	self.invisible_slow	= self:GetAbility():GetSpecialValueFor("invisible_slow")
+	
+	self.invisModifiers = {
+		"modifier_invisible",
+		"modifier_mirana_moonlight_shadow",
+		"modifier_item_imba_shadow_blade_invis",
+		"modifier_item_shadow_amulet_fade",
+		"modifier_imba_vendetta",
+		"modifier_nyx_assassin_burrow",
+		"modifier_item_imba_silver_edge_invis",
+		"modifier_item_glimmer_cape_fade",
+		"modifier_weaver_shukuchi",
+		"modifier_treant_natures_guise_invis",
+		"modifier_templar_assassin_meld",
+		"modifier_imba_skeleton_walk_dummy",
+		"modifier_invoker_ghost_walk_self",
+		"modifier_rune_invis"
+	}
+end
+
 function modifier_imba_dust_of_appearance:DeclareFunctions()
-	local decFuncs = {	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,	}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_dust_of_appearance:GetEffectName()
@@ -84,68 +117,21 @@ function modifier_imba_dust_of_appearance:GetPriority()
 	return MODIFIER_PRIORITY_ULTRA end
 
 function modifier_imba_dust_of_appearance:CheckState()
-	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") or self:GetParent():HasModifier("modifier_imba_slark_shadow_dance") then
 		return nil
 	end
 
-	return {[MODIFIER_STATE_INVISIBLE] = false,}
+	return {[MODIFIER_STATE_INVISIBLE] = false}
 end
 
 function modifier_imba_dust_of_appearance:GetModifierProvidesFOWVision()
-	local parent = self:GetParent()
-
-	if not parent:IsHero() then return 0 end
-
-	local invisModifiers = {
-		"modifier_invisible",
-		"modifier_mirana_moonlight_shadow",
-		"modifier_item_imba_shadow_blade_invis",
-		"modifier_item_shadow_amulet_fade",
-		"modifier_imba_vendetta",
-		"modifier_nyx_assassin_burrow",
-		"modifier_item_imba_silver_edge_invis",
-		"modifier_item_glimmer_cape_fade",
-		"modifier_weaver_shukuchi",
-		"modifier_treant_natures_guise_invis",
-		"modifier_templar_assassin_meld",
-		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self",
-		"modifier_rune_invis",
-		"modifier_item_imba_silver_edge_invis"
-	}
-
-	for _,v in ipairs(invisModifiers) do
-		if parent:HasModifier(v) then return 1 end
+	for _,v in ipairs(self.invisModifiers) do
+		if self:GetParent():HasModifier(v) then return 1 end
 	end
-	return 0
 end
 
 function modifier_imba_dust_of_appearance:GetModifierMoveSpeedBonus_Percentage()
-	local parent = self:GetParent()
-	local ability = self:GetAbility()
-
-	local slow = 0
-	local invisModifiers = {
-		"modifier_invisible",
-		"modifier_mirana_moonlight_shadow",
-		"modifier_item_imba_shadow_blade_invis",
-		"modifier_item_shadow_amulet_fade",
-		"modifier_imba_vendetta",
-		"modifier_nyx_assassin_burrow",
-		"modifier_item_imba_silver_edge_invis",
-		"modifier_item_glimmer_cape_fade",
-		"modifier_weaver_shukuchi",
-		"modifier_treant_natures_guise_invis",
-		"modifier_templar_assassin_meld",
-		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self",
-		"modifier_rune_invis",
-		"modifier_item_imba_silver_edge_invis"
-	}
-
-	for _,v in ipairs(invisModifiers) do
-		if parent:HasModifier(v) then slow = ability:GetSpecialValueFor("invisible_slow") end
+	for _,v in ipairs(self.invisModifiers) do
+		if self:GetParent():HasModifier(v) then return self.invisible_slow end
 	end
-
-	return slow
 end

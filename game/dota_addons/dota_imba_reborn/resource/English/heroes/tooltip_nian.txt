@@ -24,6 +24,7 @@
 "DOTA_Tooltip_ability_imba_nian_crushing_leap"											"Crushing Leap"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_Description"								"Pounces towards the selected location, dealing damage and stunning after a short delay. Damage pierces spell immunity, but the stun does not."
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_Lore"										"As agile as it is ferocious, no target can escape its sights."
+"DOTA_Tooltip_ability_imba_nian_crushing_leap_max_distance"								"MAX DISTANCE:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_duration"									"LEAP DURATION:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_radius"									"RADIUS:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_damage"									"DAMAGE:"

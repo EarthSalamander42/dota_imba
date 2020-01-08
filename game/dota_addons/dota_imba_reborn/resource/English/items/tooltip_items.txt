@@ -43,7 +43,7 @@
 
 // Angelic Alliance
 "DOTA_Tooltip_Ability_item_imba_angelic_alliance"                      "Angelic Alliance"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, and %target_status_resistance%%% for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, and are disarmed for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, %target_status_resistance%%% status resistance, and %target_evasion%%% evasion for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, disarms, and grants true sight on them for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Lore"                  "An artifact that originated in a world long destroyed. This blade was used to repel a godlike necromancer, who delighted in treachery and fooling heroes into working for him."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"                "Illusions do not benefit from Angelic Light's passive disarm effect."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_evasion"			"%+$evasion"
@@ -1023,7 +1023,7 @@
 
 // Silver Edge
 "DOTA_Tooltip_Ability_item_imba_silver_edge"                    "Silver Edge"
-"DOTA_Tooltip_ability_item_imba_silver_edge_Description"                    "<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>If attacking to end the invisibility, you break the target, disabling their passives for %main_debuff_duration% seconds, and reducing their damage output by %panic_damage_reduction%%%. <font color='#FF7800'>Additionally, you <b>Shadow Rip<b>.</font>\n<h1><font color='#FF7800'>Passive: Shadow Rip</font></h1> Attacking to end Invisibility rips the air apart, dealing %shadow_rip_damage% damage to the target and enemies behind him, disabling their passives, reducing their damage output by %panic_damage_reduction%%%, and slowing their turn rate by %panic_turnrate_slow%%% for %panic_duration% seconds."
+"DOTA_Tooltip_ability_item_imba_silver_edge_Description"                    "<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>If attacking to end the invisibility, you break the target, disabling their passives for %main_debuff_duration% seconds, and reducing their damage output by %panic_damage_reduction%%%. <font color='#FF7800'>Additionally, you <b>Shadow Rip<b>.</font>\n<h1><font color='#FF7800'>Passive: Shadow Rip</font></h1> Attacking to end Invisibility rips the air apart, dealing %shadow_rip_damage% damage to the target and enemies behind them, disabling their passives, reducing their damage output by %panic_damage_reduction%%%, and slowing their turn rate by %panic_turnrate_slow%%% for %panic_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_silver_edge_Lore"              "The blade of a fallen king, it allows you to move unseen and strike from the shadows."
 "DOTA_Tooltip_ability_item_imba_silver_edge_Note0"              "Has a 0.3 second fade time."
 "DOTA_Tooltip_ability_item_imba_silver_edge_Note1"              "If the invisibility ends without attacking, the bonus damage is lost."
@@ -1070,17 +1070,21 @@
 
 
 // Soul of Truth
+"DOTA_Tooltip_Ability_item_recipe_imba_soul_of_truth"			"Soul of Truth Recipe"
+
 "DOTA_Tooltip_Ability_item_imba_soul_of_truth"                  "Soul of Truth"
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_Description"                  "<h1>Use: Embedded Truth</h1>When used, grants its bearer armor, health regeneration, and True Sight in %radius% radius for %duration_tooltip% minutes.<br><font color='#e03e2e'>The buff is lost on death.</font>"
+"DOTA_Tooltip_ability_item_imba_soul_of_truth_Description"		"<h1>Use: Embedded Truth</h1>When used, grants its bearer true sight in %radius% radius as a buff for %duration_tooltip% minutes.<br><font color='#e03e2e'>The buff is lost on death.</font><br><br>Drops a Gem of True Sight at the parent's location when Embedded Truth is removed by any means."
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Lore"            "The golden soul of a being incapable of lies or deceit. Its gaze can pierce any disguise or veil."
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_Note0"            "Does not stack. Using Soul of Truth again only refreshes the buff's duration."
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_radius"          "TRUE SIGHT RADIUS:"
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_armor"            "+$armor"
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_health_regen"                 "+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_soul_of_truth_Note0"            "Cannot be consumed while Embedded Truth is active."
+//"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+//"DOTA_Tooltip_ability_item_imba_soul_of_truth_radius"          "TRUE SIGHT RADIUS:"
+//"DOTA_Tooltip_ability_item_imba_soul_of_truth_armor"            "+$armor"
+//"DOTA_Tooltip_ability_item_imba_soul_of_truth_health_regen"                 "+$hp_regen"
 
 "DOTA_Tooltip_modifier_imba_soul_of_truth_buff"                "Soul of Truth"
-"DOTA_Tooltip_modifier_imba_soul_of_truth_buff_Description"                 "True Sight, bonus armor and health regeneration."
+"DOTA_Tooltip_modifier_imba_soul_of_truth_buff_Description"                 "Gaining True Sight. Buff lost upon death."
+
+"dota_hud_error_soul_of_truth_already_active"						"Soul of Truth Already Active"
 
 // Spellfencer
 "DOTA_Tooltip_ability_item_imba_spell_fencer"							"Spellfencer"

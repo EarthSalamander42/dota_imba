@@ -11,7 +11,13 @@ function modifier_custom_mechanics:IsPermanent() return true end
 function modifier_custom_mechanics:OnCreated()
 	if IsServer() then
 		self.health_regen_amp = 0
-		self:StartIntervalThink(0.25)
+		
+		self.forbidden_inflictors = {
+			"item_imba_blade_mail",
+			"luna_moon_glaive"
+		}
+		
+		self:StartIntervalThink(1)
 	end
 end
 
@@ -65,50 +71,37 @@ end
 
 -- Spell lifesteal handler
 function modifier_custom_mechanics:OnTakeDamage( keys )
-	if IsServer() then
-		local parent = self:GetParent()
-		local caster = keys.attacker
-		local target = keys.unit
-		local damage = math.max(keys.damage, 0) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
-		local damage_flags = keys.damage_flags
-		local inflictor = keys.inflictor
-		
-		if caster == parent and inflictor then
+	if keys.attacker == self:GetParent() and keys.inflictor then
 
-			-- Calculate the amount of lifesteal
-			local lifesteal_amount = parent:GetSpellLifesteal()
+		-- -- Calculate the amount of lifesteal
+		-- local lifesteal_amount = self:GetParent():GetSpellLifesteal()
 
-			-- Do nothing if the victim is not a valid target, or if the lifesteal amount is nonpositive
-			if target:IsBuilding() or target:IsOther() or (target:GetTeam() == caster:GetTeam()) or (lifesteal_amount <= 0) or bit.band(damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
-				return end
+		-- Do nothing if the victim is not a valid keys.unit, or if the lifesteal amount is nonpositive
+		if keys.unit:IsBuilding() or keys.unit:IsOther() or (keys.unit:GetTeam() == keys.attacker:GetTeam()) or (self:GetParent():GetSpellLifesteal() <= 0) or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
+			return end
 
-			-- Also do nothing if the inflictor is forbidden
-			local forbidden_inflictors = {
-				"item_imba_blade_mail",
-				"luna_moon_glaive"
-			}
-			for _, forbidden_inflictor in pairs(forbidden_inflictors) do
-				if inflictor:GetName() == forbidden_inflictor then return end
-			end
-			
-			-- Particle effect
-			local lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(lifesteal_pfx, 0, caster:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
-			
-			-- if caster:IsIllusion() or target:IsIllusion() then
-				-- return
-			-- end
-			
-			-- If the target is a real hero, heal for the full value
-			--if target:IsRealHero() then
-				caster:Heal(damage * lifesteal_amount * 0.01, caster)
-
-			-- else, heal for half of it
-			--else
-			--	caster:Heal(damage * lifesteal_amount * 0.005, caster)
-			--end
+		-- Also do nothing if the inflictor is forbidden
+		for _, forbidden_inflictor in pairs(self.forbidden_inflictors) do
+			if keys.inflictor:GetName() == forbidden_inflictor then return end
 		end
+		
+		-- Particle effect
+		self.lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
+		ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
+		
+		-- if keys.attacker:IsIllusion() or keys.unit:IsIllusion() then
+			-- return
+		-- end
+		
+		-- If the keys.unit is a real hero, heal for the full value
+		--if keys.unit:IsRealHero() then
+			keys.attacker:Heal(math.max(keys.damage, 0) * self:GetParent():GetSpellLifesteal() * 0.01, keys.attacker) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
+
+		-- else, heal for half of it
+		--else
+		--	keys.attacker:Heal(math.max(keys.damage, 0) * self:GetParent():GetSpellLifesteal() * 0.005, keys.attacker)
+		--end
 	end
 end
 
@@ -124,46 +117,37 @@ end
 
 -- Regular lifesteal handler
 function modifier_custom_mechanics:OnAttackLanded( keys )
-	if IsServer() then
-		local parent = self:GetParent()
-		local attacker = keys.attacker
+	-- If this attack was not performed by the modifier's self:GetParent(), do nothing
+	if self:GetParent() ~= keys.attacker then
+		return end
 
-		-- If this attack was not performed by the modifier's parent, do nothing
-		if parent ~= attacker then
-			return end
-
-		-- Attempted fixing of invulnerable 0 hp illusions...again
-		if not attacker:IsRealHero() and (attacker:GetMaxHealth() <= 0 or attacker:GetHealth() <= 0) then
-			attacker:SetMaxHealth(attacker:GetBaseMaxHealth())
-			attacker:SetHealth(1)
-		end
-		
-		-- Else, keep going
-		local target = keys.target
-		local lifesteal_amount = parent:GetLifesteal()
-		
-		-- If there's no valid target, or lifesteal amount, do nothing
-		if target:IsBuilding() or target:IsOther() or (target:GetTeam() == attacker:GetTeam()) or lifesteal_amount <= 0 then
-			return
-		end
-
-		-- Calculate actual lifesteal amount
-		local damage = math.max(parent:GetRealDamageDone(target), 0)
-		local heal = damage * lifesteal_amount / 100
-
-		-- Choose the particle to draw
-		local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"
-		if parent:HasModifier("modifier_item_imba_vladmir_blood_aura") then
-			lifesteal_particle = "particles/item/vladmir/vladmir_blood_lifesteal.vpcf"
-		end
-
-		-- Heal and fire the particle
-		attacker:Heal(heal, attacker)
-		local lifesteal_pfx = ParticleManager:CreateParticle(lifesteal_particle, PATTACH_ABSORIGIN_FOLLOW, attacker)
-		ParticleManager:SetParticleControl(lifesteal_pfx, 0, attacker:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
+	-- Attempted fixing of invulnerable 0 hp illusions...again
+	if not keys.attacker:IsRealHero() and (keys.attacker:GetMaxHealth() <= 0 or keys.attacker:GetHealth() <= 0) then
+		keys.attacker:SetMaxHealth(keys.attacker:GetBaseMaxHealth())
+		keys.attacker:SetHealth(1)
 	end
+	
+	-- Else, keep going
+	
+	-- If there's no valid keys.target, or lifesteal amount, do nothing
+	if keys.target:IsBuilding() or keys.target:IsOther() or (keys.target:GetTeam() == keys.attacker:GetTeam()) or self:GetParent():GetLifesteal() <= 0 then
+		return
+	end
+
+	-- Choose the particle to draw
+	local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"
+	if self:GetParent():HasModifier("modifier_item_imba_vladmir_blood_aura") then
+		lifesteal_particle = "particles/item/vladmir/vladmir_blood_lifesteal.vpcf"
+	end
+
+	-- Heal and fire the particle
+	-- Calculate actual lifesteal amount
+	keys.attacker:Heal(math.max(self:GetParent():GetRealDamageDone(keys.target), 0) * self:GetParent():GetLifesteal() / 100, keys.attacker)
+	self.lifesteal_pfx = ParticleManager:CreateParticle(lifesteal_particle, PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
+	ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
 end
+
 --[[
 -- this function stack with actual respawn time, and when trying to call GetRespawnTime() or GetTimeUntilRespawn() game crash
 function modifier_custom_mechanics:GetModifierConstantRespawnTime()

@@ -260,7 +260,11 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end
 				
-				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+				local voodoo_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
+				
+				if voodoo_modifier then
+					voodoo_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+				end
 			end
 		end
 	else
@@ -284,7 +288,10 @@ function modifier_imba_shadow_shaman_voodoo_handler:RemoveOnDeath()	return false
 function modifier_imba_shadow_shaman_voodoo_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shadow_shaman_voodoo_handler:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ORDER}
+	return {
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_shadow_shaman_voodoo_handler:OnOrder(keys)
@@ -295,6 +302,22 @@ function modifier_imba_shadow_shaman_voodoo_handler:OnOrder(keys)
 		self:SetStackCount(0)
 	else
 		self:SetStackCount(1)
+	end
+end
+
+function modifier_imba_shadow_shaman_voodoo_handler:OnAttackLanded(keys)
+	if not IsServer() then return end
+	if keys.attacker == self:GetParent() and self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_hex_parlor_tricks") and not self:GetParent():IsIllusion() and self:GetAbility() and self:GetAbility():IsTrained() and self == self:GetParent():FindAllModifiersByName("modifier_imba_shadow_shaman_voodoo_handler")[1] and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then --and not keys.attacker:PassivesDisabled() then
+		if RollPseudoRandom(self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks"), self) then
+			keys.target:EmitSound("Hero_ShadowShaman.Hex.Target")
+			keys.target:EmitSound("General.Illusion.Create")
+			
+			local voodoo_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_voodoo", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2")})
+		
+			if voodoo_modifier then
+				voodoo_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2") * (1 - keys.target:GetStatusResistance()), true)
+			end
+		end
 	end
 end
 

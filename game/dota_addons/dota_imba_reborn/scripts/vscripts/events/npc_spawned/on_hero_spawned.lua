@@ -15,6 +15,8 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
+	if not hero or hero:IsNull() then return end
+
 	if hero:IsIllusion() then
 		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
@@ -33,12 +35,16 @@ function GameMode:OnHeroFirstSpawn(hero)
 	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 	if starting_level == nil then starting_level = 1 end
 	if starting_level and starting_level > 1 then
-		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
+		for level = 2, starting_level do
+			hero:HeroLevelUp(true)
+		end
+		
+		-- hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_Unspecified, false, true)
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[starting_level])
 	else
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 	end
-
+	
 	-- add modifier for custom mechanics handling
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 

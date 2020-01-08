@@ -23,7 +23,7 @@
 //"DOTA_Tooltip_ability_item_imba_yasha_bonus_evasion"			"%EVASION:"
 "DOTA_Tooltip_ability_item_imba_yasha_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
-"DOTA_Tooltip_modifier_item_imba_yasha_active"					"Shield"
+"DOTA_Tooltip_modifier_item_imba_yasha_active"					"Sword Dance"
 "DOTA_Tooltip_modifier_item_imba_yasha_active_Description"		"Grants %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
 
 // Kaya

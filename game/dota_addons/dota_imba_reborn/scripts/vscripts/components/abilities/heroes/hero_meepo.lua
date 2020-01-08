@@ -114,18 +114,21 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 end
 
 function modifier_meepo_divided_we_stand_lua:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_EVENT_ON_DEATH
+	}
 end
 
 function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 	if not IsServer() then return end
 
-	print(keys.ability:IsItem())
-	print(self:GetParent().GetCloneSource)
-	print(keys.unit)
-	print(self:GetParent():GetCloneSource())
+	-- print(keys.ability:IsItem())
+	-- print(self:GetParent().GetCloneSource)
+	-- print(keys.unit)
+	-- print(self:GetParent():GetCloneSource())
 	
-	if keys.ability:IsItem() and self:GetParent().GetCloneSource and keys.unit == self:GetParent():GetCloneSource() or (keys.target == self:GetParent():GetCloneSource() and keys.unit:GetTeamNumber() == self:GetParent():GetCloneSource():GetTeamNumber()) then
+	if keys.ability and keys.ability.IsItem and keys.ability:IsItem() and self:GetParent().GetCloneSource and (keys.unit and keys.unit == self:GetParent():GetCloneSource() or (keys.target and keys.target == self:GetParent():GetCloneSource() and keys.unit:GetTeamNumber() == self:GetParent():GetCloneSource():GetTeamNumber())) then
 		local modifier_name			= nil
 		local modifier_duration		= nil
 	
@@ -248,6 +251,17 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 
 				self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_silver_edge_invis", {duration = keys.ability:GetSpecialValueFor("invis_duration")})
 			end)
+		end
+	end
+end
+	
+-- Crash exception nonsense (mostly with Dazzle's Shallow Grave)
+function modifier_meepo_divided_we_stand_lua:OnDeath(keys)
+	if keys.unit:GetPlayerOwnerID() == self:GetParent():GetPlayerOwnerID() and keys.unit:GetName() == self:GetParent():GetName() and not keys.unit:IsIllusion() then
+		if self:GetParent():IsAlive() then
+			TrueKill(self:GetParent(), self:GetParent(), self:GetAbility())
+		elseif self:GetParent():GetCloneSource() and self:GetParent():GetCloneSource():IsAlive() then
+			TrueKill(self:GetParent():GetCloneSource(), self:GetParent():GetCloneSource(), self:GetAbility())
 		end
 	end
 end

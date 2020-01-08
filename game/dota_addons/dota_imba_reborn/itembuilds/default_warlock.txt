@@ -22,6 +22,7 @@
 			"item"		"item_imba_the_triumvirate_v2"
 			"item"		"item_imba_desolator_2"
 			"item"		"item_imba_witchblade"
+			"item"		"item_imba_manta_2"
 			"item"		"item_imba_starfury"
 			"item"		"item_imba_jarnbjorn"
 			
@@ -39,6 +40,7 @@
 			"item"		"item_imba_arcane_nexus"
 			"item"		"item_imba_meteor_hammer_4"
 			"item"		"item_imba_cyclone_2"
+			"item"		"item_imba_cultic_hammer"
 			"item"		"item_imba_necronomicon_5"
 			"item"		"item_imba_nullifier_2"
 			"item"		"item_imba_origin"

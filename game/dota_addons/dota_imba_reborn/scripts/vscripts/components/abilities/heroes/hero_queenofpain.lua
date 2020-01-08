@@ -104,64 +104,102 @@ function imba_queenofpain_shadow_strike:GetAbilityTextureName()
 end
 -------------------------------------------
 
+function imba_queenofpain_shadow_strike:GetBehavior()
+	if not self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
+		return self.BaseClass.GetBehavior(self)
+	else
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
+	end
+end
+
+function imba_queenofpain_shadow_strike:GetAOERadius()
+	if not self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
+		return 0
+	else
+		return self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_shadow_strike_aoe")
+	end
+end
+
 function imba_queenofpain_shadow_strike:OnSpellStart( params )
-	if IsServer() then
-		local caster = self:GetCaster()
-		local target
-		if params then
-			target = params
-		else
-			target = self:GetCursorTarget()
-			caster:EmitSound("Hero_QueenOfPain.ShadowStrike")
-			if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
-				caster:EmitSound("queenofpain_pain_ability_shadowstrike_0"..math.random(1,4))
+	local caster = self:GetCaster()
+	local target
+	if params then
+		target = params
+	else
+		target = self:GetCursorTarget()
+		caster:EmitSound("Hero_QueenOfPain.ShadowStrike")
+		if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
+			caster:EmitSound("queenofpain_pain_ability_shadowstrike_0"..math.random(1,4))
+		end
+	end
+
+	-- Parameters
+	local damage = self:GetSpecialValueFor("damage")
+	local sec_damage_total = self:GetSpecialValueFor("sec_damage_total")
+	local damage_interval = self:GetSpecialValueFor("damage_interval")
+	local duration = self:GetSpecialValueFor("duration")
+	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
+
+	-- Play caster particle
+	local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(caster_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 1, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 3, Vector(projectile_speed, 0, 0))
+	ParticleManager:ReleaseParticleIndex(caster_pfx)
+	
+	local projectile =
+		{
+			Target 				= target,
+			Source 				= caster,
+			Ability 			= self,
+			EffectName 			= "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
+			iMoveSpeed			= projectile_speed,
+			vSourceLoc 			= caster:GetAbsOrigin(),
+			bDrawsOnMinimap 	= false,
+			bDodgeable 			= true,
+			bIsAttack 			= false,
+			bVisibleToEnemies 	= true,
+			bReplaceExisting 	= false,
+			flExpireTime 		= GameRules:GetGameTime() + 20,
+			bProvidesVision 	= false,
+			--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+			--	iVisionRadius 		= 400,
+			--	iVisionTeamNumber 	= caster:GetTeamNumber()
+			ExtraData			= {init_damage = damage, sec_damage_total = sec_damage_total, damage_interval = damage_interval, duration = duration, bPrimaryTarget = true}
+		}
+	ProjectileManager:CreateTrackingProjectile(projectile)
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_shadow_strike_aoe"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)) do
+			if enemy ~= target then	
+				ProjectileManager:CreateTrackingProjectile({
+					Target 				= enemy,
+					Source 				= self:GetCaster(),
+					Ability 			= self,
+					EffectName 			= "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
+					iMoveSpeed			= self:GetSpecialValueFor("projectile_speed"),
+					vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
+					bDrawsOnMinimap 	= false,
+					bDodgeable 			= true,
+					bIsAttack 			= false,
+					bVisibleToEnemies 	= true,
+					bReplaceExisting 	= false,
+					flExpireTime 		= GameRules:GetGameTime() + 20,
+					bProvidesVision 	= false,
+					ExtraData			= {init_damage = damage, sec_damage_total = sec_damage_total, damage_interval = damage_interval, duration = duration, bPrimaryTarget = false}
+				})
 			end
 		end
-
-		-- Parameters
-		local damage = self:GetSpecialValueFor("damage")
-		local sec_damage_total = self:GetSpecialValueFor("sec_damage_total")
-		local damage_interval = self:GetSpecialValueFor("damage_interval")
-		local duration = self:GetSpecialValueFor("duration")
-		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-
-		-- Play caster particle
-		local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(caster_pfx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(caster_pfx, 1, target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(caster_pfx, 3, Vector(projectile_speed, 0, 0))
-		ParticleManager:ReleaseParticleIndex(caster_pfx)
-
-		local projectile =
-			{
-				Target 				= target,
-				Source 				= caster,
-				Ability 			= self,
-				EffectName 			= "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
-				iMoveSpeed			= projectile_speed,
-				vSourceLoc 			= caster:GetAbsOrigin(),
-				bDrawsOnMinimap 	= false,
-				bDodgeable 			= true,
-				bIsAttack 			= false,
-				bVisibleToEnemies 	= true,
-				bReplaceExisting 	= false,
-				flExpireTime 		= GameRules:GetGameTime() + 20,
-				bProvidesVision 	= false,
-				--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-				--	iVisionRadius 		= 400,
-				--	iVisionTeamNumber 	= caster:GetTeamNumber()
-				ExtraData			= {init_damage = damage, sec_damage_total = sec_damage_total, damage_interval = damage_interval, duration = duration}
-			}
-		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
 
 function imba_queenofpain_shadow_strike:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
 		if target then
-			if target:TriggerSpellAbsorb(self) then
+			if (not ExtraData.bPrimaryTarget or ExtraData.bPrimaryTarget and ExtraData.bPrimaryTarget == 1) and target:TriggerSpellAbsorb(self) then
 				return nil
 			end
+			
 			local caster = self:GetCaster()
 			local damage_per_interval = ExtraData.sec_damage_total / (ExtraData.duration / ExtraData.damage_interval)
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.init_damage, damage_type = self:GetAbilityDamageType()})
@@ -177,15 +215,21 @@ function modifier_imba_shadow_strike_debuff:IsHidden() return false end
 function modifier_imba_shadow_strike_debuff:IsPurgable() return true end
 function modifier_imba_shadow_strike_debuff:IsPurgeException() return false end
 function modifier_imba_shadow_strike_debuff:IsStunDebuff() return false end
+function modifier_imba_shadow_strike_debuff:IgnoreTenacity()	return true end
 -------------------------------------------
 function modifier_imba_shadow_strike_debuff:OnCreated( params )
 	local parent = self:GetParent()
 	local ability = self:GetAbility()
 	local slow_decay_pct = ability:GetSpecialValueFor("slow_decay_pct")
 	self.slow = ability:GetSpecialValueFor("init_move_slow_pct")
-	self.slow_decrease = self.slow * (slow_decay_pct / 100)
 
-	if IsServer() then
+	if IsServer() and self:GetAbility() then
+		self.slow = self.slow * (1 - self:GetParent():GetStatusResistance())
+		-- self.slow_decrease = self.slow * (slow_decay_pct / 100)
+		self.slow_decrease = self.slow / self:GetAbility():GetSpecialValueFor("duration")
+		
+		self:SetStackCount(self.slow * 100 * (-1))
+	
 		if not self.dagger_pfx then
 			self.dagger_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
 			for _, cp in pairs({ 0, 2, 3 }) do
@@ -195,10 +239,12 @@ function modifier_imba_shadow_strike_debuff:OnCreated( params )
 		end
 		self.damage_interval = params.damage_interval / 0.5
 		self.damage_per_interval = params.damage_per_interval
+		
+		self.counter = 0
+		
+		-- WARNING: Only works like this if the intervals are made in 0.5 steps!
+		self:StartIntervalThink(0.5)
 	end
-	self.counter = 0
-	-- WARNING: Only works like this if the intervals are made in 0.5 steps!
-	self:StartIntervalThink(0.5)
 end
 
 function modifier_imba_shadow_strike_debuff:OnRefresh( params )
@@ -215,6 +261,8 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 		else
 			self.slow = 0
 		end
+		
+		self:SetStackCount(self.slow * 100 * (-1))
 	end
 	if IsServer() then
 		local parent = self:GetParent()
@@ -245,13 +293,11 @@ end
 
 
 function modifier_imba_shadow_strike_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 -- Talent #3 handling
@@ -271,7 +317,8 @@ function modifier_imba_shadow_strike_debuff:OnTakeDamage( keys )
 end
 
 function modifier_imba_shadow_strike_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow * (-1)
+	-- return self.slow * (-1)
+	return self:GetStackCount() * 0.01
 end
 
 function modifier_imba_shadow_strike_debuff:GetModifierProvidesFOWVision()
@@ -297,6 +344,12 @@ function imba_queenofpain_blink:GetAbilityTextureName()
 	return "queenofpain_blink"
 end
 -------------------------------------------
+
+function imba_queenofpain_blink:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetSpecialValueFor("blink_range") + self:GetCaster():GetCastRangeBonus()
+	end
+end
 
 function imba_queenofpain_blink:OnSpellStart()
 	if IsServer() then
@@ -367,12 +420,11 @@ function imba_queenofpain_blink:OnSpellStart()
 	end
 end
 
-function imba_queenofpain_blink:GetManaCost()
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_queenofpain_blink_decision_time") then
+function imba_queenofpain_blink:GetManaCost(level)
+	if self:GetCaster():HasModifier("modifier_imba_queenofpain_blink_decision_time") then
 		return self:GetSpecialValueFor("mana_cost") * 2
 	else
-		return self:GetSpecialValueFor("mana_cost")
+		return self.BaseClass.GetManaCost(self, level)
 	end
 end
 
@@ -505,6 +557,16 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 					ApplyDamage({victim = target, attacker = caster, ability = shadow_strike_ability, damage = init_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, init_damage, nil)
 					target:AddNewModifier(caster, shadow_strike_ability, "modifier_imba_shadow_strike_debuff", {duration = duration, damage_per_interval = damage_over_time, damage_interval = damage_interval})
+				end
+			end
+			
+			-- Scream of Pain Xs Fear talent (only apply to the standard SOP and not all the extensions, for "reasonable" play
+			if self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_scream_of_pain_fear") and ExtraData.damage == self:GetSpecialValueFor("damage") then
+				-- Vanilla fear modifier
+				local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_queenofpain_scream_of_pain_fear", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_scream_of_pain_fear")})
+				
+				if fear_modifier then
+					fear_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_scream_of_pain_fear") * (1 - target:GetStatusResistance()), true)
 				end
 			end
 		end
@@ -805,12 +867,26 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_queenofpain_4	= class({})
+modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe	= modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe or class({})
 
 function modifier_special_bonus_imba_queenofpain_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_queenofpain_4:IsPurgable() 	return false end
 function modifier_special_bonus_imba_queenofpain_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe:IsHidden() 		return true end
+function modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe:IsPurgable() 		return false end
+function modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe:RemoveOnDeath() 	return false end
+
+function imba_queenofpain_shadow_strike:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_queen_of_pain_shadow_strike_aoe"), "modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", {})
+	end
+end
 
 function imba_queenofpain_delightful_torment:OnOwnerSpawned()
 	if not IsServer() then return end

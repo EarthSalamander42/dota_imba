@@ -1,0 +1,130 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf25:version{7bca2d8d-3a14-4a76-bd41-f483fdf78d50} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 6
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flProxyRadius = 8.0
+				m_flInputMax = 0.2
+			}
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
+			m_hTexture = resource:"materials/particle/particle_glow_03.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 2.0
+			m_flStartScale = 0.5
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_OP_AlphaDecay"
+			m_flMinAlpha = 0.1
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_flEndTime = 99999.0
+			m_Rate = -8.0
+			m_nField = 16
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_RampScalarLinear"
+			m_RateMax = 4.0
+			m_RateMin = -4.0
+			m_nField = 4
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.15
+			m_fLifetimeMin = 0.1
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 24.0
+			m_flRadiusMax = 20.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 155
+			m_nAlphaMax = 155
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 3
+			m_fRadiusMax = 4.0
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RemapCPtoVector"
+			m_nCPInput = 15
+			m_vInputMax = [ 255.0, 255.0, 255.0 ]
+			m_nFieldOutput = 6
+			m_vOutputMax = [ 1.0, 1.0, 1.0 ]
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nFieldOutput = 16
+			m_nField = 2
+			m_nCPInput = 14
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_flOutputMax = 100.0
+			m_nFieldOutput = 1
+			m_flInputMax = 100.0
+			m_nCPInput = 14
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_flOutputMax = 10.0
+			m_nField = 1
+			m_flInputMax = 10.0
+			m_nCPInput = 14
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 4.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
+}

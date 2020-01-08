@@ -1728,6 +1728,13 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 
 		-- Apply a ministun to the target
 		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+		
+		-- Memes (give a small cooldown to it so you don't potentially get the voice thing spammed upon multiple projectile lands
+		if not target:IsAlive() and RollPercentage(100) and (not self.meme_cooldown or GameRules:GetGameTime() - self.meme_cooldown >= 2.0) then
+			target:EmitSound("Hero_Sniper.Boom_Headshot")
+			
+			self.meme_cooldown = GameRules:GetGameTime()
+		end
 	end
 
 	-- #2 Talent: Assassinate now knockbacks all units hit

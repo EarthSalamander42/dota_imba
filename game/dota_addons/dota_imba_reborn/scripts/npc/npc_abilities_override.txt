@@ -67,8 +67,6 @@
 	"item_greater_crit"						"REMOVE"
 	"item_recipe_basher"					"REMOVE"
 	"item_basher"							"REMOVE"
-//	"item_recipe_manta"						"REMOVE"
-//	"item_manta"							"REMOVE"
 	"item_recipe_lesser_crit"				"REMOVE"
 	"item_lesser_crit"						"REMOVE"
 	"item_recipe_armlet"					"REMOVE"
@@ -174,6 +172,10 @@
 	"item_blade_mail"						"REMOVE"
 	"item_recipe_nullifier"					"REMOVE" 
 	"item_nullifier"						"REMOVE"
+	"item_recipe_manta"						"REMOVE"
+	"item_recipe_manta"						"REMOVE"
+	"item_manta"							"REMOVE"
+	"item_manta"							"REMOVE"
 	
 	"item_black_king_bar"					"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared bkb cooldown thing to work
 
@@ -197,8 +199,6 @@
 	"item_imba_bottle"						"REMOVE"
 	"item_recipe_imba_spell_fencer"			"REMOVE"
 	"item_imba_spell_fencer"				"REMOVE"
-	"item_imba_recipe_manta"				"REMOVE"
-	"item_imba_manta"						"REMOVE" // Holy god damn lag
 	"item_recipe_imba_bloodstone"			"REMOVE"
 	"item_imba_bloodstone"					"REMOVE"
 	"item_recipe_imba_gungnir"				"REMOVE"
@@ -206,7 +206,7 @@
 	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 	"item_imba_ultimate_scepter_synth"		"REMOVE"
 	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
-	"item_imba_soul_of_truth"				"REMOVE"
+	//"item_imba_soul_of_truth"				"REMOVE"
 	"item_recipe_imba_curseblade"			"REMOVE"
 	"item_imba_curseblade"					"REMOVE"
 	"item_recipe_imba_hellblade"			"REMOVE"
@@ -1837,6 +1837,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"6"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"28 32 36 40"
+			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -2841,10 +2846,14 @@
 	"invoker_invoke"
 	{
 		"MaxLevel"						"4"
-		"AbilityCooldown"				"4 3 2 2"
 
 		"AbilitySpecial"
 		{
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_reduction_per_orb"		"0.0"
+			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -3292,7 +3301,6 @@
 	"legion_commander_overwhelming_odds"
 	{
 		"AbilityCooldown"				"15 14 13 12"
-		"AbilityManaCost"				"100 110 120 130"
 
 		"AbilitySpecial"
 		{			
@@ -3317,11 +3325,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"illusion_dmg_pct"				"40"
 				"CalculateSpellDamageTooltip"	"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_speed_creeps"	"3"
 			}
 			"06"
 			{
@@ -3382,11 +3385,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"trigger_chance"			"25 30 35 40"
 				"LinkedSpecialBonus"		"special_bonus_unique_legion_commander_3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"1.0"
 			}
 			"03"
 			{
@@ -6722,42 +6720,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_heal"				"180"
+				"hp_heal"				"144"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mp_heal"				"60"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal_growth"		"5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal_growth"		"2"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal_pct"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal_pct"			"0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"5"
+				"mp_heal"				"80"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"900"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_cooldown"		"60"
 			}
 		}
 	}
@@ -6959,11 +6937,6 @@
 				"var_type"			"FIELD_INTEGER"
 				"bonus_damage"		"100"
 			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1.65"
-			}
 		}
 	}
 
@@ -7018,11 +6991,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"400"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blind_pct"				"40 50 60 70"
-			}
 		}
 	}
 
@@ -7038,18 +7006,10 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reflection_pct"	"10 18 24 28"
+				"damage_reflection_pct"	"10 16 22 28"
 				"LinkedSpecialBonus"	"special_bonus_unique_spectre_5"
 			}		
 		}
-	}
-
-	//=================================================================================================================
-	// Spectre: Haunt
-	//=================================================================================================================
-	"spectre_haunt"
-	{
-
 	}
 
 	//=================================================================================================================
@@ -8008,40 +7968,20 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agility"			"31"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"21"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"20"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"images_count"			"3"
-			}			
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_illusion_duration"			"20"
 			}
 			"08"
 			{
@@ -8052,17 +7992,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_damage_outgoing_melee"			"42"
-			}	
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"images_take_damage_percent_melee"	"250"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_damage_incoming_melee_total_pct"			"350"
-			}			
+			}		
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -8072,42 +8002,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_damage_outgoing_ranged"			"38"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"images_take_damage_percent_ranged"	"300"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_damage_incoming_ranged_total_pct"			"400"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_melee"		"30"
-			}
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_ranged_tooltip"		"45"
-			}
-			"18"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"invuln_duration"		"0.1"
-			}
-			"19"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"1000"
-			}
-			"20"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_ranged_cooldown_increase"	"15"
-			}		
+			}	
 		}
 	}
 	
@@ -8198,12 +8093,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"physical_damage_reduction"		"30 45 60 75"
+				"physical_damage_reduction"		"45 55 65 75"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"physical_damage_reduction_side"	"15 22 30 37"
+				"physical_damage_reduction_side"	"23 28 33 38"
 			}
 		}
 	}
@@ -8249,25 +8144,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Tiny: Craggy Exterior (actually Tree Grab)
-	//=================================================================================================================
-	"tiny_craggy_exterior"
-	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"splash_pct"				"40 55 70 85"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	}
-
 
 	//=================================================================================================================
 	// Ability: Tiny Toss Tree
@@ -8684,7 +8560,7 @@
 	//=================================================================================================================
 	"item_third_eye"
 	{
-		"ItemCost"						"2400"
+		"ItemCost"						"2200"
 		"ItemPurchasable"				"1"
 		"ItemStockMax"					"2"
 		"ItemStockTime"					"210.0"

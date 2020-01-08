@@ -23,7 +23,9 @@ LinkLuaModifier("modifier_imba_shiva_handler", "components/items/item_shiva.lua"
 LinkLuaModifier("modifier_imba_shiva_aura", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shiva_debuff", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_shivas_blast_slow", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_shivas_blast_true_sight", "components/items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_shiva_frost_goddess_breath", "components/items/item_shiva", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_shiva_truesight_null", "components/items/item_shiva", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_shivas_guard:GetIntrinsicModifierName()
 	return "modifier_imba_shiva_handler"
@@ -37,6 +39,12 @@ function item_imba_shivas_guard:OnSpellStart()
 	local slow_initial_stacks = self:GetSpecialValueFor("slow_initial_stacks")
 	local blast_duration = blast_radius / blast_speed
 	local current_loc = self:GetCaster():GetAbsOrigin()
+	
+	local bTrueSight = not self:GetCaster():HasModifier("modifier_item_imba_shiva_truesight_null")
+	local slow_duration_tooltip	= self:GetSpecialValueFor("slow_duration_tooltip")
+
+	local caster	= self:GetCaster()
+	local ability	= self
 
 	-- Play cast sound
 	self:GetCaster():EmitSound("DOTA_Item.ShivasGuard.Activate")
@@ -52,6 +60,10 @@ function item_imba_shivas_guard:OnSpellStart()
 	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
+
+	if bTrueSight then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_shiva_truesight_null", {duration = math.max(self:GetEffectiveCooldown(self:GetLevel()), 0)})
+	end
 
 	-- Initialize targets hit table
 	local targets_hit = {}
@@ -92,11 +104,20 @@ function item_imba_shivas_guard:OnSpellStart()
 				ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 				-- Deal damage
-				ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 				-- Apply slow modifier
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_shivas_blast_slow", {})
-				enemy:SetModifierStackCount("modifier_item_imba_shivas_blast_slow", self:GetCaster(), slow_initial_stacks)
+				enemy:AddNewModifier(caster, ability, "modifier_item_imba_shivas_blast_slow", {})
+				enemy:SetModifierStackCount("modifier_item_imba_shivas_blast_slow", caster, slow_initial_stacks)
+
+				-- Apply (IMBA) true sight modifier if applicable
+				if bTrueSight then
+					true_sight_modifier = enemy:AddNewModifier(caster, ability, "modifier_item_imba_shivas_blast_true_sight", {duration = slow_duration_tooltip})
+					
+					if true_sight_modifier then
+						true_sight_modifier:SetDuration(slow_duration_tooltip * (1 - enemy:GetStatusResistance()), true)
+					end	
+				end
 
 				-- Add enemy to the targets hit table
 				targets_hit[#targets_hit + 1] = enemy
@@ -167,11 +188,10 @@ function modifier_imba_shiva_handler:OnIntervalThink()
 end
 
 function modifier_imba_shiva_handler:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 	}
-	return funcs
 end
 
 function modifier_imba_shiva_handler:GetModifierPhysicalArmorBonus()
@@ -285,8 +305,11 @@ function modifier_item_imba_shivas_blast_slow:GetTexture()
 end
 
 function modifier_item_imba_shivas_blast_slow:OnCreated()
+	self.slow_stack	= self:GetAbility():GetSpecialValueFor("slow_stack")
+
 	if not IsServer() then return end
-	self:StartIntervalThink(1.0)
+	
+	self:StartIntervalThink(1 - self:GetParent():GetStatusResistance())
 end
 
 function modifier_item_imba_shivas_blast_slow:DeclareFunctions()
@@ -312,16 +335,38 @@ function modifier_item_imba_shivas_blast_slow:OnIntervalThink()
 end
 
 function modifier_item_imba_shivas_blast_slow:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("slow_stack") * self:GetStackCount()
+	return self.slow_stack * self:GetStackCount()
 end
 
 function modifier_item_imba_shivas_blast_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("slow_stack") * self:GetStackCount()
+	return self.slow_stack * self:GetStackCount()
 end
 
-----------------------------------------------
--- modifier_item_imba_shiva_frost_goddess_breath --
-----------------------------------------------
+------------------------------------------------
+-- MODIFIER_ITEM_IMBA_SHIVAS_BLAST_TRUE_SIGHT --
+------------------------------------------------
+
+modifier_item_imba_shivas_blast_true_sight	= modifier_item_imba_shivas_blast_true_sight or class({})
+
+function modifier_item_imba_shivas_blast_true_sight:GetEffectName()
+	return "particles/items2_fx/true_sight_debuff.vpcf"
+end
+
+function modifier_item_imba_shivas_blast_true_sight:GetPriority()
+	return MODIFIER_PRIORITY_ULTRA
+end
+
+function modifier_item_imba_shivas_blast_true_sight:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_item_imba_shivas_blast_true_sight:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = false}
+end
+
+---------------------------------------------------
+-- MODIFIER_ITEM_IMBA_SHIVA_FROST_GODDESS_BREATH --
+---------------------------------------------------
 
 modifier_item_imba_shiva_frost_goddess_breath	= modifier_item_imba_shiva_frost_goddess_breath or class({})
 
@@ -344,3 +389,14 @@ end
 function modifier_item_imba_shiva_frost_goddess_breath:GetModifierBonusStats_Intellect()
 	return self.aura_intellect
 end
+
+---------------------------------------------
+-- MODIFIER_ITEM_IMBA_SHIVA_TRUESIGHT_NULL --
+---------------------------------------------
+
+modifier_item_imba_shiva_truesight_null	= modifier_item_imba_shiva_truesight_null or class({})
+
+function modifier_item_imba_shiva_truesight_null:IgnoreTenacity()	return true end
+function modifier_item_imba_shiva_truesight_null:IsDebuff()			return true end
+function modifier_item_imba_shiva_truesight_null:IsPurgable()		return false end
+function modifier_item_imba_shiva_truesight_null:RemoveOnDeath()	return false end

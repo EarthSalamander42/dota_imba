@@ -38,17 +38,6 @@ LinkLuaModifier("modifier_item_imba_lance_of_longinus_god_piercing_enemy", "comp
 LinkLuaModifier("modifier_item_imba_lance_of_longinus_divergent_thrust", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_lance_of_longinus:GetIntrinsicModifierName()
-	-- Client/server way of checking for multiple items and only apply the effects of one without relying on extra modifiers
-	
-	-- ...Also wtf who puts logic in the GetIntrinsicModifierName function
-	Timers:CreateTimer(FrameTime(), function()
-		if self and self.GetParent and self:GetParent() then
-			for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_imba_lance_of_longinus")) do
-				modifier:SetStackCount(_)
-			end
-		end
-	end)
-	
 	return "modifier_item_imba_lance_of_longinus"
 end
 
@@ -143,18 +132,22 @@ function modifier_item_imba_lance_of_longinus:OnCreated()
 	-- Tracking when to give the true strike + bonus magical damage
 	self.pierce_proc 			= true
 	self.pierce_records			= {}
+	
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_lance_of_longinus:OnDestroy()
-	if not IsServer() then return end
-	
-	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-		modifier:SetStackCount(_)
-	end
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_lance_of_longinus:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -165,7 +158,6 @@ function modifier_item_imba_lance_of_longinus:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 	}
-	return decFuncs
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierBonusStats_Strength()
@@ -192,9 +184,8 @@ function modifier_item_imba_lance_of_longinus:GetModifierManaBonus()
 	return self.bonus_mana
 end
 
--- MKB related stuff
 function modifier_item_imba_lance_of_longinus:GetModifierAttackRangeBonus()
-	if self:GetStackCount() == 1 then
+	if self:GetAbility():GetSecondaryCharges() == 1 then
 		if self.parent:IsRangedAttacker() then
 			return self.base_attack_range
 		else

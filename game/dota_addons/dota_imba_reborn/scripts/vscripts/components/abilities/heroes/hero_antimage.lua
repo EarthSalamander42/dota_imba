@@ -295,6 +295,12 @@ function imba_antimage_blink:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_10")
 end
 
+function imba_antimage_blink:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetTalentSpecialValueFor("blink_range") + self:GetCaster():GetCastRangeBonus()
+	end
+end
+
 function imba_antimage_blink:OnSpellStart()
 	if IsServer() then
 		-- Declare variables
@@ -690,7 +696,8 @@ local function SpellReflect(parent, params)
 		["phantom_assassin_phantom_strike"] = true,
 		["imba_riki_blink_strike"] = true,
 		["riki_blink_strike"] = true,
-		["imba_rubick_spellsteal"] = true
+		["imba_rubick_spellsteal"] = true,
+		["morphling_replicate"]	= true
 	}
 
 	local reflected_spell_name = params.ability:GetAbilityName()
@@ -1209,9 +1216,12 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_antimage_10", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_antimage_11", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_antimage_blink_range", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
+
 
 modifier_special_bonus_imba_antimage_10		= class({})
 modifier_special_bonus_imba_antimage_11		= class({})
+modifier_special_bonus_imba_antimage_blink_range	= modifier_special_bonus_imba_antimage_blink_range or class({})
 
 function modifier_special_bonus_imba_antimage_10:IsHidden() 		return true end
 function modifier_special_bonus_imba_antimage_10:IsPurgable() 		return false end
@@ -1221,9 +1231,17 @@ function modifier_special_bonus_imba_antimage_11:IsHidden() 		return true end
 function modifier_special_bonus_imba_antimage_11:IsPurgable() 		return false end
 function modifier_special_bonus_imba_antimage_11:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_antimage_blink_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_antimage_blink_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_antimage_blink_range:RemoveOnDeath() 	return false end
+
 function imba_antimage_blink:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_antimage_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_antimage_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_antimage_10"), "modifier_special_bonus_imba_antimage_10", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_antimage_blink_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_antimage_blink_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_antimage_blink_range"), "modifier_special_bonus_imba_antimage_blink_range", {})
 	end
 end
 

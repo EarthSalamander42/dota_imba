@@ -29,7 +29,7 @@
 
 // Witch Doctor's Maledict
 "DOTA_Tooltip_ability_imba_witch_doctor_maledict"                      "Maledict"
-"DOTA_Tooltip_ability_imba_witch_doctor_maledict_Description"          "Curses all enemy Heroes in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every %tick_time_sec% seconds based on how much health they have lost since the curse began.\n<font color='#FF7800'>FeelsBadMan:</font> Maledict reduces healing received and health regeneration.\n<font color='#FF7800'>Feel It In Your Bones:</font> Can be casted on magic immune heroes."
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_Description"          "Curses all enemy Heroes in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every %tick_time_sec% seconds based on how much health they have lost since the curse began.\n<font color='#FF7800'>FeelsBadMan:</font> Maledict also reduces health regeneration.\n<font color='#FF7800'>Feel It In Your Bones:</font> Can be cast on magic immune heroes."
 "DOTA_Tooltip_ability_imba_witch_doctor_maledict_Note0"                "All damage dealt by Maledict is still magical, which does not ignore magic immunity."
 "DOTA_Tooltip_ability_imba_witch_doctor_maledict_Lore"                  "Certain voodoo magics can make an enemy regret engaging the Witch Doctor."
 "DOTA_Tooltip_ability_imba_witch_doctor_maledict_radius"                "#{DOTA_Tooltip_ability_filler_ability_radius}"
@@ -73,7 +73,8 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7_Description"	"Maledict disables health regen for 1 second after each tick."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8"                "Death Zone"
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears."
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_9"                "+60% Maledict FeelsBadMan Heal/Regen Reduction"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_9"                "+60% Maledict FeelsBadMan Health Regen Reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_witch_doctor_maledict_duration"	"+{s:value2} Maledict Tick"
 
 // Witch Doctor's summoned unit: Death Ward
 "imba_witch_doctor_death_ward"                              "Death Ward"

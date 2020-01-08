@@ -201,9 +201,9 @@ function modifier_item_imba_butterfly_flutter:OnCreated()
 	
 	if not IsServer() then return end
 	
-	local particle_flutter_fx = ParticleManager:CreateParticle("particles/item/butterfly/butterfly_wind_song.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-	ParticleManager:SetParticleControl(particle_flutter_fx, 0, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControlEnt(particle_flutter_fx, 3, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+	local particle_flutter_fx = ParticleManager:CreateParticle("particles/item/butterfly/butterfly_wind_song.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(particle_flutter_fx, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControlEnt(particle_flutter_fx, 3, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	
 	self:AddParticle(particle_flutter_fx, false, false, -1, false, false)
 	

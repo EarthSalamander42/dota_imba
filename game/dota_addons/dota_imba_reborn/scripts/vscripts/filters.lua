@@ -53,10 +53,10 @@ function GameMode:GoldFilter(keys)
 
 		keys.gold = keys.gold * custom_gold_bonus / 100
 
-		local reliable = false
-		if keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
-			reliable = true
-		end
+		-- local reliable = false
+		-- if keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
+			-- reliable = true
+		-- end
 
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
 		
@@ -135,6 +135,10 @@ function GameMode:ExperienceFilter( keys )
 --	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
 --	local player = PlayerResource:GetPlayer(keys.player_id_const)
 --	local hero = player:GetAssignedHero()
+	
+	-- if MAX_LEVEL and MAX_LEVEL[GetMapName()] and hero:GetLevel() >= MAX_LEVEL[GetMapName()] then
+	
+	-- end
 
 	return true
 end
@@ -702,7 +706,7 @@ function GameMode:OrderFilter( keys )
 				end
 				
 				-- allow buy order!
-				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
+				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SET_ITEM_COMBINE_LOCK then
 					return true
 				end
 
@@ -1369,8 +1373,19 @@ function GameMode:BountyRuneFilter(keys)
 	return true
 end
 
---[[
 function GameMode:HealingFilter( keys )
+	local heal_amplify = 0
+
+	for _, mod in pairs(EntIndexToHScript(keys.entindex_target_const):FindAllModifiers()) do
+		if mod.Custom_AllHealAmplify_Percentage and mod:Custom_AllHealAmplify_Percentage() then
+			heal_amplify = heal_amplify + mod:Custom_AllHealAmplify_Percentage()
+		end
+	end
+	
+	if heal_amplify ~= 0 then
+		keys.heal = keys.heal * (1 + (heal_amplify * 0.01))
+	end
+	
 	-- Values:
 	--	keys.entindex_target_const (probably want to use EntIndexToHScript(keys.entindex_target_const) to get the unit reference)
 	--	keys.heal
@@ -1393,9 +1408,8 @@ function GameMode:HealingFilter( keys )
 		-- end
 	-- end
 
-	-- return true
+	return true
 end
-]]--
 
 function GameMode:RuneSpawnFilter(keys)
     keys.rune_type = RandomInt(0, 5)

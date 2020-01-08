@@ -18,7 +18,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17 14 11 8"
+		"AbilityCooldown"				"17 15 13 11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -139,6 +139,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_duration"			"10"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_distance"			"900 1000 1100 1200"
+				"LinkedSpecialBonus"	"special_bonus_imba_nian_crushing_leap_cast_range"
 			}
 		}
 	}

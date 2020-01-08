@@ -77,7 +77,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 						else
 							self.cursed_casket = false
 						end
-						if ExtraData.cursed_casket == 1 then
+						if ExtraData.cursed_casket == 1 and maledict_ability then
 							hTarget:AddNewModifier(self:GetCaster(), maledict_ability, "modifier_imba_maledict", {duration = maledict_ability:GetSpecialValueFor("duration") + FrameTime()} )
 						end
 					end
@@ -477,7 +477,7 @@ end
 function imba_witch_doctor_maledict:OnSpellStart()
 	local vPosition = self:GetCursorPosition()
 	local radius = self:GetSpecialValueFor("radius")
-	local duration = self:GetSpecialValueFor("duration")
+	local duration = self:GetTalentSpecialValueFor("duration")
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPosition, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl( aoe_pfx, 0, vPosition )
@@ -627,9 +627,7 @@ function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 	end
 	local hpDiffDamage = (self.healthComparator - newHP) * self.bonus_damage_pct
 	
-	if not self:GetParent():IsMagicImmune() then
-		ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = hpDiffDamage, damage_type = hAbility:GetAbilityDamageType()})
-	end
+	ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = hpDiffDamage, damage_type = hAbility:GetAbilityDamageType()})
 	
 	EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", hTarget)
 

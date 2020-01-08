@@ -138,6 +138,12 @@ function imba_faceless_void_time_walk:OnAbilityPhaseStart()
 	return true
 end
 
+function imba_faceless_void_time_walk:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()
+	end
+end
+
 function imba_faceless_void_time_walk:OnSpellStart()
 	local caster = self:GetCaster()
 	local slow_radius = self:GetSpecialValueFor("slow_radius")
@@ -388,12 +394,9 @@ end
 
 function modifier_imba_faceless_void_time_walk_cast:HorizontalMotion( me, dt )
 	if IsServer() then
-
-		local caster = self:GetCaster()
-
-		if self.distance_traveled < self.distance then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.velocity * dt)
-			self.distance_traveled = self.distance_traveled + self.velocity * dt
+		if self.distance_traveled <= self.distance then
+			self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + self.direction * self.velocity * math.min(dt, self.distance - self.distance_traveled))
+			self.distance_traveled = self.distance_traveled + self.velocity * math.min(dt, self.distance - self.distance_traveled)
 		else
 			self:Destroy()
 		end

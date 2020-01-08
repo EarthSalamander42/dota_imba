@@ -38,7 +38,10 @@
 "DOTA_Tooltip_modifier_imba_command_aura_negative_Description"          "Reduced attack damage and spell amp"
 
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723"								"Vengeance Aura"
-"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Description"					"Vengeful Spirit's presence increases the ranged attack range and primary attribute of nearby friendly units. Spawns a Strong Illusion when of Vengeful Spirit when she dies that lasts until it is killed or Vengeful Spirit revives.\n<font color='#FF7800'>Remnants of Vengeance Aura:</font> If Vengeful Spirit is slain, her killer will be possessed with a reversed version of Vengeance Aura until Vengeful Spirit revives.\n<font color='#FF7800'>Growing Reprisal:</font> When Vengeful Spirit reaches Level %illusion_upgrade_level%, Vengeful Spirit will instead spawn %num_illusions_on_death_upgrade% Vengeance Illusions upon death."
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Description"					"Vengeful Spirit's presence increases the ranged attack range and primary attribute of nearby friendly units. Spawns a Strong Illusion when of Vengeful Spirit when she dies that lasts until it is killed or Vengeful Spirit revives.\n<font color='#FF7800'>Remnants of Vengeance Aura:</font> If Vengeful Spirit is slain, her killer will be possessed with a reversed version of Vengeance Aura until Vengeful Spirit revives."
+
+// \n<font color='#FF7800'>Growing Reprisal:</font> When Vengeful Spirit reaches Level %illusion_upgrade_level%, Vengeful Spirit will instead spawn %num_illusions_on_death_upgrade% Vengeance Illusions upon death.
+
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Lore"							"Although they may not share her undying passion for revenge, allies do draw on her fanaticism in combat."
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Note0"						"Vengeance Illusion keeps providing the Vengeance Aura after Vengeful Spirit's death."
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_723_Note1"						"Strong Illusions are not instantly killed by spells."

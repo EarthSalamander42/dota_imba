@@ -30,6 +30,7 @@
 #base heroes/oracle/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
+#base heroes/outworld_devourer/abilities.txt
 #base heroes/puck/abilities.txt
 #base heroes/phantom_lancer/abilities.txt
 #base heroes/rattletrap/abilities.txt
@@ -41,6 +42,7 @@
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
 #base heroes/templar_assassin/abilities.txt
+#base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
 #base custom_heroes/vardor/abilities.txt
@@ -15992,7 +15994,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 8 4 2"
+		"AbilityCooldown"				"16 12 8 4"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16527,6 +16529,62 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_shadow_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"650"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_queen_of_pain_scream_of_pain_fear"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_scream_of_pain"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.5"
 			}
 		}
 	}
@@ -23422,7 +23480,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"witch_doctor_maledict"
 		"ScriptFile"				"components/abilities/heroes/hero_witch_doctor"
@@ -23464,8 +23522,9 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"duration"					"12"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_maledict_duration"
 			}
 			"03"
 			{
@@ -23833,6 +23892,39 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_maledict_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER" 
+				"value2"					"1"					// bonus ticks
 			}
 		}
 	}
@@ -27420,7 +27512,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_dragon_knight.lua"
 		"AbilityTextureName"			"custom/dragon_knight_elder_dragon_charge"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
@@ -28209,7 +28301,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"arrow_slow_duration"		"1 2 3 4"
+				"arrow_slow_duration"		"1.25 2.25 3.25 4.25"
 			}
 			"04"
 			{
@@ -29865,7 +29957,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"secret_blade_duration"	"3.5"
+				"secret_blade_duration"	"4.0"
 			}
 			"11"
 			{
@@ -31627,6 +31719,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_line_damage_pct"	"40"
+				"RequiresScepter"			"1"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"requiem_slow_duration"	"0.8"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"requiem_slow_duration_max"	"2.4"
 			}
 		}
 	}
@@ -34067,7 +34170,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"remnants_movespeed_slow"	"8 12 16 20"
+				"remnants_movespeed_slow"	"4 6 8 10"
 			}
 			"05"
 			{
@@ -34226,7 +34329,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"				"75 90 105 120"
+				"bonus_damage"				"25 50 75 100"
 			}
 			"02"
 			{
@@ -34362,53 +34465,47 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_riki.lua"
 		"AbilityTextureName"			"riki_permanent_invisibility"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"4 3 2"
-
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
-			"particle"					"particles/hero/riki/blink_trail.vpcf"
-			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
-			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
-		}
-
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"fade_time"							"4 3 2"
+				"var_type"						"FIELD_FLOAT"
+				"damage_multiplier"				"1.4 1.8 2.2"
+				//"LinkedSpecialBonus"		"special_bonus_unique_riki_1"
+				"LinkedSpecialBonus"		"special_bonus_imba_riki_cloak_and_dagger_damage"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"backstab_angle"					"120"
+				"var_type"						"FIELD_INTEGER"
+				"backstab_angle"				"105 105 105"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier"			"1.4 1.8 2.2"
-				"LinkedSpecialBonus"				"special_bonus_imba_riki_cloak_and_dagger_damage"
-				"CalculateSpellDamageTooltip"		"0"
+				"var_type"					"FIELD_FLOAT"
+				"fade_delay"					"4 3 2"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"regards_health_regen_pct"	"1"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"regards_mana_regen_pct"	"1"
 			}
 		}
 	}
@@ -34552,12 +34649,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"area_of_effect"		"450 500 550"				
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attack_interval"		"0.6 0.55 0.5"
 			}
 			
 			"03"
@@ -34838,6 +34929,31 @@
 			}
 		}
 	}
+
+	"special_bonus_imba_riki_smokescreen_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_smoke_screen_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
 	
 	"special_bonus_imba_riki_blink_strike_cast_range"
 	{
@@ -34889,56 +35005,6 @@
 		}
 	}
 	
-	"special_bonus_imba_riki_smokescreen_invis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_smoke_screen_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-	
-	"special_bonus_imba_riki_cloak_and_dagger_invis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-	
 	"special_bonus_imba_riki_tricks_of_the_trade_cooldown"
 	{
 		// General
@@ -34960,6 +35026,31 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"7"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_cloak_and_dagger_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger_723"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -35732,7 +35823,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ensnare_chance"		"10 12 14 16"
+				"ensnare_chance"		"14 16 18 20"
 			}
 			"12"
 			{
@@ -36318,6 +36409,34 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_troll_warlord_berserkers_rage"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_battle_trance_upgrade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_battle_trance"
 		}
 
 		// Special
@@ -37244,9 +37363,9 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_attributes"	"4 7 10 13"
-				//"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
-				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_command_aura_attributes"
+				"bonus_attributes"	"7 10 13 16"
+				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
+				//"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_command_aura_attributes"
 			}
 			"02"
 			{
@@ -37276,13 +37395,46 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"num_illusions_on_death_upgrade"	"2"
-			}			
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"3 7 11 15"
+				"num_illusions_on_death_upgrade"	"1"
 			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Ability: Vengefulspirit Command Aura // Trying some super bootleg stuff here
+	//=================================================================================================================
+	"vengefulspirit_command_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attributes"	"7 10 13 16"
+				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attack_range"	"60 90 120 150"
+			}	
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"100"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"100"
+			}	
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
@@ -37729,6 +37881,35 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_vengefulspirit_command_aura"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 8 (Level 40): Vengeance Aura now increases all attack damage (instead of base damage)
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_command_aura_illusion_casts"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_vengefulspirit_command_aura_723"
 		}
 
 		// Special
@@ -42385,6 +42566,42 @@
 	}
 
 	"imba_form_change_riki"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/imba_form_change"
+		"AbilityTextureName"							"custom/form_change_new"
+		
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel"										"1"
+		
+		//Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"							"3.0"
+		"AbilityCastPoint"								"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
+	}
+
+	"imba_form_change_obsidian_destroyer"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

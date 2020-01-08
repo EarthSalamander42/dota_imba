@@ -41,7 +41,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_wards_movement"				"+60 Mass Serpent Ward Movement Speed"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_shackles_duration"			"+2.5s Shackles Duration"
 "DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_ether_shock_damage"			"+400 Ether Shock Damage"
-
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_hex_parlor_tricks"				"Parlor Tricks"
+"DOTA_Tooltip_ability_special_bonus_imba_shadow_shaman_hex_parlor_tricks_Description"	"Gives a {s:value}% chance to hex enemy targets for {s:value2} seconds on attack."
 
 ////===============================================================================================================
 // Shadow Shaman's Mass Serpent Ward

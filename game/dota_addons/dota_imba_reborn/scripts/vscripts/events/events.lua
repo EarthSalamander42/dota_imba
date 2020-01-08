@@ -523,34 +523,34 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero_attribute == nil or hero:IsFakeHero() then
 		return
 	end
-
+	
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[level])
 
-	if hero:GetLevel() > 25 then
-		if hero:GetUnitName() == "npc_dota_hero_meepo" then
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
-					if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
-						hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
-					else
-						hero:FindModifierByName("modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
-					end
-				end
-			end
-		end
+	-- if hero:GetLevel() > 25 then
+		-- if hero:GetUnitName() == "npc_dota_hero_meepo" then
+			-- for _, hero in pairs(HeroList:GetAllHeroes()) do
+				-- if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
+					-- if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+						-- hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
+					-- else
+						-- hero:FindModifierByName("modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
+					-- end
+				-- end
+			-- end
+		-- end
 
-		-- TODO: error sometimes on this line: "hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)""
-		if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
-			local mod = hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero_attribute, {})
-			if mod then
-				mod:SetStackCount(1)
-			end
-		elseif hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
-			hero:FindModifierByName("modifier_imba_war_veteran_" .. hero_attribute):SetStackCount(math.min(hero:GetLevel() - 25, 17))
-		end
+		-- -- TODO: error sometimes on this line: "hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)""
+		-- if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+			-- local mod = hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero_attribute, {})
+			-- if mod then
+				-- mod:SetStackCount(1)
+			-- end
+		-- elseif hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+			-- hero:FindModifierByName("modifier_imba_war_veteran_" .. hero_attribute):SetStackCount(math.min(hero:GetLevel() - 25, 17))
+		-- end
 
-		-- hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
-	end
+		-- -- hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+	-- end
 	
 	for _, ability in ipairs(subAbilities) do 
 		if hero:HasAbility(ability) then
@@ -591,6 +591,11 @@ function GameMode:OnPlayerLearnedAbility(keys)
 
 	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
 		hero.savage_roar = true
+	end
+	
+	-- Due to issues with the death illusion spawning without a certain talent being leveled up, there's some messy stuff here involving giving Venge the vanilla Command Aura ability but hidden and un-levelable, so this secretely levels it up to the side while the IMBA version only provides the negative daeth aura and nothing else
+	if abilityname == "imba_vengefulspirit_command_aura_723" and hero:HasAbility("vengefulspirit_command_aura") then
+		hero:FindAbilityByName("vengefulspirit_command_aura"):SetLevel(hero:FindAbilityByName(abilityname):GetLevel())
 	end
 
 	--	if hero then

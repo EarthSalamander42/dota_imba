@@ -129,18 +129,37 @@ modifier_fountain_invulnerable = class({})
 function modifier_fountain_invulnerable:IsPurgable() return false end
 function modifier_fountain_invulnerable:GetTexture() return "tower_armor_aura" end
 
+function modifier_fountain_invulnerable:GetStatusEffectName()
+	return "particles/status_effect_gold_armor.vpcf"
+end
+
+function modifier_fountain_invulnerable:OnCreated()
+	if not IsServer() then return end
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(1)
+end
+
+function modifier_fountain_invulnerable:OnIntervalThink()
+	if #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false) > 0 then
+		self.bEnemyProximity = true
+	else
+		self.bEnemyProximity = false
+	end
+end
+
 function modifier_fountain_invulnerable:CheckState()
-	return {[MODIFIER_STATE_INVULNERABLE] = true}
+	if not IsServer() then return end
+
+	return {[MODIFIER_STATE_INVULNERABLE] = self.bEnemyProximity}
 end
 
 function modifier_fountain_invulnerable:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
 	}
-
-	return funcs
 end
 
 function modifier_fountain_invulnerable:GetAbsoluteNoDamagePhysical()
