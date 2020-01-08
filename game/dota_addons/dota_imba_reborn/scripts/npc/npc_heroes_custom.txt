@@ -35,7 +35,7 @@
 #base heroes/zeus/hero.txt
 #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-#base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// #base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
