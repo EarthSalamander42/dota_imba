@@ -119,7 +119,7 @@ function modifier_item_manta_passive:GetModifierMoveSpeedBonus_Constant()
 end
 
 function modifier_item_manta_passive:OnDeath(keys)
-	if self:GetAbility() and self:GetAbility():GetName() == "item_imba_manta_2" and keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) and (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble() or keys.attacker:IsIllusion()) then
+	if self:GetAbility() and self:GetAbility():GetName() == "item_imba_manta_2" and keys.unit == self:GetParent() and self:GetParent():IsRealHero() and keys.attacker ~= self:GetParent() and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) and (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble() or keys.attacker:IsIllusion()) then
 		if not keys.attacker:IsRangedAttacker() then
 			self.outgoing_damage = self:GetAbility():GetSpecialValueFor("images_do_damage_percent_melee")
 			self.incoming_damage = self:GetAbility():GetSpecialValueFor("images_take_damage_percent_melee")
@@ -144,7 +144,7 @@ function modifier_item_manta_passive:OnDeath(keys)
 			outgoing_damage_roshan		= nil,
 			duration					= self:GetAbility():GetSpecialValueFor("tooltip_illusion_duration")
 		}
-		, 1, self.distance_multiplier, true, true)
+		, 1, self.distance_multiplier, false, true)
 		
 		for _, illusion in pairs(self.death_illusions) do
 			illusion:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_manta_abyss_boost", {target_entindex = keys.attacker:entindex()})
