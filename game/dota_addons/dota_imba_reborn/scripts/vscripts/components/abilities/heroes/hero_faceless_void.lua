@@ -40,8 +40,7 @@ function modifier_imba_faceless_void_timelord:IsDebuff()	return false end
 function modifier_imba_faceless_void_timelord:IsHidden()	return true end
 
 function modifier_imba_faceless_void_timelord:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,}
-	return funcs
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_faceless_void_timelord:OnCreated()
@@ -152,7 +151,12 @@ function imba_faceless_void_time_walk:OnSpellStart()
 
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
-	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {x = position.x, y = position.y, z = position.z})
+	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
+		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), self:GetTalentSpecialValueFor("range")) / self:GetSpecialValueFor("speed"),
+		x			= position.x,
+		y 			= position.y,
+		z			= position.z
+	})
 
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
@@ -174,8 +178,7 @@ function modifier_imba_faceless_void_time_walk_damage_counter:IsDebuff()	return 
 function modifier_imba_faceless_void_time_walk_damage_counter:IsHidden()	return true end
 
 function modifier_imba_faceless_void_time_walk_damage_counter:DeclareFunctions()
-	local funcs = { MODIFIER_EVENT_ON_TAKEDAMAGE ,}
-	return funcs
+	return {MODIFIER_EVENT_ON_TAKEDAMAGE}
 end
 
 function modifier_imba_faceless_void_time_walk_damage_counter:OnCreated()
@@ -351,7 +354,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 	end
 
 	-- If spell not stolen, add chronocharges
-	if not ability:IsStolen() then
+	if not ability:IsStolen() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
 		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
 	end
 end
@@ -417,17 +420,25 @@ function modifier_imba_faceless_void_time_walk_slow:GetEffectName()
 function modifier_imba_faceless_void_time_walk_slow:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
+function modifier_imba_faceless_void_time_walk_slow:OnCreated()
+	self.ms_steal_pcnt	= self:GetAbility():GetSpecialValueFor("ms_steal_pcnt") * (-1)
+	self.as_steal		= self:GetAbility():GetSpecialValueFor("as_steal") * (-1)
+end
+
 function modifier_imba_faceless_void_time_walk_slow:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, }
-	return funcs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_faceless_void_time_walk_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("ms_steal_pcnt") * -1 end
+	return self.ms_steal_pcnt
+end
 
 function modifier_imba_faceless_void_time_walk_slow:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("as_steal") * -1 end
+	return self.as_steal
+end
 
 ----------------------------------------------------------------
 --------------------	  Time Dilation		--------------------
@@ -947,11 +958,10 @@ function modifier_imba_faceless_void_time_lock_stun:OnDestroy()
 	if IsServer() then self:GetParent():SetRenderColor(255,255,255) end end
 
 function modifier_imba_faceless_void_time_lock_stun:CheckState()
-	if IsServer() then
-		local state = {	[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_FROZEN ] = true	}
-		return state
-	end
+	return {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_FROZEN] = true
+	}
 end
 
 ----------------------------------------------------------------
@@ -1545,12 +1555,10 @@ function modifier_imba_faceless_void_time_lock_720_freeze:OnDestroy()
 end
 
 function modifier_imba_faceless_void_time_lock_720_freeze:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_STUNNED] = true,
 		[MODIFIER_STATE_FROZEN] = true
 	}
-	
-	return state
 end
 
 -- Client-side helper functions --

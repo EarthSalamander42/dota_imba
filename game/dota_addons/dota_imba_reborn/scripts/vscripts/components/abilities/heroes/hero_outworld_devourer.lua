@@ -12,7 +12,7 @@ LinkLuaModifier("modifier_imba_outworld_devourer_essence_flux_debuff", "componen
 
 LinkLuaModifier("modifier_imba_outworld_devourer_astral_imprisonment_movement", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_outworld_devourer_sanity_eclipse_charge", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_outworld_devourer_sanity_eclipse_charge", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 
 imba_outworld_devourer_arcane_orb						= imba_outworld_devourer_arcane_orb or class({})
 
@@ -28,7 +28,7 @@ imba_outworld_devourer_astral_imprisonment_movement		= imba_outworld_devourer_as
 modifier_imba_outworld_devourer_astral_imprisonment_movement	= modifier_imba_outworld_devourer_astral_imprisonment_movement or class({})
 
 imba_outworld_devourer_sanity_eclipse					= imba_outworld_devourer_sanity_eclipse or class({})
-modifier_outworld_devourer_sanity_eclipse_charge		= modifier_outworld_devourer_sanity_eclipse_charge or class({})
+modifier_imba_outworld_devourer_sanity_eclipse_charge		= modifier_imba_outworld_devourer_sanity_eclipse_charge or class({})
 
 ---------------------------------------
 -- IMBA_OUTWORLD_DEVOURER_ARCANE_ORB --
@@ -98,7 +98,7 @@ function imba_outworld_devourer_arcane_orb:OnOrbImpact( keys )
 		end
 		
 		if self:GetCaster():HasAbility("imba_outworld_devourer_sanity_eclipse") and self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"):IsTrained() and (keys.target:IsRealHero() or keys.target:IsIllusion()) and keys.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"), "modifier_outworld_devourer_sanity_eclipse_charge", {duration = self:GetSpecialValueFor("counter_duration"), charges = 1})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"), "modifier_imba_outworld_devourer_sanity_eclipse_charge", {duration = self:GetSpecialValueFor("counter_duration"), charges = 1})
 		end
 	end
 end
@@ -154,7 +154,7 @@ function imba_outworld_devourer_astral_imprisonment:OnSpellStart()
 		end
 		
 		if self:GetCaster():HasAbility("imba_outworld_devourer_sanity_eclipse") and self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"):IsTrained() and (target:IsRealHero() or target:IsIllusion()) and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"), "modifier_outworld_devourer_sanity_eclipse_charge", {duration = self:GetSpecialValueFor("counter_duration"), charges = 3})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_outworld_devourer_sanity_eclipse"), "modifier_imba_outworld_devourer_sanity_eclipse_charge", {duration = self:GetSpecialValueFor("counter_duration"), charges = 3})
 		end
 	end
 end
@@ -481,10 +481,10 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 end
 
 ------------------------------------------------------
--- MODIFIER_OUTWORLD_DEVOURER_SANITY_ECLIPSE_CHARGE --
+-- modifier_imba_outworld_devourer_sanity_eclipse_charge --
 ------------------------------------------------------
 
-function modifier_outworld_devourer_sanity_eclipse_charge:OnCreated(keys)
+function modifier_imba_outworld_devourer_sanity_eclipse_charge:OnCreated(keys)
 	if keys and keys.charges then
 		self:SetStackCount(self:GetStackCount() + keys.charges)
 	end
@@ -496,14 +496,14 @@ function modifier_outworld_devourer_sanity_eclipse_charge:OnCreated(keys)
 	self:GetParent():CalculateStatBonus()
 end
 
-function modifier_outworld_devourer_sanity_eclipse_charge:OnRefresh(keys)
+function modifier_imba_outworld_devourer_sanity_eclipse_charge:OnRefresh(keys)
 	self:OnCreated(keys)
 end
 
-function modifier_outworld_devourer_sanity_eclipse_charge:DeclareFunctions()
+function modifier_imba_outworld_devourer_sanity_eclipse_charge:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MANA_BONUS}
 end
 
-function modifier_outworld_devourer_sanity_eclipse_charge:GetModifierManaBonus()
+function modifier_imba_outworld_devourer_sanity_eclipse_charge:GetModifierManaBonus()
 	return self:GetStackCount() * self.stack_mana
 end

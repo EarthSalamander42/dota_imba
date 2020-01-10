@@ -21,34 +21,20 @@ function imba_ursa_earthshock:GetCastRange(location, target)
 	return self:GetSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
 end
 
-function imba_ursa_earthshock:GetCastPoint()
-	if not self:GetCaster():IsRooted() then
-		self.bRootCast = false
-		return 0
-	else
-		self.bRootCast = true
-		return self:GetSpecialValueFor("hop_duration")
-	end
-end
-
 function imba_ursa_earthshock:OnSpellStart()
 	if not self:GetCaster():HasModifier("modifier_imba_earthshock_movement") then
 		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
 		
 		local direction_vector = self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("hop_distance")
-		
-		if not self.bRootCast and not self:GetCaster():IsRooted() then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
-				duration		= self:GetSpecialValueFor("hop_duration"),
-				distance		= self:GetSpecialValueFor("hop_distance"),
-				direction_x		= direction_vector.x,
-				direction_y 	= direction_vector.y,
-				diretion_z 		= direction_vector.z,
-				height			= self:GetSpecialValueFor("hop_height")
-			})
-		else
-			self:ApplyEarthShock()
-		end
+
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
+			duration		= self:GetSpecialValueFor("hop_duration"),
+			distance		= self:GetSpecialValueFor("hop_distance"),
+			direction_x		= direction_vector.x,
+			direction_y 	= direction_vector.y,
+			diretion_z 		= direction_vector.z,
+			height			= self:GetSpecialValueFor("hop_height")
+		})
 	end
 end
 
@@ -211,6 +197,9 @@ function modifier_imba_earthshock_movement:OnCreated(params)
 	self.vertical_velocity		= 4 * self.height / self.duration
 	self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
 	
+	-- Do NOT continue with motion controllers if rooted; trying to be finnicky with this will cause crashes
+	if self:GetParent():IsRooted() then return end
+	
 	if self:ApplyVerticalMotionController() == false then 
 		self:Destroy()
 	end
@@ -221,7 +210,7 @@ function modifier_imba_earthshock_movement:OnCreated(params)
 end
 
 function modifier_imba_earthshock_movement:OnDestroy()
-	if not IsServer() or self:GetParent():IsRooted() then return end
+	if not IsServer() then return end
 	
 	self:GetParent():RemoveHorizontalMotionController(self)
 	self:GetParent():RemoveVerticalMotionController(self)
@@ -1393,29 +1382,27 @@ function imba_ursa_territorial_hunter:IsInnateAbility()
 end
 
 function imba_ursa_territorial_hunter:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self
-		local target = self:GetCursorTarget()
-		local aura = "modifier_terrorital_hunter_aura"
+	local caster = self:GetCaster()
+	local ability = self
+	local target = self:GetCursorTarget()
+	local aura = "modifier_terrorital_hunter_aura"
 
-		-- Kill previous dummy, if exists
-		if ability.territorial_aura_modifier and not ability.territorial_aura_modifier:IsNull() then
-			if ability.territorial_aura_modifier.ForceKill then
-				ability.territorial_aura_modifier:ForceKill(false)
-			end
-			
-			if ability.territorial_aura_modifier.RemoveSelf then
-				ability.territorial_aura_modifier:RemoveSelf()
-			end
+	-- Kill previous dummy, if exists
+	if ability.territorial_aura_modifier and not ability.territorial_aura_modifier:IsNull() then
+		if ability.territorial_aura_modifier.ForceKill then
+			ability.territorial_aura_modifier:ForceKill(false)
 		end
-
-		ability.territorial_tree = target
-
-		-- Create Modifier Thinker
-		ability.territorial_aura_modifier = CreateModifierThinker(caster, ability, aura, {}, ability.territorial_tree:GetAbsOrigin(), caster:GetTeamNumber(), false)
-		ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
+		
+		if ability.territorial_aura_modifier.RemoveSelf then
+			ability.territorial_aura_modifier:RemoveSelf()
+		end
 	end
+
+	ability.territorial_tree = target
+
+	-- Create Modifier Thinker
+	ability.territorial_aura_modifier = CreateModifierThinker(caster, ability, aura, {}, ability.territorial_tree:GetAbsOrigin(), caster:GetTeamNumber(), false)
+	ability.territorial_aura_modifier:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
 end
 
 -- Territorial Hunter aura modifier
@@ -1487,14 +1474,11 @@ function modifier_terrorital_hunter_aura:GetEffectAttachType()
 end
 
 function modifier_terrorital_hunter_aura:CheckState()
-	local state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
-	return state
+	return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 end
 
 function modifier_terrorital_hunter_aura:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_VISUAL_Z_DELTA}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_VISUAL_Z_DELTA}
 end
 
 function modifier_terrorital_hunter_aura:GetVisualZDelta()
@@ -1510,6 +1494,14 @@ end
 
 function modifier_terrorital_hunter_fogvision:IsHidden()
 	return true
+end
+
+function modifier_terrorital_hunter_fogvision:GetEffectName()
+	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+end
+
+function modifier_terrorital_hunter_fogvision:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 function modifier_terrorital_hunter_fogvision:OnCreated()
@@ -1531,11 +1523,11 @@ function modifier_terrorital_hunter_fogvision:OnDestroy()
 end
 
 function modifier_terrorital_hunter_fogvision:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-		MODIFIER_EVENT_ON_STATE_CHANGED,
-		MODIFIER_EVENT_ON_HERO_KILLED}
-
-	return funcs
+	return {
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		-- MODIFIER_EVENT_ON_STATE_CHANGED,
+		MODIFIER_EVENT_ON_HERO_KILLED
+	}
 end
 
 -- Reveal from fog
@@ -1545,20 +1537,20 @@ function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
 	end
 end
 
--- Invis particle handling
-function modifier_terrorital_hunter_fogvision:OnStateChanged()
-	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-		if self:GetParent():IsInvisible() and not self.applied_particle then
-			self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-			ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-			self.applied_particle = true
-		elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
-			ParticleManager:DestroyParticle(self.invis_particle_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
-			self.applied_particle = false
-		end
-	end
-end
+-- -- Invis particle handling
+-- function modifier_terrorital_hunter_fogvision:OnStateChanged()
+	-- if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		-- if self:GetParent():IsInvisible() and not self.applied_particle then
+			-- self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+			-- ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+			-- self.applied_particle = true
+		-- elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
+			-- ParticleManager:DestroyParticle(self.invis_particle_fx, false)
+			-- ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
+			-- self.applied_particle = false
+		-- end
+	-- end
+-- end
 
 function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
 	if IsServer() and self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
@@ -1582,11 +1574,9 @@ function modifier_terrorital_hunter_talent_tenacity:IsPurgable() return false en
 function modifier_terrorital_hunter_talent_tenacity:IsDebuff() return false end
 
 function modifier_terrorital_hunter_talent_tenacity:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-
-	return decFuncs
 end
 
 function modifier_terrorital_hunter_talent_tenacity:OnCreated()
