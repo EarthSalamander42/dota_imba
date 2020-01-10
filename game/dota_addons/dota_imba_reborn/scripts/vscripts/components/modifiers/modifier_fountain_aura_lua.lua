@@ -53,26 +53,26 @@ function modifier_fountain_aura_effect_lua:GetTexture()
 end
 
 function modifier_fountain_aura_effect_lua:OnCreated()
-	if IsServer() then
-		if self:GetParent():GetClassname() == "npc_dota_additive" then
-			self:Destroy()
-			return
-		end
-		self:StartIntervalThink(0.1)
+	if not IsServer() then return end
 
-		local particle_name
-		if self:GetParent():IsCourier() or not (CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]) then
-			particle_name = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
-		else
-			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
-		end
-		
-		local parent = self:GetParent()
-		
-		Timers:CreateTimer(1.0, function()
-			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, parent)
-		end)
+	if self:GetParent():GetClassname() == "npc_dota_additive" then
+		self:Destroy()
+		return
 	end
+
+	self:StartIntervalThink(0.1)
+
+	local particle_name
+
+	if self:GetParent():IsCourier() or not (CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]) then
+		particle_name = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
+	else
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
+	end
+
+	Timers:CreateTimer(1.0, function()
+		self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	end)
 end
 
 function modifier_fountain_aura_effect_lua:OnIntervalThink()
