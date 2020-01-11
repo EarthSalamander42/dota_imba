@@ -1103,6 +1103,11 @@ function imba_pudge_dismember:OnSpellStart()
 	else
 		self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", false, true)
 		self.swallowed_target = target
+		
+		-- "Applies a strong dispel on the target and disjoints projectiles upon cast."
+		target:Purge(false, true, false, true, true)
+		ProjectileManager:ProjectileDodge(target)
+		
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember_scepter", {})
 		return
 	end
@@ -1334,6 +1339,8 @@ function modifier_imba_dismember_scepter:CheckState() return {
 function modifier_imba_dismember_scepter:DeclareFunctions() return {
 	MODIFIER_EVENT_ON_ORDER,
 	MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+	
+	MODIFIER_EVENT_ON_DEATH
 } end
 
 function modifier_imba_dismember_scepter:OnCreated()
@@ -1341,7 +1348,8 @@ function modifier_imba_dismember_scepter:OnCreated()
 
 	if not IsServer() then return end
 
-	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+	self:AddParticle(self.pfx, false, false, -1, true, true)
 
 	self:GetParent():AddNoDraw()
 	self:StartIntervalThink(FrameTime())
@@ -1383,16 +1391,17 @@ function modifier_imba_dismember_scepter:GetModifierHealthRegenPercentage()
 	return self:GetAbility():GetSpecialValueFor("scepter_healing_pct")
 end
 
+function modifier_imba_dismember_scepter:OnDeath(keys)
+	if keys.unit == self:GetCaster() then
+		self:Destroy()
+	end
+end
+
 function modifier_imba_dismember_scepter:OnDestroy()
 	if not IsServer() then return end
 
 	self:GetParent():RemoveNoDraw()
 	self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", true, false)
-
-	if self.pfx then
-		ParticleManager:DestroyParticle(self.pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.pfx)
-	end
 
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow_release.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(pfx)

@@ -693,7 +693,7 @@ function modifier_imba_puck_dream_coil:OnIntervalThink()
 	
 	self.counter = self.counter + self.interval
 	
-	if self.counter >= self.rapid_fire_interval and self:GetAbility() then
+	if self:GetCaster():IsAlive() and self.counter >= self.rapid_fire_interval and self:GetAbility() then
 		self.counter = 0
 		
 		local direction	= (self:GetParent():GetAbsOrigin() - self.coil_thinker_location):Normalized()
@@ -752,16 +752,18 @@ function modifier_imba_puck_dream_coil:OnIntervalThink()
 		end
 		
 		-- Putting the break stun modifier after the IMBAfication because it was getting overwritten by the basic lower duration stun
-		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
+		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration})
+		
+		if stun_modifier then
+			stun_modifier:SetDuration(stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
+		end
 		
 		self:Destroy()
 	end
 end
 
 function modifier_imba_puck_dream_coil:CheckState()
-	local state = {[MODIFIER_STATE_TETHERED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_TETHERED] = true}
 end
 
 ---------------------------------

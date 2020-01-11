@@ -157,6 +157,12 @@ function imba_oracle_fortunes_end:OnChannelFinish(bInterrupted)
 	})
 end
 
+-- -- There's some issue with the projectile not doing anything on reflected targets (ex. Lotus Orb), but I can't figure out what the cause is
+-- -- The projectile still flies towards said reflected target, but it never calls the thinker or hit functions
+-- function imba_oracle_fortunes_end:OnProjectileThink_ExtraData(target, location, data)
+
+-- end
+
 function imba_oracle_fortunes_end:OnProjectileHit_ExtraData(target, location, data)
 	if target and data.charge_pct and not target:TriggerSpellAbsorb(self) then
 		if not data.autocast_state or data.autocast_state == 0 then
@@ -212,10 +218,10 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 	
 		enemy:Purge(true, false, false, false, false)
 		
-		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration"))})
+		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration"))})
 		
 		if self.purge_modifier then
-			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * charge_pct, self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
+			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
 		end
 
 		ApplyDamage({

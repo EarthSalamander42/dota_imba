@@ -1126,10 +1126,7 @@ function imba_pugna_life_drain:OnUpgrade()
 end
 
 function imba_pugna_life_drain:GetCooldown(level)
-	local caster = self:GetCaster()
-	local scepter = caster:HasScepter()
-
-	if scepter then
+	if self:GetCaster():HasScepter() then
 		return 0
 	else
 		return self.BaseClass.GetCooldown(self, level)
@@ -1137,41 +1134,27 @@ function imba_pugna_life_drain:GetCooldown(level)
 end
 
 function imba_pugna_life_drain:CastFilterResultTarget(target)
-	if IsServer() then
-		local caster = self:GetCaster()
-		local modifier_drain = "modifier_imba_life_drain"
-
-		-- Cannot be cast on invulnerable targets
-		if target:IsInvulnerable() then
-			return UF_FAIL_INVULNERABLE
-		end
-
-		-- Cannot be cast on self
-		if target == caster then
-			return UF_FAIL_CUSTOM
-		end
-
-		-- Cannot be cast on targets already afflicted with Life Drain
-		if target:HasModifier(modifier_drain) then
-			return UF_FAIL_CUSTOM
-		end
-
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
+	-- Cannot be cast on self
+	if target == self:GetCaster() then
+		return UF_FAIL_CUSTOM
 	end
+
+	-- Cannot be cast on targets already afflicted with Life Drain
+	if target:HasModifier("modifier_imba_life_drain") then
+		return UF_FAIL_CUSTOM
+	end
+	
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, self:GetCaster():GetTeamNumber())
 end
 
 function imba_pugna_life_drain:GetCustomCastErrorTarget(target)
-	local caster = self:GetCaster()
-	local modifier_drain = "modifier_imba_life_drain"
-
 	-- Cannot be cast on self
-	if target == caster then
+	if target == self:GetCaster() then
 		return "dota_hud_error_life_drain_self"
 	end
 
 	-- Cannot be cast on targets already afflicted with Life Drain
-	if target:HasModifier(modifier_drain) then
+	if target:HasModifier("modifier_imba_life_drain") then
 		return "dota_hud_error_life_drain_target"
 	end
 end
@@ -1290,7 +1273,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 		end
 
 		-- Link breaks if the caster is invisible
-		if self.parent:IsImbaInvisible() then
+		if self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and self.parent:IsInvisible() then
 			self:Destroy()
 		end
 
@@ -1388,27 +1371,23 @@ function modifier_imba_life_drain:OnIntervalThink()
 	end
 end
 
-function modifier_imba_life_drain:DeclareFunctions()
-	local decFuncs =   {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
-	}
-
-
-	return decFuncs
-end
-
 function modifier_imba_life_drain:CheckState()
-	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
-		return state
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+		return {
+			[MODIFIER_STATE_PROVIDES_VISION]	= true,
+			[MODIFIER_STATE_INVISIBLE]			= false
+		}
 	end
-
-	local state = {[MODIFIER_STATE_PROVIDES_VISION]= true,
-		[MODIFIER_STATE_INVISIBLE] = false}
-	return state
 end
 
-function modifier_imba_life_drain:GetModifierProvidesFOWVision() return 1 end
+function modifier_imba_life_drain:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		-- MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+	}
+end
+
+-- function modifier_imba_life_drain:GetModifierProvidesFOWVision() return 1 end
 
 function modifier_imba_life_drain:GetModifierMoveSpeedBonus_Percentage()
 	-- Don't slow allies
