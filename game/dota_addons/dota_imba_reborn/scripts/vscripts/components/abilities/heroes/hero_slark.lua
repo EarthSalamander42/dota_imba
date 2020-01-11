@@ -1046,18 +1046,19 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnCreated()
 	if not IsServer() then return end
 	
 	-- self.bPassiveActive is redundant here cause I'm using stackcounts in order to control modifier visibility on client-side, but I'll leave it for reference
-	self.bPassiveActive	= true
-	self.bVisible		= false
-	self.counter		= 0
-	self.interval		= 0.1
+	self.bPassiveActive	= true	-- Is the regen/move speed modifier currently active?
+	self.bVisible		= false	-- Is the parent visible to any of the enemy teams? (I say enemy teams because of potential stuff like Overthrow or Underhollow)
+	self.counter		= 0		-- Counts up until a certain threshold to switch self.bPassiveActive on/off
+	self.interval		= 0.1	-- How often the check is done
 	
-	self.bHitByNeutral		= false
-	self.neutral_counter	= 0
+	self.bHitByNeutral		= false	-- Has the hero been damaged by a neutral recently?
+	self.neutral_counter	= 0		-- Counts up until a certain threshold to switch self.bHitByNeutral off
 	
 	self:StartIntervalThink(self.interval)
 end
 
 function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
+	-- If the parent has been hit by a neutral recently, increment the neutral counter and check if the threshold has passed and flag should be turned off or not
 	if self.bHitByNeutral then
 		self.neutral_counter	= self.neutral_counter	+ self.interval
 		
@@ -1066,12 +1067,14 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
 			self.neutral_counter	= 0
 		end
 	end
-
+	
+	-- Start by assuming that Slark is not visible to the enemy team
 	self.bVisible		= false
 	
+	-- Now check EVERY enemy on the map (except neutrals and Roshan) to see if they can see the parent via enemy:CanEntityBeSeenByMyTeam(self:GetParent()) or not
 	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
 		-- Random 7.23 building can see everything in the world or something wtf...
-		if (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType()) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) and enemy:GetName() ~= "npc_dota_watch_tower" then
+		if (not enemy.IsNeutralUnitType or (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType())) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) and enemy:GetName() ~= "npc_dota_watch_tower" then
 			self.bVisible	= true
 			break
 		end
@@ -1083,10 +1086,12 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
 			self.counter		= self.counter + self.interval
 		end
 		
+		-- Counter has passed the threshold or the parent has been recently hit by a neutral, so the passive will now be disabled
 		if self.counter >= self:GetAbility():GetSpecialValueFor("activation_delay") or self.bHitByNeutral then
 			self.bPassiveActive	= false
 			self:SetStackCount(-1)
 			
+			-- If deactivation was from the enemy having vision of the parent (and not being hit by a neutral), then reset the counter
 			if not self.bHitByNeutral then
 				self.counter		= 0
 			end

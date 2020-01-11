@@ -434,7 +434,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"assault_duration"		"6"
+				"assault_duration"		"5"
 			}
 		}
 	}

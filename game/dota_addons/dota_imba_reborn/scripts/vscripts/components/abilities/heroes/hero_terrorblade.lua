@@ -38,6 +38,8 @@ function imba_terrorblade_reflection:OnSpellStart()
 			spawn_range	= 72
 		end
 		
+		enemy:EmitSound("Hero_Terrorblade.Reflection")
+		
 		CreateIllusions(self:GetCaster(), self:GetCaster(), {
 			outgoing_damage = self:GetTalentSpecialValueFor("illusion_outgoing_damage"),
 			incoming_damage	= -100,
@@ -77,7 +79,7 @@ end
 -- MODIFIER_IMBA_TERRORBLADE_REFLECTION_UNIT --
 -----------------------------------------------
 
-function :IsPurgable()	return false end
+function modifier_imba_terrorblade_reflection_unit:IsPurgable()	return false end
 
 function modifier_imba_terrorblade_reflection_unit:OnCreated()
 
@@ -111,6 +113,8 @@ end
 ------------------------------------
 
 function imba_terrorblade_conjure_image:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Terrorblade.ConjureImage")
+
 	CreateIllusions(self:GetCaster(), self:GetCaster(), {
 		outgoing_damage = self:GetSpecialValueFor("illusion_outgoing_damage"),
 		incoming_damage	= self:GetSpecialValueFor("illusion_incoming_damage"),
@@ -128,7 +132,9 @@ end
 ------------------------------------
 
 function imba_terrorblade_metamorphosis:OnSpellStart()
-
+-- Hero_Terrorblade.Metamorphosis
+-- Hero_Terrorblade.Metamorphosis.Scepter
+-- Hero_Terrorblade.Metamorphosis.Fear
 end
 
 ---------------------------------------------
@@ -136,7 +142,22 @@ end
 ---------------------------------------------
 
 function modifier_imba_terrorblade_metamorphosis:OnCreated()
+	self.bonus_range	 = self:GetAbility():GetTalentSpecialValueFor("bonus_range")
+end
 
+function modifier_imba_terrorblade_metamorphosis:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PROJECTILE_NAME,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
+end
+
+function modifier_imba_terrorblade_metamorphosis:GetModifierProjectileName()
+
+end
+
+function modifier_imba_terrorblade_metamorphosis:GetModifierAttackRangeBonus()
+	return self.bonus_range
 end
 
 --------------------------------------------------------------------
@@ -147,13 +168,36 @@ function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:OnCreate
 
 end
 
+-----------------------------
+-- IMBA_TERRORBLADE_SUNDER --
+-----------------------------
+
+function imba_terrorblade_sunder:OnSpellStart()
+	local target = self:GetCursorTarget()
+	
+	if target:TriggerSpellAbsorb(self) then return end
+	
+	local caster_health	= self:GetCaster():GetHealth()
+	local target_health	= target:GetHealth()
+	
+	self:GetCaster():EmitSound("Hero_Terrorblade.Sunder.Cast")
+	target:EmitSound("Hero_Terrorblade.Sunder.Target")
+	
+	self:GetCaster():SetHealth(math.max(target_health, self:GetCaster():GetMaxHealth() * self:GetSpecialValueFor("hit_point_minimum_pct") * 0.01))
+	target:SetHealth(math.max(caster_health, target:GetMaxHealth() * self:GetSpecialValueFor("hit_point_minimum_pct") * 0.01))
+end
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_terrorblade_reflection_cooldown", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_terrorblade_sunder_cooldown", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_terrorblade_reflection_cooldown		= class({})
+modifier_special_bonus_imba_terrorblade_reflection_cooldown				= modifier_special_bonus_imba_terrorblade_reflection_cooldown or class({})
+modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range		= modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range or class({})
+modifier_special_bonus_imba_terrorblade_sunder_cooldown					= modifier_special_bonus_imba_terrorblade_sunder_cooldown or class({})
 
 function modifier_special_bonus_imba_terrorblade_reflection_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_terrorblade_reflection_cooldown:IsPurgable() 		return false end
