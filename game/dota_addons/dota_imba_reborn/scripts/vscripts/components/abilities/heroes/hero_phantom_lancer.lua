@@ -918,6 +918,10 @@ function imba_phantom_lancer_juxtapose:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()
 	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"), "modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", {})
+	end
 end
 
 function imba_phantom_lancer_juxtapose:OnOwnerDied()
@@ -983,7 +987,7 @@ function modifier_imba_phantom_lancer_juxtapose:OnAttackLanded(keys)
 				outgoing_damage_roshan		= nil,
 				duration		= self.duration
 			}
-			, 1, self:GetCaster():GetHullRadius(), false, true)
+			, 1, 72, false, true)
 			
 			for _, illusion in pairs(illusions) do
 				self.spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_lancer/phantom_lancer_spawn_illusion.vpcf", PATTACH_ABSORIGIN_FOLLOW, illusion)
@@ -992,7 +996,7 @@ function modifier_imba_phantom_lancer_juxtapose:OnAttackLanded(keys)
 				ParticleManager:ReleaseParticleIndex(self.spawn_particle)
 			
 				illusion:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_juxtapose_illusion", {})
-				FindClearSpaceForUnit(illusion, self:GetParent():GetAbsOrigin() + self.directional_vectors[RandomInt(1, #self.directional_vectors)], true)
+				-- FindClearSpaceForUnit(illusion, self:GetParent():GetAbsOrigin() + self.directional_vectors[RandomInt(1, #self.directional_vectors)], true)
 				illusion:SetAggroTarget(keys.target)
 				
 				table.insert(self.owner.juxtapose_table, illusion:entindex())
@@ -1017,10 +1021,10 @@ function modifier_imba_phantom_lancer_juxtapose:OnAttackLanded(keys)
 		end
 	
 		-- IMBAfication: Assault Fever		
-		if self.duration > 0 and (#(self.owner.juxtapose_table) >= self:GetAbility():GetTalentSpecialValueFor("max_illusions") or (self.owner.HasTalent and self.owner:HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"))) then
+		if self.duration > 0 and (#(self.owner.juxtapose_table) >= self:GetAbility():GetTalentSpecialValueFor("max_illusions")) then -- or (self.owner.HasTalent and self.owner:HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"))) then
 			for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)) do
 				if unit:GetPlayerOwnerID() == self:GetCaster():GetPlayerOwnerID() then
-					local assault_modifier = unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phantom_lancer_juxtapose_assault", {duration = self:GetAbility():GetSpecialValueFor("assault_duration")})
+					local assault_modifier = unit:AddNewModifier(self:GetParent():GetOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_phantom_lancer_juxtapose_assault", {duration = self:GetAbility():GetSpecialValueFor("assault_duration")})
 					
 					if self.owner:HasModifier("modifier_imba_phantom_lancer_juxtapose_assault") and self.owner:FindModifierByName("modifier_imba_phantom_lancer_juxtapose_assault"):GetStackCount() ~= assault_modifier:GetStackCount() then
 						assault_modifier:SetStackCount(self.owner:FindModifierByName("modifier_imba_phantom_lancer_juxtapose_assault"):GetStackCount())
@@ -1046,8 +1050,8 @@ end
 ----------------------------------------------------
 
 function modifier_imba_phantom_lancer_juxtapose_assault:OnCreated()
-	self.assault_attack_speed	= self:GetAbility():GetSpecialValueFor("assault_attack_speed")
-	self.assault_armor			= self:GetAbility():GetSpecialValueFor("assault_armor")
+	self.assault_attack_speed	= self:GetAbility():GetSpecialValueFor("assault_attack_speed") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter")
+	self.assault_armor			= self:GetAbility():GetSpecialValueFor("assault_armor") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", "value2")
 	
 	if not IsServer() then return end
 	
@@ -1079,11 +1083,17 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown		= class({})
+modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter	= modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter or class({})
+modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown			= modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown or class({})
 
-function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:IsHidden() 			return true end
 function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:IsPurgable() 		return false end
 function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:RemoveOnDeath() 	return false end
 

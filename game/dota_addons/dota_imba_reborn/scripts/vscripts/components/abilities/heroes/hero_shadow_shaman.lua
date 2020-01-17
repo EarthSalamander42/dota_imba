@@ -466,7 +466,7 @@ function modifier_imba_shadow_shaman_voodoo:GetModifierAura()				return "modifie
 function modifier_imba_shadow_shaman_voodoo:GetAuraEntityReject(hTarget)	
 	if not IsServer() then return end
 	
-	return hTarget == self:GetParent() or (math.abs(AngleDiff(VectorToAngles(hTarget:GetForwardVector()).y, VectorToAngles(self:GetParent():GetAbsOrigin() - hTarget:GetAbsOrigin()).y)) > (self:GetAbility():GetSpecialValueFor("deprecation_angle") or 45)) or self.targets[hTarget:GetEntityIndex()] or not hTarget:CanEntityBeSeenByMyTeam(self:GetParent())
+	return hTarget:IsRoshan() or hTarget == self:GetParent() or (math.abs(AngleDiff(VectorToAngles(hTarget:GetForwardVector()).y, VectorToAngles(self:GetParent():GetAbsOrigin() - hTarget:GetAbsOrigin()).y)) > (self:GetAbility():GetSpecialValueFor("deprecation_angle") or 45)) or self.targets[hTarget:GetEntityIndex()] or not hTarget:CanEntityBeSeenByMyTeam(self:GetParent())
 end
 
 ---------------------------------

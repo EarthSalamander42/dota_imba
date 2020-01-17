@@ -159,7 +159,7 @@
 
 // Blink Boots
 "DOTA_Tooltip_Ability_item_imba_blink_boots"						"Blink Boots"
-"DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1>Passive: Perfect Control</h1> Targeting over the maximum range will not result in a shorter blink.\n<h1>Passive: Flash Step</h1>If the user manually blinks between %sweet_spot_min% and %max_blink_range%, Blink Boots immediately goes off cooldown. Flash Step has an innate cooldown of %flash_step_cooldown% seconds when activated."
+"DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1>Passive: Perfect Control</h1> Targeting over the maximum range will not result in a shorter blink.\n<h1>Passive: Flash Step</h1>If the user manually blinks between %sweet_spot_min% and %max_blink_range% range, Blink Boots immediately goes off cooldown. Flash Step has an innate cooldown of %flash_step_cooldown% seconds when activated."
 "DOTA_Tooltip_ability_item_imba_blink_boots_Lore"					"Blink, and you'll miss it."
 "DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"		"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 "DOTA_Tooltip_ability_item_imba_blink_boots_bonus_movement_speed"	"%+$move_speed"

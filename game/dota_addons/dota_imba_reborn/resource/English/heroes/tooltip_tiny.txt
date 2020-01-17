@@ -114,5 +114,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_5"            "Tree Throw knockbacks enemies on impact"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_6"            "+100 Avalanche Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_7"            "Toss Grabs All Units"
+"DOTA_Tooltip_ability_special_bonus_imba_tiny_7_Description"		"Toss damage from additional units is 100, instead of the standard damage."
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attack Speed Penalty Removed"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_avalanche_cooldown"			"-7s Avalanche Cooldown"

@@ -1186,16 +1186,12 @@ function imba_wraith_king_reincarnation:GetAbilityTextureName()
 end
 
 function imba_wraith_king_reincarnation:GetManaCost(level)
-	local caster = self:GetCaster()
-	local ability = self    
-	local reincarnate_mana_cost = ability:GetSpecialValueFor("reincarnate_mana_cost")
-
+	if not self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_6") then
+		return self:GetSpecialValueFor("reincarnate_mana_cost")
 	-- #6 Talent: Reincarnation no longer needs mana
-	if caster:HasTalent("special_bonus_imba_skeleton_king_6") then
-		reincarnate_mana_cost = caster:FindTalentValue("special_bonus_imba_skeleton_king_6")
+	else
+		return self:GetCaster():FindTalentValue("special_bonus_imba_skeleton_king_6")
 	end
-
-	return reincarnate_mana_cost
 end
 
 function imba_wraith_king_reincarnation:OnAbilityPhaseStart() return false end
@@ -1215,6 +1211,10 @@ function imba_wraith_king_reincarnation:OnOwnerSpawned()
 	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_5") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_5"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_5", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_6"), "modifier_special_bonus_imba_skeleton_king_6", {})
 	end
 end
 
@@ -2069,3 +2069,15 @@ end
 function modifier_imba_wraith_soul_strike_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetStackCount() * (-1)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_6", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skeleton_king_6	= modifier_special_bonus_imba_skeleton_king_6 or class({})
+
+function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_skeleton_king_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_6:RemoveOnDeath() 	return false end

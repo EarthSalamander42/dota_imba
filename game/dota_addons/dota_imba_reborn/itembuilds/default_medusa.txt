@@ -79,7 +79,6 @@
 			"item"		"item_refresher"
 			"item"		"item_imba_bladestorm_mail"
 			"item"		"item_imba_meteor_hammer_4"
-			"item"		"item_imba_cyclone_2"
 			"item"		"item_imba_lance_of_longinus"
 			"item"		"item_imba_rapier_cursed"
 		}

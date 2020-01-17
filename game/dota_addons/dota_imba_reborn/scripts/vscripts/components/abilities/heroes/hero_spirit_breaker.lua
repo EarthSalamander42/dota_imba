@@ -331,9 +331,7 @@ end
 
 -- This is so Spirit Breaker doesn't spaz out at random pathing while charging
 function modifier_imba_spirit_breaker_charge_of_darkness:CheckState()
-	local state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
-	
-	return state
+	return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:DeclareFunctions()

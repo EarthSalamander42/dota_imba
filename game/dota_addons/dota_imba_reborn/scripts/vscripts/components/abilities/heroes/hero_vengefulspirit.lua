@@ -352,9 +352,6 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 					--	iVisionTeamNumber 	= caster:GetTeamNumber()
 					ExtraData			= {index = index, target_index = target:GetEntityIndex(), damage = damage, stun_duration = stun_duration, split_radius = split_radius, split_reduce_pct = split_reduce_pct, split_amount = split_amount}
 				}
-			if target_loc:GetName() == "npc_dummy_unit" then
-				target_loc:Destroy()
-			end
 		else
 			projectile =
 				{
@@ -396,8 +393,6 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 			if (not target:IsMagicImmune()) or caster:HasTalent("special_bonus_imba_vengefulspirit_5") then
 				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration}):SetDuration(ExtraData.stun_duration * (1 - target:GetStatusResistance()), true)
 			end
-		else
-			target = CreateUnitByName("npc_dummy_unit", location, false, caster, caster, caster:GetTeamNumber() )
 		end
 
 		local sound_hit = "Hero_VengefulSpirit.MagicMissileImpact"
@@ -422,9 +417,12 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 			end
 		end
 		local target_missiles = math.min(#valid_targets, ExtraData.split_amount)
-		for i = 1, target_missiles do
-			self:OnSpellStart( valid_targets[i] , ExtraData.split_reduce_pct, target, ExtraData.index )
-			table.insert(self[proj_index] , valid_targets[i])
+		
+		if target then
+			for i = 1, target_missiles do
+				self:OnSpellStart( valid_targets[i] , ExtraData.split_reduce_pct, target, ExtraData.index )
+				table.insert(self[proj_index] , valid_targets[i])
+			end
 		end
 		-- Delete these variables if no more targets are avaible
 		if self[ExtraData.index] == #self[proj_index] then
@@ -495,7 +493,7 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 		local vision_aoe = self:GetSpecialValueFor("vision_aoe")
 		local vision_duration = self:GetSpecialValueFor("vision_duration")
 
-		local dummy = CreateUnitByName("npc_dummy_unit", caster_loc, false, caster, caster, caster:GetTeamNumber() )
+		local dummy = CreateModifierThinker(self:GetCaster(), self,	nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(),	false)
 		dummy:EmitSound("Hero_VengefulSpirit.WaveOfTerror")
 
 		if caster:GetName() == "npc_dota_hero_vengefulspirit" then
@@ -526,7 +524,7 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 				bProvidesVision		= true,
 				iVisionRadius 		= vision_aoe,
 				iVisionTeamNumber 	= caster:GetTeamNumber(),
-				ExtraData			= {damage = damage, duration = duration}
+				ExtraData			= {damage = damage, duration = duration, dummy_entindex = dummy:entindex()}
 			}
 		ProjectileManager:CreateLinearProjectile(projectile)
 
@@ -534,18 +532,25 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 		local current_distance = vision_aoe / 2
 		local tick_rate = vision_aoe / speed / 2
 
-		-- Provide vision along the projectile's path
-		Timers:CreateTimer(0, function()
-			local current_vision_location = caster_loc + direction * current_distance
+		-- -- Provide vision along the projectile's path
+		-- Timers:CreateTimer(0, function()
+			-- local current_vision_location = caster_loc + direction * current_distance
 
-			self:CreateVisibilityNode(current_vision_location, vision_aoe, vision_duration)
-			dummy:SetAbsOrigin(current_vision_location)
+			-- self:CreateVisibilityNode(current_vision_location, vision_aoe, vision_duration)
+			-- dummy:SetAbsOrigin(current_vision_location)
 
-			current_distance = current_distance + vision_aoe / 2
-			if current_distance < primary_distance then
-				return tick_rate
-			end
-		end)
+			-- current_distance = current_distance + vision_aoe / 2
+			-- if current_distance < primary_distance then
+				-- return tick_rate
+			-- end
+		-- end)
+	end
+end
+
+function imba_vengefulspirit_wave_of_terror:OnProjectileThink_ExtraData(location, ExtraData)
+	if ExtraData.dummy_entindex then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"), false)
+		EntIndexToHScript(ExtraData.dummy_entindex):SetAbsOrigin(location)
 	end
 end
 
@@ -555,7 +560,11 @@ function imba_vengefulspirit_wave_of_terror:OnProjectileHit_ExtraData(target, lo
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration}):SetDuration(ExtraData.duration * (1 - target:GetStatusResistance()), true)
 	else
-		self:CreateVisibilityNode(location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"))
+		-- self:CreateVisibilityNode(location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"))
+		
+		if ExtraData.dummy_entindex then
+			EntIndexToHScript(ExtraData.dummy_entindex):ForceKill(false)
+		end
 	end
 	return false
 end

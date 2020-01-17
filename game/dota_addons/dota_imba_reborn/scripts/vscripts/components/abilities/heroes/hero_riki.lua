@@ -1503,9 +1503,23 @@ function imba_riki_tricks_of_the_trade:GetAbilityTextureName()
 end
 
 function imba_riki_tricks_of_the_trade:GetBehavior()
-	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	if self:GetName() == "imba_riki_tricks_of_the_trade" then
+		if self:GetCaster():HasScepter() then
+			return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+		else
+			return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+		end
+	elseif self:GetName() == "imba_riki_tricks_of_the_trade_723" then
+		if self:GetCaster():HasScepter() then
+			return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+		else
+			if IsServer() then
+				return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+			else
+				return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+			end
+		end
+	end
 end
 
 function imba_riki_tricks_of_the_trade:IsNetherWardStealable()
@@ -1534,6 +1548,9 @@ function imba_riki_tricks_of_the_trade:OnAbilityPhaseStart()
 	if self:GetCaster():HasScepter() and self:GetCursorTarget() and self:GetCursorTarget() ~= self:GetCaster() then
 		self.target = self:GetCursorTarget()
 		self:GetCaster():SetCursorCastTarget(self:GetCaster())
+	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
+		self:GetCaster():SetCursorCastTarget(nil)
+		self:GetCaster():CastAbilityOnPosition(self:GetCaster():GetAbsOrigin(), self, self:GetCaster():GetPlayerID())
 	end
 
 	return true
@@ -1544,48 +1561,55 @@ function imba_riki_tricks_of_the_trade:OnAbilityPhaseInterrupted()
 end
 
 function imba_riki_tricks_of_the_trade:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local origin = caster:GetAbsOrigin()
-		local aoe = self:GetSpecialValueFor("area_of_effect")
-		local target = self:GetCursorTarget()
-
-		self.channel_start_time = GameRules:GetGameTime()
-
-		if caster:HasScepter() and self.target and not self.target:IsNull() then
-			origin = self.target:GetAbsOrigin()
-		end
-
-		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_primary", {})
-		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_secondary", {})
-
-		local cast_particle = "particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
-		local tricks_particle = "particles/units/heroes/hero_riki/riki_tricks.vpcf"
-		local cast_sound = "Hero_Riki.TricksOfTheTrade.Cast"
-		local continous_sound = "Hero_Riki.TricksOfTheTrade"
-		local buttsecks_sound = "Imba.RikiSurpriseButtsex"
-
-		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
-		
-		if #heroes >= PlayerResource:GetPlayerCount() * 0.35 and self:GetName() == "imba_riki_tricks_of_the_trade" then
-			-- caster:EmitSound(buttsecks_sound)
-			EmitSoundOn(buttsecks_sound, caster)
-		end
-
-		EmitSoundOnLocationWithCaster(origin, cast_sound, caster)
-		EmitSoundOn(continous_sound, caster)
-
-		local caster_loc = caster:GetAbsOrigin()
-
-		self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
-		ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
-
-		ParticleManager:SetParticleControl(self.TricksParticle, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.TricksParticle, 1, Vector(aoe, 0, aoe))
-		ParticleManager:SetParticleControl(self.TricksParticle, 2, Vector(aoe, 0, aoe))
-
-		caster:AddNoDraw()
+	local caster = self:GetCaster()
+	local origin = caster:GetAbsOrigin()
+	
+	if self:GetName() == "imba_riki_tricks_of_the_trade_723" then
+		origin	= self:GetCursorPosition()
+		self:GetCaster():SetAbsOrigin(origin)
 	end
+	
+	local aoe = self:GetSpecialValueFor("area_of_effect")
+	local target = self:GetCursorTarget()
+
+	self.channel_start_time = GameRules:GetGameTime()
+
+	if caster:HasScepter() and self.target and not self.target:IsNull() then
+		origin = self.target:GetAbsOrigin()
+	end
+
+	caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_primary", {})
+	caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_secondary", {})
+
+	local cast_particle = "particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+	local tricks_particle = "particles/units/heroes/hero_riki/riki_tricks.vpcf"
+	local cast_sound = "Hero_Riki.TricksOfTheTrade.Cast"
+	local continous_sound = "Hero_Riki.TricksOfTheTrade"
+	local buttsecks_sound = "Imba.RikiSurpriseButtsex"
+
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+	
+	if #heroes >= PlayerResource:GetPlayerCount() * 0.35 and self:GetName() == "imba_riki_tricks_of_the_trade" then
+		-- caster:EmitSound(buttsecks_sound)
+		EmitSoundOn(buttsecks_sound, caster)
+	end
+
+	EmitSoundOnLocationWithCaster(origin, cast_sound, caster)
+	EmitSoundOn(continous_sound, caster)
+
+	local caster_loc = caster:GetAbsOrigin()
+
+	local cast_particle = ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(cast_particle, 0, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(cast_particle)
+
+	self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
+
+	ParticleManager:SetParticleControl(self.TricksParticle, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.TricksParticle, 1, Vector(aoe, 0, aoe))
+	ParticleManager:SetParticleControl(self.TricksParticle, 2, Vector(aoe, 0, aoe))
+
+	caster:AddNoDraw()
 end
 
 function imba_riki_tricks_of_the_trade:OnChannelThink()
@@ -1648,14 +1672,11 @@ function modifier_imba_riki_tricks_of_the_trade_primary:IsDebuff() return false 
 function modifier_imba_riki_tricks_of_the_trade_primary:IsHidden() return false end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_ATTACK_RANGE_BONUS, }
-	return funcs
+	return {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
 end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:GetModifierAttackRangeBonus()
-	local ability = self:GetAbility()
-	local aoe = ability:GetSpecialValueFor("area_of_effect")
-	return aoe
+	return self.area_of_effect
 end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:CheckState()
@@ -1681,6 +1702,8 @@ function modifier_imba_riki_tricks_of_the_trade_primary:CheckState()
 end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:OnCreated()
+	self.area_of_effect	= self:GetAbility():GetSpecialValueFor("area_of_effect")
+
 	if IsServer() then
 		local ability = self:GetAbility()
 		
@@ -1705,7 +1728,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		local caster = ability:GetCaster()
 		local origin = caster:GetAbsOrigin()
 
-		if caster:HasScepter() then
+		if caster:HasScepter() and ability:GetCursorTarget() then
 			local target = ability:GetCursorTarget()
 			origin = target:GetAbsOrigin()
 			caster:SetAbsOrigin(origin)

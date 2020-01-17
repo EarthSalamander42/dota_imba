@@ -1076,7 +1076,11 @@ function imba_pudge_dismember:CastFilterResultTarget(hTarget)
 	elseif not self:GetCaster():HasScepter() then
 		return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
 	else
-		return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+		if hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+			return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO, self:GetCaster():GetTeamNumber())
+		else
+			return UnitFilter(hTarget, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+		end
 	end
 end
 
@@ -1101,7 +1105,12 @@ function imba_pudge_dismember:OnSpellStart()
 			return nil
 		end
 	else
+		if self.swallowed_target and not self.swallowed_target:IsNull() and self.swallowed_target:HasModifier("modifier_imba_dismember_scepter") then
+			self.swallowed_target:RemoveModifierByName("modifier_imba_dismember_scepter")
+		end		
+		
 		self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", false, true)
+		
 		self.swallowed_target = target
 		
 		-- "Applies a strong dispel on the target and disjoints projectiles upon cast."
@@ -1348,7 +1357,7 @@ function modifier_imba_dismember_scepter:OnCreated()
 
 	if not IsServer() then return end
 
-	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+	self.pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster(), self:GetCaster():GetTeamNumber())
 	self:AddParticle(self.pfx, false, false, -1, true, true)
 
 	self:GetParent():AddNoDraw()

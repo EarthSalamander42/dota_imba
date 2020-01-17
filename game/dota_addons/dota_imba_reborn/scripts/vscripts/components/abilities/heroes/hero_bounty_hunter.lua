@@ -1238,14 +1238,14 @@ function modifier_imba_track_debuff_mark:IsHidden()
 end
 
 function modifier_imba_track_debuff_mark:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE,
 		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-		MODIFIER_EVENT_ON_HERO_KILLED,
+		--MODIFIER_EVENT_ON_HERO_KILLED,
+		MODIFIER_EVENT_ON_DEATH,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_TOOLTIP }
-
-	return decFuncs
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
 function modifier_imba_track_debuff_mark:GetModifierPreAttack_Target_CriticalStrike(keys)
@@ -1267,9 +1267,9 @@ function modifier_imba_track_debuff_mark:GetModifierIncomingDamage_Percentage()
 	return nil
 end
 
-function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
+function modifier_imba_track_debuff_mark:OnDeath(keys)
 	if IsServer() then
-		local target = keys.target
+		local target = keys.unit
 		local reincarnate = keys.reincarnate
 
 		-- Only apply if the target of the track debuff is the one who just died

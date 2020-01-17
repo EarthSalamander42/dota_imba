@@ -88,29 +88,29 @@ function modifier_imba_toxicity_debuff:OnCreated()
 	self:SetStackCount(1)
 end
 
--- TOXICITY meme with global cooldown
-function modifier_imba_toxicity_debuff:OnDeath( params )
-	if IsServer() then
-		local caster = self:GetCaster()
-		if (params.unit == self:GetParent()) and params.unit:IsRealHero() and (params.attacker == caster) then
-			if self:GetStackCount() > 100 and not _G.TOXICITY then
-				_G.TOXICITY = true
-				local dummy = CreateUnitByName("npc_dummy_unit", params.unit:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-				dummy:EmitSound("Venomancer.Toxicity")
-				Timers:CreateTimer(60, function()
-					_G.TOXICITY = nil
-					dummy:Destroy()
-				end)
-			end
-		end
-	end
-end
+-- -- TOXICITY meme with global cooldown
+-- function modifier_imba_toxicity_debuff:OnDeath( params )
+	-- if IsServer() then
+		-- local caster = self:GetCaster()
+		-- if (params.unit == self:GetParent()) and params.unit:IsRealHero() and (params.attacker == caster) then
+			-- if self:GetStackCount() > 100 and not _G.TOXICITY then
+				-- _G.TOXICITY = true
+				-- local dummy = CreateUnitByName("npc_dummy_unit", params.unit:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+				-- dummy:EmitSound("Venomancer.Toxicity")
+				-- Timers:CreateTimer(60, function()
+					-- _G.TOXICITY = nil
+					-- dummy:Destroy()
+				-- end)
+			-- end
+		-- end
+	-- end
+-- end
 
 function modifier_imba_toxicity_debuff:DeclareFunctions()
 	local decFuns =
 		{
 			MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-			MODIFIER_EVENT_ON_DEATH
+			-- MODIFIER_EVENT_ON_DEATH
 		}
 	return decFuns
 end

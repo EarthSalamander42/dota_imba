@@ -195,7 +195,7 @@ end
 
 function imba_queenofpain_shadow_strike:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
-		if target then
+		if target and not target:IsMagicImmune() then
 			if (not ExtraData.bPrimaryTarget or ExtraData.bPrimaryTarget and ExtraData.bPrimaryTarget == 1) and target:TriggerSpellAbsorb(self) then
 				return nil
 			end

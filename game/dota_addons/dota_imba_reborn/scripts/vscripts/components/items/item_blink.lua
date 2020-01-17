@@ -26,8 +26,16 @@
 if item_imba_blink == nil then item_imba_blink = class({}) end
 LinkLuaModifier( "modifier_imba_blink_dagger_handler", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown
 
+-- function item_imba_blink:GetBehavior()
+	-- return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+-- end
+
 function item_imba_blink:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	if IsServer() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	end
 end
 
 function item_imba_blink:GetIntrinsicModifierName()
@@ -57,19 +65,26 @@ function item_imba_blink:OnSpellStart()
 		-- Calculate total overshoot distance
 		if distance > max_extra_distance then
 			target_point = origin_point + (target_point - origin_point):Normalized() * max_extra_distance
-			Timers:CreateTimer(0.03, function()
-				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown)
-			end)
+			-- Timers:CreateTimer(0.03, function()
+				-- self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown)
+			-- end)
 
-			-- Calculate cooldown increase if between the two extremes
-		else
-			local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
-			Timers:CreateTimer(0.03, function()
-				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction)
-			end)
+			-- -- Calculate cooldown increase if between the two extremes
+		-- else
+			-- local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
+			-- Timers:CreateTimer(0.03, function()
+				-- self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction)
+			-- end)
+		-- end
+		end
+	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
+		for _, building in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+			if string.find(building:GetName(), "ent_dota_fountain") then
+				target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
+			end
 		end
 	end
-
+	
 	caster:Blink(target_point, false, true)
 end
 
@@ -167,7 +182,12 @@ function item_imba_blink_boots:GetAbilityTextureName()
 end
 
 function item_imba_blink_boots:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
+	if IsServer() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+	end
+end
 
 function item_imba_blink_boots:GetIntrinsicModifierName()
 	return "modifier_imba_blink_boots_handler" end
@@ -204,9 +224,15 @@ function item_imba_blink_boots:OnSpellStart()
 		-- end
 		
 		target_point = origin_point + (target_point - origin_point):Normalized() * max_blink_range
+	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
+		for _, building in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+			if string.find(building:GetName(), "ent_dota_fountain") then
+				target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
+			end
+		end
 	end
 
-	if distance >= sweet_spot_min and distance <= max_blink_range and not caster:HasModifier("modifier_imba_blink_boots_flash_step") then
+	if not self:GetCursorTarget() and distance >= sweet_spot_min and distance <= max_blink_range and not caster:HasModifier("modifier_imba_blink_boots_flash_step") then
 		-- Activate flash step (and use random particle effect)
 		Timers:CreateTimer(FrameTime(), function()
 		local particle = ParticleManager:CreateParticle("particles/econ/items/meepo/meepo_colossal_crystal_chorus/meepo_divining_rod_poof_end_explosion_ring.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())

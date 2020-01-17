@@ -424,17 +424,20 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"assault_attack_speed"	"8"
+				"assault_attack_speed"	"10"
+				"LinkedSpecialBonus"	"special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"assault_armor"			"0.8"
+				"assault_armor"			"1.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"
+				"LinkedSpecialBonusField"		"value2"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"assault_duration"		"5"
+				"assault_duration"		"6"
 			}
 		}
 	}
@@ -575,7 +578,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
+				"value"					"6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value2"					"0.6"
 			}
 		}
 	}

@@ -147,12 +147,14 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
 	
 	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	local npc_dummy_unit = CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
+	local horse_thinker = 	CreateModifierThinker(self.caster, self.ability, nil, {duration = self.max_channel_time}, self.caster_location, self.caster:GetTeamNumber(), false)
 	
-	self.spirit = npc_dummy_unit
+	-- CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
+	
+	self.spirit = horse_thinker
 	-- Set the unit/horse facing in the direction of where the wave will shoot
-	npc_dummy_unit:SetForwardVector(self.direction)
-	npc_dummy_unit:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
+	horse_thinker:SetForwardVector(self.direction)
+	horse_thinker:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
 	
 	self:StartIntervalThink(FrameTime())
 end
@@ -395,6 +397,10 @@ function modifier_imba_keeper_of_the_light_spirit_form_illuminate:GetStatusEffec
 	return "particles/status_fx/status_effect_keeper_spirit_form.vpcf"
 end
 
+function modifier_imba_keeper_of_the_light_spirit_form_illuminate:CheckState()
+	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+end
+
 function modifier_imba_keeper_of_the_light_spirit_form_illuminate:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MODEL_CHANGE
@@ -554,6 +560,10 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 		
 		if blind_mod then
 			blind_mod:SetDuration(self.duration * (1 - enemy:GetStatusResistance()), true)
+		end
+		
+		if enemy:HasModifier("modifier_imba_blinding_light_knockback") then
+			enemy:FindModifierByName("modifier_imba_blinding_light_knockback"):Destroy()
 		end
 		
 		local knockback_mod	= enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback", {x = position.x, y = position.y, z = position.z, duration = self.knockback_duration})

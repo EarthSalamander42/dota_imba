@@ -4,7 +4,9 @@
 LinkLuaModifier("modifier_imba_terrorblade_reflection_slow", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_terrorblade_reflection_unit", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_transform", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_terrorblade_metamorphosis", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_transform_aura", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_transform_aura_applier", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
 imba_terrorblade_reflection					= imba_terrorblade_reflection or class({})
@@ -14,7 +16,9 @@ modifier_imba_terrorblade_reflection_unit	= modifier_imba_terrorblade_reflection
 imba_terrorblade_conjure_image				= imba_terrorblade_conjure_image or class({})
 
 imba_terrorblade_metamorphosis									= imba_terrorblade_metamorphosis or class({})
+modifier_imba_terrorblade_metamorphosis_transform				= modifier_imba_terrorblade_metamorphosis_transform or class({})
 modifier_imba_terrorblade_metamorphosis							= modifier_imba_terrorblade_metamorphosis or class({})
+modifier_imba_terrorblade_metamorphosis_transform_aura			= modifier_imba_terrorblade_metamorphosis_transform_aura or class({})
 modifier_imba_terrorblade_metamorphosis_transform_aura_applier	= modifier_imba_terrorblade_metamorphosis_transform_aura_applier or class({})
 
 imba_terrorblade_sunder						= imba_terrorblade_sunder or class({})
@@ -135,6 +139,22 @@ function imba_terrorblade_metamorphosis:OnSpellStart()
 -- Hero_Terrorblade.Metamorphosis
 -- Hero_Terrorblade.Metamorphosis.Scepter
 -- Hero_Terrorblade.Metamorphosis.Fear
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_transform", {duration = self:GetSpecialValueFor("transformation_time")})
+end
+
+-------------------------------------------------------
+-- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS_TRANSFORM --
+-------------------------------------------------------
+
+function modifier_imba_terrorblade_metamorphosis_transform:OnCreated()
+	self.duration	= self:GetAbility():GetSpecialValueFor("duration")
+end
+
+function modifier_imba_terrorblade_metamorphosis_transform:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_terrorblade_metamorphosis", {duration = self.duration})
 end
 
 ---------------------------------------------
@@ -142,13 +162,15 @@ end
 ---------------------------------------------
 
 function modifier_imba_terrorblade_metamorphosis:OnCreated()
-	self.bonus_range	 = self:GetAbility():GetTalentSpecialValueFor("bonus_range")
+	self.bonus_range 	= self:GetAbility():GetTalentSpecialValueFor("bonus_range")
+	self.speed_loss		= self:GetAbility():GetSpecialValueFor("speed_loss") * (-1)
 end
 
 function modifier_imba_terrorblade_metamorphosis:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
 end
 
@@ -160,13 +182,39 @@ function modifier_imba_terrorblade_metamorphosis:GetModifierAttackRangeBonus()
 	return self.bonus_range
 end
 
+function modifier_imba_terrorblade_metamorphosis:GetModifierMoveSpeedBonus_Constant()
+	return self.speed_loss
+end
+
+------------------------------------------------------------
+-- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS_TRANSFORM_AURA --
+------------------------------------------------------------
+
+function modifier_imba_terrorblade_metamorphosis_transform_aura:OnCreated()
+
+end
+
 --------------------------------------------------------------------
 -- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS_TRANSFORM_AURA_APPLIER --
 --------------------------------------------------------------------
 
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:OnCreated()
-
+	self.metamorph_aura_tooltip	= self:GetAbility():GetSpecialValueFor("metamorph_aura_tooltip")
 end
+
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:IsHidden()						return true end
+
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:IsAura()						return true end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:IsAuraActiveOnDeath() 			return false end
+
+-- "The transformation aura's buff lingers for 1 second."
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraDuration()				return 1 end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraRadius()					return self.metamorph_aura_tooltip end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetModifierAura()				return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraEntityReject(hTarget)	return hTarget:GetPlayerOwnerID() ~= self:GetCaster():GetPlayerOwnerID()
 
 -----------------------------
 -- IMBA_TERRORBLADE_SUNDER --
@@ -203,9 +251,29 @@ function modifier_special_bonus_imba_terrorblade_reflection_cooldown:IsHidden() 
 function modifier_special_bonus_imba_terrorblade_reflection_cooldown:IsPurgable() 		return false end
 function modifier_special_bonus_imba_terrorblade_reflection_cooldown:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_terrorblade_sunder_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_terrorblade_sunder_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_terrorblade_sunder_cooldown:RemoveOnDeath() 	return false end
+
 function imba_terrorblade_reflection:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_terrorblade_reflection_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_terrorblade_reflection_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_terrorblade_reflection_cooldown"), "modifier_special_bonus_imba_terrorblade_reflection_cooldown", {})
+	end
+end
+
+function imba_terrorblade_metamorphosis:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_terrorblade_metamorphosis_attack_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_terrorblade_metamorphosis_attack_range"), "modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range", {})
+	end
+end
+
+function imba_terrorblade_sunder:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_terrorblade_sunder_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_terrorblade_sunder_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_terrorblade_sunder_cooldown"), "modifier_special_bonus_imba_terrorblade_sunder_cooldown", {})
 	end
 end
 

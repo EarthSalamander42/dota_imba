@@ -109,8 +109,8 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 			end
 		end
 	else
-		-- If target is out of world or gets invulnerable
-		hTarget = CreateUnitByName("npc_dummy_unit", vLocation, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber() )
+		-- -- If target is out of world or gets invulnerable
+		-- hTarget = CreateUnitByName("npc_dummy_unit", vLocation, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber() )
 	end
 	if ExtraData.bounces >= 1 then
 		Timers:CreateTimer(ExtraData.bounce_delay, function()
@@ -186,9 +186,9 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 					}
 				}
 				ProjectileManager:CreateTrackingProjectile(projectile)
-				if hTarget:GetName() == "npc_dummy_unit" then
-					hTarget:Destroy()
-				end
+				-- if hTarget:GetName() == "npc_dummy_unit" then
+					-- hTarget:Destroy()
+				-- end
 			end
 		end)
 	else

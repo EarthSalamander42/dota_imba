@@ -824,14 +824,18 @@ if IsServer() then
 		local duration = self:GetSpecialValueFor("stun_duration")
 		local toss_mult = self:GetSpecialValueFor("toss_damage_multiplier")
 		local radius = self:GetSpecialValueFor("radius")
-		if grow_ability then
-			radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
-		end
+		
+		
+		-- if grow_ability then
+			-- radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		-- end
+		
+		
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local avalanche = ParticleManager:CreateParticle(self:GetCaster().avalanche_effect, PATTACH_CUSTOMORIGIN, nil)
+		local avalanche = ParticleManager:CreateParticle(self:GetCaster().avalanche_effect or "particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(avalanche, 0, vLocation)
 		ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
-		ParticleManager:SetParticleControlForward( avalanche, 0, self.direction)
+		ParticleManager:SetParticleControlForward( avalanche, 0, self.direction or self:GetCaster():GetForwardVector())
 		local offset = 0
 		local ticks = extradata.ticks
 		if self:GetCaster():HasAbility("special_bonus_imba_tiny_3") then
@@ -1032,10 +1036,7 @@ function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 end
 
 function imba_tiny_toss:GetAOERadius()
-	local ability = self
-	local radius = ability:GetSpecialValueFor("radius")
-
-	return radius
+	return self:GetSpecialValueFor("radius")
 end
 
 LinkLuaModifier("modifier_tiny_toss_movement", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
@@ -1177,11 +1178,9 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 	}
-
-	return funcs
 end
 
 --------------------------------------------------------------------------------
@@ -1200,24 +1199,14 @@ function modifier_tiny_toss_movement:CheckState()
 	if IsServer() then
 		if self:GetCaster() ~= nil and self:GetParent() ~= nil then
 			if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and ( not self:GetParent():IsMagicImmune() ) then
-				local state = {
-					[MODIFIER_STATE_STUNNED] = true,
-				}
-
-				return state
+				return {[MODIFIER_STATE_STUNNED] = true}
 			else
-				local state = {
-					[MODIFIER_STATE_ROOTED] = true,
-				}
-
-				return state
+				return {[MODIFIER_STATE_ROOTED] = true}
 			end
 		end
 	end
-
-	local state = {}
-
-	return state
+	
+	return {}
 end
 
 --------------------------------------------------------------------------------
@@ -1460,7 +1449,7 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
-					local avalanche = ParticleManager:CreateParticle(caster.avalanche_effect, PATTACH_CUSTOMORIGIN, params.attacker)
+					local avalanche = ParticleManager:CreateParticle(caster.avalanche_effect or "particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker)
 					ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 					ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 					Timers:CreateTimer(0.2, function()
