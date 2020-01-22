@@ -204,7 +204,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 170 220"
+				"damage"				"110 160 210"
 			}
 			"03"
 			{
@@ -219,7 +219,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"145 205 265"
+				"damage_scepter"		"130 190 250"
 				"RequiresScepter"		"1"
 			}
 			"06"
@@ -252,6 +252,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"treant_bonus_damage_hero"	"5"
 				"RequiresScepter"			"1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"treant_damage_per_stack"	"0.25"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"treant_health_per_stack"	"0.75"
 			}
 		}
 	}

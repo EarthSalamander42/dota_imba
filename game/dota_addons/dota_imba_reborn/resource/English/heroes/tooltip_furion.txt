@@ -9,7 +9,7 @@
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_damage_scepter"					"SCEPTER DAMAGE:"
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_scepter_buffer"					"SCEPTER TREANT BONUS TIMER:"
 //"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, a Nature's Call treant will spawn. These treants' health and damage are based on the current level of Nature's Call. If a hero is killed, a Greater Treant will be created, which has %treant_large_hp_bonus_tooltip% health and deals %treant_large_damage_bonus_tooltip% damage."
-"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, <font color='#FF7800'>any future treants summoned will permanently have %treant_bonus_damage% bonus damage and health. Hero kills grant %treant_bonus_damage_hero% bonus damage and health. Stacks infinitely.</font>"
+"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, <font color='#FF7800'>any future treants summoned will permanently have %treant_bonus_damage% bonus damage and health. Hero kills grant %treant_bonus_damage_hero% times this amount. Stacks infinitely.</font>"
 
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_spawn" "Wrath of Nature"
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_spawn_Description"	"Will grant permanent bonus damage to future treants if killed."
@@ -18,7 +18,7 @@
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_Description"			"Subsequently spawned treants will gain bonus damage and health."
 
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_aura"				"Nature's Wrath Bonus"
-"DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_aura_Description"	"Gaining bonus damage and health."
+"DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_aura_Description"	"Gaining %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage and %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% bonus health."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_furion_wrath_of_nature_boost"	"Wrath of Nature Kill Extension"
-"DOTA_Tooltip_Ability_special_bonus_imba_furion_wrath_of_nature_boost_Description"	"+{s:value} bonus treant damage/health on Wrath of Nature kill or buffered kill; stacks with Aghanim's Scepter effect, and also enables the kill tracker."
+"DOTA_Tooltip_Ability_special_bonus_imba_furion_wrath_of_nature_boost_Description"	"+{s:value} bonus treant damage/health stack on Wrath of Nature kill or buffered kill; stacks with Aghanim's Scepter effect, and also enables the kill tracker."

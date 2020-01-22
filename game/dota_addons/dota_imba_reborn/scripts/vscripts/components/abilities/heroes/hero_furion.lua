@@ -60,6 +60,9 @@ function modifier_imba_furion_wrath_of_nature:GetAuraEntityReject(hTarget)	retur
 -----------------------------------------------
 
 function modifier_imba_furion_wrath_of_nature_aura:OnCreated()
+	self.treant_damage_per_stack	= self:GetAbility():GetSpecialValueFor("treant_damage_per_stack")
+	self.treant_health_per_stack	= self:GetAbility():GetSpecialValueFor("treant_health_per_stack")
+
 	if not IsServer() then return end
 	
 	if self:GetCaster():HasModifier("modifier_imba_furion_wrath_of_nature") then
@@ -76,15 +79,15 @@ function modifier_imba_furion_wrath_of_nature_aura:DeclareFunctions()
 end
 
 function modifier_imba_furion_wrath_of_nature_aura:GetModifierPreAttack_BonusDamage()
-	return self:GetStackCount()
+	return self:GetStackCount() * self.treant_damage_per_stack
 end
 
 function modifier_imba_furion_wrath_of_nature_aura:GetModifierExtraHealthBonus()
-	return self:GetStackCount()
+	return self:GetStackCount() * self.treant_health_per_stack
 end
 
 function modifier_imba_furion_wrath_of_nature_aura:GetModifierHealthBonus()
-	return self:GetStackCount()
+	return self:GetStackCount() * self.treant_health_per_stack
 end
 
 --------------------------------------------------
