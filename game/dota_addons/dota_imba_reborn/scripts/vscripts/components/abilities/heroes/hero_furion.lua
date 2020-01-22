@@ -246,7 +246,7 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnIntervalThink()
 	end
 	
 	-- No more valid targets
-	if not self.bFoundTarget then
+	if not self.bFoundTarget or self.counter >= self.max_targets then
 		self:StartIntervalThink(-1)
 		self:Destroy()
 	end

@@ -9,7 +9,7 @@
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_damage_scepter"					"SCEPTER DAMAGE:"
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_scepter_buffer"					"SCEPTER TREANT BONUS TIMER:"
 //"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, a Nature's Call treant will spawn. These treants' health and damage are based on the current level of Nature's Call. If a hero is killed, a Greater Treant will be created, which has %treant_large_hp_bonus_tooltip% health and deals %treant_large_damage_bonus_tooltip% damage."
-"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, <font color='#FF7800'>any future treants summoned will permanently have %treant_bonus_damage% bonus damage and health. Hero kills grant %treant_bonus_damage_hero% times this amount. Stacks infinitely.</font>"
+"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_aghanim_description"				"Increases damage. If a unit is killed by Wrath of Nature, or within %scepter_buffer% seconds thereafter, <font color='#FF7800'>any future treants summoned will permanently have %treant_damage_per_stack% bonus damage and %treant_health_per_stack% bonus health. Hero kills grant %treant_bonus_damage_hero% times this amount. Stacks infinitely.</font>"
 
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_spawn" "Wrath of Nature"
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_spawn_Description"	"Will grant permanent bonus damage to future treants if killed."
