@@ -1261,7 +1261,7 @@ end
 function modifier_imba_life_drain:OnIntervalThink()
 	if IsServer() then
 		-- If the target is an enemy illusion, kill it
-		if self.parent:IsIllusion() and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() then
+		if self.parent:IsIllusion() and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and (not self.parent.Custom_IsStrongIllusion or (self.parent.Custom_IsStrongIllusion and not self.parent:Custom_IsStrongIllusion())) then
 			self.parent:Kill(self.ability, self.caster)
 			return nil
 		end
@@ -1278,7 +1278,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 		end
 
 		-- Link breaks if the target's status doesn't allow for it to continue
-		if not self.caster:CanEntityBeSeenByMyTeam(self.parent) or self.parent:IsInvulnerable() then
+		if not self.caster:CanEntityBeSeenByMyTeam(self.parent) or self.parent:IsInvulnerable() or self.parent:IsMagicImmune() then
 			self:Destroy()
 		end
 

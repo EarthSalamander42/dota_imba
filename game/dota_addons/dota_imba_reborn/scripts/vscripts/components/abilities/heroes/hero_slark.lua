@@ -724,6 +724,8 @@ end
 
 function modifier_imba_slark_essence_shift:DestroyOnExpire()	return false end
 function modifier_imba_slark_essence_shift:IsHidden()			return self:GetStackCount() <= 0 end
+function modifier_imba_slark_essence_shift:IsPurgable()			return false end
+function modifier_imba_slark_essence_shift:RemoveOnDeath()		return false end
 
 function modifier_imba_slark_essence_shift:OnCreated()
 	if not IsServer() then return end

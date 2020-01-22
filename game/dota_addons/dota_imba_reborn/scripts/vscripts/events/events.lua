@@ -955,6 +955,35 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_slark_essence_shift_duration"
 							}
 							upgraded = true
+						elseif string.find(text, 'furion') and hero:GetName() == "npc_dota_hero_furion" then
+							ability_set = {
+								[5] = "imba_furion_wrath_of_nature",
+								[9] = "special_bonus_imba_furion_wrath_of_nature_boost",
+							}
+							upgraded = true
+						elseif string.find(text, 'brewmaster') and hero:GetName() == "npc_dota_hero_brewmaster" then
+							ability_set = {
+								[0] = "imba_brewmaster_thunder_clap",
+								[1] = "imba_brewmaster_cinder_brew",
+								-- [2] = "imba_brewmaster_drunken_brawler",
+								-- [3] = "generic_hidden",
+								-- [4] = "generic_hidden",
+								-- [5] = "imba_brewmaster_primal_split",
+								-- [6] = "special_bonus_attack_damage_15",
+								-- [7] = "special_bonus_hp_200",
+								[8] = "special_bonus_imba_brewmaster_thunder_clap_slow_duration",
+								-- [9] = "special_bonus_magic_resistance_20",
+								-- [10] = "special_bonus_imba_brewmaster_primal_split_health",
+								-- [11] = "special_bonus_attack_speed_100",
+								-- [12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
+								-- [13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
+							}
+							upgraded = true
+						elseif string.find(text, 'chaos_knight') and hero:GetName() == "npc_dota_hero_chaos_knight" then
+							ability_set = {
+								[5] = "imba_chaos_knight_phantasm",
+							}
+							upgraded = true
 						end
 						
 						for ability = 0, 23 do
@@ -1025,33 +1054,71 @@ function GameMode:OnPlayerChat(keys)
 			elseif str == "-getname" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
-				text = tonumber(text)
 				
-				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() then
-					DisplayError(caster:GetPlayerID(), PlayerResource:GetPlayerName(text))
+				if type(tonumber(text)) == "number" and PlayerResource:GetPlayer(tonumber(text)) and PlayerResource:GetPlayer(tonumber(text)):GetAssignedHero() then
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetPlayerName(tonumber(text)))
 				else
-					DisplayError(caster:GetPlayerID(), "Invalid PlayerID")
+					local foundID = nil
+					
+					for hero = 0, PlayerResource:GetPlayerCount() do
+						if PlayerResource:GetPlayer(hero) and PlayerResource:GetPlayer(hero):GetAssignedHero() and string.find(PlayerResource:GetPlayer(hero):GetAssignedHero():GetName(), text) then
+							foundID = hero
+							break
+						end
+					end
+					
+					if foundID then
+						DisplayError(caster:GetPlayerID(), PlayerResource:GetPlayerName(foundID).." -- "..foundID)
+					else
+						DisplayError(caster:GetPlayerID(), "Invalid PlayerID")
+					end
 				end
 			elseif str == "-freeze" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
-				text = tonumber(text)
 				
-				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() and IMBA_PUNISHED then
-					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(text)] = true
-					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(text).." is now frozen.")
+				if type(tonumber(text)) == "number" and PlayerResource:GetPlayer(tonumber(text)) and PlayerResource:GetPlayer(tonumber(text)):GetAssignedHero() and IMBA_PUNISHED then
+					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(tonumber(text))] = true
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(tonumber(text)).." is now frozen.")
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Freeze Target")
 				end
 			elseif str == "-unfreeze" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
-				text = tonumber(text)
 				
-				if type(text) == "number" and PlayerResource:GetPlayer(text) and PlayerResource:GetPlayer(text):GetAssignedHero() and IMBA_PUNISHED then
-					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(text)] = nil
-					PlayerResource:GetPlayer(text):GetAssignedHero():SetCustomHealthLabel("", 0, 0, 0)
-					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(text).." is now unfrozen.")
+				if type(tonumber(text)) == "number" and PlayerResource:GetPlayer(tonumber(text)) and PlayerResource:GetPlayer(tonumber(text)):GetAssignedHero() and IMBA_PUNISHED then
+					IMBA_PUNISHED[PlayerResource:GetSteamAccountID(tonumber(text))] = nil
+					PlayerResource:GetPlayer(tonumber(text)):GetAssignedHero():SetCustomHealthLabel("", 0, 0, 0)
+					DisplayError(caster:GetPlayerID(), PlayerResource:GetSteamAccountID(tonumber(text)).." is now unfrozen.")
+				else
+					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
+				end
+			elseif str == "-excavate" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				
+				if type(tonumber(text)) == "number" and PlayerResource:GetPlayer(tonumber(text)) and PlayerResource:GetPlayer(tonumber(text)):GetAssignedHero() then
+					local obs_count		= 0
+					local sentry_count	= 0
+				
+					for _, obs in pairs(Entities:FindAllByClassname("npc_dota_ward_base")) do
+						if obs:GetOwner() == PlayerResource:GetPlayer(tonumber(text)) then
+							obs:ForceKill(false)
+							obs_count	= obs_count + 1
+							caster:AddItemByName("item_ward_observer")
+						end
+					end
+					
+					for _, sentry in pairs(Entities:FindAllByClassname("npc_dota_ward_base_truesight")) do
+						if sentry:GetOwner() == PlayerResource:GetPlayer(tonumber(text)) then
+							sentry:ForceKill(false)
+							sentry_count	= sentry_count + 1
+							caster:AddItemByName("item_ward_sentry")
+						end
+					end
+					
+					DisplayError(caster:GetPlayerID(), "Destroyed "..obs_count.." observer wards and "..sentry_count.." sentry wards placed by "..PlayerResource:GetPlayerName(tonumber(text))..".")
 				else
 					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
 				end

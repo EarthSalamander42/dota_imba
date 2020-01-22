@@ -424,7 +424,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"assault_attack_speed"	"10"
+				"assault_attack_speed"	"15"
 				"LinkedSpecialBonus"	"special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"
 			}
 			"13"
@@ -578,7 +578,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"6"
+				"value"					"10"
 			}
 			"02"
 			{

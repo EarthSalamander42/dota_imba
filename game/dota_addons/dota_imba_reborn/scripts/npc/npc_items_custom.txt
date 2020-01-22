@@ -17163,6 +17163,80 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Banana
+	//=================================================================================================================
+	"item_imba_banana"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2356"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName" 			"item_banana"
+		"ScriptFile"					"components/items/item_banana"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 
-	//next free ID: 2356
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1800"
+		"ItemShopTags"					"int"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"banana"
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ShouldBeSuggested"				"1"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"				// MANY OF THESE KVs ARE HARD-CODED IN THE LUA FILE DUE TO DISCONNECT BETWEEN THINKER MODIFIERS AND ABILITIES; CHANGE THEM THERE TOO IF YOU CHANGE ANY HERE
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_gain"				"4"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_peel_radius"	"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_slide_distance"	"400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_slide_duration"	"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_directional_changes"	"4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_flying_vision"	"150"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_duration"		"120"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"banana_drop_distance"	"35"
+			}
+		}
+	}
+
+	//next free ID: 2357
 }

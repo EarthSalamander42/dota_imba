@@ -119,7 +119,6 @@ end
 
 function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 	local caster = self:GetCaster()
-	local modifier_curse = "modifier_imba_eleven_curses"
 
 	-- Ability parameters
 	local base_damage = self:GetSpecialValueFor("base_damage")
@@ -131,19 +130,29 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 		-- Play hit sound
 		target:EmitSound("Hero_SkywrathMage.ConcussiveShot.Target")
 
+		local curse_modifier = target:FindModifierByName("modifier_imba_eleven_curses")
+		
 		-- Calculate and deal damage
-		if target:HasModifier(modifier_curse) then
+		if curse_modifier then
 			-- bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01 * target:GetHealth()
-			bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01
+			bonus_damage = curse_modifier:GetStackCount() * bonus_damage * 0.01
 		else
 			bonus_damage = 0
 		end
+		
 		-- local damage = base_damage + bonus_damage
 		local damage = base_damage * (1 + bonus_damage)
 		
 		local actual_damage = ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, actual_damage, nil)
-		target:RemoveModifierByName(modifier_curse)
+		
+		if curse_modifier then
+			curse_modifier:SetStackCount(math.floor(curse_modifier:GetStackCount() * (100 - self:GetSpecialValueFor("curse_stack_reduction_pct")) * 0.01))
+			
+			if curse_modifier:GetStackCount() < 1 then
+				curse_modifier:Destroy()
+			end
+		end
 	end
 end
 

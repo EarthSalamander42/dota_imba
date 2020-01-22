@@ -156,16 +156,16 @@ end
 --		PHANTASM		--
 --------------------------
 
-imba_chaos_knight_phantasm = class({})
-LinkLuaModifier("modifier_chaos_knight_phantasm_cast", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chaos_knight_phantasm_cast", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chaos_knight_phantasm_illusion", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 
-function imba_chaos_knight_phantasm:GetAbilityTextureName()
-	return "chaos_knight_phantasm"
-end
+imba_chaos_knight_phantasm						= imba_chaos_knight_phantasm or class({})
+modifier_imba_chaos_knight_phantasm_cast		= modifier_imba_chaos_knight_phantasm_cast or class({})
+modifier_imba_chaos_knight_phantasm_illusion	= modifier_imba_chaos_knight_phantasm_illusion or class({})
 
-function imba_chaos_knight_phantasm:IsHiddenWhenStolen()
-	return false
-end
+--------------------------------
+-- IMBA_CHAOS_KNIGHT_PHANTASM --
+--------------------------------
 
 --	function imba_chaos_knight_phantasm:GetCastRange(location, target)
 --		local caster = self:GetCaster()
@@ -174,111 +174,122 @@ end
 --		return base_range
 --	end
 
+-- TODO: Think of a scepter effect (might consider ally W but then I'll need to make that custom too so hmm)
+
 function imba_chaos_knight_phantasm:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self
+	local extra_illusion_sound = "Hero_ChaosKnight.Phantasm.Plus"
 
-		-- Ability variables
-		local unit_name = caster:GetUnitName()
-		local images_count = ability:GetSpecialValueFor("images_count")
-		local duration = ability:GetSpecialValueFor("illusion_duration")
-		local outgoingDamage = ability:GetSpecialValueFor("outgoing_damage")
-		local incomingDamage = ability:GetSpecialValueFor("incoming_damage")
-		local invulnerability_duration = ability:GetSpecialValueFor("invuln_duration")
-		local extra_illusion_chance = ability:GetSpecialValueFor("extra_phantasm_chance_pct_tooltip")
-		local extra_illusion_sound = "Hero_ChaosKnight.Phantasm.Plus"
+	local unit = self:GetCursorTarget() or self:GetCaster()
+	
+	unit:EmitSound("Hero_ChaosKnight.Phantasm")
+	unit:Purge(false, true, false, false, false)
+	ProjectileManager:ProjectileDodge(unit)
+	
+	unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_chaos_knight_phantasm_cast", {duration = self:GetSpecialValueFor("invuln_duration")})
+end
 
-		local chance = RandomInt(1, 100)
-		local casterOrigin = caster:GetAbsOrigin()
+----------------------------------------------
+-- MODIFIER_IMBA_CHAOS_KNIGHT_PHANTASM_CAST --
+----------------------------------------------
 
-		-- Stop any actions of the caster otherwise its obvious which unit is real
-		caster:AddNewModifier(caster, ability, "modifier_chaos_knight_phantasm_cast", {duration=invulnerability_duration})
-		EmitSoundOn("Hero_ChaosKnight.Phantasm", caster)
+function modifier_imba_chaos_knight_phantasm_cast:IsHidden()		return true end
+function modifier_imba_chaos_knight_phantasm_cast:IsPurgable()	return false end
+
+function modifier_imba_chaos_knight_phantasm_cast:GetEffectName()
+	return "particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
+end
+
+function modifier_imba_chaos_knight_phantasm_cast:OnCreated()
+	self.images_count				= self:GetAbility():GetSpecialValueFor("images_count")
+	self.illusion_duration			= self:GetAbility():GetSpecialValueFor("illusion_duration")
+	self.outgoing_damage			= self:GetAbility():GetSpecialValueFor("outgoing_damage")
+	self.outgoing_damage_tooltip	= self:GetAbility():GetSpecialValueFor("outgoing_damage_tooltip")
+	self.incoming_damage			= self:GetAbility():GetSpecialValueFor("incoming_damage")
+	self.incoming_damage_tooltip	= self:GetAbility():GetSpecialValueFor("incoming_damage_tooltip")
+	self.invuln_duration			= self:GetAbility():GetSpecialValueFor("invuln_duration")
+	self.vision_radius				= self:GetAbility():GetSpecialValueFor("vision_radius")
+	self.magic_resistance			= self:GetAbility():GetSpecialValueFor("magic_resistance")
+	self.images_count				= self:GetAbility():GetSpecialValueFor("images_count")
+	self.scepter_images_count_extra	= self:GetAbility():GetSpecialValueFor("scepter_images_count_extra")
+	
+	if self:GetCaster():HasScepter() then
+		self.images_count = self.images_count + self.scepter_images_count_extra
 	end
 end
 
-modifier_chaos_knight_phantasm_cast = class({})
+function modifier_imba_chaos_knight_phantasm_cast:OnDestroy()
+	if not IsServer() or not self:GetParent():IsAlive() or not self:GetAbility() then return end
 
-function modifier_chaos_knight_phantasm_cast:IsHidden()
-	return true
-end
-
-function modifier_chaos_knight_phantasm_cast:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true,
-			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_OUT_OF_GAME] = true,
-		}
-
-	return state
-end
-
-function modifier_chaos_knight_phantasm_cast:OnCreated()
-	if not IsServer() then
-		return
+	-- "Orders the user to stop after the split time, canceling all queued orders, and orders given during the split time."
+	if self:GetParent() == self:GetCaster() then
+		self:GetParent():Stop()
 	end
-	local caster = self:GetCaster()
-	self.phantasm_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf", PATTACH_ABSORIGIN, caster)
-end
+	
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_radius, 1, false)
 
-function modifier_chaos_knight_phantasm_cast:OnDestroy()
-	if not IsServer() then
-		return
-	end
-
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-
-	-- Ability variables
-	local unit_name = caster:GetUnitName()
-	local images_count = ability:GetSpecialValueFor("images_count")
-	local duration = ability:GetSpecialValueFor("illusion_duration")
-	local outgoingDamage = ability:GetSpecialValueFor("outgoing_damage")
-	local incomingDamage = ability:GetSpecialValueFor("incoming_damage")
-	local invulnerability_duration = ability:GetSpecialValueFor("invuln_duration")
-	local extra_illusion_chance = ability:GetSpecialValueFor("extra_phantasm_chance_pct_tooltip")
-
-	local chance = RandomInt(1, 100)
-	local casterOrigin = caster:GetAbsOrigin()
-
-	-- Initialize the illusion table to keep track of the units created by the spell
-	if not caster.phantasm_illusions then
-		caster.phantasm_illusions = {}
-	end
-
-	-- Kill the old images
-	for k,v in pairs(caster.phantasm_illusions) do
-		if v and IsValidEntity(v) then
-			v:ForceKill(false)
+	if self:GetAbility().phantasm_illusions then
+		for _, illusion in pairs(self:GetAbility().phantasm_illusions) do
+			if illusion and not illusion:IsNull() then
+				illusion:ForceKill(false)
+			end
 		end
 	end
+	
+	self:GetAbility().phantasm_illusions = {}
+	
+	-- "The distance in between each is 135 range."
+	self.phantasm_illusions = CreateIllusions(self:GetCaster(), self:GetParent(), 
+	{
+		outgoing_damage 			= self.outgoing_damage,
+		incoming_damage				= self.incoming_damage,
+		bounty_base					= self:GetParent():GetLevel() * 2,
+		bounty_growth				= nil,
+		outgoing_damage_structure	= nil,
+		outgoing_damage_roshan		= nil,
+		duration					= self.illusion_duration
+	}
+	, self.images_count, 135, true, true)
 
-	-- Start a clean illusion table
-	caster.phantasm_illusions = {}
-
-	-- Spawn illusions
-	if chance <= extra_illusion_chance then
-		images_count = images_count +1
-		EmitSoundOn("Hero_ChaosKnight.Phantasm.Plus", caster)
+	for _, illusion in pairs(self.phantasm_illusions) do
+		illusion:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_chaos_knight_phantasm_illusion", {})
+		-- illusion:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_chaos_knight_phantasm_illusion", {magic_resistance = self.magic_resistance}) -- Feels like GetModifierMagicalResistanceBonus doesn't work on illusions or something
+		table.insert(self:GetAbility().phantasm_illusions, illusion)
 	end
+end
 
-	for i=1, images_count do
-		local illusion = IllusionManager:CreateIllusion(caster, ability, casterOrigin, caster, {damagein=incomingDamage, damageout=outgoingDamage, unique="chaos_knight_phantasm_"..i, duration=duration})
-		table.insert(caster.phantasm_illusions, illusion)
+-- "Chaos Knight is invulnerable, hidden and spell immune during the split time."
+function modifier_imba_chaos_knight_phantasm_cast:CheckState()
+	return {
+		[MODIFIER_STATE_INVULNERABLE]	= true,
+		[MODIFIER_STATE_OUT_OF_GAME]	= true,
+		
+		[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
+		[MODIFIER_STATE_NO_HEALTH_BAR]	= true,
+		[MODIFIER_STATE_STUNNED]		= true,
+	}
+end
+
+--------------------------------------------------
+-- MODIFIER_IMBA_CHAOS_KNIGHT_PHANTASM_ILLUSION --
+--------------------------------------------------
+
+-- function modifier_imba_chaos_knight_phantasm_illusion:IsHidden()		return true end
+function modifier_imba_chaos_knight_phantasm_illusion:IsPurgable()	return false end
+
+function modifier_imba_chaos_knight_phantasm_illusion:OnCreated(keys)
+	if self:GetAbility() then
+		self.magic_resistance	= self:GetAbility():GetSpecialValueFor("magic_resistance")
+	elseif keys then
+		self.magic_resistance	= keys.magic_resistance
+	else
+		self.magic_resistance	= 0
 	end
+end
 
-	for i=1, #caster.phantasm_illusions+1 do
-		if i ~= #caster.phantasm_illusions+1 then
-			FindClearSpaceForUnit( caster.phantasm_illusions[i], casterOrigin, true )
-		else
-			FindClearSpaceForUnit( caster, casterOrigin, true )
-		end
-	end
+function modifier_imba_chaos_knight_phantasm_illusion:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+end
 
-	ParticleManager:DestroyParticle(self.phantasm_particle, true)
-	ParticleManager:ReleaseParticleIndex(self.phantasm_particle)
-	self.phantasm_particle = nil
+function modifier_imba_chaos_knight_phantasm_illusion:GetModifierMagicalResistanceBonus()
+	return self.magic_resistance
 end

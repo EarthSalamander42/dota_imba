@@ -355,7 +355,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"snake_charmer_hero_count"		"4"
+				"snake_charmer_hero_count"		"3"
 			}
 			"10"
 			{
@@ -371,6 +371,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"snake_charmer_bonus_duration"	"8"
+			}
+			
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"snake_charmer_creep_bat_reduction_pct"	"10"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"snake_charmer_hero_bat_reduction_pct"	"30"
 			}
 		}
 	}

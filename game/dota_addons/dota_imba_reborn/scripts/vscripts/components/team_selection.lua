@@ -288,7 +288,7 @@ function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 	TeamSelectionUnassignTeams()
 
 	-- if we dont have enough data fire next event
-	if TeamSelectionComputedCount < TeamSelectionComputedTotal then
+	if TeamSelectionComputedCount < TeamSelectionComputedTotal and PlayerWithHostPrivileges then
 
 		-- send another compute request to the privileged client
 		local player = PlayerResource:GetPlayer(PlayerWithHostPrivileges)
@@ -309,6 +309,7 @@ function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 end
 
 function KeepTeams10v10TeamSelectionDone()
+	if not TeamSelectionListeners.computeComplete then return end
 
 	TextDebug("Team selection complete")
 

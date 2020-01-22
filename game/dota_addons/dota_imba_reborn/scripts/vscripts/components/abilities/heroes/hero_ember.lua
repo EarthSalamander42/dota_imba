@@ -109,7 +109,7 @@ function modifier_imba_flame_guard_passive:GetEffectAttachType()
 end
 
 function modifier_imba_flame_guard_passive:OnCreated(keys)
-	if IsServer() then
+	if IsServer() and not self:GetParent():IsIllusion() then
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("tick_interval"))
 	end
 end
@@ -307,7 +307,7 @@ end
 
 function modifier_imba_searing_chains_attack:OnAttackLanded(keys)
 	if IsServer() then
-		if keys.attacker == self:GetParent() then
+		if keys.attacker == self:GetParent() and not self:GetParent():IsIllusion() then
 			local attacker = self:GetParent()
 			if attacker:FindAbilityByName("special_bonus_ember_chains_on_attack") and attacker:FindAbilityByName("special_bonus_ember_chains_on_attack"):GetLevel() > 0 then
 				local talent_ability = attacker:FindAbilityByName("special_bonus_ember_chains_on_attack")

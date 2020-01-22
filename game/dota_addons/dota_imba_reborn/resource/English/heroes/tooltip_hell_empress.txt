@@ -12,7 +12,7 @@
 "DOTA_Tooltip_modifier_imba_eleven_curses_Description"          "Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% bonus damage from all sources."
 
 "DOTA_Tooltip_ability_imba_empress_hellbolt"              "Hellbolt"
-"DOTA_Tooltip_ability_imba_empress_hellbolt_Description"        "Launches a Hellbolt towards all nearby enemies, dealing damage. <font color='#C00000'>Cursed</font> enemies receive extra damage based the amount of curse stacks. This effects consumes the enemy's <font color='#C00000'>curse</font>."
+"DOTA_Tooltip_ability_imba_empress_hellbolt_Description"        "Launches a Hellbolt towards all nearby enemies, dealing damage. <font color='#C00000'>Cursed</font> enemies receive extra damage based the amount of curse stacks. This effects consumes %curse_stack_reduction_pct%%% of the enemy's <font color='#C00000'>curse</font>, rounded up."
 "DOTA_Tooltip_ability_imba_empress_hellbolt_Lore"           "A Bolt of chaotic energy seeps from the depths towards the unfortunate enemies of Hellion."
 "DOTA_Tooltip_ability_imba_empress_hellbolt_base_damage"        "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_empress_hellbolt_bonus_damage"       "%BONUS DAMAGE PER STACK:"

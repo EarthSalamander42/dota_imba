@@ -91,7 +91,3 @@ function C_DOTA_BaseNPC:IsInRiver()
 		return false
 	end
 end
-
-function C_DOTA_BaseNPC:Custom_IsStrongIllusion()
-	return self:HasModifier("modifier_chaos_knight_phantasm_illusion") or self:HasModifier("modifier_vengefulspirit_hybrid_special")
-end

@@ -65,7 +65,7 @@ function Dagon( keys )
 	target:EmitSound(sound_hit)
 
 	-- Kill the target instantly if it is an illusion
-	if target:IsIllusion() then
+	if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
 		target:Kill(ability, caster)
 	end
 	

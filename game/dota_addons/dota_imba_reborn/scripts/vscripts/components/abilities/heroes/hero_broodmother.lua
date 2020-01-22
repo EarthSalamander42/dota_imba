@@ -296,3 +296,146 @@ function modifier_imba_broodmother_insatiable_hunger:OnDestroy()
 
 	self:GetCaster():StopSound("Hero_Broodmother.InsatiableHunger")
 end
+
+---
+---
+---
+
+-- AltiV, January 18th, 2020
+
+LinkLuaModifier("modifier_imba_broodmother_poison_sting", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_broodmother_poison_sting_debuff", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
+
+imba_broodmother_poison_sting					= imba_broodmother_poison_sting or class({})
+modifier_imba_broodmother_poison_sting			= modifier_imba_broodmother_poison_sting or class({})
+modifier_imba_broodmother_poison_sting_debuff	= modifier_imba_broodmother_poison_sting_debuff or class({})
+
+-----------------------------------
+-- IMBA_BROODMOTHER_POISON_STING --
+-----------------------------------
+
+function imba_broodmother_poison_sting:GetIntrinsicModifierName()
+	return "modifier_imba_broodmother_poison_sting"
+end
+
+--------------------------------------------
+-- MODIFIER_IMBA_BROODMOTHER_POISON_STING --
+--------------------------------------------
+
+function modifier_imba_broodmother_poison_sting:IsPurgable()	return false end
+function modifier_imba_broodmother_poison_sting:RemoveOnDeath()	return false end
+
+function modifier_imba_broodmother_poison_sting:OnCreated()
+	self.damage_per_second		= self:GetAbility():GetSpecialValueFor("damage_per_second")
+	self.movement_speed			= self:GetAbility():GetSpecialValueFor("movement_speed")
+	self.duration_hero			= self:GetAbility():GetSpecialValueFor("duration_hero")
+	self.duration				= self:GetAbility():GetSpecialValueFor("duration")
+	self.cleave_starting_width	= self:GetAbility():GetSpecialValueFor("cleave_starting_width")
+	self.cleave_ending_width	= self:GetAbility():GetSpecialValueFor("cleave_ending_width")
+	self.cleave_distance		= self:GetAbility():GetSpecialValueFor("cleave_distance")
+	self.cleave_damage			= self:GetAbility():GetSpecialValueFor("cleave_damage")
+	self.scale					= self:GetAbility():GetSpecialValueFor("scale")
+end
+
+function modifier_imba_broodmother_poison_sting:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_MODEL_SCALE
+	}
+end
+
+function modifier_imba_broodmother_poison_sting:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not keys.target:IsBuilding() then
+		if keys.target:IsHero() then
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration_hero})
+		else
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration})
+		end
+	
+		if not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+			DoCleaveAttack(self:GetParent(), keys.target, self:GetAbility(), (keys.damage * self.cleave_damage * 0.01), self.cleave_starting_width, self.cleave_ending_width, self.cleave_distance, "particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf")
+		end
+	end
+end
+
+-- The stuff of nightmares
+function modifier_imba_broodmother_poison_sting:GetModifierModelScale()
+	return self:GetStackCount() * 4
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_BROODMOTHER_POISON_STING_DEBUFF --
+---------------------------------------------------
+
+function modifier_imba_broodmother_poison_sting_debuff:IgnoreTenacity()	return true end
+function modifier_imba_broodmother_poison_sting_debuff:RemoveOnDeath()	return false end
+
+function modifier_imba_broodmother_poison_sting_debuff:OnCreated()
+	self.damage_per_second		= self:GetAbility():GetSpecialValueFor("damage_per_second") + self:GetCaster():GetModifierStackCount("modifier_imba_broodmother_poison_sting", self:GetCaster())
+	self.movement_speed			= self:GetAbility():GetSpecialValueFor("movement_speed") - self:GetCaster():GetModifierStackCount("modifier_imba_broodmother_poison_sting", self:GetCaster())
+	self.scale					= self:GetAbility():GetSpecialValueFor("scale")
+	self.hero_scale				= self:GetAbility():GetSpecialValueFor("hero_scale")
+	
+	-- Keep track of all the spiderlings that could have applied the debuff for minor stacking purposes (without making a million modifiers)
+	self.spiders = {}
+	self.spiders[self:GetCaster():entindex()] = true
+	
+	if not IsServer() then return end
+	
+	self.damage_type			= self:GetAbility():GetAbilityDamageType()
+	
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:OnRefresh()
+	if not self.spiders[self:GetCaster():entindex()] then
+		self.spiders[self:GetCaster():entindex()] = true
+	end
+	
+	self.damage_per_second		= math.max(self:GetAbility():GetSpecialValueFor("damage_per_second") + self:GetCaster():GetModifierStackCount("modifier_imba_broodmother_poison_sting", self:GetCaster()), self.damage_per_second)
+	self.movement_speed			= math.min(self:GetAbility():GetSpecialValueFor("movement_speed") - self:GetCaster():GetModifierStackCount("modifier_imba_broodmother_poison_sting", self:GetCaster()), self.movement_speed)
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:OnIntervalThink()
+	ApplyDamage({
+		victim 			= self:GetParent(),
+		damage 			= self.damage_per_second,
+		damage_type		= self.damage_type,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	})
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP,
+		
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_speed
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:OnTooltip()
+	return self.damage_per_second
+end
+
+function modifier_imba_broodmother_poison_sting_debuff:OnDeath(keys)
+	if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) and self.spiders then	
+		for entindex, bool in pairs(self.spiders) do
+			if EntIndexToHScript(entindex) and not EntIndexToHScript(entindex):IsNull() and EntIndexToHScript(entindex):IsAlive() and EntIndexToHScript(entindex):HasModifier("modifier_imba_broodmother_poison_sting") then
+				if (keys.unit:IsRealHero() or keys.unit:IsClone()) then
+					EntIndexToHScript(entindex):FindModifierByName("modifier_imba_broodmother_poison_sting"):SetStackCount(EntIndexToHScript(entindex):FindModifierByName("modifier_imba_broodmother_poison_sting"):GetStackCount() + self.hero_scale)
+				else
+					EntIndexToHScript(entindex):FindModifierByName("modifier_imba_broodmother_poison_sting"):SetStackCount(EntIndexToHScript(entindex):FindModifierByName("modifier_imba_broodmother_poison_sting"):GetStackCount() + self.scale)
+				end
+			end
+		end
+		
+		self:Destroy()
+	end
+end

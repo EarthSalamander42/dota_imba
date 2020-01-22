@@ -496,8 +496,8 @@ function imba_disruptor_glimpse:OnSpellStart()
 		end			
 
 		-- if target is an illusion, kill instantly and do nothing else.
-		if target:IsIllusion() then
-			target:ForceKill(false)
+		if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
+			target:Kill(self, self:GetCaster())
 			return nil
 		end
 

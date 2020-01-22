@@ -255,7 +255,7 @@ function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_Limit()
 	not self:GetParent():HasModifier("modifier_imba_spirit_breaker_charge_of_darkness") and
 	not (self:GetParent():HasModifier("modifier_windrunner_windrun") and self:GetParent():HasScepter()) and
 	not (self:GetParent():HasModifier("modifier_imba_windranger_windrun") and self:GetParent():HasScepter()) and
-	not (self:GetParent():HasModifier("modifier_imba_hunter_in_the_night") and self:GetParent():PassivesDisabled() and IsDaytime and not IsDaytime()) then
+	not (self:GetParent():HasModifier("modifier_imba_hunter_in_the_night") and not self:GetParent():PassivesDisabled() and IsDaytime and not IsDaytime()) then
 		return self.ms_limit
 	end
 end

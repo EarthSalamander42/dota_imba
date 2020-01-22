@@ -154,8 +154,6 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 				shackleTarget = tree
 				
 				if target.AddNewModifier then
-					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
-
 					local shackleshot_tree_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_pair.vpcf", PATTACH_POINT_FOLLOW, target)
 					ParticleManager:SetParticleControl(shackleshot_tree_particle, 1, tree:GetAbsOrigin())
 					ParticleManager:SetParticleControl(shackleshot_tree_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
@@ -164,6 +162,7 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 					
 					if target_modifier then
 						target_modifier:AddParticle(shackleshot_tree_particle, false, false, -1, false, false)
+						target_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), true)
 					end
 				end	
 				
@@ -222,6 +221,7 @@ function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location,
 						local shackleshot_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_single.vpcf", PATTACH_ABSORIGIN, target)
 						-- TODO: Figure out how this particle is oriented?
 						ParticleManager:SetParticleControlForward(shackleshot_particle, 2, Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z):Normalized())
+						stun_modifier:SetDuration(self:GetSpecialValueFor("fail_stun_duration") * (1 - target:GetStatusResistance()), true)
 						stun_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
 					end
 				end

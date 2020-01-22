@@ -1,24 +1,23 @@
 // Venomancer's Venomous Gale
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale"                    "Venomous Gale"
-"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Description"                    "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement. Venomous Gale deals damage every %tick_interval% seconds over its duration.\n<font color='#FF7800'>Scourge Spit:</font> Casting Venomous Gale on a target point where Venomancer is out of range, but in a radius of a Scourge Ward, it is casted through the ward instead."
+"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Description"		"Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement. Venomous Gale deals damage every %tick_interval% seconds over its duration.\n<font color='#FF7800'>Scourge Spit:</font> Can be casted through owned plague wards if the caster is out of standard cast range. Plague wards have their own cast range of %ward_range%, which is indicated by a visible range indicator."
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Lore"              "A concoction of various stings, poisons, and toxins gathered from the jungles of Jidi Isle, victims surviving it are rare."
-"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note0"              "Does not allow the target to be denied."
-"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note1"              "The slow's effect gradually weakens during the spell's effect."
-"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note2"              "Separate Gales do not stack, but the initial damage can be dealt multiple times to the same target."
+"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note0"				"Venomous Gale can be lethal. Units afflicted by Venomous Gale can be denied when their HP drops below 25%."
+"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note1"				"Duration damage is dealt every %tick_interval% seconds."
+"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note2"				"Slow starts at %movement_slow%%%, and decreases as time passes."
 //"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note3"              "You can enable/disable the range indicator with\n<font color='#FF4A4A'>-rangeon / -rangeoff</font>."
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_movement_slow"                  "%INITIAL SLOW:"
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_strike_damage"                  "INITIAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_tick_damage"                    "DAMAGE OVER TIME:"
 "DOTA_Tooltip_ability_imba_venomancer_venomous_gale_cast_range"                     "MAX GALE DISTANCE:"
-"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_ward_range"                     "WARD RANGE:"
 
 "DOTA_Tooltip_modifier_imba_venomous_gale"                              "Venomous Gale"
 "DOTA_Tooltip_modifier_imba_venomous_gale_Description"                  "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and taking continuous damage."
 
 // Venomancer's Poison Sting
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting"                    "Poison Sting"
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"			"Adds poison damage to Venomancer's normal attacks, slowing movement speed, removing health over time, and reducing the target's HP regeneration.\n<font color='#FF7800'>Fresh Sting:</font> Poison Sting immediately damages whenever the debuff is refreshed.\n<font color='#FF7800'>Infinite Poison:</font> Poison Sting can stack with itself indefinitely. Each attack from Venomancer will add more stacks, each increasing the health loss.\n<font color='#FF7800'>Fresh Malignancy:</font> Attacks from Scourge Wards refresh the duration of Poison Sting."
+"DOTA_Tooltip_ability_imba_venomancer_poison_sting"						"Poison Sting"
+"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"			"Adds poison damage to Venomancer's normal attacks, slowing movement speed, removing health over time, and reducing the target's HP regeneration.\nPoison Sting from plague wards will have no effect if the target is already affected by the owner's own Poison Sting.\n<font color='#FF7800'>Fresh Sting:</font> Poison Sting immediately damages whenever the debuff is refreshed.\n<font color='#FF7800'>Infinite Poison:</font> Each reapplication of Poison Sting increases its damage by %stack_damage%. Plague Wards get 50% of this effect."
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_Lore"                "The paralytic sting of the creature which caused his transformation now belongs to the Venomancer."
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note0"              "Poison Sting damage can be lethal."
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note1"              "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger."
@@ -26,11 +25,9 @@
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_damage"              "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_movement_speed_pct"	"%SLOW:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_hp_regen_reduction"	"%HP REGEN REDUCTION:"
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting_stack_damage"		"DAMAGE PER STACK:"
 
-"DOTA_Tooltip_modifier_imba_poison_sting_debuff"                        "Poison Sting"
-"DOTA_Tooltip_modifier_imba_poison_sting_debuff_Description"            "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and taking continuous damage."
-
+"DOTA_Tooltip_modifier_imba_poison_sting_debuff"						"Poison Sting"
+"DOTA_Tooltip_modifier_imba_poison_sting_debuff_Description"			"Slowing by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, reducing HP regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%% and ticking for %dMODIFIER_PROPERTY_TOOLTIP% damage."
 "DOTA_Tooltip_modifier_imba_poison_sting_debuff_ward"                  "Poison Sting"
 "DOTA_Tooltip_modifier_imba_poison_sting_debuff_ward_Description"                   "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and taking continuous damage."
 
@@ -47,6 +44,16 @@
 
 "DOTA_Tooltip_modifier_imba_plague_ward"                    "Unruly growth"
 "DOTA_Tooltip_modifier_imba_plague_ward_Description"		"Invulnerable as long as its attached Plague wards are alive."
+
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2"									"Plague Ward"
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2_Description"						"Summons a plague ward to attack enemy units and structures. The ward is immune to magic. Wards gain the Poison Sting level from Venomancer, dealing 50%% of the full damage.\n<font color='#FF7800'>Spread Cancer:</font> Plague wards can attack %split_count% additional enemies within attack range."
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2_Lore"								"A mixture of his old herbalist talents and newfound toxic mastery creates a living embodiment of plague."
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2_duration"							"DURATION:"
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2_ward_hp_tooltip"					"WARD HP:"
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_v2_ward_damage_tooltip"				"WARD DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_poison_sting_v2_ward"									"Poison Sting"
+"DOTA_Tooltip_modifier_imba_poison_sting_v2_ward_Description"						"Slowing by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, reducing HP regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%% and ticking for %dMODIFIER_PROPERTY_TOOLTIP% damage."
 
 // Venomancer's Compound Toxicity
 "DOTA_Tooltip_ability_imba_venomancer_toxicity"                        "Compound Toxicity"
@@ -86,6 +93,11 @@
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_7"                  "Venomous Gale 360° AOE"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_8"                  "Scourge Ward has its own stacking Poison Sting"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_8_Description"		"Does not reduce health regeneration."
+
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_venomous_gale_plague_wards"					"Gale Hero Impact Summons {s:value} Wards"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_venomous_gale_plague_wards_Description"		"The wards are based on the current level of Plague Ward and spawned within 100 range of the impacted Hero, on opposite sides."
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_poison_sting_slow"							"{s:value}% Poison Sting Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_plague_ward_upgrade"						"{s:value}x Plague Ward HP/Damage"
 
 // Venomancer's summoned units: Plague Ward, Scourge Ward
 "npc_imba_venomancer_plague_ward"                          "Plague Ward"

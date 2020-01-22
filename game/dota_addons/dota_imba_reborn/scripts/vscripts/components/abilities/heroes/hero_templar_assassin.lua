@@ -508,7 +508,7 @@ function modifier_imba_templar_assassin_meld:OnAttackFail(keys)
 end
 
 function modifier_imba_templar_assassin_meld:GetModifierProjectileName()
-	if self:GetStackCount() ~= -1 then
+	if self:GetStackCount() ~= -1 and (self:GetParent():GetAttackTarget() and not self:GetParent():GetAttackTarget():IsBuilding()) then
 		return "particles/units/heroes/hero_templar_assassin/templar_assassin_meld_attack.vpcf"
 	end
 end

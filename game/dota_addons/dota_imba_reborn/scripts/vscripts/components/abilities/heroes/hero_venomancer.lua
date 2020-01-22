@@ -1,6 +1,17 @@
 -- Editors:
 --     Firetoad
 --     AtroCty, 23.04.2017
+--     AltiV, 17.01.2020
+
+
+LinkLuaModifier("modifier_imba_poison_sting_v2_ward", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_venomancer_plague_ward_v2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_poison_sting_v2_ward		= modifier_imba_poison_sting_v2_ward or class({})
+
+imba_venomancer_plague_ward_v2			= imba_venomancer_plague_ward_v2 or class({})
+modifier_imba_venomancer_plague_ward_v2	= modifier_imba_venomancer_plague_ward_v2 or class({})
 
 -------------------------------------------
 --				TOXICITY
@@ -51,6 +62,7 @@ function modifier_imba_toxicity:OnIntervalThink()
 			table.insert(poisons, enemy:FindModifierByNameAndCaster("modifier_imba_venomous_gale", caster))
 			table.insert(poisons, enemy:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff", caster))
 			table.insert(poisons, enemy:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff_ward", caster))
+			table.insert(poisons, enemy:FindModifierByNameAndCaster("modifier_imba_poison_sting_v2_ward", caster))
 			local novas = enemy:FindAllModifiersByName("modifier_imba_poison_nova")
 			for _,nova in pairs(novas) do
 				if nova:GetCaster() == self:GetCaster() then
@@ -139,24 +151,37 @@ end
 -------------------------------------------
 
 function imba_venomancer_venomous_gale:GetCastRange(location , target)
-	local range = self:GetSpecialValueFor("cast_range")
-	if IsServer() then
-		local caster = self:GetCaster()
-		if (caster:GetAbsOrigin() - location):Length2D() <= (range + GetCastRangeIncrease(caster)) then
-			self.bWardCaster = nil
-			return range
-		end
-		local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
-		local wards = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		for _, ward in pairs(wards) do
-			if ward.bIsScourge then
-				self.bWardCaster = ward
+	-- local range = self:GetSpecialValueFor("cast_range")
+	-- if IsServer() then
+		-- local caster = self:GetCaster()
+		-- if (caster:GetAbsOrigin() - location):Length2D() <= (range + GetCastRangeIncrease(caster)) then
+			-- self.bWardCaster = nil
+			-- return range
+		-- end
+		-- local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
+		-- local wards = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		-- for _, ward in pairs(wards) do
+			-- if ward.bIsScourge then
+				-- self.bWardCaster = ward
+				-- return 25000
+			-- end
+		-- end
+		-- self.bWardCaster = nil
+	-- end
+	-- return range
+	
+	if IsClient() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("ward_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+			if ally:GetName() == "npc_dota_venomancer_plagueward" and ally:GetOwner() == self:GetCaster() then
 				return 25000
 			end
 		end
-		self.bWardCaster = nil
+		
+		-- Cast range is standard if no nearby plague wards are found
+		return self.BaseClass.GetCastRange(self, location, target)
 	end
-	return range
 end
 
 function imba_venomancer_venomous_gale:GetCastAnimation()
@@ -168,117 +193,131 @@ function imba_venomancer_venomous_gale:GetCastAnimation()
 end
 
 function imba_venomancer_venomous_gale:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local target_loc = self:GetCursorPosition()
-		local caster_loc
-		local cast_range = self:GetSpecialValueFor("cast_range")
-		local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
+	local caster = self:GetCaster()
+	local target_loc = self:GetCursorPosition()
+	local caster_loc
+	local cast_range = self:GetSpecialValueFor("cast_range")
+	local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
 
-		if (caster:GetAbsOrigin() - target_loc):Length2D() >= (cast_range + GetCastRangeIncrease(caster)) then
-			local wards = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			for _, ward in pairs(wards) do
-				if ward:GetUnitName() == "npc_imba_venomancer_scourge_ward" then
-					self.bWardCaster = ward
-					break
-				end
+	-- if (caster:GetAbsOrigin() - target_loc):Length2D() >= (cast_range + GetCastRangeIncrease(caster)) then
+		-- local wards = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		-- for _, ward in pairs(wards) do
+			-- if ward:GetUnitName() == "npc_imba_venomancer_scourge_ward" then
+				-- self.bWardCaster = ward
+				-- break
+			-- end
+		-- end
+	-- end
+	
+	if (self:GetCaster():GetAbsOrigin() - self:GetCursorPosition()):Length2D() > self:GetSpecialValueFor("cast_range") + self:GetCaster():GetCastRangeBonus() then
+		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("ward_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+			if ally:GetName() == "npc_dota_venomancer_plagueward" and ally:GetOwner() == self:GetCaster() and (ally:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < (self:GetCaster():GetAbsOrigin() - self:GetCursorPosition()):Length2D() then
+				self.bWardCaster = ally
+				break
 			end
-		end
-
-		local mouth_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_venomous_gale_mouth.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		if self.bWardCaster then
-			caster_loc = self.bWardCaster:GetAbsOrigin()
-			ParticleManager:SetParticleControlEnt(mouth_pfx, 0, self.bWardCaster, PATTACH_POINT_FOLLOW, "attach_attack1", self.bWardCaster:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(mouth_pfx)
-			self.bWardCaster:AddNewModifier(caster, self, "modifier_imba_venomous_gale_wardcast", {duration = 0.4})
-			self.bWardCaster:FadeGesture(ACT_DOTA_ATTACK)
-			self.bWardCaster:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK, 2.3)
-			self.bWardCaster:SetForwardVector((target_loc - caster_loc):Normalized())
-		else
-			caster_loc = caster:GetAbsOrigin()
-			ParticleManager:SetParticleControlEnt(mouth_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(mouth_pfx)
-		end
-
-		-- Parameters
-		local duration = self:GetSpecialValueFor("duration")
-		local strike_damage = self:GetSpecialValueFor("strike_damage")
-		local tick_damage = self:GetSpecialValueFor("tick_damage")
-		local tick_interval = self:GetSpecialValueFor("tick_interval")
-		local projectile_speed = self:GetSpecialValueFor("speed")
-		local radius = self:GetSpecialValueFor("radius")
-
-		local direction
-		if target_loc == caster_loc then
-			direction = caster:GetForwardVector()
-		else
-			direction = (target_loc - caster_loc):Normalized()
-		end
-		local index = DoUniqueString("index")
-		self[index] = {}
-		local travel_distance
-		caster:EmitSound("Hero_Venomancer.VenomousGale")
-
-		local projectile_count = 1
-		if caster:HasTalent("special_bonus_imba_venomancer_7") then
-			projectile_count = caster:FindTalentValue("special_bonus_imba_venomancer_7")
-		end
-
-		ParticleManager:SetParticleControlEnt(mouth_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
-		ParticleManager:ReleaseParticleIndex(mouth_pfx)
-
-		for i = 1, projectile_count, 1 do
-			local angle = 360 - (360 / projectile_count)*i
-			local velocity = RotateVector2D(direction,angle,true)
-			local projectile
-			if self.bWardCaster then
-				travel_distance = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
-				projectile =
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
-						vSpawnOrigin		= self.bWardCaster:GetAbsOrigin(),
-						fDistance			= travel_distance,
-						fStartRadius		= radius,
-						fEndRadius			= radius,
-						Source				= caster,
-						bHasFrontalCone		= true,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-						iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-						iUnitTargetType		= self:GetAbilityTargetType(),
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
-					}
-			else
-				travel_distance = self.BaseClass.GetCastRange(self,target_loc,nil) + GetCastRangeIncrease(caster)
-				projectile =
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
-						vSpawnOrigin		= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_mouth")),
-						fDistance			= travel_distance,
-						fStartRadius		= radius,
-						fEndRadius			= radius,
-						Source				= caster,
-						bHasFrontalCone		= true,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-						iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-						iUnitTargetType		= self:GetAbilityTargetType(),
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
-					}
-			end
-			ProjectileManager:CreateLinearProjectile(projectile)
 		end
 	end
+
+	local mouth_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_venomous_gale_mouth.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	if self.bWardCaster then
+		caster_loc = self.bWardCaster:GetAbsOrigin()
+		ParticleManager:SetParticleControlEnt(mouth_pfx, 0, self.bWardCaster, PATTACH_POINT_FOLLOW, "attach_attack1", self.bWardCaster:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(mouth_pfx)
+		self.bWardCaster:AddNewModifier(caster, self, "modifier_imba_venomous_gale_wardcast", {duration = 0.4})
+		self.bWardCaster:FadeGesture(ACT_DOTA_ATTACK)
+		self.bWardCaster:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK, 2.3)
+		self.bWardCaster:SetForwardVector((target_loc - caster_loc):Normalized())
+	else
+		caster_loc = caster:GetAbsOrigin()
+		ParticleManager:SetParticleControlEnt(mouth_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(mouth_pfx)
+	end
+
+	-- Parameters
+	local duration = self:GetSpecialValueFor("duration")
+	local strike_damage = self:GetSpecialValueFor("strike_damage")
+	local tick_damage = self:GetSpecialValueFor("tick_damage")
+	local tick_interval = self:GetSpecialValueFor("tick_interval")
+	local projectile_speed = self:GetSpecialValueFor("speed")
+	local radius = self:GetSpecialValueFor("radius")
+
+	local direction
+	if target_loc == caster_loc then
+		direction = caster:GetForwardVector()
+	else
+		direction = (target_loc - caster_loc):Normalized()
+	end
+	local index = DoUniqueString("index")
+	self[index] = {}
+	local travel_distance
+	caster:EmitSound("Hero_Venomancer.VenomousGale")
+
+	local projectile_count = 1
+	if caster:HasTalent("special_bonus_imba_venomancer_7") then
+		projectile_count = caster:FindTalentValue("special_bonus_imba_venomancer_7")
+	end
+
+	ParticleManager:SetParticleControlEnt(mouth_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(mouth_pfx)
+
+	for i = 1, projectile_count, 1 do
+		local angle = 360 - (360 / projectile_count)*i
+		local velocity = RotateVector2D(direction,angle,true)
+		local projectile
+		if self.bWardCaster then
+			travel_distance = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
+			projectile =
+				{
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
+					vSpawnOrigin		= self.bWardCaster:GetAbsOrigin(),
+					fDistance			= travel_distance,
+					fStartRadius		= radius,
+					fEndRadius			= radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= true,
+					vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
+					-- "The projectile has 280 radius flying vision. This vision does not last."
+					bProvidesVision		= true,
+					iVisionRadius 		= 280,
+					iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+					ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
+				}
+		else
+			travel_distance = self.BaseClass.GetCastRange(self,target_loc,nil) + GetCastRangeIncrease(caster)
+			projectile =
+				{
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
+					vSpawnOrigin		= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_mouth")),
+					fDistance			= travel_distance,
+					fStartRadius		= radius,
+					fEndRadius			= radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= true,
+					vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
+					bProvidesVision		= true,
+					iVisionRadius 		= 280,
+					iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+					ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
+				}
+		end
+		ProjectileManager:CreateLinearProjectile(projectile)
+	end
+	
+	self.bWardCaster = nil
 end
 
 function imba_venomancer_venomous_gale:OnProjectileHit_ExtraData(target, location, ExtraData)
@@ -299,6 +338,15 @@ function imba_venomancer_venomous_gale:OnProjectileHit_ExtraData(target, locatio
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.strike_damage, damage_type = self:GetAbilityDamageType()})
 		target:AddNewModifier(caster, self, "modifier_imba_venomous_gale", {duration = ExtraData.duration})
 		target:EmitSound("Hero_Venomancer.VenomousGaleImpact")
+		
+		-- Talent: Gale Hero Impact Summons {s:value} Wards
+		if (target:IsRealHero() or target:IsClone()) and self:GetCaster():HasTalent("special_bonus_imba_venomancer_venomous_gale_plague_wards") and self:GetCaster():HasAbility("imba_venomancer_plague_ward_v2") and self:GetCaster():FindAbilityByName("imba_venomancer_plague_ward_v2"):IsTrained() then
+			local starting_position = target:GetAbsOrigin() + RandomVector(100)
+			
+			for num = 1, self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_venomous_gale_plague_wards") do
+				self:GetCaster():FindAbilityByName("imba_venomancer_plague_ward_v2"):OnSpellStart(RotatePosition(target:GetAbsOrigin(), QAngle(0, (360 / self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_venomous_gale_plague_wards")) * num, 0), starting_position))
+			end
+		end
 	else
 		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] or 0
 		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] + 1
@@ -317,47 +365,8 @@ function modifier_imba_venomous_gale:IsDebuff() return true end
 function modifier_imba_venomous_gale:IsHidden() return false end
 function modifier_imba_venomous_gale:IsStunDebuff() return false end
 function modifier_imba_venomous_gale:RemoveOnDeath() return true end
+function modifier_imba_venomous_gale:IgnoreTenacity()	return true end
 -------------------------------------------
-
-function modifier_imba_venomous_gale:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
-end
-
-function modifier_imba_venomous_gale:OnCreated()
-	self.ability = self:GetAbility()
-	self.movement_slow = self.ability:GetTalentSpecialValueFor("movement_slow")
-	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
-	self.tick_damage = self.ability:GetSpecialValueFor("tick_damage")
-	self.counter = 0
-	self:StartIntervalThink(0.3)
-end
-
-function modifier_imba_venomous_gale:OnRefresh()
-	self:OnCreated()
-end
-
-function modifier_imba_venomous_gale:GetModifierMoveSpeedBonus_Percentage()
-	return self.movement_slow * (-1)
-end
-
-function modifier_imba_venomous_gale:OnIntervalThink()
-	self.counter = self.counter + 1
-	local parent = self:GetParent()
-	if self.counter >= (self.tick_interval/0.3) then
-		self.counter = 0
-		if IsServer() then
-			ApplyDamage({victim = parent, attacker = self:GetCaster(), ability = self.ability, damage = self.tick_damage, damage_type = self.ability:GetAbilityDamageType()})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, parent, self.tick_damage, nil)
-		end
-	end
-	if self.movement_slow > 0 then
-		self.movement_slow = self.movement_slow - 1
-	end
-end
 
 function modifier_imba_venomous_gale:GetEffectName()
 	return "particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
@@ -367,12 +376,70 @@ function modifier_imba_venomous_gale:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
 
+function modifier_imba_venomous_gale:GetStatusEffectName()
+	return "particles/status_fx/status_effect_poison_venomancer.vpcf"
+end
+
+function modifier_imba_venomous_gale:OnCreated()
+	self.ability = self:GetAbility()
+	
+	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
+	self.tick_damage = self.ability:GetSpecialValueFor("tick_damage")
+	
+	if not IsServer() then return end
+	
+	self.movement_slow 			= self.ability:GetTalentSpecialValueFor("movement_slow")
+	self:SetStackCount(self.movement_slow * (1 - self:GetParent():GetStatusResistance()) * (-1) * 100)
+	
+	self.slow_recover_instances	= 50 -- Total duration divided by intervals
+	self.recover_per_instance	= (self.movement_slow * (1 - self:GetParent():GetStatusResistance())) / self.slow_recover_instances
+	
+	self.counter = 0
+	
+	self:StartIntervalThink(0.3)
+end
+
+function modifier_imba_venomous_gale:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_venomous_gale:OnIntervalThink()
+	self.counter = self.counter + 1
+	local parent = self:GetParent()
+	if self.counter >= (self.tick_interval/0.3) then
+		self.counter = 0
+		
+		ApplyDamage({victim = parent, attacker = self:GetCaster(), ability = self.ability, damage = self.tick_damage, damage_type = self.ability:GetAbilityDamageType()})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, parent, self.tick_damage, nil)
+	end
+	
+	-- if self.movement_slow > 0 then
+		-- self.movement_slow = self.movement_slow - 1
+	-- end
+	
+	if self:GetStackCount() <= 0 then
+		self:SetStackCount(self:GetStackCount() + (self.recover_per_instance * 100))
+	end
+end
+
 -- "A unit with less that 25% of its maximum health can be denied when it has the Venomous Gale debuff on."
 function modifier_imba_venomous_gale:CheckState()
 	if self:GetParent():GetHealthPercent() < 25 then
 		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
 	end
 end
+
+function modifier_imba_venomous_gale:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+end
+
+
+function modifier_imba_venomous_gale:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount() * 0.01
+end
+
 
 -------------------------------------------
 modifier_imba_venomous_gale_wardcast = class({})
@@ -395,6 +462,7 @@ end
 function modifier_imba_venomous_gale_wardcast:GetModifierDisableTurning()
 	return 1
 end
+
 -------------------------------------------
 --			  POISON STING
 -------------------------------------------
@@ -428,12 +496,10 @@ function modifier_imba_poison_sting:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_poison_sting:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK
+	}
 end
 
 function modifier_imba_poison_sting:OnAttack( params )
@@ -443,8 +509,8 @@ function modifier_imba_poison_sting:OnAttack( params )
 			if not params.attacker:IsBuilding() and caster:HasTalent("special_bonus_imba_venomancer_6") then
 				local ability = self:GetAbility()
 				local duration = ability:GetSpecialValueFor("duration")
-				local mod = params.attacker:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
-				mod:IncrementStackCount()
+				local mod = params.attacker:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration - FrameTime()})
+				-- mod:IncrementStackCount()
 			end
 		end
 	end
@@ -460,32 +526,34 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		
 		if (caster == params.attacker) and (params.target.IsCreep or params.target.IsHero) then
 			if not params.target:IsBuilding() then
-				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
-				if mod then
-					mod:IncrementStackCount()
-				end
+				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration - FrameTime()})
+				-- if mod then
+					-- mod:IncrementStackCount()
+				-- end
 			end
 		end
-		if params.attacker:GetName() == "npc_dota_venomancer_plagueward" then
-			if (params.attacker:GetPlayerOwnerID() == caster:GetPlayerID()) and params.attacker.bIsScourge and (params.target.IsCreep or params.target.IsHero) then
-				if not params.target:IsBuilding() then
-					local poison = params.target:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff",caster)
+		
+		
+		-- if params.attacker:GetName() == "npc_dota_venomancer_plagueward" then
+			-- if (params.attacker:GetPlayerOwnerID() == caster:GetPlayerID()) and params.attacker.bIsScourge and (params.target.IsCreep or params.target.IsHero) then
+				-- if not params.target:IsBuilding() then
+					-- local poison = params.target:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff",caster)
 					
-					if poison then
-						poison:SetDuration(poison:GetDuration(), true)
-					else -- Scrouge Wards can now apply poison sting but it won't make it stack like crazy without talent
-						params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
-					end
+					-- if poison then
+						-- poison:SetDuration(poison:GetDuration(), true)
+					-- else -- Scrouge Wards can now apply poison sting but it won't make it stack like crazy without talent
+						-- params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
+					-- end
 					
-					if caster:HasTalent("special_bonus_imba_venomancer_8") then
-						local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff_ward", {duration = duration})
-						if mod then
-							mod:IncrementStackCount()
-						end
-					end
-				end
-			end
-		end
+					-- if caster:HasTalent("special_bonus_imba_venomancer_8") then
+						-- local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff_ward", {duration = duration})
+						-- if mod then
+							-- mod:IncrementStackCount()
+						-- end
+					-- end
+				-- end
+			-- end
+		-- end
 	end
 end
 
@@ -495,76 +563,67 @@ function modifier_imba_poison_sting_debuff:IsDebuff() return true end
 function modifier_imba_poison_sting_debuff:IsHidden() return false end
 function modifier_imba_poison_sting_debuff:IsStunDebuff() return false end
 function modifier_imba_poison_sting_debuff:RemoveOnDeath() return true end
+function modifier_imba_poison_sting_debuff:IgnoreTenacity()	return true end
 -------------------------------------------
 
-function modifier_imba_poison_sting_debuff:OnCreated(params)
-	local ability = self:GetAbility()
-	self.damage = ability:GetSpecialValueFor("damage")
-	self.movement_speed_pct = ability:GetSpecialValueFor("movement_speed_pct")
-	self.stack_damage = ability:GetSpecialValueFor("stack_damage")
-	self.hp_regen_reduction	= ability:GetSpecialValueFor("hp_regen_reduction") * (-1)
-	
-	self:StartIntervalThink(1)
-	self:DamageTick(true)
+function modifier_imba_poison_sting_debuff:GetEffectName()
+	return "particles/units/heroes/hero_venomancer/venomancer_poison_debuff.vpcf"
 end
 
-function modifier_imba_poison_sting_debuff:OnRefresh(params)
+function modifier_imba_poison_sting_debuff:OnCreated(params)
+	self.damage 			= self:GetAbility():GetSpecialValueFor("damage")
+	self.stack_damage		= self:GetAbility():GetSpecialValueFor("stack_damage")
 	self.hp_regen_reduction	= self:GetAbility():GetSpecialValueFor("hp_regen_reduction") * (-1)
 	
 	if not IsServer() then return end
 	
-	self:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - self:GetParent():GetStatusResistance()), true)
+	self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("movement_speed_pct") * (1 - self:GetParent():GetStatusResistance()) * (-1) * 100)
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(1)
+end
 
-	self:OnCreated(params)
+function modifier_imba_poison_sting_debuff:OnRefresh(params)
+	self.damage 			= self.damage + self:GetAbility():GetSpecialValueFor("stack_damage")
+	self.hp_regen_reduction	= self:GetAbility():GetSpecialValueFor("hp_regen_reduction") * (-1)
+
+	if not IsServer() then return end
+	
+	self:OnIntervalThink()
 end
 
 function modifier_imba_poison_sting_debuff:OnIntervalThink()
-	self:DamageTick()
-end
-
-function modifier_imba_poison_sting_debuff:DamageTick(bFirstHit)
-	local damage
-	if bFirstHit then
-		damage = self.damage + self.stack_damage * self:GetStackCount()
-	else
-		damage = self.damage + self.stack_damage * (self:GetStackCount() - 1)
-	end
-	local parent = self:GetParent()
-	if IsServer() then
-		local final_damage 	= ApplyDamage({
-			attacker 		= self:GetCaster(),
-			victim 			= parent,
-			ability 		= self:GetAbility(),
-			damage 			= damage,
-			damage_type 	= DAMAGE_TYPE_MAGICAL,
-			damage_flags	= DOTA_DAMAGE_FLAG_HPLOSS
-		})
-		
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, final_damage, nil)
-	end
+	ApplyDamage({
+		victim 			= self:GetParent(),
+		damage 			= self.damage,
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	})
+	
+	SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage, nil)
 end
 
 function modifier_imba_poison_sting_debuff:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE 
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
 
 function modifier_imba_poison_sting_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return (self.movement_speed_pct + (self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_2") * self:GetStackCount())) * (-1)
+	return self:GetStackCount() * 0.01
 end
 
 function modifier_imba_poison_sting_debuff:GetModifierHPRegenAmplify_Percentage()
 	return self.hp_regen_reduction
 end
 
-function modifier_imba_poison_sting_debuff:GetEffectName()
-	return "particles/units/heroes/hero_venomancer/venomancer_poison_debuff.vpcf"
-end
-
-function modifier_imba_poison_sting_debuff:GetEffectAttachType()
-	return PATTACH_POINT_FOLLOW
+function modifier_imba_poison_sting_debuff:OnTooltip()
+	return self.damage
 end
 
 -------------------------------------------
@@ -576,11 +635,9 @@ function modifier_imba_poison_sting_debuff_ward:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_poison_sting_debuff_ward:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
 end
 
 function modifier_imba_poison_sting_debuff_ward:OnCreated(params)
@@ -632,6 +689,81 @@ end
 
 function modifier_imba_poison_sting_debuff_ward:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
+end
+
+----------------------------------------
+-- MODIFIER_IMBA_POISON_STING_V2_WARD --
+----------------------------------------
+
+function modifier_imba_poison_sting_v2_ward:IgnoreTenacity()	return true end
+
+function modifier_imba_poison_sting_v2_ward:GetEffectName()
+	return "particles/units/heroes/hero_venomancer/venomancer_poison_debuff.vpcf"
+end
+
+function modifier_imba_poison_sting_v2_ward:OnCreated()
+	self.damage 			= self:GetAbility():GetSpecialValueFor("damage") * 0.5
+	self.hp_regen_reduction	= self:GetAbility():GetSpecialValueFor("hp_regen_reduction") * (-1)
+	
+	if not IsServer() then return end
+	
+	self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("movement_speed_pct") * (1 - self:GetParent():GetStatusResistance()) * (-1) * 100)
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_poison_sting_v2_ward:OnRefresh()
+	self.damage 			= self.damage + (self:GetAbility():GetSpecialValueFor("stack_damage") * 0.5)
+	self.hp_regen_reduction	= self:GetAbility():GetSpecialValueFor("hp_regen_reduction") * (-1)
+	
+	if not IsServer() then return end
+	
+	self:OnIntervalThink()
+end
+
+function modifier_imba_poison_sting_v2_ward:OnIntervalThink()
+	if not self:GetParent():HasModifier("modifier_imba_poison_sting_debuff") then
+		ApplyDamage({
+			victim 			= self:GetParent(),
+			damage 			= self.damage,
+			damage_type		= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		})
+		
+		SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage, nil)
+	end
+end
+
+function modifier_imba_poison_sting_v2_ward:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_imba_poison_sting_v2_ward:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetParent():HasModifier("modifier_imba_poison_sting_debuff") then
+		return self:GetStackCount() * 0.01
+	end
+end
+
+function modifier_imba_poison_sting_v2_ward:GetModifierHPRegenAmplify_Percentage()
+	if not self:GetParent():HasModifier("modifier_imba_poison_sting_debuff") then
+		return self.hp_regen_reduction
+	end
+end
+
+function modifier_imba_poison_sting_v2_ward:OnTooltip()
+	if not self:GetParent():HasModifier("modifier_imba_poison_sting_debuff") then
+		return self.damage
+	else
+		return 0
+	end
 end
 
 -------------------------------------------
@@ -781,6 +913,120 @@ function modifier_imba_plague_ward:OnDeath( params )
 			if #self.ward_list == 0 then
 				self:Destroy()
 			end
+		end
+	end
+end
+
+------------------------------------
+-- IMBA_VENOMANCER_PLAGUE_WARD_V2 --
+------------------------------------
+
+function imba_venomancer_plague_ward_v2:OnSpellStart(talent_spawn_location)
+	local spawn_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(spawn_fx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(spawn_fx, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(spawn_fx)
+	
+	local plague_ward = CreateUnitByName("npc_dota_venomancer_plague_ward_"..math.min(self:GetLevel(), 4), talent_spawn_location or self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+	plague_ward:EmitSound("Hero_Venomancer.Plague_Ward")
+
+	if self:GetCaster():HasAbility("imba_venomancer_venomous_gale") then
+		plague_ward:AddRangeIndicator(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_venomancer_venomous_gale"), "ward_range", nil, 183, 247, 33, false, false, true)
+	end
+
+	plague_ward:SetForwardVector(self:GetCaster():GetForwardVector())
+	plague_ward:AddNewModifier(self:GetCaster(), self, "modifier_imba_venomancer_plague_ward_v2", {})
+	plague_ward:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
+	plague_ward:AddNewModifier(self:GetCaster(), self, "modifier_neutral_spell_immunity_visible", {duration = self:GetSpecialValueFor("duration")})
+	
+	plague_ward:SetBaseMaxHealth(self:GetSpecialValueFor("ward_hp_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1))
+	plague_ward:SetMaxHealth(self:GetSpecialValueFor("ward_hp_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1))
+	plague_ward:SetHealth(self:GetSpecialValueFor("ward_hp_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1))
+	
+	plague_ward:SetBaseDamageMin((self:GetSpecialValueFor("ward_damage_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1)) - 1)
+	plague_ward:SetBaseDamageMax((self:GetSpecialValueFor("ward_damage_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1)) + 1)
+	
+	plague_ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+
+	-- There was a better way to do this but I forgot where I implemented it
+	if not talent_spawn_location and self:GetCaster():GetName() == "npc_dota_hero_venomancer" and RollPercentage(25) then
+		if not self.responses then
+			self.responses = 
+			{
+				["venomancer_venm_ability_ward_01"] = 0,
+				["venomancer_venm_ability_ward_02"] = 0,
+				["venomancer_venm_ability_ward_03"] = 0,
+				["venomancer_venm_ability_ward_04"] = 0,
+				["venomancer_venm_ability_ward_05"] = 0,
+				["venomancer_venm_ability_ward_06"] = 0
+			}
+		end
+		
+		for response, timer in pairs(self.responses) do
+			if GameRules:GetDOTATime(true, true) - timer >= 60 then
+				self:GetCaster():EmitSound(response)
+				self.responses[response] = GameRules:GetDOTATime(true, true)
+				break
+			end
+		end
+	end
+end
+
+---------------------------------------------
+-- MODIFIER_IMBA_VENOMANCER_PLAGUE_WARD_V2 --
+---------------------------------------------
+
+function modifier_imba_venomancer_plague_ward_v2:IsHidden()			return true end
+function modifier_imba_venomancer_plague_ward_v2:IsPurgable()		return false end
+function modifier_imba_venomancer_plague_ward_v2:RemoveOnDeath()	return false end
+
+function modifier_imba_venomancer_plague_ward_v2:OnCreated()
+	self.split_count = self:GetAbility():GetSpecialValueFor("split_count")
+	
+	if not IsServer() then return end
+	
+	if self:GetParent():GetOwner() and self:GetParent():GetOwner() and self:GetParent():GetOwner():HasAbility("imba_venomancer_poison_sting") and self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting"):IsTrained() then
+		self.poison_sting_ability = self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting")
+	end
+end
+
+function modifier_imba_venomancer_plague_ward_v2:DeclareFunctions()
+    return {
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+    }
+end
+
+function modifier_imba_venomancer_plague_ward_v2:OnAttack(keys)
+	-- The "not keys.no_attack_cooldown" clause seems to make sure the function doesn't trigger on PerformAttacks with that false tag so this thing doesn't crash
+	if keys.attacker == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.no_attack_cooldown and not self:GetParent():PassivesDisabled() then	
+		local target_number = 0
+		
+		for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
+			if enemy ~= keys.target then
+			
+				if target_number >= self.split_count then
+					break
+				else
+					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
+					
+					target_number = target_number + 1				
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_venomancer_plague_ward_v2:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsMagicImmune() and not self:GetParent():PassivesDisabled() then 
+		if not self.poison_sting_ability then
+			if self:GetParent():GetOwner() and self:GetParent():GetOwner() and self:GetParent():GetOwner():HasAbility("imba_venomancer_poison_sting") and self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting"):IsTrained() then
+				self.poison_sting_ability = self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting")
+			end
+		end
+		
+		if self.poison_sting_ability then
+			keys.target:AddNewModifier(self:GetParent():GetOwner(), self.poison_sting_ability, "modifier_imba_poison_sting_v2_ward", {duration = self.poison_sting_ability:GetSpecialValueFor("duration") - FrameTime()})
 		end
 	end
 end
@@ -971,10 +1217,13 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_1", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_3", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_poison_sting_slow", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_venomancer_1		= class({})
 modifier_special_bonus_imba_venomancer_2		= class({})
 modifier_special_bonus_imba_venomancer_3		= class({})
+
+modifier_special_bonus_imba_venomancer_poison_sting_slow	= modifier_special_bonus_imba_venomancer_poison_sting_slow or class({})
 
 -- -----------------------
 -- -- TALENT 1 MODIFIER --
@@ -1003,6 +1252,10 @@ function modifier_special_bonus_imba_venomancer_3:IsHidden() 		return true end
 function modifier_special_bonus_imba_venomancer_3:IsPurgable() 		return false end
 function modifier_special_bonus_imba_venomancer_3:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_venomancer_poison_sting_slow:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_poison_sting_slow:IsPurgable() 		return false end
+function modifier_special_bonus_imba_venomancer_poison_sting_slow:RemoveOnDeath() 	return false end
+
 function imba_venomancer_venomous_gale:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_1"), "modifier_special_bonus_imba_venomancer_1", {})
@@ -1012,6 +1265,10 @@ end
 function imba_venomancer_poison_sting:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_2"), "modifier_special_bonus_imba_venomancer_2", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_poison_sting_slow") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_poison_sting_slow") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_poison_sting_slow"), "modifier_special_bonus_imba_venomancer_poison_sting_slow", {})
 	end
 end
 

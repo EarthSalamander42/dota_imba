@@ -7,6 +7,7 @@
 #base heroes/death_prophet/hero.txt
 #base heroes/earthshaker/hero.txt
 #base heroes/enchantress/hero.txt
+#base heroes/furion/hero.txt
 #base heroes/grimstroke/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
@@ -385,6 +386,8 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability6"					"imba_chaos_knight_phantasm"
 	}
 
 	//=================================================================================================================
@@ -759,7 +762,7 @@
 		"Ability10"					"special_bonus_movement_speed_25"
 		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
 		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
-		"Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
+		"Ability13"					"special_bonus_gold_income_150" // +3 Eidolons
 		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
 		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
 		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
@@ -767,6 +770,7 @@
 		
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
+		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
 	}
 
 	//=================================================================================================================
@@ -1104,12 +1108,13 @@
 		"Ability11"					"special_bonus_imba_magnataur_2"
 		"Ability12"					"special_bonus_imba_magnataur_3"
 		"Ability13"					"special_bonus_imba_magnataur_4"
-		"Ability14"					"special_bonus_imba_magnataur_5"
+		"Ability14"					"special_bonus_armor_10"
 		"Ability15"					"special_bonus_imba_magnataur_6"
 		"Ability16"					"special_bonus_imba_magnataur_8"
 		"Ability17"					"special_bonus_imba_magnataur_9"
 		
 		// Removed Talents
+		// "Ability14"					"special_bonus_imba_magnataur_5" // "Shockwave roots target"
 		//"Ability16"					"special_bonus_imba_magnataur_7"
 	}
 
@@ -2060,19 +2065,26 @@
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
-		"Ability3"					"imba_venomancer_plague_ward"
+		//"Ability3"					"imba_venomancer_plague_ward"
+		"Ability3"					"imba_venomancer_plague_ward_v2"
 		"Ability4"					"imba_venomancer_toxicity"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_venomancer_poison_nova"
 
 		"Ability10"					"special_bonus_imba_venomancer_1"
 		"Ability11"					"special_bonus_imba_venomancer_4"
-		"Ability12"					"special_bonus_imba_venomancer_3"
-		"Ability13"					"special_bonus_imba_venomancer_2"
-		"Ability14"					"special_bonus_imba_venomancer_5"
-		"Ability15"					"special_bonus_imba_venomancer_6"
+		"Ability12"					"special_bonus_imba_venomancer_venomous_gale_plague_wards"
+		"Ability13"					"special_bonus_imba_venomancer_poison_sting_slow"
+		"Ability14"					"special_bonus_imba_venomancer_6"
+		"Ability15"					"special_bonus_spell_lifesteal_15"
 		"Ability16"					"special_bonus_imba_venomancer_7"
-		"Ability17"					"special_bonus_imba_venomancer_8"
+		"Ability17"					"special_bonus_imba_venomancer_plague_ward_upgrade"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_venomancer_3" // "+{s:value}% Compound Toxicity Magic Resistance Reduction"
+		// "Ability13"					"special_bonus_imba_venomancer_2" // "Poison Sting adds +1% additional slow per stack" (disabled in script too so you can't use this)
+		// "Ability14"					"special_bonus_imba_venomancer_5" // "+150% Scourge/Plague Ward health/damage"
+		// "Ability17"					"special_bonus_imba_venomancer_8" // "Scourge Ward has its own stacking Poison Sting"
 	}
 
 	//=================================================================================================================

@@ -107,7 +107,7 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 				ability 		= self
 			}
 
-			ApplyDamage(damageTable)		
+			ApplyDamage(damageTable)
 			
 			-- IMBAfication: Joy Buzzer
 			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = (self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")})
@@ -253,7 +253,7 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if not target:TriggerSpellAbsorb(self) then
 			-- "Hex instantly destroys illusions."
-			if target:IsIllusion() and (not target.Custom_IsStrongIllusion or (target.Custom_IsStrongIllusion and not target:Custom_IsStrongIllusion())) then
+			if target:IsIllusion() and not Custom_bIsStrongIllusion(self.parent) then
 				target:Kill(target, self:GetCaster())
 			else	
 				if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
@@ -724,15 +724,11 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 end
 
 function modifier_imba_shadow_shaman_shackles:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_shadow_shaman_shackles:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
 end
 
 function modifier_imba_shadow_shaman_shackles:GetOverrideAnimation()
@@ -809,18 +805,11 @@ imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or c
 LinkLuaModifier("modifier_imba_mass_serpent_ward",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
 function imba_shadow_shaman_mass_serpent_ward:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
 end
 
 function imba_shadow_shaman_mass_serpent_ward:GetAOERadius()
 	return 150
-end
-
--- Snake Charmer IMBAfication will be an "opt-out" add-on
-function imba_shadow_shaman_mass_serpent_ward:OnUpgrade()
-	if self:GetLevel() == 1 then
-		self:ToggleAutoCast()
-	end
 end
 
 function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
@@ -967,6 +956,9 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 
 	self.snake_charmer_creep_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_count")
 	self.snake_charmer_hero_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_count")
+	
+	snake_charmer_creep_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_bat_reduction_pct")
+	snake_charmer_hero_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_bat_reduction_pct")
 
 	-- AGHANIM'S SCEPTER: Wards have more attack range
 	if caster:HasScepter() then
@@ -983,7 +975,7 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 end
 
 function modifier_imba_mass_serpent_ward:DeclareFunctions()
-	funcs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ATTACK,
@@ -993,15 +985,12 @@ function modifier_imba_mass_serpent_ward:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_EVENT_ON_DEATH
 	}
-	return funcs
 end
 
 function modifier_imba_mass_serpent_ward:CheckState()
-	local state = {
-		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+	return {
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true
 	}
-
-	return state
 end
 
 -- Set all damage taken to 1
@@ -1105,17 +1094,32 @@ end
 function modifier_imba_mass_serpent_ward:OnDeath(keys)
 	if not IsServer() then return end
 	
-	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and self:GetAbility():GetAutoCastState() and not keys.unit:IsOther() and keys.unit:GetName() ~= "npc_dota_unit_undying_zombie" then	
+	if keys.attacker == self:GetParent() and keys.attacker ~= keys.unit and self:GetAbility() and not keys.unit:IsOther() and keys.unit:GetName() ~= "npc_dota_unit_undying_zombie" then	
 		-- Screw patterns, let's just clump them together xd
 		if not keys.unit:IsRealHero() and not keys.unit:IsBuilding() then
-			for ward = 1, self.snake_charmer_creep_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
-			end
+			-- for ward = 1, self.snake_charmer_creep_count do
+				-- self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
+			-- end
+			
+			self:GetParent():SetMaxHealth(self:GetParent():GetMaxHealth() + self.snake_charmer_creep_count)
+			self:GetParent():Heal(self.snake_charmer_creep_count, self:GetAbility())
+			self:GetParent():SetBaseAttackTime(self:GetParent():GetBaseAttackTime() * (1 - (self.snake_charmer_creep_bat_reduction_pct * 0.01)))
+			
+			SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_HEAL, self:GetParent(), self.snake_charmer_creep_count, nil)
 		else
-			for ward = 1, self.snake_charmer_hero_count do
-				self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
-			end
+			-- for ward = 1, self.snake_charmer_hero_count do
+				-- self:GetAbility():SummonWard(keys.unit:GetAbsOrigin(), true, self:GetElapsedTime())
+			-- end
+			
+			self:GetParent():SetMaxHealth(self:GetParent():GetMaxHealth() + self.snake_charmer_hero_count)
+			self:GetParent():Heal(self.snake_charmer_hero_count, self:GetAbility())
+			self:GetParent():SetBaseAttackTime(self:GetParent():GetBaseAttackTime() * (1 - (self.snake_charmer_hero_bat_reduction_pct * 0.01)))
+			
+			SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_HEAL, self:GetParent(), self.snake_charmer_hero_count, nil)
 		end
+		
+		self:GetParent():SetModel("models/items/shadowshaman/serpent_ward/dotapit_s3_wild_tempest_wards/dotapit_s3_wild_tempest_wards.vmdl")
+		self:GetParent():SetModelScale(1.3)
 	end
 end
 

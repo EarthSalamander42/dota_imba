@@ -9,14 +9,16 @@
 #base heroes/bane/abilities.txt
 #base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
+#base heroes/brewmaster/abilities.txt
 #base heroes/bristleback/abilities.txt
-// #base heroes/broodmother/abilities.txt
+#base heroes/broodmother/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
 #base heroes/death_prophet/abilities.txt
 #base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
+#base heroes/furion/abilities.txt
 #base heroes/grimstroke/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
@@ -5597,7 +5599,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"35 35 40 40"
+				"duration"					"35"
 			}
 
 			"04"
@@ -11216,12 +11218,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_pct"		"14 34 54 74"
+				"cleave_damage_pct"		"15 30 45 60"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_ranged"	"7 17 27 37"
+				"cleave_damage_ranged"	"8 15 22 30"
 			}
 			"05"
 			{
@@ -11231,7 +11233,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_radius_end"		"330"
+				"cleave_radius_end"		"360"
 			}
 			"07"
 			{
@@ -11302,6 +11304,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"refresh_interval"		"1"
+			}
+			
+			"21"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_multiplier"		"2"
 			}
 		}
 	}
@@ -21834,7 +21842,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -21869,7 +21877,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"20"
+				"bonus_damage_pct"		"30"
 			}
 
 			"05"
@@ -21881,13 +21889,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"1300 1400 1500 1600"
+				"cast_range"				"1200 1300 1400 1500"
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"110 220 330 440"
+				"toss_damage"				"100 200 300 400"
 			}
 
 			"08"
@@ -21904,8 +21912,8 @@
 
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"building_dmg"				"33"
+				"var_type"					"FIELD_FLOAT"
+				"building_dmg"				"33.33"
 			}
 
 			"11"
@@ -24972,7 +24980,7 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Chaos Knight's Phantasm
 	//=================================================================================================================
@@ -24981,26 +24989,32 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_chaos_knight.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_chaos_knight"
+		"AbilityTextureName"			"chaos_knight_phantasm"
+		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"				"2"
-
-		"AbilityTextureName"			"chaos_knight_phantasm"
-		"MaxLevel"						"3"
-		"AbilityCooldown"				"130.0"
-		"AbilityManaCost"				"125 200 275"
-		"AbilityCastPoint"				"0.4"
-
-		// Precache
+		
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityCastRange"				"1200"
+		"HasScepterUpgrade"			"1"
+		"AbilitySound"					"Hero_ChaosKnight.Phantasm"
+		
+		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-//		"precache"
-//		{
-//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-//			"soundfile"					"soundevents/voscripts/game_sounds_vo_centaur.vsndevts"
-//			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-//			"particle"					"particles/hero/centaur/centaur_hoof_stomp_arena.vpcf"
-//		}
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"130 120 110"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 200 275"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -25009,52 +25023,53 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"images_count"				"1 3 5"
+				"images_count"				"3"
 			}
 			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"extra_phantasm_chance_pct_tooltip"	"50"
-			}
-			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"illusion_duration"			"42"
 			}	
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage"			"-40 -20 0"
+			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage"			"0"
-			}
+				"outgoing_damage_tooltip"			"60 80 100"
+			}	
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage_tooltip"	"100"
+				"incoming_damage"			"200"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"incoming_damage"			"150 130 110"
-			}
+				"incoming_damage_tooltip"			"300"
+			}		
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"incoming_damage_tooltip"	"250 230 210"
-			}		
+				"var_type"				"FIELD_FLOAT"
+				"invuln_duration"		"0.5"
+			}
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"invuln_duration"			"0.5"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}		
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"400"
-			}	
+				"var_type"				"FIELD_INTEGER"
+				"magic_resistance"			"25"
+			}
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"90"
+				"var_type"				"FIELD_INTEGER"
+				"scepter_images_count_extra"	"2"
+				"RequiresScepter"					"1"
 			}
 		}
 	}
@@ -38057,7 +38072,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800 800 850 1100"		
+		"AbilityCastRange"				"800 850 900 950"		
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
@@ -38097,7 +38112,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"15 45 75 105"
+				"tick_damage"			"25 55 85 115"
 			}
 
 			"04"
@@ -38134,7 +38149,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range"			"800 800 850 1100"
+				"cast_range"			"800 850 900 950"
 			}
 		}
 	}
@@ -38183,6 +38198,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_speed_pct"		"11 13 15 17"
+				"LinkedSpecialBonus"		"special_bonus_imba_venomancer_poison_sting_slow"
 			}
 			"04"
 			{
@@ -38290,6 +38306,82 @@
 				"plague_radius"				"150"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Venomancer: Plague Ward
+	//=================================================================================================================
+	"imba_venomancer_plague_ward_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_venomancer"
+		"AbilityTextureName"			"venomancer_plague_ward"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilitySound"					"Hero_Venomancer.Plague_Ward"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"20 20 20 20"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"40.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_hp_tooltip"		"200 350 500 650"
+				//"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
+				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_plague_ward_upgrade"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_damage_tooltip"	"25 35 45 55"
+				//"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
+				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_plague_ward_upgrade"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"04" // For special bonus at level 25
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_hp"		"150 400 650 900"
+			}
+			"05" // For special bonus at level 25
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_damage"	"26 44 62 80"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+
+			"06"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"split_count"	"0 1 2 3"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 
 	//=================================================================================================================
@@ -38662,6 +38754,91 @@
 	}
 
 	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_venomancer_venomous_gale_plague_wards"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_venomancer_plague_ward_v2"
+			"02" 	"imba_venomancer_venomous_gale"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_venomancer_poison_sting_slow"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_venomancer_poison_sting"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"12"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_venomancer_plague_ward_upgrade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_venomancer_plague_ward_v2"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
 	//=================================================================================================================
 	//=================================================================================================================
 	//=================================================================================================================
@@ -38808,6 +38985,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bolt_speed"			"1100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curse_stack_reduction_pct"			"50"
 			}
 		}
 	}

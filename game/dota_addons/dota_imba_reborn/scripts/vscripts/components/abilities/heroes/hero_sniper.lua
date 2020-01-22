@@ -731,7 +731,7 @@ function modifier_imba_sniper_headshot:OnAttackLanded(keys)
 end
 
 function modifier_imba_sniper_headshot:GetModifierProjectileName(keys)
-	if self:GetStackCount() == self:GetAbility():GetSpecialValueFor("perfectshot_attacks") - 1 or (self:GetCaster():GetModifierStackCount("modifier_imba_take_aim_range", self:GetCaster()) and self:GetCaster():GetModifierStackCount("modifier_imba_take_aim_range", self:GetCaster()) == 0) then
+	if (self:GetStackCount() == self:GetAbility():GetSpecialValueFor("perfectshot_attacks") - 1 or (self:GetCaster():GetModifierStackCount("modifier_imba_take_aim_range", self:GetCaster()) and self:GetCaster():GetModifierStackCount("modifier_imba_take_aim_range", self:GetCaster()) == 0)) and (self:GetParent():GetAttackTarget() and not self:GetParent():GetAttackTarget():IsBuilding() and not self:GetParent():GetAttackTarget():IsOther() and self:GetParent():GetAttackTarget():GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
 		return "particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
 	end
 end

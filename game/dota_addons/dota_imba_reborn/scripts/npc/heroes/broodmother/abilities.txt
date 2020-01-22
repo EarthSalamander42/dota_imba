@@ -225,21 +225,25 @@
 			}
 		}
 	}
-
-	// Spiderlings
+	
 
 	//=================================================================================================================
 	// Broodmother: Poison Sting
 	//=================================================================================================================
-	"broodmother_poison_sting"
+	"imba_broodmother_poison_sting"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5284"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_poison_sting"
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -253,53 +257,54 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"8"
+				"damage_per_second"		"11 14 17 20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"-8"
+				"movement_speed"		"-11 -14 -17 -20"
 			}
 			"03"
 			{		
 				"var_type"				"FIELD_FLOAT"
-				"duration_hero"			"2.0"
+				"duration_hero"			"2.5"
 			}			
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"6.0"
 			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_starting_width"	"80"
+			}		
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_ending_width"	"200"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_distance"		"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage"			"30"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scale"					"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_scale"			"10"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}
-
-	//=================================================================================================================
-	// Broodmother: Spawn Spiderites
-	//=================================================================================================================
-	"broodmother_spawn_spiderite"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5283"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"spiderite_duration"			"60.0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"2.0"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 }

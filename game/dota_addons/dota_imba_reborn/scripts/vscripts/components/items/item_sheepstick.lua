@@ -93,7 +93,7 @@ function item_imba_sheepstick:OnSpellStart()
 		target:EmitSound("DOTA_Item.Sheepstick.Activate")
 
 		-- Kill the target instantly if it is an illusion
-		if target:IsIllusion() and (not target.Custom_IsStrongIllusion or (target.Custom_IsStrongIllusion and not target:Custom_IsStrongIllusion())) then
+		if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
 			target:ForceKill(true)
 			return
 		end

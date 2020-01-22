@@ -714,13 +714,12 @@ function modifier_imba_tiny_rolling_stone:RemoveOnDeath()
 end
 
 function modifier_imba_tiny_rolling_stone:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 	}
-	return funcs
 end
 
 function modifier_imba_tiny_rolling_stone:GetModifierBaseAttack_BonusDamage()
@@ -728,7 +727,9 @@ function modifier_imba_tiny_rolling_stone:GetModifierBaseAttack_BonusDamage()
 end
 
 function modifier_imba_tiny_rolling_stone:GetModifierMoveSpeedBonus_Constant()
-	return self.movespeed * self:GetStackCount()
+	if not self:GetParent():HasModifier("modifier_tiny_tree_grab") and not self:GetParent():HasModifier("modifier_imba_tiny_tree") and not self:GetParent():HasModifier("modifier_imba_tiny_tree_grab") then
+		return self.movespeed * self:GetStackCount()
+	end
 end
 
 function modifier_imba_tiny_rolling_stone:GetModifierAttackSpeedBonus_Constant()
@@ -965,6 +966,39 @@ end
 
 function imba_tiny_toss:IsNetherWardStealable() return false end
 
+function imba_tiny_toss:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_tiny_toss:CastFilterResultLocation(location)
+	if not IsServer() then return end
+
+	if self:GetAutoCastState() and #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false) <= 1 then
+		return UF_FAIL_CUSTOM
+	else
+		return UF_SUCCESS
+	end
+end
+
+function imba_tiny_toss:GetCustomCastErrorLocation(location)
+	return "#dota_hud_error_cant_toss"
+end
+
+function imba_tiny_toss:OnAbilityPhaseStart()
+	if self:GetAutoCastState() and #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false) <= 1 then
+		return false
+	else
+		return true
+	end
+end
+
+-- Mountain's Strength IMBAfication will be an "opt-out" add-on
+function imba_tiny_toss:OnUpgrade()
+	if self:GetLevel() == 1 then
+		self:ToggleAutoCast()
+	end
+end
+
 function imba_tiny_toss:OnSpellStart()
 	self.tossPosition = self:GetCursorPosition()
 	local hTarget = self:GetCursorTarget()
@@ -1028,11 +1062,11 @@ end
 
 
 function imba_tiny_toss:GetCastRange(vLocation, hTarget)
-	if IsServer() or hTarget then
+	-- if IsServer() or hTarget then
 		return self:GetSpecialValueFor("cast_range")
-	elseif hTarget == nil then
-		return self:GetSpecialValueFor("grab_radius")
-	end
+	-- elseif hTarget == nil then
+		-- return self:GetSpecialValueFor("grab_radius")
+	-- end
 end
 
 function imba_tiny_toss:GetAOERadius()

@@ -1286,3 +1286,7 @@ function Custom_ArrayRemove(t, fnKeep)
 
     return t;
 end
+
+function Custom_bIsStrongIllusion(unit)
+	return unit and (unit:HasModifier("modifier_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_imba_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_vengefulspirit_hybrid_special"))
+end

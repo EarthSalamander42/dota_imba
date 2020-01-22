@@ -927,24 +927,26 @@ end
 
 modifier_imba_empower = modifier_imba_empower or class({})
 
+function modifier_imba_empower:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_empower:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
+	}
 end
 
 function modifier_imba_empower:GetModifierBaseDamageOutgoing_Percentage()
-	if self:GetCaster():IsRealHero() then
-		return self:GetAbility():GetSpecialValueFor("bonus_damage_pct")
-	end
-	return 0
+	-- if self:GetCaster():IsRealHero() then
+		return self.bonus_damage_pct
+	-- end
 end
 
 function modifier_imba_empower:OnAttackLanded( params )
 	local ability = self:GetAbility()
+	
 	if IsServer() then
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
@@ -961,12 +963,11 @@ function modifier_imba_empower:OnAttackLanded( params )
 			end
 			if params.attacker:IsRangedAttacker() then
 				-- Ranged-Attacker
-				local cleave_damage_ranged = ability:GetSpecialValueFor("cleave_damage_ranged") / 100
-				local splash_radius = ability:GetSpecialValueFor("splash_radius")
+				local splash_radius = self.splash_radius
 
 				-- Set the splash radius to supercharged values if the attacker is supercharged
 				if parent:HasModifier("modifier_imba_supercharged") then
-					splash_radius = ability:GetSpecialValueFor("super_splash_radius")
+					splash_radius = self.super_splash_radius
 				end
 
 				-- Find enemies to damage
@@ -975,7 +976,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 				-- Deal damage
 				for _,enemy in pairs(enemies) do
 					if enemy ~= params.target and not enemy:IsAttackImmune() then
-						ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_ranged), damage_type = DAMAGE_TYPE_PHYSICAL})
+						ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_ranged), damage_type = DAMAGE_TYPE_PHYSICAL})
 					end
 				end
 
@@ -985,16 +986,15 @@ function modifier_imba_empower:OnAttackLanded( params )
 				ParticleManager:ReleaseParticleIndex(cleave_pfx)
 			else
 				-- Melee-Attacker
-				local cleave_damage_pct = ability:GetSpecialValueFor("cleave_damage_pct") / 100
-				local cleave_radius_start = ability:GetSpecialValueFor("cleave_radius_start")
-				local cleave_radius_end = ability:GetSpecialValueFor("cleave_radius_end")
-				local cleave_distance = ability:GetSpecialValueFor("cleave_distance")
+				local cleave_radius_start = self.cleave_radius_start
+				local cleave_radius_end = self.cleave_radius_end
+				local cleave_distance = self.cleave_distance
 
 				-- Set the cleave properties to supercharged values if the attacker is supercharged
 				if parent:HasModifier("modifier_imba_supercharged") then
-					cleave_radius_start = ability:GetSpecialValueFor("super_cleave_start")
-					cleave_radius_end = ability:GetSpecialValueFor("super_cleave_end")
-					cleave_distance = ability:GetSpecialValueFor("super_cleave_distance")
+					cleave_radius_start = self.super_cleave_start
+					cleave_radius_end = self.super_cleave_end
+					cleave_distance = self.super_cleave_distance
 				end
 
 				-- #6 Talent: Empower grants melee targets 360 degree cleave radius
@@ -1016,7 +1016,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 					-- Deal damage
 					for _,enemy in pairs(enemies) do
 						if enemy ~= params.target and not enemy:IsAttackImmune() then
-							ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL})
+							ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL})
 						end
 					end
 
@@ -1025,10 +1025,9 @@ function modifier_imba_empower:OnAttackLanded( params )
 					ParticleManager:SetParticleControl(cleave_splash_pfx, 1, Vector(cleave_distance, 0, 0))
 					ParticleManager:ReleaseParticleIndex(cleave_splash_pfx)
 				else
-					DoCleaveAttack( params.attacker, params.target, ability, (params.damage * cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )
+					DoCleaveAttack( params.attacker, params.target, ability, (params.damage * self.cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )
 				end
 			end
-			local empower_duration = ability:GetSpecialValueFor("empower_duration")
 		end
 	end
 end
@@ -1046,6 +1045,27 @@ function modifier_imba_empower:IsHidden()
 end
 
 function modifier_imba_empower:OnCreated( params )
+	self.bonus_damage_pct		= self:GetAbility():GetSpecialValueFor("bonus_damage_pct")
+	
+	self.cleave_damage_pct		= self:GetAbility():GetSpecialValueFor("cleave_damage_pct") * 0.01
+	self.cleave_damage_ranged	= self:GetAbility():GetSpecialValueFor("cleave_damage_ranged") * 0.01
+	self.splash_radius			= self:GetAbility():GetSpecialValueFor("splash_radius")
+
+	self.cleave_radius_start	= self:GetAbility():GetSpecialValueFor("cleave_radius_start")
+	self.cleave_radius_end		= self:GetAbility():GetSpecialValueFor("cleave_radius_end")
+	self.cleave_distance		= self:GetAbility():GetSpecialValueFor("cleave_distance")
+	
+	self.super_cleave_start		= self:GetAbility():GetSpecialValueFor("super_cleave_start")
+	self.super_cleave_end		= self:GetAbility():GetSpecialValueFor("super_cleave_end")
+	self.super_cleave_distance	= self:GetAbility():GetSpecialValueFor("super_cleave_distance")
+	
+	self.super_splash_radius	= self:GetAbility():GetSpecialValueFor("super_splash_radius")
+	
+	if self:GetParent() == self:GetCaster() then
+		self.cleave_damage_pct		= self.cleave_damage_pct * self:GetAbility():GetSpecialValueFor("self_multiplier")
+		self.cleave_damage_ranged	= self.cleave_damage_ranged * self:GetAbility():GetSpecialValueFor("self_multiplier")
+	end
+
 	if IsServer() then
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
@@ -1271,13 +1291,11 @@ function modifier_imba_supercharged:GetTexture()
 end
 
 function modifier_imba_supercharged:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
+	}
 end
 
 function modifier_imba_supercharged:GetModifierAttackSpeedBonus_Constant()
@@ -1291,10 +1309,8 @@ end
 -- #3 Talent: Supercharge grants the target's 30% main attribute as bonus damage
 function modifier_imba_supercharged:GetModifierBaseAttack_BonusDamage()
 	if self:GetCaster():HasTalent("special_bonus_imba_magnataur_3") and self:GetParent().GetPrimaryStatValue and self:GetParent():GetPrimaryStatValue() then
-		local bonus_damage = self:GetParent():GetPrimaryStatValue() * self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3") * 0.01
-		return bonus_damage
+		return self:GetParent():GetPrimaryStatValue() * self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3") * 0.01
 	end
-	return 0
 end
 
 

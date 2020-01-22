@@ -34,6 +34,7 @@
 		"IMBA Caster/Control"
 		{
 			"item"		"item_imba_nether_wand"
+			"item"		"item_imba_banana"
 			"item"		"item_imba_ogre_seal_totem"
 			"item"		"item_imba_armlet_of_dementor"
 			"item"		"item_imba_aether_specs"
