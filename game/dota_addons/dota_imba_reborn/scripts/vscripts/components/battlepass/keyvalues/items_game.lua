@@ -1,13 +1,6 @@
+print("ITEMS GAME: INIT")
+
 ItemsGame = ItemsGame or class({})
-
-function ItemsGame:Init()
-	ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
-	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
-
---	for k, v in pairs(ItemsGame.kv) do
---		print(k, v)
---	end
-end
 
 --[[
 todo: create a kv file with every heroes basic particles that needs to be replaced.
@@ -67,7 +60,7 @@ if BP level is enough to have the new reward!
 	"modifier"		"Hero_Axe.Attack.Jungle"
 	"style"		"0"
 }
-"asset_modifier" // FInd a way to replace voicelines? new custom hero with a voicelines lib?
+"asset_modifier" // Find a way to replace voicelines? new custom hero with a voicelines lib?
 {
 	"type"		"response_criteria"
 	"asset"		"jungle_axe"
@@ -90,6 +83,16 @@ if BP level is enough to have the new reward!
 
 
 --]]
+
+function ItemsGame:Init()
+	print("ITEMS GAME: INIT 2")
+	ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
+	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
+
+	for k, v in pairs(ItemsGame.custom_kv) do
+		print(k, v)
+	end
+end
 
 function ItemsGame:GetItemKV(item_id)
 	return ItemsGame.kv["items"][item_id]
