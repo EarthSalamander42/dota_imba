@@ -276,13 +276,13 @@ end
 -- end
 
 function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamagePhysical(keys)
-	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL or keys.damage_type == DAMAGE_TYPE_PURE) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 		return 1
 	end
 end
 
 function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamageMagical(keys)
-	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL or keys.damage_type == DAMAGE_TYPE_PURE) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 		return 1
 	end
 end
@@ -291,7 +291,7 @@ end
 function modifier_imba_templar_assassin_refraction_absorb:GetAbsoluteNoDamagePure(keys)
 	-- "Damage below 5 (after reductions) is completely ignored. It is neither blocked, nor wastes any block instances."
 	-- "Refraction negates all 3 damage types. It does not negate damage flagged as HP Removal."
-	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+	if keys.attacker and ((keys.damage and keys.damage >= self.damage_threshold) or keys.damage_type == DAMAGE_TYPE_PHYSICAL or keys.damage_type == DAMAGE_TYPE_PURE) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 		self:GetParent():EmitSound("Hero_TemplarAssassin.Refraction.Absorb")
 		
 		local warp_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_templar_assassin/templar_assassin_refract_plasma_contact_warp.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
