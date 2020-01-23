@@ -145,22 +145,23 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			-- IMBA: Custom maximum level EXP tables adjustment
-			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-			if max_level and max_level > 25 then
-				local j = 26
-				Timers:CreateTimer(function()
-					if j >= max_level then
-						return
-					end
-					for i = j, j + 2 do
-						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + 3500
-						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XP_PER_LEVEL_TABLE)
-					end
-					j = j + 2
-					return 1.0
-				end)
-			end
+			-- -- IMBA: Custom maximum level EXP tables adjustment
+			-- local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+			
+			-- if max_level and max_level > 25 then
+				-- local j = 26
+				-- Timers:CreateTimer(function()
+					-- if j >= max_level then
+						-- return
+					-- end
+					-- for i = j, j + 2 do
+						-- XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + 3500
+						-- GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XP_PER_LEVEL_TABLE)
+					-- end
+					-- j = j + 2
+					-- return 1.0
+				-- end)
+			-- end
 
 			-- Initialize IMBA Runes system
 			if IMBA_RUNE_SYSTEM == true then

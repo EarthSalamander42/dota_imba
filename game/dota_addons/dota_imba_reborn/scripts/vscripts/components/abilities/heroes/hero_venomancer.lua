@@ -173,7 +173,7 @@ function imba_venomancer_venomous_gale:GetCastRange(location , target)
 	if IsClient() then
 		return self.BaseClass.GetCastRange(self, location, target)
 	else
-		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("ward_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("ward_range") + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
 			if ally:GetName() == "npc_dota_venomancer_plagueward" and ally:GetOwner() == self:GetCaster() then
 				return 25000
 			end
@@ -210,7 +210,7 @@ function imba_venomancer_venomous_gale:OnSpellStart()
 	-- end
 	
 	if (self:GetCaster():GetAbsOrigin() - self:GetCursorPosition()):Length2D() > self:GetSpecialValueFor("cast_range") + self:GetCaster():GetCastRangeBonus() then
-		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("ward_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("ward_range") + self:GetCaster():GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
 			if ally:GetName() == "npc_dota_venomancer_plagueward" and ally:GetOwner() == self:GetCaster() and (ally:GetAbsOrigin() - self:GetCursorPosition()):Length2D() < (self:GetCaster():GetAbsOrigin() - self:GetCursorPosition()):Length2D() then
 				self.bWardCaster = ally
 				break

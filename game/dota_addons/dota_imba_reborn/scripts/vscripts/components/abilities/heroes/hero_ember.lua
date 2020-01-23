@@ -20,25 +20,32 @@ LinkLuaModifier("modifier_imba_fire_remnant_timer", "components/abilities/heroes
 function FindActiveRemnants(caster)
 	local remnants = Entities:FindAllByModel("models/heroes/ember_spirit/ember_spirit.vmdl")
 
-	for key, remnant in pairs(remnants) do
-		--if caster == remnant or caster ~= remnant:GetOwner() or remnant:IsIllusion() or (not remnant:IsAlive()) then	
-		if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_imba_fire_remnant_state") then
-			table.remove(remnants, key)
-		end
-	end
+	-- for key, remnant in pairs(remnants) do
+		-- --if caster == remnant or caster ~= remnant:GetOwner() or remnant:IsIllusion() or (not remnant:IsAlive()) then	
+		-- if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_imba_fire_remnant_state") then
+			-- table.remove(remnants, key)
+		-- end
+	-- end
 
-	if #remnants > 0 then
-		local available_remnants = {}
-		for _, remnant in pairs(remnants) do
-			if remnant:GetTeam() == caster:GetTeam() then
-				table.insert(available_remnants, remnant)
-			end
-		end
+	-- if #remnants > 0 then
+		-- local available_remnants = {}
+		-- for _, remnant in pairs(remnants) do
+			-- if remnant:GetTeam() == caster:GetTeam() then
+				-- table.insert(available_remnants, remnant)
+			-- end
+		-- end
 
-		return available_remnants
-	else
-		return nil
-	end
+		-- return available_remnants
+	-- else
+		-- return nil
+	-- end
+	
+	Custom_ArrayRemove(remnants, function(i, j)
+		-- Remember that you want to return whatever STAYS in the array
+		return remnants[i] and remnants[i]:IsAlive() and not remnants[i]:IsHero() and remnants[i]:GetOwner() == caster and remnants[i]:HasModifier("modifier_imba_fire_remnant_state")
+	end)
+	
+	return remnants
 end
 
 --------------------------------------------------------------------------------
