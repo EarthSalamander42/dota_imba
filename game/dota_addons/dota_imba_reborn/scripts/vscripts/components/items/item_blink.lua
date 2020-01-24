@@ -78,13 +78,17 @@ function item_imba_blink:OnSpellStart()
 		-- end
 		end
 	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
-		for _, building in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
-			if string.find(building:GetName(), "ent_dota_fountain") then
-				target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
+		-- double tap
+		if target ~= nil and caster == target then
+			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+				if ent:GetTeamNumber() == caster:GetTeamNumber() then
+					target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
+					break
+				end
 			end
 		end
 	end
-	
+
 	caster:Blink(target_point, false, true)
 end
 
