@@ -525,7 +525,7 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		if caster:PassivesDisabled() then return end
 		
 		if (caster == params.attacker) and (params.target.IsCreep or params.target.IsHero) then
-			if not params.target:IsBuilding() then
+			if not params.target:IsBuilding() and not params.target:IsMagicImmune() then
 				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration - FrameTime()})
 				-- if mod then
 					-- mod:IncrementStackCount()
@@ -1018,14 +1018,14 @@ function modifier_imba_venomancer_plague_ward_v2:OnAttack(keys)
 end
 
 function modifier_imba_venomancer_plague_ward_v2:OnAttackLanded(keys)
-	if keys.attacker == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsMagicImmune() and not self:GetParent():PassivesDisabled() then 
+	if keys.attacker == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() and not keys.target:IsOther() and not self:GetParent():PassivesDisabled() then
 		if not self.poison_sting_ability then
-			if self:GetParent():GetOwner() and self:GetParent():GetOwner() and self:GetParent():GetOwner():HasAbility("imba_venomancer_poison_sting") and self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting"):IsTrained() then
+			if self:GetParent():GetOwner() and self:GetParent():GetOwner():HasAbility("imba_venomancer_poison_sting") and self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting"):IsTrained() then
 				self.poison_sting_ability = self:GetParent():GetOwner():FindAbilityByName("imba_venomancer_poison_sting")
 			end
 		end
 		
-		if self.poison_sting_ability then
+		if self.poison_sting_ability and self:GetParent():GetOwner() and not self:GetParent():GetOwner():PassivesDisabled() then
 			keys.target:AddNewModifier(self:GetParent():GetOwner(), self.poison_sting_ability, "modifier_imba_poison_sting_v2_ward", {duration = self.poison_sting_ability:GetSpecialValueFor("duration") - FrameTime()})
 		end
 	end

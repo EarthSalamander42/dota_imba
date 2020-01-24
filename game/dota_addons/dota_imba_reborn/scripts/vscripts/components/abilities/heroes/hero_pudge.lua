@@ -338,7 +338,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		fExpireTime = GameRules:GetGameTime() + ((self:GetCastRange() + GetCastRangeIncrease(self:GetCaster()) / hook_speed)),
-		vVelocity = (target_position - self:GetCaster():GetAbsOrigin()):Normalized() * hook_speed,
+		vVelocity = (target_position - self:GetCaster():GetAbsOrigin()):Normalized() * hook_speed * Vector(1, 1, 0),
 		bProvidesVision = false,
 		bDeleteOnHit = true,
 		ExtraData = {

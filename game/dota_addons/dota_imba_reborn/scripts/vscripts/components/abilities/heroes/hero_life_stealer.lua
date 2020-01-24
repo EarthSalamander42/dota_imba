@@ -776,7 +776,7 @@ function imba_life_stealer_infest:OnAbilityPhaseStart()
 end
 
 function imba_life_stealer_infest:GetCastRange(location, target)
-	if not self:GetCaster():HasScepter() or not self:GetName() == "imba_life_stealer_infest_723" then
+	if not self:GetCaster():HasScepter() or self:GetName() ~= "imba_life_stealer_infest_723" then
 		return self.BaseClass.GetCastRange(self, location, target)
 	else
 		return self:GetSpecialValueFor("cast_range_scepter")
@@ -784,7 +784,7 @@ function imba_life_stealer_infest:GetCastRange(location, target)
 end
 
 function imba_life_stealer_infest:GetCooldown(level)
-	if not self:GetCaster():HasScepter() or not self:GetName() == "imba_life_stealer_infest_723" then
+	if not self:GetCaster():HasScepter() or self:GetName() ~= "imba_life_stealer_infest_723" then
 		return self.BaseClass.GetCooldown(self, level)
 	else
 		return self:GetSpecialValueFor("cooldown_scepter")
@@ -1523,11 +1523,9 @@ end
 function imba_life_stealer_assimilate:CastFilterResultTarget(target)
 	if target == self:GetCaster() then
 		return UF_FAIL_OTHER
+	else
+		return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO, self:GetCaster():GetTeamNumber() )
 	end
-
-	if not IsServer() then return end
-
-	return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 end
 
 function imba_life_stealer_assimilate:GetAOERadius()
