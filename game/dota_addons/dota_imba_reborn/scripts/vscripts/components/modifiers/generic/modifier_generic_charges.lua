@@ -21,6 +21,10 @@ function modifier_generic_charges:DestroyOnExpire()
 	return false
 end
 
+function modifier_generic_charges:RemoveOnDeath()
+	return false
+end
+
 function modifier_generic_charges:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
