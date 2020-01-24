@@ -88,12 +88,68 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 
 	companion:SetModelScale(model_scale or 100)
 
+	-- Pfx
 	if DONATOR_COMPANION_ADDITIONAL_INFO[model] and DONATOR_COMPANION_ADDITIONAL_INFO[model][1] then
 		local particle = ParticleManager:CreateParticle(DONATOR_COMPANION_ADDITIONAL_INFO[model][1], PATTACH_ABSORIGIN_FOLLOW, companion)
+
 		if DONATOR_COMPANION_ADDITIONAL_INFO[model][3] then
 			ParticleManager:SetParticleControlEnt(particle, 0, companion, PATTACH_POINT_FOLLOW, DONATOR_COMPANION_ADDITIONAL_INFO[model][3], companion:GetAbsOrigin(), true)
 		end
+
 		ParticleManager:ReleaseParticleIndex(particle)
+	end
+
+	-- Cosmetics
+	CompanionCosmetics(companion, unit_name)
+end
+
+function CompanionCosmetics(unit, unit_name)
+	if not unit:IsNull() and UNIT_EQUIPMENT[unit_name] then
+		for _, wearable in pairs(UNIT_EQUIPMENT[unit_name]) do
+			local cosmetic = CreateUnitByName("wearable_dummy", unit:GetAbsOrigin(), false, nil, nil, unit:GetTeam())
+			cosmetic:SetOriginalModel(wearable)
+			cosmetic:SetModel(wearable)
+			cosmetic:AddNewModifier(nil, nil, "modifier_wearable", {})
+			cosmetic:SetParent(unit, nil)
+			cosmetic:FollowEntity(unit, true)
+
+			if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
+				local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:ReleaseParticleIndex(particle)
+			elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
+				cosmetic:SetMaterialGroup("1")
+			elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
+				unit:SetMaterialGroup("1") -- zonnoz pet
+				cosmetic:SetMaterialGroup("1") -- zonnoz pet
+
+				ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+				ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+				ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+			elseif wearable == "models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl" then
+				ParticleManager:CreateParticle("particles/econ/items/rubick/rubick_arcana/rubick_arc_ambient_default.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+--			elseif wearable == "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl" then
+--				ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+			elseif wearable == "models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl" then
+				ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_ti8_sword/jugg_ti8_crimson_sword_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+			elseif wearable == "models/heroes/phantom_assassin/pa_arcana_weapons.vmdl" then
+				-- swords effects
+				local left_sword = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_blade_ambient_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:SetParticleControl(left_sword, 26, Vector(40, 0, 0))
+
+				local right_sword = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_blade_ambient_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:SetParticleControl(right_sword, 26, Vector(40, 0, 0))
+--				"control_point_number"		"26"
+--				"cp_position"		"40 0 0"
+--				"style"		"1"
+
+				-- Ambient Body
+				ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_elder_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+
+				-- Eyes
+				ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_elder_eyes_l.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_elder_eyes_r.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+			end
+		end
 	end
 end
 

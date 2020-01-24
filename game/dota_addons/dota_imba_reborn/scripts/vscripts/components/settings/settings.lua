@@ -595,6 +595,18 @@ UNIT_EQUIPMENT["npc_donator_companion_terrorblade_arcana"] = {
 	{"307", "weapon"},
 	{"476", "armor"},
 }
+UNIT_EQUIPMENT["npc_donator_companion_kiddo"] = {
+--	{"7247", "weapon"},
+--	{"137", "head"},
+--	{"138", "shoulder"},
+--	{"139", "back"},
+--	{"141", "belt"},
+	"models/heroes/phantom_assassin/pa_arcana_weapons.vmdl", -- Manifold Paradox
+	"models/heroes/phantom_assassin/phantom_assassin_helmet.vmdl",
+	"models/heroes/phantom_assassin/phantom_assassin_shoulders.vmdl",
+	"models/heroes/phantom_assassin/phantom_assassin_cape.vmdl",
+	"models/heroes/phantom_assassin/phantom_assassin_daggers.vmdl",
+}
 
 IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_faceless_void",

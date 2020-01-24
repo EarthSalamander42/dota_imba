@@ -89,17 +89,6 @@ function GameMode:OnUnitFirstSpawn(unit)
 			unit:FindAbilityByName("imba_clinkz_searing_arrows"):SetLevel(unit:GetOwner():FindAbilityByName("imba_clinkz_searing_arrows"):GetLevel())
 		end
 	end
-
-	-- Unit cosmetics
-	Timers:CreateTimer(FrameTime(), function()
-		if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetUnitName()] then
-			for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
-				Wearable:_WearProp(unit, wearable[0], wearable[1], wearable[2])
-			end
-		end
-	end)
-
-	return
 end
 
 -- everytime an unit respawn

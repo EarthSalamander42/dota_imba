@@ -254,13 +254,6 @@
 		"ModelScale"				"0.75"
 	}
 
-	"npc_donator_companion_acalia"
-	{
-		"BaseClass"					"npc_donator_companion"
-		"Model"						"models/heroes/enchantress/enchantress.vmdl"
-		"ModelScale"				"0.5"
-	}
-
 	"npc_donator_companion_conjurist"
 	{
 		"BaseClass"					"npc_donator_companion"
@@ -441,5 +434,12 @@
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/courier/frog/frog.vmdl"
 		"ModelScale"				"0.75"
+	}
+
+	"npc_donator_companion_kiddo"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/phantom_assassin/pa_arcana.vmdl"
+		"ModelScale"				"0.5"
 	}
 }

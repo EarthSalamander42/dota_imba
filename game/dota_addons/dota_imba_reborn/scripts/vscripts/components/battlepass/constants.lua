@@ -14,17 +14,18 @@ DONATOR_COLOR[10] = {255, 255, 255}
 CustomNetTables:SetTableValue("game_options", "donator_colors", DONATOR_COLOR)
 
 UNIQUE_DONATOR_COMPANION = {}
--- UNIQUE_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_cookies"
+UNIQUE_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz"
 UNIQUE_DONATOR_COMPANION["76561198094835750"] = "npc_donator_companion_zonnoz"
 UNIQUE_DONATOR_COMPANION["76561198003571172"] = "npc_donator_companion_baumi"
 UNIQUE_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_icefrog"
-UNIQUE_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_admiral_bulldog"
+UNIQUE_DONATOR_COMPANION["76561198036748162"] = "npc_donator_companion_admiral_bulldog"
 UNIQUE_DONATOR_COMPANION["76561198021465788"] = "npc_donator_companion_suthernfriend"
 UNIQUE_DONATOR_COMPANION["76561198073163389"] = "npc_donator_companion_terdic"
 UNIQUE_DONATOR_COMPANION["76561197970766309"] = "npc_donator_companion_hamahe"
 UNIQUE_DONATOR_COMPANION["76561193687456266"] = "npc_donator_companion_exzas"
 UNIQUE_DONATOR_COMPANION["76561198095342815"] = "npc_donator_companion_the_blind_dog"
 UNIQUE_DONATOR_COMPANION["76561198009727790"] = "npc_donator_companion_acalia"
+UNIQUE_DONATOR_COMPANION["76561198358324920"] = "npc_donator_companion_kiddo"
 
 -- UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_conjurist"
 UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_suthernfriend" -- Conjurist wants a special Roshan

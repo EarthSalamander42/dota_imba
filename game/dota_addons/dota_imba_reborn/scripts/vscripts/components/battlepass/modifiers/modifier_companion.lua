@@ -21,17 +21,14 @@ function modifier_companion:CheckState()
 	return state
 end
 
-function modifier_companion:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-	}
-
-	return funcs
-end
+function modifier_companion:DeclareFunctions() return {
+	MODIFIER_PROPERTY_VISUAL_Z_DELTA,
+	MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+	MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+	MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+	MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+} end
 
 function modifier_companion:GetVisualZDelta()
 	if self.is_flying == 1 then
@@ -39,6 +36,15 @@ function modifier_companion:GetVisualZDelta()
 	end
 
 	return 0
+end
+
+-- add "ultimate_scepter" + "enchant_totem_leap_from_battle"
+function modifier_companion:GetActivityTranslationModifiers()
+	if self:GetParent():GetModelName() == "models/heroes/phantom_assassin/pa_arcana.vmdl" then
+		return "arcana"
+	end
+
+	return ""
 end
 
 function modifier_companion:OnCreated()
