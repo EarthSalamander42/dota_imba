@@ -8,7 +8,8 @@ LinkLuaModifier("modifier_imba_brewmaster_cinder_brew", "components/abilities/he
 
 LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_brewmaster_primal_split", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brewmaster_primal_split_split_delay", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brewmaster_primal_split_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_brewmaster_primal_unison", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
@@ -25,7 +26,8 @@ imba_brewmaster_drunken_brawler						= imba_brewmaster_drunken_brawler or class(
 modifier_imba_brewmaster_drunken_brawler			= modifier_imba_brewmaster_drunken_brawler or class({})
 
 imba_brewmaster_primal_split						= imba_brewmaster_primal_split or class({})
-modifier_imba_brewmaster_primal_split				= modifier_imba_brewmaster_primal_split or class({})
+modifier_imba_brewmaster_primal_split_split_delay	= modifier_imba_brewmaster_primal_split_split_delay or class({})
+modifier_imba_brewmaster_primal_split_duration		= modifier_imba_brewmaster_primal_split_duration or class({})
 
 imba_brewmaster_primal_unison						= imba_brewmaster_primal_unison or class({})
 modifier_imba_brewmaster_primal_unison				= modifier_imba_brewmaster_primal_unison or class({})
@@ -523,24 +525,18 @@ end
 function modifier_imba_brewmaster_drunken_brawler:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP,
 		
 		-- IMBAfication: Redirective Flow
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
-		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 	}
 end
 
 function modifier_imba_brewmaster_drunken_brawler:GetModifierEvasion_Constant()
 	return self.dodge_chance
-end
-
-function modifier_imba_brewmaster_drunken_brawler:OnAttackStart(keys)
-	if keys.attacker == self:GetParent() then
-		
-	end
 end
 
 function modifier_imba_brewmaster_drunken_brawler:GetModifierPreAttack_CriticalStrike()
@@ -559,13 +555,22 @@ function modifier_imba_brewmaster_drunken_brawler:GetModifierMoveSpeedBonus_Perc
 	end
 end
 
+-- Not sure if this is how you're supposed to do it?
+function modifier_imba_brewmaster_drunken_brawler:OnTooltip(keys)
+	if keys.fail_type == 1 then
+		return self.crit_chance
+	elseif keys.fail_type == 2 then
+		return self.crit_multiplier
+	end
+end
+
 function modifier_imba_brewmaster_drunken_brawler:OnAttackFail(keys)
-	if keys.unit == self:GetParent() then
+	if keys.target == self:GetParent() then
 		self:SetStackCount(self:GetStackCount() + keys.damage)
 	end
 end
 
-function modifier_imba_brewmaster_drunken_brawler:GetModifierBaseAttack_BonusDamage(keys)
+function modifier_imba_brewmaster_drunken_brawler:GetModifierPreAttack_BonusDamage(keys)
 	if keys.target and self:GetStackCount() > 0 then
 		self.redirective_damage = self:GetStackCount()
 		self:SetStackCount(0)
@@ -582,9 +587,7 @@ function imba_brewmaster_primal_split:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_cooldown")
 end
 
-function imba_brewmaster_primal_split:OnSpellStart()
-	self:GetCaster():EmitSound("Hero_Brewmaster.PrimalSplit.Spawn")
-
+function imba_brewmaster_primal_split:OnAbilityPhaseStart()
 	if self:GetCaster():GetName() == "npc_dota_hero_brewmaster" then
 		if not self.responses then
 			self.responses = {
@@ -597,25 +600,207 @@ function imba_brewmaster_primal_split:OnSpellStart()
 		
 		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
 	end
+	
+	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
+
+	return true
 end
 
--------------------------------------------
--- MODIFIER_IMBA_BREWMASTER_PRIMAL_SPLIT --
--------------------------------------------
-
-function modifier_imba_brewmaster_primal_split:IsPurgable()	return false end
-
-function modifier_imba_brewmaster_primal_split:OnCreated()
-
+function imba_brewmaster_primal_split:OnAbilityPhaseInterrupted()
+	self:GetCaster():RemoveGesture(ACT_DOTA_CAST_ABILITY_4)
 end
 
-function modifier_imba_brewmaster_primal_split:OnDestroy()
+function imba_brewmaster_primal_split:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Brewmaster.PrimalSplit.Cast")
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_primal_split_split_delay", {duration = self:GetSpecialValueFor("split_duration")})
+end
+
+-------------------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_PRIMAL_SPLIT_SPLIT_DELAY --
+-------------------------------------------------------
+
+function modifier_imba_brewmaster_primal_split_split_delay:IsHidden()	return true end
+function modifier_imba_brewmaster_primal_split_split_delay:IsPurgable()	return false end
+
+function modifier_imba_brewmaster_primal_split_split_delay:OnCreated()
+	self.duration				= self:GetAbility():GetSpecialValueFor("duration")
+	self.scepter_movementspeed	= self:GetAbility():GetSpecialValueFor("scepter_movementspeed")
+	
 	if not IsServer() then return end
 	
-	if self:GetCaster() == self:GetParent() then
-		self:GetCaster():EmitSound("Hero_Brewmaster.PrimalSplit.Return")
+	local split_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_primal_split.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(split_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControlForward(split_particle, 0, self:GetParent():GetForwardVector())
+	self:AddParticle(split_particle, false, false, -1, false, false)
+end
+
+-- "Brewmaster is invulnerable and hidden during the split time and duration. Does not apply any form of dispel upon cast."
+function modifier_imba_brewmaster_primal_split_split_delay:CheckState()
+	return {
+		[MODIFIER_STATE_INVULNERABLE]	= true,
+		[MODIFIER_STATE_OUT_OF_GAME]	= true,
+		
+		[MODIFIER_STATE_STUNNED]			= true,
+		[MODIFIER_STATE_NO_HEALTH_BAR]		= true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true
+	}
+end
+
+-- The brewlings spawn always in the same formation, forming an equilateral triangle which fits within a 100 radius circle.
+    -- The earth brewling is always spawned 100 range in front on Brewmaster's cast location.
+    -- The storm brewling is always spawned 50 range behind and 86.603 range to the left of Brewmaster's cast location.
+    -- The fire brewling is always spawned 50 range behind and 86.603 range to the right of Brewmaster's cast location.
+    -- Their facing angle equals Brewmaster's facing angle on cast.
+function modifier_imba_brewmaster_primal_split_split_delay:OnDestroy()
+	if not IsServer() then return end
 	
-		if self:GetCaster():GetName() == "npc_dota_hero_brewmaster" then
+	self.pandas = {}
+	-- This table is just for entity indexes for default (i.e. F1 hotkey) selection
+	self.pandas_entindexes = {}
+
+	if self:GetParent():IsAlive() and self:GetAbility() then
+		self:GetParent():EmitSound("Hero_Brewmaster.PrimalSplit.Spawn")
+	
+		local split_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_brewmaster_primal_split_duration", {duration = self.duration})
+		
+		local earth_panda	= CreateUnitByName("npc_dota_brewmaster_earth_"..self:GetAbility():GetLevel(), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		
+		local storm_panda	= CreateUnitByName("npc_dota_brewmaster_storm_"..self:GetAbility():GetLevel(), RotatePosition(self:GetParent():GetAbsOrigin(), QAngle(0, 120, 0), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		
+		local fire_panda	= CreateUnitByName("npc_dota_brewmaster_fire_"..self:GetAbility():GetLevel(), RotatePosition(self:GetParent():GetAbsOrigin(), QAngle(0, -120, 0), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		
+		self.standard_abilities	= {
+			"brewmaster_earth_hurl_boulder",
+			"brewmaster_earth_spell_immunity",
+			"brewmaster_earth_pulverize",
+			
+			"brewmaster_storm_dispel_magic",
+			"brewmaster_storm_cyclone",
+			"brewmaster_storm_wind_walk",
+			
+			"brewmaster_fire_permanent_immolation"
+		}
+		
+		self.brewmaster_vanilla_abilities = {
+			"brewmaster_thunder_clap",
+			"brewmaster_cinder_brew",
+			"brewmaster_drunken_brawler",
+		}
+		
+		self.brewmaster_abilities	= {
+			"imba_brewmaster_thunder_clap",
+			"imba_brewmaster_cinder_brew",
+			"imba_brewmaster_drunken_brawler"
+		}
+		
+		table.insert(self.pandas, earth_panda)
+		table.insert(self.pandas, storm_panda)
+		table.insert(self.pandas, fire_panda)
+
+		table.insert(self.pandas_entindexes, earth_panda:entindex())
+		table.insert(self.pandas_entindexes, storm_panda:entindex())
+		table.insert(self.pandas_entindexes, fire_panda:entindex())
+		
+		self:GetParent():FollowEntity(earth_panda, false)
+		-- PlayerResource:ResetSelection(self:GetCaster():GetPlayerID())
+		
+		if split_modifier then
+			split_modifier.pandas				= self.pandas
+			split_modifier.pandas_entindexes	= self.pandas_entindexes
+		end
+		
+		for _, panda in pairs(self.pandas) do
+			panda:SetForwardVector(self:GetParent():GetForwardVector())
+			panda:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_brewmaster_primal_split_duration", {duration = self.duration, parent_entindex = self:GetParent():entindex()})
+			panda:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self.duration})
+			
+			if self:GetCaster():HasTalent("special_bonus_imba_brewmaster_primal_split_health") then
+				panda:SetBaseMaxHealth(panda:GetBaseMaxHealth() + self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_health"))
+				panda:SetMaxHealth(panda:GetMaxHealth() + self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_health"))
+				panda:SetHealth(panda:GetHealth() + self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_health"))
+			end
+			
+			panda:SetControllableByPlayer(self:GetParent():GetPlayerID(), true)
+			PlayerResource:AddToSelection(self:GetCaster():GetPlayerID(), panda)
+			
+			for _, ability in pairs(self.standard_abilities) do
+				if panda:HasAbility(ability) then
+					panda:FindAbilityByName(ability):SetLevel(self:GetAbility():GetLevel())
+				end
+			end
+			
+			-- Replace vanilla ability with IMBA version
+			for _, ability in pairs(self.brewmaster_vanilla_abilities) do
+				if panda:HasAbility(ability) then
+					panda:AddAbility(self.brewmaster_abilities[_])
+					panda:SwapAbilities(self.brewmaster_abilities[_], ability, true, false)
+					panda:RemoveAbility(ability)
+				end
+			end
+			
+			-- IMBAfication to remove this from the scepter logic?
+			-- if self:GetCaster():HasScepter() then
+				for _, ability in pairs(self.brewmaster_abilities) do
+					if panda:HasAbility(ability) and self:GetCaster():HasAbility(ability) then
+						panda:FindAbilityByName(ability):SetLevel(self:GetCaster():FindAbilityByName(ability):GetLevel())
+					end
+				end
+			-- end
+		end
+		
+		-- Set the default selection to the pandas
+		PlayerResource:RemoveFromSelection(self:GetCaster():GetPlayerID(), self:GetParent())
+		PlayerResource:SetDefaultSelectionEntities(self:GetCaster():GetPlayerID(), self.pandas_entindexes)
+		self:GetParent():AddNoDraw()
+	end
+end
+
+----------------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_PRIMAL_SPLIT_DURATION --
+----------------------------------------------------
+
+function modifier_imba_brewmaster_primal_split_duration:IsPurgable()	return false end
+
+function modifier_imba_brewmaster_primal_split_duration:OnCreated(keys)
+	if self:GetAbility() then
+		self.scepter_movementspeed	= self:GetAbility():GetSpecialValueFor("scepter_movementspeed")
+	else
+		self.scepter_movementspeed	= 150
+	end
+
+	if not IsServer() then return end
+	
+	if keys and keys.parent_entindex then
+		self.parent	= EntIndexToHScript(keys.parent_entindex)
+	end
+
+	-- -- Jank FrameTime() interval thinker to force selection to pandas if self is attempted to be selected (ex. through clicking F1) (might not be needed now)
+	-- if self:GetParent():IsHero() then
+		-- self:OnIntervalThink()
+		-- self:StartIntervalThink(FrameTime())
+	-- end
+end
+
+-- function modifier_imba_brewmaster_primal_split_duration:OnIntervalThink()
+	-- if PlayerResource:GetSelectedEntities(self:GetParent():GetPlayerID())['0'] and PlayerResource:GetSelectedEntities(self:GetParent():GetPlayerID())['0'] == self:GetParent():entindex() and self.pandas then
+		-- for _, panda in pairs(self.pandas) do
+			-- if not panda:IsNull() and panda:IsAlive() then
+				-- PlayerResource:AddToSelection(self:GetCaster():GetPlayerID(), panda)
+			-- end
+		-- end
+		
+		-- PlayerResource:RemoveFromSelection(self:GetParent():GetPlayerID(), self:GetParent())
+	-- end
+-- end
+
+function modifier_imba_brewmaster_primal_split_duration:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():IsHero() then
+		self:GetParent():EmitSound("Hero_Brewmaster.PrimalSplit.Return")
+	
+		if self:GetRemainingTime() <= 0 and self:GetCaster():GetName() == "npc_dota_hero_brewmaster" then
 			if not self.responses then
 				self.responses = {
 					"brewmaster_brew_ability_primalsplit_10",
@@ -628,15 +813,97 @@ function modifier_imba_brewmaster_primal_split:OnDestroy()
 			
 			self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
 		end
+		
+		self:GetParent():FollowEntity(nil, false)
+		self:GetParent():RemoveNoDraw()
+		
+		-- Set default F1 selection back to Brewmaster (or whoever cast the ability)
+		PlayerResource:SetDefaultSelectionEntity(self:GetParent():GetPlayerID(), -1)
 	end
 end
 		
+function modifier_imba_brewmaster_primal_split_duration:CheckState()
+	return {
+		[MODIFIER_STATE_INVULNERABLE]		= self:GetParent():IsHero(),
+		[MODIFIER_STATE_OUT_OF_GAME]		= self:GetParent():IsHero(),
 		
+		[MODIFIER_STATE_STUNNED]			= self:GetParent():IsHero(),
+		[MODIFIER_STATE_NOT_ON_MINIMAP]		= self:GetParent():IsHero(),
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= self:GetParent():IsHero() or self:GetCaster():HasScepter(),
+		[MODIFIER_STATE_UNSELECTABLE]		= self:GetParent():IsHero(),
+	}
+end
 
-		
+function modifier_imba_brewmaster_primal_split_duration:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_DEATH,
+	
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
+	}
+end
 
+function modifier_imba_brewmaster_primal_split_duration:OnDeath(keys)
+	if keys.unit == self:GetParent() and not self:GetParent():IsHero() then
+		if self:GetParent():GetName() == "npc_dota_brewmaster_earth" then
+			self.death_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_earth_death.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		elseif self:GetParent():GetName() == "npc_dota_brewmaster_storm" then
+			self.death_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_storm_death.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		elseif self:GetParent():GetName() == "npc_dota_brewmaster_fire" then
+			self.death_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_fire_death.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		end
 		
+		if self.death_particle then
+			ParticleManager:SetParticleControl(self.death_particle, 0, self:GetParent():GetAbsOrigin())
+			
+			if self:GetAbility() then
+				ParticleManager:SetParticleControl(self.death_particle, 1, Vector(self:GetAbility():GetLevel(), 0, 0))
+			end
+			
+			ParticleManager:ReleaseParticleIndex(self.death_particle)
+		end
 		
+		if self:GetRemainingTime() > 0 then
+			if self.parent and not self.parent:IsNull() and self.parent:HasModifier("modifier_imba_brewmaster_primal_split_duration") and self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes then
+				Custom_ArrayRemove(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes, function(i, j)
+					return EntIndexToHScript(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes[i]) and EntIndexToHScript(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes[i]):IsAlive()
+				end)
+				
+				PlayerResource:SetDefaultSelectionEntities(self.parent:GetPlayerID(), self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes)
+				
+				-- Yeah technically this should be done with just the one array but I guess I can make the excuse that I'm showing two different ways of doing this
+				local bNoneAlive	= true
+				
+				-- Reminder that these should be the order of Earth, Storm, and Fire in essence of determine which panda to "port" the hero to upon one dying
+				for _, panda in pairs(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas) do
+					if not panda:IsNull() and panda:IsAlive() then
+						bNoneAlive = false
+						self.parent:FollowEntity(panda, false)
+						break
+					end
+				end
+				
+				if bNoneAlive then
+					self.parent:RemoveModifierByName("modifier_imba_brewmaster_primal_split_duration")
+					-- self.parent:SetHealth(1)
+					self.parent:Kill(self:GetAbility(), keys.attacker)
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_brewmaster_primal_split_duration:GetModifierMoveSpeedBonus_Constant()
+	if self:GetCaster() and self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetParent() then
+		return self.scepter_movementspeed
+	end
+end
+
+function modifier_imba_brewmaster_primal_split_duration:GetModifierIgnoreMovespeedLimit()
+	if self:GetCaster() and self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetParent() then
+		return 1
+	end
+end
 
 -----------------------------------
 -- IMBA_BREWMASTER_PRIMAL_UNISON --
@@ -697,13 +964,27 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_brewmaster_druken_brawler_damage	= class({})
 modifier_special_bonus_imba_brewmaster_primal_split_cooldown	= class({})
+
+function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_brewmaster_primal_split_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_brewmaster_primal_split_cooldown:IsPurgable() 		return false end
 function modifier_special_bonus_imba_brewmaster_primal_split_cooldown:RemoveOnDeath() 	return false end
+
+function imba_brewmaster_drunken_brawler:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_brewmaster_druken_brawler_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_brewmaster_druken_brawler_damage"), "modifier_special_bonus_imba_brewmaster_druken_brawler_damage", {})
+	end
+end
 
 function imba_brewmaster_primal_split:OnOwnerSpawned()
 	if not IsServer() then return end

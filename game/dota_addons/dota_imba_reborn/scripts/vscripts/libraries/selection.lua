@@ -114,6 +114,13 @@ function CDOTA_PlayerResource:SetDefaultSelectionEntity(playerID, unit)
 	end
 end
 
+function CDOTA_PlayerResource:SetDefaultSelectionEntities(playerID, unit_args)
+	local player = self:GetPlayer(playerID)
+	if player then
+		CustomNetTables:SetTableValue("selection", tostring(player:GetAssignedHero():entindex()), {entity = unit_args})
+	end
+end
+
 function CDOTA_BaseNPC:SetSelectionOverride(reselect_unit)
 	local unit = self
 	local reselectIndex = type(reselect_unit)=="number" and reselect_unit or reselect_unit:GetEntityIndex()

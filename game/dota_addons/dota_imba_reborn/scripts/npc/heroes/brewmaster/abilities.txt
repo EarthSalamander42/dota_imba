@@ -410,7 +410,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1500"
+				"value"					"2000"
 			}
 		}
 	}

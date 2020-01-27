@@ -3,7 +3,7 @@
 // Bounty Hunter's Shuriken Toss
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss"						"Shuriken Toss"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_Description"			"Hurls a deadly shuriken at an enemy unit, dealing damage and mini-stunning the target. The shuriken will bounce between any Tracked units who are within a %bounce_radius% radius of each other.\n<font color='#FF7800'>Nailed It:</font> Summons a spinning shuriken on the target location which continously pulls the target back to it. The pull is stronger the farther the leash streches.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_Description"			"Hurls a deadly shuriken at an enemy unit, dealing damage and mini-stunning the target. The shuriken will bounce between any Tracked units who are within a %bounce_radius% radius of each other.\n<font color='#FF7800'>Nailed It:</font> Summons a spinning shuriken on the target location which continously pulls the target back to it. The pull is stronger the farther the leash streches."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_Note0"					"The shuriken searches for additional targets around the last target's location."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_Lore"					"While the shuriken may be small, Gondar's precise aim can cause critical damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

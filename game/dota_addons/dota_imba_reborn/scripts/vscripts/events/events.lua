@@ -966,18 +966,18 @@ function GameMode:OnPlayerChat(keys)
 							ability_set = {
 								[0] = "imba_brewmaster_thunder_clap",
 								[1] = "imba_brewmaster_cinder_brew",
-								-- [2] = "imba_brewmaster_drunken_brawler",
-								-- [3] = "generic_hidden",
-								-- [4] = "generic_hidden",
-								-- [5] = "imba_brewmaster_primal_split",
-								-- [6] = "special_bonus_attack_damage_15",
-								-- [7] = "special_bonus_hp_200",
+								[2] = "imba_brewmaster_drunken_brawler",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_brewmaster_primal_split",
+								[6] = "special_bonus_attack_damage_30",
+								[7] = "special_bonus_hp_200",
 								[8] = "special_bonus_imba_brewmaster_thunder_clap_slow_duration",
-								-- [9] = "special_bonus_magic_resistance_20",
-								-- [10] = "special_bonus_imba_brewmaster_primal_split_health",
-								-- [11] = "special_bonus_attack_speed_100",
-								-- [12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
-								-- [13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
+								[9] = "special_bonus_magic_resistance_20",
+								[10] = "special_bonus_imba_brewmaster_primal_split_health",
+								[11] = "special_bonus_attack_speed_100",
+								[12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
+								[13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
 							}
 							upgraded = true
 						elseif string.find(text, 'chaos_knight') and hero:GetName() == "npc_dota_hero_chaos_knight" then
