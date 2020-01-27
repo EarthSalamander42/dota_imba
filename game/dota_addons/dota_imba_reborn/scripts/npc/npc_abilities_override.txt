@@ -1590,47 +1590,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Beastmaster: Call of the Wild 
-	//=================================================================================================================
-	"beastmaster_call_of_the_wild"
-	{
-//		"MaxLevel"						"4"
-		"AbilityCooldown"				"60"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_hp_tooltip"			"250 550 850 1150"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_damage_tooltip"		"20 60 90 110"
-				"LinkedSpecialBonus"		"special_bonus_unique_beastmaster_2"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_moveslow_tooltip"		"25 30 35 40"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"boar_poison_duration_tooltip"	"3.0"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Beastmaster: Call of the Wild Boar
@@ -1686,6 +1645,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hawk_speed_tooltip"		"400 450 500 550"
+				"LinkedSpecialBonus"		"special_bonus_unique_beastmaster_2"
 			}
 			"04"
 			{
@@ -2137,6 +2097,11 @@
 	//=================================================================================================================
 	"broodmother_spin_web"
 	{
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCharges"				"3 6 9 12"
+		"AbilityChargeRestoreTime"		"20.0"
+	
 		"AbilitySpecial"
 		{
 			"02"
@@ -2153,16 +2118,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"40 60 80 100"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3 6 9 12"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"20"
 			}
 		}
 	}
@@ -2297,48 +2252,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal"				"60 80 100 120"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Chaos Knight: Phantasm
-	//=================================================================================================================
-	"chaos_knight_phantasm"
-	{
-		"AbilityCooldown"				"130 120 110"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"images_count"				"3 4 5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"42"
-			}	
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage"			"0 0 0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage_tooltip"	"100 100 100"
-			}	
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"incoming_damage"			"150 130 110"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"incoming_damage_tooltip"	"250 225 200"
 			}
 		}
 	}
@@ -2697,7 +2610,12 @@
 	//=================================================================================================================
 	"gyrocopter_homing_missile"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"20 17 14 11"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"150 225 300 475"
 
 		"AbilitySpecial"
@@ -2726,11 +2644,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"acceleration"				"20 30 40 50"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"20 17 14 11"
 			}
 		}
 	}
@@ -4194,10 +4107,20 @@
 	//=================================================================================================================
 	"morphling_waveform"
 	{
-		"MaxLevel"							"4"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"1000 1100 1200 1300"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"					"11 10 9 8"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"						"100 200 300 400"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"					"140"
 
 		"AbilitySpecial"
@@ -4206,11 +4129,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"1250 1375 1500 1625"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"11 10 9 8"
 			}
 		}
 	}
@@ -4615,6 +4533,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"burn_damage"			"30 40 50 60"
+				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi_4"
 			}		
 
 			"03"
@@ -4941,11 +4860,6 @@
 			{
 				"var_type"									"FIELD_INTEGER"
 				"tooltip_total_illusion_incoming_damage"	"200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"24 21 18 15"
 			}
 		}
 	}
@@ -5978,6 +5892,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"air_time"					"1.0 1.25 1.5"
+				"LinkedSpecialBonus"		"special_bonus_unique_tusk_7"
 			}
 			"03"
 			{
@@ -6271,16 +6186,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"hits_to_destroy_tooltip"	"5 7 9 11"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_threshold"			"500 750 1000 1250"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_threshold_pct_tooltip"	"40"
 			}
 		}
 	}
@@ -7145,6 +7050,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attack_damage"			"80 240 400"
+				"LinkedSpecialBonus"		"special_bonus_unique_dark_willow_4"
 			}
 			"06"
 			{
@@ -7407,6 +7313,12 @@
 	//=================================================================================================================
 	"techies_land_mines"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChargeRestoreTime"		"18"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7424,11 +7336,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"300 600 900 1200"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"burn_duration"				"5"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7438,11 +7345,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"activation_delay"			"1.25"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"18"
 			}
 		}
 	}
@@ -7585,209 +7487,7 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Venomancer: Venomous Gale
-	//=================================================================================================================
-	"venomancer_venomous_gale"
-	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"20 17 14 11"
-		"AbilityManaCost"				"125"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"strike_damage"			"50 100 150 200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"10 40 70 100"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"3.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-50 -50 -50 -50"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"125 150 175 200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1600"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}
-
-	//=================================================================================================================
-	// Venomancer: Poison Sting
-	//=================================================================================================================
-	"venomancer_poison_sting"
-	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 9.0 12.0 15.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"15 25 35 45"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"-11 -12 -13 -14"
-				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_2"
-			}			
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	}
-
-	//=================================================================================================================
-	// Venomancer: Plague Ward
-	//=================================================================================================================
-	"venomancer_plague_ward"
-	{
-		"AbilityCastRange"				"1250"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"5.0"
-		"AbilityManaCost"				"20"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"40.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"75 200 325 450"
-				"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_damage_tooltip"	"13 22 31 40"
-				"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"04" // For special bonus at level 25
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_hp"		"150 400 650 900"
-			}
-			"05" // For special bonus at level 25
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_damage"	"26 44 62 80"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	}
 	
-	//=================================================================================================================
-	// Venomancer: Poison Nova
-	//=================================================================================================================
-	"venomancer_poison_nova"
-	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120.0 90.0 60.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"		
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// just does damage
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1000 1500 2000"
-				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_6"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"start_radius"				"255 255 255"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"16"
-				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"30 55 80"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"100.0 70.0 40.0"
-				"RequiresScepter"			"1"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"16"
-				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_4"
-				"RequiresScepter"			"1"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"60 85 110"
-				"RequiresScepter"			"1"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"750"
-			}
-		}
-	}
-
 	//=================================================================================================================
 	// Mutation: Death Explosion
 	//=================================================================================================================
@@ -7897,52 +7597,6 @@
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}
-
-	//=================================================================================================================
-	// Tiny: Toss
-	//=================================================================================================================
-	"tiny_toss"
-	{
-		"AbilityCastRange"				"1300"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-		"AbilityCooldown"				"11.0"
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"30"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"250"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"11"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -8563,49 +8217,25 @@
 	//=================================================================================================================
 	"void_spirit_astral_step"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChargeRestoreTime"		"18 16 14"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"2"
-				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_9"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"18 16 14"
-				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_travel_distance"	"200"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_travel_distance"	"800 1000 1200"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pop_damage_delay"		"1.25"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pop_damage"			"200 300 400"
 			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow_pct"		"40 60 80"
-			}
 		}
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================

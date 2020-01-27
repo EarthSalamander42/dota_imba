@@ -48,7 +48,11 @@ function modifier_item_imba_banana:GetTexture()
 end
 
 function modifier_item_imba_banana:OnCreated()
-	self.int_gain	= self:GetAbility():GetSpecialValueFor("int_gain")
+	if self:GetAbility() then
+		self.int_gain	= self:GetAbility():GetSpecialValueFor("int_gain")
+	else
+		self.int_gain	= 4
+	end
 	
 	if not IsServer() then return end
 	

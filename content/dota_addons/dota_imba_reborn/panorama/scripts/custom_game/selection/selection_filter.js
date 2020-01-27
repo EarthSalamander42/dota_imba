@@ -40,9 +40,32 @@ function SelectionFilter( entityList ) {
 
     for (var i = 0; i < entityList.length; i++) {
         var overrideEntityIndex = GetSelectionOverride(entityList[i])
-        if (overrideEntityIndex != -1) {
-            GameUI.SelectUnit(overrideEntityIndex, false);
+		
+		// Trying a bunch of stuff in here to try and get default selection to multiple units (ex. Primal Split)
+		// $.Msg(overrideEntityIndex["2"])
+		// $.Msg(Object.entries(overrideEntityIndex).length)
+		
+		if (Object.entries(overrideEntityIndex).length >= 1) {
+			// Force select the first unit in the object with false flag to get rid of the main hero selection
+			GameUI.SelectUnit(overrideEntityIndex[Object.keys(overrideEntityIndex)[0]], false)  
+			
+			for (const entindex in overrideEntityIndex) {
+				GameUI.SelectUnit(overrideEntityIndex[entindex], true);
+			}
+		}
+
+		// $.Msg(typeof overrideEntityIndex === 'object' && overrideEntityIndex !== null)
+		// $.Msg(entityList.length)
+		
+		// $.Msg(Players.GetSelectedEntities(Players.GetLocalPlayer()))
+		
+		else if (overrideEntityIndex != -1 && typeof overrideEntityIndex === 'number') {
+           GameUI.SelectUnit(overrideEntityIndex, false);
         }
+		// else if (typeof overrideEntityIndex === 'object' && overrideEntityIndex !== null) {
+			// GameUI.SelectUnit(overrideEntityIndex[(i + 1).toString()], true);
+			// $.Msg(entityList.length)
+		// }
     };
 }
 

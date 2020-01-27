@@ -162,7 +162,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			end
 
 			-- Refresh items
-			for i = 0, 9 do
+			for i = 0, 8 do
 				local current_item = caster:GetItemInSlot(i)
 				local should_refresh = true
 
@@ -180,7 +180,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			end
 			
 			-- Refresh TP slot as well
-			local teleport_scroll = caster:GetItemInSlot(16)
+			local teleport_scroll = caster:GetItemInSlot(15) -- Used to be 15, and then 16, and now 15 again cause of backpack and neutral slot shifting (currently neutral slot is 16th)
 			
 			if teleport_scroll then
 				teleport_scroll:EndCooldown()

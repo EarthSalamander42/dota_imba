@@ -22,7 +22,7 @@
 
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler"							"Drunken Brawler"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Lore"						"When Mangix won his title as the Brewmaster of the Order of Oyo, he also claimed his place in the mastery of inebriation."
-"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Description"				"Goes into a drunken brawler state, granting you a chance to avoid attacks and to deal critical damage. Brewmaster moves with a varying amount of movement speed, alternating between %min_movement%%% slower and %max_movement%%% faster. Lasts %duration% seconds."
+"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Description"				"Goes into a drunken brawler state, granting you a chance to avoid attacks and to deal critical damage. Brewmaster moves with a varying amount of movement speed, alternating between %min_movement%%% slower and %max_movement%%% faster. Lasts %duration% seconds.\n<font color='#FF7800'>Redirective Flow:</font> Whenever an attack misses Brewmaster while he is affected by Drunken Brawler, the damage that would have been dealt is stored as bonus damage for Brewmaster's next attack. Stacks infinitely until an attack is isussed or the buff expires."
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Note0"						"Stacks diminishingly with other sources of Evasion."
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_dodge_chance"				"%DODGE CHANCE:"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_crit_chance"				"%CRITICAL CHANCE:"
@@ -31,12 +31,12 @@
 
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split"								"Primal Split"
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Lore"							"It isn't clear whether Mangix is consciously aware of his potent bond with nature, as it often occurs in the midst of a drunken stupor."
-"DOTA_Tooltip_ability_imba_brewmaster_primal_split_Description"					"Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn."
+"DOTA_Tooltip_ability_imba_brewmaster_primal_split_Description"					"Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn.\n<font color='#FF7800'>Innate Specialties:</font> Earth gains Thunder Clap, Storm gains Cinder Brew and Fire gains Drunken Brawler."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Note0"						"The Earth Element will carry all auras that the Brewmaster has, as well as True Sight."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Note1"						"The Fire Element has phased movement."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Note2"						"When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_duration"						"DURATION:"
-"DOTA_Tooltip_ability_imba_brewmaster_primal_split_aghanim_description"			"Grants Brewlings bonus movement speed. Earth gains Thunder Clap, Storm gains Cinder Brew and Fire gains Drunken Brawler."
+"DOTA_Tooltip_ability_imba_brewmaster_primal_split_aghanim_description"			"Grants Brewlings bonus <font color='#FF7800'>phased</font> movement speed."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_scepter_movementspeed"		"SCEPTER BONUS MOVESPEED:"
 
 "DOTA_Tooltip_ability_imba_brewmaster_resistant_skin"							"Resistant Skin"
@@ -105,4 +105,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_brewmaster_thunder_clap_slow_duration"		"+{s:value}s Thunder Clap Slow"
 "DOTA_Tooltip_ability_special_bonus_imba_brewmaster_primal_split_health"			"+{s:value} Health to Primal Split Units"
 "DOTA_Tooltip_ability_special_bonus_imba_brewmaster_druken_brawler_damage"			"+{s:value}% Drunken Brawler Critical Strike Damage"
-"DOTA_Tooltip_ability_"special_bonus_imba_brewmaster_primal_split_cooldown"			"-{s:value}s Primal Split Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_brewmaster_primal_split_cooldown"			"-{s:value}s Primal Split Cooldown"
