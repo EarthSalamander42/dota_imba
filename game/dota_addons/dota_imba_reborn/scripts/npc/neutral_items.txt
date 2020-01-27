@@ -6,9 +6,10 @@
 		{
 			"0:00"
 			{
-				"0" "9"
-				"1" "6"
-				"2" "3"
+				"0" "10"
+				"1" "10"
+				"2" "10"
+				"3" "10"
 			}
 		}
 		
@@ -16,9 +17,9 @@
 		{
 			"item_elixer"					  "1"
 			"item_keen_optic"				  "1"
-			//"item_poor_mans_shield"			  "1"
+			//"item_poor_mans_shield"		  "1"
 			//"item_iron_talon"				  "1"
-			"item_recipe_ironwood_tree"		  "1"
+			"item_ironwood_tree"			  "1"
 			"item_royal_jelly"				  "1"
 			"item_mango_tree"				  "1"
 			"item_ocean_heart"				  "1"
@@ -34,9 +35,10 @@
 		{
 			"10:00"
 			{
-				"0" "9"
-				"1" "6"
-				"2" "3"
+				"0" "10"
+				"1" "10"
+				"2" "10"
+				"3" "10"
 			}
 		}
 
@@ -51,7 +53,7 @@
 			"item_nether_shawl"				  "1"
 			"item_dragon_scale"				  "1"
 			"item_essence_ring"				  "1"
-			"item_recipe_vambrace"			  "1"
+			"item_vambrace"					  "1"
 			"item_clumsy_net"				  "1"
 		}
 	}
@@ -61,9 +63,10 @@
 		{
 			"20:00"
 			{
-				"0" "9"
-				"1" "6"
-				"2" "3"
+				"0" "10"
+				"1" "10"
+				"2" "10"
+				"3" "10"
 			}
 		}
 
@@ -74,13 +77,14 @@
 			"item_craggy_coat"				  "1"
 			"item_greater_faerie_fire"		  "1"
 			"item_quickening_charm"			  "1"
-			"item_mind_breaker"				  "1"
 			"item_spider_legs"				  "1"
 			"item_enchanted_quiver"			  "1"
 			"item_paladin_sword"			  "1"
 			"item_orb_of_destruction"		  "1"
 //			"item_third_eye"				  "1"
 			"item_titan_sliver"				  "1"
+			"item_spy_gadget"				  "1"
+			"item_mind_breaker"				  "1"
 		}
 	}
 	"4"
@@ -89,9 +93,10 @@
 		{
 			"30:00"
 			{
-				"0" "9"
-				"1" "6"
-				"2" "3"
+				"0" "10"
+				"1" "10"
+				"2" "10"
+				"3" "10"
 			}
 		}
 
@@ -102,7 +107,6 @@
 			"item_spell_prism"				  "1"
 			"item_princes_knife"			  "1"
 			"item_flicker"					  "1"
-			"item_spy_gadget"				  "1"
 			"item_ninja_gear"				  "1"
 			"item_illusionsts_cape"			  "1"
 			"item_havoc_hammer"				  "1"
@@ -117,9 +121,10 @@
 		{
 			"40:00"
 			{
-				"0" "9"
-				"1" "6"
-				"2" "3"
+				"0" "10"
+				"1" "10"
+				"2" "10"
+				"3" "10"
 			}
 		}
 
@@ -136,7 +141,7 @@
 			"item_woodland_striders"		  "1"
 			"item_recipe_trident"			  "1"
 			"item_demonicon"				  "1"
-			"item_recipe_fallen_sky"		  "1"
+			"item_fallen_sky"				  "1"
 			"item_pirate_hat"				  "1"
 			"item_ex_machina"				  "1"
 		}
