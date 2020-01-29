@@ -980,9 +980,22 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
 							}
 							upgraded = true
-						elseif string.find(text, 'chaos_knight') and hero:GetName() == "npc_dota_hero_chaos_knight" then
+						elseif string.find(text, 'gyrocopter') and hero:GetName() == "npc_dota_hero_gyrocopter" then
 							ability_set = {
-								[5] = "imba_chaos_knight_phantasm",
+								[0] = "imba_gyrocopter_rocket_barrage",
+								[1] = "imba_gyrocopter_homing_missile",
+								[2] = "imba_gyrocopter_flak_cannon",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_gyrocopter_call_down",
+								-- [6] = "special_bonus_attack_damage_30",
+								-- [7] = "special_bonus_hp_200",
+								-- [8] = "special_bonus_imba_brewmaster_thunder_clap_slow_duration",
+								-- [9] = "special_bonus_magic_resistance_20",
+								-- [10] = "special_bonus_imba_brewmaster_primal_split_health",
+								-- [11] = "special_bonus_attack_speed_100",
+								-- [12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
+								-- [13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
 							}
 							upgraded = true
 						end

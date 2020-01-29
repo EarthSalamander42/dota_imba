@@ -70,6 +70,7 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"curse_slow"		"10 15 20 25"
+				"LinkedSpecialBonus"	"special_bonus_imba_silencer_arcane_curse_slow"
 			}
 			"06"
 			{
@@ -630,6 +631,31 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"	                    "15"
+			}
+		}
+	}
+	
+	"special_bonus_imba_silencer_arcane_curse_slow"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_silencer_arcane_curse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "12"
 			}
 		}
 	}

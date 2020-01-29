@@ -566,11 +566,11 @@ function imba_oracle_purifying_flames:GetCastPoint()
 end
 
 function imba_oracle_purifying_flames:GetCooldown(level)
-	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
-	else
-		return self:GetSpecialValueFor("cooldown_scepter")
-	end
+	-- if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_purifying_flames_cooldown")
+	-- else
+		-- return self:GetSpecialValueFor("cooldown_scepter") - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_purifying_flames_cooldown")
+	-- end
 end
 
 function imba_oracle_purifying_flames:OnSpellStart()
@@ -1316,9 +1316,15 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_oracle_purifying_flames_cooldown	= modifier_special_bonus_imba_oracle_purifying_flames_cooldown or class({})
 modifier_special_bonus_imba_oracle_fates_edict_cooldown		= class({})
+
+function modifier_special_bonus_imba_oracle_purifying_flames_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_purifying_flames_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_oracle_purifying_flames_cooldown:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsPurgable() 	return false end
@@ -1329,5 +1335,13 @@ function imba_oracle_fates_edict:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_fates_edict_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_fates_edict_cooldown"), "modifier_special_bonus_imba_oracle_fates_edict_cooldown", {})
+	end
+end
+
+function imba_oracle_purifying_flames:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_oracle_purifying_flames_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_purifying_flames_cooldown"), "modifier_special_bonus_imba_oracle_purifying_flames_cooldown", {})
 	end
 end

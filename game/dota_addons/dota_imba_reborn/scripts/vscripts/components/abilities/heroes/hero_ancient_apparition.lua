@@ -3,7 +3,6 @@
 
 LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet_freeze", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
@@ -384,7 +383,7 @@ function imba_ancient_apparition_chilling_touch:GetProjectileName()
 end
 
 function imba_ancient_apparition_chilling_touch:GetCastRange()
-	return self:GetCaster():Script_GetAttackRange() + self:GetSpecialValueFor("attack_range_bonus")
+	return self:GetCaster():Script_GetAttackRange() + self:GetTalentSpecialValueFor("attack_range_bonus")
 end
 
 function imba_ancient_apparition_chilling_touch:GetCooldown(level)
@@ -401,12 +400,21 @@ end
 
 -- "The attacks first apply the debuff, then their own damage."
 function imba_ancient_apparition_chilling_touch:OnOrbImpact( keys )
+	if keys.target:IsMagicImmune() then return end
+
 	keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
 
 	local chilling_touch_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") })
 
 	if chilling_touch_modifier then
 		chilling_touch_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+	end
+	
+	-- IMBAfication: Packed Ice
+	local stun_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") })
+
+	if stun_modifier then
+		stun_modifier:SetDuration(self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()), true)
 	end
 
 	local damageTable = {
@@ -428,12 +436,6 @@ end
 ----------------------------------
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:OnCreated()
-	-- IMBAfication: Packed Ice
-	self.state = {
-		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_FROZEN] = true
-	}
-
 	if self:GetAbility() then
 		self.slow	= self:GetAbility():GetSpecialValueFor("slow")
 	else
@@ -442,17 +444,9 @@ function modifier_imba_ancient_apparition_chilling_touch_slow:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-	}
-	
-	return decFuncs	
-end
-
-function modifier_imba_ancient_apparition_chilling_touch_slow:CheckState()
-	if self.state then
-		return self.state
-	end
+	}	
 end
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -1074,15 +1068,21 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_range", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_ancient_apparition_chilling_touch_range		= modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown		= class({})
 modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage	= class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost			= class({})
 modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe			= class({})
+
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:IsHidden() 		return true end
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown:IsHidden() 			return true end
 function modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown:IsPurgable() 		return false end
@@ -1162,6 +1162,10 @@ end
 
 function imba_ancient_apparition_chilling_touch:OnOwnerSpawned()
 	if not IsServer() then return end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_chilling_touch_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_range"), "modifier_special_bonus_imba_ancient_apparition_chilling_touch_range", {})
+	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_chilling_touch_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_damage"), "modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", {})

@@ -833,7 +833,7 @@ end
 
 function modifier_imba_manadrain_aura:IsAura()
 	-- Disable when caster is broken
-	if self.caster:PassivesDisabled() then
+	if self.caster and not self.caster:IsNull() and self.caster:PassivesDisabled() then
 		return false
 	end
 

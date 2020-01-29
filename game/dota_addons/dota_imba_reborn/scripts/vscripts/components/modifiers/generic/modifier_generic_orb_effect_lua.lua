@@ -51,7 +51,8 @@ function modifier_generic_orb_effect_lua:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_PROPERTY_PROCATTACK_FEEDBACK,
 		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
-
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		
 		MODIFIER_EVENT_ON_ORDER,
 
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
@@ -138,6 +139,14 @@ function modifier_generic_orb_effect_lua:OnAttackRecordDestroy( params )
 	
 	-- run OrbRecordDestroy script if available
 	if self.ability.OnOrbRecordDestroy then self.ability:OnOrbRecordDestroy( params ) end
+end
+
+function modifier_generic_orb_effect_lua:GetModifierAttackRangeBonus()
+	if not IsServer() then return end
+
+	if self:GetAbility():GetAutoCastState() and self:GetParent():GetAggroTarget() and UnitFilter(self:GetParent():GetAggroTarget(), self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS and self:GetAbility().GetTalentSpecialValueFor then
+		return self:GetAbility():GetTalentSpecialValueFor("attack_range_bonus")
+	end
 end
 
 function modifier_generic_orb_effect_lua:OnOrder( params )

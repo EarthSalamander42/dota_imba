@@ -388,6 +388,8 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability6"					"imba_chaos_knight_phantasm"
+		
+		"Ability14"					"special_bonus_attack_speed_40"
 	}
 
 	//=================================================================================================================
@@ -669,13 +671,14 @@
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
 		"Ability14"					"special_bonus_spell_amplify_15"
-		"Ability15"					"special_bonus_imba_earth_spirit_5"
+		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7"
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
 		// "Ability13"					"special_bonus_imba_earth_spirit_4"
-		// "Ability15"					"special_bonus_imba_earth_spirit_6"
+		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
+		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability17"					"special_bonus_imba_earth_spirit_8"
 	}
 
@@ -762,7 +765,7 @@
 		"Ability10"					"special_bonus_movement_speed_25"
 		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
 		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
-		"Ability13"					"special_bonus_gold_income_150" // +3 Eidolons
+		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
 		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
 		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
 		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
@@ -1484,7 +1487,7 @@
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
 		"Ability12"					"special_bonus_spell_lifesteal_13"
 		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
-		"Ability14"					"special_bonus_gold_income_180" // +Xs Dismember Duration
+		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
 		"Ability15"					"special_bonus_cooldown_reduction_15"
 		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
 		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
@@ -1492,7 +1495,6 @@
 		// Removed Talents
 		// "Ability12"					"special_bonus_armor_10" // +10 armor
 		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
-		// "Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
 		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
 	}
 
@@ -1725,7 +1727,7 @@
 		"Ability13"					"special_bonus_imba_skywrath_mage_9" // "+1 Arcane Bolt Per Cast"
 		"Ability14"					"special_bonus_imba_skywrath_mage_11" // "Global Concussive Shot"
 		"Ability15"					"special_bonus_imba_skywrath_mage_10" // "+15% Ancient Seal Magic Resistance Reduction"
-		"Ability16"					"special_bonus_intelligence_35"
+		"Ability16"					"special_bonus_imba_skywrath_mage_arcane_bolt_pierce"
 		"Ability17"					"special_bonus_imba_skywrath_mage_6" // "Mystic Flare deals the damage in half the duration"
 
 		// Removed Talents

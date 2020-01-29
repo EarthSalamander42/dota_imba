@@ -262,13 +262,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"3 4 5 6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_boost"			"35 50 65 80"
+				"speed_boost"			"80"
 			}
 			
 			"03"

@@ -153,7 +153,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 435 470 505"
+				"radius"					"400"
+				"LinkedSpecialBonus"		"special_bonus_imba_puck_waning_rift_range"
 			}
 			"02"
 			{
@@ -175,7 +176,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trickster_null_instances"	"1 1 2 2"
+				"trickster_null_instances"	"1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -421,7 +422,6 @@
 			}
 		}
 	}
-
 	
 	//=================================================================================================================
 	// 
@@ -447,6 +447,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_puck_waning_rift_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_puck_waning_rift"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"425"
 			}
 		}
 	}

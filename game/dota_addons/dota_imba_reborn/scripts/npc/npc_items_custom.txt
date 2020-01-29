@@ -1341,7 +1341,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"68"
+				"bonus_damage"				"75"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -2250,7 +2250,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
+				"bonus_mana_regen"		"3.0 3.5 4.0 4.5 5.0"
 			}
 			"03"
 			{
@@ -2407,7 +2407,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
+				"bonus_mana_regen"		"3.0 3.5 4.0 4.5 5.0"
 			}
 			"03"
 			{
@@ -2564,7 +2564,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
+				"bonus_mana_regen"		"3.0 3.5 4.0 4.5 5.0"
 			}
 			"03"
 			{
@@ -2721,7 +2721,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
+				"bonus_mana_regen"		"3.0 3.5 4.0 4.5 5.0"
 			}
 			"03"
 			{
@@ -2875,7 +2875,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.0 2.5 3.0 3.5 4.0"
+				"bonus_mana_regen"		"3.0 3.5 4.0 4.5 5.0"
 			}
 			"03"
 			{
@@ -4864,7 +4864,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"9"
+				"bonus_damage"				"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -5099,7 +5099,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"36"
+				"bonus_damage"				"45"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -9957,7 +9957,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"10"
+				"damage_bonus"					"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -10673,7 +10673,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"22"
+				"bonus_damage"			"28"
 			}
 			"02"
 			{
@@ -11280,7 +11280,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30"
+				"bonus_damage"			"45"
 			}
 			"02"
 			{
@@ -16309,7 +16309,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"44"
+				"bonus_damage"			"50"
 			}
 			"02"
 			{

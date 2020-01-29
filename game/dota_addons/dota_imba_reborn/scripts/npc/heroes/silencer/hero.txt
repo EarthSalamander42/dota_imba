@@ -22,7 +22,7 @@
 		
 		"Ability10"					"special_bonus_imba_silencer_1"
 		"Ability11"					"special_bonus_attack_speed_30"
-		"Ability12"					"special_bonus_gold_income_150"
+		"Ability12"					"special_bonus_imba_silencer_arcane_curse_slow"
 		"Ability13"					"special_bonus_imba_silencer_9"
 		"Ability14"					"special_bonus_attack_range_125"
 		"Ability15"					"special_bonus_imba_silencer_4"

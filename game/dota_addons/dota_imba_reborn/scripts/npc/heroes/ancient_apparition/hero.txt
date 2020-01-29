@@ -19,7 +19,7 @@
 		"Ability6"		"imba_ancient_apparition_ice_blast"
 		"Ability7"		"imba_ancient_apparition_ice_blast_release"
 		
-		"Ability10"		"special_bonus_gold_income_90"
+		"Ability10"		"special_bonus_imba_ancient_apparition_chilling_touch_range"
 		"Ability11"		"special_bonus_spell_amplify_10"
 		"Ability12"		"special_bonus_imba_ancient_apparition_ice_vortex_cooldown"
 		"Ability13"		"special_bonus_hp_regen_15"
@@ -29,6 +29,7 @@
 		"Ability17"		"special_bonus_imba_ancient_apparition_cold_feet_aoe"
 		
 		// Removed Talents
+		// "Ability10"		"special_bonus_gold_income_90"
 		// "Ability12"		"special_bonus_unique_ancient_apparition_3"
 		// "Ability14"		"special_bonus_unique_ancient_apparition_4"
 		// "Ability15"		"special_bonus_unique_ancient_apparition_2"

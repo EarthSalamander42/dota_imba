@@ -6,7 +6,7 @@
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_Note1"									"Jaunting to the Orb will disjoint projectiles."
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_max_distance"							"MAX DISTANCE:"
 "DOTA_Tooltip_ability_imba_puck_waning_rift"											"Waning Rift"
-"DOTA_Tooltip_ability_imba_puck_waning_rift_Description"								"Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.\n<font color='#FF7800'>Pocket Glitter:</font> Also reduces vision by %glitter_vision_reduction%%%.\n<font color='#FF7800'>Trickster's Inhibition:</font> The next %trickster_null_instances% damage instances inflicted while affected by Waning Rift have their damage reduced by 100%."
+"DOTA_Tooltip_ability_imba_puck_waning_rift_Description"								"Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.\n<font color='#FF7800'>Pocket Glitter:</font> Also reduces vision by %glitter_vision_reduction%%%.\n<font color='#FF7800'>Trickster's Inhibition:</font> The next %trickster_null_instances% damage instance inflicted while affected by Waning Rift have its damage reduced by 100%."
 "DOTA_Tooltip_ability_imba_puck_waning_rift_Lore"									"With a mischievous grin, Puck spreads its enchanted powder which disrupts magical flow."
 "DOTA_Tooltip_ability_imba_puck_waning_rift_radius"									"RADIUS:"
 "DOTA_Tooltip_ability_imba_puck_waning_rift_silence_duration"						"DURATION:"
@@ -49,3 +49,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_puck_dream_coil_targets_Description"		"-0.15 Rapid Fire Attack Interval; Dream Coil Affects Creeps"
 "DOTA_Tooltip_ability_special_bonus_imba_puck_phase_shift_attacks"					"Phase Shift Attack"
 "DOTA_Tooltip_ability_special_bonus_imba_puck_phase_shift_attacks_Description"		"Puck instantly attacks all enemies upon casting Phase Shift, within attack range + 200."
+"DOTA_Tooltip_ability_special_bonus_imba_puck_waning_rift_range"			"+{s:value} Waning Rift AoE and Range"

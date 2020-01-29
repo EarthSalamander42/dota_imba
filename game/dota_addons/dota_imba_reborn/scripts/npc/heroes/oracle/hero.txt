@@ -21,7 +21,7 @@
 		"Ability10"		"special_bonus_imba_oracle_fortunes_end_max_duration" // +1s Fortune's End Max Duration
 		"Ability11"		"special_bonus_intelligence_15"
 		"Ability12"		"special_bonus_cast_range_150"
-		"Ability13"		"special_bonus_gold_income_120"
+		"Ability13"		"special_bonus_imba_oracle_purifying_flames_cooldown"
 		"Ability14"		"special_bonus_movement_speed_45"
 		"Ability15"		"special_bonus_imba_oracle_false_promise_invisibility" // False Promise Invisibility
 		"Ability16"		"special_bonus_imba_oracle_fates_edict_cooldown" // -5s Fate's Edict Cooldown

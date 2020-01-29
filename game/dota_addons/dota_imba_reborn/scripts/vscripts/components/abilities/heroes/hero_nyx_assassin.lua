@@ -1382,11 +1382,15 @@ function modifier_imba_vendetta:OnCreated()
 		self.mana_burn_ability = self.caster:FindAbilityByName("imba_nyx_assassin_mana_burn")
 	end
 
+	if not IsServer() then return end
+
 	-- Add Vendetta particle
 	self.particle_vendetta_start_fx = ParticleManager:CreateParticle(self.particle_vendetta_start, PATTACH_ABSORIGIN_FOLLOW, self.caster)
 	ParticleManager:SetParticleControl(self.particle_vendetta_start_fx, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_vendetta_start_fx, 1, self.caster:GetAbsOrigin())
 	self:AddParticle(self.particle_vendetta_start_fx, false, false, -1, false, false)
+	
+	self.damage_type	= self:GetAbility():GetAbilityDamageType()
 end
 
 function modifier_imba_vendetta:IsHidden() return false end
@@ -1486,7 +1490,7 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 			local damageTable = {victim = target,
 				attacker = self.caster,
 				damage = damage,
-				damage_type = DAMAGE_TYPE_PHYSICAL,
+				damage_type = self.damage_type,
 				ability = self.ability
 			}
 

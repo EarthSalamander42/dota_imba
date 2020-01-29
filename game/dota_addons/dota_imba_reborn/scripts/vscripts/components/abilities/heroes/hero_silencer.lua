@@ -45,7 +45,7 @@ function modifier_imba_arcane_curse_debuff:OnCreated( kv )
 	self.parent = self:GetParent()
 	self.caster = self:GetAbility():GetCaster()
 	self.tick_rate = self:GetAbility():GetSpecialValueFor("tick_rate")
-	self.curse_slow = self:GetAbility():GetSpecialValueFor("curse_slow")
+	self.curse_slow = self:GetAbility():GetTalentSpecialValueFor("curse_slow")
 	self.curse_damage = self:GetAbility():GetSpecialValueFor("damage_per_second")
 	self.penalty_duration = self:GetAbility():GetSpecialValueFor("penalty_duration")
 	self.damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
@@ -1461,12 +1461,26 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_silencer_4", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_silencer_4	= class({})
+modifier_special_bonus_imba_silencer_arcane_curse_slow	= modifier_special_bonus_imba_silencer_arcane_curse_slow or class({})
 
 function modifier_special_bonus_imba_silencer_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_silencer_4:IsPurgable() 	return false end
 function modifier_special_bonus_imba_silencer_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_silencer_arcane_curse_slow:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_arcane_curse_slow:IsPurgable() 	return false end
+function modifier_special_bonus_imba_silencer_arcane_curse_slow:RemoveOnDeath() 	return false end
+
+function imba_silencer_arcane_curse:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_silencer_arcane_curse_slow") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_arcane_curse_slow"), "modifier_special_bonus_imba_silencer_arcane_curse_slow", {})
+	end
+end
 
 function imba_silencer_arcane_supremacy:OnOwnerSpawned()
 	if not IsServer() then return end

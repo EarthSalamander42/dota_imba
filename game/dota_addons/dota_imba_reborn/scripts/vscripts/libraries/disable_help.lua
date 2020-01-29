@@ -57,6 +57,7 @@ local disabledAbilities = {
 	imba_weaver_time_lapse = true,
 	imba_wisp_tether = true,
 	imba_pudge_dismember = true,
+	imba_brewmaster_primal_split = true,
 
 	-- items
 	item_imba_force_staff = true,

@@ -1,0 +1,33 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Gyrocopter
+	//=================================================================================================================
+	"npc_dota_hero_gyrocopter"
+	{
+		"IsImba"					"1"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		
+		"Ability1"		"imba_gyrocopter_rocket_barrage"
+		"Ability2"		"imba_gyrocopter_homing_missile"
+		"Ability3"		"imba_gyrocopter_flak_cannon"
+		"Ability4"		"imba_gyrocopter_lock_on"
+		"Ability5"		"imba_gyrocopter_gatling_guns"
+		"Ability6"		"imba_gyrocopter_call_down"
+		
+		"Ability10"		"special_bonus_attack_damage_20"
+		"Ability11"		"special_bonus_hp_250"
+		"Ability12"		"special_bonus_unique_gyrocopter_6"
+		"Ability13"		"special_bonus_unique_gyrocopter_3"
+		"Ability14"		"special_bonus_movement_speed_40"
+		"Ability15"		"special_bonus_unique_gyrocopter_4"
+		"Ability16"		"special_bonus_unique_gyrocopter_1"
+		"Ability17"		"special_bonus_unique_gyrocopter_5"
+		
+		// Removed Talents
+		
+	}
+}

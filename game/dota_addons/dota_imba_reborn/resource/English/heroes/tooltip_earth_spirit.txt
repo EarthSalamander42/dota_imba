@@ -94,3 +94,6 @@
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8"                    "Unrelenting Mark"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8_Description"		"Skills don't refresh Earth's Mark, but stacks decay one by one instead of all at once."
+
+"DOTA_Tooltip_ability_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"	"+{s:value} Geomagnetic Grip Silence"
+

@@ -17,7 +17,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_vortex_duration"			"DURATION:"
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch"						"Chilling Touch"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Description"			"Enchances your attacks with heavy magic damage and slow. Gives increases attack range for this attack.\n<font color='#FF7800'>Packed Ice:</font> Also applies a stun for the slow duration."
+"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Description"			"Enchances your attacks with heavy magic damage and slow. Gives increases attack range for this attack.\n<font color='#FF7800'>Packed Ice:</font> Also applies a %packed_ice_duration% second stun on impact."
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Lore"					"The Ancient Apparition's eternal knowledge brings a frigid enchantment to his attacks."
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_damage"					"DAMAGE:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_slow"					"%MOVEMENT SLOW:"
@@ -83,6 +83,7 @@
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast"									"Frostbitten"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_Description"						"Taking damage over time and cannot heal or regenerate health.  Will instantly shatter if health drops too low."
 
+"DOTA_Tooltip_ability_special_bonus_imba_ancient_apparition_chilling_touch_range"				"+{s:value} Chilling Touch Attack Range"
 "DOTA_Tooltip_ability_special_bonus_imba_ancient_apparition_ice_vortex_cooldown"				"-2.5s Ice Vortex Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_ancient_apparition_chilling_touch_damage"				"Chilling Touch Path"
 "DOTA_Tooltip_ability_special_bonus_imba_ancient_apparition_chilling_touch_damage_Description"	"+80 Chilling Touch Damage; Unlock Imbued Ice ability"

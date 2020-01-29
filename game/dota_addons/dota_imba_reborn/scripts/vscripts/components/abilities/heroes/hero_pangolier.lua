@@ -825,7 +825,7 @@ function modifier_imba_shield_crash_buff:IsStealable() return true end
 --Shield crash jump movement modifier
 modifier_imba_shield_crash_jump = class({})
 
-function modifier_imba_shield_crash_jump:IsHidden() return true end
+function modifier_imba_shield_crash_jump:IsHidden() return false end
 function modifier_imba_shield_crash_jump:IsPurgable() return false end
 
 function modifier_imba_shield_crash_jump:OnCreated()
@@ -849,6 +849,10 @@ function modifier_imba_shield_crash_jump:OnCreated()
 		self.duration	= self:GetAbility():GetSpecialValueFor("jump_duration")
 		self.height		= self:GetAbility():GetSpecialValueFor("jump_height")
 		
+		if self:GetParent():IsRooted() then
+			self.height		= 1
+		end
+		
 		-- Velocity = Displacement/Time
 		self.velocity		= self.direction * self.distance / self.duration
 
@@ -861,6 +865,9 @@ function modifier_imba_shield_crash_jump:OnCreated()
 			self:Destroy()
 		end
 		
+		-- Do NOT continue with motion controllers if rooted; trying to be finnicky with this will cause crashes
+		if self:GetParent():IsRooted() then return end
+		
 		if not self:GetParent():HasModifier("modifier_pangolier_gyroshell") and self:ApplyHorizontalMotionController() == false then 
 			self:Destroy()
 		end
@@ -870,7 +877,8 @@ end
 function modifier_imba_shield_crash_jump:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():InterruptMotionControllers(true)
+	self:GetParent():RemoveHorizontalMotionController(self)
+	self:GetParent():RemoveVerticalMotionController(self)
 	
 	--play the smash particle
 	local smash = ParticleManager:CreateParticle(self.smash_particle, PATTACH_WORLDORIGIN, nil)

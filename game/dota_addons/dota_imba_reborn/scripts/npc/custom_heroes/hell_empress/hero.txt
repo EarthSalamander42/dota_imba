@@ -65,7 +65,7 @@
 		"Ability14"					"special_bonus_cast_range_150" 
 		"Ability15"					"special_bonus_spell_amplify_10"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_300"
+		"Ability17"					"special_bonus_imba_empress_royal_wrath_cooldown"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

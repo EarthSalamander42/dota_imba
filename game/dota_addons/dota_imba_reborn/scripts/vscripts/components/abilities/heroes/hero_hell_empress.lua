@@ -162,6 +162,10 @@ end
 imba_empress_royal_wrath = class({})
 LinkLuaModifier("modifier_imba_royal_wrath", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_empress_royal_wrath:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_empress_royal_wrath_cooldown")
+end
+
 function imba_empress_royal_wrath:GetIntrinsicModifierName()
 	return "modifier_imba_royal_wrath"
 end
@@ -504,4 +508,24 @@ end
 
 function modifier_hell_empress_ambient_effects:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_empress_royal_wrath_cooldown", "components/abilities/heroes/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_empress_royal_wrath_cooldown	= modifier_special_bonus_imba_empress_royal_wrath_cooldown or class({})
+
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:RemoveOnDeath() 	return false end
+
+function imba_empress_royal_wrath:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_empress_royal_wrath_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_empress_royal_wrath_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_empress_royal_wrath_cooldown"), "modifier_special_bonus_imba_empress_royal_wrath_cooldown", {})
+	end
 end

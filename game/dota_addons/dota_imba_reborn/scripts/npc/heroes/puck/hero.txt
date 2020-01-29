@@ -25,7 +25,7 @@
 		"Ability13"		"special_bonus_attack_damage_90"
 		"Ability14"		"special_bonus_imba_puck_waning_rift_cooldown"
 		"Ability15"		"special_bonus_imba_puck_illusory_orb_speed"
-		"Ability16"		"special_bonus_gold_income_420"
+		"Ability16"		"special_bonus_imba_puck_waning_rift_range"
 		"Ability17"		"special_bonus_imba_puck_dream_coil_targets"
 		
 		// Removed Talents

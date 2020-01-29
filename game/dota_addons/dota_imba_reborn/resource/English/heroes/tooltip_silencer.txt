@@ -117,3 +117,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_8_Description"        "Any enemy casting a spell within 1200 range of Silencer is silenced for 3 seconds. Has a 6 second cooldown."
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_9"					"+1 Intelligence Steal"
 "DOTA_Tooltip_ability_special_bonus_imba_silencer_10"					"+15% damage on Global Silenced enemies"
+"DOTA_Tooltip_ability_special_bonus_imba_silencer_arcane_curse_slow"	"+{s:value}% Arcane Curse Slow"

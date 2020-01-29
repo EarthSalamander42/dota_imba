@@ -149,7 +149,7 @@
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_max_damage"          "MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_max_damage"               "SCEPTER MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_damage_increase_enemy"            "BONUS DAMAGE PER ENEMY:"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"              "Mutes items and increases duration."
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"				"Mutes items <font color='#FF7800'>and increases duration</font>."
 
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
@@ -1269,11 +1269,11 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_projectile_speed_per_stack"    "BOLT SPEED PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "INT MULTIPLIER PER STACK:"
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "%INT MULTIPLIER PER STACK:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within 700 range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
-"DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Each stack increases Arcane Bolt projectile speed and damage, and increases Mystic Nova's damage."
+"DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Arcane Bolt intelligence multiplier increased by %dMODIFIER_PROPERTY_TOOLTIP%%%, and projectile speed increased by %dMODIFIER_PROPERTY_TOOLTIP%."
 
 ////===============================================================================================================
 // Skywrath Mage's Concussive Shot
@@ -1340,6 +1340,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_10"              "+15% Ancient Seal Magic Resistance Reduction"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11"              "Global Concussive Shot"
 "DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_11_Description"	"Ghastly Pulse will not activate if the distance between Skywrath Mage and the target upon cast is greater than the standard cast range."
+"DOTA_Tooltip_ability_special_bonus_imba_skywrath_mage_arcane_bolt_pierce"	"Arcane Bolt Pierces Spell Immunity"
 
 // Techies
 ////===============================================================================================================

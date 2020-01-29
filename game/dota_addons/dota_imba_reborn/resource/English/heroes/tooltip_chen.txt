@@ -83,6 +83,7 @@
 
 "DOTA_Tooltip_Ability_special_bonus_imba_chen_divine_favor_cd_reduction"						"-8s Divine Favor Cooldown"
 "DOTA_Tooltip_Ability_special_bonus_imba_chen_test_of_faith_cd_reduction"						"-8s Test of Faith Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_chen_hand_of_god_cooldown"								"-{s:value}s Hand of God Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_chen_divine_favor_hand_of_god" 						"Divine Hand"
 "DOTA_Tooltip_ability_special_bonus_imba_chen_divine_favor_hand_of_god_description"				"Hand of God applies Divine Favor to all affected allies before the heal."
 "DOTA_Tooltip_ability_special_bonus_imba_chen_remnants_of_penitence" 							"Remnants of Penitence"

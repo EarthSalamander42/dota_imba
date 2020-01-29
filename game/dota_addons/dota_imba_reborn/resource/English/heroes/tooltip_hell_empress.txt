@@ -20,7 +20,8 @@
 
 "DOTA_Tooltip_ability_imba_empress_royal_wrath"             "Royal Wrath"
 "DOTA_Tooltip_ability_imba_empress_royal_wrath_Description"       "Whenever you are damaged and this ability is off-cooldown, the attacker and its nearby allies will be <font color='#C00000'>cursed</font>, and Hellbolt's current cooldown (if any) will decrease by %hellbolt_cdr% seconds."
-"DOTA_Tooltip_ability_imba_empress_royal_wrath_Lore"          "Eye for an eye is the only justice in Hell. Or both eyes for a slight scratch, that works, too."
+"DOTA_Tooltip_ability_imba_empress_royal_wrath_Lore"			"Eye for an eye is the only justice in Hell. Or both eyes for a slight scratch, that works, too."
+"DOTA_Tooltip_ability_imba_empress_royal_wrath_Note0"			"Not affected by standard cooldown reductions."
 
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell"             "Hurl Through Hell"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Description"       "Sends all enemies in the area to the depths of Hell, where they are invulnerable for %hurl_duration% seconds (ignores status resistance). After coming back, the effects of the trip manifest: enemies are affected by <font color='#C00000'>Eleven Curses</font>, take magical damage, and are afflicted with two random debuffs from the following list:\n\nDisarm, Root, Silence, Mute, Break, or %slow_pct%%% attack/movement slow."
@@ -49,3 +50,5 @@
 
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_break"              "Hurl Through Hell"
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_break_Description"        "Passives disabled"
+
+"DOTA_Tooltip_ability_special_bonus_imba_empress_royal_wrath_cooldown"	"-{s:value}s Royal Wrath Cooldown"

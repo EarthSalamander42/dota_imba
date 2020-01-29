@@ -53,6 +53,14 @@ function imba_skywrath_mage_arcane_bolt:GetCooldown(level)
 	return cooldown
 end
 
+function imba_skywrath_mage_arcane_bolt:CastFilterResultTarget( target )
+	if not self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_arcane_bolt_pierce") then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
 function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -81,6 +89,12 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 	-- Fire at the enemy!
 	LaunchArcaneBolt(caster, ability, target)
 
+	local target_flags	= DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_arcane_bolt_pierce") then
+		target_flags	= target_flags + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+	end
+
 	-- Scepter: Find a secondary target to shot at. Prioritize heroes
 	if scepter or caster:HasTalent("special_bonus_imba_skywrath_mage_9") then
 		local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -89,7 +103,7 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 											   scepter_search_radius,
 											   DOTA_UNIT_TARGET_TEAM_ENEMY,
 											   DOTA_UNIT_TARGET_HERO,
-											   DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+											   target_flags,
 											   FIND_ANY_ORDER,
 											   false)
 
@@ -121,7 +135,7 @@ function imba_skywrath_mage_arcane_bolt:OnSpellStart()
 											   scepter_search_radius,
 											   DOTA_UNIT_TARGET_TEAM_ENEMY,
 											   DOTA_UNIT_TARGET_BASIC,
-											   DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+											   target_flags,
 											   FIND_ANY_ORDER,
 											   false)
 
@@ -201,7 +215,7 @@ function imba_skywrath_mage_arcane_bolt:OnProjectileHit(target, location)
 	end
 
 	-- If the target became magic immune, do nothing
-	if target:IsMagicImmune() then
+	if target:IsMagicImmune() and not self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_arcane_bolt_pierce") then
 		return nil
 	end
 
@@ -273,6 +287,22 @@ function modifier_imba_arcane_bolt_buff:IsHidden() return false end
 function modifier_imba_arcane_bolt_buff:IsPurgable() return false end
 function modifier_imba_arcane_bolt_buff:IsDebuff() return false end
 
+function modifier_imba_arcane_bolt_buff:OnCreated()
+	self.intelligence_bonus_per_stack	= self:GetAbility():GetSpecialValueFor("intelligence_bonus_per_stack")
+	self.projectile_speed_per_stack		= self:GetAbility():GetSpecialValueFor("projectile_speed_per_stack")
+end
+
+function modifier_imba_arcane_bolt_buff:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TOOLTIP}
+end
+
+function modifier_imba_arcane_bolt_buff:OnTooltip(keys)
+	if keys.fail_type == 0 then
+		return self.intelligence_bonus_per_stack * self:GetStackCount()
+	elseif keys.fail_type == 1 then
+		return self.projectile_speed_per_stack * self:GetStackCount()
+	end
+end
 
 ----------------------------
 --    CONCUSSIVE SHOT     --
@@ -750,8 +780,7 @@ function modifier_imba_ancient_seal_main:IsPurgable() return true end
 function modifier_imba_ancient_seal_main:IsDebuff() return true end
 
 function modifier_imba_ancient_seal_main:CheckState()
-	local state = {[MODIFIER_STATE_SILENCED] = true}
-	return state
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 -- Aura modifier
@@ -1165,9 +1194,11 @@ function modifier_imba_skywrath_flying_movement:IsDebuff() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_3", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_10", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_skywrath_mage_3		= class({})
 modifier_special_bonus_imba_skywrath_mage_10	= class({})
+modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce	= modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce or class({})
 
 function modifier_special_bonus_imba_skywrath_mage_3:IsHidden() 		return true end
 function modifier_special_bonus_imba_skywrath_mage_3:IsPurgable() 		return false end
@@ -1176,6 +1207,20 @@ function modifier_special_bonus_imba_skywrath_mage_3:RemoveOnDeath() 	return fal
 function modifier_special_bonus_imba_skywrath_mage_10:IsHidden() 		return true end
 function modifier_special_bonus_imba_skywrath_mage_10:IsPurgable() 		return false end
 function modifier_special_bonus_imba_skywrath_mage_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce:RemoveOnDeath() 	return false end
+
+function imba_skywrath_mage_arcane_bolt:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_arcane_bolt_pierce") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_skywrath_mage_arcane_bolt_pierce"), "modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce", {})
+	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skywrath_mage_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_skywrath_mage_10"), "modifier_special_bonus_imba_skywrath_mage_10", {})
+	end	
+end
 
 function imba_skywrath_mage_ancient_seal:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_skywrath_mage_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skywrath_mage_3") then

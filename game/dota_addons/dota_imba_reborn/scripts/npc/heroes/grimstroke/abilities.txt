@@ -340,6 +340,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_damage"			"180 280 380 480"
+				"LinkedSpecialBonus"	"special_bonus_imba_grimstroke_ink_swell_max_damage"
 			}
 			"06"
 			{
@@ -651,6 +652,34 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_grimstroke_ink_swell_max_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_grimstroke_spirit_walk"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"100"
 			}
 		}
 	}

@@ -41,9 +41,9 @@ imba_chen_test_of_faith									= class({})
 imba_chen_hand_of_god									= class({})
 modifier_imba_chen_hand_of_god_overheal					= class({})
 
-----------------
+---------------
 -- PENITENCE --
-----------------
+---------------
 
 function imba_chen_penitence:OnSpellStart()
 	if not IsServer() then return end
@@ -1096,6 +1096,10 @@ end
 -- HAND OF GOD --
 -----------------
 
+function imba_chen_hand_of_god:GetCooldown(iLevel)
+	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_chen_hand_of_god_cooldown")
+end
+
 function imba_chen_hand_of_god:OnSpellStart()
 	if not IsServer() then return end
 
@@ -1198,9 +1202,11 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_chen_divine_favor_cd_reduction		= class({})
 modifier_special_bonus_imba_chen_test_of_faith_cd_reduction		= class({})
+modifier_special_bonus_imba_chen_hand_of_god_cooldown			= modifier_special_bonus_imba_chen_hand_of_god_cooldown or class({})
 
 function modifier_special_bonus_imba_chen_divine_favor_cd_reduction:IsHidden() 			return true end
 function modifier_special_bonus_imba_chen_divine_favor_cd_reduction:IsPurgable() 		return false end
@@ -1210,6 +1216,9 @@ function modifier_special_bonus_imba_chen_test_of_faith_cd_reduction:IsHidden() 
 function modifier_special_bonus_imba_chen_test_of_faith_cd_reduction:IsPurgable() 		return false end
 function modifier_special_bonus_imba_chen_test_of_faith_cd_reduction:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_chen_hand_of_god_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_chen_hand_of_god_cooldown:IsPurgable() 	return false end
+function modifier_special_bonus_imba_chen_hand_of_god_cooldown:RemoveOnDeath() 	return false end
 
 function imba_chen_divine_favor:OnOwnerSpawned()
 	if not IsServer() then return end
@@ -1228,5 +1237,13 @@ function imba_chen_test_of_faith:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_test_of_faith_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_test_of_faith_cd_reduction"), "modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", {})
+	end
+end
+
+function imba_chen_hand_of_god:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_chen_hand_of_god_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_hand_of_god_cooldown"), "modifier_special_bonus_imba_chen_hand_of_god_cooldown", {})
 	end
 end

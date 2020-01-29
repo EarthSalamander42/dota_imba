@@ -1195,7 +1195,7 @@ function modifier_imba_geomagnetic_grip_pull:OnCreated()
 			-- ability params
 			self.hitRadius = self.ability:GetSpecialValueFor("effect_radius")
 			self.damage = self.ability:GetSpecialValueFor("damage")
-			self.silenceDuration = self.ability:GetSpecialValueFor("silence_duration")
+			self.silenceDuration = self.ability:GetTalentSpecialValueFor("silence_duration")
 			self.remnantVelocity = self.ability:GetSpecialValueFor("remnant_speed")
 			self.normalVelocity = self.ability:GetSpecialValueFor("speed")
 			
@@ -1224,16 +1224,29 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), self.hitRadius, false)
 		
 		local targets = FindUnitsInRadius(self.casterTeam, self.parent:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		
+		self.silence_modifier = nil
+		
 		for _, target in ipairs(targets) do
 			if not self.hitTargets[target:GetEntityIndex()] then
 				self.hitTargets[target:GetEntityIndex()] = true
-				target:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
+				
+				self.silence_modifier = target:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
+				
+				if self.silence_modifier then
+					self.silence_modifier:SetDuration(self.silenceDuration * (1 - target:GetStatusResistance()), true)
+				end
+				
 				EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Stun", target)
 				
 				local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 				for _, unit in ipairs(magnetizedFinder) do
 					if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
-						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
+						self.silence_modifier = unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
+						
+						if self.silence_modifier then
+							self.silence_modifier:SetDuration(self.silenceDuration * (1 - target:GetStatusResistance()), true)
+						end
 					end
 				end
 				

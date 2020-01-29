@@ -41,7 +41,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 260 370 480"
+				"damage"					"120 230 340 450"
 			}
 			"03"
 			{
@@ -145,6 +145,8 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Brewmaster.DrunkenHaze.Cast"
+
+		"HasScepterUpgrade"			"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -317,6 +319,34 @@
 				"scepter_movementspeed"		"150"
 				"RequiresScepter"			"1"
 			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_attack_speed"		"100"
+				"RequiresScepter"			"1"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_magic_resistance"	"20"
+				"RequiresScepter"			"1"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"co-pilot_cast_range"		"900"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"co-pilot_projectile_speed"	"600"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"co-pilot_fail_cooldown_pct"	"40"
+			}
 		}
 	}
 
@@ -329,24 +359,19 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_brewmaster"
-		"AbilityTextureName"			"brewmaster_primal_split"
+		"AbilityTextureName"			"custom/brewmaster/primal_unison"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"FightRecapLevel"				"2"
-		"AbilitySound"					"Hero_Brewmaster.PrimalSplit.Spawn"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		"HasScepterUpgrade"			"1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"8"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"3.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

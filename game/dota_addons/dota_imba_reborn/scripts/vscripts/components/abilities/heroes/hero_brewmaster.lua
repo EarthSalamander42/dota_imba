@@ -8,6 +8,7 @@ LinkLuaModifier("modifier_imba_brewmaster_cinder_brew", "components/abilities/he
 
 LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_brewmaster_primal_split", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_split_delay", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
@@ -26,6 +27,7 @@ imba_brewmaster_drunken_brawler						= imba_brewmaster_drunken_brawler or class(
 modifier_imba_brewmaster_drunken_brawler			= modifier_imba_brewmaster_drunken_brawler or class({})
 
 imba_brewmaster_primal_split						= imba_brewmaster_primal_split or class({})
+modifier_imba_brewmaster_primal_split				= modifier_imba_brewmaster_primal_split or class({})
 modifier_imba_brewmaster_primal_split_split_delay	= modifier_imba_brewmaster_primal_split_split_delay or class({})
 modifier_imba_brewmaster_primal_split_duration		= modifier_imba_brewmaster_primal_split_duration or class({})
 
@@ -100,6 +102,7 @@ function imba_brewmaster_thunder_clap:OnSpellStart()
 			ProjectileManager:CreateTrackingProjectile({
 				EffectName			= "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf",
 				Ability				= self,
+				-- Source				= self:GetCaster(),
 				Source				= GetGroundPosition(self:GetCaster():GetAbsOrigin() + (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("radius"), nil),
 				vSourceLoc			= GetGroundPosition(self:GetCaster():GetAbsOrigin() + (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("radius"), nil), -- Does this have to be the same as Source? IDK
 				Target				= enemy,
@@ -309,7 +312,7 @@ function imba_brewmaster_cinder_brew:OnSpellStart()
 		fStartRadius	= self:GetSpecialValueFor("radius"),
 		fEndRadius		= self:GetSpecialValueFor("radius"),
 		fExpireTime		= nil,
-		iUnitTargetTeam	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetTeam	= DOTA_UNIT_TARGET_TEAM_BOTH,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bIgnoreSource		= true,
@@ -328,24 +331,31 @@ end
 
 -- Due to some weird logic detailed in the wiki where this doesn't work as a simple "apply immediately to all enemies upon projectile land" but rather like a wave that gradually affects units but only if they're within a radius, going to use a thinker
 function imba_brewmaster_cinder_brew:OnProjectileThinkHandle(projectileHandle)
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), ProjectileManager:GetLinearProjectileLocation(projectileHandle), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		-- Check if the projectile, the enemy, and the final destination radius are all overlapping or not
-		if self.projectiles[projectileHandle]["destination"] and ((self.projectiles[projectileHandle]["destination"] - ProjectileManager:GetLinearProjectileLocation(projectileHandle)) * Vector(1, 1, 0)):Length2D() <= self:GetSpecialValueFor("radius") and ((enemy:GetAbsOrigin() - ProjectileManager:GetLinearProjectileLocation(projectileHandle)) * Vector(1, 1, 0)):Length2D() <= self:GetSpecialValueFor("radius") and not self.projectiles[projectileHandle][enemy:entindex()] then
-			self.projectiles[projectileHandle][enemy:entindex()]	= true
+	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), ProjectileManager:GetLinearProjectileLocation(projectileHandle), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		-- Check if the projectile, the unit, and the final destination radius are all overlapping or not
+		if self.projectiles[projectileHandle]["destination"] and ((self.projectiles[projectileHandle]["destination"] - ProjectileManager:GetLinearProjectileLocation(projectileHandle)) * Vector(1, 1, 0)):Length2D() <= self:GetSpecialValueFor("radius") and ((unit:GetAbsOrigin() - ProjectileManager:GetLinearProjectileLocation(projectileHandle)) * Vector(1, 1, 0)):Length2D() <= self:GetSpecialValueFor("radius") and not self.projectiles[projectileHandle][unit:entindex()] then
+			self.projectiles[projectileHandle][unit:entindex()]	= true
 			
-			if enemy:IsHero() then
-				enemy:EmitSound("Hero_Brewmaster.CinderBrew.Target")
+			if unit:IsHero() then
+				unit:EmitSound("Hero_Brewmaster.CinderBrew.Target")
 			else
-				enemy:EmitSound("Hero_Brewmaster.CinderBrew.Target.Creep")
+				unit:EmitSound("Hero_Brewmaster.CinderBrew.Target.Creep")
 			end
 			
-			-- IMBAfication: Alcohol Wash
-			enemy:Purge(true, false, false, false, false)
+			if unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+				-- IMBAfication: Alcohol Wash
+				unit:Purge(true, false, false, false, false)
+				
+				self.brew_modifier = unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
+				
+				if self.brew_modifier then
+					self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()), true)
+				end
+			elseif self:GetCaster():HasScepter() then
+				local splash_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2_splash.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:ReleaseParticleIndex(splash_particle)
 			
-			self.brew_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
-			
-			if self.brew_modifier then
-				self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+				unit:Purge(false, true, false, true, true)
 			end
 		end
 	end
@@ -355,23 +365,30 @@ function imba_brewmaster_cinder_brew:OnProjectileHitHandle(target, location, pro
 	if not target and location then
 		EmitSoundOnLocationWithCaster(location, "Hero_Brewmaster.CinderBrew", self:GetCaster())
 		
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-			if not self.projectiles[projectileHandle][enemy:entindex()] then
-				self.projectiles[projectileHandle][enemy:entindex()]	= true
+		for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+			if not self.projectiles[projectileHandle][unit:entindex()] then
+				self.projectiles[projectileHandle][unit:entindex()]	= true
 				
-				if enemy:IsHero() then
-					enemy:EmitSound("Hero_Brewmaster.CinderBrew.Target")
+				if unit:IsHero() then
+					unit:EmitSound("Hero_Brewmaster.CinderBrew.Target")
 				else
-					enemy:EmitSound("Hero_Brewmaster.CinderBrew.Target.Creep")
+					unit:EmitSound("Hero_Brewmaster.CinderBrew.Target.Creep")
 				end
 				
-				-- IMBAfication: Alcohol Wash
-				enemy:Purge(true, false, false, false, false)
+				if unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+					-- IMBAfication: Alcohol Wash
+					unit:Purge(true, false, false, false, false)
+					
+					self.brew_modifier = unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
+					
+					if self.brew_modifier then
+						self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()), true)
+					end
+				elseif self:GetCaster():HasScepter() then
+					local splash_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2_splash.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+					ParticleManager:ReleaseParticleIndex(splash_particle)
 				
-				self.brew_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
-				
-				if self.brew_modifier then
-					self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+					unit:Purge(false, true, false, true, true)
 				end
 			end
 		end
@@ -583,8 +600,36 @@ end
 -- IMBA_BREWMASTER_PRIMAL_SPLIT --
 ----------------------------------
 
+function imba_brewmaster_primal_split:CastFilterResultTarget(target)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_brewmaster_primal_split", self:GetCaster()) == 0 then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_NONE, DOTA_UNIT_TARGET_NONE, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_brewmaster_primal_split:GetIntrinsicModifierName()
+	return "modifier_imba_brewmaster_primal_split"
+end
+
 function imba_brewmaster_primal_split:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_cooldown")
+end
+
+function imba_brewmaster_primal_split:GetBehavior()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_brewmaster_primal_split", self:GetCaster()) == 0 then
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
+function imba_brewmaster_primal_split:GetCastRange(location, target)
+	if self:GetCaster():GetModifierStackCount("modifier_imba_brewmaster_primal_split", self:GetCaster()) == 0 then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("co-pilot_cast_range")
+	end
 end
 
 function imba_brewmaster_primal_split:OnAbilityPhaseStart()
@@ -611,9 +656,66 @@ function imba_brewmaster_primal_split:OnAbilityPhaseInterrupted()
 end
 
 function imba_brewmaster_primal_split:OnSpellStart()
-	self:GetCaster():EmitSound("Hero_Brewmaster.PrimalSplit.Cast")
+	if not self:GetAutoCastState() then
+		self:GetCaster():EmitSound("Hero_Brewmaster.PrimalSplit.Cast")
+		
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_primal_split_split_delay", {duration = self:GetSpecialValueFor("split_duration")})
+	else
+		self:GetCaster():EmitSound("Hero_Brewmaster.Primal_Split_Projectile_Cast")
 	
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_primal_split_split_delay", {duration = self:GetSpecialValueFor("split_duration")})
+		ProjectileManager:CreateTrackingProjectile({
+			EffectName			= "particles/hero/brewmaster/primal_split_co-pilot.vpcf",
+			Ability				= self,
+			Source				= self:GetCaster():GetAbsOrigin(),
+			vSourceLoc			= self:GetCaster():GetAbsOrigin(),
+			Target				= self:GetCursorTarget(),
+			iMoveSpeed			= self:GetSpecialValueFor("co-pilot_projectile_speed"),
+			-- flExpireTime		= nil,
+			bDodgeable			= false,
+			bIsAttack			= false,
+			bReplaceExisting	= false,
+			iSourceAttachment	= nil,
+			bDrawsOnMinimap		= nil,
+			bVisibleToEnemies	= true,
+			bProvidesVision		= false,
+			iVisionRadius		= nil,
+			iVisionTeamNumber	= nil,
+			ExtraData			= {}
+		})
+	end
+end
+
+function imba_brewmaster_primal_split:OnProjectileHitHandle(target, location, projectileHandle)
+	if target and target:IsAlive() and not target:IsInvulnerable() then
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_primal_split_split_delay", {duration = self:GetSpecialValueFor("split_duration")})
+	else
+		-- Assuming the projectile failed to land
+		self:EndCooldown()
+		self:StartCooldown(self:GetCooldown(self:GetLevel()) * self:GetSpecialValueFor("co-pilot_fail_cooldown_pct") * 0.01 * self:GetCaster():GetCooldownReduction())
+	end
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_PRIMAL_SPLIT --
+-------------------------------------------
+
+function modifier_imba_brewmaster_primal_split:IsHidden()		return true end
+function modifier_imba_brewmaster_primal_split:IsPurgable()		return false end
+function modifier_imba_brewmaster_primal_split:RemoveOnDeath()	return false end
+
+function modifier_imba_brewmaster_primal_split:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ORDER}
+end
+
+function modifier_imba_brewmaster_primal_split:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
 end
 
 -------------------------------------------------------
@@ -664,7 +766,7 @@ function modifier_imba_brewmaster_primal_split_split_delay:OnDestroy()
 	
 		local split_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_brewmaster_primal_split_duration", {duration = self.duration})
 		
-		local earth_panda	= CreateUnitByName("npc_dota_brewmaster_earth_"..self:GetAbility():GetLevel(), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		local earth_panda	= CreateUnitByName("npc_dota_brewmaster_earth_"..self:GetAbility():GetLevel(), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100, true, self:GetParent(), self:GetParent(), self:GetCaster():GetTeamNumber())
 		
 		local storm_panda	= CreateUnitByName("npc_dota_brewmaster_storm_"..self:GetAbility():GetLevel(), RotatePosition(self:GetParent():GetAbsOrigin(), QAngle(0, 120, 0), self:GetParent():GetAbsOrigin() + self:GetParent():GetForwardVector() * 100), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 		
@@ -699,11 +801,13 @@ function modifier_imba_brewmaster_primal_split_split_delay:OnDestroy()
 		table.insert(self.pandas, fire_panda)
 
 		table.insert(self.pandas_entindexes, earth_panda:entindex())
-		table.insert(self.pandas_entindexes, storm_panda:entindex())
-		table.insert(self.pandas_entindexes, fire_panda:entindex())
+		
+		if self:GetCaster() == self:GetParent() then
+			table.insert(self.pandas_entindexes, storm_panda:entindex())
+			table.insert(self.pandas_entindexes, fire_panda:entindex())
+		end
 		
 		self:GetParent():FollowEntity(earth_panda, false)
-		-- PlayerResource:ResetSelection(self:GetCaster():GetPlayerID())
 		
 		if split_modifier then
 			split_modifier.pandas				= self.pandas
@@ -721,8 +825,13 @@ function modifier_imba_brewmaster_primal_split_split_delay:OnDestroy()
 				panda:SetHealth(panda:GetHealth() + self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_health"))
 			end
 			
-			panda:SetControllableByPlayer(self:GetParent():GetPlayerID(), true)
-			PlayerResource:AddToSelection(self:GetCaster():GetPlayerID(), panda)
+			if panda:GetName() == "npc_dota_brewmaster_earth" then
+				panda:SetControllableByPlayer(self:GetParent():GetPlayerID(), true)
+			else
+				panda:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+			end
+			
+			PlayerResource:AddToSelection(self:GetParent():GetPlayerID(), panda)
 			
 			for _, ability in pairs(self.standard_abilities) do
 				if panda:HasAbility(ability) then
@@ -749,9 +858,17 @@ function modifier_imba_brewmaster_primal_split_split_delay:OnDestroy()
 			-- end
 		end
 		
+		-- IMBAfication: Primal Unison
+		local unison_ability = earth_panda:AddAbility("imba_brewmaster_primal_unison")
+		
+		if unison_ability then
+			unison_ability:SetLevel(1)
+			earth_panda:SwapAbilities("imba_brewmaster_primal_unison", "generic_hidden", true, false)
+		end
+		
 		-- Set the default selection to the pandas
-		PlayerResource:RemoveFromSelection(self:GetCaster():GetPlayerID(), self:GetParent())
-		PlayerResource:SetDefaultSelectionEntities(self:GetCaster():GetPlayerID(), self.pandas_entindexes)
+		PlayerResource:RemoveFromSelection(self:GetParent():GetPlayerID(), self:GetParent())
+		PlayerResource:SetDefaultSelectionEntities(self:GetParent():GetPlayerID(), self.pandas_entindexes)
 		self:GetParent():AddNoDraw()
 	end
 end
@@ -764,35 +881,22 @@ function modifier_imba_brewmaster_primal_split_duration:IsPurgable()	return fals
 
 function modifier_imba_brewmaster_primal_split_duration:OnCreated(keys)
 	if self:GetAbility() then
-		self.scepter_movementspeed	= self:GetAbility():GetSpecialValueFor("scepter_movementspeed")
+		self.scepter_movementspeed		= self:GetAbility():GetSpecialValueFor("scepter_movementspeed")
+		self.scepter_attack_speed		= self:GetAbility():GetSpecialValueFor("scepter_attack_speed")
+		self.scepter_magic_resistance	= self:GetAbility():GetSpecialValueFor("scepter_magic_resistance")
 	else
-		self.scepter_movementspeed	= 150
+		self.scepter_movementspeed		= 150
+		self.scepter_attack_speed		= 100
+		self.scepter_magic_resistance	= 20
 	end
 
 	if not IsServer() then return end
 	
+	-- self.parent here refers to the main modifier holder, not necessarily the caster (due to IMBAfications)
 	if keys and keys.parent_entindex then
 		self.parent	= EntIndexToHScript(keys.parent_entindex)
 	end
-
-	-- -- Jank FrameTime() interval thinker to force selection to pandas if self is attempted to be selected (ex. through clicking F1) (might not be needed now)
-	-- if self:GetParent():IsHero() then
-		-- self:OnIntervalThink()
-		-- self:StartIntervalThink(FrameTime())
-	-- end
 end
-
--- function modifier_imba_brewmaster_primal_split_duration:OnIntervalThink()
-	-- if PlayerResource:GetSelectedEntities(self:GetParent():GetPlayerID())['0'] and PlayerResource:GetSelectedEntities(self:GetParent():GetPlayerID())['0'] == self:GetParent():entindex() and self.pandas then
-		-- for _, panda in pairs(self.pandas) do
-			-- if not panda:IsNull() and panda:IsAlive() then
-				-- PlayerResource:AddToSelection(self:GetCaster():GetPlayerID(), panda)
-			-- end
-		-- end
-		
-		-- PlayerResource:RemoveFromSelection(self:GetParent():GetPlayerID(), self:GetParent())
-	-- end
--- end
 
 function modifier_imba_brewmaster_primal_split_duration:OnDestroy()
 	if not IsServer() then return end
@@ -804,7 +908,7 @@ function modifier_imba_brewmaster_primal_split_duration:OnDestroy()
 			if not self.responses then
 				self.responses = {
 					"brewmaster_brew_ability_primalsplit_10",
-					"brewmaster_brew_ability_primalsplit_125",
+					"brewmaster_brew_ability_primalsplit_12",
 					"brewmaster_brew_ability_primalsplit_15",
 					"brewmaster_brew_ability_primalsplit_16",
 					"brewmaster_brew_ability_primalsplit_17"
@@ -829,7 +933,7 @@ function modifier_imba_brewmaster_primal_split_duration:CheckState()
 		
 		[MODIFIER_STATE_STUNNED]			= self:GetParent():IsHero(),
 		[MODIFIER_STATE_NOT_ON_MINIMAP]		= self:GetParent():IsHero(),
-		[MODIFIER_STATE_NO_UNIT_COLLISION]	= self:GetParent():IsHero() or self:GetCaster():HasScepter(),
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= self:GetParent():IsHero() or self:GetCaster():HasScepter() or self:GetParent():GetName() == "npc_dota_brewmaster_fire",
 		[MODIFIER_STATE_UNSELECTABLE]		= self:GetParent():IsHero(),
 	}
 end
@@ -839,7 +943,10 @@ function modifier_imba_brewmaster_primal_split_duration:DeclareFunctions()
 		MODIFIER_EVENT_ON_DEATH,
 	
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+		
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
 end
 
@@ -869,8 +976,6 @@ function modifier_imba_brewmaster_primal_split_duration:OnDeath(keys)
 					return EntIndexToHScript(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes[i]) and EntIndexToHScript(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes[i]):IsAlive()
 				end)
 				
-				PlayerResource:SetDefaultSelectionEntities(self.parent:GetPlayerID(), self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes)
-				
 				-- Yeah technically this should be done with just the one array but I guess I can make the excuse that I'm showing two different ways of doing this
 				local bNoneAlive	= true
 				
@@ -879,14 +984,27 @@ function modifier_imba_brewmaster_primal_split_duration:OnDeath(keys)
 					if not panda:IsNull() and panda:IsAlive() then
 						bNoneAlive = false
 						self.parent:FollowEntity(panda, false)
+						
+						if self.parent ~= self:GetCaster() then
+							table.insert(self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes, panda:entindex())
+							panda:SetOwner(self.parent)
+							panda:SetControllableByPlayer(self.parent:GetPlayerID(), true)
+						end
+						
 						break
 					end
 				end
 				
+				-- If one of the brewlings are killed, update the default unit selection to the remainng brewlings
+				PlayerResource:SetDefaultSelectionEntities(self.parent:GetPlayerID(), self.parent:FindModifierByName("modifier_imba_brewmaster_primal_split_duration").pandas_entindexes)
+				
 				if bNoneAlive then
 					self.parent:RemoveModifierByName("modifier_imba_brewmaster_primal_split_duration")
-					-- self.parent:SetHealth(1)
-					self.parent:Kill(self:GetAbility(), keys.attacker)
+					
+					if keys.attacker ~= self:GetParent() then
+						-- self.parent:SetHealth(1)
+						self.parent:Kill(self:GetAbility(), keys.attacker)
+					end
 				end
 			end
 		end
@@ -905,43 +1023,105 @@ function modifier_imba_brewmaster_primal_split_duration:GetModifierIgnoreMovespe
 	end
 end
 
+function modifier_imba_brewmaster_primal_split_duration:GetModifierAttackSpeedBonus_Constant()
+	if self:GetCaster() and self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetParent() then
+		return self.scepter_attack_speed
+	end
+end
+
+function modifier_imba_brewmaster_primal_split_duration:GetModifierMagicalResistanceBonus()
+	if self:GetCaster() and self:GetCaster():HasScepter() and self:GetCaster() ~= self:GetParent() then
+		return self.scepter_magic_resistance
+	end
+end
+
+
 -----------------------------------
 -- IMBA_BREWMASTER_PRIMAL_UNISON --
 -----------------------------------
 
+function imba_brewmaster_primal_unison:IsStealable()	return false end
+
 function imba_brewmaster_primal_unison:OnSpellStart()
-	-- for _, mod in pairs(self:GetCaster():FindAllModifiers()) do
-		-- print(mod:GetName())
-	-- end
+	self:GetCaster():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 0.25)
 	
-	-- if self:GetCaster():HasModifier("modifier_brewmaster_primal_split_duration") then
-		-- self:GetCaster():FindModifierByName("modifier_brewmaster_primal_split_duration"):Destroy()
-	-- end
-	
-	-- Yeah this doesn't work
-	if self:GetCaster():GetOwner() then
-		self:GetCaster():GetOwner():AddNewModifier(self:GetCaster():GetOwner(), self, "modifier_imba_brewmaster_primal_unison", {})
-		
-		for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_earth")) do
-			if ent:GetOwner() == self:GetCaster():GetOwner() then
-				ent:ForceKill(false)
-			end
-		end
+	self.particle = ParticleManager:CreateParticle("particles/econ/items/windrunner/windrunner_ti6/windrunner_spell_powershot_channel_ti6.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(self.particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+end
 
-		for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_storm")) do
-			if ent:GetOwner() == self:GetCaster():GetOwner() then
-				ent:ForceKill(false)
-			end
-		end
+-- function imba_brewmaster_primal_unison:OnChannelThink(flInterval)
 
-		for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_fire")) do
-			if ent:GetOwner() == self:GetCaster():GetOwner() then
-				ent:ForceKill(false)
+-- end
+
+function imba_brewmaster_primal_unison:OnChannelFinish(bInterrupted)
+	self:GetCaster():RemoveGesture(ACT_DOTA_CAST_ABILITY_1)
+
+	ParticleManager:DestroyParticle(self.particle, false)
+	ParticleManager:ReleaseParticleIndex(self.particle)
+
+	if not bInterrupted then
+		-- Yeah this doesn't work
+		if self:GetCaster():GetOwner() then
+			-- self:GetCaster():GetOwner():AddNewModifier(self:GetCaster():GetOwner(), self, "modifier_imba_brewmaster_primal_unison", {})
+			
+			for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_fire")) do
+				if ent:GetOwner() == self:GetCaster():GetOwner() then
+					ent:ForceKill(false)
+				end
 			end
+
+			for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_storm")) do
+				if ent:GetOwner() == self:GetCaster():GetOwner() then
+					ent:ForceKill(false)
+				end
+			end
+			
+			for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_earth")) do
+				if ent:GetOwner() == self:GetCaster():GetOwner() then
+					ent:ForceKill(false)
+				end
+			end
+			
+			-- self:GetCaster():GetOwner():RemoveModifierByName("modifier_imba_brewmaster_primal_unison")
+			self:GetCaster():GetOwner():RemoveModifierByName("modifier_imba_brewmaster_primal_split_duration")
 		end
-		
-		self:GetCaster():GetOwner():RemoveModifierByName("modifier_imba_brewmaster_primal_unison")
 	end
+	
+	
+	-- self:GetCaster():StopSound(self.channel_sound)
+	-- self:GetCaster():EmitSound(self.attack_sound)
+	
+	-- if self.fortunes_particle then
+		-- ParticleManager:DestroyParticle(self.fortunes_particle, false)
+		-- ParticleManager:ReleaseParticleIndex(self.fortunes_particle)
+	-- end
+	
+	-- ProjectileManager:CreateTrackingProjectile(	{
+		-- Target 				= self.target,
+		-- Source 				= self:GetCaster(),
+		-- Ability 			= self,
+		-- EffectName 			= self.effect_name,
+		-- iMoveSpeed			= self:GetSpecialValueFor("bolt_speed"),
+		-- vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
+		-- bDrawsOnMinimap 	= false,
+		-- bDodgeable 			= false,
+		-- bIsAttack 			= false,
+		-- bVisibleToEnemies 	= true,
+		-- bReplaceExisting 	= false,
+		-- flExpireTime 		= GameRules:GetGameTime() + 10.0,
+		-- bProvidesVision 	= false,
+		
+		-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		
+		-- ExtraData = {
+			-- charge_pct			= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()),
+			-- target_sound		= self.target_sound,
+			-- aoe_particle_name	= self.aoe_particle_name,
+			-- modifier_name		= self.modifier_name,
+			-- autocast_state		= self.autocast_state
+		-- }
+	-- })
 end
 
 --------------------------------------------

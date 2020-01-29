@@ -201,7 +201,7 @@ end
 -----------------
 
 function imba_puck_waning_rift:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
+	return self:GetTalentSpecialValueFor("radius")
 end
 
 function imba_puck_waning_rift:CastFilterResultTarget(target)
@@ -210,6 +210,10 @@ end
 
 function imba_puck_waning_rift:GetBehavior()
 	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+end
+
+function imba_puck_waning_rift:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_puck_waning_rift_range")
 end
 
 function imba_puck_waning_rift:GetCooldown(level)
@@ -224,14 +228,14 @@ function imba_puck_waning_rift:OnSpellStart()
 	end
 	
 	local rift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_waning_rift.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(rift_particle, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
+	ParticleManager:SetParticleControl(rift_particle, 1, Vector(self:GetTalentSpecialValueFor("radius"), 0, 0))
 	ParticleManager:ReleaseParticleIndex(rift_particle)
 	
 	if not self:GetCaster():IsRooted() then
 		FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
 	end
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetTalentSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 	for _, enemy in pairs(enemies) do
 		-- "Waning Rift first applies the damage, then the debuff."
@@ -812,17 +816,27 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_range", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_puck_waning_rift_cooldown	= class({})
+modifier_special_bonus_imba_puck_waning_rift_range		= modifier_special_bonus_imba_puck_waning_rift_range or class({})
 
 function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsHidden() 		return true end
 function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsPurgable() 	return false end
 function modifier_special_bonus_imba_puck_waning_rift_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_puck_waning_rift_range:IsHidden() 			return true end
+function modifier_special_bonus_imba_puck_waning_rift_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_puck_waning_rift_range:RemoveOnDeath() 	return false end
 
 function imba_puck_waning_rift:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_cooldown"), "modifier_special_bonus_imba_puck_waning_rift_cooldown", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_range"), "modifier_special_bonus_imba_puck_waning_rift_range", {})
 	end
 end

@@ -507,11 +507,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health_regen"	"8"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.25"
-			}
 		}
 	}
 
@@ -1239,11 +1234,6 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"55"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -2216,7 +2206,7 @@
 	//=================================================================================================================
 	"chaos_knight_reality_rift"
 	{
-		"AbilityCastRange"				"500 750 1000 1250"
+		"AbilityCastRange"				"500 650 800 950"
 		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
@@ -2224,12 +2214,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"500 750 1000 1250"
+				"cast_range"				"500 650 800 950"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_distance"				"300 400 500 600"
+				"pull_distance"				"250 350 450 550"
 			}		
 		}
 	}
@@ -2312,6 +2302,12 @@
 	//=================================================================================================================
 	"death_prophet_spirit_siphon"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCharges"				"3 4 5 6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"70 60 50 40"
 
 		"AbilitySpecial"
@@ -2341,16 +2337,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"siphon_buffer"			"250 300 350 400"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3 4 5 6"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"45 40 35 30"
 			}
 		}
 	}
@@ -7336,11 +7322,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"300 600 900 1200"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_damage_pct"		"40"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -7398,11 +7379,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"300 800 1300 1800"
 				"LinkedSpecialBonus"		"special_bonus_unique_techies"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_cost"					"50 45 40 35"
 			}
 		}
 	}

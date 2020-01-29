@@ -80,6 +80,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_7_Description"			"Enigma gets 1 second of magic immunity whenever he casts a spell, which stacks with itself."
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_8"						"Heroes can be used as sources for Eidolons"
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_8_Description"			"They become the target of Primordial Shard, using their stats to fuel the Eidolons."
+"DOTA_Tooltip_ability_special_bonus_imba_enigma_malefice_damage"		"+{s:value} Malefice Instance Damage"
 
 "DOTA_Tooltip_modifier_enigma_magic_immunity"                          "Void of Magic"
 "DOTA_Tooltip_modifier_enigma_magic_immunity_Description"              "Void of Magic gives you spell immunity."

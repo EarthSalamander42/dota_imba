@@ -20,6 +20,7 @@
 #base heroes/enchantress/abilities.txt
 #base heroes/furion/abilities.txt
 #base heroes/grimstroke/abilities.txt
+#base heroes/gyrocopter/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
 #base heroes/leshrac/abilities.txt
@@ -5499,7 +5500,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tick_damage"				"30 70 100 120"
+				"tick_damage"				"30 60 90 120"
+				"LinkedSpecialBonus"		"special_bonus_imba_enigma_malefice_damage"
 			}
 
 			"02"
@@ -6070,6 +6072,31 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_malefice_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_malefice"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"40"
 			}
 		}
 	}
@@ -10535,7 +10562,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"transformation_time"		"1.5"
+				"transformation_time"		"1.25"
 			}
 			"02"
 			{
@@ -14908,7 +14935,7 @@
 			"05"
 			{
 				"var_type" 					"FIELD_FLOAT"
-				"tick_rate"					"1"
+				"tick_rate"					"0.5"
 			}
 			"06"
 			{
@@ -15254,7 +15281,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"3"
+				"value"					"1"
 			}
 		}
 	}
@@ -16252,7 +16279,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"340 430 520"
+				"damage"				"340 450 560"
 			}
 			"02"
 			{
@@ -18800,7 +18827,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"intelligence_bonus_per_stack"	"8"
+				"intelligence_bonus_per_stack"	"6"
 			}
 
 			"06"
@@ -19389,6 +19416,31 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_skywrath_mage_concussive_shot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_skywrath_mage_arcane_bolt_pierce"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_skywrath_mage_arcane_bolt"
 		}
 
 		// Special
@@ -22625,7 +22677,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16"
+		"AbilityCooldown"				"14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27612,7 +27664,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"30"
+				"bonus_movement_speed"		"25"
 			}
 			"03"
 			{
@@ -32300,7 +32352,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"nyx_assassin_vendetta"
@@ -39133,6 +39185,29 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"debuff_amount_scepter"	"4"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_empress_royal_wrath_cooldown"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"0.3"
 			}
 		}
 	}

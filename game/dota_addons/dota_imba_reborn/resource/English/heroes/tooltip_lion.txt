@@ -103,7 +103,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lion_1"                "Earth Spikes branches off creeps as well"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_2"                "Hexed targets have Break applied"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_3"                "Mana Drain Overcharge"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for %duration% seconds, adding to Finger of Death's damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for 8 seconds, adding to Finger of Death's damage."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_4"                "Mana Drain slows target based on missing mana"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_5"                "FoD's Trigger Finger no longer requires kills"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_5_Description"	"Trigger Finger's debuff when an enemy is not killed is 30 seconds."

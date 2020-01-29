@@ -194,6 +194,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attack_range_bonus"	"60 120 180 240"
+				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_chilling_touch_range"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"packed_ice_duration"	"0.1"
 			}
 		}
 	}
@@ -279,7 +285,7 @@
 			"08"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"kill_pct"				"10.0 12.0 14.0"
+				"kill_pct"				"12.0 13.0 14.0"
 				//"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_5"
 				"LinkedSpecialBonus"	"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold"
 			}
@@ -566,7 +572,6 @@
 			}
 		}
 	}
-
 	
 	//=================================================================================================================
 	// Talent: X AoE Cold Feet
@@ -594,7 +599,35 @@
 				"value"					"625"
 			}
 		}
-	}	
+	}
+	
+	//=================================================================================================================
+	// Talent: +X Chilling Touch Attack Range
+	//=================================================================================================================
+	"special_bonus_imba_ancient_apparition_chilling_touch_range" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_ancient_apparition_chilling_touch"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"175"
+			}
+		}
+	}
 	
 	// Vanilla overrides
 

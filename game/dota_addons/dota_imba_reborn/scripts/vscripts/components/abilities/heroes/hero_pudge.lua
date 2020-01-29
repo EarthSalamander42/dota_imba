@@ -1125,7 +1125,7 @@ function imba_pudge_dismember:OnSpellStart()
 
 	self.target = target
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self:GetChannelTime()})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self:GetChannelTime() - FrameTime()})
 
 	if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
 		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
@@ -1203,37 +1203,40 @@ function modifier_imba_dismember:IsDebuff() return true end
 function modifier_imba_dismember:IsHidden() return false end
 
 function modifier_imba_dismember:OnCreated()
+	self.dismember_damage	= self:GetAbility():GetSpecialValueFor("dismember_damage")
+	self.strength_damage	= self:GetAbility():GetSpecialValueFor("strength_damage")
+	
 	if IsServer() then
 	
-		self.damage_ticks = 0
+		-- self.damage_ticks = 0
 		
-		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("tick_rate") * (1 - self:GetParent():GetStatusResistance()))
+		self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_rate") * (1 - self:GetParent():GetStatusResistance())
+		
+		self:StartIntervalThink(self.tick_interval)
 
 		self:OnIntervalThink()
 		
 		-- Add the pull towards modifier
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {duration = self:GetAbility():GetChannelTime()})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {duration = self:GetAbility():GetChannelTime() - FrameTime()})
 	end
 end
 
 function modifier_imba_dismember:OnIntervalThink()
-	if not IsServer() then return end
+	-- if not IsServer() then return end
 	
-	if self.damage_ticks < 3 then
-		local ability = self:GetAbility()
-		local dmg = ability:GetSpecialValueFor("dismember_damage") + self:GetCaster():GetStrength() * ability:GetSpecialValueFor("strength_damage") * 0.01
+	-- if self.damage_ticks < 3 then
 		local damageTable = {
-			victim = self:GetParent(),
-			attacker = self:GetCaster(),
-			damage = dmg,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			damage_flags = DOTA_DAMAGE_FLAG_NONE,
-			ability = self:GetAbility(),
+			victim			= self:GetParent(),
+			attacker		= self:GetCaster(),
+			damage			= (self.dismember_damage + self:GetCaster():GetStrength() * self.strength_damage * 0.01) * self.tick_interval,
+			damage_type 	= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			ability 		= self:GetAbility(),
 		}
 		ApplyDamage(damageTable)
 	
-		self.damage_ticks = self.damage_ticks + 1
-	end
+		-- self.damage_ticks = self.damage_ticks + 1
+	-- end
 end
 
 function modifier_imba_dismember:OnDestroy()
