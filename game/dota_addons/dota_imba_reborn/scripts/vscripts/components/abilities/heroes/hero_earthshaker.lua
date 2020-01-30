@@ -184,10 +184,10 @@ function modifier_earthshaker_fissure_lua_thinker:OnIntervalThink()
 		false
 	)
 
-	-- Prevent units from moving if near fissure
-	for _,unit in pairs(units) do
-		unit:AddNewModifier(unit, self:GetAbility(), "modifier_earthshaker_fissure_lua_prevent_movement", {duration=0.1})
-	end
+	-- -- Prevent units from moving if near fissure
+	-- for _,unit in pairs(units) do
+		-- unit:AddNewModifier(unit, self:GetAbility(), "modifier_earthshaker_fissure_lua_prevent_movement", {duration=0.1})
+	-- end
 end
 --[[
 function modifier_earthshaker_fissure_lua_thinker:OnRefresh( kv )

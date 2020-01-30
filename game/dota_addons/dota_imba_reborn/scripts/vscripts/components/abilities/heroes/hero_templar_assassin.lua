@@ -787,7 +787,7 @@ function modifier_imba_templar_assassin_trap_slow:OnCreated(params)
 	self.slow						= params.slow * (-1)
 	self.elapsedTime				= params.elapsedTime
 	
-	self.trap_duration_tooltip		= self:GetAbility():GetSpecialValueFor("trap_duration_tooltip")
+	self.trap_duration_tooltip		= math.max(self:GetAbility():GetSpecialValueFor("trap_duration_tooltip"), self:GetAbility():GetSpecialValueFor("trap_duration"))
 	self.trap_bonus_damage			= self:GetAbility():GetTalentSpecialValueFor("trap_bonus_damage")
 	self.trap_max_charge_duration	= self:GetAbility():GetSpecialValueFor("trap_max_charge_duration")
 	

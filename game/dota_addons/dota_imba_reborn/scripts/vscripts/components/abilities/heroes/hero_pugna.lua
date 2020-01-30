@@ -1261,7 +1261,7 @@ end
 function modifier_imba_life_drain:OnIntervalThink()
 	if IsServer() then
 		-- If the target is an enemy illusion, kill it
-		if self.parent:IsIllusion() and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and (not self.parent.Custom_IsStrongIllusion or (self.parent.Custom_IsStrongIllusion and not self.parent:Custom_IsStrongIllusion())) then
+		if self.parent:IsIllusion() and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and not Custom_bIsStrongIllusion(self.parent) then
 			self.parent:Kill(self.ability, self.caster)
 			return nil
 		end
