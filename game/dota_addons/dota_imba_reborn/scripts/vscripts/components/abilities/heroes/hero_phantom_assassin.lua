@@ -1189,13 +1189,17 @@ LinkLuaModifier("modifier_phantom_assassin_gravestone", "components/abilities/he
 
 modifier_phantom_assassin_gravestone = modifier_phantom_assassin_gravestone or class({})
 
-function modifier_phantom_assassin_gravestone:IsHidden() return false end
+function modifier_phantom_assassin_gravestone:IsHidden() return true end
 
 function modifier_phantom_assassin_gravestone:CheckState() return {
 	[MODIFIER_STATE_INVULNERABLE] = true,
 	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 	[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+	
+	[MODIFIER_STATE_OUT_OF_GAME] = true,
+	[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
+	[MODIFIER_STATE_IGNORING_STOP_ORDERS] = true
 } end
 
 function modifier_phantom_assassin_gravestone:OnCreated(keys)
