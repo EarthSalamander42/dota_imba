@@ -126,6 +126,7 @@ function GameMode:SetupFountains()
 end
 
 function GameMode:SetupShrines()
+	-- replace 3 base fillers with shrines
 	local good_fillers = {
 		"good_filler_1",
 		"good_filler_3",
@@ -162,6 +163,45 @@ function GameMode:SetupShrines()
 
 	for _, shrine in pairs(Entities:FindAllByClassname("npc_dota_filler")) do
 		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+	end
+
+	-- jungle shrines
+	local good_shrine_position = {
+		Vector(-3700, 400, 384 - 20 --[[ looks weird otherwise ]]),
+	}
+
+	local bad_shrine_position = {
+		Vector(3200, -840, 384 - 20 --[[ looks weird otherwise ]]),
+	}
+
+	for _, pos in pairs(good_shrine_position) do 
+		local shrine = CreateUnitByName("npc_dota_goodguys_healers", pos, true, nil, nil, 2)
+		shrine:SetAbsOrigin(pos)
+
+		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
+
+		for _, tree in pairs(find_trees) do
+			tree:CutDownRegrowAfter(99999, -1)
+		end
+
+		-- Briefly adds vision to tell player trees got cut down
+		AddFOWViewer(2, pos, 300, 1.0, false)
+		AddFOWViewer(3, pos, 300, 1.0, false)
+	end
+
+	for _, pos in pairs(bad_shrine_position) do 
+		local shrine = CreateUnitByName("npc_dota_badguys_healers", pos, true, nil, nil, 3)
+		shrine:SetAbsOrigin(pos)
+
+		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
+
+		for _, tree in pairs(find_trees) do
+			tree:CutDownRegrowAfter(99999, -1)
+		end
+
+		-- Briefly adds vision to tell player trees got cut down
+		AddFOWViewer(2, pos, 300, 1.0, false)
+		AddFOWViewer(3, pos, 300, 1.0, false)
 	end
 end
 
