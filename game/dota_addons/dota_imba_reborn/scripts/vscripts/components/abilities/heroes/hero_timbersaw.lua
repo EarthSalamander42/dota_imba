@@ -369,8 +369,8 @@ function imba_timbersaw_timber_chain:OnProjectileThinkHandle(projectileHandle)
 			local direction = (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 		
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
-				-- The (self:GetCaster():GetHullRadius() * 10) is a bit arbitrary, but I want Timbersaw to stop at a location between the original position and the tree, and not fly past the tree
-				duration		= math.max(((tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() - (self:GetCaster():GetHullRadius() * 10)), 0) / self:GetSpecialValueFor("speed"),
+				-- The (self:GetCaster():GetHullRadius() * 8) is a bit arbitrary, but I want Timbersaw to stop at a location between the original position and the tree, and not fly past the tree
+				duration		= math.max(((tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() - (self:GetCaster():GetHullRadius() * 8)), 0) / self:GetSpecialValueFor("speed"),
 				
 				autocast_state	= self:GetAutoCastState(),
 				

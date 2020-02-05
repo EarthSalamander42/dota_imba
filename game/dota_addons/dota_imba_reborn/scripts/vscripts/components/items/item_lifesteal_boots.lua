@@ -264,6 +264,8 @@ end
 -- MODIFIER_IMBA_LIFESTEAL_BOOTS_UNSLOWABLE --
 ----------------------------------------------
 
+modifier_imba_lifesteal_boots_unslowable	= modifier_imba_lifesteal_boots_unslowable or class({})
+
 function modifier_imba_lifesteal_boots_unslowable:IsHidden()	return true end
 
 function modifier_imba_lifesteal_boots_unslowable:CheckState()
