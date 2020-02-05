@@ -48,7 +48,24 @@ function item_imba_blink:GetCastRange(location, target)
 	end
 end
 
+function item_imba_blink:OnAbilityPhaseStart()
+	if self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
+	-- double tap
+		for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+			if ent:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+				self:GetCaster():SetCursorTargetingNothing(true)
+				self:GetCaster():CastAbilityOnPosition(ent:GetAbsOrigin(), self, self:GetCaster():GetPlayerID())
+				break
+			end
+		end
+	end
+	
+	return true
+end
+
 function item_imba_blink:OnSpellStart()
+	if self:GetCursorTarget() or self:GetCursorTarget() == self:GetCaster() then self:EndCooldown() return end
+
 	local caster = self:GetCaster()
 	local origin_point = caster:GetAbsOrigin()
 	local target_point = self:GetCursorPosition()
@@ -76,14 +93,6 @@ function item_imba_blink:OnSpellStart()
 				-- self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction)
 			-- end)
 		-- end
-		end
-	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
-	-- double tap
-		for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
-			if ent:GetTeamNumber() == caster:GetTeamNumber() then
-				target_point = origin_point + (ent:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
-				break
-			end
 		end
 	end
 
@@ -194,7 +203,24 @@ end
 function item_imba_blink_boots:GetIntrinsicModifierName()
 	return "modifier_imba_blink_boots_handler" end
 
+function item_imba_blink_boots:OnAbilityPhaseStart()
+	if self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
+		for _, building in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+			if string.find(building:GetName(), "ent_dota_fountain") then
+				-- target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
+				self:GetCaster():SetCursorTargetingNothing(true)
+				self:GetCaster():CastAbilityOnPosition(building:GetAbsOrigin(), self, self:GetCaster():GetPlayerID())
+				break
+			end
+		end
+	end
+
+	return true
+end
+
 function item_imba_blink_boots:OnSpellStart()
+	if self:GetCursorTarget() or self:GetCursorTarget() == self:GetCaster() then self:EndCooldown() return end
+
 	local caster = self:GetCaster()
 	local origin_point = caster:GetAbsOrigin()
 	local target_point = self:GetCursorPosition()
@@ -226,12 +252,6 @@ function item_imba_blink_boots:OnSpellStart()
 		-- end
 		
 		target_point = origin_point + (target_point - origin_point):Normalized() * max_blink_range
-	elseif self:GetCursorTarget() and self:GetCursorTarget() == self:GetCaster() then
-		for _, building in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
-			if string.find(building:GetName(), "ent_dota_fountain") then
-				target_point = origin_point + (building:GetAbsOrigin() - origin_point):Normalized() * max_blink_range
-			end
-		end
 	end
 
 	if not self:GetCursorTarget() and distance >= sweet_spot_min and distance <= max_blink_range and not caster:HasModifier("modifier_imba_blink_boots_flash_step") then

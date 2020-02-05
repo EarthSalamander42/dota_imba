@@ -26,7 +26,7 @@
 "vote_gamemode_5"						"Same Hero Selection"
 
 "description_gamemode_1"				"Standard game mode. Keep track of your IMBA MMR (IMR) and rise in rank as you win games."
-"description_gamemode_2"				"A random positive, negative, and terrain gameplay modifier is added to the game. 25% cooldown/mana cost/respawn time reduction."
-"description_gamemode_3"				"The de facto chaotic experience. 40% cooldown/mana cost/respawn time reduction."
+"description_gamemode_2"				"A random positive, negative, and terrain gameplay modifier is added to the game. 25% cooldown/mana cost/respawn time/status resistance reduction."
+"description_gamemode_3"				"The de facto chaotic experience. 40% cooldown/mana cost/respawn time/status resistance reduction."
 "description_gamemode_4"				"Collect candy, feed your bucket, and work together to take down Roshan as many times as you can before the timer runs out."
-"description_gamemode_5"				"Duplicate heroes allowed. 25% cooldown/mana cost/respawn time reduction."
+"description_gamemode_5"				"Duplicate heroes allowed. 25% cooldown/mana cost/respawn time/status resistance reduction."

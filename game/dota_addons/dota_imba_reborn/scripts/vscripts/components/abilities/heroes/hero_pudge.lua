@@ -1210,7 +1210,8 @@ function modifier_imba_dismember:OnCreated()
 	
 		-- self.damage_ticks = 0
 		
-		self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_rate") * (1 - self:GetParent():GetStatusResistance())
+		self.standard_tick_interval	= self:GetAbility():GetSpecialValueFor("tick_rate")
+		self.tick_interval = self.standard_tick_interval * (1 - self:GetParent():GetStatusResistance())
 		
 		self:StartIntervalThink(self.tick_interval)
 
@@ -1228,7 +1229,7 @@ function modifier_imba_dismember:OnIntervalThink()
 		local damageTable = {
 			victim			= self:GetParent(),
 			attacker		= self:GetCaster(),
-			damage			= (self.dismember_damage + self:GetCaster():GetStrength() * self.strength_damage * 0.01) * self.tick_interval,
+			damage			= (self.dismember_damage + self:GetCaster():GetStrength() * self.strength_damage * 0.01) * self.standard_tick_interval,
 			damage_type 	= DAMAGE_TYPE_MAGICAL,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			ability 		= self:GetAbility(),
