@@ -1,10 +1,11 @@
 //TIDEHUNTER
 "DOTA_Tooltip_ability_imba_tidehunter_gush"											"Gush"
-"DOTA_Tooltip_ability_imba_tidehunter_gush_Description"								"Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.  Lasts 4 seconds.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Shieldbreaker:</font> If the targeted Gush triggers Spell Block, the target is stunned for %shieldbreaker_stun% seconds.\n<font color='#FF7800'>Surf's Up!:</font> If auto-cast is on, Gush pushes the affected units back at %surf_speed_pct%%% of the projectile speed for %surf_duration% seconds.\n<font color='#FF7800'>Filtration System:</font> After %casts_before_filtration% Gush casts, the next Gush purges enemies of buffs."
+"DOTA_Tooltip_ability_imba_tidehunter_gush_Description"								"Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.\n<font color='#FF7800'>Shieldbreaker:</font> If the targeted Gush triggers Spell Block, the target is stunned for %shieldbreaker_stun% seconds.\n<font color='#FF7800'>Surf's Up!:</font> If auto-cast is on, Gush pushes the affected units back at %surf_speed_pct%%% of the projectile speed for %surf_duration% seconds.\n<font color='#FF7800'>Filtration System:</font> After %casts_before_filtration% Gush casts, the next Gush purges enemies of buffs."
 "DOTA_Tooltip_ability_imba_tidehunter_gush_Lore"										"During his championship of the Sunken Isles, Leviathan gained mastery over the open sea."
 "DOTA_Tooltip_ability_imba_tidehunter_gush_movement_speed"							"%SLOW:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_negative_armor"							"ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_gush_damage"								"DAMAGE:"
+"DOTA_Tooltip_ability_imba_tidehunter_gush_abilityduration"							"DEBUFF DURATION:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_cast_range_scepter"  						"SCEPTER RANGE:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_aoe_scepter"  						"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_cooldown_scepter"  						"SCEPTER COOLDOWN:"

@@ -176,6 +176,8 @@
 	"item_recipe_manta"						"REMOVE"
 	"item_manta"							"REMOVE"
 	"item_manta"							"REMOVE"
+	"item_third_eye"						"REMOVE"
+	"item_third_eye"						"REMOVE"
 	
 	"item_black_king_bar"					"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared bkb cooldown thing to work
 
@@ -2206,7 +2208,7 @@
 	//=================================================================================================================
 	"chaos_knight_reality_rift"
 	{
-		"AbilityCastRange"				"500 650 800 950"
+		"AbilityCastRange"				"500 750 1000 1250"
 		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
@@ -2214,12 +2216,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"500 650 800 950"
+				"cast_range"				"500 750 1000 1250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_distance"				"250 350 450 550"
+				"pull_distance"				"300 400 500 600"
 			}		
 		}
 	}
@@ -7377,7 +7379,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 800 1300 1800"
+				"damage"					"500 800 1100 1400"
 				"LinkedSpecialBonus"		"special_bonus_unique_techies"
 			}
 		}
@@ -7460,6 +7462,23 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"lifetime"					"360"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_techies_4"
+	{	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"30"
 			}
 		}
 	}
@@ -7783,6 +7802,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"physical_damage_reduction_side"	"23 28 33 38"
 			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"redirect_chance"				"100"
+			}
 		}
 	}
 	
@@ -7798,7 +7822,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"7.0 8.0 9.0"
+				"duration"				"6.0 7.0 8.0"
 			}
 			"04"
 			{

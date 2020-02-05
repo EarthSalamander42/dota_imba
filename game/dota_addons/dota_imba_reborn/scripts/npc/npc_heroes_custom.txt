@@ -265,12 +265,14 @@
 
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
-		"Ability3"					"imba_bloodseeker_thirst"
+		"Ability3"					"bloodseeker_thirst"
+		//"Ability3"					"imba_bloodseeker_thirst"
+		//"Ability3"					"imba_bloodseeker_thirst_v2"
 		"Ability4"					"generic_hidden"
 		"Ability6"					"imba_bloodseeker_rupture"
 
-		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
-		"Ability11"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
+		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
+		"Ability11"					"special_bonus_armor_6"
 		"Ability12"					"special_bonus_hp_300"
 		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
 		"Ability14"					"special_bonus_imba_bloodseeker_rupture_cast_range"
@@ -279,6 +281,7 @@
 		"Ability17"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
 		
 //		Removed Abilities
+//		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
 //		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
 //		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
 //		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
@@ -531,16 +534,17 @@
 		"Ability11"					"special_bonus_imba_disruptor_1"
 		"Ability12"					"special_bonus_cast_range_150"
 		"Ability13"					"special_bonus_imba_disruptor_3"
-		"Ability14"					"special_bonus_imba_disruptor_9"
+		"Ability14"					"special_bonus_imba_disruptor_kinetic_field_true_sight"
 		"Ability15"					"special_bonus_imba_disruptor_8"
-		"Ability16"					"special_bonus_imba_disruptor_7"
+		"Ability16"					"special_bonus_imba_disruptor_9"
 		"Ability17"					"special_bonus_imba_disruptor_10"
 		
 		// Removed Talents (they're...bad.)
 		// "Ability11"					"special_bonus_imba_disruptor_2" // Glimpse Storm lingers longer
 		// "Ability13"					"special_bonus_imba_disruptor_4" // Thunder Strike Slow
 		// "Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
-		//"Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
+		// "Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
+		// "Ability16"					"special_bonus_imba_disruptor_7"
 	}
 
 	//=================================================================================================================
@@ -1523,7 +1527,10 @@
 		"Ability14"					"special_bonus_imba_pugna_5"		//Nether Blast secondary blasts deal 10% of original damage.
 		"Ability15"					"special_bonus_imba_pugna_6"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.
 		"Ability16"					"special_bonus_imba_pugna_7"		//+3% Target current health as Life Drain's per sec damage
-		"Ability17"					"special_bonus_imba_pugna_8"		//+2 Nether Wards, -66% duration
+		"Ability17"					"special_bonus_imba_pugna_nether_ward_damage"		//+2 Nether Wards, -66% duration
+		
+		// Removed Talents
+		// "Ability17"					"special_bonus_imba_pugna_8"		//+2 Nether Wards, -66% duration
 	}
 
 	//=================================================================================================================

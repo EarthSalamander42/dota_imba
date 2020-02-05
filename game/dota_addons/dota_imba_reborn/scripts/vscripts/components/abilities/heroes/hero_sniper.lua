@@ -1396,6 +1396,7 @@ end
 --        ASSASSINATE         --
 --------------------------------
 imba_sniper_assassinate = class({})
+LinkLuaModifier("modifier_imba_sniper_assassinate_handler", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_cross", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_ministun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1403,11 +1404,23 @@ function imba_sniper_assassinate:IsHiddenWhenStolen()
 	return false
 end
 
+function imba_sniper_assassinate:GetIntrinsicModifierName()
+	return "modifier_imba_sniper_assassinate_handler"
+end
+
+function imba_sniper_assassinate:GetBehavior()
+	if not self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
+		return self.BaseClass.GetBehavior(self)
+	else
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+
 function imba_sniper_assassinate:GetCastPoint()
 	local cast_point = self.BaseClass.GetCastPoint(self)
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
-	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
+	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") and self:GetCaster():GetModifierStackCount("modifier_imba_sniper_assassinate_handler", self:GetCaster()) == 1 then
 		cast_point = cast_point + self:GetCaster():FindTalentValue("special_bonus_imba_sniper_6", "cast_point_increase")
 
 		-- What is this balancing in my IMBA game
@@ -1451,17 +1464,27 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	-- Reset the animation before Sniper shoots
-	if caster:HasTalent("special_bonus_imba_sniper_6") then
+	if caster:HasTalent("special_bonus_imba_sniper_6") and self:GetCaster():GetModifierStackCount("modifier_imba_sniper_assassinate_handler", self:GetCaster()) == 1 then
+		self.bAutoCast = true
+		
+		local scepter_speed_mult = 1
+		
+		if caster:HasScepter() then
+			scepter_speed_mult = 0.4
+		end
+		
 		-- "Reload" animation, to make it look good with the entire visual of the assassination talent
-		caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1,0.75)
+		caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 0.75 * scepter_speed_mult)
 
-		self.timer = Timers:CreateTimer(1.75, function()
+		self.timer = Timers:CreateTimer(1.75 * scepter_speed_mult, function()
 			if caster:GetCurrentActiveAbility() and caster:GetCurrentActiveAbility():GetName() == "imba_sniper_assassinate" then
 				caster:FadeGesture(ACT_DOTA_CAST_ABILITY_1)
 				caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
 			end
 		end)
 	else
+		self.bAutoCast = false
+	
 		local playback_rate = 1.0
 
 		if caster:HasScepter() then
@@ -1556,7 +1579,7 @@ function imba_sniper_assassinate:OnSpellStart()
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	-- Increase projectiles to fire
-	if caster:HasTalent("special_bonus_imba_sniper_6") then
+	if caster:HasTalent("special_bonus_imba_sniper_6") and self.bAutoCast then
 		projectiles = caster:FindTalentValue("special_bonus_imba_sniper_6", "total_projectiles")
 	end
 
@@ -1802,6 +1825,34 @@ function imba_sniper_assassinate:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
 end
 
+----------------------------------------------
+-- MODIFIER_IMBA_SNIPER_ASSASSINATE_HANDLER --
+----------------------------------------------
+
+modifier_imba_sniper_assassinate_handler	= modifier_imba_sniper_assassinate_handler or class({})
+
+function modifier_imba_sniper_assassinate_handler:IsHidden()		return true end
+function modifier_imba_sniper_assassinate_handler:IsPurgable()		return false end
+function modifier_imba_sniper_assassinate_handler:RemoveOnDeath()	return false end
+function modifier_imba_sniper_assassinate_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_sniper_assassinate_handler:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
+end
+
+function modifier_imba_sniper_assassinate_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
+end
+
 -- Cross enemy debuff
 modifier_imba_assassinate_cross = class({})
 
@@ -1860,8 +1911,7 @@ function modifier_imba_assassinate_ministun:IsPurgeException() return true end
 function modifier_imba_assassinate_ministun:IsStunDebuff() return true end
 
 function modifier_imba_assassinate_ministun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_assassinate_ministun:GetEffectName()
@@ -1870,6 +1920,14 @@ end
 
 function modifier_imba_assassinate_ministun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_assassinate_ministun:DeclareFunctions()
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+end
+
+function modifier_imba_assassinate_ministun:GetOverrideAnimation()
+	return ACT_DOTA_DISABLED
 end
 
 ---------------------
@@ -1885,6 +1943,18 @@ modifier_special_bonus_imba_sniper_9		= class({})
 function modifier_special_bonus_imba_sniper_6:IsHidden() 		return true end
 function modifier_special_bonus_imba_sniper_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sniper_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sniper_6:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasAbility("imba_sniper_assassinate") then
+		self:GetParent():FindAbilityByName("imba_sniper_assassinate"):ToggleAutoCast()
+		
+		if self:GetParent():HasModifier("modifier_imba_sniper_assassinate_handler") then
+			self:GetParent():FindModifierByName("modifier_imba_sniper_assassinate_handler"):SetStackCount(1)
+		end
+	end
+end
 
 function modifier_special_bonus_imba_sniper_9:IsHidden() 		return true end
 function modifier_special_bonus_imba_sniper_9:IsPurgable() 		return false end

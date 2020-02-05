@@ -96,19 +96,14 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"allied_damage"			   	"50"
+				"cast_range_tooltip"		"800 900 1000 1100"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"800 900 1000 1100"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"red_val_distance"			"2200"
 			}
-			"12"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"red_val_amount"			"50"
@@ -213,7 +208,30 @@
 			}
 		}
 	}
-
+	
+	//=================================================================================================================
+	// Ability: Bloodseeker's Thirst
+	//=================================================================================================================
+	"bloodseeker_thirst"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"14 26 38 50"
+				"LinkedSpecialBonus"		"special_bonus_unique_bloodseeker_4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_speed"		"35 50 65 80"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Ability: Bloodseekers Thirst
 	//=================================================================================================================
@@ -222,10 +240,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_bloodseeker"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ScriptFile"					"components/abilities/heroes/hero_bloodseeker"
 		"AbilityTextureName"			"bloodseeker_thirst"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"precache"
 		{
@@ -286,6 +305,63 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Ability: Bloodseekers Thirst
+	//=================================================================================================================
+	"imba_bloodseeker_thirst_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_bloodseeker"
+		"AbilityTextureName"			"bloodseeker_thirst"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_bonus_pct"				"75"
+			}			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"14 26 38 50"
+				"LinkedSpecialBonus"		"special_bonus_unique_bloodseeker_4"
+			}			
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_speed"		"35 50 65 80"
+			}		
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_bonus_pct"				"25"
+			}	
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"visibility_threshold_pct"	"25"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"invis_threshold_pct"	"25"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"linger_duration"			"4.0"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Ability: Bloodseekers Rupture
 	//=================================================================================================================

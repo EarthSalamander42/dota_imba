@@ -32,7 +32,7 @@
 
 // Centaur Warrunner's Double Edge
 "DOTA_Tooltip_ability_imba_centaur_double_edge"                        "Double Edge"
-"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"            "Centaur strikes a vicious blow at melee range, damaging both himself and a small area around the target.\n<font color='#FF7800'>Shake It Off:</font> Self-damage from Double Edge is reduced by an amount equal to %str_damage_reduction%%% of your strength.\n<font color='#00FF40'>Centaur cannot die from Double Edge's damage.</font>"
+"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"            "Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target. Centaur cannot die from Double Edge.\n<font color='#FF7800'>Shake It Off:</font> Self-damage from Double Edge is reduced by an amount equal to %str_damage_reduction%%% of your strength."
 "DOTA_Tooltip_ability_imba_centaur_double_edge_Lore"                    "In the spurs of combat, Bradwarden's mighty strikes sometimes cause self-inflicted collateral damage."
 "DOTA_Tooltip_ability_imba_centaur_double_edge_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_centaur_double_edge_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

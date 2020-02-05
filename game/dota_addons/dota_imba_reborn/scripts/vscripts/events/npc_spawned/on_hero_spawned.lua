@@ -157,6 +157,13 @@ function GameMode:OnHeroSpawned(hero)
 	if IsMutationMap() then
 		Mutation:OnHeroSpawn(hero)
 	end
+	
+	-- Let's try to make Meepo a bit more playable
+	-- Ensure the Meepos get buffs like custom mechanics
+	if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() and (not hero:HasModifier("modifier_meepo_divided_we_stand_lua") or not hero:HasModifier("modifier_custom_mechanics")) then
+		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_meepo_divided_we_stand_lua", {})
+		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_custom_mechanics", {})
+	end
 
 	if hero:IsTempestDouble() then
 		local clone_shared_buffs = {

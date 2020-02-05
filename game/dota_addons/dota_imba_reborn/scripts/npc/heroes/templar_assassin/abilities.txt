@@ -181,7 +181,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_range"		"590 670 750 830"
+				"attack_spill_range"		"600 800 1000 1200"
 			}
 			"03"
 			{
@@ -191,7 +191,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_pct"			"100"
+				"attack_spill_pct"			"120"
 			}
 			"05"
 			{
@@ -403,7 +403,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"springboard_vector_amp"	"1.75"
+				"springboard_vector_amp"	"2.0"
 			}
 			"11"
 			{

@@ -73,7 +73,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_4"          	"Doubles maximum Shrapnel (re)charges"
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_5"          	"Headshots have a 30% chance to become Perfectshots"
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_6"				"True Assassination"
-"DOTA_Tooltip_ability_special_bonus_imba_sniper_6_Description"  "Increases Assassination's cast point by 2 seconds, but fires 3 projectiles at the target."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_6_Description"  "Increases Assassination's cast point by {s:cast_point_increase} seconds, but fires {s:total_projectiles} projectiles at the target; turn auto-cast off to revert to standard."
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_7"         	 	"Eye Scream"
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_7_Description" 	"Take Aim's Aimed Assault apply 500 vision loss and deal 80 damage per second for 5 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_sniper_8"          	"Let it Rain"

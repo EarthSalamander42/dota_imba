@@ -1401,8 +1401,8 @@ function modifier_imba_drow_ranger_multishot:OnCreated()
 	-- "However, since only 4 arrows get released, the cone's angle is 33.33°, with an angle of 8.33° between each arrow."
 	self.angle_per_arrow		= (self.arrow_angle / 6) / 2
 	self.adjusted_angle			= (self.angle_per_arrow * self.arrows_per_salvo)
-
-	self.num_arrow_in_salvo		= 0
+	
+	self.num_arrow_in_salvo		= 1
 	self.volley_index			= 1
 	
 	self:GetParent():EmitSound("Hero_DrowRanger.Multishot.Channel")
@@ -1442,15 +1442,15 @@ function modifier_imba_drow_ranger_multishot:OnIntervalThink()
 		}
 	})
 	
-	if self.num_arrow_in_salvo < 3 then
+	if self.num_arrow_in_salvo < self.arrows_per_salvo then
 		self:StartIntervalThink(self.arrow_interval)
 	else
 		-- "Releases the waves in a 0.55-second interval .The first wave starts 0.1 seconds after channel begin. "
-		self:StartIntervalThink((self.volley_interval - (self.arrow_interval * 3)))
+		self:StartIntervalThink(math.max((self.volley_interval - (self.arrow_interval * (self.arrows_per_salvo - 1))), 0))
 		self.volley_index	= self.volley_index + 1
 	end
 	
-	self.num_arrow_in_salvo	= ((self.num_arrow_in_salvo + 1) % self.arrows_per_salvo)
+	self.num_arrow_in_salvo	= (self.num_arrow_in_salvo % self.arrows_per_salvo) + 1
 end
 
 function modifier_imba_drow_ranger_multishot:OnDestroy()
@@ -2033,7 +2033,7 @@ end
 
 function modifier_imba_drow_ranger_marksmanship_723:OnAttackRecord(keys)
 	if keys.attacker == self:GetParent() then
-		if not self:GetParent():PassivesDisabled() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
+		if not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
 			self.procs[keys.record] = true
 			
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_damage", {})
@@ -2089,6 +2089,11 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 			keys.target:EmitSound("Hero_DrowRanger.Marksmanship.Target")
 		
 			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_armor", {})
+			
+			-- IMBAfication: Perfect Shot
+			if keys.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") and not keys.target:IsRoshan() and not keys.target:HasModifier("modifier_oracle_false_promise_timer") and not keys.target:HasModifier("modifier_imba_oracle_false_promise_timer") then
+				keys.target:Kill(self:GetAbility(), self:GetParent())
+			end
 		end
 		
 		if self:GetParent():HasScepter() and not self:GetParent():PassivesDisabled() and self.start_particle and not keys.no_attack_cooldown then
@@ -2137,11 +2142,6 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 				end
 			end
 		end
-		
-		-- IMBAfication: Perfect Shot
-		if keys.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") and not keys.target:IsRoshan() and not keys.target:HasModifier("modifier_oracle_false_promise_timer") and not keys.target:HasModifier("modifier_imba_oracle_false_promise_timer") then
-			keys.target:Kill(self:GetAbility(), self:GetParent())
-		end
 	end
 end
 
@@ -2186,7 +2186,9 @@ function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnCreated()
 end
 
 function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnRefresh()
-	self.agility_multiplier	= self:GetAbility():GetSpecialValueFor("agility_multiplier") * 0.01
+	if self:GetAbility() then
+		self.agility_multiplier	= self:GetAbility():GetSpecialValueFor("agility_multiplier") * 0.01
+	end
 end
 
 function modifier_imba_drow_ranger_marksmanship_723_aura_bonus:OnIntervalThink()

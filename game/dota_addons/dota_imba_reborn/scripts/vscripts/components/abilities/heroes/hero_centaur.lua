@@ -710,7 +710,7 @@ function modifier_imba_return_passive:DeclareFunctions()
 end
 
 function modifier_imba_return_passive:OnTakeDamage(keys)
-	if IsServer() then
+	if IsServer() and self:GetAbility() then
 		-- Ability properties
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
@@ -739,13 +739,9 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 			return nil
 		end
 
-		if attacker:IsBuilding() then
-			return nil
-		end
-
 		-- Only commence on enemies attacking Centaur
 		-- Don't affect wards.
-		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target and not attacker:IsOther() then
+		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target and not attacker:IsOther() and attacker:GetName() ~= "npc_dota_unit_undying_zombie" then
 			-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 			if not caster:HasTalent("special_bonus_imba_centaur_7") then
 				if keys.inflictor then

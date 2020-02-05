@@ -292,8 +292,17 @@ end
 function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	if not IsServer() then return end
 	
-	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 and not (self:GetParent():HasModifier("modifier_slark_dark_pact_pulses") or self:GetParent():HasModifier("modifier_imba_slark_dark_pact_pulses")) then
-		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = math.max(self:GetRemainingTime() - self.curse_activation_reduction, 0), curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
+	local duration		= math.max(self:GetRemainingTime() - self.curse_activation_reduction, 0)
+	local curse_stack	= math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")
+	
+	-- Some exceptions due to this deleting certain heroes otherwise
+	if self:GetParent():HasModifier("modifier_slark_dark_pact_pulses") or self:GetParent():HasModifier("modifier_imba_slark_dark_pact_pulses") or (self:GetParent():HasModifier("modifier_imba_tidehunter_kraken_shell") and not self:GetParent():PassivesDisabled()) or self:GetParent():HasModifier("modifier_imba_voodoo_restoration") then
+		duration	= math.max(self:GetRemainingTime() + self.curse_activation_reduction, 0)
+		curse_stack = nil
+	end
+	
+	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = duration, curse_stack = curse_stack})
 	end
 end
 

@@ -391,6 +391,7 @@
 
 "DOTA_Tooltip_ability_batrider_flaming_lasso_Note1"					"If Batrider moves more than 3000 units in 0.05 seconds the lasso breaks."
 
+"DOTA_Tooltip_ability_mars_arena_of_blood_Description"			"After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.\n<font color='#FF7800'>Ultra-Gravity:</font> Enemies caught inside the arena are also leashed for its duration. Affects magic-immune units. Does not affect flying units.\n<font color='#FF7800'>Hardened Walls:</font> The wall blocking effect also works against magic-immune units. Does not affect flying units.</font>"
 "DOTA_Tooltip_ability_mars_arena_of_blood_Note0"					"Mars grows to double his size while in the arena. This is primarily for intimidation purposes, and has no other effects."
 
 "DOTA_Tooltip_ability_life_stealer_open_wounds_Note0"							"Open Wounds slows over 8 different steps: 70% / 70% / 60% / 50% / 40% / 30% / 20% / 10%, with the slow decreasing one step per second."

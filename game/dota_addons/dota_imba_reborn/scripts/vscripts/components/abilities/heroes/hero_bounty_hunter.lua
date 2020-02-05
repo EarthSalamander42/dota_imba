@@ -174,6 +174,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 				-- Apply the slow debuff on the target
 				target:AddNewModifier(caster, jinada_ability, "modifier_imba_jinada_debuff_slow", {duration = slow_duration})
+				
+				target:EmitSound("Hero_BountyHunter.Jinada")
 			end
 		end
 
@@ -719,6 +721,8 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 		-- Only apply on caster attacking enemies
 		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+			self.parent:EmitSound("Hero_BountyHunter.Jinada")
+		
 			-- Add hit particle effects
 			self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControl(self.particle_hit_fx, 0, target:GetAbsOrigin())
@@ -735,6 +739,14 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 			-- transfer gold from target to caster
 			if target:IsRealHero() and target:GetPlayerID() then
 				local actual_gold_to_steal = math.min(self:GetAbility():GetTalentSpecialValueFor("bonus_gold"), PlayerResource:GetUnreliableGold(target:GetPlayerID()))
+				
+				if actual_gold_to_steal > 0 then
+					-- Add money particle effect
+					self.money_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+					ParticleManager:SetParticleControlEnt(self.money_particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(self.money_particle)
+				end
+				
 				target:ModifyGold(-actual_gold_to_steal, false, 0)
 				attacker:ModifyGold(actual_gold_to_steal, false, 0)
 				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)

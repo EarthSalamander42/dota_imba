@@ -1107,6 +1107,10 @@ function imba_lion_finger_of_death:GetCooldown(level)
 	return base_cooldown
 end
 
+function imba_lion_finger_of_death:OnUnStolen()
+	self:GetCaster():RemoveModifierByName("modifier_imba_finger_of_death_counter")
+end
+
 function imba_lion_finger_of_death:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -1383,7 +1387,7 @@ function modifier_imba_finger_of_death_delay:IsPurgable() 		return false end
 
 function modifier_imba_finger_of_death_delay:OnRemoved()
 	if not IsServer() then return end
-	if not self:GetParent():IsAlive() and (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and not self:GetAbility():IsStolen() and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) then
+	if not self:GetParent():IsAlive() and (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) then
 		self:GetParent():EmitSound("Hero_Lion.KillCounter") 
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_finger_of_death_counter", {})
 	end
@@ -1408,9 +1412,7 @@ function modifier_imba_finger_of_death_counter:OnRefresh()
 end
 
 function modifier_imba_finger_of_death_counter:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_TOOLTIP}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_TOOLTIP}
 end
 
 function modifier_imba_finger_of_death_counter:OnTooltip()

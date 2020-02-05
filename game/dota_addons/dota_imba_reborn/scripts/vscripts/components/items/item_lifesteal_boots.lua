@@ -25,6 +25,7 @@ item_imba_lifesteal_boots = item_imba_lifesteal_boots or class({})
 LinkLuaModifier("modifier_imba_lifesteal_boots", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lifesteal_boots_unique", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lifesteal_boots_buff", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lifesteal_boots_unslowable", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_lifesteal_boots:GetIntrinsicModifierName()
 	return "modifier_imba_lifesteal_boots"
@@ -45,6 +46,7 @@ function item_imba_lifesteal_boots:OnSpellStart()
 
 	-- Add boost modifier
 	caster:AddNewModifier(caster, self, modifier_boost, {duration = phase_duration})
+	caster:AddNewModifier(caster, self, "modifier_imba_lifesteal_boots_unslowable", {duration = phase_duration})
 end
 
 
@@ -215,8 +217,7 @@ end
 
 function modifier_imba_lifesteal_boots_buff:CheckState()
 	return {
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_UNSLOWABLE] = true
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
 	}
 end
 
@@ -233,7 +234,6 @@ function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeedBonus_Percentage
 end
 
 function modifier_imba_lifesteal_boots_buff:GetModifierIgnoreMovespeedLimit()
-	
 	return 1
 end
 
@@ -258,4 +258,16 @@ function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_Limit()
 	not (self:GetParent():HasModifier("modifier_imba_hunter_in_the_night") and not self:GetParent():PassivesDisabled() and IsDaytime and not IsDaytime()) then
 		return self.ms_limit
 	end
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_LIFESTEAL_BOOTS_UNSLOWABLE --
+----------------------------------------------
+
+function modifier_imba_lifesteal_boots_unslowable:IsHidden()	return true end
+
+function modifier_imba_lifesteal_boots_unslowable:CheckState()
+	return {
+		[MODIFIER_STATE_UNSLOWABLE] = true
+	}
 end

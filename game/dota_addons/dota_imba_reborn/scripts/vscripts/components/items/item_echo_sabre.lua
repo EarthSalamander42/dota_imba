@@ -292,7 +292,7 @@ function modifier_imba_echo_rapier_haste:DeclareFunctions()
 end
 
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
-	if self.parent == keys.attacker then
+	if self.parent == keys.attacker and not keys.target:IsBuilding() and not keys.target:IsOther() then
 		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 	end
 end

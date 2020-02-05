@@ -1074,9 +1074,10 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
 	self.bVisible		= false
 	
 	-- Now check EVERY enemy on the map (except neutrals and Roshan) to see if they can see the parent via enemy:CanEntityBeSeenByMyTeam(self:GetParent()) or not
-	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_FARTHEST, false)) do
 		-- Random 7.23 building can see everything in the world or something wtf...
 		if (not enemy.IsNeutralUnitType or (enemy.IsNeutralUnitType and not enemy:IsNeutralUnitType())) and not enemy:IsRoshan() and enemy:CanEntityBeSeenByMyTeam(self:GetParent()) and enemy:GetName() ~= "npc_dota_watch_tower" then
+			self.enemy_that_sees_me = enemy
 			self.bVisible	= true
 			break
 		end
@@ -1106,6 +1107,7 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnIntervalThink()
 			self.bPassiveActive	= true
 			self:SetStackCount(0)
 			self.counter		= 0
+			self.enemy_that_sees_me = nil
 		end
 	end
 end

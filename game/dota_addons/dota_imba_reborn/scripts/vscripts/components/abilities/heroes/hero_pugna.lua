@@ -468,6 +468,21 @@ function imba_pugna_nether_ward:GetAbilityTextureName()
 end
 
 -------------------------------------------
+
+function imba_pugna_nether_ward:GetBehavior()
+	if IsServer() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET
+	end
+end
+
+function imba_pugna_nether_ward:CastFilterResultTarget( target )
+	if target ~= nil and target == self:GetCaster() then
+		return UF_SUCCESS
+	end
+end
+
 function imba_pugna_nether_ward:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -487,16 +502,23 @@ function imba_pugna_nether_ward:OnSpellStart()
 	point[3] = RotatePosition(target_point, QAngle(0,-90,0), target_point + (target_point - caster:GetAbsOrigin()):Normalized() * 64)
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
-	for i = 1, 1+caster:FindTalentValue("special_bonus_imba_pugna_8") do
+	for i = 1, 1 + caster:FindTalentValue("special_bonus_imba_pugna_8") do
+		local nether_ward = nil
+	
 		-- Spawn the Nether Ward
-		local nether_ward = CreateUnitByName("npc_imba_pugna_nether_ward_"..(ability_level), point[i], false, caster, caster, caster:GetTeam())
-		FindClearSpaceForUnit(nether_ward, point[i], true)
+		if i ~= 1 or not self:GetCursorTarget() or self:GetCursorTarget() ~= self:GetCaster() then
+			nether_ward = CreateUnitByName("npc_imba_pugna_nether_ward_"..(ability_level), point[i], true, caster, caster, caster:GetTeam())
+		else
+			-- "When double-clicking the ability, the ward is placed right in front of Pugna, 150 range away from him."
+			nether_ward = CreateUnitByName("npc_imba_pugna_nether_ward_"..(ability_level), self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 150), true, caster, caster, caster:GetTeam())
+		end
+		-- FindClearSpaceForUnit(nether_ward, point[i], true)
 		nether_ward:SetControllableByPlayer(player_id, true)
 
-		-- Prevent nearby units from getting stuck
-		Timers:CreateTimer(FrameTime(), function()
-			ResolveNPCPositions(point[i], 128)
-		end)
+		-- -- Prevent nearby units from getting stuck
+		-- Timers:CreateTimer(FrameTime(), function()
+			-- ResolveNPCPositions(point[i], 128)
+		-- end)
 
 		-- Apply the Nether Ward duration modifier
 		nether_ward:AddNewModifier(caster, ability, "modifier_kill", {duration = duration - duration * caster:FindTalentValue("special_bonus_imba_pugna_8","duration_reduce_pct") * 0.01})
@@ -600,8 +622,7 @@ function modifier_imba_nether_ward_aura:OnAttackLanded(keys)
 end
 
 function modifier_imba_nether_ward_aura:CheckState()
-	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
-	return state
+	return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 end
 
 function modifier_imba_nether_ward_aura:IsHidden() return true end
@@ -656,11 +677,18 @@ function modifier_imba_nether_ward_degen:OnCreated()
 	end
 
 	-- Ability specials
-	self.mana_multiplier = self.ability:GetSpecialValueFor("mana_multiplier")
-	self.mana_regen_reduction = self.ability:GetSpecialValueFor("mana_regen_reduction")
+	self.mana_regen_reduction = self.ability:GetSpecialValueFor("mana_regen_reduction") * (-1)
 	self.hero_damage = self.ability:GetSpecialValueFor("hero_damage")
 	self.creep_damage = self.ability:GetSpecialValueFor("creep_damage")
 	self.spell_damage = self.ability:GetSpecialValueFor("spell_damage")
+	
+	if not IsServer() then return end
+	
+	if self:GetCaster() and self:GetCaster():GetOwner() and self:GetCaster():GetOwner():HasAbility("imba_pugna_nether_ward") then
+		self.mana_multiplier = self:GetCaster():GetOwner():FindAbilityByName("imba_pugna_nether_ward"):GetTalentSpecialValueFor("mana_multiplier")
+	else
+		self.mana_multiplier = self.ability:GetTalentSpecialValueFor("mana_multiplier")
+	end
 end
 
 function modifier_imba_nether_ward_degen:IsHidden() return false end
@@ -672,15 +700,15 @@ function modifier_imba_nether_ward_degen:GetAttributes()
 end
 
 function modifier_imba_nether_ward_degen:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE,
-		MODIFIER_EVENT_ON_SPENT_MANA}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE,
+		MODIFIER_EVENT_ON_SPENT_MANA
+	}
 end
 
 
 function modifier_imba_nether_ward_degen:GetModifierTotalPercentageManaRegen()
-	return self.mana_regen_reduction * (-1)
+	return self.mana_regen_reduction
 end
 
 function modifier_imba_nether_ward_degen:OnSpentMana(keys)

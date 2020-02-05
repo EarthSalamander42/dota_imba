@@ -667,6 +667,14 @@ function imba_antimage_spell_shield:OnSpellStart()
 		caster:EmitSound("Hero_Antimage.Counterspell.Cast")
 		
 		caster:StartGesture(ACT_DOTA_CAST_ABILITY_3)
+		
+		if self:GetCaster():IsRealHero() and self:GetCaster():HasScepter() then
+			for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)) do
+				if unit:GetPlayerOwnerID() == self:GetCaster():GetPlayerOwnerID() and unit:IsIllusion() and unit:HasAbility("imba_antimage_spell_shield") and unit:HasModifier("modifier_imba_antimage_blink_command_restricted") then
+					unit:FindAbilityByName("imba_antimage_spell_shield"):OnSpellStart()
+				end
+			end
+		end
 	end
 end
 

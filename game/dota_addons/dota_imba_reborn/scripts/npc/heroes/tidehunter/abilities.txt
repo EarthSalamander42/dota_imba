@@ -154,7 +154,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"aqueous_heal"			"1.5"
+				"aqueous_heal"			"2.0"
 			}
 			"06"
 			{

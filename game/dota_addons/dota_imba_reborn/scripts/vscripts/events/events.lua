@@ -631,16 +631,16 @@ function GameMode:OnPlayerLearnedAbility(keys)
 
 	PlayerResource:StoreAbilitiesLevelUpOrder(keys.PlayerID, abilityname)
 
-	-- If it the ability is Homing Missiles, wait a bit and set count to 1
-	if abilityname == "gyrocopter_homing_missile" then
-		Timers:CreateTimer(1, function()
-			-- Find homing missile modifier
-			local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
-			if modifier_charges then
-				modifier_charges:SetStackCount(3)
-			end
-		end)
-	end
+	-- -- If it the ability is Homing Missiles, wait a bit and set count to 1
+	-- if abilityname == "gyrocopter_homing_missile" then
+		-- Timers:CreateTimer(1, function()
+			-- -- Find homing missile modifier
+			-- local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
+			-- if modifier_charges then
+				-- modifier_charges:SetStackCount(3)
+			-- end
+		-- end)
+	-- end
 
 	-- initiate talent!
 	if abilityname:find("special_bonus_imba_") == 1 then
@@ -813,7 +813,15 @@ function GameMode:OnPlayerChat(keys)
 			end		
 		
 			Say(PlayerResource:GetPlayer(keys.playerid), "There are a total of "..modifier_count.." modifiers present.", true)
-		end		
+		end
+		
+		if str == "-slark" then
+			if caster:HasModifier("modifier_imba_slark_shadow_dance_passive_regen") and caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me then
+				DisplayError(caster:GetPlayerID(), "Visible to "..caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me:GetName().."...\n\nEnemy Team Number: "..caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me:GetTeamNumber())
+			else
+				DisplayError(caster:GetPlayerID(), "Nothing to see here.")
+			end
+		end
 		
 		-- For the serial disconnectors
 		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
@@ -1032,8 +1040,6 @@ function GameMode:OnPlayerChat(keys)
 				end
 			elseif str == "-phantom_lancer" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")
-			elseif str == "-chaos_knight" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_chaos_knight")
 			elseif str == "-vardor" then
 				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
 			-- Yeah best not to call this ever but if you really think lag is bad or something...
@@ -1218,12 +1224,11 @@ function GameMode:OnThink()
 		end
 
 		-- Tusk fixes
-		if hero:FindModifierByName("modifier_tusk_snowball_movement") then
-			if hero:FindAbilityByName("tusk_snowball") then
+		-- Just to clarify on what this does since I didn't know until I commented it out: if you refresh and reuse Snowball while moving, you get permanently lingering particles; there seems to be some other code in the filters.lua file that combines with this to prevent that
+		if hero:FindAbilityByName("tusk_snowball") then
+			if hero:FindModifierByName("modifier_tusk_snowball_movement") then
 				hero:FindAbilityByName("tusk_snowball"):SetActivated(false)
-			end
-		else
-			if hero:FindAbilityByName("tusk_snowball") then
+			else
 				hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
 			end
 		end

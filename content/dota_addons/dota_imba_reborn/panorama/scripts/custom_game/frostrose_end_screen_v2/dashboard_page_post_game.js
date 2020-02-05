@@ -3,9 +3,6 @@ var is_donator_set = [];
 var permanent_buffs = {
 	"modifier_imba_flesh_heap_stacks": "spellicons",
 	"modifier_imba_finger_of_death_counter": "spellicons",
-	"modifier_item_ultimate_scepter_consumed": "items",
-	"modifier_item_tome_of_knowledge_consumed": "items",
-	"modifier_item_imba_moon_shard_active": "items",
 	"modifier_imba_silencer_arcane_supremacy": "spellicons",
 	"modifier_slark_essence_shift_permanent_buff": "spellicons",
 	"modifier_imba_slark_essence_shift_permanent_buff": "spellicons",
@@ -14,6 +11,13 @@ var permanent_buffs = {
 	"modifier_legion_commander_duel_damage_boost": "spellicons",
 	"modifier_imba_timbersaw_chakram_3": "spellicons",
 	"modifier_imba_necromastery_souls": "spellicons",
+	"modifier_imba_clinkz_death_pact_723_permanent_buff": "spellicons",
+	"modifier_imba_furion_wrath_of_nature": "spellicons",
+	
+	"modifier_item_ultimate_scepter_consumed": "items",
+	"modifier_item_tome_of_knowledge_consumed": "items",
+	"modifier_item_imba_moon_shard_active": "items",
+	"modifier_item_imba_banana": "items",
 }
 
 function AdvanceTimeline()

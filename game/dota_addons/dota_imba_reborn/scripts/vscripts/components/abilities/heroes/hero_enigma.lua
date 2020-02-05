@@ -41,20 +41,27 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 	end
 	end
 
-	local Thinkers = FindUnitsInRadius(caster:GetTeamNumber(),
-		victim:GetAbsOrigin(),
-		nil,
-		9999999,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_ALL,
-		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-		FIND_CLOSEST,
-		false)
-	for _,thinker in pairs(Thinkers) do -- midnight
-		if thinker:GetUnitName() == "npc_dummy_unit" and thinker.midnight == true then
-			hThinker = thinker
+	-- local Thinkers = FindUnitsInRadius(caster:GetTeamNumber(),
+		-- victim:GetAbsOrigin(),
+		-- nil,
+		-- 9999999,
+		-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		-- DOTA_UNIT_TARGET_ALL,
+		-- DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+		-- FIND_CLOSEST,
+		-- false)
+	-- for _,thinker in pairs(Thinkers) do -- midnight
+		-- if thinker:GetUnitName() == "npc_dummy_unit" and thinker.midnight == true then
+			-- hThinker = thinker
+			-- break
+	-- end
+	-- end
+	
+	for _, ent in pairs(Entities:FindAllByName("npc_dota_thinker")) do
+		 if ent.midnight then
+			hThinker = ent
 			break
-	end
+		end
 	end
 
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
@@ -492,9 +499,13 @@ function modifier_imba_enigma_midnight_pulse_thinker:GetModifierAura()			return 
 function modifier_imba_enigma_midnight_pulse_thinker:OnCreated(keys)
 	if not IsServer() then return end
 	local caster = self:GetCaster()
-	local findDummy = CreateUnitByName("npc_dummy_unit", self:GetParent():GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-	findDummy.midnight = true
-	findDummy:AddNewModifier(caster, nil, "modifier_kill", {duration = self:GetDuration()})
+	
+	-- local findDummy = CreateUnitByName("npc_dummy_unit", self:GetParent():GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	-- findDummy.midnight = true
+	-- findDummy:AddNewModifier(caster, nil, "modifier_kill", {duration = self:GetDuration()})
+	
+	self:GetParent().midnight = true
+	
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 	self.pull_length = self:GetAbility():GetSpecialValueFor("pull_strength")
 	self:StartIntervalThink(1.0)

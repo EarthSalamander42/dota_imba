@@ -1714,6 +1714,12 @@ end
 
 function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
 	if IsServer() then
+		-- Mars' Arena of Blood exception
+		if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+			self:Destroy()
+			return
+		end
+	
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local ability = self:GetAbility()

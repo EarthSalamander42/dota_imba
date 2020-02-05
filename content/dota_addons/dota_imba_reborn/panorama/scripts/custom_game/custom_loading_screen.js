@@ -106,6 +106,7 @@ function fetch() {
 function AllPlayersLoaded() {
 //	$.Msg("ALL PLAYERS LOADED IN!")
 	for (var i = 1; i <= $("#vote-content").GetChildCount(); i++) {
+		//$.Msg("Game Mode: ", i)
 		var panel = $("#vote-content").GetChild(i - 1);
 		var gamemode = panel.GetChild(0).id.replace("VoteGameMode", "");
 
@@ -121,6 +122,44 @@ function AllPlayersLoaded() {
 
 //	$("#VoteGameMode1").checked = true;
 //	OnVoteButtonPressed("gamemode", 1);
+
+	// Maybe Cookies will clean this up or something...kappa
+	
+	// Ranked
+	$("#VotePanel1").SetPanelEvent("onmouseover", function () {
+		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel1"), $.Localize("description_gamemode_1"));
+	})
+
+	$("#VotePanel1").SetPanelEvent("onmouseout", function () {
+		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel1"));
+	})
+	
+	// Mutation
+	$("#VotePanel2").SetPanelEvent("onmouseover", function () {
+		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel2"), $.Localize("description_gamemode_2"));
+	})
+
+	$("#VotePanel2").SetPanelEvent("onmouseout", function () {
+		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel2"));
+	})
+	
+	// (Super) Frantic
+	$("#VotePanel3").SetPanelEvent("onmouseover", function () {
+		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel3"), $.Localize("description_gamemode_3"));
+	})
+
+	$("#VotePanel3").SetPanelEvent("onmouseout", function () {
+		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel3"));
+	})
+	
+	// Same Heroes
+	$("#VotePanel5").SetPanelEvent("onmouseover", function () {
+		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel5"), $.Localize("description_gamemode_5"));
+	})
+
+	$("#VotePanel5").SetPanelEvent("onmouseout", function () {
+		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel5"));
+	})
 }
 
 function HoverableLoadingScreen() {

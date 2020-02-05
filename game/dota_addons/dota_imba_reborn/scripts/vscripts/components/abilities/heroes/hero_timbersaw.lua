@@ -369,7 +369,8 @@ function imba_timbersaw_timber_chain:OnProjectileThinkHandle(projectileHandle)
 			local direction = (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 		
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_timber_chain", {
-				duration		= (tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("speed"),
+				-- The (self:GetCaster():GetHullRadius() * 10) is a bit arbitrary, but I want Timbersaw to stop at a location between the original position and the tree, and not fly past the tree
+				duration		= math.max(((tree:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() - (self:GetCaster():GetHullRadius() * 10)), 0) / self:GetSpecialValueFor("speed"),
 				
 				autocast_state	= self:GetAutoCastState(),
 				
@@ -821,7 +822,8 @@ function modifier_imba_timbersaw_reactive_armor:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		
-		MODIFIER_EVENT_ON_ATTACK_LANDED
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE
 	}
 end
 
@@ -849,6 +851,12 @@ function modifier_imba_timbersaw_reactive_armor:OnAttackLanded(keys)
 				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_reactive_armor_stack", {duration = self:GetAbility():GetSpecialValueFor("stack_duration")})
 			end
 		end
+	end
+end
+
+function modifier_imba_timbersaw_reactive_armor:GetModifierIncomingPhysicalDamage_Percentage(keys)
+	if self:GetAbility().GetAutoCastState and self:GetAbility():GetAutoCastState() and keys.attacker:GetTeamNumber() == self:GetParent():GetTeamNumber() then
+		return self:GetAbility():GetSpecialValueFor("ally_damage_reduction") * (-1)
 	end
 end
 

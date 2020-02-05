@@ -3,10 +3,12 @@
 
 LinkLuaModifier("modifier_imba_gyrocopter_rocket_barrage", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_gyrocopter_homing_missile_handler", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_gyrocopter_homing_missile_pre_flight", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_gyrocopter_homing_missile", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_gyrocopter_flak_cannon", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gyrocopter_flak_cannon_speed_handler", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_gyrocopter_flak_cannon_side_gunner", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_gyrocopter_lock_on", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
@@ -20,11 +22,13 @@ imba_gyrocopter_rocket_barrage						= imba_gyrocopter_rocket_barrage or class({}
 modifier_imba_gyrocopter_rocket_barrage				= modifier_imba_gyrocopter_rocket_barrage or class({})
 
 imba_gyrocopter_homing_missile						= imba_gyrocopter_homing_missile or class({})
+modifier_imba_gyrocopter_homing_missile_handler		= modifier_imba_gyrocopter_homing_missile_handler or class({})
 modifier_imba_gyrocopter_homing_missile_pre_flight	= modifier_imba_gyrocopter_homing_missile_pre_flight or class({})
 modifier_imba_gyrocopter_homing_missile				= modifier_imba_gyrocopter_homing_missile or class({})
 
 imba_gyrocopter_flak_cannon							= imba_gyrocopter_flak_cannon or class({})
 modifier_imba_gyrocopter_flak_cannon				= modifier_imba_gyrocopter_flak_cannon or class({})
+modifier_imba_gyrocopter_flak_cannon_speed_handler	= modifier_imba_gyrocopter_flak_cannon_speed_handler or class({})
 modifier_imba_gyrocopter_flak_cannon_side_gunner	= modifier_imba_gyrocopter_flak_cannon_side_gunner or class({})
 
 imba_gyrocopter_lock_on								= imba_gyrocopter_lock_on or class({})
@@ -116,6 +120,24 @@ end
 -- IMBA_GYROCOPTER_HOMING_MISSILE --
 ------------------------------------
 
+function imba_gyrocopter_homing_missile:GetIntrinsicModifierName()
+	return "modifier_imba_gyrocopter_homing_missile_handler"
+end
+
+function imba_gyrocopter_homing_missile:GetBehavior()
+	if self:GetCaster():GetModifierStackCount("modifier_imba_gyrocopter_homing_missile_handler", self:GetCaster()) == 0 then
+		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+	end
+end
+--------------------------------------------------------------------------------
+
+-- function imba_gyrocopter_homing_missile:CastFilterResultTarget( target )
+	-- local default_result = self.BaseClass.CastFilterResultTarget(self, target)
+	-- return default_result
+-- end
+
 function imba_gyrocopter_homing_missile:OnSpellStart()
 	if self:GetCaster():GetName() == "npc_dota_hero_gyrocopter" then
 		if not self.responses then
@@ -132,17 +154,49 @@ function imba_gyrocopter_homing_missile:OnSpellStart()
 		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
 	end
 
-	-- "When Cast, a stationary missile is placed 150 range in front of Gyrocopter, which begins to move 3 seconds later."
-	local missile = CreateUnitByName("npc_dota_gyrocopter_homing_missile", self:GetCaster():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * 150), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
-	missile:SetForwardVector((self:GetCaster():GetAbsOrigin() - self:GetCursorTarget():GetAbsOrigin()):Normalized())
-	missile:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_homing_missile_pre_flight", {duration = self:GetSpecialValueFor("pre_flight_time")})
-	missile:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_homing_missile", {})
+	if not self:GetAutoCastState() then
+		-- "When Cast, a stationary missile is placed 150 range in front of Gyrocopter, which begins to move 3 seconds later."
+		local missile = CreateUnitByName("npc_dota_gyrocopter_homing_missile", self:GetCaster():GetAbsOrigin() + ((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * 150), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		missile:SetForwardVector((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized())
+		missile:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_homing_missile_pre_flight", {duration = self:GetSpecialValueFor("pre_flight_time")})
+		missile:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_homing_missile", {})
+		
+		-- The fuse isn't following the rope...
+		local fuse_particle = ParticleManager:CreateParticle("particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_homing_missile_fuse.vpcf", PATTACH_ABSORIGIN, missile)
+		ParticleManager:SetParticleControlForward(fuse_particle, 0, missile:GetForwardVector() * (-1))
+		-- ParticleManager:SetParticleControl(fuse_particle, 0, missile:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(fuse_particle)
+		
+		-- missile:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	else
 	
-	local fuse_particle = ParticleManager:CreateParticle("particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_homing_missile_fuse.vpcf", PATTACH_ABSORIGIN_FOLLOW, missile)
-	-- ParticleManager:SetParticleControlEnt(fuse_particle, 0, missile, PATTACH_ABSORIGIN_FOLLOW, "attach_fuse", missile:GetAbsOrigin(), true)
-	ParticleManager:ReleaseParticleIndex(fuse_particle)
+	end
+end
+
+-----------------------------------------------------
+-- MODIFIER_IMBA_GYROCOPTER_HOMING_MISSILE_HANDLER --
+-----------------------------------------------------
+
+function modifier_imba_gyrocopter_homing_missile_handler:IsHidden()			return true end
+function modifier_imba_gyrocopter_homing_missile_handler:IsPurgable()		return false end
+function modifier_imba_gyrocopter_homing_missile_handler:RemoveOnDeath()	return false end
+function modifier_imba_gyrocopter_homing_missile_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_gyrocopter_homing_missile_handler:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
+end
+
+function modifier_imba_gyrocopter_homing_missile_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
 	
-	-- missile:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
+	end
 end
 
 --------------------------------------------------------
@@ -174,54 +228,21 @@ function modifier_imba_gyrocopter_homing_missile_pre_flight:OnDestroy()
 	self:GetParent():EmitSound("Hero_Gyrocopter.HomingMissile.Enemy")
 	
 	if self.target and not self.target:IsNull() and self.target:IsAlive() and self:GetParent():HasModifier("modifier_imba_gyrocopter_homing_missile") then
+		
+		-- Okay so this part I don't understand at all; if I don't set controllable by player, the missile won't fly at all EXCEPT when the ability is level 1. This is non-vanilla behaviour to make the missile selectable (as in highlighted green bar), but I can't figure this out right now
+		self:GetParent():SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
 		self:GetParent():MoveToNPC(self.target)
+		-- self:GetParent():SetControllableByPlayer(nil, true)
+		
 		self:GetParent():FindModifierByName("modifier_imba_gyrocopter_homing_missile"):StartIntervalThink(self.interval)
 		local missile_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_gyrocopter/gyro_guided_missile.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControlEnt(missile_particle, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_fuse", self:GetParent():GetAbsOrigin(), true)
 		self:GetParent():FindModifierByName("modifier_imba_gyrocopter_homing_missile"):AddParticle(missile_particle, false, false, -1, false, false)
-		
-		-- Consider tracking projectile to handle this?
-		-- ProjectileManager:CreateTrackingProjectile({
-			-- EffectName			= nil,
-			-- Ability				= self,
-			-- Source				= self:GetParent():GetAbsOrigin(),
-			-- vSourceLoc			= self:GetParent():GetAbsOrigin(),
-			-- Target				= self.target,
-			-- iMoveSpeed			= self.speed,
-			-- -- flExpireTime		= nil,
-			-- bDodgeable			= false,
-			-- bIsAttack			= false,
-			-- bReplaceExisting	= false,
-			-- iSourceAttachment	= nil,
-			-- bDrawsOnMinimap		= nil,
-			-- bVisibleToEnemies	= true,
-			-- bProvidesVision		= false,
-			-- iVisionRadius		= nil,
-			-- iVisionTeamNumber	= nil,
-			-- ExtraData			= {}
-		-- })
 	else
 		self:GetParent():ForceKill(false)
 		self:GetParent():AddNoDraw()
 	end
 end
-
-	-- if self:GetCaster():GetName() == "npc_dota_hero_gyrocopter" then
-		-- if not self.responses then
-			-- self.responses = 
-			-- {
-				-- "gyrocopter_gyro_homing_missile_impact_01",
-				-- "gyrocopter_gyro_homing_missile_impact_02",
-				-- "gyrocopter_gyro_homing_missile_impact_05",
-				-- "gyrocopter_gyro_homing_missile_impact_06",
-				-- "gyrocopter_gyro_homing_missile_impact_07",
-				-- "gyrocopter_gyro_homing_missile_impact_08"
-			-- }
-		-- end
-		
-		-- self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
-	-- end
-
 
 ---------------------------------------------
 -- MODIFIER_IMBA_GYROCOPTER_HOMING_MISSILE --
@@ -246,6 +267,9 @@ function modifier_imba_gyrocopter_homing_missile:OnCreated()
 	
 	self.stun_duration				= self:GetAbility():GetTalentSpecialValueFor("stun_duration")
 	
+	self.damage						= self:GetAbility():GetAbilityDamage()
+	self.damage_type				= self:GetAbility():GetAbilityDamageType()
+	
 	self.target						= self:GetAbility():GetCursorTarget()
 	
 	self.interval					= 1 / self.acceleration
@@ -260,7 +284,62 @@ end
 function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 	self.speed_counter	= self.speed_counter + 1
 	self:SetStackCount(self.speed_counter)
-	self:GetParent():MoveToNPC(self.target)
+	
+	-- Arbitrary change of target handling as missile gets close (so it can overlap and count collision detection)
+	if (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() > 250 then
+		self:GetParent():MoveToNPC(self.target)
+	else
+		self:GetParent():MoveToPosition(self.target:GetAbsOrigin())
+	end
+	
+	if (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():GetHullRadius() then
+		self.target:EmitSound("Hero_Gyrocopter.HomingMissile.Target")
+		self.target:EmitSound("Hero_Gyrocopter.HomingMissile.Destroy")
+		
+		if not self.target:IsMagicImmune() then
+			-- "The rocket first applies the debuff, then the damage."
+			local stun_modifier	= self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
+			end
+			
+			ApplyDamage({
+				victim 			= self.target,
+				damage 			= self.damage,
+				damage_type		= self.damage_type,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			})
+			
+			if not self.target:IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_gyrocopter" then
+				if not self.responses then
+					self.responses = 
+					{
+						"gyrocopter_gyro_homing_missile_impact_01",
+						"gyrocopter_gyro_homing_missile_impact_02",
+						"gyrocopter_gyro_homing_missile_impact_05",
+						"gyrocopter_gyro_homing_missile_impact_06",
+						"gyrocopter_gyro_homing_missile_impact_07",
+						"gyrocopter_gyro_homing_missile_impact_08"
+					}
+				end
+				
+				self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+			end
+		end
+		
+		-- "If the missile hits its target, its 400 range flying vision stays at the location for 3.5 seconds."
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), 400, self.enemy_vision_time, false)
+		
+		local explosion_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(explosion_particle, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(explosion_particle)
+		
+		self:GetParent():ForceKill(false)
+		self:GetParent():AddNoDraw()
+	end
 	-- print((self:GetParent():GetAbsOrigin() - self.target:GetAbsOrigin()):Length2D())
 	-- print(self.target:GetHullRadius())
 end
@@ -279,7 +358,9 @@ function modifier_imba_gyrocopter_homing_missile:CheckState()
 	return {
 		[MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
-		[MODIFIER_STATE_NOT_ON_MINIMAP]						= true
+		[MODIFIER_STATE_NOT_ON_MINIMAP]						= true,
+		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS]	= true,
+		[MODIFIER_STATE_IGNORING_STOP_ORDERS]				= true
 	}
 end
 
@@ -306,7 +387,7 @@ end
 
 function modifier_imba_gyrocopter_homing_missile:GetModifierMoveSpeed_Limit()
 	if self:GetElapsedTime() < self.pre_flight_time then
-		return 0
+		return -0.01
 	else
 		return self.speed + self:GetStackCount()
 	end
@@ -347,9 +428,25 @@ end
 -- IMBA_GYROCOPTER_FLAK_CANNON --
 ---------------------------------
 
-function imba_gyrocopter_flak_cannon:GetIntrinsicModifierName()
-	return "modifier_imba_gyrocopter_flak_cannon_side_gunner"
-end
+-- Already built into hero as vanilla so this isn't required
+
+-- function imba_gyrocopter_flak_cannon:GetIntrinsicModifierName()
+	-- return "modifier_imba_gyrocopter_flak_cannon_side_gunner"
+-- end
+
+-- function imba_gyrocopter_flak_cannon:OnInventoryContentsChanged()
+	-- if self:GetIntrinsicModifierName() and self:GetCaster():HasModifier(self:GetIntrinsicModifierName()) then
+		-- if self:GetCaster():HasScepter() then
+			-- self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(self:GetSpecialValueFor("fire_rate"))
+		-- else
+			-- self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(-1)
+		-- end
+	-- end
+-- end
+
+-- function imba_gyrocopter_flak_cannon:OnHeroCalculateStatBonus()
+	-- self:OnInventoryContentsChanged()
+-- end
 
 function imba_gyrocopter_flak_cannon:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Gyrocopter.FlackCannon.Activate")
@@ -407,33 +504,41 @@ function modifier_imba_gyrocopter_flak_cannon:OnAttack(keys)
 		-- "Does not target couriers, wards, buildings, invisible units, or units inside the Fog of War."
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)) do
 			if enemy ~= keys.target and not enemy:IsCourier() then
-				-- self:GetParent():PerformAttack(enemy, false, false, true, true, true, false, false)
-				
-				ProjectileManager:CreateTrackingProjectile({
-					EffectName			= "particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf",
-					Ability				= self:GetAbility(),
-					Source				= self:GetParent():GetAbsOrigin(),
-					vSourceLoc			= self:GetParent():GetAbsOrigin(),
-					Target				= enemy,
-					iMoveSpeed			= self.projectile_speed,
-					flExpireTime		= nil,
-					bDodgeable			= false,
-					bIsAttack			= true,
-					bReplaceExisting	= false,
-					iSourceAttachment	= self:GetCaster():ScriptLookupAttachment(self.weapons[RandomInt(1, #self.weapons)]),
-					bDrawsOnMinimap		= nil,
-					bVisibleToEnemies	= true,
-					bProvidesVision		= false,
-					iVisionRadius		= nil,
-					iVisionTeamNumber	= nil,
-					ExtraData			= {}
-				})
+				self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_gyrocopter_flak_cannon_speed_handler", {projectile_speed = self.projectile_speed})
+				self:GetParent():PerformAttack(enemy, false, false, true, true, true, false, false)
+				self:GetParent():RemoveModifierByName("modifier_imba_gyrocopter_flak_cannon_speed_handler")
 			end
 		end
 		
 		if self:GetStackCount() <= 0 then
 			self:Destroy()
 		end
+	end
+end
+
+--------------------------------------------------------
+-- MODIFIER_IMBA_GYROCOPTER_FLAK_CANNON_SPEED_HANDLER --
+--------------------------------------------------------
+
+-- This modifier forces the Flak Cannon attack projectiles to be at a specific projectile speed
+
+-- function modifier_imba_gyrocopter_flak_cannon_speed_handler:IsHidden()		return true end
+function modifier_imba_gyrocopter_flak_cannon_speed_handler:IsPurgable()	return false end
+
+function modifier_imba_gyrocopter_flak_cannon_speed_handler:OnCreated(keys)
+	if not IsServer() then return end
+	
+	self.projectile_speed		= keys.projectile_speed
+	self.projectile_speed_base	= self:GetParent():GetProjectileSpeed()
+end
+
+function modifier_imba_gyrocopter_flak_cannon_speed_handler:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS}
+end
+
+function modifier_imba_gyrocopter_flak_cannon_speed_handler:GetModifierProjectileSpeedBonus()
+	if self.projectile_speed and self.projectile_speed_base then
+		return self.projectile_speed - self.projectile_speed_base
 	end
 end
 
@@ -445,19 +550,12 @@ function modifier_imba_gyrocopter_flak_cannon_side_gunner:IsHidden()		return tru
 function modifier_imba_gyrocopter_flak_cannon_side_gunner:IsPurgable()		return false end
 function modifier_imba_gyrocopter_flak_cannon_side_gunner:RemoveOnDeath()	return false end
 
--- TODO: Make sure Gyrocopter doesn't double-dip on this, as the scepter effect seems to be tied to the hero
-
-function modifier_imba_gyrocopter_flak_cannon_side_gunner:OnCreated()
-	self.fire_rate			= self:GetAbility():GetSpecialValueFor("fire_rate")
-	self.scepter_radius		= self:GetAbility():GetSpecialValueFor("scepter_radius")
-
-	self:StartIntervalThink(self.fire_rate)
-end
+-- Tthe scepter effect seems to be tied to the hero as vanilla so this probably won't be necessary
 
 -- "The Side Gunner does not attack when Gyrocopter is hidden, invisible, or affected by Break."
 function modifier_imba_gyrocopter_flak_cannon_side_gunner:OnIntervalThink()
 	if self:GetParent():HasScepter() and not self:GetParent():IsOutOfGame() and not self:GetParent():IsInvisible() and not self:GetParent():PassivesDisabled() then
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.scepter_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)) do
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_FARTHEST, false)) do
 			if not enemy:IsCourier() then
 				self:GetParent():PerformAttack(enemy, false, false, true, true, true, false, false)
 				break
@@ -544,6 +642,22 @@ function modifier_imba_gyrocopter_call_down_thinker:OnCreated()
 	
 	self.first_missile_impact	= false
 	self.second_missile_impact	= false
+	
+	self.marker_particle		= ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(self.marker_particle, 1, Vector(self.radius, 1, self.radius * (-1)))
+	self:AddParticle(self.marker_particle, false, false, -1, false, false)
+	
+	local calldown_first_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_gyrocopter/gyro_calldown_first.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(calldown_first_particle, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControl(calldown_first_particle, 1, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(calldown_first_particle, 5, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:ReleaseParticleIndex(calldown_first_particle)
+	
+	local calldown_second_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_gyrocopter/gyro_calldown_second.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(calldown_second_particle, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControl(calldown_second_particle, 1, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(calldown_second_particle, 5, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:ReleaseParticleIndex(calldown_second_particle)
 	
 	self:StartIntervalThink(self.missile_delay_tooltip)
 end

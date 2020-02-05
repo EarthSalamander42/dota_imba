@@ -334,6 +334,11 @@ end
 
 -- Man this is messy...
 function imba_chen_holy_persuasion:CastFilterResultTarget(hTarget)
+	-- Malfurion living tower exception
+	if hTarget:GetUnitLabel() == "living_tower" then
+		return UF_FAIL_ANCIENT
+	end
+
 	if not IsServer() then return end
 
 	if hTarget == self:GetCaster() 

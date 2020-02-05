@@ -24,7 +24,7 @@
 "DOTA_Tooltip_modifier_imba_timbersaw_timber_chain_side_hooks_Description"	"Being dragged by someone else's Timber Chain."
 
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor"							"Reactive Armor"
-"DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Description"				"Each time Timbersaw is attacked, he gains increased health regen and armor.\n<font color='#FF7800'>C'mon, HIT ME!:</font> Can be set to auto-cast to make Timbersaw fully deniable. Getting hit by allies grants %ally_hit_additional_stacks% additional stack of Reactive Armor."
+"DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Description"				"Each time Timbersaw is attacked, he gains increased health regen and armor.\n<font color='#FF7800'>C'mon, HIT ME!:</font> Can be set to auto-cast to make Timbersaw fully deniable. Getting hit by allies grants %ally_hit_additional_stacks% additional stack of Reactive Armor. Any physical damage dealt by allies is also reduced by %ally_damage_reduction%%%."
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_Lore"						"The saw-suit is equipped to react to the slightest touch with fortified defenses."
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_bonus_armor"				"BONUS ARMOR:"
 "DOTA_Tooltip_ability_imba_timbersaw_reactive_armor_bonus_hp_regen"			"BONUS HP REGEN:"

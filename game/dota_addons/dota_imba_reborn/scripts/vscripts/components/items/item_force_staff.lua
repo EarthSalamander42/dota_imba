@@ -166,6 +166,13 @@ end
 
 function modifier_item_imba_force_staff_active:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	
+	-- Mars' Arena of Blood exception
+	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+		self:Destroy()
+		return
+	end
+	
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
@@ -367,6 +374,13 @@ end
 
 function modifier_item_imba_hurricane_pike_force_ally:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	
+	-- Mars' Arena of Blood exception
+	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+		self:Destroy()
+		return
+	end
+	
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
@@ -420,6 +434,13 @@ end
 
 function modifier_item_imba_hurricane_pike_force_enemy:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	
+	-- Mars' Arena of Blood exception
+	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+		self:Destroy()
+		return
+	end
+	
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
@@ -470,6 +491,13 @@ end
 
 function modifier_item_imba_hurricane_pike_force_self:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	
+	-- Mars' Arena of Blood exception
+	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+		self:Destroy()
+		return
+	end
+	
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance

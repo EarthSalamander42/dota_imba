@@ -437,10 +437,18 @@ end
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:OnCreated()
 	if self:GetAbility() then
-		self.slow	= self:GetAbility():GetSpecialValueFor("slow")
+		self.slow					= self:GetAbility():GetSpecialValueFor("slow")
+		self.packed_ice_duration	= self:GetAbility():GetSpecialValueFor("packed_ice_duration")
 	else
-		self.slow	= 0
+		self.slow					= 0
+		self.packed_ice_duration	= 0
 	end
+end
+
+function modifier_imba_ancient_apparition_chilling_touch_slow:CheckState()
+	if not IsServer() then return end
+
+	return {[MODIFIER_STATE_FROZEN] = self:GetElapsedTime() <= self.packed_ice_duration * (1 - self:GetParent():GetStatusResistance())}
 end
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:DeclareFunctions()

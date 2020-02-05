@@ -1215,17 +1215,21 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 
 	-- Apply debuff modifier on enemy
 	local corrosive_haze_modifier = target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})
+	
+	if corrosive_haze_modifier then
+		corrosive_haze_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	end
 
 	-- Apply particle effects on enemy
 	-- Timers:CreateTimer(0.01, function()
-		particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, target)
-		ParticleManager:SetParticleControl(particle_haze_fx, 0, target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_haze_fx, 1, target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_haze_fx, 2, target:GetAbsOrigin())
+		-- particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, target)
+		-- ParticleManager:SetParticleControl(particle_haze_fx, 0, target:GetAbsOrigin())
+		-- ParticleManager:SetParticleControl(particle_haze_fx, 1, target:GetAbsOrigin())
+		-- ParticleManager:SetParticleControl(particle_haze_fx, 2, target:GetAbsOrigin())
 
-		ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
+		-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		-- corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
 	-- end)
 
 	-- #7 Talent: Corrosize Haze now applies to all targets
@@ -1247,8 +1251,12 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 			if enemy ~= target and not enemy:HasModifier(modifier_debuff) then
 				corrosive_haze_modifier = enemy:AddNewModifier(caster, ability, modifier_secondary_debuff, {duration = duration})
 
+				if corrosive_haze_modifier then
+					corrosive_haze_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
+				end
+	
 				-- Apply particle effects on enemy
-				Timers:CreateTimer(0.01, function()
+				-- Timers:CreateTimer(0.01, function()
 					particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
 					ParticleManager:SetParticleControl(particle_haze_fx, 0, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle_haze_fx, 1, enemy:GetAbsOrigin())
@@ -1257,7 +1265,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 					ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_overhead", enemy:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 					corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
-				end)
+				-- end)
 			end
 		end
 	end
@@ -1269,16 +1277,22 @@ modifier_imba_corrosive_haze_debuff = class({})
 
 function modifier_imba_corrosive_haze_debuff:OnCreated()
 	if not IsServer() then return end
+	
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_11") and self:GetParent():IsRealHero() then
 		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", {duration = self:GetDuration()})
 	end
+	
+	self.particle_haze_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.particle_haze_fx, 1, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.particle_haze_fx, 2, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(self.particle_haze_fx, false, false, -1, false, true)
 end
 
 function modifier_imba_corrosive_haze_debuff:OnRefresh()
 	if not IsServer() then return end
 
 	if not self:GetCaster():HasTalent("special_bonus_imba_slardar_11") then return end
-	if self:GetParent():IsRealHero() and self.caster_buff and not self.caster_buff:IsNull() then
+	if self.caster_buff and not self.caster_buff:IsNull() then
 		self.caster_buff:SetDuration(self:GetDuration(), true)
 	else
 		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", {duration = self:GetDuration()})
@@ -1287,13 +1301,13 @@ end
 
 function modifier_imba_corrosive_haze_debuff:CheckState()
 	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
-		return state
+		return {[MODIFIER_STATE_PROVIDES_VISION] = true}
+	else
+		return {
+			[MODIFIER_STATE_PROVIDES_VISION]	= true,
+			[MODIFIER_STATE_INVISIBLE]			= false
+		}
 	end
-
-	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true,
-		[MODIFIER_STATE_INVISIBLE] = false}
-	return state
 end
 
 -- function modifier_imba_corrosive_haze_debuff:GetPriority()
@@ -1301,12 +1315,12 @@ end
 -- end
 
 function modifier_imba_corrosive_haze_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 

@@ -823,6 +823,7 @@ function imba_phantom_lancer_sun_catcher:OnSpellStart()
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		fExpireTime 		= GameRules:GetGameTime() + self:GetSpecialValueFor("duration"),
+		bDrawsOnMinimap		= true,
 		bDeleteOnHit		= false,
 		vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 		bProvidesVision		= true,

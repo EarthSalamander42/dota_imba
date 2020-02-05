@@ -910,6 +910,7 @@ function imba_silencer_last_word_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
+function imba_silencer_last_word_aura:GetAuraEntityReject(hEntity) 	return self:GetCaster():HasModifier("imba_silencer_last_word_aura_prevent") end
 
 ----------------------------------------------------
 -- Last Word silence talent aura prevention
@@ -917,10 +918,9 @@ end
 LinkLuaModifier("imba_silencer_last_word_aura_prevent", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 imba_silencer_last_word_aura_prevent = imba_silencer_last_word_aura_prevent or class({})
 
-function imba_silencer_last_word_aura_prevent:IsHidden() return false end
 function imba_silencer_last_word_aura_prevent:IsPurgable() return false end
-function imba_silencer_last_word_aura_prevent:IsDebuff() return false end
-
+function imba_silencer_last_word_aura_prevent:RemoveOnDeath() return false end
+function imba_silencer_last_word_aura_prevent:IsDebuff() return true end
 
 ----------------------------------------------------
 -- Last Word aura enemy silence modifier

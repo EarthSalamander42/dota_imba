@@ -25,18 +25,18 @@ end
 --------------------------------------------------------------------------------
 
 if IsServer() then
-	function sohei_dash:OnUpgrade()
-		local caster = self:GetCaster()
-		local modifier_charges = caster:FindModifierByName( "modifier_sohei_dash_charges" )
+	-- function sohei_dash:OnUpgrade()
+		-- local caster = self:GetCaster()
+		-- local modifier_charges = caster:FindModifierByName( "modifier_sohei_dash_charges" )
 
-		if not modifier_charges then
-			modifier_charges = caster:AddNewModifier( self:GetCaster(), self, "modifier_sohei_dash_charges", {} )
-			modifier_charges:SetStackCount( self:GetSpecialValueFor( "max_charges" ) )
-		elseif modifier_charges:GetDuration() <= 0 then
-			modifier_charges:SetDuration( self:GetChargeRefreshTime(), true )
-			modifier_charges:StartIntervalThink( 0.1 )
-		end
-	end
+		-- if not modifier_charges then
+			-- modifier_charges = caster:AddNewModifier( self:GetCaster(), self, "modifier_sohei_dash_charges", {} )
+			-- modifier_charges:SetStackCount( self:GetSpecialValueFor( "max_charges" ) )
+		-- elseif modifier_charges:GetDuration() <= 0 then
+			-- modifier_charges:SetDuration( self:GetChargeRefreshTime(), true )
+			-- modifier_charges:StartIntervalThink( 0.1 )
+		-- end
+	-- end
 
 --------------------------------------------------------------------------------
 
@@ -82,29 +82,29 @@ if IsServer() then
 		local dashDistance = self:GetSpecialValueFor( "dash_distance" )
 		local dashSpeed = self:GetSpecialValueFor( "dash_speed" )
 
-		-- since changing stack count deals with cooldown anyway
-		-- let's remove the default one
-		self:EndCooldown()
+		-- -- since changing stack count deals with cooldown anyway
+		-- -- let's remove the default one
+		-- self:EndCooldown()
 
-		if modifier_charges and not modifier_charges:IsNull() then
-			-- Perform the dash if there is at least one charge remaining
-			if modifier_charges:GetStackCount() >= 1 then
-				modifier_charges:SetStackCount( modifier_charges:GetStackCount() - 1 )
+		-- if modifier_charges and not modifier_charges:IsNull() then
+			-- -- Perform the dash if there is at least one charge remaining
+			-- if modifier_charges:GetStackCount() >= 1 then
+				-- modifier_charges:SetStackCount( modifier_charges:GetStackCount() - 1 )
 
-				local shortCD = dashDistance / dashSpeed
-				if self:GetCooldownTimeRemaining() < shortCD then
-					self:EndCooldown()
-					self:StartCooldown( dashDistance / dashSpeed )
-				end
-			end
-		else
-			caster:AddNewModifier( caster, self, "modifier_sohei_dash_charges", {
-				duration = self:GetChargeRefreshTime()
-			} )
+				-- local shortCD = dashDistance / dashSpeed
+				-- if self:GetCooldownTimeRemaining() < shortCD then
+					-- self:EndCooldown()
+					-- self:StartCooldown( dashDistance / dashSpeed )
+				-- end
+			-- end
+		-- else
+			-- caster:AddNewModifier( caster, self, "modifier_sohei_dash_charges", {
+				-- duration = self:GetChargeRefreshTime()
+			-- } )
 
-			self:EndCooldown()
-			self:StartCooldown( self:GetChargeRefreshTime() )
-		end
+			-- self:EndCooldown()
+			-- self:StartCooldown( self:GetChargeRefreshTime() )
+		-- end
 
 		-- i commented on this in guard but
 		-- faking not casting is really just not a great solution
@@ -561,15 +561,13 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_sohei_flurry_self:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 --------------------------------------------------------------------------------
@@ -696,25 +694,38 @@ end
 
 sohei_wholeness_of_body = class({})
 
+LinkLuaModifier("modifier_sohei_wholeness_of_body_handler", "components/abilities/heroes/hero_sohei", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_sohei_wholeness_of_body_status", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_sohei_wholeness_of_body_knockback", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function sohei_wholeness_of_body:GetCastRange(location, target)
+	return self:GetSpecialValueFor("knockback_radius") - self:GetCaster():GetCastRangeBonus()
+end
+
+function sohei_wholeness_of_body:GetIntrinsicModifierName()
+	return "modifier_sohei_wholeness_of_body_handler"
+end
 
 function sohei_wholeness_of_body:GetBehavior()
 	local caster = self:GetCaster()
 --	caster:HasTalent(...) will return true on the client only when OnPlayerLearnedAbility event happens
 --	caster:HasModifier(...) will return true on the client only if the talent is leveled up with aghanim scepter
 	if caster:HasTalent("special_bonus_imba_sohei_wholeness_allycast") or caster:HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
-		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+		if self:GetCaster():GetModifierStackCount("modifier_sohei_wholeness_of_body_handler", self:GetCaster()) == 0 then
+			return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		else
+			return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		end
 	end
 	
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	return self.BaseClass.GetBehavior(self)
 end
 --------------------------------------------------------------------------------
 
-function sohei_wholeness_of_body:CastFilterResultTarget( target )
-	local default_result = self.BaseClass.CastFilterResultTarget(self, target)
-	return default_result
-end
+-- function sohei_wholeness_of_body:CastFilterResultTarget( target )
+	-- local default_result = self.BaseClass.CastFilterResultTarget(self, target)
+	-- return default_result
+-- end
 
 function sohei_wholeness_of_body:OnSpellStart()
 	local caster = self:GetCaster()
@@ -725,23 +736,38 @@ function sohei_wholeness_of_body:OnSpellStart()
 	target:Purge(false, true, false, false, false)
 	-- Applying the buff
 	target:AddNewModifier(caster, self, "modifier_sohei_wholeness_of_body_status", {duration = self:GetTalentSpecialValueFor("sr_duration")})
-	-- Knockback talent
-	if caster:HasTalent("special_bonus_sohei_wholeness_knockback") then
-		local position = target:GetAbsOrigin()
-		local radius = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback")
-		local team = caster:GetTeamNumber()
-		local enemies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for _, enemy in ipairs( enemies ) do
-			local modifierKnockback = {
-				center_x = position.x,
-				center_y = position.y,
-				center_z = position.z,
-				duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
-				knockback_duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
-				knockback_distance = radius - (position - enemy:GetAbsOrigin()):Length2D(),
-			}
+	-- -- Knockback talent
+	-- if caster:HasTalent("special_bonus_sohei_wholeness_knockback") then
+		-- local position = target:GetAbsOrigin()
+		-- local radius = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback")
+		-- local team = caster:GetTeamNumber()
+		-- local enemies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		-- for _, enemy in ipairs( enemies ) do
+			-- local modifierKnockback = {
+				-- center_x = position.x,
+				-- center_y = position.y,
+				-- center_z = position.z,
+				-- duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
+				-- knockback_duration = caster:FindTalentValue("special_bonus_sohei_wholeness_knockback", "duration"),
+				-- knockback_distance = radius - (position - enemy:GetAbsOrigin()):Length2D(),
+			-- }
 
-			enemy:AddNewModifier(caster, self, "modifier_knockback", modifierKnockback )
+			-- enemy:AddNewModifier(caster, self, "modifier_knockback", modifierKnockback ) 
+		-- end 
+	-- end
+	
+	local momentum_ability = self:GetCaster():FindAbilityByName("sohei_momentum")
+	
+	if momentum_ability and momentum_ability:IsTrained() then
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("knockback_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
+			enemy:RemoveModifierByName( "modifier_sohei_momentum_knockback" )
+			enemy:AddNewModifier( self:GetCaster(), momentum_ability, "modifier_sohei_momentum_knockback", {
+				duration = momentum_ability:GetSpecialValueFor("knockback_distance") / momentum_ability:GetSpecialValueFor("knockback_speed"),
+				distance = momentum_ability:GetSpecialValueFor("knockback_distance"),
+				speed = momentum_ability:GetSpecialValueFor("knockback_speed"),
+				collision_radius = momentum_ability:GetSpecialValueFor("collision_radius"),
+				source_entindex = target:entindex()
+			} )
 		end
 	end
 end
@@ -766,19 +792,25 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_sohei_wholeness_of_body_status:GetEffectName()
-	return "particles/hero/sohei/guard.vpcf"
-end
+-- function modifier_sohei_wholeness_of_body_status:GetEffectName()
+	-- return "particles/hero/sohei/guard.vpcf"
+-- end
 
-function modifier_sohei_wholeness_of_body_status:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
+-- function modifier_sohei_wholeness_of_body_status:GetEffectAttachType()
+	-- return PATTACH_ABSORIGIN_FOLLOW
+-- end
 
 function modifier_sohei_wholeness_of_body_status:OnCreated()
 	local ability = self:GetAbility()
 	self.status_resistance = ability:GetTalentSpecialValueFor("status_resistance")
 	self.damageheal = ability:GetTalentSpecialValueFor("damage_taken_heal") / 100
 	self.endHeal = 0
+	
+	if not IsServer() then return end
+	
+	self.wholeness_particle = ParticleManager:CreateParticle("particles/hero/sohei/guard.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.wholeness_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	self:AddParticle(self.wholeness_particle, false, false, -1, false, false)
 end
 
 function modifier_sohei_wholeness_of_body_status:OnRefresh()
@@ -837,11 +869,51 @@ function modifier_special_bonus_imba_sohei_wholeness_allycast:RemoveOnDeath()
 	return false
 end
 
+function modifier_special_bonus_imba_sohei_wholeness_allycast:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasAbility("sohei_wholeness_of_body") then
+		self:GetParent():FindAbilityByName("sohei_wholeness_of_body"):ToggleAutoCast()
+		
+		if self:GetParent():HasModifier("modifier_sohei_wholeness_of_body_handler") then
+			self:GetParent():FindModifierByName("modifier_sohei_wholeness_of_body_handler"):SetStackCount(1)
+		end
+	end
+end
+
 function sohei_wholeness_of_body:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_sohei_wholeness_allycast") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sohei_wholeness_allycast"), "modifier_special_bonus_imba_sohei_wholeness_allycast", {})
+	end
+end
+
+----------------------------------------------
+-- MODIFIER_SOHEI_WHOLENESS_OF_BODY_HANDLER --
+----------------------------------------------
+
+modifier_sohei_wholeness_of_body_handler	= modifier_sohei_wholeness_of_body_handler or class({})
+
+function modifier_sohei_wholeness_of_body_handler:IsHidden()		return true end
+function modifier_sohei_wholeness_of_body_handler:IsPurgable()		return false end
+function modifier_sohei_wholeness_of_body_handler:RemoveOnDeath()	return false end
+function modifier_sohei_wholeness_of_body_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_sohei_wholeness_of_body_handler:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
+end
+
+function modifier_sohei_wholeness_of_body_handler:OnOrder(keys)
+	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
+	
+	-- Due to logic order, this is actually reversed
+	if self:GetAbility():GetAutoCastState() then
+		self:SetStackCount(0)
+	else
+		self:SetStackCount(1)
 	end
 end
 
@@ -912,7 +984,7 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_sohei_momentum_passive:OnCreated( event )
-	if self:GetParent():IsIllusion() or self:GetParent():HasModifier("modifier_illusion_manager") then return end
+	-- if self:GetParent():IsIllusion() or self:GetParent():HasModifier("modifier_illusion_manager") then return end
 	self:GetAbility().intrMod = self
 
 	self.parentOrigin = self:GetParent():GetAbsOrigin()
@@ -982,7 +1054,7 @@ if IsServer() then
 	end
 
 	function modifier_sohei_momentum_passive:GetModifierPreAttack_CriticalStrike( event )
-		if (self.force_casting == true or self:GetAbility():GetAutoCastState() == true) and self:IsMomentumReady() and (self:GetAbility():IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" )) and not self:GetParent():IsIllusion() then
+		if (self.force_casting == true or self:GetAbility():GetAutoCastState() == true) and self:IsMomentumReady() and (self:GetAbility():IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" )) then
 
 			-- make sure the target is valid
 			local ufResult = UnitFilter(
@@ -1022,9 +1094,9 @@ if IsServer() then
 				return nil
 			end
 
-			if self:GetParent():IsIllusion() then
-				return nil
-			end
+			-- if self:GetParent():IsIllusion() then
+				-- return nil
+			-- end
 
 			-- Consume the buff
 			self:ForceRefresh()
@@ -1145,14 +1217,23 @@ if IsServer() then
 		local unit = self:GetParent()
 		local caster = self:GetCaster()
 
-		local difference = unit:GetAbsOrigin() - caster:GetAbsOrigin()
+		local difference = nil
+		
+		if not event.source_entindex then
+			difference = unit:GetAbsOrigin() - caster:GetAbsOrigin()
+		else
+			difference = unit:GetAbsOrigin() - EntIndexToHScript(event.source_entindex):GetAbsOrigin()
+		end
 
 		-- Movement parameters
 		self.direction = difference:Normalized()
 		self.distance = event.distance
 		self.speed = event.speed
 		self.collision_radius = event.collision_radius
-
+		
+		self.slow_duration	= self:GetAbility():GetTalentSpecialValueFor("slow_duration")
+		self.stun_duration	= self:GetAbility():GetTalentSpecialValueFor("stun_duration")
+		
 		if self:ApplyHorizontalMotionController() == false then
 			self:Destroy()
 			return
@@ -1187,25 +1268,25 @@ if IsServer() then
 			nil,
 			self.collision_radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO,
-			bit.bor( DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, DOTA_UNIT_TARGET_FLAG_NO_INVIS, DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE ),
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 			FIND_CLOSEST,
 			false
 		)
 
-		local nonHeroTarget = targets[1]
-		if nonHeroTarget == parent then
-			nonHeroTarget = targets[2]
+		local secondary_target = targets[1]
+		if secondary_target == parent then
+			secondary_target = targets[2]
 		end
 
 		local spell = self:GetAbility()
-
-		if nonHeroTarget then
+		
+		if secondary_target then
 			self:SlowAndStun( parent, caster, spell )
-			self:SlowAndStun( nonHeroTarget, caster, spell )
+			self:SlowAndStun( secondary_target, caster, spell )
 			self:Destroy()
 		-- why do these mean two different things
-		elseif not GridNav:IsTraversable( tickOrigin ) or GridNav:IsBlocked( tickOrigin ) then
+		elseif not GridNav:IsTraversable( tickOrigin ) or GridNav:IsBlocked( tickOrigin ) or GridNav:IsNearbyTree( tickOrigin, self:GetParent():GetHullRadius(), true ) then
 			self:SlowAndStun( parent, caster, spell )
 			GridNav:DestroyTreesAroundPoint( tickOrigin, self.collision_radius, false )
 			self:Destroy()
@@ -1221,21 +1302,28 @@ if IsServer() then
 
 	function modifier_sohei_momentum_knockback:SlowAndStun( unit, caster, ability )
 		local slow_modifier = unit:AddNewModifier( caster, ability, "modifier_sohei_momentum_slow", {
-			duration = ability:GetSpecialValueFor( "slow_duration" ),
+			duration = self.slow_duration,
 		} )
 		
 		if slow_modifier then
-			slow_modifier:SetDuration(ability:GetSpecialValueFor( "slow_duration" ) * (1 - unit:GetStatusResistance()), true)
+			slow_modifier:SetDuration(self.slow_duration * (1 - unit:GetStatusResistance()), true)
 		end
 
-		local talent = caster:FindAbilityByName( "special_bonus_sohei_stun" )
+		-- local talent = caster:FindAbilityByName( "special_bonus_sohei_stun" )
 
-		if talent and talent:GetLevel() > 0 then
-			local stunDuration = talent:GetSpecialValueFor("value")
+		-- if talent and talent:GetLevel() > 0 then
+			-- local stunDuration = talent:GetSpecialValueFor("value")
 
-			unit:AddNewModifier( caster, ability, "modifier_stunned", {
-				duration = stunDuration
-			} )
+			-- unit:AddNewModifier( caster, ability, "modifier_stunned", {
+				-- duration = stunDuration
+			-- } )
+		-- end
+		local stun_modifier = unit:AddNewModifier( caster, ability, "modifier_stunned", {
+			duration = self.stun_duration,
+		} )
+		
+		if stun_modifier then
+			stun_modifier:SetDuration(self.stun_duration * (1 - unit:GetStatusResistance()), true)
 		end
 	end
 end
@@ -1261,6 +1349,12 @@ end
 
 function modifier_sohei_momentum_slow:IsStunDebuff()
 	return false
+end
+
+function modifier_sohei_momentum_slow:GetTexture()
+	if self:GetAbility() then
+		return self:GetAbility().BaseClass.GetAbilityTextureName( self:GetAbility() )
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -1365,14 +1459,9 @@ if IsServer() then
 		local treeRadius = self:GetSpecialValueFor( "tree_radius" )
 		local duration = self:GetSpecialValueFor( "max_duration" )
 		local endDistance = self:GetSpecialValueFor( "end_distance" )
-		local doHeal = 0
-
+		
 		local modMomentum = caster:FindModifierByName( "modifier_sohei_momentum_passive" )
 		local spellMomentum = caster:FindAbilityByName( "sohei_momentum" )
-
-		if ( modMomentum and modMomentum:IsMomentumReady() ) and ( spellMomentum and spellMomentum:IsCooldownReady() ) then
-			doHeal = 1
-		end
 
 		caster:RemoveModifierByName( "modifier_sohei_palm_of_life_movement" )
 		caster:RemoveModifierByName( "modifier_sohei_dash_movement" )
@@ -1384,7 +1473,7 @@ if IsServer() then
 			tree_radius = treeRadius,
 			speed = speed,
 			endDistance = endDistance,
-			doHeal = doHeal
+			doHeal = 1
 		} )
 	end
 end

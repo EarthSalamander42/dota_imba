@@ -883,6 +883,7 @@ end
 
 MergeTables(LinkedModifiers,{
 	["modifier_imba_kinetic_field"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_kinetic_field_aura_modifier"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_kinetic_field_check_position"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_kinetic_field_barrier"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_kinetic_field_knockback"] = LUA_MODIFIER_MOTION_NONE,
@@ -956,11 +957,12 @@ function modifier_imba_kinetic_field:IsHidden()	return true end
 function modifier_imba_kinetic_field:IsPassive() return true end
 
 function modifier_imba_kinetic_field:OnCreated(keys)
+	self.field_radius = self:GetAbility():GetSpecialValueFor("field_radius")
+
 	if IsServer() then
 		self.caster = self:GetCaster()
 		self.target = self:GetParent()
 		self.ability = self:GetAbility()
-		self.field_radius = self.ability:GetSpecialValueFor("field_radius")
 
 		--fuck you vectors
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
@@ -1059,6 +1061,32 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 			end
 		end
 	end
+end
+
+function modifier_imba_kinetic_field:IsAura()						return self:GetCaster():HasTalent("special_bonus_imba_disruptor_kinetic_field_true_sight") end
+function modifier_imba_kinetic_field:IsAuraActiveOnDeath() 			return false end
+
+function modifier_imba_kinetic_field:GetAuraRadius()				return self.field_radius end
+function modifier_imba_kinetic_field:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_kinetic_field:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_kinetic_field:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER end
+function modifier_imba_kinetic_field:GetModifierAura()				return "modifier_truesight" end
+function modifier_imba_kinetic_field:GetAuraEntityReject(hTarget)	return not hTarget:IsOther() and hTarget:IsMagicImmune() end
+
+-----------------------------------------------
+-- MODIFIER_IMBA_KINETIC_FIELD_AURA_MODIFIER --
+-----------------------------------------------
+
+-- Not needed right now but eh
+
+modifier_imba_kinetic_field_aura_modifier	= modifier_imba_kinetic_field_aura_modifier or class({})
+
+function modifier_imba_kinetic_field_aura_modifier:GetPriority()
+	return MODIFIER_PRIORITY_HIGH
+end
+
+function modifier_imba_kinetic_field_aura_modifier:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = false}
 end
 
 modifier_imba_kinetic_field_check_inside_field = modifier_imba_kinetic_field_check_inside_field or class({})
@@ -1766,14 +1794,27 @@ end
 -- Client-side helper functions --
 
 LinkLuaModifier("modifier_special_bonus_imba_disruptor_9", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_kinetic_field_true_sight", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_disruptor_9 = class({})
+modifier_special_bonus_imba_disruptor_kinetic_field_true_sight	= modifier_special_bonus_imba_disruptor_kinetic_field_true_sight or class({})
+
 function modifier_special_bonus_imba_disruptor_9:IsHidden() 		return true end
 function modifier_special_bonus_imba_disruptor_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_disruptor_9:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_disruptor_kinetic_field_true_sight:IsHidden() 			return true end
+function modifier_special_bonus_imba_disruptor_kinetic_field_true_sight:IsPurgable() 		return false end
+function modifier_special_bonus_imba_disruptor_kinetic_field_true_sight:RemoveOnDeath() 	return false end
+
 function imba_disruptor_glimpse:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_disruptor_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_disruptor_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_disruptor_9", {})
+	end
+end
+
+function imba_disruptor_kinetic_field:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_disruptor_kinetic_field_true_sight") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_disruptor_kinetic_field_true_sight") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_disruptor_kinetic_field_true_sight"), "modifier_special_bonus_imba_disruptor_kinetic_field_true_sight", {})
 	end
 end

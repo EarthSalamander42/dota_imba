@@ -169,7 +169,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_1"                   "Kinetic Field now always pulls units inside it"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_2"                   "+1.25 Glimpse Storm linger duration"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_3"                   "Thunder Strike Chain Lightning"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3_Description"		"Grants a %value%%  chance to release a Chain Lightning per pulse, which bounces between up to %max_targets% enemies within %bounce_radius% range."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3_Description"		"Grants a {s:value}% chance to release a Chain Lightning per pulse, which bounces between up to {s:max_targets} enemies within {s:bounce_radius} range."
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_4"                   "Thunder Strike Slow"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_4_Description" 		"Inflicts 100% movespeed reduction for 0.25 seconds per pulse."
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_5"                   "Glimpse Storm Expansion"
@@ -177,9 +177,10 @@
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_6"                   "Static Storm builds stacks of mini-stun (applies upon exit)"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_7"                   "Doubles Thunder Strike pulses in Static Storm"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_8"                   "Enhanced Thunder Strike"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8_Description"       "Increases duration by %value% seconds, and reduces pulse interval by %value2% seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8_Description"       "Increases duration by {s:value} seconds, and reduces pulse interval by {s:value2} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_9"					"+1500 Glimpse Cast Range"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_10"					"Kinetic Field formation delay halved"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_kinetic_field_true_sight"		"Kinetic Field Grants True Sight"
 
 ////===============================================================================================================
 // Doom Bringer's DOOM
@@ -515,7 +516,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_9" 				"Mana Burn Scarab Parasite no longer expires"
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_10" 				"+75% Spiked Carapace Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_11" 				"Vendetta Unobstructed Pathing"
-"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12" 				"+1000 Vendetta Maximum Stored Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12" 				"+{s:value} Vendetta Maximum Stored Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12_Description" 	"Eye for an Eye modifier must be recreated after this talent is acquired for changes to apply."
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_13" 				"+10% Impale Relive Suffering damage"
 
@@ -791,6 +792,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "Life Drain Upgrade"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_7_Description"	"Life Drain additionally deals 3% of the target's current health as damage per second."
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+2 extra Nether Wards, duration reduced by 66%"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_nether_ward_damage"	"+{s:value} Nether Ward Damage Per Mana"
 
 ////===============================================================================================================
 // Pugna's summoned unit: Nether Ward

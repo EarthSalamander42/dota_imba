@@ -696,7 +696,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 			caster:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_caster", {})
 			--ProjectileManager:ProjectileDodge(caster)
 			Timers:CreateTimer(FrameTime(), function()
-				if current_target and not current_target:IsNull() and current_target:IsAlive() then
+				if current_target and not current_target:IsNull() and current_target:IsAlive() and not current_target:IsInvisible() and not current_target:IsAttackImmune() then
 					-- Particles and sound
 					caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Damage")
 					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, current_target)
@@ -721,7 +721,12 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 				if #sleight_targets >= current_count and caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
 					previous_position = current_target:GetAbsOrigin()
 					current_target = EntIndexToHScript(sleight_targets[current_count])
-					return attack_interval
+					
+					if not current_target:IsInvisible() and not current_target:IsAttackImmune() then
+						return attack_interval
+					else
+						return 0
+					end
 				-- If not, stop everything
 				else
 					Timers:CreateTimer(attack_interval - FrameTime(), function()

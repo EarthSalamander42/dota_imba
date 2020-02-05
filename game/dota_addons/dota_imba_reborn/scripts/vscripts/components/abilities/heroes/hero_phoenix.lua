@@ -1088,6 +1088,10 @@ function imba_phoenix_sun_ray:OnSpellStart()
 	local elapsedTime = 0.0
 
 	caster:SetContextThink( DoUniqueString( "updateSunRay" ), function ( )
+		-- Mars' Arena of Blood exception
+		if self:GetCaster():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetCaster():GetAbsOrigin() - self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
+		end
 
 			ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
 			-- Check the Debuff that can interrupt spell
