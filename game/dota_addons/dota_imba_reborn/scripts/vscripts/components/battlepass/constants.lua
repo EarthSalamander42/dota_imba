@@ -25,7 +25,7 @@ UNIQUE_DONATOR_COMPANION["76561197970766309"] = "npc_donator_companion_hamahe"
 UNIQUE_DONATOR_COMPANION["76561193687456266"] = "npc_donator_companion_exzas"
 UNIQUE_DONATOR_COMPANION["76561198095342815"] = "npc_donator_companion_the_blind_dog"
 UNIQUE_DONATOR_COMPANION["76561198009727790"] = "npc_donator_companion_acalia"
-UNIQUE_DONATOR_COMPANION["76561198358324920"] = "npc_donator_companion_kiddo"
+UNIQUE_DONATOR_COMPANION["76561198173806838"] = "npc_donator_companion_kiddo"
 
 -- UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_conjurist"
 UNIQUE_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_suthernfriend" -- Conjurist wants a special Roshan

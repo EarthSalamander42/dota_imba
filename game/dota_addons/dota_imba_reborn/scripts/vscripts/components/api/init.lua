@@ -1,5 +1,5 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
--- Api Interface for Dota IMBA
+-- Copyright (C) 2020 - Frostrose Studio Development Team
+-- Api Interface for every custom games managed/created by Frostrose Studio
 
 api = class({});
 

@@ -56,7 +56,9 @@ end, nil)
 ListenToGameEvent('dota_item_purchased', function(event)
 	-- itemcost, itemname, PlayerID, splitscreenplayer
 
-	PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
+	if CUSTOM_GAME_TYPE == "IMBA" then
+		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
+	end
 
 --	if not PlayerResource.ItemTimer then PlayerResource.ItemTimer = {} end
 
