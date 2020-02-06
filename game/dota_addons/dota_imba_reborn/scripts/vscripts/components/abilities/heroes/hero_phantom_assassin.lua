@@ -819,12 +819,6 @@ function modifier_imba_blur_smoke:IsHidden()	return false end
 function modifier_imba_blur_smoke:IsDebuff()	return false end
 function modifier_imba_blur_smoke:IsPurgable() return false end
 
-function modifier_imba_blur_smoke:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL
-	}
-end
-
 function modifier_imba_blur_smoke:GetEffectName()
 	return "particles/units/heroes/hero_phantom_assassin/phantom_assassin_active_blur.vpcf"
 end
@@ -844,8 +838,21 @@ function modifier_imba_blur_smoke:GetPriority()
 	return MODIFIER_PRIORITY_NORMAL
 end
 
+function modifier_imba_blur_smoke:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
 function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
 	return 1
+end
+
+function modifier_imba_blur_smoke:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and keys.target:IsRoshan() then
+		self:SetDuration(math.min(self.fade_duration, self:GetRemainingTime()), true)
+	end
 end
 
 function modifier_imba_blur_smoke:OnCreated()
@@ -873,9 +880,11 @@ function modifier_imba_blur_smoke:OnIntervalThink()
 	if #enemies > 0 then
 		self.linger = true
 		self:StartIntervalThink(-1)
-		Timers:CreateTimer(self.fade_duration, function()
-			self:Destroy()
-		end)
+		-- Timers:CreateTimer(self.fade_duration, function()
+			-- self:Destroy()
+		-- end)
+		
+		self:SetDuration(self.fade_duration, true)
 	end
 end
 
