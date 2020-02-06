@@ -644,16 +644,18 @@ function modifier_imba_omniknight_heavenly_grace:OnCreated()
 	self.status_resistance	= self:GetAbility():GetSpecialValueFor("status_resistance")
 	self.bonus_str			= self:GetAbility():GetSpecialValueFor("bonus_str")
 	self.hp_regen			= self:GetAbility():GetSpecialValueFor("hp_regen")
+	self.holy_veil_magic_resistance	= self:GetAbility():GetSpecialValueFor("holy_veil_magic_resistance")
 end
 
 function modifier_imba_omniknight_heavenly_grace:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		
+		-- IMBAfication: Holy Veil
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-
-    return decFuncs
 end
 
 function modifier_imba_omniknight_heavenly_grace:GetModifierStatusResistanceStacking()
@@ -666,6 +668,10 @@ end
 
 function modifier_imba_omniknight_heavenly_grace:GetModifierConstantHealthRegen()
 	return self.hp_regen
+end
+
+function modifier_imba_omniknight_heavenly_grace:GetModifierMagicalResistanceBonus()
+	return self.holy_veil_magic_resistance
 end
 
 -----------------------------------

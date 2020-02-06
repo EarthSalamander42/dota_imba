@@ -13356,6 +13356,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"linger_duration"		"1.25 1.5 1.75 2.0"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"holy_veil_magic_resistance"		"7 10 13 16"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -25987,6 +25992,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_stun_duration"	"0.75"
+				"RequiresScepter"		"1"
 			}
 			"06"
 			{
@@ -26022,6 +26028,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_throw_delay"		"1"
+				"RequiresScepter"		"1"
 			}
 			"13"
 			{
@@ -26032,6 +26039,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cast_range"	"800 900 1000 1100"
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -29804,7 +29812,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"42 34 26 18"
+		"AbilityCooldown"				"36 30 24 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -30043,12 +30051,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"2 3 4 5"
+				"bonus_agi"				"6"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"3"
+				"bonus_ms"				"4"
 			}
 			"05"
 			{
@@ -33619,7 +33627,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dagger_speed"			"800"
+				"dagger_speed"			"1200"
 			}
 			"03"
 			{
@@ -33634,7 +33642,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"65"
+				"bonus_damage"			"75"
 				"LinkedSpecialBonus"	"special_bonus_imba_phantom_assassin_1"
 			}
 			"06"
@@ -33645,7 +33653,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dagger_vision"			"200 350 500 650"
+				"dagger_vision"			"600"
 			}
 			"08"
 			{
@@ -33668,7 +33676,7 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"65"
+				"base_damage"				"75" // Currently unused since the "bonus_damage" KV is taking care of it
 			}
 			"12"
 			{
@@ -33711,11 +33719,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 11 8 5"
+		"AbilityCooldown"				"11 9 7 5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"35 40 45 50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

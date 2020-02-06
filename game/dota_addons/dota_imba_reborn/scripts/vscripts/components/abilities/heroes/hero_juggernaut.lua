@@ -50,7 +50,6 @@ end
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_buff", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_juggernaut_blade_fury_debuff", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_succ", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class({})
@@ -94,15 +93,16 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 			self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStart")
 			-- StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
 			
-			-- Disable Omnislash during Blade Fury (vanilla)
-			if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
-				self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
-			end
+			-- IMBAfication: Multitasker
+			-- -- Disable Omnislash during Blade Fury (vanilla)
+			-- if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
+				-- self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
+			-- end
 			
-			-- Disable Blade Dance during Blade Fury
-			if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
-				self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
-			end
+			-- -- Disable Blade Dance during Blade Fury
+			-- if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+				-- self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
+			-- end
 		end
 	end
 end
@@ -176,15 +176,15 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 		self:GetCaster():StopSound("Hero_Juggernaut.BladeFuryStart")
 		self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStop")
 
-		-- Re-enable Omnislash during Blade Fury (vanilla)
-		if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
-			self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
-		end
+		-- -- Re-enable Omnislash during Blade Fury (vanilla)
+		-- if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
+			-- self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
+		-- end
 		
-		-- Re-enable Blade Dance at the end of Blade Fury
-		if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
-			self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
-		end
+		-- -- Re-enable Blade Dance at the end of Blade Fury
+		-- if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+			-- self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
+		-- end
 		
 		if self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") then
 			StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
@@ -206,22 +206,33 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 	end
 end
 
-modifier_imba_juggernaut_blade_fury_debuff = modifier_imba_juggernaut_blade_fury_debuff or class({})
-
-function modifier_imba_juggernaut_blade_fury_debuff:DeclareFunctions()
-	local funcs = {
-		MODIFIER_EVENT_ON_ATTACKED,
-	}
-
-	return funcs
+function modifier_imba_juggernaut_blade_fury:CheckState()
+	return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 end
 
-function modifier_imba_juggernaut_blade_fury_debuff:OnAttacked(keys)
-	if IsServer() then
-		if keys.attacker == self:GetCaster() and keys.target == self:GetParent() then
-			-- make it so caster deals no damage
-		end
+function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		
+		-- IMBAfication: Windfury
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+function modifier_imba_juggernaut_blade_fury:GetModifierDamageOutgoing_Percentage(keys)
+	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
+		return self.damage_penalty
 	end
+end
+
+function modifier_imba_juggernaut_blade_fury:GetModifierMoveSpeedBonus_Constant()
+	return self.talent_movespeed
+end
+
+function modifier_imba_juggernaut_blade_fury:GetOverrideAnimation()
+	return ACT_DOTA_OVERRIDE_ABILITY_1
 end
 
 -- Mi o sutete mo, myōri wa sutezu.
@@ -380,34 +391,6 @@ function modifier_imba_juggernaut_blade_fury_succ:OnDestroy()
 	if IsServer() then
 		self.target:SetUnitOnClearGround()
 	end
-end
-
-function modifier_imba_juggernaut_blade_fury:CheckState()
-	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
-	return state
-end
-
-function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
-	}
-end
-
-function modifier_imba_juggernaut_blade_fury:GetModifierDamageOutgoing_Percentage(keys)
-	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
-		return self.damage_penalty
-	end
-end
-
-function modifier_imba_juggernaut_blade_fury:GetModifierMoveSpeedBonus_Constant()
-	return self.talent_movespeed
-end
-
-function modifier_imba_juggernaut_blade_fury:GetOverrideAnimation()
-	return ACT_DOTA_OVERRIDE_ABILITY_1
 end
 
 -- Deflected kill credited to the caster.

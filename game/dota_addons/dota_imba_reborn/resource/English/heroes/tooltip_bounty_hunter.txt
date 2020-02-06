@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_pull_duration"			"PULL DURATION:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_stun_duration"	"SCEPTER STUN DURATION:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_cast_range"		"SCEPTER CAST RANGE:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a 1 second delay, and increases stun duration."
+"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a %scepter_throw_delay% second delay, and increases cast range and stun duration."
 
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned"								"Shuriken Toss"
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned_Description"					"Stunned."

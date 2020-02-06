@@ -155,7 +155,7 @@ function imba_phantom_assassin_stifling_dagger:LaunchDagger(enemy)
 		Dodgeable = true,
 		Ability = self,
 		ProvidesVision = true,
-		VisionRadius = 600,
+		VisionRadius = self:GetSpecialValueFor("dagger_vision"),
 		bVisibleToEnemies = true,
 		iMoveSpeed = self:GetSpecialValueFor("dagger_speed"),
 		Source = self:GetCaster(),
@@ -246,7 +246,8 @@ function modifier_imba_stifling_dagger_slow:OnCreated()
 		ParticleManager:ReleaseParticleIndex(stifling_dagger_modifier_slow_particle)
 
 		-- Add vision for the duration
-		AddFOWViewer(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), dagger_vision, duration, false)
+		-- "This vision lingers for 3.34 seconds at the target's location upon successfully hitting it."
+		AddFOWViewer(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), dagger_vision, 3.34, false)
 	end
 end
 
@@ -835,6 +836,7 @@ end
 function modifier_imba_blur_smoke:CheckState()
 	return {
 		[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true
 	}
 end
 
