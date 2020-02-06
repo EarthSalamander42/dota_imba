@@ -90,7 +90,7 @@
 
 "DOTA_Tooltip_ability_imba_broodmother_poison_sting"								"Poison Sting"
 "DOTA_Tooltip_ability_imba_broodmother_poison_sting_Description"					"Poisons and slows enemies with each attack.\n<font color='#FF7800'>Arachnophobic Radiation:</font> Also grants cleave damage.<br><br><b>Starting Width: </b>%cleave_starting_width%<br><b>Ending Width: </b>%cleave_ending_width%<br><b>Distance: </b>%cleave_distance%<br><b>Damage: </b>%cleave_damage%%%\n<font color='#FF7800'>Spiderite's Nutrients: </font>If a unit dies while affected by the Poison Sting debuff, subsequent Poison Sting applications have their damage per second and movement speed slow increased by %scale%/%scale%%%. Hero deaths increase this by %hero_scale%/%hero_scale%%%."
-"DOTA_Tooltip_ability_imba_broodmother_poison_sting_Note0"							"Poison Sting applications will always use the most potent damage per second and movement speed slow numbers when applied by multiple spiderlings with varying buff numbers.
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_Note0"							"Poison Sting applications will always use the most potent damage per second and movement speed slow numbers when applied by multiple spiderlings with varying buff numbers."
 "DOTA_Tooltip_ability_imba_broodmother_poison_sting_damage_per_second"				"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_broodmother_poison_sting_movement_speed"					"%MOVE SLOW:"
 "DOTA_Tooltip_ability_imba_broodmother_poison_sting_duration"						"DURATION (CREEP):"

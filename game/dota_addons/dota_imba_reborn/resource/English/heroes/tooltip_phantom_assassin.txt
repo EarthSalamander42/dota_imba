@@ -5,7 +5,7 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_move_slow"              "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_move_slow}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"          "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_duration}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"           "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_base_damage}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_cast_range"             "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_tooltip_range}"
+"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_cast_range"             "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_abilitycastrange}"
 //"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow"									"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger}"
@@ -17,7 +17,7 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Lore"                    "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_attack_speed"      "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_bonus_attack_speed}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_buff_duration"           "ATTACK SPEED DURATION:"
-"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_tooltip_range"           "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_tooltip_range}"
+"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_tooltip_range"           "#{DOTA_Tooltip_ability_phantom_assassin_phantom_strike_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_coup_de_grace"     "%BONUS COUP CHANCE:"
 
 "DOTA_Tooltip_modifier_imba_phantom_strike"											"#{DOTA_Tooltip_modifier_phantom_assassin_phantom_strike}"

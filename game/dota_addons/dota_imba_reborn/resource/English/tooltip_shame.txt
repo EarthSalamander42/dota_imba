@@ -297,7 +297,7 @@
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Description"		"Inflicts additional damage on each attack."
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Lore"				"The fountain is evil. Don't piss off the fountain."
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_damage_increase"	"%DAMAGE INCREASE:"
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_tooltip_duration}"
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
 
 "DOTA_Tooltip_ability_imba_fountain_relief"								"Relief Aura"
 "DOTA_Tooltip_ability_imba_fountain_relief_Description"					"Relieves the tension on nearby units, drastically increasing their Tenacity and their damage reduction. Dealing damage in any way to an enemy unit or hero rejects the buff from the attacker for %aura_reject_time% seconds.\n<font color='#FF7800'>Relieved From Command:</font> Disconnected players get %disconnected_dmg_reduction%% damage reduction, and cannot be harmed. However, they're still suspectible for the aura rejection."

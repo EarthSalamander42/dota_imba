@@ -33,7 +33,7 @@
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_slow"          "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_slow"                    "ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_heal_convert"                   "%DAMAGE CONVERT:"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"                "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_tooltip_duration}"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"                "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_increase"                  "%BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_increase"                "BONUS ATTACK SPEED:"
 

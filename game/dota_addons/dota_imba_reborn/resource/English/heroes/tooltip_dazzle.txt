@@ -26,7 +26,7 @@
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_armor_per_hit"           "GRAVELY MISTAKEN ARMOR PER INSTANCE:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN MAGIC RESISTANCE PER INSTANCE:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"SCEPTER RADIUS:"
-"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"#{DOTA_Tooltip_ability_dazzle_shallow_grave_aghanim_description} <font color='#FF0000'>Does not apply Gravely Mistaken to units that are not directly targeted by the ability.</font>"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"Causes Shallow Grave to be an AoE spell. <font color='#FF0000'>Does not apply Gravely Mistaken to units that are not directly targeted by the ability.</font>"
 
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave_Description"          "Protected from death for the duration."

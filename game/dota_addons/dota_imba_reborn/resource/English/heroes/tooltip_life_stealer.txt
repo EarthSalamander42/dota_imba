@@ -119,7 +119,7 @@
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_heal_percent"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_heal_percent}"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_slow_tooltip"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_slow_tooltip}"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_duration"				"#{DOTA_Tooltip_ability_life_stealer_open_wounds_duration}"
-"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_tooltip_range"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_tooltip_range}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_tooltip_range"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_abilitycastrange}"
 
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds" 						"#{DOTA_Tooltip_modifier_life_stealer_open_wounds}"
 "DOTA_Tooltip_modifier_imba_life_stealer_open_wounds_Description"			"#{DOTA_Tooltip_modifier_life_stealer_open_wounds_Description}"
@@ -132,4 +132,4 @@
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_heal_percent"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_heal_percent}"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_slow_tooltip"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_slow_tooltip}"
 "DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_duration"				"#{DOTA_Tooltip_ability_life_stealer_open_wounds_duration}"
-"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_tooltip_range"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_tooltip_range}"
+"DOTA_Tooltip_ability_imba_life_stealer_open_wounds_723_tooltip_range"			"#{DOTA_Tooltip_ability_life_stealer_open_wounds_abilitycastrange}"
