@@ -106,15 +106,17 @@ function imba_earth_spirit_stone_remnant:OnInventoryContentsChanged()
 
 function imba_earth_spirit_stone_remnant:CheckScepter()
 	local caster = self:GetCaster()
-	if not caster:HasModifier("modifier_imba_earth_spirit_layout_fix") then
-		caster:AddNewModifier(caster, self, "modifier_imba_earth_spirit_layout_fix", {})
-	end
+	-- if not caster:HasModifier("modifier_imba_earth_spirit_layout_fix") then
+		-- caster:AddNewModifier(caster, self, "modifier_imba_earth_spirit_layout_fix", {})
+	-- end
 	
 	local petrify = caster:FindAbilityByName("imba_earth_spirit_petrify")
 	if petrify then
 		if caster:HasScepter() then
+			petrify:SetHidden(false)
 			petrify:SetActivated(true)
 		else
+			petrify:SetHidden(true)
 			petrify:SetActivated(false)
 		end
 	end
