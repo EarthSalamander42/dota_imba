@@ -51,6 +51,17 @@
 				"rocket_damage"				"12 16 20 24"
 				"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_3"
 			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ballistic_spell_amp_reduction"	"0.5 0.6 0.7 0.8"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ballistic_duration"	"4"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}	
@@ -343,7 +354,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"1000 1500 2000"
+		"AbilityCastRange"				"1000 1500 2000"
 		"AbilityCastPoint"				"0.3 0.3 0.3"
 		"AbilityCastAnimation"			"ACT_INVALID"
 
@@ -411,6 +422,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"missile_delay_tooltip"		"2"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_standard"		"1000 1500 2000" // Should be same as cast range
 			}
 		}
 	}

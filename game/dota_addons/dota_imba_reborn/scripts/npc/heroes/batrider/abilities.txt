@@ -329,7 +329,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
+		"AbilityCastRange"				"200"
 		"AbilityCooldown"				"90 60 30"
 
 		// Cost
@@ -381,7 +381,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bat_attacks_dmg_pct"	"50"
+				"bat_attacks_dmg_pct"	"100"
 			}			
 		}
 	}

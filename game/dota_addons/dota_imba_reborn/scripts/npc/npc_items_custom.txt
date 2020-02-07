@@ -16618,7 +16618,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"counter_duration"		"2.2"
+				"counter_duration"		"2.7"
 			}
 			"11"
 			{
@@ -16628,7 +16628,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"counter_dash_speed"	"1000"
+				"counter_dash_speed"	"1400"
 			}
 			"13"
 			{

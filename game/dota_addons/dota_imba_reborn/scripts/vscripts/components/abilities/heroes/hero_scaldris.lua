@@ -116,7 +116,7 @@ end
 -- Scepter Behavior
 function imba_scaldris_antipode:GetBehavior()
 	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE --+ DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
 		return DOTA_ABILITY_BEHAVIOR_PASSIVE
 	end
@@ -126,9 +126,6 @@ end
 function imba_scaldris_antipode:ScepterSwap(ability1, ability2)
 	local caster			= self:GetCaster()
 	local active_ability	= ability1				-- Stores string of ability name
-	
-	-- Not affected by manaloss reduction...hmm
-	local refresh_mana_cost	= caster:GetMaxMana() * (self:GetSpecialValueFor("scepter_max_mana_pct_cost") / 100)
 	
 	-- Make sure abilities exist before committing to function logic
 	if caster:FindAbilityByName(ability1) and caster:FindAbilityByName(ability2) then
@@ -141,14 +138,17 @@ function imba_scaldris_antipode:ScepterSwap(ability1, ability2)
 		end
 	end
 	
-	-- Autocast addendum; spend some mana for a chance to immediately refresh the non-ultimate ability that was swapped in
-	if not caster:FindAbilityByName(active_ability):IsCooldownReady() and caster:FindAbilityByName(active_ability):GetAbilityType() ~= ABILITY_TYPE_ULTIMATE and self:GetAutoCastState() and caster:GetMana() >= refresh_mana_cost and refresh_mana_cost >= 1 then
-		caster:ReduceMana(refresh_mana_cost)
+	-- -- Not affected by manaloss reduction...hmm
+	-- local refresh_mana_cost	= caster:GetMaxMana() * (self:GetSpecialValueFor("scepter_max_mana_pct_cost") / 100)
+	
+	-- -- Autocast addendum; spend some mana for a chance to immediately refresh the non-ultimate ability that was swapped in
+	-- if not caster:FindAbilityByName(active_ability):IsCooldownReady() and caster:FindAbilityByName(active_ability):GetAbilityType() ~= ABILITY_TYPE_ULTIMATE and self:GetAutoCastState() and caster:GetMana() >= refresh_mana_cost and refresh_mana_cost >= 1 then
+		-- caster:ReduceMana(refresh_mana_cost)
 		
-		if RollPercentage(self:GetSpecialValueFor("scepter_refresh_chance")) then
-			caster:FindAbilityByName(active_ability):EndCooldown()
-		end
-	end
+		-- if RollPercentage(self:GetSpecialValueFor("scepter_refresh_chance")) then
+			-- caster:FindAbilityByName(active_ability):EndCooldown()
+		-- end
+	-- end
 end
 
 function imba_scaldris_antipode:OnSpellStart()
@@ -189,6 +189,25 @@ function modifier_imba_antipode_passive:OnIntervalThink()
 		if not self:GetAbility():IsStolen() then
 			self:GetParent():SetRenderColor(63 + math.min(self.fire_strength, 4) * 48, 64, 63 + math.min(self.ice_strength, 4) * 48)
 		end
+	end
+end
+
+function modifier_imba_antipode_passive:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_imba_antipode_passive:OnAbilityFullyCast(keys)
+	if keys.unit == self:GetParent() and not keys.ability:IsItem() and not keys.ability:IsToggle() then
+		self.last_ability_cast = keys.ability
+	end
+end
+
+function modifier_imba_antipode_passive:OnDeath(keys)
+	if keys.attacker == self:GetParent() and self:GetCaster():HasScepter() and keys.unit:IsRealHero() and self.last_ability_cast and not self.last_ability_cast:IsNull() and self:GetParent():HasAbility(self.last_ability_cast:GetName()) then
+		self.last_ability_cast:EndCooldown()
 	end
 end
 

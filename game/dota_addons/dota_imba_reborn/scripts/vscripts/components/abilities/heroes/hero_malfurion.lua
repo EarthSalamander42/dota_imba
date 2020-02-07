@@ -35,13 +35,10 @@ function modifier_imba_entrangling_roots:GetEffectAttachType()
 end
 
 function modifier_imba_entrangling_roots:CheckState()
-	local states =
-	{
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_ROOTED] = true,
 	}
-
-	return states
 end
 
 function modifier_imba_entrangling_roots:OnCreated()
@@ -139,11 +136,9 @@ modifier_imba_mark_of_the_claw = modifier_imba_mark_of_the_claw or class({})
 function modifier_imba_mark_of_the_claw:IsHidden() return true end
 
 function modifier_imba_mark_of_the_claw:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-
-	return funcs
 end
 
 function modifier_imba_mark_of_the_claw:OnAttackLanded(kv)
@@ -293,10 +288,11 @@ end
 modifier_imba_malfurion_living_tower = modifier_imba_malfurion_living_tower or class({})
 
 function modifier_imba_malfurion_living_tower:IsHidden() return true end
+function modifier_imba_malfurion_living_tower:IsPurgable()	return false end
 function modifier_imba_malfurion_living_tower:RemoveOnDeath() return false end
 
 function modifier_imba_malfurion_living_tower:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 --		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -304,7 +300,6 @@ function modifier_imba_malfurion_living_tower:DeclareFunctions()
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_EVENT_ON_DEATH,
 	}
-	return funcs
 end
 
 function modifier_imba_malfurion_living_tower:GetEffectName()

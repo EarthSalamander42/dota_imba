@@ -1368,7 +1368,9 @@ function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, 
 		
 		self.targets_hit[ExtraData.volley_index][target:entindex()] = true
 		
-		return true
+		-- IMBAfication: Snowpiercer
+		-- Returning true deestroys the projectile upon land
+		-- return true
 	end
 end
 
