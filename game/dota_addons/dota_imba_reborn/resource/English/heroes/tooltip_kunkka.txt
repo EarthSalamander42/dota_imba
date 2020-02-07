@@ -52,7 +52,7 @@
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot"					"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot}"
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_Description"		"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_Description}\n<font color='#FF7800'>Back so soon?:</font> If the returned target is an enemy it will be returned once more again after %sec_duration% seconds. This secondary effect cannot be triggered early with Return."
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_Lore"			"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_Lore}"
-"DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_tooltip_range"	"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_tooltip_range}"
+"DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_tooltip_range"	"#{DOTA_Tooltip_ability_kunkka_x_marks_the_spot_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_duration"		"ENEMY DURATION:"
 "DOTA_Tooltip_ability_imba_kunkka_x_marks_the_spot_sec_duration"	"SECONDARY DURATION:"
 

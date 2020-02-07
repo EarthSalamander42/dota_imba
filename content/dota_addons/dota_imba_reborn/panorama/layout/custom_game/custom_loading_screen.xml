@@ -42,7 +42,7 @@
 					<Button id="ImbaLoadingSocialReddit" class="SocialButtons" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');">
 						<Label text="Reddit" />
 					</Button>
-					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('https://invite.gg/dotaimba');">
 						<Label text="Discord" />
 					</Button>
 				</Panel>
