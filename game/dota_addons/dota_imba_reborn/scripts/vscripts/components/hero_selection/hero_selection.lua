@@ -17,7 +17,7 @@ end)
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
---		api.imba.event(api.events.entered_hero_selection)
+
 		Timers:CreateTimer(0.5, function()
 			HeroSelection:StartSelection()
 		end)
@@ -369,12 +369,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 end
 
 function HeroSelection:IsHeroDisabled(hero)
---	if hero then
---		if api.imba.hero_is_disabled(hero) then
---			return true
---		end
---	end
-
 	if IsTournamentMap() then
 		for _,data in ipairs(cmpickorder["order"]) do
 			if hero == data.hero then

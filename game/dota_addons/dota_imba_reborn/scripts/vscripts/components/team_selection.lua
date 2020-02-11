@@ -71,13 +71,13 @@ function InitializeTeamSelection()
 --		Random5v5TeamSelection()
 	if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" then
 		-- let time for bots to join
---		if IsInToolsMode() then
---			Timers:CreateTimer(5.0, function()
---				KeepTeams10v10TeamSelection()
---			end)
---		else
+		if IsInToolsMode() then
+			Timers:CreateTimer(5.0, function()
+				KeepTeams10v10TeamSelection()
+			end)
+		else
 			KeepTeams10v10TeamSelection()
---		end
+		end
 	else
 		ManualTeamSelection()
 	end

@@ -47,7 +47,7 @@ function Mutation:ARDMReplacehero(old_hero)
 
 	if change_companion == true then
 		local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-		Battlepass:DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
+--		Battlepass:DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
 	end
 
 	if old_hero:HasModifier("modifier_item_imba_moon_shard_active") then

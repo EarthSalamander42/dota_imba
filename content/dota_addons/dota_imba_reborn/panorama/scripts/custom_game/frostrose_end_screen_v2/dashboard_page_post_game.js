@@ -13,7 +13,7 @@ var permanent_buffs = {
 	"modifier_imba_necromastery_souls": "spellicons",
 	"modifier_imba_clinkz_death_pact_723_permanent_buff": "spellicons",
 	"modifier_imba_furion_wrath_of_nature": "spellicons",
-	
+
 	"modifier_item_ultimate_scepter_consumed": "items",
 	"modifier_item_tome_of_knowledge_consumed": "items",
 	"modifier_item_imba_moon_shard_active": "items",

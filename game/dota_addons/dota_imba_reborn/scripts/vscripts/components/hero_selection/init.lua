@@ -43,10 +43,6 @@ function HeroSelection:Init()
 			customlist[key] = KeyValues.HeroKV[key].IsCustom
 		end
 
---		if api.imba.hero_is_disabled(key) then
---			hotdisabledlist[key] = 1
---		end
-
 		if value == 0 then
 			hotdisabledlist[key] = 1
 		else
