@@ -111,12 +111,13 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 		end
 	end
 
+--[[
 	if IsMutationMap() then
 		if self:HasModifier("modifier_mutation_kill_streak_power") then
 			illusion:AddNewModifier(illusion, nil, "modifier_mutation_kill_streak_power", {}):SetStackCount(self:FindModifierByName("modifier_mutation_kill_streak_power"):GetStackCount())
 		end
 	end
-
+--]]
 	illusion:MakeIllusion()
 
 	return illusion

@@ -43,10 +43,6 @@ function HeroSelection:Init()
 			customlist[key] = KeyValues.HeroKV[key].IsCustom
 		end
 
---		if api.imba.hero_is_disabled(key) then
---			hotdisabledlist[key] = 1
---		end
-
 		if value == 0 then
 			hotdisabledlist[key] = 1
 		else
@@ -54,17 +50,6 @@ function HeroSelection:Init()
 			assert(key ~= FORCE_PICKED_HERO, "FORCE_PICKED_HERO cannot be a pickable hero")
 		end
 	end
-
---	if IsMutationMap() then
---		if IMBA_MUTATION["positive"] == "killstreak_power" then
---			hotdisabledlist["npc_dota_hero_zuus"] = 1
---		end
-
---		if IMBA_MUTATION["terrain"] == "speed_freaks" then
---			hotdisabledlist["npc_dota_hero_bloodseeker"] = 1
---			hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
---		end
---	end
 
 	CustomNetTables:SetTableValue("hero_selection", "herolist", {
 		gametype = GetMapName(),

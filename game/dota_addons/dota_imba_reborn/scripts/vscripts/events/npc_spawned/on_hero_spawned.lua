@@ -153,10 +153,6 @@ function GameMode:OnHeroSpawned(hero)
 			hero:AddNewModifier(hero, nil, "modifier_fountain_invulnerable", {})
 		end
 	end)
-
-	if IsMutationMap() then
-		Mutation:OnHeroSpawn(hero)
-	end
 	
 	-- Let's try to make Meepo a bit more playable
 	-- Ensure the Meepos get buffs like custom mechanics

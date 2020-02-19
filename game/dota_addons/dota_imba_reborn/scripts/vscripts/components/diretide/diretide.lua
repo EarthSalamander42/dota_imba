@@ -240,9 +240,6 @@ function Diretide:SwapTeam(team)
 			hero:AddNewModifier(hero, nil, "modifier_no_pvp", {})
 		end
 	end
-
-	GameRules:SetGoldPerTick(0)
-	GameRules:SetGoldTickTime(0)
 end
 
 function Diretide:IncreaseTimer(time)

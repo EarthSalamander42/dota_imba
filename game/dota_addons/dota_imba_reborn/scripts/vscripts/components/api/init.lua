@@ -560,6 +560,7 @@ function api:CompleteGame(successCallback, failCallback)
 			local damage_done_to_buildings = 0
 			local kills_done_to_hero = {}
 			local items_bought = PlayerResource:GetItemsBought(id)
+			local abandon = PlayerResource:GetHasAbandonedDueToLongDisconnect(id)
 
 			if heroEntity ~= nil then
 				hero = tostring(heroEntity:GetUnitName())
@@ -612,6 +613,7 @@ function api:CompleteGame(successCallback, failCallback)
 				abilities_level_up_order = PlayerResource:GetAbilitiesLevelUpOrder(id),
 				increment_pa_arcana_kills = increment_pa_arcana_kills,
 				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
+				abandon = abandon,
 			}
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))

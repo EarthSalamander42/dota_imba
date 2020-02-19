@@ -208,7 +208,9 @@ function GameMode:OnGameRulesStateChange(keys)
 				-- SpawnEasterEgg()
 			-- end
 
-			ImbaRunes:Spawn()
+			if IMBA_RUNE_SYSTEM == true then
+				ImbaRunes:Spawn()
+			end
 		end
 
 		-- add abilities to all towers
@@ -228,7 +230,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			return GOLD_TICK_TIME[GetMapName()] / (CUSTOM_GOLD_BONUS[GetMapName()] * 0.01)
+			return GOLD_TICK_TIME[GetMapName()]
 		end)
 	end
 end
@@ -244,11 +246,6 @@ function GameMode:OnNPCSpawned(keys)
 		if npc:IsRealHero() and npc:GetPlayerID() then
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
-
-		--		api.imba.event(api.events.unit_spawned, {
-		--			tostring(npc:GetUnitName()),
-		--			tostring(player)
-		--		})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
@@ -327,10 +324,6 @@ function GameMode:OnDisconnect(keys)
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local line_duration = 7
 
-		-- Start tracking
-		--		print("started keeping track of player "..player_id.."'s connection state")
-		--		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
-
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
 			-- Keep track of time disconnected
@@ -345,8 +338,6 @@ function GameMode:OnDisconnect(keys)
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player " .. player_id .. " has abandoned the game.")
 
-				--				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
-
 				-- Start redistributing this player's gold to its allies (Valve handle it now)
 --				PlayerResource:StartAbandonGoldRedistribution(player_id)
 				-- If the player has reconnected, stop tracking connection state every second
@@ -354,18 +345,18 @@ function GameMode:OnDisconnect(keys)
 
 				-- Else, keep tracking connection state
 			else
-				--				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+--				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
 				return 1
 			end
 		end)
 
-		local table = {
+		local dc_table = {
 			ID = player_id,
 			team = PlayerResource:GetTeam(player_id),
 			disconnect = 1
 		}
 
-		GoodGame:Call(table)
+		GoodGame:Call(dc_table)
 	end
 end
 
@@ -1325,6 +1316,8 @@ function GameMode:OnThink()
 		end
 	end
 
+	-- What the hell
+--[[
 	-- Testing trying to remove invinicible 0 hp illusions (really hoping this doesn't lag things to death)
 	local entities = Entities:FindAllInSphere(GetGroundPosition(Vector(0, 0, 0), nil), 25000)
 
@@ -1333,20 +1326,7 @@ function GameMode:OnThink()
 			entity:RemoveSelf()
 		end
 	end
-
-	if i == nil then
-		i = AP_GAME_TIME - 1
-	elseif i < 0 then
-		if PICKING_SCREEN_OVER == false then
-			PICKING_SCREEN_OVER = true
-		end
-
-		return 1
-	else
-		i = i - 1
-	end
-
-	--	print("i = "..i)
+--]]
 
 	return 1
 end

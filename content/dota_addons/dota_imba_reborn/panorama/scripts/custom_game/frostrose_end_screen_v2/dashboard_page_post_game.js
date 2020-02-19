@@ -13,7 +13,7 @@ var permanent_buffs = {
 	"modifier_imba_necromastery_souls": "spellicons",
 	"modifier_imba_clinkz_death_pact_723_permanent_buff": "spellicons",
 	"modifier_imba_furion_wrath_of_nature": "spellicons",
-	
+
 	"modifier_item_ultimate_scepter_consumed": "items",
 	"modifier_item_tome_of_knowledge_consumed": "items",
 	"modifier_item_imba_moon_shard_active": "items",
@@ -285,72 +285,6 @@ function EndScoreboard(args) {
 	// Set game time
 //	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
-	if (Game.IsInToolsMode()) {
-		for (var i = 0; i < $("#PinnedRadiant").GetChildCount(); i++) {
-			$("#PinnedRadiant").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#PinnedDire").GetChildCount(); i++) {
-			$("#PinnedDire").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantPlayerRows").GetChildCount(); i++) {
-			$("#RadiantPlayerRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DirePlayerRows").GetChildCount(); i++) {
-			$("#DirePlayerRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantDamageDealtRows").GetChildCount(); i++) {
-			$("#RadiantDamageDealtRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireDamageDealtRows").GetChildCount(); i++) {
-			$("#DireDamageDealtRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantDamageReceivedRows").GetChildCount(); i++) {
-			$("#RadiantDamageReceivedRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireDamageReceivedRows").GetChildCount(); i++) {
-			$("#DireDamageReceivedRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantKillMatrixRows").GetChildCount(); i++) {
-			$("#RadiantKillMatrixRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireKillMatrixRows").GetChildCount(); i++) {
-			$("#DireKillMatrixRows").GetChild(i).DeleteAsync(0);
-		}
-
-		if ($("#RadiantSupportItemsRows")) {
-			for (var i = 0; i < $("#RadiantSupportItemsRows").GetChildCount(); i++) {
-				$("#RadiantSupportItemsRows").GetChild(i).DeleteAsync(0);
-			}
-		}
-
-		if ($("#DireSupportItemsRows")) {
-			for (var i = 0; i < $("#DireSupportItemsRows").GetChildCount(); i++) {
-				$("#DireSupportItemsRows").GetChild(i).DeleteAsync(0);
-			}
-		}
-
-		if ($("#AbilitiesRadiantPlayerRows")) {
-			for (var i = 0; i < $("#AbilitiesRadiantPlayerRows").GetChildCount(); i++) {
-				$("#AbilitiesRadiantPlayerRows").GetChild(i).DeleteAsync(0);
-			}
-		}
-
-		if ($("#AbilitiesDirePlayerRows")) {
-			for (var i = 0; i < $("#AbilitiesDirePlayerRows").GetChildCount(); i++) {
-				$("#AbilitiesDirePlayerRows").GetChild(i).DeleteAsync(0);
-			}
-		}
-	}
-
 //	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
 //		Game.GetAllPlayerIDs()[i]
 //	}
@@ -459,6 +393,8 @@ function EndScoreboard(args) {
 			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
 			$("#" + team_name[team_number] + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 
+//			$.Msg(args.data)
+
 			$.Each(Game.GetPlayerIDsOnTeam(team_number), function(id) {
 //				$.Msg("Player ID " + id + " in team " + team_number)
 				var player_info = Game.GetPlayerInfo(id);
@@ -482,20 +418,37 @@ function EndScoreboard(args) {
 					PinnedPlayerRow.AddClass("StatRowHeight5v5");
 				}
 
-				PinnedPlayerRow.FindChildTraverse("HeroImage").heroname = Players.GetPlayerSelectedHero(id);
+				// using panel.heroname doesn't work for custom heroes
+				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
+				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundSize = "cover";
+
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").GetChild(0).text = player_info.player_name;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
 
 				if (IsRanked) {
 					if (player_table && player_table.mmr_title) {
-						PinnedPlayerRow.FindChildTraverse("RankTierContainer").style.visibility = "visible";
+						var rank_panel = PinnedPlayerRow.FindChildTraverse("RankTierContainer");
+						rank_panel.style.visibility = "visible";
 
-						var short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
-						var title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+						var short_title = player_table.mmr_title;
+						var title_stars = "_empty";
+
+						// if last character is a number (horrible hack, look away please)
+						if (parseInt(title_stars)) {
+							short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+							title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+						}
 
 						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
 						PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+
+						rank_panel.SetPanelEvent("onmouseover", function () {
+							$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
+						})
+						rank_panel.SetPanelEvent("onmouseout", function () {
+							$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
+						})
 					}
 				}
 
@@ -556,7 +509,7 @@ function EndScoreboard(args) {
 
 				// setup Battlepass XP diff and booster
 				if (player_backend_result != null) {
-					$.Msg("XP earned: " + player_backend_result.xp_change)
+//					$.Msg("XP earned: " + player_backend_result.xp_change)
 					var xpDiff = Math.floor(player_backend_result.xp_change);
 //					if (Game.IsInToolsMode())
 //						xpDiff = 1000000;
@@ -656,7 +609,8 @@ function EndScoreboard(args) {
 				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);;
 				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);;
 				PlayerRowContainer.FindChildrenWithClassTraverse("GoldPerMin")[0].text = Players.GetGoldPerMin(id).toFixed(0);
-				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = Players.GetXPPerMin(id).toFixed(0);
+				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = Players.GetTotalEarnedXP(id) / Players.GetLevel(id);
+
 
 				var DamageDealtContainer = $.CreatePanel('Panel', player_damage_dealt_row_container, '');
 				DamageDealtContainer.BLoadLayoutSnippet('DetailsDamageDealtPlayerRow');
@@ -697,8 +651,13 @@ function EndScoreboard(args) {
 
 					// TODO: Somehow, panel 5 to 9 are not created in 10v10, despite dashboard_page_post_game_kill_matrix_row.xml being edited with 10 panels
 //					$.Msg(iteration + " / " + panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
-					if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
+					if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration)) {
+						// using panel.heroname doesn't work for custom heroes
+						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundImage = 'url("s2r://panorama/images/heroes/icons/' + enemy_info.player_selected_hero + '.png")';
+						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundSize = "cover";
+
 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).heroname = enemy_info.player_selected_hero;
+					}
 				});
 
 				panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
@@ -719,7 +678,7 @@ function EndScoreboard(args) {
 							var item_name = player_result.support_items[item_id].item_name;
 							var item_count = player_result.support_items[item_id].item_count;
 
-							var panel_support_item = $.CreatePanel('Panel', panel_support_items_row_container.FindChildTraverse("SupportItemContainer"), '');
+							var panel_support_item = $.CreatePanel('Panel', panel_support_items_row.FindChildTraverse("SupportItemContainer"), '');
 							panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_item_entry.xml", false, false);
 							panel_support_item.AddClass("ItemEntry")
 
@@ -890,6 +849,74 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 	buff_panel.SetPanelEvent('onmouseout', function(){ $.DispatchEvent('DOTAHideBuffTooltip'); })
 }
 
+function ResetEndScoreboardPanels() {
+	if (Game.IsInToolsMode()) {
+		for (var i = 0; i < $("#PinnedRadiant").GetChildCount(); i++) {
+			$("#PinnedRadiant").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#PinnedDire").GetChildCount(); i++) {
+			$("#PinnedDire").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#RadiantPlayerRows").GetChildCount(); i++) {
+			$("#RadiantPlayerRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#DirePlayerRows").GetChildCount(); i++) {
+			$("#DirePlayerRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#RadiantDamageDealtRows").GetChildCount(); i++) {
+			$("#RadiantDamageDealtRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#DireDamageDealtRows").GetChildCount(); i++) {
+			$("#DireDamageDealtRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#RadiantDamageReceivedRows").GetChildCount(); i++) {
+			$("#RadiantDamageReceivedRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#DireDamageReceivedRows").GetChildCount(); i++) {
+			$("#DireDamageReceivedRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#RadiantKillMatrixRows").GetChildCount(); i++) {
+			$("#RadiantKillMatrixRows").GetChild(i).DeleteAsync(0);
+		}
+
+		for (var i = 0; i < $("#DireKillMatrixRows").GetChildCount(); i++) {
+			$("#DireKillMatrixRows").GetChild(i).DeleteAsync(0);
+		}
+
+		if ($("#RadiantSupportItemsRows")) {
+			for (var i = 0; i < $("#RadiantSupportItemsRows").GetChildCount(); i++) {
+				$("#RadiantSupportItemsRows").GetChild(i).DeleteAsync(0);
+			}
+		}
+
+		if ($("#DireSupportItemsRows")) {
+			for (var i = 0; i < $("#DireSupportItemsRows").GetChildCount(); i++) {
+				$("#DireSupportItemsRows").GetChild(i).DeleteAsync(0);
+			}
+		}
+
+		if ($("#AbilitiesRadiantPlayerRows")) {
+			for (var i = 0; i < $("#AbilitiesRadiantPlayerRows").GetChildCount(); i++) {
+				$("#AbilitiesRadiantPlayerRows").GetChild(i).DeleteAsync(0);
+			}
+		}
+
+		if ($("#AbilitiesDirePlayerRows")) {
+			for (var i = 0; i < $("#AbilitiesDirePlayerRows").GetChildCount(); i++) {
+				$("#AbilitiesDirePlayerRows").GetChild(i).DeleteAsync(0);
+			}
+		}
+	}
+}
+
 (function () {
 //	$.Msg("START END SCREEN")
 
@@ -916,10 +943,20 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 	}
 
 	GameEvents.Subscribe("end_game", EndScoreboard);
-
+/*
 	// Placeholder
 	if (Game.IsInToolsMode()) {
+		ResetEndScoreboardPanels();
+
 		var args = {
+			"data":{
+				"players":{
+					"76561198015161808":{
+						"xp_change": 1234,
+						"xp_multiplier": 10,
+					},
+				},
+			},
 			"players":{
 				"76561198015161808":{
 					"xp_multiplier": 10,
@@ -941,10 +978,16 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 						"8": 7,
 						"9": 78,
 					},
-//					"support_items": {
-//						"item_ward_observer": 1,
-//						"item_ward_sentry": 1,
-//					},
+					"support_items": {
+						"1": {
+							"item_name": "item_ward_observer",
+							"item_count": 4,
+						},
+						"2": {
+							"item_name": "item_ward_sentry",
+							"item_count": 12,
+						},
+					},
 					"gold_spent_on_support": 0,
 					"abilities_level_up_order": {
 						"1": "imba_zuus_arc_lightning",
@@ -982,6 +1025,16 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 					"networth": 24579,
 					"damage_done_to_heroes": 52891,
 					"damage_done_to_buildings": 11482,
+					"support_items": {
+						"1": {
+							"item_name": "item_ward_observer",
+							"item_count": 4,
+						},
+						"2": {
+							"item_name": "item_ward_sentry",
+							"item_count": 12,
+						},
+					},
 				},
 				"90071996842377217":{
 					"xp_multiplier": 1,
@@ -1058,7 +1111,7 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 			},
 		}
 
-//		if (Game.IsInToolsMode())
-//			EndScoreboard(args);
+		EndScoreboard(args);
 	}
+*/
 })();
