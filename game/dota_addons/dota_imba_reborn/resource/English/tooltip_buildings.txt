@@ -433,3 +433,8 @@
 
 "DOTA_Tooltip_modifier_imba_tower_mindblast_silence"                    "Mindblast"
 "DOTA_Tooltip_modifier_imba_tower_mindblast_silence_Description"		"Silenced by a Mindblast tower"
+
+"DOTA_Tooltip_ability_imba_tower_secondary_resistance"						"Secondary Resistance"
+"DOTA_Tooltip_ability_imba_tower_secondary_resistance_Description"			"Adds magic resistance and player-controlled creep damage block."
+"DOTA_Tooltip_ability_imba_tower_secondary_resistance_magic_resistance"		"%MAGIC RESISTANCE:"
+"DOTA_Tooltip_ability_imba_tower_secondary_resistance_damage_block"			"PLAYER-CONTROLLED CREEP DAMAGE BLOCK:"

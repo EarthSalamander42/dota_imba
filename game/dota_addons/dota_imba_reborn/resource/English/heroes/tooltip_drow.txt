@@ -84,7 +84,7 @@
 "DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Temporarily gaining a percentage of the total Agility of your teammates."
 
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot"									"Multishot"
-"DOTA_Tooltip_ability_imba_drow_ranger_multishot_Description"						"Channeling. Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying longer duration Frost Arrows. Lasts up to %abilitychanneltime% seconds.\n<font color='#FF7800'>Snowpiercer:</font> Multishot projectiles are not destroyed upon impact, being able to hit more than one enemy.\n<font color='#FF7800'>Chill Extension:</font> Also applies Frost Arrow's Chill IMBAfication."
+"DOTA_Tooltip_ability_imba_drow_ranger_multishot_Description"						"Channeling. Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying longer duration Frost Arrows. Lasts up to %abilitychanneltime% seconds.\n<font color='#FF7800'>Chill Extension:</font> Also applies Frost Arrow's Chill IMBAfication."
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_count"						"ARROW COUNT:"
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_damage_pct"					"%ARROW BASE DAMAGE BONUS:"
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot_arrow_slow_duration"				"ARROW SLOW DURATION:"
@@ -95,7 +95,7 @@
 
 // Drow Ranger's Marksmanship
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship"						"Marksmanship (Pre 7.23)"
-"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Description"			"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, <font color='#FF7800'>ignoring their armor entirely</font>. Instantly kills creeps <font color='#FF7800'>(including ancient creeps)</font> and deals %bonus_damage% bonus proc physical damage to heroes. This ability is disabled if there is an enemy hero within %radius% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills heroes if their health is below %instakill_threshold%%%.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Description"			"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, <font color='#FF7800'>ignoring their armor entirely</font>. Instantly kills creeps <font color='#FF7800'>(including ancient creeps)</font> and deals %bonus_damage% bonus proc physical damage to heroes. This ability is disabled if there is an enemy hero within %radius% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills heroes if their health is below %instakill_threshold%%%."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note0"					"Drow's attack range is increased regardless of enemy presence. Invisible enemies can also end Marksmanship's effects."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note1"					"Splinters are counted as regular attacks, but they cannot trigger on hit effects."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Lore"					"The Drow Ranger is the epitome of archery prowess."

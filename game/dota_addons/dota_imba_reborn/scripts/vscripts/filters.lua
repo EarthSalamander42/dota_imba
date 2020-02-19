@@ -74,9 +74,9 @@ function GameMode:GoldFilter(keys)
 		
 		local networth_difference = enemy_networth - ally_networth
 		
-		-- Let's try linear scaling with max of 2x gold granted at a 150k networth differential (IDK good numbers without more input)
+		-- Let's try linear scaling with max of 2x gold granted at a 125k networth differential (IDK good numbers without more input)
 		if networth_difference > 0 then
-			keys.gold = keys.gold * math.min(1 + (networth_difference / 150000), 2)
+			keys.gold = keys.gold * math.min(1 + (networth_difference / 125000), 2)
 		end
 	end
 
@@ -127,9 +127,9 @@ function GameMode:ExperienceFilter( keys )
 	
 	local level_difference = enemy_level - ally_level
 	
-	-- Let's try linear scaling with max of 2x experience granted at a 75 level differential (IDK good numbers without more input)
+	-- Let's try linear scaling with max of 2x experience granted at a 60 level differential (IDK good numbers without more input)
 	if level_difference > 0 then
-		keys.experience = keys.experience * math.min(1 + (level_difference / 75), 2)
+		keys.experience = keys.experience * math.min(1 + (level_difference / 60), 2)
 	end
 
 --	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end

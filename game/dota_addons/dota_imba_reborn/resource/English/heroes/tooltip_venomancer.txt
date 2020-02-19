@@ -79,6 +79,7 @@
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_contagion_radius"                 "CONTAGION RADIUS:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_main_damage_scepter"              "SCEPTER DAMAGE:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_cooldown_scepter"                 "COOLDOWN:"
+"DOTA_Tooltip_ability_imba_venomancer_poison_nova_speed"								"TRAVEL SPEED:"
 
 "DOTA_Tooltip_modifier_imba_poison_nova"                    "Poison Nova"
 "DOTA_Tooltip_modifier_imba_poison_nova_Description"                    "Taking extreme damage over time and spread to nearby allies."
@@ -98,6 +99,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_venomous_gale_plague_wards_Description"		"The wards are based on the current level of Plague Ward and spawned within 100 range of the impacted Hero, on opposite sides."
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_poison_sting_slow"							"{s:value}% Poison Sting Slow"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_plague_ward_upgrade"						"{s:value}x Plague Ward HP/Damage"
+
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_poison_nova_radius"							"+{s:value} Poison Nova AoE"
 
 // Venomancer's summoned units: Plague Ward, Scourge Ward
 "npc_imba_venomancer_plague_ward"                          "Plague Ward"

@@ -17,10 +17,6 @@
 		"Ability6"		"imba_earthshaker_echo_slam"
 		
 		"Ability11"		"special_bonus_mp_500"
-		"Ability13"		"special_bonus_armor_12"
-		"Ability14"		"special_bonus_unique_earthshaker_2"
-		"Ability15"		"special_bonus_unique_earthshaker_3"
-		"Ability16"		"special_bonus_imba_earthshaker_bonus_magic_resistance"
-		"Ability17"		"special_bonus_unique_earthshaker"
+		//"Ability16"		"special_bonus_imba_earthshaker_bonus_magic_resistance" // I'm kind of skeptical on 70% magic resistance + extreme mobility being a good idea
 	}
 }

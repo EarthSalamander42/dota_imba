@@ -174,6 +174,12 @@ function modifier_outworld_devourer_astral_imprisonment_prison:OnCreated()
 
 	self.damage			= self:GetAbility():GetTalentSpecialValueFor("damage")
 	self.radius			= self:GetAbility():GetSpecialValueFor("radius")
+	self.universal_movespeed	= self:GetAbility():GetSpecialValueFor("universal_movespeed")
+		
+	if self:GetParent() ~= self:GetCaster() and self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		self.universal_movespeed = self.universal_movespeed * 2
+	end
+	
 	self.damage_type	= self:GetAbility():GetAbilityDamageType()
 
 	local ring_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison_ring.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
@@ -186,7 +192,7 @@ end
 function modifier_outworld_devourer_astral_imprisonment_prison:OnIntervalThink()
 	if self.movement_position and self:GetAbility() then
 		if self:GetParent():GetAbsOrigin() ~= self.movement_position then
-			self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + ((self.movement_position - self:GetParent():GetAbsOrigin()):Normalized() * math.min(FrameTime() * self:GetAbility():GetSpecialValueFor("universal_movespeed"), (self.movement_position - self:GetParent():GetAbsOrigin()):Length2D())))
+			self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + ((self.movement_position - self:GetParent():GetAbsOrigin()):Normalized() * math.min(FrameTime() * self.universal_movespeed, (self.movement_position - self:GetParent():GetAbsOrigin()):Length2D())))
 			-- self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + ((self.movement_position - self:GetParent():GetAbsOrigin()):Normalized()))
 		else
 			self.movement_position = nil

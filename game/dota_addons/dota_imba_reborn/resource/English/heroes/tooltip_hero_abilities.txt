@@ -243,18 +243,17 @@
 "DOTA_Tooltip_ability_imba_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
 
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order"               "Natural Order"
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
+"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.</font>\n<font color='#FF7800'>Immunosuppressant:</font> Also reduces status resistance by %status_resistance_pct%%%.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Lore"              "As it was at the beginning, Elder Titan makes it so again."
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Note0"             "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_armor_reduction_pct"     "%BASE ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE MAGIC RESIST REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order"                "Natural Order"
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced. Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After %crack_time% seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Lore"             "That which he created, the titan tears asunder."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_width"          "CRACK WIDTH:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_distance"       "CRACK LENGTH:"
@@ -285,7 +284,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "+1200 Astral Spirit Cast Range"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_2"               "+400 Astral Spirit movespeed"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_3"               "Astral Spirit roots targets hit"
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by 25%"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by {s:value}%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5"               "Natural Order reduces status resistance by 25%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
@@ -626,17 +625,18 @@
 // Phoenix's Supernova
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_phoenix_supernova"                        "Super Nova"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n<font color='#FF7800'>Nest Mates: </font>Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Flock Assemble: </font>When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.\nDISPEL TYPE: Strong Dispel"
+"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Nest Mates:</font> Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Artificial Sun:</font> Grants flying vision equal to the damage radius for Supernova's duration.\n<font color='#FF7800'>Extreme Burning:</font> Reduces spell amplification of enemies within damage radius by %extreme_burning_spell_amp%%%."
+
+//<font color='#FF7800'>Flock Assemble:</font> When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.
+
 "DOTA_Tooltip_ability_imba_phoenix_supernova_Note0"                  "Hero attacks count as 1 hit, and creeps attacks as 1/4 of a hit."
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Note1"                  "If there are no nearby enemies, fire spirits won't be launched."
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Note2"                  "The passive effect for Aghanim's Scepter doesn't trigger when Phoenix is affected by break."
+"DOTA_Tooltip_ability_imba_phoenix_supernova_Note1"                  "The passive effect for Aghanim's Scepter doesn't trigger when Phoenix is affected by break."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_lore"                    "The solar crucible of a Supernova may be fatal, yet from its flames arise new beacons to wander infinity."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_aura_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_damage_per_sec"          "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_stun_duration"          "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_max_hero_attacks"                    "ATTACKS TO DESTROY:"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_bird_num"                "FIRE SPIRITS SUMMONED:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_additional_duration"         "SCEPTER DURATION INCREASE:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_cooldown"                    "SCEPTER PASSIVE COOLDOWN:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n <font color='#FF7800'>When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova.</font>"

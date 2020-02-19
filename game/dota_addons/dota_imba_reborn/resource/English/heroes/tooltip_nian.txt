@@ -21,13 +21,13 @@
 "DOTA_Tooltip_modifier_imba_nian_frenzy_swipes_armor_reduction_Description"				"Armor reduced by %dMODIFIER_PROPERTY_TOOLTIP%."
 
 "DOTA_Tooltip_ability_imba_nian_crushing_leap"											"Crushing Leap"
-"DOTA_Tooltip_ability_imba_nian_crushing_leap_Description"								"Pounces towards the selected location, dealing damage and stunning after a short delay. Damage pierces spell immunity, but the stun does not."
+"DOTA_Tooltip_ability_imba_nian_crushing_leap_Description"								"Pounces towards the selected location, dealing damage and rooting after a short delay. Damage pierces spell immunity, but the root does not."
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_Lore"										"As agile as it is ferocious, no target can escape its sights."
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_max_distance"								"MAX DISTANCE:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_duration"									"LEAP DURATION:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_radius"									"RADIUS:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_damage"									"DAMAGE:"
-"DOTA_Tooltip_ability_imba_nian_crushing_leap_stun_duration"							"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_nian_crushing_leap_root_duration"							"ROOT DURATION:"
 
 "DOTA_Tooltip_modifier_imba_nian_crushing_leap_movement"								"Crushing Leap"
 "DOTA_Tooltip_modifier_imba_nian_crushing_leap_movement_Description"					"Leaping towards a target."
@@ -55,7 +55,7 @@
 "DOTA_Tooltip_ability_imba_nian_tail_spin_stun_duration"								"STUN DURATION:"
 
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster"											"Volcanic Burster"
-"DOTA_Tooltip_ability_imba_nian_volcanic_burster_Description"								"Fires a massive orb of destructive energy, dealing heavy damage, mini-stunning, applying a burn, and knocking enemies back and towards the orb's center. Every %secondary_interval_tooltip% seconds, an additional %projectiles_per_tick% fireballs are released from the orb, which only apply burn on impact."
+"DOTA_Tooltip_ability_imba_nian_volcanic_burster_Description"								"Fires a massive orb of destructive energy, dealing heavy damage, applying a burn, and knocking enemies back and towards the orb's center. Every %secondary_interval_tooltip% seconds, an additional %projectiles_per_tick% fireballs are released from the orb, which only apply burn on impact."
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster_Lore"										"With a mighty roar, all who stand before Nian are permanently silenced."
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster_Note0"										"The main orb spawns 200 distance in front of Nian."
 "DOTA_Tooltip_ability_imba_nian_volcanic_burster_Note1"										"Enemies can only be affected by the main orb every 0.5 seconds, indepedent of other enemies."

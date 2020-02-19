@@ -1034,6 +1034,7 @@ end
 -------------------------------------------
 --			   POISON NOVA
 -------------------------------------------
+LinkLuaModifier("modifier_imba_poison_nova_ring", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_poison_nova", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_poison_nova = class({})
@@ -1047,6 +1048,10 @@ function imba_venomancer_poison_nova:GetAbilityTextureName()
 end
 -------------------------------------------
 
+function imba_venomancer_poison_nova:GetCastRange(location, target)
+	return self:GetTalentSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
+end
+
 function imba_venomancer_poison_nova:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1054,7 +1059,7 @@ function imba_venomancer_poison_nova:OnSpellStart()
 
 		-- Parameters
 		local index = 0
-		local radius = self:GetSpecialValueFor("radius")
+		local radius = self:GetTalentSpecialValueFor("radius")
 		local duration = self:GetTalentSpecialValueFor("duration")
 		local main_damage
 		if caster:HasScepter() then
@@ -1082,40 +1087,101 @@ function imba_venomancer_poison_nova:OnSpellStart()
 		end
 
 		caster:EmitSound("Hero_Venomancer.PoisonNova")
-		-- Fire particle
-		local nova_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf", PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(nova_pfx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(nova_pfx, 1, Vector(radius * 1.2, 1, radius))
-		ParticleManager:SetParticleControl(nova_pfx, 2, Vector(0, 0, 0))
-		ParticleManager:ReleaseParticleIndex(nova_pfx)
+		
 		local nova_caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(nova_caster_pfx, 0, caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(nova_caster_pfx)
 
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _, enemy in pairs(enemies) do
-			-- local poison = enemy:FindModifierByNameAndCaster("modifier_imba_poison_nova",caster)
-			-- if poison and not caster:HasScepter() then
-				-- -- Delete old poison and re-apply
-				-- poison:Destroy()
-			-- end
-			enemy:AddNewModifier(caster, self, "modifier_imba_poison_nova", {
-				duration = duration + 2*FrameTime(),
-				main_damage = main_damage,
-				damage_pct = damage_pct,
-				health_pct = health_pct,
-				health_threshold_pct = health_threshold_pct,
-				contagion_radius = contagion_radius,
-				contagion_min_duration = contagion_min_duration,
-				index = index
-			})
-		end
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_poison_nova_ring", {duration = ((self:GetTalentSpecialValueFor("radius") - self:GetSpecialValueFor("start_radius")) / self:GetSpecialValueFor("speed"))})
+
+		-- local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		-- for _, enemy in pairs(enemies) do
+			-- -- local poison = enemy:FindModifierByNameAndCaster("modifier_imba_poison_nova",caster)
+			-- -- if poison and not caster:HasScepter() then
+				-- -- -- Delete old poison and re-apply
+				-- -- poison:Destroy()
+			-- -- end
+			-- enemy:AddNewModifier(caster, self, "modifier_imba_poison_nova", {
+				-- duration = duration + 2*FrameTime(),
+				-- main_damage = main_damage,
+				-- damage_pct = damage_pct,
+				-- health_pct = health_pct,
+				-- health_threshold_pct = health_threshold_pct,
+				-- contagion_radius = contagion_radius,
+				-- contagion_min_duration = contagion_min_duration,
+				-- index = index
+			-- })
+		-- end
 	end
 end
 
 function imba_venomancer_poison_nova:GetCooldown( nLevel )
 	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
 	return self.BaseClass.GetCooldown( self, nLevel )
+end
+
+------------------------------------
+-- MODIFIER_IMBA_POISON_NOVA_RING --
+------------------------------------
+
+modifier_imba_poison_nova_ring	= modifier_imba_poison_nova_ring or class({})
+
+function modifier_imba_poison_nova_ring:IsHidden()		return true end
+function modifier_imba_poison_nova_ring:IsPurgable()	return false end
+function modifier_imba_poison_nova_ring:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_poison_nova_ring:OnCreated()
+	if not IsServer() then return end
+	
+	self.radius			= self:GetAbility():GetTalentSpecialValueFor("radius")
+	self.start_radius	= self:GetAbility():GetSpecialValueFor("start_radius")
+	self.speed			= self:GetAbility():GetSpecialValueFor("speed")
+	
+	self.duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
+	self.main_damage	= self:GetAbility():GetSpecialValueFor("main_damage")
+	self.index			= 0
+	self.damage_pct		= self:GetAbility():GetSpecialValueFor("damage_pct") / 100
+	self.health_pct		= self:GetAbility():GetSpecialValueFor("health_pct") / 100
+	self.health_threshold_pct 	= self:GetAbility():GetSpecialValueFor("health_threshold_pct") / 100
+	self.contagion_radius 		= self:GetAbility():GetSpecialValueFor("contagion_radius")
+	self.contagion_min_duration = self:GetAbility():GetSpecialValueFor("contagion_min_duration")
+	
+	if self:GetCaster():HasScepter() then
+		self.main_damage = self:GetAbility():GetSpecialValueFor("main_damage_scepter")
+		self.index = DoUniqueString("index")
+	end
+	
+	self.cast_location	= self:GetParent():GetAbsOrigin()
+	
+	self.hit_enemies	= {}
+	
+	self.nova_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	-- ParticleManager:SetParticleControlEnt(self.nova_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.nova_particle, 1, Vector(self.radius, (self.radius - self.start_radius) / self.speed, self.speed))
+	self:AddParticle(self.nova_particle, false, false, -1, false, false)
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_poison_nova_ring:OnIntervalThink()
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.cast_location, nil, math.min(self.start_radius + (self:GetElapsedTime() * self.speed), self.radius), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
+		if not self.hit_enemies[enemy:entindex()] then
+			enemy:EmitSound("Hero_Venomancer.PoisonNovaImpact")
+			
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_poison_nova", {
+				duration				= self.duration + 2*FrameTime(),
+				main_damage 			= self.main_damage,
+				damage_pct 				= self.damage_pct,
+				health_pct 				= self.health_pct,
+				health_threshold_pct	= self.health_threshold_pct,
+				contagion_radius 		= self.contagion_radius,
+				contagion_min_duration 	= self.contagion_min_duration,
+				index 					= self.index
+			})
+			
+			self.hit_enemies[enemy:entindex()] = true
+		end
+	end
 end
 
 -------------------------------------------
@@ -1140,7 +1206,6 @@ function modifier_imba_poison_nova:OnCreated( params )
 		self.index = params.index
 		self:DealDamage(true)
 		self:StartIntervalThink(1)
-		self:GetParent():EmitSound("Hero_Venomancer.PoisonNovaImpact")
 	end
 end
 
@@ -1207,9 +1272,9 @@ function modifier_imba_poison_nova:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_poison_nova:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
+-- function modifier_imba_poison_nova:GetAttributes()
+	-- return MODIFIER_ATTRIBUTE_MULTIPLE
+-- end
 
 -------------------------------------------
 
@@ -1218,12 +1283,14 @@ LinkLuaModifier("modifier_special_bonus_imba_venomancer_1", "components/abilitie
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_3", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_poison_sting_slow", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_poison_nova_radius", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_venomancer_1		= class({})
 modifier_special_bonus_imba_venomancer_2		= class({})
 modifier_special_bonus_imba_venomancer_3		= class({})
 
 modifier_special_bonus_imba_venomancer_poison_sting_slow	= modifier_special_bonus_imba_venomancer_poison_sting_slow or class({})
+modifier_special_bonus_imba_venomancer_poison_nova_radius	= modifier_special_bonus_imba_venomancer_poison_nova_radius or class({})
 
 -- -----------------------
 -- -- TALENT 1 MODIFIER --
@@ -1256,6 +1323,10 @@ function modifier_special_bonus_imba_venomancer_poison_sting_slow:IsHidden() 		r
 function modifier_special_bonus_imba_venomancer_poison_sting_slow:IsPurgable() 		return false end
 function modifier_special_bonus_imba_venomancer_poison_sting_slow:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_venomancer_poison_nova_radius:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_poison_nova_radius:IsPurgable() 		return false end
+function modifier_special_bonus_imba_venomancer_poison_nova_radius:RemoveOnDeath() 	return false end
+
 function imba_venomancer_venomous_gale:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_1"), "modifier_special_bonus_imba_venomancer_1", {})
@@ -1275,5 +1346,11 @@ end
 function imba_venomancer_toxicity:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_3"), "modifier_special_bonus_imba_venomancer_3", {})
+	end
+end
+
+function imba_venomancer_poison_nova:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_poison_nova_radius") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_poison_nova_radius") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_poison_nova_radius"), "modifier_special_bonus_imba_venomancer_poison_nova_radius", {})
 	end
 end

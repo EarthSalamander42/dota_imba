@@ -1331,6 +1331,8 @@ function modifier_imba_reincarnation:IsPurgable() return false end
 function modifier_imba_reincarnation:IsDebuff() return false end
 
 function modifier_imba_reincarnation:OnIntervalThink()
+	if not self.ability or self.ability:IsNull() then self:Destroy() return end
+	
 	-- If caster has sufficent mana and the ability is ready, apply
 	if (self.ability:IsOwnersManaEnough()) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
 		self.can_die = false
@@ -1338,12 +1340,13 @@ function modifier_imba_reincarnation:OnIntervalThink()
 		self.can_die = true
 	end
 
-	if self:GetParent():HasTalent("special_bonus_imba_skeleton_king_5") and self:GetCaster():IsAlive() then
-		if CalcDistanceBetweenEntityOBB(self:GetParent(), self.caster) > self.caster:FindTalentValue("special_bonus_imba_skeleton_king_5") then
+	if self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_5") and self:GetCaster():IsAlive() then
+		if CalcDistanceBetweenEntityOBB(self:GetParent(), self.caster) > self.caster:FindTalentValue("special_bonus_imba_skeleton_king_5") or not self:GetCaster():IsAlive() or (self:GetCaster() ~= self:GetParent() and not self:GetAbility():GetAutoCastState()) or (self:GetCaster() ~= self:GetParent() and not self:GetAbility():IsCooldownReady()) then
 			self:Destroy()
+			return
 		end
 
-		if self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady()  then
+		if self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() then
 			local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
 									self.caster:GetAbsOrigin(),
 									nil,

@@ -773,7 +773,7 @@ end
 
 -- Gonna ignore the mechanic that updates stacks for illusions too for now
 function modifier_imba_bristleback_warpath:OnAbilityFullyCast(keys)
-	if keys.ability and keys.unit == self.parent and not self.parent:PassivesDisabled() and not keys.ability:IsItem() then
+	if keys.ability and keys.unit == self.parent and not self.parent:PassivesDisabled() and not keys.ability:IsItem() and keys.ability:GetName() ~= "ability_capture" then
 		
 		-- Keep a separate variable for "virtual" stacks so as to proper handle refreshing and decrementing when going past standard max stacks
 		self.counter = self.counter + 1

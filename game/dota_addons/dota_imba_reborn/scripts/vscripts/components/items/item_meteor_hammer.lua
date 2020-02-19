@@ -215,29 +215,29 @@ function modifier_item_imba_meteor_hammer_burn:OnIntervalThink()
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self.parent, self.burn_dps, nil)
 	
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_BASIC, self.ability.targetFlag, FIND_ANY_ORDER, false)
+	-- local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_BASIC, self.ability.targetFlag, FIND_ANY_ORDER, false)
 	
-	-- Radiation
-	for _, enemy in pairs(enemies) do
-		local bUnitAffectedYet = false
+	-- -- Radiation
+	-- for _, enemy in pairs(enemies) do
+		-- local bUnitAffectedYet = false
 		
-		-- Check to see if the enemy already received the modifier yet
-		if #self.affectedUnits > 0 then
-			for unit = 1, #self.affectedUnits do
-				if enemy == self.affectedUnits[unit] then
-					bUnitAffectedYet = true
-					break
-				end
-			end
-		end
+		-- -- Check to see if the enemy already received the modifier yet
+		-- if #self.affectedUnits > 0 then
+			-- for unit = 1, #self.affectedUnits do
+				-- if enemy == self.affectedUnits[unit] then
+					-- bUnitAffectedYet = true
+					-- break
+				-- end
+			-- end
+		-- end
 		
-		-- If they haven't, apply it and add their name to the list so they don't get it again
-		if not bUnitAffectedYet then
-			table.insert(self.affectedUnits, enemy)
-			-- Add the modifier at half life
-			enemy:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self:GetRemainingTime() / 2}).affectedUnits = self.affectedUnits
-		end
-	end
+		-- -- If they haven't, apply it and add their name to the list so they don't get it again
+		-- if not bUnitAffectedYet then
+			-- table.insert(self.affectedUnits, enemy)
+			-- -- Add the modifier at half life
+			-- enemy:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self:GetRemainingTime() / 2}).affectedUnits = self.affectedUnits
+		-- end
+	-- end
 end
 
 function modifier_item_imba_meteor_hammer_burn:CheckState()

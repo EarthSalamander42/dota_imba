@@ -75,7 +75,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"travel_speed"				"275"
+				"travel_speed"				"275 300 325"
 			}
 		}
 
@@ -160,7 +160,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"travel_speed"				"275"
+				"travel_speed"				"275 300 325"
 			}
 		}
 

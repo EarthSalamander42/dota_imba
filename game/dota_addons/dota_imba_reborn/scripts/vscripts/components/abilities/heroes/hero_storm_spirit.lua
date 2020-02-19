@@ -591,7 +591,7 @@ end
 
 function modifier_imba_overload:OnAbilityExecuted( keys )
 	if IsServer() then
-		if keys.ability then
+		if keys.ability and keys.ability:GetName() ~= "ability_capture" then
 			-- When an actual ability was executed
 			local parent =	self:GetParent()
 			-- When the attacker is Storm then

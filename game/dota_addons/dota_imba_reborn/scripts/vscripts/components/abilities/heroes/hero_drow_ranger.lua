@@ -1368,9 +1368,8 @@ function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, 
 		
 		self.targets_hit[ExtraData.volley_index][target:entindex()] = true
 		
-		-- IMBAfication: Snowpiercer
 		-- Returning true deestroys the projectile upon land
-		-- return true
+		return true
 	end
 end
 
@@ -1471,6 +1470,7 @@ LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "components/
 LinkLuaModifier("modifier_imba_markmanship_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_markmanship_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_markmanship_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_proc_armor", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_marksmanship:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -1585,6 +1585,7 @@ function modifier_imba_marksmanship:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
 		
 		MODIFIER_PROPERTY_PROJECTILE_NAME
 	}
@@ -1657,14 +1658,12 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 						params.target:Kill(self:GetAbility(), params.attacker)
 					end
 				else
-					local armor = params.target:GetPhysicalArmorValue(false)
-					local real_damage
+					-- local armor = params.target:GetPhysicalArmorValue(false)
+					-- local real_damage
 
-					if armor > 0 then
-						real_damage = CalculateReductionFromArmor_Percentage((armor - armor), armor)
-					end
-
-					self:SetStackCount(0)
+					-- if armor > 0 then
+						-- real_damage = CalculateReductionFromArmor_Percentage((armor - armor), armor)
+					-- end
 
 					-- Technically this isn't "correct" because the extra damage is supposed to be an "attack" but I can't be assed to figure out how to replicate it properly along with the armor piercing
 					local damageTable = {
@@ -1678,8 +1677,8 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 										
 					ApplyDamage(damageTable)
 					
-					-- This seems to be the true calculation for simulating damage piercing armor (minus the safety math.max)
-					return (100 / math.max((1 + real_damage), 0.001)) - 100
+					-- -- This seems to be the true calculation for simulating damage piercing armor (minus the safety math.max)
+					-- return (100 / math.max((1 + real_damage), 0.001)) - 100
 				end
 			else
 				params.target:Kill(self:GetAbility(), params.attacker)
@@ -1704,6 +1703,10 @@ function modifier_imba_marksmanship:OnAttackLanded(keys)
 
 		-- Only apply on caster's attacks
 		if self.caster == attacker then
+			if self:GetStackCount() == 1 then
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_proc_armor", {duration = 0.01})
+			end
+		
 			-- Only apply when she has scepter
 			if scepter then
 				-- Find enemies near the target's hit location
@@ -1748,6 +1751,10 @@ function modifier_imba_marksmanship:OnAttackLanded(keys)
 		end
 	end
 end
+
+-- function modifier_imba_marksmanship:OnAttackRecordDestroy(keys)
+	-- keys.target:RemoveModifierByName("modifier_imba_drow_ranger_marksmanship_proc_armor")
+-- end
 
 function SplinterArrowHit(keys, projectileID, modifier)
 	local caster = modifier.caster
@@ -1964,6 +1971,27 @@ end
 
 function modifier_imba_markmanship_slow:IsDebuff()
 	return true
+end
+
+-------------------------------------------------------
+-- modifier_imba_drow_ranger_marksmanship_proc_armor --
+-------------------------------------------------------
+
+modifier_imba_drow_ranger_marksmanship_proc_armor	= modifier_imba_drow_ranger_marksmanship_proc_armor or class({})
+
+-- function modifier_imba_drow_ranger_marksmanship_proc_armor:IsHidden()		return true end
+function modifier_imba_drow_ranger_marksmanship_proc_armor:IsPurgable()		return false end
+
+function modifier_imba_drow_ranger_marksmanship_proc_armor:OnCreated()
+	if not IsServer() then return end
+end
+
+function modifier_imba_drow_ranger_marksmanship_proc_armor:DeclareFunctions()
+	return {MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR}
+end
+
+function modifier_imba_drow_ranger_marksmanship_proc_armor:GetModifierIgnorePhysicalArmor(keys)
+	return 1
 end
 
 ---------------------------------------

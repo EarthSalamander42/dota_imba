@@ -50,6 +50,7 @@
 #base heroes/timbersaw/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
+#base heroes/void_spirit/abilities.txt
 #base heroes/weaver/abilities.txt
 #base heroes/windranger/abilities.txt
 #base heroes/winter_wyvern/abilities.txt
@@ -3494,6 +3495,105 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Dazzle: Poison Touch (7.07 Version)
+	//=================================================================================================================
+	"imba_dazzle_poison_touch_707"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dazzle"
+		"AbilityTextureName"			"dazzle_poison_touch"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Dazzle.Poison_Touch"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27 24 21 18"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140"
+				
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.35"	// Can apply multiple modifiers
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"200 200 200 200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 300 300 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_distance"				"600 700 800 900"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"targets"					"2 4 6 8"
+			}
+			"05"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"16 28 40 52"
+				//"LinkedSpecialBonus"	"special_bonus_unique_dazzle_3"
+				"LinkedSpecialBonus"	"special_bonus_imba_dazzle_poison_touch_damage"
+			}
+			"06"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"slow"			"-16 -18 -20 -22"
+				//"LinkedSpecialBonus"	"special_bonus_unique_dazzle_1"
+				"LinkedSpecialBonus"	"special_bonus_imba_dazzle_poison_touch_slow"
+			}
+			"07"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"projectile_speed"	"1300"
+			}
+			"08"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"		"4 5 6 7"
+			}
+			"08"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"		"4 5 6 7"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"poison_stack_damage"		"3"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
 
 	//=================================================================================================================
 	// Dazzle's Shallow Grave
@@ -4092,6 +4192,56 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"2"
+			}
+		}
+	}
+	
+	"special_bonus_imba_dazzle_poison_touch_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_poison_touch_707"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"45"
+			}
+		}
+	}
+	
+	"special_bonus_imba_dazzle_poison_touch_slow"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_poison_touch_707"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-40"
 			}
 		}
 	}
@@ -5021,9 +5171,12 @@
 		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
 		"HasScepterUpgrade"				"1"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_ANCESTRAL_SPIRIT"
+		"AbilityCastGestureSlot"		"DEFAULT"
 		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -5082,18 +5235,18 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_heroes"					"20 50 80 110"
+				"damage_heroes"					"35 60 85 110"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"armor_creeps"					"0.5"
+				"armor_creeps"					"0.7"
 			}		
 			"11"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"armor_heroes"					"1.5 3 4.5 6"
+				"armor_heroes"					"3 4.5 6 7.5"
 			}
 			
 			"12"
@@ -5165,6 +5318,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magic_resistance_pct"		"-40 -70 -100 -130"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"status_resistance_pct"		"25"
 			}
 		}
 	}
@@ -14343,11 +14501,18 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_additional_duration"	"4 3 2"
+				"RequiresScepter"				"1"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_cooldown"				"90"
+				"RequiresScepter"				"1"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"extreme_burning_spell_amp"		"15 30 45"
 			}
 		}
 	}
@@ -30051,7 +30216,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"6"
+				"bonus_agi"				"5"
 			}
 			"04"
 			{
@@ -34628,13 +34793,13 @@
 
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"regards_health_regen_pct"	"1"
+				"var_type"					"FIELD_FLOAT"
+				"regards_health_regen_pct"	"1.5"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"regards_mana_regen_pct"	"1"
+				"var_type"					"FIELD_FLOAT"
+				"regards_mana_regen_pct"	"1.5"
 			}
 		}
 	}
@@ -34719,7 +34884,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"martyr_aspd_pct"		"70"
+				"martyr_aspd_pct"		"50"
 			}			
 		}
 	}
@@ -34789,7 +34954,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"martyr_aspd_pct"		"70"
+				"martyr_aspd_pct"		"50"
 			}
 			
 			"07"
@@ -35457,7 +35622,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"320 485 650"
+				"damage"					"420 585 750"
 			}
 			"02"
 			{
@@ -38463,7 +38628,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"200 350 500 650"
+				"ward_hp_tooltip"		"150 300 450 600"
 				//"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
 				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_plague_ward_upgrade"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
@@ -38590,7 +38755,8 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"870"
+				"radius"						"830"
+				"LinkedSpecialBonus"			"special_bonus_imba_venomancer_poison_nova_radius"
 			}
 			"02"
 			{
@@ -38639,6 +38805,16 @@
 				"var_type"						"FIELD_INTEGER"
 				"cooldown_scepter"				"120 90 60"
 				"RequiresScepter"				"1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"255 255 255"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"500"
 			}
 		}
 	}
@@ -38948,6 +39124,35 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"3"
+			}
+		}
+	}
+	
+		
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_venomancer_poison_nova_radius"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_venomancer_poison_nova"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"800"
 			}
 		}
 	}
@@ -41427,7 +41632,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCooldown"				"7"
+		"AbilityCooldown"				"0.2"
 		"AbilityCharges"				"2 4 6 8"
 		"AbilityChargeRestoreTime"		"7"
 		
@@ -41697,7 +41902,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"180 200 220 240"
+				"crit_damage"				"170 190 210 230"
 				"CalculateSpellDamageTooltip"   "0"
 			}
 			"06"
@@ -41708,13 +41913,13 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"4.0"
+				"slow_duration"				"3.0"
 				"LinkedSpecialBonus"		"special_bonus_imba_sohei_momentum_duration"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0"
+				"stun_duration"				"0.3"
 				"LinkedSpecialBonus"		"special_bonus_imba_sohei_momentum_duration"
 			}
 		}

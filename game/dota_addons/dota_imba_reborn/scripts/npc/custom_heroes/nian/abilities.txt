@@ -128,7 +128,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.7 1.8 1.9 2.0"
+				"root_duration"			"1.7 1.8 1.9 2.0"
 			}
 			"07"
 			{

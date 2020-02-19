@@ -143,7 +143,7 @@ end
 function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 	if IsServer() then
 		if params.ability then
-			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) then
+			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) and params.ability:GetName() ~= "ability_capture" then
 
 				-- Ignore toggles
 				if params.ability:IsToggle() then
@@ -945,7 +945,7 @@ end
 
 function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
 	if IsServer() then
-		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) and ( not self:GetParent():IsMagicImmune() ) then
+		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) and ( not self:GetParent():IsMagicImmune() ) and params.ability:GetName() ~= "ability_capture" then
 			if CheckExceptions(params.ability) then
 				return
 			end
@@ -1040,7 +1040,7 @@ end
 
 function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 	if IsServer() then
-		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) then
+		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) and params.ability:GetName() ~= "ability_capture" then
 			if CheckExceptions(params.ability) then
 				return
 			end

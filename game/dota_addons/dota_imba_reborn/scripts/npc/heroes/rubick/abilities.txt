@@ -331,6 +331,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"cooldown_scepter"			"2.0"
+				"RequiresScepter"			"1"
 			}
 		}
 	}

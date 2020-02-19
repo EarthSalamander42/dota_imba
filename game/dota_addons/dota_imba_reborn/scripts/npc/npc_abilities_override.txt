@@ -1743,6 +1743,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"side_damage"				"150 300 450"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_radius"				"400"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"push_distance"				"900"
+			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -5909,12 +5919,6 @@
 				"crit_multiplier"			"450"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"air_time"					"1.0 1.25 1.5"
-				"LinkedSpecialBonus"		"special_bonus_unique_tusk_7"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -5969,7 +5973,6 @@
 	//=================================================================================================================
 	"abyssal_underlord_firestorm"
 	{
-		"MaxLevel"							"4"
 		"AbilityCooldown"					"12 11 10 9"
 
 		"AbilitySpecial"
@@ -5992,7 +5995,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wave_damage"				"25 50 75 100"
+				"wave_damage"				"30 50 70 90"
 				"LinkedSpecialBonus"		"special_bonus_unique_underlord_2"
 			}
 			"05"
@@ -6010,11 +6013,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"burn_interval"				"1.0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"burn_duration"				"3 4 5 6"
 			}
 		}
 	}
@@ -6060,7 +6058,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_creep"		"10"
+				"bonus_damage_from_creep"		"8"
 			}
 			"04"
 			{
@@ -6123,21 +6121,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"str_steal"					"4 5 6 7"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"decay_duration"			"45"
-				"LinkedSpecialBonus"		"special_bonus_unique_undying_4"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"325 375 425 475"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"str_scale_up"				"2"
 			}
 			"06"
 			{
@@ -6226,20 +6213,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"health_threshold"		"500 750 1000 1250"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health_threshold_pct"	"40"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
 			}
 		}
 	}
@@ -6253,6 +6230,16 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"50 55 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"35 45 55"
+			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -8171,6 +8158,27 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pull_destination"		"54 60 66 72"
+			}
+			
+			"91"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"60"
+			}
+			"92"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"10"
+			}
+			"93"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed_bonus"		"10"
+			}
+			"94"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"evasion_bonus"			"10"
 			}
 		}
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"

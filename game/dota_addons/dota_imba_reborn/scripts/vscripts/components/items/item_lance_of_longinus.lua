@@ -41,6 +41,14 @@ function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	return "modifier_item_imba_lance_of_longinus"
 end
 
+function item_imba_lance_of_longinus:CastFilterResultTarget(target)
+	if self:GetCaster() == target or target:HasModifier("modifier_imba_gyrocopter_homing_missile") then
+		return UF_SUCCESS
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_CUSTOM, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
 function item_imba_lance_of_longinus:OnSpellStart()
 	if not IsServer() then return end
 	

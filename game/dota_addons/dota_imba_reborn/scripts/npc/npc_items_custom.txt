@@ -10312,7 +10312,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityCastRange"				"950"
 		"AbilityCooldown"				"26"
 		"AbilitySharedCooldown"			"bkb"
@@ -11418,12 +11418,12 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_damage_pct"		"60"
+				"splash_damage_pct"		"70"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_range"			"625"
+				"splash_range"			"650"
 			}
 			"16"
 			{
@@ -11448,7 +11448,7 @@
 			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_end"			"330"
+				"cleave_end"			"360"
 			}
 			"21"
 			{
