@@ -212,12 +212,9 @@ CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["dota"] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
-CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
-CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
 CUSTOM_GOLD_BONUS[Map10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
-CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
 CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
@@ -226,12 +223,9 @@ CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS[Map1v1()] = global_xp
 CUSTOM_XP_BONUS["dota"] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp
-CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
-CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
 CUSTOM_XP_BONUS[Map10v10()] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
-CUSTOM_XP_BONUS[MapDiretide()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
@@ -240,12 +234,9 @@ HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
 HERO_STARTING_LEVEL["dota"] = global_starting_level
 HERO_STARTING_LEVEL["imba_5v5"] = global_starting_level
-HERO_STARTING_LEVEL[MapRanked5v5()] = global_starting_level
-HERO_STARTING_LEVEL[MapRanked10v10()] = global_starting_level
 HERO_STARTING_LEVEL[Map10v10()] = global_starting_level
 HERO_STARTING_LEVEL[MapTournament()] = global_starting_level
 HERO_STARTING_LEVEL[MapOverthrow()] = global_starting_level
-HERO_STARTING_LEVEL[MapDiretide()] = global_starting_level
 HERO_STARTING_LEVEL["imba_demo"] = 1
 
 local global_max_level = 30 -- Currently custom level boolean is set to off because this is the same as vanilla
@@ -253,39 +244,31 @@ MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = global_max_level
 MAX_LEVEL["dota"] = global_max_level
 MAX_LEVEL["imba_5v5"] = global_max_level
-MAX_LEVEL[MapRanked5v5()] = global_max_level
-MAX_LEVEL[MapRanked10v10()] = global_max_level
 MAX_LEVEL[Map10v10()] = global_max_level
 MAX_LEVEL[MapTournament()] = global_max_level
 MAX_LEVEL[MapOverthrow()] = global_max_level
-MAX_LEVEL[MapDiretide()] = global_max_level
 MAX_LEVEL["imba_demo"] = global_max_level
 
-local starting_gold_5v5 = 1700
+local starting_gold_5v5 = 2300
 local starting_gold_10v10 = 2300
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = starting_gold_5v5
 HERO_INITIAL_GOLD["dota"] = starting_gold_5v5
 HERO_INITIAL_GOLD["imba_5v5"] = starting_gold_5v5
-HERO_INITIAL_GOLD[MapRanked5v5()] = starting_gold_5v5
-HERO_INITIAL_GOLD[MapRanked10v10()] = starting_gold_5v5
 HERO_INITIAL_GOLD[Map10v10()] = starting_gold_10v10
 HERO_INITIAL_GOLD[MapTournament()] = starting_gold_5v5
 HERO_INITIAL_GOLD[MapOverthrow()] = starting_gold_10v10
-HERO_INITIAL_GOLD[MapDiretide()] = starting_gold_10v10
 HERO_INITIAL_GOLD["imba_demo"] = 99999
 
-local global_gold_tick_time = 0.7
+local global_gold_tick_time = 0.6
+local global_10v10_gold_tick_time = 0.4
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = global_gold_tick_time
 GOLD_TICK_TIME["dota"] = global_gold_tick_time
 GOLD_TICK_TIME["imba_5v5"] = global_gold_tick_time
-GOLD_TICK_TIME[MapRanked5v5()] = global_gold_tick_time
-GOLD_TICK_TIME[MapRanked10v10()] = global_gold_tick_time
-GOLD_TICK_TIME[Map10v10()] = global_gold_tick_time
+GOLD_TICK_TIME[Map10v10()] = global_10v10_gold_tick_time
 GOLD_TICK_TIME[MapTournament()] = global_gold_tick_time
 GOLD_TICK_TIME[MapOverthrow()] = global_gold_tick_time
-GOLD_TICK_TIME[MapDiretide()] = global_gold_tick_time
 GOLD_TICK_TIME["imba_demo"] = global_gold_tick_time
 
 BANNED_ITEMS = {}
@@ -295,12 +278,6 @@ BANNED_ITEMS[Map1v1()] = {
 	"item_soul_ring",
 	"item_tome_of_knowledge",
 }
---[[
-BANNED_ITEMS[MapDiretide()] = {
-	"item_recipe_imba_jarnbjorn",
-	"item_imba_jarnbjorn",
-}
---]]
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_tenacity",

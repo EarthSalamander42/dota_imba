@@ -230,7 +230,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			return GOLD_TICK_TIME[GetMapName()] / (CUSTOM_GOLD_BONUS[GetMapName()] * 0.01)
+			return GOLD_TICK_TIME[GetMapName()]
 		end)
 	end
 end

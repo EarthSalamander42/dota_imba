@@ -113,10 +113,8 @@ ListenToGameEvent('player_connect_full', function(keys)
 --		print(PlayerResource:GetSelectedHeroEntity(playerID))
 
 		if PlayerResource:GetSelectedHeroEntity(playerID) then
-			if IsMutationMap() then
-				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "send_mutations", IMBA_MUTATION)
-				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "update_mutations", {})
-			end
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "send_mutations", IMBA_MUTATION)
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "update_mutations", {})
 		else
 --			print("Not fully reconnected yet:", playerID)
 			return 0.1
