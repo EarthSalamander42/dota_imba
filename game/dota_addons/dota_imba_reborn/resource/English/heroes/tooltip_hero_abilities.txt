@@ -659,8 +659,8 @@
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_scepter_passive_cooldown"             "Super Nova scepter cooldown"
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_scepter_passive_cooldown_Description" "Super Nova scepter passive is on cooldown."
 
-"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg"                    "Sun Burn"
-"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg_Description"                    "Taking damage over time, and having a miss chance if facing towards the Super Nova."
+"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg"						"Sun Burn"
+"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg_Description"			"Taking damage over time, and spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Phoenix's Burning Wings
