@@ -6673,7 +6673,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_as_per_ally"	"2"
+				"active_as_per_ally"	"1"
 			}
 			"09"
 			{
