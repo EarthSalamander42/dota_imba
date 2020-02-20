@@ -594,19 +594,26 @@ function Battlepass:GetMaelstormEffect(ID)
 end
 
 function Battlepass:SetItemEffects(ID)
-	CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
-		blink = Battlepass:GetBlinkEffect(ID),
-		bottle = Battlepass:GetBottleEffect(ID),
-		force_staff = Battlepass:GetForceStaffEffect(ID),
-		fountain = Battlepass:GetFountainEffect(ID),
-		maelstorm = Battlepass:GetMaelstormEffect(ID),
-		mekansm = Battlepass:GetMekansmEffect(ID),
-		radiance = Battlepass:GetRadianceEffect(ID),
-		sheepstick = Battlepass:GetSheepstickEffect(ID),
-		shiva = Battlepass:GetShivaEffect(ID),
-	})
+	api:Request("armory", function(data)
+		print(data)
 
---	print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
+		CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
+			blink = Battlepass:GetBlinkEffect(ID),
+			bottle = Battlepass:GetBottleEffect(ID),
+			force_staff = Battlepass:GetForceStaffEffect(ID),
+			fountain = Battlepass:GetFountainEffect(ID),
+			maelstorm = Battlepass:GetMaelstormEffect(ID),
+			mekansm = Battlepass:GetMekansmEffect(ID),
+			radiance = Battlepass:GetRadianceEffect(ID),
+			sheepstick = Battlepass:GetSheepstickEffect(ID),
+			shiva = Battlepass:GetShivaEffect(ID),
+		})
+
+--		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
+	end, nil, "POST", {
+		steamid = tostring(PlayerResource:GetSteamID(ID)),
+		hero = "blink",
+	});
 end
 
 -- todo: use values in items_game.txt instead

@@ -10,6 +10,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			require('components/battlepass/donator_settings')
 			require('components/battlepass/donator')
 			require('components/battlepass/experience')
+			require('components/battlepass/keyvalues/items_game')
 
 			if CUSTOM_GAME_TYPE ~= "POG" then
 				require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')

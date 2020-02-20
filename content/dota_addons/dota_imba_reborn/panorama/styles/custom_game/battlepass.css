@@ -254,10 +254,6 @@
 	align: center bottom;
 }
 
-#BattlepassInfoContainer {
-	overflow:  squish scroll;
-}
-
 .LeaderboardTableWrapper {
 	width: 100%;
 	background-color: #040c1850;
@@ -448,6 +444,7 @@
 }
 .sub_nav_tab {	
 	padding:  9px 10px;
+	flow-children: right;
 }
 .sub_nav_tab Label {
 	text-transform: uppercase;
@@ -781,7 +778,7 @@
 }
 
 #ComingSoonPanel, #TabTitlePanel {
-	width: 70%;
+	width: 100%;
 	height: 40px;
 	background-color: #39404855;
 	align: left top;
@@ -799,30 +796,27 @@
 
 .BattlepassRow {
 	width: 100%;
-	height: 85px;
+	height: 30%;
 	margin-top: 5px;
 	/* background-color: #000000ba; */
-	horizontal-align: left;
 	flow-children: right;
-/*	overflow: noclip scroll; */
+	overflow: scroll;
 }
 
 .BattlepassReward {
-	width: 74px;
-	height: 84px;
+	width: 127px;
+	height: 100%;
 	margin-left: 2px;
 	margin-right: 2px;
 	flow-children: down;
 }
 
 .BattlepassRewardIcon {
-	width: 74px;
-	height: 64px;
+	width: 127px;
+	height: 70%;
 	border: 1px solid #38424b;
 	box-shadow: 0px 2px 6px 0px #000000a5;
-	vertical-align: top;
-	background-position: 0px 0px;
-	background-size: 74px 64px;
+	background-size: 100% 100%;
 }
 
 .BattlepassRewardIcon_locked {
@@ -836,16 +830,14 @@
 	horizontal-align: right;
 	background-size: cover;
 }
+
 .BattlepassReward:hover .BattlepassRewardPanelUnlocked {
 	opacity: 1;
 }
+
 .BattlepassRewardLabel {
-	width: 92%;
-	horizontal-align: left;
 	font-size: 11px;
-	vertical-align: top;
 	letter-spacing: 1px;
-	align: center center;
 	text-transform: uppercase;
 	text-align: center center;
 	text-shadow: 0px 0px 3px 3 #00000070;
@@ -856,8 +848,7 @@
 .BattlepassRewardLabel.unlocked {
 	background-color: #2a3440;
 	border: 1px solid #1c2328;
-	border-top: 0;
-	margin-top:  -2px;
+	margin-top:  5px;
 	box-shadow: 0px 0 0 0px #00000000;
 }
 .BattlepassRewardLabel.locked {
@@ -1106,9 +1097,10 @@
 	text-shadow: 1px 1px 3px 2.0 #00000025;
 }
 
-#RefreshBattlepass {
+.RefreshBattlepass {
 	width: 20px;
 	height: 20px;
+	margin-left: 6px;
 	margin-right: 6px;
 	background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
 	background-size: 100% 100%;
@@ -1119,7 +1111,7 @@
 	brightness: 1.6;
 }
 
-#RefreshBattlepass.Active {
+.RefreshBattlepass.Active {
 	animation-name: refresh;
 	animation-duration: 0.55s;
 	animation-delay: 0.15s;
@@ -1255,24 +1247,25 @@
 	text-overflow: shrink;
 }
 
-#RefreshBattlepass {
-	width: 20px;
-	height: 20px;
-	margin-right: 6px;
-	background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
-	background-size: 100% 100%;
-	align: left center;
-}
-
 .SettingsButtonClass:hover {
 	brightness: 1.6;
 }
 
-#RefreshBattlepass.Active {
-	animation-name: refresh;
-	animation-duration: 0.55s;
-	animation-delay: 0.15s;
-	animation-timing-function: ease-in-out;
-	animation-iteration-count: 1;
-	animation-direction: reverse;
+.BattlepassPlayerRow {
+	width: 100%;
+	height: 25%;
+	margin-top: 5px;
+	/* background-color: #000000ba; */
+	flow-children: right;
+}
+
+#BattlepassRewardContainer {
+	width: 100%;
+	height: 520px;
+	flow-children: down;
+}
+
+#PlayerSteamAvatar {
+	width: 100px;
+	height: 100px;
 }
