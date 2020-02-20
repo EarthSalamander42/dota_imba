@@ -1024,8 +1024,8 @@ function GameMode:OnPlayerChat(keys)
 								-- [0] = "imba_gyrocopter_rocket_barrage",
 								[1] = "imba_void_spirit_dissimilate",
 								[2] = "imba_void_spirit_resonant_pulse",
-								[3] = "imba_void_spirit_astral_step_helper",
-								[4] = "imba_void_spirit_aether_remnant_helper",
+								[3] = "imba_void_spirit_void_stasis",
+								[4] = "imba_void_spirit_astral_step_helper",
 								[5] = "imba_void_spirit_astral_step",
 								-- [6] = "special_bonus_attack_damage_25",
 								-- [7] = "special_bonus_hp_250",
@@ -1036,6 +1036,7 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_imba_void_spirit_astral_step_crit",
 								[13] = "special_bonus_imba_void_spirit_dissimilate_stun"
 							}
+							
 							upgraded = true
 						end
 						
@@ -1050,10 +1051,17 @@ function GameMode:OnPlayerChat(keys)
 								
 								-- Remove this when done
 								if new_ability:GetName() == "imba_gyrocopter_lock_on" or
-								new_ability:GetName() == "imba_gyrocopter_gatling_guns" then
+								new_ability:GetName() == "imba_gyrocopter_gatling_guns" or 
+								new_ability:GetName() == "imba_void_spirit_void_stasis" then
 									new_ability:SetLevel(1)
 								end
 							end
+						end
+						
+						if hero:GetName() == "npc_dota_hero_void_spirit" and not hero:HasAbility("imba_void_spirit_aether_remnant_helper") then
+							local helper_ability = hero:AddAbility("imba_void_spirit_aether_remnant_helper")
+							helper_ability:SetLevel(1)
+							-- helper_ability:SetAbilityIndex(4)
 						end
 						
 						if upgraded then

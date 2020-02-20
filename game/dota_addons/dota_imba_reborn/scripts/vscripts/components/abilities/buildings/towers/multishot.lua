@@ -21,7 +21,7 @@ function modifier_imba_tower_multishot:OnAttack(keys)
 		local target_count = 0
 
 		for _, enemy in pairs(enemies) do
-			if enemy ~= keys.target then
+			if enemy ~= keys.target and enemy:GetName() ~= "npc_dota_techies_mines" then
 				self:GetParent():PerformAttack(enemy, true, true, true, false, true, false, false)
 
 				target_count = target_count + 1

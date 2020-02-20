@@ -2,6 +2,7 @@
 --	   AltiV, February 12th, 2020
 
 LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_pull", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_target_vision", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_void_spirit_dissimilate", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_dissimilate_ally", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
@@ -10,19 +11,24 @@ LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_ring", "components/abi
 LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_physical_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_thinker_aura", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_thinker_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_equal_exchange", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_void_spirit_astral_step_grace_time", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_void_spirit_void_stasis", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_void_spirit_astral_step_debuff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_astral_step_crit", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_void_spirit_astral_step_invis", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
 imba_void_spirit_aether_remnant							= imba_void_spirit_aether_remnant or class({})
 modifier_imba_void_spirit_aether_remnant_pull			= modifier_imba_void_spirit_aether_remnant_pull or class({})
+modifier_imba_void_spirit_aether_remnant_target_vision	= modifier_imba_void_spirit_aether_remnant_target_vision or class({})
 
 imba_void_spirit_dissimilate							= imba_void_spirit_dissimilate or class({})
 modifier_imba_void_spirit_dissimilate					= modifier_imba_void_spirit_dissimilate or class({})
@@ -33,6 +39,7 @@ modifier_imba_void_spirit_resonant_pulse_ring			= modifier_imba_void_spirit_reso
 modifier_imba_void_spirit_resonant_pulse_physical_buff	= modifier_imba_void_spirit_resonant_pulse_physical_buff or class({})
 modifier_imba_void_spirit_resonant_pulse_thinker_aura	= modifier_imba_void_spirit_resonant_pulse_thinker_aura or class({})
 modifier_imba_void_spirit_resonant_pulse_thinker_buff	= modifier_imba_void_spirit_resonant_pulse_thinker_buff or class({})
+modifier_imba_void_spirit_resonant_pulse_equal_exchange	= modifier_imba_void_spirit_resonant_pulse_equal_exchange or class({})
 
 imba_void_spirit_astral_step_helper						= imba_void_spirit_astral_step_helper or class({})
 modifier_imba_void_spirit_astral_step_grace_time		= modifier_imba_void_spirit_astral_step_grace_time or class({})
@@ -41,9 +48,13 @@ imba_void_spirit_aether_remnant_helper					= imba_void_spirit_aether_remnant_hel
 modifier_imba_void_spirit_aether_remnant_helper			= modifier_imba_void_spirit_aether_remnant_helper or class({})
 modifier_imba_void_spirit_aether_remnant_helper_buff	= modifier_imba_void_spirit_aether_remnant_helper_buff or class({})
 
+imba_void_spirit_void_stasis							= imba_void_spirit_void_stasis or class({})
+modifier_imba_void_spirit_void_stasis					= modifier_imba_void_spirit_void_stasis or class({})
+
 imba_void_spirit_astral_step							= imba_void_spirit_astral_step or class({})
 modifier_imba_void_spirit_astral_step_debuff			= modifier_imba_void_spirit_astral_step_debuff or class({})
 modifier_imba_void_spirit_astral_step_crit				= modifier_imba_void_spirit_astral_step_crit or class({})
+modifier_imba_void_spirit_astral_step_invis				= modifier_imba_void_spirit_astral_step_invis or class({})
 
 -------------------------------------
 -- IMBA_VOID_SPIRIT_AETHER_REMNANT --
@@ -59,6 +70,18 @@ end
 
 function modifier_imba_void_spirit_aether_remnant_pull:OnCreated()
 
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_PULL --
+---------------------------------------------------
+
+function modifier_imba_void_spirit_aether_remnant_target_vision:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = false}
+end
+
+function modifier_imba_void_spirit_aether_remnant_target_vision:GetPriority()
+	return MODIFIER_PRIORITY_HIGH
 end
 
 ----------------------------------
@@ -379,6 +402,7 @@ end
 function modifier_imba_void_spirit_resonant_pulse_ring:OnCreated(keys)
 	self.speed	 					= self:GetAbility():GetSpecialValueFor("speed")
 	self.return_projectile_speed	= self:GetAbility():GetSpecialValueFor("return_projectile_speed")
+	self.equal_exchange_duration	= self:GetAbility():GetSpecialValueFor("equal_exchange_duration")
 	
 	self.thickness = 50
 	
@@ -410,26 +434,6 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 			ParticleManager:SetParticleControlEnt(self.impact_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(self.impact_particle)
 			
-			ProjectileManager:CreateTrackingProjectile({
-				EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
-				Ability				= self:GetAbility(),
-				Source				= enemy:GetAbsOrigin(),
-				vSourceLoc			= enemy:GetAbsOrigin(),
-				Target				= self:GetParent(),
-				iMoveSpeed			= self.return_projectile_speed,
-				-- flExpireTime		= nil,
-				bDodgeable			= false,
-				bIsAttack			= false,
-				bReplaceExisting	= false,
-				iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-				bDrawsOnMinimap		= nil,
-				bVisibleToEnemies	= true,
-				bProvidesVision		= false,
-				iVisionRadius		= nil,
-				iVisionTeamNumber	= nil,
-				ExtraData			= {}
-			})
-		
 			ApplyDamage({
 				victim 			= enemy,
 				damage 			= self.damage,
@@ -439,27 +443,53 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 				ability 		= self:GetAbility()
 			})
 			
-			ProjectileManager:CreateTrackingProjectile({
-				EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
-				Ability				= self:GetAbility(),
-				Source				= enemy:GetAbsOrigin(),
-				vSourceLoc			= enemy:GetAbsOrigin(),
-				Target				= EntIndexToHScript(self.thinker_entindex),
-				iMoveSpeed			= self.return_projectile_speed,
-				-- flExpireTime		= nil,
-				bDodgeable			= false,
-				bIsAttack			= false,
-				bReplaceExisting	= false,
-				iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-				bDrawsOnMinimap		= nil,
-				bVisibleToEnemies	= true,
-				bProvidesVision		= false,
-				iVisionRadius		= nil,
-				iVisionTeamNumber	= nil,
-				ExtraData			= {}
-			})
+			if enemy:IsRealHero() or enemy:IsClone() or enemy:IsTempestDouble() then
+				ProjectileManager:CreateTrackingProjectile({
+					EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
+					Ability				= self:GetAbility(),
+					Source				= enemy:GetAbsOrigin(),
+					vSourceLoc			= enemy:GetAbsOrigin(),
+					Target				= self:GetParent(),
+					iMoveSpeed			= self.return_projectile_speed,
+					-- flExpireTime		= nil,
+					bDodgeable			= false,
+					bIsAttack			= false,
+					bReplaceExisting	= false,
+					iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+					bDrawsOnMinimap		= nil,
+					bVisibleToEnemies	= true,
+					bProvidesVision		= false,
+					iVisionRadius		= nil,
+					iVisionTeamNumber	= nil,
+					ExtraData			= {}
+				})
+				
+				-- IMBAfication: Expansion Dome
+				ProjectileManager:CreateTrackingProjectile({
+					EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
+					Ability				= self:GetAbility(),
+					Source				= enemy:GetAbsOrigin(),
+					vSourceLoc			= enemy:GetAbsOrigin(),
+					Target				= EntIndexToHScript(self.thinker_entindex),
+					iMoveSpeed			= self.return_projectile_speed,
+					-- flExpireTime		= nil,
+					bDodgeable			= false,
+					bIsAttack			= false,
+					bReplaceExisting	= false,
+					iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+					bDrawsOnMinimap		= nil,
+					bVisibleToEnemies	= true,
+					bProvidesVision		= false,
+					iVisionRadius		= nil,
+					iVisionTeamNumber	= nil,
+					ExtraData			= {}
+				})
+			end
 			
 			self.hit_enemies[enemy:entindex()] = true
+			
+			-- IMBAfication: Equal Exchange
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_void_spirit_resonant_pulse_equal_exchange", {duration = self.equal_exchange_duration})
 		end
 	end
 end
@@ -577,6 +607,36 @@ function modifier_imba_void_spirit_resonant_pulse_thinker_buff:GetModifierIncomi
 	end
 end
 
+-------------------------------------------------------------
+-- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_EQUAL_EXCHANGE --
+-------------------------------------------------------------
+
+function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.equal_exchange_attacks	= self:GetAbility():GetSpecialValueFor("equal_exchange_attacks")
+	
+	self:SetStackCount(self.equal_exchange_attacks)
+end
+
+function modifier_imba_void_spirit_resonant_pulse_equal_exchange:CheckState()
+	return {[MODIFIER_STATE_BLOCK_DISABLED] = true}
+end
+
+function modifier_imba_void_spirit_resonant_pulse_equal_exchange:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ATTACK_LANDED}
+end
+
+function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnAttackLanded(keys)
+	if keys.target == self:GetParent() then
+		self:DecrementStackCount()
+		
+		if self:GetStackCount() <= 0 then
+			self:Destroy()
+		end
+	end
+end
+
 -----------------------------------------
 -- IMBA_VOID_SPIRIT_ASTRAL_STEP_HELPER --
 -----------------------------------------
@@ -613,13 +673,9 @@ end
 -- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_HELPER --
 -----------------------------------------------------
 
-function modifier_imba_void_spirit_aether_remnant_helper:IsHidden()	return true end
+function modifier_imba_void_spirit_aether_remnant_helper:IsHidden()			return true end
 function modifier_imba_void_spirit_aether_remnant_helper:IsPurgable()		return false end
 function modifier_imba_void_spirit_aether_remnant_helper:RemoveOnDeath()	return false end
-
-function modifier_imba_void_spirit_aether_remnant_helper:OnCreated()
-	
-end
 
 function modifier_imba_void_spirit_aether_remnant_helper:DeclareFunctions()
 	return {MODIFIER_EVENT_ON_TAKEDAMAGE}
@@ -627,7 +683,13 @@ end
 
 function modifier_imba_void_spirit_aether_remnant_helper:OnTakeDamage(keys)
 	if keys.inflictor and keys.inflictor:GetName() == "void_spirit_aether_remnant" and keys.attacker == self:GetParent() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.unit:IsHero() then
-		self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = 60})
+		self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		
+		local vision_modifier = keys.unit:AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_target_vision", {duration = self:GetAbility():GetSpecialValueFor("vision_duration")})
+		
+		if vision_modifier then
+			vision_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("vision_duration") * (1 - keys.unit:GetStatusResistance()), true)
+		end
 	end
 end
 
@@ -722,6 +784,99 @@ function modifier_imba_void_spirit_astral_step_grace_time:OnDestroy()
 end
 
 ----------------------------------
+-- IMBA_VOID_SPIRIT_VOID_STASIS --
+----------------------------------
+
+function imba_void_spirit_void_stasis:IsInnateAbility() return true end
+
+function imba_void_spirit_void_stasis:OnInventoryContentsChanged()
+	if self:GetCaster():HasScepter() then
+		self:SetHidden(false)
+	else
+		self:SetHidden(true)
+	end
+end
+
+function imba_void_spirit_void_stasis:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
+function imba_void_spirit_void_stasis:GetChannelAnimation()
+	return ACT_DOTA_GENERIC_CHANNEL_1
+end
+
+function imba_void_spirit_void_stasis:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_void_spirit_void_stasis:OnSpellStart()
+	-- self:GetCaster():EmitSound("Imba.Hellblade")
+
+	self.aoe_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift_outer_ring.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(self.aoe_particle_1, 0, self:GetCursorPosition())
+	ParticleManager:SetParticleControl(self.aoe_particle_1, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
+	
+	self:GetCaster():StartGesture(ACT_DOTA_GENERIC_CHANNEL_1)
+end
+
+function imba_void_spirit_void_stasis:OnChannelFinish(bInterrupted)
+	-- self:GetCaster():StopSound("Imba.Hellblade")
+
+	ParticleManager:DestroyParticle(self.aoe_particle_1, true)
+	ParticleManager:ReleaseParticleIndex(self.aoe_particle_1)
+	
+	self:GetCaster():FadeGesture(ACT_DOTA_GENERIC_CHANNEL_1)
+	
+	if not bInterrupted then
+		EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_VoidSpirit.AstralStep.Target", self:GetCaster())
+		
+		self.aoe_particle_impact = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift/planeshift_aether_start.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(self.aoe_particle_impact, 0, self:GetCursorPosition())
+		ParticleManager:ReleaseParticleIndex(self.aoe_particle_impact)
+		
+		for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false)) do
+			unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_void_stasis", {duration = self:GetSpecialValueFor("duration")})
+			
+			unit:Interrupt()
+		end
+	end
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_VOID_SPIRIT_VOID_STASIS --
+-------------------------------------------
+
+function modifier_imba_void_spirit_void_stasis:IsPurgable()		return false end
+function modifier_imba_void_spirit_void_stasis:IgnoreTenacity()	return true end
+
+function modifier_imba_void_spirit_void_stasis:GetStatusEffectName()
+	return "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+end
+
+function modifier_imba_void_spirit_void_stasis:CheckState()
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		return {
+			[MODIFIER_STATE_STUNNED]		= true,
+			[MODIFIER_STATE_FROZEN]			= true,
+			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
+			[MODIFIER_STATE_INVULNERABLE]	= true,
+			[MODIFIER_STATE_OUT_OF_GAME]	= true,
+			[MODIFIER_STATE_NO_HEALTH_BAR]	= true
+		}
+	else
+		return {
+			[MODIFIER_STATE_DISARMED]		= true,
+			[MODIFIER_STATE_MUTED]			= true,
+			[MODIFIER_STATE_SILENCED]		= true,
+			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
+			[MODIFIER_STATE_INVULNERABLE]	= true,
+			[MODIFIER_STATE_OUT_OF_GAME]	= true,
+			[MODIFIER_STATE_NO_HEALTH_BAR]	= true
+		}
+	end
+end
+
+----------------------------------
 -- IMBA_VOID_SPIRIT_ASTRAL_STEP --
 ----------------------------------
 
@@ -764,42 +919,59 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector)
 	
 	self.original_vector	= (final_position - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus())
 	
+	self:GetCaster():SetForwardVector(self.original_vector:Normalized())
+	
 	self:GetCaster():EmitSound("Hero_VoidSpirit.AstralStep.Start")
 	
-	local step_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	local step_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(step_particle, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(step_particle, 1, final_position)
 	ParticleManager:ReleaseParticleIndex(step_particle)
 	
+	local bHeroHit	= false
+	
 	-- Logically speaking it doesn't make sense for it to check for enemies hit before Void Spirit actually moves, but it makes more sense without creating more variables
-	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE)) do
+	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
 		enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
+		enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
 		
 		self.impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControlEnt(self.impact_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(self.impact_particle)
 		
-		if not self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") then
-			self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
-		else
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_crit", {})
-			self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
-			self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_crit")
-		end
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_crit", {})
+		-- TODO: Check to make sure this doesn't cause massive lag on large amounts of units
+		self:GetCaster():SetAbsOrigin(enemy:GetAbsOrigin() - self:GetCaster():GetForwardVector())
+		self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
+		self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_crit")
 		
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_debuff", {duration = self:GetSpecialValueFor("pop_damage_delay")})
+		
+		if enemy:IsHero() and not bHeroHit then
+			bHeroHit = true
+		end
 	end
 	
 	self.impact_particle = nil
 	
 	FindClearSpaceForUnit(self:GetCaster(), final_position, false)
 	
-	self:GetCaster():SetForwardVector(self.original_vector:Normalized())
-	
 	self:GetCaster():EmitSound("Hero_VoidSpirit.AstralStep.End")
 	
+	-- IMBAfication: Echo Slash
 	if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper") and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):IsTrained() then
 		self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_grace_time")
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"), "modifier_imba_void_spirit_astral_step_grace_time", {duration = self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):GetSpecialValueFor("grace_time_end")})
+	end
+	
+	-- IMBAfication: I am ALL The Hidden Ones
+	-- TODO: Check that this doesn't screw with the Astral Step particle (I would assume it makes the slash invisible to the enemy, which IDK if it's fine or not)
+	if bHeroHit and not recastVector then
+		if not self:GetCaster():HasModifier("modifier_imba_void_spirit_astral_step_invis") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_invis", {duration = self:GetSpecialValueFor("hidden_ones_duration")})
+		else
+			self:GetCaster():FindModifierByName("modifier_imba_void_spirit_astral_step_invis"):SetDuration(self:GetCaster():FindModifierByName("modifier_imba_void_spirit_astral_step_invis"):GetRemainingTime() + self:GetSpecialValueFor("hidden_ones_duration"), true)
+		end
 	end
 end
 
@@ -824,8 +996,6 @@ end
 
 function modifier_imba_void_spirit_astral_step_debuff:OnDestroy()
 	if not IsServer() then return end
-	
-	-- self:GetParent():EmitSound("Hero_VoidSpirit.AstralStep.Target")
 	
 	self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(self.damage_particle)
@@ -856,82 +1026,50 @@ end
 
 function modifier_imba_void_spirit_astral_step_crit:IsPurgable()	return false end
 
+-- This CheckState is basically only for allowing cleave to properly function (since Void Spirit will warp to in front of the target before performing the attack)
+function modifier_imba_void_spirit_astral_step_crit:CheckState()
+	return {
+		[MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true
+	}
+end
+
 function modifier_imba_void_spirit_astral_step_crit:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+	return {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+	}
 end
 
 function modifier_imba_void_spirit_astral_step_crit:GetModifierPreAttack_CriticalStrike()
-	return self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_astral_step_crit")
+	if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_astral_step_crit")
+	end
 end
 
--- -- ---------------------
--- -- -- TALENT HANDLERS --
--- -- ---------------------
+-- Hopefully this is enough random information to only suppress cleaves?...
+function modifier_imba_void_spirit_astral_step_crit:GetModifierTotalDamageOutgoing_Percentage(keys)
+	if not self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") and not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+		return -100
+	end
+end
 
--- LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_call_down_cooldown", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_gatling_guns_activate", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_homing_missile_charges", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
+-------------------------------------------------
+-- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_INVIS --
+-------------------------------------------------
 
--- modifier_special_bonus_imba_gyrocopter_call_down_cooldown		= modifier_special_bonus_imba_gyrocopter_call_down_cooldown or class({})
--- modifier_special_bonus_imba_gyrocopter_gatling_guns_activate	= modifier_special_bonus_imba_gyrocopter_gatling_guns_activate or class({})
--- modifier_special_bonus_imba_gyrocopter_homing_missile_charges	= modifier_special_bonus_imba_gyrocopter_homing_missile_charges or class({})
+function modifier_imba_void_spirit_astral_step_invis:CheckState()
+	return {[MODIFIER_STATE_INVISIBLE] = true}
+end
 
--- function modifier_special_bonus_imba_gyrocopter_call_down_cooldown:IsHidden() 		return true end
--- function modifier_special_bonus_imba_gyrocopter_call_down_cooldown:IsPurgable() 	return false end
--- function modifier_special_bonus_imba_gyrocopter_call_down_cooldown:RemoveOnDeath() 	return false end
+function modifier_imba_void_spirit_astral_step_invis:DeclareFunctions()
+	return {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+end
 
--- function modifier_special_bonus_imba_gyrocopter_gatling_guns_activate:IsHidden() 		return true end
--- function modifier_special_bonus_imba_gyrocopter_gatling_guns_activate:IsPurgable() 		return false end
--- function modifier_special_bonus_imba_gyrocopter_gatling_guns_activate:RemoveOnDeath() 	return false end
+function modifier_imba_void_spirit_astral_step_invis:GetModifierInvisibilityLevel()
+	return 1
+end
 
--- function modifier_special_bonus_imba_gyrocopter_gatling_guns_activate:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self.gatling_guns_ability		= self:GetCaster():FindAbilityByName("imba_gyrocopter_gatling_guns")
-	
-	-- if self.gatling_guns_ability then
-		-- self.gatling_guns_ability:SetHidden(false)
-	-- end
--- end
-
--- function modifier_special_bonus_imba_gyrocopter_gatling_guns_activate:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- if self.gatling_guns_ability then
-		-- self.gatling_guns_ability:SetHidden(true)
-	-- end
--- end
-
--- function modifier_special_bonus_imba_gyrocopter_homing_missile_charges:IsHidden() 		return true end
--- function modifier_special_bonus_imba_gyrocopter_homing_missile_charges:IsPurgable() 	return false end
--- function modifier_special_bonus_imba_gyrocopter_homing_missile_charges:RemoveOnDeath() 	return false end
-
--- function modifier_special_bonus_imba_gyrocopter_homing_missile_charges:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_gyrocopter_homing_missile"), "modifier_generic_charges", {})
--- end
-
--- function imba_gyrocopter_homing_missile:OnOwnerSpawned()
-	-- if not IsServer() then return end
-	
-	-- if self:GetCaster():HasTalent("special_bonus_imba_gyrocopter_homing_missile_charges") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_gyrocopter_homing_missile_charges") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_gyrocopter_homing_missile_charges"), "modifier_special_bonus_imba_gyrocopter_homing_missile_charges", {})
-	-- end
--- end
-
--- function imba_gyrocopter_gatling_guns:OnOwnerSpawned()
-	-- if not IsServer() then return end
-	
-	-- if self:GetCaster():HasTalent("special_bonus_imba_gyrocopter_gatling_guns_activate") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_gyrocopter_gatling_guns_activate") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_gyrocopter_gatling_guns_activate"), "modifier_special_bonus_imba_gyrocopter_gatling_guns_activate", {})
-	-- end
--- end
-
--- function imba_gyrocopter_call_down:OnOwnerSpawned()
-	-- if not IsServer() then return end
-	
-	-- if self:GetCaster():HasTalent("special_bonus_imba_gyrocopter_call_down_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_gyrocopter_call_down_cooldown") then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_gyrocopter_call_down_cooldown"), "modifier_special_bonus_imba_gyrocopter_call_down_cooldown", {})
-	-- end
--- end
+---------------------
+-- TALENT HANDLERS --
+---------------------
