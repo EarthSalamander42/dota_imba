@@ -15,7 +15,7 @@
 		"item_id"					"16315" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"1"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -29,7 +29,7 @@
 		"item_id"					"11190"
 		"item_type"					"blink"
 		"item_unlock_level"			"25"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles" // this is the only item id where this is not required as the script can get the info in vanilla file, but yeah screw it
@@ -43,7 +43,7 @@
 		"item_id"					"17262" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"50"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -57,7 +57,7 @@
 		"item_id"					"17262" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"75"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -71,7 +71,7 @@
 		"item_id"					"17239" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"100"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -85,7 +85,7 @@
 		"item_id"					"16315" // this reward is not in items_game.txt
 		"item_type"					"blink"
 		"item_unlock_level"			"125"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -99,7 +99,7 @@
 		"item_id"					"17021" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"150"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -113,7 +113,7 @@
 		"item_id"					"17021" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
 		"item_unlock_level"			"175"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -127,7 +127,7 @@
 		"item_id"					"16315" // this reward is not in items_game.txt
 		"item_type"					"blink"
 		"item_unlock_level"			"200"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -141,7 +141,7 @@
 		"item_id"					"16315"
 		"item_type"					"blink"
 		"item_unlock_level"			"225"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -155,7 +155,7 @@
 		"item_id"					"17250"
 		"item_type"					"blink"
 		"item_unlock_level"			"250"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -169,7 +169,7 @@
 		"item_id"					"17250"
 		"item_type"					"blink"
 		"item_unlock_level"			"275"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -183,7 +183,7 @@
 		"item_id"					"16315"
 		"item_type"					"blink"
 		"item_unlock_level"			"300"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -197,7 +197,7 @@
 		"item_id"					"16315"
 		"item_type"					"blink"
 		"item_unlock_level"			"325"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -216,7 +216,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"110"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -229,7 +229,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"210"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -242,7 +242,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"310"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -255,7 +255,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"410"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -268,7 +268,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"510"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -281,7 +281,7 @@
 		"item_id"					"16315"
 		"item_type"					"bottle"
 		"item_unlock_level"			"610"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -299,7 +299,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"120"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -312,7 +312,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"240"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -325,7 +325,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"360"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -338,7 +338,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"480"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -351,7 +351,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"600"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -364,7 +364,7 @@
 		"item_id"					"16315"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"720"
-		"item_rarity"				"mythical"
+		"item_rarity"				"rare"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -382,7 +382,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"1"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -396,7 +396,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"35"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -410,7 +410,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"70"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -424,7 +424,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"105"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -438,7 +438,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"140"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -452,7 +452,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"175"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -466,7 +466,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"210"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -480,7 +480,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"245"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -494,7 +494,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"280"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -508,7 +508,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"315"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -522,7 +522,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"350"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -536,7 +536,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"385"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -550,7 +550,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"420"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -564,7 +564,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"455"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -578,7 +578,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"490"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -592,7 +592,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"525"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -606,7 +606,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"560"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -620,7 +620,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"595"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -634,7 +634,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"630"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -648,7 +648,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"665"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -662,7 +662,7 @@
 		"item_id"					"16315"
 		"item_type"					"fountain"
 		"item_unlock_level"			"700"
-		"item_rarity"				"rare"
+		"item_rarity"				"uncommon"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -680,7 +680,7 @@
 		"item_id"					"16315"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"90"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -696,7 +696,7 @@
 		"item_id"					"16315"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"270"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -712,7 +712,7 @@
 		"item_id"					"16315"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"450"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -728,7 +728,7 @@
 		"item_id"					"16315"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"630"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -744,7 +744,7 @@
 		"item_id"					"16315"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"810"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -764,7 +764,7 @@
 		"item_id"					"16315"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"120"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -782,7 +782,7 @@
 		"item_id"					"16315"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"360"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -800,7 +800,7 @@
 		"item_id"					"16315"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"600"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -818,7 +818,7 @@
 		"item_id"					"16315"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"840"
-		"item_rarity"				"legendary"
+		"item_rarity"				"mythical3"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
@@ -892,6 +892,104 @@
 		{
 			"effect1"					"particles/econ/events/ti9/radiance_owner_ti9.vpcf"
 			"effect2"					"particles/econ/events/ti9/radiance_ti9.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// RADIANCE EFFECTS
+	////////////////////////////////////////////////////////
+
+	"61" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"sheepstick"
+		"item_unlock_level"			"320"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+			"effect2"					"models/props_gameplay/pig_blue.vmdl"
+		}
+	}
+
+	"62" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"sheepstick"
+		"item_unlock_level"			"640"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+			"effect2"					"models/props_gameplay/roquelaire/roquelaire.vmdl"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// SHIVA EFFECTS
+	////////////////////////////////////////////////////////
+
+	"63" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"shiva"
+		"item_unlock_level"			"400"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+		}
+	}
+
+	"64" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"shiva"
+		"item_unlock_level"			"800"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+		}
+	}
+
+	"65" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"shiva"
+		"item_unlock_level"			"1200"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+		}
+	}
+
+	"66" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"shiva"
+		"item_unlock_level"			"1600"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
 		}
 	}
 
