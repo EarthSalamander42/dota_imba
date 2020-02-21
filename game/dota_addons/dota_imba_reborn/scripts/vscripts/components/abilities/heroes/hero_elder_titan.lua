@@ -119,20 +119,8 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = self:GetChannelTime()})
 	-- end
 
-	if astral_spirit == nil then
-	else
-		if astral_spirit.is_returning == true then return true end
-		local ab = astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
-
-		if ab:IsInAbilityPhase() == false then
-			local caster = self:GetCaster()
-		
-			Timers:CreateTimer(FrameTime(), function()
-				astral_spirit:CastAbilityNoTarget(ab, caster:GetOwner():GetPlayerID())
-			end)
-		end
-
-		astral_spirit:CastAbilityNoTarget(ab, astral_spirit:GetPlayerOwnerID())
+	if astral_spirit and not astral_spirit:IsNull() and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") then
+		astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
@@ -214,10 +202,14 @@ end
 
 -- Astral Spirit
 imba_elder_titan_ancestral_spirit = class({})
+LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_damage", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_ms", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_armor", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+
+---------------------------------------
+-- IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT --
+---------------------------------------
 
 function imba_elder_titan_ancestral_spirit:GetAbilityTextureName()
 	return "elder_titan_ancestral_spirit"
@@ -235,16 +227,16 @@ function imba_elder_titan_ancestral_spirit:GetCastRange(location, target)
 	end
 end
 
-function imba_elder_titan_ancestral_spirit:OnAbilityPhaseStart()
-	StartAnimation(self:GetCaster(), {duration=self.BaseClass.GetCastPoint(self), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
+-- function imba_elder_titan_ancestral_spirit:OnAbilityPhaseStart()
+	-- StartAnimation(self:GetCaster(), {duration=self.BaseClass.GetCastPoint(self), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
 
-	return true
-end
+	-- return true
+-- end
 
-function imba_elder_titan_ancestral_spirit:OnAbilityPhaseInterrupted()
-	EndAnimation(self:GetCaster())
-	return true
-end
+-- function imba_elder_titan_ancestral_spirit:OnAbilityPhaseInterrupted()
+	-- EndAnimation(self:GetCaster())
+	-- return true
+-- end
 
 function imba_elder_titan_ancestral_spirit:IsNetherWardStealable() return false end
 
@@ -253,10 +245,7 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	local target_point = self:GetCursorPosition()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("spirit_duration")
-	local spirit_movespeed = self:GetSpecialValueFor("speed")
-	if caster:HasTalent("special_bonus_imba_elder_titan_2") then
-		spirit_movespeed = self:GetSpecialValueFor("speed") + self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_2")
-	end
+	local spirit_movespeed = self:GetTalentSpecialValueFor("speed")
 	
 	EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Cast", caster)
 	caster:SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", false, true)
@@ -287,92 +276,9 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	end
 end
 
--- Return Spirit
-imba_elder_titan_return_spirit = class({})
-
-function imba_elder_titan_return_spirit:GetAbilityTextureName()
-	return "elder_titan_return_spirit"
-end
-
-function imba_elder_titan_return_spirit:IsInnateAbility()
-	return true
-end
-
-function imba_elder_titan_return_spirit:IsStealable() return false end
-function imba_elder_titan_return_spirit:IsHiddenWhenStolen() return true end
-function imba_elder_titan_return_spirit:IsNetherWardStealable() return false end
-
-function imba_elder_titan_return_spirit:GetAssociatedPrimaryAbilities()
-	return "imba_elder_titan_ancestral_spirit"
-end
-
-function imba_elder_titan_return_spirit:OnSpellStart()
-	if astral_spirit and not astral_spirit.is_returning then
-		astral_spirit:MoveToNPC(astral_spirit:GetOwner())
-		astral_spirit.is_returning = true
-		astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
-		StartAnimation(astral_spirit, {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
-		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", astral_spirit)
-	end
-end
-
-modifier_imba_elder_titan_ancestral_spirit_damage = modifier_imba_elder_titan_ancestral_spirit_damage or class({})
-
--- Modifier properties
-function modifier_imba_elder_titan_ancestral_spirit_damage:IsDebuff() return false end
-function modifier_imba_elder_titan_ancestral_spirit_damage:IsHidden() return false end
-function modifier_imba_elder_titan_ancestral_spirit_damage:IsPurgable() return false end
-
-function modifier_imba_elder_titan_ancestral_spirit_damage:GetEffectName()
-	return "particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_buff.vpcf"
-end
-
-function modifier_imba_elder_titan_ancestral_spirit_damage:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	}
-
-	return decFuncs
-end
-
-function modifier_imba_elder_titan_ancestral_spirit_damage:GetModifierPreAttack_BonusDamage()
-	return self:GetStackCount()
-end
-
-modifier_imba_elder_titan_ancestral_spirit_ms = modifier_imba_elder_titan_ancestral_spirit_ms or class({})
-
--- Modifier properties
-function modifier_imba_elder_titan_ancestral_spirit_ms:IsDebuff() return false end
-function modifier_imba_elder_titan_ancestral_spirit_ms:IsHidden() return false end
-function modifier_imba_elder_titan_ancestral_spirit_ms:IsPurgable() return false end
-
-function modifier_imba_elder_titan_ancestral_spirit_ms:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	}
-
-	return decFuncs
-end
-
-function modifier_imba_elder_titan_ancestral_spirit_ms:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount()
-end
-
-modifier_imba_elder_titan_ancestral_spirit_armor = class({})
-
-function modifier_imba_elder_titan_ancestral_spirit_armor:IsPurgable() return false end
-
-function modifier_imba_elder_titan_ancestral_spirit_armor:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-	}
-
-	return decFuncs
-end
-
-function modifier_imba_elder_titan_ancestral_spirit_armor:GetModifierPhysicalArmorBonus()
-	return self:GetStackCount() * 0.1
-end
+-----------------------------------------------------
+-- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_SELF --
+-----------------------------------------------------
 
 modifier_imba_elder_titan_ancestral_spirit_self = modifier_imba_elder_titan_ancestral_spirit_self or class({})
 
@@ -424,15 +330,20 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 		self:GetParent():RemoveSelf()
 	end
 
+	-- "Astral Spirit roots targets hit" talent; root duration variable
 	local duration = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_elder_titan_3")
+	
+	-- Constantly check for nearby enemies to see if they haven't been hit by Astral Spirit yet
 	local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(nearby_enemies) do
 		-- Check if this enemy was already hit
 		local enemy_has_been_hit = false
+		
 		for _, enemy_hit in pairs(self.targets_hit) do
 			if enemy == enemy_hit then
 				enemy_has_been_hit = true
+				break
 			end
 		end
 
@@ -447,7 +358,8 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 
 			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Buff", enemy)
 			ApplyDamage({attacker = self:GetParent(), victim = enemy, ability = self:GetAbility(), damage = self.pass_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
+			
+			-- "Astral Spirit roots targets hit" talent
 			if self:GetParent():GetOwner():HasTalent("special_bonus_imba_elder_titan_3") then
 				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration})
 
@@ -479,23 +391,28 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			end
 		end
 	end
-
+	
+	-- If Elder Titan is killed while the Astral Spirit is out, immediately swap the ability back and destroy the spirit
 	if not self:GetParent():GetOwner():IsAlive() then
 		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
 		self:GetParent():RemoveSelf()
 		astral_spirit = nil
 		return nil
 	end
-
-	local et_ab = self:GetParent():FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
-	if self.return_timer > self.duration and not et_ab:IsInAbilityPhase() then
-		if not self:GetParent().is_returning then
-			self:GetParent():MoveToNPC(self:GetParent():GetOwner())
-			self:GetParent().is_returning = true
-			self:GetParent():FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
-			StartAnimation(self:GetParent(), {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
-			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", self:GetParent())
-		end
+	
+	if not self.et_ab then self.et_ab = self:GetParent():FindAbilityByName("imba_elder_titan_echo_stomp_spirit") end
+	if not self.owner_echo_stomp_ability then self.owner_echo_stomp_ability = self:GetParent():GetOwner():FindAbilityByName("imba_elder_titan_echo_stomp") end
+	
+	if self.et_ab and self.return_timer > self.duration and not self.et_ab:IsInAbilityPhase() and not self:GetParent().is_returning then
+		self:GetParent():MoveToNPC(self:GetParent():GetOwner())
+		self:GetParent().is_returning = true
+		self:GetParent():FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
+		-- StartAnimation(self:GetParent(), {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
+		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", self:GetParent())
+	end
+	
+	if self:GetParent().is_returning and (not self.owner_echo_stomp_ability or (not self.owner_echo_stomp_ability:IsInAbilityPhase() and not self.owner_echo_stomp_ability:IsChanneling())) then
+		self:GetParent():MoveToNPC(self:GetParent():GetOwner())
 	end
 
 	if self.return_timer - 10.0 > self.duration or 
@@ -556,12 +473,13 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:DeclareFunctions()
-	local funcs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
-			MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
-		}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+		
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE
+	}
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierMoveSpeed_AbsoluteMin (keys)
@@ -572,12 +490,131 @@ function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierIgnoreMovesp
 	return 1
 end
 
+function modifier_imba_elder_titan_ancestral_spirit_self:GetOverrideAnimation()
+	if self:GetStackCount() == 1 then
+		return ACT_DOTA_FLAIL
+	end
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_self:GetOverrideAnimationRate()
+	if self:GetStackCount() == 1 then
+		return 0.2
+	end
+end
+
 -- On the edge case where Juggernaut's Omnislash jumps to the Astral Spirit and kills it...give Elder Titan back the skill immediately
 function modifier_imba_elder_titan_ancestral_spirit_self:OnDestroy (keys)
 	if self:GetParent().GetOwner then
 		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
 	end
 end
+
+-------------------------------------------------------
+-- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_DAMAGE --
+-------------------------------------------------------
+
+modifier_imba_elder_titan_ancestral_spirit_damage = modifier_imba_elder_titan_ancestral_spirit_damage or class({})
+
+-- Modifier properties
+function modifier_imba_elder_titan_ancestral_spirit_damage:IsDebuff() return false end
+function modifier_imba_elder_titan_ancestral_spirit_damage:IsHidden() return false end
+function modifier_imba_elder_titan_ancestral_spirit_damage:IsPurgable() return false end
+
+function modifier_imba_elder_titan_ancestral_spirit_damage:GetEffectName()
+	return "particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_buff.vpcf"
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_damage:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_damage:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_MS --
+---------------------------------------------------
+
+modifier_imba_elder_titan_ancestral_spirit_ms = modifier_imba_elder_titan_ancestral_spirit_ms or class({})
+
+-- Modifier properties
+function modifier_imba_elder_titan_ancestral_spirit_ms:IsDebuff() return false end
+function modifier_imba_elder_titan_ancestral_spirit_ms:IsHidden() return false end
+function modifier_imba_elder_titan_ancestral_spirit_ms:IsPurgable() return false end
+
+function modifier_imba_elder_titan_ancestral_spirit_ms:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_ms:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount()
+end
+
+------------------------------------------------------
+-- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_ARMOR --
+------------------------------------------------------
+
+modifier_imba_elder_titan_ancestral_spirit_armor = class({})
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:IsPurgable() return false end
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_armor:GetModifierPhysicalArmorBonus()
+	return self:GetStackCount() * 0.1
+end
+
+------------------------------------
+-- IMBA_ELDER_TITAN_RETURN_SPIRIT --
+------------------------------------
+
+-- Return Spirit
+imba_elder_titan_return_spirit = class({})
+
+function imba_elder_titan_return_spirit:GetAbilityTextureName()
+	return "elder_titan_return_spirit"
+end
+
+function imba_elder_titan_return_spirit:IsInnateAbility()
+	return true
+end
+
+function imba_elder_titan_return_spirit:IsStealable() return false end
+function imba_elder_titan_return_spirit:IsHiddenWhenStolen() return true end
+function imba_elder_titan_return_spirit:IsNetherWardStealable() return false end
+
+function imba_elder_titan_return_spirit:GetAssociatedPrimaryAbilities()
+	return "imba_elder_titan_ancestral_spirit"
+end
+
+function imba_elder_titan_return_spirit:OnSpellStart()
+	if astral_spirit and not astral_spirit.is_returning then
+		astral_spirit:MoveToNPC(astral_spirit:GetOwner())
+		astral_spirit.is_returning = true
+		astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
+		-- StartAnimation(astral_spirit, {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
+		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", astral_spirit)
+	end
+end
+
+------------------------------------
+-- IMBA_ELDER_TITAN_NATURAL_ORDER --
+------------------------------------
 
 -- Natural Order
 imba_elder_titan_natural_order = imba_elder_titan_natural_order or class({})
@@ -606,14 +643,13 @@ function modifier_imba_elder_titan_natural_order_aura:IsHidden() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsPermanent() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsPurgable() return false end
 
-local natural_order_radius = 0
 function modifier_imba_elder_titan_natural_order_aura:OnCreated()
-	natural_order_radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.natural_order_radius = self:GetAbility():GetSpecialValueFor("radius")
 end
 
 -- Aura properties
 function modifier_imba_elder_titan_natural_order_aura:GetAuraRadius()
-	return natural_order_radius
+	return self.natural_order_radius
 end
 
 function modifier_imba_elder_titan_natural_order_aura:GetAuraSearchFlags()
@@ -653,6 +689,7 @@ function modifier_imba_elder_titan_natural_order:OnCreated()
 	local ability = self:GetAbility()
 	self.base_armor_reduction = ability:GetSpecialValueFor("armor_reduction_pct")
 	self.magic_resist_reduction = ability:GetSpecialValueFor("magic_resistance_pct")
+	self.status_resistance_pct	= ability:GetSpecialValueFor("status_resistance_pct")
 end
 
 function modifier_imba_elder_titan_natural_order:DeclareFunctions()
@@ -686,15 +723,17 @@ function modifier_imba_elder_titan_natural_order:GetModifierBaseAttack_BonusDama
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierStatusResistanceStacking()
-	if self:GetCaster() ~= nil and self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
-		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then -- This line doesn't pick up the Ancestral Spirit
-			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
-		else
-			return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
-		end
-	else
-		return 0
-	end
+	-- if self:GetCaster() ~= nil and self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
+		-- if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then -- This line doesn't pick up the Ancestral Spirit
+			-- return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
+		-- else
+			-- return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
+		-- end
+	-- else
+		-- return 0
+	-- end
+	
+	return self.status_resistance_pct * (-1)
 end
 
 ---------------
@@ -741,17 +780,23 @@ function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseStart()
 			end
 		end
 	end
-
+	
+	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
+	
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
 
 	return true
+end
+
+function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseInterrupted()
+	self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_1)
 end
 
 function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
-		if caster.is_returning == true then return end
+		-- if caster.is_returning == true then return end
 		local ability = self
 
 		-- Ability specials
@@ -784,6 +829,8 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 			end
 		end
+		
+		self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_1)
 	end
 end
 

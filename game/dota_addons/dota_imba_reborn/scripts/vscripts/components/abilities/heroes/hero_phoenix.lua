@@ -1887,12 +1887,13 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnCreated()
 		return
 	end
 	local caster = self:GetCaster()
-	local abi = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit")
-	if abi then
-		if self:GetParent() == self:GetCaster() and abi:IsTrained() then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phoenix_supernova_bird_thinker", {duration = self:GetDuration()})
-		end
-	end
+	-- local abi = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit")
+	-- if abi then
+		-- if self:GetParent() == self:GetCaster() and abi:IsTrained() then
+			-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phoenix_supernova_bird_thinker", {duration = self:GetDuration()})
+		-- end
+	-- end
+	
 	local innate = caster:FindAbilityByName("imba_phoenix_burning_wings")
 	if innate then
 		if innate:GetToggleState() then
@@ -2144,13 +2145,11 @@ function modifier_imba_phoenix_supernova_egg_thinker:GetModifierAura()			return 
 function modifier_imba_phoenix_supernova_egg_thinker:GetTexture() return "phoenix_supernova" end
 
 function modifier_imba_phoenix_supernova_egg_thinker:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-			MODIFIER_EVENT_ON_ATTACKED,
-			MODIFIER_EVENT_ON_DEATH,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACKED,
+		MODIFIER_EVENT_ON_DEATH,
+	}
 end
 
 function modifier_imba_phoenix_supernova_egg_thinker:GetModifierIncomingDamage_Percentage()
@@ -2158,6 +2157,9 @@ function modifier_imba_phoenix_supernova_egg_thinker:GetModifierIncomingDamage_P
 end
 
 function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
+	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.damage_per_sec	= self:GetAbility():GetSpecialValueFor("damage_per_sec")
+	
 	if not IsServer() then
 		return
 	end
@@ -2181,6 +2183,10 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
 
 	local ability = self:GetAbility()
 	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") , false)
+	
+	-- IMBAfication: Artificial Sun
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.aura_radius, 1, false)
+	
 	self:StartIntervalThink(1.0)
 end
 
@@ -2194,6 +2200,10 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
 	if not egg:IsAlive() or egg:HasModifier("modifier_imba_phoenix_supernova_egg_double") then
 		return
 	end
+	
+	-- IMBAfication: Artificial Sun
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.aura_radius, math.min(1, self:GetRemainingTime()), false)
+	
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 		egg:GetAbsOrigin(),
 		nil,
@@ -2207,7 +2217,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
 		local damageTable = {
 			victim = enemy,
 			attacker = caster,
-			damage = ability:GetSpecialValueFor("damage_per_sec"),
+			damage = self.damage_per_sec,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			ability = ability,
 		}
@@ -2232,7 +2242,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 	if egg.NovaCaster then
 		egg.NovaCaster = nil
 	end
-	print(killer:GetUnitName())
+	-- print(killer:GetUnitName())
 
 	caster:RemoveNoDraw()
 	if caster.ally and not caster.HasDoubleEgg then
@@ -2369,18 +2379,13 @@ function modifier_imba_phoenix_supernova_dmg:IsHidden() return false end
 function modifier_imba_phoenix_supernova_dmg:IsDebuff() return true end
 function modifier_imba_phoenix_supernova_dmg:IsPurgable() return false end
 
-function modifier_imba_phoenix_supernova_dmg:DeclareFunctions()
-	local decFuns = {
-		--MODIFIER_PROPERTY_MISS_PERCENTAGE,
-	}
-	return decFuns
-end
-
 function modifier_imba_phoenix_supernova_dmg:GetHeroEffectName() return "particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf" end
 
 function modifier_imba_phoenix_supernova_dmg:GetEffectAttachType() return PATTACH_WORLDORIGIN end
 
 function modifier_imba_phoenix_supernova_dmg:OnCreated()
+	self.extreme_burning_spell_amp	= self:GetAbility():GetSpecialValueFor("extreme_burning_spell_amp") * (-1)
+
 	if not IsServer() then
 		return
 	end
@@ -2390,6 +2395,21 @@ function modifier_imba_phoenix_supernova_dmg:OnCreated()
 	-- The fucking particle I can't do
 	ParticleManager:SetParticleControlEnt( self.pfx, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true )
 
+end
+
+function modifier_imba_phoenix_supernova_dmg:OnDestroy()
+	if not IsServer() then
+		return
+	end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
+end
+
+function modifier_imba_phoenix_supernova_dmg:DeclareFunctions()
+	return {
+		--MODIFIER_PROPERTY_MISS_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
 end
 
 -- Kit is overloaded so I'm removing this for now
@@ -2426,12 +2446,8 @@ end
 	-- end
 -- end
 
-function modifier_imba_phoenix_supernova_dmg:OnDestroy()
-	if not IsServer() then
-		return
-	end
-	ParticleManager:DestroyParticle(self.pfx, false)
-	ParticleManager:ReleaseParticleIndex(self.pfx)
+function modifier_imba_phoenix_supernova_dmg:GetModifierSpellAmplify_Percentage()
+	return self.extreme_burning_spell_amp
 end
 
 modifier_imba_phoenix_supernova_scepter_passive = modifier_imba_phoenix_supernova_scepter_passive or class({})

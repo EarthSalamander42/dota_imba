@@ -4,7 +4,7 @@
 \n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
 \n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
 
-"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note0"						"<b>Level 1:</b> None."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
@@ -26,7 +26,7 @@
 \n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
 \n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
 
-"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note0"						"<b>Level 1:</b> None."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
@@ -48,7 +48,7 @@
 \n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
 \n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
 
-"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note0"						"<b>Level 1:</b> None."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
@@ -70,7 +70,7 @@
 \n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
 \n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
 
-"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note0"						"<b>Level 1:</b> None."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
 "DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."

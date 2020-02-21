@@ -523,12 +523,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"450"
+				"radius"					"300"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus_pct"			"200 300 400"
+				"crit_bonus_pct"			"150 250 350"
 			}
 			"04"
 			{

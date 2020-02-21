@@ -1743,6 +1743,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"side_damage"				"150 300 450"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_radius"				"400"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"push_distance"				"900"
+			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -2464,6 +2474,23 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_earthshaker_2"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"100"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Ability: Special Bonus (+X Fissure Range)
 	//=================================================================================================================
@@ -5768,7 +5795,6 @@
 	//=================================================================================================================
 	"tusk_snowball"
 	{
-		"MaxLevel"							"4"
 		"AbilityCastRange"					"1250 1400 1550 1700"
 		"AbilityCooldown"					"21 19 17 15"
 
@@ -5789,28 +5815,18 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_damage_bonus"		"50 70 90 110"
+				"snowball_damage_bonus"		"70 100 130 160"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.9 1.1 1.3 1.5"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"snowball_windup_radius"	"100"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"snowball_duration"			"4.0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"snowball_radius"			"200"
-			}			
+			}	
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -5825,6 +5841,33 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"snowball_grab_radius"		"350 450 550 650"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tusk: Tag Team
+	//=================================================================================================================
+	"tusk_tag_team"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"50 75 100 125"													
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"90"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"				"600"
 			}
 		}
 	}
@@ -5876,12 +5919,6 @@
 				"crit_multiplier"			"450"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"air_time"					"1.0 1.25 1.5"
-				"LinkedSpecialBonus"		"special_bonus_unique_tusk_7"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -5909,25 +5946,13 @@
 				"var_type"				"FIELD_FLOAT"
 				"air_time"				"1.75"
 				"RequiresScepter"	"1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"push_length"			"1400"
-				"RequiresScepter"	"1"
-			}			
+			}		
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"move_slow"				"70"
 				"RequiresScepter"	"1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"4"
-				"RequiresScepter"	"1"
-			}			
+			}		
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -5937,7 +5962,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400"
+				"damage"				"600"
 				"RequiresScepter"	"1"
 			}
 		}
@@ -5948,7 +5973,6 @@
 	//=================================================================================================================
 	"abyssal_underlord_firestorm"
 	{
-		"MaxLevel"							"4"
 		"AbilityCooldown"					"12 11 10 9"
 
 		"AbilitySpecial"
@@ -5971,7 +5995,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wave_damage"				"25 50 75 100"
+				"wave_damage"				"30 50 70 90"
 				"LinkedSpecialBonus"		"special_bonus_unique_underlord_2"
 			}
 			"05"
@@ -5989,11 +6013,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"burn_interval"				"1.0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"burn_duration"				"3 4 5 6"
 			}
 		}
 	}
@@ -6039,7 +6058,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_creep"		"10"
+				"bonus_damage_from_creep"		"8"
 			}
 			"04"
 			{
@@ -6102,21 +6121,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"str_steal"					"4 5 6 7"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"decay_duration"			"45"
-				"LinkedSpecialBonus"		"special_bonus_unique_undying_4"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"325 375 425 475"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"str_scale_up"				"2"
 			}
 			"06"
 			{
@@ -6205,20 +6213,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"health_threshold"		"500 750 1000 1250"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health_threshold_pct"	"40"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
 			}
 		}
 	}
@@ -6232,6 +6230,16 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"50 55 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"35 45 55"
+			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7037,7 +7045,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_damage"			"80 240 400"
+				"attack_damage"			"100 250 400"
 				"LinkedSpecialBonus"		"special_bonus_unique_dark_willow_4"
 			}
 			"06"
@@ -7053,7 +7061,7 @@
 	//=================================================================================================================
 	"dark_willow_terrorize"
 	{
-		"AbilityCooldown"				"100 75 50"
+		"AbilityCooldown"				"80 65 50"
 		
 		"02"
 		{
@@ -8150,6 +8158,32 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pull_destination"		"54 60 66 72"
+			}
+			
+			"91"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"60"
+			}
+			"92"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"10"
+			}
+			"93"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed_bonus"		"10"
+			}
+			"94"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"evasion_bonus"			"10"
+			}
+			"95"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_duration"		"4"
 			}
 		}
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"

@@ -6,7 +6,7 @@ modifier_generic_charges = class({})
 --------------------------------------------------------------------------------
 -- Classifications
 function modifier_generic_charges:IsHidden()
-	return self:GetAbility():GetLevel() >= 1 and self:GetAbility():GetSpecialValueFor("max_charges") == 0 and self:GetAbility():GetSpecialValueFor("max_charges_scepter") ~= 0 and not self:GetCaster():HasScepter()
+	return self:GetAbility():GetLevel() <= 0 or (self:GetAbility():GetLevel() >= 1 and self:GetAbility():GetSpecialValueFor("max_charges") == 0 and self:GetAbility():GetSpecialValueFor("max_charges_scepter") ~= 0 and not self:GetCaster():HasScepter())
 end
 
 function modifier_generic_charges:IsDebuff()
@@ -54,6 +54,9 @@ end
 
 function modifier_generic_charges:OnAbilityFullyCast( params )
 	if params.unit ~= self:GetParent() then return end
+	
+	-- Remove this modifier if the ability no longer exists
+	if not self:GetAbility() or self:GetAbility():IsNull() then self:Destroy() return end
 	
 	if params.ability == self:GetAbility() then
 		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
@@ -125,9 +128,14 @@ function modifier_generic_charges:CalculateCharge()
 
 		-- set on cooldown if no charges
 		if self:GetStackCount() == 0 then
+			self:GetAbility():EndCooldown()
 			self:GetAbility():StartCooldown(self:GetRemainingTime())
 		else
-			self:GetAbility():StartCooldown(0.25)
+			self:GetAbility():EndCooldown()
+			
+			if self:GetAbility():GetName() ~= "imba_void_spirit_astral_step" or self:GetAbility():GetName() ~= "imba_gyrocopter_homing_missile" then
+				self:GetAbility():StartCooldown(0.25)
+			end
 		end
 	end
 end

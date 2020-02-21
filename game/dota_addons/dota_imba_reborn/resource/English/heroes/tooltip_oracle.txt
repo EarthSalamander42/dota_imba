@@ -13,13 +13,13 @@
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_aghanim_description"		"Increases cast range, effect radius, and stuns for a percentage of the duration."
 
 "DOTA_Tooltip_ability_imba_oracle_fates_edict"							"Fate's Edict"
-"DOTA_Tooltip_ability_imba_oracle_fates_edict_Description"				"Oracle enraptures a target, disarming them and granting them %magic_damage_resistance_pct_tooltip%%% magic damage resistance. Can be cast on allies and enemies.\n<font color='#FF7800'>Future Unsealed:</font> Can be set to auto-cast to apply a modifier on the target that will activate Fate's Edict after a %decree_delay% second delay.\n<font color='#20C6B6'>Alter Self:</font> Mutes the target and reduces their status resistance by %alter_status_resistance_reduction_pct%%%, but grants them physical damage immunity."
+"DOTA_Tooltip_ability_imba_oracle_fates_edict_Description"				"Oracle enraptures a target, disarming them and granting them %magic_damage_resistance_pct_tooltip%%% magic damage resistance. Can be cast on allies and enemies.\n<font color='#FF7800'>Future Unsealed:</font> Can be set to auto-cast to apply a modifier on the target that will activate Fate's Edict after a %decree_delay% second delay.\n<font color='#20C6B6'>Alter Self:</font> Mutes the target and grants them physical damage immunity."
 "DOTA_Tooltip_ability_imba_oracle_fates_edict_Lore"						"An unbreakable prophecy resounds: a chosen ally shall briefly suffer no magics.  Other kinds of suffering however..."
 "DOTA_Tooltip_ability_imba_oracle_fates_edict_Note0"					"Delayed Decree will not work if the target dies during the delay, or is in a state where modifiers cannot be applied when the delay ends."
 "DOTA_Tooltip_ability_imba_oracle_fates_edict_duration"					"DURATION:"
 "DOTA_Tooltip_ability_imba_oracle_fates_edict_abilitycastrange"				"CAST RANGE:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames"						"Purifying Flames"
-"DOTA_Tooltip_ability_imba_oracle_purifying_flames_Description"			"Burns away impurities, dealing heavy magic damage to the target before causing them to regenerate health over time. The amount of health regenerated over its duration exceeds the amount of initial damage. Can be cast on enemies and allies.\n<font color='#F78000'>Faux Flame:</font> Can be cast on magic-immune allies.\n<font color='#20C6B6'>Alter Self:</font> Damage and healing is swapped. The damage over time is pure damage, and the debuff is unpurgable. Does not deal damage if the target is affected by Fate's Edict Alter."
+"DOTA_Tooltip_ability_imba_oracle_purifying_flames_Description"			"Burns away impurities, dealing heavy magic damage to the target before causing them to regenerate health over time. The amount of health regenerated over its duration exceeds the amount of initial damage. Can be cast on enemies and allies.\n<font color='#F78000'>Faux Flame:</font> Can be cast on magic-immune allies.\n<font color='#20C6B6'>Alter Self:</font> Damage and healing is swapped. The damage over time is armor ignoring physical damage, and the debuff is unpurgable."
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_Lore"					"Like a hall of mirrors might amplify the light of a single candle, the shattered walls of the universe can transform the light of prophecy into a burning torch."
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_aghanim_description"	"<font color='#FF7800'>Improves cast point.</font>"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_damage"				"DAMAGE:"
@@ -71,6 +71,7 @@
 "DOTA_Tooltip_modifier_imba_oracle_false_promise_timer_alter_targets_Description"			"Will receive damage after the modifier ends. Any healing received will reduce this delayed damage."
 
 "DOTA_Tooltip_ability_special_bonus_imba_oracle_fortunes_end_max_duration"					"+{s:value}s Fortune's End Max Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_oracle_fortunes_end_max_duration_Description"		"Does not increase max channel time."
 "DOTA_Tooltip_ability_special_bonus_imba_oracle_false_promise_invisibility"					"False Promise Invisibility"
 "DOTA_Tooltip_ability_special_bonus_imba_oracle_false_promise_invisibility_Description"		"The target of False Promise also becomes invisible for the duration (with a 0.6 second fade time)."
 "DOTA_Tooltip_ability_special_bonus_imba_oracle_fates_edict_cooldown"						"-{s:value}s Fate's Edict Cooldown"

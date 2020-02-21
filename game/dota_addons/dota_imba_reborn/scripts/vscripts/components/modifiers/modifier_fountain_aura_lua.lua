@@ -71,7 +71,9 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 	end
 
 	Timers:CreateTimer(1.0, function()
-		self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		if self and not self:IsNull() and self.GetParent and self:GetParent() and not self:GetParent():IsNull() then
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		end
 	end)
 end
 

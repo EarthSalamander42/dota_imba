@@ -512,7 +512,7 @@ function modifier_imba_oracle_fates_edict_alter:GetTexture()
 end
 
 function modifier_imba_oracle_fates_edict_alter:OnCreated()
-	self.alter_status_resistance_reduction_pct	= self:GetAbility():GetSpecialValueFor("alter_status_resistance_reduction_pct") * (-1)
+	-- self.alter_status_resistance_reduction_pct	= self:GetAbility():GetSpecialValueFor("alter_status_resistance_reduction_pct") * (-1)
 	
 	if not IsServer() then return end
 	
@@ -521,6 +521,10 @@ function modifier_imba_oracle_fates_edict_alter:OnCreated()
 	
 	self.mute_particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_muted.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	self:AddParticle(self.mute_particle, false, false, -1, true, true)
+	
+	-- for _, mod in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_oracle_purifying_flames_alter")) do
+		-- mod:Destroy()
+	-- end
 end
 
 function modifier_imba_oracle_fates_edict_alter:OnDestroy()
@@ -541,9 +545,9 @@ function modifier_imba_oracle_fates_edict_alter:GetAbsoluteNoDamagePhysical()
 	return 1
 end
 
-function modifier_imba_oracle_fates_edict_alter:GetModifierStatusResistanceStacking()
-	return self.alter_status_resistance_reduction_pct
-end
+-- function modifier_imba_oracle_fates_edict_alter:GetModifierStatusResistanceStacking()
+	-- return self.alter_status_resistance_reduction_pct
+-- end
 
 ----------------------------------
 -- IMBA_ORACLE_PURIFYING_FLAMES --
@@ -714,7 +718,7 @@ function modifier_imba_oracle_purifying_flames_alter:OnCreated()
 	
 	if not IsServer() then return end
 	
-	self.damage_flags		= DOTA_DAMAGE_FLAG_NONE
+	self.damage_flags		= DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR
 	
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		self.damage_flags = self.damage_flags + DOTA_DAMAGE_FLAG_NON_LETHAL
@@ -728,7 +732,7 @@ function modifier_imba_oracle_purifying_flames_alter:OnIntervalThink()
 		ApplyDamage({
 			victim 			= self:GetParent(),
 			damage 			= self.heal_per_second,
-			damage_type		= DAMAGE_TYPE_PURE,
+			damage_type		= DAMAGE_TYPE_PHYSICAL,
 			damage_flags 	= self.damage_flags,
 			attacker 		= self:GetCaster(),
 			ability 		= self
@@ -961,6 +965,12 @@ end
 
 function modifier_imba_oracle_false_promise_timer:OnIntervalThink()
 	self.invis_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_invisible", {})
+	
+	-- Dumb generic invis modifier stopping attacks (and I no longer have reference to its keys) but at least have this block so units don't keep getting their attacks interrupted when this activates
+	if self:GetParent():GetAggroTarget() then
+		self:GetParent():MoveToTargetToAttack(self:GetParent():GetAggroTarget())
+	end
+	
 	self:StartIntervalThink(-1)
 end
 
@@ -1138,7 +1148,8 @@ end
 
 function modifier_imba_oracle_false_promise_timer:OnAttack(keys)
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") and keys.attacker == self:GetParent() and not keys.no_attack_cooldown and self.invis_modifier and not self.invis_modifier:IsNull() then
-		self.invis_modifier:Destroy()
+		-- Don't need to manually destroy since the built-in modifier self-destructs on attack
+		-- self.invis_modifier:Destroy()
 		
 		self:StartIntervalThink(self.invis_fade_delay)
 	end
@@ -1146,7 +1157,8 @@ end
 
 function modifier_imba_oracle_false_promise_timer:OnAbilityFullyCast(keys)
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_false_promise_invisibility") and keys.unit == self:GetParent() and self.invis_modifier and not self.invis_modifier:IsNull() then
-		self.invis_modifier:Destroy()
+		-- Don't need to manually destroy since the built-in modifier self-destructs on ability cast
+		-- self.invis_modifier:Destroy()
 		
 		self:StartIntervalThink(self.invis_fade_delay)
 	end

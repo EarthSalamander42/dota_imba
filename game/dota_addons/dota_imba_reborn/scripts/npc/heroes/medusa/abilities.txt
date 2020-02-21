@@ -247,6 +247,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"quick_snake_speed"		"400"
 			}
+			"25"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_max_stacks"	"100"			
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}

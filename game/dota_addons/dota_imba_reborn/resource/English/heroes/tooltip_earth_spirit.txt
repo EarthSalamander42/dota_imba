@@ -1,5 +1,5 @@
 "DOTA_Tooltip_modifier_imba_earths_mark"								"Earth's Mark"
-"DOTA_Tooltip_modifier_imba_earths_mark_Description"					"Susceptible to extra effects from Earth Spirits spells"
+"DOTA_Tooltip_modifier_imba_earths_mark_Description"					"Susceptible to extra effects from Earth Spirit's spells"
 
 "DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter"	"Stone Remnant Charges"
 "DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter_Description"	"Amount of no cost remnants available before Overdraw. Charges slowly restore over time."
@@ -27,7 +27,7 @@
 "DOTA_Tooltip_Ability_imba_earth_spirit_stone_remnant_overdraw_cooldown"			"OVERDRAW COOLDOWN:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_stone_remnant_earths_mark_duration"			"EARTHS MARK DURATION:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_stone_remnant_effect_radius"				"EFFECT AND VISION RADIUS:"
-"DOTA_Tooltip_Ability_imba_earth_spirit_stone_remnant_vision_duration"				"VISION RADIUS:"
+"DOTA_Tooltip_Ability_imba_earth_spirit_stone_remnant_vision_duration"				"VISION DURATION:"
 
 "DOTA_Tooltip_Ability_imba_earth_spirit_boulder_smash"								"#{DOTA_Tooltip_ability_earth_spirit_boulder_smash}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_boulder_smash_Description"					"Earth Spirit smashes the target enemy or ally, sending them in the diection he is facing. If Earth Spirit targets an area, he will smash the nearest Stone Remnant in a %max_distance_for_push% radius. The Traveling unit or Remnant damages all enemy units it hits. If an enemy is hit by a Stone Remnant, they are also <font color='#FF7800'>stunned (instead of slowed)</font>. Stone Remnants travel further than other units.\n<font color='#FF7800'>Marked Enemy:</font> Deals bonus %mark_stack_damage% damage per Earth's Mark stack."
@@ -58,17 +58,16 @@
 "DOTA_Tooltip_Ability_imba_earth_spirit_geomagnetic_grip_root_time_per_mark"		"ROOT DURATION PER EARTHS MARK:"
 
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize"									"#{DOTA_Tooltip_ability_earth_spirit_magnetize}"
-"DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_Description"						"Magnetizes units in a small nearby area, causing them to take damage for a short duration. Magnetized heroes cause nearby Stone Remnants to explode, destroying the remnant and refreshing Magnetize's duration on all nearby enemies. This process can repeat multiple times. If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.\n<font color='#FF7800'>Earth's Wrath:</font> Constantly refreshes Earth's Mark duration, as well as dealing increased damage per second based on stack count. Exploding Stone Remnants apply an Earth's Mark stack."
+"DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_Description"						"Magnetizes units in a small nearby area, causing them to take damage for a short duration. Magnetized heroes cause nearby Stone Remnants to explode, destroying the remnant and refreshing Magnetize's duration on all nearby enemies. This process can repeat multiple times. If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.\n<font color='#FF7800'>Earth's Wrath:</font> Constantly refreshes Earth's Mark duration and deals %mark_damage_per_sec_per_stack% increased damage per second per stack. Exploding Stone Remnants apply an Earth's Mark stack."
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_Lore"								"#{DOTA_Tooltip_ability_earth_spirit_magnetize_Lore}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_duration"							"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_damage_per_sec"					"DAMAGE PER SECOND:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_remnant_search_radius"			"REMNANT SEARCH RADIUS:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_remnant_refresh_radius"			"REMNANT EXPLODE RADIUS:"
-"DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_mark_damage_per_sec_per_stack"	"EXTRA DAMAGE PER EARTH'S MARK:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_aghanim_description"				"<font color='#FF7800'>Magnetize becomes auto-castable. When auto-cast is on, exploding remnants pull enemies with Earth's Mark to their location.</font>"
 
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}"
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}\n<font color= '#00FF40'>Requires Aghanim's Scepter.</font>"
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}\n<font color='#FF7800'>Potent Stone:</font> Ignores status resistance and spell absorb."
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Lore"								"#{DOTA_Tooltip_ability_earth_spirit_petrify_Lore}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_duration"							"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_damage"								"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -95,5 +94,5 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8"                    "Unrelenting Mark"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8_Description"		"Skills don't refresh Earth's Mark, but stacks decay one by one instead of all at once."
 
-"DOTA_Tooltip_ability_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"	"+{s:value} Geomagnetic Grip Silence"
-
+"DOTA_Tooltip_ability_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"	"+{s:value}s Geomagnetic Grip Silence"
+"DOTA_Tooltip_ability_special_bonus_imba_earth_spirit_magnetize_unpurgable"					"Magnetize is Unpurgable"

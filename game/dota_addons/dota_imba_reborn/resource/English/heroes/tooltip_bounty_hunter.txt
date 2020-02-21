@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_pull_duration"			"PULL DURATION:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_stun_duration"	"SCEPTER STUN DURATION:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_cast_range"		"SCEPTER CAST RANGE:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a 1 second delay, and increases stun duration."
+"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a %scepter_throw_delay% second delay, and increases cast range and stun duration."
 
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned"								"Shuriken Toss"
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned_Description"					"Stunned."
@@ -103,5 +103,5 @@
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_6_Description"	"If movement has occured within 1 second, a stack is gaied, adding to Shadow Sprint's bonus movement speed values. Otherwise, stacks are reset."
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_7"				"Inescapable"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_7_Description"	"Jinada's Shadow Jaunt can be cast on Headhunter's contract targets from 3500 range."
-"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_8"				"Track is hidden and unpurgable"
+"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_8"				"Track is Unpurgable"
 "Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_9"				"+90 Jinada Gold Steal"

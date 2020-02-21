@@ -226,7 +226,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"20"
+				"duration"				"40"
 			}
 			"02"
 			{
@@ -348,7 +348,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"50 75 100"				
+				"bonus_health_regen"	"50 85 120"				
 			}
 			"06"
 			{
@@ -358,7 +358,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"40 50 60"
+				"bonus_movespeed"		"40 60 80"
 			}		
 			"08"
 			{

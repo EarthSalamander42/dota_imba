@@ -89,6 +89,23 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	-- If caster has scepter, launch another one after a second delay
 	if scepter then
 		Timers:CreateTimer(scepter_throw_delay, function()
+			-- #4 Talent: Jinada is applied to the shuriken if ready
+			shuriken_crit = false
+			if caster:HasTalent("special_bonus_imba_bounty_hunter_4") then
+				local jinada_ability = caster:FindAbilityByName("imba_bounty_hunter_jinada")
+
+				if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
+					-- Jinada goes on cooldown
+					jinada_ability:UseResources(false, false, true)
+
+					-- Consumes Jinada's buff
+					caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
+
+					-- Set the shuriken to be a critical shuriken
+					shuriken_crit = true
+				end
+			end
+		
 			caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 
 			shuriken_projectile = {
@@ -1240,14 +1257,14 @@ function modifier_imba_track_debuff_mark:RemoveOnDeath()
 	return false
 end
 
-function modifier_imba_track_debuff_mark:IsHidden()
-	-- #8 Talent - Hidden track
-	if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then
-		return true
-	end
+-- function modifier_imba_track_debuff_mark:IsHidden()
+	-- -- #8 Talent - Hidden track
+	-- if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then
+		-- return true
+	-- end
 
-	return false
-end
+	-- return false
+-- end
 
 function modifier_imba_track_debuff_mark:DeclareFunctions()
 	return {

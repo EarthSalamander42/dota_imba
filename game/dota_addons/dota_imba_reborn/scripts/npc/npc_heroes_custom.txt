@@ -434,7 +434,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 
-		"Ability1"					"imba_dazzle_poison_touch"
+		"Ability1"					"imba_dazzle_poison_touch_707"
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"                  "imba_dazzle_ressurection"
@@ -446,15 +446,20 @@
 		"Ability12"					"special_bonus_cast_range_200"
 		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
 		"Ability14"					"special_bonus_movement_speed_40"
-		"Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
-		"Ability16"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
-		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
+		"Ability15"					"special_bonus_imba_dazzle_poison_touch_damage"
+		"Ability16"					"special_bonus_imba_dazzle_poison_touch_slow"
+		"Ability17"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
+		
+		// Removed Abilities
+		// "Ability1"					"imba_dazzle_poison_touch"
 		
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage 
 		// "Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
 		// "Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		// "Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
 		// "Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
+		// "Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
 	}
 
 	//=================================================================================================================
@@ -604,13 +609,14 @@
 		"Ability13"					"special_bonus_armor_8"
 		"Ability14"					"special_bonus_spell_amplify_15"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
-		"Ability16"					"special_bonus_imba_earth_spirit_7"
+		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
 		// "Ability13"					"special_bonus_imba_earth_spirit_4"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
+		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
 		// "Ability17"					"special_bonus_imba_earth_spirit_8"
 	}
 
@@ -632,14 +638,15 @@
 
 		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
-		"Ability12"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
-		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
+		"Ability12"					"special_bonus_magic_resistance_15"
+		"Ability13"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
 		"Ability17"					"special_bonus_lifesteal_100"
 		
 		// Removed Talents
+		//"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity (also disabled in code)
 		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 	}
@@ -1233,8 +1240,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_phantom_assassin_coup_de_grace"
 
-		"Ability10"					"special_bonus_imba_phantom_assassin_1" // "+35 Stifling Dagger damage"
-		"Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
+		"Ability10"					"special_bonus_hp_250"
+		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_lifesteal_15"
 		"Ability13"					"special_bonus_cleave_25"
 		"Ability14"					"special_bonus_corruption_4"
@@ -1243,6 +1250,8 @@
 		"Ability17"					"special_bonus_imba_phantom_assassin_3" // "+X Stifling Dagger thrown"
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_imba_phantom_assassin_1" // "+35 Stifling Dagger damage"
+		// "Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
 		// "Ability13"				""special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
 		// "Ability13"				"special_bonus_imba_phantom_assassin_4" // "+5% Phantom Strike bonus crit chance"
 		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
@@ -1832,13 +1841,14 @@
 		"Ability13"					"special_bonus_imba_venomancer_poison_sting_slow"
 		"Ability14"					"special_bonus_imba_venomancer_6"
 		"Ability15"					"special_bonus_spell_lifesteal_15"
-		"Ability16"					"special_bonus_imba_venomancer_7"
+		"Ability16"					"special_bonus_imba_venomancer_poison_nova_radius"
 		"Ability17"					"special_bonus_imba_venomancer_plague_ward_upgrade"
 		
 		// Removed Talents
 		// "Ability12"					"special_bonus_imba_venomancer_3" // "+{s:value}% Compound Toxicity Magic Resistance Reduction"
 		// "Ability13"					"special_bonus_imba_venomancer_2" // "Poison Sting adds +1% additional slow per stack" (disabled in script too so you can't use this)
 		// "Ability14"					"special_bonus_imba_venomancer_5" // "+150% Scourge/Plague Ward health/damage"
+		// "Ability16"					"special_bonus_imba_venomancer_7" // "Venomous Gale 360° AOE"
 		// "Ability17"					"special_bonus_imba_venomancer_8" // "Scourge Ward has its own stacking Poison Sting"
 	}
 

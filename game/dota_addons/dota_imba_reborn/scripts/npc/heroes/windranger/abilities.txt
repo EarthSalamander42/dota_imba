@@ -401,7 +401,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -40 -30"
+				"focusfire_damage_reduction"	"-40 -30 -20"
 				"LinkedSpecialBonus"			"special_bonus_unique_windranger_8"
 			}
 			

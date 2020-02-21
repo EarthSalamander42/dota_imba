@@ -213,7 +213,7 @@ function modifier_imba_dazzle_poison_touch_debuff:OnAbilityFullyCast( keys )
 
 		local originalAbility = self:GetAbility()
 		local originalCaster = originalAbility:GetCaster()
-		if ability:GetCursorTarget() == parent and caster:GetTeamNumber() == parent:GetTeamNumber() and not caster:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff") then
+		if ability:GetCursorTarget() == parent and caster:GetTeamNumber() == parent:GetTeamNumber() and not caster:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff") and keys.ability:GetName() ~= "ability_capture" then
 			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = originalAbility:GetSpecialValueFor("poison_duration")})
 			mod:SetStackCount(self:GetStackCount())
 		end
@@ -271,6 +271,146 @@ function modifier_imba_dazzle_poison_touch_talent_slow:OnTakeDamage( keys )
 		end
 
 		self:SetStackCount(self:GetStackCount() + damage)
+	end
+end
+
+LinkLuaModifier("modifier_imba_dazzle_poison_touch_707", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+imba_dazzle_poison_touch_707			= imba_dazzle_poison_touch_707 or class({})
+modifier_imba_dazzle_poison_touch_707	= modifier_imba_dazzle_poison_touch_707 or class({})
+
+----------------------------------
+-- IMBA_DAZZLE_POISON_TOUCH_707 --
+----------------------------------
+
+function imba_dazzle_poison_touch_707:OnSpellStart()
+	local target = self:GetCursorTarget()
+	
+	if target:TriggerSpellAbsorb(self) then return end
+	
+	-- Helper function in vscripts\internal\util.lua
+	local enemies = FindUnitsInBicycleChain(
+		self:GetCaster():GetTeamNumber(),
+		target:GetAbsOrigin(),
+		self:GetCaster():GetAbsOrigin(),
+		self:GetCaster():GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("end_distance") + self:GetCaster():GetCastRangeBonus())),
+		self:GetSpecialValueFor("start_radius"),
+		self:GetSpecialValueFor("end_radius"),
+		nil,
+		self:GetAbilityTargetTeam(),
+		self:GetAbilityTargetType(),
+		self:GetAbilityTargetFlags(),
+		FIND_CLOSEST,
+		false
+	)
+	
+	self:GetCaster():EmitSound("Hero_Dazzle.Poison_Cast")
+	
+	for _, enemy in pairs(enemies) do
+		if _ <= self:GetSpecialValueFor("targets") then
+			ProjectileManager:CreateTrackingProjectile({
+				EffectName			= "particles/units/heroes/hero_dazzle/dazzle_poison_touch.vpcf",
+				Ability				= self,
+				Source				= self:GetCaster():GetAbsOrigin(),
+				vSourceLoc			= self:GetCaster():GetAbsOrigin(),
+				Target				= enemy,
+				iMoveSpeed			= self:GetSpecialValueFor("projectile_speed"),
+				flExpireTime		= nil,
+				bDodgeable			= true,
+				bIsAttack			= false,
+				bReplaceExisting	= false,
+				iSourceAttachment	= nil,
+				bDrawsOnMinimap		= nil,
+				bVisibleToEnemies	= true,
+				bProvidesVision		= false,
+				iVisionRadius		= nil,
+				iVisionTeamNumber	= nil,
+				ExtraData			= {}
+			})
+		else
+			break
+		end
+	end
+end
+
+function imba_dazzle_poison_touch_707:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if target and not target:IsMagicImmune() then
+		target:EmitSound("Hero_Dazzle.Poison_Touch")
+		
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_707", {duration = self:GetSpecialValueFor("duration")})
+	end
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_DAZZLE_POISON_TOUCH_707 --
+-------------------------------------------
+
+function modifier_imba_dazzle_poison_touch_707:IgnoreTenacity()	return true end
+function modifier_imba_dazzle_poison_touch_707:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_dazzle_poison_touch_707:GetEffectName()
+	return "particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
+end
+
+function modifier_imba_dazzle_poison_touch_707:GetStatusEffectName()
+	return "particles/status_fx/status_effect_poison_dazzle.vpcf"
+end
+
+function modifier_imba_dazzle_poison_touch_707:OnCreated()
+	if not IsServer() then return end
+	
+	self.slow					= self:GetAbility():GetTalentSpecialValueFor("slow")
+	self.damage					= self:GetAbility():GetTalentSpecialValueFor("damage")
+	self.poison_stack_damage	= self:GetAbility():GetSpecialValueFor("poison_stack_damage")
+	
+	self.damage_type	= self:GetAbility():GetAbilityDamageType()
+	
+	self:SetStackCount((self.slow * (1 - self:GetParent():GetStatusResistance())) * 100)
+	
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_dazzle_poison_touch_707:OnRefresh()
+	if not IsServer() then return end
+	
+	self.slow					= self:GetAbility():GetTalentSpecialValueFor("slow")
+	self.damage					= math.max(self.damage, self:GetAbility():GetTalentSpecialValueFor("damage"))
+	self.poison_stack_damage	= self:GetAbility():GetSpecialValueFor("poison_stack_damage")
+	
+	self.damage_type	= self:GetAbility():GetAbilityDamageType()
+	
+	self:SetStackCount((self.slow * (1 - self:GetParent():GetStatusResistance())) * 100)
+end
+
+function modifier_imba_dazzle_poison_touch_707:OnIntervalThink()
+	ApplyDamage({
+		victim 			= self:GetParent(),
+		damage 			= self.damage,
+		damage_type		= self.damage_type,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	})
+	
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, self:GetParent(), self.damage, nil)
+end
+
+function modifier_imba_dazzle_poison_touch_707:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+function modifier_imba_dazzle_poison_touch_707:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount() * 0.01
+end
+
+function modifier_imba_dazzle_poison_touch_707:OnAttackLanded(keys)
+	if keys.target == self:GetParent() and ((keys.attacker.GetPlayerID and keys.attacker:GetPlayerID()) or keys.attacker:IsRoshan()) then
+		self.damage	= self.damage + self.poison_stack_damage
+		
+		self:SetDuration(self:GetDuration(), true)
 	end
 end
 
@@ -391,7 +531,7 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			parent:Heal(self.shallowDamage, caster)
+			-- parent:Heal(self.shallowDamage, caster)
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
@@ -602,7 +742,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 
-							parent:Heal(self.shallowDamage, parent)
+							-- parent:Heal(self.shallowDamage, parent)
 							if parent:HasTalent("special_bonus_imba_dazzle_3") then
 								self.targetsHit = {}
 								table.insert(self.targetsHit, parent:entindex(), true)
@@ -699,13 +839,13 @@ function modifier_imba_dazzle_nothl_protection:OnRemoved()
 	end
 end
 
-function modifier_imba_dazzle_nothl_protection:OnDestroy()
-	if IsServer() then
-		if self.isActive and self:GetParent():IsAlive() then
-			self:GetParent():Heal(self.shallowDamage, self:GetParent())
-		end
-	end
-end
+-- function modifier_imba_dazzle_nothl_protection:OnDestroy()
+	-- if IsServer() then
+		-- if self.isActive and self:GetParent():IsAlive() then
+			-- self:GetParent():Heal(self.shallowDamage, self:GetParent())
+		-- end
+	-- end
+-- end
 
 -- For the talent that releases a shadow wave
 function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTarget, heal)
@@ -902,7 +1042,7 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnDestroy()
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			parent:Heal(self.shallowDamage, self:GetAbility():GetCaster())
+			-- parent:Heal(self.shallowDamage, self:GetAbility():GetCaster())
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, parent, self.shallowDamage, nil)
 			if self.shallowDamageInstances > 0 then
 				local modifier = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
@@ -1868,7 +2008,7 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 		local unit = params.unit
 
 		-- If this was the caster casting Refresher, refresh charges
-		if unit == self:GetCaster() and not ability:IsItem() then
+		if unit == self:GetCaster() and not ability:IsItem() and params.ability:GetName() ~= "ability_capture" and params.ability:GetCooldown(params.ability:GetLevel()) > 0 then
 			local behavior = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 			if self:GetCaster():HasTalent("special_bonus_imba_dazzle_7") then
 				behavior = behavior + DOTA_UNIT_TARGET_BUILDING

@@ -4684,3 +4684,38 @@ function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStack
 	return tenacity
 end
 
+------------------------------------
+-- IMBA_TOWER_SECONDARY_RESISTANCE --
+-------------------------------------
+
+LinkLuaModifier("modifier_imba_tower_secondary_resistance", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+
+imba_tower_secondary_resistance				= imba_tower_secondary_resistance or class({})
+modifier_imba_tower_secondary_resistance	= modifier_imba_tower_secondary_resistance or class({})
+
+function imba_tower_secondary_resistance:GetIntrinsicModifierName()
+	return "modifier_imba_tower_secondary_resistance"
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_TOWER_SECONDARY_RESISTANCE --
+----------------------------------------------
+
+function modifier_imba_tower_secondary_resistance:IsHidden()	return true end
+
+function modifier_imba_tower_secondary_resistance:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
+end
+
+function modifier_imba_tower_secondary_resistance:GetModifierMagicalResistanceBonus()
+	return self:GetAbility():GetSpecialValueFor("magic_resistance")
+end
+
+function modifier_imba_tower_secondary_resistance:GetModifierPhysical_ConstantBlock(keys)
+	if keys.attacker:IsCreep() and keys.attacker.GetPlayerOwner and keys.attacker:GetPlayerOwner() then
+		return self:GetAbility():GetSpecialValueFor("damage_block")
+	end
+end

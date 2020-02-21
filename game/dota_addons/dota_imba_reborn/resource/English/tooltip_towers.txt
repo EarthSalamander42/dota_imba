@@ -1,4 +1,4 @@
 // Multishot Ability
 "dota_tooltip_ability_imba_tower_multishot"						"Multishot"
-"dota_tooltip_ability_imba_tower_multishot_description"			"Allows the tower to hit multiple units with each attacks."
+"dota_tooltip_ability_imba_tower_multishot_description"			"Allows the tower to hit multiple units with each attack. Only targets player-controlled creeps, prioritizing closer targets."
 "dota_tooltip_ability_imba_tower_multishot_arrow_count"			"TARGET COUNT:"

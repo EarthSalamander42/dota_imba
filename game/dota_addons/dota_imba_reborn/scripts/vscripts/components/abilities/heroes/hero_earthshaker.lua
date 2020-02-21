@@ -1049,17 +1049,40 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_unique_earthshaker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earthshaker_bonus_magic_resistance", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_unique_earthshaker			= class({})
+modifier_special_bonus_imba_earthshaker_bonus_magic_resistance	= modifier_special_bonus_imba_earthshaker_bonus_magic_resistance or class({})
 
 function modifier_special_bonus_unique_earthshaker:IsHidden() 		return true end
 function modifier_special_bonus_unique_earthshaker:IsPurgable() 	return false end
 function modifier_special_bonus_unique_earthshaker:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:IsHidden() 		return true end
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:IsPurgable() 	return false end
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:OnCreated()
+	self.magic_resistance = self:GetParent():FindTalentValue("special_bonus_imba_earthshaker_bonus_magic_resistance")
+end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:DeclareFunctions()
+    return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:GetModifierMagicalResistanceBonus()
+	return self.magic_resistance
+end
 
 function earthshaker_enchant_totem_lua:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_unique_earthshaker") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_earthshaker") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_earthshaker"), "modifier_special_bonus_unique_earthshaker", {})
+	end
+	
+	-- Doesn't matter where we attach the bonus magic resistance talent to but it should be attached to SOMETHING
+	if self:GetCaster():HasTalent("special_bonus_imba_earthshaker_bonus_magic_resistance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_earthshaker_bonus_magic_resistance") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_earthshaker_bonus_magic_resistance"), "modifier_special_bonus_imba_earthshaker_bonus_magic_resistance", {})
 	end
 end

@@ -658,6 +658,7 @@ function modifier_imba_medusa_mystic_snake_tracker:OnCreated()
 	self.myotoxin_stack_aspd	= self:GetAbility():GetSpecialValueFor("myotoxin_stack_aspd")
 	self.myotoxin_base_cast		= self:GetAbility():GetSpecialValueFor("myotoxin_base_cast")
 	self.myotoxin_stack_cast	= self:GetAbility():GetSpecialValueFor("myotoxin_stack_cast")
+	self.myotoxin_max_stacks	= self:GetAbility():GetSpecialValueFor("myotoxin_max_stacks")
 
 	if not IsServer() then return end
 
@@ -674,13 +675,14 @@ function modifier_imba_medusa_mystic_snake_tracker:DeclareFunctions()
     return decFuncs
 end
 
+-- IMBAfication: Myotoxin
 function modifier_imba_medusa_mystic_snake_tracker:OnTakeDamage(keys)
-	if keys.damage > 0 then
+	if keys.damage > 0 and self:GetStackCount() < self.myotoxin_max_stacks then
 		if keys.attacker == self:GetParent() then
-			self:SetStackCount(self:GetStackCount() + self.myotoxin_stack_deal)
+			self:SetStackCount(math.min(self:GetStackCount() + self.myotoxin_stack_deal), self.myotoxin_max_stacks)
 			self:SetDuration(self:GetRemainingTime() + self.myotoxin_duration_inc, true)
 		elseif keys.unit == self:GetParent() then
-			self:SetStackCount(self:GetStackCount() + self.myotoxin_stack_take)
+			self:SetStackCount(math.min(self:GetStackCount() + self.myotoxin_stack_take), self.myotoxin_max_stacks)
 			self:SetDuration(self:GetRemainingTime() + self.myotoxin_duration_inc, true)
 		end
 	end

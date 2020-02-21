@@ -214,6 +214,21 @@ end
 function modifier_imba_form_change:IsHidden()			return self:GetRemainingTime() <= 0 and self:GetDuration() ~= -1 end
 function modifier_imba_form_change:DestroyOnExpire()	return false end
 
+function modifier_imba_form_change:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetParent():IsIllusion() and self:GetParent():GetPlayerOwner():GetAssignedHero() and self:GetParent():GetPlayerOwner():GetAssignedHero():HasModifier("modifier_imba_form_change") then
+		self.initialized = true
+		
+		if self:GetParent():GetPlayerOwner():GetAssignedHero():FindModifierByName("modifier_imba_form_change"):GetAbility().form == "old" then
+			self:GetAbility():OnChannelFinish(false)
+		end
+		
+		self:SetDuration(math.max(self:GetParent():GetPlayerOwner():GetAssignedHero():FindModifierByName("modifier_imba_form_change"):GetRemainingTime(), 0), true)
+		self:StartIntervalThink(math.max(self:GetParent():GetPlayerOwner():GetAssignedHero():FindModifierByName("modifier_imba_form_change"):GetRemainingTime(), 0))
+	end
+end
+
 function modifier_imba_form_change:OnIntervalThink()
 	if self:GetAbility() then
 		self:GetAbility():SetHidden(true)

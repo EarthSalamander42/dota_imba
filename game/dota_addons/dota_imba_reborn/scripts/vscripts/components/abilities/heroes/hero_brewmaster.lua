@@ -674,7 +674,7 @@ function imba_brewmaster_primal_split:OnSpellStart()
 			bDodgeable			= false,
 			bIsAttack			= false,
 			bReplaceExisting	= false,
-			iSourceAttachment	= nil,
+			iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
 			bDrawsOnMinimap		= nil,
 			bVisibleToEnemies	= true,
 			bProvidesVision		= false,
