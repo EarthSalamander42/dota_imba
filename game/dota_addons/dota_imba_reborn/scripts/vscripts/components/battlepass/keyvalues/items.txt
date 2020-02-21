@@ -993,6 +993,25 @@
 		}
 	}
 
+	////////////////////////////////////////////////////////
+	// WEARABLES
+	////////////////////////////////////////////////////////
+
+	"67" // 
+	{
+		"item_id"					"20844"
+		"item_type"					"bundle"
+		"item_unlock_level"			"100"
+//		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"wearables"
+		{
+			"1"					"6914" // Tempest Helm of the Thundergod
+			"2"					"8692" // Thundergod's Bare Arms
+			"3"					"8693" // Thundergod's Bare Chest
+		}
+	}
+
 //	"2" // Antipode Couriers (Radiant)
 //	{
 //		"item_id"					"10888"
