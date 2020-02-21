@@ -6,7 +6,9 @@
 
 "BattlepassHeroes"
 {
-	// BLINK EFFECT
+	////////////////////////////////////////////////////////
+	// BLINK EFFECTS
+	////////////////////////////////////////////////////////
 
 	"1" // 
 	{
@@ -205,13 +207,15 @@
 		}
 	}
 
-	// BOTTLE EFFECT
+	////////////////////////////////////////////////////////
+	// BOTTLE EFFECTS
+	////////////////////////////////////////////////////////
 
 	"15" // 
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"1"
+		"item_unlock_level"			"110"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
@@ -224,7 +228,7 @@
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"110"
+		"item_unlock_level"			"210"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
@@ -237,7 +241,7 @@
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"210"
+		"item_unlock_level"			"310"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
@@ -250,7 +254,7 @@
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"310"
+		"item_unlock_level"			"410"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
@@ -263,7 +267,7 @@
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"410"
+		"item_unlock_level"			"510"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
@@ -276,13 +280,618 @@
 	{
 		"item_id"					"16315"
 		"item_type"					"bottle"
-		"item_unlock_level"			"510"
+		"item_unlock_level"			"610"
 		"item_rarity"				"mythical"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"particles"
 		{
 			"effect1"					"particles/econ/events/ti9/bottle_ti9.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// FORCE STAFF EFFECTS
+	////////////////////////////////////////////////////////
+
+	"21" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"120"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+		}
+	}
+	"22" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"240"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/force_staff_ti7.vpcf"
+		}
+	}
+	"23" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"360"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+		}
+	}
+	"24" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"480"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/force_staff_ti6.vpcf"
+		}
+	}
+	"25" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"600"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/force_staff_ti8.vpcf"
+		}
+	}
+	"26" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"force_staff"
+		"item_unlock_level"			"720"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/force_staff_ti9.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// FOUNTAIN EFFECTS
+	////////////////////////////////////////////////////////
+
+	"27" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"1"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+		}
+	}
+
+	"28" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"35"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+		}
+	}
+
+	"29" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"70"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+		}
+	}
+
+	"30" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"105"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+		}
+	}
+
+	"31" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"140"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+		}
+	}
+
+	"32" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"175"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+		}
+	}
+
+	"33" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"210"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+		}
+	}
+
+	"34" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"245"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+		}
+	}
+
+	"35" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"280"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+		}
+	}
+
+	"36" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"315"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+		}
+	}
+
+	"37" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"350"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
+		}
+	}
+
+	"38" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"385"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+		}
+	}
+
+	"39" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"420"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+		}
+	}
+
+	"40" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"455"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+		}
+	}
+
+	"41" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"490"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+		}
+	}
+
+	"42" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"525"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+		}
+	}
+
+	"43" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"560"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+		}
+	}
+
+	"44" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"595"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+		}
+	}
+
+	"45" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"630"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9.vpcf"
+		}
+	}
+
+	"46" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"665"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
+		}
+	}
+
+	"47" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"fountain"
+		"item_unlock_level"			"700"
+		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// MAELSTROM / MJOLLNIR / JARNBJORN EFFECTS
+	////////////////////////////////////////////////////////
+
+	"48" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"maelstrom"
+		"item_unlock_level"			"90"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/items2_fx/jarnbjorn_shield.vpcf"
+			"effect2"					"particles/item/jarnbjorn/static_lightning_bolt.vpcf"
+			"effect3"					"particles/items_fx/chain_lightning_jarnbjorn.vpcf"
+		}
+	}
+
+	"49" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"maelstrom"
+		"item_unlock_level"			"270"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/mjollnir_shield_ti6.vpcf"
+			"effect2"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
+			"effect3"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
+		}
+	}
+
+	"50" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"maelstrom"
+		"item_unlock_level"			"450"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/mjollnir_shield_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
+			"effect3"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
+		}
+	}
+
+	"51" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"maelstrom"
+		"item_unlock_level"			"630"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/mjollnir_shield_ti8.vpcf"
+			"effect2"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
+			"effect3"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
+		}
+	}
+
+	"52" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"maelstrom"
+		"item_unlock_level"			"810"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
+			"effect2"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+			"effect3"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// MEKANSM / GUARDIAN GREAVES EFFECTS
+	////////////////////////////////////////////////////////
+
+	"53" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"mekansm"
+		"item_unlock_level"			"120"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/mekanism_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+			"effect3"					"particles/items3_fx/warmage1.vpcf"
+			"effect4"					"particles/items3_fx/warmage1_recipient.vpcf"
+			"effect5"					"particles/items3_fx/warmage1_mana_nonhero.vpcf"
+		}
+	}
+
+	"54" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"mekansm"
+		"item_unlock_level"			"360"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/mekanism_ti6.vpcf"
+			"effect2"					"particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+			"effect3"					"particles/items3_fx/warmage2.vpcf"
+			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
+			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+		}
+	}
+
+	"55" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"mekansm"
+		"item_unlock_level"			"600"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/mekanism_ti8.vpcf"
+			"effect2"					"particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
+			"effect3"					"particles/items3_fx/warmage2.vpcf"
+			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
+			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+		}
+	}
+
+	"56" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"mekansm"
+		"item_unlock_level"			"840"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/mekanism_ti9.vpcf"
+			"effect2"					"particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
+			"effect3"					"particles/items3_fx/warmage2.vpcf"
+			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
+			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+		}
+	}
+
+	////////////////////////////////////////////////////////
+	// RADIANCE EFFECTS
+	////////////////////////////////////////////////////////
+
+	"57" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"radiance"
+		"item_unlock_level"			"150"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/radiance_ti7.vpcf"
+		}
+	}
+
+	"58" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"radiance"
+		"item_unlock_level"			"450"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+			"effect2"					"particles/econ/events/ti6/radiance_ti6.vpcf"
+		}
+	}
+
+	"59" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"radiance"
+		"item_unlock_level"			"750"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/radiance_owner_ti8.vpcf"
+			"effect2"					"particles/econ/events/ti8/radiance_ti8.vpcf"
+		}
+	}
+
+	"60" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"radiance"
+		"item_unlock_level"			"1050"
+		"item_rarity"				"legendary"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/radiance_owner_ti9.vpcf"
+			"effect2"					"particles/econ/events/ti9/radiance_ti9.vpcf"
 		}
 	}
 

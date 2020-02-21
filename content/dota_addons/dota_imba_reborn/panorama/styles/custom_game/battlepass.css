@@ -1303,6 +1303,7 @@
 	width: 100%;
 	height: 520px;
 	flow-children: down;
+	opacity-mask: url("s2r://panorama/images/masks/softedge_horizontal_png.vtex");
 }
 
 #PlayerSteamAvatar {
