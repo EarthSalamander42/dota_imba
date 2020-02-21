@@ -803,19 +803,43 @@ function Battlepass:GetHeroEffect(hero)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["zuus_arcana"] then
-				Wearable:_WearProp(hero, "6914", "head")
-				Wearable:_WearProp(hero, "8692", "arms")
-				Wearable:_WearProp(hero, "8693", "back")
+				-- temporary
 
-				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
-				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start.vpcf"
-				hero.thundergods_wrath_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath.vpcf"
-				hero.thundergods_wrath_pre_sound = "Hero_Zuus.GodsWrath.PreCast.Arcana"
+				-- todo: http request to get which item_id is equipped for the hero
+				local item_id = 67
 
-				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
-				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
-				hero.blink_icon = "zuus"
-				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
+				for k, v in pairs(ItemsGame:GetItemWearables(item_id)) do
+					Wearable:_WearProp(hero, k, v)
+
+--					print(ItemsGame.kv["items"][k])
+					if ItemsGame.kv["items"][k] and ItemsGame.kv["items"][k]["visuals"] then
+--						print(ItemsGame.kv["items"][k]["visuals"])
+
+						for i, j in pairs(ItemsGame.kv["items"][k]["visuals"]) do
+							if not string.find(i, "skip") then
+								if j.type == "particle" then
+									CScriptParticleManager.PARTICLES_OVERRIDE[j.asset] = j.modifier
+								elseif j.type == "sound" then
+									local sound_table = {}
+									sound_table.asset = j.asset
+									sound_table.modifier = j.modifier
+									sound_table.parent = hero
+
+									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+								end
+							end
+						end
+					end
+				end
+
+				print(CScriptParticleManager.PARTICLES_OVERRIDE)
+				print("---------------------------------")
+				print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+
+--				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
+--				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
+--				hero.blink_icon = "zuus"
+--				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		end

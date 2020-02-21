@@ -184,6 +184,14 @@ function ItemsGame:GetItemType(item_id)
 	return GetItemInfo(item_id, "item_type", "nope")
 end
 
+function ItemsGame:GetItemWearables(item_id)
+	return GetItemInfo(item_id, "wearables", {})
+end
+
+function ItemsGame:GetItemSlot(item_id)
+	return GetItemInfo(item_id, "item_slot")
+end
+
 function ItemsGame:GetItemModel(item_id)
 	if type(item_id) ~= "string" then item_id = tostring(item_id) end
 

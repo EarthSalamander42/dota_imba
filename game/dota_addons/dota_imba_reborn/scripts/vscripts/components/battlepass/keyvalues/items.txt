@@ -1006,9 +1006,9 @@
 
 		"wearables"
 		{
-			"1"					"6914" // Tempest Helm of the Thundergod
-			"2"					"8692" // Thundergod's Bare Arms
-			"3"					"8693" // Thundergod's Bare Chest
+			"6914"			"head" // Tempest Helm of the Thundergod
+			"8692"			"arms" // Thundergod's Bare Arms
+			"8693"			"back" // Thundergod's Bare Chest
 		}
 	}
 

@@ -799,10 +799,16 @@ function CDOTA_BaseNPC:GetIllusionBounty()
 	return self:GetLevel() * 2
 end
 
+CScriptParticleManager.PARTICLES_OVERRIDE = {}
+
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent)
 --	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+
+	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
+		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	end
 
 	-- call the original function
 	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
@@ -810,13 +816,43 @@ CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachTyp
 	return response
 end
 
+-- Call custom functions whenever CreateParticleForTeam is being called anywhere
+original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
+CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+
+	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
+		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	end
+
+	-- call the original function
+	local response = original_CreateParticleForTeam(self, sParticleName, iAttachType, hParent, iTeamNumber)
+
+	return response
+end
+
+-- Call custom functions whenever CreateParticleForPlayer is being called anywhere
+original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlayer
+CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+
+	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
+		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	end
+
+	-- call the original function
+	local response = original_CreateParticleForPlayer(self, sParticleName, iAttachType, hParent, hPlayer)
+
+	return response
+end
+
 -- Call custom functions whenever CreateIllusions is being called anywhere
 original_CreateIllusions = CreateIllusions
-CreateIllusions = function(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 --	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
 	-- call the original function
-	local response = original_CreateIllusions(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+	local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
 	for i = 1, #response do
 		local illusion = response[i]
@@ -830,13 +866,37 @@ CreateIllusions = function(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusio
 	return response
 end
 
+CDOTA_BaseNPC.SOUNDS_OVERRIDE = {}
+
 -- Call custom functions whenever EmitSound is being called anywhere
 original_EmitSound = CDOTA_BaseNPC.EmitSound
 CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
 --	print("Create Particle (override):", sSoundName)
 
+	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
+		if v.asset == sSoundName and v.parent == self then
+			sSoundName = v.modifier
+		end
+	end
+
 	-- call the original function
 	local response = original_EmitSound(self, sSoundName)
+
+	return response
+end
+
+original_EmitSoundOn = EmitSoundOn
+EmitSoundOn = function(sSoundName, hParent)
+--	print("Create Particle (override):", sSoundName)
+
+	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
+		if v.asset == sSoundName and v.parent == hParent then
+			sSoundName = v.modifier
+		end
+	end
+
+	-- call the original function
+	local response = original_EmitSoundOn(sSoundName, hParent)
 
 	return response
 end
@@ -861,30 +921,16 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
 	
 	-- Keep the static strings in or else you're going to get potential nils if IMBA BP is disabled
-	local blink_effect		= "particles/items_fx/blink_dagger_start.vpcf"
 	local blink_effect_end	= "particles/items_fx/blink_dagger_end.vpcf"
 	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) then
-		blink_effect		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
-		blink_effect_end	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
-	end
-	
---	print(blink_effect, blink_effect_end, blink_sound)
-
-	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
-	if self.blink_effect or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect) then blink_effect = self.blink_effect end
-	if self.blink_effect_end or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect_end) then blink_effect_end = self.blink_effect_end end
-	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end
-	if bPlaySound == true then EmitSoundOn(blink_sound, self) end
-
---	print(self.blink_effect, self.blink_effect_end, self.blink_sound)
+	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 
 	local blink_pfx
 	if bTeamOnlyParticle == true then
-		blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())
+		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_CUSTOMORIGIN, nil)
+		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
@@ -892,9 +938,9 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	ProjectileManager:ProjectileDodge( self )
 	local blink_end_pfx
 	if bTeamOnlyParticle == true then
-		blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_effect_end, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
+		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber())
 	else
-		blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, self)
+		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self)
 	end
 	ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.NailedIt", self) end
