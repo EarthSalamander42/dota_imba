@@ -1,111 +1,52 @@
 BATTLEPASS_LEVEL_REWARD = {}
 BATTLEPASS_LEVEL_REWARD[2]		= {"vengefulspirit_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[4]		= {"fountain", "common"}
 BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
 BATTLEPASS_LEVEL_REWARD[7]		= {"slark_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[9]		= {"blink", "common"}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[13]		= {"fountain2", "common"}
 BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[16]		= {"force_staff", "common"}
-BATTLEPASS_LEVEL_REWARD[18]		= {"blink2", "common"}
-BATTLEPASS_LEVEL_REWARD[20]		= {"maelstorm", "common"}
-BATTLEPASS_LEVEL_REWARD[22]		= {"fountain3", "common"}
 BATTLEPASS_LEVEL_REWARD[23]		= {"enigma_taunt", "rare"}
-BATTLEPASS_LEVEL_REWARD[27]		= {"blink3", "common"}
 BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[30]		= {"zuus_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[31]		= {"fountain4", "common"}
-BATTLEPASS_LEVEL_REWARD[32]		= {"force_staff2", "common"}
 BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[35]		= {"mekansm", "common"}
-BATTLEPASS_LEVEL_REWARD[36]		= {"blink4", "common"}
 BATTLEPASS_LEVEL_REWARD[38]		= {"lion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
-BATTLEPASS_LEVEL_REWARD[40]		= {"fountain5", "common"}
-BATTLEPASS_LEVEL_REWARD[44]		= {"radiance", "common"}
-BATTLEPASS_LEVEL_REWARD[45]		= {"blink5", "common"}
 BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[48]		= {"force_staff3", "common"}
-BATTLEPASS_LEVEL_REWARD[49]		= {"fountain6", "common"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
-BATTLEPASS_LEVEL_REWARD[51]		= {"maelstorm2", "common"}
 BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[54]		= {"blink6", "common"}
 BATTLEPASS_LEVEL_REWARD[55]		= {"lina_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[58]		= {"fountain7", "common"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[63]		= {"blink7", "common"}
-BATTLEPASS_LEVEL_REWARD[64]		= {"force_staff4", "common"}
 BATTLEPASS_LEVEL_REWARD[65]		= {"juggernaut_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[67]		= {"fountain8", "common"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[70]		= {"mekansm2", "common"}
 BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
-BATTLEPASS_LEVEL_REWARD[72]		= {"blink8", "common"}
 BATTLEPASS_LEVEL_REWARD[75]		= {"pudge_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[76]		= {"fountain9", "common"}
-BATTLEPASS_LEVEL_REWARD[80]		= {"force_staff5", "common"}
-BATTLEPASS_LEVEL_REWARD[81]		= {"blink9", "common"}
-BATTLEPASS_LEVEL_REWARD[82]		= {"maelstorm3", "common"}
 BATTLEPASS_LEVEL_REWARD[84]		= {"pangolier_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[85]		= {"fountain10", "common"}
-BATTLEPASS_LEVEL_REWARD[88]		= {"radiance2", "common"}
-BATTLEPASS_LEVEL_REWARD[90]		= {"blink10", "common"}
-BATTLEPASS_LEVEL_REWARD[94]		= {"fountain11", "common"}
 BATTLEPASS_LEVEL_REWARD[95]		= {"furion_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[96]		= {"force_staff6", "common"}
 BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[99]		= {"blink11", "common"}
-BATTLEPASS_LEVEL_REWARD[100]	= {"shiva", "common"}
-BATTLEPASS_LEVEL_REWARD[103]	= {"fountain12", "common"}
-BATTLEPASS_LEVEL_REWARD[105]	= {"mekansm3", "common"}
 BATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[108]	= {"blink12", "common"}
 BATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[112]	= {"fountain13", "common"}
-BATTLEPASS_LEVEL_REWARD[113]	= {"maelstorm4", "common"}
 BATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
-BATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
-BATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
 BATTLEPASS_LEVEL_REWARD[125]	= {"juggernaut_arcana2", "arcana"}
-BATTLEPASS_LEVEL_REWARD[126]	= {"blink14", "common"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
-BATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[135]	= {"phantom_assassin_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
-BATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
-BATTLEPASS_LEVEL_REWARD[144]	= {"maelstorm5", "common"}
 BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[146]	= {"earthshaker_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
-BATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
 BATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[157]	= {"fountain18", "common"}
 BATTLEPASS_LEVEL_REWARD[165]	= {"earthshaker_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[166]	= {"fountain19", "common"}
 BATTLEPASS_LEVEL_REWARD[170]	= {"enigma_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
-BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
 BATTLEPASS_LEVEL_REWARD[190]	= {"tiny_immortal", "immortal"}
 if IsInToolsMode() then
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
 	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
 end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
-BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
 BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
@@ -151,17 +92,6 @@ function Battlepass:Init()
 	-- used to add a hero icon in BP reward windows
 	CustomNetTables:SetTableValue("battlepass", "hero_rewards", BattlepassHeroes)
 
-	BattlepassItems = {}
-	BattlepassItems["blink"] = {}
-	BattlepassItems["bottle"] = {}
-	BattlepassItems["force_staff"] = {}
-	BattlepassItems["fountain"] = {}
-	BattlepassItems["maelstorm"] = {}
-	BattlepassItems["mekansm"] = {}
-	BattlepassItems["radiance"] = {}
-	BattlepassItems["sheepstick"] = {}
-	BattlepassItems["shiva"] = {}
-
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
 		local required_level = k
 		local reward_name = v[1]
@@ -175,12 +105,6 @@ function Battlepass:Init()
 				BattlepassHeroes[hero_name][reward_name] = required_level
 				break
 			end
-		end
-
---		print(required_level, category, reward_level)
-		if BattlepassItems[category] then
-			if reward_level == "" then reward_level = 1 end
-			table.insert(BattlepassItems[category], tonumber(reward_level), required_level)
 		end
 	end
 end
