@@ -418,6 +418,8 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 		});
 	});
 
+	MiniTabButtonContainer.style.visibility = "visible";
+
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer(), bRewardsDisabled);
 
 	var companions = CustomNetTables.GetTableValue("battlepass", "companions");
@@ -799,18 +801,30 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			var bp_level = BattlepassRewards[i].level;
 			var bp_name = BattlepassRewards[i].name;
 			var bp_rarity = BattlepassRewards[i].rarity;
+			var bp_type = BattlepassRewards[i].type;
 
-			var reward = $.CreatePanel("Panel", reward_row, "");
+			if (!$("#container_level_" + bp_level)) {
+				var level_container = $.CreatePanel("Panel", reward_row, "container_level_" + bp_level);
+				level_container.AddClass("ContainerLevel");
+
+				var reward_level_container = $.CreatePanel("Panel", $("#container_level_" + bp_level), "reward_container_level_" + bp_level);
+				reward_level_container.AddClass("RewardContainerLevel");
+
+				var reward_label_container = $.CreatePanel("Panel", $("#container_level_" + bp_level), "");
+				reward_label_container.AddClass("BattlepassRewardLabelContainer");
+
+				var reward_label = $.CreatePanel("Label", reward_label_container, "");
+				reward_label.AddClass("BattlepassRewardLabel");
+				reward_label.text = $.Localize("battlepass_level") + bp_level;
+//				reward_label.AddClass(bp_rarity + "_text");
+			}
+
+			var reward = $.CreatePanel("Panel", $("#reward_container_level_" + bp_level), "");
 			reward.AddClass("BattlepassReward");
 			var reward_icon = $.CreatePanel("Panel", reward, "");
 			reward_icon.style.backgroundImage = 'url("s2r://panorama/images/' + bp_image + '.png")';
 			reward_icon.AddClass("BattlepassRewardIcon");
 			reward_icon.AddClass(bp_rarity + "_border");
-
-			var reward_label = $.CreatePanel("Label", reward, "");
-			reward_label.AddClass("BattlepassRewardLabel");
-			reward_label.text = $.Localize("battlepass_level") + bp_level;
-			reward_label.AddClass(bp_rarity + "_text");
 /*
 			if (battlepass_hero_icon != undefined && battlepass_hero_icon[hero_name]) {
 				var reward_hero_icon = $.CreatePanel("Panel", reward_icon, bp_reward + "_icon");
@@ -822,23 +836,24 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 				if (i <= plyData.Lvl) {
 					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, "");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
-					reward_label.AddClass("unlocked");
+					reward_label.AddClass("unlocked"); 
 
 					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, "");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
-					reward_label_unlocked.text = $.Localize(bp_name);
+					reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 				} else {
 					reward_label.AddClass("locked");
 					reward_icon.AddClass("BattlepassRewardIcon_locked")
+
 					var reward_label_locked = $.CreatePanel("Label", reward_icon, "");
 					reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-					reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize(bp_name);
+					reward_label_locked.text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 				}
 			} else {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, "");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize(bp_name);
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 			}
 		}
 	}

@@ -1,4 +1,14 @@
-"battlepass_blink"						"Nature Blink"
+// Types
+"battlepass_blink"						"Blink"
+"battlepass_bottle"						"Bottle"
+"battlepass_force_staff"				"Force Staff"
+"battlepass_fountain"					"Fountain"
+"battlepass_mekansm"					"Mekansm"
+"battlepass_radiance"					"Radiance"
+"battlepass_sheepstick"					"Scythe of Vyse"
+"battlepass_shiva"						"Shiva"
+
+// "battlepass_blink"						"Nature Blink"
 "battlepass_blink2"						"Light Blue Blink"
 "battlepass_blink3"						"Water Blink"
 "battlepass_blink4"						"Water Blink 2"
@@ -13,33 +23,32 @@
 "battlepass_blink13"					"Overgrown Blink"
 "battlepass_blink14"					"Overgrown Blink 2"
 
-"battlepass_force_staff"				"Nature Force Staff"
+// "battlepass_force_staff"				"Nature Force Staff"
 "battlepass_force_staff2"				"Water Force Staff"
 "battlepass_force_staff3"				"Snow Force Staff"
 "battlepass_force_staff4"				"Red Force Staff"
 "battlepass_force_staff5"				"Emerald Force Staff"
 "battlepass_force_staff6"				"Overgrown Force Staff"
 
-"battlepass_radiance"					"Water Radiance"
+// "battlepass_radiance"					"Water Radiance"
 "battlepass_radiance2"					"Red Radiance"
 "battlepass_radiance3"					"Emerald Radiance"
 "battlepass_radiance4"					"Overgrown Radiance"
 
-"battlepass_sheepstick"					"Blue Pig Sheepstick"
+// "battlepass_sheepstick"					"Blue Pig Sheepstick"
 "battlepass_sheepstick2"				"Bird Sheepstick"
 
-"battlepass_shiva"						"Water Shiva"
+// "battlepass_shiva"						"Water Shiva"
 "battlepass_shiva2"						"Fire Shiva"
-
 "battlepass_shiva3"						"Emerald Shiva"
 "battlepass_shiva4"						"Overgrown Shiva"
 
-"battlepass_mekansm"					"Water Mekansm"
+// "battlepass_mekansm"					"Water Mekansm"
 "battlepass_mekansm2"					"Red Mekansm"
 "battlepass_mekansm3"					"Emerald Mekansm"
 "battlepass_mekansm4"					"Overgrown Mekansm"
 
-"battlepass_fountain"					"Nature Fountain"
+// "battlepass_fountain"					"Nature Fountain"
 "battlepass_fountain2"					"Nature Fountain 2"
 "battlepass_fountain3"					"Nature Fountain 3"
 "battlepass_fountain4"					"Water Fountain"
@@ -61,7 +70,7 @@
 "battlepass_fountain20"					"Overgrown Fountain 2"
 "battlepass_fountain21"					"Overgrown Fountain 3"
 
-"battlepass_bottle"						"Water Bottle"
+// "battlepass_bottle"						"Water Bottle"
 "battlepass_bottle2"					"Purple Bottle"
 "battlepass_bottle3"					"Red Bottle"
 "battlepass_bottle4"					"Gold Bottle"

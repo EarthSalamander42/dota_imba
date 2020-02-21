@@ -6,172 +6,283 @@
 
 "BattlepassHeroes"
 {
+	// BLINK EFFECT
+
 	"1" // 
 	{
 		"item_id"					"16315" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"9"
+		"item_unlock_level"			"1"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-			"end"					"particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+			"effect1"					"particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+			"effect2"					"particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
 		}
 	}
 	"2" // PC Bang Compendium 2015 Blink
 	{
 		"item_id"					"11190"
 		"item_type"					"blink"
-		"item_unlock_level"			"18"
+		"item_unlock_level"			"25"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles" // this is the only item id where this is not required as the script can get the info in vanilla file, but yeah screw it
 		{
-			"start"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-			"end"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+			"effect1"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+			"effect2"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
 		}
 	}
 	"3" // 
 	{
 		"item_id"					"17262" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"27"
+		"item_unlock_level"			"50"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-			"end"					"particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
 		}
 	}
 	"4" // 
 	{
 		"item_id"					"17262" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"36"
+		"item_unlock_level"			"75"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-			"end"					"particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
 		}
 	}
 	"5" // 
 	{
 		"item_id"					"17239" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"45"
+		"item_unlock_level"			"100"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-			"end"					"particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+			"effect1"					"particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+			"effect2"					"particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
 		}
 	}
 	"6" // TI 4 Blink
 	{
 		"item_id"					"16315" // this reward is not in items_game.txt
 		"item_type"					"blink"
-		"item_unlock_level"			"54"
+		"item_unlock_level"			"125"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-			"end"					"particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+			"effect1"					"particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+			"effect2"					"particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
 		}
 	}
 	"7" // 
 	{
 		"item_id"					"17021" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"63"
+		"item_unlock_level"			"150"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-			"end"					"particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
 		}
 	}
 	"8" // 
 	{
 		"item_id"					"17021" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
-		"item_unlock_level"			"72"
+		"item_unlock_level"			"175"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-			"end"					"particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
 		}
 	}
 	"9" // 
 	{
 		"item_id"					"16315" // this reward is not in items_game.txt
 		"item_type"					"blink"
-		"item_unlock_level"			"81"
+		"item_unlock_level"			"200"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-			"end"					"particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+			"effect1"					"particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+			"effect2"					"particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
 		}
 	}
 	"10" // 
 	{
 		"item_id"					"16315"
 		"item_type"					"blink"
-		"item_unlock_level"			"90"
+		"item_unlock_level"			"225"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-			"end"					"particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+			"effect1"					"particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+			"effect2"					"particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
 		}
 	}
 	"11" // 
 	{
 		"item_id"					"17250"
 		"item_type"					"blink"
-		"item_unlock_level"			"99"
+		"item_unlock_level"			"250"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
-			"end"					"particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
+			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
 		}
 	}
 	"12" // 
 	{
 		"item_id"					"17250"
 		"item_type"					"blink"
-		"item_unlock_level"			"108"
+		"item_unlock_level"			"275"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
-			"end"					"particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
+			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
 		}
 	}
 	"13" // 
 	{
 		"item_id"					"16315"
 		"item_type"					"blink"
-		"item_unlock_level"			"117"
+		"item_unlock_level"			"300"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
-			"end"					"particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
+			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
+			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
 		}
 	}
 	"14" // 
 	{
 		"item_id"					"16315"
 		"item_type"					"blink"
-		"item_unlock_level"			"126"
+		"item_unlock_level"			"325"
 		"item_rarity"				"rare"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
 		"particles"
 		{
-			"start"					"particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
-			"end"					"particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
+			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+		}
+	}
+
+	// BOTTLE EFFECT
+
+	"15" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"1"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti4/bottle_ti4.vpcf"
+		}
+	}
+	"16" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"110"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti5/bottle_ti5.vpcf"
+		}
+	}
+	"17" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"210"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti6/bottle_ti6.vpcf"
+		}
+	}
+	"18" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"310"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti7/bottle_ti7.vpcf"
+		}
+	}
+	"19" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"410"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti8/bottle_ti8.vpcf"
+		}
+	}
+	"20" // 
+	{
+		"item_id"					"16315"
+		"item_type"					"bottle"
+		"item_unlock_level"			"510"
+		"item_rarity"				"mythical"
+		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+
+		"particles"
+		{
+			"effect1"					"particles/econ/events/ti9/bottle_ti9.vpcf"
 		}
 	}
 
@@ -181,7 +292,7 @@
 //		"item_cost"					"1500" // poggers cost
 //		"item_name"					"Angelic Recruit" // todo: string in addon_english.txt
 //		"item_rarity"				"mythical" // not required if item rarity is same than vanilla
-//		"item_type"					"courier"
+//		"item_type"					"companion"
 //		"item_team"					"radiant" // radiant or dire
 //		"item_unit_name"			"npc_donator_companion_angelic_recruit"
 //	}
@@ -191,7 +302,7 @@
 //		"item_cost"					"4000" // poggers cost
 //		"item_name"					"Ethereal Flame" // todo: string in addon_english.txt
 //		"item_rarity"				"legendary" // not required if item rarity is same than vanilla
-//		"item_type"					"particle"
+//		"item_type"					"companion particle"
 //		"default_color"
 //		{
 //			"r"		"208"
@@ -205,6 +316,6 @@
 //		"item_cost"					"4000" // poggers cost
 //		"item_name"					"Trail of Burning Doom" // todo: string in addon_english.txt
 //		"item_rarity"				"legendary" // not required if item rarity is same than vanilla
-//		"item_type"					"particle"
+//		"item_type"					"companion particle"
 //	}
 }

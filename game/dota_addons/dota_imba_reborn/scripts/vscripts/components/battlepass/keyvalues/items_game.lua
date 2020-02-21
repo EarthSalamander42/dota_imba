@@ -76,8 +76,6 @@ if BP level is enough to have the new reward!
 	"modifier"		"axe_counter_helix_unleashed"
 	"style"		"0"
 }
-
-
 --]]
 
 ItemsGame = ItemsGame or class({})
@@ -89,6 +87,7 @@ function ItemsGame:Init()
 	ItemsGame.companions = {}
 
 	local count = 1
+	local bp_reward_table = {}
 
 	while ItemsGame.custom_kv[tostring(count)] do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]
@@ -105,12 +104,16 @@ function ItemsGame:Init()
 			reward_table.level = ItemsGame:GetItemUnlockLevel(count)
 			reward_table.name = ItemsGame:GetItemName(count)
 			reward_table.rarity = ItemsGame:GetItemRarity(count)
+			reward_table.type = ItemsGame:GetItemType(count)
 
-			table.insert(ItemsGame.battlepass, count, reward_table)
+			table.insert(bp_reward_table, count, reward_table)
 		end
 
 		count = count + 1
 	end
+
+	-- bubble sort by level
+	ItemsGame.battlepass = BubbleSortByElement(bp_reward_table, "level")
 
 	CustomNetTables:SetTableValue("battlepass", "rewards", {ItemsGame.battlepass})
 	CustomNetTables:SetTableValue("battlepass", "companions", {ItemsGame.companions})
