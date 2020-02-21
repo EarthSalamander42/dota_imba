@@ -830,6 +830,17 @@ CreateIllusions = function(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusio
 	return response
 end
 
+-- Call custom functions whenever EmitSound is being called anywhere
+original_EmitSound = CDOTA_BaseNPC.EmitSound
+CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
+--	print("Create Particle (override):", sSoundName)
+
+	-- call the original function
+	local response = original_EmitSound(self, sSoundName)
+
+	return response
+end
+
 ----------------------------------------------------------------------------------
 -- credits to yahnich for every functions below
 ----------------------------------------------------------------------------------
