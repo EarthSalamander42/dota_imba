@@ -807,11 +807,9 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "8692", "arms")
 				Wearable:_WearProp(hero, "8693", "back")
 
-				hero.static_field_icon = 1
 				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
 				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start.vpcf"
 				hero.thundergods_wrath_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath.vpcf"
-				hero.thundergods_wrath_icon = 1
 				hero.thundergods_wrath_pre_sound = "Hero_Zuus.GodsWrath.PreCast.Arcana"
 
 				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
