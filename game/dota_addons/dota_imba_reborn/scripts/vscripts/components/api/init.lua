@@ -405,11 +405,13 @@ function api:Message(message, _type)
 	end
 
 	local status, err = xpcall(function ()
+--[[
 		api:Request("game-event", nil, nil, "POST", {
 			type = _type,
 			game_id = api.game_id or 0,
 			message = data
 		})
+--]]
 	end , function(err)
 
 		if err == nil then

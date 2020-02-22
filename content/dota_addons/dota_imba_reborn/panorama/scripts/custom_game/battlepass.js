@@ -782,10 +782,10 @@ function SafeToLeave() {
 }
 
 function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
-	$.Msg(BattlepassRewards["1"])
 	if (BattlepassRewards == undefined) return;
 	if (BattlepassRewards["1"] == undefined) return;
 	BattlepassRewards = BattlepassRewards["1"];
+	$.Msg(BattlepassRewards)
 
 	var plyData = CustomNetTables.GetTableValue("battlepass", player);
 	var battlepass_hero_icon = CustomNetTables.GetTableValue("battlepass", "hero_rewards");

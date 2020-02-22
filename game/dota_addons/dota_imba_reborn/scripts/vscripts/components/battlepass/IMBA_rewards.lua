@@ -214,8 +214,20 @@ function Battlepass:GetShivaEffect(ID)
 end
 
 function Battlepass:SetItemEffects(ID)
+	if tostring(PlayerResource:GetSteamID(ID)) == "0" then return end
+
+	local payload = {
+		steamid = tostring(PlayerResource:GetSteamID(ID)),
+		hero = "blink",
+	}
+
+	print("Payload:", payload)
+
 	api:Request("armory", function(data)
 		print(data)
+
+--		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
+	end, failduh(), "GET", payload);
 
 		CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
 			blink = Battlepass:GetBlinkEffect(ID),
@@ -228,12 +240,10 @@ function Battlepass:SetItemEffects(ID)
 			sheepstick = Battlepass:GetSheepstickEffect(ID),
 			shiva = Battlepass:GetShivaEffect(ID),
 		})
+end
 
---		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
-	end, nil, "POST", {
-		steamid = tostring(PlayerResource:GetSteamID(ID)),
-		hero = "blink",
-	});
+function failduh()
+	print("CALLBACK FAIL")
 end
 
 -- todo: use values in items_game.txt instead
