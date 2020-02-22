@@ -812,11 +812,11 @@ end
 
 -- Call custom functions whenever CreateIllusions is being called anywhere
 original_CreateIllusions = CreateIllusions
-CreateIllusions = function(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 --	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
 	-- call the original function
-	local response = original_CreateIllusions(self, hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+	local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
 	for i = 1, #response do
 		local illusion = response[i]
