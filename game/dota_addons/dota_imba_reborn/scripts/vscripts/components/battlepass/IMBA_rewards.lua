@@ -837,14 +837,12 @@ function Battlepass:GetHeroEffect(hero)
 					end
 				end
 
-				print(CScriptParticleManager.PARTICLES_OVERRIDE)
-				print("---------------------------------")
-				print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+--				print(CScriptParticleManager.PARTICLES_OVERRIDE)
+--				print("---------------------------------")
+--				print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
 
---				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
---				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
 --				hero.blink_icon = "zuus"
---				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
+
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		end

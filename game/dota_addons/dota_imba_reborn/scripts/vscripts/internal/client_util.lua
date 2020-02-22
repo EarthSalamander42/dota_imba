@@ -98,7 +98,9 @@ C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
 	-- call the original function
 	local response = original_GetAbilityTextureName(self)
 
---	print("GetAbilityTextureName (override):", response)
+	print("GetAbilityTextureName (override):", response)
+
+	print(self:GetAbilityName())
 
 	return response
 end
