@@ -227,7 +227,7 @@ function Battlepass:SetItemEffects(ID)
 		print(data)
 
 --		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
-	end, failduh(), "GET", payload);
+	end, failduh(), "POST", payload);
 
 		CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
 			blink = Battlepass:GetBlinkEffect(ID),
@@ -841,6 +841,8 @@ function Battlepass:GetHeroEffect(hero)
 									sound_table.parent = hero
 
 									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+								elseif j.type == "ability_icon" then
+									CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
 								end
 							end
 						end
@@ -852,8 +854,6 @@ function Battlepass:GetHeroEffect(hero)
 --				print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
 
 --				hero.blink_icon = "zuus"
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		end
 	end

@@ -529,12 +529,6 @@ function imba_zuus_static_field:GetIntrinsicModifierName()
 	return "modifier_imba_zuus_static_field"
 end
 
-function imba_zuus_static_field:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "zuus_static_field" end
-	return "custom/imba_zuus_static_field_arcana"
-end
-
 ------------------------------------------------------
 --  			Static Field modifier  				--
 ------------------------------------------------------
@@ -1146,12 +1140,6 @@ modifier_imba_zuus_on_nimbus = class({})
 --				Thundergods Wrath  			--
 ----------------------------------------------
 imba_zuus_thundergods_wrath = class({})
-
-function imba_zuus_thundergods_wrath:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "zuus_thundergods_wrath" end
-	return "custom/imba_zuus_thundergods_wrath_arcana"
-end
 
 function imba_zuus_thundergods_wrath:OnAbilityPhaseStart()
 	local sound_name = "Hero_Zuus.GodsWrath.PreCast"
