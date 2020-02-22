@@ -799,47 +799,48 @@ function CDOTA_BaseNPC:GetIllusionBounty()
 	return self:GetLevel() * 2
 end
 
--- Call custom functions whenever CreateParticle is being called anywhere
-original_CreateParticle = CScriptParticleManager.CreateParticle
-CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent)
---	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+-- Commenting out all of these custom functions for now because they're causing mass errors
+-- -- Call custom functions whenever CreateParticle is being called anywhere
+-- original_CreateParticle = CScriptParticleManager.CreateParticle
+-- CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent)
+-- --	print("Create Particle (override):", sParticleName, iAttachType, hParent)
 
-	-- call the original function
-	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
+	-- -- call the original function
+	-- local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
 
-	return response
-end
+	-- return response
+-- end
 
--- Call custom functions whenever CreateIllusions is being called anywhere
-original_CreateIllusions = CreateIllusions
-CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
---	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+-- -- Call custom functions whenever CreateIllusions is being called anywhere
+-- original_CreateIllusions = CreateIllusions
+-- CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+-- --	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
-	-- call the original function
-	local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+	-- -- call the original function
+	-- local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
-	for i = 1, #response do
-		local illusion = response[i]
+	-- for i = 1, #response do
+		-- local illusion = response[i]
 
-		if hModifierKeys.duration and type(hModifierKeys.duration) == "number" then
-			print("Add fail-safe kill target in "..hModifierKeys.duration.." seconds.")
-			illusion:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = hModifierKeys.duration})
-		end
-	end
+		-- if hModifierKeys.duration and type(hModifierKeys.duration) == "number" then
+			-- print("Add fail-safe kill target in "..hModifierKeys.duration.." seconds.")
+			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = hModifierKeys.duration})
+		-- end
+	-- end
 
-	return response
-end
+	-- return response
+-- end
 
--- Call custom functions whenever EmitSound is being called anywhere
-original_EmitSound = CDOTA_BaseNPC.EmitSound
-CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
---	print("Create Particle (override):", sSoundName)
+-- -- Call custom functions whenever EmitSound is being called anywhere
+-- original_EmitSound = CDOTA_BaseNPC.EmitSound
+-- CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
+-- --	print("Create Particle (override):", sSoundName)
 
-	-- call the original function
-	local response = original_EmitSound(self, sSoundName)
+	-- -- call the original function
+	-- local response = original_EmitSound(self, sSoundName)
 
-	return response
-end
+	-- return response
+-- end
 
 ----------------------------------------------------------------------------------
 -- credits to yahnich for every functions below

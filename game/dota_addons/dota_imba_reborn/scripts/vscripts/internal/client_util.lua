@@ -92,13 +92,14 @@ function C_DOTA_BaseNPC:IsInRiver()
 	end
 end
 
--- Call custom functions whenever GetAbilityTextureName is being called anywhere
-original_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
-C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
-	-- call the original function
-	local response = original_GetAbilityTextureName(self)
+-- Commenting out all of these custom functions for now because they're causing mass errors
+-- -- Call custom functions whenever GetAbilityTextureName is being called anywhere
+-- original_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
+-- C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
+	-- -- call the original function
+	-- local response = original_GetAbilityTextureName(self)
 
---	print("GetAbilityTextureName (override):", response)
+-- --	print("GetAbilityTextureName (override):", response)
 
-	return response
-end
+	-- return response
+-- end
