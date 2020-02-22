@@ -8,6 +8,8 @@ end
 
 modifier_imba_tower_multishot = modifier_imba_tower_multishot or class({})
 
+function modifier_imba_tower_multishot:IsHidden()	return true end
+
 function modifier_imba_tower_multishot:DeclareFunctions() return {
 	MODIFIER_EVENT_ON_ATTACK,
 	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
