@@ -803,11 +803,13 @@ CScriptParticleManager.PARTICLES_OVERRIDE = {}
 
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
-CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent)
---	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
+--	print("Create Particle (override):", self, sParticleName, iAttachType, hParent, hCaster)
 
-	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
-		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+			sParticleName = v.modifier
+		end
 	end
 
 	-- call the original function
@@ -818,11 +820,13 @@ end
 
 -- Call custom functions whenever CreateParticleForTeam is being called anywhere
 original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
-CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber)
---	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
 
-	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
-		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+			sParticleName = v.modifier
+		end
 	end
 
 	-- call the original function
@@ -833,11 +837,13 @@ end
 
 -- Call custom functions whenever CreateParticleForPlayer is being called anywhere
 original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlayer
-CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer)
---	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer, hCaster)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent, hPlayer, hCaster)
 
-	if CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName] then
-		sParticleName = CScriptParticleManager.PARTICLES_OVERRIDE[sParticleName]
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+			sParticleName = v.modifier
+		end
 	end
 
 	-- call the original function
@@ -919,30 +925,33 @@ end
 
 function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
-	
-	-- Keep the static strings in or else you're going to get potential nils if IMBA BP is disabled
-	local blink_effect_end	= "particles/items_fx/blink_dagger_end.vpcf"
-	
+
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 
 	local blink_pfx
+
 	if bTeamOnlyParticle == true then
-		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())
+		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
+
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	FindClearSpaceForUnit(self, position, true)
 	ProjectileManager:ProjectileDodge( self )
+
 	local blink_end_pfx
+
 	if bTeamOnlyParticle == true then
-		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber())
+		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
 	else
-		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self)
+		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self)
 	end
+
 	ParticleManager:ReleaseParticleIndex(blink_end_pfx)
+
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.NailedIt", self) end
 end
 

@@ -818,7 +818,12 @@ function Battlepass:GetHeroEffect(hero)
 						for i, j in pairs(ItemsGame.kv["items"][k]["visuals"]) do
 							if not string.find(i, "skip") then
 								if j.type == "particle" then
-									CScriptParticleManager.PARTICLES_OVERRIDE[j.asset] = j.modifier
+									local particle_table = {}
+									particle_table.asset = j.asset
+									particle_table.modifier = j.modifier
+									particle_table.parent = hero
+
+									table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
 								elseif j.type == "sound" then
 									local sound_table = {}
 									sound_table.asset = j.asset
