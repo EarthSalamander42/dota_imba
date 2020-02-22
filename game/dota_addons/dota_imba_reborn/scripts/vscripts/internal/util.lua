@@ -49,7 +49,7 @@ function BubbleSortByElement(t, element_name)
 	while i ~= #t do
 		for k, v in ipairs(t) do
 			if t[k + 1] and t[k][element_name] and t[k + 1][element_name] and t[k][element_name] > t[k + 1][element_name] then
-				print(t[k][element_name], t[k + 1][element_name])
+--				print(t[k][element_name], t[k + 1][element_name])
 				t[k], t[k + 1] = t[k + 1], t[k]
 				i = 0
 				break
