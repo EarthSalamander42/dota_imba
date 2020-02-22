@@ -1,3 +1,25 @@
+-- Editor:
+--	   AltiV, February 20th, 2020
+
+-- Much of the original logic was derived from Elfansoer; I will leave the lua abilities intact below as reference, but somewhat copy these into imba classes for better consistency
+
+LinkLuaModifier("modifier_imba_earthshaker_fissure_thinker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_earthshaker_enchant_totem", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthshaker_enchant_totem_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+
+imba_earthshaker_fissure							= imba_earthshaker_fissure or class({})
+modifier_imba_earthshaker_fissure_thinker			= modifier_imba_earthshaker_fissure_thinker or class({})
+
+imba_earthshaker_enchant_totem						= imba_earthshaker_enchant_totem or class({})
+modifier_imba_earthshaker_enchant_totem				= modifier_imba_earthshaker_enchant_totem or class({})
+modifier_imba_earthshaker_enchant_totem_leap		= modifier_imba_earthshaker_enchant_totem_leap or class({})
+
+
+------------------------------
+-- IMBA_EARTHSHAKER_FISSURE --
+------------------------------
+
 -- Credits: Elfansoer.
 -- Earthshaker Fissure luafied
 -- Fissure: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_fissure_lua/earthshaker_fissure_lua.lua

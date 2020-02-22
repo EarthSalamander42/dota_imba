@@ -637,16 +637,18 @@ function modifier_imba_blur:OnIntervalThink()
 end
 
 function modifier_imba_blur:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_EVASION_CONSTANT,
+	return {
+		MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		
-		MODIFIER_EVENT_ON_HERO_KILLED}
-	return funcs
+		MODIFIER_EVENT_ON_HERO_KILLED
+	}
 end
 
 function modifier_imba_blur:GetModifierEvasion_Constant()
-	return self.evasion
+	if not self:GetParent():PassivesDisabled() then
+		return self.evasion
+	end
 end
 
 function modifier_imba_blur:GetModifierIncomingDamage_Percentage()
@@ -946,7 +948,7 @@ function modifier_imba_coup_de_grace:DeclareFunctions()
 end
 
 function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
-	if IsServer() then
+	if not self:GetParent():PassivesDisabled() then
 		local target = keys.target							-- TALENT: +8 sec Coup de Grace bonus damage duration
 		local crit_duration = self.crit_increase_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")
 		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")

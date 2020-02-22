@@ -865,7 +865,7 @@ CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nP
 
 		if hModifierKeys.duration and type(hModifierKeys.duration) == "number" then
 			print("Add fail-safe kill target in "..hModifierKeys.duration.." seconds.")
-			illusion:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = hModifierKeys.duration})
+			illusion:AddNewModifier(hOwner, nil, "modifier_kill", {duration = hModifierKeys.duration})
 		end
 	end
 

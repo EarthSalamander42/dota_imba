@@ -430,6 +430,11 @@ function GameMode:ItemAddedFilter( keys )
 				item:SetPurchaser(unit)
 			end
 			
+			-- Cursed Rapiers should not be droppable at all after first drop (due to abuse like Spectre ult)
+			if item:GetName() == "item_imba_rapier_cursed" then
+				item:SetDroppable(false)
+			end			
+			
 			if item:GetPurchaser() and item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end

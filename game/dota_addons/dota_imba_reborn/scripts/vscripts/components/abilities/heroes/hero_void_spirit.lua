@@ -683,7 +683,7 @@ end
 
 function modifier_imba_void_spirit_aether_remnant_helper:OnTakeDamage(keys)
 	if keys.inflictor and keys.inflictor:GetName() == "void_spirit_aether_remnant" and keys.attacker == self:GetParent() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.unit:IsHero() then
-		self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = self:GetAbility():GetSpecialValueFor("swiftness_duration")})
 		
 		local vision_modifier = keys.unit:AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_target_vision", {duration = self:GetAbility():GetSpecialValueFor("vision_duration")})
 		
@@ -705,6 +705,7 @@ function modifier_imba_void_spirit_aether_remnant_helper_buff:OnCreated()
 	self.damage_bonus		= self:GetAbility():GetSpecialValueFor("damage_bonus")
 	self.move_speed_bonus	= self:GetAbility():GetSpecialValueFor("move_speed_bonus")
 	self.evasion_bonus		= self:GetAbility():GetSpecialValueFor("evasion_bonus")
+	self.swiftness_duration	= self:GetAbility():GetSpecialValueFor("swiftness_duration")
 
 	if not IsServer() then return end
 	
@@ -728,7 +729,7 @@ end
 function modifier_imba_void_spirit_aether_remnant_helper_buff:OnIntervalThink()
 	Custom_ArrayRemove(self.stack_table, function(i, j)
 		-- Remember that you return what you want to KEEP, which is kinda contradictory to the function name...
-		return GameRules:GetDOTATime(true, true) - self.stack_table[i] <= 60
+		return GameRules:GetDOTATime(true, true) - self.stack_table[i] <= self.swiftness_duration
 	end)
 	
 	if #self.stack_table ~= self:GetStackCount() then
@@ -769,13 +770,15 @@ function modifier_imba_void_spirit_astral_step_grace_time:OnCreated()
 	
 	self.grace_time_start	= self:GetAbility():GetSpecialValueFor("grace_time_start")
 	
-	self:StartIntervalThink(self.grace_time_start)
+	self:GetAbility():SetActivated(true)
+	
+	-- self:StartIntervalThink(self.grace_time_start)
 end
 
-function modifier_imba_void_spirit_astral_step_grace_time:OnIntervalThink()
-	self:GetAbility():SetActivated(true)
-	self:StartIntervalThink(-1)
-end
+-- function modifier_imba_void_spirit_astral_step_grace_time:OnIntervalThink()
+	-- self:GetAbility():SetActivated(true)
+	-- self:StartIntervalThink(-1)
+-- end
 
 function modifier_imba_void_spirit_astral_step_grace_time:OnDestroy()
 	if not IsServer() then return end
