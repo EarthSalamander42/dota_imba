@@ -935,8 +935,8 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector)
 	
 	-- Logically speaking it doesn't make sense for it to check for enemies hit before Void Spirit actually moves, but it makes more sense without creating more variables
 	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
-		enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
-		enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
+		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
+		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
 		
 		self.impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControlEnt(self.impact_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)

@@ -314,7 +314,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_mana_pct"			"22"
+				"max_mana_pct"			"50"
 			}
 			"02"
 			{

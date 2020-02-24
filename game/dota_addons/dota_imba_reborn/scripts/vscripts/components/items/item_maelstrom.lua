@@ -310,6 +310,12 @@ function modifier_item_imba_mjollnir_slow:IsHidden() return false end
 function modifier_item_imba_mjollnir_slow:IsDebuff() return true end
 function modifier_item_imba_mjollnir_slow:IsPurgable() return true end
 
+function modifier_item_imba_mjollnir_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.static_slow	= self:GetAbility():GetSpecialValueFor("static_slow")
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_mjollnir_slow:DeclareFunctions()
 	local funcs = {
@@ -320,11 +326,11 @@ function modifier_item_imba_mjollnir_slow:DeclareFunctions()
 end
 
 function modifier_item_imba_mjollnir_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("static_slow")
+	return self.static_slow
 end
 
 function modifier_item_imba_mjollnir_slow:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("static_slow")
+	return self.static_slow
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -596,6 +602,12 @@ function modifier_item_imba_jarnbjorn_slow:GetTexture()
 	return "modifiers/imba_jarnbjorn"
 end
 
+function modifier_item_imba_jarnbjorn_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.static_slow	= self:GetAbility():GetSpecialValueFor("static_slow")
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_jarnbjorn_slow:DeclareFunctions()
 	local funcs = {
@@ -606,11 +618,11 @@ function modifier_item_imba_jarnbjorn_slow:DeclareFunctions()
 end
 
 function modifier_item_imba_jarnbjorn_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("static_slow")
+	return self.static_slow
 end
 
 function modifier_item_imba_jarnbjorn_slow:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("static_slow")
+	return self.static_slow
 end
 
 -----------------------------------------------------------------------------------------------------------

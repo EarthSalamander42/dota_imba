@@ -118,7 +118,7 @@ function modifier_generic_charges:CalculateCharge()
 			-- start charging
 			local charge_time	= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction()
 			
-			if self:GetParent():HasScepter() then
+			if self:GetParent():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") > 0 then
 				charge_time		= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") * self:GetParent():GetCooldownReduction()
 			end
 			

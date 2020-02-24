@@ -95,6 +95,8 @@ function modifier_imba_skull_basher_unique:IsDebuff() return false end
 function modifier_imba_skull_basher_unique:IsPermanent() return true end
 
 function modifier_imba_skull_basher_unique:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
