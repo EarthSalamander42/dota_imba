@@ -1012,6 +1012,14 @@
 		}
 	}
 
+	"67" // Fiery Soul of the Slayer
+	{
+		"item_id"					"4794"
+		"item_type"					"wearable"
+		"item_unlock_level"			"200"
+//		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+	}
+
 //	"2" // Antipode Couriers (Radiant)
 //	{
 //		"item_id"					"10888"

@@ -99,13 +99,6 @@ function item_imba_blink:OnSpellStart()
 	caster:Blink(target_point, false, true)
 end
 
-function item_imba_blink:GetAbilityTextureName()
-	if not IsClient() then return end
-	local caster = self:GetCaster()
-	if not caster.blink_icon_client then return "item_blink" end
-	return "custom/imba_blink"..caster.blink_icon_client
-end
-
 -----------------------------------------------------------------------------------------------------------
 --	Blink Dagger Handler
 -----------------------------------------------------------------------------------------------------------
@@ -115,49 +108,6 @@ function modifier_imba_blink_dagger_handler:IsDebuff() return false end
 function modifier_imba_blink_dagger_handler:IsPurgable() return false end
 function modifier_imba_blink_dagger_handler:RemoveOnDeath() return false end
 function modifier_imba_blink_dagger_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_imba_blink_dagger_handler:OnCreated()
-	self:OnIntervalThink()
-	self:StartIntervalThink(1.0)
-end
-
-function modifier_imba_blink_dagger_handler:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
-	if IsServer() and self:GetParent() and not self:GetParent():IsNull() then
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) then
-			local blink_icon = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["blink"]["level"]
-
-			-- temporary
-			if caster.blink_icon then
-				blink_icon = caster.blink_icon
-			end
-
-			if blink_icon == "zuus" then
-				blink_icon = 100
-			elseif blink_icon == "earthshaker" then
-				blink_icon = 101
-			elseif blink_icon == "earthshaker2" then
-				blink_icon = 102
-			end
-			self:SetStackCount(blink_icon)
-		end
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then
-			caster.blink_icon_client = nil
-		elseif self:GetStackCount() == 100 then
-			caster.blink_icon_client = "zuus"
-		elseif self:GetStackCount() == 101 then
-			caster.blink_icon_client = "earthshaker"
-		elseif self:GetStackCount() == 102 then
-			caster.blink_icon_client = "earthshaker2"
-		else
-			caster.blink_icon_client = self:GetStackCount()
-		end
-	end
-end
 
 function modifier_imba_blink_dagger_handler:DeclareFunctions()
 	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {} end
@@ -187,10 +137,6 @@ end
 if item_imba_blink_boots == nil then item_imba_blink_boots = class({}) end
 LinkLuaModifier( "modifier_imba_blink_boots_handler", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown + item bonuses
 LinkLuaModifier( "modifier_imba_blink_boots_flash_step", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set 
-
-function item_imba_blink_boots:GetAbilityTextureName()
-	return "custom/imba_blink_boots"
-end
 
 function item_imba_blink_boots:GetBehavior()
 	if IsServer() then

@@ -8,7 +8,6 @@ BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[23]		= {"enigma_taunt", "rare"}
 BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[30]		= {"zuus_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[38]		= {"lion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
@@ -214,35 +213,20 @@ function Battlepass:GetShivaEffect(ID)
 end
 
 function Battlepass:SetItemEffects(ID)
-	if tostring(PlayerResource:GetSteamID(ID)) == "0" then return end
-
-	local payload = {
-		steamid = tostring(PlayerResource:GetSteamID(ID)),
-		hero = "blink",
-	}
-
-	print("Payload:", payload)
-
-	api:Request("armory", function(data)
-		print(data)
-
---		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
-	end, failduh(), "POST", payload);
-
-		CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
-			blink = Battlepass:GetBlinkEffect(ID),
-			bottle = Battlepass:GetBottleEffect(ID),
-			force_staff = Battlepass:GetForceStaffEffect(ID),
-			fountain = Battlepass:GetFountainEffect(ID),
-			maelstorm = Battlepass:GetMaelstormEffect(ID),
-			mekansm = Battlepass:GetMekansmEffect(ID),
-			radiance = Battlepass:GetRadianceEffect(ID),
-			sheepstick = Battlepass:GetSheepstickEffect(ID),
-			shiva = Battlepass:GetShivaEffect(ID),
-		})
+	CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
+		blink = Battlepass:GetBlinkEffect(ID),
+		bottle = Battlepass:GetBottleEffect(ID),
+		force_staff = Battlepass:GetForceStaffEffect(ID),
+		fountain = Battlepass:GetFountainEffect(ID),
+		maelstorm = Battlepass:GetMaelstormEffect(ID),
+		mekansm = Battlepass:GetMekansmEffect(ID),
+		radiance = Battlepass:GetRadianceEffect(ID),
+		sheepstick = Battlepass:GetSheepstickEffect(ID),
+		shiva = Battlepass:GetShivaEffect(ID),
+	})
 end
 
-function failduh()
+local function failduh()
 	print("CALLBACK FAIL")
 end
 
@@ -386,6 +370,66 @@ function Battlepass:GetHeroEffect(hero)
 	if ply_table and ply_table.bp_rewards == 0 then
 		return
 	end
+
+	-- todo: http request to get which item_id is equipped for the hero
+	if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= "0" then
+		local payload = {
+			steamid = tostring(PlayerResource:GetSteamID(hero:GetPlayerID())),
+			hero = hero:GetUnitName(),
+		}
+
+		print("Payload:", payload)
+
+		api:Request("armory", function(data)
+			print(data)
+
+			for k, v in pairs(data) do
+				Wearable:_WearProp(hero, v.item_id, v.slot_id)
+
+--				print(ItemsGame.kv["items"][v.item_id])
+				if ItemsGame.kv["items"][v.item_id] and ItemsGame.kv["items"][v.item_id]["visuals"] then
+--					print(ItemsGame.kv["items"][v.item_id]["visuals"])
+
+					for i, j in pairs(ItemsGame.kv["items"][v.item_id]["visuals"]) do
+						if not string.find(i, "skip") then
+							if j.type == "particle" then
+								local particle_table = {}
+								particle_table.asset = j.asset
+								particle_table.modifier = j.modifier
+								particle_table.parent = hero
+
+								table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
+							elseif j.type == "sound" then
+								local sound_table = {}
+								sound_table.asset = j.asset
+								sound_table.modifier = j.modifier
+								sound_table.parent = hero
+
+								table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+							elseif j.type == "ability_icon" then
+								CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+							elseif j.type == "icon_replacement_hero" then
+								CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+									player_id = hero:GetPlayerID(),
+									icon_path = j.modifier,
+								})
+							end
+						end
+					end
+				end
+			end
+
+--			print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(hero:GetPlayerID())))
+		end, failduh(), "POST", payload);
+	end
+
+	if false then return end
+
+--	print(CScriptParticleManager.PARTICLES_OVERRIDE)
+--	print("---------------------------------")
+--	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+
+--	hero.blink_icon = "zuus"
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
@@ -810,50 +854,6 @@ function Battlepass:GetHeroEffect(hero)
 				hero.spirits_icon = 1
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["zuus_arcana"] then
-				-- temporary
-
-				-- todo: http request to get which item_id is equipped for the hero
-				local item_id = 67
-
-				for k, v in pairs(ItemsGame:GetItemWearables(item_id)) do
-					Wearable:_WearProp(hero, k, v)
-
---					print(ItemsGame.kv["items"][k])
-					if ItemsGame.kv["items"][k] and ItemsGame.kv["items"][k]["visuals"] then
---						print(ItemsGame.kv["items"][k]["visuals"])
-
-						for i, j in pairs(ItemsGame.kv["items"][k]["visuals"]) do
-							if not string.find(i, "skip") then
-								if j.type == "particle" then
-									local particle_table = {}
-									particle_table.asset = j.asset
-									particle_table.modifier = j.modifier
-									particle_table.parent = hero
-
-									table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-								elseif j.type == "sound" then
-									local sound_table = {}
-									sound_table.asset = j.asset
-									sound_table.modifier = j.modifier
-									sound_table.parent = hero
-
-									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
-								elseif j.type == "ability_icon" then
-									CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-								end
-							end
-						end
-					end
-				end
-
---				print(CScriptParticleManager.PARTICLES_OVERRIDE)
---				print("---------------------------------")
---				print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
-
---				hero.blink_icon = "zuus"
 			end
 		end
 	end
