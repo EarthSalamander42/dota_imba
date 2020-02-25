@@ -337,6 +337,27 @@ function api:GetPhantomAssassinArcanaKills(player_id)
 	end
 end
 
+function api:GetArmory(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+--		native_print("api:GetArmory: Player ID not valid!")
+		return {}
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know if the player is a donator
+	if self.players == nil then
+		return {}
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid].armory
+	else
+--		native_print("api:GetArmory: api players steamid not valid!")
+		return {}
+	end
+end
+
 function api:GetApiGameId()
 	return self.game_id
 end
@@ -517,7 +538,7 @@ function api:RegisterGame(callback)
 			print(data.players)
 		end
 		if callback ~= nil then
-			callback()
+			callback(data)
 		end
 	end, nil, "POST", {
 		map = GetMapName(),

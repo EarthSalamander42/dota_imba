@@ -785,6 +785,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	if (BattlepassRewards == undefined) return;
 	if (BattlepassRewards["1"] == undefined) return;
 	BattlepassRewards = BattlepassRewards["1"];
+
 	$.Msg(BattlepassRewards)
 
 	var plyData = CustomNetTables.GetTableValue("battlepass", player);
@@ -802,6 +803,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			var bp_name = BattlepassRewards[i].name;
 			var bp_rarity = BattlepassRewards[i].rarity;
 			var bp_type = BattlepassRewards[i].type;
+			var bp_item_id = BattlepassRewards[i].item_id;
 
 			if (!$("#container_level_" + bp_level)) {
 				var level_container = $.CreatePanel("Panel", reward_row, "container_level_" + bp_level);
@@ -821,6 +823,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 
 			var reward = $.CreatePanel("Panel", $("#reward_container_level_" + bp_level), "");
 			reward.AddClass("BattlepassReward");
+
 			var reward_icon = $.CreatePanel("Panel", reward, "");
 			reward_icon.style.backgroundImage = 'url("s2r://panorama/images/' + bp_image + '.png")';
 			reward_icon.AddClass("BattlepassRewardIcon");
@@ -841,6 +844,25 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, "");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
 					reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+
+					var armory = CustomNetTables.GetTableValue("battlepass", "rewards_" + player);
+
+					if (armory) {
+						var j = 1;
+
+						while (armory[j] != undefined) {
+							var item = armory[j];
+
+							if (item && item.item_id == bp_item_id) {
+//								$.Msg(item)
+								var reward_equipped = $.CreatePanel("Panel", reward, "");
+								reward_equipped.AddClass("RewardEquipped");
+								break;
+							}
+
+							j++;
+						}
+					}
 				} else {
 					reward_label.AddClass("locked");
 					reward_icon.AddClass("BattlepassRewardIcon_locked")
@@ -853,8 +875,10 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, "");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 			}
+		} else {
+			break;
 		}
 	}
 }

@@ -17,7 +17,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				Battlepass:Init()
 			end
 		end
-
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		Battlepass:GetPlayerInfoXP()
 	end
 end, nil)

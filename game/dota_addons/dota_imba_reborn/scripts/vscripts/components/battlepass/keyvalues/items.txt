@@ -997,7 +997,7 @@
 	// WEARABLES
 	////////////////////////////////////////////////////////
 
-	"67" // 
+	"67" // Tempest Helm of the Thundergod
 	{
 		"item_id"					"20844"
 		"item_type"					"bundle"
@@ -1012,7 +1012,7 @@
 		}
 	}
 
-	"67" // Fiery Soul of the Slayer
+	"68" // Fiery Soul of the Slayer
 	{
 		"item_id"					"4794"
 		"item_type"					"wearable"

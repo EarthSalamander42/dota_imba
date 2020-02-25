@@ -101,21 +101,21 @@
 	}
 }
 
-@keyframes 'breathe_mythical'
+@keyframes 'breathe_legendary'
 {
 	0%
 	{
-		box-shadow: inset #720585 0 0 1px 0;
+		box-shadow: inset #d32ce6 0 0 1px 0;
 	}
 
 	50%
 	{
-		box-shadow: inset #720585 0 0 4px 0;
+		box-shadow: inset #d32ce6 0 0 4px 0;
 	}
 
 	100%
 	{
-		box-shadow: inset #720585 0 0 1px 0;
+		box-shadow: inset #d32ce6 0 0 1px 0;
 	}
 }
 
@@ -808,7 +808,7 @@
 	height: 100%;
 	margin-left: 2px;
 	margin-right: 2px;
-	flow-children: down;
+	flow-children: none;
 }
 
 .BattlepassRewardIcon {
@@ -1122,15 +1122,24 @@
 }
 
 /* colors */
-.ancient_border {
-	animation-name: breathe_ancient;
-	animation-duration: 2.0s;
-	animation-timing-function: ease-in;
-	animation-iteration-count: infinite;
+.common_border {
+	box-shadow: inset #b0c3d9 0 0 4px 0;
 }
 
-.arcana_border {
-	animation-name: breathe_arcana;
+.uncommon_border {
+	box-shadow: inset #5e98d9 0 0 4px 0;
+}
+
+.rare_border {
+	box-shadow: inset #4b69ff 0 0 4px 0;
+}
+
+.mythical_border {
+	box-shadow: inset #8847ff 0 0 4px 0;
+}
+
+.legendary_border {
+	animation-name: breathe_legendary;
 	animation-duration: 2.0s;
 	animation-timing-function: ease-in;
 	animation-iteration-count: infinite;
@@ -1143,8 +1152,15 @@
 	animation-iteration-count: infinite;
 }
 
-.mythical_border {
-	animation-name: breathe_mythical;
+.arcana_border {
+	animation-name: breathe_arcana;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.ancient_border {
+	animation-name: breathe_ancient;
 	animation-duration: 2.0s;
 	animation-timing-function: ease-in;
 	animation-iteration-count: infinite;
@@ -1180,46 +1196,6 @@
 
 .ancient_text {
 	color: #eb4b4b;
-}
-
-.common_border {
-	border-radius: 5px;
-	border: 1px solid #b0c3d9;
-}
-
-.uncommon_border {
-	border-radius: 5px;
-	border: 1px solid #5e98d9;
-}
-
-.rare_border {
-	border-radius: 5px;
-	border: 1px solid #4b69ff;
-}
-
-.mythical_border {
-	border-radius: 5px;
-	border: 1px solid #8847ff;
-}
-
-.legendary_border {
-	border-radius: 5px;
-	border: 1px solid #d32ce6;
-}
-
-.immortal_border {
-	border-radius: 5px;
-	border: 1px solid #b28a33;
-}
-
-.arcana_border {
-	border-radius: 5px;
-	border: 1px solid #ade55c;
-}
-
-.ancient_border {
-	border-radius: 5px;
-	border: 1px solid #eb4b4b;
 }
 
 .gold {
@@ -1326,7 +1302,13 @@
 	height: 20%;
 }
 
-.Equipped {
-	width: 23%;
-	height: 21%;
+.RewardEquipped {
+	width: 20%;
+	height: 20%;
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
+	horizontal-align: right;
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-size: 100%;
+	wash-color: #B3DFDC;
 }

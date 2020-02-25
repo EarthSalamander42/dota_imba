@@ -105,6 +105,7 @@ function ItemsGame:Init()
 			reward_table.name = ItemsGame:GetItemName(count)
 			reward_table.rarity = ItemsGame:GetItemRarity(count)
 			reward_table.type = ItemsGame:GetItemType(count)
+			reward_table.item_id = tostring(count)
 
 			table.insert(bp_reward_table, count, reward_table)
 		end

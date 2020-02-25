@@ -373,63 +373,62 @@ function Battlepass:GetHeroEffect(hero)
 
 	-- todo: http request to get which item_id is equipped for the hero
 	if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= "0" then
-		local payload = {
-			steamid = tostring(PlayerResource:GetSteamID(hero:GetPlayerID())),
-			hero = hero:GetUnitName(),
-		}
+		local armory = api:GetArmory(hero:GetPlayerID())
 
-		print("Payload:", payload)
+		CustomNetTables:SetTableValue("battlepass", "rewards_"..hero:GetPlayerID(), armory)
 
-		api:Request("armory", function(data)
-			print(data)
+--		print(armory)
 
-			for k, v in pairs(data) do
-				Wearable:_WearProp(hero, v.item_id, v.slot_id)
+		for k, v in pairs(armory) do
+			if hero:GetUnitName() == v.hero then
+				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
+--					print(item_id, slot_id)
+					Wearable:_WearProp(hero, item_id, slot_id)
 
---				print(ItemsGame.kv["items"][v.item_id])
-				if ItemsGame.kv["items"][v.item_id] and ItemsGame.kv["items"][v.item_id]["visuals"] then
---					print(ItemsGame.kv["items"][v.item_id]["visuals"])
+--					print(ItemsGame.kv["items"][item_id])
+					if ItemsGame.kv["items"][item_id] and ItemsGame.kv["items"][item_id]["visuals"] then
+--						print(ItemsGame.kv["items"][item_id]["visuals"])
 
-					for i, j in pairs(ItemsGame.kv["items"][v.item_id]["visuals"]) do
-						if not string.find(i, "skip") then
-							if j.type == "particle" then
-								local particle_table = {}
-								particle_table.asset = j.asset
-								particle_table.modifier = j.modifier
-								particle_table.parent = hero
+						for i, j in pairs(ItemsGame.kv["items"][item_id]["visuals"]) do
+							if not string.find(i, "skip") then
+								if j.type == "particle" then
+									local particle_table = {}
+									particle_table.asset = j.asset
+									particle_table.modifier = j.modifier
+									particle_table.parent = hero
 
-								table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-							elseif j.type == "sound" then
-								local sound_table = {}
-								sound_table.asset = j.asset
-								sound_table.modifier = j.modifier
-								sound_table.parent = hero
+									table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
+								elseif j.type == "sound" then
+									local sound_table = {}
+									sound_table.asset = j.asset
+									sound_table.modifier = j.modifier
+									sound_table.parent = hero
 
-								table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
-							elseif j.type == "ability_icon" then
-								CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-							elseif j.type == "icon_replacement_hero" then
-								CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
-									player_id = hero:GetPlayerID(),
-									icon_path = j.modifier,
-								})
+									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+								elseif j.type == "ability_icon" then
+									CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+								elseif j.type == "icon_replacement_hero" then
+									CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+										player_id = hero:GetPlayerID(),
+										icon_path = j.modifier,
+									})
+								end
 							end
 						end
 					end
 				end
 			end
+		end
 
---			print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(hero:GetPlayerID())))
-		end, failduh(), "POST", payload);
+--		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(hero:GetPlayerID())))
 	end
-
-	local hello = false
-
-	if hello == false then return end
 
 --	print(CScriptParticleManager.PARTICLES_OVERRIDE)
 --	print("---------------------------------")
 --	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+
+	local hello = false
+	if hello == false then return end
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
