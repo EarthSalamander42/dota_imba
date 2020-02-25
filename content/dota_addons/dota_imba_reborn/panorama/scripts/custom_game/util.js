@@ -147,9 +147,8 @@ function HideIMR(panel) {
 	}
 }
 
+// Somehow called multiple times, creating many panels for nothing
 function OverrideTopBarHeroImage(args) {
-	$.Msg(args)
-
 	var team = "Radiant"
 
 	if (Players.GetTeam(args.player_id) == 3) {

@@ -62,5 +62,14 @@ ListenToGameEvent('npc_spawned', function(event)
 		if npc.bp_init == true then return end
 
 		npc.bp_init = true
+
+		local herolist = CustomNetTables:GetTableValue("hero_selection", "herolist")
+
+		if herolist and herolist.customlist and herolist.customlist[npc:GetUnitName()] then
+			CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+				player_id = npc:GetPlayerID(),
+				icon_path = npc:GetUnitName(),
+			})
+		end
 	end
 end, nil)

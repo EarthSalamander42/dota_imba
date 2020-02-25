@@ -423,13 +423,13 @@ function Battlepass:GetHeroEffect(hero)
 		end, failduh(), "POST", payload);
 	end
 
-	if false then return end
+	local hello = false
+
+	if hello == false then return end
 
 --	print(CScriptParticleManager.PARTICLES_OVERRIDE)
 --	print("---------------------------------")
 --	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
-
---	hero.blink_icon = "zuus"
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
