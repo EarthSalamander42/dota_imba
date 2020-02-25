@@ -15,6 +15,8 @@ LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_equal_exchange", "comp
 
 LinkLuaModifier("modifier_imba_void_spirit_astral_step_grace_time", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_void_spirit_astral_step_armor_pierce", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
@@ -43,6 +45,9 @@ modifier_imba_void_spirit_resonant_pulse_equal_exchange	= modifier_imba_void_spi
 
 imba_void_spirit_astral_step_helper						= imba_void_spirit_astral_step_helper or class({})
 modifier_imba_void_spirit_astral_step_grace_time		= modifier_imba_void_spirit_astral_step_grace_time or class({})
+
+imba_void_spirit_astral_step_helper_2					= imba_void_spirit_astral_step_helper_2 or class({})
+modifier_imba_void_spirit_astral_step_armor_pierce		= modifier_imba_void_spirit_astral_step_armor_pierce or class({})
 
 imba_void_spirit_aether_remnant_helper					= imba_void_spirit_aether_remnant_helper or class({})
 modifier_imba_void_spirit_aether_remnant_helper			= modifier_imba_void_spirit_aether_remnant_helper or class({})
@@ -641,6 +646,8 @@ end
 -- IMBA_VOID_SPIRIT_ASTRAL_STEP_HELPER --
 -----------------------------------------
 
+-- Echo Slash: Scrapping this IMBAfication due to the sheer amount of anime
+
 function imba_void_spirit_astral_step_helper:IsStealable()		return false end
 
 function imba_void_spirit_astral_step_helper:GetManaCost(level)
@@ -657,6 +664,82 @@ function imba_void_spirit_astral_step_helper:OnSpellStart()
 	if self:GetCaster():HasAbility("imba_void_spirit_astral_step") and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step").original_vector then
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step").original_vector * (-1))
 	end	
+end
+
+-------------------------------------------
+-- IMBA_VOID_SPIRIT_ASTRAL_STEP_HELPER_2 --
+-------------------------------------------
+
+function imba_void_spirit_astral_step_helper_2:GetAssociatedSecondaryAbilities()
+	return "imba_void_spirit_astral_step"
+end
+
+function imba_void_spirit_astral_step_helper_2:OnAbilityPhaseStart()
+	if self.charge_modifier and self.charge_modifier:GetStackCount() > 0 then
+		self:GetCaster():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_2_END, 0.2)
+		return true
+	else
+		DisplayError(self:GetCaster():GetPlayerOwnerID(), "#dota_hud_error_astral_step_no_charges")
+		return false
+	end
+end
+
+function imba_void_spirit_astral_step_helper_2:OnChannelFinish(bInterrupted)
+	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	end
+	
+	self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_2_END)
+	
+	if self.charge_modifier and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() >= 1 then
+		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
+		local wtf_mode = true
+		
+		if not GameRules:IsCheatMode() then
+			wtf_mode = false
+		else
+			for ability = 0, 24 - 1 do
+				if self:GetCaster():GetAbilityByIndex(ability) and self:GetCaster():GetAbilityByIndex(ability):GetCooldownTimeRemaining() > 0 then
+					wtf_mode = false
+					break
+				end
+			end
+
+			if wtf_mode == false then
+				for item = 0, 15 do
+					if self:GetCaster():GetItemInSlot(item) and self:GetCaster():GetItemInSlot(item):GetCooldownTimeRemaining() > 0 then
+						wtf_mode = false
+						break
+					end
+				end
+			end
+		end
+		
+		if wtf_mode == false then
+			self.charge_modifier:DecrementStackCount()
+			self.charge_modifier:CalculateCharge()
+		end
+	end
+	
+	if self:GetCaster():HasAbility("imba_void_spirit_astral_step") then
+		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(nil, (((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):GetSpecialValueFor("max_travel_distance")) * (1 + (self:GetSpecialValueFor("bonus_range_pct") * 0.01)) + self:GetCaster():GetCastRangeBonus()) , bInterrupted)
+	end
+end
+
+--------------------------------------------------------
+-- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_ARMOR_PIERCE --
+--------------------------------------------------------
+
+function modifier_imba_void_spirit_astral_step_armor_pierce:IsHidden()		return true end
+function modifier_imba_void_spirit_astral_step_armor_pierce:IsPurgable()	return false end
+
+function modifier_imba_void_spirit_astral_step_armor_pierce:DeclareFunctions()
+	return {MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR}
+end
+
+function modifier_imba_void_spirit_astral_step_armor_pierce:GetModifierIgnorePhysicalArmor()
+	return 1
 end
 
 --------------------------------------------
@@ -883,6 +966,10 @@ end
 -- IMBA_VOID_SPIRIT_ASTRAL_STEP --
 ----------------------------------
 
+function imba_void_spirit_astral_step_helper_2:GetAssociatedPrimaryAbilities()
+	return "imba_void_spirit_astral_step_helper_2"
+end
+
 function imba_void_spirit_astral_step:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
@@ -893,17 +980,32 @@ function imba_void_spirit_astral_step:OnUpgrade()
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetActivated(false)
 	end
 	
+	if self:IsTrained() and self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
+		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2"):SetLevel(self:GetLevel())
+	end
+	
 	if self:GetLevel() == 1 then
 		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
 			if mod:GetAbility() == self then
 				mod:OnCreated()
+				
+				if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
+					self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier = mod
+				end
+				
 				break
 			end
 		end
 	end
 end
 
-function imba_void_spirit_astral_step:OnSpellStart(recastVector)
+function imba_void_spirit_astral_step:GetCastRange(location, target)
+	if IsClient() then
+		return self:GetSpecialValueFor("max_travel_distance")
+	end
+end
+
+function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bInterrupted)
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
@@ -914,10 +1016,16 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector)
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetLevel(1)
 	end
 	
+	local original_position	= self:GetCaster():GetAbsOrigin()
+	
 	local final_position = self:GetCaster():GetAbsOrigin() + ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * math.max(math.min(((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D(), self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus()), self:GetSpecialValueFor("min_travel_distance")))
 	
 	if recastVector then
 		final_position	= self:GetCaster():GetAbsOrigin() + recastVector
+	end
+	
+	if warpVector then
+		final_position	= self:GetCaster():GetAbsOrigin() + warpVector
 	end
 	
 	self.original_vector	= (final_position - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus())
@@ -943,10 +1051,16 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector)
 		ParticleManager:ReleaseParticleIndex(self.impact_particle)
 		
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_crit", {})
-		-- TODO: Check to make sure this doesn't cause massive lag on large amounts of units
 		self:GetCaster():SetAbsOrigin(enemy:GetAbsOrigin() - self:GetCaster():GetForwardVector())
+		
+		if warpVector and not bInterrupted then
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_armor_pierce", {})
+		end
+		
 		self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
 		self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_crit")
+		
+		enemy:RemoveModifierByName("modifier_imba_void_spirit_astral_step_armor_pierce")
 		
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_debuff", {duration = self:GetSpecialValueFor("pop_damage_delay")})
 		
@@ -957,18 +1071,28 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector)
 	
 	self.impact_particle = nil
 	
-	FindClearSpaceForUnit(self:GetCaster(), final_position, false)
+	if not warpVector then
+		FindClearSpaceForUnit(self:GetCaster(), final_position, false)
+	else
+		FindClearSpaceForUnit(self:GetCaster(), original_position, false)
+	end
 	
 	self:GetCaster():EmitSound("Hero_VoidSpirit.AstralStep.End")
 	
-	-- IMBAfication: Echo Slash
+	-- IMBAfication: Echo Slash (disabled)
 	if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper") and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):IsTrained() then
 		self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_grace_time")
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"), "modifier_imba_void_spirit_astral_step_grace_time", {duration = self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):GetSpecialValueFor("grace_time_end")})
 	end
 	
+	-- IMBAfication: Warp Slash
+	if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
+		if self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier and ((not warpVector and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() <= 1) or (warpVector and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() <= 0)) then
+			self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2"):StartCooldown(self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetRemainingTime())
+		end
+	end
+	
 	-- IMBAfication: I am ALL The Hidden Ones
-	-- TODO: Check that this doesn't screw with the Astral Step particle (I would assume it makes the slash invisible to the enemy, which IDK if it's fine or not)
 	if bHeroHit and not recastVector then
 		if not self:GetCaster():HasModifier("modifier_imba_void_spirit_astral_step_invis") then
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_invis", {duration = self:GetSpecialValueFor("hidden_ones_duration")})
@@ -1033,7 +1157,9 @@ function modifier_imba_void_spirit_astral_step_crit:IsPurgable()	return false en
 function modifier_imba_void_spirit_astral_step_crit:CheckState()
 	return {
 		[MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
-		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
+		
+		[MODIFIER_STATE_INVULNERABLE]						= true -- Just in case?
 	}
 end
 
@@ -1052,7 +1178,7 @@ end
 
 -- Hopefully this is enough random information to only suppress cleaves?...
 function modifier_imba_void_spirit_astral_step_crit:GetModifierTotalDamageOutgoing_Percentage(keys)
-	if not self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") and not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
+	if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
 		return -100
 	end
 end

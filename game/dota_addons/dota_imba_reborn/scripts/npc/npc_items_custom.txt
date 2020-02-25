@@ -7753,6 +7753,7 @@
 		"IsTempestDoubleClonable"		"0"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

@@ -33576,6 +33576,11 @@
 				"var_type"                  "FIELD_FLOAT"
 				"value"						"1"
 			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"					"7"
+			}
 		}
 	}
 

@@ -147,7 +147,8 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_meteor_hammer_3",
 				"item_imba_meteor_hammer_4",
 				"item_imba_rod_of_atos_2",
-				"item_imba_the_triumvirate_v2"
+				"item_imba_the_triumvirate_v2",
+				"item_tome_of_knowledge"
 			}
 			
 			-- Get script error when using caster:GetAbilityCount() cause it goes up to 30 for some reason

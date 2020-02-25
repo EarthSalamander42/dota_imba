@@ -826,10 +826,10 @@
 	//=================================================================================================================
 	"item_tome_of_knowledge"
 	{
-		"ItemCost"						"100"
-		"ItemInitialStockTime"			"300.0"
-		"ItemStockTime"					"40.0"
-		"AbilityCooldown"				"0.0"
+		"ItemCost"						"30"
+		"ItemInitialStockTime"			"390.0"
+		"ItemStockTime"					"120.0"
+		"ItemStockMax"					"5"
 
 		"ItemStackable"					"1"
 
@@ -838,12 +838,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_bonus"				"100"
+				"xp_bonus"				"140"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_per_use"			"60"
+				"xp_per_use"			"27"
 			}
 		}
 	}
@@ -3516,12 +3516,6 @@
 				"bear_armor"				"3 6 9 12"
 				"LinkedSpecialBonus"		"special_bonus_unique_lone_druid_2"
 			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"60.0"
-				"RequiresScepter"		"1"
-			}
 		}
 	}
 
@@ -3556,10 +3550,6 @@
 	//=================================================================================================================
 	"lone_druid_spirit_link"
 	{
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0 30.0 25.0 20.0"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -3574,11 +3564,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"lifesteal_percent"			"50 60 70 80"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0 12.0 14.0 16.0"
 			}
 		}
 	}
@@ -3604,7 +3589,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.4 2.0 2.6 3.2"
+				"duration"				"1.3 1.8 2.3 2.8"
 			}
 		}
 	}
@@ -3694,21 +3679,6 @@
 	"lone_druid_spirit_bear_entangle"
 	{
 		"AbilityDamage"					"90"
-	}
-
-	//=================================================================================================================
-	// Lone Druid: Spirit Bear Demolish
-	//=================================================================================================================
-	"lone_druid_spirit_bear_demolish"
-	{
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_building_damage"	"50"
-			}
-		}
 	}
 
 	//=================================================================================================================
