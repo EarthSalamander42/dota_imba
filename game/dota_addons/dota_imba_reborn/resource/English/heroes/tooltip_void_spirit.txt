@@ -48,6 +48,11 @@
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_Description"		"Can only be activated between %grace_time_start% and %grace_time_end% seconds after Astral Step is cast. Doing so immediately performs an Astral Step in the opposite direction at max distance. Costs Astral Step's mana cost plus %max_mana_pct%%% of the caster's max mana to activate."
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_Lore"					"A small step for Inai creates great devastation on the mortal plane."
 
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2"					"Warp Slash"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Description"		"CHANNELED - Allows Void Spirit to perform an Astral Step at %bonus_range_pct%%% increased max range without moving to the cast position. If successfully channeled for %abilitychanneltime% seconds, the instant attack will ignore armor."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Lore"					"A small step for Inai creates great devastation on the mortal plane."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Note0"					"Requires and uses Astral Step charges."
+
 "DOTA_Tooltip_ability_imba_void_spirit_void_stasis"					"Void Stasis"
 "DOTA_Tooltip_ability_imba_void_spirit_void_stasis_Description"		"After channeling for %abilitychanneltime% seconds, Inai puts all heroes within the cast area into stasis for %duration% seconds, interrupting their current action and granting them invulnerability and spell immunity. Enemies are stunned and frozen, while allies are disarmed, muted, and silenced."
 "DOTA_Tooltip_ability_imba_void_spirit_void_stasis_Lore"			"From a point beyond time and space, Inai violently displaces dimensionality within a distant realm."
@@ -58,8 +63,11 @@
 "DOTA_Tooltip_modifier_imba_void_spirit_void_stasis_Description"	"Invulnerable and spell immune. Enemies of the caster are stunned and frozen, while allies are disarmed, muted, and silenced."
 
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step"						"Astral Step"
-"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Description"			"Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.\n<font color='#FF7800'>I am ALL The Hidden Ones:</font> Successfully hitting at least one hero with Astral Step grants Inai invisibility for %hidden_ones_duration% seconds. Can stack with itself, increasing its duration.\n<font color='#FF7800'>Echo Slash:</font> Gains access to the Echo Slash sub-ability, which allows Astral Step to be re-cast in the opposite direction. Echo Slashes do not contribute to 'I am ALL The Hidden Ones'."
-"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Note0"				"Astral Step attacks do not cleave unless the Astral Step EX talent is learned."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Description"			"Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.\n<font color='#FF7800'>I am ALL The Hidden Ones:</font> Successfully hitting at least one hero with Astral Step grants Inai invisibility for %hidden_ones_duration% seconds. Can stack with itself, increasing its duration.\n<font color='#FF7800'>Warp Slash:</font> Gains access to the Warp Slash sub-ability, which allows Astral Step to be channeled and cast without teleporting."
+
+//\n<font color='#FF7800'>Echo Slash:</font> Gains access to the Echo Slash sub-ability, which allows Astral Step to be re-cast in the opposite direction. Echo Slashes do not contribute to 'I am ALL The Hidden Ones'.
+
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Note0"				"Astral Step attacks do not cleave."
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step_Lore"					"A small step for Inai creates great devastation on the mortal plane."
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step_bonus_damage"			"BONUS ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_imba_void_spirit_astral_step_max_charges"			"MAX CHARGES:"
@@ -97,8 +105,8 @@
 
 "DOTA_Tooltip_ability_special_bonus_imba_void_spirit_dissimilate_stun"				"Dissimilate Stuns for {s:value}s"
 "DOTA_Tooltip_ability_special_bonus_imba_void_spirit_resonant_pulse_damage"				"+{s:value} Resonant Pulse Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit"				"Astral Step EX"
-"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit_Description"	"Attacks made with Astral Step deal a {s:value}% critical strike, and can cleave."
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit"				"Astral Step {s:value}% Crit"
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit_Description"	"Attacks made with Astral Step deal a critical strike."
 
 //"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_2"				"+{s:value} Astral Step Range"
 //"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_5"				"{s:value}% Larger Dissimilate Portals"

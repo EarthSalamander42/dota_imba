@@ -15,7 +15,8 @@
 		"Ability2"					"imba_void_spirit_dissimilate"
 		"Ability3"					"imba_void_spirit_resonant_pulse"
 		"Ability4"					"imba_void_spirit_void_stasis"
-		"Ability5"					"imba_void_spirit_astral_step_helper"
+		//"Ability5"					"imba_void_spirit_astral_step_helper"
+		"Ability5"					"imba_void_spirit_astral_step_helper_2"
 		"Ability6"					"imba_void_spirit_astral_step"
 		"Ability7"					"imba_void_spirit_aether_remnant_helper"
 		
