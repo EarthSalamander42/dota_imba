@@ -106,6 +106,8 @@ function ItemsGame:Init()
 			reward_table.rarity = ItemsGame:GetItemRarity(count)
 			reward_table.type = ItemsGame:GetItemType(count)
 			reward_table.item_id = tostring(count)
+			reward_table.slot_id = ItemsGame:GetItemSlot(count)
+			reward_table.hero = ItemsGame:GetItemHero(count)
 
 			table.insert(bp_reward_table, count, reward_table)
 		end
@@ -191,6 +193,20 @@ end
 
 function ItemsGame:GetItemSlot(item_id)
 	return GetItemInfo(item_id, "item_slot")
+end
+
+function ItemsGame:GetItemHero(item_id)
+	local item_info = GetItemInfo(item_id, "used_by_heroes")
+
+	if item_info then
+		if type(item_info) == "table" then
+			for k, v in pairs(item_info) do
+				return k
+			end
+		else
+			return item_info
+		end
+	end
 end
 
 function ItemsGame:GetItemModel(item_id)

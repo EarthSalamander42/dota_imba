@@ -377,18 +377,12 @@ function Battlepass:GetHeroEffect(hero)
 
 		CustomNetTables:SetTableValue("battlepass", "rewards_"..hero:GetPlayerID(), armory)
 
---		print(armory)
-
 		for k, v in pairs(armory) do
 			if hero:GetUnitName() == v.hero then
 				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
---					print(item_id, slot_id)
 					Wearable:_WearProp(hero, item_id, slot_id)
 
---					print(ItemsGame.kv["items"][item_id])
 					if ItemsGame.kv["items"][item_id] and ItemsGame.kv["items"][item_id]["visuals"] then
---						print(ItemsGame.kv["items"][item_id]["visuals"])
-
 						for i, j in pairs(ItemsGame.kv["items"][item_id]["visuals"]) do
 							if not string.find(i, "skip") then
 								if j.type == "particle" then
@@ -419,8 +413,6 @@ function Battlepass:GetHeroEffect(hero)
 				end
 			end
 		end
-
---		print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(hero:GetPlayerID())))
 	end
 
 --	print(CScriptParticleManager.PARTICLES_OVERRIDE)
