@@ -801,14 +801,36 @@ end
 
 CScriptParticleManager.PARTICLES_OVERRIDE = {}
 
+-- Call custom functions whenever CreateLinearProjectile is being called anywhere
+original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
+ProjectileManager.CreateLinearProjectile = function(self, hHandle)
+--	print("CreateLinearProjectile (override):", hHandle)
+
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
+--			print("Create Particle (override):", hHandle)
+			hHandle.EffectName = v.modifier
+--			print("New particle:", hHandle.EffectName)
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_CreateLinearProjectile(self, hHandle)
+
+	return response
+end
+
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
---	print("Create Particle (override):", self, sParticleName, iAttachType, hParent, hCaster)
 
 	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
 		if v.asset == sParticleName and v.parent == hCaster then
+--			print("Create Particle (override):", sParticleName, iAttachType, hParent, hCaster)
 			sParticleName = v.modifier
+--			print("New particle:", sParticleName)
+			break
 		end
 	end
 
@@ -826,6 +848,7 @@ CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAt
 	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
 		if v.asset == sParticleName and v.parent == hCaster then
 			sParticleName = v.modifier
+			break
 		end
 	end
 
@@ -843,6 +866,7 @@ CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, i
 	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
 		if v.asset == sParticleName and v.parent == hCaster then
 			sParticleName = v.modifier
+			break
 		end
 	end
 
@@ -882,6 +906,7 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
 	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
 		if v.asset == sSoundName and v.parent == self then
 			sSoundName = v.modifier
+			break
 		end
 	end
 
@@ -898,6 +923,7 @@ EmitSoundOn = function(sSoundName, hParent)
 	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
 		if v.asset == sSoundName and v.parent == hParent then
 			sSoundName = v.modifier
+			break
 		end
 	end
 

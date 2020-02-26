@@ -39,6 +39,9 @@
 
 "emblem_success"				"Emblem changed with: "
 
+"bp_reward_equip_success"		"Reward equipped: "
+"bp_reward_unequip_success"		"Reward unequipped: "
+
 //Leaderboard
 "leaderboard"					"Leaderboard"
 "leaderboard_loading"			"Loading leaderboard, please wait"

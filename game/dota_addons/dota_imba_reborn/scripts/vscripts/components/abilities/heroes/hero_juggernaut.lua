@@ -1,6 +1,8 @@
 -- Editors:
 --     Yahnich, 28.03.2017
 
+LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
 -- JUGGERNAUT SPECIFIC UTILITY FUNCTIONS --
 local function IsTotem(unit) -- have to do it like this because server and client side classes are different thanks valve
 	return ( not unit:HasMovementCapability() )
@@ -14,12 +16,6 @@ end
 imba_juggernaut_blade_fury = imba_juggernaut_blade_fury or class({})
 
 function imba_juggernaut_blade_fury:IsNetherWardStealable() return true end
-
-function imba_juggernaut_blade_fury:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "juggernaut_blade_fury" end
-	return "custom/imba_juggernaut_blade_fury_arcana"
-end
 
 function imba_juggernaut_blade_fury:GetCastRange()
 	return self:GetSpecialValueFor("effect_radius")
@@ -461,12 +457,6 @@ end
 imba_juggernaut_healing_ward = imba_juggernaut_healing_ward or class({})
 function imba_juggernaut_healing_ward:IsNetherWardStealable() return false end
 
-function imba_juggernaut_healing_ward:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "juggernaut_healing_ward" end
-	return "custom/imba_juggernaut_healing_ward_arcana"
-end
-
 function imba_juggernaut_healing_ward:OnSpellStart()
 	local caster = self:GetCaster()
 	local targetPoint = self:GetCursorPosition()
@@ -728,12 +718,6 @@ end
 
 -- BLADE DANCE --
 imba_juggernaut_blade_dance = imba_juggernaut_blade_dance or class({})
-
-function imba_juggernaut_blade_dance:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "juggernaut_blade_dance" end
-	return "custom/imba_juggernaut_blade_dance_arcana"
-end
 
 function imba_juggernaut_blade_dance:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_blade_dance_passive"
@@ -1507,12 +1491,6 @@ LinkLuaModifier("modifier_omnislash_image_afterimage_fade", "components/abilitie
 
 function imba_juggernaut_omni_slash:IsNetherWardStealable() return false end
 
-function imba_juggernaut_omni_slash:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "juggernaut_omni_slash" end
-	return "custom/imba_juggernaut_omni_slash_arcana"
-end
-
 function imba_juggernaut_omni_slash:GetCooldown(level)
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("cooldown_scepter")
@@ -1642,48 +1620,47 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
 
 		local omnislash_modifier_handler
-		
+
 		if self.caster:HasScepter() then
 			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		else
 			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		end
-		
+
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
 		end
-		
+
 		FindClearSpaceForUnit(omnislash_image, self.target:GetAbsOrigin() + RandomVector(128), false)
-		
+
 		omnislash_image:EmitSound("Hero_Juggernaut.OmniSlash")
-		
+
 		Timers:CreateTimer(FrameTime(), function()
-		if (not omnislash_image:IsNull()) then
-			StartAnimation(omnislash_image, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
-		end
+			if (not omnislash_image:IsNull()) then
+				StartAnimation(omnislash_image, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
+			end
 		end)
-		
+
 		if self.target:TriggerSpellAbsorb(self) then
 			return nil
 		end
-		
+
 		Timers:CreateTimer(FrameTime(), function()
-		if (not omnislash_image:IsNull()) then
-		self.current_position = omnislash_image:GetAbsOrigin()
+			if (not omnislash_image:IsNull()) then
+				self.current_position = omnislash_image:GetAbsOrigin()
 		
-		omnislash_image:PerformAttack(self.target, true, true, true, true, false, false, false)
+				omnislash_image:PerformAttack(self.target, true, true, true, true, false, false, false)
 		
-		-- Play particle trail when moving
-		local trail_pfx = ParticleManager:CreateParticle(self:GetCaster().omni_slash_trail_effect, PATTACH_ABSORIGIN, omnislash_image)
-		ParticleManager:SetParticleControl(trail_pfx, 0, self.previous_position)
-		ParticleManager:SetParticleControl(trail_pfx, 1, self.current_position)
-		ParticleManager:ReleaseParticleIndex(trail_pfx)
-		
-		end
+				-- Play particle trail when moving
+				local trail_pfx = ParticleManager:CreateParticle(self:GetCaster().omni_slash_trail_effect, PATTACH_ABSORIGIN, omnislash_image)
+				ParticleManager:SetParticleControl(trail_pfx, 0, self.previous_position)
+				ParticleManager:SetParticleControl(trail_pfx, 1, self.current_position)
+				ParticleManager:ReleaseParticleIndex(trail_pfx)
+			end
 		end)
 	else
 		local omnislash_modifier_handler
-		
+
 		if self.caster:HasScepter() then
 			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		else
@@ -1695,17 +1672,17 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		end
 
 		self:SetActivated(false)
-		
+
 		-- Disable Blade Fury during Omnislash (vanilla)
 		if self.caster:HasAbility("imba_juggernaut_blade_fury") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_fury"):SetActivated(false)
 		end
-		
+
 		-- Disable Blade Dance during Omnislash 
 		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
 		end
-		
+
 		--if not self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
 			self.caster:CenterCameraOnEntity(self.caster)
 		--end

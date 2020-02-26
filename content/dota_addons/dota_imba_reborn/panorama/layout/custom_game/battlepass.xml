@@ -60,6 +60,7 @@
 						<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="" />
 					</Panel>
 				</Panel>
+
 				<Panel id="TabsButtonWrapper" hittest="false">
 					<Panel id="TabButtonContainer" hittest="false">
 						<Button class="color_animation" id="BattlepassTabButton" onactivate="SwitchTab('BattlepassInfoContainer');">
@@ -77,6 +78,10 @@
 							<Label class="text" id="LoadingWarning" text="#leaderboard" />
 						</Button>
 					</Panel>
+
+					<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+						<Label id="CompanionNotificationLabel"/>
+					</Button>
 
 					<Panel id="MiniTabButtonContainer" class="MiniTabButtonContainer" hittest="false">
 						<Button class="sub_nav_tab" id="LeaderboardExperienceTabButton">
@@ -195,10 +200,6 @@
 				<Panel id="TabTitlePanel">
 					<Label id="DonatorTabTitle" class="DonatorTabLabel" text="#donator_info" />
 				</Panel>
-
-				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
-					<Label id="CompanionNotificationLabel"/>
-				</Button>
 <!--
 				<Panel id="PatreonTableWrapper" hittest="false">
 					<Panel id="Donator1" class="patreon_donator_row" hittest="false">

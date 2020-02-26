@@ -131,7 +131,7 @@ function ItemsGame:GetItemKV(item_id)
 end
 
 -- Item ID (custom id, not items_game.txt id), string / table name to return, return override
-function GetItemInfo(item_id, category, return_override)
+function ItemsGame:GetItemInfo(item_id, category, return_override)
 	if type(item_id) ~= "string" then item_id = tostring(item_id) end
 
 	if ItemsGame:GetItemKV(item_id)[category] then
@@ -155,48 +155,62 @@ function GetItemInfo(item_id, category, return_override)
 	end
 end
 
+function ItemsGame:GetItemID(item_id)
+	return self:GetItemInfo(item_id, "item_id")
+end
+
 function ItemsGame:GetItemTeam(item_id)
-	return GetItemInfo(item_id, "item_team", "radiant")
+	return self:GetItemInfo(item_id, "item_team", "radiant")
 end
 
 function ItemsGame:GetItemImage(item_id)
-	return GetItemInfo(item_id, "image_inventory")
+	return self:GetItemInfo(item_id, "image_inventory")
 end
 
 function ItemsGame:GetItemUnlockLevel(item_id)
-	return GetItemInfo(item_id, "item_unlock_level", 1)
+	return self:GetItemInfo(item_id, "item_unlock_level", 1)
 end
 
 function ItemsGame:GetItemName(item_id)
-	return GetItemInfo(item_id, "item_name")
+	return self:GetItemInfo(item_id, "item_name")
 end
 
 function ItemsGame:GetItemVisuals(item_id)
-	return GetItemInfo(item_id, "visuals")
+	return self:GetItemInfo(item_id, "visuals")
 end
 
 function ItemsGame:GetItemName(item_id)
-	return GetItemInfo(item_id, "item_name")
+	return self:GetItemInfo(item_id, "item_name")
 end
 
 function ItemsGame:GetItemRarity(item_id)
-	return GetItemInfo(item_id, "item_rarity")
+	return self:GetItemInfo(item_id, "item_rarity")
 end
 
 function ItemsGame:GetItemType(item_id)
-	return GetItemInfo(item_id, "item_type", "nope")
+	return self:GetItemInfo(item_id, "item_type", "nope")
+end
+
+function ItemsGame:GetItemModifier(item_id)
+	return self:GetItemInfo(item_id, "modifier")
 end
 
 function ItemsGame:GetItemWearables(item_id)
-	return GetItemInfo(item_id, "wearables", {})
+	if self:GetItemType(item_id) == "bundle" then
+		return self:GetItemInfo(item_id, "wearables", {})
+	elseif self:GetItemType(item_id) == "wearable" then
+		local callback = {}
+		callback[self:GetItemID(item_id)] = self:GetItemSlot(item_id)
+		return callback
+	end
 end
 
 function ItemsGame:GetItemSlot(item_id)
-	return GetItemInfo(item_id, "item_slot")
+	return self:GetItemInfo(item_id, "item_slot")
 end
 
 function ItemsGame:GetItemHero(item_id)
-	local item_info = GetItemInfo(item_id, "used_by_heroes")
+	local item_info = self:GetItemInfo(item_id, "used_by_heroes")
 
 	if item_info then
 		if type(item_info) == "table" then

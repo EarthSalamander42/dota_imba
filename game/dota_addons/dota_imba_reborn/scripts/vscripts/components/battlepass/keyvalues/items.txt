@@ -1068,7 +1068,6 @@
 		"item_id"					"20844"
 		"item_type"					"bundle"
 		"item_unlock_level"			"100"
-//		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 
 		"wearables"
 		{
@@ -1083,7 +1082,14 @@
 		"item_id"					"4794"
 		"item_type"					"wearable"
 		"item_unlock_level"			"200"
-//		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+	}
+
+	"69" // Bladeform Legacy
+	{
+		"item_id"					"9059"
+		"item_type"					"wearable"
+		"item_unlock_level"			"300"
+		"modifier"					"modifier_juggernaut_arcana"
 	}
 
 //	"2" // Antipode Couriers (Radiant)

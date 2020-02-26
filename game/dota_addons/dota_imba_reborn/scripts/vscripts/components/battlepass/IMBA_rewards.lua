@@ -14,7 +14,6 @@ BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
 BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
 BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[55]		= {"lina_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
@@ -289,15 +288,6 @@ function Battlepass:GetHeroEffect(hero)
 		hero.quas_orb = "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
 		hero.wex_orb = "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
 		hero.exort_orb = "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-		hero.blade_dance_effect = "particles/units/heroes/hero_juggernaut/juggernaut_crit_tgt.vpcf"
-		hero.blade_dance_sound = "Hero_Juggernaut.BladeDance"
-		hero.omni_slash_hit_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
-		hero.omni_slash_trail_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
-		hero.omni_slash_dash_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_dash.vpcf"
-		hero.omni_slash_status_effect = "particles/status_fx/status_effect_omnislash.vpcf"
-		hero.omni_slash_end = "particles/units/heroes/hero_juggernaut/juggernaut_omni_end.vpcf"
-		hero.omni_slash_light = "particles/units/heroes/hero_juggernaut/juggernaut_omnislash_light.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
 		CustomNetTables:SetTableValue("battlepass", "leshrac", {
 			diabolic_edict = "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf",
@@ -380,10 +370,19 @@ function Battlepass:GetHeroEffect(hero)
 		for k, v in pairs(armory) do
 			if hero:GetUnitName() == v.hero then
 				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
+					if type(item_id) == "number" then item_id = tostring(item_id) end
+--					print(item_id, slot_id, type(item_id))
 					Wearable:_WearProp(hero, item_id, slot_id)
+
+					local modifier = ItemsGame:GetItemModifier(v.item_id)
+
+					if modifier then
+						hero:AddNewModifier(hero, nil, modifier, {})
+					end
 
 					if ItemsGame.kv["items"][item_id] and ItemsGame.kv["items"][item_id]["visuals"] then
 						for i, j in pairs(ItemsGame.kv["items"][item_id]["visuals"]) do
+--							print(i, j)
 							if not string.find(i, "skip") then
 								if j.type == "particle" then
 									local particle_table = {}
@@ -415,9 +414,9 @@ function Battlepass:GetHeroEffect(hero)
 		end
 	end
 
---	print(CScriptParticleManager.PARTICLES_OVERRIDE)
---	print("---------------------------------")
---	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+	print(CScriptParticleManager.PARTICLES_OVERRIDE)
+	print("---------------------------------")
+	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
 
 	local hello = false
 	if hello == false then return end
@@ -600,8 +599,6 @@ function Battlepass:GetHeroEffect(hero)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then
-				LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-
 				local style = 0
 				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana2"] then
 					style = 1
@@ -631,8 +628,6 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero.blade_dance_sound = "Hero_Juggernaut.BladeDance.Arcana"
 
-				hero:AddNewModifier(hero, nil, "modifier_juggernaut_arcana", {})
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
 				Wearable:_WearProp(hero, "9059", "head", style)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then

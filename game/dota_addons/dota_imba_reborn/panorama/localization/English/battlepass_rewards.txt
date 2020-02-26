@@ -9,6 +9,7 @@
 "battlepass_sheepstick"					"Scythe of Vyse"
 "battlepass_shiva"						"Shiva"
 "battlepass_bundle"						"Bundle"
+"battlepass_wearable"					"Wearable"
 
 // "battlepass_blink"						"Nature Blink"
 "battlepass_blink2"						"Light Blue Blink"
