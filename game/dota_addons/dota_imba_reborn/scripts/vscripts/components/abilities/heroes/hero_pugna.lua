@@ -851,6 +851,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"monkey_king_wukongs_command",
 			"doom_doom",
 			"zuus_cloud",
+			"void_spirit_aether_remnant"
 		}
 
 		-- Ignore items

@@ -485,6 +485,14 @@ function GameMode:ItemAddedFilter( keys )
 		
 		return false
 	end
+	
+	----------------------------------------------------------------
+	-- Gem of True Sight Logic (mostly for Soul of Truth merging) --
+	----------------------------------------------------------------
+	
+	if item:GetName() == "item_gem" then
+		item:SetPurchaser(unit)
+	end
 
 	return true
 end
