@@ -1180,10 +1180,18 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
 		if self:GetCaster():HasScepter() and self:GetCaster():FindAbilityByName("clinkz_burning_army") and self:GetCaster():FindAbilityByName("clinkz_burning_army"):IsTrained() then
 			for i = 1, self:GetAbility():GetSpecialValueFor("scepter_skeleton_count") do
-				-- todo: spawn them on left and right of clinkz pos
 				local pos = self:GetCaster():GetAbsOrigin() + RandomVector(250)
+				
+				if i == 1 then
+					pos	= self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetRightVector() * 250 * (-1))
+				elseif i == 2 then
+					pos	= self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetRightVector() * 250)
+				end
+				
 				local archer = CreateUnitByName("npc_dota_clinkz_skeleton_archer", pos, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 				archer:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("clinkz_burning_army"), "modifier_imba_clinkz_burning_army_skeleton_custom", {})
+				archer:AddNewModifier(self:GetCaster(), nil, "modifier_kill", {duration = self:GetCaster():FindAbilityByName("clinkz_burning_army"):GetSpecialValueFor("duration")})
+				archer:SetForwardVector(self:GetCaster():GetForwardVector())
 			end
 
 			if self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
