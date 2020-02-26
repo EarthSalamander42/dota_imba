@@ -48,6 +48,7 @@
 #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
 #base heroes/void_spirit/abilities.txt
@@ -33579,7 +33580,7 @@
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"duration"					"7"
+				"duration"					"5"
 			}
 		}
 	}
