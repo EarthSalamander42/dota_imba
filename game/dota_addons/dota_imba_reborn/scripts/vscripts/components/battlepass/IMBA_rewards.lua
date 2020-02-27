@@ -361,7 +361,6 @@ function Battlepass:GetHeroEffect(hero)
 		return
 	end
 
-	-- todo: http request to get which item_id is equipped for the hero
 	if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= "0" then
 		local armory = api:GetArmory(hero:GetPlayerID())
 
@@ -371,19 +370,21 @@ function Battlepass:GetHeroEffect(hero)
 			if hero:GetUnitName() == v.hero then
 				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
 					if type(item_id) == "number" then item_id = tostring(item_id) end
---					print(item_id, slot_id, type(item_id))
-					Wearable:_WearProp(hero, item_id, slot_id)
 
 					local modifier = ItemsGame:GetItemModifier(v.item_id)
 
 					if modifier then
+						print("Add cosmetic modifier:", modifier)
 						hero:AddNewModifier(hero, nil, modifier, {})
 					end
 
+					print(item_id, slot_id)
+					Wearable:_WearProp(hero, item_id, slot_id)
+
 					if ItemsGame.kv["items"][item_id] and ItemsGame.kv["items"][item_id]["visuals"] then
 						for i, j in pairs(ItemsGame.kv["items"][item_id]["visuals"]) do
---							print(i, j)
-							if not string.find(i, "skip") then
+							print(i, j)
+							if not i == "skip_model_combine" then
 								if j.type == "particle" then
 									local particle_table = {}
 									particle_table.asset = j.asset
@@ -399,6 +400,7 @@ function Battlepass:GetHeroEffect(hero)
 
 									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
 								elseif j.type == "ability_icon" then
+									print("ability icon:", j.modifier)
 									CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
 								elseif j.type == "icon_replacement_hero" then
 									CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
@@ -420,6 +422,8 @@ function Battlepass:GetHeroEffect(hero)
 
 	local hello = false
 	if hello == false then return end
+
+	print("DONT")
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")

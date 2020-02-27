@@ -30,45 +30,49 @@ function modifier_wearable:IsHidden()
 end
 
 function modifier_wearable:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(FrameTime())
-		self.render_color = nil
-	end
+	if not IsServer() then return end
+
+	self:StartIntervalThink(FrameTime())
+	self.render_color = nil
 end
 
 function modifier_wearable:OnIntervalThink()
-	local hero = self:GetParent():GetOwnerEntity()
+	local cosmetic = self:GetParent()
+	local hero = cosmetic:GetOwnerEntity()
 	if hero == nil then return end
 
 	if self.render_color == nil then
-		if Battlepass:HasArcana(self:GetParent():GetOwnerEntity():GetPlayerID(), "juggernaut") == 0 then
+		if hero:HasModifier("modifier_juggernaut_arcana") then
+			print("Jugg arcana 1, Color wearables!")
 			self.render_color = true
-			self:GetParent():SetRenderColor(50, 50, 70)
-		elseif Battlepass:HasArcana(self:GetParent():GetOwnerEntity():GetPlayerID(), "juggernaut") == 1 then
+			cosmetic:SetRenderColor(80, 80, 100)
+		elseif hero:HasModifier("modifier_juggernaut_arcana") and hero:FindModifierByName("modifier_juggernaut_arcana"):GetStackCount() == 1 then
+			print("Jugg arcana 2, Color wearables!")
 			self.render_color = true
-			self:GetParent():SetRenderColor(255, 220, 220)
-		elseif self:GetParent():GetOwnerEntity():GetUnitName() == "npc_dota_hero_vardor" then
+			cosmetic:SetRenderColor(255, 220, 220)
+		elseif hero:GetUnitName() == "npc_dota_hero_vardor" then
+			print("Vardor, Color wearables!")
 			self.render_color = true
-			self:GetParent():SetRenderColor(255, 0, 0) -- not turning to red somehow :(
+			cosmetic:SetRenderColor(255, 0, 0) -- not turning to red somehow :(
 		end
 	end
 
 	for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
 		if not hero:HasModifier(v) then
-			if self:GetParent():HasModifier(v) then
-				self:GetParent():RemoveModifierByName(v)
+			if cosmetic:HasModifier(v) then
+				cosmetic:RemoveModifierByName(v)
 			end
 		else
-			if not self:GetParent():HasModifier(v) then
-				self:GetParent():AddNewModifier(self:GetParent(), nil, v, {})
+			if not cosmetic:HasModifier(v) then
+				cosmetic:AddNewModifier(cosmetic, nil, v, {})
 				break -- remove this break if you want to add multiple modifiers at the same time
 			end
 		end
 	end
 
 	if hero:IsOutOfGame() or hero:IsHexed() then
-		self:GetParent():AddNoDraw()
+		cosmetic:AddNoDraw()
 	else
-		self:GetParent():RemoveNoDraw()
+		cosmetic:RemoveNoDraw()
 	end
 end
