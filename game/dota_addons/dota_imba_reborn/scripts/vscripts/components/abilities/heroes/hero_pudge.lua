@@ -67,18 +67,6 @@ function imba_pudge_light_hook:OnInventoryContentsChanged()
 	end
 end
 
-function imba_pudge_sharp_hook:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "custom/pudge_sharp_hook" end
-	return "custom/pudge_sharp_hook_arcana_style"..self:GetCaster().arcana_style
-end
-
-function imba_pudge_light_hook:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "custom/pudge_light_hook" end
-	return "custom/pudge_light_hook_arcana_style"..self:GetCaster().arcana_style
-end
-
 modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
 modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class({})
 
@@ -305,14 +293,14 @@ function imba_pudge_meat_hook:OnSpellStart()
 	hook_dmg
 	hook_width
 	]]
-	
-	if not self:GetCaster().hook_pfx then
+
+--	if not self:GetCaster().hook_pfx then
 		--self:GetCaster().hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
-		self:GetCaster().hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-	end
+--		self:GetCaster().hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+--	end
 
 	local vKillswitch = Vector((((self:GetCastRange() + GetCastRangeIncrease(self:GetCaster())) / hook_speed) * 2) + 10, 0, 0)
-	local hook_particle = ParticleManager:CreateParticle(self:GetCaster().hook_pfx, PATTACH_CUSTOMORIGIN, nil)
+	local hook_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetCaster())
 	ParticleManager:SetParticleAlwaysSimulate(hook_particle)
 	ParticleManager:SetParticleControlEnt(hook_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true)
 	ParticleManager:SetParticleControl(hook_particle, 2, Vector(hook_speed, self:GetCastRange() + GetCastRangeIncrease(self:GetCaster()), hook_width))
@@ -320,9 +308,9 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_particle, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_particle, 5, Vector( 0, 0, 0 ) )
 	
-	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
+--	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
 		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)
-	end
+--	end
 
 	local projectile_info = {
 		Ability = self,
@@ -421,7 +409,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 					if move_damage > 0 then
 						if not target.is_ruptured then
 							target.is_ruptured = true
-							self.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, target)
+							self.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, target, self:GetCaster())
 							EmitSoundOn("hero_bloodseeker.rupture.cast", target)
 							EmitSoundOn("hero_bloodseeker.rupture", target)
 						end
@@ -466,7 +454,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		if hTarget then
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget)
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookRetract", hTarget)
-			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget)
+			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin() + Vector( 0, 0, 96 ), true)
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
 			bVision = true
@@ -484,7 +472,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
 
-				if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then -- error for reasons, maybe because target is dead
+				if self:GetCaster():HasModifier("modifier_pudge_arcana") then -- error for reasons, maybe because target is dead
 					if hTarget:IsRealHero() then
 						self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
 					else
@@ -494,13 +482,13 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 					if self:GetCaster().successful_hooks >= 2 then
 						EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
 						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
-						if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") == 1 then
+						if self:GetCaster():HasModifier("modifier_pudge_arcana") == 1 then
 							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
 						end
 
 						self:GetCaster():EmitSound("Hero.Pudge.Arcana.Streak")
 
-						local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+						local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster(), self:GetCaster())
 						local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
 						ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, self:GetCaster().successful_hooks - stack_10 * 10, self:GetCaster().successful_hooks))
 						ParticleManager:ReleaseParticleIndex(hook_counter)
@@ -509,12 +497,12 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
 			else
-				if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
+				if self:GetCaster():HasModifier("modifier_pudge_arcana") then
 					self:GetCaster().successful_hooks = 0
 				end
 			end
 		else
-			if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
+			if self:GetCaster():HasModifier("modifier_pudge_arcana") then
 				self:GetCaster().successful_hooks = 0
 			end
 		end
@@ -603,15 +591,6 @@ end
 
 function imba_pudge_meat_hook:GetIntrinsicModifierName()
 	return "modifier_imba_pudge_meat_hook_handler"
-end
-
-function imba_pudge_meat_hook:GetAbilityTextureName()
-	if not IsClient() then return end
-	if self:GetCaster().arcana_style then
-		return "custom/pudge_meat_hook_arcana_style"..self:GetCaster().arcana_style
-	else
-		return "pudge_meat_hook"
-	end
 end
 
 if modifier_imba_pudge_meat_hook_handler == nil then modifier_imba_pudge_meat_hook_handler = class({}) end
@@ -803,12 +782,6 @@ function imba_pudge_rot:OnToggle()
 	end
 end
 
-function imba_pudge_rot:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "pudge_rot" end
-	return "custom/pudge_rot_arcana_style"..self:GetCaster().arcana_style
-end
-
 imba_pudge_rot_active = imba_pudge_rot_active or class({})
 
 function imba_pudge_rot_active:IsDebuff()				return false end
@@ -840,7 +813,7 @@ function imba_pudge_rot_active:OnCreated()
 		EmitSoundOn("Hero_Pudge.Rot", caster)
 
 		local pfx_name = "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-		self.pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, caster)
+		self.pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 		ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 0, 0))
 	end
 end
@@ -926,12 +899,6 @@ function imba_pudge_flesh_heap:GetIntrinsicModifierName()
 	return "modifier_imba_flesh_heap_stacks"
 end
 
-function imba_pudge_flesh_heap:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "pudge_flesh_heap" end
-	return "custom/pudge_flesh_heap_arcana_style"..self:GetCaster().arcana_style
-end
-
 modifier_imba_pudge_flesh_heap_handler = class({})
 function modifier_imba_pudge_flesh_heap_handler:IsDebuff() return false end
 function modifier_imba_pudge_flesh_heap_handler:IsHidden() return true end
@@ -961,7 +928,7 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 		-- Check to make sure death is within range of Pudge
 		if (self:GetAbility():GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= flesh_heap_range then
 			self:SetStackCount(self:GetStackCount() + 1)
-			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 			ParticleManager:ReleaseParticleIndex(pfx)
 		end
 	end
@@ -1127,13 +1094,13 @@ function imba_pudge_dismember:OnSpellStart()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self:GetChannelTime() - FrameTime()})
 
-	if Battlepass and Battlepass:HasArcana(self:GetCaster(), "pudge") then
-		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
+	if self:GetCaster():HasModifier("modifier_pudge_arcana") then
+		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target, self:GetCaster())
 		ParticleManager:SetParticleControl(self.pfx, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.pfx, 8, Vector(1, 1, 1))
 		ParticleManager:SetParticleControl(self.pfx, 15, target:GetFittingColor())
 	else
-		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN, target)
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN, target, self:GetCaster())
 		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	end
 end
@@ -1156,12 +1123,6 @@ function imba_pudge_dismember:OnChannelFinish(bInterrupted)
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
-end
-
-function imba_pudge_dismember:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "pudge_dismember" end
-	return "custom/pudge_dismember_arcana_style"..self:GetCaster().arcana_style
 end
 
 --------------------------------
@@ -1361,7 +1322,7 @@ function modifier_imba_dismember_scepter:OnCreated()
 
 	if not IsServer() then return end
 
-	self.pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster(), self:GetCaster():GetTeamNumber())
+	self.pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_pudge/pudge_swallow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster(), self:GetCaster():GetTeamNumber(), self:GetCaster())
 	self:AddParticle(self.pfx, false, false, -1, true, true)
 
 	self:GetParent():AddNoDraw()
@@ -1416,7 +1377,7 @@ function modifier_imba_dismember_scepter:OnDestroy()
 	self:GetParent():RemoveNoDraw()
 	self:GetCaster():SwapAbilities("imba_pudge_flesh_heap", "imba_pudge_eject", true, false)
 
-	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow_release.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_swallow_release.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(pfx)
 end
 
@@ -1489,4 +1450,17 @@ function imba_pudge_rot:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_pudge_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_pudge_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_pudge_9"), "modifier_special_bonus_imba_pudge_9", {})
 	end
+end
+
+LinkLuaModifier("modifier_pudge_arcana", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+
+-- Arcana animation handler
+modifier_pudge_arcana = modifier_pudge_arcana or class({})
+
+function modifier_pudge_arcana:RemoveOnDeath()
+	return false
+end
+
+function modifier_pudge_arcana:IsHidden()
+	return not IsInToolsMode()
 end

@@ -81,7 +81,6 @@ if BP level is enough to have the new reward!
 ItemsGame = ItemsGame or class({})
 
 function ItemsGame:Init()
-	ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
 	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
 	ItemsGame.battlepass = {}
 	ItemsGame.companions = {}
@@ -147,8 +146,8 @@ function ItemsGame:GetItemInfo(item_id, category, return_override)
 	else
 		local vanilla_item_id = tostring(ItemsGame:GetItemKV(item_id).item_id)
 
-		if ItemsGame.kv["items"][vanilla_item_id] and ItemsGame.kv["items"][vanilla_item_id][category] then
-			return ItemsGame.kv["items"][vanilla_item_id][category]
+		if Wearable.items_game["items"][vanilla_item_id] and Wearable.items_game["items"][vanilla_item_id][category] then
+			return Wearable.items_game["items"][vanilla_item_id][category]
 		else
 			return nil
 		end

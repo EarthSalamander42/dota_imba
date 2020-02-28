@@ -17,7 +17,6 @@ BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[65]		= {"juggernaut_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
 BATTLEPASS_LEVEL_REWARD[75]		= {"pudge_arcana", "arcana"}
@@ -229,6 +228,41 @@ local function failduh()
 	print("CALLBACK FAIL")
 end
 
+function Battlepass:SetOverrideAssets(hero, modifier, table_name)
+	for i, j in pairs(table_name) do
+--		print(i, j)
+
+		if i ~= "skip_model_combine" then
+			if (j.type == "particle" and j.style == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("Particle:", j)
+				local particle_table = {}
+				particle_table.asset = j.asset
+				particle_table.modifier = j.modifier
+				particle_table.parent = hero
+
+				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
+			elseif (j.type == "sound" and j.style == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("Sound:", j)
+				local sound_table = {}
+				sound_table.asset = j.asset
+				sound_table.modifier = j.modifier
+				sound_table.parent = hero
+
+				table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+			elseif (j.type == "ability_icon" and j.style == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+				print("ability icon:", j)
+				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+			elseif (j.type == "icon_replacement_hero" and j.style == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("topbar icon:", j)
+				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+					player_id = hero:GetPlayerID(),
+					icon_path = j.modifier,
+				})
+			end
+		end
+	end
+end
+
 -- todo: use values in items_game.txt instead
 function Battlepass:GetHeroEffect(hero)
 	if hero:GetUnitName() == "npc_dota_hero_axe" then
@@ -378,47 +412,21 @@ function Battlepass:GetHeroEffect(hero)
 						hero:AddNewModifier(hero, nil, modifier, {})
 					end
 
-					print(item_id, slot_id)
+--					print(item_id, slot_id)
 					Wearable:_WearProp(hero, item_id, slot_id)
 
-					if ItemsGame.kv["items"][item_id] and ItemsGame.kv["items"][item_id]["visuals"] then
-						for i, j in pairs(ItemsGame.kv["items"][item_id]["visuals"]) do
-							print(i, j)
-							if not i == "skip_model_combine" then
-								if j.type == "particle" then
-									local particle_table = {}
-									particle_table.asset = j.asset
-									particle_table.modifier = j.modifier
-									particle_table.parent = hero
-
-									table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-								elseif j.type == "sound" then
-									local sound_table = {}
-									sound_table.asset = j.asset
-									sound_table.modifier = j.modifier
-									sound_table.parent = hero
-
-									table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
-								elseif j.type == "ability_icon" then
-									print("ability icon:", j.modifier)
-									CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-								elseif j.type == "icon_replacement_hero" then
-									CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
-										player_id = hero:GetPlayerID(),
-										icon_path = j.modifier,
-									})
-								end
-							end
-						end
+					if Wearable.items_game["items"][item_id] and Wearable.items_game["items"][item_id]["visuals"] then
+						Battlepass:SetOverrideAssets(hero, modifier, Wearable.items_game["items"][item_id]["visuals"])
+						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
 					end
 				end
 			end
 		end
-	end
 
-	print(CScriptParticleManager.PARTICLES_OVERRIDE)
-	print("---------------------------------")
-	print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+--		print(CScriptParticleManager.PARTICLES_OVERRIDE)
+--		print("---------------------------------")
+--		print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+	end
 
 	local hello = false
 	if hello == false then return end
@@ -729,9 +737,6 @@ function Battlepass:GetHeroEffect(hero)
 				end
 
 				Wearable:_WearProp(hero, "7756", "back", style)
-
-				-- custom icons
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
 			end
 
 			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"

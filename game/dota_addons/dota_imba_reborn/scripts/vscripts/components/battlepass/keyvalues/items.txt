@@ -1092,6 +1092,14 @@
 		"modifier"					"modifier_juggernaut_arcana"
 	}
 
+	"70" // Feast of Abscession
+	{
+		"item_id"					"7756"
+		"item_type"					"wearable"
+		"item_unlock_level"			"400"
+		"modifier"					"modifier_pudge_arcana"
+	}
+
 //	"2" // Antipode Couriers (Radiant)
 //	{
 //		"item_id"					"10888"

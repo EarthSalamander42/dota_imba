@@ -638,6 +638,7 @@ function SetArmory(hero, slot_id, item_id) {
 		slot_id		: slot_id,
 		item_id		: item_id,
 		isEquipped	: equip,
+		custom_game	: game_type,
 	}, function() {
 		$("#CompanionNotification").AddClass("success");
 		var text = $.Localize("bp_reward_equip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;

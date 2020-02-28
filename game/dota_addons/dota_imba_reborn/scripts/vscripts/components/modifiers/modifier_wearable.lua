@@ -43,7 +43,7 @@ function modifier_wearable:OnIntervalThink()
 
 	if self.render_color == nil then
 		if hero:HasModifier("modifier_juggernaut_arcana") then
-			print("Jugg arcana 1, Color wearables!")
+--			print("Jugg arcana 1, Color wearables!")
 			self.render_color = true
 			cosmetic:SetRenderColor(80, 80, 100)
 		elseif hero:HasModifier("modifier_juggernaut_arcana") and hero:FindModifierByName("modifier_juggernaut_arcana"):GetStackCount() == 1 then
