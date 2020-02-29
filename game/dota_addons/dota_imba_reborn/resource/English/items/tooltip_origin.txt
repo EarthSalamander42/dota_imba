@@ -1,0 +1,30 @@
+"DOTA_Tooltip_Ability_item_imba_origin"						"Origin"
+"DOTA_Tooltip_Ability_item_recipe_imba_origin"				"Origin Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_origin_Description"		"<h1>Active: Return to Loss</h1>Applies a debuff on the target for %active_duration% seconds, based on Origin's state:<br><br><font color='#90EE90'><b>Health: </b></font>Disables all healing, and deals %health_damage_amount% + %enemy_hp_drain%%% of the enemy's current HP as damage per second. Damage instances scale with status resistance. Undispellable.</b></font><br><font color='#C71585'><b>Power: </b></font>Reduces strength/agility/intellect by %power_stat_reduction%%% of the enemy's primary stat. Undispellable, and can be cast on magic-immunne enemies.<br><font color='#696969'><b>Chaos: </b></font>%chaos_dmg_pct%%% of damage dealt to the enemy is also dealt to enemies within %chaos_radius% radius of the target. Can also be cast on other allies, which reflects at half the percentage.\n<h1>Active/Passive: Alter State</h1>Self-cast to change between <font color='#90EE90'><b>Health</b></font>, <font color='#C71585'><b>Power</b></font>, and <font color='#696969'><b>Chaos</b></font> states. The wearer gains bonuses based on Origin's state:<br><br><font color='#90EE90'><b>Health: </b></font>Increases health regen amp by %health_passive%%%.</b></font><br><font color='#C71585'><b>Power: </b></font>Increases strength/agility/intellect by %power_passive%.<br><font color='#696969'><b>Chaos: </b></font>Duplicates %chaos_passive%%% of damage taken back to the unit that dealt the damage."
+
+"DOTA_Tooltip_Ability_item_imba_origin_Lore"				"Earth to earth, ashes to ashes, dust to dust. As the amulet sees countless ends, so too shall it see your beginning."
+
+"DOTA_Tooltip_Ability_item_imba_origin_Note0"				"If Return to Loss is reflected via Lotus Orb et al., it will apply the Health state modifier."
+
+"DOTA_Tooltip_Ability_item_imba_origin_bonus_strength"			"+$str"
+"DOTA_Tooltip_Ability_item_imba_origin_bonus_agility"			"+$agi"
+"DOTA_Tooltip_Ability_item_imba_origin_bonus_intellect"			"+$int"
+
+
+"DOTA_Tooltip_ability_item_imba_origin_bonus_damage"			"+$damage"
+"DOTA_Tooltip_ability_item_imba_origin_bonus_aspd"				"+$attack"
+"DOTA_Tooltip_Ability_item_imba_origin_bonus_armor"             "+$armor"
+
+"DOTA_Tooltip_ability_item_imba_origin_bonus_health"			"+$health"
+"DOTA_Tooltip_ability_item_imba_origin_bonus_mana"				"+$mana"
+"DOTA_Tooltip_ability_item_imba_origin_bonus_mana_regen"		"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_origin_health"					"Origin - Health"
+"DOTA_Tooltip_modifier_item_imba_origin_health_Description"		"Unable to heal, and taking a portion of current health as damage every tick."
+
+"DOTA_Tooltip_modifier_item_imba_origin_power"					"Origin - Power"
+"DOTA_Tooltip_modifier_item_imba_origin_power_Description"		"All stats reduced by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
+
+"DOTA_Tooltip_modifier_item_imba_origin_chaos"					"Origin - Chaos"
+"DOTA_Tooltip_modifier_item_imba_origin_chaos_Description"		"A large percentage of all damage received is dealt to allies within %dMODIFIER_PROPERTY_TOOLTIP% radius."

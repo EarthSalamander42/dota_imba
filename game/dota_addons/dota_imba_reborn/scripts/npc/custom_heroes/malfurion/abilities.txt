@@ -1,0 +1,407 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Malfurion: Entrangling Roots
+	//=================================================================================================================
+	"imba_malfurion_entrangling_roots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"custom/malfurion/entrangling_roots"
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.35"
+		"AbilityCooldown"				"13.0"
+		"AbilityManaCost"				"95"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0 3.0 4.0 5.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_per_sec"			"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_damage_tooltip"	"200 300 400 500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Malfurion: Rejuvenation
+	//=================================================================================================================
+	"imba_malfurion_rejuvenation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_malfurion.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+
+		// Stats
+		//-------------------------------------------------------------------------------------
+		"AbilityCastPoint"			"0.5"
+		"AbilityCastRange"			"900"
+		"AbilityCooldown"			"18.0"
+		"AbilityManaCost"			"110 120 130 140"
+		"AbilityTextureName"		"custom//malfurion/rejuvenation"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
+
+		"precache"
+		{
+			"particle"		"particles/econ/events/ti6/bottle_ti6.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_per_sec"			"20 40 60 80"
+				"LinkedSpecialBonus"	"special_bonus_imba_malfurion_5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_per_sec_creep_pct"	"25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_per_sec_building_pct"	"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Malfurion: Mark of the Claw
+	//=================================================================================================================
+	"imba_malfurion_mark_of_the_claw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"custom/malfurion/mark_of_the_claw"
+
+		"precache"
+		{
+			"particle"  	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+			"soundfile" 	"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance"				"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"175 200 225 250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_damage_pct"		"60"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_start"			"150"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_end"			"350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Malfurion: Strength of the Wild
+	//=================================================================================================================
+	"imba_malfurion_strength_of_the_wild"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"custom//malfurion/strength_of_the_wild"
+		"MaxLevel"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_tooltip"		"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_percentage"	"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Malfurion: Mirage
+	//=================================================================================================================
+	"imba_malfurion_living_tower"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"MaxLevel"						"3"
+		"LevelsBetweenUpgrades"			"6"
+		"RequiredLevel"					"6"
+		"AbilityTextureName"			"custom/tower_tenacity"
+		"AbilityManaCost"				"150 200 250"
+		"AbilityCooldown"				"120 105 90"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"600"
+		"HasScepterUpgrade"				"1"
+
+//		"precache"
+//		{
+//			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+//			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+//		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health"				"2000 3500 5000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150 250 350"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_range"			"800 900 1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed"			"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_radius"			"400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_pct"			"50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER" // Multiplied by map xp multiplier
+				"xp_bounty"				"50 100 150"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER" // Multiplied by map gold multiplier
+				"gold_bounty"			"50 100 150"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_health"		"3500 5000 7500"
+				"RequiresScepter"		"1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_duration"		"60"
+				"RequiresScepter"		"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Malfurion's Talents
+	//=================================================================================================================
+	"special_bonus_imba_malfurion_1" // Aegis Aura ability on living tower
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_malfurion_living_tower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_malfurion_2" // Atrophy Aura ability on living tower
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_malfurion_living_tower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_malfurion_3" // Soul Leech Aura ability on living tower
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_malfurion_living_tower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_malfurion_4" // Tower Barrier Aura ability on living tower
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_malfurion_living_tower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_malfurion_5" // +%value% heal/sec for Rejuvenation
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_malfurion_rejuvenation"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"40"
+			}
+		}
+	}
+}

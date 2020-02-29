@@ -1,0 +1,37 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Templar Assassin
+	//=================================================================================================================
+	"npc_dota_hero_templar_assassin"
+	{
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"		"imba_templar_assassin_refraction"
+		"Ability2"		"imba_templar_assassin_meld"
+		"Ability3"		"imba_templar_assassin_psi_blades"
+		"Ability4"		"imba_templar_assassin_trap"
+		"Ability5"		"imba_templar_assassin_trap_teleport"
+		"Ability6"		"imba_templar_assassin_psionic_trap"
+		
+		"Ability10"		"special_bonus_attack_speed_25"
+		"Ability11"		"special_bonus_evasion_15"
+		"Ability12"		"special_bonus_movement_speed_25"
+		"Ability13"		"special_bonus_imba_templar_assassin_psionic_trap_damage" // +X Psionic Trap Damage
+		"Ability14"		"special_bonus_imba_templar_assassin_meld_dispels" // Meld Dispels
+		"Ability15"		"special_bonus_imba_templar_assassin_meld_armor_reduction"// -X Meld Armor Reduction 
+		"Ability16"		"special_bonus_imba_templar_assassin_meld_bash" // Xs Meld Hit Bash
+		"Ability17"		"special_bonus_imba_templar_assassin_refraction_instances" // +X Refraction Instances
+		
+		// Removd Talents
+		// "Ability13"		"special_bonus_unique_templar_assassin_3" // +X Psionic Trap Damage
+		// "Ability14"		"special_bonus_unique_templar_assassin_4" // Meld Dispels
+		// "Ability15"		"special_bonus_unique_templar_assassin_2"// -X Meld Armor Reduction 
+		// "Ability16"		"special_bonus_unique_templar_assassin_7" // Xs Meld Hit Bash
+		// "Ability17"		"special_bonus_unique_templar_assassin" // +X Refraction Instances
+	}
+}

@@ -1,0 +1,38 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Medusa
+	//=================================================================================================================
+	"npc_dota_hero_medusa"
+	{
+	
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		
+		"Ability1"		"imba_medusa_split_shot"
+		"Ability2"		"imba_medusa_mystic_snake"
+		"Ability3"		"imba_medusa_mana_shield"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_medusa_stone_gaze"
+		
+		"Ability10"		"special_bonus_attack_damage_20"
+		"Ability11"		"special_bonus_evasion_20"
+		"Ability12"		"special_bonus_attack_speed_50"
+		"Ability13"		"special_bonus_imba_mystic_snake_mana_steal"
+		"Ability14"		"special_bonus_imba_medusa_extra_split_shot_targets"
+		"Ability15"		"special_bonus_imba_medusa_stone_gaze_duration"
+		"Ability16"		"special_bonus_imba_medusa_bonus_mana"
+		"Ability17"		"special_bonus_imba_medusa_split_shot_modifiers"
+		
+		// Removed Talents
+		// "Ability13"		"special_bonus_unique_medusa_3" // +X% Mystic Snake Mana Steal (handled with custom talent)
+		// "Ability14"		"special_bonus_unique_medusa_5" // -Xs Mystic Snake Cooldown
+		// "Ability15"		"special_bonus_unique_medusa" // +Xs Stone Gaze Duration (handled with custom talent)
+		// "Ability16"		"special_bonus_mp_1000"
+		// "Ability17"		"special_bonus_unique_medusa_4"	// Split Shot Uses Modifiers (handled with custom talent)
+	}
+}

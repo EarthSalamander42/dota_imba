@@ -1,0 +1,296 @@
+@define COLOR_INFO_BACKGROUND_BLUE: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK_BLUE: #002233;
+@define COLOR_INFO_TEXT_BLUE: #66aaff;
+
+@define COLOR_INFO_BACKGROUND_GREEN: #004d1ada;
+@define COLOR_INFO_BACKGROUND_GREEN_SOCIAL: #003800da;
+@define COLOR_INFO_BACKGROUND_DARK_GREEN: #003312;
+@define COLOR_INFO_TEXT_GREEN: #00e64d;
+
+@define COLOR_INFO_BACKGROUND_ORANGE: #994d00ee;
+@define COLOR_INFO_BACKGROUND_DARK_ORANGE: #663300;
+@define COLOR_INFO_TEXT_ORANGE: #ffb366;
+
+@define COLOR_INFO_BACKGROUND_RED: #660000ee;
+@define COLOR_INFO_BACKGROUND_DARK_RED: #330000;
+@define COLOR_INFO_TEXT_RED: #ff0000;
+
+@define COLOR_INFO_BACKGROUND_GREY: #222222ee;
+@define COLOR_INFO_BACKGROUND_GREY_SOCIAL: #222222da;
+@define COLOR_INFO_BACKGROUND_DARK_GREY: #333333;
+@define COLOR_INFO_TEXT_GREY: #ff0000;
+
+.addon-root {
+	height: 100%;
+	background-color: black;
+	background-position: center center;
+	background-size: cover;
+	background-image: url("file://{images}/custom_game/loading_screen/loading_screen_bg.png");
+/*	z-index: 1; /* disable if loading players are no longer visible */
+}
+
+.down {
+	flow-children: down;
+	width: 100%;
+	box-shadow: 0 0 10px #111;
+	padding: 10px 20px;
+}
+
+.large {
+	font-size: 28px;
+}
+
+.huge {
+	font-size: 36px;
+}
+
+.normal {
+	font-size: 20px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+#imba-loading {
+	flow-children: down;
+	width: 79.3%;
+	height: 100%;
+	z-index: 1; /* Should fix buttons not hoverable/clickable in pick screen, if it hides players loading please comment this line */
+}
+
+#imba-loading-title,
+#imba-loading-title-patreon,
+#imba-loading-title-promote,
+#imba-loading-title-vote {
+	width: 1400px;
+	margin-top: 20px;
+	margin-left: 70px;
+	flow-children: right;
+}
+
+#imba-loading-title {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#imba-loading-title-patreon {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#imba-loading-title-promote, {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#imba-loading-title-vote, {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	flow-children: none;
+}
+
+#loading-title-text,
+#loading-title-text-patreon,
+#loading-title-text-promote,
+#loading-title-text-vote {
+	width: 100%;
+	font-size: 36px;
+}
+
+#loading-title-text {
+	color: COLOR_INFO_TEXT_GREEN;
+}
+
+#loading-title-text-patreon {
+	color: COLOR_INFO_TEXT_ORANGE;
+}
+
+#loading-title-text-promote {
+	color: COLOR_INFO_TEXT_BLUE;
+}
+
+#loading-title-text-vote {
+	color: COLOR_INFO_TEXT_RED;
+}
+
+#loading-content-text,
+.loading-content-text-patreon,
+#loading-content-text-promote,
+#loading-content-text-vote, {
+	margin-bottom: 5px;
+	font-size: 20px;
+	color: #cccccc;
+	width: 100%;
+}
+
+#loading-map-text {
+	margin: 20px 0px;
+	color: #ddddff;
+	font-size: 24px;
+}
+
+#loading-link {
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	box-shadow: 0 0 10px #111;
+}
+
+#loading-link-promote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	box-shadow: 0 0 10px #111;
+}
+
+#loading-link-vote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_RED;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_RED;
+	box-shadow: 0 0 10px #111;
+}
+
+#loading-link-patreon {
+	width: 340px;
+	height: 80px;
+	background-image: url("file://{images}/custom_game/patreon.png");
+	background-size: cover;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	box-shadow: 0 0 10px #111;
+	transition-duration: 0.25s;
+	transition-property: box-shadow;
+}
+
+#loading-link-patreon:hover {
+	box-shadow: 0 0 10px orange;
+}
+
+#loading-link-text,
+#loading-link-text-promote {
+	padding: 0px 10px;
+	font-size: 24px;
+	text-shadow: 0 0 5px #000;
+	color: #cccccc;	
+}
+
+#loading-link-text:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+#loading-link-text-promote:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+.LoadingButtons {
+	margin-left: 280px;
+	overflow: scroll;
+	flow-children: down;
+	background-color: COLOR_INFO_BACKGROUND_GREY_SOCIAL;
+	border-left: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-right: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-bottom: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+.LoadingButtons Panel {
+	padding: 0px 20px;
+	flow-children: right;
+}
+
+.LoadingButtons Button:hover {
+	box-shadow: 0 0 7px #333;
+}
+
+.LoadingButtons Button {
+	border: 1px solid #333;
+	padding: 5px 20px 3px;
+	margin: 4px 12px 4px 0px;
+	box-shadow: 0 0 5px  #222;
+}
+
+.LoadingButtons Label {
+	font-size: 20px;
+	color: #fff;
+}
+
+#BottomButtonBar {
+	margin-left: 125px;
+}
+
+.SocialButtons {
+	transition-duration: 0.25s;
+	transition-property: pre-transform-scale2d;
+}
+
+.SocialButtons:hover {
+	pre-transform-scale2d: 1.05;
+}
+
+#ImbaLoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#ImbaLoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
+#ImbaLoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
+#ImbaLoadingSocialReddit { background-color: gradient(linear, 0% 0%, 0% 100%, from(#ff6600), to(#111)); }
+#ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+
+.DarkBlue {
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111));
+}
+
+#vote-content {
+	width: 100%;
+	height: 50px;
+	flow-children: right;
+}
+
+.VoteButton {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.VoteGameModeText {
+	margin-left: 27px;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px 2px black;
+	visibility: collapse;
+}
+
+.Active .VoteGameModeText {
+	visibility: visible;
+}
+
+.Active #VoteGameModeText1
+{
+	color: yellow;
+}
+
+.Active #VoteGameModeText2
+{
+	color: orange;
+}
+
+.Active #VoteGameModeText3
+{
+	color: red;
+}
+
+.Active #VoteGameModeText4
+{
+	color: darkred;
+}
+
+.Active #VoteGameModeText5
+{
+	color: darkred;
+}
+
+.CGSRadio
+{
+	width: 100%;
+	z-index: 2;
+	visibility: collapse;
+}
+
+.Active .CGSRadio {
+	visibility: visible;
+}

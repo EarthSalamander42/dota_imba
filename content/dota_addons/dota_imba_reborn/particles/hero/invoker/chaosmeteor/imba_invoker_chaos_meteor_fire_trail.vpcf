@@ -1,0 +1,233 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 164
+	m_flConstantLifespan = 3.0
+	m_ConstantColor = [ 182, 138, 119, 25 ]
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flRadiusScaleMax = 0.75
+				m_flRadiusScaleMin = 0.75
+				m_flAlphaScaleMax = 0.75
+				m_flAlphaScaleMin = 0.75
+				m_nCPin = 0
+			}
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_flStartFadeSize = 0.575
+			m_flEndFadeSize = 0.65
+			m_flMaxSize = 0.75
+			m_flOverbrightFactor = 5.0
+			m_flAddSelfAmount = 2.5
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/fire_particle_10/fire_particle_10_low.vtex"
+			m_flAnimationRate = 0.75
+			m_nHSVShiftControlPoint = 62
+			m_ColorScale = [ 255, 255, 255 ]
+		},
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_nOrientationType = 3
+			m_flStartFadeSize = 0.575
+			m_flEndFadeSize = 0.65
+			m_flMaxSize = 0.75
+			m_flOverbrightFactor = 5.0
+			m_flAddSelfAmount = 2.5
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/fire_particle_10/fire_particle_10_low.vtex"
+			m_flAnimationRate = 0.25
+			m_nHSVShiftControlPoint = 62
+			m_nAnimationType = "ANIMATION_TYPE_FIT_LIFETIME"
+			m_ColorScale = [ 255, 255, 255 ]
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_RampScalarLinear"
+			m_nField = "4"
+			m_RateMin = -0.1
+			m_RateMax = 0.1
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.25
+			m_flEndScale = 0.8
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 1.0
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_nFieldOutput = "16"
+			m_flOutput = 0.0
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_nFieldOutput = "7"
+			m_flOutput = 0.0
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_Gravity = [ 0.0, 0.0, 25.0 ]
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 164.0
+			m_flRadiusMax = 200.0
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 10
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 3.0
+			m_fLifetimeMax = 4.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 75
+			m_nAlphaMax = 75
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_nControlPointNumber = 3
+			m_OffsetMin = [ -50.0, -50.0, 0.0 ]
+			m_OffsetMax = [ 50.0, 50.0, 0.0 ]
+		},
+		{
+			_class = "C_INIT_PositionPlaceOnGround"
+			m_CollisionGroupName = "DEBRIS"
+			m_flMaxTraceLength = 512.0
+			m_flOffset = 8.0
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpEndFadeInTime = 8.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 50.0
+			}
+		},
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpStartFadeInTime = 3.0
+			m_flOpEndFadeInTime = 5.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 50.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpStartFadeInTime = 5.0
+			m_flOpEndFadeInTime = 12.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 50.0
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly_sparks.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor_fire_trail_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor_fire_trail_glow.vpcf"
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_HSVShiftToCP"
+			m_DefaultHSVColor = [ 255, 158, 97, 255 ]
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 6
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 60
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 50.0, 255.0, 50.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 61
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 62
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}

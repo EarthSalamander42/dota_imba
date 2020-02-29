@@ -1,0 +1,37 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Chen
+	//=================================================================================================================
+	"npc_dota_hero_chen"
+	{
+	
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability1"		"imba_chen_penitence"
+		"Ability2"		"imba_chen_divine_favor"
+		"Ability3"		"imba_chen_holy_persuasion"
+		"Ability4"		"imba_chen_test_of_faith"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_chen_hand_of_god"
+		
+		"Ability10"		"special_bonus_exp_boost_60"
+		"Ability11"		"special_bonus_cast_range_200"
+		"Ability12"		"special_bonus_armor_8"
+		"Ability13"		"special_bonus_imba_chen_divine_favor_cd_reduction"
+		"Ability14"		"special_bonus_imba_chen_hand_of_god_cooldown"
+		"Ability15"		"special_bonus_imba_chen_test_of_faith_cd_reduction"
+		"Ability16"		"special_bonus_all_stats_15"
+		"Ability17"		"special_bonus_imba_chen_remnants_of_penitence"
+		
+		// Removed Talents
+		// "Ability14"		"special_bonus_gold_income_240"
+		//"Ability16"		"special_bonus_unique_chen_1"
+		//"Ability16"		"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
+		//"Ability17"		"special_bonus_unique_chen_2"		
+	}
+}

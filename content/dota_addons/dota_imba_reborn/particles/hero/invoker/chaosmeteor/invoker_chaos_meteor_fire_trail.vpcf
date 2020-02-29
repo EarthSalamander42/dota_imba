@@ -1,0 +1,191 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 250
+	m_ConstantColor = [ 255, 255, 255, 35 ]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderRopes"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bMod2X = true
+			m_nOrientationType = 3
+			m_hTexture = resource:"materials/particle/beam_crack_04.vtex"
+			m_flRadiusScale = 0.5
+			m_flTextureVWorldSize = 268.45639
+			m_nMaxTesselation = 1
+			m_ColorScale = [ 255, 255, 255 ]
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.1
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.5
+			m_flEndTime = 0.055
+			m_flStartScale = 0.0
+			m_flBias = 0.8
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.5
+			m_flStartTime = 0.9
+			m_flEndScale = 0.0
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 0.1
+			m_nFieldOutput = "16"
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 1.0
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_nFieldOutput = "16"
+			m_flOutput = 0.0
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_nFieldOutput = "7"
+		},
+		{
+			_class = "C_OP_DifferencePreviousParticle"
+			m_nOpEndCapState = 0
+			m_flInputMin = 71.0
+			m_flInputMax = 72.0
+			m_nFieldOutput = "16"
+			m_flOutputMin = 1.0
+			m_flOutputMax = 0.0
+			m_bSetPreviousParticle = true
+		},
+		{
+			_class = "C_OP_RemapScalarEndCap"
+			m_nFieldOutput = "16"
+			m_flInputMax = 15.0
+			m_nFieldInput = "8"
+		},
+		{
+			_class = "C_OP_RemapVisibilityScalar"
+			m_flRadiusScale = 0.1
+			m_nFieldOutput = "7"
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 3.0
+			m_fLifetimeMin = 3.0
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMax = 300.0
+			m_flRadiusMin = 180.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_nFieldOutput = "22"
+			m_TintMax = [ 0, 0, 0, 255 ]
+			m_ColorMax = [ 61, 61, 61, 255 ]
+		},
+		{
+			_class = "C_INIT_CreateFromParentParticles"
+		},
+		{
+			_class = "C_INIT_RemapParticleCountToScalar"
+			m_nFieldOutput = "7"
+			m_nInputMax = 2
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMax = [ 0.0, 0.0, 128.0 ]
+			m_OffsetMin = [ 0.0, 0.0, 128.0 ]
+		},
+		{
+			_class = "C_INIT_PositionPlaceOnGround"
+			m_flOffset = 32.0
+			m_bIncludeWater = true
+			m_bSetNormal = true
+			m_flMaxTraceLength = 1024.0
+			m_CollisionGroupName = "DEBRIS"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_bInitFromKilledParentParticles = true
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_CONTROL_POINT_COMPONENT"
+				m_nControlPoint = 11
+				m_nVectorComponent = 0
+				m_nMapType = "PF_MAP_TYPE_MULT"
+				m_flMultFactor = 6.0
+			}
+		},
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_batrider/batrider_firefly_path_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_batrider/batrider_firefly_path_light.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_batrider/batrider_firefly_path_f.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 11
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 1.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
+}

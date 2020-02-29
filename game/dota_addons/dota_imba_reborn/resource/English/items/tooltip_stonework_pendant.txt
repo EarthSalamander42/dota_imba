@@ -1,0 +1,8 @@
+"DOTA_Tooltip_ability_item_imba_stonework_pendant"								"Stonework Pendant"
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Description"				"<h1>Passive: Blood Magic</h1>The wearer gains bonus health and health regen equal to %mana_to_hp_pct%%% of their max mana and mana regen respectively.<br><br>In exchange, any instance of mana that the wearer expends or loses is instead redirected to their hit points at %mana_hp_convert_mult%x the rate."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Lore"						"You CAN get blood from a stone."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_spell_lifesteal"			"%SPELL LIFESTEAL:"
+
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note0"					"Multiple Stonework Pendants do not stack."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note1"					"Any mana lost under Stonework Pendant is immediately refunded."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note2"					"The mana to health redirection is lethal, and is considered a deny if Blood Magic reduces the owner's health to 0."

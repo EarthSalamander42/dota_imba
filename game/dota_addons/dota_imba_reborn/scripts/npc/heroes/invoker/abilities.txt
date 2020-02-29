@@ -1,0 +1,1509 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Invoker's QUAS
+	//=================================================================================================================
+	"imba_invoker_quas"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"invoker_quas"
+		"MaxLevel"						"7"
+		"levelkey"						"quaslevel"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
+		}	
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_regen_per_instance"	"3 5 10 15 20 25 30 35"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"			"1 3 5 7 9 11 13 15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's WEX
+	//=================================================================================================================
+	"imba_invoker_wex"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"invoker_wex"
+		"MaxLevel"						"7"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+		}	
+
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_per_instance"	"1 3 5 7 9 11 13 15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed_per_instance"	"1 3 5 7 9 11 13 15"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_agility"				"1 3 5 7 9 11 13 15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's EXORT
+	//=================================================================================================================
+	"imba_invoker_exort"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"invoker_exort"
+		"MaxLevel"						"7"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
+		}	
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_per_instance"	"5 10 15 20 25 30 35 45"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intelligence"		"1 3 5 7 9 11 13 15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Invoke
+	//=================================================================================================================
+	"imba_invoker_invoke"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"RequiredLevel"					"0"
+		"MaxLevel"						"4"
+		"AbilityTextureName"			"invoker_invoke"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+		"HasScepterUpgrade"				"1"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3 2 2 1"
+		"AbilityManaCost"				"20 40 65 100"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_invoke.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_invoked_spells"		"2 2 2 2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"2 1 0 0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_cost_scepter"			"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"0 8 12 15"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"0 0 15 25"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spellpower"			"0 0 6 15"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"0 0 0 25"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_reduction_pct"	"0 0 0 15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's EMP
+	//=================================================================================================================
+	"imba_invoker_emp"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"invoker_emp"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"0"
+		"AbilityCastAnimation" "ACT_DOTA_CAST_EMP"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_invoker/invoker_emp.vpcf"
+			"particle" 					"particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf"
+		}
+
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"950"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"25"
+		"AbilityManaCost"				"125"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"2.9 2.8 2.7 2.6 2.5 2.4 2.3 2.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"675"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burned"				"250 550 750 1000 1250 1500 1750 2500"
+				"levelkey"					"wexlevel"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_mana_pct"		"50"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_gain_per_mana_pct"	"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"after_shock_duration"		"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Sun Strike
+	//=================================================================================================================
+	"imba_invoker_sun_strike"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"MaxLevel"						"1"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"invoker_sun_strike"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/invoker_sun_strike_outer_beam.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray2.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_big_ray3.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_blastup.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_blastup_glow.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_c.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_column_beams.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_dark_arts.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_glow_small.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_glow_small2.vpcf"
+			"particle"		"particles/hero/invoker/sunstrike/imba_invoker_sun_strike_outer_beam_rotating_glow.vpcf"
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"25"
+		"AbilityManaCost"				"175"
+			
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"1.7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"175"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"100 162.5 225 287.5 350 412.5 475 537.5"
+				"levelkey"				"exortlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"4.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cataclysm_cooldown"		"90"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cataclysm_min_range"		"160"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cataclysm_max_range"		"200"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"4.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"incinerate_dmg"		"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"incinerate_duration"	"3.0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"incinerate_beam_radius"		"175"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Invoker's Cold Snap
+	//=================================================================================================================
+	"imba_invoker_cold_snap"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"invoker_cold_snap"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
+		}
+			
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"100"
+			
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5"
+				"levelkey"				"quaslevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"freeze_duration"		"0.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"freeze_cooldown"		"0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
+				"levelkey"				"quaslevel"	
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"freeze_damage"			"10 20 30 40 50 60 70 80"
+				"levelkey"				"quaslevel"	
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_trigger"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Ghost Walk
+	//=================================================================================================================
+	"imba_invoker_ghost_walk"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"          "SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"invoker_ghost_walk"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_ghost_walk_debuff.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"125"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"area_of_effect"				"625"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"enemy_slow"					"-20 -25 -30 -35 -40 -50 -60 -70"
+				"levelkey"						"quaslevel"
+			}
+			"04"
+			{				
+				"var_type"						"FIELD_FLOAT"
+				"self_slow"						"0 5 10 15 20 25 35 45"
+				"levelkey"						"wexlevel"
+			}			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_fade_time"				"2.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"invis_fade_time"				"0.5"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				// Higher value == less preformance heavy... but also less smoothie feeling
+				"aura_update_interval"				"0.2"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"increase_max_movement_speed"		"700"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Alacrity
+	//=================================================================================================================
+	"imba_invoker_alacrity"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"invoker_alacrity"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_a.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_b.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_c.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning_b.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning_e.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning_impact.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning_impact_b.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_chain_lightning_light.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_hit_effect.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_hit_effect_a.vpcf"
+			"particle"		"particles/hero/invoker/alacrity/imba_invoker_alacrity_hit_effect_b.vpcf"
+			"particle"		"particles/status_fx/status_effect_alacrity.vpcf"
+		}
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"45"
+			
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15 30 45 60 80 100 120 140"
+				"levelkey"				"wexlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15 30 45 60 80 100 120 140"
+				"levelkey"				"exortlevel"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"number_of_chains"		"2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_distance"		"500"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_damage_pct"		"25.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Forge Spirit
+	//=================================================================================================================
+	"imba_invoker_forge_spirit"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"invoker_forge_spirit"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+			"model"			"models/heroes/invoker/forge_spirit.vmdl"
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"75"
+		"AttributeBaseIntelligence"		"45"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_damage"			"28 37 46 55 64 76 88 100"
+				"levelkey"				"exortlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_mana"			"150 200 250 300 350 400 450 661"
+				"levelkey"				"exortlevel"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_armor"			"1 3 5 7 9 11 13 15"
+				"levelkey"				"exortlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_attack_range"	"50 125 200 275 350 425 500 575"
+				"levelkey"				"quaslevel"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_hp"				"350 550 850 1150 1350 1750 2000 2550"
+				"levelkey"				"quaslevel"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_duration"		"40 45 50 55 60 70 80 90"
+				"levelkey"				"quaslevel"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				// Depends on Quas and Exort levels. Both need to be lvl4 to get 2 spirits
+				"spirit_count"			"1 1 1 2 2 2 2" 
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"death_radius" 			"150"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"death_damage" 			"100 125 150 175 200 225 250 275"
+			}
+
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Forge Spirit Melting Strike
+	//=================================================================================================================
+	"imba_forged_spirit_melting_strike"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"forged_spirit_melting_strike"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_removed"			"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_armor_removed"		"999"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Forge Spirit Melting Strike
+	//=================================================================================================================
+	"imba_forged_spirit_death"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"invoker_forge_spirit"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Tornado
+	//=================================================================================================================
+	"imba_invoker_tornado"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"1"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"invoker_tornado"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_TORNADO"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2000"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"150"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/econ/items/invoker/invoker_ti6/invoker_tornado_ti6.vpcf"
+			"particle"			"particles/econ/items/invoker/invoker_ti6/invoker_tornado_child_ti6.vpcf"
+		}
+			
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"travel_distance"			"1000 1500 2000 2500 3000 4000 5000 10000"
+				"levelkey"					"wexlevel"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"travel_speed"				"1200"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"350"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_distance"			"600"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_vision_duration"		"3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"lift_duration"				"0.8 1.1 1.4 1.7 2.0 2.3 2.6 2.9"
+				"levelkey"					"quaslevel"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage"				"120"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wex_damage"				"50 100 150 200 250 300 350 400"
+				"levelkey"					"wexlevel"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_initial_height"	"400"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_min_height"		"350"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_max_height"		"450"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Ice Wall
+	//=================================================================================================================
+	"imba_invoker_ice_wall"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"          "SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"1"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"invoker_ice_wall"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ICE_WALL"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25"
+		"AbilityManaCost"				"175"
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall.vpcf"
+			"particle"			"particles/hero/invoker/icewall/imba_invoker_ice_wall.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_b.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.5 5.0 6.5 8.0 9.5 11.0 12.5 14.0"
+				"levelkey"					"quaslevel"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-20 -40 -60 -80 -100 -120 -140 -160"
+				"levelkey"					"quaslevel"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"2.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_per_second"			"12 18 24 30 40 50 60 70"
+				"levelkey"					"exortlevel"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				 // The distance from Invoker's position to the middle point of the ice wall.
+				"wall_placement_distance"	"200" 
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				 // The distance from Invoker's position to the middle point of the ice wall.
+				"wall_length"				"1650" 
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				// The width of the wall's slowing/damaging aura.
+				"wall_area_of_effect"		"105"  
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_slow"				"15"  
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Invoker's Chaos Meteor
+	//=================================================================================================================
+	"imba_invoker_chaos_meteor"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"MaxLevel"						"1"
+		"HotKeyOverride"				"D"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"invoker_chaos_meteor"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_CHAOS_METEOR"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"55"
+		"AbilityManaCost"				"200"
+
+		
+		"precache"
+		{
+			"particle"				"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor.vpcf"
+			"particle"				"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor_fire_trail.vpcf"
+			"particle"				"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor_fire_trail_b.vpcf"
+			"particle"				"particles/hero/invoker/chaosmeteor/imba_invoker_chaos_meteor_fire_trail_glow.vpcf"			
+			"particle"				"particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_chaos_meteor_burn_debuff.vpcf"
+		}
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"land_time"				"1.3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"325"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"800 1200 1600 2000 2500 3000 4000 7500"
+				"levelkey"				"wexlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"350"
+			}			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"500"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"end_vision_duration"	"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"main_damage"			"60 80 100 120 145 170 195 220"
+				"levelkey"				"exortlevel"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"3.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_dps"				"15 20 25 30 36 42 48 54"
+				"levelkey"				"exortlevel"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_dps_inverval"		"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Deafening Blast
+	//=================================================================================================================
+	"imba_invoker_deafening_blast"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"          "SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"1"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"invoker_deafening_blast"
+		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+			"particle"		"particles/hero/invoker/deafeningblast/imba_invoker_deafening_blast.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"200"
+		"AbilityModifierSupportValue"	"0.5"	// Applies 2 modifiers
+
+		//-------------------------------------------------------------------------------------------------------------
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"1400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"9001"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_start"			"225"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_end"			"275"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"end_vision_duration"	"3.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"50 100 150 200 250 300 400 600"
+				"levelkey"				"exortlevel"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0"
+				"levelkey"				"quaslevel"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"1.25 2.0 2.75 3.5 4.25 5.0 5.75 6.5"
+				"levelkey"				"wexlevel"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's EMP Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_emp"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"threshold"	                   "1"
+			}
+			"02"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"effect_reduction"	        "25"
+			}
+			"02"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"charges"	        		"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Chaos Meteor Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_chaos_meteor"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  	"FIELD_INTEGER"
+				"number_of_meteors"	    		"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Forge Spirit Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_forge_spirit"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"additional_spirits"         "1"
+			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"reduced_duration" 	        "15"
+			}
+		}
+
+	}
+
+	//=================================================================================================================
+	// Invoker's IceWall talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_icewall"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  			"FIELD_INTEGER"
+				"ice_walls"         					"3"
+			}
+			"02"
+			{
+				"var_type"                  			"FIELD_INTEGER"
+				"ice_wall_offset"         				"65"
+			}
+		}
+
+	}
+
+	//=================================================================================================================
+	// Invoker's Cataclysm Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_sun_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"cooldown"					"90"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"minimum_range"         	"150"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"maximum_range"         	"200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_area_of_effect"		"50"
+			}
+		}
+
+	}
+
+	//=================================================================================================================
+	// Invoker's Alacrity Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_alacrity"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  	"FIELD_INTEGER"
+				"alacrity_cooldown"				"45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Deafening Blast Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_deafening_blast"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  	"FIELD_INTEGER"
+				"number_of_blasts"				"12"
+			}
+			"01"
+			{
+				"var_type"                  	"FIELD_INTEGER"
+				"damage_reduction"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker's Tornado Talent
+	//=================================================================================================================
+	"imba_special_bonus_unique_invoker_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_invoker_tornado"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  	"FIELD_FLOAT"
+				"cooldown_reduction"			"16.0"
+			}
+			"02"
+			{
+				"var_type"                  	"FIELD_FLOAT"
+				"daze_duration"					"3.0"
+			}
+		}
+	}
+}

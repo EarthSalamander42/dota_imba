@@ -1,0 +1,20 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Nature's Prophet
+	//=================================================================================================================
+	"npc_dota_hero_furion"
+	{
+		"IsImba"					"0"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability6"		"imba_furion_wrath_of_nature"
+		
+		"Ability13"		"special_bonus_imba_furion_wrath_of_nature_boost"
+		
+		// Removed Talents
+	}
+}

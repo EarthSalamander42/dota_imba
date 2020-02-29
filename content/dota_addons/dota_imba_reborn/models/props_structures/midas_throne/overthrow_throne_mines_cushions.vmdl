@@ -1,0 +1,328 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CVModel CVModel_0
+{
+	CVmeshList m_meshList = CVmeshList
+	{
+		CVmesh[] m_meshList = 
+		[
+			CVmesh
+			{
+				string m_meshName = "overthrow_throne_mines_cushions"
+				string m_meshFile = "models/props_structures/midas_throne/fbx/mesh/overthrow_throne_mines_cushions.fbx"
+				string m_materialSearchPath = ""
+				bool m_bSkinParentedObjects = true
+				bool m_bLegacySkinParentedTransforms = false
+				bool m_bExpensiveTangents = false
+				bool m_bExpensiveVertices = false
+				bool m_bIgnoreCloth = false
+				bool m_bGetSkinningFromLod0 = false
+				CVmorphInfo* m_pMorphInfo = NULL
+			}
+		]
+	}
+	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	{
+		CVClothProxyMesh[] m_clothProxyMeshList = 
+		[
+			
+		]
+		float m_flClothEnableThreshold = 0.050000
+		bool m_bCreateStaticBone = false
+		int m_nMaxBonesPerVertex = 4
+		bool m_bRemoveUnusedBonesEnabled = false
+		bool m_bDriveMeshesWithBacksolvedJointsOnly = true
+		float m_flMatchProxiesToMeshes = 1.000000
+		float m_flReservedFloat = 0.000000
+		int m_nReservedInt = 0
+		bool m_bReservedBool1 = false
+		bool m_bReservedBool2 = false
+		bool m_bReservedBool3 = false
+		bool m_bReservedBool4 = false
+	}
+	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
+	{
+		CVphysicsMesh[] m_meshList = 
+		[
+			
+		]
+	}
+	CVmodelInfo* m_pModelInfo = NULL
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = &CVBoneFlagList_0
+		string m_sFileName = ""
+	}
+	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
+	[
+		
+	]
+	CVattachmentListReference[] m_pAttachmentLists = 
+	[
+		
+	]
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
+	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
+	{
+		NodeMaterialGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVMeshGroupListReference m_pMeshGroupList = CVMeshGroupListReference
+	{
+		MeshGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVLODGroupListReference m_pLodGroupList = CVLODGroupListReference
+	{
+		LODGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropBreakableListReference m_pPropBreakableList = CVpropBreakableListReference
+	{
+		CVpropBreakableList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropDataListReference m_pPropDataList = CVpropDataListReference
+	{
+		CVpropDataList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVConstraintListReference[] m_pConstraintLists = 
+	[
+		
+	]
+	string m_collision = ""
+	string m_softbody = ""
+	string m_sMDLFilename = ""
+	string[] m_sOffsetHitboxSets = 
+	[
+		
+	]
+	float(3) m_vHitboxSetOffset = ( 0.000000, 0.000000, 0.000000 )
+	string[] m_scriptFiles = 
+	[
+		
+	]
+	CVMaterialRemapList* m_pMaterialRemapList = NULL
+	float m_flFbxScale = 1.000000
+	float m_flQCScale = 1.000000
+	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
+	CVPsf* m_pvPsf = NULL
+	string m_keyValueText = ""
+	bool m_bStaticProp = false
+	bool m_bEnableClothProcessing = true
+	float m_flClothEnableThreshold = 0.050000
+	int m_nMaxClothVertsPerMesh = 2048
+	bool m_bBuildClothBoneHierarchy = false
+	symbol m_nNavType = AUTH_NAV_MESH
+	bool m_bMakeUniqueVMeshes = false
+	bool m_bMakeImplicitBindPoseSequence = false
+	bool m_bAdjustSkeletonFromBoneFlags = false
+}
+
+CVBoneFlagList CVBoneFlagList_0
+{
+	CVEncodingFlagBone[] m_boneFlag = 
+	[
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Root0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowB0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowB1_0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowB0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowB2_0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowC0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowA0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowA1_0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowA0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowA2_0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowB1_0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "TasselA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowB2_0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "TasselB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "PillowC0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "PillowC1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		}
+	]
+	CVEncodingFlagPose[] m_boneWorldspace = 
+	[
+		CVEncodingFlagPose
+		{
+			string m_name = "Root0_JNT"
+			float(3) m_Translation = ( 0.000000, 0.000000, 0.000000 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowB0_JNT"
+			float(3) m_Translation = ( 24.139620, 30.253126, 164.889267 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowA0_JNT"
+			float(3) m_Translation = ( 15.128163, -41.325897, 178.645096 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowB1_0_JNT"
+			float(3) m_Translation = ( 57.003761, 10.393639, 162.713943 )
+			float(3) m_Rotation = ( 112.490196, 43.239258, -23.818102 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowB2_0_JNT"
+			float(3) m_Translation = ( 41.037937, 52.718353, 182.173752 )
+			float(3) m_Rotation = ( 111.735649, -35.338875, 34.735950 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowC0_JNT"
+			float(3) m_Translation = ( -53.480747, 18.671650, 190.672272 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowA1_0_JNT"
+			float(3) m_Translation = ( 34.804825, -25.063820, 177.327026 )
+			float(3) m_Rotation = ( 60.820274, 49.076397, 15.028254 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowA2_0_JNT"
+			float(3) m_Translation = ( 3.377331, -51.197109, 195.910812 )
+			float(3) m_Rotation = ( 102.739281, -22.992599, -150.742981 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "TasselA0_JNT"
+			float(3) m_Translation = ( 82.366821, -0.802372, 136.643356 )
+			float(3) m_Rotation = ( -31.997681, 89.555733, -130.068726 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "TasselB0_JNT"
+			float(3) m_Translation = ( 67.888840, 71.335716, 205.341415 )
+			float(3) m_Rotation = ( 25.167835, 81.669960, -67.317490 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "PillowC1_JNT"
+			float(3) m_Translation = ( -52.308933, 20.001648, 203.927429 )
+			float(3) m_Rotation = ( 91.767853, -60.805069, 172.126541 )
+		}
+	]
+	CVEncodingFlagMorph[] m_morphFlag = 
+	[
+		
+	]
+	CVEncodingFlagUser[] m_userFlag = 
+	[
+		
+	]
+}

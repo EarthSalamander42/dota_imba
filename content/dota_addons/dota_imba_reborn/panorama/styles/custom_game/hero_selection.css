@@ -1,0 +1,1543 @@
+@keyframes 'fade_full'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.8;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+.HeroSelection {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(30, 30, 30, 0.95);
+	transition-property: opacity, transform;
+	/*transition-delay: 3s;*/
+	transition-timing-function: ease-in;
+	transition-duration: 0.5s;
+	transform: scaleX(1) scaleY(1) translateY(0);
+}
+
+.Ranked {
+	padding-top: 30px;
+}
+
+#BlurBG {
+	width: 100%;
+	height: 100%;
+	background-color: #000000ba;
+	z-index: -90;
+//	blur: gaussian(10);
+}
+
+#ImageBG {
+	width: 100%;
+	height: 100%;
+	z-index: -100;
+}
+
+#ChatPlaceholder {
+	width: 580px;
+	height: 400px;
+	vertical-align: top;
+	horizontal-align: right;
+	margin-bottom: 0px;
+}
+
+#MinimapPlaceHolder {
+	width: 300px;
+	height: 300px;
+	vertical-align: bottom;
+	horizontal-align: left;
+	margin-right: 80px;
+	margin-bottom: 30px;
+	margin-left: 35px;
+	background-color: #000000ea;
+	border:	1px solid #0f2425aa;
+	border-radius: 	5px;
+}
+
+.AspectRatio16x10 #MinimapPlaceHolder {
+	width: 300px;
+	height: 300px;
+}
+
+.AspectRatio4x3 #MinimapPlaceHolder {
+	width: 300px;
+	height: 300px;
+}
+
+#minimap {
+	background-image: url("s2r://panorama/images/hud/reborn/bg_minimap_psd.vtex");
+	background-size: contain;
+	overflow: clip;
+	align: left center;
+	/* border-radius: 5px; */
+}
+
+/*
+ARDM Loading screen
+*/
+#ARDMLoading {
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 0.5s;
+	padding: 30px 50px;
+
+	background-color: #aaaaaa55;
+	width: 600px;
+	horizontal-align: center;
+	vertical-align: center;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 26px;
+}
+
+Label {
+	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	font-weight: normal;
+	font-size: 30px;
+	color: white;
+}
+
+
+#PregameBG {
+	width: 100%;
+	height: 100%;
+	horizontal-align: center;
+	/*pre-transform-scale2d: 2;*/
+	vertical-align: center;
+	transition-property: blur, brightness;
+	transition-duration: 1s;
+	transition-delay: 0.5s;
+	transition-timing-function: ease-in-out;
+	opacity: 1;
+	background-image: url("file://{images}/custom_game/strategy/strategy_map.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.BluredAndDark {
+	blur: gaussian(10);
+	brightness: 0.05;
+}
+
+.DashboardButton {
+	background-image: url("s2r://panorama/images/control_icons/return_to_game_png.vtex");
+	background-size: 30px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	wash-color: #888899;
+	transform: scaleY(-1);
+	width: 30px;
+	height: 30px;
+	margin: 10px;
+	horizontal-align: left;
+	vertical-align: top;
+}
+
+.DashboardButton:hover {
+	wash-color: #aaaabb;
+}
+
+.TeamStatus {
+	horizontal-align: center;
+	width: 90%;
+	height: 15%;
+	flow-children: down;
+}
+
+#TeamRow2 {
+	margin-top: 10%;
+}
+
+.FillWidth {
+	width: 10%;
+	height: 100%;
+}
+
+#TeamRadiant {
+	flow-children: right;
+	width: 45%;
+	height: 100%;
+	/* background-color: #171A2590; */
+}
+
+#TeamCustom1,
+#TeamCustom2,
+#TeamCustom3,
+#TeamCustom4 {
+	flow-children: right;
+	width: 22.5%;
+	height: 100%;
+	/* background-color: #171A2590; */
+}
+
+#Clock,
+#DummyClock {
+	width: 10%;
+	height: 100%;
+	/* background-color: #171A2590; */
+}
+
+#Clock #TimeLeft {
+	width: 100%;
+	/* height: 50%; */
+	text-align: center;
+	font-size: 65px;
+}
+
+#Clock #GameMode {
+	width: 100%;
+	/* height: 35%; */
+	text-align: center;
+	font-size: 21px;
+	vertical-align: bottom;
+	color: #f1f9ff;
+	text-shadow: 1px 1px 6px 2.0 #abc6dc15;
+}
+
+#TeamDire {
+	flow-children: left;
+	width: 45%;
+	height: 100%;
+	/* background-color: #171A2590; */
+}
+
+#TeamCustom5,
+#TeamCustom6,
+#TeamCustom7,
+#TeamCustom8 {
+	flow-children: left;
+	width: 22.5%;
+	height: 100%;
+	/* background-color: #171A2590; */
+}
+
+
+.Player {
+	margin: 0 3px 5px 3px;
+	width: 18%;
+	height: 100%;
+}
+
+.TenVTen .Player {
+	width: 9%;
+	height: 100%;
+}
+
+.Cavern .Player {
+	width: 30%;
+	height: 80%;
+}
+
+.TenVTen .Player DOTAHeroImage{
+	width: 100%;
+	height: 58%;
+}
+
+.Cavern .Player DOTAHeroImage{
+	width: 100%;
+	height: 58%;
+}
+
+#TeamRadiant .Player,
+#TeamCustom1 .Player,
+#TeamCustom2 .Player,
+#TeamCustom3 .Player,
+#TeamCustom4 .Player,
+#TeamCustom5 .Player,
+#TeamCustom6 .Player,
+#TeamCustom7 .Player,
+#TeamCustom8 .Player {
+	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+}
+#TeamDire .Player {
+	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_right_psd.vtex");
+}
+.PlayerImage {
+	width: 100%;
+	height: 62%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #37425ddd ), to( #2B3445dd ) );
+	box-shadow: 0px 0px 8px 2px #000000d5;
+}
+
+.PlayerImage.PreviewHero {
+	/* blur: gaussian(2); */
+	/* brightness: 0.80; */
+	saturation:  0;
+
+	wash-color: #365379cc;
+}
+
+#TeamDire .PlayerImage {
+	transform: rotateY(180deg);
+}
+
+.PlayerLabel {
+	/* height: 30%; */
+	width: 100%;
+	/* background-color: #2B344570; */
+	vertical-align: bottom;
+	horizontal-align: middle;
+}
+
+.PlayerInfo {
+	height: 22px;
+	width: 100%;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
+	horizontal-align: middle;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	width: 100%;
+	padding: 2px 2px 0 2px;
+	color: darkred;
+	color:  #8f9dae;
+	text-align: center;
+	margin-bottom: 30%;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
+}
+.TenVTen .PlayerInfo {
+	font-size:  13px;
+	height: 18px;
+	margin-bottom:  39%;
+}
+.Cavern .PlayerInfo {
+	font-size:  13px;
+	height: 18px;
+	margin-bottom:  39%;
+}
+.PlayerOverlay {
+	background-color:  gradient( linear, 0 100%,0 0, from( #000000dd ), color-stop( 0.4, #0000004a ),  to( #00000000) );
+	width:  100%;
+	height: 70%;
+}
+.PlayerColorBar {
+	height: 5px;
+	width:  100%;
+	align: center bottom;
+	margin-bottom:  25%;
+	box-shadow: 0px 0px 6px 2px #000000d5;
+}
+.TenVTen .PlayerOverlay {
+	height: 62%;
+}
+.TenVTen .PlayerColorBar {
+	margin-bottom: 34%;
+}
+.Cavern .PlayerOverlay {
+	height: 62%;
+}
+.Cavern .PlayerColorBar {
+	margin-bottom: 34%;
+}
+.PlayerColorBarOverlay {
+	width:  100%;
+	height: 100%;
+	background-color:  gradient( linear,  100% 0,0 0, from( #000000a0 ), color-stop( 0.5, #00000000 ),  to( #000000a0) );
+}
+.PlayerLabel Label {
+	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	font-weight: normal;
+	font-size: 16px;
+	width: 100%;
+	padding: 0 2px 0 2px;
+	color: #9bacbe;
+	text-align: center bottom;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	margin-bottom:  0px;
+	text-overflow: shrink;
+	margin-left: 2px;
+	align: center bottom;
+	height: 20px;
+}
+.TenVTen .PlayerLabel Label {
+	height: 20px;
+	vertical-align: bottom;
+	margin-bottom: 0px;
+}
+.Cavern .PlayerLabel Label {
+	height: 20px;
+	vertical-align: bottom;
+	margin-bottom: 0px;
+}
+
+#MainContent {
+	width: 100%;
+	height: 90%;
+	margin-top: 10%;
+	flow-children: right;
+	transition-property: transform, opacity;
+	transition-duration: 0.75s;
+	transition-timing-function: ease-in;
+	opacity: 1;
+	//transform: translateX(0) translateY(0);
+}
+
+.LeftColumn {
+	visibility: collapse;
+	width: 24%;
+	height: 100%;
+	flow-children: down;
+	padding-left: 15px;
+}
+
+.MiddleColumn {
+	padding: 0 20px;
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.Cavern .MiddleColumn {
+	margin-top: 90px;
+}
+
+.RightColumn {
+	visibility: collapse;
+	width: 24%;
+	height: 100%;
+	flow-children: down;
+	padding-right: 15px;
+}
+
+#Minimap {
+	width: 100%;
+	height: 45%;
+	margin: 0 0 15px 0;
+	background-color: #171A2590;
+}
+
+DOTAMinimap {
+	width: 96%;
+	height: 96%;
+	margin: 2%;
+}
+
+#GameInfo {
+	width: 100%;
+	height: 40%;
+	background-color: #171A2590;
+	padding: 10px;
+}
+
+.HeroWrapper {
+	flow-children: down;
+	width: 33.3%;
+}
+
+.HeroInnerWrapper {
+	width: 475px;
+	horizontal-align: center;
+	flow-children: down;
+}
+.AttrHolder {
+	/*width: 100%;*/
+	flow-children: down;
+	width:  465px;
+	margin-bottom: 22px;
+}
+.AttrHolder .Border {
+	width:  100%;
+	border-bottom: 1px solid #ffffff30;
+}
+.AttrHolder Label {
+	font-size:  21px;
+	letter-spacing: 3px;
+}
+
+#HeroPanel {
+	width: 100%;
+	flow-children: right;
+}
+
+#CMPanel {
+	visibility: collapse;
+	width: 90%;
+	min-height: 150px;
+	margin: 15px 0;
+	horizontal-align: center;
+}
+#ReserveTimePanel {
+	margin-top: -30px;
+	width: 300px;
+	height: 100%;
+	flow-children: right;
+	horizontal-align: center;
+}
+#ReserveLabel {
+	height: 100%;
+	text-align: center;
+	font-size: 18px;
+}
+.ReserveTimeHolder {
+	horizontal-align: center;
+	width: fill-parent-flow(1.0);
+	height: 80px;
+}
+.ReserveTimeHolder Label {
+	font-size: 24px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+#RadiantReserve {
+	color: #00ff00;
+}
+#DireReserve {
+	color: #ff0000;
+}
+
+.CMStep.active {
+	box-shadow: #999999ff -2px -2px 4px 4px;
+}
+
+#CMProgress {
+	visibility: collapse;
+	flow-children: right;
+	background-color: #171A2590;
+	width: 100%;
+	height: 100%;
+	horizontal-align: center;
+}
+
+#BecomeCaptainPanel {
+	horizontal-align: center;
+}
+
+#BecomeCaptain {
+	visibility: collapse;
+	width: 400px;
+	padding-right: 90px;
+	background-image: url("s2r://panorama/images/status_icons/captain_overlay_psd.vtex");
+	background-position: 98% center;
+	background-size: contain;
+}
+
+#BecomeCaptain Label {
+	/*font-size: 12px;*/
+	text-align: center;
+	height: 80%;
+	vertical-align: bottom;
+	horizontal-align: middle;
+	color: white;
+	text-transform: uppercase;
+	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+}
+
+.CMTeam {
+	width: fill-parent-flow(1.0);
+	height: 100%;
+	padding: 5px;
+}
+
+#CMRadiant {
+	horizontal-align: left;
+}
+
+#CMRadiant.Ban, #CMDire.Ban {
+	background-color: gradient( linear, 0% 0%, 0% 90%, from( #ff000020 ), to( #171A2590 ) );
+}
+
+#CMRadiant.Pick, #CMDire.Pick {
+	background-color: gradient( linear, 0% 0%, 0% 90%, from( #0090ff20 ), to( #171A2590 ) );
+}
+
+#CMDire {
+	horizontal-align: right;
+}
+
+.CMLabels, .CMHeroImages, .ProgressBar {
+	flow-children: right;
+	width: 100%;
+	height: 100%;
+}
+
+.CMHeroImages {
+	vertical-align: top;
+}
+
+#CMDire .CMLabels, #CMDire .CMHeroImages {
+	flow-children: left;
+}
+
+.CMHeroImages DOTAHeroImage, .CMLabels Label {
+	width: fill-parent-flow(1.0);
+	margin: 0 1%;
+	height: 40%;
+	border-radius: 5px;
+}
+
+.CMHeroImages DOTAHeroImage.pick, .CMLabels Label.pick {
+	margin-top: 60%;
+}
+
+.CMHeroImages DOTAHeroImage {
+	box-shadow: #000000ff -1px -1px 2px 2px;
+}
+
+.CMLabels Label {
+	text-align: center;
+}
+.CMLabels Label.ban {
+	background-color: #ff000020;
+}
+.CMLabels Label.pick {
+	background-color: #0090ff20;
+}
+
+.ProgressBar {
+	background-color: #ffffffff;
+	height: 3px;
+	vertical-align: center;
+	transition-property: width;
+	transition-duration: 0.2s;
+}
+#CMDireProgress {
+	horizontal-align: right;
+	margin-right: -5%;
+}
+#CMRadiantProgress {
+	margin-left: -5%;
+}
+
+.CMTeamInfo {
+	height: 20%;
+	width: 100%;
+	vertical-align: middle;
+}
+
+.CMTeamInfo Label {
+	text-align: center;
+	horizontal-align: middle;
+	vertical-align: middle;
+	font-size: 25px;
+}
+
+.CMInfo {
+	width: 120px;
+	height: 100%;
+	padding: 10px;
+	horizontal-align: middle;
+	background-color: #171A2590;
+}
+
+.CMInfo .BanLabel {
+	margin-top: 4%;
+	vertical-align: top;
+	font-size: 25px;
+	width: 100%;
+	text-align: center;
+}
+
+.CMInfo .PickLabel {
+	margin-bottom: 4%;
+	vertical-align: bottom;
+	font-size: 25px;
+	width: 100%;
+	text-align: center;
+}
+
+#StrHolder {
+	background-color: #ec3d06;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+#AgiHolder {
+	background-color: #26e030;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+#IntHolder {
+	background-color: #00d9ec;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+/* #StrHolder {
+	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_strength_psd.vtex");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 90%;
+	width: height-percentage( 100% );
+	margin-right: 10px;
+}
+
+#AgiHolder {
+	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_agility_psd.vtex");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 90%;
+	width: height-percentage( 100% );
+	margin-right: 10px;
+}
+
+#IntHolder {
+	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_intelligence_psd.vtex");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 90%;
+	width: height-percentage( 100% );
+	margin-right: 10px;
+}
+ */
+.HeroHolder {
+	margin: 0 0 10px 0;
+	align: center center;
+	flow-children: right-wrap;
+}
+
+RadioButton {
+	margin: 0 8px 5px 0;
+	width: 80px;
+	height: 44px;
+	box-shadow: #000000ba -2px -2px 2px 2px;
+	border: 1px solid #6f7074;
+	border-radius: 3px;
+	pre-transform-scale2d: 0.98;
+}
+
+RadioButton:hover {
+	border-color: #fff;
+	pre-transform-scale2d: 1.03;
+}
+
+RadioButton:selected {
+	border-color: #aedbe6;
+	box-shadow: #26c8f0a0 0 0 5px 0;
+}
+
+RadioButton.Disabled {
+	brightness: 0.05;
+}
+
+RadioButton.Disabled:hover {
+	box-shadow: none;
+}
+
+RadioButton.Disabled:selected {
+	box-shadow: none;
+}
+
+.HeroCard {
+	border: 1px solid grey;
+}
+
+.ImbaCard {
+	/* height: 100%; */
+	/* width: 100%; */
+	border: 1px solid darkorange;
+	box-shadow: inset #663700 0 0 4px 0;
+}
+
+.NewCard {
+	/* height: 100%; */
+	/* width: 100%; */
+	border: 1px solid skyblue;
+	/* box-shadow: fill skyblue -1px -1px 2px 2px; */
+}
+
+.CustomCard {
+	/* height: 100%; */
+	/* width: 100%; */
+	border: 1px solid purple;
+	/* box-shadow: fill purple -1px -1px 2px 2px; */
+}
+
+#HeroSelector {
+	/* width: 45%; */
+	margin-top: 50px;
+	height: fill-parent-flow(1.0);
+	flow-children: down;
+	horizontal-align: middle;
+}
+
+#PreviewPanel {
+	margin-top: 0px;
+	width: fill-parent-flow(1.0);
+	height: fill-parent-flow(1.0);
+	horizontal-align: center;
+}
+
+#ChatBoxHolder {
+	width: 100%;
+	height: 100%;
+	vertical-align: bottom;
+	flow-children: down;
+}
+#ChatBox {
+	width: 30%;
+	horizontal-align: left;
+	vertical-align: bottom;
+	/*height: 80%;*/
+}
+
+DOTAChat#HudChat .ChatLine {
+	width:  420px;
+	max-width: 420px;
+}
+#ChatLinesOverlay {
+	background-color: transparent;
+}
+
+#HeroPreview {
+	/*visibility: collapse;*/
+	margin-top: 60px;
+	margin-left: 10%;
+	margin-right: 10%;
+	width: 100%;
+	height: 100%;
+	vertical-align: top;
+	horizontal-align: middle;
+	z-index: -10;
+}
+
+#HeroPreviewContainer {
+	width: 100%;
+	height: 50%;
+}
+
+#HeroPreviewCredits {
+	width: 100%;
+	height: 20%;
+	margin-top: 80%;
+}
+
+#AbilitiesPreview {
+	margin-top: 50px;
+	align: center top;
+	flow-children: right;
+}
+
+#AbilitiesPreview.four_abilities .PickedHeroAbility {
+	width: 70px;
+	align: left center;
+}
+
+#AbilitiesPreview.five_abilities .PickedHeroAbility {
+	width: 70px;
+	align: left center;
+}
+
+#AbilitiesPreview.six_abilities .PickedHeroAbility {
+	width: 70px;
+	align: left center;
+}
+
+.PickedHeroAbility {
+	margin-left: 8px;
+	margin-right: 8px;
+	border-radius: 0px;
+	vertical-align: middle;
+	visibility: collapse;
+}
+
+#AghanimPreview {
+	height: 50%;
+	background-image: url("s2r://panorama/images/spellicons/aghsicon_psd.vtex");
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: contain;
+	visibility: collapse;
+}
+
+#TalentPreview {
+	height: 65px;
+	background-image: url("s2r://panorama/images/spellicons/statbranch_psd.vtex");
+	background-repeat: no-repeat;
+	background-position: center;
+	visibility: collapse;
+	background-size: contain;
+}
+
+.AspectRatio16x10 #AghanimPreview {
+	height: 55px;
+}
+
+.AspectRatio4x3 #AghanimPreview {
+	height: 55px;
+}
+
+#AghanimPreviewTooltip {
+	align: center center;
+	font-size: 12px;
+}
+
+#AghanimPreviewText {
+	padding: 10px;
+	font-size: 20px;
+	align: left top;
+	font-family: defaultFont;
+}
+
+#AghanimPreviewText_Description,
+.TalentPreviewText_Description {
+	padding: 10px;
+	margin-top: 40px;
+	font-size: 16px;
+	align: center top;
+	color: #9ab0cd;
+	font-family: defaultFont;
+}
+
+#TalentPreview {
+	width: 200px;
+	height: 100px;
+}
+
+#TalentPreviewWindow {
+	width: 500px;
+	height: 400px;
+	align: center bottom;
+	visibility: collapse;
+	flow-children: down;
+}
+
+.AspectRatio16x10 #TalentPreviewWindow {
+	height: 380px;
+}
+
+.AspectRatio4x3 #TalentPreviewWindow {
+	height: 320px;
+}
+
+.TalentsRow {
+	width: 100%;
+	height: 25%;
+	flow-children: right;
+}
+
+.TalentsPanel {
+	width: 50%;
+	height: 100%;
+	padding: 5px;
+	background-color: #000000aa;
+	border-radius: 10px;
+	flow-children: down;
+}
+
+.TalentPreviewTitle {
+	font-size: 20px;
+	align: left top;
+	font-family: defaultFont;
+}
+
+.TalentPreviewText {
+	padding: 5px;
+	font-size: 16px;
+	align: left top;
+	font-family: defaultFont;
+	text-overflow: shrink;
+	color: #9ab0cd;
+}
+
+.TalentPreviewText_Description {
+	padding: 5px;
+	font-size: 16px;
+	align: left top;
+	font-family: defaultFont;
+	text-overflow: shrink;
+}
+
+.CustomTooltips {
+	margin-top: 370px;
+	margin-right: 400px;
+	min-width: 100px;
+	min-height: 100px;
+	max-width: 550px;
+	text-overflow: shrink;
+	width: fit-children;
+	height: fit-children;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_tooltip_psd.vtex");
+	background-color: #10171c;
+	padding: 8px;
+	background-size: cover;
+	border: 2px solid black;
+	box-shadow: #00000066 -4px -4px 8px 8px;
+	visibility: collapse;
+}
+
+.AspectRatio16x10 .CustomTooltips {
+	margin-top: 480px;
+	margin-right: 300px;
+}
+
+.AspectRatio4x3 .CustomTooltips {
+	margin-top: 600px;
+	margin-right: 430px;
+}
+
+DOTAScenePanel {
+	width: 100%;
+	height: 100%;
+}
+
+#CMHeroPreview DOTAScenePanel {
+	height: 80%;
+}
+
+#CMHeroPreview {
+	width: 100%;
+	height: 100%;
+	vertical-align: top;
+	horizontal-align: middle;
+	flow-children: right;
+}
+
+.CMHeroPreviewItem {
+	width: fill-parent-flow(1.0);
+	height: fill-parent-flow(1.0);
+	flow-children: down;
+	box-shadow: none;
+	margin: 3px;
+}
+
+.CMHeroPreviewItem:hover {
+	box-shadow: none;
+	brightness: 2.0;
+}
+
+.CMHeroPreviewItem:selected {
+	brightness: 2.0;
+	box-shadow: none;
+}
+
+.CMHeroPreviewItem DOTAHeroImage {
+	height: 100%;
+	width: 30%;
+}
+
+.CMHeroPreviewItem DOTAUserName {
+	width: 70%;
+	text-align: left;
+	vertical-align: middle;
+	padding-left: 10px;
+}
+
+.HeroPickLabel {
+	margin-bottom: -30px;
+}
+
+
+#HeroPickContainer {
+	/* height: fill-parent-flow(1.0); */
+	flow-children: right;
+	vertical-align: bottom;
+	horizontal-align: middle;
+}
+
+.HeroPickerButton {
+	height: 75px;
+	/* width: 210px; */
+	min-width: 200px;
+	text-align: center center;
+	box-shadow: #00000040 -3px -3px 6px 6px;
+	transition-property: brightness;
+	transition-duration: 0.2s;
+	margin-right: 20px;
+}
+.HeroPickerButton Label {
+	align:  center center;
+	text-transform: uppercase;
+	font-size: 15px;
+	letter-spacing: 1px;
+	text-shadow: 0px 1px 2px 2.0 #00000040;
+}
+
+.HeroPickerButton:hover {
+	brightness: 1.4;
+}
+
+#HeroLockIn {
+	visibility: collapse;
+	width:  300px;
+	background-color: gradient( radial, 50% 50%, 0% -10%,70% 80%, from( #218155 ),  to( #17583a ) );
+	/* border-top: 1px solid #1b6542cc; */
+	flow-children:  right;			  
+}
+
+.HeroPickerButton .border-top {
+	align: center top;
+	width: 100%;
+	height: 1px;
+	background-color:  #ffffff14;
+	margin-right: -100%;
+	z-index: 2;
+}
+
+#HeroPickWrapper {
+	flow-children:  down;
+	align:  center center;
+	width: 180px;
+}
+#HeroLockIn Label {
+	margin-top: 11px;
+}
+#HeroLockIn Label.SectionTitle {
+	text-overflow: shrink;	
+	/* width:  90%; */
+	height: 30px;
+	line-height: 1;
+	white-space: nowrap;
+	margin-top: 3px;
+}
+Label.SectionTitle {
+	text-transform: uppercase;
+	padding: 0 10px;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	height: 20px;
+	margin-top: 3px;
+	/* text-overflow: shrink; */
+	/* width:  100%; */
+	text-align: center;
+}
+
+#CurrentHero {
+	width: 135px;
+	height: 100%;
+	align: right center;
+}
+#CurrentHero DOTAHeroImage {
+	height: 100%;
+}
+
+#HeroLockIn.Activated {
+	sound: "ui.pick_play";
+}
+
+#CaptainLockIn {
+	visibility: collapse;
+}
+
+#pickLabel, #banLabel {
+	visibility: collapse;
+}
+
+#CaptainLockIn.PickHero #pickLabel, #CaptainLockIn.BanHero #banLabel {
+	visibility: visible;
+}
+
+#CaptainLockIn.PickHero {
+	background-image: url("s2r://panorama/images/control_icons/check_shadow_png.vtex");
+}
+
+#CaptainLockIn.BanHero {
+	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+}
+
+#HeroRandom {
+	background-color: gradient( radial, 50% 50%, 0% -10%,70% 80%, from( #343f4d ),  to( #242b35 ) );
+	flow-children: down;
+}
+#HeroImbaRandom {
+	width: 200px;
+	background-color: gradient( radial, 50% 50%, 0% -10%,70% 80%, from( #343f4d ),  to( #242b35 ) );
+	flow-children: down;
+}
+#HeroImbaRandom .border-top {
+	background-color:  #ffffff07;
+}
+#HeroImbaRandom #HeroPickWrapper {
+	width:  200px;
+}
+#HeroImbaRandom Label {
+	/* color: #e17307; */
+	color: #dfd4a8;
+}
+#HeroRandom .border-top {
+	background-color:  #ffffff07;
+}
+#HeroRandom.Activated {
+	sound: "ui.pick_play";
+}
+
+
+
+#HeroImbaRandom.Activated {
+	sound: "ui.pick_play";
+}
+
+#CustomChat {
+	width: 100%;
+	height: 40%;
+	background-color: #171A2590;
+	padding: 10px;
+}
+
+#StrategyContent {
+	width: 100%;
+	height: 90%;
+	margin-top: 10%;
+	transition-property: transform, opacity;
+	transition-duration: 2s;
+	transition-delay: 1.25s;
+	transition-timing-function: ease-out;
+	opacity: 0;
+	transform: scaleX(1) scaleY(1);
+}
+
+.BossIcon {
+	background-image: url("s2r://panorama/images/hud/reborn/icon_armor_psd.vtex");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transition-property: transform, opacity;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	opacity: 0;
+	transform: translateY(-5%);
+	width: 50px;
+	height: 50px;
+	//wash-color: #ff0000;
+}
+
+.BossIcon Label {
+	font-size: 14px;
+	padding-left: 2px;
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+
+.CaveIcon {
+	background-image: url("s2r://panorama/images/hud/reborn/icon_armor_psd.vtex");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transition-property: transform, opacity;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	opacity: 0;
+	transform: translateY(-5%);
+	width: 50px;
+	height: 50px;
+	//wash-color: #ff0000;
+}
+
+.CaveIcon Label {
+	font-size: 12px;
+	padding-left: 2px;
+	vertical-align: middle;
+	horizontal-align: middle;
+}
+
+.DuelIconHolder {
+	transition-property: transform, opacity;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	opacity: 0;
+	transform: translateY(-5%);
+	width: 50px;
+	height: 65px;
+}
+
+.DuelIcon {
+	background-image: url("s2r://panorama/images/hud/reborn/icon_damage_psd.vtex");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transform: translateY(5px) translateX(-5px) rotateZ(135deg);
+	width: 37.5px;
+	height: 37.5px;
+	vertical-align: bottom;
+	horizontal-align: middle;
+	wash-color: #FF0000;
+}
+
+.DuelIconHolder Label {
+	font-size: 14px;
+	padding-left: 2px;
+	vertical-align: top;
+	horizontal-align: middle;
+}
+
+#Boss1r {
+	margin-left: 34%;
+	margin-top: 35%;
+	transition-delay: 3s;
+}
+
+#Boss1d {
+	margin-left: 58%;
+	margin-top: 14%;
+	transition-delay: 3s;
+}
+
+#Boss2r {
+	margin-left: 30%;
+	margin-top: 46%;
+	transition-delay: 3.5s;
+}
+
+#Boss2d {
+	margin-left: 56%;
+	margin-top: 11.5%;
+	transition-delay: 3.5s;
+}
+
+#Boss3r {
+	margin-left: 52%;
+	margin-top: 48%;
+	transition-delay: 4s;
+}
+
+#Boss3d {
+	margin-left: 47.5%;
+	margin-top: 12%;
+	transition-delay: 4s;
+}
+
+#Boss4r {
+	margin-left: 67%;
+	margin-top: 46%;
+	transition-delay: 4.5s;
+}
+
+#Boss4d {
+	margin-left: 41%;
+	margin-top: 12.5%;
+	transition-delay: 4.5s;
+}
+
+#Boss5r {
+	margin-left: 32.5%;
+	margin-top: 16%;
+	transition-delay: 5s;
+}
+
+#Boss5d {
+	margin-left: 72%;
+	margin-top: 30%;
+	transition-delay: 5s;
+}
+
+#Duel1 {
+	margin-left: 77%;
+	margin-top: 37.5%;
+	transition-delay: 5.5s;
+}
+
+#Duel2 {
+	margin-left: 35%;
+	margin-top: 9.5%;
+	transition-delay: 5.5s;
+}
+
+#Cave1r {
+	margin-left: 26%;
+	margin-top: 27%;
+	transition-delay: 6s;
+}
+
+#Cave1d {
+	margin-left: 66%;
+	margin-top: 18%;
+	transition-delay: 6s;
+}
+
+#Cave2r {
+	margin-left: 22%;
+	margin-top: 33%;
+	transition-delay: 6.5s;
+}
+
+#Cave2d {
+	margin-left: 64%;
+	margin-top: 14%;
+	transition-delay: 6.5s;
+}
+
+#Cave3r {
+	margin-left: 17%;
+	margin-top: 41%;
+	transition-delay: 7s;
+}
+
+#Cave3d {
+	margin-left: 62.5%;
+	margin-top: 10%;
+	transition-delay: 7s;
+}
+
+.Arcana {
+	width: 100%;
+	height: 40%;
+	font-size: 17px;
+	text-align: center;
+	align: center bottom;
+	color: lightgreen;
+	background-color: #1a6600aa;
+
+	animation-name: fade_full;
+	animation-duration: 3.0s;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+.AverageIMR {
+	width: 10%;
+	height: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.IMRInfo {
+	height: 22px;
+	width: 100%;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
+	horizontal-align: middle;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 2px 2px 0 2px;
+	color: darkred;
+	color:  #8f9dae;
+	text-align: center;
+	margin-bottom: 30%;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
+}
+
+#TeamRow_sub {
+	width: 100%;
+	height: 65%;
+	flow-children: right;
+}
+
+#TeamRow_imr {
+	width: 100%;
+	height: 35%;
+	flow-children: right;
+}
+
+#RadiantIMR,
+#DireIMR {
+	visibility: collapse;
+}
+
+#Mutations {
+	flow-children: right;
+	align: center top;
+	box-shadow: none;
+	visibility: collapse;
+}
+
+.DotaMutations {
+	margin-top: 4px;
+	margin-left: 0;
+	padding-left: 10px;
+	padding-top: 9px;
+	font-size: 16px;
+	color: #A3FDCC;
+	height: 42px;
+	width: 195px;
+}
+
+#Mutation0Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/imba-bg.png");
+	background-size: cover;
+	color: #ccebff;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation1Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/positive-bg.png");
+	background-size: cover;
+	color: #ecfef6;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation2Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/negative-bg.png");
+	background-size: cover;
+	color: #ffe9eb;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation3Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/terrain-bg.png");
+	background-size: cover;
+	color: #ede5da;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#credits_coder_panel {
+	width: 100%;
+	padding-left: 5px;
+	padding-right: 5px;
+	align: left center;
+	background-color: #000000aa;
+	flow-children: right;
+	border-radius: 10px;
+}
+
+#credits_coder_label {
+	width: 15%;
+	height: 60%;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	align: left center;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 2px 2px 0 2px;
+	color: darkred;
+	color:  #8f9dae;
+	text-align: center;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
+}
+
+#credits_editor_panel {
+	width: 100%;
+	align: left center;
+	background-color: #000000aa;
+	flow-children: right;
+	border-radius: 10px;
+}
+
+#credits_editor_label {
+	width: 15%;
+	height: 60%;
+	margin-right: 15px;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	align: left center;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 2px 2px 0 2px;
+	color: darkred;
+	color:  #8f9dae;
+	text-align: center;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
+}

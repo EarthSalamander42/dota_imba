@@ -1,0 +1,36 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Shadow Shaman
+	//=================================================================================================================
+	"npc_dota_hero_shadow_shaman"
+	{
+		"IsImba"					"1"
+		
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"imba_shadow_shaman_ether_shock"
+		"Ability2"					"imba_shadow_shaman_voodoo"
+		"Ability3"					"imba_shadow_shaman_shackles"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
+		
+		"Ability10"					"special_bonus_hp_300"
+		"Ability11"					"special_bonus_spell_amplify_10"
+		"Ability12"					"special_bonus_cast_range_125"
+		"Ability13"					"special_bonus_imba_shadow_shaman_hex_cooldown"
+		"Ability14"					"special_bonus_imba_shadow_shaman_shackles_duration"
+		"Ability15"					"special_bonus_imba_shadow_shaman_hex_parlor_tricks"
+		"Ability16"					"special_bonus_imba_shadow_shaman_ether_shock_damage"
+		"Ability17"					"special_bonus_imba_shadow_shaman_3"
+		
+		// Removed Talents
+		// "Ability15"					"special_bonus_imba_shadow_shaman_2" // +2 Mass Serpent Wards health
+		// "Ability15"					"special_bonus_imba_shadow_shaman_wards_movement" // Lag I guess
+	}
+}

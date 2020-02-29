@@ -1,0 +1,8 @@
+"DOTA_Tooltip_ability_imba_death_prophet_silence"				"#{DOTA_Tooltip_ability_death_prophet_silence}"
+"DOTA_Tooltip_ability_imba_death_prophet_silence_Description"	"#{DOTA_Tooltip_ability_death_prophet_silence_Description}"
+"DOTA_Tooltip_ability_imba_death_prophet_silence_Lore"			"#{DOTA_Tooltip_ability_death_prophet_silence_Lore}"
+"DOTA_Tooltip_ability_imba_death_prophet_silence_Note0"			"#{DOTA_Tooltip_ability_death_prophet_silence_Note0}"
+"DOTA_Tooltip_ability_imba_death_prophet_silence_radius"		"#{DOTA_Tooltip_ability_death_prophet_silence_radius}"
+"DOTA_Tooltip_ability_imba_death_prophet_silence_duration"		"#{DOTA_Tooltip_ability_death_prophet_silence_duration}"
+
+"DOTA_Tooltip_modifier_imba_death_prophet_silence"				"#{DOTA_Tooltip_ability_death_prophet_silence}"

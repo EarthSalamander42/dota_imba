@@ -1,0 +1,17 @@
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield"							"Glimmerdark Shield"
+
+"DOTA_Tooltip_Ability_item_recipe_imba_glimmerdark_shield"							"Glimmerdark Shield Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Lore"							"This shield's first bearer thought he had gained immortality in battle. Until the second bearer's magic began to flow."
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Description"				"<h1>Active: Gleam</h1> Gain immunity to physical damage, but receive +%tooltip_prism_bonus_magic_dmg%%  magic damage. Lasts %prism_duration% seconds.\n<h1><font color='#FF7800'>Active: Luminate</font></h1>Gleam provides %luminate_radius% radius flying and true sight vision around the target for its duration.\n<h1><font color='#FF7800'>Active: Extrasensory</font></h1>Gleam allows the ally target to ignore cast angles (abilities can begin their ability phase before the unit needs to turn to face their target)."
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Note0"				"Multiple Glimmerdark Shields do not stack."
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Note1"				"Does not turn the caster ethereal. The caster can still be attacked normally, but gains immunity to physical damage."
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Note2"				"The magic resistance reduction does not stack with those of Ghost Scepter or Ethereal Blade. Glimmdark Shield takes priority."
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_Note3"				"Does not proivide immunity to physical damage if the user is magic immune."
+
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_bonus_strength"			"+$all"
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_bonus_armor"				"+$armor"
+"DOTA_Tooltip_Ability_item_imba_glimmerdark_shield_bonus_health_regen"		"+$hp_regen"
+
+"DOTA_Tooltip_modifier_item_imba_glimmerdark_shield_prism"					"Gleam"
+"DOTA_Tooltip_modifier_item_imba_glimmerdark_shield_prism_Description"		"This unit is immune to physical damage but receives greatly increased magic damage."

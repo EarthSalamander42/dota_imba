@@ -1,0 +1,84 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/imba_game_info.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/imba_game_info.js" />
+	</scripts>
+
+	<Panel class="OverthrowGameInfo">
+
+		<Panel id="Title">
+			<Image id="ImbaTitle" class="SeqImg" src="file://{images}/custom_game/tutorial/imba.png" />
+		</Panel>
+
+		<Label id="Intro01" class="Header" html="true" text="#imba_tutorial_intro_01" />
+		<Label id="Intro02" text="#imba_tutorial_intro_02" />
+
+		<Panel id="Heroes" class="InfoBox">
+			<Panel id="HeroesTextBox" class="TextBox">
+				<Label id="HeroesTitle" class="Header" html="true" text="#imba_tutorial_heroes_title" />
+				<Label id="Heroes01" html="true" text="#imba_tutorial_heroes_01" />
+				<Label id="Heroes02" html="true" text="#imba_tutorial_heroes_02" />
+				<Label id="Heroes03" html="true" text="#imba_tutorial_heroes_03" />
+			</Panel>
+			<Image id="HeroesImage" src="file://{images}/custom_game/tutorial/Tutorial01.png" />
+		</Panel>
+
+		<Panel id="AbilitiesImage"/>
+
+		<Panel id="Items" class="InfoBox">
+			<Panel id="ItemsTextBox" class="TextBox">
+				<Label id="ItemsTitle" class="Header" html="true" text="#imba_tutorial_items_title" />
+				<Label id="Items01" html="true" text="#imba_tutorial_items_01" />
+				<Label id="Items02" html="true" text="#imba_tutorial_items_02" />
+			</Panel>
+		</Panel>
+
+		<Panel id="ItemsImage"/>
+
+		<Panel id="Creeps" class="InfoBox">
+			<Panel id="CreepsTextBox" class="TextBox">
+				<Label id="CreepsTitle" class="Header" html="true" text="#imba_tutorial_creeps_title" />
+				<Label id="Creeps01" html="true" text="#imba_tutorial_creeps_01" />
+			</Panel>
+		</Panel>
+		<!--
+		<Panel id="Roshan" class="InfoBox">
+			<Panel id="RoshanTextBox" class="TextBox">
+				<Label id="RoshanTitle" class="Header" html="true" text="#imba_tutorial_roshan_title" />
+				<Label id="Roshan01" html="true" text="#imba_tutorial_roshan_01" />
+			</Panel>
+		</Panel>
+		-->
+		<Panel id="PowerBalance" class="InfoBox">
+			<Panel id="PowerBalanceTextBox" class="TextBox">
+				<Label id="PowerBalanceTitle" class="Header" html="true" text="#imba_tutorial_power_balance_title" />
+				<Label id="PowerBalance01" html="true" text="#imba_tutorial_power_balance_01" />
+				<Label id="PowerBalance02" html="true" text="#imba_tutorial_power_balance_02" />
+				<Label id="PowerBalance03" html="true" text="#imba_tutorial_power_balance_03" />
+				<Label id="PowerBalance04" html="true" text="#imba_tutorial_power_balance_04" />
+			</Panel>
+		</Panel>
+
+		<Panel id="Developers" class="InfoBox">
+			<Panel id="DevelopersTextBox" class="TextBox">
+				<Label id="DevelopersTitle" class="Header" html="true" text="DEVELOPERS" />
+				<Label id="Developers01" html="true" text="#imba_developer_credits_01" />
+				<Label id="Developers02" html="true" text="#imba_developer_credits_02" />
+			</Panel>
+		</Panel>
+
+		<Panel id="Supporters" class="InfoBox">
+			<Panel id="SupportersTextBox" class="TextBox">
+				<Label id="SupportersTitle" class="Header" html="true" text="#imba_tutorial_credits_title" />
+				<Label id="Supporters01" html="true" text="#imba_tutorial_credits_01" />
+				<Label id="Supporters02" html="true" text="#imba_tutorial_credits_02" />
+			</Panel>
+		</Panel>
+
+		<Label id="End" class="Header" html="true" text="#imba_tutorial_end" />
+	</Panel>
+</root>

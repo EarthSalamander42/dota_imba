@@ -1,0 +1,213 @@
+//=================================================================================================================
+// Invoker
+//=================================================================================================================
+// Sun Strike!
+"DOTA_Tooltip_ability_imba_invoker_sun_strike"                     		    	"#{DOTA_Tooltip_ability_invoker_sun_strike}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_description"          		    "#{DOTA_Tooltip_ability_invoker_sun_strike_Description}\n<font color='#FF7800'>Incinerate:</font> Enemies hit by Sun Strike are incinerated burning an additional 10% of Sun Strikes 'hit' damage over 3 seconds."
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_lore"                 			"#{DOTA_Tooltip_ability_invoker_sun_strike_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_note0"                			"#{DOTA_Tooltip_ability_invoker_sun_strike_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_note1"                			"#{DOTA_Tooltip_ability_invoker_sun_strike_Note1}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_area_of_effect"      		    	"#{DOTA_Tooltip_ability_invoker_sun_strike_area_of_effect}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_delay"							"#{DOTA_Tooltip_ability_invoker_sun_strike_delay}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_damage"             				"#{DOTA_Tooltip_ability_invoker_sun_strike_damage}"
+
+"DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate"						"Incinerated"
+"DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate_description"			"Sun Strike deals 10%% increased damage per stack."
+
+// Chaos Meteor
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor"                    		    "#{DOTA_Tooltip_ability_invoker_chaos_meteor}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_description"         		    "#{DOTA_Tooltip_ability_invoker_chaos_meteor_Description}\n<font color='#FF7800'>Burning Ground:</font> The meteor leaves behind a trail of burning fire. Enemies caught in the trail have their burn durations refreshed."
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_lore"            		      	"#{DOTA_Tooltip_ability_invoker_chaos_meteor_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_note0"  						"#{DOTA_Tooltip_ability_invoker_chaos_meteor_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_note1"  						"#{DOTA_Tooltip_ability_invoker_chaos_meteor_Note1}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_land_time"						"#{DOTA_Tooltip_ability_invoker_chaos_meteor_land_time}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_area_of_effect"					"#{DOTA_Tooltip_ability_invoker_chaos_meteor_area_of_effect}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_travel_distance"				"#{DOTA_Tooltip_ability_invoker_chaos_meteor_travel_distance}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_main_damage"					"#{DOTA_Tooltip_ability_invoker_chaos_meteor_main_damage}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_damage_interval"				"#{DOTA_Tooltip_ability_invoker_chaos_meteor_damage_interval}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_burn_duration"					"#{DOTA_Tooltip_ability_invoker_chaos_meteor_burn_duration}"
+"DOTA_Tooltip_ability_imba_invoker_chaos_meteor_burn_dps"						"#{DOTA_Tooltip_ability_invoker_chaos_meteor_burn_dps}"
+
+// Alacrity
+"DOTA_Tooltip_ability_imba_invoker_alacrity"									"#{DOTA_Tooltip_ability_invoker_alacrity}"
+"DOTA_Tooltip_ability_imba_invoker_alacrity_description"						"#{DOTA_Tooltip_ability_invoker_alacrity_Description}\n<font color='#FF7800'>Surge of Power:</font> Attacks chain %number_of_chains% times, each chain dealing %chain_damage_pct%%  of base damage"
+"DOTA_Tooltip_ability_imba_invoker_alacrity_lore"								"#{DOTA_Tooltip_ability_invoker_alacrity_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_alacrity_bonus_attack_speed"					"#{DOTA_Tooltip_ability_invoker_alacrity_bonus_attack_speed}"
+"DOTA_Tooltip_ability_imba_invoker_alacrity_bonus_damage"						"#{DOTA_Tooltip_ability_invoker_alacrity_bonus_damage}"
+"DOTA_Tooltip_ability_imba_invoker_alacrity_duration"							"#{DOTA_Tooltip_ability_invoker_alacrity_duration}"
+
+// Cold Snap
+"DOTA_Tooltip_ability_imba_invoker_cold_snap"									"#{DOTA_Tooltip_ability_invoker_cold_snap}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_description"						"#{DOTA_Tooltip_ability_invoker_cold_snap_Description}\n<font color='#FF7800'>Pnas Dloc:</font> Cold Snap can be cast on allies with reversed effect, causing enemies that attack the target to take damage and be briefly frozen."
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_lore"								"#{DOTA_Tooltip_ability_invoker_cold_snap_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_note0"								"#{DOTA_Tooltip_ability_invoker_cold_snap_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_duration"							"#{DOTA_Tooltip_ability_invoker_cold_snap_duration}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_freeze_duration"					"#{DOTA_Tooltip_ability_invoker_cold_snap_freeze_duration}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_freeze_damage"						"#{DOTA_Tooltip_ability_invoker_cold_snap_freeze_damage}"
+"DOTA_Tooltip_ability_imba_invoker_cold_snap_freeze_cooldown"					"#{DOTA_Tooltip_ability_invoker_cold_snap_freeze_cooldown}"
+
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap_buff"								"Pnas Dloc"
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap_buff_Description"					"When attacked, the target will take additional damage and will be frozen briefly."
+
+// Ghost Walk
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk"									"#{DOTA_Tooltip_ability_invoker_ghost_walk}"
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_description"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_Description}\n<font color='#FF7800'>Shadowsteps:</font> Invisibility lingers for %invis_fade_time% seconds after being broken by an ability cast."
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_lore"								"#{DOTA_Tooltip_ability_invoker_ghost_walk_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_note0"							"#{DOTA_Tooltip_ability_invoker_ghost_walk_Note0}."
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_duration"							"#{DOTA_Tooltip_ability_invoker_ghost_walk_duration}"
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_self_slow"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_self_slow}"
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_area_of_effect"					"#{DOTA_Tooltip_ability_invoker_ghost_walk_area_of_effect}"
+"DOTA_Tooltip_ability_imba_invoker_ghost_walk_enemy_slow"						"#{DOTA_Tooltip_ability_invoker_ghost_walk_enemy_slow}"
+
+"DOTA_Tooltip_modifier_invis_fade_ghost_walk"									"Shadowsteps"
+"DOTA_Tooltip_modifier_invis_fade_ghost_walk_Description"						"Still invisible."
+
+// Ice wall
+"DOTA_Tooltip_ability_imba_invoker_ice_wall"									"#{DOTA_Tooltip_ability_invoker_ice_wall}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_description"						"#{DOTA_Tooltip_ability_invoker_ice_wall_Description}\n<font color='#FF7800'>Permafrost:</font> Attack speed is reduced by 15% while stuck inside the icewall"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_lore"								"#{DOTA_Tooltip_ability_invoker_ice_wall_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_note0"								"#{DOTA_Tooltip_ability_invoker_ice_wall_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_duration"							"#{DOTA_Tooltip_ability_invoker_ice_wall_duration}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_slow"								"#{DOTA_Tooltip_ability_invoker_ice_wall_slow}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_slow_duration"						"#{DOTA_Tooltip_ability_invoker_ice_wall_slow_duration}"
+"DOTA_Tooltip_ability_imba_invoker_ice_wall_damage_per_second"					"#{DOTA_Tooltip_ability_invoker_ice_wall_damage_per_second}"
+
+// EMP
+"DOTA_Tooltip_ability_imba_invoker_emp"											"#{DOTA_Tooltip_ability_invoker_emp}"
+"DOTA_Tooltip_ability_imba_invoker_emp_description"								"#{DOTA_Tooltip_ability_invoker_emp_Description}\n<font color='#FF7800'>Overload:</font> Enemies hit by EMP have their mana gain disabled for %after_shock_duration% seconds."
+"DOTA_Tooltip_ability_imba_invoker_emp_lore"									"#{DOTA_Tooltip_ability_invoker_emp_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_emp_note0"									"#{DOTA_Tooltip_ability_invoker_emp_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_emp_delay"									"#{DOTA_Tooltip_ability_invoker_emp_delay}"
+"DOTA_Tooltip_ability_imba_invoker_emp_mana_burned"								"#{DOTA_Tooltip_ability_invoker_emp_mana_burned}"
+"DOTA_Tooltip_ability_imba_invoker_emp_damage_per_mana_pct"						"#{DOTA_Tooltip_ability_invoker_emp_damage_per_mana_pct}"
+"DOTA_Tooltip_ability_imba_invoker_emp_area_of_effect"							"#{DOTA_Tooltip_ability_invoker_emp_area_of_effect}"
+
+// Tornado 
+"DOTA_Tooltip_ability_imba_invoker_tornado"										"#{DOTA_Tooltip_ability_invoker_tornado}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_description"							"#{DOTA_Tooltip_ability_invoker_tornado_Description}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_lore"								"#{DOTA_Tooltip_ability_invoker_tornado_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_note0"								"#{DOTA_Tooltip_ability_invoker_tornado_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_travel_distance"						"#{DOTA_Tooltip_ability_invoker_tornado_travel_distance}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_area_of_effect"						"#{DOTA_Tooltip_ability_invoker_tornado_area_of_effect}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_lift_duration"						"#{DOTA_Tooltip_ability_invoker_tornado_lift_duration}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_base_damage"							"#{DOTA_Tooltip_ability_invoker_tornado_base_damage}"
+"DOTA_Tooltip_ability_imba_invoker_tornado_wex_damage"							"#{DOTA_Tooltip_ability_invoker_tornado_wex_damage}"
+
+// Deafening Blast
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast"								"#{DOTA_Tooltip_ability_invoker_deafening_blast}"
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_description"					"#{DOTA_Tooltip_ability_invoker_deafening_blast_Description}"
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_lore"						"#{DOTA_Tooltip_ability_invoker_deafening_blast_Lore}"
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_travel_distance"				"#{DOTA_Tooltip_ability_invoker_deafening_blast_travel_distance}"	
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_damage"						"#{DOTA_Tooltip_ability_invoker_deafening_blast_damage}"
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_knockback_duration"			"#{DOTA_Tooltip_ability_invoker_deafening_blast_knockback_duration}"
+"DOTA_Tooltip_ability_imba_invoker_deafening_blast_disarm_duration"				"#{DOTA_Tooltip_ability_invoker_deafening_blast_disarm_duration}"
+
+// Forge Spirit
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit"								"#{DOTA_Tooltip_ability_invoker_forge_spirit}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_description"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_Description}\n<font color='#FF7800'>Forge Mastery:</font> Summons an additional forge spirit when both <font color='#0066FF'>Quas</font> and <font color='#E68A00'>Exort</font> are level 4."
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_lore"							"#{DOTA_Tooltip_ability_invoker_forge_spirit_Lore}"				
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_note0"							"#{DOTA_Tooltip_ability_invoker_forge_spirit_Note0}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_damage"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_damage}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_mana"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_mana}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_armor"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_armor}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_attack_range"			"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_attack_range}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_hp"						"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_hp}"
+"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_duration"				"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_duration}"
+
+// Quas
+"DOTA_Tooltip_Ability_imba_invoker_quas"    									"#{DOTA_Tooltip_ability_invoker_quas}"
+"DOTA_Tooltip_Ability_imba_invoker_quas_description"							"#{DOTA_Tooltip_ability_invoker_quas_Description}"
+"DOTA_Tooltip_Ability_imba_invoker_quas_note0"									"#{DOTA_Tooltip_ability_invoker_quas_Note0}"
+"DOTA_Tooltip_Ability_imba_invoker_quas_health_regen_per_instance"				"#{DOTA_Tooltip_ability_invoker_quas_health_regen_per_instance}"
+"DOTA_Tooltip_Ability_imba_invoker_quas_bonus_strength"							"BONUS STRENGTH:"
+
+// Wex
+"DOTA_Tooltip_Ability_imba_invoker_wex"    										"#{DOTA_Tooltip_ability_invoker_wex}"
+"DOTA_Tooltip_Ability_imba_invoker_wex_description"								"#{DOTA_Tooltip_ability_invoker_wex_Description}"
+"DOTA_Tooltip_Ability_imba_invoker_wex_note0"									"#{DOTA_Tooltip_ability_invoker_wex_Note0}"
+"DOTA_Tooltip_Ability_imba_invoker_wex_attack_speed_per_instance"				"#{DOTA_Tooltip_ability_invoker_wex_attack_speed_per_instance}"
+"DOTA_Tooltip_Ability_imba_invoker_wex_move_speed_per_instance"					"#{DOTA_Tooltip_ability_invoker_wex_move_speed_per_instance}"
+"DOTA_Tooltip_Ability_imba_invoker_wex_bonus_agility"							"BONUS AGILITY:"
+
+// Exort
+"DOTA_Tooltip_Ability_imba_invoker_exort"    									"#{DOTA_Tooltip_ability_invoker_exort}"
+"DOTA_Tooltip_Ability_imba_invoker_exort_description"   						"#{DOTA_Tooltip_ability_invoker_exort_Description}"
+"DOTA_Tooltip_Ability_imba_invoker_exort_note0"   								"#{DOTA_Tooltip_ability_invoker_exort_Note0}"
+"DOTA_Tooltip_Ability_imba_invoker_exort_bonus_damage_per_instance"   			"#{DOTA_Tooltip_ability_invoker_exort_bonus_damage_per_instance}"
+"DOTA_Tooltip_Ability_imba_invoker_exort_bonus_intelligence"  					"BONUS INTELLIGENCE:"
+
+// Quas modifier
+"Dota_Tooltip_modifier_imba_invoker_quas"    									"#{DOTA_Tooltip_modifier_invoker_quas_instance}"
+"Dota_Tooltip_modifier_imba_invoker_quas_description"							"Health regeneration and strength increased per instance."
+
+"Dota_Tooltip_modifier_imba_invoker_wex"    									"#{DOTA_Tooltip_modifier_invoker_wex_instance}"
+"Dota_Tooltip_modifier_imba_invoker_wex_description"							"Movement speed, attack speed and agility increased per instance."
+
+"Dota_Tooltip_modifier_imba_invoker_exort"    									"#{DOTA_Tooltip_modifier_invoker_exort_instance}"
+"Dota_Tooltip_modifier_imba_invoker_exort_description"							"Damage and intelligence increased per instance."
+
+"DOTA_Tooltip_modifier_imba_invoker_chaos_meteor_burn"							"#{DOTA_Tooltip_modifier_invoker_chaos_meteor_burn}"
+"DOTA_Tooltip_modifier_imba_invoker_chaos_meteor_burn_description"				"#{DOTA_Tooltip_modifier_invoker_chaos_meteor_burn_Description}"
+
+"DOTA_Tooltip_Ability_imba_invoker_invoke"										"#{DOTA_Tooltip_ability_invoker_invoke}"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_description"							"#{DOTA_Tooltip_ability_invoker_invoke_Description}"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_lore"									"#{DOTA_Tooltip_ability_invoker_invoke_Lore}"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_note0"								"#{DOTA_Tooltip_ability_invoker_invoke_Note0}"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_note1"								"#{DOTA_Tooltip_ability_invoker_invoke_Note1}"
+// "DOTA_Tooltip_Ability_imba_invoker_invoke_aghanim_description"					"#{DOTA_Tooltip_ability_invoker_invoke_aghanim_description}"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_max_invoked_spells"					"MAX SPELLS:"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_bonus_intellect"						"BONUS INTELLIGENCE:"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_magic_resistance_pct"					"%MAGIC RESISTANCE:"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_bonus_spellpower"						"%SPELL AMP:"
+"DOTA_Tooltip_Ability_imba_invoker_invoke_spell_lifesteal"						"%SPELL LIFESTEAL:"
+
+"DOTA_Tooltip_Ability_imba_forged_spirit_melting_strike"						"MELTING STRIKE"
+"DOTA_Tooltip_Ability_imba_forged_spirit_melting_strike_description"			"Melts away the armor of heroes hit by the spirit's attack if the spirit has enough mana. Each successive hit increases the amount of armor melted."
+"DOTA_Tooltip_Ability_imba_forged_spirit_melting_strike_armor_removed"			"Armor Reduction per Attack:"
+"DOTA_Tooltip_Ability_imba_forged_spirit_melting_strike_max_armor_removed"		"Armor Reduction Cap:"
+"DOTA_Tooltip_Ability_imba_forged_spirit_melting_strike_duration"				"Duration:"
+
+"DOTA_Tooltip_modifier_imba_forged_spirit_melting_strike"						"MELTING STRIKE"
+"DOTA_Tooltip_modifier_imba_forged_spirit_melting_strike_description"			"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+"DOTA_Tooltip_Ability_imba_forged_spirit_death"									"Detonate Dead"
+"DOTA_Tooltip_Ability_imba_forged_spirit_death_description"						"Forge Spirit Detonates on death."
+
+"DOTA_Tooltip_modifier_imba_invoker_ice_wall_slow"								"ICE WALL"
+"DOTA_Tooltip_modifier_imba_invoker_ice_wall_slow_description"					"Slowed by the wall of ice."
+
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap"									"COLD SNAP"
+"DOTA_Tooltip_modifier_imba_invoker_cold_snap_description"						"When damaged, will take additional damage and will be frozen briefly."
+
+"DOTA_Tooltip_modifier_imba_invoker_alacrity"									"ALACRITY"
+"DOTA_Tooltip_modifier_imba_invoker_alacrity_description"						"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and damage increased by %dMODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE%."
+
+"DOTA_Tooltip_modifier_imba_invoker_ghost_walk"									"GHOST WALK"
+"DOTA_Tooltip_modifier_imba_invoker_ghost_walk_description"						"Invisible, movement speed changed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and slowing nearby enemies"
+
+"DOTA_Tooltip_modifier_imba_invoker_ghost_walk_aura"							"GHOST WALK"
+"DOTA_Tooltip_modifier_imba_invoker_ghost_walk_aura_description"				"Near a ghost! Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%"
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1"						"Rechargable E.M.P"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_1_description"			"When EMP successfuly drains {s:threshold} targets it will recharge and repeat a second time at {s:effect_reduction}% reduced efficiency."
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2"						"Triple Meteors"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_2_description"			"Drops 3 chaos meteors on the target location."
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3"						" +{s:additional_spirits} Forged Spirit Summoned"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_3_description"			"Summons {s:additional_spirits} additional Forged Spirit.\nDuration for each spirit is reduced by {s:reduced_duration}"
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_4"						"THICC icewall"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_4_description"			"it's sooo THICC!"
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_5"						"Cataclysm"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_5_description"			"Launched when doubble tapped! Puts SunStrike on {s:cooldown} second cooldown.\nCreates 2 visible Sun Strikes within {s:minimum_range}-{s:maximum_range} range of each enemy hero."
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_6"						"Global Alacrity"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_6_description"			"Alacrity becomes global affecting all friendly heroes. Cooldown is increaesd to 45 seconds."
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7"						"Spiral Deafening Blast"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_7_description"			"Releases {s:number_of_blasts} Deafening Blasts around Invoker in a Spiral pattern.\nAt the end a second volley is triggered dealing half damage."
+
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8"						"Empowered Tornado"
+"DOTA_Tooltip_Ability_imba_special_bonus_unique_invoker_8_description"			"Tornados cooldown is reduced by -{s:cooldown_reduction} seconds.\nEnemies hit have their passives disabled for 3 seconds uppon landing."

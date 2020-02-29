@@ -1,0 +1,2483 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CVanimGroup CVanimGroup_0
+{
+	string m_Name = ""
+	CVReferenceSkeletonReference m_pReferenceSkeleton = CVReferenceSkeletonReference
+	{
+		CVReferenceSkeleton* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = &CVBoneFlagList_0
+		string m_sFileName = ""
+	}
+	CVseqGroupReference m_pSeqGroup = CVseqGroupReference
+	{
+		CVseqGroup* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
+	CVanim[] m_Vanim = 
+	[
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 53
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE"
+					int m_nWeight = 0
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 52
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle_cheers"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_cheers.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 66
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE_RARE"
+					int m_nWeight = 0
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 65
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 14
+					string m_DataString = "particles/overboss_chalice_splash.vpcf follow_attachment splash"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle_hiccup"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_hiccup.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 66
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE_RARE"
+					int m_nWeight = 1
+				},
+				CActivity
+				{
+					string m_Name = ""
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 65
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle_long"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_long.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 183
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE_RARE"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 182
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.100000
+				float m_flFadeOutTime = 0.100000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_throw_coin"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_throw_coin.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 72
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_1"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 71
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle_and_cheers"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_and_cheers.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 120
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 111
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_idle_and_hiccup"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_and_hiccup.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 123
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 111
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_throw_coin_long"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_throw_coin_long.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 110
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_2"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 109
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "overboss_throne_victory"
+			string m_Filepath = "models/props_structures/midas_throne/dmx/animation/overboss_throne_victory.dmx"
+			int m_nStartframe = 0
+			int m_nEndframe = 476
+			float m_flFps = 24.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_3"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_CREATE_PARTICLE_EFFECT"
+					int m_nFrame = 0
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf follow_attachment bubbles"
+				},
+				CAnimationEvent
+				{
+					string m_Event = "AE_CL_STOP_PARTICLE_EFFECT"
+					int m_nFrame = 475
+					string m_DataString = "particles/overboss_chalice_fizz.vpcf 1"
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		}
+	]
+	string[] m_sScripts = 
+	[
+		
+	]
+}
+
+CVBoneFlagList CVBoneFlagList_0
+{
+	CVEncodingFlagBone[] m_boneFlag = 
+	[
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "OBERBOSS_THONE_IDLE"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "OBERBOSS_THONE_IDLE"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Origin_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Origin_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Root_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Spine0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Spine1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Spine2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Spine3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfArm0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfArm1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfArm2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfArm3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtArm0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtArm1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtArm2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtArm3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Chalice0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Chalice0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LiquidRoot_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Neck0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Neck0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace4_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace4_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace5_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace5_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Necklace6_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "NecklaceInnerB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Necklace2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "NecklaceInnerA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Neck0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Head0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Mouth0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Mouth0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tongue0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tongue0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tongue1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tongue1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tongue2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tongue2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tongue3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Mouth0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtBeard0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtBeard0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtBeard1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Mouth0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfBeard0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfBeard0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfBeard1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfEar0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfEar0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfEar1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtEar0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtEar0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtEar1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfNostril0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtNostril0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfEye0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtEye0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Neck0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "NeckHelper0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfDigitA0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitA1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfDigitB0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitB1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitC0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfDigitC0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDigitC1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfWrist0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfBangle0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfDeltoid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtDigitA0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitA1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtDigitB0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitB1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitC0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtDigitC0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDigitC1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtWrist0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtBangle0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtArm0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtDeltoid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfBreast0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtBreast0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Spine1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "BellyHelperB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLeg0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfLeg0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLeg1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfLeg1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLeg2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfLeg2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLeg3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfLeg3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfToeA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfLeg3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfToeB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLeg0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtLeg0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLeg1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtLeg1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLeg2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtLeg2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLeg3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtLeg3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtToeA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "RtLeg3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtToeB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tail0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tail0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tail1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tail1_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tail2_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Tail2_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Tail3_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "FrontLoincloth0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "FrontLoincloth0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "FrontLoincloth1_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "BellyHelperA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfHip0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtHip0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLoincloth0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Root_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLoincloth0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LiquidRoot_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LiquidA0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LiquidRoot_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LiquidB0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LiquidRoot_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LiquidC0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LiquidRoot_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LiquidD0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfUprEyelid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "LfLwrEyelid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtUprEyelid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "Head0_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "RtLwrEyelid0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = "LfArm3_JNT"
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "Grape0_JNT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "kobold_overboss9"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "OVERBOSS_IDLE_LONG_EXPORT"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "OVERBOSS_THROW_COIN"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "OVERBOSS_THRONE_THROW_COIN_LONG"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		},
+		CVEncodingFlagBone
+		{
+			string m_sParent = ""
+			bool m_bRigidLength = false
+			bool m_bPrealignedRotation = false
+			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
+			string m_sName = "kobold_overboss1"
+			bool m_bProcedural = false
+			bool m_bDeleted = true
+			string m_sGroup = ""
+		}
+	]
+	CVEncodingFlagPose[] m_boneWorldspace = 
+	[
+		CVEncodingFlagPose
+		{
+			string m_name = "OBERBOSS_THONE_IDLE"
+			float(3) m_Translation = ( 0.000000, 0.000000, -0.000061 )
+			float(3) m_Rotation = ( 0.000000, -0.000000, -90.000153 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Origin_JNT"
+			float(3) m_Translation = ( 0.000000, 0.000000, 0.000000 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Root_JNT"
+			float(3) m_Translation = ( -2.239679, -0.000000, 55.191196 )
+			float(3) m_Rotation = ( 90.000000, -0.000000, 90.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Spine0_JNT"
+			float(3) m_Translation = ( -6.023224, -0.000001, 58.573730 )
+			float(3) m_Rotation = ( -89.999985, -79.481270, -0.000016 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Spine1_JNT"
+			float(3) m_Translation = ( -4.710322, -0.000001, 65.644623 )
+			float(3) m_Rotation = ( 89.999985, -84.449181, -179.999969 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Spine2_JNT"
+			float(3) m_Translation = ( -6.207705, -0.000002, 81.052292 )
+			float(3) m_Rotation = ( 89.999992, -79.854843, -179.999985 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Spine3_JNT"
+			float(3) m_Translation = ( -8.513223, -0.000003, 93.936546 )
+			float(3) m_Rotation = ( -89.999992, -71.818466, -0.000007 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfArm0_JNT"
+			float(3) m_Translation = ( -0.319247, 13.982759, 102.172348 )
+			float(3) m_Rotation = ( 171.795013, -23.542204, 109.849464 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfArm1_JNT"
+			float(3) m_Translation = ( -3.940855, 22.822266, 99.193474 )
+			float(3) m_Rotation = ( 174.038162, 44.709293, 90.406143 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfArm2_JNT"
+			float(3) m_Translation = ( -4.356765, 39.153610, 82.108299 )
+			float(3) m_Rotation = ( 153.474350, 37.814365, 59.699898 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfArm3_JNT"
+			float(3) m_Translation = ( 4.321498, 53.873260, 67.705452 )
+			float(3) m_Rotation = ( 153.474350, 37.814358, 59.699898 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtArm0_JNT"
+			float(3) m_Translation = ( -0.319263, -13.982830, 102.172028 )
+			float(3) m_Rotation = ( -8.205000, 23.542206, 70.150543 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtArm1_JNT"
+			float(3) m_Translation = ( -3.940881, -22.822258, 99.193581 )
+			float(3) m_Rotation = ( -5.961818, -44.709293, 89.593864 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtArm2_JNT"
+			float(3) m_Translation = ( -4.356793, -39.153683, 82.108421 )
+			float(3) m_Rotation = ( -26.525618, -37.814358, 120.300095 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtArm3_JNT"
+			float(3) m_Translation = ( 4.321462, -53.873314, 67.705574 )
+			float(3) m_Rotation = ( -26.525618, -37.814358, 120.300095 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Chalice0_JNT"
+			float(3) m_Translation = ( -0.000040, -0.000092, 0.000145 )
+			float(3) m_Rotation = ( 0.000000, -89.999985, -89.999985 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LiquidRoot_JNT"
+			float(3) m_Translation = ( -0.000043, -0.000141, 49.038475 )
+			float(3) m_Rotation = ( 90.000000, 0.000026, 180.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Neck0_JNT"
+			float(3) m_Translation = ( -2.905695, -0.000005, 111.010468 )
+			float(3) m_Rotation = ( -90.000000, -58.801872, -0.000003 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace0_JNT"
+			float(3) m_Translation = ( 1.019736, 0.328895, 111.416420 )
+			float(3) m_Rotation = ( 146.204102, 19.696604, -66.994568 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace1_JNT"
+			float(3) m_Translation = ( 8.010279, -16.135435, 105.013199 )
+			float(3) m_Rotation = ( 10.070201, 36.029972, 9.273329 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace2_JNT"
+			float(3) m_Translation = ( 24.658644, -13.417135, 92.743835 )
+			float(3) m_Rotation = ( 8.535823, 39.068188, 20.954311 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace3_JNT"
+			float(3) m_Translation = ( 41.960773, -6.791296, 77.704102 )
+			float(3) m_Rotation = ( 14.716259, 45.929298, 56.618538 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace4_JNT"
+			float(3) m_Translation = ( 49.924149, 5.294279, 62.753586 )
+			float(3) m_Rotation = ( 29.928823, -33.830143, 131.888229 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace5_JNT"
+			float(3) m_Translation = ( 34.843666, 22.108768, 77.891106 )
+			float(3) m_Rotation = ( -12.453478, -45.686180, -173.714218 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Necklace6_JNT"
+			float(3) m_Translation = ( 12.334883, 19.629395, 101.085068 )
+			float(3) m_Rotation = ( -12.550521, -42.225918, -167.628082 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "NecklaceInnerB0_JNT"
+			float(3) m_Translation = ( 39.856792, 10.948065, 79.896500 )
+			float(3) m_Rotation = ( 12.788437, -36.985386, 157.157410 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "NecklaceInnerA0_JNT"
+			float(3) m_Translation = ( 35.577610, 5.871897, 87.556641 )
+			float(3) m_Rotation = ( 21.060385, -31.242502, 147.915909 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Head0_JNT"
+			float(3) m_Translation = ( 1.243434, -0.000006, 117.862000 )
+			float(3) m_Rotation = ( -89.999992, -76.636940, -0.000009 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Mouth0_JNT"
+			float(3) m_Translation = ( 10.830993, -0.000007, 122.842918 )
+			float(3) m_Rotation = ( 90.000000, 48.421242, -0.000001 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tongue0_JNT"
+			float(3) m_Translation = ( 6.781552, -0.107767, 109.398140 )
+			float(3) m_Rotation = ( -90.000000, -33.416576, 0.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tongue1_JNT"
+			float(3) m_Translation = ( 14.425121, -0.107769, 114.441437 )
+			float(3) m_Rotation = ( -90.000000, 3.576365, 0.000002 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tongue2_JNT"
+			float(3) m_Translation = ( 23.250656, -0.107771, 113.889984 )
+			float(3) m_Rotation = ( -89.999931, 5.300959, 0.000005 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tongue3_JNT"
+			float(3) m_Translation = ( 27.072422, -0.107772, 113.535500 )
+			float(3) m_Rotation = ( -90.000000, -3.136338, 0.000001 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtBeard0_JNT"
+			float(3) m_Translation = ( 33.399323, -2.914258, 104.148132 )
+			float(3) m_Rotation = ( -33.188824, 64.243057, -20.008696 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtBeard1_JNT"
+			float(3) m_Translation = ( 36.858086, -4.173754, 96.519165 )
+			float(3) m_Rotation = ( 16.768768, 67.677650, 34.022884 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfBeard0_JNT"
+			float(3) m_Translation = ( 33.334270, 2.667858, 104.083122 )
+			float(3) m_Rotation = ( -156.564987, 61.676315, 15.491734 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfBeard1_JNT"
+			float(3) m_Translation = ( 38.256470, 4.032154, 94.606361 )
+			float(3) m_Rotation = ( 179.150284, 64.191589, -11.668473 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfEar0_JNT"
+			float(3) m_Translation = ( 5.298810, 8.811583, 124.923515 )
+			float(3) m_Rotation = ( 175.500595, -15.675933, 121.845238 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfEar1_JNT"
+			float(3) m_Translation = ( -0.441813, 18.053967, 127.976822 )
+			float(3) m_Rotation = ( 178.711945, -23.608047, 108.026413 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtEar0_JNT"
+			float(3) m_Translation = ( 5.298799, -8.811619, 124.923981 )
+			float(3) m_Rotation = ( -4.499411, 15.675928, 58.154778 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtEar1_JNT"
+			float(3) m_Translation = ( -0.441824, -18.054054, 127.977013 )
+			float(3) m_Rotation = ( -1.288054, 23.608051, 71.973602 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfNostril0_JNT"
+			float(3) m_Translation = ( 32.753532, 3.147809, 118.954216 )
+			float(3) m_Rotation = ( 88.232178, -8.160207, 74.024406 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtNostril0_JNT"
+			float(3) m_Translation = ( 32.753613, -3.147838, 118.953964 )
+			float(3) m_Rotation = ( -91.767815, 8.160199, 105.975594 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfEye0_JNT"
+			float(3) m_Translation = ( 16.059752, 5.607323, 123.704880 )
+			float(3) m_Rotation = ( 90.019417, -3.869673, 18.828968 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtEye0_JNT"
+			float(3) m_Translation = ( 16.059853, -5.607357, 123.704979 )
+			float(3) m_Rotation = ( -89.980591, 3.869675, 161.171036 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "NeckHelper0_JNT"
+			float(3) m_Translation = ( 16.303825, -0.000005, 104.735970 )
+			float(3) m_Rotation = ( -90.000000, 24.698452, 0.000002 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitA0_JNT"
+			float(3) m_Translation = ( 9.732706, 52.631824, 66.985443 )
+			float(3) m_Rotation = ( -125.341209, 29.801653, -3.680563 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitA1_JNT"
+			float(3) m_Translation = ( 14.383663, 52.332668, 64.316154 )
+			float(3) m_Rotation = ( -140.706940, 49.565483, -27.194544 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitB0_JNT"
+			float(3) m_Translation = ( 11.142788, 55.545456, 62.941879 )
+			float(3) m_Rotation = ( -154.367889, 50.939529, 2.572119 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitB1_JNT"
+			float(3) m_Translation = ( 14.108868, 55.678726, 59.283325 )
+			float(3) m_Rotation = ( 174.410156, 55.190994, -35.938641 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitC0_JNT"
+			float(3) m_Translation = ( 5.762642, 56.498787, 60.171101 )
+			float(3) m_Rotation = ( 177.789673, 63.366180, 0.105922 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDigitC1_JNT"
+			float(3) m_Translation = ( 8.109647, 56.503159, 55.491158 )
+			float(3) m_Rotation = ( 130.824692, 46.747925, -55.241966 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfWrist0_JNT"
+			float(3) m_Translation = ( -0.017632, 46.513458, 74.906891 )
+			float(3) m_Rotation = ( 153.474350, 37.814358, 59.699898 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfBangle0_JNT"
+			float(3) m_Translation = ( -5.156003, 39.037132, 81.875481 )
+			float(3) m_Rotation = ( -2.285606, -29.363106, -85.346512 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfDeltoid0_JNT"
+			float(3) m_Translation = ( -3.940855, 22.822266, 99.193474 )
+			float(3) m_Rotation = ( 174.038162, 44.709293, 90.406143 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitA0_JNT"
+			float(3) m_Translation = ( 9.732706, -52.631969, 66.985649 )
+			float(3) m_Rotation = ( 54.658783, -29.801676, -176.319443 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitA1_JNT"
+			float(3) m_Translation = ( 14.383705, -52.332825, 64.316422 )
+			float(3) m_Rotation = ( 39.293060, -49.565514, -152.805450 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitB0_JNT"
+			float(3) m_Translation = ( 11.142772, -55.545559, 62.942032 )
+			float(3) m_Rotation = ( 25.632078, -50.939568, 177.427887 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitB1_JNT"
+			float(3) m_Translation = ( 14.108877, -55.678818, 59.283485 )
+			float(3) m_Rotation = ( -5.589937, -55.191010, -144.061295 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitC0_JNT"
+			float(3) m_Translation = ( 5.762617, -56.498825, 60.171219 )
+			float(3) m_Rotation = ( -2.210371, -63.366215, 179.894089 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDigitC1_JNT"
+			float(3) m_Translation = ( 8.109629, -56.503155, 55.491367 )
+			float(3) m_Rotation = ( -49.175381, -46.747936, -124.757980 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtWrist0_JNT"
+			float(3) m_Translation = ( -0.017673, -46.513515, 74.906982 )
+			float(3) m_Rotation = ( -26.525618, -37.814358, 120.300095 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtBangle0_JNT"
+			float(3) m_Translation = ( -5.156036, -39.037201, 81.875656 )
+			float(3) m_Rotation = ( 177.714371, 29.363106, -94.653481 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtDeltoid0_JNT"
+			float(3) m_Translation = ( -3.940881, -22.822258, 99.193581 )
+			float(3) m_Rotation = ( -5.961818, -44.709293, 89.593864 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfBreast0_JNT"
+			float(3) m_Translation = ( 20.516495, 21.023968, 85.928001 )
+			float(3) m_Rotation = ( 89.982140, 12.176676, 42.492706 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtBreast0_JNT"
+			float(3) m_Translation = ( 20.516510, -21.024002, 85.927979 )
+			float(3) m_Rotation = ( -90.017860, -12.176666, 137.507278 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "BellyHelperB0_JNT"
+			float(3) m_Translation = ( 28.839142, -0.000002, 70.466522 )
+			float(3) m_Rotation = ( -89.999969, -7.037946, -0.000004 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLeg0_JNT"
+			float(3) m_Translation = ( 11.546869, 23.966259, 44.470039 )
+			float(3) m_Rotation = ( -113.019005, 78.005272, -13.160499 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLeg1_JNT"
+			float(3) m_Translation = ( 16.485580, 22.811489, 20.597778 )
+			float(3) m_Rotation = ( 98.347023, 55.957710, -163.661301 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLeg2_JNT"
+			float(3) m_Translation = ( 5.927974, 19.716494, 4.312716 )
+			float(3) m_Rotation = ( -18.271421, 86.861176, -108.067322 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLeg3_JNT"
+			float(3) m_Translation = ( 5.860267, 19.508940, 0.331284 )
+			float(3) m_Rotation = ( 77.873604, 46.971714, -10.754330 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfToeA0_JNT"
+			float(3) m_Translation = ( 11.742641, 19.773186, -3.897395 )
+			float(3) m_Rotation = ( 67.958313, 38.807602, -14.237578 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfToeB0_JNT"
+			float(3) m_Translation = ( 8.800486, 26.032776, -2.732507 )
+			float(3) m_Rotation = ( 103.398590, 54.896538, 11.027637 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLeg0_JNT"
+			float(3) m_Translation = ( 11.546899, -23.966297, 44.470001 )
+			float(3) m_Rotation = ( 66.980988, -78.005272, -166.839508 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLeg1_JNT"
+			float(3) m_Translation = ( 16.485598, -22.811499, 20.597801 )
+			float(3) m_Rotation = ( -81.652969, -55.957706, -16.338694 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLeg2_JNT"
+			float(3) m_Translation = ( 5.927983, -19.716511, 4.312712 )
+			float(3) m_Rotation = ( 161.728607, -86.861176, -71.932732 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLeg3_JNT"
+			float(3) m_Translation = ( 5.860274, -19.508926, 0.331274 )
+			float(3) m_Rotation = ( -102.126419, -46.971729, -169.245667 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtToeA0_JNT"
+			float(3) m_Translation = ( 11.742613, -19.773239, -3.897404 )
+			float(3) m_Rotation = ( -112.041695, -38.807617, -165.762405 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtToeB0_JNT"
+			float(3) m_Translation = ( 8.800491, -26.032749, -2.732513 )
+			float(3) m_Rotation = ( -76.601418, -54.896549, 168.972366 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tail0_JNT"
+			float(3) m_Translation = ( -18.990891, -0.000004, 44.568005 )
+			float(3) m_Rotation = ( -90.000046, 9.945262, 180.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tail1_JNT"
+			float(3) m_Translation = ( -35.342899, -0.000014, 41.700829 )
+			float(3) m_Rotation = ( -90.000107, 6.674475, 180.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tail2_JNT"
+			float(3) m_Translation = ( -50.993446, -0.000029, 39.869408 )
+			float(3) m_Rotation = ( -90.000000, 39.232121, 180.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Tail3_JNT"
+			float(3) m_Translation = ( -55.530468, -0.000044, 36.164909 )
+			float(3) m_Rotation = ( -90.000000, 49.653366, 180.000000 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "FrontLoincloth0_JNT"
+			float(3) m_Translation = ( 28.178482, 0.000001, 26.716991 )
+			float(3) m_Rotation = ( -89.999954, 85.881813, -179.999954 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "FrontLoincloth1_JNT"
+			float(3) m_Translation = ( 27.103249, 0.000001, 11.783194 )
+			float(3) m_Rotation = ( -89.999969, 84.717125, -179.999969 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "BellyHelperA0_JNT"
+			float(3) m_Translation = ( 21.798067, 0.462439, 52.556278 )
+			float(3) m_Rotation = ( -87.177711, 18.039968, 11.161089 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfHip0_JNT"
+			float(3) m_Translation = ( 11.546869, 23.966259, 44.470039 )
+			float(3) m_Rotation = ( -113.019005, 78.005272, -13.160499 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtHip0_JNT"
+			float(3) m_Translation = ( 11.546899, -23.966297, 44.470001 )
+			float(3) m_Rotation = ( 66.980988, -78.005272, -166.839508 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLoincloth0_JNT"
+			float(3) m_Translation = ( -13.196799, 18.294302, 47.205189 )
+			float(3) m_Rotation = ( 173.550919, 82.301231, -146.699326 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLoincloth0_JNT"
+			float(3) m_Translation = ( -13.392051, -17.502916, 48.362808 )
+			float(3) m_Rotation = ( 17.964024, 81.226364, 154.843613 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LiquidA0_JNT"
+			float(3) m_Translation = ( -16.155712, -0.000173, 49.038525 )
+			float(3) m_Rotation = ( 89.999939, 0.000003, 89.999939 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LiquidB0_JNT"
+			float(3) m_Translation = ( -0.000034, 16.155470, 49.038513 )
+			float(3) m_Rotation = ( 90.000000, 0.000032, 179.999985 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LiquidC0_JNT"
+			float(3) m_Translation = ( 16.155632, -0.000198, 49.038532 )
+			float(3) m_Rotation = ( 90.000000, 0.000032, 179.999985 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LiquidD0_JNT"
+			float(3) m_Translation = ( -0.000045, -16.155836, 49.038544 )
+			float(3) m_Rotation = ( 90.000000, 0.000032, 179.999985 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfUprEyelid0_JNT"
+			float(3) m_Translation = ( 17.045448, 6.418781, 124.047615 )
+			float(3) m_Rotation = ( 89.272095, -9.202367, 50.711422 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "LfLwrEyelid0_JNT"
+			float(3) m_Translation = ( 16.807144, 6.315181, 123.189240 )
+			float(3) m_Rotation = ( 87.971832, -7.431439, 27.021404 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtUprEyelid0_JNT"
+			float(3) m_Translation = ( 16.807224, -6.315213, 123.188965 )
+			float(3) m_Rotation = ( -90.727921, 9.202388, 129.288574 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "RtLwrEyelid0_JNT"
+			float(3) m_Translation = ( 16.807224, -6.315213, 123.188965 )
+			float(3) m_Rotation = ( -90.727921, 9.202388, 129.288574 )
+		},
+		CVEncodingFlagPose
+		{
+			string m_name = "Grape0_JNT"
+			float(3) m_Translation = ( 149.719437, -195.547379, -67.573601 )
+			float(3) m_Rotation = ( 56.990860, -31.923943, -144.275864 )
+		}
+	]
+	CVEncodingFlagMorph[] m_morphFlag = 
+	[
+		CVEncodingFlagMorph
+		{
+			string m_sName = "neckCompress"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "lfUprBlink"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "lfLwrBlink"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "lfInnerBrowRaiser"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "lfOuterBrowRaiser"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "overboss-body"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "lfOuterBrowLowerer"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtUprBlink"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtLwrBlink"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtInnerBrowRaiser"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtOuterBrowRaiser"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtInnerBrowLowerer"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		},
+		CVEncodingFlagMorph
+		{
+			string m_sName = "rtOuterBrowLowerer"
+			bool m_bProcedural = false
+			bool m_bDeleted = false
+			string m_sGroup = ""
+		}
+	]
+	CVEncodingFlagUser[] m_userFlag = 
+	[
+		
+	]
+}

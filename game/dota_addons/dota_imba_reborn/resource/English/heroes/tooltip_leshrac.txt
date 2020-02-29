@@ -1,0 +1,11 @@
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict"						"#{DOTA_Tooltip_ability_leshrac_diabolic_edict}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_Description"			"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_Description}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_Lore"					"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_Lore}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_Note0"				"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_Note0}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_Note1"				"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_Note1}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_Note2"				"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_Note2}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_radius"				"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_radius}"
+"DOTA_Tooltip_ability_imba_leshrac_diabolic_edict_num_explosions"		"#{DOTA_Tooltip_ability_leshrac_diabolic_edict_num_explosions}"
+
+"DOTA_Tooltip_modifier_imba_leshrac_diabolic_edict"						"#{DOTA_Tooltip_modifier_leshrac_diabolic_edict}"
+"DOTA_Tooltip_modifier_imba_leshrac_diabolic_edict_Description"			"#{DOTA_Tooltip_modifier_leshrac_diabolic_edict_Description}"

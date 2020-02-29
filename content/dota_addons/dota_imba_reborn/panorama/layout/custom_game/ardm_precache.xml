@@ -1,0 +1,16 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/ardm_precache.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/ardm_precache.js" />
+	</scripts>
+
+	<Panel hittest="false" class="ARDM">
+		<Panel id="precache">
+			<Label id="precache-label" text="Precaching: 0%"/>
+			<Panel id="precache-progress"/>
+		</Panel>
+	</Panel>
+</root>

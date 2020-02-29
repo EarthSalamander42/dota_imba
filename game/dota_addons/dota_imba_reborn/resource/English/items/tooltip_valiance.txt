@@ -1,0 +1,22 @@
+"DOTA_Tooltip_ability_item_recipe_imba_valiance"						"Valiance Recipe"
+
+"DOTA_Tooltip_ability_item_imba_valiance"								"Valiance"
+"DOTA_Tooltip_ability_item_imba_valiance_Description"					"<h1>Active: Royal Guard</h1> Enters a state of extreme defense for %guard_duration% seconds, reducing incoming damage from sources within %guard_angle% degrees of the caster's forward vector by %guard_damage_reduction%%%, as well as generally increasing status resistance by %guard_status_resistance%%%. Any damage before reductions that would normally be received in this manner is stored into Countershield.\n<h1>Active: Countershield</h1> Within %counter_duration% seconds after Royal Guard ends, Valiance can be cast as a point-target ability. Dashes towards the point and shield bashes %counter_distance% radius in front of the caster. Hit enemies take %counter_damage_percent%%% of Royal Guard's stored damage as pure damage, and are knocked back and upwards for %counter_knockback_duration% seconds. Damage and knockback pierces spell immunity.<br><br>Mana Cost: %counter_mana_cost%<br>Cast Point: %counter_castpoint% seconds<br>Cast Range: %counter_cast_range%\n<h1>Passive: Damage Block</h1> Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged."
+"DOTA_Tooltip_ability_item_imba_valiance_Lore"								"An ascended shield that has seen substantial growth through its wielder's expertise."
+"DOTA_Tooltip_ability_item_imba_valiance_Note0"								"Multiple sources of damage block do not stack."
+"DOTA_Tooltip_ability_item_imba_valiance_Note1"								"Guard does not block damage flagged as health loss."
+"DOTA_Tooltip_ability_item_imba_valiance_Note2"								"Countershield does not dash if the cast point is within the bash distance."
+"DOTA_Tooltip_ability_item_imba_valiance_Note3"								"Countershield cannot be cast beyond its bash radius if the caster is rooted."
+"DOTA_Tooltip_ability_item_imba_valiance_Note4"								"Countershield's dash stuns, disarms, and grants invulnerability for its duration."
+"DOTA_Tooltip_ability_item_imba_valiance_Note5"								"Countershield's damage is not affected by spell amplifcation."
+"DOTA_Tooltip_ability_item_imba_valiance_bonus_health"						"+$health"
+"DOTA_Tooltip_ability_item_imba_valiance_bonus_health_regen"					"+$hp_regen"
+
+"DOTA_Tooltip_modifier_item_imba_valiance_guard"						"Royal Guard"
+"DOTA_Tooltip_modifier_item_imba_valiance_guard_Description"			"Status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%, and heavily reducing all damage taken from the front."
+
+"DOTA_Tooltip_modifier_item_imba_valiance_counter"						"Countershield Grace Time"
+"DOTA_Tooltip_modifier_item_imba_valiance_counter_Description"			"Valiance can be cast a point-target ability to activate Countershield."
+
+"DOTA_Tooltip_modifier_item_imba_valiance_dash"							"Countershield Dash"
+"DOTA_Tooltip_modifier_item_imba_valiance_dash_Description"				"Stunned, disarmed, invulnerable, and dashing quickly towards a target location. Will apply Countershield's shield bash at modifier end."

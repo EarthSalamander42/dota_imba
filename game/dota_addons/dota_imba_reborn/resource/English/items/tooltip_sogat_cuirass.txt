@@ -1,0 +1,23 @@
+// Calaminh's Tutela Plate // Tutela // Nutella // Greatwyrm // Turtle // Sogat // Soggy
+"DOTA_Tooltip_Ability_item_imba_sogat_cuirass"                "Sogat Cuirass"
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_Description"                "<h1>Active: Bulwark</h1> For %duration% seconds, grant nearby allied heroes and buildings +%active_armor% armor, a %block_chance_active%%% chance to block %block_damage_melee_active% damage from each incoming attack, and %damage_reduction_pct%%% damage reduction for heroes.<br><br>Units may only be affected by Bulwark once every %tooltip_reapply_time% seconds.<br><br>Radius: %radius%\n<h1>Passive: Damage Block</h1> Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.\n<h1>Passive: Sogat Aura</h1>Grants %aura_as_ally% attack speed and %aura_armor_ally% armor to nearby allied units and structures, and decreases nearby enemy unit and structure armor by %aura_armor_reduction_enemy%.<br><br>Radius: %radius%\n<h1>Passive: Parry</h1> Also reduces all incoming damage by %damage_reduction_pct_passive%%%. Passive damage reduction does not stack with Bulwark's damage reduction."
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_Lore"          "With great power comes great responsibility, but they also say absolute power corrupts absolutely. The 87th and missing king of Ulmarain knew the end of times were coming with the clashing of heroes and took a gamble by forging Tutela, the guardian plate - indestructible, unconquerable, and eternal. Even when the world crumbles into ash and cinders, a lone survivor will remain."
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_Note0"          "Multiple sources of damage block and Crimson Guard series damage reduction do not stack."
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_Note1"          "Bulwark overrides and does not stack with Crimson Guard's active Guard ability."
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_health"					"+$health"
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_armor"          		"+$armor"
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_stats"					"+$all"
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_as"						"+$attack"	
+"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_health_regen"			"+$hp_regen"
+
+"DOTA_Tooltip_modifier_item_imba_sogat_cuirass_buff"					"Bulwark"
+"DOTA_Tooltip_modifier_item_imba_sogat_cuirass_buff_Description"		"Gained %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE% armor, and a 100%% chance to block %dMODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK% damage from incoming attacks. Heroes also gain %dMODIFIER_PROPERTY_TOOLTIP%%% damage reduction."
+
+"DOTA_Tooltip_modifier_item_imba_sogat_cuirass_nostack"					"Guard/Bulwark Cooldown"
+"DOTA_Tooltip_modifier_item_imba_sogat_cuirass_nostack_Description"		"Guard/Bulwark will not affect a unit that has recently been protected by Guard/Bulwark."
+
+"DOTA_Tooltip_modifier_imba_sogat_cuirass_aura_positive_effect"					"Sogat Aura"
+"DOTA_Tooltip_modifier_imba_sogat_cuirass_aura_positive_effect_Description"		"Increased armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% and attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+"DOTA_Tooltip_modifier_imba_sogat_cuirass_aura_negative_effect"					"Sogat Aura"
+"DOTA_Tooltip_modifier_imba_sogat_cuirass_aura_negative_effect_Description"		"Reduced armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."

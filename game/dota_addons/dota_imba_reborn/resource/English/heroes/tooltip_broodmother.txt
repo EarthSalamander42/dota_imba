@@ -1,0 +1,103 @@
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings"							"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_Description"				"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_Description}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_Lore"						"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_Lore}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_Note0"						"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_Note0}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_Note1"						"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_Note1}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_spiderling_duration"		"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_spiderling_duration}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_damage"					"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_damage}"
+"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderlings_count"						"#{DOTA_Tooltip_ability_broodmother_spawn_spiderlings_count}"
+
+"DOTA_Tooltip_ability_imba_broodmother_spin_web"									"#{DOTA_Tooltip_ability_broodmother_spin_web}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_Description"						"#{DOTA_Tooltip_ability_broodmother_spin_web_Description}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_Lore"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Lore}"
+// "DOTA_Tooltip_ability_imba_broodmother_spin_web_aghanim_description"				"#{DOTA_Tooltip_ability_broodmother_spin_web_aghanim_description}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_Note0"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Note0}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_Note1"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Note1}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_count"								"#{DOTA_Tooltip_ability_broodmother_spin_web_count}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_heath_regen"						"#{DOTA_Tooltip_ability_broodmother_spin_web_heath_regen}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_bonus_movespeed"					"#{DOTA_Tooltip_ability_broodmother_spin_web_bonus_movespeed}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_max_charges"					    "#{DOTA_Tooltip_ability_broodmother_spin_web_max_charges}"
+"DOTA_Tooltip_ability_imba_broodmother_spin_web_charge_restore_time"				"#{DOTA_Tooltip_ability_broodmother_spin_web_charge_restore_time}"		
+// "DOTA_Tooltip_ability_imba_broodmother_spin_web_count_scepter"						"#{DOTA_Tooltip_ability_broodmother_spin_web_count_scepter}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spin_web_max_charges_scepter"				"#{DOTA_Tooltip_ability_broodmother_spin_web_max_charges_scepter}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spin_web_bonus_movespeed_scepter"     		"#{DOTA_Tooltip_ability_broodmother_spin_web_bonus_movespeed_scepter}"
+
+// Using vanilla ability
+//	"DOTA_Tooltip_ability_imba_broodmother_spin_web_destroy"							"#{DOTA_Tooltip_ability_broodmother_spin_web_destroy}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spin_web_destroy_Description"				"#{DOTA_Tooltip_ability_broodmother_spin_web_destroy_Description}"
+
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite"							"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_Description"				"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_Description}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_Lore"					"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_Lore}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_Note0"					"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_Note0}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_miss_chance"				"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_miss_chance}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_bonus_movespeed"			"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_bonus_movespeed}"
+"DOTA_Tooltip_ability_imba_broodmother_incapacitating_bite_duration"				"#{DOTA_Tooltip_ability_broodmother_incapacitating_bite_duration}"		
+
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger"							"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_Description"				"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_Description}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_Lore"						"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_Lore}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_Note0"						"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_Note0}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_bonus_damage"				"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_bonus_damage}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_lifesteal_pct"				"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_lifesteal_pct}"
+"DOTA_Tooltip_ability_imba_broodmother_insatiable_hunger_duration"					"#{DOTA_Tooltip_ability_broodmother_insatiable_hunger_duration}"
+
+// Using vanilla ability
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting"								"#{DOTA_Tooltip_ability_broodmother_poison_sting}"
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting_Description"					"#{DOTA_Tooltip_ability_broodmother_poison_sting_Description}"
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting_damage_per_second"				"#{DOTA_Tooltip_ability_broodmother_poison_sting_damage_per_second}"
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting_movement_speed"					"#{DOTA_Tooltip_ability_broodmother_poison_sting_movement_speed}"
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting_duration"						"#{DOTA_Tooltip_ability_broodmother_poison_sting_duration}:"
+//	"DOTA_Tooltip_ability_imba_broodmother_poison_sting_duration_hero"					"#{DOTA_Tooltip_ability_broodmother_poison_sting_duration_hero}:"
+
+// Using vanilla ability
+//	"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderite"								"#{DOTA_Tooltip_ability_broodmother_spawn_spiderite}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderite_Description"					"#{DOTA_Tooltip_ability_broodmother_spawn_spiderite_Description}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderite_spiderite_duration"			"#{DOTA_Tooltip_ability_broodmother_spawn_spiderite_spiderite_duration}"
+//	"DOTA_Tooltip_ability_imba_broodmother_spawn_spiderite_buff_duration"				"#{DOTA_Tooltip_ability_broodmother_spawn_spiderite_buff_duration}"
+
+"DOTA_Tooltip_modifier_imba_broodmother_spawn_spiderlings"							"#{DOTA_Tooltip_modifier_broodmother_spawn_spiderlings}"
+"DOTA_Tooltip_modifier_imba_broodmother_spawn_spiderlings_Description"				"#{DOTA_Tooltip_modifier_broodmother_spawn_spiderlings_Description}"
+
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web"									"#{DOTA_Tooltip_modifier_broodmother_spin_web}"
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web_Description"						"#{DOTA_Tooltip_modifier_broodmother_spin_web_Description}"
+
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web_charge_counter"					"#{DOTA_Tooltip_modifier_broodmother_spin_web_charge_counter}"		
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web_charge_counter_Description"		"#{DOTA_Tooltip_modifier_broodmother_spin_web_charge_counter_Description}"		
+
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web_slowed"							"#{DOTA_Tooltip_modifier_broodmother_spin_web_slowed}"		
+"DOTA_Tooltip_modifier_imba_broodmother_spin_web_slowed_Description"				"#{DOTA_Tooltip_modifier_broodmother_spin_web_slowed_Description}"		
+
+"DOTA_Tooltip_modifier_imba_broodmother_incapacitating_bite_orb"					"#{DOTA_Tooltip_modifier_broodmother_incapacitating_bite_orb}"
+"DOTA_Tooltip_modifier_imba_broodmother_incapacitating_bite_orb_Description"		"#{DOTA_Tooltip_modifier_broodmother_incapacitating_bite_orb_Description}"
+
+"DOTA_Tooltip_modifier_imba_broodmother_insatiable_hunger"							"#{DOTA_Tooltip_modifier_broodmother_insatiable_hunger}"
+"DOTA_Tooltip_modifier_imba_broodmother_insatiable_hunger_Description"				"#{DOTA_Tooltip_modifier_broodmother_insatiable_hunger_Description}"
+
+// Using vanilla ability
+//	"DOTA_Tooltip_modifier_imba_broodmother_spawn_spiderite_debuff"						"#{DOTA_Tooltip_modifier_broodmother_spawn_spiderite_debuff}"
+//	"DOTA_Tooltip_modifier_imba_broodmother_spawn_spiderite_debuff_Description"			"#{DOTA_Tooltip_modifier_broodmother_spawn_spiderite_debuff_Description}"
+
+// Using vanilla ability
+//	"DOTA_Tooltip_modifier_imba_broodmother_poison_sting_debuff"						"#{DOTA_Tooltip_modifier_broodmother_poison_sting_debuff}"
+//	"DOTA_Tooltip_modifier_imba_broodmother_poison_sting_debuff_Description"			"#{DOTA_Tooltip_modifier_broodmother_poison_sting_debuff_Description}"
+
+///
+///
+///
+
+"DOTA_Tooltip_ability_broodmother_spawn_spiderlings_Note1"						"Units killed by Spiderlings do not give birth to Spiderites, but gain increased potency on their Poison Sting ability."
+
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting"								"Poison Sting"
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_Description"					"Poisons and slows enemies with each attack.\n<font color='#FF7800'>Arachnophobic Radiation:</font> Also grants cleave damage.<br><br><b>Starting Width: </b>%cleave_starting_width%<br><b>Ending Width: </b>%cleave_ending_width%<br><b>Distance: </b>%cleave_distance%<br><b>Damage: </b>%cleave_damage%%%\n<font color='#FF7800'>Spiderite's Nutrients: </font>If a unit dies while affected by the Poison Sting debuff, subsequent Poison Sting applications have their damage per second and movement speed slow increased by %scale%/%scale%%%. Hero deaths increase this by %hero_scale%/%hero_scale%%%."
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_Note0"							"Poison Sting applications will always use the most potent damage per second and movement speed slow numbers when applied by multiple spiderlings with varying buff numbers."
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_damage_per_second"				"DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_movement_speed"					"%MOVE SLOW:"
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_duration"						"DURATION (CREEP):"
+"DOTA_Tooltip_ability_imba_broodmother_poison_sting_duration_hero"					"DURATION (HERO):"
+
+"DOTA_Tooltip_modifier_imba_broodmother_poison_sting"							"Poison Sting Scaling"
+"DOTA_Tooltip_modifier_imba_broodmother_poison_sting_Description"				"Poison Sting gains bonus damage per second and movement speed slow from killed enemies."
+
+"DOTA_Tooltip_modifier_imba_broodmother_poison_sting_debuff"					"Poison Sting"
+"DOTA_Tooltip_modifier_imba_broodmother_poison_sting_debuff_Description"		"Ticking for %dMODIFIER_PROPERTY_TOOLTIP% damage per second, slowing by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."

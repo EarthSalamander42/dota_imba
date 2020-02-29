@@ -1,0 +1,44 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Wisp
+	//=================================================================================================================
+	"npc_dota_hero_wisp"
+	{
+	
+
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+
+		"Ability1"					"imba_wisp_tether"
+		"Ability2"					"imba_wisp_spirits"
+		//"Ability3"					"imba_wisp_overcharge"
+		"Ability3"					"imba_wisp_overcharge_721"
+		"Ability4"					"imba_wisp_swap_spirits"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_wisp_relocate"
+		"Ability7"					"imba_wisp_spirits_toggle"
+		"Ability8"					"imba_wisp_tether_break"
+		"Ability9"					"imba_wisp_relocate_break"
+
+		"Ability10"					"special_bonus_attack_damage_50"
+		"Ability11"					"special_bonus_imba_wisp_12"
+		"Ability12"					"special_bonus_imba_wisp_11"
+		"Ability13"					"special_bonus_hp_regen_10"
+		"Ability14"					"special_bonus_imba_wisp_4"
+		"Ability15"					"special_bonus_imba_wisp_10"
+		"Ability16"					"special_bonus_imba_wisp_9"
+		"Ability17"					"special_bonus_imba_wisp_6"
+
+		// Removed Talents
+		//"Ability10"					"special_bonus_imba_wisp_3" // Spirits Truesight
+		// "Ability11"					"special_bonus_imba_wisp_2" // Tether gives Scepter bonus (Don't know when but it broke and doesn't give vanilla sub-abilities now)
+		//"Ability12"					"special_bonus_imba_wisp_1"	// Overcharge Bonus
+		//"Ability12"					"special_bonus_imba_wisp_5" // +X Tether cast range, and max distance
+		//"Ability16"					"special_bonus_imba_wisp_7" // Relocate grants spell immunity
+		// Ability15"					"special_bonus_imba_wisp_8" // Overcharge grants max mana
+	}
+}

@@ -1,0 +1,16 @@
+"DOTA_Tooltip_Ability_item_imba_ring_of_aquila"			"Ring of Aquila"
+
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Description"				"<h1>Passive: Aquila Aura</h1>Grants %aura_mana_regen% mana regeneration and %aura_bonus_armor% armor to nearby allies.<br><br>Radius: %aura_radius%\n<h1>Toggle: Aura</h1> Deactivate to stop affecting non-hero units.\n<h1><font color='#FF7800'>Passive: Eagle's Watch</font></h1>Aquila Aura also provides %aura_bonus_vision% bonus vision."
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Lore"						"The ring of the fallen Warlord Aquila continues to support armies in battle."
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Note0"					"Does not stack with armor auras from Ring of Basilius or Ring of Aquila."
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Note1"					"Multiple instances of Aquila Aura do not stack."
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_bonus_strength"			"+$str"
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_bonus_agility"			"+$agi"
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_bonus_intellect"			"+$int"
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_bonus_aspd"				"+$attack"
+"DOTA_Tooltip_ability_item_imba_ring_of_aquila_bonus_damage"				"+$damage"
+//"DOTA_Tooltip_ability_item_imba_ring_of_aquila_aura_mana_regen"			"AURA MANA REGEN:"
+//"DOTA_Tooltip_ability_item_imba_ring_of_aquila_aura_bonus_armor"			"AURA BONUS ARMOR:"
+
+"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus"				"Ring of Aquila Aura"
+"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus_Description"		"Mana regeneration increased by %fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE% and armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE%."

@@ -1,0 +1,153 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf21:version{7a150ecc-d865-438f-ad53-5963fe1a2720} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 160
+	m_flConstantRadius = 60.0
+	m_ConstantColor = [ 226, 0, 0, 60 ]
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flRadiusScaleMin = 0.5
+				m_flInputMax = 0.1
+				m_flProxyRadius = 32.0
+			}
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_ALPHA_FROM0_RGB_FROM_1"
+			m_flZoomAmount1 = 4.0
+			m_hTexture = resource:"materials/particle/vistasmokev1/vistasmokev1_gray.vtex"
+			m_flAnimationRate = 1.0
+			m_nOrientationType = 2
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.2
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeIn"
+			m_bProportional = false
+			m_flFadeInTimeMax = 0.4
+			m_flFadeInTimeMin = 0.4
+		},
+		{
+			_class = "C_OP_FadeOut"
+			m_bEaseInAndOut = false
+			m_bProportional = false
+			m_flFadeOutTimeMax = 0.4
+			m_flFadeOutTimeMin = 0.4
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 55, 0, 0, 255 ]
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 1.2
+			m_flEndScale = 2.5
+			m_flBias = 0.4
+		},
+		{
+			_class = "C_OP_MovementPlaceOnGround"
+			m_flOffset = 2.0
+			m_CollisionGroupName = "DEBRIS"
+		},
+		{
+			_class = "C_OP_DistanceToCP"
+			m_flInputMax = 150.0
+			m_nFieldOutput = 16
+			m_flOutputMin = 1.0
+			m_flOutputMax = 0.0
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_flRange = 120.0
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.9
+			m_fLifetimeMin = 0.9
+		},
+		{
+			_class = "C_INIT_CreateWithinBox"
+			m_vecMax = [ 0.0, 0.0, 70.0 ]
+			m_vecMin = [ 0.0, 0.0, 70.0 ]
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMin = 360.0
+			m_flDegreesMax = 0.0
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 56, 18, 18, 25 ]
+			m_ColorMax = [ 18, 7, 7, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 40
+			m_nAlphaMax = 80
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMax = 80.0
+			m_flRadiusMin = 50.0
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_vecOutputMax = [ 25.0, 25.0, 0.0 ]
+			m_vecOutputMin = [ -25.0, -25.0, 0.0 ]
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_PositionPlaceOnGround"
+			m_flOffset = 2.0
+			m_CollisionGroupName = "DEBRIS"
+		},
+		{
+			_class = "C_INIT_InitialVelocityNoise"
+			m_vecOutputMin = [ -10.0, -10.0, 1.0 ]
+			m_vecOutputMax = [ 10.0, 10.0, 1.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 30.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 7
+}

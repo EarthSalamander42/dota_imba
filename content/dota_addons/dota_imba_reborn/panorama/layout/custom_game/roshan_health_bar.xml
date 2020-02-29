@@ -1,0 +1,23 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/roshan_health_bar.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/roshan_health_bar.js" />
+	</scripts>
+	
+	<Panel class="Diretide" hittest="false">
+		<Panel id="DiretidePanel">
+			<Panel id="RoshanHP" hittest="false">
+				<Label id="RoshanLabel" class="HoldoutLabelSmall" hittest="false" text="#npc_imba_roshan"/>
+				<Label id="RoshanLevel" class="HoldoutLabelSmall_alt" hittest="false" text="Level: 1"/>
+				<Panel id="RoshanProgressBarContainer" hittest="false">
+					<DOTAHeroImage id="BossIcon" hittest="false"/>
+					<ProgressBar id="RoshanProgressBar" hittest="false" value="1.0"/>
+					<Label id="RoshanHealth" class="HoldoutLabelSmall" hittest="false" text="15000/15000"/>
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

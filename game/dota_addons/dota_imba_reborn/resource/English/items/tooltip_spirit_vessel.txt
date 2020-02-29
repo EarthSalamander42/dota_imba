@@ -1,0 +1,16 @@
+"DOTA_Tooltip_ability_item_imba_spirit_vessel"								"Spirit Vessel"
+
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_Description"					"<h1>Active: Soul Release</h1> When used against enemies, it reduces health by %enemy_hp_drain%%% of current health per second, and reduces HP regeneration and healing by %hp_regen_reduction_enemy%%%. Deals %soul_damage_amount% damage per second. <br><br>When used on allies, it provides %soul_heal_amount% health regeneration per second. <br><br>Lasts %duration% seconds.  <br><br>Gains charges every time an enemy hero dies within %soul_radius% units.  Only the closest Spirit Vessel to the dying hero will gain a charge.<br><br>Cast Range: %soul_release_range_tooltip%\n<h1><font color='#FF7800'>Active: Soul Sacrifice</font></h1> Spirit Vessel can be cast with 0 charges. However, doing so will also cast the Soul Release debuff on the caster.\n<h1><font color='#FF7800'>Active: Curse Activation</font></h1> If Spirit Vessel's debuff is dispelled before half of its duration has passed, it is reapplied for its remaining duration minus %curse_activation_reduction% seconds at %curse_activation_mult%x the strength (damage, health damage, and regeneration reduction).<br><br>Certain purge effects will not trigger Curse Activation's strength increase, but will instead increase the debuff duration by %curse_activation_reduction% seconds. Hold ALT to see the affected modifiers."
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_lore"					"Forged by a god to entrap the soul of another." 		
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_Note0"					"Curse Activation does not have increased strength if the target is under any of the following modifiers:<br>  - Slark's Dark Pact's purge<br>  - Tidehunter's Kraken Shell<br>  - Witch Doctor's Voodoo Restoration"
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_health"                     "+$health"
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_movement_speed"				"+$move_speed"	
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_mana_regen"                "+$mana_regen"
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_all_stats"				"+$all"
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_armor"					"+$armor"
+"DOTA_Tooltip_ability_item_imba_spirit_vessel_mana_regen"					"+$mana_regen"
+	
+"DOTA_Tooltip_modifier_item_imba_spirit_vessel_heal"							"Spirit Vessel Heal"
+"DOTA_Tooltip_modifier_item_imba_spirit_vessel_heal_Description"				"Healing %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP per second."
+"DOTA_Tooltip_modifier_item_imba_spirit_vessel_damage"							"Spirit Vessel Damage"
+"DOTA_Tooltip_modifier_item_imba_spirit_vessel_damage_Description"				"All heals reduced by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and losing %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP plus a percentage of current health."

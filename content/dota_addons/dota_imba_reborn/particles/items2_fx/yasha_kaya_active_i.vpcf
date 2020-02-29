@@ -1,0 +1,136 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf13:version{10b35a8e-b1ee-4f14-87a6-a7b6aae37699} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 80
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_bSaturateColorPreAlphaBlend = false
+			m_bAdditive = true
+			m_flFeatheringMaxDist = 35.0
+			m_flOverbrightFactor = 8.0
+			m_hTexture = resource:"materials/particle/blueflare_wisp.vtex"
+			m_flAddSelfAmount = 1.0
+			m_nFeatheringMode = "PARTICLE_DEPTH_FEATHERING_ON_OPTIONAL"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_flOpTimeOffsetMax = 1.0
+			m_flOpStrengthMinScale = 0.0
+		},
+		{
+			_class = "C_OP_MovementRotateParticleAroundAxis"
+			m_flRotRate = -150.0
+			m_flOpStartFadeOutTime = 0.5
+			m_flOpEndFadeOutTime = 1.0
+		},
+		{
+			_class = "C_OP_MoveToHitbox"
+			m_flLifeTimeLerpStart = 0.175
+			m_flLifeTimeLerpEnd = 4.0
+		},
+		{
+			_class = "C_OP_PositionLock"
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = 5.0
+			m_flStartTime = 0.25
+			m_flEndTime = 9999999999.0
+			m_nField = "4"
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.75
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndTime = 0.25
+			m_flStartScale = 0.0
+			m_flBias = 0.65
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.0
+			m_flBias = 0.85
+			m_flStartTime = 0.25
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 0, 91, 98, 255 ]
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 1.0
+			m_fLifetimeMax = 1.25
+			m_flOpTimeOffsetMax = 1.0
+			m_flOpStrengthMinScale = 0.0
+		},
+		{
+			_class = "C_INIT_RingWave"
+			m_flParticlesPerOrbit = 40.0
+			m_bEvenDistribution = true
+			m_flInitialRadius = 150.0
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, 32.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 32.0 ]
+		},
+		{
+			_class = "C_INIT_SetHitboxToModel"
+			m_flHitBoxScale = 1.2
+			m_vecDirectionBias = [ 0.0, 0.0, 0.25 ]
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMin = 360.0
+			m_flDegreesMax = 0.0
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 12
+			m_bShuffle = true
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 40
+		},
+	]
+	m_nBehaviorVersion = 6
+	m_nFirstMultipleOverride_BackwardCompat = 6
+	m_ConstantColor = [ 23, 146, 223, 255 ]
+	m_flConstantRadius = 80.0
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}

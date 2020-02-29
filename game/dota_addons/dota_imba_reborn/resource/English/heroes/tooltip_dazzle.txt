@@ -1,0 +1,136 @@
+// Dazzle's Poison Touch
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch"                        "Poison Touch"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Description"            "Coats your enemy in a poisonous substance that takes %set_in_time% seconds to set in. While the poison sets in, the target is gradually slowed by up to %maximum_slow%%, then stunned for one second. After the poison has finished setting in, the poison will start dealing damage over time.\n<font color='#FF7800'>Unstable Poison:</font> Each attack landed on a poisoned enemy during the set-in period will increase the poison's potency, making it deal an extra %poison_stack_damage% damage per second, and further reduce armor by %stack_armor_reduction%."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Note0"                  "A single target can be affected by multiple instances of Poison Touch."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Lore"                    "One of the few Dezun rites used for offensive purposes, the paralytic enchantment often proves useful."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_poison_duration"                     "POISON DURATION:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_poison_base_damage"                  "BASE DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_cast_range"              "CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_setin"                  "Poison Touch"
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_setin_Description"                  "Slowed while the poison sets in. Getting hit will increase its potency."
+
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_setin"                  "Poison Touch"
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_setin_Description"                  "Reduced armor and taking damage over time."
+
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707"										"Poison Touch"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_Description"							"Releases a cone of poison that strikes multiple enemy units. Deals damage over time and slows the targets. Anytime the targets get attacked, the debuff duration is refreshed.\n<font color='#FF7800'>Unstable Poison:</font> Any attack that refreshes the debuff duration will increase the poison's potency, making it deal an extra %poison_stack_damage% damage per second."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_Lore"									"One of the few Dezun rites used for offensive purposes, the paralytic enchantment often proves useful."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_Note0"								"The damage is not reduced by damage block abilities."
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_targets"								"TARGETS:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_damage"								"DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_slow"									"%SLOW:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_dazzle_poison_touch_707_abilitycastrange"						"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_707"				"Poison Touch"
+"DOTA_Tooltip_modifier_imba_dazzle_poison_touch_707_Description"	"Taking damage over time with movement speed modified by %-dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+// Dazzle's Shallow Grave
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave"                        "Shallow Grave"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Description"            "An ally blessed with Shallow Grave, no matter how close to death, cannot die under its protection.\n<font color='#FF7800'>Gravely Mistaken:</font> Lethal damage taken while under Shallow grants armor and magic resistance per lethal damage instance for a short duration.\n<font color='#FF7800'>Nothl Protection:</font> If Dazzle is mortally wounded, a shorter duration Shallow Grave will trigger automatically. Nothl Protection needs to cool down for some time after activation. Applies Gravely Mistaken as well upon expiration."
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Note0"                  "Damage instances which would not kill the target are not counted for Gravely mistaken."
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Lore"                  "Only a seasoned acolyte of the Shadow can properly perform the rite of preventing death."
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_cast_range"            "CAST RANGE:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_nothl_protection_duration"          "NOTHL PROTECTION DURATION:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_nothl_protection_cooldown"          "NOTHL PROTECTION COOLDOWN:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_duration"                "GRAVELY MISTAKEN DURATION:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_armor_per_hit"           "GRAVELY MISTAKEN ARMOR PER INSTANCE:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN MAGIC RESISTANCE PER INSTANCE:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"SCEPTER RADIUS:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"Causes Shallow Grave to be an AoE spell. <font color='#FF0000'>Does not apply Gravely Mistaken to units that are not directly targeted by the ability.</font>"
+
+"DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"
+"DOTA_Tooltip_modifier_imba_dazzle_shallow_grave_Description"          "Protected from death for the duration."
+
+"DOTA_Tooltip_modifier_imba_dazzle_nothl_protection"                    "Nothl Protection"
+"DOTA_Tooltip_modifier_imba_dazzle_nothl_protection_Description"                    "Protected from death for the duration."
+
+"DOTA_Tooltip_modifier_imba_dazzle_post_shallow_grave_buff"            "Gravely Mistaken"
+"DOTA_Tooltip_modifier_imba_dazzle_post_shallow_grave_buff_Description"             "Increased armor and magic resistance."
+
+"DOTA_Tooltip_modifier_imba_dazzle_nothl_protection_aura_talent"                    "Deaths Chance"
+"DOTA_Tooltip_modifier_imba_dazzle_nothl_protection_aura_talent_Description"        "Taking fatal damage will apply a Shallow Grave for 1.5 seconds."
+
+// Dazzle's Shadow Wave
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave"                          "Shadow Wave"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Description"              "Sends out a bolt of power that arcs between allies, healing them while damaging nearby enemies.\n<font color='#FF7800'>Inverted Shadows:</font> Can be cast on enemies to reverse the effect, dealing damage to enemies the wave hit, and healing allies around them.\n<font color='#FF7800'>Shadow Poison:</font> Enemies affected by Poison Touch will transfer the poison further with a refreshed duration.\n<font color='#FF7800'>Travel The Realm:</font> Bounces infinitely until there are no more targets to bounce to."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note0"                "Healing scales with spell amp."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note1"                    "Armor bonus does not stack."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note2"                    "Dazzle is always healed by Shadow Wave."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note3"                    "Shadow wave will only bounce no more than once on the same unit."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note4"                    "Poison Touch is transfered only after the wave hit a poisoned enemy, and only to enemies that are not poisoned. Stacks will update if an enemy with more stacks was hit."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Lore"                    "While it is a simplistic and routine rite among Shadow Priests, the Shadow Wave is also the most critical for success."
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage"                  "DAMAGE/HEAL:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_bounce_radius"            "BOUNCE DISTANCE:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage_radius"            "DAMAGE RADIUS:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_buff_duration"            "BONUS ARMOR DURATION:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_bonus_armor"              "BONUS ARMOR:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_bonus_armor_injured"                  "BONUS ARMOR FOR THE INJURED:"
+"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_cast_range"              "CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_dazzle_shadow_wave_buff"                    "Shadow Wave"
+"DOTA_Tooltip_modifier_imba_dazzle_shadow_wave_buff_Description"                    "Increased armor"
+
+"DOTA_Tooltip_modifier_imba_dazzle_shadow_wave_injured_buff"            "Shadow Wave"
+"DOTA_Tooltip_modifier_imba_dazzle_shadow_wave_injured_buff_Description"            "Increased armor"
+
+// Dazzle's Weave
+"DOTA_Tooltip_ability_imba_dazzle_weave"								"Weave"
+"DOTA_Tooltip_ability_imba_dazzle_weave_Description"                    "Gradually increases affected allies' armor, while also decreasing affected enemies' armor by the same amount.\n<font color='#FF7800'>Reweaving Waves:</font> Re-casts Weave every %repeat_delay% seconds on the target point over the duration of Weave, applying the buff/debuff as if the enemy was hit by the initial cast.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_dazzle_weave_Note0"                          "Does not affect creeps. Grants vision in the cast area for some seconds."
+"DOTA_Tooltip_ability_imba_dazzle_weave_Lore"                          "His ethereal journey into the Nothl realm has allowed Dazzle to mend together the powers of light and dark, creating shifting waves of enchantments."
+"DOTA_Tooltip_ability_imba_dazzle_weave_modifier_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_dazzle_weave_area_of_effect"                "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dazzle_weave_base_shift"                    "BASE ARMOR SHIFT:"
+"DOTA_Tooltip_ability_imba_dazzle_weave_stack_shift"                    "ARMOR SHIFT PER SECOND:"
+"DOTA_Tooltip_ability_imba_dazzle_weave_aghanim_description"            "Grants access to the <font color='#FF7800'>Resurrection</font> spell, which brings heroes back from the dead."
+
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju"								"Bad Juju"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_Description"					"Passively reduces cooldowns on your abilities and items. Anytime you cast a spell, all nearby enemies will have their armor reduced. Debuff stacks and refreshes duration.\n<font color='#FF7800'>Good Juju:</font> Anytime you cast a spell, all nearby allies will have their armor increased. Buff stacks and refreshes duration."
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_cooldown_reduction"			"%COOLDOWN REDUCTION:"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_armor_reduction"				"ARMOR REDUCTION:"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_radius"						"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dazzle_bad_juju_aghanim_description"			"Grants access to the <font color='#FF7800'>Resurrection</font> spell, which brings heroes back from the dead."
+
+"DOTA_Tooltip_modifier_imba_dazzle_weave_buff"                          "Weave"
+"DOTA_Tooltip_modifier_imba_dazzle_weave_buff_Description"              "Gaining armor over time"
+
+"DOTA_Tooltip_modifier_imba_dazzle_weave_debuff"                        "Weave"
+"DOTA_Tooltip_modifier_imba_dazzle_weave_debuff_Description"            "Losing armor over time"
+
+"DOTA_Tooltip_modifier_imba_dazzle_bad_juju_buff"						"Good Juju"
+"DOTA_Tooltip_modifier_imba_dazzle_bad_juju_buff_Description"			"Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_dazzle_bad_juju_debuff"						"Bad Juju"
+"DOTA_Tooltip_modifier_imba_dazzle_bad_juju_debuff_Description"			"Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+// Dazzle's Resurrection
+"DOTA_Tooltip_ability_imba_dazzle_ressurection"                        "Resurrection"
+"DOTA_Tooltip_ability_imba_dazzle_ressurection_Description"            "Can only be cast on the area where a hero has fallen. After a %delay% second delay, brings the targeted hero back from the dead, and places them near Dazzle.\nShould the target be alive before the resurrection delay ends, the resurrection will fail, the cooldown will reset, the mana refunded."
+"DOTA_Tooltip_ability_imba_dazzle_ressurection_Note0"                  "To target a hero, click on their portrait on the top bar (does NOT work with quick cast), or target in their approximate point of death. The spell will search for a corpse in a 300 unit radius of the cast point."
+"DOTA_Tooltip_ability_imba_dazzle_ressurection_Lore"                    "To keep someone alive is childs play. But to bring someone back from the dead, is truly a master feat."
+
+"dota_hud_error_ressurection_no_targets"							"No valid resurrection targets within selected area."
+
+"DOTA_Tooltip_modifier_imba_dazzle_ressurection"				"Resurrection"
+"DOTA_Tooltip_modifier_imba_dazzle_ressurection_Description"	"Target will be resurrected after this modifier expires. Cooldown and mana cost will be refunded if the target is alive or non-existent upon modifier expiry."
+
+// Dazzle's Custom Talents
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_1"         		"Shadow Wave now bounces with a 1 second delay"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_2"				"Duality"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_2_Description"  "Shadow Wave bounces can heal and damage nearby allies and enemies."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_3"          	"Burst of Life"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_3_Description" 	"All excess damage stored by Shallow Grave/Nothl Protection is released as an ally-only Healing Wave."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_4"				"Increased Potency"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_4_Description" 	"Poison Touch's poison slows target by 3% for every 3% of target's max health damage."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_5"				"Poison Spread"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_5_Description" 	"Enemies casting abilities on Poison Touched allies also receive the debuff."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_6"				"Together We Stand"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_6_Description"	"Nothl Protection now applies on every allied hero within 500 AoE of Dazzle."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_7"				"Bad Juju now fully affects buildings as well"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_8"				"Shadow Wave Applies Allied Basic Dispel"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_poison_touch_damage"	"+{s:value} Poison Touch DPS"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_poison_touch_slow"		"{s:value}% Poison Touch Slow"

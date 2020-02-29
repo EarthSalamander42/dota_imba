@@ -1,0 +1,842 @@
+@keyframes 'fade_in'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+@keyframes 'level_up'
+{
+	0%
+	{
+		border: 0px solid gold;
+	}
+
+	100%
+	{
+		border: 2px solid gold;
+	}
+}
+
+@keyframes 'level_down'
+{
+	0%
+	{
+		border: 0px solid red;
+	}
+
+	50%
+	{
+		border: 2px solid red;
+	}
+
+	100%
+	{
+		border: 0px solid red;
+	}
+}
+
+.es-root {
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
+}
+
+.end-screen {
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
+	flow-children: down;
+}
+
+#es-victory-info,
+#es-teams,
+#es-buttons {
+	animation-name: fade_in;
+	animation-duration: 1.25s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
+}
+
+.es-text-red { color: #f03333; }
+.es-text-green { color: #72a144; }
+.es-text-white { color: #ffffff; }
+
+#es-victory-info { 
+	margin-top: 14%;
+	margin-bottom: 20px;
+	flow-children: down;
+	horizontal-align: center;
+	text-align: center;
+} 
+
+#es-game-time-text,
+#es-victory-info-text {
+	font-size: 40px;
+	color: #fff;
+	horizontal-align: center;
+	text-transform: uppercase;
+	text-shadow: 0px 0px 5px 5 #000;
+}
+
+#es-teams {
+	height: 700px;
+	flow-children: down;
+	horizontal-align: center;
+	width: 100%;
+	padding: 10px 5px 10px 5px;
+	overflow:  squish scroll;
+}
+
+.es-teams-columns {
+	flow-children: right;
+	horizontal-align: center;
+}
+
+.es-team {
+	flow-children: down;
+	margin: 10px;
+	border-top:  1px solid #3a363a;	
+	border-left:  1px solid #3a363a;
+	border-bottom: 1px solid #1d2126;	
+	border-right: 1px solid #1d2126;
+	padding: 20px 0px;
+	box-shadow: 0px 0px 12px 0px #000000a5;
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
+}
+
+#es-custom1,
+#es-custom2,
+#es-custom3,
+#es-custom4,
+#es-custom5,
+#es-custom6,
+#es-custom7,
+#es-custom8 {
+	visibility: collapse;
+}
+
+#es-radiant .es-team-name,
+#es-dire .es-team-name,
+#es-custom1 .es-team-name,
+#es-custom2 .es-team-name,
+#es-custom3 .es-team-name, {
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-radiant .es-team-name {
+	color: #326114;
+}
+
+#es-dire .es-team-name {
+	color: #f03333;
+}
+
+#es-custom1 .es-team-name {
+	color: #f3c909;
+}
+
+#es-custom2 .es-team-name {
+	color: #FF6C00;
+}
+
+#es-custom3 .es-team-name {
+	color: #3455FF;
+}
+
+#es-custom4 .es-team-name {
+	color: #65d413;
+}
+
+#es-custom5 .es-team-name {
+	color: #815336;
+}
+
+#es-custom6 .es-team-name {
+	color: #1bc0d8;
+}
+
+#es-custom7 .es-team-name {
+	color: #c7e40d;
+}
+
+#es-custom8 .es-team-name {
+	color: #8c2af4;
+}
+
+.es-team-title {
+	width: 100%;
+}
+
+.es-team-name {
+	font-size: 30px;
+	color: #fff;
+	text-transform: uppercase; 
+	horizontal-align: center;
+}
+
+.es-team-score {
+	font-size: 30px;
+	margin-right: 20px;
+	color: #fff;
+	horizontal-align: right;
+}
+
+.es-legend {
+	height: 40px;
+	flow-children: right;
+	padding-left: 284px;
+}
+
+.es-legend Label {
+	color: #ddd;
+	text-align: center;
+	vertical-align: center;
+	font-size: 16px;
+}
+
+.es-legend-gold { width: 50px; }
+
+.es-legend-xp { width: 250px; }
+
+.es-legend-rank { width: 80px; }
+
+.es-legend-xp-diff { width: 70px; }
+
+.es-legend-xp-booster { width: 70px; }
+
+.es-player-root {
+	flow-children: right;
+	border-top: 2px solid #333;
+	padding: 3px 5px;
+	background-color: #1c1c1c77;
+}
+
+.es-players {
+	width: 100%;
+	flow-children: down;
+}
+
+.es-player-name-and-desc {
+	flow-children: down;
+	width: 180px;
+}
+
+#es-player-name {
+	font-size: 18px;
+	color: #fff;
+	height: 18px;
+	margin-top: -3px;
+}
+
+#es-player-desc {
+	font-size: 12px;
+	color: #ccc;
+}
+
+.es-player-line-text {
+	font-size: 16px;
+}
+
+#es-player-avatar {
+	border: 1px solid #666;
+	height: 30px;
+	width: 30px;
+	margin-right: 5px;
+} 
+
+#es-player-hero {
+	border: 1px solid #999;
+	height: 30px;
+	width: 53px;
+	margin-right: 5px;
+}
+.es-legend-kdalevel {
+	width: 30px;
+}
+
+.es-player-kdalevel {
+	width: 30px;
+	vertical-align: center;
+	text-align: center;
+	color: #eee;
+}
+
+#es-player-gold {
+	width: 50px;
+	vertical-align: center;
+	text-align: center;
+	color: #ee7;
+}
+
+.es-legend-imr,
+.es-legend-imr10v10,
+.es-legend-imr1v1 {
+	width: 60px; 
+	margin-right: 15px;
+	text-align: center;
+	visibility: collapse;
+}
+
+#es-player-imr,
+#es-player-imr10v10,
+#es-player-imr1v1 {
+	width: 60px;
+	vertical-align: center;
+	text-align: center;
+	visibility: collapse;
+	margin-right: 15px;
+	visibility: collapse;
+}
+
+.es-player-xp {
+	flow-children: none; 
+	width: 250px;
+	vertical-align: center;
+	background-color: black;
+	border: 1px solid #222;
+	height: 26px;
+	box-shadow: 0 0 5px 0 #00000022 inset;
+}
+
+.level-up {
+	animation-name: level_up;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-down {
+	animation-name: level_down;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+#es-player-xp-progress { 
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
+	border-radius: 1px;
+	width: 0%;
+	height: 24px;
+	transition-property: width;
+	transition-duration: 2s;
+}
+
+.es-player-xp Label {
+	color: #fff;
+	width: 100%;
+	font-size: 16px;
+	vertical-align: center;
+	padding: 2px 5px;
+}
+
+#es-player-xp-rank { text-align: right; }
+#es-player-xp-level { text-align: left; }
+#es-player-xp-xp { text-align: right; }
+
+#es-player-xp-rank-name {
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-player-xp-earned,
+#es-player-xp-booster {
+	width: 70px;
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-buttons {
+	flow-children: right;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#es-buttons Button {
+	padding: 7px 25px;
+	margin: 10px;
+	border: 1px solid #333;
+	box-shadow: #111 0 0 4px 0;
+}
+
+#es-buttons-stats, #es-buttons-website {
+	background-color: #222222ee;
+}
+
+#es-buttons-survey {
+	background-color: darkorange;
+}
+
+#es-buttons-close {
+	background-color: green;
+}
+
+#es-buttons Label {
+	font-size: 20px;
+	color: #fff;
+}
+
+#es-buttons Button:hover {
+	background-color: #333333ee;
+}
+
+#es-buttons Button:active {
+	background-color: #222222ff;
+	border: 1px transparent;
+	box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Diretide
+{
+	width: 100%;
+	height: 100%;
+	z-index: -10;
+}
+
+#DiretidePanel
+{
+	margin-top: 67%;
+	horizontal-align: center;
+	flow-children: down;
+	z-index: -1000;
+}
+
+#Diretide
+{
+	width: fit-children;
+	height: fit-children;
+	flow-children: down;
+	horizontal-align: center;
+	visibility: collapse;
+}
+
+#Diretide2
+{
+	width: fit-children;
+	height: fit-children;
+	flow-children: right;
+	horizontal-align: center;
+	visibility: collapse;
+}
+
+#ScorePanel
+{
+	flow-children: down;
+	width: fit-children;
+	height: fit-children;
+}
+
+#Timer,
+#Timer_alt
+{
+	font-size: 20px;
+	font-weight: bolder;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #7b612b;
+	text-align: center;
+	width: 100%;
+	text-overflow: clip;
+}
+
+#Timer_alt
+{
+	margin-right: 6%;
+	text-align: right;
+	text-overflow: clip;
+}
+
+#Timer.timer_visible
+{
+	opacity: 1;
+}
+
+#Timer.timer_alert
+{
+	color: red;
+}
+
+#RadiantScore,
+#DireScore
+{
+	flow-children: down;
+	width: 120px;
+	height: 110px;
+	align: center center;
+
+	background-image: url("file://{images}/custom_game/game_info/pumpkin.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 70% 70%;
+}
+
+#RadiantScoreText,
+#DireScoreText
+{
+	margin-left: 49px;
+	margin-top: -30px;
+
+	color: green;
+	text-align: center;
+}
+
+#DireScoreText
+{
+	color: red;
+}
+
+.QuestGenericText
+{
+	font-family: TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	text-shadow: 2px 2px 1px 3.0 #333333b0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 40px;
+	text-align: center;
+}
+
+#PhaseLabel
+{
+	font-size: 18px;
+	font-weight: bolder;
+	color: green;
+	text-shadow: 1px 1px 1px #7b612b;
+	text-align: center;
+	text-overflow: clip;
+}
+
+#PhaseLevel
+{
+	horizontal-align: left;
+}
+
+//XHS BOSS BARS
+.HoldoutLabelSmall
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall_alt
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-bottom: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall.Header
+{
+	width: 95px;
+}
+
+#RoshanHP
+{
+	width: 750px;
+	height: 64px;
+	visibility: collapse;
+}
+
+#RoshanProgressBar
+{
+	width: 90%;
+	height: 24px;
+	border-radius: 1px;
+	border: 0px;
+	background-color: black;
+	vertical-align: middle;
+	horizontal-align: right;
+	box-shadow: fill #000 -3px -3px 6px 6px;	
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+	box-shadow: inset #000 1px 1px 3px 3px;	
+	border-radius: 2px;
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #D71414 ), color-stop( .5, #D71414 ), to( #320000 ) );
+}
+
+#RoshanProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+}
+
+#RoshanProgressBarContainer
+{
+	width: 100%;
+	height: 40px;
+	margin-right: 6%;
+	vertical-align: bottom;
+}
+
+#BossIcon
+{
+	width: 48px;
+	height: 48px;
+	margin-left: 5%;	
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 90% 90%;
+	z-index: 10;
+}
+
+#RoshanHealth
+{
+	margin-left: 6%;
+}
+
+#RoshanLevel
+{
+	margin-left: 6%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+#RoshanLevel_alt
+{
+	margin-top: 5%;
+	margin-left: 2%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+
+#Roshan
+{
+	width: 120px;
+	height: 80px;
+	align: center center;
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 100% 100%;
+}
+
+#RoshanTarget
+{
+	width: 100%;
+	margin-top: 4%;
+	font-size: 16px;
+	font-weight: bolder;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #7b612b;
+	text-align: center;
+	text-overflow: clip;
+	visibility: collapse;
+}
+
+#RoshanTarget.visible
+{
+	opacity: 1;
+}
+
+#RoshanTarget.alert
+{
+	color: red;
+}
+
+#HallOfFame
+{
+	width: 800px;
+	height: 570px;
+	padding: 5px;
+	align: center center;
+	flow-children: down;
+	visibility: visible;
+	z-index: 10;
+
+//	background-color: #040c1850;
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
+	padding-bottom: 10px;
+	overflow:  squish scroll;
+}
+
+.LeaderboardRank,
+.LeaderboardXP,
+.LeaderboardIMR,
+.LeaderboardAvatar,
+.LeaderboardAvatar_alt
+{
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardXP, {
+	padding: 3px 10px 3px 10px;
+	flow-children: right;
+}
+
+/* Leaderboard Legend */
+.LeaderboardLegend {
+	width: 100%;
+	height: 40px;
+	flow-children: right;
+	/* border-bottom: 1px solid white; */
+}
+
+/* Leaderboard */
+.LeaderboardGames {
+	width: 100%;
+	height: 45px;
+	flow-children: right-wrap;
+	border-top: 1px solid #3f464ecc;
+}
+
+.LeaderboardRank {
+	width: 20%;	
+	align:  right center;
+}
+
+.LeaderboardAvatar {
+	width: 60%;
+	align:  center center;
+}
+
+.LeaderboardXP {
+	width: 60%;	
+	align:  center center;
+}
+
+.LeaderboardIMR {
+	width: 20%;	
+	align:  right center;
+}
+
+#Tops {
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+}
+
+.LeaderboardButtonLabel {
+	width: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+	align:  center center;
+}
+
+#InfoHeader {
+	width: 100%;
+	height: 50px;
+	background-color: #2c4d6015;
+	border-bottom: 1px solid #29353b;
+	margin-bottom: 20px;
+}
+
+#CloseButton {
+	width: 90px;
+	height: 37px;
+	align: left center;
+}
+#CloseButtonImage {
+	width: 37px;
+	height: 37px;
+	align: left center;
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/close.png");
+	opacity: 0.5;
+}
+#CloseButton:hover #CloseButtonImage {
+	opacity: 1;
+}
+
+/* Labels */
+.HoldoutLabelSmall
+{
+	color: #b2baaf;
+	text-transform: uppercase;
+	text-align: center;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	align: center center;
+	text-align: center;	
+	text-shadow: 1px 1px 2px 3.0 #000000ee;
+	font-size: 22px;
+}

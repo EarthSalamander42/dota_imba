@@ -1,0 +1,591 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Spirit Breaker: Charge of Darkness
+	//=================================================================================================================
+	"imba_spirit_breaker_charge_of_darkness"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
+		"AbilityTextureName"			"spirit_breaker_charge_of_darkness"		
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Spirit_Breaker.ChargeOfDarkness"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.47 0.47 0.47 0.47"
+		"AbilityCastRange"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14 13 12 11"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 80 90 100"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	".30" // applies multiple modifiers
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"320 360 400 440"
+				"LinkedSpecialBonus"	"special_bonus_imba_spirit_breaker_charge_speed"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.2 1.6 2.0 2.4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius"			"375"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400 400 400 400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"0.94 0.94 0.94 0.94"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"darkness_speed"		"20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"clothesline_duration"	"2.2 2.8 3.4 4.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"taxi_radius"			"500"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"taxi_distance"			"180"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+	
+	//=================================================================================================================
+	// Ability: Bulldoze
+	//=================================================================================================================
+	"imba_spirit_breaker_bulldoze"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
+		"AbilityTextureName"			"spirit_breaker_bulldoze"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Spirit_Breaker.EmpoweringHaste.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22 20 18 16"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25 30 35 40"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed"				"16 22 28 34"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"status_resistance"			"35 50 65 80"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"	"8"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"empowering_aura_radius"	"1200"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"empowering_aura_move_speed"	"4 6 8 10"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastGestureSlot"		"DEFAULT"
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Greater Bash
+	//=================================================================================================================
+	"imba_spirit_breaker_greater_bash"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
+		"AbilityTextureName"			"spirit_breaker_greater_bash"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilitySound"					"Hero_Spirit_Breaker.GreaterBash"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.5 1.5 1.5 1.5"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"	"40"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance_pct"			"17 17 17 17"
+				// "LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_1"
+				"LinkedSpecialBonus"	"special_bonus_imba_spirit_breaker_bash_chance"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"24.0 32.0 40.0 48.0"
+				// "LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.3 1.5 1.7 1.9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.5 0.5 0.5 0.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_distance"	"143 152 158 162"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_height"		"50 50 50 50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_pct"	"17"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"movespeed_duration"	"3.0 3.0 3.0 3.0"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Nether Strike
+	//=================================================================================================================
+	"imba_spirit_breaker_nether_strike"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
+		"AbilityTextureName"			"spirit_breaker_nether_strike"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"			"1"
+		"AbilitySound"					"Hero_Spirit_Breaker.NetherStrike.Begin"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastRange"				"700 1200 1700"
+		"AbilityCastRangeBuffer"		"3500"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time			
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60 50 40"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 150 175"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 350 500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"1.0 1.0 1.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"700 1200 1700"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"4242"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius_scepter"	"375"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_scepter"		"20.0 20.0 20.0"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"big_dmg_reduction"		"-50"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"planeswalker_duration"		"3 4 5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"planeswalker_reduction"	"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// -Xs Bulldoze Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_spirit_breaker_bulldoze_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_spirit_breaker_bulldoze"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"7"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// +Xs Charge of Darkness Bonus Speed
+	//=================================================================================================================
+	"special_bonus_imba_spirit_breaker_charge_speed" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_spirit_breaker_charge_of_darkness"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"125"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
+	// +X% Greater Bash Chance
+	//=================================================================================================================
+	"special_bonus_imba_spirit_breaker_bash_chance" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_spirit_breaker_greater_bash"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// +X Health
+	//=================================================================================================================
+	"special_bonus_imba_spirit_breaker_bonus_health" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Vanilla Overrides
+	//=================================================================================================================
+
+	//=================================================================================================================
+	// Spirit Breaker: Charge of Darkness
+	//=================================================================================================================
+	"spirit_breaker_charge_of_darkness"
+	{
+		"AbilityCooldown"				"11.0 10.5 10 9.5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"400 450 500 550"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.2 1.6 2.0 2.4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius"			"375"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"1.25"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Bulldoze
+	//=================================================================================================================
+	"spirit_breaker_bulldoze"
+	{		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"16 22 28 34"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"status_resistance"		"35 50 65 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Empowering Haste
+	//=================================================================================================================
+	"spirit_breaker_empowering_haste"
+	{
+		"MaxLevel"							"4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed_pct_self"	"12 20 28 36"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_movespeed_pct_allies"	"9 15 20 24"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"900"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed_pct_extra"	"9 12 15 18"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Greater Bash
+	//=================================================================================================================
+	"spirit_breaker_greater_bash"
+	{
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"24.0 32.0 40.0 48.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.3 1.5 1.7 1.9"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_distance"	"143 152 158 162"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_pct"	"17 21 25 29"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"movespeed_duration"	"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Nether Strike
+	//=================================================================================================================
+	"spirit_breaker_nether_strike"
+	{
+		"AbilityCastRange"				"700 1200 1700"
+		"AbilityCastRangeBuffer"		"3500"
+		"AbilityCooldown"				"60 50 40"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 350 500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"4242"
+				"RequiresScepter"		"1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius_scepter"	"375"
+				"RequiresScepter"		"1"
+			}
+		}
+	}	
+}

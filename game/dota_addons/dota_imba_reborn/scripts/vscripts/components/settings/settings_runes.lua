@@ -1,0 +1,98 @@
+-- Double Damage
+if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+	-- TODO: add illusion rune incoming and outgoing damage + duration in parameters here
+
+	-- Arcane
+	IMBA_RUNE_ARCANE_CDR = 80 -- %
+	IMBA_RUNE_ARCANE_SPELL_AMP = 60 -- %
+	IMBA_RUNE_ARCANE_MANA_COST_REDUCTION = 80 -- %
+	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 60 -- %
+
+	-- Double Damage
+	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 2 -- 300% damage, attribute 20%
+
+	-- Frost
+	IMBA_RUNE_FROST_ATTACK_SPEED_SLOW = -200
+	IMBA_RUNE_FROST_MOVE_SPEED_SLOW = -40 -- %
+	IMBA_RUNE_FROST_SLOW_DURATION = 3.0 -- seconds
+
+	-- Haste
+	IMBA_RUNE_HASTE_ATTACK_SPEED_BONUS = 160
+	IMBA_RUNE_HASTE_MOVE_SPEED_BONUS = 100 -- %
+	IMBA_RUNE_HASTE_MOVE_SPEED_MIN = 800
+
+	--Illusion
+	IMBA_RUNE_ILLUSION_DODGE_PCT = 40 -- %
+	
+	-- Invis
+	IMBA_RUNE_INVIS_CRITICAL_DAMAGE = 400 -- %
+	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 40 -- %
+	
+	-- Regen
+	IMBA_RUNE_REGEN_STACKS = 10
+	IMBA_RUNE_REGEN_HEAL_BASE = 100
+	IMBA_RUNE_REGEN_HEAL_PCT = 12 -- %
+	IMBA_RUNE_REGEN_MANA_BASE = 40
+	IMBA_RUNE_REGEN_MANA_PCT = 12 -- %
+
+	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 1200
+else
+	-- Arcane
+	IMBA_RUNE_ARCANE_CDR = 40 -- %
+	IMBA_RUNE_ARCANE_SPELL_AMP = 30 -- %
+	IMBA_RUNE_ARCANE_MANA_COST_REDUCTION = 40 -- %
+	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 30 -- %
+
+	-- Double Damage
+	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 1 -- 200% damage, attribute 20%
+
+	-- Frost
+	IMBA_RUNE_FROST_ATTACK_SPEED_SLOW = -100
+	IMBA_RUNE_FROST_MOVE_SPEED_SLOW = -20 -- %
+	IMBA_RUNE_FROST_SLOW_DURATION = 3.0 -- seconds
+
+	-- Haste
+	IMBA_RUNE_HASTE_ATTACK_SPEED_BONUS = 80
+	IMBA_RUNE_HASTE_MOVE_SPEED_BONUS = 60 -- %
+	IMBA_RUNE_HASTE_MOVE_SPEED_MIN = 550
+
+	--Illusion
+	IMBA_RUNE_ILLUSION_DODGE_PCT = 20 -- %
+	
+	-- Invis
+	IMBA_RUNE_INVIS_CRITICAL_DAMAGE = 200 -- %
+	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 20 -- %
+
+	-- Regen
+	IMBA_RUNE_REGEN_STACKS = 5
+	IMBA_RUNE_REGEN_HEAL_BASE = 50
+	IMBA_RUNE_REGEN_HEAL_PCT = 6 -- %
+	IMBA_RUNE_REGEN_MANA_BASE = 20
+	IMBA_RUNE_REGEN_MANA_PCT = 6 -- %
+
+	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 1200
+end
+
+CustomNetTables:SetTableValue("game_options", "runes",
+{
+	arcane_rune_cdr = IMBA_RUNE_ARCANE_CDR,
+	arcane_rune_spell_amp = IMBA_RUNE_ARCANE_SPELL_AMP,
+	arcane_rune_mana_cost_reduction = IMBA_RUNE_ARCANE_MANA_COST_REDUCTION,
+	arcane_rune_cast_time_pct = IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT,
+	double_damage_rune_multiplier = IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER,
+	frost_rune_attack_slow = IMBA_RUNE_FROST_ATTACK_SPEED_SLOW,
+	frost_rune_move_slow = IMBA_RUNE_FROST_MOVE_SPEED_SLOW,
+	frost_rune_slow_duration = IMBA_RUNE_FROST_SLOW_DURATION,
+	haste_rune_attack_speed = IMBA_RUNE_HASTE_ATTACK_SPEED_BONUS,
+	haste_rune_move_speed = IMBA_RUNE_HASTE_MOVE_SPEED_BONUS,
+	haste_rune_move_speed_min = IMBA_RUNE_HASTE_MOVE_SPEED_MIN,
+	illusion_rune_dodge_pct = IMBA_RUNE_ILLUSION_DODGE_PCT,
+	invis_rune_critical_damage = IMBA_RUNE_INVIS_CRITICAL_DAMAGE,
+	invis_rune_move_speed = IMBA_RUNE_INVIS_BONUS_MOVE_SPEED,
+	regen_rune_stacks = IMBA_RUNE_REGEN_STACKS,
+	regen_rune_heal_base = IMBA_RUNE_REGEN_HEAL_BASE,
+	regen_rune_heal_pct = IMBA_RUNE_REGEN_HEAL_PCT,
+	regen_rune_mana_base = IMBA_RUNE_REGEN_MANA_BASE,
+	regen_rune_mana_pct = IMBA_RUNE_REGEN_MANA_PCT,
+	rune_radius_effect = IMBA_RUNE_ALLIES_RADIUS_EFFECT
+})

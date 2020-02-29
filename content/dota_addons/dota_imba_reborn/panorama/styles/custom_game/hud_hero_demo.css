@@ -1,0 +1,1297 @@
+.CustomHudRoot
+{
+	width: 100%;
+	height: 100%;
+	visibility:  collapse;
+}
+
+.CustomHudRoot.visible {
+	visibility: visible;
+}
+
+.DemoHud
+{
+	flow-children: right;
+	height: 100%;
+	width: 100%;
+}
+
+.ControlPanel
+{
+	transform: translateX( 0% ) translateY( -100px );
+	vertical-align: middle;
+	horizontal-align: left;
+	padding: 4px;
+	padding-left: 0px;
+	padding-top: 60px;
+
+	transition-property: background-color, transform;
+	transition-duration: 0.35s;
+	transition-timing-function: ease-in-out;
+	visibility: collapse;
+}
+
+.ControlPanel.visible
+{
+	visibility: visible;
+}
+
+.ControlPanelContainer
+{
+	flow-children: right;
+	vertical-align: middle;
+	horizontal-align: left;
+	width: 160px;
+	font-size: 16;
+	background-color: #181818dd;
+	border: 2px solid #222222;
+	box-shadow: #000000aa -4px -4px 8px 8px;
+}
+
+#ControlPanelSlideThumb
+{
+	width: 32px;
+	height: 96px;
+	transform: translateX( 0px );
+	background-color: #181818cc;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	box-shadow: #00000055 -4px -4px 8px 8px;
+	vertical-align: middle;
+}
+
+.RightArrowButtonIcon
+{
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	horizontal-align: right;
+	background-image: url("s2r://panorama/images/control_icons/double_arrow_left_png.vtex");
+	background-position: 0% 50%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	wash-color: #91aba6;
+
+	transform: translateX( -9px );
+	
+	transition-property: transform, wash-color;
+	transition-delay: 0.0s;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
+#ControlPanelSlideThumb:hover
+{
+	background-color: #383838cc;
+}
+
+#ControlPanelSlideThumb:hover .RightArrowButtonIcon
+{
+	transform: translateX( -12px );
+	wash-color: white;
+}
+
+.Minimized .ControlPanel .RightArrowButtonIcon
+{
+	transform: rotateZ(180deg) translateX( -6px );
+}
+
+.Minimized .ControlPanel #ControlPanelSlideThumb:hover .RightArrowButtonIcon
+{
+	transform: translateX( 3px ) rotateZ(180deg);
+	wash-color: white;
+}
+
+.ControlPanel. #ControlPanelSlideThumb:hover .RightArrowButtonIcon
+{
+	transform: translateX( 3px ) rotateZ(180deg);
+	wash-color: white;
+}
+
+.Minimized .ControlPanel
+{
+	transform: translateX( -160px ) translateY( -100px );
+}
+
+.QuitPausePanel
+{
+	flow-children: right;
+	transform: translateX( 0px ) translateY( 0px );
+	vertical-align: top;
+	horizontal-align: right;
+	height: 45px;
+	width: 500px; /* it's actually less, but just in case (aspect ratio, future changes) */
+	background-color: #181818;
+	border: 2px solid #222222;	
+}
+
+.QuitPausePanel .DemoButton
+{
+	height: 100%;
+	width: 48%;
+}
+
+.Category .QuitPausePanel
+{
+
+}
+
+.Category .QuitPausePanel .DemoButton Label
+{
+	margin-top: 5px;
+	margin-left: 5px;
+
+}
+
+.QuitPausePanel .QuitButton
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #441111), to( #662222 ) );
+	height: 100%;
+	width: 48%;
+
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+
+	border-style: solid;
+	border-width: 2px;	
+
+	border-top-color: #661111;
+	border-left-color: #591111;
+	border-bottom-color: #441111;
+	border-right-color: #502222;
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+}
+
+.Category .QuitPausePanel .QuitButton Label
+{
+	margin-top: 5px;
+	margin-left: 5px;
+	color: #ffffff;
+	font-size: 16;
+	vertical-align: middle;
+}
+
+.QuitPausePanel .QuitButton:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #441111), to( #aa2222 ) );
+}
+
+.QuitPausePanel.QuitButton:active
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
+	pre-transform-scale2d: 1.02;
+}
+
+.QuitPausePanel .QuitButton:selected
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #777777 ), to( #999999 ) );
+}
+
+.ControlPanelContainer Label
+{
+	flow-children: down;
+
+	horizontal-align: left;
+	font-size: 24;	
+	color: #444444;
+	margin-top: 7px;
+	margin-bottom: 6px;
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+.ControlPanelContainer .Category Label
+{
+	horizontal-align: left;
+	margin-left: 0%;
+	margin-top: 2px;
+	font-size: 20px;
+	color: #888888;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	text-align: left;
+	min-width: 100%;
+	text-overflow: shrink;
+}
+
+.ControlPanelContainer #Maximized
+{
+	flow-children: down;
+	visibility:visible;
+}
+
+.ControlPanelContainer #Maximized #MinimizeButton
+{
+	flow-children: down;
+	transform: translateX( 0% ) translateY( 0% );
+	vertical-align: middle;
+	horizontal-align: left;
+	width: 100%;
+	background-color: #181818;
+	border: 2px solid #111111;
+	visibility:visible;
+}
+
+.ControlPanelContainer #Maximized #MinimizeButton Label
+{
+	font-size: 18;
+	color: #666666;
+}
+
+#MinimizeButton
+{
+	horizontal-align: right;
+}
+
+#MinimizeButton Label
+{
+	font-size: 16;
+	color: #666666;
+}
+
+#MinimizeButton:hover Label
+{
+	font-size: 16;
+	color: #aaaaaa;
+}
+
+.Category
+{
+	flow-children: down;
+	border-style: solid;
+	border-color: #00000022;
+	border-width: 0%;
+	//border-radius: 5px;
+
+	box-shadow: fill #00000011 -4px -4px 8px 9px;
+
+	padding: 5px;
+
+	background-color: #11111166;
+}
+
+.Row
+{
+	flow-children: right;
+	margin-top: 0%;
+	margin-bottom: 0%;
+	margin-right: 0%;
+	width: 100%;
+}
+
+.Category .Row Label
+{
+	horizontal-align: right;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 18;
+	color: #888888;
+}
+
+.Row #DemoButton
+{
+	
+}
+
+.Row TextEntry
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #111111FF ), to( #222222FF ) );
+	border: 1px solid baseBorder;
+	
+	color: lightgrey;
+	font-size: 16;
+
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+
+	height: 20px;
+	width: 40px;
+
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.Row TextEntry #PlaceholderText
+{
+	opacity: 1.0;
+
+	transition-property: opacity;
+	transition-duration: 0.1s;
+
+	vertical-align: middle;
+
+	color: #444444;
+	font-size: 16;
+}
+
+.Row TextEntry:focus
+{
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+.Row TextEntry:focus #PlaceholderText, TextEntry.HasInput #PlaceholderText
+{
+	opacity: 0.0;
+}
+
+.DemoButton
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #333333), to( #444444 ) );
+
+	height: 32px;
+	width: 140px;
+
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+
+	border-style: solid;
+	border-width: 1px;
+
+	border-top-color: #444444;
+	border-left-color: #494949;
+	border-bottom-color: #111111;
+	border-right-color: #404040;
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
+}
+
+.Category .Row .DemoButton#FieldButton
+{
+	height: 40px;
+	width: 140px;
+}
+
+.Category .DemoButton Label
+{
+	margin-top: 5px;
+/*	padding: 6% 12% 6% 3%;*/
+	color: #cccccc;
+	font-size: 15;
+	font-weight: thin;
+	vertical-align: middle;
+	text-transform: none;
+	letter-spacing: 0px;
+}
+
+.Category .DemoButton:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
+}
+
+.Category .DemoButton:hover Label
+{
+	//color: #cccccc;
+}
+
+.Category .DemoButton:active
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #888888 ), to( #aaaaaa ) );
+	pre-transform-scale2d: 1.02;
+}
+
+.Category .DemoButton:active Label
+{
+	//color: #eeeeee;
+}
+
+.Category .DemoButton:selected
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #777777 ), to( #999999 ) );
+}
+
+.Category ToggleButton.DemoButton:active Label
+{
+	//color: #eeeeee;
+}
+
+.Category ToggleButton:selected Label
+{
+	//color: #cccccc;
+}
+
+#SelectEnemyHeroContainer
+{
+	vertical-align: center;
+	margin-left: 200px;
+	background-color: #000c;
+
+	opacity: 0.0;
+	transform: translateX( -60px ) translateY( -100px );
+
+	transition-property: opacity, transform;
+	transition-duration: 0.2s;
+}
+
+#SelectEnemyHeroContainer.HeroPickerVisible 
+{
+	opacity: 1.0;
+	transform: translateX( 0px ) translateY( -100px );
+}
+
+#EnemyCancelButton
+{
+	horizontal-align: right;
+	width: 14px;
+	height: 14px;
+}
+
+#SelectAllyHeroContainer
+{
+	vertical-align: center;
+	margin-left: 200px;
+	background-color: #000c;
+
+	opacity: 0.0;
+	transform: translateX( -60px ) translateY( -20px );
+
+	transition-property: opacity, transform;
+	transition-duration: 0.2s;
+}
+
+#SelectAllyHeroContainer.HeroPickerVisible 
+{
+	opacity: 1.0;
+	transform: translateX( 0px ) translateY( -20px );
+}
+
+#AllyCancelButton
+{
+	horizontal-align: right;
+	width: 14px;
+	height: 14px;
+}
+
+
+#SelectCosmeticsContainer
+{
+	horizontal-align: right;
+	vertical-align: center;
+	margin-bottom: 180px;
+	margin-right: 20px;
+	z-index: 10;
+	
+	opacity: 0.0;
+	transform: translateX( 100px ) translateY( 0px );
+
+	transition-property: opacity, transform;
+	transition-duration: 0.2s;
+}
+
+#SelectCosmeticsContainer.CosmeticsContainerVisible 
+{
+	opacity: 1.0;
+	transform: translateX( 0px ) translateY( 0px );
+}
+
+#CosmeticsCloseButton
+{
+	horizontal-align: right;
+	width: 14px;
+	height: 14px;
+}
+
+#HeroInspectBackground
+{
+	horizontal-align: center;
+	/* margin-top: 200px; */
+	margin-right: 0px;
+	width: 680px;
+	height: 640px;
+	background-color: black;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_hud_inspect_psd.vtex");
+	background-size: cover;
+	/* background-repeat: no-repeat; */
+	box-shadow: #000000 -12px -12px 24px 24px;
+	z-index: -10;
+}
+
+.EconItemContainer
+{
+	horizontal-align: center;
+	vertical-align: top;
+	flow-children: down;
+	width: 100%;
+}
+
+#EquipItemContainer
+{
+	flow-children: down;
+	horizontal-align: center;
+	vertical-align: top;
+	max-width: 100%;
+	height: 255px;
+	flow-children: right-wrap;
+	z-index: 20;
+	margin-top: 30px;
+	/* margin-left: 800px; */
+}
+
+.NotWearable #PleaseSelectWearableUnit
+{
+	visibility: visible;
+}
+
+#PleaseSelectWearableUnit
+{
+	horizontal-align: middle;
+	vertical-align: middle;
+	visibility: collapse;
+	font-size: 22px;
+}
+
+#EquipItemContainer DOTAEconItem
+{
+	width: 100px;
+	height: 100px;
+	tooltip-position: left;
+}
+
+#PurchaseTooltip
+{
+	font-size: 17px;
+	width: 53%;
+}
+
+.EconItemSlot
+{
+	flow-children: down;
+	height: 130px; 
+	width: 120px;
+	overflow: noclip noclip;
+}
+
+.EconItemSlot > Label
+{
+	text-transform: uppercase;
+	margin-left: 7px;
+	font-size: 14px;
+	color: #999;
+	margin-bottom: -6px;
+	margin-top: 2px;
+	text-overflow: ellipsis;
+	width: 84px;
+	height: 20px;
+}
+
+.EconItemSlot > DOTAEconItem:hover
+{
+	box-shadow:  #CCCCCC 0px 0px 10px 1px;
+}
+
+.Selected > DOTAEconItem
+{
+	box-shadow:  grey 0px 0px 10px 1px;
+}
+
+.EconItemStyleContents 
+{
+	/* margin: 0px; */
+	padding: 0px;
+	width: 350px;
+	flow-children: down;
+	border: 2px solid black;
+	box-shadow: none;
+	
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #000 ), to( #222 ) );
+	
+	border: 0px;
+	
+	z-index: 30;
+	box-shadow: fill #00000077 0px 0px 4px 4px;
+}
+
+#StyleLabel
+{
+	margin-left: 6px;
+	font-size: 16px;
+	color: #ccc;
+}
+
+#AvailableItems
+{
+	flow-children: down;
+	margin-top: 8px;
+	width: 95%;
+	horizontal-align: middle;
+}
+
+#AvailableHeader
+{
+	flow-children: right;
+	margin-bottom: 4px;
+}
+
+#AvailableTitle
+{
+	color: white;
+	text-transform: uppercase;
+	vertical-align: bottom;
+}
+
+#VoteButton
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #60862d ), to( #3d5f1c ));
+	horizontal-align:right;
+	margin-right: 10px;
+}
+
+.SourceButton
+{
+	flow-children: right;
+
+	border-top: 1px solid #ffffff22;
+	border-left: 1px solid #ffffff11;
+	border-right: 1px solid #00000044;
+	border-bottom: 1px solid #00000088;
+	padding: 5px 14px 3px 14px;
+	min-width: 100px;
+	height: 34px;
+	margin: 5px;
+
+}
+
+.SourceButton:hover
+{
+	brightness: 2.0;
+}
+
+#Bundle.SourceButton
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3784a6 ), to( #215373 ) );
+}
+
+#Single.SourceButton
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3751a6 ), to( #1b2b5e ) );
+}
+
+#Single.SourceButtonDisabled,
+#Bundle.SourceButtonDisabled
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #646666 ), to( #646666 ) ) !important;
+}
+
+#SourceIconContainer
+{
+	width: 44px;
+	height: 26px;
+	margin-top: -2px;
+	/* margin-right: elementMargin; */
+	vertical-align: middle;
+	flow-children: right;
+
+}
+
+#SourceIconArrow
+{
+	width: 14px;
+	height: 14px;
+	vertical-align: middle;
+	horizontal-align: center;
+	
+	wash-color: #ceffbb;
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+
+	background-image: url("s2r://panorama/images/icon_treasure_arrow_psd.vtex");
+}
+
+#SourceIcon
+{
+	width: 22px;
+	height: 22px;
+	vertical-align: middle;
+	horizontal-align: center;
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+
+#Bundle #SourceIcon
+{
+	background-image: url("s2r://panorama/images/control_icons/brackets_png.vtex");
+}
+
+#Single #SourceIcon
+{
+	background-image: url("s2r://panorama/images/topbar/armory_icon_off_png.vtex");
+	brightness: 7;
+}
+
+.SourceButton Label
+{
+	color: white;
+}
+
+#StoreButton
+{
+	vertical-align: middle;
+}
+
+#StoreButton > Label
+{
+	color: #999;
+	margin-left: 5px;
+	font-size: 14px;
+}
+
+#StoreButton > Label:hover
+{
+	color: white;
+}
+#StoreButton > Label:active
+{
+	color: #aaa;
+}
+
+#AvailableItemsCarouselNav
+{
+	margin-right: 7px;
+}
+
+#AvailableItemsCarousel
+{
+	flow-children: right;
+	width: 100%;
+	height: 236px;
+}
+
+#AvailableItemsCarousel .CarouselPage
+{
+	flow-children: right;
+	/* width: 100%; */
+	padding-left: 0px;
+	padding-right: 32px;
+	overflow: scroll squish ;
+
+	transition-property: position;
+	transition-duration: 0.3s;
+}
+
+#AvailableItemsCarousel DOTAStoreItem
+{
+	/* width: fill-parent-flow( 1.0 ); */
+	/* 5:6 */
+	width: 180px;
+	height: 236px;
+	margin-right: 10px;
+}
+
+#HeroNameContainer
+{
+	vertical-align: bottom;
+	horizontal-align: right;
+	flow-children: right;
+	margin-right: 222px;
+	margin-bottom: 200px;
+}
+
+#HeroBadge
+{
+	ui-scale: 80%;
+	margin-right: 2px;
+}
+
+#HeroBadge.NoTier
+{
+	visibility: collapse;
+}
+
+#HeroName
+{
+	color: white;
+	font-size: 48px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: right;
+	vertical-align: bottom;
+}
+
+@define HeroTransitionDuration: 0.46s;
+
+#GemContainer
+{
+	flow-children: right;
+	vertical-align: middle;
+	horizontal-align: right;
+	height: 900px;
+	/* width: 700px; */
+	
+	transition-property: background-color, transform;
+	transition-duration: 0.35s;
+	transition-timing-function: ease-in-out;
+	z-index: 40;
+}
+
+#GemSlideThumb
+{
+	width: 52px;
+	height: 116px;
+	transform: translateX( 0px );
+	background-color: #181818cc;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	box-shadow: #00000055 -4px -4px 8px 8px;
+	vertical-align: middle;
+}
+
+#GemSlideThumb  DOTAEconItem
+{
+	height: 40px;
+	width: 40px;
+}
+
+.LeftArrowButtonIcon
+{
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	horizontal-align: right;
+	margin-right: 10px;
+	background-image: url("s2r://panorama/images/control_icons/double_arrow_right_png.vtex");
+	background-position: 0% 50%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	wash-color: #91aba6;
+
+	transform: translateX( -9px );
+	
+	transition-property: transform, wash-color;
+	transition-delay: 0.0s;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
+#GemSlideThumb:hover
+{
+	background-color: #383838cc;
+}
+
+#GemSlideThumb:hover .LeftArrowButtonIcon
+{
+	transform: translateX( -6px );
+	wash-color: white;
+}
+
+.GemMinimized #GemContainer
+{
+	transform: translateX( 820px );
+}
+
+.GemMinimized #GemContainer .LeftArrowButtonIcon
+{
+	transform: rotateZ(180deg) translateX( -12px );
+}
+
+.GemMinimized #GemContainer #GemSlideThumb:hover .LeftArrowButtonIcon
+{
+	transform: translateX( 15px ) rotateZ(180deg);
+	wash-color: white;
+}
+
+
+#GemContainer #GemSlideThumb:hover .RightArrowButtonIcon
+{
+	transform: translateX( -3px ) rotateZ(180deg);
+	wash-color: white;
+}
+
+.GemItemSelected
+{
+	background-color:gradient( linear, 0% 0%, 0% 100%, from( #ffeaa415 ), to( #0e0b0633 ) );
+	box-shadow:  grey 0px 0px 10px 1px;
+}
+
+#GemMaskContainer
+{
+	height: 100%;
+	
+}
+
+#GemMask
+{
+	width: 100%;
+	height: 100%;
+	z-index: 50;
+	/* blur: gaussian( 1 ); */
+	background-color:gradient( linear, 0% 0%, 0% 100%, from( #000000d0 ), to( #0e0b0633 ) );
+	/* wash-color: #000000bb; */
+	/* opacity: 0.8; */
+	visibility: collapse;
+}
+
+.ShowMask #GemMask
+{
+	visibility: visible;
+}
+
+#AvailableGems
+{
+	height: 100%;
+	flow-children: right;
+}
+
+.ShowMask #AvailableGems
+{
+	blur: gaussian( 1 );
+}
+
+#CommingSoon
+{
+	vertical-align: middle;
+	horizontal-align: middle;
+	font-size: 50px;
+	color: dotaPlusLightGold;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-shadow: 0px 0px 4px dotaPlusLightGold;
+}
+
+#AvailablePrismatics
+{
+	width: 520px;
+	height: 100%;
+	flow-children: down-wrap;
+	/* overflow:  squish squish; */
+	background-color: #181818dd;
+	border: 2px solid #222222;
+}
+
+#AvailablePrismatics DOTAEconItem
+{
+	width: 50px;
+	/* height: 80px; */
+	tooltip-position: left;
+}
+
+.PrismaticItem
+{
+	width: 33%;
+	height: 7.05%;
+	flow-children: none;
+}
+
+.GemItemSelected #PrismaticEquipped
+{
+	visibility: visible;
+}
+
+#PrismaticEquipped
+{
+	width: 23px;
+	height: 23px;
+	wash-color: none;
+	z-index:1;
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_immortal_psd.vtex");
+	background-repeat: no-repeat;
+	transform: rotateY(180deg);
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+.PrismaticItem:hover
+{
+	background-color:gradient( linear, 0% 0%, 0% 100%, from( #ffeaa433 ), to( #0e0b0633 ) );
+}
+
+.PrismaticLabels
+{
+	vertical-align: middle;
+	horizontal-align: left;
+	flow-children: down;
+	/* position: 40% 0% 0px; */
+	vertical-align: middle;
+	horizontal-align: left;
+	margin-left: 65px;
+}
+
+.PrismaticLabels #PrismaticName
+{
+	font-size: 18px;
+	color: white;
+	/* margin-bottom: 6px;
+	margin-top: 2px; */
+	line-height: 15px;
+	text-overflow: ellipsis;
+}
+
+.PrismaticLabels #PrismaticColor
+{
+	font-size: 16px;
+	color: white;
+	/* margin-bottom: 2px; */
+	/* margin-top: 2px; */
+	text-overflow: ellipsis;
+}
+
+
+#AvailableEthereals
+{
+	width: 300px;
+	height: 100%;
+	flow-children: down-wrap;
+	/* overflow:  squish scroll; */
+	background-color: #181818dd;
+	border: 2px solid #222222;
+}
+
+#AvailableEthereals DOTAEconItem
+{
+	width: 50px;
+	/* height: 80px; */
+	tooltip-position: left;
+}
+
+.EtherealItem
+{
+	width: 50%;
+	height: 5.5%;
+	/* flow-children: right; */
+}
+
+.GemItemSelected #EtherealEquipped
+{
+	visibility: visible;
+}
+
+#EtherealEquipped
+{
+	width: 18px;
+	height: 18px;
+	wash-color: #B3DFDC;
+	z-index:1;
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
+	background-repeat: no-repeat;
+	transform: rotateY(180deg);
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+.EtherealItem:hover
+{
+	background-color:gradient( linear, 0% 0%, 0% 100%, from( #ffeaa433 ), to( #0e0b0633 ) );
+}
+
+#EtherealName
+{
+	font-size: 18px;
+	color: white;
+	vertical-align: middle;
+	horizontal-align: left;
+	margin-left: 65px;
+	text-overflow: shrink;
+}
+
+#ResetGemsButton
+{
+	vertical-align: middle;
+	horizontal-align: middle;
+	width: 44%;
+}
+
+#ResetGemsButton:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
+}
+
+#ResetGemsButton Label
+{
+/*	padding: 6% 12% 6% 3%;*/
+	color: #cccccc;
+	font-size: 15;
+	font-weight: thin;
+	vertical-align: middle;
+	text-transform: none;
+	letter-spacing: 0px;
+	horizontal-align: middle;
+}
+
+#HeroImageContainer
+{
+	margin-top: 0px;
+	horizontal-align: middle;
+	width: 800px;
+	height: 60px;
+	flow-children: right;
+	overflow: scroll squish ;
+}
+
+#HeroImageContainer .HeroImageItem
+{
+	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+	max-width: 80px;
+	height: 50px;
+	overflow: clip;
+}
+
+.TopBarHeroImage
+{
+	background-color: #222;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #333  ), color-stop( 0.2, #444 ), color-stop( .5, #333), to( #111 ) );
+	width: 77px;
+	height: 42px;
+	margin-top: 4px;
+	vertical-align: top;
+	transition-duration: 0.1s;
+	saturation: 1;
+	brightness: 1;
+	contrast: 1;
+}
+
+#Title
+{
+	width: fill-parent-flow(1.0);
+	color: white;
+}
+
+.Value
+{
+	color: white;
+}
+
+.Middle
+{
+	horizontal-align: middle;
+	vertical-align: middle;
+}
+
+#RespawnButtonLabel
+{
+	color: red;
+}
+
+#CourierSelectorContainer
+{
+	flow-children: down;
+	vertical-align: top;
+	/* margin-top: 75px; */
+}
+
+#TeamSelectorContainer
+{
+	/* visibility: collapse; */
+	flow-children: right;
+	vertical-align: top;
+	margin-top: 15px;
+}
+
+.TeamSelector
+{
+	width: 39px;
+	height: 39px;
+	vertical-align: center;
+	background-size: 80%;
+	background-repeat: no-repeat;
+	background-color: #333333;
+	background-position: 50% 50%;
+	margin-right: 10px;
+	margin-top: 3px;
+	transition-property: background-color;
+	transition-duration: .2s;
+}
+
+.TeamSelector.Radiant
+{
+	background-image: url("s2r://panorama/images/team_icons/radiant_png.vtex");
+}
+
+.TeamSelector.Dire
+{
+	background-image: url("s2r://panorama/images/team_icons/dire_png.vtex");
+}
+
+.TeamSelector.Radiant
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3c8c73 ), to( #3c3c73 ));
+}
+
+#TeamSelectorContainer.DireSelected .TeamSelector.Radiant
+{
+	background-color: #333333;
+}
+
+#TeamSelectorContainer.DireSelected .TeamSelector.Dire
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #73803c ), to( #733c3c ));
+}
+
+.TeamSelector.Radiant:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3c8cb3 ), to( #3c3cb3 ));
+}
+
+.TeamSelector.Dire:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #b3803c ), to( #b33c3c ));
+}
+
+#FlySelectorContainer
+{
+	/* visibility: collapse; */
+	flow-children: right;
+	vertical-align: top;
+	margin-top: 20px;
+}
+
+.FlySelector
+{
+	width: 39px;
+	height: 39px;
+	vertical-align: center;
+	background-size: 100% 80%;
+	background-repeat: no-repeat;
+	background-color: #333333;
+	background-position: 50% 50%;
+	margin-right: 10px;
+	margin-top: 3px;
+	transition-property: background-color;
+	transition-duration: .2s;
+}
+
+.FlySelector.Ground
+{
+	background-image: url("s2r://panorama/images/items/courier_png.vtex");
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #a1a1a1 ), to( #757575 ));
+}
+
+.FlySelector.Fly
+{
+	background-image: url("s2r://panorama/images/items/courier_radiant_flying_png.vtex");
+}
+
+.FlySelector.Ground:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #cacaca ), to( #979797 ));
+}
+
+.FlySelector.Fly:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #cacaca ), to( #979797 ));
+}
+
+#FlySelectorContainer.FlySelected .FlySelector.Ground
+{
+	background-color: #333333;
+}
+
+#FlySelectorContainer.FlySelected .FlySelector.Fly
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #a1a1a1 ), to( #757575 ));
+}

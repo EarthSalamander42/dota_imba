@@ -1,0 +1,5 @@
+.IMBA_HeroCard {
+	transition-duration: 0.25s;
+	transition-property: box-shadow;
+    box-shadow: #000000aa -2px -2px 4px 4px;
+}

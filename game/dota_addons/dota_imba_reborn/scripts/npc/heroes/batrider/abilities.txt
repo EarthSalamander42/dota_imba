@@ -1,0 +1,523 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Batrider: Sticky Napalm
+	//=================================================================================================================
+	"imba_batrider_sticky_napalm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_batrider"
+		"AbilityTextureName"			"batrider_sticky_napalm"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Batrider.StickyNapalm.Impact"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550 600 650 700"
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3.0 2.8 2.6 2.4"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"20 20 20 20"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5"	// Works by boosting damage
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"12 18 24 30"
+				"CalculateSpellDamageTooltip"		"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"375 425 475 525"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0 8.0 8.0 8.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_pct"	"-3 -5 -7 -9"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"turn_rate_pct"			"-70 -70 -70 -70"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"100 100 100 100"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Batrider: Flamebreak
+	//=================================================================================================================
+	"imba_batrider_flamebreak"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_batrider"
+		"AbilityTextureName"			"batrider_flamebreak"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Batrider.Flamebreak"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18 17 16 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"1.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_impact"			"50 75 100 125"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_duration"		"4.5 6.0 7.5 9.0"
+				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"	"special_bonus_unique_batrider_3"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_total_tooltip"		"120 200 300 420"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_radius"		"525"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"collision_radius"		"100 100 100 100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.5 0.5 0.5 0.5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_distance"	"300"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_height"		"100 100 100 100"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.35 0.35 0.35 0.35"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Batrider: Firefly
+	//=================================================================================================================
+	"imba_batrider_firefly"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_batrider"
+		"AbilityTextureName"			"batrider_firefly"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40 38 36 34"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"30 60 90 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"5 10 15 20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250 250 250 250"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15 18 21 24"
+				// "LinkedSpecialBonus"	"special_bonus_unique_batrider_1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.5 0.5 0.5 0.5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tree_radius"			"100 100 100 100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_vision"			"200 400 600 800"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"quiet_flight_multi"	"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Batrider: Methane Boost
+	//=================================================================================================================
+	"imba_batrider_methane_boost"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_batrider"
+		"AbilityTextureName"			"custom/batrider/methane_boost"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+		"AbilityCastPoint"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"475"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_batrider_methane_boost_distance"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.6"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Batrider: Flaming Lasso
+	//=================================================================================================================
+	"imba_batrider_flaming_lasso"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_batrider"
+		"AbilityTextureName"			"batrider_flaming_lasso"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Batrider.FlamingLasso.Cast"
+
+		"HasScepterUpgrade"			"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200"
+		"AbilityCooldown"				"90 60 30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"225"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.5 4.0 4.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"drag_distance"			"300 300 300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_distance"		"3000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grab_radius"		"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grab_radius_scepter"		"800"
+				"RequiresScepter"		"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"		"40 60 80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_damage"		"100"
+				"RequiresScepter"		"1"
+			}			
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bat_attacks_dmg_pct"	"100"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Methane Boost Distance
+	//=================================================================================================================
+	"special_bonus_unique_imba_batrider_methane_boost_distance" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_batrider_methane_boost"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"225"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Talent: Firefly Grants X True Sight Radius
+	//=================================================================================================================
+	"special_bonus_unique_imba_batrider_firefly_truesight" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_batrider_firefly"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"250" // If this is changed, change radius in Firefly KV as well to match
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: -Xs Flamebreak Cooldown
+	//=================================================================================================================
+	"special_bonus_unique_imba_batrider_flamebreak_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_batrider_flamebreak"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+		}
+	}
+	
+	
+	//===================//
+	// VANILLA OVERRIDES //
+	//===================//
+
+
+	//=================================================================================================================
+	//	Batrider: bonus Flamebreak aoe
+	//=================================================================================================================
+	"special_bonus_unique_batrider_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Batrider: bonus Firefly duration
+	//=================================================================================================================
+	"special_bonus_unique_batrider_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_batrider_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"3"
+			}
+		}
+	}
+}
