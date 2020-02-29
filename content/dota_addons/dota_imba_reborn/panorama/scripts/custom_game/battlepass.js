@@ -627,8 +627,7 @@ function SetArmory(hero, slot_id, item_id) {
 		return;
 	}
 
-	// Right now players are only able to equip one bp reward from a specific hero / item
-	if (slot_id == undefined) slot_id = "bundle";
+	if (slot_id == undefined) slot_id = "weapon";
 
 	var equip = 1;
 

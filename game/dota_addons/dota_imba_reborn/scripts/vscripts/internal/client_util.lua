@@ -106,3 +106,20 @@ C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
 
 	return response
 end
+
+--[[
+-- Call custom functions whenever GetHeroEffectName is being called anywhere
+original_GetHeroEffectName = C_DOTA_Ability_Lua.GetHeroEffectName
+C_DOTA_Ability_Lua.GetHeroEffectName = function(self)
+	-- call the original function
+	local response = original_GetHeroEffectName(self)
+	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	if override_image then
+--		print("GetHeroEffectName (override):", response, override_image["1"])
+		response = override_image["1"]
+	end
+
+	return response
+end
+--]]

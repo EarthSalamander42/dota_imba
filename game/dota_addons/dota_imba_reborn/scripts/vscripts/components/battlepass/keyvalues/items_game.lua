@@ -205,7 +205,7 @@ function ItemsGame:GetItemWearables(item_id)
 end
 
 function ItemsGame:GetItemSlot(item_id)
-	return self:GetItemInfo(item_id, "item_slot")
+	return self:GetItemInfo(item_id, "item_slot") or "weapon"
 end
 
 function ItemsGame:GetItemHero(item_id)

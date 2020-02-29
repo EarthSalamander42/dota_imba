@@ -821,6 +821,26 @@ ProjectileManager.CreateLinearProjectile = function(self, hHandle)
 	return response
 end
 
+-- Call custom functions whenever CreateTrackingProjectile is being called anywhere
+original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
+ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
+--	print("CreateTrackingProjectile (override):", hHandle)
+
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
+--			print("Create Particle (override):", hHandle)
+			hHandle.EffectName = v.modifier
+--			print("New particle:", hHandle.EffectName)
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_CreateTrackingProjectile(self, hHandle)
+
+	return response
+end
+
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)

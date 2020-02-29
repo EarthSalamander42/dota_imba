@@ -19,19 +19,15 @@ BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
-BATTLEPASS_LEVEL_REWARD[75]		= {"pudge_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[84]		= {"pangolier_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[95]		= {"furion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[125]	= {"juggernaut_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[135]	= {"phantom_assassin_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"} -- try multiple modifiers to add multiple animation translation activities
 BATTLEPASS_LEVEL_REWARD[146]	= {"earthshaker_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[165]	= {"earthshaker_arcana", "arcana"}
@@ -44,7 +40,6 @@ if IsInToolsMode() then
 end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
-BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
@@ -230,7 +225,7 @@ end
 
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 	for i, j in pairs(table_name) do
---		print(i, j)
+		print(i, j)
 
 		if i ~= "skip_model_combine" then
 			if (j.type == "particle" and j.style == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
@@ -259,6 +254,14 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 					icon_path = j.modifier,
 				})
 			end
+		end
+	end
+
+	-- override attack projectile
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == GetKeyValueByHeroName(hero:GetUnitName(), "ProjectileModel") and v.parent == hero then
+			hero:SetRangedProjectileName(v.modifier)
+			break
 		end
 	end
 end
@@ -335,18 +338,6 @@ function Battlepass:GetHeroEffect(hero)
 	elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 		hero.spiked_carapace_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
 		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
-		hero.stifling_dagger_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
-		hero.stifling_dagger_debuff_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-		hero.stifling_dagger_silence_effect = "particles/generic_gameplay/generic_silenced.vpcf"
-
-		hero.phantom_strike_start_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
-		hero.phantom_strike_end_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-
-		hero.fatality_screen_blood_splatter = "particles/hero/phantom_assassin/screen_blood_splatter.vpcf"
-		hero.coup_de_grace_crit_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-
-		hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace"
 	elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
@@ -402,18 +393,34 @@ function Battlepass:GetHeroEffect(hero)
 
 		for k, v in pairs(armory) do
 			if hero:GetUnitName() == v.hero then
+--				print(ItemsGame:GetItemWearables(v.item_id))
 				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
 					if type(item_id) == "number" then item_id = tostring(item_id) end
 
 					local modifier = ItemsGame:GetItemModifier(v.item_id)
 
 					if modifier then
-						print("Add cosmetic modifier:", modifier)
+--						print("Add cosmetic modifier:", modifier)
 						hero:AddNewModifier(hero, nil, modifier, {})
+
+						local style = 0
+
+						if v.hero == "npc_dota_hero_phantom_assassin" then
+--							print("Arcana kills:")
+							local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
+--							print(pa_arcana_kills)
+							hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
+
+							if tonumber(pa_arcana_kills) >= 400 then
+								style = 1
+							elseif tonumber(pa_arcana_kills) >= 1000 then
+								style = 2
+							end
+						end
 					end
 
 --					print(item_id, slot_id)
-					Wearable:_WearProp(hero, item_id, slot_id)
+					Wearable:_WearProp(hero, item_id, slot_id, style)
 
 					if Wearable.items_game["items"][item_id] and Wearable.items_game["items"][item_id]["visuals"] then
 						Battlepass:SetOverrideAssets(hero, modifier, Wearable.items_game["items"][item_id]["visuals"])
@@ -609,39 +616,6 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then
-				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana2"] then
-					style = 1
-				end
-
-				if style == 0 then
-					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
-					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_crit_tgt.vpcf"
-					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_tgt.vpcf"
-					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_trail.vpcf"
-					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_dash.vpcf"
-					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_omni.vpcf"
-					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_end.vpcf"
-					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_trigger.vpcf"
-					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omnislash_light.vpcf"
-				elseif style == 1 then
-					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_blade_fury.vpcf"
-					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_crit_tgt.vpcf"
-					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_tgt.vpcf"
-					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_trail.vpcf"
-					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_dash.vpcf"
-					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_v2_omni.vpcf"
-					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_end.vpcf"
-					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_trigger.vpcf"
-					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omnislash_light.vpcf"
-				end
-
-				hero.blade_dance_sound = "Hero_Juggernaut.BladeDance.Arcana"
-
-				Wearable:_WearProp(hero, "9059", "head", style)
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["leshrac_immortal"] then
 				CustomNetTables:SetTableValue("battlepass", "leshrac", {
@@ -674,13 +648,6 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["lina_arcana"] then
-				Wearable:_WearProp(hero, "4794", "head")
-
-				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
 			if IsInToolsMode() then
 				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nevermore_arcana"] then
@@ -697,54 +664,6 @@ function Battlepass:GetHeroEffect(hero)
 
 			-- custom icons
 			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-		elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["phantom_assassin_arcana"] then
-				LinkLuaModifier("modifier_phantom_assassin_arcana", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-
-				hero.stifling_dagger_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_arcana.vpcf"
-				hero.stifling_dagger_debuff_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_debuff_arcana.vpcf"
-				hero.stifling_dagger_silence_effect = "particles/econ/items/storm_spirit/storm_spirit_orchid_hat/storm_orchid_silenced.vpcf"
-
-				hero.phantom_strike_start_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_start.vpcf"
-				hero.phantom_strike_end_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_end.vpcf"
-
-				hero.fatality_screen_blood_splatter = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_screen_blood_splatter.vpcf"
-				hero.coup_de_grace_crit_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_crit_arcana_swoop.vpcf"
-
-				hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace.Arcana"
-
-				local style = 0
---				print("Arcana kills:")
-				local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
---				print(pa_arcana_kills)
-				hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
-
-				if tonumber(pa_arcana_kills) >= 400 then
-					style = 1
-				elseif tonumber(pa_arcana_kills) >= 1000 then
-					style = 2
-				end
-
-				Wearable:_WearProp(hero, "7247", "weapon", style)
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana"] then
-				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana2"] then
-					style = 1
-				end
-
-				Wearable:_WearProp(hero, "7756", "back", style)
-			end
-
-			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
-
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_immortal"] then
-				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-				Wearable:_WearProp(hero, "4007", "weapon")
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal2"] then
 				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt_golden.vpcf"

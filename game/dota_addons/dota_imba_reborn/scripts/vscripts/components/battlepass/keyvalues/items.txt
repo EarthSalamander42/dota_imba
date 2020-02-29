@@ -1100,6 +1100,14 @@
 		"modifier"					"modifier_pudge_arcana"
 	}
 
+	"71" // Manifold Paradox
+	{
+		"item_id"					"7247"
+		"item_type"					"wearable"
+		"item_unlock_level"			"500"
+		"modifier"					"modifier_phantom_assassin_arcana"
+	}
+
 //	"2" // Antipode Couriers (Radiant)
 //	{
 //		"item_id"					"10888"

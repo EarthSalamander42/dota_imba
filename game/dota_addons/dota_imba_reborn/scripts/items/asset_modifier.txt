@@ -11847,6 +11847,18 @@
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_elder_eyes_r.vpcf"
 		}
+		"asset_modifier33"
+				{
+					"type"		"particle"
+					"asset"		"particles/generic_gameplay/generic_silenced.vpcf"
+					"modifier"		"particles/econ/items/storm_spirit/storm_spirit_orchid_hat/storm_orchid_silenced.vpcf"
+				}
+		"asset_modifier34"
+				{
+					"type"		"particle"
+					"asset"		"particles/hero/phantom_assassin/screen_blood_splatter.vpcf"
+					"modifier"		"particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_screen_blood_splatter.vpcf"
+				}
 	}
 	"7253"
 	{
