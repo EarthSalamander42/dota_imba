@@ -1267,3 +1267,51 @@ end
 function Custom_bIsStrongIllusion(unit)
 	return unit and (unit:HasModifier("modifier_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_imba_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_vengefulspirit_hybrid_special"))
 end
+
+-- Checks if the entity is any kind of tree (either regular or temporary)
+function CEntityInstance:Custom_IsTree()
+	if self:Custom_IsRegularTree() or self:Custom_IsTempTree() then
+		return true
+	end
+
+	return false
+end
+
+-- Checks if the entity is a regular tree that spawns in the map
+function CEntityInstance:Custom_IsRegularTree()
+	if self.CutDown then
+		return true	
+	end
+
+	return false
+end
+
+-- Checks if the entity is a temporary tree that despawns after a while (Furion's Sprout, gg branch etc.)
+function CEntityInstance:Custom_IsTempTree()
+	if self:GetClassname() == "dota_temp_tree" then
+		return true
+	end
+
+	return false
+end
+
+-- Checks if the unit (hero or unit with inventory) has an empty space in inventory
+function CDOTA_BaseNPC:Custom_HasAnyAvailableInventorySpace()
+	-- If it's a hero, just use the known function
+	if self:IsHero() then
+		return self:HasAnyAvailableInventorySpace()
+	else
+		-- Otherwise, we need to check if there's at least one empty space (for creep heroes)
+		for i=DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_9 do
+			local item = self:GetItemInSlot(i)
+
+			-- If there is not item in a slot, then we have a free space
+			if not item then
+				return true
+			end
+		end
+
+		-- If we got here, then we don't have a free space
+		return false
+	end
+end

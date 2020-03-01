@@ -10,6 +10,10 @@
 
 	// Default item removal 
 	// -----------------------------------------------------------
+	"item_tango"							"REMOVE"
+	"item_tango_single"						"REMOVE"
+	"item_flask"							"REMOVE"
+	"item_clarity"							"REMOVE"
 	"item_blink"							"REMOVE"
 	"item_javelin"							"REMOVE"
 	"item_stout_shield"						"REMOVE"
@@ -212,7 +216,7 @@
 	"item_recipe_imba_curseblade"			"REMOVE"
 	"item_imba_curseblade"					"REMOVE"
 	"item_recipe_imba_hellblade"			"REMOVE"
-	"item_imba_hellblade"					"REMOVE"
+	"item_imba_hellblade"					"REMOVE"	
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
