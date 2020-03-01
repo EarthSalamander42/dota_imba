@@ -10,6 +10,7 @@
 
 	// Default item removal 
 	// -----------------------------------------------------------
+	"item_smoke_of_deceit"					"REMOVE"
 	"item_tango"							"REMOVE"
 	"item_tango_single"						"REMOVE"
 	"item_flask"							"REMOVE"

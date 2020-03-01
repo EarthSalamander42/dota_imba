@@ -17570,5 +17570,123 @@
 		}
 	}
 
-	//next free ID: 2361
+	//=================================================================================================================
+	// Smoke of Deceit
+	//=================================================================================================================
+	"item_imba_smoke_of_deceit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2361"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName" 			"item_smoke_of_deceit"
+		"ScriptFile"					"components/items/item_smoke_of_deceit"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"Model"							"models/props_gameplay/smoke.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_smoke.vpcf"
+		"FightRecapLevel"				"1"
+																																																																												 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		"AbilityCastRange"				"1200"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"80"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"smoke of deceit"
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemStockMax"					"2"
+		"ItemStockTime"					"420"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"		
+		"ItemAlertable"					"1"
+		"IsTempestDoubleClonable"		"0"
+
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"application_radius"	"1200"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"visibility_radius"		"1025"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_bonus_pct"	"15"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"smoke_duration"		"35"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"surprise_atk_duration"	"8"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"surprise_atk_damage_pct"	"20"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"surprise_atk_spell_amp" 	"20"
+			}			
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"surprise_atk_hit_count" 	"3"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"surprise_atk_delay"	 	"5"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"gank_hero_ms_bonus_pct"	"4"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"gank_unit_ms_bonus_pct" 	"2"
+			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"gank_unit_radius"		 	"1200"
+			}
+		}
+	}
+
+	//next free ID: 2362
 }
