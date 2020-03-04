@@ -495,7 +495,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- Gem of True Sight Logic (mostly for Soul of Truth merging) --
 	----------------------------------------------------------------
 	
-	if item:GetName() == "item_gem" then
+	if item:GetName() == "item_gem" and not unit:IsCourier() then
 		item:SetPurchaser(unit)
 	end
 
@@ -700,7 +700,7 @@ function GameMode:OrderFilter( keys )
 			end
 
 			-- Rough code to drop neutral items on the ground
-			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability.GetName and ability:GetName() == "courier_return_stash_items" then
+			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability and ability.GetName and ability:GetName() == "courier_return_stash_items" then
 				for i = 0, 8 do
 					if unit:GetItemInSlot(i) and unit:GetItemInSlot(i).GetPurchaser and not unit:GetItemInSlot(i):GetPurchaser() then
 						unit:DropItemAtPositionImmediate(unit:GetItemInSlot(i), unit:GetAbsOrigin() + RandomVector(RandomInt(0, 100)))
