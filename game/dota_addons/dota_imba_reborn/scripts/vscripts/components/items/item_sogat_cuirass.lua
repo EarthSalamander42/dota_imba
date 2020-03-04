@@ -274,8 +274,11 @@ function modifier_imba_sogat_cuirass_aura_negative_effect:GetTexture()
 end
 
 function modifier_imba_sogat_cuirass_aura_negative_effect:OnCreated()
-	-- Ability specials
-	self.aura_armor_reduction_enemy = self:GetAbility():GetSpecialValueFor("aura_armor_reduction_enemy")
+	if self:GetAbility() then
+		self.aura_armor_reduction_enemy = self:GetAbility():GetSpecialValueFor("aura_armor_reduction_enemy") * (-1)
+	else
+		self.aura_armor_reduction_enemy = 0
+	end
 end
 
 function modifier_imba_sogat_cuirass_aura_negative_effect:IsHidden() return false end
@@ -283,13 +286,11 @@ function modifier_imba_sogat_cuirass_aura_negative_effect:IsPurgable() return fa
 function modifier_imba_sogat_cuirass_aura_negative_effect:IsDebuff() return true end
 
 function modifier_imba_sogat_cuirass_aura_negative_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 end
 
 function modifier_imba_sogat_cuirass_aura_negative_effect:GetModifierPhysicalArmorBonus()
-	return self.aura_armor_reduction_enemy * (-1)
+	return self.aura_armor_reduction_enemy
 end
 
 if modifier_item_imba_sogat_cuirass_buff == nil then modifier_item_imba_sogat_cuirass_buff = class({}) end
@@ -353,7 +354,7 @@ end
 --	Bulwark Modifier Cooldown	--
 ----------------------------------
 
-modifier_item_imba_sogat_cuirass_nostack = class ({})
+modifier_item_imba_sogat_cuirass_nostack = class({})
 
 function modifier_item_imba_sogat_cuirass_nostack:IsHidden() 		return false end
 function modifier_item_imba_sogat_cuirass_nostack:IsDebuff() 		return true end

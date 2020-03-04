@@ -6,11 +6,41 @@ LinkLuaModifier("modifier_imba_undying_decay_buff_counter", "components/abilitie
 LinkLuaModifier("modifier_imba_undying_decay_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_decay_debuff_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_decay							= imba_undying_decay or class({})
-modifier_imba_undying_decay_buff			= modifier_imba_undying_decay_buff or class({})
-modifier_imba_undying_decay_buff_counter	= modifier_imba_undying_decay_buff_counter or class({})
-modifier_imba_undying_decay_debuff			= modifier_imba_undying_decay_debuff or class({})
-modifier_imba_undying_decay_debuff_counter	= modifier_imba_undying_decay_debuff_counter or class({})
+LinkLuaModifier("modifier_imba_undying_soul_rip_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_soul_rip_aura_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_undying_tombstone_death_trigger", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathlust", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+
+imba_undying_decay								= imba_undying_decay or class({})
+modifier_imba_undying_decay_buff				= modifier_imba_undying_decay_buff or class({})
+modifier_imba_undying_decay_buff_counter		= modifier_imba_undying_decay_buff_counter or class({})
+modifier_imba_undying_decay_debuff				= modifier_imba_undying_decay_debuff or class({})
+modifier_imba_undying_decay_debuff_counter		= modifier_imba_undying_decay_debuff_counter or class({})
+
+imba_undying_soul_rip							= imba_undying_soul_rip or class({})
+modifier_imba_undying_soul_rip_aura				= modifier_imba_undying_soul_rip_aura or class({})
+modifier_imba_undying_soul_rip_aura_modifier	= modifier_imba_undying_soul_rip_aura_modifier or class({})
+
+imba_undying_tombstone												= imba_undying_tombstone or class({})
+modifier_imba_undying_tombstone_death_trigger						= modifier_imba_undying_tombstone_death_trigger or class({})
+modifier_imba_undying_tombstone_zombie_aura							= modifier_imba_undying_tombstone_zombie_aura or class({})
+modifier_imba_undying_tombstone_zombie_deathlust					= modifier_imba_undying_tombstone_zombie_deathlust or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike					= modifier_imba_undying_tombstone_zombie_deathstrike or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike_slow				= modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter		= modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
+modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
+
+imba_undying_tombstone_zombie_deathstrike							= imba_undying_tombstone_zombie_deathstrike or class({})
+
+    -- "modifier_undying_flesh_golem",
+    -- "modifier_undying_flesh_golem_plague_aura",
+    -- "modifier_undying_flesh_golem_slow",
 
 ------------------------
 -- IMBA_UNDYING_DECAY --
@@ -20,30 +50,148 @@ function imba_undying_decay:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
+-- "Upon acquiring/losing Aghanim's Scepter, all stacks of stolen strength adapts immediately. "
+-- What a pain
+function imba_undying_decay:OnInventoryContentsChanged()
+	if self:GetCaster():HasScepter() and not self.scepter_updated then
+		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_imba_undying_decay_buff")) do
+			if mod.str_steal_scepter then
+				mod:SetStackCount(mod.str_steal_scepter)
+			end
+		end
+		
+		if self.debuff_modifier_table and #self.debuff_modifier_table > 0 then
+			for _, debuff in pairs(self.debuff_modifier_table) do
+				if not debuff:IsNull() and debuff.str_steal_scepter then
+					debuff:SetStackCount(debuff.str_steal_scepter)
+				end
+			end
+		end
+	
+		self.scepter_updated = true
+	elseif not self:GetCaster():HasScepter() and self.scepter_updated then
+		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_imba_undying_decay_buff")) do
+			if mod.str_steal then
+				mod:SetStackCount(mod.str_steal)
+			end
+		end
+		
+		if self.debuff_modifier_table then
+			for _, debuff in pairs(self.debuff_modifier_table) do
+				if not debuff:IsNull() and debuff.str_steal then
+					debuff:SetStackCount(debuff.str_steal)
+				end
+			end
+		end
+
+		self.scepter_updated = false
+	end
+end
+
+function imba_undying_decay:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
 -- "The strength loss on the target does not keep the current health percentage, but instead removes 20 health per strength from the current health pool."
 -- "The strength gain on Undying does not keep the current health percentage either, and instead adds 20 health per strength to the current health pool."
 function imba_undying_decay:OnSpellStart()
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.closest_position, nil, self.damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		-- "Steals strength before applying its damage."
-		if enemy:IsHero() and not enemy:IsIllusion() then
-			if enemy:IsClone() or enemy:IsTempestDouble() then
-			
-			else
+	-- This variable is to prevent glitches where the ability is obtained while a user already has Aghanim's Scepter, and then they drop the scepter and never retrieve it again, which would keep the Decay stacks at their scepter levels
+	-- Yes I know it's stupid
+	self.scepter_updated = self:GetCaster():HasScepter()
+
+	self:GetCaster():EmitSound("Hero_Undying.Decay.Cast")
+	
+	local decay_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_decay.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(decay_particle, 0, self:GetCursorPosition())
+	ParticleManager:SetParticleControl(decay_particle, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
+	-- This isn't technically correct because the flies actually follow Undying all the way to the end but like...ugh
+	ParticleManager:SetParticleControl(decay_particle, 2, self:GetCaster():GetAbsOrigin())
+	-- ParticleManager:SetParticleControlEnt(decay_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(decay_particle)
+	
+	local clone_owner_units = {}
+	local strength_transfer_particle	= nil
+	local flies_transfer_particle		= nil
+	
+	local buff_modifier					= nil
+	local debuff_modifier				= nil
+	
+	if not self.debuff_modifier_table then
+		self.debuff_modifier_table = {}
+	end
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		if enemy:IsClone() or enemy:IsTempestDouble() then
+			if enemy.GetPlayerOwner and enemy:GetPlayerOwner().GetAssignedHero and enemy:GetPlayerOwner():GetAssignedHero():entindex() then
+				if not clone_owner_units[enemy:GetPlayerOwner():GetAssignedHero():entindex()] then
+					clone_owner_units[enemy:GetPlayerOwner():GetAssignedHero():entindex()] = {}
+				end
 				
+				table.insert(clone_owner_units[enemy:GetPlayerOwner():GetAssignedHero():entindex()], enemy:entindex())
 			end
-			
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+		else
+			if enemy:IsHero() and not enemy:IsIllusion() then
+				enemy:EmitSound("Hero_Undying.Decay.Target")
+				self:GetCaster():EmitSound("Hero_Undying.Decay.Transfer")
+				
+				strength_transfer_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_decay_strength_xfer.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+				ParticleManager:SetParticleControlEnt(strength_transfer_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(strength_transfer_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(strength_transfer_particle)
+				
+				-- flies_transfer_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_decay_strength_xfer_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+				-- ParticleManager:SetParticleControlEnt(flies_transfer_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				-- ParticleManager:SetParticleControlEnt(flies_transfer_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+				-- ParticleManager:ReleaseParticleIndex(flies_transfer_particle)
+				
+				-- "Steals strength before applying its damage."
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+				debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+				table.insert(self.debuff_modifier_table, debuff_modifier)
+				
+				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+				buff_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+				
+				ApplyDamage({
+					victim 			= enemy,
+					damage 			= self:GetSpecialValueFor("decay_damage"),
+					damage_type		= self:GetAbilityDamageType(),
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self
+				})
+			end
 		end
+	end
+	
+	local selected_unit = nil
+	
+	-- Separate handling for clones
+	if #clone_owner_units > 0 then
+		for tables in clone_owner_units do
+			enemy:EmitSound("Hero_Undying.Decay.Target")
+			self:GetCaster():EmitSound("Hero_Undying.Decay.Transfer")
+			
+			selected_unit =  EntIndexToHScript(tables[RandomInt(1, #tables)])
 		
-		ApplyDamage({
-			victim 			= enemy,
-			damage 			= self:GetSpecialValueFor("decay_damage"),
-			damage_type		= self:GetAbilityDamageType(),
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
-		})
+			enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+			debuff_modifier = enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+			table.insert(self.debuff_modifier_table, debuff_modifier)
+			
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+			
+			for enemy_entindex in tables do
+				ApplyDamage({
+					victim 			= EntIndexToHScript(enemy_entindex),
+					damage 			= self:GetSpecialValueFor("decay_damage"),
+					damage_type		= self:GetAbilityDamageType(),
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self
+				})
+			end
+		end
 	end
 end
 
@@ -56,12 +204,15 @@ function modifier_imba_undying_decay_buff:IsPurgable()		return false end
 function modifier_imba_undying_decay_buff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_undying_decay_buff:OnCreated()
+	self.str_steal			= self:GetAbility():GetSpecialValueFor("str_steal")
+	self.str_steal_scepter	= self:GetAbility():GetSpecialValueFor("str_steal_scepter")
+	
 	if not IsServer() then return end
 	
 	if not self:GetCaster():HasScepter() then
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal"))
+		self:SetStackCount(self:GetStackCount() + self.str_steal)
 	else
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal_scepter"))
+		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
 	end
 end
 
@@ -73,24 +224,39 @@ function modifier_imba_undying_decay_buff:OnDestroy()
 	end
 end
 
+function modifier_imba_undying_decay_buff:OnStackCountChanged(stackCount)
+	if not IsServer() then return end
+
+	if self:GetParent():HasModifier("modifier_imba_undying_decay_buff_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):GetStackCount() + (self:GetStackCount() - stackCount))
+	end
+end
+
+function modifier_imba_undying_decay_buff:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MODEL_SCALE}
+end
+
+-- "Each status buff of Decay increases Undying's model size by 2%. This has no impact on his collision size."
+function modifier_imba_undying_decay_buff:GetModifierModelScale()
+	return 2
+end
+
 ----------------------------------------------
 -- MODIFIER_IMBA_UNDYING_DECAY_BUFF_COUNTER --
 ----------------------------------------------
 
 function modifier_imba_undying_decay_buff_counter:IsPurgable()	return false end
 
-function modifier_imba_undying_decay_buff_counter:OnCreated()
-	if not IsServer() then return end
-	
-	if not self:GetCaster():HasScepter() then
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal"))
-	else
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal_scepter"))
-	end
+function modifier_imba_undying_decay_buff_counter:GetEffectName()
+	return "particles/units/heroes/hero_undying/undying_decay_strength_buff.vpcf"
 end
 
-function modifier_imba_undying_decay_buff_counter:OnRefresh()
-	self:OnCreated()
+function modifier_imba_undying_decay_buff_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+end
+
+function modifier_imba_undying_decay_buff_counter:GetModifierBonusStats_Strength()
+	return self:GetStackCount()
 end
 
 ----------------------------------------
@@ -102,12 +268,15 @@ function modifier_imba_undying_decay_debuff:IsPurgable()	return false end
 function modifier_imba_undying_decay_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_undying_decay_debuff:OnCreated()
+	self.str_steal			= self:GetAbility():GetSpecialValueFor("str_steal")
+	self.str_steal_scepter	= self:GetAbility():GetSpecialValueFor("str_steal_scepter")
+
 	if not IsServer() then return end
 	
 	if not self:GetCaster():HasScepter() then
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal"))
+		self:SetStackCount(self:GetStackCount() + self.str_steal)
 	else
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal_scepter"))
+		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
 	end
 end
 
@@ -116,6 +285,21 @@ function modifier_imba_undying_decay_debuff:OnDestroy()
 	
 	if self:GetParent():HasModifier("modifier_imba_undying_decay_buff_counter") then
 		self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):GetStackCount() - self:GetStackCount())
+	end
+	
+	if self:GetAbility() and self:GetAbility().debuff_modifier_table then
+		Custom_ArrayRemove(self:GetAbility().debuff_modifier_table, function(i, j)
+			-- Remember that you return what you want to KEEP, which is kinda contradictory to the function name...
+			return self:GetAbility().debuff_modifier_table[i] ~= self
+		end)
+	end
+end
+
+function modifier_imba_undying_decay_debuff:OnStackCountChanged(stackCount)
+	if not IsServer() then return end
+
+	if self:GetParent():HasModifier("modifier_imba_undying_decay_debuff_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_undying_decay_debuff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_debuff_counter"):GetStackCount() + (self:GetStackCount() - stackCount))
 	end
 end
 
@@ -126,18 +310,169 @@ end
 function modifier_imba_undying_decay_debuff_counter:IsPurgable()	return false end
 
 function modifier_imba_undying_decay_debuff_counter:OnCreated()
-	if not IsServer() then return end
+	self.brains_int_pct	= self:GetAbility():GetSpecialValueFor("brains_int_pct")
+end
+
+function modifier_imba_undying_decay_debuff_counter:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+	}
+end
+
+function modifier_imba_undying_decay_debuff_counter:GetModifierBonusStats_Strength()
+	return self:GetStackCount() * (-1)
+end
+
+function modifier_imba_undying_decay_debuff_counter:GetModifierBonusStats_Intellect()
+	return math.ceil(self:GetStackCount() * self.brains_int_pct * 0.01) * (-1)
+end
+
+---------------------------
+-- IMBA_UNDYING_SOUL_RIP --
+---------------------------
+
+function imba_undying_soul_rip:OnSpellStart()
+	-- "Does not count Undying, the target, wards, buildings, invisible enemies and units in the Fog of War."
+    -- "Spell immune allies are counted, including the zombies from Tombstone."
+	-- "Units which require a certain amount of attacks to be killed do not lose health when counted in by Soul Rip."
 	
-	if not self:GetCaster():HasScepter() then
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal"))
-	else
-		self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("str_steal_scepter"))
+	local target = self:GetCursorTarget()
+	
+	local units_ripped = 0
+	
+	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
+		if unit ~= self:GetCaster() and unit ~= target then
+			ApplyDamage({
+				victim 			= unit,
+				damage 			= self:GetSpecialValueFor("damage_per_unit"),
+				damage_type		= DAMAGE_TYPE_PURE,
+				damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NON_LETHAL, -- Putting reflection flag here in case of unwanted interactions
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			units_ripped = units_ripped + 1
+			
+			if units_ripped >= self:GetSpecialValueFor("max_units") then
+				break
+			end
+		end
+	end
+	
+	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self) then
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("damage_per_unit") * units_ripped,
+			damage_type		= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() ~= "" then -- TODO: Tombstone name
+		target:Heal(self:GetSpecialValueFor("damage_per_unit") * units_ripped, self:GetCaster())
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("damage_per_unit") * units_ripped, nil)
+	elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() == "" then -- TODO: Tombstone name
+		target:Heal(self:GetSpecialValueFor("tombstone_heal"), self:GetCaster())
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("tombstone_heal"), nil)
 	end
 end
 
-function modifier_imba_undying_decay_debuff_counter:OnRefresh()
-	self:OnCreated()
+-----------------------------------------
+-- MODIFIER_IMBA_UNDYING_SOUL_RIP_AURA --
+-----------------------------------------
+
+function modifier_imba_undying_soul_rip_aura:OnCreated()
+
 end
+
+--------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_SOUL_RIP_AURA_MODIFIER --
+--------------------------------------------------
+
+function modifier_imba_undying_soul_rip_aura_modifier:OnCreated()
+
+end
+
+----------------------------
+-- IMBA_UNDYING_TOMBSTONE --
+----------------------------
+
+function imba_undying_tombstone:OnSpellStart()
+	local tombstone = CreateUnitByName("npc_dota_unit_tombstone"..self:GetLevel(), self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_tombstone_zombie_aura", {})
+	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
+	
+	-- "Destroys trees within 300 radius around the Tombstone upon cast."
+	GridNav:DestroyTreesAroundPoint(self:GetCursorPosition(), 300, true)
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_DEATH_TRIGGER --
+---------------------------------------------------
+
+function modifier_imba_undying_tombstone_death_trigger:OnCreated()
+
+end
+
+-------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_AURA --
+-------------------------------------------------
+
+-- I believe this was meant to be an intrinsic modifier to the undying_tombstone_zombie_aura ability, but it seems like the Tombstone doesn't have this anymore? So I guess I'll just use it as the tombstone's standard modifier
+
+function modifier_imba_undying_tombstone_zombie_aura:IsPurgable()	return false end
+
+function modifier_imba_undying_tombstone_zombie_aura:OnCreated()
+	self.radius							= self:GetAbility():GetSpecialValueFor("radius")
+	self.health_threshold_pct_tooltip	= self:GetAbility():GetSpecialValueFor("health_threshold_pct_tooltip")
+	self.zombie_interval				= self:GetAbility():GetSpecialValueFor("zombie_interval")
+
+	if not IsServer() then return end
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(self.zombie_interval)
+end
+
+function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
+	local zombie = nil
+
+    -- "Zombies do not spawn for invisible units or units in the Fog of War."
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
+		 -- "Zombies do not spawn for wards, buildings, couriers, hidden units and zombies from an enemy Tombstone."
+		if not enemy:IsCourier() and enemy:GetName() ~= "npc_dota_unit_undying_zombie" then
+			-- No offset?
+			zombie = CreateUnitByName("npc_dota_unit_undying_zombie", enemy:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), self:GetCaster():GetTeamNumber())
+			zombie:AddAbility("imba_undying_tombstone_zombie_deathstrike")
+			zombie:SwapAbilities("imba_undying_tombstone_zombie_deathstrike", "undying_tombstone_zombie_deathstrike", true, false)
+			zombie:RemoveAbilityByName("undying_tombstone_zombie_deathstrike")
+			
+			zombie:SetAttacking(enemy)
+		end
+	end
+end
+
+-----------------------------------------------
+-- IMBA_UNDYING_TOMBSTONE_ZOMBIE_DEATHSTRIKE --
+-----------------------------------------------
+
+function imba_undying_tombstone_zombie_deathstrike:GetIntrinsicModifierName()
+	return "modifier_imba_undying_tombstone_zombie_modifier"
+end
+
+function imba_undying_tombstone_zombie_deathstrike:OnSpellStart()
+
+end
+
+modifier_imba_undying_tombstone_zombie_deathlust					= modifier_imba_undying_tombstone_zombie_deathlust or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike					= modifier_imba_undying_tombstone_zombie_deathstrike or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike_slow				= modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter		= modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
+modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
+
+
 
 -- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_pull", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_target_vision", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)

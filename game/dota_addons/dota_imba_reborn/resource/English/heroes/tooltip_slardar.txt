@@ -119,7 +119,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_4"                     "10% Slipstream miss/trigger chance"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_5"                     "Rip Current can always be cast when sprinting"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_6"                     "Dual Crusher"
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_6_Description"			"Increases cooldown of Slithereen Crush by 50%. Casting Slithereen Crush casts another one after a 1 second delay."
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_6_Description"			"Increases cooldown of Slithereen Crush by {s:cdr_mult}%. Casting Slithereen Crush casts another one after a {s:value} second delay."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_7"                     "Corrosive Haze applies in AoE for half armor"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_8"                     "-3 armor per physical damage on Corrosive Haze"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_9"						"Bash of the Deep Affects Buildings"

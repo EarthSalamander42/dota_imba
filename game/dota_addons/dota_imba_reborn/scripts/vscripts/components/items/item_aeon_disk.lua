@@ -16,54 +16,48 @@
 --
 --	Author:
 --		naowin, 21.08.2019
-
+--  Editor:
+--      AltiV, 02.03.2020 and a few times before that
 
 -----------------------------------------------------------------------------------------------------------
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
-LinkLuaModifier( "modifier_imba_aeon_disk_basic", "components/items/item_aeon_disk.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_aeon_disk_unique", "components/items/item_aeon_disk.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_aeon_disk", "components/items/item_aeon_disk.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_aeon_disk_basic", "components/items/item_aeon_disk", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_aeon_disk", "components/items/item_aeon_disk", LUA_MODIFIER_MOTION_NONE )
+
 if item_imba_aeon_disk == nil then item_imba_aeon_disk = class({}) end
+
 function item_imba_aeon_disk:GetAbilityTextureName()
 	return "custom/imba_aeon_disk_icon"
 end
 
 function item_imba_aeon_disk:GetIntrinsicModifierName()
-	return "modifier_imba_aeon_disk_basic" end
+	return "modifier_imba_aeon_disk_basic"
+end
 
 function item_imba_aeon_disk:OnSpellStart()
-	if IsServer() then
-		local uniqueModifier = self:GetCaster():FindModifierByName("modifier_imba_aeon_disk_unique")
-		if not uniqueModifier then return end -- If this happens, something is terribly wrong
-
-		-- Get, and toggle state [ 1 = disabled | 2 = enabled ]
-		local state = uniqueModifier:GetStackCount()
-		if state == 2 then
-			uniqueModifier:SetStackCount(1)
+	-- Play sound only to the caster
+	self:GetCaster():EmitSound("Item.DropGemWorld")
+		
+	for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_imba_aeon_disk_basic")) do
+		if mod:GetStackCount() == 2 then
+			mod:SetStackCount(1)
 		else
-			uniqueModifier:SetStackCount(2)
+			mod:SetStackCount(2)
 		end
-
-		-- Play sound only to the caster
-		self:GetCaster():EmitSound("Item.DropGemWorld")
-
-		-- Ignore the item's cooldown
-		self:EndCooldown()
 	end
+
+	-- Ignore the item's cooldown
+	self:EndCooldown()
 end
 
 function item_imba_aeon_disk:GetAbilityTextureName()
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_aeon_disk_unique") then
-		local state = caster:GetModifierStackCount("modifier_imba_aeon_disk_unique", caster)
-		if state == 1 then return "custom/imba_aeon_disk_icon_off" end
+	if self:GetCaster():GetModifierStackCount("modifier_imba_aeon_disk_basic", self:GetCaster()) == 1 then
+		return "custom/imba_aeon_disk_icon_off"
+	else
+		return "custom/imba_aeon_disk_icon"
 	end
-
-	return "custom/imba_aeon_disk_icon"
 end
-
-
 
 -----------------------------------------------------------------------------------------------------------
 --	Basic modifier definition
@@ -74,94 +68,63 @@ function modifier_imba_aeon_disk_basic:IsDebuff() return false end
 function modifier_imba_aeon_disk_basic:IsPurgable() return false end
 function modifier_imba_aeon_disk_basic:IsPermanent() return true end
 function modifier_imba_aeon_disk_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_aeon_disk_basic:DeclareFunctions()
-	return {	
-		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_HEALTH_BONUS,
-	}
-end
 
 function modifier_imba_aeon_disk_basic:OnCreated()
-	if IsServer() then 
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.modifier_self = "modifier_imba_aeon_disk_basic"
-		self.uniqueModifier = "modifier_imba_aeon_disk_unique"
-
-		if not self.caster:HasModifier(self.uniqueModifier) then
-			local modifier_handler = self.caster:AddNewModifier(self.caster, self.ability, self.uniqueModifier, {})
-			if modifier_handler then
-				modifier_handler:SetStackCount(2)
-			end
-		end
-	end
-end
-
-function modifier_imba_aeon_disk_basic:OnDestroy()
-	if IsServer() then
-		-- Remove the unique modifier if no other cores were found
-		if not self:IsNull() and not self.caster:IsNull() and not self.caster:HasModifier(self.modifier_self) then
-			self.caster:RemoveModifierByName(self.uniqueModifier)
-		end
-	end
-end
-
-function modifier_imba_aeon_disk_basic:GetModifierManaBonus()
 	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("bonus_mana")
+		self.bonus_health	= self:GetAbility():GetSpecialValueFor("bonus_health")
+		self.bonus_mana		= self:GetAbility():GetSpecialValueFor("bonus_mana")
+	else
+		self.bonus_health	= 0
+		self.bonus_mana		= 0
 	end
+
+	if IsServer() then
+		self:SetStackCount(2)
+	end
+end
+
+function modifier_imba_aeon_disk_basic:DeclareFunctions()
+	return {	
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_MANA_BONUS,
+		
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
 end
 
 function modifier_imba_aeon_disk_basic:GetModifierHealthBonus()
-	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("bonus_health")
-	end
+	return self.bonus_health
 end
 
------------------------------------------------------------------------------------------------------------
---	Unique modifier definition
------------------------------------------------------------------------------------------------------------
-if modifier_imba_aeon_disk_unique == nil then modifier_imba_aeon_disk_unique = class({}) end
-function modifier_imba_aeon_disk_unique:IsHidden() return true end
-function modifier_imba_aeon_disk_unique:IsDebuff() return false end
-function modifier_imba_aeon_disk_unique:IsPurgable() return false end
-function modifier_imba_aeon_disk_unique:RemoveOnDeath() return false end
-
-function modifier_imba_aeon_disk_unique:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	}
+function modifier_imba_aeon_disk_basic:GetModifierManaBonus()
+	return self.bonus_mana
 end
 
-function modifier_imba_aeon_disk_unique:GetModifierIncomingDamage_Percentage(kv)
-	if IsServer() then
-		local state = self:GetStackCount()
-		if state == 2 then	-- [ 1 = disabled | 2 = enabled ]
-
-			local ability 	= self:GetAbility()
-			local parent 	= self:GetParent()
-
-			if ability:IsCooldownReady() and kv.attacker:GetOwner() and kv.attacker ~= parent and not parent:HasModifier("modifier_imba_aeon_disk") and not parent:IsIllusion() then
-				local buff_duration 			= ability:GetSpecialValueFor("buff_duration")
-				local health_threshold_pct 	= ability:GetSpecialValueFor("health_threshold_pct") / 100.0
-				local health_treshold 	= parent:GetHealth() / parent:GetMaxHealth()
-				
-				if (health_treshold < health_threshold_pct or ((parent:GetHealth() - kv.damage) / parent:GetMaxHealth()) <= health_threshold_pct) and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
-					parent:EmitSound("DOTA_Item.ComboBreaker")
-				
-					parent:Purge( false, true, false, true, true )
-					local aeon_disc = parent:AddNewModifier(parent, ability, "modifier_imba_aeon_disk", {duration = buff_duration})
-					
-					parent:SetHealth(math.min(parent:GetHealth(), parent:GetMaxHealth() * health_threshold_pct))
-					
-					ability:UseResources(false, false, true)
-					
-					return -100
-				end
-			end
+function modifier_imba_aeon_disk_basic:GetModifierIncomingDamage_Percentage(kv)
+	-- [ 1 = disabled | 2 = enabled ]
+	if self:GetParent():FindAllModifiersByName("modifier_imba_aeon_disk_basic")[1] == self and self:GetStackCount() == 2 and self:GetAbility() and self:GetAbility():IsCooldownReady() and kv.attacker ~= self:GetParent() and not self:GetParent():HasModifier("modifier_imba_aeon_disk") and not self:GetParent():IsIllusion() then
+		local buff_duration			= self:GetAbility():GetSpecialValueFor("buff_duration")
+		local health_threshold_pct	= self:GetAbility():GetSpecialValueFor("health_threshold_pct") / 100.0
+		local health_threshold		= self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()
+		
+		if (health_threshold < health_threshold_pct or ((self:GetParent():GetHealth() - kv.damage) / self:GetParent():GetMaxHealth()) <= health_threshold_pct) and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+			self:GetParent():EmitSound("DOTA_Item.ComboBreaker")
+		
+			self:GetParent():Purge( false, true, false, true, true )
+			local aeon_disc = self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_aeon_disk", {duration = buff_duration})
+			
+			self:GetParent():SetHealth(math.min(self:GetParent():GetHealth(), self:GetParent():GetMaxHealth() * health_threshold_pct))
+			
+			self:GetAbility():UseResources(false, false, true)
+			
+			return -100
 		end
 	end
 end
+
+-----------------------------
+-- MODIFIER_IMBA_AEON_DISK --
+-----------------------------
 
 if modifier_imba_aeon_disk == nil then modifier_imba_aeon_disk = class({}) end
 
@@ -170,12 +133,11 @@ function modifier_imba_aeon_disk:GetTexture()
 end
 
 function modifier_imba_aeon_disk:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_imba_aeon_disk:OnCreated(kv)

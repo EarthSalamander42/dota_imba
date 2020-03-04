@@ -1219,10 +1219,8 @@ function modifier_imba_life_stealer_infest_effect:OnStackCountChanged(stackCount
 end
 
 function modifier_imba_life_stealer_infest_effect:CheckState()
-	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and self:GetParent():IsHero() then
-		local state = {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
-		
-		return state
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and (self:GetParent():IsHero() or self:GetParent():IsBuilding()) then
+		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
 	end
 end
 
@@ -1235,7 +1233,9 @@ function modifier_imba_life_stealer_infest_effect:DeclareFunctions()
 		MODIFIER_EVENT_ON_ORDER,
 		
 		MODIFIER_PROPERTY_TOOLTIP,
-		MODIFIER_PROPERTY_TOOLTIP_2
+		MODIFIER_PROPERTY_TOOLTIP_2,
+		
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
 end
 
@@ -1288,6 +1288,13 @@ end
 -- Seems like they removed this or something...
 function modifier_imba_life_stealer_infest_effect:OnTooltip2()
 	return self.chestburster_failure_stacks
+end
+
+function modifier_imba_life_stealer_infest_effect:GetModifierIncomingDamage_Percentage(keys)
+	if self:GetParent():IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and keys.attacker:GetTeamNumber() == self:GetParent():GetTeamNumber() then
+		self:Destroy()
+		return -100
+	end
 end
 
 -------------

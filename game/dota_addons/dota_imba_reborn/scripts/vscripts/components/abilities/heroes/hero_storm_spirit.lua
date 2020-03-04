@@ -799,8 +799,12 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 
 		-- Play the cast sound
 		caster:EmitSound("Hero_StormSpirit.BallLightning")
-		caster:EmitSound("Hero_StormSpirit.BallLightning.Loop")
-
+		
+		-- A bit arbitrary but I'm trying to prevent lingering loop sounds
+		if (target_loc - caster_loc):Length2D() > 130 then
+			caster:EmitSound("Hero_StormSpirit.BallLightning.Loop")
+		end
+		
 		-- Fire the ball of death!
 		local projectile =
 		{
@@ -980,11 +984,7 @@ end
 function modifier_imba_ball_lightning:OnDestroy()
 	if not IsServer() then return end
 	
-	local parent = self:GetParent()
-	
-	Timers:CreateTimer(FrameTime(), function()
-		parent:StopSound("Hero_StormSpirit.BallLightning.Loop")
-	end)
+	self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
 end
 
 

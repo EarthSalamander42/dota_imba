@@ -54,12 +54,12 @@
 		//-------------------------------------------------------------------------------------
 		"BaseClass"					"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_malfurion.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 
 		// Stats
 		//-------------------------------------------------------------------------------------
 		"AbilityCastPoint"			"0.5"
-		"AbilityCastRange"			"900"
+		"AbilityCastRange"			"600"
 		"AbilityCooldown"			"18.0"
 		"AbilityManaCost"			"110 120 130 140"
 		"AbilityTextureName"		"custom//malfurion/rejuvenation"

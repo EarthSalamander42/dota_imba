@@ -196,7 +196,7 @@ function modifier_imba_wisp_tether:OnCreated(params)
 		self.update_timer 			= 0
 		self.time_to_send 			= 1
 
-		EmitSoundOn("Hero_Wisp.Tether", self:GetParent())
+		self:GetCaster():EmitSound("Hero_Wisp.Tether")
 	end
 	
 	self:StartIntervalThink(FrameTime())
@@ -2020,6 +2020,7 @@ function modifier_imba_wisp_overcharge_721:OnCreated()
 	-- AbilitySpecials
 	self.bonus_attack_speed		= self.ability:GetSpecialValueFor("bonus_attack_speed")
 	self.bonus_damage_pct		= self.ability:GetSpecialValueFor("bonus_damage_pct") - self.caster:FindTalentValue("special_bonus_imba_wisp_4")
+	self.hp_regen				= self.ability:GetSpecialValueFor("hp_regen")
 	
 	self.bonus_missile_speed	= self.ability:GetSpecialValueFor("bonus_missile_speed")
 	self.bonus_cast_speed		= self.ability:GetSpecialValueFor("bonus_cast_speed")
@@ -2029,6 +2030,8 @@ function modifier_imba_wisp_overcharge_721:OnCreated()
 	self.talent_drain_pct		= self.ability:GetSpecialValueFor("talent_drain_pct")
 	
 	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Wisp.Overcharge")
 	
 	local tether_ability = self:GetCaster():FindAbilityByName("imba_wisp_tether")
 	
@@ -2061,6 +2064,8 @@ end
 function modifier_imba_wisp_overcharge_721:OnDestroy()
 	if not IsServer() then return end
 	
+	self:GetParent():StopSound("Hero_Wisp.Overcharge")
+	
 	local tether_ability = self:GetCaster():FindAbilityByName("imba_wisp_tether")
 	
 	if tether_ability and tether_ability.target then
@@ -2075,7 +2080,8 @@ end
 function modifier_imba_wisp_overcharge_721:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		
 		-- IMBAfication: Fundamental Shift
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -2090,8 +2096,12 @@ function modifier_imba_wisp_overcharge_721:GetModifierAttackSpeedBonus_Constant(
 	return self.bonus_attack_speed
 end
 
-function modifier_imba_wisp_overcharge_721:GetModifierIncomingDamage_Percentage()
-	return self.bonus_damage_pct
+-- function modifier_imba_wisp_overcharge_721:GetModifierIncomingDamage_Percentage()
+	-- return self.bonus_damage_pct
+-- end
+
+function modifier_imba_wisp_overcharge_721:GetModifierHealthRegenPercentage()
+	return self.hp_regen
 end
 
 function modifier_imba_wisp_overcharge_721:GetModifierProjectileSpeedBonus()
@@ -2142,6 +2152,7 @@ function modifier_imba_wisp_overcharge_721_aura:OnCreated()
 	
 	self.bonus_attack_speed		= self.ability:GetSpecialValueFor("bonus_attack_speed")		* self.scepter_efficiency
 	self.bonus_damage_pct		= self.ability:GetSpecialValueFor("bonus_damage_pct") 		- self.caster:FindTalentValue("special_bonus_imba_wisp_4") * self.scepter_efficiency
+	self.hp_regen				= self.ability:GetSpecialValueFor("hp_regen")				* self.scepter_efficiency
 	
 	self.bonus_missile_speed	= self.ability:GetSpecialValueFor("bonus_missile_speed")	* self.scepter_efficiency
 	self.bonus_cast_speed		= self.ability:GetSpecialValueFor("bonus_cast_speed")		* self.scepter_efficiency
@@ -2155,7 +2166,8 @@ end
 function modifier_imba_wisp_overcharge_721_aura:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		
 		-- IMBAfication: Fundamental Shift
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -2170,8 +2182,12 @@ function modifier_imba_wisp_overcharge_721_aura:GetModifierAttackSpeedBonus_Cons
 	return self.bonus_attack_speed
 end
 
-function modifier_imba_wisp_overcharge_721_aura:GetModifierIncomingDamage_Percentage()
-	return self.bonus_damage_pct
+-- function modifier_imba_wisp_overcharge_721_aura:GetModifierIncomingDamage_Percentage()
+	-- return self.bonus_damage_pct
+-- end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierHealthRegenPercentage()
+	return self.hp_regen
 end
 
 function modifier_imba_wisp_overcharge_721_aura:GetModifierProjectileSpeedBonus()

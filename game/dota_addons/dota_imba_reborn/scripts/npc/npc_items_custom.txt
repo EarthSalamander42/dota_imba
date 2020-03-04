@@ -5892,28 +5892,36 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"34"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"0"
+				"chain_chance"			"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"25"
+				"chain_damage"			"190"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"190"
-				"CalculateSpellDamageTooltip"	"1"
+				"chain_strikes"			"0" // Vanilla is 4
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"900"
+				"chain_radius"			"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_delay"			"0.06" // Vanilla is 0.25
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_cooldown"		"0.1" // Vanilla is 0.2
 			}
 		}
 	}
@@ -5984,64 +5992,92 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"34"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"60"
+				"bonus_attack_speed"	"75"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"25"
+				"var_type"				"FIELD_FLOAT"
+				"static_duration"		"15.0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"230"
-				"CalculateSpellDamageTooltip"	"1"
+				"static_chance"			"25"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"900"
+				"static_strikes"		"0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_duration"		"15"
+				"static_damage"			"230"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_primary_radius"	"600"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_seconary_radius"	"900"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_proc_chance"	"30"
+				"static_radius"			"900"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"static_damage"			"230"
-				"CalculateSpellDamageTooltip"	"1"
+				"var_type"				"FIELD_FLOAT"
+				"static_cooldown"		"0.2"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_radius"			"900"
+				"chain_chance"			"25"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_slow"			"-100"
+				"chain_damage"			"230"
 			}
 			"13"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"static_slow_duration"	"1.25"
+				"var_type"				"FIELD_INTEGER"
+				"chain_strikes"			"0"
 			}
 			"14"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_radius"			"900"
+			}
+			"15"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"static_cooldown"		"0.1"
+				"chain_delay"			"0.06"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_cooldown"		"0.1"
+			}
+			
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_slow"			"100"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"static_slow_duration"	"0.5"
 			}
 		}
 	}
@@ -6161,13 +6197,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50"
+				"damage"				"60"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"7"
+				"armor_reduction"		"6"
 			}
 			"03"
 			{
@@ -6275,7 +6311,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"
+				"damage"				"102"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -6433,7 +6469,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"50"
+				"mana_burn"					"40"
 			}
 			"04"
 			{
@@ -6525,7 +6561,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"75"
+				"mana_burn"					"60"
 			}
 			"04"
 			{
@@ -7251,14 +7287,19 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_lifesteal"		"30"
-			}
+				"hero_lifesteal"		"30"
+			}			
 			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_lifesteal"		"10"
+			}	
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_radius"			"900"
 			}
-			"07"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_damage"			"80"
@@ -8624,7 +8665,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_conversion_rate"	"100"
+				"mana_conversion_rate"	"70"
 			}
 			"06"
 			{
@@ -11291,7 +11332,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"200"
+				"base_crit"				"180"
 			}
 		}
 	}
@@ -11343,7 +11384,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"35.0"
-		"AbilityManaCost"				"125"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11361,100 +11402,157 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"90"
-				"CalculateSpellDamageTooltip"	"0"
+				"bonus_damage"			"94"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"60"
+				"bonus_attack_speed"	"75"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"25"
+				"var_type"				"FIELD_FLOAT"
+				"static_duration"		"15.0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"260"
-				"CalculateSpellDamageTooltip"	"1"
+				"static_chance"			"30"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"900"
+				"static_strikes"		"0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_duration"		"15"
+				"static_damage"			"230"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_primary_radius"	"600"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_seconary_radius"	"900"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_proc_chance"	"30"
+				"static_radius"			"900"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"static_damage"			"200"
-				"CalculateSpellDamageTooltip"	"1"
+				"var_type"				"FIELD_FLOAT"
+				"static_cooldown"		"0.2"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_radius"			"900"
+				"chain_chance"			"25"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_slow"			"-100"
+				"chain_damage"			"260"
 			}
 			"13"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"static_slow_duration"	"1.25"
+				"var_type"				"FIELD_INTEGER"
+				"chain_strikes"			"0"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_damage_pct"		"70"
+				"chain_radius"			"900"
 			}
 			"15"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"splash_range"			"650"
+				"var_type"				"FIELD_FLOAT"
+				"chain_delay"			"0.06"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"8"
+				"chain_cooldown"		"0.1"
 			}
+			
 			"17"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3.75"
+				"var_type"				"FIELD_INTEGER"
+				"static_slow"			"100"
 			}
 			"18"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tree_cooldown"			"2.5"
+				"static_slow_duration"	"0.5"
 			}
+			
+			
+			// Battlefury addendum
 			"19"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cleave_start"			"150"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"8.0"
 			}
 			"20"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cleave_end"			"360"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"3.75"
 			}
 			"21"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"static_cooldown"		"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage_percent"	"70"
+			}
+			"22"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage_percent_creep"	"50" // Unused because I don't know how to differentiate cleave damage on creeps and heroes
+			}
+			"23"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quelling_bonus"			"18"
+			}
+			"24"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quelling_bonus_ranged"	"5"
+			}			
+			"25"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_starting_width"			"150"
+			}			
+			"26"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_ending_width"			"360"
+			}			
+			"27"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_distance"			"650"
+			}
+			
+			"28"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chop_tree_cooldown"	"4"
+			}
+			"29"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chop_tree_cast_range"	"350"
+			}
+			"30"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chop_tree_radius"		"150"
 			}
 		}
 	}
@@ -13794,7 +13892,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_damage_amount"	"40"
+				"soul_damage_amount"	"30"
 			}
 			"11"
 			{
@@ -13809,7 +13907,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_reduction_enemy"	"70"
+				"hp_regen_reduction_enemy"	"65"
 			}
 			"14"
 			{
@@ -13877,6 +13975,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"1"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 
@@ -13942,6 +14041,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"1500"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ankle_breaker_damage_pct"		"75"
 			}
 		}
 	}
@@ -14074,7 +14179,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curtain_fire_speed"	"800"
+				"curtain_fire_speed"	"700"
 			}
 			"11"
 			{
@@ -14095,6 +14200,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"curtain_fire_projectile_radius"		"60"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ankle_breaker_damage_pct"		"100"
 			}
 		}
 	}
@@ -14184,7 +14295,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"feedback_mana_burn"	"100"
+				"feedback_mana_burn"	"80"
 			}
 			"04"
 			{
@@ -14224,7 +14335,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"combust_mana_loss"		"100"
+				"combust_mana_loss"		"80"
 			}
 			"12"
 			{

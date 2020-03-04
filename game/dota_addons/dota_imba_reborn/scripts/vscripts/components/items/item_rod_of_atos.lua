@@ -214,8 +214,8 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		-- IMBAfication: Ankle Breaker
 		local damageTable = {
 			victim 			= target,
-			damage 			= target:GetIdealSpeed(),
-			damage_type		= DAMAGE_TYPE_PURE,
+			damage 			= target:GetIdealSpeed() * self:GetSpecialValueFor("ankle_breaker_damage_pct") * 0.01,
+			damage_type		= self:GetAbilityDamageType(),
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self.caster,
 			ability 		= self

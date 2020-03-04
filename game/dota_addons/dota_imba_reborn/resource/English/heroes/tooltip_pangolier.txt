@@ -100,7 +100,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_3"				"Shield Crash Protection"
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_3_Description"	"Shield Crash builds parry stacks for each damaged enemy hero that allow Pangolier to parry (evade) and counter attacks with a Swashbuckle slash."
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_4"				"Rolling Thunder Linger"
-"DOTA_Tooltip_ability_special_bonus_imba_pangolier_4_Description"	"Rolling Thunder spell immunity lingers for 4 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_pangolier_4_Description"	"Rolling Thunder spell immunity lingers for {s:value} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_5"				"Heartpiecer Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_5_Description"	"Heartpiercer repeatedly applies damage and on-hit effects over time."
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_6"				"Hearpiecer Tenacity"

@@ -2416,6 +2416,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"regen"					"5 10 15 20"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_level"			"6"
+			}
 		}
 	}
 
@@ -2424,7 +2429,6 @@
 	//=================================================================================================================
 	"doom_bringer_scorched_earth"
 	{
-		"MaxLevel"							"4"
 		"AbilityCastRange"					"600 700 800 900"
 
 		"AbilitySpecial"
@@ -2454,8 +2458,6 @@
 	//=================================================================================================================
 	"doom_bringer_infernal_blade"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"10 8 6 4"
 
 		"AbilitySpecial"
@@ -3462,11 +3464,6 @@
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost_per_second"	"20 40 60"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -3492,6 +3489,10 @@
 	//=================================================================================================================
 	"lone_druid_spirit_bear"
 	{
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100.0"
+		
 		"AbilitySpecial"
 		{
 			"01"
@@ -3515,6 +3516,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"bear_armor"				"3 6 9 12"
 				"LinkedSpecialBonus"		"special_bonus_unique_lone_druid_2"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"100.0"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -3623,6 +3630,17 @@
 	{
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"12 18 24"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_hp"					"1000 1500 2000"
+				"LinkedSpecialBonus"	"special_bonus_unique_lone_druid_7"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -3682,22 +3700,24 @@
 	}
 
 	//=================================================================================================================
-	// Lone Druid: Spirit Bear Defender
+	// Ability: Special Bonus
 	//=================================================================================================================
-	"lone_druid_spirit_bear_defender"
-	{
+	"special_bonus_unique_lone_druid_7"
+	{	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_share"			"50"
+				"var_type"					"FIELD_INTEGER"
+				"value"				"1500"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Lycan: Shapeshift (keeping these KVs around for the Torrent Storm Aghanim's Scepter ability)
+	// Lycan: Shapeshift (keeping these KVs around for the Shapeshift Aghanim's Scepter ability)
 	//=================================================================================================================
 	"lycan_shapeshift"
 	{
@@ -3904,11 +3924,6 @@
 				"strike_crit_mult"			"150 200 250 300"
 				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"strike_radius"				"150"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -4040,8 +4055,6 @@
 	//=================================================================================================================
 	"monkey_king_jingu_mastery"
 	{
-		"MaxLevel"							"4"
-
 		"AbilitySpecial"
 		{
 			"03"
@@ -4508,16 +4521,10 @@
 				
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"5 7 9 11"
-			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"30 40 50 60"
+				"burn_damage"			"32 44 56 68"
 				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi_4"
 			}		
 
@@ -4565,21 +4572,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"multicast_bloodlust_aoe"			"900"
 			}			
-		}
-	}
-
-	//=================================================================================================================
-	//	Ogre Magi: bonus Bloodlust attack speed
-	//=================================================================================================================
-	"special_bonus_unique_ogre_magi"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"45"
-			}
 		}
 	}
 
@@ -7287,11 +7279,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -7316,16 +7303,11 @@
 	"techies_stasis_trap"
 	{
 		"AbilitySpecial"
-		{		
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"activation_radius"			"500"
-			}
+		{
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_radius"				"1000"
+				"stun_radius"				"800"
 			}
 			"04"
 			{
@@ -7381,7 +7363,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 500 700"
+				"damage"					"350 525 700"
 			}
 			"03"
 			{
@@ -7391,7 +7373,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"450 650 850"
+				"damage_scepter"			"500 700 900"
 				"RequiresScepter"			"1"
 			}
 			"07"
@@ -7753,10 +7735,21 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"700"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"knockback_slow"			"50"
+			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage_vs_heroes"	"75"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_cooldown"			"1.0"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -7800,12 +7793,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 7.0 8.0"
+				"duration"				"6.5 7.5 8.5"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"spear_damage"		"150 210 270"
+				"spear_damage"		"150 225 300"
 			}
 			"07"
 			{

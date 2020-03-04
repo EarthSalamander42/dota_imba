@@ -392,8 +392,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+25% Heartstopper Aura healing reduction"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+300 Ghost Shroud effect radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+1% Sadist health/mana regen"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50%/50 Reaper's Scythe damage/spell amp reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+1% Heartstopper Aura damage per second"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50% Reaper's Scythe Death and Decay"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura damage per second"
 
 
 // Nyx Assassin
@@ -1180,7 +1180,10 @@
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"					"Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a perpendicular line.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+
+// \n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius
+
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Lore"              "Nevermore's trademark for harvesting souls."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"				"Stack duration refreshes on stack gain."
 
@@ -1203,7 +1206,10 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls."
+
+// \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"                "Can't steal the soul of units which don't have one in the first place."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"                "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"                  "DAMAGE PER SOUL:"

@@ -101,10 +101,12 @@ function modifier_imba_octarine_core_basic:OnDestroy()
 end
 
 function modifier_imba_octarine_core_basic:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MANA_BONUS,
+	return {
+		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,	}
-	return funcs
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_octarine_core_basic:GetModifierManaBonus()
@@ -115,6 +117,29 @@ function modifier_imba_octarine_core_basic:GetModifierHealthBonus()
 
 function modifier_imba_octarine_core_basic:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_intelligence") end
+
+--- Enum DamageCategory_t
+-- DOTA_DAMAGE_CATEGORY_ATTACK = 1
+-- DOTA_DAMAGE_CATEGORY_SPELL = 0
+function modifier_imba_octarine_core_basic:OnTakeDamage( keys )
+	if keys.attacker == self:GetParent() and not keys.unit:IsBuilding() and not keys.unit:IsOther() then
+		print(self == self:GetParent():FindAllModifiersByName("modifier_imba_octarine_core_basic")[1])
+		
+		-- Spell lifesteal handler
+		if keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.inflictor and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) ~= DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
+			-- Particle effect
+			self.lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
+			ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
+			
+			if keys.unit:IsCreep() then
+				keys.attacker:Heal(math.max(keys.damage, 0) * self:GetAbility():GetSpecialValueFor("creep_lifesteal") * 0.01, keys.attacker)
+			else
+				keys.attacker:Heal(math.max(keys.damage, 0) * self:GetAbility():GetSpecialValueFor("hero_lifesteal") * 0.01, keys.attacker)
+			end
+		end
+	end
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Unique modifier definition
@@ -132,9 +157,9 @@ function modifier_imba_octarine_core_unique:DeclareFunctions()
 	}
 end
 
-function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()
-	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
-end
+-- function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()
+	-- return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+-- end
 
 function modifier_imba_octarine_core_unique:GetModifierPercentageCooldown()
 	return self:GetAbility():GetSpecialValueFor("bonus_cooldown")

@@ -1788,7 +1788,7 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 			end
 
 			-- If the enemy is an illusion, KILL IT!!!!!!!!!!!!!!!!!!
-			if enemy:IsIllusion() then
+			if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or not enemy:Custom_IsStrongIllusion()) then
 				enemy:Kill(ability, caster)
 			else
 				-- Calculate difference in intelligence for heroes, otherwise there are regarded as 0 int

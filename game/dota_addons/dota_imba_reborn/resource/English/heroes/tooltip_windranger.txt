@@ -47,7 +47,7 @@
 "DOTA_Tooltip_Ability_imba_windranger_advancement_advancement_height"					"ADVANCEMENT HEIGHT:"
 "DOTA_Tooltip_Ability_imba_windranger_advancement_advancement_duration"					"ADVANCEMENT DURATION:"
 
-// "DOTA_Tooltip_ability_windrunner_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds.\n<font color='#FF7800'>Pincushion:</font> Windranger has a %ministun_chance%%% chance to mini-stun Focus Fire targets."
+"DOTA_Tooltip_ability_windrunner_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds.\n<font color='#FF7800'>Pincushion:</font> Windranger has a %ministun_chance%%% chance to mini-stun Focus Fire targets."
 
 "DOTA_Tooltip_ability_imba_windranger_focusfire"										"Focus Fire"
 "DOTA_Tooltip_ability_imba_windranger_focusfire_Description" 						"Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.  Lasts %focusfire_duration_tooltip% seconds."

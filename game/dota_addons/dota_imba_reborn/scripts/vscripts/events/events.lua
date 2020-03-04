@@ -562,6 +562,8 @@ end
 local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 
 function GameMode:OnPlayerLevelUp(keys)
+	if not keys.player then return end
+
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	if hero == nil then
@@ -1042,6 +1044,25 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
 							ability_set = {
 								[0] = "imba_terrorblade_reflection",
+								-- [1] = "imba_void_spirit_dissimilate",
+								-- [2] = "imba_void_spirit_resonant_pulse",
+								-- [3] = "imba_void_spirit_void_stasis",
+								-- [4] = "imba_void_spirit_astral_step_helper",
+								-- [5] = "imba_void_spirit_astral_step",
+								-- [6] = "special_bonus_attack_damage_25",
+								-- [7] = "special_bonus_hp_250",
+								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
+								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
+								-- [10] = "special_bonus_movement_speed_50",
+								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
+								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
+								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+							}
+							
+							upgraded = true
+						elseif string.find(text, 'undying') and hero:GetName() == "npc_dota_hero_undying" then
+							ability_set = {
+								[0] = "imba_undying_decay",
 								-- [1] = "imba_void_spirit_dissimilate",
 								-- [2] = "imba_void_spirit_resonant_pulse",
 								-- [3] = "imba_void_spirit_void_stasis",

@@ -79,14 +79,20 @@ function imba_malfurion_rejuvenation:OnAbilityPhaseInterrupted()
 	self:GetCaster():FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 end
 
-function imba_malfurion_rejuvenation:OnSpellStart()
-	if IsServer() then
-		self:GetCaster():EmitSound("Hero_Warlock.ShadowWordCastGood")
+function imba_malfurion_rejuvenation:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
 
-		local allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _, ally in pairs (allies) do
-			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
-		end
+function imba_malfurion_rejuvenation:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Warlock.ShadowWordCastGood")
+	
+	local particle = nil
+	
+	for _, ally in pairs (FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)) do
+		particle = ParticleManager:CreateParticle("particles/econ/items/leshrac/leshrac_tormented_staff_retro/leshrac_split_retro_sparks_tormented.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
+		ParticleManager:ReleaseParticleIndex(particle)
+	
+		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
 	end
 end
 
