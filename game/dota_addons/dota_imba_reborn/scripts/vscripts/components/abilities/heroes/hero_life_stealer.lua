@@ -795,7 +795,11 @@ function imba_life_stealer_infest:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
 	-- Some really messy stuff happening if this line isn't in...
-	if not target:IsAlive() or target:IsInvulnerable() or target:IsOutOfGame() then return end
+	if not target:IsAlive() or target:IsInvulnerable() or target:IsOutOfGame() then 
+		self:RefundManaCost()
+		self:EndCooldown()
+		return
+	end
 	
 	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
 
