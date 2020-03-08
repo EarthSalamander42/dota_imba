@@ -440,7 +440,7 @@ end
 
 -- Talent handling
 function CDOTA_BaseNPC:HasTalent(talentName)
-	if self:HasAbility(talentName) then
+	if self and not self:IsNull() and self:HasAbility(talentName) then
 		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
 	end
 	return false

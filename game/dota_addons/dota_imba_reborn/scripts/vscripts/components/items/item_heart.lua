@@ -152,7 +152,7 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 		local attacker = keys.attacker
 
 		-- Only apply if the unit taking damage is the caster
-		if unit == self:GetCaster() then
+		if unit == self:GetParent() then
 			-- If the attacker wasn't an enemy hero or Roshan, do nothing
 			if attacker:IsHero() or attacker:IsRoshan() then
 				if attacker == unit then
@@ -161,11 +161,11 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 				end
 
 				local cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
-				if self:GetCaster():IsRangedAttacker() then
+				if self:GetParent():IsRangedAttacker() then
 					cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged")
 				end
 
-				self:GetAbility():StartCooldown(cooldown)
+				self:GetAbility():StartCooldown(cooldown * self:GetParent():GetCooldownReduction())
 			end
 		end
 	end

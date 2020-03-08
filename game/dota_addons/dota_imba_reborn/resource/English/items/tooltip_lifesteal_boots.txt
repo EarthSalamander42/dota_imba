@@ -1,6 +1,6 @@
 // Lifesteal Boots
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots"						"Lifesteal Boots"
-"DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Description"			"<h1>Active: Demonic Haste</h1> Grants the bearer phased and unslowable movement, %phase_ms%%% movespeed bonus, and increases the move speed limit to %ms_limit%. While phased, passing through units drains %drain_damage% health from them and grants it to the caster. Lasts %phase_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt. Stacks additively with other sources of lifesteal, but not with itself.\nFlat movement speed bonuses from multiple pairs of boots do not stack."
+"DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Description"			"<h1>Active: Demonic Haste</h1> Grants the bearer phased and unslowable movement, %phase_ms%%% movespeed bonus, and increases the move speed limit to %ms_limit%. While phased, passing through units drains %drain_damage% health from them and grants it to the caster. Lasts %phase_duration% seconds.\n<h1>Passive: Lifesteal</h1>Heals the attacker for %lifesteal_pct%%% of attack damage dealt.\nMovement speed bonuses from multiple pairs of boots do not stack."
 
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Note0"					"Can only pass through each unit once per cast."
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Note1"					"Drain deals magical damage to enemies affected."
@@ -10,7 +10,6 @@
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_bonus_movement_speed"	"%+$move_speed"
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_bonus_damage"			"+$damage"
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_armor"					"+$armor"
-"DOTA_Tooltip_Ability_item_imba_lifesteal_boots_lifesteal_pct"			"%LIFESTEAL:"
 
 "DOTA_Tooltip_modifier_imba_lifesteal_boots_buff"						"Demonic Haste"
 "DOTA_Tooltip_modifier_imba_lifesteal_boots_buff_Description"			"Phased, drastically increased move speed, and dealing damage to enemies you pass through."

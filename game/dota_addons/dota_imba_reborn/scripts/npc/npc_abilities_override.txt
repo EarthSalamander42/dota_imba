@@ -992,11 +992,7 @@
 	//=================================================================================================================
 	"item_dagon"
 	{
-		"AbilityCastRange"				"600"
-		"AbilityCooldown"				"35"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"120"		
-		"ItemCost"						"2565"
 		"UpgradesItems"					"item_dagon;item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
@@ -1004,38 +1000,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_2"
 	{
-		"AbilityCastRange"				"650"
-		"AbilityCooldown"				"30"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"140"
-		"ItemCost"						"3815"
 		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
@@ -1043,144 +1020,72 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_3"
 	{
-		"AbilityCastRange"				"700"
-		"AbilityCooldown"				"25"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"160"
-		"ItemCost"						"5065"
-		"UpgradesItems"					"item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_4"
 	{
-		"AbilityCastRange"				"750"
-		"AbilityCooldown"				"20"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"180"
-		"ItemCost"						"6315"
-		"UpgradesItems"					"item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_5"
 	{
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"15"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"200"
-		"ItemCost"						"7565"
-		"UpgradesItems"					"item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
@@ -5513,8 +5418,6 @@
 	//=================================================================================================================
 	"tinker_march_of_the_machines"
 	{
-		"AbilityDamage"					"24 36 48 60"
-		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5528,6 +5431,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"machines_per_sec"		"36"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"24 36 48 60"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker_2"
 			}
 		}
 	}

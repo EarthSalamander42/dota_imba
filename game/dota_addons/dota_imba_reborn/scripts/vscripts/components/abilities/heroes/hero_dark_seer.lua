@@ -76,15 +76,34 @@ function imba_dark_seer_vacuum:OnSpellStart()
 	ParticleManager:SetParticleControl(particle, 1, Vector(self:GetSpecialValueFor("radius"), 1, 1))
 	ParticleManager:ReleaseParticleIndex(particle)
 
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)	
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)	
 	
 	for _, enemy in pairs(enemies) do
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum", 
-		{
-			duration	= self:GetTalentSpecialValueFor("duration"),
-			x			= self:GetCursorPosition().x,
-			y			= self:GetCursorPosition().y
-		})
+		-- Need some weird workaround for being able to affect invulnerable units
+		if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
+			enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum", 
+			{
+				duration		= self:GetTalentSpecialValueFor("duration"),
+				x				= self:GetCursorPosition().x,
+				y				= self:GetCursorPosition().y,
+				caster_entindex	= self:GetCaster():entindex()
+			})
+			
+			if wormhole_ability then
+				enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+			end
+		else
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum", 
+			{
+				duration		= self:GetTalentSpecialValueFor("duration"),
+				x				= self:GetCursorPosition().x,
+				y				= self:GetCursorPosition().y
+			})
+			
+			if wormhole_ability then
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+			end
+		end
 		
 		if wormhole_ability then
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
@@ -128,12 +147,19 @@ end
 -- VACUUM MODIFIER --
 ---------------------
 
+function modifier_imba_dark_seer_vacuum:IsDebuff()			return true end
 function modifier_imba_dark_seer_vacuum:IgnoreTenacity()	return true end
 
 function modifier_imba_dark_seer_vacuum:OnCreated(params)
 	self.damage	= self:GetAbility():GetSpecialValueFor("damage")
 
 	if not IsServer() then return end
+	
+	if params.caster_entindex then
+		self.caster = EntIndexToHScript(params.caster_entindex)
+	else
+		self.caster = self:GetCaster()
+	end
 	
 	-- Get coordinates of where the Vacuum was cast
 	self.duration	= params.duration
@@ -181,8 +207,8 @@ function modifier_imba_dark_seer_vacuum:OnDestroy()
 		victim 			= self:GetParent(),
 		damage 			= self.damage,
 		damage_type		= DAMAGE_TYPE_MAGICAL,
-		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
+		damage_flags 	= DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
+		attacker 		= self.caster,
 		ability 		= self:GetAbility()
 	}
 	
@@ -194,11 +220,9 @@ function modifier_imba_dark_seer_vacuum:CheckState()
 end
 
 function modifier_imba_dark_seer_vacuum:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
     }
-
-    return decFuncs
 end
 
 function modifier_imba_dark_seer_vacuum:GetOverrideAnimation()
@@ -210,6 +234,7 @@ end
 ------------------------------
 
 function modifier_imba_dark_seer_vacuum_wormhole:IgnoreTenacity()	return true end
+function modifier_imba_dark_seer_vacuum_wormhole:IsDebuff()			return true end
 function modifier_imba_dark_seer_vacuum_wormhole:IsPurgable()		return false end
 
 -------------------------------------
@@ -294,12 +319,23 @@ function imba_dark_seer_wormhole:OnSpellStart()
 	
 	for _, enemy in pairs(self.enemy_tracker) do
 		if not enemy:IsNull() and enemy:HasModifier("modifier_imba_dark_seer_vacuum_wormhole") and not enemy:HasModifier("modifier_imba_dark_seer_wormhole") and not IsNearFountain(enemy:GetAbsOrigin(), 1700) then
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_wormhole", 
-			{
-				duration	= self:GetTalentSpecialValueFor("duration"),
-				x			= self:GetCursorPosition().x,
-				y			= self:GetCursorPosition().y
-			})
+			-- Need some weird workaround for being able to affect invulnerable units
+			if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
+				enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_wormhole", 
+				{
+					duration		= self:GetTalentSpecialValueFor("duration"),
+					x				= self:GetCursorPosition().x,
+					y				= self:GetCursorPosition().y,
+					caster_entindex	= self:GetCaster():entindex()
+				})
+			else
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_wormhole", 
+				{
+					duration	= self:GetTalentSpecialValueFor("duration"),
+					x			= self:GetCursorPosition().x,
+					y			= self:GetCursorPosition().y
+				})
+			end
 		end
 	end
 	
@@ -318,6 +354,7 @@ end
 -- WORMHOLE MODIFIER --
 -----------------------
 
+function modifier_imba_dark_seer_wormhole:IsDebuff()		return true end
 function modifier_imba_dark_seer_wormhole:IgnoreTenacity()	return true end
 
 function modifier_imba_dark_seer_wormhole:OnCreated(params)
@@ -330,7 +367,13 @@ function modifier_imba_dark_seer_wormhole:OnCreated(params)
 	self.x			= params.x
 	self.y			= params.y
 	self.vacuum_pos	= GetGroundPosition(Vector(self.x, self.y, 0), nil)
-
+	
+	if params.caster_entindex then
+		self.caster = EntIndexToHScript(params.caster_entindex)
+	else
+		self.caster = self:GetCaster()
+	end
+	
 	-- Get WARPED
 	self:GetParent():SetAbsOrigin(self.vacuum_pos)
 	
@@ -372,8 +415,8 @@ function modifier_imba_dark_seer_wormhole:OnDestroy()
 		victim 			= self:GetParent(),
 		damage 			= self.damage,
 		damage_type		= DAMAGE_TYPE_MAGICAL,
-		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
+		damage_flags 	= DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
+		attacker 		= self.caster,
 		ability 		= self:GetAbility()
 	}
 	

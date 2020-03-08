@@ -3,8 +3,6 @@
 
 LinkLuaModifier("modifier_imba_visage_grave_chill_buff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_visage_grave_chill_debuff", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_visage_grave_chill_aura", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_visage_grave_chill_aura_modifier", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_visage_soul_assumption", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_visage_soul_assumption_stacks", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
@@ -28,8 +26,6 @@ LinkLuaModifier("modifier_imba_visage_become_familiar", "components/abilities/he
 imba_visage_grave_chill									= class({})
 modifier_imba_visage_grave_chill_buff					= class({})
 modifier_imba_visage_grave_chill_debuff					= class({})
-modifier_imba_visage_grave_chill_aura					= class({})
-modifier_imba_visage_grave_chill_aura_modifier			= class({})
 
 imba_visage_soul_assumption								= class({})
 modifier_imba_visage_soul_assumption					= class({})
@@ -59,10 +55,6 @@ modifier_imba_visage_become_familiar					= class({})
 -----------------
 -- GRAVE CHILL --
 -----------------
-
--- function imba_visage_grave_chill:GetIntrinsicModifierName()
-	-- return "modifier_imba_visage_grave_chill_aura"
--- end
 
 function imba_visage_grave_chill:OnSpellStart()
 	local target = self:GetCursorTarget()
@@ -131,11 +123,12 @@ function modifier_imba_visage_grave_chill_buff:OnCreated()
 	self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
 	self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
 	
-	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	
-	self:StartIntervalThink(FrameTime())
-	
 	if not IsServer() then return end
+	
+	-- Custom variable in on_unit_spawned.lua or on_hero_spawned.lua
+	if self:GetCaster().time_spawned then
+		self:SetStackCount(math.floor(GameRules:GetGameTime() - self:GetCaster().time_spawned) * (-1))
+	end
 	
 	local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_caster.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	-- I have no god damn idea what connects to where
@@ -156,20 +149,12 @@ function modifier_imba_visage_grave_chill_buff:OnRefresh()
 	self:OnCreated()
 end
 
--- This is just to update client-side
-function modifier_imba_visage_grave_chill_buff:OnIntervalThink()
-	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	self:StartIntervalThink(-1)
-end
-
 function modifier_imba_visage_grave_chill_buff:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_visage_grave_chill_buff:GetModifierMoveSpeedBonus_Percentage()
@@ -177,11 +162,11 @@ function modifier_imba_visage_grave_chill_buff:GetModifierMoveSpeedBonus_Percent
 end
 
 function modifier_imba_visage_grave_chill_buff:GetModifierAttackSpeedBonus_Constant()
-	return self.attackspeed_bonus + (self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec)
+	return self.attackspeed_bonus + (self:GetStackCount() * (-1) * self.deaths_enticement_bonus_per_sec)
 end
 
 function modifier_imba_visage_grave_chill_buff:GetModifierTurnRate_Percentage()
-	return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec
+	return self:GetStackCount() * (-1) * self.deaths_enticement_bonus_per_sec
 end
 
 ---------------------------------
@@ -193,15 +178,16 @@ function modifier_imba_visage_grave_chill_debuff:GetStatusEffectName()
 end
 
 function modifier_imba_visage_grave_chill_debuff:OnCreated()
-	self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus")
-	self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus")
+	self.movespeed_bonus					= self:GetAbility():GetSpecialValueFor("movespeed_bonus") * (-1)
+	self.attackspeed_bonus					= self:GetAbility():GetSpecialValueFor("attackspeed_bonus") * (-1)
 	self.deaths_enticement_bonus_per_sec	= self:GetAbility():GetSpecialValueFor("deaths_enticement_bonus_per_sec")
 	
-	self.deaths_enticement_stacks			= self:GetParent():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetCaster())
-	
-	self:StartIntervalThink(FrameTime())
-	
 	if not IsServer() then return end
+
+	-- Custom variable in on_unit_spawned.lua or on_hero_spawned.lua
+	if self:GetParent().time_spawned then
+		self:SetStackCount(math.floor(GameRules:GetGameTime() - self:GetParent().time_spawned) * (-1))
+	end
 	
 	local chill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(chill_particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
@@ -212,84 +198,25 @@ function modifier_imba_visage_grave_chill_debuff:OnRefresh()
 	self:OnCreated()
 end
 
--- This is just to update client-side
-function modifier_imba_visage_grave_chill_debuff:OnIntervalThink()
-	self.deaths_enticement_stacks			= self:GetCaster():GetModifierStackCount("modifier_imba_visage_grave_chill_aura_modifier", self:GetParent())
-	self:StartIntervalThink(-1)
-end
-
 function modifier_imba_visage_grave_chill_debuff:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_visage_grave_chill_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_bonus * (-1)
+	return self.movespeed_bonus
 end
 
 function modifier_imba_visage_grave_chill_debuff:GetModifierAttackSpeedBonus_Constant()
-	return (self.attackspeed_bonus + self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec) * (-1)
+	return self.attackspeed_bonus + (self:GetStackCount() * self.deaths_enticement_bonus_per_sec)
 end
 
 function modifier_imba_visage_grave_chill_debuff:GetModifierTurnRate_Percentage()
-	return self.deaths_enticement_stacks * self.deaths_enticement_bonus_per_sec * (-1)
+	return self:GetStackCount() * self.deaths_enticement_bonus_per_sec
 end
-
--------------------------------
--- GRAVE CHILL AURA MODIFIER --
--------------------------------
-
--- IMBAfication: Death's Enticement
--- Assuming this line will be required in case it gets duplicated through something like Grimstroke's Soulbind, which would then otherwise remove this modifier
-function modifier_imba_visage_grave_chill_aura:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_imba_visage_grave_chill_aura:IsHidden()				return true end
-
-function modifier_imba_visage_grave_chill_aura:IsAura() 				return true end
-function modifier_imba_visage_grave_chill_aura:IsAuraActiveOnDeath() 	return true end
-
-function modifier_imba_visage_grave_chill_aura:GetAuraRadius()			return FIND_UNITS_EVERYWHERE end
-function modifier_imba_visage_grave_chill_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-
-function modifier_imba_visage_grave_chill_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_BOTH end
-function modifier_imba_visage_grave_chill_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_visage_grave_chill_aura:GetModifierAura()		return "modifier_imba_visage_grave_chill_aura_modifier" end
-
-----------------------------------------
--- GRAVE CHILL AURA MODIFIER MODIFIER --
-----------------------------------------
-
-function modifier_imba_visage_grave_chill_aura_modifier:IsHidden()		return true end
-function modifier_imba_visage_grave_chill_aura_modifier:IsPurgable()	return false end
-function modifier_imba_visage_grave_chill_aura_modifier:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_imba_visage_grave_chill_aura_modifier:OnCreated()
-	self.creation_time = GameRules:GetDOTATime(true, true)
-end
-
-function modifier_imba_visage_grave_chill_aura_modifier:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		-- MODIFIER_PROPERTY_TOOLTIP
-	}
-	
-	return decFuncs
-end
-
-function modifier_imba_visage_grave_chill_aura_modifier:OnAbilityExecuted(keys)
-	if keys.ability == self:GetAbility() and keys.target == self:GetParent() then
-		self:SetStackCount(GameRules:GetDOTATime(true, true) - self.creation_time)
-	end
-end
-
--- function modifier_imba_visage_grave_chill_aura_modifier:OnTooltip()
-	-- return self:GetStackCount()
--- end
 
 ---------------------
 -- SOUL ASSUMPTION --
@@ -698,11 +625,9 @@ function modifier_imba_visage_gravekeepers_cloak_secondary:OnCreated()
 end
 
 function modifier_imba_visage_gravekeepers_cloak_secondary:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 -- "Unlike the damage reduction on the hero itself, this damage reduction has no minimum threshold."
@@ -742,12 +667,10 @@ function modifier_imba_visage_gravekeepers_cloak_secondary_ally:OnIntervalThink(
 end
 
 function modifier_imba_visage_gravekeepers_cloak_secondary_ally:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_visage_gravekeepers_cloak_secondary_ally:GetModifierIncomingDamage_Percentage(keys)

@@ -27,8 +27,7 @@
 #base heroes/slark/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
-// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
-#base heroes/templar_assassin/hero.txt
+#base heroes/templar_assassin/hero.txt // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
@@ -37,8 +36,7 @@
 #base heroes/zeus/hero.txt
 #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
-// #base heroes/invoker/hero.txt
+// #base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt

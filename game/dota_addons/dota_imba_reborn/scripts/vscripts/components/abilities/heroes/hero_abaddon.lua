@@ -180,9 +180,6 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
 				end
 			end
-
-			-- Apply the Mist
-			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_enemy", {duration = mist_duration})
 		else
 			--Apply spellpower to heal
 			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
@@ -283,30 +280,33 @@ function modifier_imba_mist_coil_mist_ally:IsPurgable() return true end
 function modifier_imba_mist_coil_mist_ally:RemoveOnDeath() return true end
 ---------------------------------------------
 function modifier_imba_mist_coil_mist_ally:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+	
 	self.damage_heal_pct = self:GetAbility():GetSpecialValueFor("damage_heal_pct") / 100
-	self:SetStackCount(0)
-	self.caster = self:GetCaster()
-	self.parent = self:GetParent()
+end
+
+function modifier_imba_mist_coil_mist_ally:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
-	if self.parent and IsServer() and self.parent:IsAlive() then
-		self.parent:Heal(self:GetStackCount(), self.caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.parent, self:GetStackCount(), nil)
+	if not self:GetAbility() then return end
+	
+	if IsServer() and self:GetParent():IsAlive() then
+		self:GetParent():Heal(self:GetStackCount(), self:GetCaster())
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetStackCount(), nil)
 	end
 end
 
 function modifier_imba_mist_coil_mist_ally:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_mist_coil_mist_ally:OnTakeDamage(keys)
-	if keys.target == self.parent then
-		self:SetStackCount(self:GetStackCount() + math.floor(keys.damage * self.damage_heal_pct + 0.5))
+	if keys.unit == self:GetParent() then
+		self:SetStackCount(self:GetStackCount() + math.floor(keys.damage * self.damage_heal_pct))
 	end
 end
 

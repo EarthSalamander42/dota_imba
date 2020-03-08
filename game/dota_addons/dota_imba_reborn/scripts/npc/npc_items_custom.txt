@@ -1555,7 +1555,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"33"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"02"
 			{
@@ -1571,7 +1571,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1582,7 +1582,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"30"
+				"bonus_intellect_real"	"38"
 			}
 			"07"
 			{
@@ -1669,7 +1669,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"36"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"02"
 			{
@@ -1685,7 +1685,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1696,7 +1696,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"32"
+				"bonus_intellect_real"	"41"
 			}
 			"07"
 			{
@@ -1783,7 +1783,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"39"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"02"
 			{
@@ -1799,7 +1799,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1810,7 +1810,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"34"
+				"bonus_intellect_real"	"44"
 			}
 			"07"
 			{
@@ -1897,7 +1897,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"42"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"02"
 			{
@@ -1913,7 +1913,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1924,7 +1924,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"36"
+				"bonus_intellect_real"	"47"
 			}
 			"07"
 			{
@@ -2008,7 +2008,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"45"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"02"
 			{
@@ -2024,7 +2024,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -2035,7 +2035,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"38"
+				"bonus_intellect_real"	"50"
 			}
 			"07"
 			{
@@ -2275,7 +2275,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+				"warrior_mana_break_tooltip"	"30 40 50 60 70"
 			}
 			"08"
 			{
@@ -2432,7 +2432,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+				"warrior_mana_break_tooltip"	"30 40 50 60 70"
 			}
 			"08"
 			{
@@ -2589,7 +2589,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+				"warrior_mana_break_tooltip"	"30 40 50 60 70"
 			}
 			"08"
 			{
@@ -2746,7 +2746,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+				"warrior_mana_break_tooltip"	"30 40 50 60 70"
 			}
 			"08"
 			{
@@ -2900,7 +2900,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+				"warrior_mana_break_tooltip"	"30 40 50 60 70"
 			}
 			"08"
 			{
@@ -6458,48 +6458,48 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"20"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"20"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"10"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"40"
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn"	"40"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_degrade_pct"			"20"
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_melee"	"16"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"starting_slow_pct"			"100"
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_ranged"	"16"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_loss_time"			"0.8"
+				"var_type"				"FIELD_INTEGER"
+				"purge_rate"			"5"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"total_slow_duration"		"4"
+				"var_type"				"FIELD_FLOAT"
+				"purge_root_duration"	"3.0"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"16"
+				"var_type"				"FIELD_FLOAT"
+				"purge_slow_duration"	"4.0"
 			}
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"root_duration"				"3"
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"1.0"
 			}
 		}		
 	}
@@ -6550,49 +6550,50 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"40"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"40"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"18"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"18"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"60"
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn"	"60"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_degrade_pct"			"20"
-			}	
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_melee"	"25"
+			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"starting_slow_pct"			"100"
-			}			
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_ranged"	"25"
+			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_loss_time"			"0.8"
+				"var_type"				"FIELD_INTEGER"
+				"purge_rate"			"5"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"total_slow_duration"		"4"
+				"var_type"				"FIELD_FLOAT"
+				"purge_root_duration"	"3.0"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"25"
+				"var_type"				"FIELD_FLOAT"
+				"purge_slow_duration"	"4.0"
 			}
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"root_duration"				"3"
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"1.0"
 			}
+			
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"

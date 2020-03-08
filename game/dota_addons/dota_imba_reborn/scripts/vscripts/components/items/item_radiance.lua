@@ -115,19 +115,28 @@ function modifier_imba_cloak_of_flames_burn:IsHidden() return false end
 function modifier_imba_cloak_of_flames_burn:IsDebuff() return true end
 function modifier_imba_cloak_of_flames_burn:IsPurgable() return false end
 
+function modifier_imba_cloak_of_flames_burn:GetTexture()
+	return "modifiers/cloak_of_flames"
+end
+
 function modifier_imba_cloak_of_flames_burn:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
+	self.think_interval	= self:GetAbility():GetSpecialValueFor("think_interval")
+
 	if IsServer() then
-		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))
+		self:StartIntervalThink(self.think_interval)
 	end
 end
 
 function modifier_imba_cloak_of_flames_burn:OnIntervalThink()
-	if IsServer() and not self:GetCaster():HasItemInInventory("item_imba_radiance") then
+	if self:GetAbility() and not self:GetCaster():HasItemInInventory("item_imba_radiance") then
 		ApplyDamage({
 			victim = self:GetParent(),
 			attacker = self:GetCaster(),
 			ability = self:GetAbility(),
-			damage = self:GetAbility():GetSpecialValueFor("base_damage"),
+			damage = self.base_damage,
 			damage_type = DAMAGE_TYPE_MAGICAL
 		})
 	end

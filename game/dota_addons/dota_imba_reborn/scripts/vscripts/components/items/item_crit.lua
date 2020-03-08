@@ -57,9 +57,7 @@ end
 
 
 function modifier_item_imba_lesser_crit:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
 end
 
 function modifier_item_imba_lesser_crit:GetModifierPreAttack_BonusDamage()

@@ -985,16 +985,19 @@ function modifier_imba_ball_lightning:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
+	
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(self:GetParent())
 end
 
 
 
-function modifier_imba_ball_lightning:CheckState()
-	local state	=	{
---		[MODIFIER_STATE_MAGIC_IMMUNE] = true
-	}
-	return state
-end
+-- function modifier_imba_ball_lightning:CheckState()
+	-- local state	=	{
+-- --		[MODIFIER_STATE_MAGIC_IMMUNE] = true
+	-- }
+	-- return state
+-- end
 
 function modifier_imba_ball_lightning:GetEffectAttachType()
 	-- Yep, this is a thing.

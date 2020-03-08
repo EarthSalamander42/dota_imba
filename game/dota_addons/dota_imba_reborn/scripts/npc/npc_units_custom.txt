@@ -3938,7 +3938,6 @@
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
 		"Ability3"					"necronomicon_warrior_sight"
-		"Ability4"					"black_dragon_dragonhide_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4396,7 +4395,6 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"forest_troll_high_priest_mana_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4411,7 +4409,7 @@
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"9000"
+		"AttackAcquisitionRange"	"900"
 		"AttackRange"				"550"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
@@ -4489,7 +4487,6 @@
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4582,7 +4579,6 @@
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
 		"Ability5"					"imba_necronomicon_archer_multishot"
 
 		// Armor

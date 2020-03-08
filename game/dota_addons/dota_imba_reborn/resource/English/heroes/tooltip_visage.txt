@@ -9,9 +9,6 @@
 "DOTA_Tooltip_ability_imba_visage_grave_chill_attackspeed_bonus"		"ATTACK SPEED DRAIN:"
 "DOTA_Tooltip_ability_imba_visage_grave_chill_chill_duration"		"DURATION:"
 
-"DOTA_Tooltip_modifier_imba_visage_grave_chill_aura_modifier"				"Death's Enticement"
-"DOTA_Tooltip_modifier_imba_visage_grave_chill_aura_modifier_Description"	"Visage keeps count of lives down to the last second. This unit has lived for %dMODIFIER_PROPERTY_TOOLTIP% seconds since (re)spawn."
-
 "DOTA_Tooltip_ability_imba_visage_soul_assumption"					"Soul Assumption"
 "DOTA_Tooltip_ability_imba_visage_soul_assumption_Description"		"Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge.\n<font color='#FF7800'>Soul Accelerant:</font> Any stored damage above the max threshold is used to increase Soul Assumption's projectile speed, up to a maximum of %soul_accelerant_max% speed.\n<font color='#FF7800'>Familiar Flow:</font> Familiars can charge Soul Assumption off of any enemy."
 "DOTA_Tooltip_ability_imba_visage_soul_assumption_Lore"				"The collected souls of the dead reach out to bring another into their fold."
