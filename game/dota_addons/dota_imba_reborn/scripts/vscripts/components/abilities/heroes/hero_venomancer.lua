@@ -946,7 +946,11 @@ function imba_venomancer_plague_ward_v2:OnSpellStart(talent_spawn_location)
 	plague_ward:SetBaseDamageMin((self:GetSpecialValueFor("ward_damage_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1)) - 1)
 	plague_ward:SetBaseDamageMax((self:GetSpecialValueFor("ward_damage_tooltip") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_venomancer_plague_ward_upgrade"), 1)) + 1)
 	
-	plague_ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	if self:GetCaster().GetPlayerID then
+		plague_ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+		plague_ward:SetControllableByPlayer(self:GetCaster():GetOwner():GetPlayerID(), true)
+	end
 
 	-- There was a better way to do this but I forgot where I implemented it
 	if not talent_spawn_location and self:GetCaster():GetName() == "npc_dota_hero_venomancer" and RollPercentage(25) then
