@@ -840,6 +840,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"tusk_frozen_sigil",
 			"gyrocopter_flak_cannon",
 			"elder_titan_echo_stomp_spirit",
+			"imba_elder_titan_ancestral_spirit",
 			"visage_soul_assumption",
 			"visage_summon_familiars",
 			"earth_spirit_geomagnetic_grip",
@@ -851,7 +852,20 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"monkey_king_wukongs_command",
 			"doom_doom",
 			"zuus_cloud",
-			"void_spirit_aether_remnant"
+			"void_spirit_aether_remnant",
+			"imba_rubick_spellsteal",
+			"rubick_spell_steal",
+			
+			"lone_druid_spirit_bear",
+			"imba_lone_druid_spirit_bear",
+			"lone_druid_true_form",
+			"imba_lone_druid_true_form",
+			"terrorblade_metamorphosis",
+			"imba_terrorblade_metamorphosis",
+			"undying_flesh_golem",
+			"imba_undying_flesh_golem",
+			"dragon_knight_elder_dragon_form",
+			"imba_dragon_knight_elder_dragon_form"			
 		}
 
 		-- Ignore items

@@ -714,7 +714,7 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 		
 		-- IMBAfication: Swindle
 		-- Transfer gold from target to caster
-		if self:GetParent():IsRealHero() and self:GetParent():GetPlayerID() then
+		if self:GetParent():IsRealHero() and self:GetParent():GetPlayerID() and self:GetParent().ModifyGold and self:GetCaster().ModifyGold then
 			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
 			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
 			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)

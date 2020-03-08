@@ -53,9 +53,11 @@ function imba_lycan_summon_wolves:OnSpellStart()
 	local death_check = "modifier_imba_lycan_wolf_death_check"	
 	
 	-- Nonhero caster handling (e.g. Nether Ward)
-	if caster:IsRealHero() then
+	if self:GetCaster().GetPlayerID then
 		player_id = caster:GetPlayerID()
-	end	
+	elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+		player_id = self:GetCaster():GetOwner():GetPlayerID()
+	end
 
 	-- Ability specials
 	local distance = ability:GetSpecialValueFor("distance")
@@ -393,10 +395,13 @@ function ReviveWolves (caster, ability)
 				 end
 				
 				-- Nonhero caster handling (e.g. Nether Ward)
-				if caster:IsRealHero() then
+				if self:GetCaster().GetPlayerID then
 					player_id = caster:GetPlayerID()
-					wolf:SetControllableByPlayer(player_id, true)				
+				elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+					player_id = self:GetCaster():GetOwner():GetPlayerID()
 				end
+	
+				wolf:SetControllableByPlayer(player_id, true)
 			end		
 		end	
 	end
