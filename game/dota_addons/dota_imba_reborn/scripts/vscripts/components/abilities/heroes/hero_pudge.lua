@@ -1015,7 +1015,8 @@ end
 function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
 	if self:GetAbility() then
 		if self:GetParent():PassivesDisabled() then
-			return self:GetAbility():GetSpecialValueFor("base_health_regen")
+			-- return self:GetAbility():GetSpecialValueFor("base_health_regen")
+			return 0 -- Non-vanilla interaction
 		else
 			return self:GetAbility():GetSpecialValueFor("base_health_regen") + self:GetAbility():GetSpecialValueFor("stack_health_regen") * math.min(self:GetStackCount(), self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4"))
 		end
@@ -1023,7 +1024,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierBonusStats_Strength()
-	if self:GetAbility() and not self:GetParent():IsIllusion() then
+	if self:GetAbility() and not self:GetParent():IsIllusion() and not self:GetParent():PassivesDisabled() then -- Non-vanilla interaction
 		return self:GetAbility():GetSpecialValueFor("stack_str") * self:GetStackCount()
 	end
 end

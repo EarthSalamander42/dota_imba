@@ -862,6 +862,7 @@ function modifier_imba_blur_smoke:OnCreated()
 
 		if IsServer() then
 			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+			self:OnIntervalThink()
 			self:StartIntervalThink(FrameTime())
 		end
 	end
