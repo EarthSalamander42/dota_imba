@@ -872,24 +872,24 @@ imba_invoker = imba_invoker or class({})
 					-- vision_duration 	= vision_duration,
 					-- all_heroes 			= all_heroes
 				-- })
-				
+
 			---------------------
 			-- "FIXED" VERSION --
 			---------------------
-			
+
 			if not self:GetCaster():HasAbility("imba_invoker_exort") then return end
-			
+
 			self:GetCaster():StartGesture(ACT_DOTA_CAST_SUN_STRIKE)
-			
+
 			local bCataclysm = self:GetCursorTarget() == self:GetCaster()
-			
+
 			if bCataclysm and self:GetCaster():HasScepter() then
 				bCataclysm = 1
 				self:StartCooldown(self:GetSpecialValueFor("cataclysm_cooldown") * self:GetCaster():GetCooldownReduction())
 			else
 				bCataclysm = 0
 			end
-			
+
 			CreateModifierThinker(self:GetCaster(), self, "modifier_imba_invoker_sun_strike_thinker", {
 				duration 			= self:GetSpecialValueFor("delay"),
 				area_of_effect 		= self:GetSpecialValueFor("area_of_effect"),
@@ -919,7 +919,7 @@ imba_invoker = imba_invoker or class({})
 
 			-- Play SunStrike Sound!
 			EmitSoundOnLocationWithCaster(target_point, "Hero_Invoker.SunStrike.Charge", caster)
-			
+
 			for _,hero in pairs(all_heroes) do
 				-- For each real hero
 				if hero:IsRealHero() then 
