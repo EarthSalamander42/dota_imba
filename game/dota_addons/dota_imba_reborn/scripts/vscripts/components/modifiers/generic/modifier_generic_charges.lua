@@ -109,8 +109,6 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 		if wtf_mode == false then
 			self:DecrementStackCount()
 
-			print("Decrement stack count!")
-
 			Timers:CreateTimer(FrameTime() * 2, function()
 				CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
 					unit_index = self:GetParent():entindex(),

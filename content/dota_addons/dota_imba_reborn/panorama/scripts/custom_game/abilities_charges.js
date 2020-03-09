@@ -20,21 +20,20 @@ function InitChargeUI(args) {
 	GetDotaHud().FindChildTraverse("Ability" + args.ability_index).FindChildTraverse("AbilityCharges").GetChild(1).text = 0;
 
 	// store ability index
-	$.Msg("Store hero index " + args.unit_index + " with ability index: " + args.ability_index)
+//	$.Msg("Store hero index " + args.unit_index + " with ability index: " + args.ability_index)
 	show_charge_for_hero[args.unit_index] = [];
 	show_charge_for_hero[args.unit_index][args.ability_index] = [args.charge_duration, args.scepter_duration];
 }
 
 function UpdateCharges(args) {
+//	$.Msg("Update charges!")
 	var buff_id = GetBuffIDByName(args.unit_index, "modifier_generic_charges");
-
-	$.Msg("Update charges!")
 
 	GetDotaHud().FindChildTraverse("Ability" + args.ability_index).FindChildTraverse("AbilityCharges").GetChild(1).text = Buffs.GetStackCount(args.unit_index, buff_id);;
 }
 
 function UpdateLoadingCharge(args) {
-	$.Msg("Update loading charges!")
+//	$.Msg("Update loading charges!")
 	var run_loop = true;
 	var buff_id = GetBuffIDByName(args.unit_index, "modifier_generic_charges");
 
@@ -87,7 +86,7 @@ function GetBuffIDByName(selectedEntityID, buff_name) {
 }
 
 function RefreshUI() {
-	$.Msg( "OnUpdateSelectedUnit ", Entities.GetClassname(Players.GetLocalPlayerPortraitUnit()), " / ", Players.GetLocalPlayerPortraitUnit() );
+//	$.Msg( "OnUpdateSelectedUnit ", Entities.GetClassname(Players.GetLocalPlayerPortraitUnit()), " / ", Players.GetLocalPlayerPortraitUnit() );
 
 	for (var i = 0; i < 5; i++) {
 		var panel = GetDotaHud().FindChildTraverse("Ability" + i);

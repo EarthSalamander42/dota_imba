@@ -52,6 +52,12 @@ function modifier_imba_broodmother_spawn_spiderlings:OnDestroy()
 	if not IsServer() then return end
 
 	if not self:GetParent():IsAlive() then
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(pfx, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(pfx)
+
+		self:GetParent():EmitSound("Hero_Broodmother.SpawnSpiderlings")
+
 		for i = 1, self:GetAbility():GetSpecialValueFor("count") do
 			local spiderling = CreateUnitByName("npc_dota_broodmother_spiderling", self:GetParent():GetAbsOrigin(), false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 			spiderling:SetOwner(self:GetCaster())
@@ -59,15 +65,6 @@ function modifier_imba_broodmother_spawn_spiderlings:OnDestroy()
 			spiderling:SetUnitOnClearGround()
 			spiderling:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self:GetAbility():GetSpecialValueFor("spiderling_duration")})
 --			ResolveNPCPositions(spiderling:GetAbsOrigin(), 50)
-			self:GetParent():EmitSound("Hero_Broodmother.SpawnSpiderlings")
-
-			for i = 0, 24 do
-				local ability = spiderling:GetAbilityByIndex(i)
-
-				if ability then
-					ability:SetLevel(1)
-				end
-			end
 		end
 	end
 end
@@ -109,9 +106,6 @@ end
 
 function imba_broodmother_spin_web:OnSpellStart()
 	if not IsServer() then return end
-
-	-- todo: allow web to be cast out of cast range if overlapping onto an existing web
-
 
 	local webs = Entities:FindAllByClassname("npc_dota_broodmother_web")
 
@@ -290,6 +284,14 @@ function modifier_imba_broodmother_insatiable_hunger:DeclareFunctions() return {
 	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 } end
 
+function modifier_imba_broodmother_insatiable_hunger:OnCreated()
+	if not IsServer() then return end
+
+--	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_thorax", self:GetParent():GetAbsOrigin(), true)
+end
+
 function modifier_imba_broodmother_insatiable_hunger:GetModifierPreAttack_BonusDamage()
 	return self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
@@ -302,6 +304,11 @@ function modifier_imba_broodmother_insatiable_hunger:OnDestroy()
 	if not IsServer() then return end
 
 	self:GetCaster():StopSound("Hero_Broodmother.InsatiableHunger")
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
 end
 
 ---
@@ -321,6 +328,8 @@ modifier_imba_broodmother_poison_sting_debuff	= modifier_imba_broodmother_poison
 -- IMBA_BROODMOTHER_POISON_STING --
 -----------------------------------
 
+function imba_broodmother_poison_sting:IsInnateAbility() return true end
+
 function imba_broodmother_poison_sting:GetIntrinsicModifierName()
 	return "modifier_imba_broodmother_poison_sting"
 end
@@ -329,8 +338,8 @@ end
 -- MODIFIER_IMBA_BROODMOTHER_POISON_STING --
 --------------------------------------------
 
-function modifier_imba_broodmother_poison_sting:IsPurgable()	return false end
-function modifier_imba_broodmother_poison_sting:RemoveOnDeath()	return false end
+function modifier_imba_broodmother_poison_sting:IsPurgable()		return false end
+function modifier_imba_broodmother_poison_sting:RemoveOnDeath()		return false end
 
 function modifier_imba_broodmother_poison_sting:OnCreated()
 	self.damage_per_second		= self:GetAbility():GetSpecialValueFor("damage_per_second")

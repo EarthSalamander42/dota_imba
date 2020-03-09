@@ -116,7 +116,7 @@ end
 
 function IsNearEntity(entities, location, distance, owner)
 	for _, entity in pairs(Entities:FindAllByClassname(entities)) do
-		if (entity:GetAbsOrigin() - location):Length2D() <= distance or owner and (entity:GetAbsOrigin() - location):Length2D() and entity:GetOwner() == owner then
+		if (entity:GetAbsOrigin() - location):Length2D() <= distance or owner and (entity:GetAbsOrigin() - location):Length2D() <= distance and entity:GetOwner() == owner then
 			return true
 		end
 	end
