@@ -3721,12 +3721,14 @@ imba_invoker = imba_invoker or class({})
 		imba_invoker_deafening_blast.ability_effect_path 			= "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
 --		imba_invoker_deafening_blast.ability_effect_path 			= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_ti6.vpcf"
 		imba_invoker_deafening_blast.ability_effect_path_aoe		= "particles/hero/invoker/deafeningblast/imba_invoker_deafening_blast.vpcf"
-		imba_invoker_deafening_blast.ability_disarm_effect_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_disarm_ti6_debuff.vpcf"
-		imba_invoker_deafening_blast.ability_knockback_effect_path 	= "particles/econ/items/invoker/invoker_ti6/invoker_deafening_blast_ti6_knockback_debuff.vpcf"
+		imba_invoker_deafening_blast.ability_disarm_effect_path 	= "particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
+		imba_invoker_deafening_blast.ability_knockback_effect_path 	= "particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
+
 		LinkLuaModifier("modifier_imba_invoker_deafening_blast", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_deafening_blast_frozen", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_deafening_blast_knockback", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_deafening_blast_disarm", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
 		function imba_invoker_deafening_blast:GetCastAnimation()
 		 	return ACT_DOTA_CAST_DEAFENING_BLAST
 		end

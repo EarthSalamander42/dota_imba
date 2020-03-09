@@ -1,3 +1,6 @@
+#base heroes/broodmother/units.txt
+#base heroes/invoker/units.txt
+
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
 #base custom_heroes/malfurion/units.txt
@@ -7422,118 +7425,6 @@
 //
 //		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
 //	}
-
-	"npc_dota_broodmother_spiderling"
-	{
-		// Abilities
-		//----------------------------------------------------------------
-		//"Ability1"					"broodmother_poison_sting"			// Ability 1.
-		//"Ability2"					"broodmother_spawn_spiderite"		// Ability 2.
-
-		"Ability1"					"imba_broodmother_poison_sting"			// Ability 1.
-		"Ability2"					""										// Ability 2.
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"12"		// Physical protection.
-		"MagicalResistance"			"50"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"38"		// Damage range min.
-		"AttackDamageMax"			"40"		// Damage range max.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"18"		// Experience earn.
-		"BountyGoldMin"				"18"		// Gold earned min.
-		"BountyGoldMax"				"18"		// Gold earned max.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"700"		// Base health.
-	}
-
-	"npc_dota_broodmother_spiderite"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_broodmother_spiderling"	// Class of entity of link to.
-		"Model"						"models/heroes/broodmother/spiderling.vmdl"	// Model.
-		"SoundSet"					"0"					// Name of sound set.
-		"ModelScale"				"0.23"								// old 0.7
-		"Level"						"2"
-		"IsSummoned"				"1"
-		"SelectionGroup"			"Spiderite"
-		"UnitLabel"					"spiderite"
-
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					""			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"			// Physical protection.
-		"MagicalResistance"			"50"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"9"		// Damage range min.
-		"AttackDamageMax"			"10"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1.35"		// Speed of attack.
-		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"100"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			""			// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"20"		// Experience earn.
-		"BountyGoldMin"				"16"		// Gold earned min.
-		"BountyGoldMax"				"21"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"140"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"350"		// Speed
-		"MovementTurnRate"			"0.5"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"450"		// Base health.
-		"StatusHealthRegen"			"2.0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"700"		// Range of vision during day light.
-		"VisionNighttimeRange"		"700"		// Range of vision at night time.
-	}
 
 	"npc_dota_mutation_spiderling_super_big"
 	{
