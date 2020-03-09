@@ -77,8 +77,8 @@
 "DOTA_Tooltip_modifier_imba_talent_enrage_damage_Description"         "Enrage will automatically activate upon reaching its damage threshold."
 
 // Ursa's Territorial Hunter
-"DOTA_Tooltip_ability_imba_ursa_territorial_hunter"                    "Territorial Hunter"
-"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Description"                     "Ursa sharpens his claws on a tree, marking the surrounding area as his hunting grounds. His powerful sense of smell grants vision of any enemies in his designated territory, and can even sense the position of invisible enemies inside it, although those still cannot be attacked. Marking a new tree forfeits the previous territory."
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter"						"Territorial Hunter"
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Description"			"Ursa sharpens his claws on a tree, marking the surrounding area as his hunting grounds. His powerful sense of smell grants vision of any enemies in his designated territory, and can even sense the position of invisible enemies inside it, although those still cannot be attacked. Neutral units within the radius are made visible to both teams. Marking a new tree forfeits the previous territory."
 "DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Lore"                "He who enters ursine territory can be many things: reckless, foolish, or overconfident. The Ursa Warrior cares not - fresh meat, willingly given, is a delicacy and a gift."
 "DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Note0"              "The mark is visible to both teams and is destroyed if the marked tree is cut down."
 "DOTA_Tooltip_ability_imba_ursa_territorial_hunter_vision_range"                    "TERRITORY RADIUS:"

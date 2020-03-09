@@ -1458,10 +1458,10 @@ function imba_bane_fiends_grip_723:OnSpellStart()
 		if not self:GetCaster():HasTalent("special_bonus_imba_bane_3") then
 			self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = self:GetChannelTime()})
 		else
-			local grip_modifier = self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = self.BaseClass.GetChannelTime(self)})
+			local grip_modifier = self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")})
 			
 			if grip_modifier then
-				grip_modifier:SetDuration(self.BaseClass.GetChannelTime(self) * (1 - self.target:GetStatusResistance()), true)
+				grip_modifier:SetDuration((self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) * (1 - self.target:GetStatusResistance()), true)
 			end
 		end
 	else
@@ -1561,7 +1561,7 @@ function modifier_imba_bane_fiends_grip_723:OnDestroy()
 	
 	self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_4)
 	
-	if self:GetAbility():IsChanneling() and self:GetParent() == self:GetAbility():GetCursorTarget() then
+	if self:GetAbility() and self:GetAbility():IsChanneling() and self:GetParent() == self:GetAbility():GetCursorTarget() then
 		self:GetCaster():Interrupt()
 	end
 end
@@ -1586,7 +1586,8 @@ end
 
 -- "If the target turns invulnerable or hidden, the channeling stops instantly."
 function modifier_imba_bane_fiends_grip_723:OnStateChanged(keys)
-	if (self:GetCaster():IsStunned() or self:GetCaster():IsSilenced() or self:GetCaster():IsHexed() or self:GetCaster():IsOutOfGame() or (self:GetCaster().IsFeared and self:GetCaster():IsFeared()) or (self:GetCaster().IsHypnotized and self:GetCaster():IsHypnotized())) or (self:GetParent():IsInvulnerable() or self:GetParent():IsOutOfGame()) then
+	-- The self:GetElapsedTime() >= 0.03 is roughly to make sure Lotus Orb "works"
+	if self:GetElapsedTime() >= 0.03 and (self:GetCaster():IsStunned() or self:GetCaster():IsSilenced() or self:GetCaster():IsHexed() or self:GetCaster():IsOutOfGame() or (self:GetCaster().IsFeared and self:GetCaster():IsFeared()) or (self:GetCaster().IsHypnotized and self:GetCaster():IsHypnotized())) or (self:GetParent():IsInvulnerable() or self:GetParent():IsOutOfGame()) then
 		self:Destroy()
 	end
 end

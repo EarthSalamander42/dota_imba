@@ -177,7 +177,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
-		"AbilityCooldown"				"7.5 6.0 4.5 3.0"
+		"AbilityCooldown"				"7.25 5.75 4.25 2.75"
 			
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------

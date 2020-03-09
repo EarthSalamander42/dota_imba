@@ -168,7 +168,7 @@ function modifier_special_bonus_imba_enigma_7:DeclareFunctions()
 end
 
 function modifier_special_bonus_imba_enigma_7:OnAbilityFullyCast (keys)
-	if keys.unit == self:GetParent() and not keys.ability:IsItem() and not keys.ability:IsToggle() then
+	if keys.unit == self:GetParent() and not keys.ability:IsItem() and not keys.ability:IsToggle() and keys.ability:GetName() ~= "ability_capture" then
 		SetTalentSpellImmunity(self:GetParent())
 	end
 end

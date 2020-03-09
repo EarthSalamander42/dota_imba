@@ -13,4 +13,4 @@
 "DOTA_Tooltip_modifier_item_imba_spirit_vessel_heal"							"Spirit Vessel Heal"
 "DOTA_Tooltip_modifier_item_imba_spirit_vessel_heal_Description"				"Healing %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP per second."
 "DOTA_Tooltip_modifier_item_imba_spirit_vessel_damage"							"Spirit Vessel Damage"
-"DOTA_Tooltip_modifier_item_imba_spirit_vessel_damage_Description"				"All heals reduced by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and losing %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP plus a percentage of current health."
+"DOTA_Tooltip_modifier_item_imba_spirit_vessel_damage_Description"				"All heals reduced by %dMODIFIER_PROPERTY_TOOLTIP%%%, and losing %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP plus a percentage of current health."

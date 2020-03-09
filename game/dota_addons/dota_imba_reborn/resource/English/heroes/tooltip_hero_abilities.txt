@@ -243,18 +243,17 @@
 "DOTA_Tooltip_ability_imba_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
 
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order"               "Natural Order"
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
+"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. <font color='#FF7800'>The armor reduction and the magic armor reduction are centered around both Elder Titan as well as the Astral Spirit.</font>\n<font color='#FF7800'>Immunosuppressant:</font> Also reduces status resistance by %status_resistance_pct%%%.\n<font color='#FF7800'>Nature Over All:</font> Aura pierces spell immunity."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Lore"              "As it was at the beginning, Elder Titan makes it so again."
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_Note0"             "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_armor_reduction_pct"     "%BASE ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE MAGIC RESIST REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order"                "Natural Order"
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced. Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After %crack_time% seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Lore"             "That which he created, the titan tears asunder."
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_width"          "CRACK WIDTH:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_crack_distance"       "CRACK LENGTH:"
@@ -285,7 +284,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "+1200 Astral Spirit Cast Range"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_2"               "+400 Astral Spirit movespeed"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_3"               "Astral Spirit roots targets hit"
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by 25%"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by {s:value}%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5"               "Natural Order reduces status resistance by 25%"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
@@ -393,8 +392,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+25% Heartstopper Aura healing reduction"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+300 Ghost Shroud effect radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+1% Sadist health/mana regen"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50%/50 Reaper's Scythe damage/spell amp reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+1% Heartstopper Aura damage per second"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50% Reaper's Scythe Death and Decay"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura damage per second"
 
 
 // Nyx Assassin
@@ -626,17 +625,18 @@
 // Phoenix's Supernova
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_phoenix_supernova"                        "Super Nova"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n<font color='#FF7800'>Nest Mates: </font>Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Flock Assemble: </font>When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.\nDISPEL TYPE: Strong Dispel"
+"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Nest Mates:</font> Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Artificial Sun:</font> Grants flying vision equal to the damage radius for Supernova's duration.\n<font color='#FF7800'>Extreme Burning:</font> Reduces spell amplification of enemies within damage radius by %extreme_burning_spell_amp%%%."
+
+//<font color='#FF7800'>Flock Assemble:</font> When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.
+
 "DOTA_Tooltip_ability_imba_phoenix_supernova_Note0"                  "Hero attacks count as 1 hit, and creeps attacks as 1/4 of a hit."
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Note1"                  "If there are no nearby enemies, fire spirits won't be launched."
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Note2"                  "The passive effect for Aghanim's Scepter doesn't trigger when Phoenix is affected by break."
+"DOTA_Tooltip_ability_imba_phoenix_supernova_Note1"                  "The passive effect for Aghanim's Scepter doesn't trigger when Phoenix is affected by break."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_lore"                    "The solar crucible of a Supernova may be fatal, yet from its flames arise new beacons to wander infinity."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_aura_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_damage_per_sec"          "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_stun_duration"          "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_max_hero_attacks"                    "ATTACKS TO DESTROY:"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_bird_num"                "FIRE SPIRITS SUMMONED:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_additional_duration"         "SCEPTER DURATION INCREASE:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_cooldown"                    "SCEPTER PASSIVE COOLDOWN:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n <font color='#FF7800'>When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova.</font>"
@@ -659,8 +659,8 @@
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_scepter_passive_cooldown"             "Super Nova scepter cooldown"
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_scepter_passive_cooldown_Description" "Super Nova scepter passive is on cooldown."
 
-"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg"                    "Sun Burn"
-"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg_Description"                    "Taking damage over time, and having a miss chance if facing towards the Super Nova."
+"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg"						"Sun Burn"
+"DOTA_Tooltip_modifier_imba_phoenix_supernova_dmg_Description"			"Taking damage over time, and spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Phoenix's Burning Wings
@@ -1180,7 +1180,10 @@
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"					"Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a perpendicular line.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+
+// \n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius
+
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Lore"              "Nevermore's trademark for harvesting souls."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"				"Stack duration refreshes on stack gain."
 
@@ -1203,7 +1206,10 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls."
+
+// \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"                "Can't steal the soul of units which don't have one in the first place."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"                "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"                  "DAMAGE PER SOUL:"
@@ -1511,6 +1517,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm_Description"	"CHANNELED - Resets the cooldown on most of Tinker's items and abilities."
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
 "DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Aether Specs, Arcane Boots, Black King Bar, Black Queen's Cape, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Note1"              "Rod of Atos EX can be Rearmed, but doing so will decrement its number of charges by 1."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
 "DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "<font color='#FF7800'>Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana.</font>"

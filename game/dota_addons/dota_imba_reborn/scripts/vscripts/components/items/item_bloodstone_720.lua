@@ -107,6 +107,8 @@ function modifier_item_imba_bloodstone_720:IsPermanent()	return true end
 function modifier_item_imba_bloodstone_720:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_bloodstone_720:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	

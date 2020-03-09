@@ -1831,12 +1831,42 @@
 			"03"
 			{	
 				"var_type"						"FIELD_INTEGER"
-				"arrow_count"					"2 4 6 8"
+				"arrow_count"					"1 2 3 4"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"split_shot_bonus_range"		"100"
+				"split_shot_bonus_range"		"0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Secondary Resistance
+	//=================================================================================================================
+	"imba_tower_secondary_resistance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"ScriptFile"							"components/abilities/buildings/tower_abilities"
+		"AbilityTextureName"					"custom/ancient_defense"
+		
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance"			"5 10 15 20"
+			}			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_block"				"10 20 30 40"
 			}
 		}
 	}

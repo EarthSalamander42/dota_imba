@@ -269,33 +269,6 @@ function HeroSelection:SelectHero(playerId, hero)
 			GameRules:GetGameModeEntity():SetPauseEnabled(true)
 			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = true})
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
-
-			if IsRankedMap() then
-				Timers:CreateTimer(3.0, function()
-					for i = 1, 25 do
-						local top_imr = nil
-						if GetMapName() == MapRanked5v5() then
-							top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
-						elseif GetMapName() == MapRanked10v10() then
-							top_imr = CustomNetTables:GetTableValue("top_imr10v10", tostring(i))
-						end
-
-						if top_imr then
-							if tostring(PlayerResource:GetSteamID(playerId)) == top_imr.SteamID64 then
-								if GetMapName() == MapRanked5v5() then
-									Say(nil, PlayerResource:GetPlayerName(playerId).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
-								elseif GetMapName() == MapRanked10v10() then
-									Say(nil, PlayerResource:GetPlayerName(playerId).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_10v10)..")", false)
-								end
-							end
-						end
-					end
-				end)
-			elseif IsMutationMap() then
---				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- WHY THE FUCK IT DOESN'T WORK FOR EVERY PLAYERS
-				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
-				CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
-			end
 		end
 
 		local player = PlayerResource:GetPlayer(playerId)

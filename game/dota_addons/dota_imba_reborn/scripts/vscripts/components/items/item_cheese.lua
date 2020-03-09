@@ -22,7 +22,7 @@ local function ConsumeCheese(parent, item)
 	item:SetCurrentCharges(item:GetCurrentCharges() - 1)
 
 	-- If this was the last charge, remove the item
-	if item:GetCurrentCharges() == 0 then
+	if item:GetCurrentCharges() <= 0 then
 		if not parent:IsClone() then
 			parent:RemoveItem(item)
 		else

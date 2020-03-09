@@ -3,7 +3,7 @@
 	"addonSteamAppID"				"570"
 	"addontitle"					"Dota IMBA"
 	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.19d"
+	"addonversion"					"7.19f"
 	"addontagline"					"IMBA"
 	"addonauthor"					"EarthSalamander #42"
 	"addonSteamGroupName"			""

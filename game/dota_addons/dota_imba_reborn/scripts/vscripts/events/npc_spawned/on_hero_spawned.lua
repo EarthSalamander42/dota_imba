@@ -137,7 +137,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 
 		-- Refresh TP on first spawn
-		local teleport_scroll = hero:GetItemInSlot(16)
+		local teleport_scroll = hero:GetItemInSlot(15)
 		
 		if teleport_scroll then
 			teleport_scroll:EndCooldown()
@@ -153,10 +153,6 @@ function GameMode:OnHeroSpawned(hero)
 			hero:AddNewModifier(hero, nil, "modifier_fountain_invulnerable", {})
 		end
 	end)
-
-	if IsMutationMap() then
-		Mutation:OnHeroSpawn(hero)
-	end
 	
 	-- Let's try to make Meepo a bit more playable
 	-- Ensure the Meepos get buffs like custom mechanics

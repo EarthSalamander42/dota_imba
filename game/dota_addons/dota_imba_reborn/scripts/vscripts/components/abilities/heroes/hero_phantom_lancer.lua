@@ -407,6 +407,7 @@ function imba_phantom_lancer_doppelwalk:OnSpellStart()
 		}
 		, 1, self:GetCaster():GetHullRadius(), false, true)[1]
 		
+		self.illusion_1:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_doppelwalk_illusion", {})
 		self.illusion_1:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_juxtapose_illusion", {}) -- This should be the brighter one, but I don't know how to get that to work
 	else
 		self.illusion_1:SetHealth(self:GetCaster():GetHealth())
@@ -428,6 +429,7 @@ function imba_phantom_lancer_doppelwalk:OnSpellStart()
 		}
 		, 1, self:GetCaster():GetHullRadius(), false, true)[1]
 		
+		self.illusion_2:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_doppelwalk_illusion", {})
 		self.illusion_2:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_juxtapose_illusion", {})
 	else
 		self.illusion_2:SetHealth(self:GetCaster():GetHealth())
@@ -435,6 +437,36 @@ function imba_phantom_lancer_doppelwalk:OnSpellStart()
 	end
 	
 	table.insert(affected_units, self.illusion_2)
+	
+	-- IMBAfication: Crowdsourcing
+	if self.illusion_3 and not self.illusion_3:IsNull() and self.illusion_3:IsAlive() then
+		self.illusion_3:ForceKill(false)
+	end
+
+	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("search_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)) do
+		if unit:GetName() ~= self:GetCaster():GetName() and (unit:IsRealHero() or unit:IsClone() or unit:IsTempestDouble() or unit:IsIllusion()) then
+			self.illusion_3 = CreateIllusions(self:GetCaster(), unit, 
+			{
+				outgoing_damage = -100,
+				incoming_damage	= 0,
+				bounty_base		= 5,
+				bounty_growth	= nil,
+				outgoing_damage_structure	= nil,
+				outgoing_damage_roshan		= nil,
+				duration		= self:GetSpecialValueFor("illusion_duration") + self:GetSpecialValueFor("delay")
+			}
+			, 1, self:GetCaster():GetHullRadius(), false, true)[1]
+			
+			if self.illusion_3 then
+				self.illusion_3:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_doppelwalk_illusion", {})
+				self.illusion_3:AddNewModifier(self:GetCaster(), self, "modifier_phantom_lancer_juxtapose_illusion", {})
+			end
+			
+			break
+		end
+	end
+	
+	table.insert(affected_units, self.illusion_3)
 	
 	for _, unit in pairs(affected_units) do
 		if unit:GetPlayerOwnerID() == self:GetCaster():GetPlayerOwnerID() and (unit == self:GetCaster() or unit:IsIllusion()) then

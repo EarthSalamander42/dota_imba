@@ -25,19 +25,21 @@
 		"Ability9"					"imba_wisp_relocate_break"
 
 		"Ability10"					"special_bonus_attack_damage_50"
-		"Ability11"					"special_bonus_imba_wisp_12"
+		"Ability11"					"special_bonus_hp_regen_6"
 		"Ability12"					"special_bonus_imba_wisp_11"
-		"Ability13"					"special_bonus_hp_regen_10"
-		"Ability14"					"special_bonus_imba_wisp_4"
-		"Ability15"					"special_bonus_imba_wisp_10"
+		"Ability13"					"special_bonus_spell_lifesteal_13"
+		"Ability14"					"special_bonus_imba_wisp_10"
+		"Ability15"					"special_bonus_armor_15"
 		"Ability16"					"special_bonus_imba_wisp_9"
 		"Ability17"					"special_bonus_imba_wisp_6"
 
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_wisp_3" // Spirits Truesight
-		// "Ability11"					"special_bonus_imba_wisp_2" // Tether gives Scepter bonus (Don't know when but it broke and doesn't give vanilla sub-abilities now)
+		//"Ability11"					"special_bonus_imba_wisp_2" // Tether gives Scepter bonus (Don't know when but it broke and doesn't give vanilla sub-abilities now)
+		//"Ability11"					"special_bonus_imba_wisp_12" // "Remnants of Overcharge"
 		//"Ability12"					"special_bonus_imba_wisp_1"	// Overcharge Bonus
 		//"Ability12"					"special_bonus_imba_wisp_5" // +X Tether cast range, and max distance
+		//"Ability14"					"special_bonus_imba_wisp_4" // "+10% Overcharge Damage Reduction"
 		//"Ability16"					"special_bonus_imba_wisp_7" // Relocate grants spell immunity
 		// Ability15"					"special_bonus_imba_wisp_8" // Overcharge grants max mana
 	}

@@ -580,25 +580,26 @@ function modifier_imba_wave_of_terror:RemoveOnDeath() return true end
 
 function modifier_imba_wave_of_terror:OnCreated( params )
 	local ability = self:GetAbility()
-	self.armor_reduction = ability:GetTalentSpecialValueFor("armor_reduction")
-	self.atk_reduction_pct = ability:GetSpecialValueFor("atk_reduction_pct")
+	
+	if not ability then self:Destroy() return end
+	
+	self.armor_reduction = ability:GetTalentSpecialValueFor("armor_reduction") * (-1)
+	self.atk_reduction_pct = ability:GetSpecialValueFor("atk_reduction_pct") * (-1)
 end
 
 function modifier_imba_wave_of_terror:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
+	}
 end
 
 function modifier_imba_wave_of_terror:GetModifierPhysicalArmorBonus()
-	return self.armor_reduction * (-1)
+	return self.armor_reduction
 end
 
 function modifier_imba_wave_of_terror:GetModifierBaseDamageOutgoing_Percentage()
-	return self.atk_reduction_pct * (-1)
+	return self.atk_reduction_pct
 end
 
 function modifier_imba_wave_of_terror:GetEffectName()

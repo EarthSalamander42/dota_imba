@@ -35,13 +35,10 @@ function modifier_imba_entrangling_roots:GetEffectAttachType()
 end
 
 function modifier_imba_entrangling_roots:CheckState()
-	local states =
-	{
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_ROOTED] = true,
 	}
-
-	return states
 end
 
 function modifier_imba_entrangling_roots:OnCreated()
@@ -82,14 +79,20 @@ function imba_malfurion_rejuvenation:OnAbilityPhaseInterrupted()
 	self:GetCaster():FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 end
 
-function imba_malfurion_rejuvenation:OnSpellStart()
-	if IsServer() then
-		self:GetCaster():EmitSound("Hero_Warlock.ShadowWordCastGood")
+function imba_malfurion_rejuvenation:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
 
-		local allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _, ally in pairs (allies) do
-			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
-		end
+function imba_malfurion_rejuvenation:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Warlock.ShadowWordCastGood")
+	
+	local particle = nil
+	
+	for _, ally in pairs (FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)) do
+		particle = ParticleManager:CreateParticle("particles/econ/items/leshrac/leshrac_tormented_staff_retro/leshrac_split_retro_sparks_tormented.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
+		ParticleManager:ReleaseParticleIndex(particle)
+	
+		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_rejuvenation", {duration=self:GetSpecialValueFor("duration")})
 	end
 end
 
@@ -139,11 +142,9 @@ modifier_imba_mark_of_the_claw = modifier_imba_mark_of_the_claw or class({})
 function modifier_imba_mark_of_the_claw:IsHidden() return true end
 
 function modifier_imba_mark_of_the_claw:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-
-	return funcs
 end
 
 function modifier_imba_mark_of_the_claw:OnAttackLanded(kv)
@@ -293,10 +294,11 @@ end
 modifier_imba_malfurion_living_tower = modifier_imba_malfurion_living_tower or class({})
 
 function modifier_imba_malfurion_living_tower:IsHidden() return true end
+function modifier_imba_malfurion_living_tower:IsPurgable()	return false end
 function modifier_imba_malfurion_living_tower:RemoveOnDeath() return false end
 
 function modifier_imba_malfurion_living_tower:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 --		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -304,7 +306,6 @@ function modifier_imba_malfurion_living_tower:DeclareFunctions()
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_EVENT_ON_DEATH,
 	}
-	return funcs
 end
 
 function modifier_imba_malfurion_living_tower:GetEffectName()

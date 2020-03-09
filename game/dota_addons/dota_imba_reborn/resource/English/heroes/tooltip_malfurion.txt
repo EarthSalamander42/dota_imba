@@ -11,9 +11,9 @@
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec"					"HEAL PER SEC:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec_creep_pct"		"%HEAL PER SEC (CREEPS):"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_heal_per_sec_building_pct"	"%HEAL PER SEC (BUILDINGS):"
-"DOTA_Tooltip_ability_imba_malfurion_rejuvenation_total_heal_tooltip"			"TOTAL HEAL:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_radius"						"RADIUS:"
 "DOTA_Tooltip_ability_imba_malfurion_rejuvenation_duration"						"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_malfurion_rejuvenation_abilitycastrange"				"CAST RANGE:"
 
 "DOTA_Tooltip_modifier_imba_rejuvenation"										"Rejuvenation"
 "DOTA_Tooltip_modifier_imba_rejuvenation_Description"							"Healed periodically."
@@ -22,18 +22,19 @@
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Description"				"Has a chance to trigger bonus damage and a cleave attack."
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Lore"						""
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Note0"					"Bonus damage is a percentage of the attack damage dealt after reductions."
+"DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_Note1"					"Works against ward-type units."
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_chance"					"%CHANCE:"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_bonus_damage_pct"			"%BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_radius"					"CLEAVE RADIUS:"
 "DOTA_Tooltip_ability_imba_malfurion_mark_of_the_claw_splash_damage_pct"		"%CLEAVE:"
 
 "DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild"							"Strength of the Wild"
-"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_Description"				"Increase Malfurion's base attacks against non-heroes enemies."
+"DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_Description"				"Increase Malfurion's attack damage against non-hero enemies."
 "DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_Lore"						""
 "DOTA_Tooltip_ability_imba_malfurion_strength_of_the_wild_bonus_damage_tooltip"		"%DAMAGE MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild"							"Strength of the Wild"
-"DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild_Description"				"Increases Malfurion's attack damage by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% against non-heroes enemies."
+"DOTA_Tooltip_modifier_imba_malfurion_strength_of_the_wild_Description"				"Increases Malfurion's attack damage by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%% against non-hero enemies."
 
 "DOTA_Tooltip_ability_imba_malfurion_living_tower"							"Living Tower"
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_Description"				"Summons a powerful living tower, which benefits from custom creep scaling. This tower is treated as a magic immune, creep-hero Ancient unit."

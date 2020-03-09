@@ -76,7 +76,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 160 255 335"
+				"damage"				"100 200 300 400"
 			}
 
 			"02"
@@ -106,7 +106,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_pull"			"4"
+				"night_pull"			"4" // Unused
 			}
 
 			"07"
@@ -118,7 +118,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_extend"			"4"
+				"night_extend"			"4" // Unused
 			}
 
 			"09"
@@ -137,13 +137,13 @@
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_ministun"		"0.5"
+				"scepter_ministun"		"0.6"
 				"RequiresScepter"		"1"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_cooldown_reduction"		"2"
+				"scepter_cooldown_reduction"		"2"	// Unused
 				"RequiresScepter"		"1"
 			}			
 		}
@@ -327,7 +327,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"base_bonus_ms_pct"	"22 28 34 40"
+				"base_bonus_ms_pct"	"24 30 36 42"
 			}
 			"02"
 			{
@@ -337,7 +337,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_vision_bonus"	"100 200 300 400"
+				"night_vision_bonus"	"100 200 300 400" // Unused
 			}
 			"04"
 			{
@@ -352,7 +352,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"flying_duration"		"4"
+				"flying_duration"		"4"	// Unused
 			}
 		}
 	}
@@ -411,7 +411,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_reduction_pct"		"25"
+				"vision_reduction_pct"		"25" // Unused
 			}
 			"04"
 			{

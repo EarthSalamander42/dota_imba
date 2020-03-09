@@ -64,5 +64,5 @@
 "DOTA_Tooltip_modifier_imba_winterbringer_slow_Description"			"Caught in Winterbringer, slowing move speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 // Talents
-"DOTA_Tooltip_Ability_special_bonus_imba_unique_sly_king_1"			"+0.4 Hypothermic Wisdom INT per health loss %"
+"DOTA_Tooltip_Ability_special_bonus_imba_unique_sly_king_1"			"+{s:value} Hypothermic Wisdom INT per health loss %"
 "DOTA_Tooltip_Ability_special_bonus_imba_unique_sly_king_2"			"-0.15s Winterbringer pulse reduction"

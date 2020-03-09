@@ -30,14 +30,10 @@ function item_imba_force_staff:GetIntrinsicModifierName()
 end
 
 function item_imba_force_staff:CastFilterResultTarget(target)
-	if IsServer() then
-		if self:GetCaster():GetTeam() == target:GetTeam() and self:GetCaster() ~= target and target:IsMagicImmune() then
-			return UF_FAIL_MAGIC_IMMUNE_ALLY
-		elseif self:GetCaster():GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
-			return UF_FAIL_MAGIC_IMMUNE_ENEMY
-		end
-
-		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	if self:GetCaster() == target or target:HasModifier("modifier_imba_gyrocopter_homing_missile") then
+		return UF_SUCCESS
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_CUSTOM, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, self:GetCaster():GetTeamNumber())
 	end
 end
 
@@ -200,6 +196,14 @@ end
 
 function item_imba_hurricane_pike:GetIntrinsicModifierName()
 	return "modifier_item_imba_hurricane_pike"
+end
+
+function item_imba_hurricane_pike:CastFilterResultTarget(target)
+	if self:GetCaster() == target or target:HasModifier("modifier_imba_gyrocopter_homing_missile") then
+		return UF_SUCCESS
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_CUSTOM, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, self:GetCaster():GetTeamNumber())
+	end
 end
 
 function item_imba_hurricane_pike:OnSpellStart()

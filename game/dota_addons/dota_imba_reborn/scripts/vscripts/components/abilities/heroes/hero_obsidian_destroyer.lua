@@ -1059,11 +1059,15 @@ function modifier_imba_astral_imprisonment_buff:OnCreated()
 		self.particle_prison = "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
 
 		-- Ability specials
-		self.prison_movespeed = self.ability:GetSpecialValueFor("prison_movespeed")        
-
+		self.prison_movespeed = self.ability:GetSpecialValueFor("prison_movespeed")
+		
 		-- Allow the game to index the target location, then start thinking
 		Timers:CreateTimer(0.1, function()
 			self.current_location = self.target:GetAbsOrigin()
+
+			if self.target ~= self:GetCaster() and self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+				self.prison_movespeed = self.prison_movespeed * 2
+			end
 
 			-- Apply particles
 			self.particle_prison_fx = ParticleManager:CreateParticle(self.particle_prison, PATTACH_WORLDORIGIN, self.target)
@@ -1784,7 +1788,7 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 			end
 
 			-- If the enemy is an illusion, KILL IT!!!!!!!!!!!!!!!!!!
-			if enemy:IsIllusion() then
+			if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or not enemy:Custom_IsStrongIllusion()) then
 				enemy:Kill(ability, caster)
 			else
 				-- Calculate difference in intelligence for heroes, otherwise there are regarded as 0 int

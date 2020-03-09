@@ -231,7 +231,9 @@ end
 
 -----	Stone Remnant handler
 modifier_imba_stone_remnant = modifier_imba_stone_remnant or class({})
+
 function modifier_imba_stone_remnant:IsHidden() return true end
+function modifier_imba_stone_remnant:IgnoreTenacity()	return true end
 
 function modifier_imba_stone_remnant:OnCreated()
 	if IsServer() then
@@ -949,6 +951,11 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 				local RemnantFinder = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 				for _, r in ipairs(RemnantFinder) do
 					if r:HasModifier("modifier_imba_stone_remnant") then
+						-- "Enchanted heroes boost the rolling, ending the enchantment early. Earth Spirit does not collide with them."
+						if r:IsHero() then
+							self.enchanted_hero = r
+						end
+					
 						local remnantModifier = r:FindModifierByName("modifier_imba_stone_remnant")
 						if remnantModifier then remnantModifier:Destroy() end
 						
@@ -969,42 +976,68 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 			
 			local heroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 			for i, hero in ipairs(heroes) do
-				
-				ApplyDamage({victim = hero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
-				
-				local mark = hero:FindModifierByName("modifier_imba_earths_mark")
-				if mark then
-					mark:IncrementStackCount()
-					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
-				else
-					local modifier = hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+				if not self.enchanted_hero or hero ~= self.enchanted_hero then
+					ApplyDamage({victim = hero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 					
-					if modifier then
-						modifier:SetDuration(self.earthsMarkDuration * (1 - hero:GetStatusResistance()), true)
-					end
-				end
-				
-				if self.hitRemnant then
-					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
-					
-					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-					for _, unit in ipairs(magnetizedFinder) do
-						if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
-							unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
+					local mark = hero:FindModifierByName("modifier_imba_earths_mark")
+					if mark then
+						mark:IncrementStackCount()
+						hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
+					else
+						local modifier = hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+						
+						if modifier then
+							modifier:SetDuration(self.earthsMarkDuration * (1 - hero:GetStatusResistance()), true)
 						end
 					end
-				end
-				
-				-- Place caster on the other side of the target
-				if i == 1 then
-					EmitSoundOn("Hero_EarthSpirit.RollingBoulder.Target", hero)
-					FindClearSpaceForUnit(self.caster, hero:GetAbsOrigin() + self.direction * self.distanceOppositeToTarget, false)
-				end
-				
-				-- Stop rolling
-				if i == #heroes then
-					self:Destroy()
-					return
+					
+					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+					
+					for _, unit in ipairs(magnetizedFinder) do
+						if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
+							local mark = unit:FindModifierByName("modifier_imba_earths_mark")
+							if mark then
+								mark:IncrementStackCount()
+								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
+							else
+								local modifier = unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+								
+								if modifier then
+									modifier:SetDuration(self.earthsMarkDuration * (1 - unit:GetStatusResistance()), true)
+								end
+							end
+						end
+					end
+					
+					if self.hitRemnant then
+						local slow_modifier = hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
+						
+						if slow_modifier then
+							slow_modifier:SetDuration(self.slowDuration * (1 - hero:GetStatusResistance()), true)
+						end
+						
+						for _, unit in ipairs(magnetizedFinder) do
+							if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
+								local slow_modifier = unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
+								
+								if slow_modifier then
+									slow_modifier:SetDuration(self.slowDuration * (1 - unit:GetStatusResistance()), true)
+								end
+							end
+						end
+					end
+					
+					-- Place caster on the other side of the target
+					if i == 1 then
+						EmitSoundOn("Hero_EarthSpirit.RollingBoulder.Target", hero)
+						FindClearSpaceForUnit(self.caster, hero:GetAbsOrigin() + self.direction * self.distanceOppositeToTarget, false)
+					end
+					
+					-- Stop rolling
+					if i == #heroes then
+						self:Destroy()
+						return
+					end
 				end
 			end
 			
@@ -1241,17 +1274,6 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 				
 				EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Stun", target)
 				
-				local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-				for _, unit in ipairs(magnetizedFinder) do
-					if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
-						self.silence_modifier = unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
-						
-						if self.silence_modifier then
-							self.silence_modifier:SetDuration(self.silenceDuration * (1 - target:GetStatusResistance()), true)
-						end
-					end
-				end
-				
 				-- checking for modifier instead of isRemnant because enchant remnant retains movement qualities after expiring, but doesnt damage anymore
 				if self.parent:HasModifier("modifier_imba_stone_remnant") then
 					ApplyDamage({victim = target, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
@@ -1264,6 +1286,27 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 						mark:IncrementStackCount()
 					else
 						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - target:GetStatusResistance()), true)
+					end
+				end
+				
+				local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+				
+				for _, unit in ipairs(magnetizedFinder) do
+					if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
+						self.silence_modifier = unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_silence", {duration = self.silenceDuration})
+						
+						if self.silence_modifier then
+							self.silence_modifier:SetDuration(self.silenceDuration * (1 - target:GetStatusResistance()), true)
+						end
+					end
+					
+					-- Earths mark effect
+					local mark = unit:FindModifierByName("modifier_imba_earths_mark")
+					if mark then
+						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_root", {duration = self.rootTimePerMark * mark:GetStackCount()})
+						mark:IncrementStackCount()
+					else
+						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - unit:GetStatusResistance()), true)
 					end
 				end
 			end
@@ -1296,6 +1339,14 @@ end
 modifier_imba_geomagnetic_grip_silence = modifier_imba_geomagnetic_grip_silence or class({})
 function modifier_imba_geomagnetic_grip_silence:IsDebuff() return true end
 function modifier_imba_geomagnetic_grip_silence:IsPurgable() return true end
+
+function modifier_imba_geomagnetic_grip_silence:GetEffectName()
+	return "particles/generic_gameplay/generic_silenced.vpcf"
+end
+
+function modifier_imba_geomagnetic_grip_silence:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
 
 function modifier_imba_geomagnetic_grip_silence:CheckState()
 	return { [MODIFIER_STATE_SILENCED] = true } end
@@ -1338,6 +1389,11 @@ function imba_earth_spirit_magnetize:OnSpellStart()
 		local caster = self:GetCaster()
 		
 		EmitSoundOn("Hero_EarthSpirit.Magnetize.Cast", caster)
+		
+		local magnetize_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_magnetize_pulse.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControl(magnetize_particle, 2, Vector(searchRadius, 0, 0))
+		ParticleManager:ReleaseParticleIndex(magnetize_particle)
+		
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _, unit in ipairs(units) do
 			if unit:HasModifier("modifier_imba_magnetize") then
@@ -1352,7 +1408,7 @@ end
 -----	Debuff modifier
 modifier_imba_magnetize = modifier_imba_magnetize or class({})
 function modifier_imba_magnetize:IsDebuff() return true end
-function modifier_imba_magnetize:IsPurgable() return true end
+function modifier_imba_magnetize:IsPurgable() return not self:GetCaster():HasTalent("special_bonus_imba_earth_spirit_magnetize_unpurgable") end
 function modifier_imba_magnetize:IgnoreTenacity() return true end
 
 function modifier_imba_magnetize:OnCreated()
@@ -1372,12 +1428,26 @@ function modifier_imba_magnetize:OnCreated()
 		self.markTickDamagePerSecPerStack = self.ability:GetSpecialValueFor("mark_damage_per_sec_per_stack") * self.tickInterval
 		self.markedStunDuration = self.ability:GetSpecialValueFor("marked_stun_duration")
 		
+		self.marked_damage_pct	= self.ability:GetSpecialValueFor("marked_damage_pct")
+		
+		self.counter = 0
+		
 		self:StartIntervalThink(self.tickInterval)
 	end
 end
 
 function modifier_imba_magnetize:OnIntervalThink()
 	if IsServer() then
+		self.counter = self.counter + 1
+		
+		if (self:GetParent():IsHero() or self:GetParent():IsCreep()) and self.counter % 2 == 1 then
+			-- Using Visage particle here cause I don't know where the Earth Spirit one is
+			self.overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_visage/visage_stoneform_overhead_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
+			ParticleManager:SetParticleControl(self.overhead_particle, 1, Vector(0, math.ceil(self:GetRemainingTime()), 0))
+			ParticleManager:SetParticleControl(self.overhead_particle, 2, Vector(1, 0, 0))
+			ParticleManager:ReleaseParticleIndex(self.overhead_particle)
+		end
+	
 		local damage = self.tickDamge
 		local mark = self.parent:FindModifierByName("modifier_imba_earths_mark")
 		if mark then
@@ -1411,7 +1481,8 @@ function modifier_imba_magnetize:OnIntervalThink()
 					
 					EmitSoundOn("Hero_EarthSpirit.Magnetize.StoneBolt", self.parent)
 					local zapParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_magnet_arclightning.vpcf", PATTACH_POINT, self.caster)
-					ParticleManager:SetParticleControlEnt(zapParticle, 0, r, PATTACH_POINT, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					-- ParticleManager:SetParticleControlEnt(zapParticle, 0, r, PATTACH_POINT, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControl(zapParticle, 0, r:GetAbsOrigin())
 					ParticleManager:SetParticleControlEnt(zapParticle, 1, unit, PATTACH_POINT, "attach_hitloc", r:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(zapParticle)
 					
@@ -1456,6 +1527,25 @@ function modifier_imba_magnetize:OnDestroy()
 	end
 end
 
+-- function modifier_imba_magnetize:DeclareFunctions()
+	-- return {
+		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+	-- }
+-- end
+
+-- function modifier_imba_magnetize:GetModifierIncomingDamage_Percentage()
+	-- if IsServer() and self:GetParent():HasModifier("modifier_imba_earths_mark") then
+		-- return self.marked_damage_pct * self:GetParent():FindModifierByName("modifier_imba_earths_mark"):GetStackCount()
+	-- end
+-- end
+
+-- function modifier_imba_magnetize:GetModifierTotalDamageOutgoing_Percentage()
+	-- if IsServer() and self:GetParent():HasModifier("modifier_imba_earths_mark") then
+		-- return self.marked_damage_pct * self:GetParent():FindModifierByName("modifier_imba_earths_mark"):GetStackCount() * (-1)
+	-- end
+-- end
+
 ---------------------------------------------------------------------
 -------------------------	Enchant Remnant	  -----------------------
 ---------------------------------------------------------------------
@@ -1495,11 +1585,16 @@ function imba_earth_spirit_petrify:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local duration = self:GetSpecialValueFor("duration")
 		
-		if not target:TriggerSpellAbsorb(self) then
+		-- IMBAfication: 
+		-- if not target:TriggerSpellAbsorb(self) then
 			EmitSoundOn("Hero_EarthSpirit.Petrify", target)
 			local mod = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_stone_remnant", {duration = duration})
 			mod:SetPetrify(self)
-		end
+			
+			if target:HasModifier("modifier_imba_magnetize") then
+				target:FindModifierByName("modifier_imba_magnetize"):SetDuration(target:FindModifierByName("modifier_imba_magnetize"):GetDuration(), true)
+			end
+		-- end
 	end
 end
 

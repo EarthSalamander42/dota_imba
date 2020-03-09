@@ -96,24 +96,24 @@ end
 -- -- Seems like I might need to somewhat hard code this stuff cause it's NOT WORKING PROPERLY
 function modifier_custom_creep_scaling:DeclareFunctions()
     return {
-		-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
         -- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		-- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		-- MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		--MODIFIER_PROPERTY_HEALTH_BONUS, -- Doesn't actually work but gonna use this for tooltips
-		-- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		-- MODIFIER_EVENT_ON_UNIT_MOVED -- Supposedly causes major lag even with it only doing rest of logic in one frame
 		
-		-- MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
     }
 end
 
--- function modifier_custom_creep_scaling:GetModifierPreAttack_BonusDamage()
-	-- if self.melee_attack then
-		-- return self.melee_attack * self.game_time * self.multiplier
-	-- end
--- end
+function modifier_custom_creep_scaling:GetModifierPreAttack_BonusDamage()
+	if self.melee_attack and self:GetParent():GetUnitLabel() == "living_tower" then
+		return self.melee_attack * self.game_time * self.multiplier
+	end
+end
 
 -- function modifier_custom_creep_scaling:GetModifierAttackSpeedBonus_Constant()
 	-- if self.melee_aspd then
@@ -143,17 +143,17 @@ end
     -- -- return self.melee_hp
 -- -- end
 
--- function modifier_custom_creep_scaling:GetModifierConstantHealthRegen()
-	-- if self.melee_regen then
-		-- return self.melee_regen * self.game_time * self.multiplier
-	-- end
--- end
+function modifier_custom_creep_scaling:GetModifierConstantHealthRegen()
+	if self.melee_regen and self:GetParent():GetUnitLabel() == "living_tower" then
+		return self.melee_regen * self.game_time * self.multiplier
+	end
+end
 
--- function modifier_custom_creep_scaling:GetModifierExtraHealthBonus()
-	-- if self.melee_hp then
-		-- return self.melee_hp * self.game_time * self.multiplier
-	-- end
--- end
+function modifier_custom_creep_scaling:GetModifierExtraHealthBonus()
+	if self.melee_hp and self:GetParent():GetUnitLabel() == "living_tower" then
+		return self.melee_hp * self.game_time * self.multiplier
+	end
+end
 
 -- -- function modifier_custom_creep_scaling:OnUnitMoved(keys)
 	-- -- if keys.unit == self.parent and not self.initialized then

@@ -41,7 +41,7 @@
 "DOTA_Tooltip_ability_imba_batrider_methane_boost_duration"				"TRAVEL DURATION:"
 
 "DOTA_Tooltip_ability_imba_batrider_flaming_lasso"						"Flaming Lasso"
-"DOTA_Tooltip_ability_imba_batrider_flaming_lasso_Description"			"Lassoes an enemy and drags them in Batrider's wake.  Victims cannot be dragged over impassable terrain. Dragged units cannot move, attack, or use abilities.  Teleporting or blinking <font color='#FF7800'>over %break_distance% distance</font> will break the lasso.\n<font color='#FF7800'>The Bat Attacks:</font> Batrider can attack while using Flaming Lasso, but attack damage is reduced to %bat_attacks_dmg_pct%%%."
+"DOTA_Tooltip_ability_imba_batrider_flaming_lasso_Description"			"Lassoes an enemy and drags them in Batrider's wake.  Victims cannot be dragged over impassable terrain. Dragged units cannot move, attack, or use abilities.  Teleporting or blinking <font color='#FF7800'>over %break_distance% distance</font> will break the lasso.\n<font color='#FF7800'>The Bat Attacks:</font> Batrider can attack while using Flaming Lasso."
 "DOTA_Tooltip_ability_imba_batrider_flaming_lasso_aghanim_description"			"Flaming Lasso grabs both its target, as well as the target's nearest allied hero within 400 range. The secondary target is tethered to the first. <font color='#FF7800'>Also causes Flaming Lasso to deal 100 damage per second.</font>"
 "DOTA_Tooltip_ability_imba_batrider_flaming_lasso_Lore"					"Few dare to ask to ride on the bat, as Batrider gives them free of charge."
 "DOTA_Tooltip_ability_imba_batrider_flaming_lasso_Note0"					"Killing the target or the Batrider will break the lasso before its expiration."

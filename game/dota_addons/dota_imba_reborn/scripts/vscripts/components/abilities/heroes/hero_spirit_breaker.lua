@@ -61,6 +61,9 @@ function imba_spirit_breaker_charge_of_darkness:GetIntrinsicModifierName()
 end
 
 function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
+	-- Debug line
+	self.charge_cancel_reason = nil
+
 	local target = self:GetCursorTarget()
 
 	if target:TriggerSpellAbsorb(self) then
@@ -147,6 +150,8 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	
 	-- Rubick/Morphling stuff I guess
 	if not self:GetAbility() then
+		-- Okay this line should never run but...
+		self:GetAbility().charge_cancel_reason = "Ability Does Not Exist"
 		self:Destroy()
 		return
 	end
@@ -155,7 +160,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 	if not self.target:IsAlive() then
 		local new_targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), nil, 4000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 		
+		-- Set this to nil and begin looking for a new target if applicable
+		self.target = nil
+		
 		if #new_targets == 0 then
+			self:GetAbility().charge_cancel_reason = "Primary target dead; no other valid targets within 4000 radius"
 			self:Destroy()
 			return
 		end
@@ -165,10 +174,13 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 				self.target = target
 				self.vision_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_vision", {})
 				break
-			else
-				self:Destroy()
-				return
 			end
+		end
+		
+		if not self.target then
+			self:GetAbility().charge_cancel_reason = "Primary target dead; only valid target within 4000 radius is being Clotheslined"
+			self:Destroy()
+			return
 		end
 	end
 	
@@ -266,13 +278,16 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 			end
 		end
 		
-		-- IMBAfication: Mad Cow
+		-- IMBAfication: Mad Cow (if the target is NOT alive after the charge connects, the charge modifier is not necessarily destroyed)
 		if self.target:IsAlive() then
+			self:GetAbility().charge_cancel_reason = "Charge connected with target and they were still alive after impact"
 			me:SetAggroTarget(self.target)
 			self:Destroy()
 		end
+		
 		return
 	elseif me:IsStunned() or me:IsOutOfGame() or me:IsHexed() or me:IsRooted() then
+		self:GetAbility().charge_cancel_reason = "Caster was disabled mid-charge"
 		self:Destroy()
 		return
 	end
@@ -294,6 +309,8 @@ end
 
 -- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
 function modifier_imba_spirit_breaker_charge_of_darkness:OnHorizontalMotionInterrupted()
+	self:GetAbility().charge_cancel_reason = "Horizontal Motion Interrupted"
+
 	self:Destroy()
 end
 
@@ -391,7 +408,9 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnOrder(keys)
 		}
 		
 		-- Testing something to try and stop randomly cancelled charges but IDK what the issue is
-		if cancel_commands[keys.order_type] and self:GetElapsedTime() >= 0.1 then
+		if cancel_commands[keys.order_type] then -- and self:GetElapsedTime() >= 0.1 then
+			self:GetAbility().charge_cancel_reason = "Cancel Order Issued: "..keys.order_type
+			
 			self:Destroy()
 		end
 	-- IMBAfication: Taxi!

@@ -324,7 +324,7 @@ function modifier_imba_nian_crushing_leap_movement:GetAttributes()	return MODIFI
 function modifier_imba_nian_crushing_leap_movement:OnCreated(params)
 	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage				= self:GetAbility():GetSpecialValueFor("damage")
-	self.stun_duration		= self:GetAbility():GetSpecialValueFor("stun_duration")
+	self.root_duration		= self:GetAbility():GetSpecialValueFor("root_duration")
 	
 	self.scepter_duration	= self:GetAbility():GetSpecialValueFor("scepter_duration")
 	
@@ -395,10 +395,10 @@ function modifier_imba_nian_crushing_leap_movement:OnDestroy()
 			ApplyDamage(damageTable)
 		
 			if not enemy:IsMagicImmune() then
-				local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
+				local root_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_rooted", {duration = self.root_duration})
 				
-				if stun_modifier then
-					stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
+				if root_modifier then
+					root_modifier:SetDuration(self.root_duration * (1 - enemy:GetStatusResistance()), true)
 				end
 				
 				if self:GetCaster():HasScepter() then
@@ -779,7 +779,7 @@ function imba_nian_volcanic_burster:OnProjectileThink_ExtraData(location, data)
 				bDecelerate 	= false,
 				bInterruptible 	= false,
 				bIgnoreTenacity	= true,
-				bStun			= true,
+				bStun			= false,
 				bTreeRadius		= self:GetSpecialValueFor("tree_radius")
 			})
 			

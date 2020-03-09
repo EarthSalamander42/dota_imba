@@ -74,9 +74,9 @@ function GameMode:GoldFilter(keys)
 		
 		local networth_difference = enemy_networth - ally_networth
 		
-		-- Let's try linear scaling with max of 2x gold granted at a 150k networth differential (IDK good numbers without more input)
+		-- Let's try linear scaling with max of 2x gold granted at a 125k networth differential (IDK good numbers without more input)
 		if networth_difference > 0 then
-			keys.gold = keys.gold * math.min(1 + (networth_difference / 150000), 2)
+			keys.gold = keys.gold * math.min(1 + (networth_difference / 125000), 2)
 		end
 	end
 
@@ -127,9 +127,9 @@ function GameMode:ExperienceFilter( keys )
 	
 	local level_difference = enemy_level - ally_level
 	
-	-- Let's try linear scaling with max of 2x experience granted at a 75 level differential (IDK good numbers without more input)
+	-- Let's try linear scaling with max of 2x experience granted at a 60 level differential (IDK good numbers without more input)
 	if level_difference > 0 then
-		keys.experience = keys.experience * math.min(1 + (level_difference / 75), 2)
+		keys.experience = keys.experience * math.min(1 + (level_difference / 60), 2)
 	end
 
 --	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
@@ -313,25 +313,30 @@ function GameMode:ItemAddedFilter( keys )
 	if unit == nil then return end
 	local item = EntIndexToHScript(keys.item_entindex_const)
 	if item == nil then return end
-	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
-		item:EndCooldown()
+	
+	-- This is currently done by default and does not use the ENABLE_TPSCROLL_ON_FIRST_SPAWN variable
+	-- if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
+		-- item:EndCooldown()
 
-		return ENABLE_TPSCROLL_ON_FIRST_SPAWN
+		-- return ENABLE_TPSCROLL_ON_FIRST_SPAWN
 
-		-- return false to remove it
---		return false
-	end
+		-- -- return false to remove it
+-- --		return false
+	-- end
 
-	local item_name = 0
+	local item_name = nil
+	
 	if item:GetName() then
 		item_name = item:GetName()
 	end
-
+	
+	-- Custom Rune System
 	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
 		ImbaRunes:PickupRune(item_name, unit)
 		return false
 	end
-
+	
+	-- Airdrop Mutation to inform players that an item was picked up
 	if item.airdrop then
 		local overthrow_item_drop =
 		{
@@ -430,6 +435,11 @@ function GameMode:ItemAddedFilter( keys )
 				item:SetPurchaser(unit)
 			end
 			
+			-- Cursed Rapiers should not be droppable at all after first drop (due to abuse like Spectre ult)
+			if item:GetName() == "item_imba_rapier_cursed" then
+				item:SetDroppable(false)
+			end			
+			
 			if item:GetPurchaser() and item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end
@@ -479,6 +489,14 @@ function GameMode:ItemAddedFilter( keys )
 		end
 		
 		return false
+	end
+	
+	----------------------------------------------------------------
+	-- Gem of True Sight Logic (mostly for Soul of Truth merging) --
+	----------------------------------------------------------------
+	
+	if item:GetName() == "item_gem" and not unit:IsCourier() then
+		item:SetPurchaser(unit)
 	end
 
 	return true
@@ -682,7 +700,7 @@ function GameMode:OrderFilter( keys )
 			end
 
 			-- Rough code to drop neutral items on the ground
-			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability.GetName and ability:GetName() == "courier_return_stash_items" then
+			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability and ability.GetName and ability:GetName() == "courier_return_stash_items" then
 				for i = 0, 8 do
 					if unit:GetItemInSlot(i) and unit:GetItemInSlot(i).GetPurchaser and not unit:GetItemInSlot(i):GetPurchaser() then
 						unit:DropItemAtPositionImmediate(unit:GetItemInSlot(i), unit:GetAbsOrigin() + RandomVector(RandomInt(0, 100)))
@@ -914,7 +932,19 @@ function GameMode:OrderFilter( keys )
 		if ability ~= nil and ability:GetAbilityName() == "imba_kunkka_tidebringer" then
 			ability.manual_cast = true
 		end
-
+		
+		-- Give Lone Druid's Spirit Bear the Cursed Fountain debuff if applicable (doesn't get picked up by any of the spawn filters)
+		if ability ~= nil and ability:GetAbilityName() == "lone_druid_spirit_bear" and unit:HasModifier("modifier_imba_cursed_fountain") then
+			for _, search_unit in pairs(FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)) do
+				if string.find(search_unit:GetUnitName(), "npc_dota_lone_druid_bear") and search_unit.GetOwner and search_unit:GetOwner() == unit then
+					local cursed_fountain_modifier = search_unit:AddNewModifier(unit:FindModifierByName("modifier_imba_cursed_fountain"):GetCaster(), unit:FindModifierByName("modifier_imba_cursed_fountain"):GetAbility(), "modifier_imba_cursed_fountain", {})
+					
+					if cursed_fountain_modifier then
+						cursed_fountain_modifier:SetStackCount(unit:FindModifierByName("modifier_imba_cursed_fountain"):GetStackCount())
+					end
+				end
+			end
+		end
 	elseif unit:HasModifier("modifier_imba_torrent_cast") and keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
 		unit:RemoveModifierByName("modifier_imba_torrent_cast")
 	end

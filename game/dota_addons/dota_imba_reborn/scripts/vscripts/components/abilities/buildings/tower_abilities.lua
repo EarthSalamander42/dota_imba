@@ -2336,10 +2336,12 @@ function modifier_imba_tower_atrophy_aura_debuff:DeclareFunctions()
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	if self.caster then
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 
-	local total_damage_reduction = self.damage_reduction + self.additional_dr_per_protective * protective_instinct_stacks
-	return total_damage_reduction
+		local total_damage_reduction = self.damage_reduction + self.additional_dr_per_protective * protective_instinct_stacks
+		return total_damage_reduction
+	end
 end
 
 
@@ -3861,87 +3863,28 @@ end
 modifier_imba_tower_barrier_aura_buff = modifier_imba_tower_barrier_aura_buff or class({})
 
 function modifier_imba_tower_barrier_aura_buff:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		if not self.ability then
-			self:Destroy()
-			return nil
-		end
-		self.parent = self:GetParent()
-		self.prevention_modifier = "modifier_imba_tower_barrier_aura_cooldown"
+	if not IsServer() or not self:GetAbility() then return end
 
-		-- Ability specials
-		self.base_maxdamage = self.ability:GetSpecialValueFor("base_maxdamage")
-		self.maxdamage_per_protective = self.ability:GetSpecialValueFor("maxdamage_per_protective")
-		self.replenish_duration = self.ability:GetSpecialValueFor("replenish_duration")
-
-		-- Assign variables
-		self.tower_barrier_damage = 0
-		self.tower_barrier_max = self.base_maxdamage
-
-		-- Calculate max damage to show on modifier creation
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-		local show_stacks = self.base_maxdamage + self.maxdamage_per_protective * protective_instinct_stacks
-		self:SetStackCount(show_stacks)
-
-		-- Start thinking
-		self:StartIntervalThink(FrameTime())
-	end
-end
-
-function modifier_imba_tower_barrier_aura_buff:OnRefresh()
-	self:OnCreated()
-end
-
-function modifier_imba_tower_barrier_aura_buff:OnIntervalThink()
-	if IsServer() then
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-		self.tower_barrier_max = self.base_maxdamage + self.maxdamage_per_protective * protective_instinct_stacks
-
-		-- If the barrier should be broken, break it
-		local barrier_life = self.tower_barrier_max - self.tower_barrier_damage
-		if barrier_life <= 0 then
-			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, {duration = self.replenish_duration})
-			self:Destroy()
-		end
-
-		self:SetStackCount(barrier_life)
-	end
+	-- Ability specials
+	self.base_maxdamage 			= self:GetAbility():GetSpecialValueFor("base_maxdamage")
+	self.maxdamage_per_protective	= self:GetAbility():GetSpecialValueFor("maxdamage_per_protective")
+	self.replenish_duration			= self:GetAbility():GetSpecialValueFor("replenish_duration")
+	
+	self:SetStackCount(self.base_maxdamage + self.maxdamage_per_protective * #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
 end
 
 function modifier_imba_tower_barrier_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK}
 end
 
-function modifier_imba_tower_barrier_aura_buff:GetModifierIncomingDamage_Percentage()
-	return -100
-end
-
-function modifier_imba_tower_barrier_aura_buff:OnTakeDamage(keys)
-	if IsServer() then
-		local unit = keys.unit
-		local damage = keys.original_damage
-		local damage_type = keys.damage_type
-
-		-- Only apply on the golem taking damage
-		if unit == self.parent then
-
-			-- Adjust damage according to armor or magic resist, if damage types match.
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * GetReductionFromArmor(self.parent:GetPhysicalArmorValue(false))
-
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
-				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-			end
-
-			-- Increase the damage that the barrier had blocked
-			self.tower_barrier_damage = self.tower_barrier_damage + damage
-		end
+function modifier_imba_tower_barrier_aura_buff:GetModifierTotal_ConstantBlock(keys)
+	if keys.damage >= self:GetStackCount() then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tower_barrier_aura_cooldown", {duration = self.replenish_duration})
+		self:Destroy()
+		return self:GetStackCount()
+	else
+		self:SetStackCount(self:GetStackCount() - keys.damage)
+		return keys.damage
 	end
 end
 
@@ -4684,3 +4627,38 @@ function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStack
 	return tenacity
 end
 
+------------------------------------
+-- IMBA_TOWER_SECONDARY_RESISTANCE --
+-------------------------------------
+
+LinkLuaModifier("modifier_imba_tower_secondary_resistance", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+
+imba_tower_secondary_resistance				= imba_tower_secondary_resistance or class({})
+modifier_imba_tower_secondary_resistance	= modifier_imba_tower_secondary_resistance or class({})
+
+function imba_tower_secondary_resistance:GetIntrinsicModifierName()
+	return "modifier_imba_tower_secondary_resistance"
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_TOWER_SECONDARY_RESISTANCE --
+----------------------------------------------
+
+function modifier_imba_tower_secondary_resistance:IsHidden()	return true end
+
+function modifier_imba_tower_secondary_resistance:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
+end
+
+function modifier_imba_tower_secondary_resistance:GetModifierMagicalResistanceBonus()
+	return self:GetAbility():GetSpecialValueFor("magic_resistance")
+end
+
+function modifier_imba_tower_secondary_resistance:GetModifierPhysical_ConstantBlock(keys)
+	if keys.attacker:IsCreep() and keys.attacker.GetPlayerOwner and keys.attacker:GetPlayerOwner() then
+		return self:GetAbility():GetSpecialValueFor("damage_block")
+	end
+end

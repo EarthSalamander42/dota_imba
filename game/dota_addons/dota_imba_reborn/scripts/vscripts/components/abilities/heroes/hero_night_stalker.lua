@@ -1217,11 +1217,10 @@ modifier_imba_darkness_fogvision = class({})
 function modifier_imba_darkness_fogvision:IsHidden() return true end
 function modifier_imba_darkness_fogvision:IsPurgable() return false end
 function modifier_imba_darkness_fogvision:IsDebuff() return true end
+function modifier_imba_darkness_fogvision:IgnoreTenacity()	return true end
 
 function modifier_imba_darkness_fogvision:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
 end
 
 function modifier_imba_darkness_fogvision:GetModifierProvidesFOWVision()

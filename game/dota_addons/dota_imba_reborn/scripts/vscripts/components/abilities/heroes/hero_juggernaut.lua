@@ -93,15 +93,16 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 			self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStart")
 			-- StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
 			
-			-- Disable Omnislash during Blade Fury (vanilla)
-			if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
-				self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
-			end
+			-- IMBAfication: Multitasker
+			-- -- Disable Omnislash during Blade Fury (vanilla)
+			-- if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
+				-- self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
+			-- end
 			
-			-- Disable Blade Dance during Blade Fury
-			if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
-				self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
-			end
+			-- -- Disable Blade Dance during Blade Fury
+			-- if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+				-- self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
+			-- end
 		end
 	end
 end
@@ -175,15 +176,15 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 		self:GetCaster():StopSound("Hero_Juggernaut.BladeFuryStart")
 		self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStop")
 
-		-- Re-enable Omnislash during Blade Fury (vanilla)
-		if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
-			self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
-		end
+		-- -- Re-enable Omnislash during Blade Fury (vanilla)
+		-- if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
+			-- self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
+		-- end
 		
-		-- Re-enable Blade Dance at the end of Blade Fury
-		if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
-			self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
-		end
+		-- -- Re-enable Blade Dance at the end of Blade Fury
+		-- if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+			-- self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
+		-- end
 		
 		if self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") then
 			StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})

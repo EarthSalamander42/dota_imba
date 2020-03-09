@@ -196,7 +196,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 60 90 120"
+				"damage_per_second"		"30 65 100 135"
 				//"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
 				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_damage"
 			}
@@ -509,7 +509,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"150"
+				"value"						"135"
 			}
 		}
 	}

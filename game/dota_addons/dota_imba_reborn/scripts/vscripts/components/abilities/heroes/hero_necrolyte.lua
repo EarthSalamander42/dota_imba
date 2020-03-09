@@ -413,9 +413,12 @@ function modifier_imba_ghost_shroud_active:GetEffectAttachType()
 end
 
 function modifier_imba_ghost_shroud_active:DeclareFunctions()
-	return 
-	{ MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE,
-	MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL }
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_MP_RESTORE_AMPLIFY_PERCENTAGE 
+	}
 end
 
 function modifier_imba_ghost_shroud_active:GetModifierMagicalResistanceDecrepifyUnique( params )
@@ -425,6 +428,14 @@ end
 function modifier_imba_ghost_shroud_active:GetAbsoluteNoDamagePhysical()
 	if self:GetCaster() == self:GetParent() then return 1
 	else return nil end
+end
+
+function modifier_imba_ghost_shroud_active:GetModifierMPRegenAmplify_Percentage()
+	return self.healing_amp_pct
+end
+
+function modifier_imba_ghost_shroud_active:GetModifierMPRestoreAmplify_Percentage()
+	return self.healing_amp_pct
 end
 
 function modifier_imba_ghost_shroud_active:CheckState()
@@ -437,6 +448,8 @@ end
 
 -- IntervalThink to remove active if magic immune (so you can't stack the two)
 function modifier_imba_ghost_shroud_active:OnCreated()
+	self.healing_amp_pct	= self:GetAbility():GetSpecialValueFor("healing_amp_pct")
+
 	if not IsServer() then return end
 	self:StartIntervalThink(FrameTime())
 end

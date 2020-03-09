@@ -51,3 +51,5 @@
 "DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_echo_damage"				"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_echo_damage}"
 "DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_damage_range"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_damage_range}"
 "DOTA_Tooltip_ability_imba_earthshaker_echo_slam_echo_slam_initial_damage"			"#{DOTA_Tooltip_ability_earthshaker_echo_slam_echo_slam_initial_damage}"
+
+"DOTA_Tooltip_ability_special_bonus_imba_earthshaker_bonus_magic_resistance"		"+{s:value}% Magic Resistance"

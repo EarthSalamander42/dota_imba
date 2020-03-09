@@ -39,31 +39,20 @@ function item_imba_sheepstick:GetIntrinsicModifierName()
 	return "modifier_item_imba_sheepstick" end
 
 function item_imba_sheepstick:CastFilterResultTarget(target)
-	if IsServer() then
-		local caster = self:GetCaster()
-
-		-- Can't cast on allies, except for yourself
-		if caster:GetTeam() == target:GetTeam() and caster ~= target then
-			return UF_FAIL_CUSTOM
-		elseif caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
-			return UF_FAIL_CUSTOM
-		elseif target:IsBuilding() then
-			return UF_FAIL_BUILDING
-		elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
-			return UF_FAIL_CUSTOM
-		end
-		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	-- Can't cast on allies, except for yourself
+	if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() and self:GetCaster() ~= target then
+		return UF_FAIL_CUSTOM
+	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+		return UF_FAIL_CUSTOM
 	end
+	
+	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber() )
 end
 
 function item_imba_sheepstick:GetCustomCastErrorTarget(target)
 	local caster = self:GetCaster()
-	if caster:GetTeam() == target:GetTeam() and caster ~= target then
+	if caster:GetTeamNumber() == target:GetTeamNumber() and caster ~= target then
 		return "#dota_hud_error_only_cast_on_self"
-	elseif caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
-		return "#dota_hud_error_target_magic_immune"
-	elseif target:IsBuilding() then
-		return "#dota_hud_error_cant_cast_on_building"
 	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 		return "#dota_hud_error_cant_use_already_hexed"
 	end
@@ -82,11 +71,6 @@ function item_imba_sheepstick:OnSpellStart()
 			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
-		end
-
-		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
-		if target:IsMagicImmune() then
-			return nil
 		end
 
 		-- Play the cast sound

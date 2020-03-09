@@ -559,9 +559,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"0"
-		"BountyGoldMin"				"0"
-		"BountyGoldMax"				"0"
+		"BountyXP"					"75"		// Experience earn.
+		"BountyGoldMin"				"75"			// Gold earned min.
+		"BountyGoldMax"				"75"			// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -6369,7 +6369,8 @@
 		
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air (this was for movement talent)
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 
 		// Status
 		//----------------------------------------------------------------
@@ -6385,7 +6386,8 @@
 		
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 
 		// Status
 		//----------------------------------------------------------------
@@ -6401,7 +6403,8 @@
 		
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 
 		// Status
 		//----------------------------------------------------------------

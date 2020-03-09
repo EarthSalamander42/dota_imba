@@ -315,7 +315,8 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	self.enemies_hit = {}
 
 	-- Calculate the center point of the primary raze
-	local main_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * main_raze_distance
+	-- local main_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * main_raze_distance
+	local main_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) - (caster:GetRightVector() * main_raze_radius * (self:GetLevel() - 1))
 	local raze_hit_hero = CastShadowRazeOnPoint(caster, ability, main_raze_point, main_raze_radius)
 
 	-- Check if ability is level 5 or above
@@ -326,8 +327,11 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	if level_of_ability >= 2 then
 
 		-- Create a second raze with its values
-		local level_5_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_5_raze_distance
-		lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, level_5_raze_radius)
+		-- local level_5_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_5_raze_distance		
+		-- lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, level_5_raze_radius)
+		
+		local level_5_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius) - (caster:GetRightVector() * (main_raze_radius * (self:GetLevel() - 2)))
+		lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, main_raze_radius)
 	end
 
 	-- Check if ability is level 6 or above
@@ -338,9 +342,12 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	if level_of_ability >= 3 then
 	
 		-- Create a third raze with its values, behind the caster
-		local back_direction = (main_raze_point - caster:GetAbsOrigin()):Normalized()
-		local level_6_raze_point = caster:GetAbsOrigin() + back_direction * level_6_raze_distance
-		lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, level_6_raze_radius)
+		-- local back_direction = (main_raze_point - caster:GetAbsOrigin()):Normalized()
+		-- local level_6_raze_point = caster:GetAbsOrigin() + back_direction * level_6_raze_distance	
+		-- lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, level_6_raze_radius)
+		
+		local level_6_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius * 2) - (caster:GetRightVector() * (main_raze_radius * (self:GetLevel() - 3)))
+		lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, main_raze_radius)
 	end
 
 	-- Check if abiility is level 7
@@ -351,8 +358,11 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	if level_of_ability == 4 then
 	
 		-- Create the last raze at the far end
-		local level_7_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_7_raze_distance
-		local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
+		-- local level_7_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_7_raze_distance
+		-- local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
+		
+		local level_7_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius * 3)
+		local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, main_raze_radius)
 	end
 
 	--if caster is in Soul Harvest and no razes hit an hero, remove the modifier
@@ -510,10 +520,10 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 		-- Adjust damage
 		damage = damage + (stacks * damage_per_soul) + debuff_boost
 
-		-- Add a Necromastery stack if it was a hero
-		if enemy:IsRealHero() then
-			AddNecromasterySouls(caster, souls_per_raze)
-		end
+		-- -- Add a Necromastery stack if it was a hero
+		-- if enemy:IsRealHero() then
+			-- AddNecromasterySouls(caster, souls_per_raze)
+		-- end
 
 		-- If caster is not broken, launch a soul projectile to the caster
 		if not caster:PassivesDisabled() then
@@ -1120,8 +1130,8 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 				return nil
 			end
 
-			-- Gain a soul and refresh
-			AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
+			-- -- Gain a soul and refresh
+			-- AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
 
 			-- If caster is not broken and is visible, launch a hero soul to the caster
 			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then

@@ -185,9 +185,9 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_enemy", {duration = mist_duration})
 		else
 			--Apply spellpower to heal
-			local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
+			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 
-			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) * heal_amp
+			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
 			target:Heal(heal, caster)

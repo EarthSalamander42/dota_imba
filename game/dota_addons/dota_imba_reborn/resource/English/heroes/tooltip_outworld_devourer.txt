@@ -19,7 +19,7 @@
 
 // Obsidian Destroyer's Astral Imprisonment
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment"                  "Astral Imprisonment"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"      "Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to it and nearby enemies.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it, carrying the imprisoned target. The prison can be moved indefinitely until it ends."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"      "Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to it and nearby enemies.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it, carrying the imprisoned target. The prison can be moved indefinitely until it ends. Move speed is doubled for non-self allies."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Lore"             "Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_radius"           "IMPLOSION RADIUS:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -108,7 +108,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_mana_cost"	"%CURRENT MANA COST:"
 
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment"				"Astral Imprisonment"
-"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Description"	"Places a target unit into an astral prison. The hidden unit is invulnerable and disabled. When the astral prison implodes, it deals damage to the target and nearby enemies with %radius% range. Gains three Sanity's Eclipse charges.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it at a move speed of %universal_movespeed%, carrying the imprisoned target. The prison can be moved indefinitely until it ends.\n<font color='#FF7800'>Dimensional Casting:</font> If Astral Imprisonment is self-cast, the caster can freely cast abilities. They are treated as disarmed, muted, and rooted, instead of stunned."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Description"	"Places a target unit into an astral prison. The hidden unit is invulnerable and disabled. When the astral prison implodes, it deals damage to the target and nearby enemies with %radius% range. Gains three Sanity's Eclipse charges.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it at a move speed of %universal_movespeed%, carrying the imprisoned target. The prison can be moved indefinitely until it ends. Move speed is doubled for non-self allies.\n<font color='#FF7800'>Dimensional Casting:</font> If Astral Imprisonment is self-cast, the caster can freely cast abilities. They are treated as disarmed, muted, and rooted, instead of stunned."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Lore"			"Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Note0"			"Imprisoned units can still be hit by Sanity's Eclipse."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_int_steal"       "INT STEAL:"
@@ -119,7 +119,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_max_charges_scepter"	"SCEPTER MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_range_bonus"	"SCEPTER CAST RANGE BONUS:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_charge_restore_time_scepter"	"SCEPTER CHARGE RESTORE TIME:"
-"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_aghanim_description"	"Grants charges to Astral Imprisonment. Damage areas stack."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_aghanim_description"	"Grants charges to Astral Imprisonment. Damage areas stack. Also increases cast range."
 
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux"					"Essence Flux"
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_Description"		"Passively grants you a chance to restore a percentage of your max mana each time you cast an ability. When activated, causes all abilities to slow enemies when they deal damage.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."

@@ -845,10 +845,9 @@ function modifier_imba_fury_swipes:IsPurgable()
 end
 
 function modifier_imba_fury_swipes:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL
 	}
-	return decFuncs
 end
 
 function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( keys )
@@ -882,9 +881,10 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			if target:IsRoshan() then
 				stack_duration = roshan_stack_duration
 			end
-
+			
+			-- "Does not work against buildings, wards and allied units when attacking them."
 			-- If the target is a building, do nothing
-			if target:IsBuilding() then
+			if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 				return nil
 			end
 

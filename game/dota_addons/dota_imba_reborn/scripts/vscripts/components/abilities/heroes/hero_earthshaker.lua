@@ -1,3 +1,25 @@
+-- Editor:
+--	   AltiV, February 20th, 2020
+
+-- Much of the original logic was derived from Elfansoer; I will leave the lua abilities intact below as reference, but somewhat copy these into imba classes for better consistency
+
+LinkLuaModifier("modifier_imba_earthshaker_fissure_thinker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_earthshaker_enchant_totem", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthshaker_enchant_totem_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+
+imba_earthshaker_fissure							= imba_earthshaker_fissure or class({})
+modifier_imba_earthshaker_fissure_thinker			= modifier_imba_earthshaker_fissure_thinker or class({})
+
+imba_earthshaker_enchant_totem						= imba_earthshaker_enchant_totem or class({})
+modifier_imba_earthshaker_enchant_totem				= modifier_imba_earthshaker_enchant_totem or class({})
+modifier_imba_earthshaker_enchant_totem_leap		= modifier_imba_earthshaker_enchant_totem_leap or class({})
+
+
+------------------------------
+-- IMBA_EARTHSHAKER_FISSURE --
+------------------------------
+
 -- Credits: Elfansoer.
 -- Earthshaker Fissure luafied
 -- Fissure: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_fissure_lua/earthshaker_fissure_lua.lua
@@ -1049,17 +1071,40 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_unique_earthshaker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earthshaker_bonus_magic_resistance", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_unique_earthshaker			= class({})
+modifier_special_bonus_imba_earthshaker_bonus_magic_resistance	= modifier_special_bonus_imba_earthshaker_bonus_magic_resistance or class({})
 
 function modifier_special_bonus_unique_earthshaker:IsHidden() 		return true end
 function modifier_special_bonus_unique_earthshaker:IsPurgable() 	return false end
 function modifier_special_bonus_unique_earthshaker:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:IsHidden() 		return true end
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:IsPurgable() 	return false end
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:OnCreated()
+	self.magic_resistance = self:GetParent():FindTalentValue("special_bonus_imba_earthshaker_bonus_magic_resistance")
+end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:DeclareFunctions()
+    return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+end
+
+function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:GetModifierMagicalResistanceBonus()
+	return self.magic_resistance
+end
 
 function earthshaker_enchant_totem_lua:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_unique_earthshaker") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_earthshaker") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_earthshaker"), "modifier_special_bonus_unique_earthshaker", {})
+	end
+	
+	-- Doesn't matter where we attach the bonus magic resistance talent to but it should be attached to SOMETHING
+	if self:GetCaster():HasTalent("special_bonus_imba_earthshaker_bonus_magic_resistance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_earthshaker_bonus_magic_resistance") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_earthshaker_bonus_magic_resistance"), "modifier_special_bonus_imba_earthshaker_bonus_magic_resistance", {})
 	end
 end

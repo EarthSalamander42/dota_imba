@@ -54,12 +54,12 @@
 		//-------------------------------------------------------------------------------------
 		"BaseClass"					"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_malfurion.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 
 		// Stats
 		//-------------------------------------------------------------------------------------
 		"AbilityCastPoint"			"0.5"
-		"AbilityCastRange"			"900"
+		"AbilityCastRange"			"600"
 		"AbilityCooldown"			"18.0"
 		"AbilityManaCost"			"110 120 130 140"
 		"AbilityTextureName"		"custom//malfurion/rejuvenation"
@@ -89,20 +89,15 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"total_heal_tooltip"	"120 240 360 480"
-			}
-			"04"
-			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"6.0"
 			}
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"heal_per_sec_creep_pct"	"25"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"heal_per_sec_building_pct"	"50"
@@ -135,12 +130,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chance"				"17"
+				"chance"				"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"180 200 220 240"
+				"bonus_damage_pct"		"175 200 225 250"
 			}
 			"03"
 			{
@@ -209,7 +204,7 @@
 		"RequiredLevel"					"6"
 		"AbilityTextureName"			"custom/tower_tenacity"
 		"AbilityManaCost"				"150 200 250"
-		"AbilityCooldown"				"140.0 120.0 100.0"
+		"AbilityCooldown"				"120 105 90"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange"				"600"
 		"HasScepterUpgrade"				"1"
@@ -230,7 +225,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 200 300"
+				"damage"				"150 250 350"
 			}
 			"03"
 			{

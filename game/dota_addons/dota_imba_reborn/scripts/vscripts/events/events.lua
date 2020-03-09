@@ -230,7 +230,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			return GOLD_TICK_TIME[GetMapName()] / (CUSTOM_GOLD_BONUS[GetMapName()] * 0.01)
+			return GOLD_TICK_TIME[GetMapName()]
 		end)
 	end
 end
@@ -562,6 +562,8 @@ end
 local subAbilities = {"chen_test_of_faith", "huskar_inner_vitality", "tusk_frozen_sigil"}
 
 function GameMode:OnPlayerLevelUp(keys)
+	if not keys.player then return end
+
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	if hero == nil then
@@ -814,6 +816,29 @@ function GameMode:OnPlayerChat(keys)
 			end
 		end
 		
+		if str == "-charge" then
+			if caster:HasAbility("imba_spirit_breaker_charge_of_darkness") and caster:FindAbilityByName("imba_spirit_breaker_charge_of_darkness").charge_cancel_reason then
+				DisplayError(caster:GetPlayerID(), "Charge was cancelled due to..."..caster:FindAbilityByName("imba_spirit_breaker_charge_of_darkness").charge_cancel_reason)
+			else
+				DisplayError(caster:GetPlayerID(), "Nothing to see here.")
+			end
+		end
+	
+		if str == "-killillusions" then
+			local zero_health_illusion_count = 0
+			
+			for _, unit in pairs(FindUnitsInRadius(caster:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+				if (unit:IsIllusion() and unit:GetHealth() <= 0) or (unit.GetPlayerID and unit:GetPlayerID() == -1) then
+					unit:ForceKill(false)
+					unit:RemoveSelf()
+					
+					zero_health_illusion_count = zero_health_illusion_count + 1
+				end
+			end
+			
+			DisplayError(caster:GetPlayerID(), zero_health_illusion_count.." zero health illusions killed.")
+		end
+		
 		-- For the serial disconnectors
 		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
 			GameRules:SetGameWinner(caster:GetTeamNumber())
@@ -984,18 +1009,76 @@ function GameMode:OnPlayerChat(keys)
 								[0] = "imba_gyrocopter_rocket_barrage",
 								[1] = "imba_gyrocopter_homing_missile",
 								[2] = "imba_gyrocopter_flak_cannon",
-								[3] = "generic_hidden",
+								[3] = "imba_gyrocopter_gatling_guns",
 								[4] = "generic_hidden",
 								[5] = "imba_gyrocopter_call_down",
-								-- [6] = "special_bonus_attack_damage_30",
-								-- [7] = "special_bonus_hp_200",
-								-- [8] = "special_bonus_imba_brewmaster_thunder_clap_slow_duration",
-								-- [9] = "special_bonus_magic_resistance_20",
-								-- [10] = "special_bonus_imba_brewmaster_primal_split_health",
-								-- [11] = "special_bonus_attack_speed_100",
-								-- [12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
-								-- [13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
+								[6] = "special_bonus_attack_damage_25",
+								[7] = "special_bonus_hp_250",
+								[8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
+								[9] = "special_bonus_imba_gyrocopter_rocket_barrage_damage",
+								[10] = "special_bonus_movement_speed_50",
+								[11] = "special_bonus_imba_gyrocopter_call_down_cooldown",
+								[12] = "special_bonus_imba_gyrocopter_homing_missile_charges",
+								[13] = "special_bonus_imba_gyrocopter_gatling_guns_activate"
 							}
+							upgraded = true
+						elseif string.find(text, 'void') and hero:GetName() == "npc_dota_hero_void_spirit" then
+							ability_set = {
+								-- [0] = "imba_gyrocopter_rocket_barrage",
+								[1] = "imba_void_spirit_dissimilate",
+								[2] = "imba_void_spirit_resonant_pulse",
+								[3] = "imba_void_spirit_void_stasis",
+								-- [4] = "imba_void_spirit_astral_step_helper",
+								[4] = "imba_void_spirit_astral_step_helper_2",
+								[5] = "imba_void_spirit_astral_step",
+								-- [6] = "special_bonus_attack_damage_25",
+								-- [7] = "special_bonus_hp_250",
+								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
+								[9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
+								-- [10] = "special_bonus_movement_speed_50",
+								[11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
+								[12] = "special_bonus_imba_void_spirit_astral_step_crit",
+								[13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+							}
+							
+							upgraded = true
+						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
+							ability_set = {
+								[0] = "imba_terrorblade_reflection",
+								-- [1] = "imba_void_spirit_dissimilate",
+								-- [2] = "imba_void_spirit_resonant_pulse",
+								-- [3] = "imba_void_spirit_void_stasis",
+								-- [4] = "imba_void_spirit_astral_step_helper",
+								-- [5] = "imba_void_spirit_astral_step",
+								-- [6] = "special_bonus_attack_damage_25",
+								-- [7] = "special_bonus_hp_250",
+								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
+								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
+								-- [10] = "special_bonus_movement_speed_50",
+								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
+								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
+								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+							}
+							
+							upgraded = true
+						elseif string.find(text, 'undying') and hero:GetName() == "npc_dota_hero_undying" then
+							ability_set = {
+								[0] = "imba_undying_decay",
+								-- [1] = "imba_void_spirit_dissimilate",
+								-- [2] = "imba_void_spirit_resonant_pulse",
+								-- [3] = "imba_void_spirit_void_stasis",
+								-- [4] = "imba_void_spirit_astral_step_helper",
+								-- [5] = "imba_void_spirit_astral_step",
+								-- [6] = "special_bonus_attack_damage_25",
+								-- [7] = "special_bonus_hp_250",
+								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
+								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
+								-- [10] = "special_bonus_movement_speed_50",
+								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
+								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
+								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+							}
+							
 							upgraded = true
 						end
 						
@@ -1009,14 +1092,18 @@ function GameMode:OnPlayerChat(keys)
 								new_ability:SetLevel(old_ability_level)
 								
 								-- Remove this when done
-								if new_ability:GetName() == "imba_windranger_backpedal" or
-								new_ability:GetName() == "imba_windranger_focusfire_vanilla_enhancer" or
-								new_ability:GetName() == "imba_timbersaw_chakram_2" or
-								new_ability:GetName() == "imba_timbersaw_chakram_3" or 
-								new_ability:GetName() == "imba_oracle_alter_self" then
+								if new_ability:GetName() == "imba_gyrocopter_lock_on" or
+								new_ability:GetName() == "imba_gyrocopter_gatling_guns" or 
+								new_ability:GetName() == "imba_void_spirit_void_stasis" then
 									new_ability:SetLevel(1)
 								end
 							end
+						end
+						
+						if hero:GetName() == "npc_dota_hero_void_spirit" and not hero:HasAbility("imba_void_spirit_aether_remnant_helper") then
+							local helper_ability = hero:AddAbility("imba_void_spirit_aether_remnant_helper")
+							helper_ability:SetLevel(1)
+							-- helper_ability:SetAbilityIndex(4)
 						end
 						
 						if upgraded then

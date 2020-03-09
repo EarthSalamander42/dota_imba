@@ -81,7 +81,7 @@
 
 // Night Stalker's Darkness
 "DOTA_Tooltip_ability_imba_night_stalker_darkness"                      "Dark Ascension"
-"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Nightstalker gains flight and bonus damage during this time. Has unobstructed vision.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed."
+"DOTA_Tooltip_ability_imba_night_stalker_darkness_Description"          "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Nightstalker gains flight and bonus damage during this time. Has unobstructed vision.\n<font color='#FF7800'>Darksight:</font> When Darkness is cast, enemy heroes are briefly revealed. Ignores status resistance."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_Lore"                "It is a humbling sight to see when the mightiest of warriors become afraid of the dark."
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_bonus_damage"				"BONUS DAMAGE:"

@@ -75,6 +75,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_9"                "+60% Maledict FeelsBadMan Health Regen Reduction"
 "DOTA_Tooltip_ability_special_bonus_imba_witch_doctor_maledict_duration"	"+{s:value2} Maledict Tick"
+"DOTA_Tooltip_ability_special_bonus_imba_witch_doctor_maledict_radius"	"+{s:value} Maledict AoE"
 
 // Witch Doctor's summoned unit: Death Ward
 "imba_witch_doctor_death_ward"                              "Death Ward"

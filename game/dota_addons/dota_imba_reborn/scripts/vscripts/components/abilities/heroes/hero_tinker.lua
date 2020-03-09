@@ -146,8 +146,9 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_meteor_hammer_2",
 				"item_imba_meteor_hammer_3",
 				"item_imba_meteor_hammer_4",
-				"item_imba_rod_of_atos_2",
-				"item_imba_the_triumvirate_v2"
+				-- "item_imba_rod_of_atos_2",
+				"item_imba_the_triumvirate_v2",
+				"item_tome_of_knowledge"
 			}
 			
 			-- Get script error when using caster:GetAbilityCount() cause it goes up to 30 for some reason
@@ -175,6 +176,12 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 
 				-- Refresh
 				if current_item and should_refresh then
+					
+					-- Rod of Atos EX exception
+					if current_item:GetName() == "item_imba_rod_of_atos_2" then
+						current_item:SpendCharge()
+					end
+				
 					current_item:EndCooldown()
 				end
 			end

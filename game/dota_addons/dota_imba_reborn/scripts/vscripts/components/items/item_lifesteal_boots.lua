@@ -127,6 +127,8 @@ function modifier_imba_lifesteal_boots_unique:IsPermanent() return true end
 function modifier_imba_lifesteal_boots_unique:RemoveOnDeath() return false end
 
 function modifier_imba_lifesteal_boots_unique:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability specials
 	self.lifesteal_pct = self:GetAbility():GetSpecialValueFor("lifesteal_pct")
 end

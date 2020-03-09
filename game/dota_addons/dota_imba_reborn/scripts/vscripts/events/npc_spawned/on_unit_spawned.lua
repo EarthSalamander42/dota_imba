@@ -89,6 +89,24 @@ function GameMode:OnUnitFirstSpawn(unit)
 			unit:FindAbilityByName("imba_clinkz_searing_arrows"):SetLevel(unit:GetOwner():FindAbilityByName("imba_clinkz_searing_arrows"):GetLevel())
 		end
 	end
+	
+	-- Replacing Cloak Aura with a version that stacks with itself
+	if unit:HasAbility("mudgolem_cloak_aura") then
+		local old_cloak_aura_ability = unit:FindAbilityByName("mudgolem_cloak_aura")
+		local new_cloak_aura_ability = unit:AddAbility("imba_mudgolem_cloak_aura")
+		new_cloak_aura_ability:SetLevel(old_cloak_aura_ability:GetLevel())
+		unit:SwapAbilities("mudgolem_cloak_aura", "imba_mudgolem_cloak_aura", false, true)
+		unit:RemoveAbilityByHandle(old_cloak_aura_ability)
+	end
+
+	-- Cursed Fountain addendum
+	if unit.GetOwner and unit:GetOwner() and unit:GetOwner().HasModifier and unit:GetOwner():HasModifier("modifier_imba_cursed_fountain") then
+		local cursed_fountain_modifier = unit:AddNewModifier(unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetCaster(), unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetAbility(), "modifier_imba_cursed_fountain", {})
+		
+		if cursed_fountain_modifier then
+			cursed_fountain_modifier:SetStackCount(unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetStackCount())
+		end
+	end
 end
 
 -- everytime an unit respawn
@@ -112,5 +130,14 @@ function GameMode:OnUnitSpawned(unit)
 	-- Prevent zombies from spawning inside of units?
 	if unit:GetName() == "npc_dota_unit_undying_zombie" then
 		ResolveNPCPositions(unit:GetAbsOrigin(), unit:GetHullRadius())
+	end
+	
+	-- Cursed Fountain addendum
+	if unit.GetOwner and unit:GetOwner().HasModifier and unit:GetOwner():HasModifier("modifier_imba_cursed_fountain") then
+		local cursed_fountain_modifier = unit:AddNewModifier(unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetCaster(), unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetAbility(), "modifier_imba_cursed_fountain", {})
+		
+		if cursed_fountain_modifier then
+			cursed_fountain_modifier:SetStackCount(unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetStackCount())
+		end
 	end
 end

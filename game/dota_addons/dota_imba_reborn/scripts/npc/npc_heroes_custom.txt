@@ -27,7 +27,8 @@
 #base heroes/slark/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
-#base heroes/templar_assassin/hero.txt // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+#base heroes/templar_assassin/hero.txt
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
@@ -36,7 +37,8 @@
 #base heroes/zeus/hero.txt
 #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-// #base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// #base heroes/invoker/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
@@ -489,7 +491,7 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_dazzle_poison_touch"
+		"Ability1"					"imba_dazzle_poison_touch_707"
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"                  "imba_dazzle_ressurection"
@@ -501,15 +503,20 @@
 		"Ability12"					"special_bonus_cast_range_200"
 		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
 		"Ability14"					"special_bonus_movement_speed_40"
-		"Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
-		"Ability16"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
-		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
+		"Ability15"					"special_bonus_imba_dazzle_poison_touch_damage"
+		"Ability16"					"special_bonus_imba_dazzle_poison_touch_slow"
+		"Ability17"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
+		
+		// Removed Abilities
+		// "Ability1"					"imba_dazzle_poison_touch"
 		
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage 
 		// "Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
 		// "Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		// "Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
 		// "Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
+		// "Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
 	}
 
 	//=================================================================================================================
@@ -593,13 +600,18 @@
 		"Ability6"					"imba_dragon_knight_elder_dragon_form"
 
 		"Ability10"					"special_bonus_imba_dragon_knight_1"
-		"Ability11"					"special_bonus_imba_dragon_knight_2"
-		"Ability12"					"special_bonus_imba_dragon_knight_3"
-		"Ability13"					"special_bonus_imba_dragon_knight_4"
+		"Ability11"					"special_bonus_imba_dragon_knight_3"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_hp_400"
 		"Ability14"					"special_bonus_imba_dragon_knight_5"
-		"Ability15"					"special_bonus_imba_dragon_knight_6"
+		"Ability15"					"special_bonus_strength_25"
 		"Ability16"					"special_bonus_imba_dragon_knight_7"
-		"Ability17"					"special_bonus_imba_dragon_knight_8"
+		"Ability17"					"special_bonus_imba_dragon_knight_4"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_dragon_knight_2" // "x2 range for Elder Dragon Charge"
+		// "Ability15"					"special_bonus_imba_dragon_knight_6" // "EDF reduces enemies' damage by 20% in 600 radius"
+		// "Ability17"					"special_bonus_imba_dragon_knight_8" // "+3% of current health as movespeed"
 	}
 
 	//=================================================================================================================
@@ -676,13 +688,14 @@
 		"Ability13"					"special_bonus_armor_8"
 		"Ability14"					"special_bonus_spell_amplify_15"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
-		"Ability16"					"special_bonus_imba_earth_spirit_7"
+		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
 		// "Ability13"					"special_bonus_imba_earth_spirit_4"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
+		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
 		// "Ability17"					"special_bonus_imba_earth_spirit_8"
 	}
 
@@ -707,14 +720,15 @@
 
 		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
-		"Ability12"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
-		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
+		"Ability12"					"special_bonus_magic_resistance_15"
+		"Ability13"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
 		"Ability17"					"special_bonus_lifesteal_100"
 		
 		// Removed Talents
+		//"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity (also disabled in code)
 		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 	}
@@ -1005,7 +1019,7 @@
 		"Ability12"					"special_bonus_hp_400"
 		"Ability13"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
 		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
-		"Ability15"					"special_bonus_imba_lina_9" // +30/2% Fiery Soul Per Stack
+		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
 		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
 		"Ability17"					"special_bonus_attack_range_175"
 		
@@ -1168,8 +1182,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_mirana_moonlight_shadow"
 
-		"Ability10"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
-		"Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
 		"Ability12"					"special_bonus_mana_break_25"
 		"Ability13"					"special_bonus_imba_mirana_9" // +1 Leap Charge Replenish
 		"Ability14"					"special_bonus_corruption_4"
@@ -1180,6 +1194,7 @@
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
 		// "Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
+		// "Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		// "Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
 		// "Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 	}
@@ -1416,8 +1431,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_phantom_assassin_coup_de_grace"
 
-		"Ability10"					"special_bonus_imba_phantom_assassin_1" // "+35 Stifling Dagger damage"
-		"Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
+		"Ability10"					"special_bonus_hp_250"
+		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_lifesteal_15"
 		"Ability13"					"special_bonus_cleave_25"
 		"Ability14"					"special_bonus_corruption_4"
@@ -1426,6 +1441,8 @@
 		"Ability17"					"special_bonus_imba_phantom_assassin_3" // "+X Stifling Dagger thrown"
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_imba_phantom_assassin_1" // "+35 Stifling Dagger damage"
+		// "Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
 		// "Ability13"				""special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
 		// "Ability13"				"special_bonus_imba_phantom_assassin_4" // "+5% Phantom Strike bonus crit chance"
 		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
@@ -1668,13 +1685,18 @@
 		"Ability6"					"imba_nevermore_requiem"		
 
 		"Ability10"					"special_bonus_imba_nevermore_1"
-		"Ability11"					"special_bonus_imba_nevermore_2"
+		"Ability11"					"special_bonus_attack_speed_20"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_imba_nevermore_4"
+		"Ability13"					"special_bonus_movement_speed_30"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
 		"Ability17"					"special_bonus_cooldown_reduction_40"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
+		// "Ability13"					"special_bonus_imba_nevermore_4" // "+0.5% lifesteal per Necromastery soul"
+		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 
 	//=================================================================================================================
@@ -1777,7 +1799,7 @@
 		"Ability11"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
 		"Ability12"					"special_bonus_night_vision_1000"
 		"Ability13"					"special_bonus_imba_slardar_13" // +X Bash Damage
-		"Ability14"					"special_bonus_imba_slardar_10" // Depression
+		"Ability14"					"special_bonus_lifesteal_30"
 		"Ability15"					"special_bonus_imba_slardar_11" // Corrosive Haze Armor Transfer
 		"Ability16"					"special_bonus_imba_slardar_6" // Casts a second free Slithereen Crush
 		"Ability17"					"special_bonus_imba_slardar_12" // Corrosive Haze Undispellable
@@ -1785,6 +1807,7 @@
 		// Removed Talents
 		//"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
 		//"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep Upgrade
+		// "Ability14"					"special_bonus_imba_slardar_10" // Depression
 	}
 
 	//=================================================================================================================
@@ -1988,6 +2011,8 @@
 	"npc_dota_hero_undying"
 	{
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability16"		"special_bonus_reincarnation_200"
 	}
 
 	//=================================================================================================================
@@ -2086,13 +2111,14 @@
 		"Ability13"					"special_bonus_imba_venomancer_poison_sting_slow"
 		"Ability14"					"special_bonus_imba_venomancer_6"
 		"Ability15"					"special_bonus_spell_lifesteal_15"
-		"Ability16"					"special_bonus_imba_venomancer_7"
+		"Ability16"					"special_bonus_imba_venomancer_poison_nova_radius"
 		"Ability17"					"special_bonus_imba_venomancer_plague_ward_upgrade"
 		
 		// Removed Talents
 		// "Ability12"					"special_bonus_imba_venomancer_3" // "+{s:value}% Compound Toxicity Magic Resistance Reduction"
 		// "Ability13"					"special_bonus_imba_venomancer_2" // "Poison Sting adds +1% additional slow per stack" (disabled in script too so you can't use this)
 		// "Ability14"					"special_bonus_imba_venomancer_5" // "+150% Scourge/Plague Ward health/damage"
+		// "Ability16"					"special_bonus_imba_venomancer_7" // "Venomous Gale 360° AOE"
 		// "Ability17"					"special_bonus_imba_venomancer_8" // "Scourge Ward has its own stacking Poison Sting"
 	}
 
@@ -2151,9 +2177,9 @@
 		"Ability10"					"special_bonus_attack_damage_75"
 		"Ability11"					"special_bonus_armor_8"
 		"Ability12"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
-		"Ability13"					"special_bonus_imba_witch_doctor_maledict_duration"
-		"Ability14"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
-		"Ability15"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability13"					"special_bonus_imba_witch_doctor_maledict_radius"
+		"Ability14"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability15"					"special_bonus_imba_witch_doctor_maledict_duration"
 		"Ability16"					"special_bonus_imba_witch_doctor_9" //+X% Maledict FeelsBadMan Heal/Regen Reduction
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
 		
@@ -2162,6 +2188,7 @@
 		// "Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
 		// "Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
 		// "Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
+		// "Ability15"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
 	}
 
 	//=================================================================================================================

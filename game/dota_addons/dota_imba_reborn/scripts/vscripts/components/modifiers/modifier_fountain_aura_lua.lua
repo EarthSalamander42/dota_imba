@@ -71,13 +71,13 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 	end
 
 	Timers:CreateTimer(1.0, function()
-		self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		if self and not self:IsNull() and self.GetParent and self:GetParent() and not self:GetParent():IsNull() then
+			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		end
 	end)
 end
 
 function modifier_fountain_aura_effect_lua:OnIntervalThink()
-	if GetMapName() == MapDiretide() then return end
-
 	if IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
 		-- self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
 	else
@@ -189,9 +189,16 @@ function modifier_imba_cursed_fountain:OnCreated()
 	
 	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
 	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
-	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
-	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
-	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	
+	if self:GetParent().GetStrength then
+		self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+		self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+		self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	else
+		self.strength	= 0
+		self.agility	= 0
+		self.intellect	= 0
+	end
 	
 	self.damage_outgoing	= -10
 	
@@ -222,11 +229,18 @@ function modifier_imba_cursed_fountain:OnIntervalThink()
 	
 	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
 	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
-	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
-	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
-	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
 	
-	self:GetParent():CalculateStatBonus()
+	if self:GetParent().GetStrength then
+		self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+		self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+		self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+		
+		self:GetParent():CalculateStatBonus()
+	else
+		self.strength	= 0
+		self.agility	= 0
+		self.intellect	= 0
+	end
 end
 
 function modifier_imba_cursed_fountain:CheckState()

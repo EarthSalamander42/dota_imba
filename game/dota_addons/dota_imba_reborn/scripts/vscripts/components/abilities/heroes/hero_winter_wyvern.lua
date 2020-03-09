@@ -729,18 +729,18 @@ function imba_winter_wyvern_winters_curse:OnSpellStart()
 		local ability 	= self;
 		local duration  = self:GetSpecialValueFor("duration");
 
+		-- Stop if target has linkens
+		if target:TriggerSpellAbsorb(ability) then return end
+		
 		if caster:HasTalent("special_bonus_imba_winter_wyvern_7") then 
 			local bonus_duration = caster:FindTalentValue("special_bonus_imba_winter_wyvern_7", "duration");
 			duration = duration + bonus_duration
 			target:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_winters_curse", {duration = duration});
 		end
-
-		caster:EmitSound("Hero_Winter_Wyvern.WintersCurse.Cast");
-
-		-- Stop if target has linkens
-		if target:TriggerSpellAbsorb(ability) then return end
 		
+		caster:EmitSound("Hero_Winter_Wyvern.WintersCurse.Cast");
 		target:EmitSound("Hero_Winter_Wyvern.WintersCurse.Target");
+		
 		if RandomInt(1,100) > 80 then 
 			local random_sound = RandomInt(1, 14);
 			if random_sound < 10 then 
