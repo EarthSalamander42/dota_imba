@@ -35,11 +35,9 @@ function modifier_imba_delightful_torment_thinker:IsStunDebuff() return false en
 -------------------------------------------
 
 function modifier_imba_delightful_torment_thinker:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_delightful_torment_thinker:OnTakeDamage( params )
@@ -595,11 +593,9 @@ end
 
 
 function modifier_imba_scream_of_pain_reflect:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
@@ -609,13 +605,15 @@ function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
 		local ability = self:GetAbility()
 		if params.attacker == parent then
 			local damage = params.damage
+			
 			if (self.damage_counter + damage) > self.damage_threshold then
 				damage = self.damage_threshold - self.damage_counter
 				self:Destroy()
 			else
 				self.damage_counter = self.damage_counter + damage
 			end
-			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
+			
+			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_HPLOSS})
 		end
 	end
 end

@@ -181,7 +181,7 @@ function LaunchArcaneBolt(caster, ability, target)
 	arcane_bolt_projectile = {Target = target,
 							  Source = caster,
 							  Ability = ability,
-							  EffectName = caster.arcane_bolt_pfx,
+							  EffectName = caster.arcane_bolt_pfx or "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf",
 							  iMoveSpeed = projectile_speed,
 							  bDodgeable = false, 
 							  bVisibleToEnemies = true,

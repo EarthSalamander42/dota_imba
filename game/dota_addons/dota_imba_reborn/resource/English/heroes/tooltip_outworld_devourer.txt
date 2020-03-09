@@ -111,6 +111,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Description"	"Places a target unit into an astral prison. The hidden unit is invulnerable and disabled. When the astral prison implodes, it deals damage to the target and nearby enemies with %radius% range. Gains three Sanity's Eclipse charges.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it at a move speed of %universal_movespeed%, carrying the imprisoned target. The prison can be moved indefinitely until it ends. Move speed is doubled for non-self allies.\n<font color='#FF7800'>Dimensional Casting:</font> If Astral Imprisonment is self-cast, the caster can freely cast abilities. They are treated as disarmed, muted, and rooted, instead of stunned."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Lore"			"Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Note0"			"Imprisoned units can still be hit by Sanity's Eclipse."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Note1"			"If Astral Imprisonment triggers spell reflect, Universal Movement cannot be used while stunned by the prison."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_int_steal"       "INT STEAL:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_damage"        "DAMAGE:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_radius"		"RADIUS:"
@@ -132,6 +133,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement"				"A.I. Sub-Ability"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Description"	"Can be cast to move all active, owned Astral Imprisonments towards the target location."
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Lore"			"As the worlds shift, so too do the target's feelings of hopelessness."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Note0"		"Cannot be used if the Astral Imprisonment is the result of a spell reflect onto the caster."
 
 "dota_hud_error_no_astral_imprisonments_active"								"No Owned Astral Imprisonments Active"	
 
@@ -154,10 +156,10 @@
 "DOTA_Tooltip_modifier_imba_outworld_devourer_sanity_eclipse_charge_Description"	"Max mana increased by %dMODIFIER_PROPERTY_MANA_BONUS%."
 
 "DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_active"	"Essence Flux"
-"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_active_Description"	"All damage dealt slows enemy movement."
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_active_Description"	"All damage dealt slows enemy movement. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 "DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_debuff"	"Essence Flux"
-"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Additionally losing %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 "DOTA_Tooltip_ability_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier"	"+{s:value} Sanity's Eclipse Mana Difference Multiplier"
 "DOTA_Tooltip_ability_special_bonus_imba_outworld_devourer_arcane_orb_damage"			"+{s:value}% Arcane Orb Damage"

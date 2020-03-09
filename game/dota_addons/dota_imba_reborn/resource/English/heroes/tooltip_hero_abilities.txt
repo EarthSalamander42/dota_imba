@@ -249,8 +249,8 @@
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_armor_reduction_pct"     "%BASE ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE MAGIC RESIST REDUCTION:"
 
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order"                "Natural Order"
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced. Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order"					"Natural Order"
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"		"Reducing base magic damage resistance by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%, armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, and status resistance by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After %crack_time% seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
@@ -316,7 +316,8 @@
 
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse"                      "Death Pulse"
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Description"          "Necrophos drains the life essence from nearby enemies, while releasing a healing pulse to nearby allies.\n<font color='#FF7800'>Blight's Boon:</font> Redirects each affected enemy's essence through Necrophos, converting it into extra healing that spreads to nearby allies. Heals a percentage of each ally's maximum health."
-"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note0"                "Healing amount is affected by your spell amp."
+"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note0"					"Death Pulse can't be disjointed."
+"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note1"					"Can heal Spell Immune units."
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Lore"                  "Combining his monk heritage with his newfound affinity for plague has a menacing result."
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_radius"                "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -368,7 +369,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their base attack damage and spell ampification."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
@@ -380,7 +381,7 @@
 "DOTA_Tooltip_modifier_imba_reapers_scythe_Description"                "You're fucked."
 
 "DOTA_Tooltip_modifier_imba_reapers_scythe_debuff"                      "Reaper's Scythe"
-"DOTA_Tooltip_modifier_imba_reapers_scythe_debuff_Description"          "Attack damage reduced and spell amp severely reduced."
+"DOTA_Tooltip_modifier_imba_reapers_scythe_debuff_Description"          "Base attack damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%% and spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Necrophos's Custom Talents
@@ -696,7 +697,7 @@
 // Pugna's Nether Blast
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_nether_blast"                          "Nether Blast"
-"DOTA_Tooltip_ability_imba_pugna_nether_blast_Description"              "An exploding pulse deals damage to enemies and structures in the area. Deals half damage to structures.\n<font color='#FF7800'>Nether Weakness:</font> Immediately blasts the surrounding area with small explosions that deals no damage, but reduce targets' magic resistance. Stacks with itself. Explosion count increases and blasts become closer to the target point as the skill is leveled, increasing possible overlaps on each target. Each new cast of Nether Blast clears the previous stack count."
+"DOTA_Tooltip_ability_imba_pugna_nether_blast_Description"              "An exploding pulse deals damage to enemies and structures in the area. Deals half damage to structures.\n<font color='#FF7800'>Nether Weakness:</font> Immediately blasts the surrounding area with small explosions that deal no damage, but reduce targets' magic resistance. Stacks with itself. Explosion count increases and blasts become closer to the target point as the skill is leveled, increasing possible overlaps on each target. Each new cast of Nether Blast clears the previous stack count. Buildings receive %magic_res_building_pct%%% of the effect."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_Lore"                    "The Arts of Oblivion include a deafening blast of emerald flames from the Nether Reaches."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_Note0"                    "Even though the debuff is stackable, it is cleared on each cast, then reapplied again."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_mini_blast_count"                     "NETHER WEAKNESS BLASTS:"
@@ -705,14 +706,14 @@
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_cast_range"              "CAST RANGE:"
 
-"DOTA_Tooltip_modifier_imba_nether_blast_magic_res"                    "Nether Weakness"
-"DOTA_Tooltip_modifier_imba_nether_blast_magic_res_Description"                     "Suffers from reduced magic resistance."
+"DOTA_Tooltip_modifier_imba_nether_blast_magic_res"						"Nether Weakness"
+"DOTA_Tooltip_modifier_imba_nether_blast_magic_res_Description"			"Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 ////===============================================================================================================
 // Pugna's Decrepify
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_decrepify"                            "Decrepify"
-"DOTA_Tooltip_ability_imba_pugna_decrepify_Description"                "A powerful banishing spell that renders the target unable to attack or be attacked. Afflicted units take extra magic damage.\n<font color='#FF7800'>From The Nether Reaches:</font> While Decrepified, all damage on the target is stored, and is released on a Nether Blast centered on the target location when the effect ends. The radius of the Nether Blast is %base_radius% + all damage stored for the duration. The Nether Blast deals damage to enemies equal to a percentage of damage stored, and heals allies in the area of effect for the same amount.\n<font color='#FF7800'>Masterful Banish:</font> Only enemies are slowed. Allies become less vulnerable to magic, while enemies suffer the full effect."
+"DOTA_Tooltip_ability_imba_pugna_decrepify_Description"                "A powerful banishing spell that renders the target unable to attack or be attacked. Afflicted units take extra magic damage.\n<font color='#FF7800'>From The Nether Reaches:</font> While Decrepified, all damage on the target is stored, and is released through a Nether Blast centered on the target location when the effect ends. The radius of the Nether Blast is equal to %base_radius% + all damage stored for the duration (up to %max_radius% radius). The Nether Blast deals damage to enemies and heals allies within the radius for %total_dmg_conversion_pct%%% of the damage stored.\n<font color='#FF7800'>Masterful Banish:</font> Only enemies are slowed, and allies do not take as much extra magic damage as enemies would."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Lore"                        "A now-mastered relic from his childhood, Pugna delights in banishing others into the Nether Realm, whether for good, evil, or simple enjoyment."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Note0"                      "From The Nether Reaches triggers on both allies and enemies."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Note1"                      "From The Nether Reaches will always trigger after Decrepify ends, even if the target dies or Decrepify is purged."
@@ -721,7 +722,6 @@
 "DOTA_Tooltip_ability_imba_pugna_decrepify_ally_res_reduction_pct"                  "%ALLY MAGIC RESISTANCE REDUCTION:"
 "DOTA_Tooltip_ability_imba_pugna_decrepify_enemy_res_reduction_pct"                 "%ENEMY MAGIC RESISTANCE REDUCTION:"
 "DOTA_Tooltip_ability_imba_pugna_decrepify_enemy_slow_pct"              "%ENEMY SLOW:"
-"DOTA_Tooltip_ability_imba_pugna_decrepify_total_dmg_conversion_pct"                "%STORED DAMAGE TO DAMAGE/HEAL:"
 
 "DOTA_Tooltip_modifier_imba_decrepify"                      "Decrepify"
 "DOTA_Tooltip_modifier_imba_decrepify_Description"                      "Banished, taking extra damage from spells. When Decrpify ends, the stored damage will be unleashed."
@@ -846,16 +846,14 @@
 // Queen of Pain's Scream of Pain
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain"                  "Scream of Pain"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Description"                  "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.\n<font color='#FF7800'>Overwhelming Pain:</font> Enemies hit by Scream of Pain are briefly wracked with overwhelming pain for %pain_duration% seconds, causing them to take part of the damage every time they deal some, up to a certain threshold."
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Note0"            "Damage type of Overwhelming pain is pure."
+"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Description"		"The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.\n<font color='#FF7800'>Overwhelming Pain:</font> Enemies hit by Scream of Pain are briefly wracked with overwhelming pain for %pain_duration% seconds, causing them to take %pain_reflect_pct%%% of any damage they deal back as pure damage, up to Scream of Pain's base damage as threshold."
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Lore"            "The sultry voice of Akasha beckons her opponents while stealing their souls."
+"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Note0"            "Overwhelming Pain damage benefits from spell amplifcation and spell lifesteal."
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_radius"          "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_pain_duration"                "OVERWHELMING PAIN DURATION:"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_pain_reflect_pct"             "%OVERWHELMING PAIN REFLECTION PERCANTAGE:"
 
-"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect"                    "Overwhelming Pain"
-"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect_Description"                     "Reflecting part of his dealt damage to itself up to a threshold."
+"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect"						"Overwhelming Pain"
+"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect_Description"			"Reflecting a portion of damage dealt back to self."
 
 ////===============================================================================================================
 // Queen of Pain's Sonic Wave

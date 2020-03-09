@@ -467,9 +467,10 @@
 
 // Hand of Midas
 "DOTA_Tooltip_Ability_item_imba_hand_of_midas"                  "Hand of Midas"
-"DOTA_Tooltip_ability_item_imba_hand_of_midas_Description"                  "<h1>Active: Transmute</h1> Kills a non-hero target, granting you %bonus_gold% gold and %xp_multiplier%x the normal experience. Cannot be used on Ancient Creeps.\n<h1><font color='#FF7800'>Passive: Midas Touch</font></h1> Increases the gold you gain from any source by %passive_gold_bonus%%%."
-"DOTA_Tooltip_ability_item_imba_hand_of_midas_Lore"            "Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets."
-"DOTA_Tooltip_ability_item_imba_hand_of_midas_Note0"            "Midas' touch does not stack with itself."
+"DOTA_Tooltip_ability_item_imba_hand_of_midas_Description"		"<h1>Active: Transmute</h1> Kills a non-hero target, granting you %bonus_gold% gold and %xp_multiplier%x the normal experience. Cannot be used on Ancient Creeps.\n<h1><font color='#FF7800'>Passive: Midas Touch</font></h1> Increases the gold you gain by %passive_gold_bonus%%%. Does not affect hero kills or passive gold."
+"DOTA_Tooltip_ability_item_imba_hand_of_midas_Lore"				"Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets."
+"DOTA_Tooltip_ability_item_imba_hand_of_midas_Note0"			"<font color='#FF7800'>If Transmute is cast on a target outside its cast range, and the target dies before the caster gets in range, Transmute will still activate.</font>"
+"DOTA_Tooltip_ability_item_imba_hand_of_midas_Note1"			"Midas Touch does not stack with itself."
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_bonus_attack_speed"           "+$attack"
 
 // Heart of Tarrasque
@@ -688,9 +689,7 @@
 
 // Moon Shard
 "DOTA_Tooltip_Ability_item_imba_moon_shard"						"Moon Shard"
-"DOTA_Tooltip_ability_item_imba_moon_shard_Description"			"<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'> Can be used multiple times, but stacks at diminishing values.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\nMoon Shard stacks in inventory, but only applies its effects if individual item slots are available.\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
-"DOTA_Tooltip_ability_item_imba_moon_shard_Note0"				"Using Moon Shard on yourself consumes all shards in inventory, while using it on allies consumes one shard each."
-"DOTA_Tooltip_ability_item_imba_moon_shard_Note1"				"Using Moon Shard anywhere else drops a shard from your inventory at your location."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Description"			"<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'> Can be used multiple times, but stacks at diminishing values.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\nMoon Shard stack effects will only apply based on the amount of empty item slots in your inventory. Moon Shard's slot also counts for this purpose.\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
 "DOTA_Tooltip_ability_item_imba_moon_shard_Lore"                "Said to be a tear from the lunar goddess Selemene."
 "DOTA_Tooltip_ability_item_imba_moon_shard_bonus_attack_speed"              "+$attack"
 
@@ -1158,12 +1157,12 @@
 "DOTA_Tooltip_ability_item_imba_veil_of_discord_bonus_all_stats"			"+$all"
 
 "DOTA_Tooltip_modifier_veil_buff_aura_modifier"					"Magic Superiority"
-"DOTA_Tooltip_modifier_veil_buff_aura_modifier_Description"		"Spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%, and granting mana regeneration to allies."
+"DOTA_Tooltip_modifier_veil_buff_aura_modifier_Description"		"Spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%, and mana regeneration increased by %2fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT%."
 
-"DOTA_Tooltip_modifier_veil_active_debuff"                      "Magic Absolution"
+"DOTA_Tooltip_modifier_veil_active_debuff"                      "Magic Weakness"
 "DOTA_Tooltip_modifier_veil_active_debuff_Description"          "Spell damage taken increased by %dMODIFIER_PROPERTY_TOOLTIP%%%."
 
-"DOTA_Tooltip_modifier_veil_debuff_aura_modifier"              "Magic Weakness"
+"DOTA_Tooltip_modifier_veil_debuff_aura_modifier"              "Magic Superiority"
 "DOTA_Tooltip_modifier_veil_debuff_aura_modifier_Description"	"Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 // Vladmir's Blood

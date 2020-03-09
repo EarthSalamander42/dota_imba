@@ -69,7 +69,7 @@
 //      Zeus: Modifier
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_modifier_imba_zuus_static_charge"					"Static Charge"
-"DOTA_Tooltip_modifier_imba_zuus_static_charge_description"		"Reducing magic resistance by %2fMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Grants True Sight at five stacks, and Mutes at nine stacks. Don't let this stack too high!"
+"DOTA_Tooltip_modifier_imba_zuus_static_charge_description"		"Reducing magic resistance by %fMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Grants truesight of the target at six stacks, and mutes at ten stacks."
 
 "DOTA_Tooltip_modifier_imba_zuus_thundergods_focus"					"Thundergod's Focus"
 "DOTA_Tooltip_modifier_imba_zuus_thundergods_focus_description"		"Collecting power. Each stack grants additional movement speed and turn rate."

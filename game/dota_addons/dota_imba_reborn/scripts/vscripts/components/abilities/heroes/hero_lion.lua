@@ -168,7 +168,12 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 		if bounces_left > 0 and target:IsRealHero() then
 			should_branch = true
 		end
-	end    
+	end
+
+	-- If target has Linken's Sphere off cooldown, do nothing
+	if self:GetSpecialValueFor("max_bounces_per_cast") == extra_data.bounces_left and target:TriggerSpellAbsorb(self) then
+		return nil
+	end
 	
 	-- If it can bounce, start a timer and look for bounce target
 	if should_branch then
@@ -250,18 +255,6 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 			end         
 		end)
 	end
-	
-	-- If target has magic immunity, do nothing
-	if target:IsMagicImmune() then
-		return nil
-	end
-
-	-- If target has Linken's Sphere off cooldown, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
-	end     
 	
 	-- Immediately apply stun
 	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})

@@ -431,16 +431,17 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 						-- modifier:SetDuration(modifier:GetRemainingTime() + global_silence_duration_increase, true)
 					-- end
 				-- end
+				
+				-- IMBAfication: Tranquility of Aeol Drias
+				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
+				if not hit_counter then
+					hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
+				end
 
-				-- local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
-				-- if not hit_counter then
-					-- hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
-				-- end
-
-				-- if hit_counter then
-					-- hit_counter:IncrementStackCount()
-					-- hit_counter:SetDuration(self.hit_count_duration, true)
-				-- end
+				if hit_counter then
+					hit_counter:IncrementStackCount()
+					hit_counter:SetDuration(self.hit_count_duration, true)
+				end
 
 				-- local int_damage = target:FindModifierByName(self.modifier_int_damage)
 				-- if not int_damage then
@@ -600,10 +601,15 @@ end
 LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_glaives_hit_counter = modifier_imba_silencer_glaives_hit_counter or class({})
 
-function modifier_imba_silencer_glaives_hit_counter:IsDebuff() return true end
-function modifier_imba_silencer_glaives_hit_counter:IsPurgable() return false end
-function modifier_imba_silencer_glaives_hit_counter:IsHidden() return true end
+function modifier_imba_silencer_glaives_hit_counter:IgnoreTenacity()	return true end
+function modifier_imba_silencer_glaives_hit_counter:IsDebuff() 			return true end
+function modifier_imba_silencer_glaives_hit_counter:IsPurgable() 		return false end
+-- function modifier_imba_silencer_glaives_hit_counter:IsHidden() return true end
 function modifier_imba_silencer_glaives_hit_counter:OnCreated( kv )
+	if self:GetAbility() and IsClient() then
+		self.hits_to_silence	= self:GetAbility():GetSpecialValueFor("hits_to_silence")
+	end
+
 	if IsServer() then
 		self.target = self:GetParent()
 		self.caster = self:GetAbility():GetCaster()
@@ -620,6 +626,17 @@ function modifier_imba_silencer_glaives_hit_counter:OnStackCountChanged(old_stac
 		end
 	end
 end
+
+function modifier_imba_silencer_glaives_hit_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TOOLTIP}
+end
+
+function modifier_imba_silencer_glaives_hit_counter:OnTooltip()
+	if self.hits_to_silence then
+		return self.hits_to_silence
+	end
+end
+
 ---------------------------------
 -- Glaives of Wisdom int reduction modifier
 ---------------------------------
@@ -981,7 +998,7 @@ function modifier_imba_silencer_last_word_debuff:IsPurgable() return true end
 
 function modifier_imba_silencer_last_word_debuff:OnCreated( kv )
 	self.caster = self:GetCaster()
-	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct")
+	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct") * (-1)
 	self.int_multiplier		= self:GetAbility():GetSpecialValueFor("int_multiplier")
 	
 	if IsServer() then
@@ -1021,21 +1038,16 @@ function modifier_imba_silencer_last_word_debuff:OnDestroy( kv )
 end
 
 function modifier_imba_silencer_last_word_debuff:CheckState()
-	local state = {
-		--[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_PROVIDES_VISION] = true,
+	return {
+		[MODIFIER_STATE_PROVIDES_VISION] = true
 	}
-
-	return state
 end
 
 function modifier_imba_silencer_last_word_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
 	}
-
-	return funcs
 end
 
 function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
@@ -1054,7 +1066,7 @@ function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 end
 
 function modifier_imba_silencer_last_word_debuff:GetModifierTotalPercentageManaRegen( params )
-	return self.m_regen_reduct_pct * (-1)
+	return self.m_regen_reduct_pct
 end
 
 

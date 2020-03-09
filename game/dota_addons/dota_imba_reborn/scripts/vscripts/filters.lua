@@ -40,7 +40,7 @@ function GameMode:GoldFilter(keys)
 
 		-- Hand of Midas gold bonus (let's make it not affect hero kills)
 		if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
-			keys.gold = keys.gold * 1.05
+			keys.gold = keys.gold * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
 		end
 
 		-- Lobby options adjustment
@@ -1361,6 +1361,11 @@ function GameMode:BountyRuneFilter(keys)
 				table.insert(self.allies, unit)
 			end
 		end
+	end
+	
+	-- Hand of Midas gold bonus
+	if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") then
+		keys.gold_bounty = keys.gold_bounty * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
 	end
 	
 	-- Okay now we should have the list of allies, so for each instance of BountyRuneFilter that is run, go through and check gold/exp; if Greevil's Greed owner, give an extra amount accordingly	

@@ -17,10 +17,7 @@ function imba_pugna_nether_blast:GetCastRange()
 end
 
 function imba_pugna_nether_blast:GetAOERadius()
-	local ability = self
-	local radius = ability:GetSpecialValueFor("main_blast_radius")
-
-	return radius
+	return self:GetSpecialValueFor("main_blast_radius")
 end
 
 function imba_pugna_nether_blast:IsNetherWardStealable()
@@ -203,9 +200,7 @@ function modifier_imba_nether_blast_magic_res:IsPurgable() return true end
 function modifier_imba_nether_blast_magic_res:IsDebuff() return true end
 
 function modifier_imba_nether_blast_magic_res:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
 end
 
 function modifier_imba_nether_blast_magic_res:GetModifierMagicalResistanceBonus()
@@ -268,6 +263,14 @@ end
 -- Decrepify modifier
 modifier_imba_decrepify = class({})
 
+function modifier_imba_decrepify:GetEffectName()
+	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+end
+
+function modifier_imba_decrepify:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 function modifier_imba_decrepify:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -319,18 +322,19 @@ function modifier_imba_decrepify:IsDebuff()
 end
 
 function modifier_imba_decrepify:CheckState()
-	local state = {[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		[MODIFIER_STATE_DISARMED] = true}
-	return state
+	return {
+		[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
+		[MODIFIER_STATE_DISARMED]		= true
+	}
 end
 
 function modifier_imba_decrepify:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_decrepify:GetModifierMagicalResistanceBonus()
@@ -353,24 +357,11 @@ function modifier_imba_decrepify:GetAbsoluteNoDamagePhysical()
 	return 1
 end
 
-function modifier_imba_decrepify:GetEffectName()
-	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-end
-
-function modifier_imba_decrepify:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
 function modifier_imba_decrepify:OnTakeDamage(keys)
-	if IsServer() then
-		local unit = keys.unit
-		local damage = keys.damage
-
-		-- Only apply if the unit taking damage is the parent of this modifier
-		if unit == self.parent then
-			-- Add the current damage to the damage stored
-			self.damage_stored = self.damage_stored + damage
-		end
+	-- Only apply if the unit taking damage is the parent of this modifier
+	if keys.unit == self:GetParent() then
+		-- Add the current damage to the damage stored
+		self.damage_stored = self.damage_stored + keys.damage
 	end
 end
 
@@ -382,20 +373,12 @@ function modifier_imba_decrepify:OnDestroy()
 			return nil
 		end
 
-		-- Radius is equal to base radius + all damage stored
-		local total_radius = self.base_radius + self.damage_stored
-
-		-- Radius cannot exceed max radius
-		if total_radius > self.max_radius then
-			total_radius = self.max_radius
-		end
+		-- Radius is equal to base radius + all damage stored; cannot exceed max radius
+		local total_radius = math.min(self.base_radius + self.damage_stored, self.max_radius)
 
 		-- Calculate damage and heal
 		local damage = self.damage_stored * self.total_dmg_conversion_pct * 0.01
-
-		-- #4 Talent: Heal/damage increase at the end of Decrepify
-		damage = damage * 0.01
-
+		
 		-- Use the damage value as heal
 		local heal = damage
 
@@ -439,14 +422,13 @@ function modifier_imba_decrepify:OnDestroy()
 						SendOverheadEventMessage(unit, OVERHEAD_ALERT_HEAL, unit, heal, unit)
 					else
 						-- If the unit is an enemy, damage it
-						local damageTable = {victim = unit,
+						ApplyDamage({
+							victim = unit,
 							damage = damage,
 							damage_type = DAMAGE_TYPE_MAGICAL,
 							attacker = self.caster,
 							ability = self.ability
-						}
-
-						ApplyDamage(damageTable)
+						})
 					end
 				end
 		end)
@@ -1187,7 +1169,7 @@ function imba_pugna_life_drain:CastFilterResultTarget(target)
 		return UF_FAIL_CUSTOM
 	end
 	
-	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, self:GetCaster():GetTeamNumber())
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, self:GetCaster():GetTeamNumber())
 end
 
 function imba_pugna_life_drain:GetCustomCastErrorTarget(target)

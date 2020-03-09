@@ -107,19 +107,23 @@ function item_imba_moon_shard:OnSpellStart()
 		if target:IsTempestDouble() then
 			target = nil
 		end
-		if target == caster then
+		-- if target == caster then
+			-- EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
+			-- local moon_buff = caster:FindModifierByName("modifier_item_imba_moon_shard_active")
+			-- if moon_buff then
+				-- moon_buff:SetStackCount(moon_buff:GetStackCount() + current_stacks)
+			-- else
+				-- moon_buff = caster:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
+				-- moon_buff:SetStackCount(current_stacks)
+			-- end
+			-- caster:RemoveItem(self)
+		-- else
 			EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
-			local moon_buff = caster:FindModifierByName("modifier_item_imba_moon_shard_active")
-			if moon_buff then
-				moon_buff:SetStackCount(moon_buff:GetStackCount() + current_stacks)
-			else
-				moon_buff = caster:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
-				moon_buff:SetStackCount(current_stacks)
+			
+			if target ~= caster then
+				EmitSoundOnClient("Item.MoonShard.Consume", target:GetPlayerOwner())
 			end
-			caster:RemoveItem(self)
-		else
-			EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
-			EmitSoundOnClient("Item.MoonShard.Consume", target:GetPlayerOwner())
+			
 			local moon_buff = target:FindModifierByName("modifier_item_imba_moon_shard_active")
 			if moon_buff then
 				moon_buff:SetStackCount(moon_buff:GetStackCount() + 1)
@@ -132,7 +136,7 @@ function item_imba_moon_shard:OnSpellStart()
 			else
 				caster:RemoveItem(self)
 			end
-		end
+		-- end
 	else
 		EmitSoundOn("Item.DropWorld", caster)
 		local moon = CreateItem("item_imba_moon_shard", caster, caster)

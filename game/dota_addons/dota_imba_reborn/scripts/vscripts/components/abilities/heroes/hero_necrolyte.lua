@@ -234,7 +234,6 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 		-- Parameters
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local damage = self:GetSpecialValueFor("damage")
-		local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 		local base_heal = self:GetSpecialValueFor("base_heal")
 		local sec_heal_pct = self:GetSpecialValueFor("sec_heal_pct")
 		local enemy_speed = self:GetSpecialValueFor("enemy_speed")
@@ -263,7 +262,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 					--	iVisionRadius = vision_radius,
 					--	iVisionTeamNumber = caster:GetTeamNumber(),
 					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {sec_heal_pct = sec_heal_pct, heal_amp = heal_amp, radius = radius, ally_speed = ally_speed}
+					ExtraData = {sec_heal_pct = sec_heal_pct, radius = radius, ally_speed = ally_speed}
 				}
 
 			-- Create the projectile
@@ -286,7 +285,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 					--	iVisionRadius = vision_radius,
 					--	iVisionTeamNumber = caster:GetTeamNumber(),
 					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {base_heal = base_heal, heal_amp = heal_amp}
+					ExtraData = {base_heal = base_heal}
 				}
 			-- Create the projectile
 			ProjectileManager:CreateTrackingProjectile(ally_projectile)
@@ -300,15 +299,15 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 
 		-- Base Heal
 		if extraData.base_heal then
-			target:Heal((extraData.base_heal * extraData.heal_amp), caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal * extraData.heal_amp, nil)
+			target:Heal(extraData.base_heal, caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal, nil)
 			return nil
 		end
 
 		local caster_loc = caster:GetAbsOrigin()
 
 		if not extraData.radius then
-			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100) * extraData.heal_amp
+			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100)
 			target:Heal(heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		end
@@ -330,7 +329,7 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 						--	iVisionRadius = vision_radius,
 						--	iVisionTeamNumber = caster:GetTeamNumber(),
 						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-						ExtraData = {sec_heal_pct = extraData.sec_heal_pct, heal_amp = extraData.heal_amp, ally_speed = extraData.ally_speed}
+						ExtraData = {sec_heal_pct = extraData.sec_heal_pct, ally_speed = extraData.ally_speed}
 					}
 
 				-- Create the projectile
@@ -758,15 +757,14 @@ end
 
 
 function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
+	}
 end
 
 function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
 	if self:GetAbility() ~= nil then
+		print( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 		return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 	end
 end
@@ -978,25 +976,6 @@ end
 
 modifier_imba_reapers_scythe_debuff = modifier_imba_reapers_scythe_debuff or class({})
 
-function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
-	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"
-end
-
-function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
-		}
-	return decFuncs
-end
-
-function modifier_imba_reapers_scythe_debuff:OnCreated( params )
-	local ability = self:GetAbility()
-	self.damage_reduction_pct = ability:GetTalentSpecialValueFor("damage_reduction_pct") * (-1)
-	self.spellpower_reduction = ability:GetTalentSpecialValueFor("spellpower_reduction") * (-1)
-end
-
 function modifier_imba_reapers_scythe_debuff:IsDebuff()
 	return true
 end
@@ -1005,10 +984,62 @@ function modifier_imba_reapers_scythe_debuff:IsPurgable()
 	return false
 end
 
+function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
+	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"
+end
+
+function modifier_imba_reapers_scythe_debuff:OnCreated( params )
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.damage_reduction_pct = self:GetAbility():GetTalentSpecialValueFor("damage_reduction_pct") * (-1)
+	self.spellpower_reduction = self:GetAbility():GetTalentSpecialValueFor("spellpower_reduction") * (-1)
+end
+
+function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
+end
+
 function modifier_imba_reapers_scythe_debuff:GetModifierSpellAmplify_Percentage()
 	return self.spellpower_reduction
 end
 
 function modifier_imba_reapers_scythe_debuff:GetModifierBaseDamageOutgoing_Percentage()
 	return self.damage_reduction_pct
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_7", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_necrolyte_4				= modifier_special_bonus_imba_necrolyte_4 or class({})
+modifier_special_bonus_imba_necrolyte_7				= modifier_special_bonus_imba_necrolyte_7 or class({})
+
+function modifier_special_bonus_imba_necrolyte_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_7:RemoveOnDeath() 	return false end
+
+function imba_necrolyte_heartstopper_aura:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_4"), "modifier_special_bonus_imba_necrolyte_4", {})
+	end
+end
+
+function imba_necrolyte_reapers_scythe:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_7"), "modifier_special_bonus_imba_necrolyte_7", {})
+	end
 end

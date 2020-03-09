@@ -647,7 +647,10 @@ end
 ------------------------------------------------------
 LinkLuaModifier("modifier_imba_zuus_static_charge", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_static_charge = class({})
-function modifier_imba_zuus_static_charge:IsDebuff() return true end
+
+function modifier_imba_zuus_static_charge:IsHidden()	return self:GetStackCount() <= 0 end
+function modifier_imba_zuus_static_charge:IsDebuff()	return true end
+
 function modifier_imba_zuus_static_charge:OnCreated()
 	local caster = self:GetCaster()
 	self.reduced_magic_resistance 	= self:GetAbility():GetSpecialValueFor("reduced_magic_resistance")
@@ -664,11 +667,9 @@ function modifier_imba_zuus_static_charge:GetTexture()
 end
 
 function modifier_imba_zuus_static_charge:DeclareFunctions()
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_zuus_static_charge:CheckState()
