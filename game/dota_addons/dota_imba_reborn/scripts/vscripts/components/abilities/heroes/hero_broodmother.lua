@@ -77,25 +77,32 @@ LinkLuaModifier("modifier_imba_broodmother_spin_web", "components/abilities/hero
 
 imba_broodmother_spin_web = imba_broodmother_spin_web or class({})
 
+function imba_broodmother_spin_web:GetCastRange(location, target)
+	if IsServer() then
+		if IsNearEntity("npc_dota_broodmother_web", location, self:GetSpecialValueFor("radius") * 2, self:GetCaster()) then
+			return 25000
+		end
+	end
+
+	return self.BaseClass.GetCastRange(self, location, target)
+end
+
+function imba_broodmother_spin_web:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
 function imba_broodmother_spin_web:OnUpgrade()
 	if not IsServer() then return end
 
 	if self:GetLevel() == 1 then
-		LinkLuaModifier("modifier_charges", "components/modifiers/modifier_charges.lua", LUA_MODIFIER_MOTION_NONE)
+		LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_charges", {
-			start_count = self:GetSpecialValueFor("max_charges"),
-			max_count = self:GetSpecialValueFor("max_charges"),
-			replenish_time = self:GetSpecialValueFor("charge_restore_time"),
-		})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})
 	else
-		charges_modifier = self:GetCaster():FindModifierByName("modifier_charges")
+		charges_modifier = self:GetCaster():FindModifierByName("modifier_generic_charges")
 
 		if charges_modifier then
-			local kv = {}
-			kv.max_count = self:GetSpecialValueFor("max_charges")
-			kv.replenish_time = self:GetSpecialValueFor("charge_restore_time")
-			charges_modifier:OnRefresh(kv)
+			charges_modifier:OnRefresh({bonus_charges = self:GetLevelSpecialValueFor("max_charges", 1)})
 		end
 	end
 end

@@ -137,9 +137,9 @@ function IsNearFountain(location, distance)
 	return false
 end
 
-function IsNearEntity(entity, location, distance)
-	for _, fountain in pairs(Entities:FindAllByClassname(entity)) do
-		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+function IsNearEntity(entities, location, distance, owner)
+	for _, entity in pairs(Entities:FindAllByClassname(entities)) do
+		if (entity:GetAbsOrigin() - location):Length2D() <= distance or owner and (entity:GetAbsOrigin() - location):Length2D() and entity:GetOwner() == owner then
 			return true
 		end
 	end

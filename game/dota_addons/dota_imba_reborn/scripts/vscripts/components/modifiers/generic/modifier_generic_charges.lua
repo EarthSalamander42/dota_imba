@@ -33,6 +33,13 @@ end
 function modifier_generic_charges:OnCreated()
 	if not IsServer() then return end
 
+	CustomGameEventManager:Send_ServerToAllClients("init_charge_ui", {
+		unit_index = self:GetParent():entindex(),
+		ability_index = self:GetAbility():GetAbilityIndex(),
+		charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"),
+		scepter_charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"),
+	})
+
 	if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
 		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter"))
 
@@ -42,6 +49,22 @@ function modifier_generic_charges:OnCreated()
 
 		self:CalculateCharge()
 	end
+end
+
+function modifier_generic_charges:OnRefresh(params)
+	if not IsServer() then return end
+
+	local max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges")
+
+	if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
+		max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter")
+	end
+
+	if params.bonus_charges then
+		self:SetStackCount(math.min(self:GetStackCount() + params.bonus_charges, max_charges))
+	end
+
+	self:CalculateCharge()
 end
 
 --------------------------------------------------------------------------------
@@ -57,7 +80,8 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 	
 	if params.ability == self:GetAbility() then
 		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
-		local wtf_mode = true
+--		local wtf_mode = true
+		local wtf_mode = false
 		
 		if not GameRules:IsCheatMode() then
 			wtf_mode = false
@@ -81,6 +105,21 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 		
 		if wtf_mode == false then
 			self:DecrementStackCount()
+
+			print("Decrement stack count!")
+
+			Timers:CreateTimer(FrameTime() * 2, function()
+				CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
+					unit_index = self:GetParent():entindex(),
+					ability_index = self:GetAbility():GetAbilityIndex(),
+				})
+
+				CustomGameEventManager:Send_ServerToAllClients("update_charge_loading", {
+					unit_index = self:GetParent():entindex(),
+					ability_index = self:GetAbility():GetAbilityIndex(),
+				})
+			end)
+
 			self:CalculateCharge()
 		end
 	elseif params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
@@ -130,4 +169,11 @@ function modifier_generic_charges:CalculateCharge()
 			self:GetAbility():StartCooldown(0.25)
 		end
 	end
+
+	Timers:CreateTimer(FrameTime() * 2, function()
+		CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
+			unit_index = self:GetParent():entindex(),
+			ability_index = self:GetAbility():GetAbilityIndex(),
+		})
+	end)
 end

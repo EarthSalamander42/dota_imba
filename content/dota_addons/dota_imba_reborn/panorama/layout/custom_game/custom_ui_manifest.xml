@@ -1,5 +1,6 @@
 <root> 
 	<scripts>
+		<include src="file://{resources}/scripts/custom_game/abilities_charges.js" />
 		<include src="file://{resources}/scripts/custom_game/vanilla_keybinds.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_invoker_tooltips.js" />
 	</scripts>
