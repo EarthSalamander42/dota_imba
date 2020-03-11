@@ -1,5 +1,6 @@
 #base heroes/ancient_apparition/hero.txt
 #base heroes/batrider/hero.txt
+#base heroes/brewmaster/hero.txt
 #base heroes/bristleback/hero.txt
 #base heroes/broodmother/hero.txt
 #base heroes/chen/hero.txt
@@ -9,6 +10,7 @@
 #base heroes/enchantress/hero.txt
 #base heroes/furion/hero.txt
 #base heroes/grimstroke/hero.txt
+#base heroes/gyrocopter/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
 #base heroes/leshrac/hero.txt
@@ -32,6 +34,7 @@
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
+#base heroes/void_spirit/hero.txt
 #base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt

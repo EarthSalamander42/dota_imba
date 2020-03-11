@@ -125,17 +125,17 @@ end
 
 function CDOTA_BaseNPC:GetNetworth()
 	if not self:IsRealHero() then return 0 end
-    local gold = self:GetGold()
+	local gold = self:GetGold()
 
-    -- Iterate over item slots adding up its gold cost
-    for i = 0, 15 do
-        local item = self:GetItemInSlot(i)
-        if item then
-            gold = gold + item:GetCost()
-        end
-    end
+	-- Iterate over item slots adding up its gold cost
+	for i = 0, 15 do
+		local item = self:GetItemInSlot(i)
+		if item then
+			gold = gold + item:GetCost()
+		end
+	end
 
-    return gold
+	return gold
 end
 
 -- Initializes heroes' innate abilities
