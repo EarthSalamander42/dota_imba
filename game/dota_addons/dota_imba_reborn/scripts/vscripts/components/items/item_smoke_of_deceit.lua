@@ -39,11 +39,7 @@ function item_imba_smoke_of_deceit:OnSpellStart()
     end
 
     -- Decrease charges (in case more than one is bought), or destroy if it was the only charge left
-    if ability:GetCurrentCharges() > 1 then
-        ability:SetCurrentCharges(ability:GetCurrentCharges() - 1)
-    else
-        ability:Destroy()
-    end
+    ability:SpendCharge()
 end
 
 ------------------------------

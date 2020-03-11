@@ -25,11 +25,7 @@ function item_imba_clarity:OnSpellStart()
 	target:AddNewModifier(caster, ability, modifier_regen, {duration = duration})
 
 	-- Reduce a charge, or destroy the item if no charges are left
-	if ability:GetCurrentCharges() > 1 then
-		ability:SetCurrentCharges(ability:GetCurrentCharges() - 1)
-	else
-		ability:Destroy()
-	end
+	ability:SpendCharge()
 end
 
 

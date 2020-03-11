@@ -177,12 +177,7 @@ function UseTango(ability)
     end    
 
     -- Decrease charge, destroy item when out of charges
-    local current_charges = ability:GetCurrentCharges()
-    if current_charges == 1 then
-        ability:Destroy()
-    else
-        ability:SetCurrentCharges(current_charges - 1)
-    end
+    ability:SpendCharge()
 end
 
 

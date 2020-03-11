@@ -275,7 +275,7 @@
 		"ItemResult"					"item_imba_magic_wand"
 		"ItemRequirements"
 		{
-			"01"						"item_branches;item_branches;item_circlet;item_imba_magic_stick"
+			"01"						"item_imba_branches;item_imba_branches;item_imba_circlet;item_imba_magic_stick"
 		}
 	}
 
@@ -17251,7 +17251,7 @@
 		"ScriptFile"					"components/items/item_tango"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_OTHER"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_TREE"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 		"Model"							"models/props_gameplay/tango.vmdl"
 
@@ -17688,5 +17688,284 @@
 		}
 	}
 
-	//next free ID: 2362
+	//=================================================================================================================
+	// Circlet
+	//=================================================================================================================
+	"item_imba_circlet"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2362"		
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_circlet"
+		"ScriptFile"					"components/items/item_circlet"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"155"
+		"ItemShopTags"					"agi;int;str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"circlet"
+		"ShouldBeInitiallySuggested"	"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"2"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hidden_pwr_stat_bonus"	"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gauntlet of Strength
+	//=================================================================================================================
+	"item_imba_gauntlets"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2363"		
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_gauntlets"
+		"ScriptFile"					"components/items/item_gauntlets"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"145"
+		"ItemShopTags"					"str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gauntlets of strength"
+		"ShouldBeInitiallySuggested"	"1"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_str"				"3"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block"			"25"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Mantle of Intelligence
+	//=================================================================================================================
+	"item_imba_mantle"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2364"		
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_mantle"
+		"ScriptFile"					"components/items/item_mantle"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"145"
+		"ItemShopTags"					"int"
+		"ItemQuality"					"component"
+		"ItemAliases"					"mantle of intelligence"
+		"ShouldBeInitiallySuggested"	"1"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"3"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magical_damage"		"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Enchanted Mango
+	//=================================================================================================================
+	"item_imba_enchanted_mango"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2365"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"Model"							"models/props_gameplay/mango.vmdl"
+		"BaseClass"                     "item_lua"
+        "AbilityTextureName"            "item_enchanted_mango"
+        "ScriptFile"                    "components/items/item_enchanted_mango"
+
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"70"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"enchanted mango"
+		"ItemStackable"					"1"
+		"ItemStackableMax"				"3"
+		"ItemInitialCharges"			"1"
+		"ItemPermanent"					"0"
+		"IsTempestDoubleClonable"		"0"
+		"ItemInitiallySellable"			"1"
+		"ItemSellable"					"0"
+		"ShouldBeInitiallySuggested"	"1"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hp_regen"				"0.6"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_replenish"		"110"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ripe_mango_mana"		"330"			
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ripe_mango_duration"	"20"			
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"400"			
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Faerie Fire
+	//=================================================================================================================
+	"item_imba_faerie_fire"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2366"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"BaseClass"                     "item_lua"
+        "AbilityTextureName"            "item_faerie_fire"
+        "ScriptFile"                    "components/items/item_faerie_fire"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"5"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"70"
+		"ItemShopTags"					"damage;consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"faerie fire"
+		"ItemStackable"					"1"
+		"ItemStackableMax"				"3"
+		"ItemInitialCharges"			"1"
+		"ItemPermanent"					"0"
+		"IsTempestDoubleClonable"		"0"
+		"ShouldBeInitiallySuggested"	"1"
+		
+		// Sounden
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"2"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_restore"			"85"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fire_within_dmg"		"15"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fire_within_dmg_rdctn_pct"	"50"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fire_within_duration"	"8"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_charges"		"3"
+			}
+		}
+	}
+
+
+	//next free ID: 2367
 }

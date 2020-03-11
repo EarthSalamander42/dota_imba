@@ -26,11 +26,7 @@ function item_imba_flask:OnSpellStart()
     modifier_regen_modifier:SetStackCount(break_stacks)
 
     -- Reduce a charge, or destroy the item if no charges are left
-    if ability:GetCurrentCharges() > 1 then
-        ability:SetCurrentCharges(ability:GetCurrentCharges() - 1)
-    else
-        ability:Destroy()
-    end
+    ability:SpendCharge()
 end
 
 --------------------------------------
