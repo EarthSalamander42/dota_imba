@@ -326,33 +326,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Brewmaster
-	//=================================================================================================================
-	"npc_dota_hero_brewmaster"
-	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"brewmaster_thunder_clap"
-		"Ability2"					"brewmaster_cinder_brew"
-		"Ability3"					"brewmaster_drunken_brawler"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"brewmaster_primal_split"
-
-		"Ability10"					"special_bonus_attack_damage_30"
-		"Ability11"					"special_bonus_hp_200"
-		"Ability12"					"special_bonus_unique_brewmaster_3"
-		"Ability13"					"special_bonus_magic_resistance_20"
-		"Ability14"					"special_bonus_unique_brewmaster"
-		"Ability15"					"special_bonus_attack_speed_100"
-		"Ability16"					"special_bonus_unique_brewmaster_2"
-		"Ability17"					"special_bonus_unique_brewmaster_4"
-	}
-
-	//=================================================================================================================
 	// HERO: Centaur
 	//=================================================================================================================
 	"npc_dota_hero_centaur"
@@ -833,33 +806,6 @@
 		//"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
 		//"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
 		//"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
-	}
-
-	//=================================================================================================================
-	// HERO: Gyrocopter
-	//=================================================================================================================
-	"npc_dota_hero_gyrocopter"
-	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"gyrocopter_rocket_barrage"
-		"Ability2"					"gyrocopter_homing_missile"
-		"Ability3"					"gyrocopter_flak_cannon"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"gyrocopter_call_down"
-
-		"Ability10"					"special_bonus_attack_damage_25"
-		"Ability11"					"special_bonus_hp_250"
-		"Ability12"					"special_bonus_unique_gyrocopter_2"
-		"Ability13"					"special_bonus_unique_gyrocopter_3"
-		"Ability14"					"special_bonus_movement_speed_50"
-		"Ability15"					"special_bonus_unique_gyrocopter_4"
-		"Ability16"					"special_bonus_unique_gyrocopter_1"
-		"Ability17"					"special_bonus_unique_gyrocopter_5"
 	}
 
 	//=================================================================================================================

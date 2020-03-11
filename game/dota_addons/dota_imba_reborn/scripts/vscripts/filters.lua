@@ -228,7 +228,7 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:IsRoshan() then
 			-- Ignore stuns
-			print("Roshan modifier name:", modifier_name)
+--			print("Roshan modifier name:", modifier_name)
 			if modifier_name == "modifier_stunned" then
 				return false
 			end

@@ -46,8 +46,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				SendToServerConsole('dota_bot_populate')
 			end
 
-			if GetMapName() == MapOverthrow() then
-				require("components/overthrow/imbathrow")
+			if IsOverthrowMap() then
 				GoodCamera = Entities:FindByName(nil, "@overboss")
 				BadCamera = Entities:FindByName(nil, "@overboss")
 
@@ -59,6 +58,8 @@ function GameMode:OnGameRulesStateChange(keys)
 						break
 					end
 				end
+
+				require("components/overthrow/init")
 			else
 				GoodCamera = Entities:FindByName(nil, "good_healer_6")
 				BadCamera = Entities:FindByName(nil, "bad_healer_6")

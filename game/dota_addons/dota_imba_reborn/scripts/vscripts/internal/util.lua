@@ -103,6 +103,14 @@ function IsTournamentMap()
 	return false
 end
 
+function IsOverthrowMap()
+	if GetMapName() == MapOverthrow() then
+		return true
+	end
+
+	return false
+end
+
 -- Check if an unit is near the enemy fountain
 function IsNearFountain(location, distance)
 	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
@@ -152,6 +160,32 @@ function ShallowCopy(orig)
 		copy[orig_key] = orig_value
 	end
 	return copy
+end
+
+function ShuffledList( orig_list )
+	local list = ShallowCopy( orig_list )
+	local result = {}
+	local count = #list
+	for i = 1, count do
+		local pick = RandomInt( 1, #list )
+		result[ #result + 1 ] = list[ pick ]
+		table.remove( list, pick )
+	end
+	return result
+end
+
+function TableFindKey( table, val )
+	if table == nil then
+		print( "nil" )
+		return nil
+	end
+
+	for k, v in pairs( table ) do
+		if v == val then
+			return k
+		end
+	end
+	return nil
 end
 
 function ShowHUD(bool)

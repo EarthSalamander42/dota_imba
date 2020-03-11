@@ -626,11 +626,6 @@ IMBA_PUNISHED = {
 
 IMBA_FIRST_BLOOD = false
 
--- files requirements
-if GetMapName() == MapOverthrow() then
-	require("components/settings/settings_imbathrow")
-end
-
 -- IMBA override vanilla systems
 USE_TEAM_COURIER = true -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?

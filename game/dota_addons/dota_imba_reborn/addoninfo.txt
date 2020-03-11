@@ -15,7 +15,7 @@
 	"CheckAFKPlayers"				"1"
 	"EnablePickRules"				"1"
 
-	"maps"							"imba_5v5 imba_10v10 imba_1v1 imba_demo"
+	"maps"							"imba_5v5 imba_10v10 imba_1v1 imbathrow_3v3v3v3 imba_demo"
 //	"maps"							"dota imba_demo"
 
 	"IsPlayable"					"1"
@@ -28,6 +28,11 @@
 	"imba_1v1"
 	{
 		"MaxPlayers"				"2"
+	}
+
+	"imbathrow_3v3v3v3"
+	{
+		"MaxPlayers"				"12"
 	}
 
 	"imba_demo"

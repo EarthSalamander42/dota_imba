@@ -44,6 +44,8 @@ function fetch() {
 
 	if (Game.GetMapInfo().map_display_name == "imba_1v1")
 		DisableVoting();
+	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
+		DisableRankingVoting();
 
 	var game_version = game_options.value
 
@@ -262,6 +264,10 @@ function OnVotesReceived(data)
 
 function DisableVoting() {
 	$("#imba-loading-title-vote").style.visibility = "collapse";
+}
+
+function DisableRankingVoting() {
+	$("#imba-loading-title-vote").FindChildTraverse("vote-content").GetChild(0).style.visibility = "collapse";
 }
 
 (function(){
