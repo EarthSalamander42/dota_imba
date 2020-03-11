@@ -3588,11 +3588,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"		"4 5 6 7"
 			}
-			"08"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"		"4 5 6 7"
-			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -37785,7 +37780,7 @@
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 		"MaxLevel"							"1"
 		"AbilityTextureName"				"custom/vengeful_rancor"
-		"ScriptFile"				"components/abilities/heroes/hero_vengefulspirit"
+		"ScriptFile"						"components/abilities/heroes/hero_vengefulspirit"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37813,12 +37808,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_duration"			"0.5"
-			}
-
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"talent_radius"				"900"
 			}
 
 			"06"

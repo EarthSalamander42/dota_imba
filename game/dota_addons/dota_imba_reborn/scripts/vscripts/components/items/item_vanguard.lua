@@ -174,8 +174,8 @@ function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_M
 function modifier_item_imba_vanguard:OnCreated()
 	self.health			= self:GetAbility():GetSpecialValueFor("health")
 	self.health_regen	= self:GetAbility():GetSpecialValueFor("health_regen")
-	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
-	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
+	self.block_damage_melee		= self:GetAbility():GetSpecialValueFor("block_damage_melee")
+	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
 	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
 end
 
@@ -201,9 +201,9 @@ function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
 function modifier_item_imba_vanguard:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end
@@ -283,7 +283,7 @@ function modifier_item_imba_crimson_guard:GetCustomIncomingDamageReductionUnique
 
 -- Declare modifier events/properties
 function modifier_item_imba_crimson_guard:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -292,7 +292,6 @@ function modifier_item_imba_crimson_guard:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 	}
-	return funcs
 end
 
 function modifier_item_imba_crimson_guard:GetModifierHealthBonus()
@@ -316,9 +315,9 @@ function modifier_item_imba_crimson_guard:GetModifierBonusStats_Intellect()
 function modifier_item_imba_crimson_guard:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end
@@ -357,12 +356,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_crimson_guard_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	return funcs
 end
 
 function modifier_item_imba_crimson_guard_buff:GetModifierPhysicalArmorBonusUniqueActive()

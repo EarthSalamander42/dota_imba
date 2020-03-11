@@ -77,7 +77,7 @@
 "DOTA_Tooltip_modifier_imba_ancient_apparition_cold_feet_freeze"				"Frozen"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_cold_feet_freeze_Description"			"Frozen by Ancient Apparition."
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_vortex"									"Ice Vortex"
-"DOTA_Tooltip_modifier_imba_ancient_apparition_ice_vortex_Description"						"Enemies are slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move speed and take %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% additional spell damage. Allies instead have their move speed increased."
+"DOTA_Tooltip_modifier_imba_ancient_apparition_ice_vortex_Description"						"Enemies are slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move speed and have %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% reduced magic resistance. Allies instead have their move speed increased."
 "DOTA_Tooltip_modifier_imba_ancient_apparition_chilling_touch_slow"								"Chilling Touch"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_chilling_touch_slow_Description"					"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast"									"Frostbitten"

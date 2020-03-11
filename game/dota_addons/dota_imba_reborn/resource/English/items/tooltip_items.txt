@@ -43,7 +43,7 @@
 
 // Angelic Alliance
 "DOTA_Tooltip_Ability_item_imba_angelic_alliance"                      "Angelic Alliance"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, %target_status_resistance%%% status resistance, and %target_evasion%%% evasion for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, disarms, and grants true sight on them for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, %target_status_resistance%%% status resistance, and %target_evasion%%% evasion for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, disarms, and grants true sight on them for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker for %passive_disarm_duration% seconds. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Lore"                  "An artifact that originated in a world long destroyed. This blade was used to repel a godlike necromancer, who delighted in treachery and fooling heroes into working for him."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"                "Illusions do not benefit from Angelic Light's passive disarm effect."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_evasion"			"%+$evasion"
@@ -56,8 +56,6 @@
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_mana_regen"		"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_ms"				"%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_status_resistance"		"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_passive_duration"					"ACTIVE DISARM DURATION:"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_passive_disarm_duration"           "PASSIVE DISARM DURATION:"
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff"				"Angelic Light"
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff_Description"	"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and disarmed."
@@ -83,16 +81,16 @@
 "DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_mana"		"+$mana"
 
 // Arcane Rapier
-"DOTA_Tooltip_Ability_item_imba_rapier_magic"                  "Arcane Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_magic_Description"                   "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
+"DOTA_Tooltip_Ability_item_imba_rapier_magic"					"Arcane Rapier"
+"DOTA_Tooltip_ability_item_imba_rapier_magic_Description"		"<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font> <br><br>Becomes unusable if picked up by an ally of its owner until it is returned to its owner. It is immediately usable by anybody if an enemy of the owner picks it up and is killed. A dropped Rapier cannot be picked up by a courier.\n<font color='#FF0000'>Bonus spell amplification does not work if the target is over 2500 range away."
 "DOTA_Tooltip_ability_item_imba_rapier_magic_Lore"              "So powerful, it cannot have a single owner."
-"DOTA_Tooltip_ability_item_imba_rapier_magic_spell_power"                   "%SPELL AMP:"
+"DOTA_Tooltip_ability_item_imba_rapier_magic_spell_power"		"%+Spell Amplification"
 
 // Archmage Rapier
-"DOTA_Tooltip_Ability_item_imba_rapier_magic_2"                "Archmage Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Description"                 "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of Power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
-"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Lore"            "So powerful, it cannot have a single owner."
-"DOTA_Tooltip_ability_item_imba_rapier_magic_2_spell_power"                 "%SPELL AMP:"
+"DOTA_Tooltip_Ability_item_imba_rapier_magic_2"					"Archmage Rapier"
+"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Description"		"<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font> <br><br>Becomes unusable if picked up by an ally of its owner until it is returned to its owner. It is immediately usable by anybody if an enemy of the owner picks it up and is killed. A dropped Rapier cannot be picked up by a courier.\n<h1><font color='#FF0000'>Passive: Beacon of Power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Bonus spell amplification does not work if the target is over 2500 range away."
+"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Lore"			"So powerful, it cannot have a single owner."
+"DOTA_Tooltip_ability_item_imba_rapier_magic_2_spell_power"		"%+Spell Amplification"
 
 // Armlet
 "DOTA_Tooltip_Ability_item_imba_armlet"						"Armlet of Mordiggian"
@@ -100,16 +98,14 @@
 "DOTA_Tooltip_ability_item_imba_armlet_Lore"                            "Weapon of choice among brutes, the bearer sacrifices his life energy to gain immense strength and power."
 "DOTA_Tooltip_ability_item_imba_armlet_Note0"                          "The bonus strength affects both maximum and current HP."
 "DOTA_Tooltip_ability_item_imba_armlet_Note1"                          "You cannot die from the health loss when the bonus strength is gone, or due to the health drain."
+"DOTA_Tooltip_ability_item_imba_armlet_Note2"                          "Illusions do not benefit from Blood Price's bonuses."
 "DOTA_Tooltip_ability_item_imba_armlet_bonus_damage"                    "+$damage"
 "DOTA_Tooltip_ability_item_imba_armlet_bonus_attack_speed"              "+$attack"
 "DOTA_Tooltip_ability_item_imba_armlet_bonus_armor"                    "+$armor"
 "DOTA_Tooltip_ability_item_imba_armlet_bonus_health_regen"              "+$hp_regen"
 
-"DOTA_Tooltip_modifier_imba_armlet_unholy_strength"                    "Unholy Strength"
-"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_Description"                     "Losing 45 health per second, but gaining %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength, %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage, %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor, and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
-
-"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_visual_effect"                   "Unholy Strength"
-"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_visual_effect_Description"       "Losing 45 health per second, but gaining %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength, %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage, %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor, and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+"DOTA_Tooltip_modifier_imba_armlet_unholy_strength"						"Unholy Strength"
+"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_Description"			"Damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%.<br>Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%.<br>Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%.<br>Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%.<br>Losing %dMODIFIER_PROPERTY_TOOLTIP% health per second."
 
 // Assault Cuirass
 "DOTA_Tooltip_Ability_item_imba_assault"                    "Assault Cuirass"
@@ -250,8 +246,8 @@
 "DOTA_Tooltip_modifier_item_imba_crimson_guard_buff_Description"		"Gained %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE% armor, and a 100%% chance to block %dMODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK% damage from incoming attacks. Heroes also gain %dMODIFIER_PROPERTY_TOOLTIP%%% damage reduction."
 
 // Crystalys
-"DOTA_Tooltip_Ability_item_imba_lesser_crit"                   "Crystalys"
-"DOTA_Tooltip_ability_item_imba_lesser_crit_Description"                   "<h1>Passive: Critical Strike</h1> Grants each attack a %crit_chance%%% chance to deal %base_crit%% damage.  <br><br>Critical Strike does not work against buildings."
+"DOTA_Tooltip_Ability_item_imba_lesser_crit"					"Crystalys"
+"DOTA_Tooltip_ability_item_imba_lesser_crit_Description"		"<h1>Passive: Critical Strike</h1>Grants each attack a %crit_chance%%% chance to deal %crit_multiplier%%% damage."
 "DOTA_Tooltip_ability_item_imba_lesser_crit_Lore"             "A blade forged from rare crystals, it seeks weak points in enemy armor."
 "DOTA_Tooltip_ability_item_imba_lesser_crit_bonus_damage"                  "+$damage"
 
@@ -277,14 +273,11 @@
 "DOTA_Tooltip_modifier_imba_souldrain_damage_Description"                   "Being drained of your life force."
 
 // Cursed Rapier
-"DOTA_Tooltip_Ability_item_imba_rapier_cursed"                  "Cursed Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer.\n<font color='#FF0000'>Bonus damage and spell amp does not work if the target is over 2500 range away.</font>"
-"DOTA_Tooltip_Ability_item_imba_rapier_cursed_Note0"            "Bonus damage and spell amp stops working when dealing damage to units over 2500 range away from you."
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_Lore"            "So powerful, it hasn't ever accepted a single owner."
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"                 "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_spell_power"                  "%SPELL AMP:"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_damage_reduction"             "%DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_tenacity_pct"                 "%TENACITY:"
+"DOTA_Tooltip_Ability_item_imba_rapier_cursed"					"Cursed Rapier"
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"		"<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font> <br><br>Becomes unusable if picked up by an ally of its owner until it is returned to its owner. It is immediately usable by anybody if an enemy of the owner picks it up and is killed. A dropped Rapier cannot be picked up by a courier.\n<h1> Passive: REAL ULTIMATE POWER</h1>Reduces incoming damage by %damage_reduction%%% and increases status resistance by %tenacity_pct%%%.\n<h1><font color='#FF0000'>Passive: Cursed by the Gods</font></h1> Wielding the Cursed Rapier deals %base_corruption%%% of the owner's maximum health as self-damage every second. The damage increases linearly at a rate of %base_corruption%%% every %time_to_double% seconds. The curse is non-lethal.\n<h1><font color='#FF0000'>Passive: Beacon of Power</font></h1> The absurd power of the Cursed Rapier makes its bearer visible to the enemy team at all times.\n\n<h1>Passive: True Strike</h1> Your attacks cannot miss.\n<font color='#FF0000'>Bonus damage and spell amplification does not work if the target is over 2500 range away."
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_Lore"				"So powerful, it hasn't ever accepted a single owner."
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"		"+$damage"
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_spell_power"		"%+Spell Amplification"
 
 // Daedalus
 "DOTA_Tooltip_Ability_item_imba_greater_crit"                  "Daedalus"
@@ -352,26 +345,19 @@
 
 
 // Diffusal Blade
-"DOTA_Tooltip_Ability_item_imba_diffusal_blade"                "Diffusal Blade"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_Description"                 "<h1>Active: Purge</h1> Purges a target enemy, removing its purgable buffs and slowing it. The slow decays over the duration. Non-hero enemies are also rooted for %root_duration% seconds.\n<h1>Passive: Mana Burn</h1> Your attacks burn up to %mana_burn% mana and deal it as bonus physical damage."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note0"          "Mana Burn works partially on your illusions, burning 16 mana. Does not pierce Spell Immunity."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note1"          "Mana Burn does not stack with different versions of Diffusal Blade and its upgrades."
+"DOTA_Tooltip_Ability_item_imba_diffusal_blade"					"Diffusal Blade"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_Description"		"<h1>Active: Inhibit</h1> <font color='#FF7800'>Purges</font> a target enemy and slows it for %purge_slow_duration% seconds. The slow decays over the duration. Non-hero enemies are also rooted for %purge_root_duration% seconds.<br><br>Range: %abilitycastrange%\n<h1>Passive: Manabreak</h1>Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana. <br><br>Burns %feedback_mana_burn_illusion_melee% mana per attack from melee illusions and %feedback_mana_burn_illusion_ranged% mana per attack from ranged illusions."
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note0"			"Mana Burn does not stack with other Diffusal Blade series items."
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_Lore"            "An enchanted blade that allows the user to cut straight into the enemy's soul."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_total_slow_duration"         "PURGE SLOW DURATION:"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_initial_charges"             "PURGE CHARGES:"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_mana_burn"                   "MANA BURNED PER HIT:"
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_agi"                   "+$agi"
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_int"                   "+$int"
 
-"DOTA_Tooltip_modifier_item_imba_diffusal_slow"                "Diffusal Blade"
-"DOTA_Tooltip_modifier_item_imba_diffusal_slow_Description"                 "Purged and slowed. Regains movement speed over time."
-
-"DOTA_Tooltip_modifier_item_imba_diffusal_root"                "Diffusal Blade Root"
-"DOTA_Tooltip_modifier_item_imba_diffusal_root_Description"                 "Rooted."
+"DOTA_Tooltip_modifier_item_imba_diffusal_blade_slow"					"Diffusal Blade Inhibit"
+"DOTA_Tooltip_modifier_item_imba_diffusal_blade_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 // Divine Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier"                        "Divine Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font> \n\n <h1> Passive: True Strike</h1> Your attacks cannot miss."
+"DOTA_Tooltip_ability_item_imba_rapier_Description"            "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font> <br><br>Becomes unusable if picked up by an ally of its owner until it is returned to its owner. It is immediately usable by anybody if an enemy of the owner picks it up and is killed. A dropped Rapier cannot be picked up by a courier.\n\n<h1>Passive: True Strike</h1> Your attacks cannot miss.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away."
 "DOTA_Tooltip_ability_item_imba_rapier_Lore"                    "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_bonus_damage"            "+$damage"
 
@@ -531,7 +517,7 @@
 
 // Hurricane Pike
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike"               "Hurricane Pike"
-"DOTA_Tooltip_Ability_item_imba_hurricane_pike_Description"         "<h1>Active: Hurricane Thrust</h1> Pushes you and target enemy %enemy_length% units away from each other, and for %range_duration% seconds, allows you to make %max_attacks% attacks against the target without range restrictions and with +%bonus_attack_speed% attack speed.<br><br>Works like Force Staff when used on self or allies.\n<h1>Passive:  Dragon's Reach</h1> Increases attack range of ranged heroes by %base_attack_range%."
+"DOTA_Tooltip_Ability_item_imba_hurricane_pike_Description"		"<h1>Active: Hurricane Thrust</h1> Pushes you and target enemy %enemy_length% units away from each other, and for %range_duration% seconds, allows you to make %max_attacks% attacks against the target without range restrictions (ranged casters only) and with +%bonus_attack_speed% attack speed.<br><br>Works like Force Staff when used on self or allies.<br><br>Allied Range: %abilitycastrange%<br>Enemy Range: %cast_range_enemy%\n<h1>Passive:  Dragon's Reach</h1> Increases attack range of ranged heroes by %base_attack_range%."
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike_Lore"            "A legendary pike once held as royal sigil of the ancient wyvern riders."
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike_Note0"           "Self-cast will use Hurricane Pike on yourself."
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike_Note1"           "Hurricane Pike doesn't interrupt the target's actions."
@@ -542,7 +528,7 @@
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike_bonus_strength"        "+$str"
 
 "DOTA_Tooltip_modifier_item_imba_hurricane_pike_attack_speed"       "Hurricane Pike"
-"DOTA_Tooltip_modifier_item_imba_hurricane_pike_attack_speed_Description" "Unlimited attack!"
+"DOTA_Tooltip_modifier_item_imba_hurricane_pike_attack_speed_Description" "Gaining bonus attack speed against the Hurricane Thurst target, and range-unrestricted attacks equal to stack count if the caster is ranged."
 
 // Initiate's Robe
 "DOTA_Tooltip_Ability_item_imba_initiate_robe"                  "Initiate's Robe"
@@ -582,33 +568,41 @@
 
 // Jarnbjorn
 "DOTA_Tooltip_Ability_item_imba_jarnbjorn"                  "Jarnbjorn"
-"DOTA_Tooltip_ability_item_imba_jarnbjorn_Description"		"<h1>Active: Static Charge</h1>Same as Mjollnir.\n<h1>Active: Chop Tree</h1> Destroy a target tree and all trees within %chop_tree_radius% radius.<br><br>Cast Range: %chop_tree_cast_range%<br>Cooldown: %chop_tree_cooldown% seconds\n<h1><h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between all targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br>Stacks with the Chain Lightning of other Maelstrom series items.\n<h1>Passive: Quell</h1> Increases attack damage against non-hero units by %quelling_bonus% for melee heroes, and %quelling_bonus_ranged% for ranged. \n<h1>Passive: Cleave</h1> Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target. (Melee Only)"
+"DOTA_Tooltip_ability_item_imba_jarnbjorn_Description"		"<h1>Active: Static Charge</h1>Same as Mjollnir (%static_chance%%% chance).\n<h1>Active: Chop Trees</h1> Destroy a target tree and all trees within %chop_tree_radius% radius.<br><br>Cast Range: %chop_tree_cast_range%<br>Cooldown: %chop_tree_cooldown% seconds\n<h1><h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between all targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br>Stacks with the Chain Lightning of other Maelstrom series items.\n<h1>Passive: Quell</h1> Increases attack damage against non-hero units by %quelling_bonus% for melee heroes, and %quelling_bonus_ranged% for ranged. \n<h1>Passive: Cleave</h1> Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target. (Melee Only)\n<h1>Passive: Long Reach</h1> Increases attack range of melee heroes by %bonus_range%."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Lore"               "Thor's magical hammer, made for him by the dwarves Brok and Eitri."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Note0"					"Static Charge cannot trigger more than once per %static_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Note1"					"Static Charge's shock deals magical damage centered on hero with the Static Charge. Static Charge's targets cannot be more than %static_seconary_radius% range away."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Note2"					"Static Charge procs will not bounce to heroes that are invisible or hidden by Fog of War."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Note3"					"Has a %chain_delay% second delay between leaps, and a %chain_cooldown% second cooldown between Chain Lightnings."
+"DOTA_Tooltip_ability_item_imba_jarnbjorn_Note4"					"Bonus melee attack range does not stack with other Javelin series items."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_damage"				"+$damage"
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_attack_speed"		"+$attack"
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_health_regen"		"+$hp_regen"
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_mana_regen"			"+$mana_regen"
 
-"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static"              "Static Charge"
-"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static_Description"        "Countering incoming damage with lightning bolts"
+"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static"					"Jarnbjorn Static Charge"
+"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static_Description"		"Countering incoming damage with lightning bolts"
 
-"DOTA_Tooltip_modifier_item_imba_jarnbjorn_slow"              "Static Charge"
-"DOTA_Tooltip_modifier_item_imba_jarnbjorn_slow_Description"        "Movement and attack slowed"
+"DOTA_Tooltip_modifier_item_imba_jarnbjorn_slow"             		 "Static Charge"
+"DOTA_Tooltip_modifier_item_imba_jarnbjorn_slow_Description"		"Movement and attack speed slowed."
+
+"DOTA_Tooltip_modifier_item_imba_static_charge"					"Static Charge"
+"DOTA_Tooltip_modifier_item_imba_static_charge_Description"		"When attacked, there is a %dMODIFIER_PROPERTY_TOOLTIP%%% chance that lightning will strike the attacker and other nearby enemies."
 
 // Javelin
 "DOTA_Tooltip_ability_item_imba_javelin"                        "Javelin"
-"DOTA_Tooltip_ability_item_imba_javelin_Description"            "<h1>Passive: Pierce</h1>Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Grants %bonus_range% bonus attack range to melee wielders. Does not benefit ranged heroes."
+"DOTA_Tooltip_ability_item_imba_javelin_Description"            "<h1>Passive: Pierce</h1>Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Increases attack range of melee heroes by %bonus_range%."
 "DOTA_Tooltip_ability_item_imba_javelin_Lore"                  "A rather typical spear that can sometimes pierce through an enemy's armor when used to attack."
+"DOTA_Tooltip_ability_item_imba_javelin_Note0"                  "Bonus melee attack range does not stack with other Javelin series items."
+"DOTA_Tooltip_ability_item_imba_javelin_bonus_damage"			"+$damage"
+
 
 // Maelstrom
 "DOTA_Tooltip_Ability_item_imba_maelstrom"                      "Maelstrom"
-"DOTA_Tooltip_ability_item_imba_maelstrom_Description"          "<h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between <font color='#FF7800'>all</font> targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br><font color='#FF7800'>Stacks with the Chain Lightning of other Maelstrom series items.</font>"
+"DOTA_Tooltip_ability_item_imba_maelstrom_Description"          "<h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between <font color='#FF7800'>all</font> targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br><font color='#FF7800'>Stacks with the Chain Lightning of other Maelstrom series items.</font>\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Increases attack range of melee heroes by %bonus_range%."
 "DOTA_Tooltip_ability_item_imba_maelstrom_Lore"                "A hammer forged for the gods themselves, Maelstrom allows its user to harness the power of lightning."
 "DOTA_Tooltip_ability_item_imba_maelstrom_Note0"                "Has a %chain_delay% second delay between leaps, and a %chain_cooldown% second cooldown between Chain Lightnings."
+"DOTA_Tooltip_ability_item_imba_maelstrom_Note1"					"Bonus melee attack range does not stack with other Javelin series items."
 "DOTA_Tooltip_ability_item_imba_maelstrom_bonus_damage"			"+$damage"
 
 // Magic Stick
@@ -664,12 +658,13 @@
 
 // Mjollnir
 "DOTA_Tooltip_Ability_item_imba_mjollnir"                      "Mjollnir"
-"DOTA_Tooltip_ability_item_imba_mjollnir_Description"          "<h1>Active: Static Charge</h1>Places a charged shield on a target unit for %static_duration% seconds which has a %static_chance%%% chance to release a %static_damage% magical damage shocking bolt at a nearby attacker and <font color='#FF7800'>all</font> additional enemies. <font color='#FF7800'>Slows movement and attack speed of enemies hit by Static Charge by %static_slow%%%/%static_slow% for %static_slow_duration% seconds.</font><br><br>Range: %abilitycastrange%\n<h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between <font color='#FF7800'>all</font> targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br><font color='#FF7800'>Stacks with the Chain Lightning of other Maelstrom series items.</font>"
+"DOTA_Tooltip_ability_item_imba_mjollnir_Description"          "<h1>Active: Static Charge</h1>Places a charged shield on a target unit for %static_duration% seconds which on taking damage has a %static_chance%%% chance to release a %static_damage% magical damage shocking bolt at a nearby attacker and <font color='#FF7800'>all</font> additional enemies. <font color='#FF7800'>Slows movement and attack speed of enemies hit by Static Charge by %static_slow%%%/%static_slow% for %static_slow_duration% seconds.</font><br><br>Range: %abilitycastrange%\n<h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between <font color='#FF7800'>all</font> targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br><font color='#FF7800'>Stacks with the Chain Lightning of other Maelstrom series items.</font>\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Increases attack range of melee heroes by %bonus_range%."
 "DOTA_Tooltip_ability_item_imba_mjollnir_Lore"                  "Thor's magical hammer, made for him by the dwarves Brok and Eitri."
 "DOTA_Tooltip_ability_item_imba_mjollnir_Note0"					"Static Charge cannot trigger more than once per %static_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_mjollnir_Note1"					"Static Charge's shock deals magical damage centered on hero with the Static Charge. Static Charge's targets cannot be more than %static_seconary_radius% range away."
 "DOTA_Tooltip_ability_item_imba_mjollnir_Note2"					"Static Charge procs will not bounce to heroes that are invisible or hidden by Fog of War."
 "DOTA_Tooltip_ability_item_imba_mjollnir_Note3"					"Has a %chain_delay% second delay between leaps, and a %chain_cooldown% second cooldown between Chain Lightnings."
+"DOTA_Tooltip_ability_item_imba_mjollnir_Note4"					"Bonus melee attack range does not stack with other Javelin series items."
 "DOTA_Tooltip_ability_item_imba_mjollnir_bonus_damage"						"+$damage"
 "DOTA_Tooltip_ability_item_imba_mjollnir_bonus_attack_speed"					"+$attack"
 
@@ -681,11 +676,12 @@
 
 // Monkey King Bar
 "DOTA_Tooltip_Ability_item_imba_monkey_king_bar"                "Monkey King Bar"
-"DOTA_Tooltip_ability_item_imba_monkey_king_bar_Description"                "<h1>Passive: Pierce</h1>Grants each attack a <font color='#FF7800'>%bonus_chance%%%</font> chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1><font color='#FF7800'>Passive: King's Reach</font></h1> Grants %bonus_range% bonus attack range to melee wielders. Does not benefit ranged heroes."
-"DOTA_Tooltip_ability_item_imba_monkey_king_bar_Lore"          "The staff of the Monkey King extends and retracts naturally, like an extension of one's own body."
-"DOTA_Tooltip_ability_item_imba_monkey_king_bar_pulverize_damage"           "PULVERIZE DAMAGE:"
-"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_damage"               "+$damage"
-"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_attack_speed"			"+$attack"
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_Description"                "<h1>Passive: Pierce</h1>Grants each attack a <font color='#FF7800'>%bonus_chance%%%</font> chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1><font color='#FF7800'>Passive: King's Reach</font></h1> Increases attack range of melee heroes by %bonus_range%."
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_Lore"					"The staff of the Monkey King extends and retracts naturally, like an extension of one's own body."
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_Note0"					"Bonus melee attack range does not stack with other Javelin series items."
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_pulverize_damage"		"PULVERIZE DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_damage"			"+$damage"
+"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_attack_speed"		"+$attack"
 
 // Moon Shard
 "DOTA_Tooltip_Ability_item_imba_moon_shard"						"Moon Shard"
@@ -853,16 +849,15 @@
 "DOTA_Tooltip_modifier_item_imba_poor_mans_shield_active_Description"	"Blocking additional attack damage."
 
 // Purgeblade
-"DOTA_Tooltip_Ability_item_imba_diffusal_blade_2"              "Purgeblade"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Description"               "<h1>Active: Combust</h1> Purges a target enemy, removing its purgable buffs and slowing it.<font color='#FF7800'> Each buff removed in this manner immediately burns %dispel_burn% mana, dealing it as magical damage.</font> The slow decays over the duration. Non-hero enemies are also rooted for %root_duration% seconds.\n<h1>Passive: Mana Burn</h1> Your attacks burn up to %mana_burn% mana and deal it as bonus physical damage.\n<h1><font color='#FF7800'>Passive: Mana Combustion</font></h1> Has a %dispel_chance_pct%%% chance to combust one random buff from the enemy with every hit, burning %dispel_burn% mana and dealing it as magical damage."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note0"                     "Mana Burn works partially on your illusions, burning 25 mana. Does not pierce Spell Immunity."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note1"                     "Mana Burn does not stack with different versions of Diffusal Blade and its upgrades."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Lore"          "The fabled Sword of Godec."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_total_slow_duration"       "PURGE SLOW DURATION:"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_initial_charges"           "PURGE CHARGES:"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_mana_burn"                 "MANA BURNED PER HIT:"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_agi"                 "+$agi"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_int"                 "+$int"
+"DOTA_Tooltip_Ability_item_imba_diffusal_blade_2"					"Purgeblade"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Description"		"<h1>Active: Combust</h1> Purges a target enemy and slows it for %purge_slow_duration% seconds. Each buff removed in this manner immediately burns %dispel_burn% mana, dealing it as magical damage. The slow decays over the duration. Non-hero enemies are also rooted for %purge_root_duration% seconds.<br><br>Range: %abilitycastrange%\n<h1>Passive: Manabreak</h1>Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana. <br><br>Burns %feedback_mana_burn_illusion_melee% mana per attack from melee illusions and %feedback_mana_burn_illusion_ranged% mana per attack from ranged illusions.\n<h1><font color='#FF7800'>Passive: Mana Combustion</font></h1> Has a %dispel_chance_pct%%% chance to combust one random buff from the enemy with every hit, burning %dispel_burn% mana and dealing it as magical damage."
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note0"				"Mana Burn does not stack with other Diffusal Blade series items."
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Lore"				"The fabled Sword of Godec."
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_agi"			"+$agi"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_int"			"+$int"
+
+"DOTA_Tooltip_modifier_item_imba_diffusal_blade_2_slow"					"Purgeblade Combust"
+"DOTA_Tooltip_modifier_item_imba_diffusal_blade_2_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 // Radiance
 "DOTA_Tooltip_Ability_item_imba_radiance"                      "Radiance"
@@ -941,24 +936,20 @@
 "DOTA_Tooltip_modifier_item_imba_sheepstick_buff_Description"               "You are a harmless, helpless critter... Which flies VERY fast."
 
 // Shadow Blade
-"DOTA_Tooltip_Ability_item_imba_shadow_blade"                  "Shadow Blade"
-"DOTA_Tooltip_ability_item_imba_shadow_blade_Description"                   "<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>If attacking to end the invisibility, you gain %invis_damage% bonus damage on that attack, <font color='#FF7800'>and apply <b>Shadowy Panic<b> to the target.</font>\n<h1><font color='#FF7800'>Passive: Shadowy Panic</font></h1> Attacking to break invisiblity cripples the target's senses, slowing their turn rate by %turnrate_slow%%% for %turnrate_slow_duration% seconds."
+"DOTA_Tooltip_Ability_item_imba_shadow_blade"					"Shadow Blade"
+"DOTA_Tooltip_ability_item_imba_shadow_blade_Description"		"<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>If attacking to end the invisibility, you gain %invis_damage% bonus damage on that attack.\n<h1><font color='#FF7800'>Passive: Shadowy Panic</font></h1> Attacking to break Shadow Walk cripples the target's senses, slowing their turn rate by %turnrate_slow%%% for %turnrate_slow_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_shadow_blade_Lore"              "The blade of a fallen king, it allows you to move unseen and strike from the shadows."
-"DOTA_Tooltip_ability_item_imba_shadow_blade_Note0"            "Has a 0.3 second fade time."
+"DOTA_Tooltip_ability_item_imba_shadow_blade_Note0"            "Has a %invis_fade_time% second fade time."
 "DOTA_Tooltip_ability_item_imba_shadow_blade_Note1"            "If the invisibility ends without attacking, the bonus damage is lost."
-"DOTA_Tooltip_ability_item_imba_shadow_blade_Note2"            "Upon taking hero-based damage, terrain walking is disabled for 2 seconds."
+"DOTA_Tooltip_ability_item_imba_shadow_blade_Note2"            "Upon taking hero-based damage, terrain walking is disabled for %invis_flying_damage_disable_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_shadow_blade_bonus_damage"                  "+$damage"
 "DOTA_Tooltip_ability_item_imba_shadow_blade_bonus_attack_speed"            "+$attack"
-"DOTA_Tooltip_ability_item_imba_shadow_blade_invis_duration"                "SHADOW WALK DURATION:"
-"DOTA_Tooltip_ability_item_imba_shadow_blade_invis_damage"                  "SHADOW WALK DAMAGE:"
-"DOTA_Tooltip_ability_item_imba_shadow_blade_turnrate_slow"                 "%PANIC TURNRATE SLOW:"
-"DOTA_Tooltip_ability_item_imba_shadow_blade_turnrate_slow_duration"        "PANIC DURATION:"
 
-"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis"            "Shadow Walk"
-"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis_Description"            "Invisible as the wind. Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and you can move through units and terrain. Attacking to break invisibility will deal bonus damage and slow turnrate"
+"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis"				"Shadow Walk"
+"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis_Description"	"Invisible as the wind. Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and you can move through units and terrain. Attacking to break invisibility will deal %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_POST_CRIT% bonus damage and apply Shadowy Panic."
 
 "DOTA_Tooltip_modifier_item_imba_shadow_blade_invis_turnrate_debuff"                "PANIC"
-"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis_turnrate_debuff_Description"    "WHY ARE YOU LOOKING AT THIS DEBUFF INSTEAD OF RUNNING AWAY (turn rate slowed)"
+"DOTA_Tooltip_modifier_item_imba_shadow_blade_invis_turnrate_debuff_Description"    "WHY ARE YOU LOOKING AT THIS DEBUFF INSTEAD OF RUNNING AWAY (turn rate slowed by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%%%)"
 
 // Siege Cuirass
 "DOTA_Tooltip_Ability_item_imba_siege_cuirass"                  "Siege Cuirass"
@@ -984,29 +975,23 @@
 
 
 // Silver Edge
-"DOTA_Tooltip_Ability_item_imba_silver_edge"                    "Silver Edge"
-"DOTA_Tooltip_ability_item_imba_silver_edge_Description"                    "<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>If attacking to end the invisibility, you break the target, disabling their passives for %main_debuff_duration% seconds, and reducing their damage output by %panic_damage_reduction%%%. <font color='#FF7800'>Additionally, you <b>Shadow Rip<b>.</font>\n<h1><font color='#FF7800'>Passive: Shadow Rip</font></h1> Attacking to end Invisibility rips the air apart, dealing %shadow_rip_damage% damage to the target and enemies behind them, disabling their passives, reducing their damage output by %panic_damage_reduction%%%, and slowing their turn rate by %panic_turnrate_slow%%% for %panic_duration% seconds."
-"DOTA_Tooltip_ability_item_imba_silver_edge_Lore"              "The blade of a fallen king, it allows you to move unseen and strike from the shadows."
-"DOTA_Tooltip_ability_item_imba_silver_edge_Note0"              "Has a 0.3 second fade time."
+"DOTA_Tooltip_Ability_item_imba_silver_edge"					"Silver Edge"
+"DOTA_Tooltip_ability_item_imba_silver_edge_Description"		"<h1>Active: Shadow Walk</h1>Makes you invisible for %invis_duration% seconds, or until you attack or cast a spell.  While Shadow Walk is active, you move %invis_ms_pct%%% faster and can move through units <font color='#FF7800'>and terrain</font>.  <br><br>Attacking to end the invisibility will deal %shadow_rip_damage% <font color='#FF7800'>pure</font> damage to the target, and for %main_debuff_duration% seconds, disable their passive abilities <font color='#FF7800'>and reduce their outgoing damage by %panic_damage_reduction%%%</font>.\n<h1><font color='#FF7800'>Active: Shadow Rip</font></h1> If attacking to end Shadow Walk, all enemies in a cone behind the target receive the Shadow Walk damage, have their turn rate slowed by %panic_turnrate_slow%%%, outgoing damage reduced by %panic_damage_reduction%%%, and passives disabled for %panic_duration% seconds. This debuff also affects the main target, but damage reduction does not stack with Shadow Walk's debuff.<br><br>Cone Starting Width: %shadow_rip_start_width%<br>Cone Ending Width: %shadow_rip_end_width%<br>Cone Distance: %shadow_rip_distance%"
+"DOTA_Tooltip_ability_item_imba_silver_edge_Lore"				"The blade of a fallen king, it allows you to move unseen and strike from the shadows."
+"DOTA_Tooltip_ability_item_imba_silver_edge_Note0"				"Has a %invis_fade_time% second fade time."
 "DOTA_Tooltip_ability_item_imba_silver_edge_Note1"              "If the invisibility ends without attacking, the bonus damage is lost."
-"DOTA_Tooltip_ability_item_imba_silver_edge_Note2"              "Shadow Rip cannot miss."
-"DOTA_Tooltip_ability_item_imba_silver_edge_Note3"              "Upon taking hero-based damage, terrain walking is disabled for 1 second."
+"DOTA_Tooltip_ability_item_imba_silver_edge_Note2"				"Shadow Rip cannot miss."
+"DOTA_Tooltip_ability_item_imba_silver_edge_Note3"				"Upon taking hero-based damage, terrain walking is disabled for %invis_flying_damage_disable_duration% second."
+"DOTA_Tooltip_ability_item_imba_silver_edge_Note4"				"<font color='#FF7800'>Shadow Walk damage is dealt as a separate damage instance.</font>"
 "DOTA_Tooltip_ability_item_imba_silver_edge_bonus_damage"                   "+$damage"
 "DOTA_Tooltip_ability_item_imba_silver_edge_bonus_attack_speed"             "+$attack"
 "DOTA_Tooltip_ability_item_imba_silver_edge_bonus_all_stats"                "+$all"
-"DOTA_Tooltip_ability_item_imba_silver_edge_invis_duration"                 "SHADOW WALK DURATION:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_shadow_rip_distance"            "SHADOW RIP DISTANCE:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_shadow_rip_damage"              "SHADOW RIP DAMAGE:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_panic_damage_reduction"         "%PANIC DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_panic_turnrate_slow"            "%PANIC TURNRATE SLOW:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_panic_duration"                 "PANIC DURATION:"
-"DOTA_Tooltip_ability_item_imba_silver_edge_main_debuff_duration"           "BREAK DURATION:"
 
-"DOTA_Tooltip_modifier_item_imba_silver_edge_invis"            "Shadow Walk"
-"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_Description"             "Invisible as the wind. Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and you can move through units and terrain. Attacking to break invisibility will deal %MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_POST_CRIT%%% bonus damage and slow turnrate"
+"DOTA_Tooltip_modifier_item_imba_silver_edge_invis"					"Shadow Walk"
+"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_Description"		"Invisible as the wind. Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and you can move through units and terrain. Attacking to break invisibility will deal %dMODIFIER_PROPERTY_TOOLTIP% pure damage and apply Shadow Rip."
 
 "DOTA_Tooltip_modifier_item_imba_silver_edge_invis_panic_debuff"                "PANIC"
-"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_panic_debuff_Description"    "RUN AWAY. WAIT, NO, HELP MY TEAMMATE. WAIT, NO, HE'S DEAD FUUUUUUUUUUUUUUUUU (Turn rate slowed, Damage reduced, passives disabled.)"
+"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_panic_debuff_Description"    "RUN AWAY. WAIT, NO, HELP MY TEAMMATE. WAIT, NO, HE'S DEAD FUUUUUUUUUUUUUUUUU (Turn rate slowed by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%%%, total outgoing damage reduced by %dMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%%, and passives disabled.)"
 
 "DOTA_Tooltip_modifier_item_imba_silver_edge_invis_break_debuff"                "Break"
 "DOTA_Tooltip_modifier_item_imba_silver_edge_invis_break_debuff_Description"    "Passives are disabled and damage is reduced."
@@ -1117,7 +1102,7 @@
 // Trinity Rapier
 
 "DOTA_Tooltip_Ability_item_imba_rapier_2"                      "Trinity Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away.</font> \n\n <h1> Passive: True Strike</h1> Your attacks cannot miss."
+"DOTA_Tooltip_ability_item_imba_rapier_2_Description"          "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font> <br><br>Becomes unusable if picked up by an ally of its owner until it is returned to its owner. It is immediately usable by anybody if an enemy of the owner picks it up and is killed. A dropped Rapier cannot be picked up by a courier.\n<h1><font color='#FF0000'>Passive: Beacon of Power</font></h1> The absurd power of the Trinity Rapier makes its bearer visible to the enemy team at all times.\n\n<h1>Passive: True Strike</h1> Your attacks cannot miss.\n<font color='#FF0000'>Bonus damage does not work if the target is over 2500 range away."
 "DOTA_Tooltip_ability_item_imba_rapier_2_Lore"                  "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_2_bonus_damage"          "+$damage"
 

@@ -567,7 +567,7 @@ function modifier_imba_bristleback_bristleback:DeclareFunctions()
 end
 
 function modifier_imba_bristleback_bristleback:GetModifierIncomingDamage_Percentage(keys)
-	if self.parent:PassivesDisabled() then return 0 end
+	if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then return 0 end
 
 	local forwardVector			= self.caster:GetForwardVector()
 	local forwardAngle			= math.deg(math.atan2(forwardVector.x, forwardVector.y))
@@ -623,7 +623,7 @@ end
 
 function modifier_imba_bristleback_bristleback:OnTakeDamage( keys )
 	if keys.unit == self.parent then
-		if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then return end
+		if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then return end
 	
 		-- Pretty inefficient to calculate this stuff twice but I don't want to make these class variables due to how much damage might stack in a single frame...
 		local forwardVector			= self.caster:GetForwardVector()
@@ -668,12 +668,10 @@ function modifier_imba_bristleback_bristleback_has:OnCreated()
 end
 
 function modifier_imba_bristleback_bristleback_has:CheckState(keys)
-	local state = {
-	[MODIFIER_STATE_ROOTED] = true,
-	[MODIFIER_STATE_DISARMED] = true
+	return {
+		[MODIFIER_STATE_ROOTED] = true,
+		[MODIFIER_STATE_DISARMED] = true
 	}
-
-	return state
 end
 
 -------------
@@ -746,7 +744,7 @@ function modifier_imba_bristleback_warpath:OnRefresh()
 end
 
 function modifier_imba_bristleback_warpath:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
         MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
@@ -754,8 +752,6 @@ function modifier_imba_bristleback_warpath:DeclareFunctions()
 		-- IMBAfication: I Swear On Me Mum
 		MODIFIER_EVENT_ON_HERO_KILLED
     }
-
-    return decFuncs
 end
 
 function modifier_imba_bristleback_warpath:GetModifierPreAttack_BonusDamage(keys)

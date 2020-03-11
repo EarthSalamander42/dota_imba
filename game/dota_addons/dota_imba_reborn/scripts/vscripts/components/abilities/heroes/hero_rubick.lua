@@ -1054,7 +1054,8 @@ imba_rubick_spellsteal.banned_abilities =
 	"shredder_chakram_2",
 	"shredder_return_chakram",
 	"shredder_return_chakram_2",
-	"monkey_king_wukongs_command"
+	"monkey_king_wukongs_command",
+	"void_spirit_aether_remnant"
 }
 
 --------------------------------------------------------------------------------

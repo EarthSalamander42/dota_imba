@@ -130,11 +130,11 @@ function modifier_item_imba_heart_unique:GetAuraSearchType() return DOTA_UNIT_TA
 function modifier_item_imba_heart_unique:GetModifierAura() return "modifier_item_imba_heart_aura_buff" end
 
 function modifier_item_imba_heart_unique:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+	return {
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE }
-
-	return decFuncs
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
+	}
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
@@ -147,27 +147,19 @@ function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
 end
 
 function modifier_item_imba_heart_unique:OnTakeDamage(keys)
-	if IsServer() then
-		local unit = keys.unit
-		local attacker = keys.attacker
+	if not self:GetAbility() then return end
+	
+	local attacker = keys.attacker
 
-		-- Only apply if the unit taking damage is the caster
-		if unit == self:GetParent() then
-			-- If the attacker wasn't an enemy hero or Roshan, do nothing
-			if attacker:IsHero() or attacker:IsRoshan() then
-				if attacker == unit then
-					-- don't trigger cd with self damage
-					return
-				end
-
-				local cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
-				if self:GetParent():IsRangedAttacker() then
-					cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged")
-				end
-
-				self:GetAbility():StartCooldown(cooldown * self:GetParent():GetCooldownReduction())
-			end
+	-- "Damage greater than 0 from any player (including allies, excluding self) or Roshan puts the regeneration on a 5/7-second cooldown. "
+	if keys.unit == self:GetParent() and keys.damage > 0 and keys.attacker ~= keys.unit and (attacker:IsHero() or attacker:IsRoshan()) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		local cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
+		
+		if self:GetParent():IsRangedAttacker() then
+			cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged")
 		end
+
+		self:GetAbility():StartCooldown(cooldown * self:GetParent():GetCooldownReduction())
 	end
 end
 
@@ -184,9 +176,7 @@ function modifier_item_imba_heart_aura_buff:OnCreated()
 end
 
 function modifier_item_imba_heart_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 end
 
 function modifier_item_imba_heart_aura_buff:GetModifierBonusStats_Strength()

@@ -23,18 +23,18 @@
 -- Date: 05/03/2020
 
 LinkLuaModifier("modifier_item_imba_diffusal", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_diffusal_slow", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
-
-LinkLuaModifier("modifier_item_imba_diffusal_blade_2", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_diffusal_blade_slow", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_item_imba_diffusal_2", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_diffusal_blade_2_slow", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_diffusal_blade			= item_imba_diffusal_blade or class({})
 modifier_item_imba_diffusal			= modifier_item_imba_diffusal or class({})
-modifier_item_diffusal_blade_slow	= modifier_item_diffusal_blade_slow or class({})
+modifier_item_imba_diffusal_blade_slow	= modifier_item_imba_diffusal_blade_slow or class({})
 
 item_imba_diffusal_blade_2				= item_imba_diffusal_blade_2 or class({})
-modifier_item_imba_diffusal_blade_2		= modifier_item_imba_diffusal_blade_2 or class({})
-modifier_item_imba_diffusal_blade_slow	= modifier_item_imba_diffusal_blade_slow or class({})
+modifier_item_imba_diffusal_2			= modifier_item_imba_diffusal_2 or class({})
+modifier_item_imba_diffusal_blade_2_slow		= modifier_item_imba_diffusal_blade_2_slow or class({})
 
 ------------------------------
 -- ITEM_IMBA_DIFFUSAL_BLADE --
@@ -61,7 +61,7 @@ function item_imba_diffusal_blade:OnSpellStart()
 	target:Purge(true, false, false, false, false)
 	
 	-- Add the slow modifier
-	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
+	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
 	
 	if slow_modifier then
 		slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
@@ -111,11 +111,11 @@ function modifier_item_imba_diffusal:GetModifierProcAttack_BonusDamage_Physical(
 	if self:GetAbility() and 
 	keys.attacker == self:GetParent() and 
 	keys.attacker:FindAllModifiersByName(self:GetName())[1] == self and 
-	not keys.attacker:HasModifier("modifier_item_imba_diffusal_2" and 
+	not keys.attacker:HasModifier("modifier_item_imba_diffusal_2") and 
 	not keys.attacker:HasModifier("modifier_item_imba_witchblade") and 
 	keys.attacker:GetTeamNumber() ~= keys.target:GetTeamNumber() and 
-	(keys.target.GetMaxMana and keys.target:GetMaxMana() > 0) 
-	and not keys.target:IsMagicImmune() then 
+	(keys.target.GetMaxMana and keys.target:GetMaxMana() > 0) and 
+	not keys.target:IsMagicImmune() then 
 		-- Apply mana burn particle effect
 		local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
 		ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
@@ -152,11 +152,11 @@ end
 -- MODIFIER_ITEM_DIFFUSAL_BLADE_SLOW --
 ---------------------------------------
 
-function modifier_item_imba_diffusal_slow:GetEffectName()
+function modifier_item_imba_diffusal_blade_slow:GetEffectName()
 	return "particles/items_fx/diffusal_slow.vpcf"
 end
 
-function modifier_item_imba_diffusal_slow:OnCreated()
+function modifier_item_imba_diffusal_blade_slow:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 	
 	self.purge_slow_duration	= self:GetAbility():GetSpecialValueFor("purge_slow_duration")
@@ -167,32 +167,32 @@ function modifier_item_imba_diffusal_slow:OnCreated()
 	
 	if not IsServer() then return end
 	
-	self:StartIntervalThink(self.purge_slow_duration * (1 - self:GetParent():GetStatusResistance()))
+	self:SetStackCount(self.movement_speed_slow)
+	self:StartIntervalThink((self.purge_slow_duration * (1 - self:GetParent():GetStatusResistance())) / self.purge_rate)
 end
 
-function modifier_item_imba_diffusal_slow:OnRefresh()
+function modifier_item_imba_diffusal_blade_slow:OnRefresh()
 	self:StartIntervalThink(-1)
 	self:OnCreated()
 end
 
 -- "The slow decreases in 0.8 second intervals, so it slows for 100%/80%/60%/40%/20%, going one step down every 0.8 seconds."
-function modifier_item_imba_diffusal_slow:OnIntervalThink()
+function modifier_item_imba_diffusal_blade_slow:OnIntervalThink()
 	self.movement_speed_slow = self.movement_speed_slow + self.slow_intervals
+	self:SetStackCount(self.movement_speed_slow)
 end
 
-function modifier_item_imba_diffusal_slow:IsHidden() return false end
-function modifier_item_imba_diffusal_slow:IsPurgable() return true end
-function modifier_item_imba_diffusal_slow:IsDebuff() return true end
+function modifier_item_imba_diffusal_blade_slow:IsHidden() return false end
+function modifier_item_imba_diffusal_blade_slow:IsPurgable() return true end
+function modifier_item_imba_diffusal_blade_slow:IsDebuff() return true end
 
-function modifier_item_imba_diffusal_slow:DeclareFunctions()
+function modifier_item_imba_diffusal_blade_slow:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
-function modifier_item_imba_diffusal_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.movement_speed_slow
+function modifier_item_imba_diffusal_blade_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount()
 end
-
-
 
 --------------------------------
 -- ITEM_IMBA_DIFFUSAL_BLADE_2 --
@@ -220,43 +220,47 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 
 	-- Purge target
 	target:Purge(true, false, false, false, false)
-	
-	-- Add the slow modifier
-	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
-	
-	if slow_modifier then
-		slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
-	end
-	
-	-- If the target is not a hero (or a creep hero), root it
-	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
-		
-		if root_modifier then
-			root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
+
+	self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()
+		if initial_modifiers - target:GetModifierCount() > 0 then
+			-- Burn mana and deal damage according to modifiers lost on the purge
+			local mana_burn = (initial_modifiers - target:GetModifierCount()) * self:GetSpecialValueFor("dispel_burn")
+			local target_mana = target:GetMana()
+
+			-- Apply particle effect
+			local particle_dispel_fx = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_2_dispel_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
+
+			target:ReduceMana(mana_burn)
+
+			ApplyDamage({
+				victim			= target,
+				attacker		= self:GetCaster(),
+				damage			= math.min(mana_burn, target_mana),
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				ability			= self,
+				damage_flags	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL
+			})
 		end
-	end
+
+		-- Add the slow modifier
+		local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_2_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
+		
+		if slow_modifier then
+			slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
+		end
+		
+		-- If the target is not a hero (or a creep hero), root it
+		if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
+			local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
+			
+			if root_modifier then
+				root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
+			end
+		end
 	
-	if initial_modifiers - target:GetModifierCount() > 0 then
-		-- Burn mana and deal damage according to modifiers lost on the purge
-		local mana_burn = (initial_modifiers - target:GetModifierCount()) * self:GetSpecialValueFor("dispel_burn")
-		local target_mana = target:GetMana()
-
-		-- Apply particle effect
-		local particle_dispel_fx = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_2_dispel_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
-
-		target:ReduceMana(mana_burn)
-
-		ApplyDamage({
-			victim			= target,
-			attacker		= self:GetCaster(),
-			damage			= math.min(mana_burn, target_mana),
-			damage_type		= DAMAGE_TYPE_MAGICAL,
-			ability			= self,
-			damage_flags	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL
-		})
-	end
+		return nil
+	end, FrameTime())
 end
 
 ---------------------------------
@@ -347,8 +351,8 @@ function modifier_item_imba_diffusal_2:GetModifierProcAttack_BonusDamage_Physica
 			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
 			
 			-- Burn additional mana and deal magical damage
-			local target_mana = target:GetMana()
-			target:ReduceMana(self:GetAbility():GetSpecialValueFor("dispel_burn"))
+			local target_mana = keys.target:GetMana()
+			keys.target:ReduceMana(self:GetAbility():GetSpecialValueFor("dispel_burn"))
 
 			-- Deal appropriate magical damage, based on mana burnt
 			local damageTable = {
@@ -372,11 +376,11 @@ end
 -- MODIFIER_ITEM_DIFFUSAL_BLADE_SLOW_2 --
 -----------------------------------------
 
-function modifier_item_imba_diffusal_slow_2:GetEffectName()
+function modifier_item_imba_diffusal_blade_2_slow:GetEffectName()
 	return "particles/items_fx/diffusal_slow.vpcf"
 end
 
-function modifier_item_imba_diffusal_slow_2:OnCreated()
+function modifier_item_imba_diffusal_blade_2_slow:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 	
 	self.purge_slow_duration	= self:GetAbility():GetSpecialValueFor("purge_slow_duration")
@@ -387,29 +391,31 @@ function modifier_item_imba_diffusal_slow_2:OnCreated()
 	
 	if not IsServer() then return end
 	
-	self:StartIntervalThink(self.purge_slow_duration * (1 - self:GetParent():GetStatusResistance()))
+	self:SetStackCount(self.movement_speed_slow)
+	self:StartIntervalThink((self.purge_slow_duration * (1 - self:GetParent():GetStatusResistance())) / self.purge_rate)
 end
 
-function modifier_item_imba_diffusal_slow_2:OnRefresh()
+function modifier_item_imba_diffusal_blade_2_slow:OnRefresh()
 	self:StartIntervalThink(-1)
 	self:OnCreated()
 end
 
 -- "The slow decreases in 0.8 second intervals, so it slows for 100%/80%/60%/40%/20%, going one step down every 0.8 seconds."
-function modifier_item_imba_diffusal_slow_2:OnIntervalThink()
+function modifier_item_imba_diffusal_blade_2_slow:OnIntervalThink()
 	self.movement_speed_slow = self.movement_speed_slow + self.slow_intervals
+	self:SetStackCount(self.movement_speed_slow)
 end
 
-function modifier_item_imba_diffusal_slow_2:IsHidden() return false end
-function modifier_item_imba_diffusal_slow_2:IsPurgable() return true end
-function modifier_item_imba_diffusal_slow_2:IsDebuff() return true end
+function modifier_item_imba_diffusal_blade_2_slow:IsHidden() return false end
+function modifier_item_imba_diffusal_blade_2_slow:IsPurgable() return true end
+function modifier_item_imba_diffusal_blade_2_slow:IsDebuff() return true end
 
-function modifier_item_imba_diffusal_slow_2:DeclareFunctions()
+function modifier_item_imba_diffusal_blade_2_slow:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
-function modifier_item_imba_diffusal_slow_2:GetModifierMoveSpeedBonus_Percentage()
-	return self.movement_speed_slow
+function modifier_item_imba_diffusal_blade_2_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount()
 end
 
 
@@ -472,7 +478,7 @@ end
 -- item_imba_diffusal_blade = item_imba_diffusal_blade or class({})
 -- LinkLuaModifier("modifier_item_imba_diffusal", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_item_imba_diffusal_unique", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_item_imba_diffusal_slow", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
+-- LinkLuaModifier("modifier_item_imba_diffusal_blade_slow", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_item_imba_diffusal_root", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 
 -- function item_imba_diffusal_blade:GetIntrinsicModifierName()
@@ -491,7 +497,7 @@ end
 	-- local sound_cast = "DOTA_Item.DiffusalBlade.Activate"
 	-- local sound_target = "DOTA_Item.DiffusalBlade.Target"
 	-- local particle_target = "particles/generic_gameplay/generic_manaburn.vpcf"
-	-- local modifier_purge = "modifier_item_imba_diffusal_slow"
+	-- local modifier_purge = "modifier_item_imba_diffusal_blade_slow"
 	-- local modifier_root = "modifier_item_imba_diffusal_root"
 
 	-- -- Ability specials
@@ -686,9 +692,9 @@ end
 
 
 -- -- Slow modifier
--- modifier_item_imba_diffusal_slow = modifier_item_imba_diffusal_slow or class({})
+-- modifier_item_imba_diffusal_blade_slow = modifier_item_imba_diffusal_blade_slow or class({})
 
--- function modifier_item_imba_diffusal_slow:OnCreated()
+-- function modifier_item_imba_diffusal_blade_slow:OnCreated()
 	-- -- Ability properties
 	-- self.caster = self:GetCaster()
 	-- self.ability = self:GetAbility()
@@ -705,28 +711,28 @@ end
 	-- self:StartIntervalThink(self.stack_loss_time)
 -- end
 
--- function modifier_item_imba_diffusal_slow:OnIntervalThink()
+-- function modifier_item_imba_diffusal_blade_slow:OnIntervalThink()
 	-- -- Reduce the slow
 	-- self.slow_pct = self.slow_pct - self.slow_degrade_pct
 -- end
 
--- function modifier_item_imba_diffusal_slow:IsHidden() return false end
--- function modifier_item_imba_diffusal_slow:IsPurgable() return true end
--- function modifier_item_imba_diffusal_slow:IsDebuff() return true end
+-- function modifier_item_imba_diffusal_blade_slow:IsHidden() return false end
+-- function modifier_item_imba_diffusal_blade_slow:IsPurgable() return true end
+-- function modifier_item_imba_diffusal_blade_slow:IsDebuff() return true end
 
--- function modifier_item_imba_diffusal_slow:DeclareFunctions()
+-- function modifier_item_imba_diffusal_blade_slow:DeclareFunctions()
 	-- return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 -- end
 
--- function modifier_item_imba_diffusal_slow:GetModifierMoveSpeedBonus_Percentage()
+-- function modifier_item_imba_diffusal_blade_slow:GetModifierMoveSpeedBonus_Percentage()
 	-- return self.slow_pct * (-1)
 -- end
 
--- function modifier_item_imba_diffusal_slow:GetEffectName()
+-- function modifier_item_imba_diffusal_blade_slow:GetEffectName()
 	-- return "particles/items_fx/diffusal_slow.vpcf"
 -- end
 
--- function modifier_item_imba_diffusal_slow:GetEffectAttachType()
+-- function modifier_item_imba_diffusal_blade_slow:GetEffectAttachType()
 	-- return PATTACH_ABSORIGIN_FOLLOW
 -- end
 
@@ -832,7 +838,7 @@ end
 	-- local sound_target = "DOTA_Item.DiffusalBlade.Target"
 	-- local particle_target = "particles/item/diffusal/diffusal_manaburn_2.vpcf"
 	-- local particle_dispel = "particles/item/diffusal/diffusal_2_dispel_explosion.vpcf"
-	-- local modifier_purge = "modifier_item_imba_diffusal_slow"
+	-- local modifier_purge = "modifier_item_imba_diffusal_blade_slow"
 	-- local modifier_root = "modifier_item_imba_diffusal_root"
 
 	-- -- Ability specials

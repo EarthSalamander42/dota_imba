@@ -52,6 +52,8 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation"				"Ink God's Incarnation"
 "DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation_Description"	"Strokes of Fate cast in a cross pattern, and constantly applying Ink Swell on self."
 
+"dota_hud_error_target_has_ink_gods_incarnation"					"Cannot cast Ink Swell on units under Ink God's Incarnation"
+
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain"					"Soulbind"
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Description"		"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius."
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Note0"				"Blinking or teleporting can break the ink bind."

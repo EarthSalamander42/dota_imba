@@ -336,12 +336,10 @@ function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_ice_vortex:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-	}
-	
-	return decFuncs	
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	}	
 end
 
 function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_Percentage()
@@ -352,7 +350,7 @@ function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_P
 	end
 end
 
-function modifier_imba_ancient_apparition_ice_vortex:GetModifierSpellAmplify_Percentage()
+function modifier_imba_ancient_apparition_ice_vortex:GetModifierMagicalResistanceBonus()
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		return self.spell_resist_pct
 	else
@@ -417,16 +415,14 @@ function imba_ancient_apparition_chilling_touch:OnOrbImpact( keys )
 		stun_modifier:SetDuration(self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()), true)
 	end
 
-	local damageTable = {
+	ApplyDamage({
 		victim 			= keys.target,
 		damage 			= self:GetTalentSpecialValueFor("damage"),
 		damage_type		= DAMAGE_TYPE_MAGICAL,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self:GetCaster(),
 		ability 		= self
-	}
-
-	ApplyDamage(damageTable)
+	})
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self:GetTalentSpecialValueFor("damage"), nil)
 end
@@ -527,11 +523,9 @@ function modifier_imba_ancient_apparition_imbued_ice:OnRefresh()
 end
 
 function modifier_imba_ancient_apparition_imbued_ice:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-	
-	return decFuncs
 end
 
 -- "Does not work against buildings, but fully works against wards."
@@ -576,12 +570,10 @@ function modifier_imba_ancient_apparition_imbued_ice_slow:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_imbued_ice_slow:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_DISABLE_HEALING
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_ancient_apparition_imbued_ice_slow:GetModifierMoveSpeedBonus_Percentage()

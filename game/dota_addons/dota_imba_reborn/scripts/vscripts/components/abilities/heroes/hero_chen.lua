@@ -3,6 +3,7 @@
 
 LinkLuaModifier("modifier_imba_chen_penitence", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chen_penitence_buff", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_penitence_remnants", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_chen_divine_favor", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chen_divine_favor_aura", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
@@ -21,6 +22,7 @@ LinkLuaModifier("modifier_imba_chen_hand_of_god_overheal", "components/abilities
 imba_chen_penitence										= class({})
 modifier_imba_chen_penitence							= class({})
 modifier_imba_chen_penitence_buff						= class({})
+modifier_imba_chen_penitence_remnants					= modifier_imba_chen_penitence_remnants or class({})
 
 imba_chen_divine_favor									= class({})
 modifier_imba_chen_divine_favor							= class({})
@@ -89,7 +91,19 @@ function imba_chen_penitence:OnProjectileHit_ExtraData(hTarget, vLocation, kv)
 	local particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_penitence.vpcf", PATTACH_ABSORIGIN_FOLLOW, hTarget)
 	ParticleManager:ReleaseParticleIndex(particle)
 	
-	hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+	local penitence_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence", {duration = self:GetSpecialValueFor("duration")})
+	
+	if penitence_modifier then
+		penitence_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") then
+		local remnants_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence_remnants", {duration = self:GetSpecialValueFor("duration")})
+		
+		if remnants_modifier then
+			remnants_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+		end
+	end
 end
 
 ------------------------
@@ -101,25 +115,22 @@ function modifier_imba_chen_penitence:GetEffectName()
 end
 
 function modifier_imba_chen_penitence:OnCreated()
-	if self:GetAbility() then
-		self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
-		self.buff_duration			= self:GetAbility():GetSpecialValueFor("buff_duration")
-	end
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	self.buff_duration			= self:GetAbility():GetSpecialValueFor("buff_duration")
 end
 
 function modifier_imba_chen_penitence:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		
-		MODIFIER_EVENT_ON_ATTACK_START,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+		MODIFIER_EVENT_ON_ATTACK_START
     }
-
-    return decFuncs
 end
 
 function modifier_imba_chen_penitence:GetModifierMoveSpeedBonus_Percentage()
-    return self.bonus_movement_speed or 0
+    return self.bonus_movement_speed
 end
 
 function modifier_imba_chen_penitence:OnAttackStart(keys)
@@ -130,35 +141,42 @@ function modifier_imba_chen_penitence:OnAttackStart(keys)
 	end
 end
 
-function modifier_imba_chen_penitence:GetModifierIncomingDamage_Percentage(keys)
-	return self:GetCaster():FindTalentValue("special_bonus_imba_chen_remnants_of_penitence")
-end
-
 -----------------------------
 -- PENITENCE BUFF MODIFIER --
 -----------------------------
 
 function modifier_imba_chen_penitence_buff:OnCreated()
-	if self:GetAbility() then
-		self.bonus_attack_speed		= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
-		
-		
-		if self:GetParent():IsCreep() then
-			self.bonus_attack_speed	= self.bonus_attack_speed * self:GetAbility():GetSpecialValueFor("creep_mult")
-		end
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_attack_speed		= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	
+	if self:GetParent():IsCreep() then
+		self.bonus_attack_speed	= self.bonus_attack_speed * self:GetAbility():GetSpecialValueFor("creep_mult")
 	end
 end
 
 function modifier_imba_chen_penitence_buff:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
     }
-
-    return decFuncs
 end
 
 function modifier_imba_chen_penitence_buff:GetModifierAttackSpeedBonus_Constant()
-    return self.bonus_attack_speed or 0
+    return self.bonus_attack_speed
+end
+
+-------------------------------------------
+-- MODIFIER_IMBA_CHEN_PENITENCE_REMNANTS --
+-------------------------------------------
+
+function modifier_imba_chen_penitence_remnants:DeclareFunctions()
+    return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+    }
+end
+
+function modifier_imba_chen_penitence_remnants:GetModifierIncomingDamage_Percentage(keys)
+	return self:GetCaster():FindTalentValue("special_bonus_imba_chen_remnants_of_penitence")
 end
 
 ------------------
@@ -228,18 +246,20 @@ function modifier_imba_chen_divine_favor:OnCreated()
 end
 
 function modifier_imba_chen_divine_favor:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+    return {
+		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE -- IMBAfication: Pure Devotion
     }
-
-    return decFuncs
 end
 
-function modifier_imba_chen_divine_favor:GetModifierHPRegenAmplify_Percentage()
+-- function modifier_imba_chen_divine_favor:GetModifierHPRegenAmplify_Percentage()
+	-- return self.heal_amp
+-- end
+
+function modifier_imba_chen_divine_favor:Custom_AllHealAmplify_Percentage()
 	return self.heal_amp
 end
 
@@ -293,19 +313,21 @@ function modifier_imba_chen_divine_favor_aura_buff:OnCreated()
 end
 
 function modifier_imba_chen_divine_favor_aura_buff:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+    return {
+		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE -- IMBAfication: Pure Devotion
     }
-
-    return decFuncs
 end
 
-function modifier_imba_chen_divine_favor_aura_buff:GetModifierHPRegenAmplify_Percentage()
-	return self.heal_amp_aura
+-- function modifier_imba_chen_divine_favor_aura_buff:GetModifierHPRegenAmplify_Percentage()
+	-- return self.heal_amp_aura
+-- end
+
+function modifier_imba_chen_divine_favor_aura_buff:Custom_AllHealAmplify_Percentage()
+	return self.heal_amp
 end
 
 function modifier_imba_chen_divine_favor_aura_buff:GetModifierConstantHealthRegen()
@@ -598,8 +620,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		target:SetMaximumGoldBounty(math.max(target_gold_max - commonwealth_gold, 0))
 		
 		-- Give half of this to the caster
-		self:GetCaster():AddExperience(commonwealth_xp_self, 2, true, true)
-		self:GetCaster():ModifyGold(commonwealth_gold_self, false, 13)
+		self:GetCaster():AddExperience(commonwealth_xp_self, DOTA_ModifyXP_CreepKill, true, true)
+		self:GetCaster():ModifyGold(commonwealth_gold_self, false, DOTA_ModifyGold_CreepKill)
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_XP, self:GetCaster(), commonwealth_xp_self, nil)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, self:GetCaster(), commonwealth_gold_self, nil)
@@ -607,16 +629,16 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		-- Give the rest to everyone else
 		local ally_num = PlayerResource:GetPlayerCountForTeam(self:GetCaster():GetTeamNumber())
 		
-		local commonwealth_xp_others	= math.floor(math.max(commonwealth_xp_others_total / ally_num, 0))
-		local commonwealth_gold_others	= math.floor(math.max(commonwealth_gold_others_total / ally_num, 0))
+		local commonwealth_xp_others	= math.max(commonwealth_xp_others_total / math.max(ally_num - 1, 1), 0)
+		local commonwealth_gold_others	= math.max(commonwealth_gold_others_total / math.max(ally_num - 1, 1), 0)
 		
 		for ally = 1, ally_num do
 			-- This seems like kinda disgusting chaining of functions
 			local hero = PlayerResource:GetPlayer(PlayerResource:GetNthPlayerIDOnTeam(self:GetCaster():GetTeamNumber(), ally)):GetAssignedHero()
 			
 			if hero ~= self:GetCaster() then
-				hero:AddExperience(commonwealth_xp_others, 2, true, true)
-				hero:ModifyGold(commonwealth_gold_others, false, 13)
+				hero:AddExperience(commonwealth_xp_others, DOTA_ModifyXP_CreepKill, true, true)
+				hero:ModifyGold(commonwealth_gold_others, false, DOTA_ModifyGold_CreepKill)
 				
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_XP, hero, commonwealth_xp_self, nil)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, commonwealth_gold_self, nil)
@@ -1208,10 +1230,12 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_remnants_of_penitence", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_chen_divine_favor_cd_reduction		= class({})
 modifier_special_bonus_imba_chen_test_of_faith_cd_reduction		= class({})
 modifier_special_bonus_imba_chen_hand_of_god_cooldown			= modifier_special_bonus_imba_chen_hand_of_god_cooldown or class({})
+modifier_special_bonus_imba_chen_remnants_of_penitence			= modifier_special_bonus_imba_chen_remnants_of_penitence or class({})
 
 function modifier_special_bonus_imba_chen_divine_favor_cd_reduction:IsHidden() 			return true end
 function modifier_special_bonus_imba_chen_divine_favor_cd_reduction:IsPurgable() 		return false end
@@ -1225,15 +1249,23 @@ function modifier_special_bonus_imba_chen_hand_of_god_cooldown:IsHidden() 		retu
 function modifier_special_bonus_imba_chen_hand_of_god_cooldown:IsPurgable() 	return false end
 function modifier_special_bonus_imba_chen_hand_of_god_cooldown:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_chen_remnants_of_penitence:IsHidden() 		return true end
+function modifier_special_bonus_imba_chen_remnants_of_penitence:IsPurgable() 	return false end
+function modifier_special_bonus_imba_chen_remnants_of_penitence:RemoveOnDeath() 	return false end
+
+function imba_chen_penitence:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_remnants_of_penitence") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_remnants_of_penitence"), "modifier_special_bonus_imba_chen_remnants_of_penitence", {})
+	end
+end
+
 function imba_chen_divine_favor:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_divine_favor_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_divine_favor_cd_reduction"), "modifier_special_bonus_imba_chen_divine_favor_cd_reduction", {})
-	end
-		
-	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_6") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_6"), "modifier_special_bonus_imba_enchantress_6", {})
 	end
 end
 

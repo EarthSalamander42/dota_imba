@@ -45,6 +45,10 @@ function modifier_imba_bloodrage_buff_stats:StatusEffectPriority()
 end
 
 function modifier_imba_bloodrage_buff_stats:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.health_bonus_pct	= self:GetAbility():GetSpecialValueFor("health_bonus_pct")
+
 	if not IsServer() then return end
 
 	self.modifier_frenzy = "modifier_imba_bloodrage_blood_frenzy"
@@ -134,22 +138,20 @@ function modifier_imba_bloodrage_buff_stats:GetModifierIncomingDamage_Percentage
 end
 
 function modifier_imba_bloodrage_buff_stats:OnDeath(params)
-	if not IsServer() then return end
-
 	-- "Bloodrage does not heal upon killing illusions, Arc Warden Tempest Doubles, Roshan, wards, or buildings."
 	if not params.unit:IsIllusion() and not params.unit:IsTempestDouble() and not params.unit:IsRoshan() and not params.unit:IsOther() and not params.unit:IsBuilding() then
-		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit then
-			local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
+		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit and not params.attacker:IsOther() and not params.attacker:IsBuilding() then
+			local heal = params.unit:GetMaxHealth() * self.health_bonus_pct / 100
 			
-			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, params.attacker, heal, nil)
 			params.attacker:Heal(heal, self:GetCaster())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		elseif params.unit:IsRealHero() and (self:GetParent():GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= self.health_bonus_aoe then
-			local heal = params.unit:GetMaxHealth() * (self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100) * (self.health_bonus_share_percent * 0.01)
+			local heal = params.unit:GetMaxHealth() * (self.health_bonus_pct / 100) * (self.health_bonus_share_percent * 0.01)
 			
-			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent():GetAbsOrigin(), heal, self:GetCaster() )
-			self:GetCaster():Heal(heal, self:GetParent())
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL , self:GetParent(), heal, nil)
+			self:GetParent():Heal(heal, self:GetCaster())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end

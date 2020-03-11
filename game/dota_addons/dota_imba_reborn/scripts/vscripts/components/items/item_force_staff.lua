@@ -206,6 +206,14 @@ function item_imba_hurricane_pike:CastFilterResultTarget(target)
 	end
 end
 
+function item_imba_hurricane_pike:GetCastRange(location, target)
+	if not target or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("cast_range_enemy")
+	end
+end
+
 function item_imba_hurricane_pike:OnSpellStart()
 	if not IsServer() then return end
 	local ability = self
@@ -285,12 +293,12 @@ function modifier_item_imba_hurricane_pike:OnDestroy()
 end
 
 function modifier_item_imba_hurricane_pike:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 	}
-	return decFuncs
 end
 
 function modifier_item_imba_hurricane_pike:GetModifierConstantHealthRegen()
@@ -317,10 +325,9 @@ function modifier_item_imba_hurricane_pike_unique:IsDebuff() return false end
 function modifier_item_imba_hurricane_pike_unique:RemoveOnDeath() return false end
 
 function modifier_item_imba_hurricane_pike_unique:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 	}
-	return decFuncs
 end
 
 function modifier_item_imba_hurricane_pike_unique:GetModifierAttackRangeBonus()
@@ -538,11 +545,12 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnIntervalThink()
 end
 
 function modifier_item_imba_hurricane_pike_attack_speed:DeclareFunctions()
-	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ORDER,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
-	return decFuncs
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 end
 
 function modifier_item_imba_hurricane_pike_attack_speed:GetModifierAttackSpeedBonus_Constant()

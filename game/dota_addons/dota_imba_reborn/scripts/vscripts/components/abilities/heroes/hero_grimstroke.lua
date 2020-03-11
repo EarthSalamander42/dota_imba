@@ -249,7 +249,7 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		if data.bPrimary == 1 then
 			-- IMBAfication: Your Stain Spreads
 			if EntIndexToHScript(data.stroke_dummy).hit_units == 1 then
-				local counter = 0
+				-- local counter = 0
 			
 				local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("stain_spread_max_distance"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_FARTHEST, false)
 
@@ -257,17 +257,17 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 					-- Using vanilla Soulbind modifier name for now
 					-- if target ~= enemy and ((target:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() >= self:GetSpecialValueFor("stain_spread_min_distance") or (target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()))) then
 					
-					if target ~= enemy and target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
+					if target ~= enemy and target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) and enemy:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
 					
 						self:Stroke(target:GetAbsOrigin(), enemy:GetAbsOrigin(), false)
 						
-						if not target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
-							counter = counter + 1
-						end
+						-- if not target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
+							-- counter = counter + 1
+						-- end
 						
-						if counter >= self:GetSpecialValueFor("stain_spread_max_units") then
-							break
-						end
+						-- if counter >= self:GetSpecialValueFor("stain_spread_max_units") then
+							-- break
+						-- end
 					end
 				end
 			end
@@ -877,6 +877,20 @@ end
 -- INK SWELL --
 ---------------
 
+function imba_grimstroke_spirit_walk:CastFilterResultTarget(target)
+	if target:HasModifier("modifier_imba_grimstroke_ink_gods_incarnation") then
+		return UF_FAIL_CUSTOM
+	end
+	
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+end
+
+function imba_grimstroke_spirit_walk:GetCustomCastErrorTarget(target)
+	if target:HasModifier("modifier_imba_grimstroke_ink_gods_incarnation") then
+		return "#dota_hud_error_target_has_ink_gods_incarnation"
+	end
+end
+
 function imba_grimstroke_spirit_walk:OnSpellStart()
 	-- Yes, this is needed so we don't get Soulbind errors (cause self:GetCursorTarget() goes nil on the duplication)
 	local target = self:GetCursorTarget()
@@ -1072,15 +1086,15 @@ function modifier_imba_grimstroke_spirit_walk_buff:OnDestroy()
 					
 					stunned_table[enemy] = true
 				end
-				
-				if ink_gods_incarnation_modifier then
-					ink_gods_incarnation_modifier.stunned = stunned_table
-				end
-				
-				-- Clear the temp table after sending it to the other modifier
-				stunned_table = {}
 			end
 		end
+		
+		if ink_gods_incarnation_modifier then
+			ink_gods_incarnation_modifier.stunned = stunned_table
+		end
+		
+		-- Clear the temp table after sending it to the other modifier
+		stunned_table = {}
 	end
 end
 
@@ -1096,12 +1110,10 @@ function modifier_imba_grimstroke_spirit_walk_buff:CheckState()
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:GetModifierMoveSpeedBonus_Percentage()
@@ -1126,17 +1138,13 @@ end
 -------------------------------
 
 function modifier_imba_grimstroke_spirit_walk_debuff:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_grimstroke_spirit_walk_debuff:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
     }
-
-    return decFuncs
 end
 
 function modifier_imba_grimstroke_spirit_walk_debuff:GetOverrideAnimation()
@@ -1208,11 +1216,9 @@ function modifier_imba_grimstroke_ink_gods_incarnation:OnDestroy()
 end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MODEL_SCALE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:GetModifierModelScale()

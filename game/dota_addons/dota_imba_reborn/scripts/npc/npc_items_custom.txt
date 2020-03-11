@@ -4786,7 +4786,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"90"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4796,7 +4795,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"255"
+				"crit_multiplier"		"255"
 			}
 			"04"
 			{
@@ -5923,6 +5922,12 @@
 				"var_type"				"FIELD_FLOAT"
 				"chain_cooldown"		"0.1" // Vanilla is 0.2
 			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"50"
+			}
 		}
 	}
 
@@ -6078,6 +6083,12 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"static_slow_duration"	"0.5"
+			}
+
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"50"
 			}
 		}
 	}
@@ -11311,10 +11322,11 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2120"
+		"ItemCost"						"2130"
 		"ItemShopTags"					"damage;crit"
-		"ItemQuality"					"rare"
+		"ItemQuality"					"epic"
 		"ItemAliases"					"crystalys"
+		"ShouldBeSuggested"				"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11333,7 +11345,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"180"
+				"crit_multiplier"		"180"
 			}
 		}
 	}
@@ -11554,6 +11566,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"chop_tree_radius"		"150"
+			}
+			
+			"31"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"50"
 			}
 		}
 	}
@@ -14402,6 +14420,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"extra_spell_damage_percent"	"-40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -14529,6 +14548,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ethereal_damage_bonus"	"-40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{

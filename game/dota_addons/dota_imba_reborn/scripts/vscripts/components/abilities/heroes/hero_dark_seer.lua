@@ -628,11 +628,7 @@ end
 -----------
 
 function imba_dark_seer_surge:GetCastRange(location, target)
-	if IsClient() then
-		return self.BaseClass.GetCastRange(self, location, target)
-	else
-		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_dark_seer_surge_cast_range")
-	end
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_dark_seer_surge_cast_range")
 end
 
 function imba_dark_seer_surge:GetAOERadius()
@@ -880,7 +876,7 @@ function modifier_imba_dark_seer_wall_of_replica_slow:GetAttributes()	return MOD
 function modifier_imba_dark_seer_wall_of_replica_slow:OnCreated(params)
 	if not IsServer() then return end
 
-	self:SetStackCount(params.movement_slow)
+	self:SetStackCount(params.movement_slow * (-1))
 	
 	self.attack_speed	= self:GetParent():GetAttackSpeed()
 	
@@ -900,16 +896,14 @@ function modifier_imba_dark_seer_wall_of_replica_slow:OnIntervalThink()
 end
 
 function modifier_imba_dark_seer_wall_of_replica_slow:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
     }
-
-    return decFuncs
 end
 
 function modifier_imba_dark_seer_wall_of_replica_slow:GetModifierMoveSpeedBonus_Percentage()
-    return self:GetStackCount() * (-1)
+    return self:GetStackCount()
 end
 
 -- Is this how you use the function?
@@ -920,5 +914,25 @@ function modifier_imba_dark_seer_wall_of_replica_slow:OnTakeDamageKillCredit(key
 		else
 			self:GetParent():Kill(self:GetAbility(), keys.attacker)
 		end
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_surge_cast_range", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_dark_seer_surge_cast_range				= modifier_special_bonus_imba_dark_seer_surge_cast_range or class({})
+
+function modifier_special_bonus_imba_dark_seer_surge_cast_range:IsHidden() 			return true end
+function modifier_special_bonus_imba_dark_seer_surge_cast_range:IsPurgable() 		return false end
+function modifier_special_bonus_imba_dark_seer_surge_cast_range:RemoveOnDeath() 	return false end
+
+function imba_dark_seer_surge:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_dark_seer_surge_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_dark_seer_surge_cast_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_dark_seer_surge_cast_range"), "modifier_special_bonus_imba_dark_seer_surge_cast_range", {})
 	end
 end

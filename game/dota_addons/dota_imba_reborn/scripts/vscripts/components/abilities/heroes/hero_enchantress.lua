@@ -715,9 +715,14 @@ function modifier_imba_enchantress_natures_attendants_mini:OnCreated()
 	if not IsServer() then return end
 	
 	self.particle_name 	= "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl1.vpcf"
+	
+	if self.wisp_count_mini >= 5 then
+		self.particle_name 	= "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl2.vpcf"
+	end
+	
 	self.particle 		= ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	
-	for wisp = 3, 5 do
+	for wisp = 3, 7 do
 		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	end
 	
@@ -1284,9 +1289,7 @@ function modifier_special_bonus_imba_enchantress_2_aura:OnCreated()
 end
 
 function modifier_special_bonus_imba_enchantress_2_aura:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
-
-  	return decFuncs
+  	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_special_bonus_imba_enchantress_2_aura:GetModifierMoveSpeedBonus_Constant ()
@@ -1401,10 +1404,6 @@ function imba_enchantress_enchant:OnOwnerSpawned()
 end
 
 function imba_enchantress_natures_attendants:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_8") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_4"), "modifier_special_bonus_imba_enchantress_4", {})
-	end
-		
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_8") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_8"), "modifier_special_bonus_imba_enchantress_8", {})
 	end

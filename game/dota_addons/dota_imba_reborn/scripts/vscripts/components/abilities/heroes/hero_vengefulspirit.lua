@@ -83,44 +83,35 @@ function modifier_imba_rancor:OnCreated()
 end
 
 function modifier_imba_rancor:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE,
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_rancor:OnTakeDamage( params )
-	if IsServer() then
-		local parent = self:GetParent()
-		if (parent == params.unit) or params.unit:HasModifier("modifier_imba_rancor_allies") then
-			if params.damage > 0 and not parent:PassivesDisabled() and params.unit:IsRealHero() then
-				local ability = self:GetAbility()
-				local stack_receive_pct = ability:GetSpecialValueFor("stack_receive_pct")
-				
-				-- Check for Rancor Talent for allied damage
-				if params.unit:HasModifier("modifier_imba_rancor_allies") and not (parent == params.unit) then
-					if params.unit:FindModifierByNameAndCaster("modifier_imba_rancor_allies", parent) then
-						self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth())) * (parent:FindTalentValue("special_bonus_imba_vengefulspirit_4", "rate_pct") / 100)
-					end
-				else
-					self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth()))
-				end
-				
-				while (self.dmg_received_pct >= stack_receive_pct ) do
-					if parent:HasModifier("modifier_imba_rancor_stack") then
-						local modifier = parent:FindModifierByName("modifier_imba_rancor_stack")
-						-- Adding a limit to prevent possible exploits
-						if modifier:GetStackCount() < self.max_stacks then
-							modifier:IncrementStackCount()
-						end
-					else
-						local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_rancor_stack", {})
-						modifier:SetStackCount(1)
-					end
-					self.dmg_received_pct = self.dmg_received_pct - stack_receive_pct
-				end
+	if self:GetAbility() and ((self:GetParent() == params.unit) or params.unit:HasModifier("modifier_imba_rancor_allies")) and params.damage > 0 and not self:GetParent():PassivesDisabled() and params.unit:IsRealHero() then
+		-- Check for Rancor Talent for allied damage
+		if params.unit:HasModifier("modifier_imba_rancor_allies") and not (self:GetParent() == params.unit) then
+			if params.unit:FindModifierByNameAndCaster("modifier_imba_rancor_allies", self:GetParent()) then
+				self.dmg_received_pct = self.dmg_received_pct + ((100 / self:GetParent():GetMaxHealth()) * math.min(params.damage, self:GetParent():GetHealth())) * (self:GetParent():FindTalentValue("special_bonus_imba_vengefulspirit_4", "rate_pct") / 100)
 			end
+		else
+			-- Calculates percentage of damage taken relative to max health
+			self.dmg_received_pct = self.dmg_received_pct + ((100 / self:GetParent():GetMaxHealth()) * math.min(params.damage, self:GetParent():GetHealth()))
+		end
+		
+		while (self.dmg_received_pct >= self:GetAbility():GetSpecialValueFor("stack_receive_pct")) do
+			if self:GetParent():HasModifier("modifier_imba_rancor_stack") then
+				local modifier = self:GetParent():FindModifierByName("modifier_imba_rancor_stack")
+				-- Adding a limit to prevent possible exploits
+				if modifier:GetStackCount() < self.max_stacks then
+					modifier:IncrementStackCount()
+				end
+			else
+				local modifier = self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_rancor_stack", {})
+				modifier:SetStackCount(1)
+			end
+			self.dmg_received_pct = self.dmg_received_pct - self:GetAbility():GetSpecialValueFor("stack_receive_pct")
 		end
 	end
 end
@@ -171,11 +162,15 @@ function modifier_imba_rancor_stack:DeclareFunctions()
 end
 
 function modifier_imba_rancor_stack:GetModifierSpellAmplify_Percentage()
-	return (self:GetAbility():GetSpecialValueFor("spell_power") * self:GetStackCount())
+	if self:GetAbility() then
+		return (self:GetAbility():GetSpecialValueFor("spell_power") * self:GetStackCount())
+	end
 end
 
 function modifier_imba_rancor_stack:GetModifierPreAttack_BonusDamage()
-	return (self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetStackCount())
+	if self:GetAbility() then
+		return (self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetStackCount())
+	end
 end
 
 function modifier_imba_rancor_stack:IsAura()				return true	end
@@ -185,8 +180,8 @@ function modifier_imba_rancor_stack:GetModifierAura()		return "modifier_imba_ran
 function modifier_imba_rancor_stack:GetAuraEntityReject(target) if target == self:GetCaster() then return true end end
 
 function modifier_imba_rancor_stack:GetAuraRadius()
-	if self:GetCaster():IsRealHero() then
-		return 1200 -- Make this KV
+	if self:GetCaster():IsRealHero() and self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("aura_radius")
 	end
 end
 

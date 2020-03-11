@@ -952,7 +952,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
-		if target:IsBuilding() then
+		if target:IsBuilding() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
 			return end
 
 		-- if we have phantom strike modifier, apply bonus percentage to our crit_chance
@@ -1011,14 +1011,13 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 		local target = keys.target
 		local attacker = keys.attacker
 		local fatality = self:GetAbility():GetSpecialValueFor("fatality_chance")
-		if IsInToolsMode() then fatality = 25 end
+		-- if IsInToolsMode() then fatality = 25 end
 
 		-- Only apply if the attacker is the caster and it was a critical strike
 		if self:GetCaster() == attacker then
 			-- Prevent Fatality on buildings
-			if target:IsBuilding() or target:IsRoshan() then return end
-
-
+			if target:IsBuilding() or target:IsRoshan() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then return end
+			
 			-- Roll for fatality
 			if RandomInt(1, 100) <= fatality then
 				if target:GetHealthPercent() >= self:GetAbility():GetSpecialValueFor("fatality_threshold") then

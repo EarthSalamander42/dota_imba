@@ -1226,7 +1226,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 	local unit = OnDeathKeys.unit
 	local reincarnate = OnDeathKeys.reincarnate
 	-- Check if it was a reincarnation death
-	if reincarnate and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
+	if reincarnate then -- and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
 		BuffInfo.reincarnation_death = true
 
 		-- Use the Reincarnation's ability cooldown
@@ -1371,12 +1371,12 @@ function modifier_imba_reincarnation:OnRefresh()
 end
 
 function modifier_imba_reincarnation:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_REINCARNATION,                      
-					  MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-					  MODIFIER_EVENT_ON_DEATH,
-					  MODIFIER_PROPERTY_RESPAWNTIME_STACKING}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_REINCARNATION,                      
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_RESPAWNTIME_STACKING
+	}
 end
 
 function modifier_imba_reincarnation:ReincarnateTime()

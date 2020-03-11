@@ -63,13 +63,13 @@ modifier_imba_frost_arrows_thinker = class({})
 
 
 function modifier_imba_frost_arrows_thinker:DeclareFunctions()
-	local decFunc = {MODIFIER_EVENT_ON_ATTACK_START,
+	return {
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_ORDER}
-
-	return decFunc
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_frost_arrows_thinker:OnCreated()
@@ -376,8 +376,13 @@ function modifier_imba_frost_arrows_slow:OnCreated()
 	self.modifier_freeze = "modifier_imba_frost_arrows_freeze"
 	self.caster_modifier = "modifier_imba_frost_arrows_buff" -- talent movement speed buff
 
-	-- Ability specials
-	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+-- Ability specials
+	if self:GetAbility():GetName() == "imba_drow_ranger_frost_arrows_723" then
+		self.ms_slow_pct = self.ability:GetSpecialValueFor("frost_arrows_movement_speed")
+	else	
+		self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct") * (-1)
+	end
+	
 	self.as_slow = self.ability:GetSpecialValueFor("as_slow")
 	self.stacks_to_freeze = self.ability:GetSpecialValueFor("stacks_to_freeze")
 	self.freeze_duration = self.ability:GetSpecialValueFor("freeze_duration")
@@ -451,7 +456,7 @@ function modifier_imba_frost_arrows_slow:DeclareFunctions()
 end
 
 function modifier_imba_frost_arrows_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_slow_pct * (-1)
+	return self.ms_slow_pct
 end
 
 function modifier_imba_frost_arrows_slow:GetModifierAttackSpeedBonus_Constant()
@@ -1239,7 +1244,7 @@ function modifier_imba_trueshot:GetModifierBonusStats_Agility()
 end
 
 function modifier_imba_trueshot:IsHidden()
-	return false
+	return self:GetAbility():GetLevel() <= 0
 end
 
 function modifier_imba_trueshot:IsPurgable()
@@ -1876,6 +1881,10 @@ function modifier_imba_markmanship_aura:IsPurgable()
 	return false
 end
 
+function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
+	return not self:GetAbility() or not self:GetAbility():IsTrained()
+end
+
 -- Markmanship talent aura modifier for allies
 modifier_imba_markmanship_buff = class({})
 
@@ -1936,7 +1945,7 @@ function modifier_imba_markmanship_slow:OnCreated()
 end
 
 function modifier_imba_markmanship_slow:GetTexture()
-	return "drow_ranger_frost_arrows"
+	return "drow_ranger_marksmanship"
 end
 
 function modifier_imba_markmanship_slow:GetEffectName()
@@ -1952,9 +1961,7 @@ function modifier_imba_markmanship_slow:GetStatusEffectName()
 end
 
 function modifier_imba_markmanship_slow:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFunc
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_markmanship_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -2063,7 +2070,7 @@ end
 
 function modifier_imba_drow_ranger_marksmanship_723:OnAttackRecord(keys)
 	if keys.attacker == self:GetParent() then
-		if not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
+		if not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
 			self.procs[keys.record] = true
 			
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_damage", {})
@@ -2335,7 +2342,7 @@ function modifier_imba_drow_ranger_trueshot_720:GetAuraEntityReject(hEntity)
 	if not IsServer() then return end
 
 	-- If Drow Ranger (or the caster) is not broken and the unit is either a hero or is a ranged attacker and the ability is active, then they get the aura effects
-	if not self:GetCaster():PassivesDisabled() and (hEntity:IsHero() or (hEntity:IsRangedAttacker() and self.activation_counter ~= nil and self.activation_counter > 0)) then
+	if self:GetAbility() and self:GetAbility():IsTrained() and not self:GetCaster():PassivesDisabled() and (hEntity:IsHero() or (hEntity:IsRangedAttacker() and self.activation_counter ~= nil and self.activation_counter > 0)) then
 		return false
 	else
 		return true
@@ -2371,9 +2378,7 @@ function modifier_imba_drow_ranger_trueshot_720_aura:OnCreated()
 end
 
 function modifier_imba_drow_ranger_trueshot_720_aura:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-  	return decFuncs
+  	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_drow_ranger_trueshot_720_aura:GetModifierAttackSpeedBonus_Constant()
@@ -2391,9 +2396,21 @@ end
 -------------------------------------------
 
 -- Client-side helper functions --
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_5", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_9", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_drow_ranger_9		= class({})
+modifier_special_bonus_imba_drow_ranger_5		= modifier_special_bonus_imba_drow_ranger_5 or class({})
+modifier_special_bonus_imba_drow_ranger_9		= modifier_special_bonus_imba_drow_ranger_9 or class({})
+
+function modifier_special_bonus_imba_drow_ranger_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_drow_ranger_5:RemoveOnDeath() 	return false end
+
+function imba_drow_ranger_marksmanship:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_5"), "modifier_special_bonus_imba_drow_ranger_5", {})
+	end
+end
 
 -- -----------------------
 -- -- TALENT 9 MODIFIER --

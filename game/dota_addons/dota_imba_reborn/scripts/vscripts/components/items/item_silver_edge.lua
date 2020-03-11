@@ -69,50 +69,60 @@ function modifier_item_imba_silver_edge_invis:IsHidden() return false end
 function modifier_item_imba_silver_edge_invis:IsPurgable() return false end
 
 function modifier_item_imba_silver_edge_invis:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.shadow_rip_damage	= self:GetAbility():GetSpecialValueFor("shadow_rip_damage")
+	self.bonus_movespeed        =   self:GetAbility():GetSpecialValueFor("invis_ms_pct")
+	self.bonus_attack_damage    =   self:GetAbility():GetSpecialValueFor("invis_damage")
+	
 	-- Start flying if has not taken damage recently
 	if IsServer() then
 		if not self:GetParent():FindModifierByName("modifier_item_imba_silver_edge_invis_flying_disabled") then
 			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
 	end
-
-	if self:GetAbility() == nil then return end
-	self.bonus_movespeed        =   self:GetAbility():GetSpecialValueFor("invis_ms_pct")
-	self.bonus_attack_damage    =   self:GetAbility():GetSpecialValueFor("invis_damage")
 end
 
--- Damage and movespeed bonuses
-function modifier_item_imba_silver_edge_invis:DeclareFunctions()
-	local funcs =   {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_POST_CRIT,
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-		-- Breaking invis handlers
-		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		-- Check who got hit by the cleave
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE,
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL
-	}
-	return funcs
+function modifier_item_imba_silver_edge_invis:OnDestroy()
+	if IsServer() then
+		if not self:GetParent():FindModifierByName("modifier_silver_edge_invis_flying_disabled") then
+			-- Remove flying movement
+			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+			-- Destroy trees to not get stuck
+			GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
+			-- Find a clear space to stand on
+			ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 64)
+		end
+	end
 end
-
-function modifier_item_imba_silver_edge_invis:GetModifierMoveSpeedBonus_Percentage() return self.bonus_movespeed end
 
 -- Phase invis and flying bonuses
 function modifier_item_imba_silver_edge_invis:CheckState()
-	local state =   {
+	return {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_INVISIBLE] = true,
 		[MODIFIER_STATE_CANNOT_MISS] = true -- Attack out of invis cannot miss.
 	}
-	return state
 end
 
 function modifier_item_imba_silver_edge_invis:GetPriority()
 	return MODIFIER_PRIORITY_NORMAL
 end
+
+-- Damage and movespeed bonuses
+function modifier_item_imba_silver_edge_invis:DeclareFunctions() 
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+		-- Breaking invis handlers
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_item_imba_silver_edge_invis:GetModifierMoveSpeedBonus_Percentage() return self.bonus_movespeed end
 
 function modifier_item_imba_silver_edge_invis:GetModifierInvisibilityLevel()
 	return 1
@@ -171,8 +181,6 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 			end
 
 			-- Find units hit by the cleave (amazing custom function from funcs.lua)
-
-
 			local enemies = FindUnitsInCone(self:GetParent():GetTeamNumber(),
 				CalculateDirection(params.target, self:GetParent()),
 				self:GetParent():GetAbsOrigin(),
@@ -190,13 +198,11 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 			for _,enemy in pairs(enemies) do
 				local damager = self:GetParent()
 
-				local damageTable =({victim = enemy,
+				ApplyDamage(({victim = enemy,
 					attacker = damager,
 					ability = ability,
 					damage = cleave_damage,
-					damage_type = DAMAGE_TYPE_PURE})
-
-				ApplyDamage(damageTable)
+					damage_type = DAMAGE_TYPE_PURE}))
 
 				enemy:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration})
 			end
@@ -234,19 +240,9 @@ function modifier_item_imba_silver_edge_invis:OnAbilityExecuted( keys )
 	end
 end
 
-function modifier_item_imba_silver_edge_invis:OnDestroy()
-	if IsServer() then
-		if not self:GetParent():FindModifierByName("modifier_silver_edge_invis_flying_disabled") then
-			-- Remove flying movement
-			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-			-- Destroy trees to not get stuck
-			GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
-			-- Find a clear space to stand on
-			ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 64)
-		end
-	end
+function modifier_item_imba_silver_edge_invis:OnTooltip()
+	return self.shadow_rip_damage
 end
-
 
 ----------------------------------
 --- STACKABLE PASSIVE MODIFIER ---
@@ -274,7 +270,7 @@ end
 
 -- Attack speed, damage and stat bonuses
 function modifier_item_imba_silver_edge_passive:DeclareFunctions()
-	local funcs =   {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -282,7 +278,6 @@ function modifier_item_imba_silver_edge_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_TAKEDAMAGE            -- Flying disabler handler
 	}
-	return funcs
 end
 
 function modifier_item_imba_silver_edge_passive:GetModifierPreAttack_BonusDamage() return self.attack_damage_bonus end
@@ -354,18 +349,16 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:OnCreated()
 end
 
 function modifier_item_imba_silver_edge_invis_panic_debuff:CheckState()
-	local state ={
-		[MODIFIER_STATE_PASSIVES_DISABLED]= true
+	return {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
-	return state
 end
 
-function modifier_item_imba_silver_edge_invis_panic_debuff:DeclareFunctions()
-	local funcs =   {
+function modifier_item_imba_silver_edge_invis_panic_debuff:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_silver_edge_invis_panic_debuff:GetModifierTurnRate_Percentage() return self.turnrate end
@@ -399,18 +392,15 @@ function modifier_item_imba_silver_edge_invis_break_debuff:OnCreated()
 end
 
 function modifier_item_imba_silver_edge_invis_break_debuff:CheckState()
-	local state ={
-		[MODIFIER_STATE_PASSIVES_DISABLED]= true
+	return {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
-	return state
 end
 
 function modifier_item_imba_silver_edge_invis_break_debuff:DeclareFunctions()
-	local funcs =   {
-		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+	return {
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
-	return funcs
 end
 
 function modifier_item_imba_silver_edge_invis_break_debuff:GetModifierTotalDamageOutgoing_Percentage()

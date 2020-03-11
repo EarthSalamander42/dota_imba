@@ -132,7 +132,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_total_tooltip"		"120 200 300 420"
+				"damage_total_tooltip"		"210 315 380 485"
 			}
 			"05"
 			{

@@ -35,31 +35,20 @@ function item_imba_orchid:GetIntrinsicModifierName()
 	return "modifier_item_imba_orchid" end
 
 function item_imba_orchid:OnSpellStart()
-	if IsServer() then
+	local target = self:GetCursorTarget()
 
-		-- Parameters
-		local caster = self:GetCaster()
-		local target = self:GetCursorTarget()
-		local silence_duration = self:GetSpecialValueFor("silence_duration")
-
-		-- If the target possesses a ready Linken's Sphere, do nothing
-		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(self) then
-				return nil
-			end
-		end
-
-		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
-		if target:IsMagicImmune() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= self:GetCaster():GetTeam() then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
-
-		-- Play the cast sound
-		target:EmitSound("DOTA_Item.Orchid.Activate")
-
-		-- Apply the Orchid debuff
-		target:AddNewModifier(caster, self, "modifier_item_imba_orchid_debuff", {duration = silence_duration})
 	end
+
+	-- Play the cast sound
+	target:EmitSound("DOTA_Item.Orchid.Activate")
+
+	-- Apply the Orchid debuff
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_orchid_debuff", {duration = self:GetSpecialValueFor("silence_duration")})
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -92,14 +81,13 @@ end
 
 -- Attribute bonuses
 function modifier_item_imba_orchid:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_orchid:GetModifierBonusStats_Intellect()
@@ -147,18 +135,16 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_orchid_debuff:DeclareFunctions()
-	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
-	return funcs
 end
 
 -- Declare modifier states
 function modifier_item_imba_orchid_debuff:CheckState()
-	local states = {
-		[MODIFIER_STATE_SILENCED] = true,
+	return {
+		[MODIFIER_STATE_SILENCED] = true
 	}
-	return states
 end
 
 -- Track damage taken
@@ -208,7 +194,6 @@ end
 
 item_imba_bloodthorn = item_imba_bloodthorn or class({})
 LinkLuaModifier( "modifier_item_imba_bloodthorn", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit chance, unstackable
 LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Active attackers' crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
@@ -269,37 +254,26 @@ function modifier_item_imba_bloodthorn:OnCreated()
 		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
 		self.spell_power = self.item:GetSpecialValueFor("spell_power")
 		self:CheckUnique(true)
-		if IsServer() then
-			if not self.parent:HasModifier("modifier_item_imba_bloodthorn_unique") then
-				self.parent:AddNewModifier(self.parent, self.item, "modifier_item_imba_bloodthorn_unique", {})
-			end
-		end
 	end
 end
 
-
--- Removes the aura emitter from the caster if this is the last vladmir's offering in its inventory
 function modifier_item_imba_bloodthorn:OnDestroy(keys)
 	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_item_imba_bloodthorn") then
-			parent:RemoveModifierByName("modifier_item_imba_bloodthorn_unique")
-		end
 		self:CheckUnique(false)
 	end
 end
 
-
 -- Attribute bonuses
 function modifier_item_imba_bloodthorn:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
 	}
-	return funcs
 end
 
 function modifier_item_imba_bloodthorn:GetModifierBonusStats_Intellect()
@@ -317,32 +291,14 @@ function modifier_item_imba_bloodthorn:GetModifierConstantManaRegen()
 function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,nil) end
 
------------------------------------------------------------------------------------------------------------
---	Bloodthorn owner unique bonus (crit chance)
------------------------------------------------------------------------------------------------------------
-
-modifier_item_imba_bloodthorn_unique = modifier_item_imba_bloodthorn_unique or class({})
-function modifier_item_imba_bloodthorn_unique:IsHidden() return true end
-function modifier_item_imba_bloodthorn_unique:IsDebuff() return false end
-function modifier_item_imba_bloodthorn_unique:IsPurgable() return false end
-function modifier_item_imba_bloodthorn_unique:IsPermanent() return true end
-
--- Declare modifier events/properties
-function modifier_item_imba_bloodthorn_unique:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-	}
-	return funcs
-end
-
 -- Roll for the crit chance
-function modifier_item_imba_bloodthorn_unique:GetModifierPreAttack_CriticalStrike(keys)
-	if IsServer() then
+function modifier_item_imba_bloodthorn:GetModifierPreAttack_CriticalStrike(keys)
+	if self:GetAbility() then
 		local owner = self:GetParent()
 
 		-- If this unit is the attacker, roll for a crit
 		if owner == keys.attacker then
-			if RollPercentage(self:GetAbility():GetSpecialValueFor("crit_chance")) then
+			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("crit_chance"), self) then
 				return self:GetAbility():GetSpecialValueFor("crit_damage")
 			end
 		end
@@ -378,22 +334,20 @@ function modifier_item_imba_bloodthorn_debuff:OnCreated()
 	end
 end
 
+-- Declare modifier states
+function modifier_item_imba_bloodthorn_debuff:CheckState()
+	return {
+		[MODIFIER_STATE_SILENCED]		= true,
+		[MODIFIER_STATE_EVADE_DISABLED] = true
+	}
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_bloodthorn_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_START,
 	}
-	return funcs
-end
-
--- Declare modifier states
-function modifier_item_imba_bloodthorn_debuff:CheckState()
-	local states = {
-		[MODIFIER_STATE_SILENCED] = true,
-		[MODIFIER_STATE_EVADE_DISABLED] = true,
-	}
-	return states
 end
 
 -- Grant the crit modifier to attackers
@@ -468,11 +422,10 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_bloodthorn_attacker_crit:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return funcs
 end
 
 -- Grant the crit damage multiplier

@@ -20,13 +20,13 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_creep_duration"                 "CREEP SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_freeze_duration"                "FREEZE DURATION:"
 
-"DOTA_Tooltip_modifier_imba_frost_arrows_slow"                          "Chill"
-"DOTA_Tooltip_modifier_imba_frost_arrows_slow_Description"              "Movement slowed. Enough stacks will cause you to freeze!"
+"DOTA_Tooltip_modifier_imba_frost_arrows_slow"							"Frost Arrow Slow"
+"DOTA_Tooltip_modifier_imba_frost_arrows_slow_Description"				"Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Enough stacks will cause you to freeze!"
 
 "DOTA_Tooltip_modifier_imba_frost_arrows_freeze"                        "Frozen"
 "DOTA_Tooltip_modifier_imba_frost_arrows_freeze_Description"            "Rooted in place."
 
-"DOTA_Tooltip_modifier_imba_frost_arrows_buff"                          "Hasting chill"
+"DOTA_Tooltip_modifier_imba_frost_arrows_buff"                          "Hasting Chill"
 "DOTA_Tooltip_modifier_imba_frost_arrows_buff_Description"              "Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% extra movement speed from stacks of Chill applied to enemy heroes."
 
 //DROW RANGER
@@ -105,10 +105,10 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_aghanim_description"	"Causes your attacks to splinter, hitting all enemies in 375 radius of your target. Splinters deal 50% reduced damage, and cannot proc any on-hit effects, except Frost Arrows."
 
 "DOTA_Tooltip_modifier_imba_markmanship_buff"							"Silent Sentinel Blessing"
-"DOTA_Tooltip_modifier_imba_markmanship_buff_Description"				"Drow's presence infuse your auto attacks with a chilling effect that slows enemy units."
+"DOTA_Tooltip_modifier_imba_markmanship_buff_Description"				"Drow's presence infuses your attacks with a chilling effect that slows enemy units."
 
-"DOTA_Tooltip_modifier_imba_markmanship_slow"							"Lesser Chill"
-"DOTA_Tooltip_modifier_imba_markmanship_slow_Description"				"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% from Drow allies."
+"DOTA_Tooltip_modifier_imba_markmanship_slow"							"Silent Sentinel Blessing"
+"DOTA_Tooltip_modifier_imba_markmanship_slow_Description"				"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723"									"Marksmanship"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Description"						"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. Grants Drow and nearby ranged heroes with bonus agility based on Drow's current agility. This ability is disabled if there is an enemy hero within %disable_range% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants %range_bonus% bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills targets if their health is below %instakill_threshold%%%."
@@ -128,19 +128,19 @@
 // Drow Ranger's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1"                 "Gust Self Cast"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1_Description"		"Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally."
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_2"                 "25% chance to instantly kill non-ancient creeps"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_2"                 "{s:value}% chance to instantly kill non-ancient creeps"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3"					"Wind Repellent"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3_Description"     "After casting Gust, all auto attacks for the next 4 seconds push the main target back 50 units over 0.3 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3_Description"     "After casting Gust, all auto attacks for the next {s:buff_duration} seconds push the main target back {s:knockback_distance} units over {s:knockback_duration} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4"					"Chill Speed Bonus"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4_Description"     "Each Chilled enemy grants Drow Ranger +10 flat movespeed bonus for the duration. Stacks with itself, depending on amount of Chilled stacks on enemies."
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5"					"Marksmanship Chill Aura"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5_Description"     "When Marksmanship is not disabled, it applies a 900 radius aura that grants allies attacks that reduce movespeed by 15%."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4_Description"     "Each Chilled enemy grants Drow Ranger +{s:bonus_movespeed} flat movespeed bonus for the duration. Stacks with itself, depending on amount of Chilled stacks on enemies."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5"					"Silent Sentinel Blessing"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5_Description"     "When Marksmanship is enabled, it applies a {s:aura_radius} radius aura that grants allies attacks that reduce movement speed by {s:slow_pct}% for {s:duration} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6"					"Trueshot Burst"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6_Description"     "While Precision Aura is cast/active, Drow gains agility equal to 3% of every allied hero's agility."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6_Description"     "While Precision Aura is cast/active, Drow gains agility equal to {s:agility_bonus_percent}% of every allied hero's agility."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"                 "Deadeye passively affects allied heroes as well"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"                 "Marksmanship no longer disabled by distance"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_9"                 "+{s:value} Gust Distance/Knockback"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+25% Precision Aura Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+{s:value}% Precision Aura Attack Speed"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_frost_arrows_damage"				"+{s:value} Frost Arrows Bonus Damage"
 
 

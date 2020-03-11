@@ -35,7 +35,6 @@ LinkLuaModifier("modifier_item_imba_lance_of_longinus_attack_speed", "components
 
 LinkLuaModifier("modifier_item_imba_lance_of_longinus_god_piercing_ally", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_lance_of_longinus_god_piercing_enemy", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_lance_of_longinus_divergent_thrust", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	return "modifier_item_imba_lance_of_longinus"
@@ -46,6 +45,14 @@ function item_imba_lance_of_longinus:CastFilterResultTarget(target)
 		return UF_SUCCESS
 	else
 		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_CUSTOM, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function item_imba_lance_of_longinus:GetCastRange(location, target)
+	if not target or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("cast_range_enemy")
 	end
 end
 
@@ -654,11 +661,9 @@ function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnIntervalThink(
 end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_HEAL_RECEIVED
 	}
-
-	return decFuncs
 end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnHealReceived(keys)
@@ -679,30 +684,8 @@ end
 -- All this logic should be handled in ally modifier so this is just for visuals
 modifier_item_imba_lance_of_longinus_god_piercing_enemy = class ({})
 
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsHidden()			return true end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsPurgable()		return false end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IgnoreTenacity() 	return true end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:RemoveOnDeath() 	return false end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
----------------------------------------
--- DIVERGENT THRUST DISABLE MODIFIER --
----------------------------------------
-
-modifier_item_imba_lance_of_longinus_divergent_thrust = class({})
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:IgnoreTenacity() return true end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:GetTexture()
-	return "custom/lance_of_longinus_divergent"
-end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_DISABLE_HEALING 
-	}
-	return decFuncs
-end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:GetDisableHealing()
-	return 1
-end

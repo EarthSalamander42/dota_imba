@@ -54,12 +54,12 @@
 			"04"
 			{
                 "var_type"			"FIELD_INTEGER"
-                "regret_stacks"		"2 3 3 4"		
+                "regret_stacks"		"2 3 4"
 			}
 			"05"
 			{
                 "var_type"					"FIELD_FLOAT"
-                "peace_on_earth_duration"	"4 4.5 5 5.5"
+                "peace_on_earth_duration"	"4.0 4.5 5.0"
 			}
 			"06"
 			{

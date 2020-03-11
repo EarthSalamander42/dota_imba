@@ -967,6 +967,7 @@ if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle
 function modifier_imba_dazzle_post_shallow_grave_buff:IsPurgable() return true end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsDebuff() return false end
+function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:GetTexture()
 	return "dazzle_shallow_grave" end
@@ -1376,11 +1377,10 @@ end
 function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local spellAmp = caster:GetSpellAmplification(false)
 		local damage = self:GetSpecialValueFor("damage")
 		local damageRadius = self:GetSpecialValueFor("damage_radius")
 
-		local totalHeal = damage * (1 + spellAmp * 0.01)
+		local totalHeal = damage
 		local targetTeam = DOTA_UNIT_TARGET_TEAM_FRIENDLY
 
 		if isAlly then

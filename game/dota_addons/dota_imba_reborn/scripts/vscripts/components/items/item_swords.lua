@@ -54,13 +54,11 @@ function modifier_item_imba_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange:GetModifierPreAttack_BonusDamage()

@@ -401,8 +401,11 @@ function modifier_imba_bane_enfeeble_723_effect:OnCreated()
 end
 
 function modifier_imba_bane_enfeeble_723_effect:OnRefresh()
-	self:IncrementStackCount()
 	self:OnCreated()
+	
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
 end
 
 function modifier_imba_bane_enfeeble_723_effect:DeclareFunctions()

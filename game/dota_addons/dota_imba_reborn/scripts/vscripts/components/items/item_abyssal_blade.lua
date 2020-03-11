@@ -106,8 +106,8 @@ function modifier_imba_abyssal_blade:OnCreated()
 	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")   
 	self.bonus_hp_regen = self.ability:GetSpecialValueFor("bonus_hp_regen") 
 	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")
-	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
-	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
+	self.block_damage_melee		= self:GetAbility():GetSpecialValueFor("block_damage_melee")
+	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
 	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
 
 	if IsServer() then
@@ -160,9 +160,9 @@ end
 function modifier_imba_abyssal_blade:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end

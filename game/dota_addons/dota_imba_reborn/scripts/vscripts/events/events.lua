@@ -1241,6 +1241,8 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
+	
+		-- Ban system that forces heroes into their fountain area and locks their position there (either through database or manual intervention)
 		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 or (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
 				local pos = GetGroundPosition(Vector(-6700, -7165, 1509), nil)
@@ -1453,53 +1455,6 @@ function GameMode:OnTeamKillCredit(keys)
 					Notifications:BottomToAll({ text = "#imba_deathstreak_10", duration = line_duration, continue = true })
 				end
 			end
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Rancor logic
-	-------------------------------------------------------------------------------------------------
-
-	-- TODO: Format this into venge's hero file
-	-- Victim stack loss
-	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
-		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
-		if current_stacks <= 2 then
-			victim_hero:RemoveModifierByName("modifier_imba_rancor")
-		else
-			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
-		end
-	end
-
-	-- Killer stack gain
-	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
-		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-		if eligible_rancor_targets[1] then
-			local rancor_stacks = 1
-
-			-- Double stacks if the killed unit was Venge
-			if victim_hero == VENGEFUL_RANCOR_CASTER then
-				rancor_stacks = rancor_stacks * 2
-			end
-
-			-- Add stacks and play particle effect
-			AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
-			local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
-			ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
-			ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Vengeance Aura logic
-	-------------------------------------------------------------------------------------------------
-
-	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
-		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
-		local killer_hero = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
-		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
-			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
-			victim_hero.vengeance_aura_target = killer_hero
 		end
 	end
 end
