@@ -455,12 +455,10 @@ function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 end
 
 function modifier_imba_ice_breath_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return funcs
 end
 
 function modifier_imba_ice_breath_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
@@ -698,12 +696,10 @@ function modifier_imba_ice_path_slow_debuff:OnCreated()
 end
 
 function modifier_imba_ice_path_slow_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
-
-	return funcs
 end
 
 function modifier_imba_ice_path_slow_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
@@ -1209,3 +1205,21 @@ function modifier_imba_macropyre_debuff:DeclareFunctions()
 end
 
 function modifier_imba_macropyre_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_jakiro_2", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_jakiro_2		= modifier_special_bonus_imba_jakiro_2 or class({})
+
+function modifier_special_bonus_imba_jakiro_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_jakiro_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_jakiro_2:RemoveOnDeath() 	return false end
+
+function base_ability_dual_breath:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_jakiro_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_jakiro_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_jakiro_2"), "modifier_special_bonus_imba_jakiro_2", {})
+	end
+end

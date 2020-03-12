@@ -317,6 +317,14 @@ function modifier_imba_radiance_burn:IsHidden() return false end
 function modifier_imba_radiance_burn:IsDebuff() return true end
 function modifier_imba_radiance_burn:IsPurgable() return false end
 
+function modifier_imba_radiance_burn:GetTexture()
+	if self:GetCaster().radiance_icon_client then
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
+	else
+		return "item_radiance"
+	end
+end
+
 function modifier_imba_radiance_burn:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
 
@@ -423,6 +431,14 @@ function modifier_imba_radiance_afterburn:IsHidden() return false end
 function modifier_imba_radiance_afterburn:IsDebuff() return true end
 function modifier_imba_radiance_afterburn:IsPurgable() return false end
 
+function modifier_imba_radiance_afterburn:GetTexture()
+	if self:GetCaster().radiance_icon_client then
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
+	else
+		return "item_radiance"
+	end
+end
+
 function modifier_imba_radiance_afterburn:OnCreated()
 	if IsServer() then
 
@@ -486,7 +502,7 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 end
 
 function modifier_imba_radiance_afterburn:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, }
+	return {MODIFIER_PROPERTY_MISS_PERCENTAGE}
 end
 
 function modifier_imba_radiance_afterburn:GetModifierMiss_Percentage()

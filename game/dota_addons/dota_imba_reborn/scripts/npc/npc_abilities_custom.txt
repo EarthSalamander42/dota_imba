@@ -6352,6 +6352,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"40 60 80 100"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"fire_damage_increase"
 			}
 
 			"05"
@@ -6454,12 +6455,14 @@
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"slow_increase"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_slow"				"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"slow_increase"
 			}
 			"08"
 			{
@@ -37102,6 +37105,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cooldown"		"30 24 18"
+				"RequiresScepter"			"1"
 			}
 			"04"
 			{

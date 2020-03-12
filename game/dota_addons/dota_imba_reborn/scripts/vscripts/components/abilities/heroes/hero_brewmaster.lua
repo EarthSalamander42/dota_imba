@@ -12,8 +12,6 @@ LinkLuaModifier("modifier_imba_brewmaster_primal_split", "components/abilities/h
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_split_delay", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_brewmaster_primal_unison", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
-
 imba_brewmaster_thunder_clap						= imba_brewmaster_thunder_clap or class({})
 modifier_imba_brewmaster_thunder_clap				= modifier_imba_brewmaster_thunder_clap or class({})
 modifier_imba_brewmaster_thunder_clap_conductive_thinker	= modifier_imba_brewmaster_thunder_clap_conductive_thinker or class({})
@@ -32,7 +30,6 @@ modifier_imba_brewmaster_primal_split_split_delay	= modifier_imba_brewmaster_pri
 modifier_imba_brewmaster_primal_split_duration		= modifier_imba_brewmaster_primal_split_duration or class({})
 
 imba_brewmaster_primal_unison						= imba_brewmaster_primal_unison or class({})
-modifier_imba_brewmaster_primal_unison				= modifier_imba_brewmaster_primal_unison or class({})
 
 ----------------------------------
 -- IMBA_BREWMASTER_THUNDER_CLAP --
@@ -1061,10 +1058,7 @@ function imba_brewmaster_primal_unison:OnChannelFinish(bInterrupted)
 	ParticleManager:ReleaseParticleIndex(self.particle)
 
 	if not bInterrupted then
-		-- Yeah this doesn't work
-		if self:GetCaster():GetOwner() then
-			-- self:GetCaster():GetOwner():AddNewModifier(self:GetCaster():GetOwner(), self, "modifier_imba_brewmaster_primal_unison", {})
-			
+		if self:GetCaster():GetOwner() then			
 			for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_fire")) do
 				if ent:GetOwner() == self:GetCaster():GetOwner() then
 					ent:ForceKill(false)
@@ -1083,61 +1077,9 @@ function imba_brewmaster_primal_unison:OnChannelFinish(bInterrupted)
 				end
 			end
 			
-			-- self:GetCaster():GetOwner():RemoveModifierByName("modifier_imba_brewmaster_primal_unison")
 			self:GetCaster():GetOwner():RemoveModifierByName("modifier_imba_brewmaster_primal_split_duration")
 		end
 	end
-	
-	
-	-- self:GetCaster():StopSound(self.channel_sound)
-	-- self:GetCaster():EmitSound(self.attack_sound)
-	
-	-- if self.fortunes_particle then
-		-- ParticleManager:DestroyParticle(self.fortunes_particle, false)
-		-- ParticleManager:ReleaseParticleIndex(self.fortunes_particle)
-	-- end
-	
-	-- ProjectileManager:CreateTrackingProjectile(	{
-		-- Target 				= self.target,
-		-- Source 				= self:GetCaster(),
-		-- Ability 			= self,
-		-- EffectName 			= self.effect_name,
-		-- iMoveSpeed			= self:GetSpecialValueFor("bolt_speed"),
-		-- vSourceLoc 			= self:GetCaster():GetAbsOrigin(),
-		-- bDrawsOnMinimap 	= false,
-		-- bDodgeable 			= false,
-		-- bIsAttack 			= false,
-		-- bVisibleToEnemies 	= true,
-		-- bReplaceExisting 	= false,
-		-- flExpireTime 		= GameRules:GetGameTime() + 10.0,
-		-- bProvidesVision 	= false,
-		
-		-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-		
-		-- ExtraData = {
-			-- charge_pct			= ((GameRules:GetGameTime() - self:GetChannelStartTime()) / self:GetChannelTime()),
-			-- target_sound		= self.target_sound,
-			-- aoe_particle_name	= self.aoe_particle_name,
-			-- modifier_name		= self.modifier_name,
-			-- autocast_state		= self.autocast_state
-		-- }
-	-- })
-end
-
---------------------------------------------
--- MODIFIER_IMBA_BREWMASTER_PRIMAL_UNISON --
---------------------------------------------
-
--- function modifier_imba_brewmaster_primal_unison:IsHidden()		return true end
-function modifier_imba_brewmaster_primal_unison:IsPurgable()	return false end
-function modifier_imba_brewmaster_primal_unison:GetAttributes()	return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
-
-function modifier_imba_brewmaster_primal_unison:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MIN_HEALTH}
-end
-
-function modifier_imba_brewmaster_primal_unison:GetMinHealth()
-	return 1
 end
 
 ---------------------

@@ -1274,9 +1274,7 @@ end
 modifier_imba_trueshot_talent_buff = class ({})
 
 function modifier_imba_trueshot_talent_buff:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS}
-
-	return decFunc
+	return {MODIFIER_PROPERTY_STATS_AGILITY_BONUS}
 end
 
 function modifier_imba_trueshot_talent_buff:OnCreated()
@@ -1289,33 +1287,35 @@ function modifier_imba_trueshot_talent_buff:OnCreated()
 	self.agility_bonus_percent = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_6", "agility_bonus_percent")
 
 	if IsServer() then
-		self:StartIntervalThink(1)
+		self:OnIntervalThink()
+		self:StartIntervalThink(0.1)
 	end
 end
 
 --Calculate total agility of allied heroes
 function modifier_imba_trueshot_talent_buff:GetTotalAgilityOfTeam()
 	local total_agility = 0
+	
 	if IsServer() then
-		local allies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		for _, ally in pairs(allies) do
-			total_agility = total_agility + ally:GetAgility()
+		for _, ally in pairs(FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS , FIND_ANY_ORDER, false)) do
+			if ally.GetAgility then
+				total_agility = total_agility + ally:GetAgility()
+			end
 		end
+		
 		return total_agility
 	end
 end
 
 function modifier_imba_trueshot_talent_buff:OnIntervalThink()
-	if IsServer() then
-		--refresh allies agility total every 1 second
-		self.current_total_agility = self:GetTotalAgilityOfTeam()
-	end
+	-- self.current_total_agility = self:GetTotalAgilityOfTeam()
+	self:SetStackCount(self:GetTotalAgilityOfTeam() * (self.agility_bonus_percent / 100))
 end
 
 --return a % of the total agility of the allied heroes as bonus agility to Drow
 function modifier_imba_trueshot_talent_buff:GetModifierBonusStats_Agility()
-	local agility_bonus = self.current_total_agility * (self.agility_bonus_percent / 100)
-	return agility_bonus
+	-- return self.current_total_agility * (self.agility_bonus_percent / 100)
+	return self:GetStackCount()
 end
 
 function modifier_imba_trueshot_talent_buff:IsDebuff() return false end
@@ -2397,18 +2397,30 @@ end
 
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_5", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_6", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_9", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_drow_ranger_5		= modifier_special_bonus_imba_drow_ranger_5 or class({})
+modifier_special_bonus_imba_drow_ranger_6		= modifier_special_bonus_imba_drow_ranger_6 or class({})
 modifier_special_bonus_imba_drow_ranger_9		= modifier_special_bonus_imba_drow_ranger_9 or class({})
 
 function modifier_special_bonus_imba_drow_ranger_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_drow_ranger_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_drow_ranger_5:IsPurgable()		return false end
 function modifier_special_bonus_imba_drow_ranger_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_6:RemoveOnDeath() 	return false end
 
 function imba_drow_ranger_marksmanship:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_5"), "modifier_special_bonus_imba_drow_ranger_5", {})
+	end
+end
+
+function imba_drow_ranger_trueshot_720:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_6"), "modifier_special_bonus_imba_drow_ranger_6", {})
 	end
 end
 

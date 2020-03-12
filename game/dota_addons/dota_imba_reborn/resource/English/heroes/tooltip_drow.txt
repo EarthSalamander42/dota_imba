@@ -80,8 +80,8 @@
 "DOTA_Tooltip_modifier_imba_trueshot_active"                            "Marksman's Presence"
 "DOTA_Tooltip_modifier_imba_trueshot_active_Description"                "Trueshot Aura is affecting creeps, and granting bonus agility to heroes."
 
-"DOTA_Tooltip_modifier_imba_trueshot_talent_buff"                      "Precision Frenzy"
-"DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Temporarily gaining a percentage of the total Agility of your teammates."
+"DOTA_Tooltip_modifier_imba_trueshot_talent_buff"                      "Trueshot Burst"
+"DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Gaining %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% bonus agility from teammates."
 
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot"									"Multishot"
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot_Description"						"Channeling. Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying longer duration Frost Arrows. Lasts up to %abilitychanneltime% seconds.\n<font color='#FF7800'>Chill Extension:</font> Also applies Frost Arrow's Chill IMBAfication."

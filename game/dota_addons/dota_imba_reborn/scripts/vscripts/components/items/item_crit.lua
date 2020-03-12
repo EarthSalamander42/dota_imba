@@ -133,7 +133,8 @@ end
 
 function modifier_item_imba_greater_crit_buff:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
 end
 
@@ -143,11 +144,18 @@ function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrik
 		
 		-- RollPseudoRandom only keeps track of whole numbers, so some rounding is required
 		if RollPseudoRandom(math.ceil(multiplicative_chance), self) then
+			self.bCrit = true
 			local stacks = self:GetStackCount()
 			self:SetStackCount(0)
 			return self.crit_multiplier + stacks
 		else
-			self:SetStackCount(self:GetStackCount() + (self.crit_increase * #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit")))
+			self.bCrit = false
 		end
+	end
+end
+
+function modifier_item_imba_greater_crit_buff:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and not self.bCrit and keys.original_damage > 0 then
+		self:SetStackCount(self:GetStackCount() + (self.crit_increase * #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit")))
 	end
 end

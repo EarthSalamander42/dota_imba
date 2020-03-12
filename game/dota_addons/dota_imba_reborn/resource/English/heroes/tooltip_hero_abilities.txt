@@ -387,14 +387,14 @@
 // Necrophos's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_1"                   "+125 Death Pulse radius"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_1"                   "+{s:value} Death Pulse Radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_2"                   "Attacking enemy heroes now grants Sadist"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-2s Death Pulse cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+25% Heartstopper Aura healing reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+300 Ghost Shroud effect radius"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+1% Sadist health/mana regen"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50% Reaper's Scythe Death and Decay"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura damage per second"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-{s:value}s Death Pulse Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+{s:value}% Heartstopper Aura healing reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+{s:value} Ghost Shroud Radius"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+{s:value}% Sadist health/mana regen"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+{s:value}% Reaper's Scythe Death and Decay"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura Health Loss Per Second"
 
 
 // Nyx Assassin
@@ -1640,41 +1640,40 @@
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_movement_speed"       "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 
-"DOTA_Tooltip_modifier_imba_whirling_axes_ranged"                      "Whirling Axes"
-"DOTA_Tooltip_modifier_imba_whirling_axes_ranged_Description"          "Movement speed slowed."
+"DOTA_Tooltip_modifier_imba_whirling_axes_ranged"						"Whirling Axes"
+"DOTA_Tooltip_modifier_imba_whirling_axes_ranged_Description"			"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Troll Warlord's Whirling Axes (Melee)
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee"          "Whirling Axes (Melee)"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"           "Troll hurls <font color='#FF7800'>ten</font> axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.\n<font color='#FF7800'>Imbued Axes:</font> Can trigger attack modifiers."
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee"					"Whirling Axes (Melee)"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"		"Troll hurls <font color='#FF7800'>ten</font> axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.\n<font color='#FF7800'>Imbued Axes:</font> Can trigger attack modifiers."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Lore"                  "The Troll's attacks are obnoxious to the point of madness."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note0"                 "Cannot hit an enemy more than once with the same cast of the spell."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note1"                 "Melee Whirling Axes do not affect Roshan."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_hit_radius"            "HIT RADIUS:"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_max_range"             "SPIN RADIUS:"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_max_range"             "RADIUS:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_duration"        "BLIND DURATION:"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_stacks"          "NUMBER OF MISSES:"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_pct"				"%MISS CHANCE:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_whirl_duration"        "WHIRL DURATION:"
 
-"DOTA_Tooltip_modifier_imba_whirling_axes_melee"                        "Blind Rage"
-"DOTA_Tooltip_modifier_imba_whirling_axes_melee_Description"            "Will miss attacks until the stacks are depleted."
+"DOTA_Tooltip_modifier_imba_whirling_axes_melee"                        "Whirling Axes Blind"
+"DOTA_Tooltip_modifier_imba_whirling_axes_melee_Description"            "Blinded, have a %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%% chance to miss."
 
 ////===============================================================================================================
 // Troll Warlord's Fervor
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor"                        "Fervor"
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"            "With each continuous blow on the same target, Troll gains increased attack speed. If Troll changes targets, the stacks drop <font color='#FF7800'>by a percantage</font>.\n<font color='#FF7800'>Trolololol:</font> No max stack limit."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Lore"                  "The Warlord's most common strategy is to insist until his opponent is too tired to fight back."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note0"                  "Break does not prevent gaining new stacks, but does nullifies bonus attack speed of already existing stacks."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_bonus_as"              "BONUS ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor"						"Fervor"
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"			"With each continuous blow on the same target, Troll gains increased attack speed. If Troll changes targets, the stacks drop <font color='#FF7800'>by a percantage</font>.\n<font color='#FF7800'>Trolololol:</font> No max stack limit.\n<font color='#FF7800'>Anger Beyond the Grave:</font> Stacks are not lost on death."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Lore"					"The Warlord's most common strategy is to insist until his opponent is too tired to fight back."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note0"					"Break does not prevent gaining new stacks, but does nullifies bonus attack speed of already existing stacks."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_bonus_as"				"ATTACK SPEED PER STACK:"
 "DOTA_Tooltip_ability_imba_troll_warlord_fervor_switch_lose_pct"		"%STACKS LOSS ON NEW TARGET:"
 
-"DOTA_Tooltip_modifier_imba_fervor_stacks"                              "Fervor"
-"DOTA_Tooltip_modifier_imba_fervor_stacks_Description"                  "Increased attack speed and each consecutive attack on the same target increases it. Hit'em already!"
+"DOTA_Tooltip_modifier_imba_fervor_stacks"								"Fervor"
+"DOTA_Tooltip_modifier_imba_fervor_stacks_Description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%. Each consecutive attack on the same target increases attack speed further. Hit'em already!"
 
 ////===============================================================================================================
 // Troll Warlord's Battle Trance
@@ -1687,7 +1686,7 @@
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_as"                    "ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_buff_duration"               "TRANCE DURATION:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_bat"                   "BASE ATTACK TIME:"
-"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active.</font>"
+"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active and locked onto a target.</font>"
 
 "DOTA_Tooltip_modifier_imba_battle_trance"                              "Battle Trance"
 "DOTA_Tooltip_modifier_imba_battle_trance_Description"                  "Increased attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -1703,14 +1702,14 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1"               "Ranged Proficiency"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1_Description"	"Berserker's Rage grants +3 armor, +25 movespeed and 1.6 BAT while ranged."
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_2"               "+20% Whirling Axes (Ranged) Movement Slow"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_3"               "-15% Fervor stack loss on target change"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_4"               "+6 Fervor attack speed per stack"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_5"               "-7s Whirling Axes cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_6"               "+50% Battle Trance duration"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_7"              	"+10 Ranged Whirling Axes, +80 Spread Degrees"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "-0.2 Battle Trance BAT improvement"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1_Description"	"Berserker's Rage grants +{s:armor} armor, +{s:movespeed_pct} movespeed and {s:bat} BAT in ranged mode."
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_2"               "+{s:value}% Whirling Axes (Ranged) Movement Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_3"               "{s:value}% Fervor stack loss on target change"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_4"               "+{s:value} Fervor Attack Speed Per Stack"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_5"               "-{s:value}s Whirling Axes Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_6"               "+{s:value}% Battle Trance Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_7"              	"+{s:axe_count_increase} Ranged Whirling Axes, +{s:axe_spread_increase} Spread Degrees"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "{s:value} Battle Trance BAT improvement"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9"               "Remnants of Berserker's Rage"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9_Description"	"Replaces ensnare with bash chance for 20/30/40/50 magical damage, piercing spell immunity. Can no longer use other passive bash abilities."
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_battle_trance_upgrade"					"Battle Trance True Sight"

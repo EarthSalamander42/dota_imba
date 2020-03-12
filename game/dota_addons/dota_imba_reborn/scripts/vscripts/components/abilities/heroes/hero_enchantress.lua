@@ -109,7 +109,7 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.parent		= self:GetParent()
 	
 	-- AbilitySpecials
-	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_enchantress_5")
+	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase 		= self.ability:GetSpecialValueFor("stopgap_bat_increase")
 	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
@@ -128,13 +128,11 @@ function modifier_imba_enchantress_untouchable_slow:GetStatusEffectName()
 end
 
 function modifier_imba_enchantress_untouchable_slow:DeclareFunctions()
-    local decFuncs = {
+    return {
         MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT, -- IMBAfication: Stopgap
 		MODIFIER_EVENT_ON_ATTACK
     }
-
-    return decFuncs
 end
 
 function modifier_imba_enchantress_untouchable_slow:GetModifierAttackSpeedBonus_Constant()

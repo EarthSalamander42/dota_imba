@@ -221,16 +221,16 @@ end
 modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class({})
 
 function modifier_imba_berserkers_call_debuff_cmd:CheckState()
-	local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
-	return state
+	if self:GetElapsedTime() >= FrameTime() then
+		return {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+	end
 end
 
 function modifier_imba_berserkers_call_debuff_cmd:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_DEATH
 	}
-	return funcs
 end
 
 function modifier_imba_berserkers_call_debuff_cmd:GetModifierAttackSpeedBonus_Constant()

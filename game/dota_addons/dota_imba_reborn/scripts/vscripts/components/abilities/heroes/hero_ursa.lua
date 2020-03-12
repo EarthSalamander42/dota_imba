@@ -829,6 +829,16 @@ function modifier_imba_fury_swipes_debuff:IsPurgable()
 	return false
 end
 
+function modifier_imba_fury_swipes_debuff:OnCreated()
+	if self:GetAbility() and self:GetParent():IsRoshan() then
+		self:SetDuration(self:GetAbility():GetSpecialValueFor("roshan_stack_duration"), true)
+	end
+end
+
+function modifier_imba_fury_swipes_debuff:OnRefresh()
+	self:OnCreated()
+end
+
 -- Fury Swipes modifier buff
 modifier_imba_fury_swipes = class({})
 

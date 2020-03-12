@@ -759,12 +759,15 @@ function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
 	if self:GetAbility():IsTrained() and keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
 		self.shift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_essence_shift.vpcf", PATTACH_POINT_FOLLOW, keys.target)
 		ParticleManager:ReleaseParticleIndex(self.shift_particle)
-	
+		
+		-- IMBAfication: Shivalry
 		table.insert(self.stack_table, {
 			apply_game_time	= GameRules:GetDOTATime(true, true),
+			-- duration		= self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())
 			duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
 		})
 		
+		-- self:SetDuration(math.max(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), self:GetRemainingTime()), true)
 		self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration"), true)
 		self:IncrementStackCount()
 		

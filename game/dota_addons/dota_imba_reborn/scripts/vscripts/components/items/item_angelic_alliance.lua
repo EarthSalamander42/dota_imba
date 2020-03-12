@@ -23,6 +23,7 @@ if item_imba_angelic_alliance == nil then item_imba_angelic_alliance = class({})
 LinkLuaModifier( "modifier_imba_angelic_alliance_debuff", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )					--	Disarm, armor reduction, vision
 LinkLuaModifier( "modifier_imba_angelic_alliance_passive_effect", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Item Modifier + attack/hit effect
 LinkLuaModifier( "modifier_imba_angelic_alliance_buff", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )					--	Evasion, armor, vision
+LinkLuaModifier( "modifier_imba_angelic_alliance_buff_self", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_angelic_alliance_debuff_caster", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Armor reduction for the caster
 LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Passive disarm from attacking or getting attacked
 LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm_cooldown", "components/items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )--	Cooldown for the passive disarm effect per target
@@ -67,7 +68,11 @@ function item_imba_angelic_alliance:OnSpellStart()
 	target:EmitSound("Imba.AngelicAllianceCast")
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
-		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})
+		if target ~= caster then
+			target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})
+		else
+			target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff_self", {duration = duration})
+		end
 	else
 		if target:TriggerSpellAbsorb(self) then return nil end
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff", {duration = duration})
@@ -243,23 +248,14 @@ end
 if modifier_imba_angelic_alliance_buff == nil then modifier_imba_angelic_alliance_buff = class({}) end
 function modifier_imba_angelic_alliance_buff:IsHidden() return false end
 function modifier_imba_angelic_alliance_buff:IsDebuff() return false end
-function modifier_imba_angelic_alliance_buff:IsPurgable() return false end
 function modifier_imba_angelic_alliance_buff:GetTexture() return "custom/imba_angelic_alliance" end
 
 function modifier_imba_angelic_alliance_buff:GetEffectName()
-	if self:GetCaster() ~= self:GetParent() then
-		return "particles/item/angelic_alliance/angelic_alliance_buff.vpcf"
-	else
-		return "particles/items2_fx/sange_active.vpcf"
-	end
+	return "particles/item/angelic_alliance/angelic_alliance_buff.vpcf"
 end
 
 function modifier_imba_angelic_alliance_buff:GetEffectAttachType()
-	if self:GetCaster() ~= self:GetParent() then
-		return PATTACH_OVERHEAD_FOLLOW
-	else
-		return PATTACH_ABSORIGIN_FOLLOW
-	end
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 function modifier_imba_angelic_alliance_buff:OnCreated()
@@ -306,6 +302,34 @@ function modifier_imba_angelic_alliance_buff:GetModifierEvasion_Constant()
 	if self:GetParent() ~= self:GetCaster() then
 		return self.target_evasion
 	end
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_ANGELIC_ALLIANCE_BUFF_SELF --
+----------------------------------------------
+
+modifier_imba_angelic_alliance_buff_self	= modifier_imba_angelic_alliance_buff_self or class({})
+
+function modifier_imba_angelic_alliance_buff_self:GetTexture() return "custom/imba_angelic_alliance" end
+
+function modifier_imba_angelic_alliance_buff_self:GetEffectName()
+	return "particles/items2_fx/sange_active.vpcf"
+end
+
+function modifier_imba_angelic_alliance_buff_self:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.target_status_resistance	= self:GetAbility():GetSpecialValueFor("target_status_resistance")
+end
+
+function modifier_imba_angelic_alliance_buff_self:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
+end
+
+function modifier_imba_angelic_alliance_buff_self:GetModifierStatusResistanceStacking()
+	return self.target_status_resistance
 end
 
 -----------------------------------------------------------------------------------------------------------

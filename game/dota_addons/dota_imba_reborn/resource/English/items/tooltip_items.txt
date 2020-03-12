@@ -61,7 +61,10 @@
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff_Description"	"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and disarmed."
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_buff"                      "Angelic Light"
-"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_Description"          "Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement spead increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%. If self-cast, only status resistance is increased."
+"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_Description"          "Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement spead increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+
+"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_self"                      "Angelic Light"
+"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_self_Description"          "Status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff_caster"            "Angelic Abandon"
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff_caster_Description"             "Losing the armor and passive disarm provided by Angelic Alliance."
@@ -470,8 +473,8 @@
 
 "DOTA_Tooltip_ability_item_imba_heart_hp_regen_amp"				"%+Health Regen Amplification"
 
-"DOTA_Tooltip_modifier_item_imba_heart_aura_buff"              "Tarrasque Breath"
-"DOTA_Tooltip_modifier_item_imba_heart_aura_buff_Description"               "Increased Strength"
+"DOTA_Tooltip_modifier_item_imba_heart_aura_buff"				"Tarrasque Breath"
+"DOTA_Tooltip_modifier_item_imba_heart_aura_buff_Description"	"Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
 
 
 // Hellblade
@@ -588,6 +591,9 @@
 
 "DOTA_Tooltip_modifier_item_imba_static_charge"					"Static Charge"
 "DOTA_Tooltip_modifier_item_imba_static_charge_Description"		"When attacked, there is a %dMODIFIER_PROPERTY_TOOLTIP%%% chance that lightning will strike the attacker and other nearby enemies."
+
+"DOTA_Tooltip_modifier_item_imba_static_charge_slow"					"Static Charge Slow"
+"DOTA_Tooltip_modifier_item_imba_static_charge_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 // Javelin
 "DOTA_Tooltip_ability_item_imba_javelin"                        "Javelin"
@@ -866,15 +872,13 @@
 "DOTA_Tooltip_ability_item_imba_radiance_Note0"                "Illusions do not apply Afterburn stacks."
 "DOTA_Tooltip_ability_item_imba_radiance_Note1"                "While affected by both the regular burn and Afterburn, Afterburn is paused."
 "DOTA_Tooltip_ability_item_imba_radiance_Note2"                "Afterburn does not benefit from the stacking miss chance from multiple Radiances."
-"DOTA_Tooltip_ability_item_imba_radiance_base_damage"          "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_item_imba_radiance_miss_chance"          "%MISS CHANCE:"
 "DOTA_Tooltip_ability_item_imba_radiance_bonus_damage"          "+$damage"
 
-"DOTA_Tooltip_modifier_imba_radiance_burn"                      "Radiance Burn"
-"DOTA_Tooltip_modifier_imba_radiance_burn_Description"          "Blinded and taking damage over time until moving away from the Radiance wielder."
+"DOTA_Tooltip_modifier_imba_radiance_burn"						"Radiance Burn"
+"DOTA_Tooltip_modifier_imba_radiance_burn_Description"			"Blinded and taking damage over time until moving away from the Radiance wielder."
 
-"DOTA_Tooltip_modifier_imba_radiance_afterburn"                "Radiance Afterburn"
-"DOTA_Tooltip_modifier_imba_radiance_afterburn_Description"                 "Blinded and taking damage over time until stacks are depleted"
+"DOTA_Tooltip_modifier_imba_radiance_afterburn"					"Radiance Afterburn"
+"DOTA_Tooltip_modifier_imba_radiance_afterburn_Description"		"Blinded and taking damage over time until stacks are depleted."
 
 // Reverb Sabre
 "DOTA_Tooltip_Ability_item_imba_reverb_rapier"                  "Reverb Sabre"

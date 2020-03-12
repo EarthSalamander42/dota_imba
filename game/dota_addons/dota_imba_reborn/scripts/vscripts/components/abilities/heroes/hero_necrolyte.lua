@@ -387,7 +387,7 @@ function imba_necrolyte_ghost_shroud:OnSpellStart()
 end
 
 function imba_necrolyte_ghost_shroud:GetCastRange( location , target)
-	return self:GetTalentSpecialValueFor("radius")
+	return self:GetTalentSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
 end
 
 function imba_necrolyte_ghost_shroud:IsHiddenWhenStolen()
@@ -598,15 +598,15 @@ function modifier_imba_ghost_shroud_debuff:GetEffectName()
 end
 
 function modifier_imba_ghost_shroud_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
 end
 
 function modifier_imba_ghost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
+	end
 end
 
 -------------------------------------------
@@ -1014,19 +1014,47 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_1", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_5", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_7", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_necrolyte_1				= modifier_special_bonus_imba_necrolyte_1 or class({})
 modifier_special_bonus_imba_necrolyte_4				= modifier_special_bonus_imba_necrolyte_4 or class({})
+modifier_special_bonus_imba_necrolyte_5				= modifier_special_bonus_imba_necrolyte_5 or class({})
 modifier_special_bonus_imba_necrolyte_7				= modifier_special_bonus_imba_necrolyte_7 or class({})
+
+function modifier_special_bonus_imba_necrolyte_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_1:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_necrolyte_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_necrolyte_4:IsPurgable() 		return false end
 function modifier_special_bonus_imba_necrolyte_4:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_necrolyte_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_5:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_necrolyte_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_necrolyte_7:IsPurgable() 		return false end
 function modifier_special_bonus_imba_necrolyte_7:RemoveOnDeath() 	return false end
+
+function imba_necrolyte_death_pulse:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_1"), "modifier_special_bonus_imba_necrolyte_1", {})
+	end
+end
+
+function imba_necrolyte_ghost_shroud:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_5"), "modifier_special_bonus_imba_necrolyte_5", {})
+	end
+end
 
 function imba_necrolyte_heartstopper_aura:OnOwnerSpawned()
 	if not IsServer() then return end
