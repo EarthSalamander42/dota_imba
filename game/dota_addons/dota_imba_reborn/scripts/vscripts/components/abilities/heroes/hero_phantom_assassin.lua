@@ -748,9 +748,7 @@ function modifier_imba_blur_speed:IsPurgable() return true end
 function modifier_imba_blur_speed:IsDebuff() return false end
 
 function modifier_imba_blur_speed:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
-
-	return decFunc
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_imba_blur_speed:GetModifierMoveSpeedBonus_Constant()
@@ -774,25 +772,25 @@ function modifier_imba_blur_blur:GetStatusEffectName()
 	return "particles/hero/phantom_assassin/blur_status_fx.vpcf"
 end
 
-function modifier_imba_blur_blur:OnCreated()
-	if not IsServer() then return end
+-- function modifier_imba_blur_blur:OnCreated()
+	-- if not IsServer() then return end
 
-	-- looks so ugly m8
---	self.blur_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	-- -- looks so ugly m8
+-- --	self.blur_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+-- end
+
+function modifier_imba_blur_blur:CheckState()
+	return {[MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true}
 end
 
-function modifier_imba_blur_blur:CheckState() return {
-	[MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true,
-} end
+-- function modifier_imba_blur_blur:OnDestroy()
+	-- if not IsServer() then return end
 
-function modifier_imba_blur_blur:OnDestroy()
-	if not IsServer() then return end
-
-	if self.blur_particle then
-		ParticleManager:DestroyParticle(self.blur_particle, false)
-		ParticleManager:ReleaseParticleIndex(self.blur_particle)
-	end
-end
+	-- if self.blur_particle then
+		-- ParticleManager:DestroyParticle(self.blur_particle, false)
+		-- ParticleManager:ReleaseParticleIndex(self.blur_particle)
+	-- end
+-- end
 
 -------------------------------------------
 -- Blur invuln modifier
@@ -858,10 +856,9 @@ function modifier_imba_blur_smoke:OnIntervalThink()
 	-- print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
 	-- print(self:GetParent():GetTeamNumber())
 	-- print(self:GetParent():GetAbsOrigin())
-
-	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	if #enemies > 0 then
+	
+	-- "The effect is dispelled when getting within 600 range of an enemy hero (including clones, excluding illusions) or an enemy building (except for shrines) (just gonna ignore that shrine line)."
+	if #FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false) > 0 then
 		self.linger = true
 		self:StartIntervalThink(-1)
 		-- Timers:CreateTimer(self.fade_duration, function()
@@ -1234,23 +1231,23 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		self:IncrementStackCount()
 --		print("New arcana kill:", self:GetStackCount())
 
-		local gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
-		gravestone:SetOwner(self:GetParent())
+		-- local gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
+		-- gravestone:SetOwner(self:GetParent())
 
---		print("CDP damage (pre):", self:GetParent().cdp_damage)
-		-- required for CDP damage to be valid
-		Timers:CreateTimer(FrameTime(), function()
-			gravestone:AddNewModifier(gravestone, nil, "modifier_phantom_assassin_gravestone", {cdp_damage = params.attacker.cdp_damage}):SetStackCount(params.target:entindex())
---			print("CDP damage (post):", self:GetParent().cdp_damage)
-		end)
+-- --		print("CDP damage (pre):", self:GetParent().cdp_damage)
+		-- -- required for CDP damage to be valid
+		-- Timers:CreateTimer(FrameTime(), function()
+			-- gravestone:AddNewModifier(gravestone, nil, "modifier_phantom_assassin_gravestone", {cdp_damage = params.attacker.cdp_damage}):SetStackCount(params.target:entindex())
+-- --			print("CDP damage (post):", self:GetParent().cdp_damage)
+		-- end)
 
-		gravestone.epitaph_number = RandomInt(1, 13)
-		gravestone.victim_id = params.target:GetPlayerID()
+		-- gravestone.epitaph_number = RandomInt(1, 13)
+		-- gravestone.victim_id = params.target:GetPlayerID()
 
-		-- hack to show the panel when clicking on the sword
-		for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			gravestone:SetControllableByPlayer(i, false)
-		end
+		-- -- hack to show the panel when clicking on the sword
+		-- for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			-- gravestone:SetControllableByPlayer(i, false)
+		-- end
 
 		if self:GetStackCount() == 400 then
 			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 1)
@@ -1270,6 +1267,6 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 			style = 2
 		end
 
-		gravestone:SetMaterialGroup(tostring(style))
+		-- gravestone:SetMaterialGroup(tostring(style))
 	end
 end

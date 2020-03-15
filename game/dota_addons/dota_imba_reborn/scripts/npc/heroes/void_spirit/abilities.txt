@@ -314,7 +314,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_mana_pct"			"22"
+				"max_mana_pct"			"50"
 			}
 			"02"
 			{
@@ -325,6 +325,45 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"grace_time_end"		"0.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Void Spirit: Astral Step Helper 2
+	//=================================================================================================================
+	"imba_void_spirit_astral_step_helper_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_void_spirit"
+		"AbilityTextureName"			"void_spirit_astral_step"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"0.8"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"960 1200 1440" // Dependent on Astral Step max travel distance and the bonus range percentage below
+		"AbilityCastPoint"				"0.2"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range_pct"		"20"
 			}
 		}
 	}

@@ -714,7 +714,7 @@ function modifier_imba_shadow_shaman_shackles:OnIntervalThink()
 		
 		-- IMBAfication: Swindle
 		-- Transfer gold from target to caster
-		if self:GetParent():IsRealHero() and self:GetParent():GetPlayerID() then
+		if self:GetParent():IsRealHero() and self:GetParent():GetPlayerID() and self:GetParent().ModifyGold and self:GetCaster().ModifyGold then
 			local actual_gold_to_steal = math.min(self.swindle_gold_per_tick, PlayerResource:GetUnreliableGold(self:GetParent():GetPlayerID()))
 			self:GetParent():ModifyGold(-actual_gold_to_steal, false, 0)
 			self:GetCaster():ModifyGold(actual_gold_to_steal, false, 0)
@@ -920,7 +920,12 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elaps
 	ward:SetForwardVector(self:GetCaster():GetForwardVector())
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_imba_mass_serpent_ward", {})
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = duration})
-	ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	
+	if self:GetCaster().GetPlayerID then
+		ward:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+	elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+		ward:SetControllableByPlayer(self:GetCaster():GetOwner():GetPlayerID(), true)
+	end
 
 	
 	-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
@@ -937,9 +942,9 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elaps
 		ward:SetRenderColor(0,0,0)
 	end
 	
-	if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
-		ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
-	end
+	-- if not self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") then
+		-- ward:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+	-- end
 end
 
 --- SERPENT WARD MODIFIER
@@ -1017,7 +1022,7 @@ end
 
 function modifier_imba_mass_serpent_ward:OnAttack(params)
 	if IsServer() then
-		if params.attacker == self:GetParent() then
+		if params.attacker == self:GetParent() and ability and not ability:IsNull() then
 			-- Ability properties
 			local parent    =   self:GetParent()
 			local caster    =   self:GetCaster()

@@ -76,6 +76,13 @@ function modifier_item_imba_arcane_boots:IsPurgable() return false end
 function modifier_item_imba_arcane_boots:IsPermanent() return true end
 function modifier_item_imba_arcane_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_arcane_boots:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.bonus_ms	= self:GetAbility():GetSpecialValueFor("bonus_ms")
+	self.bonus_mana	= self:GetAbility():GetSpecialValueFor("bonus_mana")
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_arcane_boots:DeclareFunctions()
 	local funcs = {
@@ -86,11 +93,11 @@ function modifier_item_imba_arcane_boots:DeclareFunctions()
 end
 
 function modifier_item_imba_arcane_boots:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("bonus_ms")
+	return self.bonus_ms
 end
 
 function modifier_item_imba_arcane_boots:GetModifierManaBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana")
+	return self.bonus_mana
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -174,6 +181,9 @@ function modifier_item_imba_mekansm:GetAttributes() return MODIFIER_ATTRIBUTE_MU
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_mekansm:OnCreated(keys)
+	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
+
 	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_mekansm_aura_emitter") then
@@ -222,16 +232,16 @@ function modifier_item_imba_mekansm:DeclareFunctions()
 end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_mekansm:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_armor") end
+	return self.bonus_armor end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mekansm aura emitter
@@ -382,6 +392,13 @@ function modifier_item_imba_guardian_greaves:GetAttributes() return MODIFIER_ATT
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_guardian_greaves:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.bonus_ms			= self:GetAbility():GetSpecialValueFor("bonus_ms")
+	self.bonus_mana			= self:GetAbility():GetSpecialValueFor("bonus_mana")
+	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
+
 	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_guardian_greaves_aura_emitter") then
@@ -433,22 +450,22 @@ function modifier_item_imba_guardian_greaves:DeclareFunctions()
 end
 
 function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Special_Boots()
-	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
+	return self.bonus_ms end
 
 function modifier_item_imba_guardian_greaves:GetModifierManaBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana") end
+	return self.bonus_mana end
 
 function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	return self.bonus_all_stats end
 
 function modifier_item_imba_guardian_greaves:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_armor") end
+	return self.bonus_armor end
 
 -----------------------------------------------------------------------------------------------------------
 --	Guardian Greaves aura emitter
@@ -459,6 +476,15 @@ function modifier_item_imba_guardian_greaves_aura_emitter:IsAura() return true e
 function modifier_item_imba_guardian_greaves_aura_emitter:IsHidden() return true end
 function modifier_item_imba_guardian_greaves_aura_emitter:IsDebuff() return false end
 function modifier_item_imba_guardian_greaves_aura_emitter:IsPurgable() return false end
+
+function modifier_item_imba_guardian_greaves_aura_emitter:OnCreated()
+	self.aura_radius			= self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.min_health_threshold	= self:GetAbility():GetSpecialValueFor("min_health_threshold")
+	self.mend_base_health		= self:GetAbility():GetSpecialValueFor("mend_base_health")
+	self.mend_base_mana			= self:GetAbility():GetSpecialValueFor("mend_base_mana")
+	self.mend_mana_pct			= self:GetAbility():GetSpecialValueFor("mend_mana_pct")
+	self.mend_duration			= self:GetAbility():GetSpecialValueFor("mend_duration")
+end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
@@ -479,7 +505,7 @@ end
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraRadius()
 	if not self:GetAbility() then return 0 end
 	
-	return self:GetAbility():GetSpecialValueFor("aura_radius") end
+	return self.aura_radius end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_aura_emitter:DeclareFunctions()
@@ -504,12 +530,8 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnTakeDamage( keys )
 
 		-- If the owner's health is below the threshold, and Mend is off cooldown, activate it
 		local ability = self:GetAbility()
-		if owner:GetHealthPercent() <= ability:GetSpecialValueFor("min_health_threshold") and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() and owner:GetMana() >= ability:GetManaCost(-1) then
-			local heal_amount = ability:GetSpecialValueFor("mend_base_health") * (1 + owner:GetSpellAmplification(false) * 0.01)
-			local mana_amount = ability:GetSpecialValueFor("mend_base_mana") + ability:GetSpecialValueFor("mend_mana_pct") * owner:GetMaxMana() * 0.01
-			local heal_radius = ability:GetSpecialValueFor("aura_radius")
-			local heal_duration = ability:GetSpecialValueFor("mend_duration")
-			GreavesActivate(owner, ability, heal_amount, mana_amount, heal_radius, heal_duration)
+		if owner:GetHealthPercent() <= self.min_health_threshold and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() and owner:GetMana() >= ability:GetManaCost(-1) then
+			GreavesActivate(owner, ability, self.mend_base_health, self.mend_base_mana + self.mend_mana_pct * owner:GetMaxMana() * 0.01, self.aura_radius, self.mend_duration)
 		end
 	end
 end

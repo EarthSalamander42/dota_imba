@@ -950,7 +950,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 	if IsServer() then
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
-		if params.attacker == parent and ( not parent:IsIllusion() ) then
+		if params.attacker == parent and ( not parent:IsIllusion() ) and params.attacker:GetTeamNumber() ~= params.target:GetTeamNumber() then
 			local cleave_particle = "particles/units/heroes/hero_magnataur/magnataur_empower_cleave_effect.vpcf"
 			local splash_particle = "particles/hero/magnataur/magnataur_empower_splash.vpcf"
 			if parent:HasModifier("modifier_imba_supercharged") then
@@ -1338,7 +1338,7 @@ function modifier_imba_ubercharged:OnAttackLanded(params)
 		local ability = self:GetAbility()
 
 		local ubercharge_indicator = parent:FindModifierByName("modifier_imba_ubercharged_indicator")
-		if parent == params.attacker and ubercharge_indicator:GetStackCount() >= 1 then
+		if parent == params.attacker and ubercharge_indicator:GetStackCount() >= 1 and params.attacker:GetTeamNumber() ~= params.target:GetTeamNumber() then
 
 			-- Declaring the table to a different function
 			self:CreateShockwave(parent, params.target, caster, ability)

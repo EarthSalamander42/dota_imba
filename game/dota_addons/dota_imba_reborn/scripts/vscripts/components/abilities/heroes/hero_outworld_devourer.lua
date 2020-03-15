@@ -4,7 +4,7 @@
 LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_outworld_devourer_astral_imprisonment_prison", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_outworld_devourer_astral_imprisonment_prison", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_outworld_devourer_essence_flux", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_outworld_devourer_essence_flux_active", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
@@ -16,8 +16,8 @@ LinkLuaModifier("modifier_imba_outworld_devourer_sanity_eclipse_charge", "compon
 
 imba_outworld_devourer_arcane_orb						= imba_outworld_devourer_arcane_orb or class({})
 
-imba_outworld_devourer_astral_imprisonment				= imba_outworld_devourer_astral_imprisonment or class({})
-modifier_outworld_devourer_astral_imprisonment_prison	= modifier_outworld_devourer_astral_imprisonment_prison or class({})
+imba_outworld_devourer_astral_imprisonment					= imba_outworld_devourer_astral_imprisonment or class({})
+modifier_imba_outworld_devourer_astral_imprisonment_prison	= modifier_imba_outworld_devourer_astral_imprisonment_prison or class({})
 
 imba_outworld_devourer_essence_flux						= imba_outworld_devourer_essence_flux or class({})
 modifier_imba_outworld_devourer_essence_flux			= modifier_imba_outworld_devourer_essence_flux or class({})
@@ -115,6 +115,14 @@ function imba_outworld_devourer_astral_imprisonment:GetAssociatedSecondaryAbilit
 	return "imba_outworld_devourer_astral_imprisonment_movement"
 end
 
+function imba_outworld_devourer_astral_imprisonment:GetCastRange(location, target)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetSpecialValueFor("scepter_range_bonus")
+	end
+end
+
 function imba_outworld_devourer_astral_imprisonment:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
 		return self.BaseClass.GetCooldown(self, level)
@@ -144,7 +152,7 @@ function imba_outworld_devourer_astral_imprisonment:OnSpellStart()
 	if not target:TriggerSpellAbsorb(self) then
 		target:EmitSound("Hero_ObsidianDestroyer.AstralImprisonment")
 	
-		local prison_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_outworld_devourer_astral_imprisonment_prison", {duration = self:GetSpecialValueFor("prison_duration")})
+		local prison_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_outworld_devourer_astral_imprisonment_prison", {duration = self:GetSpecialValueFor("prison_duration")})
 		
 		if prison_modifier and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			prison_modifier:SetDuration(self:GetSpecialValueFor("prison_duration") * (1 - target:GetStatusResistance()), true)
@@ -160,16 +168,16 @@ function imba_outworld_devourer_astral_imprisonment:OnSpellStart()
 end
 
 -----------------------------------------------------------
--- MODIFIER_OUTWORLD_DEVOURER_ASTRAL_IMPRISONMENT_PRISON --
+-- modifier_imba_outworld_devourer_astral_imprisonment_prison --
 -----------------------------------------------------------
 
-function modifier_outworld_devourer_astral_imprisonment_prison:IsPurgable()	return false end
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:IsPurgable()	return false end
 
-function modifier_outworld_devourer_astral_imprisonment_prison:GetEffectName()
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:GetEffectName()
 	return "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
 end
 
-function modifier_outworld_devourer_astral_imprisonment_prison:OnCreated()
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:OnCreated()
 	if not IsServer() then return end
 
 	self.damage			= self:GetAbility():GetTalentSpecialValueFor("damage")
@@ -189,7 +197,7 @@ function modifier_outworld_devourer_astral_imprisonment_prison:OnCreated()
 	-- self:GetParent():AddNoDraw()
 end
 
-function modifier_outworld_devourer_astral_imprisonment_prison:OnIntervalThink()
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:OnIntervalThink()
 	if self.movement_position and self:GetAbility() then
 		if self:GetParent():GetAbsOrigin() ~= self.movement_position then
 			self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + ((self.movement_position - self:GetParent():GetAbsOrigin()):Normalized() * math.min(FrameTime() * self.universal_movespeed, (self.movement_position - self:GetParent():GetAbsOrigin()):Length2D())))
@@ -204,7 +212,7 @@ function modifier_outworld_devourer_astral_imprisonment_prison:OnIntervalThink()
 end
 
 -- Astral Imprisonment fully disables the target and turns it invulnerable and hidden for its duration.
-function modifier_outworld_devourer_astral_imprisonment_prison:CheckState()
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:CheckState()
 	if self:GetParent() ~= self:GetCaster() then
 		return {
 			[MODIFIER_STATE_STUNNED]			= true,
@@ -226,7 +234,7 @@ function modifier_outworld_devourer_astral_imprisonment_prison:CheckState()
 	end
 end
 
-function modifier_outworld_devourer_astral_imprisonment_prison:OnDestroy()
+function modifier_imba_outworld_devourer_astral_imprisonment_prison:OnDestroy()
 	if not IsServer() then return end
 
 	-- self:GetParent():RemoveNoDraw()
@@ -417,8 +425,8 @@ end
 
 function imba_outworld_devourer_astral_imprisonment_movement:OnSpellStart()
 	for _, astral_mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_imba_outworld_devourer_astral_imprisonment_movement")) do
-		if astral_mod:GetCaster():HasModifier("modifier_outworld_devourer_astral_imprisonment_prison") then
-			local prison_modifier = astral_mod:GetCaster():FindModifierByName("modifier_outworld_devourer_astral_imprisonment_prison")
+		if astral_mod:GetCaster():HasModifier("modifier_imba_outworld_devourer_astral_imprisonment_prison") then
+			local prison_modifier = astral_mod:GetCaster():FindModifierByName("modifier_imba_outworld_devourer_astral_imprisonment_prison")
 		
 			prison_modifier.movement_position = self:GetCursorPosition()
 			prison_modifier:OnIntervalThink()
@@ -457,7 +465,7 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(self.eclipse_cast_particle)
 
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
-		if ((not enemy:IsInvulnerable() and not enemy:IsOutOfGame()) or enemy:HasModifier("modifier_outworld_devourer_astral_imprisonment_prison")) and enemy.GetMaxMana then
+		if ((not enemy:IsInvulnerable() and not enemy:IsOutOfGame()) or enemy:HasModifier("modifier_imba_outworld_devourer_astral_imprisonment_prison")) and enemy.GetMaxMana then
 			self.eclipse_damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 			ParticleManager:ReleaseParticleIndex(self.eclipse_damage_particle)
 			
@@ -486,9 +494,9 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 	end
 end
 
-------------------------------------------------------
--- modifier_imba_outworld_devourer_sanity_eclipse_charge --
-------------------------------------------------------
+-----------------------------------------------------------
+-- MODIFIER_IMBA_OUTWORLD_DEVOURER_SANITY_ECLIPSE_CHARGE --
+-----------------------------------------------------------
 
 function modifier_imba_outworld_devourer_sanity_eclipse_charge:OnCreated(keys)
 	if keys and keys.charges then

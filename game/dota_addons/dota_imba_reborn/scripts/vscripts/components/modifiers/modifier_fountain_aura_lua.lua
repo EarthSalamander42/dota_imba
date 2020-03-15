@@ -189,9 +189,16 @@ function modifier_imba_cursed_fountain:OnCreated()
 	
 	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
 	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
-	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
-	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
-	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	
+	if self:GetParent().GetStrength then
+		self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+		self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+		self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+	else
+		self.strength	= 0
+		self.agility	= 0
+		self.intellect	= 0
+	end
 	
 	self.damage_outgoing	= -10
 	
@@ -222,11 +229,18 @@ function modifier_imba_cursed_fountain:OnIntervalThink()
 	
 	self.damage		= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) - ((self:GetParent():GetBaseDamageMax() + self:GetParent():GetBaseDamageMin()) / 2)
 	self.spell_amp	= self:GetParent():GetSpellAmplification(false) - self:GetParent():GetSpellAmplification(true)
-	self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
-	self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
-	self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
 	
-	self:GetParent():CalculateStatBonus()
+	if self:GetParent().GetStrength then
+		self.strength	= self:GetParent():GetStrength()	- self:GetParent():GetBaseStrength()
+		self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
+		self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
+		
+		self:GetParent():CalculateStatBonus()
+	else
+		self.strength	= 0
+		self.agility	= 0
+		self.intellect	= 0
+	end
 end
 
 function modifier_imba_cursed_fountain:CheckState()

@@ -112,7 +112,7 @@ function modifier_item_imba_valiance:OnCreated()
 	self.bonus_health			= self:GetAbility():GetSpecialValueFor("bonus_health")
 	self.bonus_health_regen		= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
 	self.block_damage_melee		= self:GetAbility():GetSpecialValueFor("block_damage_melee")
-	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
+	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
 	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
 end
 
@@ -134,9 +134,9 @@ function modifier_item_imba_valiance:GetModifierConstantHealthRegen()
 function modifier_item_imba_valiance:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end

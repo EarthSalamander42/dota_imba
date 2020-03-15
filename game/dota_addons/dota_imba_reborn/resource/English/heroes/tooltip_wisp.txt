@@ -84,10 +84,11 @@
 
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721"									"Overcharge"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_Lore"							"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Description"						"Io gains bonus attack speed and damage reduction. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants the following bonuses: \nProjectile Speed: + %bonus_missile_speed%<br>Cast Speed: + %bonus_cast_speed%%%"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Description"						"Io gains bonus attack speed and HP Regen based on max health.  If Io is Tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants the following bonuses: \nProjectile Speed: + %bonus_missile_speed%<br>Cast Speed: + %bonus_cast_speed%%%"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_Note0"							"Fundamental Shift does not increase the cast speed of Nature Prophet's Teleportation."
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_attack_speed"					"ATTACK SPEED:"
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_damage_pct"					"%INCOMING DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_attack_speed"				"ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_hp_regen"						"%MAX HEALTH REGEN:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_duration"						"DURATION:"
 
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_aghanim_description"   	"<font color='#FF7800'>Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff.</font>"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_radius"			"SCEPTER RADIUS:"

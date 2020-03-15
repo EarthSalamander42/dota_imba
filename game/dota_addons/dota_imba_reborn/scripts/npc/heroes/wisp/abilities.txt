@@ -314,11 +314,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_radius"			"900"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_efficiency"		"0.25"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -345,7 +347,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18.0"
+		"AbilityCooldown"				"22 20 18 16"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -363,7 +365,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_pct"			"-5 -10 -15 -20"
+				"bonus_damage_pct"			"0"
 				"LinkedSpecialBonus"		"special_bonus_imba_wisp_4"
 				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
 			}
@@ -392,11 +394,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_radius"			"900"
+				"RequiresScepter"			"1"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_efficiency"		"0.25"
+				"RequiresScepter"			"1"
 			}
 			
 			"09"
@@ -413,6 +417,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"talent_cooldown"			"2"
+			}
+			
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hp_regen"			"0.5 0.6 0.7 0.8"
 			}
 		}
 	}

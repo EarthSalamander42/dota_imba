@@ -54,7 +54,12 @@ function item_imba_blink:OnAbilityPhaseStart()
 		for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
 			if ent:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 				self:GetCaster():SetCursorTargetingNothing(true)
-				self:GetCaster():CastAbilityOnPosition(ent:GetAbsOrigin(), self, self:GetCaster():GetPlayerID())
+				if self:GetCaster().GetPlayerID then
+					self:GetCaster():CastAbilityOnPosition(ent:GetAbsOrigin(), self, self:GetCaster():GetPlayerID())
+				elseif self:GetCaster():GetOwner().GetPlayerID then
+					self:GetCaster():CastAbilityOnPosition(ent:GetAbsOrigin(), self, self:GetCaster():GetOwner():GetPlayerID())
+				end
+				
 				break
 			end
 		end

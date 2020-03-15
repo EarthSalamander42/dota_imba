@@ -70,7 +70,7 @@
 
 "DOTA_Tooltip_ability_imba_visage_become_familiar"					"Become Familiar"
 "DOTA_Tooltip_ability_imba_visage_become_familiar_Description"		"After a %familiar_transform_delay% second delay, Visage transforms into a familiar, gaining flying and phased movement with altered base movement speed and turn rate.\n<font color='#E03E2E'>Visage does not benefit from <font color='#FF7800'>Unfeeling Stone</font> or <font color='#FF7800'>Petrifying Breath</font>, and is muted while in the familiar state.</font>"
-"DOTA_Tooltip_ability_imba_visage_become_familiar_Lore"				"\"Fine, I'll do it myself.\""
+"DOTA_Tooltip_ability_imba_visage_become_familiar_Lore"				"Fine, I'll do it myself."
 "DOTA_Tooltip_ability_imba_visage_become_familiar_Note0"			"Visage keeps standard vision range."
 "DOTA_Tooltip_ability_imba_visage_become_familiar_familiar_speed"			"BASE MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_visage_become_familiar_familiar_movement_turn_rate"	"BASE TURN RATE:"

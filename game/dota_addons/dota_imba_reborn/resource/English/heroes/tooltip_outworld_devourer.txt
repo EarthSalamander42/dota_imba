@@ -119,7 +119,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_max_charges_scepter"	"SCEPTER MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_range_bonus"	"SCEPTER CAST RANGE BONUS:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_charge_restore_time_scepter"	"SCEPTER CHARGE RESTORE TIME:"
-"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_aghanim_description"	"Grants charges to Astral Imprisonment. Damage areas stack."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_aghanim_description"	"Grants charges to Astral Imprisonment. Damage areas stack. Also increases cast range."
 
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux"					"Essence Flux"
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_Description"		"Passively grants you a chance to restore a percentage of your max mana each time you cast an ability. When activated, causes all abilities to slow enemies when they deal damage.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."

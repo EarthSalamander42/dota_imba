@@ -82,10 +82,10 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 						end
 					end
 					
-					if hTarget:HasModifier("modifier_stunned") then
-						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration * (1 - hTarget:GetStatusResistance())})
-					else
-						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					local stun_modifier = hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					
+					if stun_modifier then
+						stun_modifier:SetDuration(ExtraData.hero_duration * (1 - hTarget:GetStatusResistance()), true)
 					end
 					
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.hero_damage, damage_type = self:GetAbilityDamageType()})
@@ -476,7 +476,7 @@ end
 
 function imba_witch_doctor_maledict:OnSpellStart()
 	local vPosition = self:GetCursorPosition()
-	local radius = self:GetSpecialValueFor("radius")
+	local radius = self:GetTalentSpecialValueFor("radius")
 	local duration = self:GetTalentSpecialValueFor("duration")
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPosition, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
@@ -493,7 +493,7 @@ function imba_witch_doctor_maledict:OnSpellStart()
 end
 
 function imba_witch_doctor_maledict:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
+	return self:GetTalentSpecialValueFor("radius")
 end
 
 -------------------------------------------
@@ -528,6 +528,7 @@ function modifier_imba_maledict:OnCreated()
 
 	if IsServer() then
 		self.healthComparator = hParent:GetHealth()
+		self.damage_type = self:GetAbility():GetAbilityDamageType()
 		self:StartIntervalThink( self.tick_time_main )
 	end
 	EmitSoundOn("Hero_WitchDoctor.Maledict_Loop", hParent)
@@ -564,7 +565,7 @@ function modifier_imba_maledict:OnIntervalThink()
 	self.counter = self.counter + self.tick_time_main
 	
 	if not self:GetParent():IsMagicImmune() then
-		ApplyDamage({victim = hParent, attacker = self:GetCaster(), damage = self.main_damage, damage_type = self:GetAbility():GetAbilityDamageType()})
+		ApplyDamage({victim = hParent, attacker = self:GetCaster(), damage = self.main_damage, damage_type = self.damage_type})
 	end
 	
 	if self.counter >= self.tick_time_sec then
@@ -1005,17 +1006,27 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_9", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_maledict_radius", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_witch_doctor_9	= class({})
+modifier_special_bonus_imba_witch_doctor_maledict_radius	= modifier_special_bonus_imba_witch_doctor_maledict_radius or class({})
 
 function modifier_special_bonus_imba_witch_doctor_9:IsHidden() 		return true end
 function modifier_special_bonus_imba_witch_doctor_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_witch_doctor_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_witch_doctor_maledict_radius:IsHidden() 		return true end
+function modifier_special_bonus_imba_witch_doctor_maledict_radius:IsPurgable() 		return false end
+function modifier_special_bonus_imba_witch_doctor_maledict_radius:RemoveOnDeath() 	return false end
 
 function imba_witch_doctor_maledict:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_witch_doctor_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_witch_doctor_9"), "modifier_special_bonus_imba_witch_doctor_9", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_maledict_radius") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_witch_doctor_maledict_radius") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_witch_doctor_maledict_radius"), "modifier_special_bonus_imba_witch_doctor_maledict_radius", {})
 	end
 end

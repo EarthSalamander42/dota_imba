@@ -48,6 +48,7 @@
 #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
 #base heroes/void_spirit/abilities.txt
@@ -8948,7 +8949,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"1075"
 		"AbilityCastPoint"				"0.45"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
@@ -9173,7 +9174,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"45 60 75 90"
+				"bonus_as"				"50 65 80 95"
 				"LinkedSpecialBonus"			"special_bonus_imba_lina_9"
 			}
 			"02"
@@ -9605,12 +9606,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"30"
+				"value"						"35"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value2"					"2"
+				"value2"					"3"
 			}
 		}
 	}
@@ -10616,7 +10617,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"			"5 6 7 8"
+				"armor"			"6 7 8 9"
 			}
 			"04"
 			{
@@ -10671,8 +10672,8 @@
 
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"health_regen"				"1 4 7 10"
+				"var_type"					"FIELD_FLOAT"
+				"health_regen"				"2.5 5.0 7.5 10.0"
 			}
 
 			"03"
@@ -12606,8 +12607,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.6"
 			}
 		}
 	}
@@ -19705,6 +19706,10 @@
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
 		}
 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20123,7 +20128,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"armor_reduction"				"10 18 26"
+				"armor_reduction"				"10 16 22"
 			}
 
 			"03"
@@ -20375,7 +20380,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cdr_mult"				"25"
+				"cdr_mult"				"50"
 			}			
 		}
 	}
@@ -22163,7 +22168,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"1200 1300 1400 1500"
+				"cast_range"				"1000 1100 1200 1300"
 			}
 
 			"07"
@@ -22476,7 +22481,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"10 18 26"
+				"bonus_armor"				"10 16 22"
 			}
 		}
 	}
@@ -23801,6 +23806,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"180"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_maledict_radius"
 			}
 			"02"
 			{
@@ -24207,6 +24213,34 @@
 			{
 				"var_type"					"FIELD_INTEGER" 
 				"value2"					"1"					// bonus ticks
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_maledict_radius"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
 			}
 		}
 	}
@@ -28012,7 +28046,7 @@
 		}
 	}
 
-	// Breathe Fire now reduces strength by 20% for the duration of the debuff
+	// Breathe Fire now reduces strength by X% for the duration of the debuff
 	"special_bonus_imba_dragon_knight_3"
 	{
 		// General
@@ -28033,7 +28067,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"20"
+				"value"					"15"
 			}
 		}
 	}
@@ -28147,7 +28181,7 @@
 		}
 	}
 
-	// +3% MS based on current health
+	// +X% MS based on current health
 	"special_bonus_imba_dragon_knight_8"
 	{
 		// General
@@ -31882,13 +31916,13 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"raze_armor_reduction"		"1 2 3 4"
+				"raze_armor_reduction"		"0 1 2 3"
 			}
 
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"raze_reduction_duration"	"7"
+				"raze_reduction_duration"	"5"
 			}
 
 			"05"
@@ -31969,8 +32003,8 @@
 
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"harvest_base_cd"			"2"
+				"var_type"					"FIELD_FLOAT"
+				"harvest_base_cd"			"1.5"
 			}
 
 			"06"
@@ -33576,10 +33610,15 @@
 				"var_type"                  "FIELD_FLOAT"
 				"value"						"1"
 			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"					"5"
+			}
 		}
 	}
 
-	"special_bonus_imba_pangolier_4" // Spell immunity linger 4 seconds after Rolling Thunder end
+	"special_bonus_imba_pangolier_4" // Spell immunity linger X seconds after Rolling Thunder end
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -33599,7 +33638,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"						"4.0"
+				"value"						"3.0"
 			}
 		}
 	}
@@ -37486,7 +37525,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"2000"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
@@ -37628,8 +37667,7 @@
 			}
 		}
 	}
-
-
+	
 	//=================================================================================================================
 	// Vengeful Spirit's Vengeance Aura
 	//=================================================================================================================
@@ -38325,10 +38363,33 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"8"
+				"value"						"10"
 			}
 		}
 	}	
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_vengeful_spirit_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6237"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"10"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Venomancer's Venomous Gale
@@ -40054,7 +40115,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange" 				"600 700 800 900"
+		"AbilityCastRange" 				"625 700 775 850"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -40092,7 +40153,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"140 200 260 320" 	
+				"damage"					"140 210 280 350"
 			}
 			"04"
 			{
@@ -40305,13 +40366,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"int_per_health_pct_loss"	"0.35 0.55 0.75 0.95"
+				"int_per_health_pct_loss"	"0.4 0.6 0.8 1.0"
 				"LinkedSpecialBonus"     	 "special_bonus_imba_unique_sly_king_1"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spell_amp_per_int"			"0.1" 
+				"spell_amp_per_int"			"0.15"
 			}
 			"03"
 			{
@@ -40429,7 +40490,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"0.4"
+				"value"			"0.5"
 			}
 		}
 	}
@@ -43229,5 +43290,42 @@
 				"duration"			"30"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Mud Golem Cloak Aura
+	//=================================================================================================================
+	"imba_mudgolem_cloak_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/other/imba_mudgolem_cloak_aura"
+		"AbilityTextureName"							"mudgolem_cloak_aura"
+		
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magical_armor"	"10"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magical_armor_creeps"	"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
 }

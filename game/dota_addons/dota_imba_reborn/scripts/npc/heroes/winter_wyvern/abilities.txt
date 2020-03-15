@@ -331,7 +331,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.2"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 		
 		// Time		
@@ -349,7 +349,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 600 700"
+				"radius"				"500"
 			}
 			"02"
 			{
@@ -359,7 +359,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplification"	"20"
+				"damage_amplification"	"0"
 			}
 			"04"
 			{

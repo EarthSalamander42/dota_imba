@@ -211,17 +211,15 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		-- Otherwise, play the sound...
 		target:EmitSound("DOTA_Item.RodOfAtos.Target")
 		
-		-- IMBAfication: Ankle Breaker
-		local damageTable = {
+		-- IMBAfication: Ankle Breaker			
+		ApplyDamage({
 			victim 			= target,
-			damage 			= target:GetIdealSpeed(),
+			damage 			= target:GetIdealSpeed() * self:GetSpecialValueFor("ankle_breaker_damage_pct") * 0.01,
 			damage_type		= DAMAGE_TYPE_PURE,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self.caster,
 			ability 		= self
-		}
-								
-		ApplyDamage(damageTable)		
+		})		
 		
 		if targetted_projectile then
 			-- ...and apply the Cripple modifier.
@@ -279,13 +277,11 @@ function modifier_item_imba_rod_of_atos:OnCreated()
 end
 
 function modifier_item_imba_rod_of_atos:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_rod_of_atos:GetModifierBonusStats_Intellect()

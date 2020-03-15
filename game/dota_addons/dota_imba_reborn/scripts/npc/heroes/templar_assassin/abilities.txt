@@ -62,23 +62,18 @@
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"reality_duration"			"0.1"
+				"var_type"					"FIELD_INTEGER"
+				"disperse_radius"			"350"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"disperse_radius"			"350"
+				"disperse_instances"			"1"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"disperse_instances"			"1"
-			}
-			"09"
-			{
 				"var_type"					"FIELD_FLOAT"
-				"disperse_duration"			"0.2"
+				"disperse_duration"			"0.3"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_REFRACTION"
@@ -133,12 +128,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"inner_eye_seconds_to_flying_sight"	"5"
+				"inner_eye_seconds_to_flying_sight"	"4"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"inner_eye_seconds_to_expand"	"10"
+				"inner_eye_seconds_to_expand"	"8"
 			}
 			"05"
 			{
@@ -262,7 +257,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_max"			"70"
+				"movement_speed_max"			"80"
 			}
 			"05"
 			{
@@ -378,7 +373,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_max"			"70"
+				"movement_speed_max"			"80"
 			}
 			"06"
 			{
@@ -403,12 +398,12 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"springboard_vector_amp"	"2.0"
+				"springboard_vector_amp"	"2.25"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"springboard_movement_slow_pct"		"25"
+				"springboard_movement_slow_pct"		"20"
 			}
 		}
 	}
@@ -477,7 +472,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_max"			"70"
+				"movement_speed_max"			"80"
 				"RequiresScepter"		"1"
 			}
 			"06"
@@ -559,7 +554,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_max"			"70"
+				"movement_speed_max"			"80"
 			}
 			"06"
 			{

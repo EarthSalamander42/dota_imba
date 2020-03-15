@@ -61,7 +61,7 @@
 "DOTA_Tooltip_modifier_imba_lycan_howl_723_Description"				"Damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%, Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse"							"#{DOTA_Tooltip_ability_lycan_feral_impulse}"
-"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"				"#{DOTA_Tooltip_ability_lycan_feral_impulse_Description}\n<font color='#FF7800'>Welcome to the Pack:</font> The more units and heroes affected by the aura, the stronger its effects become. Heroes grant double the bonus."
+"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"				"#{DOTA_Tooltip_ability_lycan_feral_impulse_Description}\n<font color='#FF7800'>The Beast Within Us:</font> Affects all allied heroes and player-controlled units.\n<font color='#FF7800'>Welcome to the Pack:</font> The more units and heroes affected by the aura, the stronger its effects become. Heroes grant double the bonus."
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse_Note0"					"Lycan is ignored when counting units affected by Feral Impulse."
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse_Lore"					"#{DOTA_Tooltip_ability_lycan_feral_impulse_Lore}"
 "DOTA_Tooltip_ability_imba_lycan_feral_impulse_base_bonus_damage_perc"	"#{DOTA_Tooltip_ability_lycan_feral_impulse_bonus_damage}"

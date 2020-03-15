@@ -27,7 +27,8 @@
 #base heroes/slark/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
-#base heroes/templar_assassin/hero.txt // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+#base heroes/templar_assassin/hero.txt
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
@@ -36,7 +37,8 @@
 #base heroes/zeus/hero.txt
 #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-// #base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// #base heroes/invoker/hero.txt
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
@@ -532,13 +534,18 @@
 		"Ability6"					"imba_dragon_knight_elder_dragon_form"
 
 		"Ability10"					"special_bonus_imba_dragon_knight_1"
-		"Ability11"					"special_bonus_imba_dragon_knight_2"
-		"Ability12"					"special_bonus_imba_dragon_knight_3"
-		"Ability13"					"special_bonus_imba_dragon_knight_4"
+		"Ability11"					"special_bonus_imba_dragon_knight_3"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_hp_400"
 		"Ability14"					"special_bonus_imba_dragon_knight_5"
-		"Ability15"					"special_bonus_imba_dragon_knight_6"
+		"Ability15"					"special_bonus_strength_25"
 		"Ability16"					"special_bonus_imba_dragon_knight_7"
-		"Ability17"					"special_bonus_imba_dragon_knight_8"
+		"Ability17"					"special_bonus_imba_dragon_knight_4"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_dragon_knight_2" // "x2 range for Elder Dragon Charge"
+		// "Ability15"					"special_bonus_imba_dragon_knight_6" // "EDF reduces enemies' damage by 20% in 600 radius"
+		// "Ability17"					"special_bonus_imba_dragon_knight_8" // "+3% of current health as movespeed"
 	}
 
 	//=================================================================================================================
@@ -911,7 +918,7 @@
 		"Ability12"					"special_bonus_hp_400"
 		"Ability13"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
 		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
-		"Ability15"					"special_bonus_imba_lina_9" // +30/2% Fiery Soul Per Stack
+		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
 		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
 		"Ability17"					"special_bonus_attack_range_175"
 		
@@ -1048,8 +1055,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_mirana_moonlight_shadow"
 
-		"Ability10"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
-		"Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
 		"Ability12"					"special_bonus_mana_break_25"
 		"Ability13"					"special_bonus_imba_mirana_9" // +1 Leap Charge Replenish
 		"Ability14"					"special_bonus_corruption_4"
@@ -1060,6 +1067,7 @@
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
 		// "Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
+		// "Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		// "Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
 		// "Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 	}
@@ -1472,13 +1480,18 @@
 		"Ability6"					"imba_nevermore_requiem"		
 
 		"Ability10"					"special_bonus_imba_nevermore_1"
-		"Ability11"					"special_bonus_imba_nevermore_2"
+		"Ability11"					"special_bonus_attack_speed_20"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_imba_nevermore_4"
+		"Ability13"					"special_bonus_movement_speed_30"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
 		"Ability17"					"special_bonus_cooldown_reduction_40"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
+		// "Ability13"					"special_bonus_imba_nevermore_4" // "+0.5% lifesteal per Necromastery soul"
+		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 
 	//=================================================================================================================
@@ -1572,7 +1585,7 @@
 		"Ability11"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
 		"Ability12"					"special_bonus_night_vision_1000"
 		"Ability13"					"special_bonus_imba_slardar_13" // +X Bash Damage
-		"Ability14"					"special_bonus_imba_slardar_10" // Depression
+		"Ability14"					"special_bonus_lifesteal_30"
 		"Ability15"					"special_bonus_imba_slardar_11" // Corrosive Haze Armor Transfer
 		"Ability16"					"special_bonus_imba_slardar_6" // Casts a second free Slithereen Crush
 		"Ability17"					"special_bonus_imba_slardar_12" // Corrosive Haze Undispellable
@@ -1580,6 +1593,7 @@
 		// Removed Talents
 		//"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
 		//"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep Upgrade
+		// "Ability14"					"special_bonus_imba_slardar_10" // Depression
 	}
 
 	//=================================================================================================================
@@ -1755,6 +1769,16 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Undying
+	//=================================================================================================================
+	"npc_dota_hero_undying"
+	{
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability16"		"special_bonus_reincarnation_200"
+	}
+
+	//=================================================================================================================
 	// HERO: Ursa
 	//=================================================================================================================
 	"npc_dota_hero_ursa"
@@ -1901,9 +1925,9 @@
 		"Ability10"					"special_bonus_attack_damage_75"
 		"Ability11"					"special_bonus_armor_8"
 		"Ability12"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
-		"Ability13"					"special_bonus_imba_witch_doctor_maledict_duration"
-		"Ability14"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
-		"Ability15"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability13"					"special_bonus_imba_witch_doctor_maledict_radius"
+		"Ability14"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability15"					"special_bonus_imba_witch_doctor_maledict_duration"
 		"Ability16"					"special_bonus_imba_witch_doctor_9" //+X% Maledict FeelsBadMan Heal/Regen Reduction
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
 		
@@ -1912,6 +1936,7 @@
 		// "Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
 		// "Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
 		// "Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
+		// "Ability15"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
 	}
 
 	//=================================================================================================================

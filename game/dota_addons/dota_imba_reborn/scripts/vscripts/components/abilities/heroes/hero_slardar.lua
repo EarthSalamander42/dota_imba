@@ -824,7 +824,7 @@ function modifier_imba_slithereen_crush_puddle_aura:IsHidden()					return true e
 function modifier_imba_slithereen_crush_puddle_aura:IsAura()					return true end
 function modifier_imba_slithereen_crush_puddle_aura:IsAuraActiveOnDeath() 		return false end
 
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("scepter_puddle_radius") end
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraRadius()				return self.scepter_puddle_radius end
 function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO end
@@ -832,11 +832,13 @@ function modifier_imba_slithereen_crush_puddle_aura:GetModifierAura()			return "
 function modifier_imba_slithereen_crush_puddle_aura:GetAuraEntityReject(hTarget)	return hTarget ~= self:GetCaster() end
 
 function modifier_imba_slithereen_crush_puddle_aura:OnCreated()
+	self.scepter_puddle_radius	= self:GetAbility():GetSpecialValueFor("scepter_puddle_radius")
+
 	if not IsServer() then return end
 	
 	local puddle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slardar/slardar_water_puddle.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 	ParticleManager:SetParticleControl(puddle_particle, 0, self:GetParent():GetAbsOrigin())
-	ParticleManager:SetParticleControl(puddle_particle, 1, Vector(self:GetAbility():GetSpecialValueFor("scepter_puddle_radius"), 0, 0))
+	ParticleManager:SetParticleControl(puddle_particle, 1, Vector(self.scepter_puddle_radius, 0, 0))
 	self:AddParticle(puddle_particle, false, false, -1, false, false)
 end
 

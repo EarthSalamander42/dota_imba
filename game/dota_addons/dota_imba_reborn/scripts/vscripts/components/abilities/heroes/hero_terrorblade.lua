@@ -44,7 +44,7 @@ function imba_terrorblade_reflection:OnSpellStart()
 		
 		enemy:EmitSound("Hero_Terrorblade.Reflection")
 		
-		CreateIllusions(self:GetCaster(), self:GetCaster(), {
+		local illusions = CreateIllusions(self:GetCaster(), enemy, {
 			outgoing_damage = self:GetTalentSpecialValueFor("illusion_outgoing_damage"),
 			incoming_damage	= -100,
 			bounty_base		= 0,
@@ -53,7 +53,13 @@ function imba_terrorblade_reflection:OnSpellStart()
 			outgoing_damage_roshan		= nil,
 			duration		= self:GetSpecialValueFor("illusion_duration")
 		}
-		, 1, spawn_range, false, false)
+		, 1, spawn_range, false, true)
+		
+		for _, illusion in pairs(illusions) do
+			illusion:SetAttacking(enemy)
+			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_unit", {})
+			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_reflection_invulnerability", {})
+		end
 		
 		slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_slow", {duration = self:GetSpecialValueFor("illusion_duration")})
 		
@@ -85,6 +91,10 @@ end
 
 function modifier_imba_terrorblade_reflection_unit:IsPurgable()	return false end
 
+function modifier_imba_terrorblade_reflection_unit:GetStatusEffectName()
+	return "particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+end
+
 function modifier_imba_terrorblade_reflection_unit:OnCreated()
 
 end
@@ -99,7 +109,8 @@ function modifier_imba_terrorblade_reflection_unit:CheckState()
 		
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
-		[MODIFIER_STATE_MAGIC_IMMUNE]		= true
+		[MODIFIER_STATE_MAGIC_IMMUNE]		= true,
+		[MODIFIER_STATE_NO_HEALTH_BAR]		= true
 	}
 end
 
@@ -169,7 +180,7 @@ end
 function modifier_imba_terrorblade_metamorphosis:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
 end
@@ -214,7 +225,7 @@ function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraS
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO end
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetModifierAura()				return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
-function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraEntityReject(hTarget)	return hTarget:GetPlayerOwnerID() ~= self:GetCaster():GetPlayerOwnerID()
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraEntityReject(hTarget)	return hTarget:GetPlayerOwnerID() ~= self:GetCaster():GetPlayerOwnerID() end
 
 -----------------------------
 -- IMBA_TERRORBLADE_SUNDER --

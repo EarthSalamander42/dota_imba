@@ -36,6 +36,8 @@ modifier_imba_oracle_purifying_flames_alter	= class({})
 imba_oracle_alter_self						= class({})
 modifier_imba_oracle_alter_self				= class({})
 
+imba_oracle_false_promise_alter				= imba_oracle_false_promise_alter or class({})
+
 imba_oracle_false_promise					= class({})
 modifier_imba_oracle_false_promise_delay	= class({})
 modifier_imba_oracle_false_promise_timer	= class({})
@@ -812,23 +814,13 @@ end
 -- IMBA_ORACLE_FALSE_PROMISE --
 -------------------------------
 
-function imba_oracle_false_promise:GetAbilityTextureName()
-	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		return "oracle_false_promise"
-	else
-		return "custom/oracle/false_promise_alter"
-	end
-end
-
 function imba_oracle_false_promise:GetBehavior()
 	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
-function imba_oracle_false_promise:CastFilterResultTarget(target)
-	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
-	else
-		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+function imba_oracle_false_promise:OnUpgrade()
+	if self:GetCaster():HasAbility("imba_oracle_false_promise_alter") then
+		self:GetCaster():FindAbilityByName("imba_oracle_false_promise_alter"):SetLevel(self:GetLevel())
 	end
 end
 
@@ -836,9 +828,7 @@ function imba_oracle_false_promise:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
 	if not self:GetAutoCastState() then
-		if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() or (target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self)) then
-			self:ApplyFalsePromise(target)
-		end
+		self:ApplyFalsePromise(target)
 	else
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_delay", {duration = self:GetSpecialValueFor("future_delay")})
 	end
@@ -869,20 +859,74 @@ function imba_oracle_false_promise:ApplyFalsePromise(target)
 	ParticleManager:ReleaseParticleIndex(self.false_promise_cast_particle)
 	
 	self.false_promise_target_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:ReleaseParticleIndex(self.false_promise_target_particle)
+	
+	self:GetCaster():EmitSound("Hero_Oracle.FalsePromise.Cast")
+	
+	target:Purge(false, true, false, true, true)
+	
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer", {duration = self:GetTalentSpecialValueFor("duration")})
+	
+	if self:GetCaster():HasAbility("imba_oracle_false_promise_alter") then
+		self:GetCaster():FindAbilityByName("imba_oracle_false_promise_alter"):StartCooldown(self:GetSpecialValueFor("alter_cooldown")* self:GetCaster():GetCooldownReduction())
+	end
+end
+
+-------------------------------------
+-- IMBA_ORACLE_FALSE_PROMISE_ALTER --
+-------------------------------------
+
+function imba_oracle_false_promise_alter:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_oracle_false_promise_alter:OnSpellStart()
+	local target = self:GetCursorTarget()
+	
+	if not self:GetAutoCastState() then
+		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self) then
+			self:ApplyFalsePromise(target)
+		end
+	else
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_delay", {duration = self:GetSpecialValueFor("future_delay")})
+	end
+end
+
+function imba_oracle_false_promise_alter:ApplyFalsePromise(target)
+	target:EmitSound("Hero_Oracle.FalsePromise.Target")
+	EmitSoundOnClient("Hero_Oracle.FalsePromise.FP", target:GetPlayerOwner())
+
+	if self:GetCaster():GetName() == "npc_dota_hero_oracle" and target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and RollPercentage(50) then
+		if not self.responses then
+			self.responses = 
+			{
+				"oracle_orac_falsepromise_01",
+				"oracle_orac_falsepromise_02",
+				"oracle_orac_falsepromise_03",
+				"oracle_orac_falsepromise_04",
+				"oracle_orac_falsepromise_06",
+				"oracle_orac_falsepromise_11"
+			}
+		end
+		
+		self:GetCaster():EmitSound(self.responses[RandomInt(1, #self.responses)])
+	end
+
+	self.false_promise_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(self.false_promise_cast_particle, 2, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(self.false_promise_cast_particle)
+	
+	self.false_promise_target_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(self.false_promise_target_particle)	
 	
-	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-		self:GetCaster():EmitSound("Hero_Oracle.FalsePromise.Cast")
-		
-		target:Purge(false, true, false, true, true)
-		
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer", {duration = self:GetTalentSpecialValueFor("duration")})
-	else
-		self:GetCaster():EmitSound("Hero_Oracle.False_Promise_Alter")
+	self:GetCaster():EmitSound("Hero_Oracle.False_Promise_Alter")
 	
-		target:Purge(true, false, false, false, false)
+	target:Purge(true, false, false, false, false)
 	
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer_alter", {duration = self:GetTalentSpecialValueFor("duration")})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_oracle_false_promise_timer_alter", {duration = self:GetTalentSpecialValueFor("duration")})
+
+	if self:GetCaster():HasAbility("imba_oracle_false_promise") then
+		self:GetCaster():FindAbilityByName("imba_oracle_false_promise"):StartCooldown(self:GetSpecialValueFor("alter_cooldown")* self:GetCaster():GetCooldownReduction())
 	end
 end
 

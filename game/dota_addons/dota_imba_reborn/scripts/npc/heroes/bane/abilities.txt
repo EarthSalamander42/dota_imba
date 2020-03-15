@@ -97,7 +97,7 @@
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
-		"AbilityManaCost"				"50 75 100 125"
+		"AbilityManaCost"				"75"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -122,12 +122,12 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"discomfort_status_resistance_reduction_per_stack"	"5 6 7 8"
+				"discomfort_status_resistance_reduction_per_stack"	"7 8 9 10"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"discomfort_magic_resistance_reduction_per_stack"	"4 5 6 7"
+				"discomfort_magic_resistance_reduction_per_stack"	"5 6 7 8"
 			}
 			"06"
 			{
@@ -514,7 +514,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"fiend_grip_mana_drain"			"5 6 7"
+				"fiend_grip_mana_drain"			"7"
 			}
 			"03"
 			{
@@ -526,7 +526,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"fiend_grip_damage"				"100 200 300"
+				"fiend_grip_damage"				"140 230 320"
 			}
 		}
 	}

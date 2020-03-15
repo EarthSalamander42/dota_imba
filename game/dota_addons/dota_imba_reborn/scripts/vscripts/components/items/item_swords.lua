@@ -366,6 +366,8 @@ function modifier_item_imba_kaya:IsPermanent() return true end
 function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.spell_amp	= self:GetAbility():GetSpecialValueFor("spell_amp")
 	self.bonus_cdr	= self:GetAbility():GetSpecialValueFor("bonus_cdr")
 	self.bonus_int	= self:GetAbility():GetSpecialValueFor("bonus_int")
@@ -418,7 +420,8 @@ end
 --   - Arcane Nexus
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_kaya:GetModifierPercentageCooldown()
-    if self:GetAbility():GetSecondaryCharges() == 1 and 
+	if self:GetAbility() and
+    self:GetAbility():GetSecondaryCharges() == 1 and 
 	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
 	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and 
 	not self:GetParent():HasModifier("modifier_item_imba_kaya_and_sange") and 

@@ -9,33 +9,33 @@ function modifier_special_bonus_imba_pangolier_3:IsHidden() return true end
 function modifier_special_bonus_imba_pangolier_3:IsPurgable() return false end
 function modifier_special_bonus_imba_pangolier_3:RemoveOnDeath() return false end
 
---Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
-function modifier_special_bonus_imba_pangolier_3:OnCreated()
-	if IsServer() then
-		self.shield_crash = self:GetCaster():FindAbilityByName("imba_pangolier_shield_crash")
-		self.en_guarde = "modifier_imba_shield_crash_block"
+-- --Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
+-- function modifier_special_bonus_imba_pangolier_3:OnCreated()
+	-- if IsServer() then
+		-- self.shield_crash = self:GetCaster():FindAbilityByName("imba_pangolier_shield_crash")
+		-- self.en_guarde = "modifier_imba_shield_crash_block"
 
-		self:GetCaster():AddNewModifier(self:GetCaster(), self.shield_crash, self.en_guarde, {})
-	end
-end
+		-- self:GetCaster():AddNewModifier(self:GetCaster(), self.shield_crash, self.en_guarde, {})
+	-- end
+-- end
 
-function modifier_special_bonus_imba_pangolier_3:DeclareFunctions()
-	local funcs = {MODIFIER_EVENT_ON_RESPAWN}
+-- function modifier_special_bonus_imba_pangolier_3:DeclareFunctions()
+	-- local funcs = {MODIFIER_EVENT_ON_RESPAWN}
 
-	return funcs
-end
+	-- return funcs
+-- end
 
-function modifier_special_bonus_imba_pangolier_3:OnRespawn(kv)
-	if IsServer() then
-		--Add again the modifier if somehow it was lost (stupid bugs)
-		if not self:GetCaster():HasModifier(self.en_guarde) then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self.shield_crash, self.en_guarde, {})
+-- function modifier_special_bonus_imba_pangolier_3:OnRespawn(kv)
+	-- if IsServer() then
+		-- --Add again the modifier if somehow it was lost (stupid bugs)
+		-- if not self:GetCaster():HasModifier(self.en_guarde) then
+			-- self:GetCaster():AddNewModifier(self:GetCaster(), self.shield_crash, self.en_guarde, {})
 
-			--reset to last amount of stacks recorded
-			self:GetCaster():SetModifierStackCount(self.en_guarde, self:GetCaster(), self:GetCaster():GetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster()))
-		end
-	end
-end
+			-- --reset to last amount of stacks recorded
+			-- self:GetCaster():SetModifierStackCount(self.en_guarde, self:GetCaster(), self:GetCaster():GetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster()))
+		-- end
+	-- end
+-- end
 
 -------------------------------------
 -----        SWASHBUCKLE       ------
@@ -795,15 +795,8 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
 	end
 end
 
-
-function modifier_imba_shield_crash_buff:DestroyOnExpire()
-	return true
-end
-
 function modifier_imba_shield_crash_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
 end
 
 function modifier_imba_shield_crash_buff:GetModifierIncomingDamage_Percentage()
@@ -819,8 +812,6 @@ function modifier_imba_shield_crash_buff:IsPurgable() return true end
 function modifier_imba_shield_crash_buff:IsDebuff() return false end
 function modifier_imba_shield_crash_buff:AllowIllusionDuplicate() return true end
 function modifier_imba_shield_crash_buff:IsStealable() return true end
-
-
 
 --Shield crash jump movement modifier
 modifier_imba_shield_crash_jump = class({})
@@ -938,9 +929,15 @@ function modifier_imba_shield_crash_jump:OnDestroy()
 	if damaged_heroes > 0 then
 		--Talent #3: Earn stacks of parry based on the heroes hit with Shield Crash
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_3") then
-			local block_modifier_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
-			self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), block_modifier_stacks + damaged_heroes)
-			self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), block_modifier_stacks + damaged_heroes)
+			-- local block_modifier_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
+			
+			-- self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), block_modifier_stacks + damaged_heroes)
+			-- self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), block_modifier_stacks + damaged_heroes)
+			
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shield_crash_block", {
+				duration	= self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_3", "duration"),
+				stacks		= damaged_heroes
+			})
 		end
 
 		if self:GetCaster():HasModifier(self.buff_modifier) then
@@ -1032,14 +1029,16 @@ end
 --Talent #3 modifier: each stack will block an attack directed to Pangolier from an enemy hero and start a counterattack (1 Swashbuckle slash)
 modifier_imba_shield_crash_block = modifier_imba_shield_crash_block or class({})
 
-function modifier_imba_shield_crash_block:IsHidden() return false end
-function modifier_imba_shield_crash_block:IsPurgable() return false end --WHY THE FUCK IS THIS FAILING SOMETIMES?!
-function modifier_imba_shield_crash_block:IsPermanent() return true end
-function modifier_imba_shield_crash_block:RemoveOnDeath() return false end
-function modifier_imba_shield_crash_block:IsDebuff() return false end
+-- Yeah let's just...comment all of these flags out for balance reasons
+
+-- function modifier_imba_shield_crash_block:IsHidden() return false end
+-- function modifier_imba_shield_crash_block:IsPurgable() return false end --WHY THE FUCK IS THIS FAILING SOMETIMES?!
+-- function modifier_imba_shield_crash_block:IsPermanent() return true end
+-- function modifier_imba_shield_crash_block:RemoveOnDeath() return false end
+-- function modifier_imba_shield_crash_block:IsDebuff() return false end
 
 
-function modifier_imba_shield_crash_block:OnCreated()
+function modifier_imba_shield_crash_block:OnCreated(keys)
 	if IsServer() then
 		--Ability Properties
 
@@ -1062,18 +1061,24 @@ function modifier_imba_shield_crash_block:OnCreated()
 			self:Destroy()
 		end
 
-		--initialize stack count
-		self:SetStackCount(0)
+		-- --initialize stack count
+		-- self:SetStackCount(0)
+		
+		self:SetStackCount(self:GetStackCount() + keys.stacks)
 	end
 end
 
+function modifier_imba_shield_crash_block:OnRefresh(keys)
+	self:OnCreated(keys)
+end
+
 function modifier_imba_shield_crash_block:DeclareFunctions()
-	funcs = {MODIFIER_EVENT_ON_ATTACK_START,
+	return {
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_FINISHED,
-		MODIFIER_PROPERTY_EVASION_CONSTANT}
-
-	return funcs
+		MODIFIER_PROPERTY_EVASION_CONSTANT
+	}
 end
 
 function modifier_imba_shield_crash_block:GetModifierEvasion_Constant(params)
@@ -1158,10 +1163,8 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 			--if self.hero_attacks == 0 and self:GetCaster():HasModifier("modifier_imba_shield_crash_block_parry") then
 			--	self:GetCaster():RemoveModifierByName("modifier_imba_shield_crash_block_parry")
 			--end
-
-
+			
 			local stacks = self:GetCaster():GetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster())
-
 
 			local caster_loc = self:GetCaster():GetAbsOrigin()
 			local attacker_loc = attacker:GetAbsOrigin()
@@ -1246,8 +1249,8 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 
 				--Decrease parry stacks
 				self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), stacks - 1)
-				self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), stacks - 1)
-
+				-- self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), stacks - 1)
+				
 				Timers:CreateTimer(0.5, function ()
 					--Remove particles
 					ParticleManager:DestroyParticle(slash_particle, false)
@@ -1258,6 +1261,10 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 
 					--Turn pangolier back to his previous direction
 					self:GetCaster():SetForwardVector(old_direction)
+					
+					if self:GetStackCount() <= 0 then
+						self:Destroy()
+					end
 				end)
 			end
 		end
