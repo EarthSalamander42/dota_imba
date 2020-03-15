@@ -1,16 +1,1255 @@
-LinkLuaModifier("modifier_imba_snapfire_scatterblast", fileName, LuaModifierType)
+-- Original Lua Abilityes created by Elfansoer: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities
+-- IMBAfied by EarthSalamander
 
+--------------------------------------------------------------------------------
 imba_snapfire_scatterblast = imba_snapfire_scatterblast or class({})
+LinkLuaModifier( "modifier_imba_snapfire_scatterblast", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_generic_custom_indicator", "components/modifiers/generic/modifier_generic_custom_indicator", LUA_MODIFIER_MOTION_NONE )
 
-function imba_snapfire_scatterblast:OnAbilityPhaseStart()
-	if not IsServer() then return end
-
-	self:GetCaster():EmitSound("")
-
-	-- todo: add precast pfx
+--------------------------------------------------------------------------------
+-- Custom Indicator
+function imba_snapfire_scatterblast:GetIntrinsicModifierName()
+	return "modifier_generic_custom_indicator"
 end
 
+function imba_snapfire_scatterblast:CastFilterResultLocation( vLoc )
+	if IsClient() then
+		if self.custom_indicator then
+			-- register cursor position
+			self.custom_indicator:Register( vLoc )
+		end
+	end
+
+	return UF_SUCCESS
+end
+
+function imba_snapfire_scatterblast:CreateCustomIndicator()
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun_range_finder_aoe.vpcf"
+	self.effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster() )
+end
+
+function imba_snapfire_scatterblast:UpdateCustomIndicator( loc )
+	-- get data
+	local origin = self:GetCaster():GetAbsOrigin()
+	local point_blank = self:GetSpecialValueFor( "point_blank_range" )
+
+	-- get direction
+	local direction = loc - origin
+	direction.z = 0
+	direction = direction:Normalized()
+
+	ParticleManager:SetParticleControl( self.effect_cast, 0, origin )
+	ParticleManager:SetParticleControl( self.effect_cast, 1, origin + direction*(self:GetCastRange( loc, nil )+200) )
+	ParticleManager:SetParticleControl( self.effect_cast, 6, origin + direction*point_blank )
+end
+
+function imba_snapfire_scatterblast:DestroyCustomIndicator()
+	ParticleManager:DestroyParticle( self.effect_cast, false )
+	ParticleManager:ReleaseParticleIndex( self.effect_cast )
+end
+
+--------------------------------------------------------------------------------
+-- Ability Phase Start
+function imba_snapfire_scatterblast:OnAbilityPhaseStart()
+	-- play sound
+	local sound_cast = "Hero_Snapfire.Shotgun.Load"
+	EmitSoundOn( sound_cast, self:GetCaster() )
+
+	return true -- if success
+end
+
+--------------------------------------------------------------------------------
+-- Ability Start
 function imba_snapfire_scatterblast:OnSpellStart()
+	-- unit identifier
+	local caster = self:GetCaster()
+	local point = self:GetCursorPosition()
+	local origin = caster:GetOrigin()
+
+	-- load data
+	local projectile_name = "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun.vpcf"
+	local projectile_distance = self:GetCastRange( point, nil )
+	local projectile_start_radius = self:GetSpecialValueFor( "blast_width_initial" )/2
+	local projectile_end_radius = self:GetSpecialValueFor( "blast_width_end" )/2
+	local projectile_speed = self:GetSpecialValueFor( "blast_speed" )
+	local projectile_direction = point-origin
+	projectile_direction.z = 0
+	projectile_direction = projectile_direction:Normalized()	
+
+	-- create projectile
+	local info = {
+		Source = caster,
+		Ability = self,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		
+	    bDeleteOnHit = false,
+	    
+	    iUnitTargetTeam = self:GetAbilityTargetTeam(),
+	    iUnitTargetFlags = self:GetAbilityTargetFlags(),
+	    iUnitTargetType = self:GetAbilityTargetType(),
+	    
+	    EffectName = projectile_name,
+	    fDistance = projectile_distance,
+	    fStartRadius = projectile_start_radius,
+	    fEndRadius =projectile_end_radius,
+		vVelocity = projectile_direction * projectile_speed,
+	
+		bProvidesVision = false,
+		ExtraData = {
+			pos_x = origin.x,
+			pos_y = origin.y,
+		}
+	}
+	ProjectileManager:CreateLinearProjectile(info)
+
+	-- play sound
+	local sound_cast = "Hero_Snapfire.Shotgun.Fire"
+	EmitSoundOn( sound_cast, caster )
+end
+--------------------------------------------------------------------------------
+-- Projectile
+function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location, extraData )
+	if not target then return end
+
+	-- load data
+	local caster = self:GetCaster()
+	local location = target:GetOrigin()
+	local point_blank_range = self:GetSpecialValueFor( "point_blank_range" )
+	local point_blank_mult = self:GetSpecialValueFor( "point_blank_dmg_bonus_pct" )/100
+	local damage = self:GetSpecialValueFor( "damage" )
+	local slow = self:GetSpecialValueFor( "debuff_duration" )
+
+	-- check position
+	local origin = Vector( extraData.pos_x, extraData.pos_y, 0 )
+	local length = (location-origin):Length2D()
+
+	-- manual check due to projectile's circle shape
+	-- if length>self:GetCastRange( location, nil )+150 then return end
+
+	local point_blank = (length<=point_blank_range)
+	if point_blank then damage = damage + point_blank_mult*damage end
+
+	-- damage
+	local damageTable = {
+		victim = target,
+		attacker = caster,
+		damage = damage,
+		damage_type = self:GetAbilityDamageType(),
+		ability = self, --Optional.
+	}
+	ApplyDamage(damageTable)
+
+	-- debuff
+	target:AddNewModifier(
+		caster, -- player source
+		self, -- ability source
+		"modifier_imba_snapfire_scatterblast", -- modifier name
+		{ duration = slow } -- kv
+	)
+
+	-- effect
+	self:PlayEffects( target, point_blank )
+end
+
+--------------------------------------------------------------------------------
+function imba_snapfire_scatterblast:PlayEffects( target, point_blank )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun_impact.vpcf"
+	local particle_cast2 = "particles/units/heroes/hero_snapfire/hero_snapfire_shells_impact.vpcf"
+	local particle_cast3 = "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun_pointblank_impact_sparks.vpcf"
+	local sound_target = "Hero_Snapfire.Shotgun.Target"
+
+	-- Get Data
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, target )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+
+	if point_blank then
+		local effect_cast = ParticleManager:CreateParticle( particle_cast2, PATTACH_POINT_FOLLOW, target )
+		ParticleManager:SetParticleControlEnt(
+			effect_cast,
+			3,
+			target,
+			PATTACH_POINT_FOLLOW,
+			"attach_hitloc",
+			Vector(0,0,0), -- unknown
+			true -- unknown, true
+		)
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+
+		local effect_cast = ParticleManager:CreateParticle( particle_cast3, PATTACH_POINT_FOLLOW, target )
+		ParticleManager:SetParticleControlEnt(
+			effect_cast,
+			4,
+			target,
+			PATTACH_POINT_FOLLOW,
+			"attach_hitloc",
+			Vector(0,0,0), -- unknown
+			true -- unknown, true
+		)
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+	end
+
+	-- Create Sound
+	EmitSoundOn( sound_target, target )
+end
+
+--------------------------------------------------------------------------------
+modifier_snapfire_scatterblast_lua = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_snapfire_scatterblast_lua:IsHidden()
+	return false
+end
+
+function modifier_snapfire_scatterblast_lua:IsDebuff()
+	return true
+end
+
+function modifier_snapfire_scatterblast_lua:IsStunDebuff()
+	return false
+end
+
+function modifier_snapfire_scatterblast_lua:IsPurgable()
+	return true
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_snapfire_scatterblast_lua:OnCreated( kv )
+	-- references
+	self.slow = -self:GetAbility():GetSpecialValueFor( "movement_slow_pct" )
+end
+
+function modifier_snapfire_scatterblast_lua:OnRefresh( kv )
+	-- references
+	self.slow = -self:GetAbility():GetSpecialValueFor( "movement_slow_pct" )	
+end
+
+function modifier_snapfire_scatterblast_lua:OnRemoved()
+end
+
+function modifier_snapfire_scatterblast_lua:OnDestroy()
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_snapfire_scatterblast_lua:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_snapfire_scatterblast_lua:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow
+end
+
+--------------------------------------------------------------------------------
+-- Graphics & Animations
+function modifier_snapfire_scatterblast_lua:GetEffectName()
+	return "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun_debuff.vpcf"
+end
+
+function modifier_snapfire_scatterblast_lua:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_snapfire_scatterblast_lua:GetStatusEffectName()
+	return "particles/status_fx/status_effect_snapfire_slow.vpcf"
+end
+
+function modifier_snapfire_scatterblast_lua:StatusEffectPriority()
+	return MODIFIER_PRIORITY_NORMAL
+end
+
+--------------------------------------------------------------------------------
+imba_snapfire_firesnap_cookie = imba_snapfire_firesnap_cookie or class({})
+
+--------------------------------------------------------------------------------
+-- Custom KV
+function imba_snapfire_firesnap_cookie:GetCastPoint()
+	if IsServer() and self:GetCursorTarget()==self:GetCaster() then
+		return self:GetSpecialValueFor( "self_cast_delay" )
+	end
+	return 0.2
+end
+
+--------------------------------------------------------------------------------
+-- Ability Cast Filter
+function imba_snapfire_firesnap_cookie:CastFilterResultTarget( hTarget )
+	if IsServer() and hTarget:IsChanneling() then
+		return UF_FAIL_CUSTOM
+	end
+
+	local nResult = UnitFilter(
+		hTarget,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+		0,
+		self:GetCaster():GetTeamNumber()
+	)
+	if nResult ~= UF_SUCCESS then
+		return nResult
+	end
+
+	return UF_SUCCESS
+end
+
+function imba_snapfire_firesnap_cookie:GetCustomCastErrorTarget( hTarget )
+	if IsServer() and hTarget:IsChanneling() then
+		return "#dota_hud_error_is_channeling"
+	end
+
+	return ""
+end
+
+--------------------------------------------------------------------------------
+-- Ability Phase Start
+function imba_snapfire_firesnap_cookie:OnAbilityPhaseInterrupted()
+
+end
+function imba_snapfire_firesnap_cookie:OnAbilityPhaseStart()
+	if self:GetCursorTarget()==self:GetCaster() then
+		self:PlayEffects1()
+	end
+
+	return true -- if success
+end
+
+--------------------------------------------------------------------------------
+-- Ability Start
+function imba_snapfire_firesnap_cookie:OnSpellStart()
+	-- unit identifier
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
+
+	-- load data
+	local projectile_name = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_projectile.vpcf"
+	local projectile_speed = self:GetSpecialValueFor( "projectile_speed" )
+
+	-- create projectile
+	local info = {
+		Target = target,
+		Source = caster,
+		Ability = self,	
+		
+		EffectName = projectile_name,
+		iMoveSpeed = projectile_speed,
+		bDodgeable = false,                           -- Optional
+	}
+	ProjectileManager:CreateTrackingProjectile(info)
+
+	-- Play sound
+	local sound_cast = "Hero_Snapfire.FeedCookie.Cast"
+	EmitSoundOn( sound_cast, self:GetCaster() )
+end
+--------------------------------------------------------------------------------
+-- Projectile
+function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
+	if not target then return end
+
+	if target:IsChanneling() or target:IsOutOfGame() then return end
+
+	-- load data
+	local duration = self:GetSpecialValueFor( "jump_duration" )
+	local height = self:GetSpecialValueFor( "jump_height" )
+	local distance = self:GetSpecialValueFor( "jump_horizontal_distance" )
+	local stun = self:GetSpecialValueFor( "impact_stun_duration" )
+	local damage = self:GetSpecialValueFor( "impact_damage" )
+	local radius = self:GetSpecialValueFor( "impact_radius" )
+
+	-- play effects2
+	local effect_cast = self:PlayEffects2( target )
+
+	-- knockback
+	local knockback = target:AddNewModifier(
+		self:GetCaster(), -- player source
+		self, -- ability source
+		"modifier_knockback", -- modifier name
+		{
+			should_stun = true,
+			knockback_duration = duration,
+			duration = duration,
+			knockback_distance = distance,
+			knockback_height = height,
+			center_x = target:GetAbsOrigin().x,
+			center_y = target:GetAbsOrigin().y,
+			center_z = target:GetAbsOrigin().z
+		} -- kv
+	)
+
+	-- on landing
+	local callback = function()
+		-- precache damage
+		local damageTable = {
+			-- victim = target,
+			attacker = self:GetCaster(),
+			damage = damage,
+			damage_type = self:GetAbilityDamageType(),
+			ability = self, --Optional.
+		}
+
+		-- find enemies
+		local enemies = FindUnitsInRadius(
+			self:GetCaster():GetTeamNumber(),	-- int, your team number
+			target:GetOrigin(),	-- point, center point
+			nil,	-- handle, cacheUnit. (not known)
+			radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
+			DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
+			0,	-- int, flag filter
+			0,	-- int, order filter
+			false	-- bool, can grow cache
+		)
+
+		for _,enemy in pairs(enemies) do
+			-- apply damage
+			damageTable.victim = enemy
+			ApplyDamage(damageTable)
+
+			-- stun
+			enemy:AddNewModifier(
+				self:GetCaster(), -- player source
+				self, -- ability source
+				"modifier_stunned", -- modifier name
+				{ duration = stun } -- kv
+			)
+		end
+
+		-- destroy trees
+		GridNav:DestroyTreesAroundPoint( target:GetOrigin(), radius, true )
+
+		-- play effects
+		ParticleManager:DestroyParticle( effect_cast, false )
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+		self:PlayEffects3( target, radius )
+	end
+
+--	knockback:SetEndCallback( callback )
+end
+
+--------------------------------------------------------------------------------
+function imba_snapfire_firesnap_cookie:PlayEffects1()
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_selfcast.vpcf"
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster() )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+end
+
+function imba_snapfire_firesnap_cookie:PlayEffects2( target )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_buff.vpcf"
+	local particle_cast2 = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_receive.vpcf"
+	local sound_target = "Hero_Snapfire.FeedCookie.Consume"
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, target )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+
+	local effect_cast = ParticleManager:CreateParticle( particle_cast2, PATTACH_ABSORIGIN_FOLLOW, target )
+
+	-- Create Sound
+	EmitSoundOn( sound_target, target )
+
+	return effect_cast
+end
+
+function imba_snapfire_firesnap_cookie:PlayEffects3( target, radius )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_landing.vpcf"
+	local sound_location = "Hero_Snapfire.FeedCookie.Impact"
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, target )
+	ParticleManager:SetParticleControl( effect_cast, 0, target:GetOrigin() )
+	ParticleManager:SetParticleControl( effect_cast, 1, Vector( radius, radius, radius ) )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+
+	-- Create Sound
+	EmitSoundOn( sound_location, target )
+end
+
+--------------------------------------------------------------------------------
+imba_snapfire_lil_shredder = class({})
+LinkLuaModifier( "modifier_imba_snapfire_lil_shredder", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_snapfire_lil_shredder_debuff", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+
+--------------------------------------------------------------------------------
+-- Ability Start
+function imba_snapfire_lil_shredder:OnSpellStart()
+	-- unit identifier
+	local caster = self:GetCaster()
+
+	-- load data
+	local duration = self:GetDuration()
+
+	-- addd buff
+	caster:AddNewModifier(
+		caster, -- player source
+		self, -- ability source
+		"modifier_imba_snapfire_lil_shredder", -- modifier name
+		{ duration = duration } -- kv
+	)
+end
+
+--------------------------------------------------------------------------------
+modifier_imba_snapfire_lil_shredder = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_imba_snapfire_lil_shredder:IsHidden()
+	return false
+end
+
+function modifier_imba_snapfire_lil_shredder:IsDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_lil_shredder:IsStunDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_lil_shredder:IsPurgable()
+	return true
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_imba_snapfire_lil_shredder:OnCreated( kv )
+	-- references
+	self.attacks = self:GetAbility():GetSpecialValueFor( "buffed_attacks" )
+	self.damage = self:GetAbility():GetSpecialValueFor( "damage" )
+	self.as_bonus = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus" )
+	self.range_bonus = self:GetAbility():GetSpecialValueFor( "attack_range_bonus" )
+	self.bat = self:GetAbility():GetSpecialValueFor( "base_attack_time" )
+
+	self.slow = self:GetAbility():GetSpecialValueFor( "slow_duration" )
+
+	if not IsServer() then return end
+	self:SetStackCount( self.attacks )
+
+	self.records = {}
+
+	-- play Effects & Sound
+	self:PlayEffects()
+	local sound_cast = "Hero_Snapfire.ExplosiveShells.Cast"
+	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+function modifier_imba_snapfire_lil_shredder:OnRefresh( kv )
+	-- references
+	self.attacks = self:GetAbility():GetSpecialValueFor( "buffed_attacks" )
+	self.damage = self:GetAbility():GetSpecialValueFor( "damage" )
+	self.as_bonus = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus" )
+	self.range_bonus = self:GetAbility():GetSpecialValueFor( "attack_range_bonus" )
+	self.bat = self:GetAbility():GetSpecialValueFor( "base_attack_time" )
+
+	self.slow = self:GetAbility():GetSpecialValueFor( "slow_duration" )
+
+	if not IsServer() then return end
+	self:SetStackCount( self.attacks )
+
+	-- play sound
+	local sound_cast = "Hero_Snapfire.ExplosiveShells.Cast"
+	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+function modifier_imba_snapfire_lil_shredder:OnRemoved()
+end
+
+function modifier_imba_snapfire_lil_shredder:OnDestroy()
 	if not IsServer() then return end
 
+	-- stop sound
+	local sound_cast = "Hero_Snapfire.ExplosiveShells.Cast"
+	StopSoundOn( sound_cast, self:GetParent() )
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_imba_snapfire_lil_shredder:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
+
+		MODIFIER_PROPERTY_PROJECTILE_NAME,
+		MODIFIER_PROPERTY_OVERRIDE_ATTACK_DAMAGE,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+	}
+
+	return funcs
+end
+
+function modifier_imba_snapfire_lil_shredder:OnAttack( params )
+	if params.attacker~=self:GetParent() then return end
+	if self:GetStackCount()<=0 then return end
+
+	-- record attack
+	self.records[params.record] = true
+
+	-- play sound
+	local sound_cast = "Hero_Snapfire.ExplosiveShellsBuff.Attack"
+	EmitSoundOn( sound_cast, self:GetParent() )
+
+	-- decrement stack
+	if self:GetStackCount()>0 then
+		self:DecrementStackCount()
+	end
+end
+
+function modifier_imba_snapfire_lil_shredder:OnAttackLanded( params )
+	if self.records[params.record] then
+		-- add modifier
+		params.target:AddNewModifier(
+			self:GetParent(), -- player source
+			self:GetAbility(), -- ability source
+			"modifier_snapfire_lil_shredder_lua_debuff", -- modifier name
+			{ duration = self.slow } -- kv
+		)
+	end
+
+	-- play sound
+	local sound_cast = "Hero_Snapfire.ExplosiveShellsBuff.Target"
+	EmitSoundOn( sound_cast, params.target )
+end
+
+function modifier_imba_snapfire_lil_shredder:OnAttackRecordDestroy( params )
+	if self.records[params.record] then
+		self.records[params.record] = nil
+
+		-- if table is empty and no stack left, destroy
+		if next(self.records)==nil and self:GetStackCount()<=0 then
+			self:Destroy()
+		end
+	end
+end
+
+function modifier_imba_snapfire_lil_shredder:GetModifierProjectileName()
+	if self:GetStackCount()<=0 then return end
+	return "particles/units/heroes/hero_snapfire/hero_snapfire_shells_projectile.vpcf"
+end
+
+function modifier_imba_snapfire_lil_shredder:GetModifierOverrideAttackDamage()
+	if self:GetStackCount()<=0 then return end
+	return self.damage
+end
+
+function modifier_imba_snapfire_lil_shredder:GetModifierAttackRangeBonus()
+	if self:GetStackCount()<=0 then return end
+	return self.range_bonus
+end
+
+function modifier_imba_snapfire_lil_shredder:GetModifierAttackSpeedBonus_Constant()
+	if self:GetStackCount()<=0 then return end
+	return self.as_bonus
+end
+
+function modifier_imba_snapfire_lil_shredder:GetModifierBaseAttackTimeConstant()
+	if self:GetStackCount()<=0 then return end
+	return self.bat
+end
+
+--------------------------------------------------------------------------------
+-- Graphics & Animations
+function modifier_imba_snapfire_lil_shredder:PlayEffects()
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_shells_buff.vpcf"
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	ParticleManager:SetParticleControlEnt(
+		effect_cast,
+		3,
+		self:GetParent(),
+		PATTACH_POINT_FOLLOW,
+		"attach_hitloc",
+		Vector(0,0,0), -- unknown
+		true -- unknown, true
+	)
+	ParticleManager:SetParticleControlEnt(
+		effect_cast,
+		4,
+		self:GetParent(),
+		PATTACH_POINT_FOLLOW,
+		"attach_hitloc",
+		Vector(0,0,0), -- unknown
+		true -- unknown, true
+	)
+	ParticleManager:SetParticleControlEnt(
+		effect_cast,
+		5,
+		self:GetParent(),
+		PATTACH_POINT_FOLLOW,
+		"attach_hitloc",
+		Vector(0,0,0), -- unknown
+		true -- unknown, true
+	)
+
+	-- buff particle
+	self:AddParticle(
+		effect_cast,
+		false, -- bDestroyImmediately
+		false, -- bStatusEffect
+		-1, -- iPriority
+		false, -- bHeroEffect
+		false -- bOverheadEffect
+	)
+end
+
+--------------------------------------------------------------------------------
+modifier_snapfire_lil_shredder_lua_debuff = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_snapfire_lil_shredder_lua_debuff:IsHidden()
+	return false
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:IsDebuff()
+	return true
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:IsStunDebuff()
+	return false
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:IsPurgable()
+	return true
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_snapfire_lil_shredder_lua_debuff:OnCreated( kv )
+	-- references
+	self.slow = -self:GetAbility():GetSpecialValueFor( "attack_speed_slow_per_stack" )
+
+	if not IsServer() then return end
+	self:SetStackCount( 1 )
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:OnRefresh( kv )
+	if not IsServer() then return end
+	self:IncrementStackCount()
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:OnRemoved()
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:OnDestroy()
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_snapfire_lil_shredder_lua_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
+
+	return funcs
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:GetModifierAttackSpeedBonus_Constant()
+	return self.slow * self:GetStackCount()
+end
+
+--------------------------------------------------------------------------------
+-- Graphics & Animations
+function modifier_snapfire_lil_shredder_lua_debuff:GetEffectName()
+	-- return "particles/units/heroes/hero_snapfire/hero_snapfire_slow_debuff.vpcf"
+	return "particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
+end
+
+function modifier_snapfire_lil_shredder_lua_debuff:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+--------------------------------------------------------------------------------
+imba_snapfire_mortimer_kisses = imba_snapfire_mortimer_kisses or class({})
+LinkLuaModifier( "modifier_imba_snapfire_mortimer_kisses", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_snapfire_mortimer_kisses_thinker", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_snapfire_mortimer_kisses_debuff", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+
+--------------------------------------------------------------------------------
+-- Custom KV
+-- AOE Radius
+function imba_snapfire_mortimer_kisses:GetAOERadius()
+	return self:GetSpecialValueFor( "impact_radius" )
+end
+
+--------------------------------------------------------------------------------
+-- Ability Start
+function imba_snapfire_mortimer_kisses:OnSpellStart()
+	-- unit identifier
+	local caster = self:GetCaster()
+	local point = self:GetCursorPosition()
+
+	-- load data
+	local duration = self:GetDuration()
+
+	-- add modifier
+	caster:AddNewModifier(
+		caster, -- player source
+		self, -- ability source
+		"modifier_imba_snapfire_mortimer_kisses", -- modifier name
+		{
+			duration = duration,
+			pos_x = point.x,
+			pos_y = point.y,
+		} -- kv
+	)
+end
+
+--------------------------------------------------------------------------------
+-- Projectile
+function imba_snapfire_mortimer_kisses:OnProjectileHit( target, location )
+	if not target then return end
+
+	-- load data
+	local damage = self:GetSpecialValueFor( "damage_per_impact" )
+	local duration = self:GetSpecialValueFor( "burn_ground_duration" )
+	local impact_radius = self:GetSpecialValueFor( "impact_radius" )
+	local vision = self:GetSpecialValueFor( "projectile_vision" )
+
+	-- precache damage
+	local damageTable = {
+		-- victim = target,
+		attacker = self:GetCaster(),
+		damage = damage,
+		damage_type = self:GetAbilityDamageType(),
+		ability = self, --Optional.
+	}
+
+	local enemies = FindUnitsInRadius(
+		self:GetCaster():GetTeamNumber(),	-- int, your team number
+		location,	-- point, center point
+		nil,	-- handle, cacheUnit. (not known)
+		impact_radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
+		0,	-- int, flag filter
+		0,	-- int, order filter
+		false	-- bool, can grow cache
+	)
+
+	for _,enemy in pairs(enemies) do
+		damageTable.victim = enemy
+		ApplyDamage(damageTable)
+	end
+
+	-- start aura on thinker
+	target:AddNewModifier(
+		self:GetCaster(), -- player source
+		self, -- ability source
+		"modifier_imba_snapfire_mortimer_kisses_thinker", -- modifier name
+		{
+			duration = duration,
+			slow = 1,
+		} -- kv
+	)
+
+	-- destroy trees
+	GridNav:DestroyTreesAroundPoint( location, impact_radius, true )
+
+	-- create Vision
+	AddFOWViewer( self:GetCaster():GetTeamNumber(), location, vision, duration, false )
+
+	-- play effects
+	self:PlayEffects( target:GetOrigin() )
+end
+
+--------------------------------------------------------------------------------
+function imba_snapfire_mortimer_kisses:PlayEffects( loc )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_ultimate_impact.vpcf"
+	local particle_cast2 = "particles/units/heroes/hero_snapfire/hero_snapfire_ultimate_linger.vpcf"
+	local sound_cast = "Hero_Snapfire.MortimerBlob.Impact"
+
+	-- Create Particle
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, self:GetCaster() )
+	ParticleManager:SetParticleControl( effect_cast, 3, loc )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+
+	local effect_cast = ParticleManager:CreateParticle( particle_cast2, PATTACH_WORLDORIGIN, self:GetCaster() )
+	ParticleManager:SetParticleControl( effect_cast, 0, loc )
+	ParticleManager:SetParticleControl( effect_cast, 1, loc )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
+
+	-- Create Sound
+	local sound_location = "Hero_Snapfire.MortimerBlob.Impact"
+	EmitSoundOnLocationWithCaster( loc, sound_location, self:GetCaster() )
+end
+
+--------------------------------------------------------------------------------
+modifier_imba_snapfire_mortimer_kisses = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_imba_snapfire_mortimer_kisses:IsHidden()
+	return false
+end
+
+function modifier_imba_snapfire_mortimer_kisses:IsDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_mortimer_kisses:IsStunDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_mortimer_kisses:IsPurgable()
+	return false
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
+	-- references
+	self.min_range = self:GetAbility():GetSpecialValueFor( "min_range" )
+	self.max_range = self:GetAbility():GetCastRange( Vector(0,0,0), nil )
+	self.range = self.max_range-self.min_range
+	
+	self.min_travel = self:GetAbility():GetSpecialValueFor( "min_lob_travel_time" )
+	self.max_travel = self:GetAbility():GetSpecialValueFor( "max_lob_travel_time" )
+	self.travel_range = self.max_travel-self.min_travel
+	
+	self.projectile_speed = self:GetAbility():GetSpecialValueFor( "projectile_speed" )
+	local projectile_vision = self:GetAbility():GetSpecialValueFor( "projectile_vision" )
+	
+	self.turn_rate = self:GetAbility():GetSpecialValueFor( "turn_rate" )
+
+	if not IsServer() then return end
+
+	-- load data
+	local interval = self:GetAbility():GetDuration()/self:GetAbility():GetSpecialValueFor( "projectile_count" ) + 0.01 -- so it only have 8 projectiles instead of 9
+	self:SetValidTarget( Vector( kv.pos_x, kv.pos_y, 0 ) )
+	local projectile_name = "particles/units/heroes/hero_snapfire/snapfire_lizard_blobs_arced.vpcf"
+	local projectile_start_radius = 0
+	local projectile_end_radius = 0
+
+	-- precache projectile
+	self.info = {
+		-- Target = target,
+		Source = self:GetCaster(),
+		Ability = self:GetAbility(),	
+		
+		EffectName = projectile_name,
+		iMoveSpeed = self.projectile_speed,
+		bDodgeable = false,                           -- Optional
+	
+		vSourceLoc = self:GetCaster():GetOrigin(),                -- Optional (HOW)
+		
+		bDrawsOnMinimap = false,                          -- Optional
+		bVisibleToEnemies = true,                         -- Optional
+		bProvidesVision = true,                           -- Optional
+		iVisionRadius = projectile_vision,                              -- Optional
+		iVisionTeamNumber = self:GetCaster():GetTeamNumber()        -- Optional
+	}
+
+	-- Start interval
+	self:StartIntervalThink( interval )
+	self:OnIntervalThink()
+end
+
+function modifier_imba_snapfire_mortimer_kisses:OnRefresh( kv )
+	
+end
+
+function modifier_imba_snapfire_mortimer_kisses:OnRemoved()
+end
+
+function modifier_imba_snapfire_mortimer_kisses:OnDestroy()
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_imba_snapfire_mortimer_kisses:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ORDER,
+
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT,
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_imba_snapfire_mortimer_kisses:OnOrder( params )
+	if params.unit~=self:GetParent() then return end
+
+	-- right click, switch position
+	if 	params.order_type==DOTA_UNIT_ORDER_MOVE_TO_POSITION then
+		self:SetValidTarget( params.new_pos )
+	elseif 
+		params.order_type==DOTA_UNIT_ORDER_MOVE_TO_TARGET or
+		params.order_type==DOTA_UNIT_ORDER_ATTACK_TARGET
+	then
+		self:SetValidTarget( params.target:GetOrigin() )
+
+	-- stop or hold
+	elseif 
+		params.order_type==DOTA_UNIT_ORDER_STOP or
+		params.order_type==DOTA_UNIT_ORDER_HOLD_POSITION
+	then
+		self:Destroy()
+	end
+end
+
+function modifier_imba_snapfire_mortimer_kisses:GetModifierMoveSpeed_Limit()
+	return 0.1
+end
+
+function modifier_imba_snapfire_mortimer_kisses:GetModifierTurnRate_Percentage()
+	return -self.turn_rate
+end
+
+--------------------------------------------------------------------------------
+-- Status Effects
+function modifier_imba_snapfire_mortimer_kisses:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+
+	return state
+end
+
+--------------------------------------------------------------------------------
+-- Interval Effects
+function modifier_imba_snapfire_mortimer_kisses:OnIntervalThink()
+	-- create target thinker
+	local thinker = CreateModifierThinker(
+		self:GetParent(), -- player source
+		self:GetAbility(), -- ability source
+		"modifier_imba_snapfire_mortimer_kisses_thinker", -- modifier name
+		{ travel_time = self.travel_time }, -- kv
+		self.target,
+		self:GetParent():GetTeamNumber(),
+		false
+	)
+
+	-- set projectile
+	self.info.iMoveSpeed = self.vector:Length2D()/self.travel_time
+	self.info.Target = thinker
+
+	-- launch projectile
+	ProjectileManager:CreateTrackingProjectile( self.info )
+
+	-- create FOW
+	AddFOWViewer( self:GetParent():GetTeamNumber(), thinker:GetOrigin(), 100, 1, false )
+
+	-- play sound
+	local sound_cast = "Hero_Snapfire.MortimerBlob.Launch"
+	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+--------------------------------------------------------------------------------
+-- Helper
+function modifier_imba_snapfire_mortimer_kisses:SetValidTarget( location )
+	local origin = self:GetParent():GetOrigin()
+	local vec = location-origin
+	local direction = vec
+	direction.z = 0
+	direction = direction:Normalized()
+
+	if vec:Length2D()<self.min_range then
+		vec = direction * self.min_range
+	elseif vec:Length2D()>self.max_range then
+		vec = direction * self.max_range
+	end
+
+	self.target = GetGroundPosition( origin + vec, nil )
+	self.vector = vec
+	self.travel_time = (vec:Length2D()-self.min_range)/self.range * self.travel_range + self.min_travel
+end
+
+--------------------------------------------------------------------------------
+modifier_imba_snapfire_mortimer_kisses_debuff = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_imba_snapfire_mortimer_kisses_debuff:IsHidden()
+	return false
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:IsDebuff()
+	return true
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:IsStunDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:IsPurgable()
+	return true
+end
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_imba_snapfire_mortimer_kisses_debuff:OnCreated( kv )
+	-- references
+	self.slow = -self:GetAbility():GetSpecialValueFor( "move_slow_pct" )
+	self.dps = self:GetAbility():GetSpecialValueFor( "burn_damage" )
+	local interval = self:GetAbility():GetSpecialValueFor( "burn_interval" )
+
+	if not IsServer() then return end
+
+	-- precache damage
+	self.damageTable = {
+		victim = self:GetParent(),
+		attacker = self:GetCaster(),
+		damage = self.dps*interval,
+		damage_type = self:GetAbility():GetAbilityDamageType(),
+		ability = self:GetAbility(), --Optional.
+	}
+
+	-- Start interval
+	self:StartIntervalThink( interval )
+	self:OnIntervalThink()
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:OnRefresh( kv )
+	
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:OnRemoved()
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:OnDestroy()
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_imba_snapfire_mortimer_kisses_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow
+end
+
+--------------------------------------------------------------------------------
+-- Interval Effects
+function modifier_imba_snapfire_mortimer_kisses_debuff:OnIntervalThink()
+	-- apply damage
+	ApplyDamage( self.damageTable )
+
+	-- play overhead
+end
+
+--------------------------------------------------------------------------------
+-- Graphics & Animations
+function modifier_imba_snapfire_mortimer_kisses_debuff:GetEffectName()
+	return "particles/units/heroes/hero_snapfire/hero_snapfire_burn_debuff.vpcf"
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:GetStatusEffectName()
+	return "particles/status_fx/status_effect_snapfire_magma.vpcf"
+end
+
+function modifier_imba_snapfire_mortimer_kisses_debuff:StatusEffectPriority()
+	return MODIFIER_PRIORITY_NORMAL
+end
+
+--------------------------------------------------------------------------------
+modifier_imba_snapfire_mortimer_kisses_thinker = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+
+--------------------------------------------------------------------------------
+-- Initializations
+function modifier_imba_snapfire_mortimer_kisses_thinker:OnCreated( kv )
+	-- references
+	self.max_travel = self:GetAbility():GetSpecialValueFor( "max_lob_travel_time" )
+	self.radius = self:GetAbility():GetSpecialValueFor( "impact_radius" )
+	self.linger = self:GetAbility():GetSpecialValueFor( "burn_linger_duration" )
+
+	if not IsServer() then return end
+
+	-- dont start aura right off
+	self.start = false
+
+	-- create aoe finder particle
+	self:PlayEffects( kv.travel_time )
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:OnRefresh( kv )
+	-- references
+	self.max_travel = self:GetAbility():GetSpecialValueFor( "max_lob_travel_time" )
+	self.radius = self:GetAbility():GetSpecialValueFor( "impact_radius" )
+	self.linger = self:GetAbility():GetSpecialValueFor( "burn_linger_duration" )
+
+	if not IsServer() then return end
+
+	-- start aura
+	self.start = true
+
+	-- stop aoe finder particle
+	self:StopEffects()
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:OnRemoved()
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:OnDestroy()
+	if not IsServer() then return end
+	UTIL_Remove( self:GetParent() )
+end
+
+--------------------------------------------------------------------------------
+-- Aura Effects
+function modifier_imba_snapfire_mortimer_kisses_thinker:IsAura()
+	return self.start
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:GetModifierAura()
+	return "modifier_snapfire_mortimer_kisses_lua_debuff"
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:GetAuraRadius()
+	return self.radius
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:GetAuraDuration()
+	return self.linger
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:PlayEffects( time )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_snapfire/hero_snapfire_ultimate_calldown.vpcf"
+
+	-- Create Particle
+	self.effect_cast = ParticleManager:CreateParticleForTeam( particle_cast, PATTACH_CUSTOMORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber() )
+	ParticleManager:SetParticleControl( self.effect_cast, 0, self:GetParent():GetOrigin() )
+	ParticleManager:SetParticleControl( self.effect_cast, 1, Vector( self.radius, 0, -self.radius*(self.max_travel/time) ) )
+	ParticleManager:SetParticleControl( self.effect_cast, 2, Vector( time, 0, 0 ) )
+end
+
+function modifier_imba_snapfire_mortimer_kisses_thinker:StopEffects()
+	ParticleManager:DestroyParticle( self.effect_cast, true )
+	ParticleManager:ReleaseParticleIndex( self.effect_cast )
 end

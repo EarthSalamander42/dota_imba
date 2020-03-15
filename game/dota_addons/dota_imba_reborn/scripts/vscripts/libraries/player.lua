@@ -920,11 +920,17 @@ CDOTA_BaseNPC.SOUNDS_OVERRIDE = {}
 
 -- Call custom functions whenever EmitSound is being called anywhere
 original_EmitSound = CDOTA_BaseNPC.EmitSound
-CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
+CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 --	print("Create Particle (override):", sSoundName)
 
+	local caster = self
+
+	if hCaster then
+		caster = hCaster
+	end
+
 	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == self then
+		if v.asset == sSoundName and v.parent == caster then
 			sSoundName = v.modifier
 			break
 		end

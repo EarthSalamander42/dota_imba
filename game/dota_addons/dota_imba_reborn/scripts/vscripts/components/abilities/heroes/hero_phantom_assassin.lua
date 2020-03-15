@@ -429,7 +429,7 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 		ParticleManager:ReleaseParticleIndex(blink_pfx)
 
 		-- Fire blink end sound
-		self.target:EmitSound("Hero_PhantomAssassin.Strike.End")
+		self.target:EmitSound("Hero_PhantomAssassin.Strike.End", self:GetCaster())
 
 		-- Apply coup de grace modifier on caster it was an enemy
 		if self.target:GetTeamNumber() ~= self.caster:GetTeamNumber() then
@@ -945,7 +945,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 		end
 
 		if RollPseudoRandom(crit_chance_total, self) then
-			StartSoundEvent(self:GetParent().coup_de_grace_sound, target)
+			target:EmitSound("Hero_PhantomAssassin.CoupDeGrace", self:GetCaster())
 			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
 				"phantom_assassin_phass_ability_coupdegrace_02",
 				"phantom_assassin_phass_ability_coupdegrace_03",
@@ -1014,7 +1014,7 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 					Notifications:BottomToAll({text = "FATALITY!", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
 
 					-- Play global sounds
---					self:GetCaster():EmitSound(attacker.coup_de_grace_sound)
+					target:EmitSound("Hero_PhantomAssassin.CoupDeGrace", self:GetCaster())
 					self:GetCaster():EmitSound("Imba.PhantomAssassinFatality")
 
 					if self:GetParent():HasModifier("modifier_phantom_assassin_arcana") then

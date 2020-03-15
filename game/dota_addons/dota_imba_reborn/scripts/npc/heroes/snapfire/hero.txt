@@ -1,0 +1,28 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Snapfire
+	//=================================================================================================================
+	"npc_dota_hero_snapfire"
+	{
+		"IsImba"					"1"
+
+		"Ability1"		"imba_snapfire_scatterblast"
+		"Ability2"		"imba_snapfire_firesnap_cookie"
+		"Ability3"		"imba_snapfire_lil_shredder"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_snapfire_mortimer_kisses"
+
+//		"Ability10"		"special_bonus_strength_10"
+//		"Ability11"		"special_bonus_agility_6"
+//		"Ability12"		"special_bonus_attack_speed_30"
+//		"Ability13"		"special_bonus_lifesteal_20"
+//		"Ability14"		"special_bonus_imba_slark_pounce_duration"
+//		"Ability15"		"special_bonus_imba_slark_dark_pact_damage"
+//		"Ability16"		"special_bonus_imba_slark_shadow_dance_duration"
+//		"Ability17"		"special_bonus_imba_slark_essence_shift_duration"
+	}
+}
