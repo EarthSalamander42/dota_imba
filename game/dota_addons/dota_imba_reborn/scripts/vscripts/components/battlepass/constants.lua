@@ -14,7 +14,7 @@ DONATOR_COLOR[10] = {255, 255, 255}
 CustomNetTables:SetTableValue("game_options", "donator_colors", DONATOR_COLOR)
 
 UNIQUE_DONATOR_COMPANION = {}
-UNIQUE_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz"
+-- UNIQUE_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz" -- EarthSalamander
 UNIQUE_DONATOR_COMPANION["76561198094835750"] = "npc_donator_companion_zonnoz"
 UNIQUE_DONATOR_COMPANION["76561198003571172"] = "npc_donator_companion_baumi"
 UNIQUE_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_icefrog"

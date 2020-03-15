@@ -10,13 +10,14 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			require('components/battlepass/donator_settings')
 			require('components/battlepass/donator')
 			require('components/battlepass/experience')
+			require('components/battlepass/keyvalues/items_game')
 
 			if CUSTOM_GAME_TYPE ~= "POG" then
 				require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
 				Battlepass:Init()
 			end
 		end
-
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		Battlepass:GetPlayerInfoXP()
 	end
 end, nil)
@@ -62,9 +63,13 @@ ListenToGameEvent('npc_spawned', function(event)
 
 		npc.bp_init = true
 
-		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
-			player_id = npc:GetPlayerID(),
-			hero_name = string.gsub(npc:GetUnitName(), "npc_dota_hero_", ""),
-		})
+		local herolist = CustomNetTables:GetTableValue("hero_selection", "herolist")
+
+		if herolist and herolist.customlist and herolist.customlist[npc:GetUnitName()] then
+			CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+				player_id = npc:GetPlayerID(),
+				icon_path = npc:GetUnitName(),
+			})
+		end
 	end
 end, nil)

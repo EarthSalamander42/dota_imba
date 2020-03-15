@@ -14,12 +14,6 @@ LinkLuaModifier("modifier_imba_stifling_dagger_silence", "components/abilities/h
 LinkLuaModifier("modifier_imba_stifling_dagger_bonus_damage", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stifling_dagger_dmg_reduction", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
-function imba_phantom_assassin_stifling_dagger:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "phantom_assassin_stifling_dagger" end
-	return "phantom_assassin_arcana_stifling_dagger"
-end
-
 function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	local caster 	= self:GetCaster()
 	local target 	= self:GetCursorTarget()
@@ -151,7 +145,7 @@ function imba_phantom_assassin_stifling_dagger:LaunchDagger(enemy)
 	if enemy == nil then return end
 
 	local dagger_projectile = {
-		EffectName = self:GetCaster().stifling_dagger_effect,
+		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		Dodgeable = true,
 		Ability = self,
 		ProvidesVision = true,
@@ -242,7 +236,7 @@ function modifier_imba_stifling_dagger_slow:OnCreated()
 		local caster = self:GetCaster()
 		local dagger_vision = self:GetAbility():GetSpecialValueFor("dagger_vision")
 		local duration = self:GetAbility():GetSpecialValueFor("slow_duration")
-		local stifling_dagger_modifier_slow_particle = ParticleManager:CreateParticle(caster.stifling_dagger_debuff_effect, PATTACH_ABSORIGIN_FOLLOW, self.target)
+		local stifling_dagger_modifier_slow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), caster)
 		ParticleManager:ReleaseParticleIndex(stifling_dagger_modifier_slow_particle)
 
 		-- Add vision for the duration
@@ -273,7 +267,7 @@ function modifier_imba_stifling_dagger_slow:IsPurgable()	return true end
 modifier_imba_stifling_dagger_silence = class({})
 
 function modifier_imba_stifling_dagger_silence:OnCreated()
-	self.stifling_dagger_modifier_silence_particle = ParticleManager:CreateParticle(self:GetCaster().stifling_dagger_silence_effect, PATTACH_OVERHEAD_FOLLOW, self.target)
+	self.stifling_dagger_modifier_silence_particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_silenced.vpcf", PATTACH_OVERHEAD_FOLLOW, self.target, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(self.stifling_dagger_modifier_silence_particle)
 end
 
@@ -337,12 +331,6 @@ end
 
 imba_phantom_assassin_phantom_strike = class({})
 
-function imba_phantom_assassin_phantom_strike:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "phantom_assassin_phantom_strike" end
-	return "phantom_assassin_arcana_phantom_strike"
-end
-
 LinkLuaModifier("modifier_imba_phantom_strike", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 function imba_phantom_assassin_phantom_strike:IsNetherWardStealable() return false end
@@ -398,7 +386,7 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 			end
 		end
 
-		local blink_start_pfx = ParticleManager:CreateParticle(self.caster.phantom_strike_start_effect, PATTACH_ABSORIGIN, self.caster)
+		local blink_start_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf", PATTACH_ABSORIGIN, self.caster, self.caster)
 		ParticleManager:ReleaseParticleIndex(blink_start_pfx)
 
 		-- I'm guessing this was used for attacking enemies in between initial position and the target but was removed so...let's bring it back
@@ -437,7 +425,7 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 		ProjectileManager:ProjectileDodge(self.caster)
 
 		-- Fire blink particle
-		local blink_pfx = ParticleManager:CreateParticle(self.caster.phantom_strike_end_effect, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+		local blink_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 		ParticleManager:ReleaseParticleIndex(blink_pfx)
 
 		-- Fire blink end sound
@@ -545,12 +533,6 @@ LinkLuaModifier("modifier_imba_blur", "components/abilities/heroes/hero_phantom_
 LinkLuaModifier("modifier_imba_blur_blur", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
 LinkLuaModifier("modifier_imba_blur_speed", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_smoke", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
-
-function imba_phantom_assassin_blur:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "phantom_assassin_blur" end
-	return "phantom_assassin_arcana_blur"
-end
 
 function imba_phantom_assassin_blur:GetIntrinsicModifierName()
 	return "modifier_imba_blur"
@@ -909,12 +891,6 @@ function imba_phantom_assassin_coup_de_grace:GetIntrinsicModifierName()
 	return "modifier_imba_coup_de_grace"
 end
 
-function imba_phantom_assassin_coup_de_grace:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "phantom_assassin_coup_de_grace" end
-	return "phantom_assassin_arcana_coup_de_grace"
-end
-
 -------------------------------------------
 -- Coup De Grace modifier
 -------------------------------------------
@@ -1032,7 +1008,7 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 				-- Global effect when killing a real hero
 				if target:IsRealHero() then
 					-- Play screen blood particle
-					local blood_pfx = ParticleManager:CreateParticle(attacker.fatality_screen_blood_splatter, PATTACH_EYES_FOLLOW, target)
+					local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target, attacker)
 
 					-- Play fatality message
 					Notifications:BottomToAll({text = "FATALITY!", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
@@ -1045,7 +1021,7 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 						self:KillingBlowDamage("Fatality!")
 					end
 
-					local coup_pfx = ParticleManager:CreateParticle(self:GetParent().coup_de_grace_crit_effect, PATTACH_ABSORIGIN_FOLLOW, target)
+					local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self.caster)
 					ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControl(coup_pfx, 1, target:GetAbsOrigin())
 					ParticleManager:SetParticleControlOrientation(coup_pfx, 1, self:GetParent():GetForwardVector() * (-1), self:GetParent():GetRightVector(), self:GetParent():GetUpVector())
@@ -1057,7 +1033,7 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 
 			if self.crit_strike ~= false then
 				-- If that attack was marked as a critical strike, apply the particles
-				local coup_pfx = ParticleManager:CreateParticle(self:GetParent().coup_de_grace_crit_effect, PATTACH_ABSORIGIN_FOLLOW, target)
+				local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self.caster)
 				ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControl(coup_pfx, 1, target:GetAbsOrigin())
 				ParticleManager:SetParticleControlOrientation(coup_pfx, 1, self:GetParent():GetForwardVector() * (-1), self:GetParent():GetRightVector(), self:GetParent():GetUpVector())
@@ -1231,6 +1207,8 @@ function modifier_phantom_assassin_gravestone:OnIntervalThink()
 		end
 	end
 end
+
+LinkLuaModifier("modifier_phantom_assassin_arcana", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
 modifier_phantom_assassin_arcana = modifier_phantom_assassin_arcana or class({})
 

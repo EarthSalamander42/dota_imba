@@ -48,7 +48,7 @@ function modifier_imba_blazing_fire:OnCreated( params )
 		self.counter = 10
 		local parent = self:GetParent()
 		self:StartIntervalThink(params.tick_duration)
-		self.particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_fiery_soul.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self:GetCaster())
+		self.particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_fiery_soul.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 		ParticleManager:SetParticleControlEnt(self.particle_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle_fx, 1, Vector(1,0,0))
 	end
@@ -94,12 +94,6 @@ end
 
 imba_lina_dragon_slave = class({})
 
-function imba_lina_dragon_slave:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "lina_dragon_slave" end
-	return "custom/imba_lina_dragon_slave_arcana_"..self:GetCaster().arcana_style
-end
-
 function imba_lina_dragon_slave:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_lina_10")
 end
@@ -142,15 +136,10 @@ function imba_lina_dragon_slave:OnSpellStart()
 		local velocity = direction * speed
 		local primary_velocity = primary_direction * speed
 
-		local particle_effect = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-		if caster.dragon_slave_effect then
-			particle_effect = caster.dragon_slave_effect
-		end
-
 		local projectile =
 			{
 				Ability				= self,
-				EffectName			= particle_effect,
+				EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
 				vSpawnOrigin		= caster_loc,
 				fDistance			= primary_distance,
 				fStartRadius		= width_initial,
@@ -208,7 +197,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 				local projectile =
 					{
 						Ability				= self,
-						EffectName			= particle_effect,
+						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
 						vSpawnOrigin		= target_loc,
 						fDistance			= secondary_distance,
 						fStartRadius		= secondary_width_initial,
@@ -239,7 +228,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 				local projectile =
 					{
 						Ability				= self,
-						EffectName			= particle_effect,
+						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
 						vSpawnOrigin		= new_loc,
 						fDistance			= primary_distance,
 						fStartRadius		= width_initial,
@@ -265,22 +254,30 @@ end
 
 function imba_lina_dragon_slave:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
-		local caster = self:GetCaster()
-		local ability_laguna = caster:FindAbilityByName("imba_lina_laguna_blade")
-		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		local ability_laguna = self:GetCaster():FindAbilityByName("imba_lina_laguna_blade")
+
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+		ParticleManager:SetParticleControl(pfx, 0, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(pfx, 1, target:GetAbsOrigin())
+
+		ApplyDamage({victim = target, attacker = self:GetCaster(), ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+
 		-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
-		if caster:HasTalent("special_bonus_imba_lina_5") then
+		if self:GetCaster():HasTalent("special_bonus_imba_lina_5") then
 			local blaze_burn = target:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
+
 			if blaze_burn then
 				blaze_burn:ForceRefresh()
 			else
-				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+				local fiery_soul = self:GetCaster():FindAbilityByName("imba_lina_fiery_soul")
 				if fiery_soul:GetLevel() > 0 then
-					target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+					target:AddNewModifier(self:GetCaster(), fiery_soul, "modifier_imba_fiery_soul_blaze_burn",{duration = self:GetCaster():FindTalentValue("special_bonus_imba_lina_5","duration")})
 				end
 			end
 		end
+
 		target:RemoveModifierByName("modifier_imba_blazing_fire")
+
 		if ability_laguna and not ability_laguna:IsCooldownReady() then
 			local cdr
 			if target:IsHero() and not target:IsIllusion() then
@@ -293,6 +290,7 @@ function imba_lina_dragon_slave:OnProjectileHit_ExtraData(target, location, Extr
 			ability_laguna:StartCooldown(current_cooldown - cdr)
 		end
 	end
+
 	return false
 end
 
@@ -396,7 +394,7 @@ function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay,
 	local caster = self:GetCaster()
 
 	Timers:CreateTimer(delay, function()
-		local cast_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, caster, caster:GetTeam())
+		local cast_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, caster, caster:GetTeam(), caster)
 		ParticleManager:SetParticleControl(cast_pfx, 0, position)
 		ParticleManager:SetParticleControl(cast_pfx, 1, Vector(radius * 2, 0, 0))
 		ParticleManager:ReleaseParticleIndex(cast_pfx)
@@ -404,7 +402,7 @@ function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay,
 
 	Timers:CreateTimer((delay+cast_delay), function()
 		-- Emit particle + sound
-		local blast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		local blast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_CUSTOMORIGIN, nil, caster)
 		ParticleManager:SetParticleControl(blast_pfx, 0, position)
 		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(radius, 0, 0))
 		ParticleManager:ReleaseParticleIndex(blast_pfx)
@@ -473,7 +471,6 @@ function modifier_imba_lsa_talent_magma:OnCreated(kv)
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
-		self.particle_effect = "particles/hero/lina/from_the_ash.vpcf"
 
 		-- Talent specials
 		self.radius = kv.radius
@@ -482,7 +479,7 @@ function modifier_imba_lsa_talent_magma:OnCreated(kv)
 		self.tick_interval = self.caster:FindTalentValue("special_bonus_imba_lina_4", "tick_interval")
 
 		-- Play magma particle effect, assign to modifier
-		local particle_magma = ParticleManager:CreateParticle(self.particle_effect, PATTACH_WORLDORIGIN, nil)
+		local particle_magma = ParticleManager:CreateParticle("particles/hero/lina/from_the_ash.vpcf", PATTACH_WORLDORIGIN, nil, caster)
 		ParticleManager:SetParticleControl(particle_magma, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_magma, 1, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_magma, 2, Vector(1,0,0))
@@ -541,12 +538,6 @@ function imba_lina_fiery_soul:GetIntrinsicModifierName()
 	return "modifier_imba_fiery_soul"
 end
 
-function imba_lina_fiery_soul:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "lina_fiery_soul" end
-	return "custom/imba_lina_fiery_soul_arcana_"..self:GetCaster().arcana_style
-end
-
 function imba_lina_fiery_soul:GetCastRange(location, target)	
 	return self:GetSpecialValueFor("immolation_aoe") - self:GetCaster():GetCastRangeBonus()
 end
@@ -583,14 +574,14 @@ function imba_lina_fiery_soul:OnSpellStart()
 		local max_damage_aoe		= self:GetSpecialValueFor("max_damage_aoe")
 
 		-- Emit particle + sound
-		EmitSoundOnLocationWithCaster( caster_loc, "Hero_Phoenix.SuperNova.Explode", caster )
+		EmitSoundOnLocationWithCaster(caster_loc, "Hero_Phoenix.SuperNova.Explode", caster)
 
-		local blast_pfx = ParticleManager:CreateParticle( "particles/hero/lina/lina_immolation.vpcf", PATTACH_CUSTOMORIGIN, nil )
-		ParticleManager:SetParticleControl( blast_pfx, 0, caster_loc )
-		ParticleManager:SetParticleControl( blast_pfx, 1, Vector(1.5,1.5,1.5) )
-		ParticleManager:SetParticleControl( blast_pfx, 3, caster_loc )
-		ParticleManager:SetParticleControl( blast_pfx, 13, Vector(immolation_aoe, 0, 0))
-		ParticleManager:SetParticleControl( blast_pfx, 15, caster_loc)
+		local blast_pfx = ParticleManager:CreateParticle("particles/hero/lina/lina_immolation.vpcf", PATTACH_CUSTOMORIGIN, nil, caster)
+		ParticleManager:SetParticleControl(blast_pfx, 0, caster_loc)
+		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(1.5,1.5,1.5))
+		ParticleManager:SetParticleControl(blast_pfx, 3, caster_loc)
+		ParticleManager:SetParticleControl(blast_pfx, 13, Vector(immolation_aoe, 0, 0))
+		ParticleManager:SetParticleControl(blast_pfx, 15, caster_loc)
 		ParticleManager:ReleaseParticleIndex(blast_pfx)
 		-- Destroys trees
 		GridNav:DestroyTreesAroundPoint(caster_loc, immolation_aoe, false)
@@ -598,7 +589,7 @@ function imba_lina_fiery_soul:OnSpellStart()
 		-- Deal damage
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, immolation_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
-			local distance = ( caster_loc - enemy:GetAbsOrigin() ):Length2D()
+			local distance = (caster_loc - enemy:GetAbsOrigin()):Length2D()
 			local immolation_damage
 
 			-- Deal the damage based on the target's distance
@@ -711,7 +702,7 @@ function modifier_imba_fiery_soul_counter:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		self:SetStackCount(1)
-		self.particle = ParticleManager:CreateParticle("particles/hero/lina/fiery_soul.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		self.particle = ParticleManager:CreateParticle("particles/hero/lina/fiery_soul.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 		ParticleManager:SetParticleControl(self.particle, 0, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.particle, 1, caster, PATTACH_POINT_FOLLOW, nil, caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle, 3, Vector(1,0,0))
@@ -845,7 +836,7 @@ function modifier_imba_fiery_soul_blaze_burn:OnCreated()
 
 	if IsServer() then
 		-- Add and attach flaming particle
-		self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent)
+		self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent, self.caster)
 		ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 
 		self:AddParticle(self.particle_flame_fx, false, false, -1, false, false)
@@ -890,10 +881,6 @@ end
 
 imba_lina_laguna_blade = class({})
 
-function imba_lina_laguna_blade:GetAbilityTextureName()
-	return "lina_laguna_blade"
-end
-
 function imba_lina_laguna_blade:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -910,7 +897,7 @@ function imba_lina_laguna_blade:OnSpellStart()
 
 		-- Play the cast sound + fire particle
 		caster:EmitSound("Ability.LagunaBlade")
-		local blade_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		local blade_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster, caster)
 		ParticleManager:SetParticleControlEnt(blade_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster_loc, true)
 		ParticleManager:SetParticleControlEnt(blade_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
 		ParticleManager:ReleaseParticleIndex(blade_pfx)
@@ -953,7 +940,7 @@ function imba_lina_laguna_blade:OnSpellStart()
 			-- Bounce on remaining targets
 			Timers:CreateTimer(bounce_delay, function()
 				for i=1, math.min(#enemies,bounce_amount),1 do
-					local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
+					local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster, caster)
 					ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
 					ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(bounce_pfx)

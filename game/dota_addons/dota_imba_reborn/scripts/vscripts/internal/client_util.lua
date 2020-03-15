@@ -92,14 +92,34 @@ function C_DOTA_BaseNPC:IsInRiver()
 	end
 end
 
--- Commenting out all of these custom functions for now because they're causing mass errors
--- -- Call custom functions whenever GetAbilityTextureName is being called anywhere
--- original_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
--- C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
-	-- -- call the original function
-	-- local response = original_GetAbilityTextureName(self)
+-- Call custom functions whenever GetAbilityTextureName is being called anywhere
+original_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
+C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
+	-- call the original function
+	local response = original_GetAbilityTextureName(self)
+	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
 
--- --	print("GetAbilityTextureName (override):", response)
+	if override_image then
+--		print("GetAbilityTextureName (override):", response, override_image["1"])
+		response = override_image["1"]
+	end
 
-	-- return response
--- end
+	return response
+end
+
+--[[
+-- Call custom functions whenever GetHeroEffectName is being called anywhere
+original_GetHeroEffectName = C_DOTA_Ability_Lua.GetHeroEffectName
+C_DOTA_Ability_Lua.GetHeroEffectName = function(self)
+	-- call the original function
+	local response = original_GetHeroEffectName(self)
+	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	if override_image then
+--		print("GetHeroEffectName (override):", response, override_image["1"])
+		response = override_image["1"]
+	end
+
+	return response
+end
+--]]

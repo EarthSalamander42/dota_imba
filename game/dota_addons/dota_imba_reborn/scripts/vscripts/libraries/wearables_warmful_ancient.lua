@@ -1782,11 +1782,10 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 
 --	print("Default Wearables:")
 	for i, child in ipairs(hUnit:GetChildren()) do
+--		print(child)
 		if IsValidEntity(child) and child:GetClassname() == "dota_item_wearable" then
 			if child:GetModelName() ~= "" then
-				if IsInToolsMode() then
---					print("Wearable:", child, child:GetModelName())
-				end
+--				print("Wearable:", child, child:GetModelName())
 
 				for key, value in pairs(Wearable.items_game["items"]) do
 					if value["model_player"] == child:GetModelName() then
@@ -1799,12 +1798,15 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 --						print(key)
 --						print(value["model_player"])
 --						print(item_slot)
+--						print(sSlotName)
 
-						if not hUnit.Slots[item_slot] then
+						if not hUnit.Slots[item_slot] or sSlotName == item_slot then
 --							print("Remove wearable:", child:GetModelName())
 							UTIL_Remove(child)
 
-							Wearable:_WearProp(hUnit, tonumber(key), item_slot)
+							if sSlotName ~= item_slot then
+								Wearable:_WearProp(hUnit, tonumber(key), item_slot)
+							end
 						end
 
 						break

@@ -198,7 +198,8 @@
 {
 	height: 40px;
 	margin-bottom: 2px;
-	background-image: url("file://{images}/custom_game/flyout/rowbg.png");
+/*	background-image: url("file://{images}/custom_game/flyout/rowbg.png"); */
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
 	background-size: 100% 100%;
 	margin-bottom: 3.5px;
 	overflow: clip;
@@ -519,9 +520,8 @@ align: center top;
 {
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 16px;
-	color: #fefeff;
+	color: #c3b9d8;
 	align: center center;
-	opacity: 0.5;
 }
 
 #ImbaXPEarned0,

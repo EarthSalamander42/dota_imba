@@ -1,7 +1,19 @@
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
-		api:RegisterGame()
+		api:RegisterGame(function(data)
+			for k, v in pairs(data.players) do
+				local payload = {
+					steamid = tostring(k),
+				}
+
+				api:Request("armory", function(data)
+					if api.players[k] then
+						api.players[k]["armory"] = data
+					end
+				end, nil, "POST", payload);
+			end
+		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
 

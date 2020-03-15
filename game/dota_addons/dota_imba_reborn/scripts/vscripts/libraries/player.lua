@@ -799,48 +799,159 @@ function CDOTA_BaseNPC:GetIllusionBounty()
 	return self:GetLevel() * 2
 end
 
--- Commenting out all of these custom functions for now because they're causing mass errors
--- -- Call custom functions whenever CreateParticle is being called anywhere
--- original_CreateParticle = CScriptParticleManager.CreateParticle
--- CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent)
--- --	print("Create Particle (override):", sParticleName, iAttachType, hParent)
+CScriptParticleManager.PARTICLES_OVERRIDE = {}
 
-	-- -- call the original function
-	-- local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
+-- Call custom functions whenever CreateLinearProjectile is being called anywhere
+original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
+ProjectileManager.CreateLinearProjectile = function(self, hHandle)
+--	print("CreateLinearProjectile (override):", hHandle)
 
-	-- return response
--- end
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
+--			print("Create Particle (override):", hHandle)
+			hHandle.EffectName = v.modifier
+--			print("New particle:", hHandle.EffectName)
+			break
+		end
+	end
 
--- -- Call custom functions whenever CreateIllusions is being called anywhere
--- original_CreateIllusions = CreateIllusions
--- CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
--- --	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+	-- call the original function
+	local response = original_CreateLinearProjectile(self, hHandle)
 
-	-- -- call the original function
-	-- local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+	return response
+end
 
-	-- for i = 1, #response do
-		-- local illusion = response[i]
+-- Call custom functions whenever CreateTrackingProjectile is being called anywhere
+original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
+ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
+--	print("CreateTrackingProjectile (override):", hHandle)
 
-		-- if hModifierKeys.duration and type(hModifierKeys.duration) == "number" then
-			-- print("Add fail-safe kill target in "..hModifierKeys.duration.." seconds.")
-			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = hModifierKeys.duration})
-		-- end
-	-- end
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
+--			print("Create Particle (override):", hHandle)
+			hHandle.EffectName = v.modifier
+--			print("New particle:", hHandle.EffectName)
+			break
+		end
+	end
 
-	-- return response
--- end
+	-- call the original function
+	local response = original_CreateTrackingProjectile(self, hHandle)
 
--- -- Call custom functions whenever EmitSound is being called anywhere
--- original_EmitSound = CDOTA_BaseNPC.EmitSound
--- CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
--- --	print("Create Particle (override):", sSoundName)
+	return response
+end
 
-	-- -- call the original function
-	-- local response = original_EmitSound(self, sSoundName)
+-- Call custom functions whenever CreateParticle is being called anywhere
+original_CreateParticle = CScriptParticleManager.CreateParticle
+CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
 
-	-- return response
--- end
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+--			print("Create Particle (override):", sParticleName, iAttachType, hParent, hCaster)
+			sParticleName = v.modifier
+--			print("New particle:", sParticleName)
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
+
+	return response
+end
+
+-- Call custom functions whenever CreateParticleForTeam is being called anywhere
+original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
+CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
+
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+			sParticleName = v.modifier
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_CreateParticleForTeam(self, sParticleName, iAttachType, hParent, iTeamNumber)
+
+	return response
+end
+
+-- Call custom functions whenever CreateParticleForPlayer is being called anywhere
+original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlayer
+CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer, hCaster)
+--	print("Create Particle (override):", sParticleName, iAttachType, hParent, hPlayer, hCaster)
+
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == sParticleName and v.parent == hCaster then
+			sParticleName = v.modifier
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_CreateParticleForPlayer(self, sParticleName, iAttachType, hParent, hPlayer)
+
+	return response
+end
+
+-- Call custom functions whenever CreateIllusions is being called anywhere
+original_CreateIllusions = CreateIllusions
+CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+--	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+
+	-- call the original function
+	local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
+
+	for i = 1, #response do
+		local illusion = response[i]
+
+		if hModifierKeys.duration and type(hModifierKeys.duration) == "number" then
+			print("Add fail-safe kill target in "..hModifierKeys.duration.." seconds.")
+			illusion:AddNewModifier(hOwner, nil, "modifier_kill", {duration = hModifierKeys.duration})
+		end
+	end
+
+	return response
+end
+
+CDOTA_BaseNPC.SOUNDS_OVERRIDE = {}
+
+-- Call custom functions whenever EmitSound is being called anywhere
+original_EmitSound = CDOTA_BaseNPC.EmitSound
+CDOTA_BaseNPC.EmitSound = function(self, sSoundName)
+--	print("Create Particle (override):", sSoundName)
+
+	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
+		if v.asset == sSoundName and v.parent == self then
+			sSoundName = v.modifier
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_EmitSound(self, sSoundName)
+
+	return response
+end
+
+original_EmitSoundOn = EmitSoundOn
+EmitSoundOn = function(sSoundName, hParent)
+--	print("Create Particle (override):", sSoundName)
+
+	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
+		if v.asset == sSoundName and v.parent == hParent then
+			sSoundName = v.modifier
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_EmitSoundOn(sSoundName, hParent)
+
+	return response
+end
 
 ----------------------------------------------------------------------------------
 -- credits to yahnich for every functions below
@@ -860,44 +971,33 @@ end
 
 function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
-	
-	-- Keep the static strings in or else you're going to get potential nils if IMBA BP is disabled
-	local blink_effect		= "particles/items_fx/blink_dagger_start.vpcf"
-	local blink_effect_end	= "particles/items_fx/blink_dagger_end.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) then
-		blink_effect		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
-		blink_effect_end	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
-	end
-	
---	print(blink_effect, blink_effect_end, blink_sound)
 
-	local blink_sound = "DOTA_Item.BlinkDagger.Activate"
-	if self.blink_effect or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect) then blink_effect = self.blink_effect end
-	if self.blink_effect_end or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_effect_end) then blink_effect_end = self.blink_effect_end end
-	if self.blink_sound or (self:GetPlayerOwner() and self:GetPlayerOwner().blink_sound) then blink_sound = self.blink_sound end
-	if bPlaySound == true then EmitSoundOn(blink_sound, self) end
-
---	print(self.blink_effect, self.blink_effect_end, self.blink_sound)
+	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 
 	local blink_pfx
+
 	if bTeamOnlyParticle == true then
-		blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber())
+		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_CUSTOMORIGIN, nil)
+		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
+
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	FindClearSpaceForUnit(self, position, true)
 	ProjectileManager:ProjectileDodge( self )
+
 	local blink_end_pfx
+
 	if bTeamOnlyParticle == true then
-		blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_effect_end, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
+		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
 	else
-		blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, self)
+		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self)
 	end
+
 	ParticleManager:ReleaseParticleIndex(blink_end_pfx)
+
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.NailedIt", self) end
 end
 

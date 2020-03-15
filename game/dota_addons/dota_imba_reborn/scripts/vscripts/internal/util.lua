@@ -42,19 +42,24 @@ function MergeTables( t1, t2 )
 	end
 end
 
-function bubbleSort(A)
-	local itemCount=#A
-	local hasChanged
-	repeat
-		hasChanged = false
-		itemCount=itemCount - 1
-		for i = 1, itemCount do
-			if A[i] > A[i + 1] then
-				A[i], A[i + 1] = A[i + 1], A[i]
-				hasChanged = true
+function BubbleSortByElement(t, element_name)
+	local i = 0
+
+	-- Basically, if the counter goes up to table length without ordering anything we're good to go
+	while i ~= #t do
+		for k, v in ipairs(t) do
+			if t[k + 1] and t[k][element_name] and t[k + 1][element_name] and t[k][element_name] > t[k + 1][element_name] then
+--				print(t[k][element_name], t[k + 1][element_name])
+				t[k], t[k + 1] = t[k + 1], t[k]
+				i = 0
+				break
+			else
+				i = i + 1
 			end
 		end
-	until hasChanged == false
+	end
+
+	return t
 end
 
 function string.split(input, delimiter)

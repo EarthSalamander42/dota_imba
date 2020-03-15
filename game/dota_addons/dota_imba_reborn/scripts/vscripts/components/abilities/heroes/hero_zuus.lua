@@ -21,7 +21,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 
 	caster:EmitSound("Hero_Zuus.ArcLightning.Cast")
 
-	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
+	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster, caster)
 	ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
 	ParticleManager:SetParticleControl(lightningBolt, 1, Vector(target:GetAbsOrigin().x, target:GetAbsOrigin().y, target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
 
@@ -80,7 +80,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 
 		origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
 
-		local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, origin_target)
+		local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, origin_target, caster)
 		ParticleManager:SetParticleControl(lightningBolt, 0, Vector(origin_target:GetAbsOrigin().x, origin_target:GetAbsOrigin().y , origin_target:GetAbsOrigin().z + origin_target:GetBoundingMaxs().z ))   
 		ParticleManager:SetParticleControl(lightningBolt, 1, Vector(chained_target:GetAbsOrigin().x, chained_target:GetAbsOrigin().y, chained_target:GetAbsOrigin().z + chained_target:GetBoundingMaxs().z ))
 
@@ -347,7 +347,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			end
 		end
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, target)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, target, caster)
 		if target == nil then 
 			-- Renders the particle on the ground target
 			ParticleManager:SetParticleControl(particle, 0, Vector(target_point.x, target_point.y, target_point.z))
@@ -505,7 +505,6 @@ modifier_imba_zuus_lightning_fow = class({})
 function modifier_imba_zuus_lightning_fow:IsHidden() return true end
 function modifier_imba_zuus_lightning_fow:OnCreated(keys) 
 	if IsServer() then 
-		self.caster = self:GetCaster()
 		self.parent = self:GetParent()
 		self.radius = keys.radius
 		self:StartIntervalThink(FrameTime())
@@ -513,7 +512,7 @@ function modifier_imba_zuus_lightning_fow:OnCreated(keys)
 end
 
 function modifier_imba_zuus_lightning_fow:OnIntervalThink()
-	AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.radius, FrameTime(), false)
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self.parent:GetAbsOrigin(), self.radius, FrameTime(), false)
 end
 
 
@@ -527,12 +526,6 @@ imba_zuus_static_field = class({})
 
 function imba_zuus_static_field:GetIntrinsicModifierName()
 	return "modifier_imba_zuus_static_field"
-end
-
-function imba_zuus_static_field:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "zuus_static_field" end
-	return "custom/imba_zuus_static_field_arcana"
 end
 
 ------------------------------------------------------
@@ -571,12 +564,8 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 			)
 
 			local caster_position = caster:GetAbsOrigin()
-			local particle_effect = "particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
-			if caster.static_field_effect then
-				particle_effect = caster.static_field_effect
-			end
 
-			local zuus_static_field = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
+			local zuus_static_field = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 			ParticleManager:SetParticleControl(zuus_static_field, 0, Vector(caster_position.x, caster_position.y, caster_position.z))		
 			ParticleManager:SetParticleControl(zuus_static_field, 1, Vector(caster_position.x, caster_position.y, caster_position.z) * 100)	
 			
@@ -614,12 +603,7 @@ function modifier_imba_zuus_static_field:Apply(target)
 	local damage_health_pct	= ability:GetSpecialValueFor("damage_health_pct")
 	local duration			= ability:GetSpecialValueFor("duration")
 
-	local particle_effect = "particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
-	if caster.static_field_effect then
-		particle_effect = caster.static_field_effect
-	end
-
-	local zuus_static_field = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, target)
+	local zuus_static_field = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
 	ParticleManager:SetParticleControl(zuus_static_field, 1, target:GetAbsOrigin() * 100)	
 	
 	local current_health = target:GetHealth()
@@ -757,11 +741,10 @@ function modifier_zuus_nimbus_storm:IsHidden() return true end
 
 function modifier_zuus_nimbus_storm:OnCreated(keys)
 	if IsServer() then
-		self.caster 				= self:GetCaster()
 		self.ability 				= self
 		self.cloud_radius 			= keys.cloud_radius
 		self.cloud_bolt_interval 	= keys.cloud_bolt_interval
-		self.lightning_bolt 		= self.caster:FindAbilityByName("imba_zuus_lightning_bolt")
+		self.lightning_bolt 		= self:GetCaster():FindAbilityByName("imba_zuus_lightning_bolt")
 		local target_point 			= GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent())
 		
 		self.original_z = target_point.z
@@ -771,7 +754,7 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 		self.counter = self.cloud_bolt_interval
 
 		-- Create nimbus cloud particle
-		self.zuus_nimbus_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zeus/zeus_cloud.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.zuus_nimbus_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zeus/zeus_cloud.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		-- Position of ground effect
 		ParticleManager:SetParticleControl(self.zuus_nimbus_particle, 0, Vector(target_point.x, target_point.y, 450))
 		-- Radius of ground effect
@@ -803,7 +786,7 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 	if IsServer() then
 		if self.lightning_bolt:GetLevel() > 0 and self.counter >= self.cloud_bolt_interval then
 			local nearby_enemy_units = FindUnitsInRadius(
-				self.caster:GetTeamNumber(), 
+				self:GetCaster():GetTeamNumber(), 
 				self:GetParent():GetAbsOrigin(), 
 				nil, 
 				self.cloud_radius, 
@@ -816,7 +799,7 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 
 			for _,unit in pairs(nearby_enemy_units) do
 				if unit:IsAlive() then
-					imba_zuus_lightning_bolt:CastLightningBolt(self.caster, self.lightning_bolt, unit, unit:GetAbsOrigin(), self:GetParent())
+					imba_zuus_lightning_bolt:CastLightningBolt(self:GetCaster(), self.lightning_bolt, unit, unit:GetAbsOrigin(), self:GetParent())
 					-- Abort when we find something to hit
 					self.counter = 0
 					break
@@ -1156,21 +1139,24 @@ modifier_imba_zuus_on_nimbus = class({})
 ----------------------------------------------
 imba_zuus_thundergods_wrath = class({})
 
-function imba_zuus_thundergods_wrath:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "zuus_thundergods_wrath" end
-	return "custom/imba_zuus_thundergods_wrath_arcana"
-end
-
 function imba_zuus_thundergods_wrath:OnAbilityPhaseStart()
-	local sound_name = "Hero_Zuus.GodsWrath.PreCast"
-	if self:GetCaster().thundergods_wrath_pre_sound then
-		sound_name = self:GetCaster().thundergods_wrath_pre_sound
-	end
+	self:GetCaster():EmitSound("Hero_Zuus.GodsWrath.PreCast")
 
-	self:GetCaster():EmitSound(sound_name)
+	local attack_lock = self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1"))
+
+	self.thundergod_spell_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+	ParticleManager:SetParticleControl(self.thundergod_spell_cast, 0, Vector(attack_lock.x, attack_lock.y, attack_lock.z))
+	ParticleManager:SetParticleControl(self.thundergod_spell_cast, 1, Vector(attack_lock.x, attack_lock.y, attack_lock.z))
+	ParticleManager:SetParticleControl(self.thundergod_spell_cast, 2, Vector(attack_lock.x, attack_lock.y, attack_lock.z))
 
 	return true
+end
+
+function imba_zuus_thundergods_wrath:OnAbilityPhaseInterrupted()
+	if self.thundergod_spell_cast then
+		ParticleManager:DestroyParticle(self.thundergod_spell_cast, true)
+		ParticleManager:ReleaseParticleIndex(self.thundergod_spell_cast)
+	end
 end
 
 function imba_zuus_thundergods_wrath:OnSpellStart() 
@@ -1184,15 +1170,10 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		local pierce_spellimmunity 	= false
 
 		local position 				= self:GetCaster():GetAbsOrigin()	
-		local attack_lock 			= caster:GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1"))
-		local particle_effect		= "particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf"
-		if self:GetCaster().thundergods_wrath_start_effect then
-			particle_effect = self:GetCaster().thundergods_wrath_start_effect
+
+		if self.thundergod_spell_cast then
+			ParticleManager:ReleaseParticleIndex(self.thundergod_spell_cast)
 		end
-		local thundergod_spell_cast = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(thundergod_spell_cast, 0, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
-		ParticleManager:SetParticleControl(thundergod_spell_cast, 1, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
-		ParticleManager:SetParticleControl(thundergod_spell_cast, 2, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 
 		if caster:HasTalent("special_bonus_imba_zuus_7") then
 			if caster:HasModifier("modifier_imba_zuus_thundergods_focus") and caster:FindModifierByName("modifier_imba_zuus_thundergods_focus"):GetStackCount() >= caster:FindTalentValue("special_bonus_imba_zuus_7", "value") then
@@ -1218,12 +1199,8 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		for _,hero in pairs(HeroList:GetAllHeroes()) do 
 			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) and not hero:IsClone() then 
 				local target_point = hero:GetAbsOrigin()
-				local particle_effect = "particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf"
-				if self:GetCaster().thundergods_wrath_effect then
-					particle_effect = self:GetCaster().thundergods_wrath_effect
-				end
 
-				local thundergod_strike_particle = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, hero)
+				local thundergod_strike_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, self:GetCaster())
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 0, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 1, Vector(target_point.x, target_point.y, 2000))
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 2, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
@@ -1258,18 +1235,16 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
 
-					if Battlepass and Battlepass:HasArcana(self:GetCaster():GetPlayerID(), "zuus") then
-						Timers:CreateTimer(FrameTime(), function()
-							if not hero:IsAlive() then
-								local thundergod_kill_particle = ParticleManager:CreateParticle("particles/econ/items/zeus/arcana_chariot/zeus_arcana_kill_remnant.vpcf", PATTACH_WORLDORIGIN, nil)
-								ParticleManager:SetParticleControl(thundergod_kill_particle, 0, hero:GetAbsOrigin())
-								ParticleManager:SetParticleControl(thundergod_kill_particle, 1, hero:GetAbsOrigin())
-								ParticleManager:SetParticleControl(thundergod_kill_particle, 2, hero:GetAbsOrigin())
-								ParticleManager:SetParticleControl(thundergod_kill_particle, 3, hero:GetAbsOrigin())
-								ParticleManager:SetParticleControl(thundergod_kill_particle, 6, hero:GetAbsOrigin())
-							end
-						end)
-					end
+					Timers:CreateTimer(FrameTime(), function()
+						if not hero:IsAlive() then
+							local thundergod_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zeus/zues_kill_empty.vpcf", PATTACH_WORLDORIGIN, nil, self:GetCaster())
+							ParticleManager:SetParticleControl(thundergod_kill_particle, 0, hero:GetAbsOrigin())
+							ParticleManager:SetParticleControl(thundergod_kill_particle, 1, hero:GetAbsOrigin())
+							ParticleManager:SetParticleControl(thundergod_kill_particle, 2, hero:GetAbsOrigin())
+							ParticleManager:SetParticleControl(thundergod_kill_particle, 3, hero:GetAbsOrigin())
+							ParticleManager:SetParticleControl(thundergod_kill_particle, 6, hero:GetAbsOrigin())
+						end
+					end)
 				end
 
 				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
@@ -1385,8 +1360,8 @@ function modifier_imba_zuus_thundergods_awakening:IsBuff() 		return true end
 function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
 function modifier_imba_zuus_thundergods_awakening:OnCreated()
 	if IsServer() then 
-		--self.static_field = ParticleManager:CreateParticle("particles/hero/zeus/awakening_zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		self.static_field = ParticleManager:CreateParticle("particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning_sphere.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		--self.static_field = ParticleManager:CreateParticle("particles/hero/zeus/awakening_zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+		self.static_field = ParticleManager:CreateParticle("particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning_sphere.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 
 		local caster = self:GetCaster()
 		self.ability = caster:FindAbilityByName("imba_zuus_arc_lightning")
@@ -1425,7 +1400,7 @@ function modifier_imba_zuus_thundergods_awakening:OnAttackLanded(keys)
 		local caster = self:GetCaster()
 		if keys.attacker:GetTeam() ~= caster:GetTeam() and keys.attacker:IsAlive() and keys.target == caster and not keys.attacker:IsBuilding() and not keys.attacker:IsMagicImmune() then
 			--print("Attacked!", keys.attacker:IsCreep(), keys.attacker:IsHero())
-			local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
+			local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster, caster)
 			ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
 			ParticleManager:SetParticleControl(lightningBolt, 1, Vector(keys.attacker:GetAbsOrigin().x, keys.attacker:GetAbsOrigin().y, keys.attacker:GetAbsOrigin().z + keys.attacker:GetBoundingMaxs().z ))
 

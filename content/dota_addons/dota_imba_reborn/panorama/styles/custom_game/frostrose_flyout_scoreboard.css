@@ -198,7 +198,7 @@
 {
 	height: 40px;
 	margin-bottom: 2px;
-	background-image: url("file://{images}/custom_game/flyout/rowbg.png");
+/*	background-image: url("file://{images}/custom_game/flyout/rowbg.png"); */
 	background-size: 100% 100%;
 	margin-bottom: 3.5px;
 	overflow: clip;

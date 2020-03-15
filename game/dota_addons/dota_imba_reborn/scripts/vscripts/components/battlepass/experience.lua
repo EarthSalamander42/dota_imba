@@ -61,30 +61,6 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				donator_color = DONATOR_COLOR[0]
 			end
 
-			-- todo: rework this mess
-			local arcana_heroes = {
-				"axe",
-				"earthshaker",
-				"juggernaut",
-				"invoker",
-				"lina",
-				"nevermore",
-				"phantom_assassin",
-				"pudge",
-				"terrorblade",
-				"tiny",
-				"wisp",
-				"zuus",
-			}
-
-			-- check arcana icon replacement
-			local arcana = {}
-			if Battlepass then
-				for k, v in pairs(arcana_heroes) do
-					arcana["npc_dota_hero_"..v] = Battlepass:HasArcana(i, v)
-				end
-			end
-
 			CustomNetTables:SetTableValue("battlepass", tostring(ID),
 			{
 				XP = api.players[steamid].xp_in_level,
@@ -102,7 +78,6 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				winrate_toggle = api:GetPlayerWinrateShown(ID),
 				XP_change = 0,
 				IMR_5v5_change = 0,
-				arcana = arcana,
 				mmr = api:GetPlayerMMR(ID),
 				mmr_title = api:GetPlayerRankMMR(ID),
 			})

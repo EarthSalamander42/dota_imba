@@ -56,9 +56,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_arc_warden"
 	{
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
 		"Ability12"					"special_bonus_magic_resistance_20"
 	}
 
@@ -67,11 +64,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_abaddon"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_abaddon_mist_coil"
 		"Ability2"					"imba_abaddon_aphotic_shield"
@@ -97,7 +91,6 @@
 	{
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_alchemist_acid_spray"
 		"Ability2"					"imba_alchemist_unstable_concoction"
@@ -131,7 +124,6 @@
 
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
@@ -168,7 +160,6 @@
 
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
@@ -200,7 +191,6 @@
 
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_bane_enfeeble_723"
 		"Ability2"					"imba_bane_brain_sap_723"
@@ -233,26 +223,10 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Batrider
-	//=================================================================================================================
-	"npc_dota_hero_batrider"
-	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-	}
-
-	//=================================================================================================================
 	// HERO: Beastmaster
 	//=================================================================================================================
 	"npc_dota_hero_beastmaster"
 	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
 		"Ability11"					"special_bonus_movement_speed_30"
 		"Ability12"					"special_bonus_armor_7"
 	}
@@ -262,11 +236,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_bloodseeker"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
@@ -299,11 +270,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_bounty_hunter"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
 		"Ability2"			 		"imba_bounty_hunter_jinada"
@@ -330,11 +298,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_centaur"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
  
 		"Ability1"					"imba_centaur_hoof_stomp"
 		"Ability2"					"imba_centaur_double_edge"
@@ -362,14 +327,8 @@
 	//	HERO: Chaos Knight
 	//=================================================================================================================
 	"npc_dota_hero_chaos_knight"
-	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		
+	{		
 		"Ability6"					"imba_chaos_knight_phantasm"
-		
 		"Ability14"					"special_bonus_attack_speed_40"
 	}
 
@@ -378,11 +337,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_clinkz"
 	{
-	
-		
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_clinkz_death_pact_723"
 		"Ability2"					"imba_clinkz_searing_arrows"
@@ -425,11 +381,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_crystal_maiden"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
 		"Ability1"					"imba_crystal_maiden_crystal_nova"
 		"Ability2"					"imba_crystal_maiden_frostbite"
@@ -461,11 +414,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_dazzle"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_dazzle_poison_touch_707"
 		"Ability2"					"imba_dazzle_shallow_grave"
@@ -500,11 +450,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_disruptor"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_disruptor_thunder_strike"
 		"Ability2"					"imba_disruptor_glimpse"
@@ -535,11 +482,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_doom_bringer"
 	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
 		"Ability1"					"doom_bringer_devour"
 		"Ability2"					"doom_bringer_scorched_earth"
 		"Ability3"					"doom_bringer_infernal_blade"
@@ -562,10 +504,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_dragon_knight"
 	{
-	
-
 		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		"IsImba"					"1"
 
 		"Ability1"					"imba_dragon_knight_breathe_fire"
@@ -595,11 +534,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_drow_ranger"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows_723"
 		"Ability2"					"imba_drow_ranger_gust"
@@ -645,11 +581,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_earth_spirit"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_earth_spirit_boulder_smash"
 		"Ability2"					"imba_earth_spirit_rolling_boulder"
@@ -680,11 +613,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_elder_titan"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_elder_titan_echo_stomp"
 		"Ability2"					"imba_elder_titan_ancestral_spirit"
@@ -714,11 +644,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_ember_spirit"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_ember_spirit_searing_chains"
 		"Ability2"					"imba_ember_spirit_sleight_of_fist"
@@ -743,11 +670,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_enigma"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
@@ -775,11 +699,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_faceless_void"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_faceless_void_time_walk"
 		"Ability2"					"imba_faceless_void_time_dilation"
@@ -813,12 +734,10 @@
 	//=================================================================================================================
 	"npc_dota_hero_jakiro"
 	{
-	
 		"AttackRange"				"500"
 
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_jakiro_fire_breath"
 		"Ability2"					"imba_jakiro_ice_path"
@@ -848,11 +767,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_juggernaut"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_juggernaut_blade_fury"
 		"Ability2"					"imba_juggernaut_healing_ward"
@@ -884,7 +800,6 @@
 	{
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"Ability1"					"imba_kunkka_torrent"		
 		"Ability2"					"imba_kunkka_tidebringer"	
@@ -915,11 +830,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_lich"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
 		"Ability1"					"imba_lich_frost_nova"
 		"Ability2"					"imba_lich_frost_shield"
@@ -950,11 +862,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_lina"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
@@ -986,11 +895,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_lion"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_lion_earth_spike"
 		"Ability2"					"imba_lion_hex"
@@ -1019,11 +925,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_lycan"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_lycan_summon_wolves"
 		"Ability2"					"imba_lycan_howl_723"
@@ -1056,11 +959,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_magnataur"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		"particle_folder"			"particles/units/heroes/hero_magnataur"
@@ -1093,24 +993,10 @@
 	//=================================================================================================================
 	"npc_dota_hero_meepo"
 	{
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		
-		"Ability1"		"meepo_earthbind"
-		"Ability2"		"meepo_poof"
-		"Ability3"		"meepo_ransack"
-		"Ability4"		"generic_hidden"
-		"Ability5"		"generic_hidden"
-		"Ability6"		"meepo_divided_we_stand"
-		
 		"Ability10"		"special_bonus_strength_15"
 		"Ability11"		"special_bonus_attack_damage_25"
-		"Ability12"		"special_bonus_evasion_20"
-		"Ability13"		"special_bonus_unique_meepo_2"
-		"Ability14"		"special_bonus_unique_meepo_3"
 		"Ability15"		"special_bonus_lifesteal_15"
 		"Ability16"		"special_bonus_hp_800"
-		"Ability17"		"special_bonus_unique_meepo"
 	}
 
 	//=================================================================================================================
@@ -1118,11 +1004,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_mirana"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
@@ -1153,45 +1036,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_monkey_king"
 	{
-	
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"monkey_king_boundless_strike"
-		"Ability2"					"monkey_king_tree_dance"
-		"Ability3"					"monkey_king_primal_spring"
-		"Ability4"					"monkey_king_jingu_mastery"
-		"Ability5"					"monkey_king_mischief"
-		"Ability6"					"monkey_king_wukongs_command"
-		"Ability7"					"monkey_king_primal_spring_early"
-		"Ability8"					"monkey_king_untransform"
 		"Ability9"					"imba_monkey_king_true_strike"
-
-		"Ability10"					"special_bonus_unique_monkey_king_5"
-		"Ability11"					"special_bonus_attack_speed_20"
-		"Ability12"					"special_bonus_unique_monkey_king_7"
-		"Ability13"					"special_bonus_unique_monkey_king_2"
-		"Ability14"					"special_bonus_unique_monkey_king"
-		"Ability15"					"special_bonus_unique_monkey_king_3"
-		"Ability16"					"special_bonus_unique_monkey_king_4"
-		"Ability17"					"special_bonus_unique_monkey_king_6"
-	}
-
-	//=================================================================================================================
-	// HERO: Morphling
-	//=================================================================================================================
-	"npc_dota_hero_morphling"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-	}
-
-	//=================================================================================================================
-	// HERO: Nature's Prophet
-	//=================================================================================================================
-	"npc_dota_hero_furion"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 	}
 
 	//=================================================================================================================
@@ -1199,11 +1044,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_necrolyte"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_necrolyte_death_pulse"
 		"Ability2"					"imba_necrolyte_ghost_shroud"
@@ -1227,11 +1069,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_night_stalker"
 	{
-	
-		
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_night_stalker_void"
 		"Ability2"					"imba_night_stalker_crippling_fear_720"
@@ -1265,11 +1104,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_nyx_assassin"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability2"					"imba_nyx_assassin_mana_burn"
@@ -1301,11 +1137,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_omniknight"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_omniknight_purification"
 		//"Ability2"					"imba_omniknight_repel"
@@ -1335,11 +1168,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_pangolier"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_pangolier_swashbuckle"
 		"Ability2"					"imba_pangolier_shield_crash"
@@ -1367,11 +1197,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_assassin"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_phantom_assassin_stifling_dagger"
 		"Ability2"					"imba_phantom_assassin_phantom_strike"
@@ -1397,7 +1224,6 @@
 		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
 		// "Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a X% chance to evade any damage"
 		//"Ability17"					"special_bonus_imba_phantom_assassin_7" // "+Xs Coup de Grace's Die Hard duration"
-		
 	}
 
 	//=================================================================================================================
@@ -1405,11 +1231,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_phoenix"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_phoenix_icarus_dive"
 		"Ability2"					"imba_phoenix_fire_spirits"
@@ -1439,11 +1262,8 @@
 	//========================================================================================================
 	"npc_dota_hero_pudge"
 	{
-	
-		
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_pudge_meat_hook"
 		"Ability2"					"imba_pudge_rot"
@@ -1473,11 +1293,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_pugna"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_pugna_nether_blast"
 		"Ability2"					"imba_pugna_decrepify"
@@ -1504,11 +1321,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_queenofpain"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_queenofpain_shadow_strike"
 		"Ability2"					"imba_queenofpain_blink"
@@ -1539,11 +1353,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_riki"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_riki_smoke_screen_723"
 		"Ability2"					"imba_riki_blink_strike_723"
@@ -1587,11 +1398,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_sand_king"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_sandking_burrowstrike"
 		"Ability2"					"imba_sandking_sand_storm_720"
@@ -1620,11 +1428,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_nevermore"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 	
 		"Ability1"					"imba_nevermore_shadowraze_close"
 		"Ability2"					"imba_nevermore_shadowraze_medium"
@@ -1653,11 +1458,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_skeleton_king"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_wraith_king_wraithfire_blast"
 		"Ability2"					"imba_wraith_king_vampiric_aura"
@@ -1686,11 +1488,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_skywrath_mage"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_skywrath_mage_arcane_bolt"
 		"Ability2"					"imba_skywrath_mage_concussive_shot"
@@ -1721,11 +1520,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_slardar"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_slardar_guardian_sprint"
 		"Ability2"					"imba_slardar_slithereen_crush"
@@ -1764,11 +1560,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_sniper"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_sniper_shrapnel"
 		"Ability2"					"imba_sniper_headshot"
@@ -1785,7 +1578,7 @@
 		"Ability15"					"special_bonus_movement_speed_40"
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
-		
+
 		// Removed Talents
 		// "Ability10"					"special_bonus_imba_sniper_1" // Shrapnel's cast range is doubled
 		// "Ability11"					"special_bonus_imba_sniper_2" // Infamous Assassinate knockback talent
@@ -1798,11 +1591,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_storm_spirit"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_storm_spirit_static_remnant"
 		"Ability2"					"imba_storm_spirit_electric_vortex"
@@ -1830,11 +1620,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_sven"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_sven_storm_bolt"
 		"Ability2"					"imba_sven_great_cleave"
@@ -1863,14 +1650,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_tinker"
 	{
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"tinker_laser"
-		"Ability2"					"tinker_heat_seeking_missile"
-		"Ability3"					"tinker_march_of_the_machines"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_tinker_rearm"
 	}
 
@@ -1881,7 +1660,6 @@
 	{
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_tiny_avalanche"
 		"Ability2"					"imba_tiny_toss"
@@ -1916,11 +1694,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_troll_warlord"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
 		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
@@ -1943,14 +1718,12 @@
 		// "Ability15"					"special_bonus_imba_troll_warlord_6" // +50% Battle Trance duration
 		// "Ability16"					"special_bonus_imba_troll_warlord_9" // Remnants of Berserker's Rage
 	}
-	
+
 	//=================================================================================================================
 	// HERO: Tusk
 	//=================================================================================================================
 	"npc_dota_hero_tusk"
 	{
-		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
-
 		"Ability5"		"tusk_frozen_sigil"
 	}
 
@@ -1969,11 +1742,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_ursa"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_ursa_earthshock"
 		"Ability2"					"imba_ursa_overpower"
@@ -2000,11 +1770,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_vengefulspirit"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_vengefulspirit_magic_missile"
 		"Ability2"					"imba_vengefulspirit_wave_of_terror"
@@ -2040,11 +1807,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_venomancer"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
@@ -2076,11 +1840,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_warlock"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
@@ -2110,11 +1871,8 @@
 	//=================================================================================================================
 	"npc_dota_hero_witch_doctor"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_witch_doctor_paralyzing_cask"
 		"Ability2"					"imba_witch_doctor_voodoo_restoration"
@@ -2451,20 +2209,18 @@
 	//=================================================================================================================
 	// HERO: Dummy
 	//=================================================================================================================
-	"npc_dota_hero_dummy_dummy"
-	{
-		"BaseClass"			"npc_dota_hero"
-		"HeroID"			"255"
-		"Model"				"models/development/invisiblebox.vmdl"
-	}
+//	"npc_dota_hero_dummy_dummy"
+//	{
+//		"BaseClass"			"npc_dota_hero"
+//		"HeroID"			"255"
+//		"Model"				"models/development/invisiblebox.vmdl"
+//	}
 	
 	//=================================================================================================================
 	// HERO: Mars
 	//=================================================================================================================
 	"npc_dota_hero_mars"
-	{
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		
+	{		
 		"Ability4"		"imba_mars_arena_of_blood_enhance"
 	}		
 }

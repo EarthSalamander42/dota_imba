@@ -1,123 +1,50 @@
 BATTLEPASS_LEVEL_REWARD = {}
 BATTLEPASS_LEVEL_REWARD[2]		= {"vengefulspirit_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[4]		= {"fountain", "common"}
-BATTLEPASS_LEVEL_REWARD[5]		= {"bottle", "common"}
 BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
 BATTLEPASS_LEVEL_REWARD[7]		= {"slark_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[9]		= {"blink", "common"}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[13]		= {"fountain2", "common"}
 BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[16]		= {"force_staff", "common"}
-BATTLEPASS_LEVEL_REWARD[18]		= {"blink2", "common"}
-BATTLEPASS_LEVEL_REWARD[20]		= {"maelstorm", "common"}
-BATTLEPASS_LEVEL_REWARD[22]		= {"fountain3", "common"}
 BATTLEPASS_LEVEL_REWARD[23]		= {"enigma_taunt", "rare"}
-BATTLEPASS_LEVEL_REWARD[25]		= {"bottle2", "common"}
-BATTLEPASS_LEVEL_REWARD[27]		= {"blink3", "common"}
 BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[30]		= {"zuus_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[31]		= {"fountain4", "common"}
-BATTLEPASS_LEVEL_REWARD[32]		= {"force_staff2", "common"}
 BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[35]		= {"mekansm", "common"}
-BATTLEPASS_LEVEL_REWARD[36]		= {"blink4", "common"}
 BATTLEPASS_LEVEL_REWARD[38]		= {"lion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
-BATTLEPASS_LEVEL_REWARD[40]		= {"fountain5", "common"}
-BATTLEPASS_LEVEL_REWARD[44]		= {"radiance", "common"}
-BATTLEPASS_LEVEL_REWARD[45]		= {"blink5", "common"}
 BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[48]		= {"force_staff3", "common"}
-BATTLEPASS_LEVEL_REWARD[49]		= {"fountain6", "common"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
-BATTLEPASS_LEVEL_REWARD[51]		= {"maelstorm2", "common"}
 BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[54]		= {"blink6", "common"}
-BATTLEPASS_LEVEL_REWARD[55]		= {"lina_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[58]		= {"fountain7", "common"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[63]		= {"blink7", "common"}
-BATTLEPASS_LEVEL_REWARD[64]		= {"force_staff4", "common"}
-BATTLEPASS_LEVEL_REWARD[65]		= {"juggernaut_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[67]		= {"fountain8", "common"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[70]		= {"mekansm2", "common"}
 BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
-BATTLEPASS_LEVEL_REWARD[72]		= {"blink8", "common"}
-BATTLEPASS_LEVEL_REWARD[75]		= {"pudge_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[76]		= {"fountain9", "common"}
-BATTLEPASS_LEVEL_REWARD[77]		= {"bottle3", "common"}
-BATTLEPASS_LEVEL_REWARD[80]		= {"force_staff5", "common"}
-BATTLEPASS_LEVEL_REWARD[81]		= {"blink9", "common"}
-BATTLEPASS_LEVEL_REWARD[82]		= {"maelstorm3", "common"}
 BATTLEPASS_LEVEL_REWARD[84]		= {"pangolier_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[85]		= {"fountain10", "common"}
-BATTLEPASS_LEVEL_REWARD[88]		= {"radiance2", "common"}
-BATTLEPASS_LEVEL_REWARD[90]		= {"blink10", "common"}
-BATTLEPASS_LEVEL_REWARD[94]		= {"fountain11", "common"}
 BATTLEPASS_LEVEL_REWARD[95]		= {"furion_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[96]		= {"force_staff6", "common"}
 BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[99]		= {"blink11", "common"}
-BATTLEPASS_LEVEL_REWARD[100]	= {"shiva", "common"}
-BATTLEPASS_LEVEL_REWARD[103]	= {"fountain12", "common"}
-BATTLEPASS_LEVEL_REWARD[105]	= {"mekansm3", "common"}
 BATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[108]	= {"blink12", "common"}
 BATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[112]	= {"fountain13", "common"}
-BATTLEPASS_LEVEL_REWARD[113]	= {"maelstorm4", "common"}
-BATTLEPASS_LEVEL_REWARD[115]	= {"pudge_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[117]	= {"blink13", "common"}
-BATTLEPASS_LEVEL_REWARD[120]	= {"sheepstick2", "common"}
-BATTLEPASS_LEVEL_REWARD[121]	= {"fountain14", "common"}
-BATTLEPASS_LEVEL_REWARD[125]	= {"juggernaut_arcana2", "arcana"}
-BATTLEPASS_LEVEL_REWARD[126]	= {"blink14", "common"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[130]	= {"fountain15", "common"}
-BATTLEPASS_LEVEL_REWARD[132]	= {"radiance3", "common"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[135]	= {"phantom_assassin_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[136]	= {"bottle4", "common"}
-BATTLEPASS_LEVEL_REWARD[139]	= {"fountain16", "common"}
-BATTLEPASS_LEVEL_REWARD[140]	= {"mekansm4", "common"}
-BATTLEPASS_LEVEL_REWARD[144]	= {"maelstorm5", "common"}
-BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"}
+BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"} -- try multiple modifiers to add multiple animation translation activities
 BATTLEPASS_LEVEL_REWARD[146]	= {"earthshaker_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[148]	= {"fountain17", "common"}
-BATTLEPASS_LEVEL_REWARD[150]	= {"shiva2", "common"}
 BATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[157]	= {"fountain18", "common"}
 BATTLEPASS_LEVEL_REWARD[165]	= {"earthshaker_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[166]	= {"fountain19", "common"}
 BATTLEPASS_LEVEL_REWARD[170]	= {"enigma_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[175]	= {"fountain20", "common"}
-BATTLEPASS_LEVEL_REWARD[176]	= {"radiance4", "common"}
 BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[184]	= {"fountain21", "common"}
 BATTLEPASS_LEVEL_REWARD[190]	= {"tiny_immortal", "immortal"}
 if IsInToolsMode() then
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
 	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
 end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
-BATTLEPASS_LEVEL_REWARD[200]	= {"shiva3", "common"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
-BATTLEPASS_LEVEL_REWARD[250]	= {"shiva4", "common"}
-BATTLEPASS_LEVEL_REWARD[257]	= {"bottle5", "common"}
-BATTLEPASS_LEVEL_REWARD[265]	= {"earthshaker_arcana2", "arcana"}
 BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[310]	= {"dragon_knight_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[411]	= {"bottle6", "common"}
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
@@ -157,17 +84,6 @@ function Battlepass:Init()
 	-- used to add a hero icon in BP reward windows
 	CustomNetTables:SetTableValue("battlepass", "hero_rewards", BattlepassHeroes)
 
-	BattlepassItems = {}
-	BattlepassItems["blink"] = {}
-	BattlepassItems["bottle"] = {}
-	BattlepassItems["force_staff"] = {}
-	BattlepassItems["fountain"] = {}
-	BattlepassItems["maelstorm"] = {}
-	BattlepassItems["mekansm"] = {}
-	BattlepassItems["radiance"] = {}
-	BattlepassItems["sheepstick"] = {}
-	BattlepassItems["shiva"] = {}
-
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
 		local required_level = k
 		local reward_name = v[1]
@@ -181,12 +97,6 @@ function Battlepass:Init()
 				BattlepassHeroes[hero_name][reward_name] = required_level
 				break
 			end
-		end
-
---		print(required_level, category, reward_level)
-		if BattlepassItems[category] then
-			if reward_level == "" then reward_level = 1 end
-			table.insert(BattlepassItems[category], tonumber(reward_level), required_level)
 		end
 	end
 end
@@ -205,392 +115,94 @@ end
 --]]
 
 function Battlepass:GetBlinkEffect(ID)
-	local effects = {}
+	local effect_table = {}
+	effect_table[1] = "particles/items_fx/blink_dagger_start.vpcf"
+	effect_table[2] = "particles/items_fx/blink_dagger_end.vpcf"
 
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items_fx/blink_dagger_start.vpcf"
-	effects["effect1"][1] = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-	effects["effect1"][2] = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-	effects["effect1"][5] = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-	effects["effect1"][6] = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-	effects["effect1"][7] = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-	effects["effect1"][8] = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-	effects["effect1"][9] = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-	effects["effect1"][10] = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-	effects["effect1"][11] = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
-	effects["effect1"][12] = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
-	effects["effect1"][13] = "particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
-	effects["effect1"][14] = "particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
+	-- todo: http request to get equipped effect
 
-	effects["effect2"] = {}
-	effects["effect2"][0] = "particles/items_fx/blink_dagger_end.vpcf"
-	effects["effect2"][1] = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-	effects["effect2"][2] = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
-	effects["effect2"][3] = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
-	effects["effect2"][4] = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
-	effects["effect2"][5] = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
-	effects["effect2"][6] = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
-	effects["effect2"][7] = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
-	effects["effect2"][8] = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-	effects["effect2"][9] = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-	effects["effect2"][10] = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-	effects["effect2"][11] = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
-	effects["effect2"][12] = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
-	effects["effect2"][13] = "particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
-	effects["effect2"][14] = "particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BattlepassItems["blink"], 1, -1 do
-			if BattlepassItems["blink"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["blink"][i] then
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetForceStaffEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items_fx/force_staff.vpcf"
-	effects["effect1"][1] = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
-	effects["effect1"][2] = "particles/econ/events/ti7/force_staff_ti7.vpcf"
-	effects["effect1"][3] = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti6/force_staff_ti6.vpcf"
-	effects["effect1"][5] = "particles/econ/events/ti8/force_staff_ti8.vpcf"
-	effects["effect1"][6] = "particles/econ/events/ti9/force_staff_ti9.vpcf"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BattlepassItems["force_staff"], 1, -1 do
-			if BattlepassItems["force_staff"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["force_staff"][i] then
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetRadianceEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items2_fx/radiance_owner.vpcf"
-	effects["effect1"][1] = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
-	effects["effect1"][2] = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti9/radiance_owner_ti9.vpcf"
-
-	effects["effect2"] = {}
-	effects["effect2"][0] = "particles/items2_fx/radiance.vpcf"
-	effects["effect2"][1] = "particles/econ/events/ti7/radiance_ti7.vpcf"
-	effects["effect2"][2] = "particles/econ/events/ti6/radiance_ti6.vpcf"
-	effects["effect2"][3] = "particles/econ/events/ti8/radiance_ti8.vpcf"
-	effects["effect2"][4] = "particles/econ/events/ti9/radiance_ti9.vpcf"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BattlepassItems["radiance"], 1, -1 do
-			if BattlepassItems["radiance"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["radiance"][i] then
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetSheepstickEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items_fx/item_sheepstick.vpcf"
-	effects["effect1"][1] = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
-	effects["effect1"][2] = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
-
-	effects["effect2"] = {}
-	effects["effect2"][0] = "models/props_gameplay/pig.vmdl"
-	effects["effect2"][1] = "models/props_gameplay/pig_blue.vmdl"
-	effects["effect2"][2] = "models/props_gameplay/roquelaire/roquelaire.vmdl"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BattlepassItems["sheepstick"])
---		print("rewards:",  BattlepassItems["sheepstick"])
-		for i = #BattlepassItems["sheepstick"], 1, -1 do
---			print("Check if level higher than:", BattlepassItems["sheepstick"][i])
-			if BattlepassItems["sheepstick"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["sheepstick"][i] then
---				print("Item level:", i)
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetShivaEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items2_fx/shivas_guard_active.vpcf"
-	effects["effect1"][1] = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-	effects["effect1"][2] = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti9/shivas_guard_ti9_active.vpcf"
-
-	effects["effect2"] = {}
-	effects["effect2"][0] = "particles/items2_fx/shivas_guard_impact.vpcf"
-	effects["effect2"][1] = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
-	effects["effect2"][2] = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
-	effects["effect2"][3] = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
-	effects["effect2"][4] = "particles/econ/events/ti9/shivas_guard_ti9_impact.vpcf"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BattlepassItems["shiva"])
---		print("rewards:",  BattlepassItems["shiva"])
-		for i = #BattlepassItems["shiva"], 1, -1 do
---			print("Check if level higher than:", BattlepassItems["shiva"][i])
-			if BattlepassItems["shiva"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["shiva"][i] then
---				print("Item level:", i)
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetMekansmEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items2_fx/mekanism.vpcf"
-	effects["effect1"][1] = "particles/econ/events/ti7/mekanism_ti7.vpcf"
-	effects["effect1"][2] = "particles/econ/events/ti6/mekanism_ti6.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti8/mekanism_ti8.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti9/mekanism_ti9.vpcf"
-
-	effects["effect2"] = {}
-	effects["effect2"][0] = "particles/items2_fx/mekanism_recipient.vpcf"
-	effects["effect2"][1] = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
-	effects["effect2"][2] = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
-	effects["effect2"][3] = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
-	effects["effect2"][4] = "particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
-
-	effects["effect3"] = {}
-	effects["effect3"][0] = "particles/items3_fx/warmage.vpcf"
-	effects["effect3"][1] = "particles/items3_fx/warmage1.vpcf"
-	effects["effect3"][2] = "particles/items3_fx/warmage2.vpcf"
-	effects["effect3"][3] = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
-	effects["effect3"][4] = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
-
-	effects["effect4"] = {}
-	effects["effect4"][0] = "particles/items3_fx/warmage_recipient.vpcf"
-	effects["effect4"][1] = "particles/items3_fx/warmage1_recipient.vpcf"
-	effects["effect4"][2] = "particles/items3_fx/warmage2_recipient.vpcf"
-	effects["effect4"][3] = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
-	effects["effect4"][4] = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
-
-	effects["effect5"] = {}
-	effects["effect5"][0] = "particles/items3_fx/warmage_mana_nonhero.vpcf"
-	effects["effect5"][1] = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
-	effects["effect5"][2] = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
-	effects["effect5"][3] = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
-	effects["effect5"][4] = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-	hero_item_effects["effect3"] = effects["effect3"][0]
-	hero_item_effects["effect4"] = effects["effect4"][0]
-	hero_item_effects["effect5"] = effects["effect5"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BattlepassItems["mekansm"])
---		print("rewards:",  BattlepassItems["mekansm"])
-		for i = #BattlepassItems["mekansm"], 1, -1 do
---			print("Check if level higher than:", BattlepassItems["mekansm"][i])
-			if BattlepassItems["mekansm"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["mekansm"][i] then
---				print("Item level:", i)
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				hero_item_effects["effect3"] = effects["effect3"][i]
-				hero_item_effects["effect4"] = effects["effect4"][i]
-				hero_item_effects["effect5"] = effects["effect5"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
-end
-
-function Battlepass:GetFountainEffect(ID)
-	local effects = {}
-
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
-	effects["effect1"][1] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
-	effects["effect1"][2] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
-	effects["effect1"][3] = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
-	effects["effect1"][5] = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
-	effects["effect1"][6] = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
-	effects["effect1"][7] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
-	effects["effect1"][8] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
-	effects["effect1"][9] = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
-	effects["effect1"][10] = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
-	effects["effect1"][11] = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
-	effects["effect1"][12] = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
-	effects["effect1"][13] = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
-	effects["effect1"][14] = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
-	effects["effect1"][15] = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
-	effects["effect1"][16] = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
-	effects["effect1"][17] = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
-	effects["effect1"][18] = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
-	effects["effect1"][19] = "particles/econ/events/ti9/fountain_regen_ti9.vpcf"
-	effects["effect1"][20] = "particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
-	effects["effect1"][21] = "particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
-
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BattlepassItems["fountain"], 1, -1 do
-			if BattlepassItems["fountain"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["fountain"][i] then
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				break
-			end
-		end
-	end
-
-	return hero_item_effects
+	return effect_table
 end
 
 function Battlepass:GetBottleEffect(ID)
-	local effects = {}
+	local effect_table = {}
+	effect_table[1] = "particles/items_fx/bottle.vpcf"
 
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items_fx/bottle.vpcf"
-	effects["effect1"][1] = "particles/econ/events/ti7/bottle_ti7.vpcf"
-	effects["effect1"][2] = "particles/econ/events/ti4/bottle_ti4.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti6/bottle_ti6.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti5/bottle_ti5.vpcf"
-	effects["effect1"][5] = "particles/econ/events/ti8/bottle_ti8.vpcf"
-	effects["effect1"][6] = "particles/econ/events/ti9/bottle_ti9.vpcf"
+	-- todo: http request to get equipped effect
 
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
+	return effect_table
+end
 
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
---		print("reward count:",  #BattlepassItems["bottle"])
---		print("rewards:",  BattlepassItems["bottle"])
-		for i = #BattlepassItems["bottle"], 1, -1 do
---			print("Check if level higher than:", BattlepassItems["bottle"][i])
-			if BattlepassItems["bottle"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["bottle"][i] then
---				print("Item level:", i)
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				break
-			end
-		end
-	end
+function Battlepass:GetForceStaffEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/items_fx/force_staff.vpcf"
 
-	return hero_item_effects
+	-- todo: http request to get equipped effect
+
+	return effect_table
+end
+
+function Battlepass:GetFountainEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
+
+	-- todo: http request to get equipped effect
+
+	return effect_table
 end
 
 function Battlepass:GetMaelstormEffect(ID)
-	local effects = {}
+	local effect_table = {}
+	effect_table[1] = "particles/items2_fx/mjollnir_shield.vpcf"
+	effect_table[2] = "particles/item/mjollnir/static_lightning_bolt.vpcf"
+	effect_table[3] = "particles/items_fx/chain_lightning.vpcf"
 
-	effects["effect1"] = {}
-	effects["effect1"][0] = "particles/items2_fx/mjollnir_shield.vpcf"
-	effects["effect1"][1] = "particles/items2_fx/jarnbjorn_shield.vpcf"
-	effects["effect1"][2] = "particles/econ/events/ti6/mjollnir_shield_ti6.vpcf"
-	effects["effect1"][3] = "particles/econ/events/ti7/mjollnir_shield_ti7.vpcf"
-	effects["effect1"][4] = "particles/econ/events/ti8/mjollnir_shield_ti8.vpcf"
-	effects["effect1"][5] = "particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
+	-- todo: http request to get equipped effect
 
-	effects["effect2"] = {}
-	effects["effect2"][0] = "particles/item/mjollnir/static_lightning_bolt.vpcf"
-	effects["effect2"][1] = "particles/item/jarnbjorn/static_lightning_bolt.vpcf"
-	effects["effect2"][2] = "particles/econ/events/ti6/maelstorm_ti6.vpcf"
-	effects["effect2"][3] = "particles/econ/events/ti7/maelstorm_ti7.vpcf"
-	effects["effect2"][4] = "particles/econ/events/ti8/maelstorm_ti8.vpcf"
-	effects["effect2"][5] = "particles/econ/events/ti9/maelstorm_ti9.vpcf"
+	return effect_table
+end
 
-	effects["effect3"] = {}
-	effects["effect3"][0] = "particles/items_fx/chain_lightning.vpcf"
-	effects["effect3"][1] = "particles/items_fx/chain_lightning_jarnbjorn.vpcf"
-	effects["effect3"][2] = "particles/econ/events/ti6/maelstorm_ti6.vpcf"
-	effects["effect3"][3] = "particles/econ/events/ti7/maelstorm_ti7.vpcf"
-	effects["effect3"][4] = "particles/econ/events/ti8/maelstorm_ti8.vpcf"
-	effects["effect3"][5] = "particles/econ/events/ti9/maelstorm_ti9.vpcf"
+function Battlepass:GetMekansmEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/items2_fx/mekanism.vpcf"
+	effect_table[2] = "particles/items2_fx/mekanism_recipient.vpcf"
+	effect_table[3] = "particles/items3_fx/warmage.vpcf"
+	effect_table[4] = "particles/items3_fx/warmage_recipient.vpcf"
+	effect_table[5] = "particles/items3_fx/warmage_mana_nonhero.vpcf"
 
-	local hero_item_effects = {}
-	hero_item_effects["level"] = 0
-	hero_item_effects["effect1"] = effects["effect1"][0]
-	hero_item_effects["effect2"] = effects["effect2"][0]
-	hero_item_effects["effect3"] = effects["effect3"][0]
+	-- todo: http request to get equipped effect
 
-	if Battlepass:GetRewardUnlocked(ID) ~= nil then
-		for i = #BattlepassItems["maelstorm"], 1, -1 do
-			if BattlepassItems["maelstorm"][i] and Battlepass:GetRewardUnlocked(ID) >= BattlepassItems["maelstorm"][i] then
-				hero_item_effects["level"] = i
-				hero_item_effects["effect1"] = effects["effect1"][i]
-				hero_item_effects["effect2"] = effects["effect2"][i]
-				hero_item_effects["effect3"] = effects["effect3"][i]
-				break
-			end
-		end
-	end
+	return effect_table
+end
 
-	return hero_item_effects
+function Battlepass:GetRadianceEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/items2_fx/radiance_owner.vpcf"
+	effect_table[2] = "particles/items2_fx/radiance.vpcf"
+
+	-- todo: http request to get equipped effect
+
+	return effect_table
+end
+
+function Battlepass:GetSheepstickEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/items_fx/item_sheepstick.vpcf"
+	effect_table[2] = "models/props_gameplay/pig.vmdl"
+
+	-- todo: http request to get equipped effect
+
+	return effect_table
+end
+
+function Battlepass:GetShivaEffect(ID)
+	local effect_table = {}
+	effect_table[1] = "particles/items2_fx/shivas_guard_active.vpcf"
+	effect_table[2] = "particles/items2_fx/shivas_guard_impact.vpcf"
+
+	-- todo: http request to get equipped effect
+
+	return effect_table
 end
 
 function Battlepass:SetItemEffects(ID)
@@ -605,8 +217,53 @@ function Battlepass:SetItemEffects(ID)
 		sheepstick = Battlepass:GetSheepstickEffect(ID),
 		shiva = Battlepass:GetShivaEffect(ID),
 	})
+end
 
---	print(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(ID)))
+local function failduh()
+	print("CALLBACK FAIL")
+end
+
+function Battlepass:SetOverrideAssets(hero, modifier, table_name)
+	for i, j in pairs(table_name) do
+		print(i, j)
+
+		if i ~= "skip_model_combine" then
+			if (j.type == "particle" and j.style == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("Particle:", j)
+				local particle_table = {}
+				particle_table.asset = j.asset
+				particle_table.modifier = j.modifier
+				particle_table.parent = hero
+
+				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
+			elseif (j.type == "sound" and j.style == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("Sound:", j)
+				local sound_table = {}
+				sound_table.asset = j.asset
+				sound_table.modifier = j.modifier
+				sound_table.parent = hero
+
+				table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+			elseif (j.type == "ability_icon" and j.style == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+				print("ability icon:", j)
+				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+			elseif (j.type == "icon_replacement_hero" and j.style == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("topbar icon:", j)
+				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+					player_id = hero:GetPlayerID(),
+					icon_path = j.modifier,
+				})
+			end
+		end
+	end
+
+	-- override attack projectile
+	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
+		if v.asset == GetKeyValueByHeroName(hero:GetUnitName(), "ProjectileModel") and v.parent == hero then
+			hero:SetRangedProjectileName(v.modifier)
+			break
+		end
+	end
 end
 
 -- todo: use values in items_game.txt instead
@@ -668,15 +325,6 @@ function Battlepass:GetHeroEffect(hero)
 		hero.quas_orb = "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
 		hero.wex_orb = "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
 		hero.exort_orb = "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-		hero.blade_dance_effect = "particles/units/heroes/hero_juggernaut/juggernaut_crit_tgt.vpcf"
-		hero.blade_dance_sound = "Hero_Juggernaut.BladeDance"
-		hero.omni_slash_hit_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
-		hero.omni_slash_trail_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
-		hero.omni_slash_dash_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_dash.vpcf"
-		hero.omni_slash_status_effect = "particles/status_fx/status_effect_omnislash.vpcf"
-		hero.omni_slash_end = "particles/units/heroes/hero_juggernaut/juggernaut_omni_end.vpcf"
-		hero.omni_slash_light = "particles/units/heroes/hero_juggernaut/juggernaut_omnislash_light.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
 		CustomNetTables:SetTableValue("battlepass", "leshrac", {
 			diabolic_edict = "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf",
@@ -690,18 +338,6 @@ function Battlepass:GetHeroEffect(hero)
 	elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
 		hero.spiked_carapace_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
 		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
-		hero.stifling_dagger_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
-		hero.stifling_dagger_debuff_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-		hero.stifling_dagger_silence_effect = "particles/generic_gameplay/generic_silenced.vpcf"
-
-		hero.phantom_strike_start_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_start.vpcf"
-		hero.phantom_strike_end_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-
-		hero.fatality_screen_blood_splatter = "particles/hero/phantom_assassin/screen_blood_splatter.vpcf"
-		hero.coup_de_grace_crit_effect = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-
-		hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace"
 	elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
@@ -749,6 +385,62 @@ function Battlepass:GetHeroEffect(hero)
 	if ply_table and ply_table.bp_rewards == 0 then
 		return
 	end
+
+	if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= "0" then
+		local armory = api:GetArmory(hero:GetPlayerID())
+
+		if not armory then return end
+
+		CustomNetTables:SetTableValue("battlepass", "rewards_"..hero:GetPlayerID(), armory)
+
+		for k, v in pairs(armory) do
+			if hero:GetUnitName() == v.hero then
+--				print(ItemsGame:GetItemWearables(v.item_id))
+				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
+					if type(item_id) == "number" then item_id = tostring(item_id) end
+
+					local modifier = ItemsGame:GetItemModifier(v.item_id)
+
+					if modifier then
+--						print("Add cosmetic modifier:", modifier)
+						hero:AddNewModifier(hero, nil, modifier, {})
+
+						local style = 0
+
+						if v.hero == "npc_dota_hero_phantom_assassin" then
+--							print("Arcana kills:")
+							local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
+--							print(pa_arcana_kills)
+							hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
+
+							if tonumber(pa_arcana_kills) >= 400 then
+								style = 1
+							elseif tonumber(pa_arcana_kills) >= 1000 then
+								style = 2
+							end
+						end
+					end
+
+--					print(item_id, slot_id)
+					Wearable:_WearProp(hero, item_id, slot_id, style)
+
+					if Wearable.items_game["items"][item_id] and Wearable.items_game["items"][item_id]["visuals"] then
+						Battlepass:SetOverrideAssets(hero, modifier, Wearable.items_game["items"][item_id]["visuals"])
+						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
+					end
+				end
+			end
+		end
+
+--		print(CScriptParticleManager.PARTICLES_OVERRIDE)
+--		print("---------------------------------")
+--		print(CDOTA_BaseNPC.SOUNDS_OVERRIDE)
+	end
+
+	local hello = false
+	if hello == false then return end
+
+	print("DONT")
 
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
@@ -926,43 +618,6 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana"] then
-				LinkLuaModifier("modifier_juggernaut_arcana", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-
-				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["juggernaut_arcana2"] then
-					style = 1
-				end
-
-				if style == 0 then
-					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
-					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_crit_tgt.vpcf"
-					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_tgt.vpcf"
-					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_trail.vpcf"
-					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_dash.vpcf"
-					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_omni.vpcf"
-					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_end.vpcf"
-					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_trigger.vpcf"
-					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omnislash_light.vpcf"
-				elseif style == 1 then
-					hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_blade_fury.vpcf"
-					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_crit_tgt.vpcf"
-					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_tgt.vpcf"
-					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_trail.vpcf"
-					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_dash.vpcf"
-					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_v2_omni.vpcf"
-					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_end.vpcf"
-					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_trigger.vpcf"
-					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omnislash_light.vpcf"
-				end
-
-				hero.blade_dance_sound = "Hero_Juggernaut.BladeDance.Arcana"
-
-				hero:AddNewModifier(hero, nil, "modifier_juggernaut_arcana", {})
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
-				Wearable:_WearProp(hero, "9059", "head", style)
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["leshrac_immortal"] then
 				CustomNetTables:SetTableValue("battlepass", "leshrac", {
@@ -995,13 +650,6 @@ function Battlepass:GetHeroEffect(hero)
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["lina_arcana"] then
-				Wearable:_WearProp(hero, "4794", "head")
-
-				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
 			if IsInToolsMode() then
 				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nevermore_arcana"] then
@@ -1018,57 +666,6 @@ function Battlepass:GetHeroEffect(hero)
 
 			-- custom icons
 			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-		elseif hero:GetUnitName() == "npc_dota_hero_phantom_assassin" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["phantom_assassin_arcana"] then
-				LinkLuaModifier("modifier_phantom_assassin_arcana", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-
-				hero.stifling_dagger_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_arcana.vpcf"
-				hero.stifling_dagger_debuff_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_stifling_dagger_debuff_arcana.vpcf"
-				hero.stifling_dagger_silence_effect = "particles/econ/items/storm_spirit/storm_spirit_orchid_hat/storm_orchid_silenced.vpcf"
-
-				hero.phantom_strike_start_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_start.vpcf"
-				hero.phantom_strike_end_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_phantom_strike_end.vpcf"
-
-				hero.fatality_screen_blood_splatter = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_screen_blood_splatter.vpcf"
-				hero.coup_de_grace_crit_effect = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/phantom_assassin_crit_arcana_swoop.vpcf"
-
-				hero.coup_de_grace_sound = "Hero_PhantomAssassin.CoupDeGrace.Arcana"
-
-				local style = 0
---				print("Arcana kills:")
-				local pa_arcana_kills = api:GetPhantomAssassinArcanaKills(hero:GetPlayerID()) or 0
---				print(pa_arcana_kills)
-				hero:AddNewModifier(hero, nil, "modifier_phantom_assassin_arcana", {}):SetStackCount(tonumber(pa_arcana_kills))
-
-				if tonumber(pa_arcana_kills) >= 400 then
-					style = 1
-				elseif tonumber(pa_arcana_kills) >= 1000 then
-					style = 2
-				end
-
-				Wearable:_WearProp(hero, "7247", "weapon", style)
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana"] then
-				local style = 0
-				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_arcana2"] then
-					style = 1
-				end
-
-				Wearable:_WearProp(hero, "7756", "back", style)
-
-				-- custom icons
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
-			end
-
-			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
-
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["pudge_immortal"] then
-				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-				Wearable:_WearProp(hero, "4007", "weapon")
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal2"] then
 				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt_golden.vpcf"
@@ -1172,25 +769,6 @@ function Battlepass:GetHeroEffect(hero)
 				hero.tether_icon = 1
 				hero.spirits_icon = 1
 
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["zuus_arcana"] then
-				Wearable:_WearProp(hero, "6914", "head")
-				Wearable:_WearProp(hero, "8692", "arms")
-				Wearable:_WearProp(hero, "8693", "back")
-
-				hero.static_field_icon = 1
-				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
-				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start.vpcf"
-				hero.thundergods_wrath_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath.vpcf"
-				hero.thundergods_wrath_icon = 1
-				hero.thundergods_wrath_pre_sound = "Hero_Zuus.GodsWrath.PreCast.Arcana"
-
-				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
-				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
-				hero.blink_icon = "zuus"
-				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		end
