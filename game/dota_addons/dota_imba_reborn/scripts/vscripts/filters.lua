@@ -1,7 +1,7 @@
 -- TODO: FORMAT FILTERS CODE IT LOOKS LIKE SHIT
 
 -- Testing a gold reduction on hero kills to reduce "snowballing"; 1 is default
-HERO_KILL_MULTIPLIER = 0.8
+local HERO_KILL_MULTIPLIER = 0.6
 
 -- Gold gain filter function
 function GameMode:GoldFilter(keys)
