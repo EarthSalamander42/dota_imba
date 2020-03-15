@@ -629,26 +629,24 @@ function SetArmory(hero, slot_id, item_id) {
 
 	if (slot_id == undefined) slot_id = "weapon";
 
-	var equip = 1;
-
 	api.updateArmory({
 		steamid		: Game.GetLocalPlayerInfo().player_steamid,
 		hero		: hero,
 		slot_id		: slot_id,
 		item_id		: item_id,
-		isEquipped	: equip,
 		custom_game	: game_type,
-	}, function() {
+	}, function(data) {
+		$.Msg(data)
 		$("#CompanionNotification").AddClass("success");
 		var text = $.Localize("bp_reward_equip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
-		if (equip == 0)
-			var text = $.Localize("bp_reward_unequip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
+
+//		if (equip == 0)
+//			text = $.Localize("bp_reward_unequip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 
 		$("#CompanionNotificationLabel").text = text;
 
 		if ($("#reward_equipped_" + item_id)) {
 			$("#reward_equipped_" + item_id).DeleteAsync(0);
-			equip = 0;
 		} else {
 			SetRewardEquipped(item_id, hero);
 		}

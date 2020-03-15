@@ -205,7 +205,11 @@ function ItemsGame:GetItemWearables(item_id)
 end
 
 function ItemsGame:GetItemSlot(item_id)
-	return self:GetItemInfo(item_id, "item_slot") or "weapon"
+	if self:GetItemType(item_id) == "bundle" then
+		return self:GetItemInfo(item_id, "prefab")
+	elseif self:GetItemType(item_id) == "wearable" then
+		return self:GetItemInfo(item_id, "item_slot") or "weapon"
+	end
 end
 
 function ItemsGame:GetItemHero(item_id)

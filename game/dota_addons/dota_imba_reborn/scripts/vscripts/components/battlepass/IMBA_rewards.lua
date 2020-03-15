@@ -389,6 +389,8 @@ function Battlepass:GetHeroEffect(hero)
 	if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= "0" then
 		local armory = api:GetArmory(hero:GetPlayerID())
 
+		if not armory then return end
+
 		CustomNetTables:SetTableValue("battlepass", "rewards_"..hero:GetPlayerID(), armory)
 
 		for k, v in pairs(armory) do
