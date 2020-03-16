@@ -10,7 +10,7 @@ function UpdateTooltip(args) {
 
 	var query_panel = FindDotaHudElement("QueryUnit");
 
-	if (args.victim_id != undefined) {
+	if (args.victim_id != undefined && Game.GetLocalPlayerID() == args.killer_id) {
 		query_panel.RemoveClass("Hidden");
 
 		var gravestone_ui = query_panel.FindChildTraverse("pa_gravestone");

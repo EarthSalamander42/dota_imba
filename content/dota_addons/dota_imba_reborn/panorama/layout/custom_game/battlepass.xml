@@ -188,6 +188,8 @@
 				<Panel id="BattlepassRewardContainer" hittest="true">
 					<Panel id="BattlepassPlayerRow" class="BattlepassPlayerRow" hittest="false">
 						<DOTAAvatarImage id="PlayerSteamAvatar" hittest="false"/>
+
+						<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel"/>
 					</Panel>
 
 					<Panel id="BattlepassRewardRow" class="BattlepassRow" hittest="false">

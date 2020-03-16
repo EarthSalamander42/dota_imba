@@ -800,7 +800,7 @@
 	margin-top: 5px;
 	/* background-color: #000000ba; */
 	flow-children: right;
-	overflow: scroll;
+	overflow: scroll squish;
 }
 
 .BattlepassReward {
@@ -955,9 +955,9 @@
 #CompanionNotification {
 	width: 100%;
 	height: 40px;
-	background-color: black;
+	background-color: none;
 	align: center center;
-	visibility: collapse;
+	visibility: visible;
 	margin-bottom: 15px;
 }
 
@@ -996,10 +996,9 @@
 
 #CompanionNotificationLabel {
 	padding: 10% 0% 10% 0%;
-	width: 100%;
-	height: 100%;
 	color: white;
 	text-align: center center;
+	align: center center;
 	font-size: 18px;
 	text-overflow: shrink;
 }
@@ -1311,4 +1310,293 @@
 	background-position: right top;
 	background-size: 100%;
 	wash-color: #B3DFDC;
+}
+
+#PanelImbaXP 
+{
+	width: 50%;
+	padding: 3px 10px 5px;
+	align: center center;
+//	background-color: #0d061dcc;
+}
+#LevelContainer
+{
+	flow-children: right;
+	align: center top;
+	width: 100%;
+	padding: 0 3px;
+}
+#LevelContainerChild {
+	align: left top;
+	flow-children: right;
+	margin-right:  15px;
+	margin-top: 1px;
+}
+#LevelContainerChild2 {
+	align: right top;
+}
+#LevelLabel
+{
+	color: #c3b9d8;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center top;
+}
+
+#ImbaXPRank0,
+#ImbaXPRank1,
+#ImbaXPRank2,
+#ImbaXPRank3,
+#ImbaXPRank4,
+#ImbaXPRank5,
+#ImbaXPRank6,
+#ImbaXPRank7,
+#ImbaXPRank8,
+#ImbaXPRank9,
+#ImbaXPRank10,
+#ImbaXPRank11,
+#ImbaXPRank12,
+#ImbaXPRank13,
+#ImbaXPRank14,
+#ImbaXPRank15,
+#ImbaXPRank16,
+#ImbaXPRank17,
+#ImbaXPRank18,
+#ImbaXPRank19,
+#ImbaXPRank20,
+#ImbaXPRank21,
+#ImbaXPRank22,
+#ImbaXPRank23
+{
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center top;
+	/*margin-top: 1px;*/
+	/*margin-right: 5%;
+	margin-bottom: 1px;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	text-shadow: 0 0 3px #000000cc;
+	align: center center;*/
+}
+
+#ImbaXP0,
+#ImbaXP1,
+#ImbaXP2,
+#ImbaXP3,
+#ImbaXP4,
+#ImbaXP5,
+#ImbaXP6,
+#ImbaXP7,
+#ImbaXP8,
+#ImbaXP9,
+#ImbaXP10,
+#ImbaXP11,
+#ImbaXP12,
+#ImbaXP13,
+#ImbaXP14,
+#ImbaXP15,
+#ImbaXP16,
+#ImbaXP17,
+#ImbaXP18,
+#ImbaXP19,
+#ImbaXP20,
+#ImbaXP21,
+#ImbaXP22,
+#ImbaXP23
+{
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	color: #fefeff;
+	align: center center;
+	opacity: 0.5;
+}
+
+#ImbaXPEarned0,
+#ImbaXPEarned1,
+#ImbaXPEarned2,
+#ImbaXPEarned3,
+#ImbaXPEarned4,
+#ImbaXPEarned5,
+#ImbaXPEarned6,
+#ImbaXPEarned7,
+#ImbaXPEarned8,
+#ImbaXPEarned9,
+#ImbaXPEarned10,
+#ImbaXPEarned11,
+#ImbaXPEarned12,
+#ImbaXPEarned13,
+#ImbaXPEarned14,
+#ImbaXPEarned15,
+#ImbaXPEarned16,
+#ImbaXPEarned17,
+#ImbaXPEarned18,
+#ImbaXPEarned19,
+#ImbaXPEarned20,
+#ImbaXPEarned21,
+#ImbaXPEarned22,
+#ImbaXPEarned23
+{
+	visibility: collapse;
+}
+
+#ImbaLvl0,
+#ImbaLvl1,
+#ImbaLvl2,
+#ImbaLvl3,
+#ImbaLvl4,
+#ImbaLvl5,
+#ImbaLvl6,
+#ImbaLvl7,
+#ImbaLvl8,
+#ImbaLvl9,
+#ImbaLvl10,
+#ImbaLvl11,
+#ImbaLvl12,
+#ImbaLvl13,
+#ImbaLvl14,
+#ImbaLvl15,
+#ImbaLvl16,
+#ImbaLvl17,
+#ImbaLvl18,
+#ImbaLvl19,
+#ImbaLvl20,
+#ImbaLvl21,
+#ImbaLvl22,
+#ImbaLvl23
+{
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center bottom;
+	color: #c3b9d8;
+	/*font-size: 16px;
+	font-weight: bold;
+	margin-top: 2px;
+	margin-left: 3%;
+	color: white;
+	align: left center;
+	opacity: 0.75;*/
+}
+
+#XPProgressBar0,
+#XPProgressBar1,
+#XPProgressBar2,
+#XPProgressBar3,
+#XPProgressBar4,
+#XPProgressBar5,
+#XPProgressBar6,
+#XPProgressBar7,
+#XPProgressBar8,
+#XPProgressBar9,
+#XPProgressBar10,
+#XPProgressBar11,
+#XPProgressBar12,
+#XPProgressBar13,
+#XPProgressBar14,
+#XPProgressBar15,
+#XPProgressBar16,
+#XPProgressBar17,
+#XPProgressBar18,
+#XPProgressBar19,
+#XPProgressBar20,
+#XPProgressBar21,
+#XPProgressBar22,
+#XPProgressBar23
+{
+	width: 100%;
+	height: 20px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#XPProgressBar0_Left,
+#XPProgressBar1_Left,
+#XPProgressBar2_Left,
+#XPProgressBar3_Left,
+#XPProgressBar4_Left,
+#XPProgressBar5_Left,
+#XPProgressBar6_Left,
+#XPProgressBar7_Left,
+#XPProgressBar8_Left,
+#XPProgressBar9_Left,
+#XPProgressBar10_Left,
+#XPProgressBar11_Left,
+#XPProgressBar12_Left,
+#XPProgressBar13_Left,
+#XPProgressBar14_Left,
+#XPProgressBar15_Left,
+#XPProgressBar16_Left,
+#XPProgressBar17_Left,
+#XPProgressBar18_Left,
+#XPProgressBar19_Left,
+#XPProgressBar20_Left,
+#XPProgressBar21_Left,
+#XPProgressBar22_Left,
+#XPProgressBar23_Left
+{
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#3e3060), color-stop( 0.5, #58418b ), to(#3e3060));
+	border-radius: 50px 0 0 50px;
+}
+
+#XPProgressBar0_Right,
+#XPProgressBar1_Right,
+#XPProgressBar2_Right,
+#XPProgressBar3_Right,
+#XPProgressBar4_Right,
+#XPProgressBar5_Right,
+#XPProgressBar6_Right,
+#XPProgressBar7_Right,
+#XPProgressBar8_Right,
+#XPProgressBar9_Right,
+#XPProgressBar10_Right,
+#XPProgressBar11_Right,
+#XPProgressBar12_Right,
+#XPProgressBar13_Right,
+#XPProgressBar14_Right,
+#XPProgressBar15_Right,
+#XPProgressBar16_Right,
+#XPProgressBar17_Right,
+#XPProgressBar18_Right,
+#XPProgressBar19_Right,
+#XPProgressBar20_Right,
+#XPProgressBar21_Right,
+#XPProgressBar22_Right,
+#XPProgressBar23_Right
+{
+	background-color: #2d2839;
+	border-radius:  0 50px 50px 0;
+}
+
+#XPProgressBarContainer0,
+#XPProgressBarContainer1,
+#XPProgressBarContainer2,
+#XPProgressBarContainer3,
+#XPProgressBarContainer4,
+#XPProgressBarContainer5,
+#XPProgressBarContainer6,
+#XPProgressBarContainer7,
+#XPProgressBarContainer8,
+#XPProgressBarContainer9,
+#XPProgressBarContainer10,
+#XPProgressBarContainer11,
+#XPProgressBarContainer12,
+#XPProgressBarContainer13,
+#XPProgressBarContainer14,
+#XPProgressBarContainer15,
+#XPProgressBarContainer16,
+#XPProgressBarContainer17,
+#XPProgressBarContainer18,
+#XPProgressBarContainer19,
+#XPProgressBarContainer20,
+#XPProgressBarContainer21,
+#XPProgressBarContainer22,
+#XPProgressBarContainer23
+{
+	vertical-align: bottom;
+	height: 40px;
+	width: 100%;
 }

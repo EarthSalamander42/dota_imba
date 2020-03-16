@@ -50,6 +50,7 @@ function OnUpdateHeroSelection()
 		hero_portrait.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + localPlayerInfo.possible_hero_selection + '.png")';
 		hero_portrait.style.backgroundSize = "100% 100%";
 	}
+
 }
 
 function UpdateTeam( teamId )

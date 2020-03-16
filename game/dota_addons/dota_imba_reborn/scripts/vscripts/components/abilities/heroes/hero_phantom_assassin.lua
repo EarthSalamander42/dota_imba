@@ -1201,6 +1201,7 @@ function modifier_phantom_assassin_gravestone:OnIntervalThink()
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "update_pa_arcana_tooltips", {
 				victim = self:GetStackCount(),
 				victim_id = self:GetParent().victim_id,
+				killer_id = i,
 				epitaph = self:GetParent().epitaph_number,
 				cdp_damage = self.cdp_damage,
 			})
@@ -1231,23 +1232,23 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		self:IncrementStackCount()
 --		print("New arcana kill:", self:GetStackCount())
 
-		-- local gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
-		-- gravestone:SetOwner(self:GetParent())
+		local gravestone = CreateUnitByName("npc_dota_phantom_assassin_gravestone", params.target:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), DOTA_TEAM_NEUTRALS)
+		gravestone:SetOwner(self:GetParent())
 
--- --		print("CDP damage (pre):", self:GetParent().cdp_damage)
-		-- -- required for CDP damage to be valid
-		-- Timers:CreateTimer(FrameTime(), function()
-			-- gravestone:AddNewModifier(gravestone, nil, "modifier_phantom_assassin_gravestone", {cdp_damage = params.attacker.cdp_damage}):SetStackCount(params.target:entindex())
--- --			print("CDP damage (post):", self:GetParent().cdp_damage)
-		-- end)
+--		print("CDP damage (pre):", self:GetParent().cdp_damage)
+		-- required for CDP damage to be valid
+		Timers:CreateTimer(FrameTime(), function()
+			gravestone:AddNewModifier(gravestone, nil, "modifier_phantom_assassin_gravestone", {cdp_damage = params.attacker.cdp_damage}):SetStackCount(params.target:entindex())
+--			print("CDP damage (post):", self:GetParent().cdp_damage)
+		end)
 
-		-- gravestone.epitaph_number = RandomInt(1, 13)
-		-- gravestone.victim_id = params.target:GetPlayerID()
+		gravestone.epitaph_number = RandomInt(1, 13)
+		gravestone.victim_id = params.target:GetPlayerID()
 
-		-- -- hack to show the panel when clicking on the sword
-		-- for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			-- gravestone:SetControllableByPlayer(i, false)
-		-- end
+		-- hack to show the panel when clicking on the sword
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			gravestone:SetControllableByPlayer(i, false)
+		end
 
 		if self:GetStackCount() == 400 then
 			Wearable:_WearProp(self:GetParent(), "7247", "weapon", 1)
@@ -1267,6 +1268,6 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 			style = 2
 		end
 
-		-- gravestone:SetMaterialGroup(tostring(style))
+		gravestone:SetMaterialGroup(tostring(style))
 	end
 end

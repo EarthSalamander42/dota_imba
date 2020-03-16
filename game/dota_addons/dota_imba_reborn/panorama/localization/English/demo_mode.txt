@@ -34,6 +34,7 @@
 "DummyTarget_Button"						"Dummy Target"
 "RemoveSpawns_Button"						"Remove Spawns"
 "SelectCosmetics_Button"					"Equip New Items"
+"SelectHero_Button"							"Select New Enemy Hero"
 "ChangeHero_Button"							"Select New Hero"
 "PauseDemo_Button"							"Pause"
 "QuitDemo_Button"							"Quit"

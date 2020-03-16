@@ -119,7 +119,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 
 	for _,enemy in pairs(furyEnemies) do
 		-- Play hit sound
-		enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+		enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact", self:GetCaster())
 
 		-- Play hit particle
 		local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
@@ -147,11 +147,9 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 				ParticleManager:SetParticleControl(crit_pfx, 0, self:GetParent():GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(crit_pfx)
 				
-				if self:GetCaster().blade_dance_sound then
-					self:GetParent():EmitSound(self:GetCaster().blade_dance_sound)
-				end
-				
-				self:GetParent():EmitSound("Hero_Juggernaut.PreAttack")
+				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance", self:GetCaster())
+				self:GetParent():EmitSound("Hero_Juggernaut.PreAttack", self:GetCaster())
+
 				damage = damage * crit
 				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_CRITICAL, enemy, damage, self:GetCaster())
 			else
@@ -786,9 +784,9 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated()
 	if IsServer() then
 		self.caster = self:GetCaster()
 		self.parent = self:GetParent()
-		
-		EmitSoundOn("Hero_Juggernaut.PreAttack", self.parent)
-		EmitSoundOn("Hero_EarthShaker.Attack", self.parent)
+
+		self:GetCaster():EmitSound("Hero_Juggernaut.PreAttack")
+		self:GetCaster():EmitSound("Hero_EarthShaker.Attack")
 		self.has_slice_enemy = false
 		self.enemies_hit = {}
 		
@@ -879,7 +877,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 				if not enemy_hit then
 					
 					-- Play hit sound
-					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact", self:GetCaster())
 					-- Play hit particle
 					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 					ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
@@ -1049,7 +1047,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 				if not enemy_hit then
 
 				-- Play hit sound
-				enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+				enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact", self:GetCaster())
 				-- Play hit particle
 				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 				ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
@@ -1255,7 +1253,7 @@ if IsServer() then
 				ParticleManager:ReleaseParticleIndex(crit_pfx)
 
 				self.critProc = true
-				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance")
+				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance", self:GetCaster())
 
 				return self.crit
 			end
@@ -1294,7 +1292,7 @@ if IsServer() then
 				ParticleManager:ReleaseParticleIndex(particle)
 
 				-- Play crit sound
-				self:GetParent():EmitSound(self:GetCaster().blade_dance_sound)
+				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance", self:GetCaster())
 				self.critProc = false
 
 				if self:GetCaster():HasModifier("modifier_juggernaut_arcana") then
@@ -1630,7 +1628,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 
 		FindClearSpaceForUnit(omnislash_image, self.target:GetAbsOrigin() + RandomVector(128), false)
 
-		omnislash_image:EmitSound("Hero_Juggernaut.OmniSlash")
+		omnislash_image:EmitSound("Hero_Juggernaut.OmniSlash", self:GetCaster())
 
 		Timers:CreateTimer(FrameTime(), function()
 			if (not omnislash_image:IsNull()) then
@@ -1686,7 +1684,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 
 		FindClearSpaceForUnit(self.caster, self.target:GetAbsOrigin() + RandomVector(128), false)
 
-		self.caster:EmitSound("Hero_Juggernaut.OmniSlash")
+		self.caster:EmitSound("Hero_Juggernaut.OmniSlash", self:GetCaster())
 
 		StartAnimation(self.caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
 
@@ -1930,7 +1928,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 			end
 
 			-- Play hit sound
-			enemy:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
+			enemy:EmitSound("Hero_Juggernaut.OmniSlash.Damage", self:GetCaster())
 
 			-- Play hit particle on the current target
 			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())

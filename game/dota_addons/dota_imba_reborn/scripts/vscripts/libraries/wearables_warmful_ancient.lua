@@ -465,6 +465,10 @@ function Wearable:IsDisplayInLoadout(sHeroName, sSlotName)
 		return false
 	end
 
+	if sHeroName == "npc_dota_hero_hell_empress" then
+		sHeroName = "npc_dota_hero_abyssal_underlord"
+	end
+
 	local heroSlots = Wearable.heroes[sHeroName]
 	local Slot = heroSlots[sSlotName]
 	if (not Slot) or Slot.DisplayInLoadout == 0 then
