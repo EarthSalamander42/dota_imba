@@ -432,12 +432,15 @@ function EndScoreboard(args) {
 						rank_panel.style.visibility = "visible";
 
 						var short_title = player_table.mmr_title;
-						var title_stars = "_empty";
+						var title_stars = player_table.mmr_title.substring(player_table.mmr_title.length - 1, player_table.mmr_title.length)
 
 						// if last character is a number (horrible hack, look away please)
 						if (parseInt(title_stars)) {
 							short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
 							title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+						} else {
+							short_title = player_table.mmr_title;
+							title_stars = "_empty";
 						}
 
 						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
