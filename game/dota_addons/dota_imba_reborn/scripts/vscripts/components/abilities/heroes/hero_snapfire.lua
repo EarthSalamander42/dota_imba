@@ -269,6 +269,8 @@ end
 --------------------------------------------------------------------------------
 imba_snapfire_firesnap_cookie = imba_snapfire_firesnap_cookie or class({})
 
+LinkLuaModifier("modifier_generic_knockback_lua", "components/modifiers/generic/modifier_generic_knockback_lua", LUA_MODIFIER_MOTION_BOTH)
+
 --------------------------------------------------------------------------------
 -- Custom KV
 function imba_snapfire_firesnap_cookie:GetCastPoint()
@@ -369,16 +371,14 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 	local knockback = target:AddNewModifier(
 		self:GetCaster(), -- player source
 		self, -- ability source
-		"modifier_knockback", -- modifier name
+		"modifier_generic_knockback_lua", -- modifier name
 		{
-			should_stun = true,
-			knockback_duration = duration,
+			distance = distance,
+			height = height,
 			duration = duration,
-			knockback_distance = distance,
-			knockback_height = height,
-			center_x = target:GetAbsOrigin().x,
-			center_y = target:GetAbsOrigin().y,
-			center_z = target:GetAbsOrigin().z
+			direction_x = target:GetForwardVector().x,
+			direction_y = target:GetForwardVector().y,
+			IsStun = true,
 		} -- kv
 	)
 
