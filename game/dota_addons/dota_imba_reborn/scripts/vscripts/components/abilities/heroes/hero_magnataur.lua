@@ -999,31 +999,33 @@ function modifier_imba_empower:OnAttackLanded( params )
 
 				-- #6 Talent: Empower grants melee targets 360 degree cleave radius
 				if caster:HasTalent("special_bonus_imba_magnataur_6") then
-					local cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_effect.vpcf"
+					if not params.target:IsBuilding() and not params.target:IsOther() then
+						local cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_effect.vpcf"
 
-					if parent:HasModifier("modifier_imba_supercharged") then
-						cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect.vpcf"
-					end
-
-					-- #3 Talent: Supercharge grants the target's 30% main attribute as bonus damage, change particle effects
-					if parent:HasModifier("modifier_imba_supercharged") and caster:HasTalent("special_bonus_imba_magnataur_3") then
-						cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect_plus.vpcf"
-					end
-
-					-- Find enemies to damage
-					local enemies = FindUnitsInRadius(params.attacker:GetTeamNumber(), params.target:GetAbsOrigin(), nil, cleave_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-
-					-- Deal damage
-					for _,enemy in pairs(enemies) do
-						if enemy ~= params.target and not enemy:IsAttackImmune() then
-							ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL})
+						if parent:HasModifier("modifier_imba_supercharged") then
+							cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect.vpcf"
 						end
-					end
 
-					local cleave_splash_pfx = ParticleManager:CreateParticle(cleave_splash_particle, PATTACH_ABSORIGIN, params.target)
-					ParticleManager:SetParticleControl(cleave_splash_pfx, 0, params.target:GetAbsOrigin())
-					ParticleManager:SetParticleControl(cleave_splash_pfx, 1, Vector(cleave_distance, 0, 0))
-					ParticleManager:ReleaseParticleIndex(cleave_splash_pfx)
+						-- #3 Talent: Supercharge grants the target's 30% main attribute as bonus damage, change particle effects
+						if parent:HasModifier("modifier_imba_supercharged") and caster:HasTalent("special_bonus_imba_magnataur_3") then
+							cleave_splash_particle = "particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect_plus.vpcf"
+						end
+
+						-- Find enemies to damage
+						local enemies = FindUnitsInRadius(params.attacker:GetTeamNumber(), params.target:GetAbsOrigin(), nil, cleave_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
+
+						-- Deal damage
+						for _,enemy in pairs(enemies) do
+							if enemy ~= params.target then
+								ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+							end
+						end
+
+						local cleave_splash_pfx = ParticleManager:CreateParticle(cleave_splash_particle, PATTACH_ABSORIGIN, params.target)
+						ParticleManager:SetParticleControl(cleave_splash_pfx, 0, params.target:GetAbsOrigin())
+						ParticleManager:SetParticleControl(cleave_splash_pfx, 1, Vector(cleave_distance, 0, 0))
+						ParticleManager:ReleaseParticleIndex(cleave_splash_pfx)
+					end
 				else
 					DoCleaveAttack( params.attacker, params.target, ability, (params.damage * self.cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )
 				end

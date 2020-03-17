@@ -165,10 +165,10 @@ end
 modifier_item_imba_shadow_blade_passive = modifier_item_imba_shadow_blade_passive or class({})
 
 -- Modifier properties
-function modifier_item_imba_shadow_blade_passive:IsDebuff() return false end
+
 function modifier_item_imba_shadow_blade_passive:IsHidden() return true end
 function modifier_item_imba_shadow_blade_passive:IsPurgable() return false end
-function modifier_item_imba_shadow_blade_passive:IsPermanent() return true end
+function modifier_item_imba_shadow_blade_passive:RemoveOnDeath() return false end
 function modifier_item_imba_shadow_blade_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_shadow_blade_passive:OnCreated()

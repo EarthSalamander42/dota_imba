@@ -43,8 +43,10 @@ end
 -- RING OF AQUILA MODIFIER --
 -----------------------------
 
-function modifier_item_imba_ring_of_aquila:IsHidden()				return true end
-function modifier_item_imba_ring_of_aquila:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_ring_of_aquila:IsHidden() return true end
+function modifier_item_imba_ring_of_aquila:IsPurgable() return false end
+function modifier_item_imba_ring_of_aquila:RemoveOnDeath() return false end
+function modifier_item_imba_ring_of_aquila:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_ring_of_aquila:OnCreated()
 	-- AbilitySpecials

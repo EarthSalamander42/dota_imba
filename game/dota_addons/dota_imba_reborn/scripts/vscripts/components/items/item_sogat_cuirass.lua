@@ -43,7 +43,7 @@ modifier_imba_sogat_cuirass = class({})
 
 function modifier_imba_sogat_cuirass:IsHidden() return true end
 function modifier_imba_sogat_cuirass:IsPurgable() return false end
-function modifier_imba_sogat_cuirass:IsDebuff() return false end
+function modifier_imba_sogat_cuirass:RemoveOnDeath() return false end
 function modifier_imba_sogat_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_sogat_cuirass:OnCreated()
@@ -134,9 +134,9 @@ end
 function modifier_imba_sogat_cuirass:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end

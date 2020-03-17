@@ -185,21 +185,20 @@ function modifier_imba_bloodrage_blood_frenzy:OnCreated()
 	local particle_frenzy_fx = ParticleManager:CreateParticle(self.particle_frenzy, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(particle_frenzy_fx, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(particle_frenzy_fx, false, false, -1, false, false)
+	
+	if not IsServer() then return end
+	
+	self:SetStackCount(self.ms_bonus_pct)
 end
 
 function modifier_imba_bloodrage_blood_frenzy:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
 end
 
 function modifier_imba_bloodrage_blood_frenzy:GetModifierMoveSpeedBonus_Percentage()
-	return self.ms_bonus_pct
-end
-
-function modifier_imba_bloodrage_blood_frenzy:GetModifierMoveSpeed_Max()
-	return 5000
+	return self:GetStackCount()
 end
 
 function modifier_imba_bloodrage_blood_frenzy:IsHidden() return false end
@@ -1156,9 +1155,16 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_bloodseeker_7					= modifier_special_bonus_imba_bloodseeker_7 or class({})
 modifier_special_bonus_imba_bloodseeker_rupture_cast_range	= modifier_special_bonus_imba_bloodseeker_rupture_cast_range or class({})
+
+function modifier_special_bonus_imba_bloodseeker_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_7:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsHidden() 		return true end
 function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsPurgable() 		return false end
@@ -1169,5 +1175,13 @@ function imba_bloodseeker_rupture:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_rupture_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_rupture_cast_range"), "modifier_special_bonus_imba_bloodseeker_rupture_cast_range", {})
+	end
+end
+
+function imba_bloodseeker_bloodrage:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_7"), "modifier_special_bonus_imba_bloodseeker_7", {})
 	end
 end

@@ -78,10 +78,10 @@
 "DOTA_Tooltip_modifier_imba_chen_hand_of_god_overheal_Description"		"Gaining extra max health from overheal, which decays over time."
 
 "DOTA_Tooltip_modifier_imba_chen_divine_favor"	"Divine Favor"
-"DOTA_Tooltip_modifier_imba_chen_divine_favor_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%. Gaining immunity to any pure damage."
+"DOTA_Tooltip_modifier_imba_chen_divine_favor_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_TOOLTIP%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%. Gaining immunity to any pure damage."
 
 "DOTA_Tooltip_modifier_imba_chen_divine_favor_aura_buff"	"Divine Favor"
-"DOTA_Tooltip_modifier_imba_chen_divine_favor_aura_buff_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
+"DOTA_Tooltip_modifier_imba_chen_divine_favor_aura_buff_Description"	"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen, amplifying all regen by %dMODIFIER_PROPERTY_TOOLTIP%%%, and increasing attack damage by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
 
 
 "DOTA_Tooltip_Ability_special_bonus_imba_chen_divine_favor_cd_reduction"						"-8s Divine Favor Cooldown"

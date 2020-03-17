@@ -36,8 +36,7 @@ modifier_imba_skull_basher = modifier_imba_skull_basher or class({})
 
 function modifier_imba_skull_basher:IsHidden() return true end
 function modifier_imba_skull_basher:IsPurgable() return false end
-function modifier_imba_skull_basher:IsDebuff() return false end
-function modifier_imba_skull_basher:IsPermanent() return true end
+function modifier_imba_skull_basher:RemoveOnDeath() return false end
 function modifier_imba_skull_basher:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_skull_basher:OnCreated()

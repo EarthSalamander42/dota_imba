@@ -409,6 +409,9 @@ function modifier_item_imba_ogre_seal_totem:IsPurgable()
 	return false
 end
 
+function modifier_item_imba_ogre_seal_totem:RemoveOnDeath()	return false end
+function modifier_item_imba_ogre_seal_totem:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 ----------------------------------------
 
 function modifier_item_imba_ogre_seal_totem:OnCreated( kv )

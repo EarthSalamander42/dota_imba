@@ -7,27 +7,24 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note2"					"Multitasker damage penalty does not apply to enemies that are not affected by Blade Fury's damage (ie. buildings and spell immune enemies)."
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_effect_radius"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_blade_fury_radius}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_damage_per_sec"		"DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_deflect_chance"		"%DEFLECT CHANCE:"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury"						"Blade Fury"
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_Description"			"Dealing damage every 0.2 seconds."
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ"					"Fury Siphon"
-"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ_Description"		"You are being sucked towards Juggernaut. Run!"
+"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ_Description"		"Being sucked in towards Juggernaut."
 
 // Juggernaut's Healing Ward
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward"						"#{DOTA_Tooltip_ability_juggernaut_healing_ward}"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Description"			"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Description}\n<font color='#FF7800'>Fortify:</font> Upgrades the ward into a Healing Totem. In this form, it cannot move, but gains bonus health, and heals faster, over a larger area."
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Description"			"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Description}\n<font color='#FF7800'>Fortify:</font> Upgrades the ward into a Healing Totem. In this form, it cannot move, but sets its current and total health to %health_totem%, increases its healing by %heal_bonus_totem%%%, and increases its healing radius by %radius_bonus_totem%."
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Lore"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Lore}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note0"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note0}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note1"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note1}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note2"				"Real heroes and towers deal 3 damage to the healing ward, while other units deal 1 damage."
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_radius"			"HEALING RADIUS:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_per_sec"		"#{DOTA_Tooltip_ability_juggernaut_healing_ward_healing_ward_heal_amount}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health"				"WARD HEALTH:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health_bonus_totem"	"TOTEM BONUS HEALTH:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_bonus_totem"	"%TOTEM BONUS HEALING:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_radius_bonus_totem"	"TOTEM BONUS RADIUS:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive"						"Healing Aura"

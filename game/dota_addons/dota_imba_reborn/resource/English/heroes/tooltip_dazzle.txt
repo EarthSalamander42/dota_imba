@@ -66,7 +66,7 @@
 
 // Dazzle's Weave
 "DOTA_Tooltip_ability_imba_dazzle_weave"								"Weave"
-"DOTA_Tooltip_ability_imba_dazzle_weave_Description"                    "Gradually increases affected allies' armor, while also decreasing affected enemies' armor by the same amount.\n<font color='#FF7800'>Reweaving Waves:</font> Re-casts Weave every %repeat_delay% seconds on the target point over the duration of Weave, applying the buff/debuff as if the enemy was hit by the initial cast.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_dazzle_weave_Description"                    "Gradually increases affected allies' armor, while also decreasing affected enemies' armor by the same amount.\n<font color='#FF7800'>Reweaving Waves:</font> Re-casts Weave every %repeat_delay% seconds on the target point over the duration of Weave, applying the buff/debuff as if the enemy was hit by the initial cast."
 "DOTA_Tooltip_ability_imba_dazzle_weave_Note0"                          "Does not affect creeps. Grants vision in the cast area for some seconds."
 "DOTA_Tooltip_ability_imba_dazzle_weave_Lore"                          "His ethereal journey into the Nothl realm has allowed Dazzle to mend together the powers of light and dark, creating shifting waves of enchantments."
 "DOTA_Tooltip_ability_imba_dazzle_weave_modifier_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"

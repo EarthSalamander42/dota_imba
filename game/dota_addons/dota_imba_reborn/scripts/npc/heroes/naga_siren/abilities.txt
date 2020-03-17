@@ -170,7 +170,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"armor_reduction"			"-2 -4 -6 -8"
-				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
+				//"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_naga_siren_rip_tide_armor"
 			}
 			"03"
 			{
@@ -312,7 +313,7 @@
 	// Talents
 
 	//=================================================================================================================
-	// Talent: X% Rip Tide Proc Chance
+	// 
 	//=================================================================================================================
 	"special_bonus_imba_naga_siren_mirror_image_perfect_image" 
 	{
@@ -324,7 +325,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_naga_siren_rip_tide"
+			"01" 	"imba_naga_siren_mirror_image"
 		}
 
 		// Special
@@ -352,7 +353,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_naga_siren_rip_tide"
+			"01" 	"imba_naga_siren_mirror_image"
 		}
 
 		// Special
@@ -391,6 +392,34 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"13"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// "{s:value} Rip Tide Armor"
+	//=================================================================================================================
+	"special_bonus_imba_naga_siren_rip_tide_armor" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_naga_siren_rip_tide"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-6"
 			}
 		}
 	}

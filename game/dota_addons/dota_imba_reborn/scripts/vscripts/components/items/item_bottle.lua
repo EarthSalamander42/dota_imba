@@ -56,10 +56,10 @@ end
 
 modifier_item_imba_bottle_texture_controller = modifier_item_imba_bottle_texture_controller or class({})
 
-function modifier_item_imba_bottle_texture_controller:IsHidden() return true end
-function modifier_item_imba_bottle_texture_controller:IsPurgable() return false end
-function modifier_item_imba_bottle_texture_controller:IsDebuff() return false end
-function modifier_item_imba_bottle_texture_controller:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_bottle_texture_controller:IsHidden()		return true end
+function modifier_item_imba_bottle_texture_controller:IsPurgable()	return false end
+function modifier_item_imba_bottle_texture_controller:RemoveOnDeath()	return false end
+function modifier_item_imba_bottle_texture_controller:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_bottle_texture_controller:OnCreated()
 	if IsServer() then
@@ -148,10 +148,10 @@ end
 
 function modifier_item_imba_bottle_heal:OnCreated()
 	-- the ability is added in ModifierFilter, using vanilla bottle. Clientside is not called OnCreated, and CustomNetTables are sending values to client to show on UI, but it doesn't show up on UI somehow.
-	if not IsServer() then return end
-
 	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	
+	if not IsServer() then return end
 
 	local particle_name = "particles/items_fx/bottle.vpcf"
 	

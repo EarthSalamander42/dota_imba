@@ -50,10 +50,10 @@ end
 -- Butterfly stacking modifier
 modifier_item_imba_butterfly = class({})
 
-function modifier_item_imba_butterfly:IsHidden() return true end
-function modifier_item_imba_butterfly:IsPurgable() return false end
-function modifier_item_imba_butterfly:IsDebuff() return false end
-function modifier_item_imba_butterfly:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_butterfly:IsHidden()		return true end
+function modifier_item_imba_butterfly:IsPurgable()	return false end
+function modifier_item_imba_butterfly:RemoveOnDeath()	return false end
+function modifier_item_imba_butterfly:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_butterfly:OnCreated()
 	-- Ability properties

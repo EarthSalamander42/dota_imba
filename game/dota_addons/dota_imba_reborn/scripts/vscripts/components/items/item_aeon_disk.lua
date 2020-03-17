@@ -63,11 +63,10 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_aeon_disk_basic == nil then modifier_imba_aeon_disk_basic = class({}) end
-function modifier_imba_aeon_disk_basic:IsHidden() return true end
-function modifier_imba_aeon_disk_basic:IsDebuff() return false end
-function modifier_imba_aeon_disk_basic:IsPurgable() return false end
-function modifier_imba_aeon_disk_basic:IsPermanent() return true end
-function modifier_imba_aeon_disk_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_aeon_disk_basic:IsHidden()			return true end
+function modifier_imba_aeon_disk_basic:IsPurgable()		return false end
+function modifier_imba_aeon_disk_basic:RemoveOnDeath()	return false end
+function modifier_imba_aeon_disk_basic:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_aeon_disk_basic:OnCreated()
 	if self:GetAbility() then

@@ -22,14 +22,10 @@
 // Bounty Hunter's Jinada
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada"								"Jinada"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next hit, dealing bonus damage and stealing some unreliable gold.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.\n<font color='#FF7800'>Critical Strike:</font> Jinada also adds a critical strike and maim, reducing move and attack speed."
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next hit, dealing bonus damage and stealing some unreliable gold.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.<br><br>Cast Range: %cast_range%\n<font color='#FF7800'>Critical Strike:</font> Jinada also adds a %crit_damage%%% critical strike and maim, reducing movement speed by %ms_slow_pct%%% and attack speed by %as_slow% for %slow_duration% seconds."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note0"							"Activating Jinada requires mana, but the passive does not."
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note1"							"<font color='#FF0000'>Gold gain is not affected by the map gold multiplier.</font>"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Lore"							"Whispering an enchantment he learned from Soruq to his faithful blades, Gondar targets vital tendons and joints to disable his opponents."
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_crit_damage"					"%CRITICAL DAMAGE:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_slow_duration"					"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_ms_slow_pct"					"%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_as_slow"						"ATTACK SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_cast_range"						"SHADOW JAUNT CAST RANGE:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_bonus_gold"						"GOLD STOLEN:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_bonus_damage"					"BONUS DAMAGE:"
 
@@ -43,13 +39,12 @@
 // Bounty Hunter's Shadow Walk
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk"							"Shadow Walk"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Description"				"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains %invis_ms_bonus%%% bonus movement speed while invisible.\n<font color='#FF7800'>Shadow Hunting Shadows:</font> While invisible, Bounty Hunter can detect and reveal invisible units in his vicinity."
+"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Description"				"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains %invis_ms_bonus%%% bonus movement speed while invisible.\n<font color='#FF7800'>Shadow Hunting Shadows:</font> While invisible, Bounty Hunter can detect and reveal invisible units within %true_sight_radius% radius."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Note0"						"Bonus damage is a separate instance and does not multiply Jinada's critical damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Lore"						"The court jesters present during King Goff's assassination can recount no other image than a dancing shadow."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_bonus_damage"				"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_fade_time"					"FADE TIME:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_true_sight_radius"			"TRUE SIGHT RADIUS:"
 
 "Dota_Tooltip_modifier_imba_shadow_walk_buff_invis"								"Shadow Walk"
 "Dota_Tooltip_modifier_imba_shadow_walk_buff_invis_Description"					"Invisible and detecting nearby invisible units. Increasing move speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
@@ -62,6 +57,7 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note0"					"Casting Track does not break Shadow Walk."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note1"					"Bounty Hunter always collects the gold, regardless of distance."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note2"					"The allies that are receiving the bonus speed from Track are the ones that will receive the bonus gold."
+"DOTA_Tooltip_ability_imba_bounty_hunter_track_Note3"					"<font color='#FF7800'>Gold gain is affected by the map gold multiplier.</font>"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Lore"                    "Using his elevated senses of sight and smell, Gondar's hunts have quite a good chance of success."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_ms_bonus_allies_pct"		"%ALLIED MOVE SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"

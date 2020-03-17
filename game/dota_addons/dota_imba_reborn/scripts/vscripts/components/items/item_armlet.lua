@@ -72,10 +72,11 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_armlet_basic == nil then modifier_imba_armlet_basic = class({}) end
-function modifier_imba_armlet_basic:IsHidden() return true end
-function modifier_imba_armlet_basic:IsDebuff() return false end
-function modifier_imba_armlet_basic:IsPurgable() return false end
-function modifier_imba_armlet_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_armlet_basic:IsHidden()			return true end
+function modifier_imba_armlet_basic:IsPurgable()		return false end
+function modifier_imba_armlet_basic:RemoveOnDeath()	return false end
+function modifier_imba_armlet_basic:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_armlet_basic:OnCreated()
 	if not IsServer() then return end

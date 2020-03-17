@@ -1007,7 +1007,7 @@
 "DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary_Description"			"Invulnerable and slashing enemies in the area."
 
 "DOTA_Tooltip_modifier_imba_martyrs_mark"                              "Martyr's Mark"
-"DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting strike by Martyr's Strike."
+"DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting struck by subsequent Martyr Strikes."
 
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"

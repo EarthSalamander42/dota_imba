@@ -457,6 +457,28 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Necronomicon Archer Spread Shot
+	//=================================================================================================================
+	"imba_necronomicon_archer_spread_shot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/other/imba_necronomicon_archer_spread_shot"
+		"AbilityTextureName"							"sniper_shrapnel_muh_keen_gun"
+		
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+		
+		}
+	}
 
 	//=================================================================================================================
 	// Fountain: Danger Zone
@@ -2393,7 +2415,7 @@
 	}
 
 	//=================================================================================================================
-	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero
+	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero (DISABLED, DO NOT USE THIS)
 	//=================================================================================================================
 	"special_bonus_imba_centaur_3"
 	{
@@ -4675,6 +4697,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_duration"		"10"
+				"RequiresScepter"		"1"
 			}
 			"04"
 			{
@@ -4695,6 +4718,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_max_damage"	"250 300 350"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
@@ -11343,11 +11367,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_distance"		"2000"
+				"RequiresScepter"		"1"
 			}
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_speed"		"1500"
+				"RequiresScepter"		"1"
 			}
 			"16"
 			{
@@ -11499,6 +11525,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius_scepter"		"1200"
+				"RequiresScepter"		"1"
 			}
 			"17"
 			{
@@ -14918,6 +14945,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_hook_stacks"	"7 9 11 13" // gives 30/50/70/90 max stacks
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -18396,6 +18424,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_scepter"	"700 1000 1300 1600"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -26318,6 +26347,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_gold"			"15 25 35 45"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_9"
 			}
 		}
 	}
@@ -28478,6 +28508,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"50"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 
 			"09"
@@ -30155,7 +30186,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_bonus_totem"	"6 7 8 9"
+				"health_totem"	"9"
 			}
 		}
 	}
@@ -30208,7 +30239,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"			"9 9 9 9 12 15 18"
+				"health_totem"			"9"
 			}
 		}
 	}
@@ -30375,6 +30406,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12"
 				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
@@ -30413,11 +30445,13 @@
 				"duration_scepter"			"4 4.25 4.5"
 				//"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_juggernaut_10"
+				"RequiresScepter"		"1"
 			}
 			"14"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"cooldown_scepter"	"70"
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -35468,6 +35502,9 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_charge_count"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_4"
+				"LinkedSpecialBonusField"		"max_charge_mult"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 
 			"08"

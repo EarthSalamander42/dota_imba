@@ -23,7 +23,6 @@
 
 item_imba_lifesteal_boots = item_imba_lifesteal_boots or class({})
 LinkLuaModifier("modifier_imba_lifesteal_boots", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_lifesteal_boots_unique", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lifesteal_boots_buff", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lifesteal_boots_unslowable", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 
@@ -66,9 +65,6 @@ function modifier_imba_lifesteal_boots:OnCreated()
 	self.armor = self.ability:GetSpecialValueFor("armor")
 	
 	if IsServer() then
-		if not self.caster:HasModifier("modifier_imba_lifesteal_boots_unique") then
-			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_lifesteal_boots_unique", {})
-		end
 		-- Change to lifesteal projectile, if there's nothing "stronger"
 		ChangeAttackProjectileImba(self.caster)
 	end
@@ -77,32 +73,22 @@ end
 -- Removes the unique modifier from the caster if this is the last Satanic in its inventory
 function modifier_imba_lifesteal_boots:OnDestroy()
 	if IsServer() then
-		-- If it is the last Satanic in inventory, remove unique effect
-		if not self:IsNull() and not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_lifesteal_boots") then
-			self.caster:RemoveModifierByName("modifier_imba_lifesteal_boots")
-		end
-
 		-- Remove lifesteal projectile
 		ChangeAttackProjectileImba(self.caster)
 	end
 end
 
-function modifier_imba_lifesteal_boots:IsHidden() return true end
-function modifier_imba_lifesteal_boots:IsPurgable() return false end
-function modifier_imba_lifesteal_boots:IsPurgeException() return false end
-function modifier_imba_lifesteal_boots:IsDebuff() return false end
-function modifier_imba_lifesteal_boots:IsPermanent() return true end
-function modifier_imba_lifesteal_boots:RemoveOnDeath() return false end
-function modifier_imba_lifesteal_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_lifesteal_boots:IsHidden()		return true end
+function modifier_imba_lifesteal_boots:IsPurgable()		return false end
+function modifier_imba_lifesteal_boots:RemoveOnDeath()	return false end
+function modifier_imba_lifesteal_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_lifesteal_boots:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_lifesteal_boots:GetModifierPreAttack_BonusDamage()
@@ -117,24 +103,10 @@ function modifier_imba_lifesteal_boots:GetModifierPhysicalArmorBonus()
 	return self.armor
 end
 
-modifier_imba_lifesteal_boots_unique = class ({})
-
-function modifier_imba_lifesteal_boots_unique:IsHidden() 	return true end
-function modifier_imba_lifesteal_boots_unique:IsPurgable() 	return false end
-function modifier_imba_lifesteal_boots_unique:IsDebuff() 	return false end
-function modifier_imba_lifesteal_boots_unique:IsPurgeException() return false end
-function modifier_imba_lifesteal_boots_unique:IsPermanent() return true end
-function modifier_imba_lifesteal_boots_unique:RemoveOnDeath() return false end
-
-function modifier_imba_lifesteal_boots_unique:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-
-	-- Ability specials
-	self.lifesteal_pct = self:GetAbility():GetSpecialValueFor("lifesteal_pct")
-end
-
-function modifier_imba_lifesteal_boots_unique:GetModifierLifesteal()
-	return self.lifesteal_pct
+function modifier_imba_lifesteal_boots:GetModifierLifesteal()
+	if self:GetAbility() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
+		return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
+	end
 end
 
 -- Move speed bonus buff (active)

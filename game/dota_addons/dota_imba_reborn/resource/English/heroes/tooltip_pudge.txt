@@ -11,7 +11,7 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_base_damage"				"BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_hook_stacks"				"POWER/SWIFT STACKS:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_hook_stacks"		"SCEPTER BONUS POWER/SWIFT STACKS:"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"Increase Power and Swift Hook stack count."
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"<font color='#FF7800'>Increase Power and Swift Hook stack count.</font>"
 
 "DOTA_Tooltip_ability_imba_pudge_rot"					"#{DOTA_Tooltip_ability_pudge_rot}"
 "DOTA_Tooltip_ability_imba_pudge_rot_Description"		"#{DOTA_Tooltip_ability_pudge_rot_description}\n<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius%.\n<font color='#FF7800'>Too Stinky to Live:</font> Rot can self-deny."
@@ -52,13 +52,12 @@
 "DOTA_Tooltip_ability_imba_pudge_light_hook_stack_range"				"BONUS RANGE PER STACK:"
 
 "DOTA_Tooltip_ability_imba_pudge_dismember"								"#{DOTA_Tooltip_ability_pudge_dismember}"
-"DOTA_Tooltip_ability_imba_pudge_dismember_Description"					"#{DOTA_Tooltip_ability_pudge_dismember_description}\n<font color='#FF7800'>An Hungry Abomination:</font> Deals extra damage based on Pudge's strength.\n<font color='#FF7800'>Feeding Time!:</font> While channeling Dismember, Pudge gains huge amounts of Spellsteal for the duration."
+"DOTA_Tooltip_ability_imba_pudge_dismember_Description"					"#{DOTA_Tooltip_ability_pudge_dismember_description}\n<font color='#FF7800'>An Hungry Abomination:</font> Deals extra damage based on Pudge's strength.\n<font color='#FF7800'>Feeding Time!:</font> While channeling Dismember, Pudge gains %spell_lifesteal%%% spell lifesteal for the duration."
 "DOTA_Tooltip_ability_imba_pudge_dismember_Lore"						"#{DOTA_Tooltip_ability_pudge_dismember_lore}"
 "DOTA_Tooltip_ability_imba_pudge_dismember_Note0"						"Dismember will disable Spell Immune units, but not damage them."
 "DOTA_Tooltip_ability_imba_pudge_dismember_Note1"						"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."
 "DOTA_Tooltip_ability_imba_pudge_dismember_dismember_damage"			"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_strength_damage"				"%STRENGTH DAMAGE BONUS:"
-"DOTA_Tooltip_ability_imba_pudge_dismember_spell_lifesteal"				"%SPELL LIFESTEAL:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_aghanim_description"			"Reduces Dismember cooldown to %scepter_cooldown%. Allows you to target an ally with Dismember, instantly swallowing them in your belly and healing them for %scepter_healing_pct%% of their max health per second. The ally can exit whenever they want by issuing a command."
 
 // Unable to gather dota 2 vanilla tooltips for reasons

@@ -1191,15 +1191,6 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 
-		-- Magic barrier (pipe/hood) damage mitigation
-		if victim:HasModifier("modifier_imba_hood_of_defiance_active_shield") and victim:GetTeam() ~= attacker:GetTeam() and damage_type == DAMAGE_TYPE_MAGICAL then
-			local shield_modifier = victim:FindModifierByName("modifier_imba_hood_of_defiance_active_shield")
-
-			if shield_modifier and shield_modifier.AbsorbDamage then
-				keys.damage = shield_modifier:AbsorbDamage(keys.damage)
-			end
-		end
-
 		-- Reaper's Scythe kill credit logic
 		if victim:HasModifier("modifier_imba_reapers_scythe") then
 
@@ -1279,7 +1270,7 @@ function GameMode:DamageFilter( keys )
 						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
 
 						-- Increase damage and show the critical attack event
-						keys.damage = keys.damage * (1 + on_prow_crit_damage_pct * 0.01)
+						keys.damage = keys.damage * (1 + (on_prow_crit_damage_pct - 100) * 0.01)
 
 						-- Overhead critical event
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)

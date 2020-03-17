@@ -45,11 +45,11 @@ function item_imba_vladmir:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_vladmir == nil then modifier_item_imba_vladmir = class({}) end
-function modifier_item_imba_vladmir:IsHidden() return true end
-function modifier_item_imba_vladmir:IsDebuff() return false end
-function modifier_item_imba_vladmir:IsPurgable() return false end
-function modifier_item_imba_vladmir:IsPermanent() return true end
-function modifier_item_imba_vladmir:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_vladmir:IsHidden()		return true end
+function modifier_item_imba_vladmir:IsPurgable()		return false end
+function modifier_item_imba_vladmir:RemoveOnDeath()	return false end
+function modifier_item_imba_vladmir:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Attribute bonuses
 function modifier_item_imba_vladmir:DeclareFunctions()
@@ -223,11 +223,11 @@ function item_imba_vladmir_2:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_vladmir_blood == nil then modifier_item_imba_vladmir_blood = class({}) end
-function modifier_item_imba_vladmir_blood:IsHidden() return true end
-function modifier_item_imba_vladmir_blood:IsDebuff() return false end
-function modifier_item_imba_vladmir_blood:IsPurgable() return false end
-function modifier_item_imba_vladmir_blood:IsPermanent() return true end
-function modifier_item_imba_vladmir_blood:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_vladmir_blood:IsHidden()		return true end
+function modifier_item_imba_vladmir_blood:IsPurgable()		return false end
+function modifier_item_imba_vladmir_blood:RemoveOnDeath()	return false end
+function modifier_item_imba_vladmir_blood:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_vladmir_blood:DeclareFunctions()
 	return {

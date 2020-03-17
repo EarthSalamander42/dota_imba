@@ -119,9 +119,10 @@ end
 
 modifier_item_imba_lance_of_longinus = modifier_item_imba_lance_of_longinus or class({})
 
-function modifier_item_imba_lance_of_longinus:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus:IsPermanent() return true end
-function modifier_item_imba_lance_of_longinus:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lance_of_longinus:IsHidden()		return true end
+function modifier_item_imba_lance_of_longinus:IsPurgable()		return false end
+function modifier_item_imba_lance_of_longinus:RemoveOnDeath()	return false end
+function modifier_item_imba_lance_of_longinus:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus:OnCreated()
 	self.ability	= self:GetAbility()

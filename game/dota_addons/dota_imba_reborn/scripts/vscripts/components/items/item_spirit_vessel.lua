@@ -337,9 +337,10 @@ end
 -- SPIRIT VESSEL MODIFIER --
 ----------------------------
 
-function modifier_item_imba_spirit_vessel:IsHidden()		return true end
-function modifier_item_imba_spirit_vessel:IsPermanent()		return true end
-function modifier_item_imba_spirit_vessel:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_spirit_vessel:IsHidden() return true end
+function modifier_item_imba_spirit_vessel:IsPurgable() return false end
+function modifier_item_imba_spirit_vessel:RemoveOnDeath() return false end
+function modifier_item_imba_spirit_vessel:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_spirit_vessel:OnCreated()
 	self.ability	= self:GetAbility()

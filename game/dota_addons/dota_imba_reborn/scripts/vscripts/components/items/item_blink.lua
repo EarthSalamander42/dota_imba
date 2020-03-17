@@ -115,11 +115,11 @@ end
 --	Blink Dagger Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_blink_dagger_handler == nil then modifier_imba_blink_dagger_handler = class({}) end
-function modifier_imba_blink_dagger_handler:IsHidden() return true end
-function modifier_imba_blink_dagger_handler:IsDebuff() return false end
-function modifier_imba_blink_dagger_handler:IsPurgable() return false end
-function modifier_imba_blink_dagger_handler:RemoveOnDeath() return false end
-function modifier_imba_blink_dagger_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_blink_dagger_handler:IsHidden()		return true end
+function modifier_imba_blink_dagger_handler:IsPurgable()	return false end
+function modifier_imba_blink_dagger_handler:RemoveOnDeath()	return false end
+function modifier_imba_blink_dagger_handler:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_dagger_handler:OnCreated()
 	self:OnIntervalThink()

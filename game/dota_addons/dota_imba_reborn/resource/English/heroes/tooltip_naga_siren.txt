@@ -1,10 +1,10 @@
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image"										"#{DOTA_Tooltip_ability_naga_siren_mirror_image}"
-"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Description"							"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Description}\n<font color='#FF7800'>Everlasting Reflection:</font> Mirror Image illusions have an unlimited duration.\n<font color='#FF7800'>Perfect Image:</font> Every creep killed by an Illusion grants bonus illusion damage dealt, and reduced illusion damage taken to all Naga Siren's illusions. Heroes killed by an illusion grant maximum stacks. Casting Mirror Image resets this bonus."
+"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Description"							"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Description}\n<font color='#FF7800'>Everlasting Reflection:</font> Mirror Image illusions have an unlimited duration.\n<font color='#FF7800'>Perfect Image:</font> Every creep killed by an Illusion grants bonus illusion damage dealt, and reduces illusion damage taken to all Naga Siren's illusions. Heroes killed by an illusion grant maximum stacks. Casting Mirror Image resets this bonus."
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Lore"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Lore}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Note0"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Note0}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Note1"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Note1}"
 //	"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_Note2"								"#{DOTA_Tooltip_ability_naga_siren_mirror_image_Note2}"
-"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_illusion_duration"					"#{DOTA_Tooltip_ability_naga_siren_mirror_image_illusion_duration}"
+//"DOTA_Tooltip_ability_imba_naga_siren_mirror_image_illusion_duration"					"#{DOTA_Tooltip_ability_naga_siren_mirror_image_illusion_duration}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_outgoing_damage_tooltip"				"#{DOTA_Tooltip_ability_naga_siren_mirror_image_outgoing_damage_tooltip}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_tooltip_incoming_damage_total_pct"	"#{DOTA_Tooltip_ability_naga_siren_mirror_image_tooltip_incoming_damage_total_pct}"
 "DOTA_Tooltip_ability_imba_naga_siren_mirror_image_images_count"						"#{DOTA_Tooltip_ability_naga_siren_mirror_image_images_count}"
@@ -56,7 +56,7 @@
 "DOTA_Tooltip_modifier_imba_naga_siren_song_of_the_siren_Description"			"#{DOTA_Tooltip_modifier_naga_siren_song_of_the_siren_Description}"	
 
 "DOTA_Tooltip_modifier_imba_naga_siren_siren_temptation_debuff"					"Siren's Temptation"
-"DOTA_Tooltip_modifier_imba_naga_siren_siren_temptation_debuff_Description"		"Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%  from all sources."	
+"DOTA_Tooltip_modifier_imba_naga_siren_siren_temptation_debuff_Description"		"Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% increased damage from all sources."	
 
 // tooltips compiler error when using vanilla token
 "DOTA_Tooltip_modifier_imba_naga_siren_song_of_the_siren_healing"				"Song of the Siren"
@@ -71,3 +71,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_naga_siren_rip_tide_proc_chance"			"+{s:value}% Rip Tide proc chance"
 "DOTA_Tooltip_ability_special_bonus_imba_naga_siren_mirror_image_perfect_image"		"+{s:value}% Mirror Image Perfect Image damage dealt"
 "DOTA_Tooltip_ability_special_bonus_imba_naga_siren_mirror_image_damage_taken"		"-{s:value}% Mirror Image Illusion damage taken"
+"DOTA_Tooltip_ability_special_bonus_imba_naga_siren_rip_tide_armor"					"{s:value} Rip Tide Armor"

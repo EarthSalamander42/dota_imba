@@ -272,6 +272,47 @@
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
+	
+	//=================================================================================================================
+	// Undying: Flesh Golem Grab
+	//=================================================================================================================
+	"imba_undying_flesh_golem_grab"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_undying"
+		"AbilityTextureName"			"undying_soul_rip"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Undying.SoulRip.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_UNDYING_SOUL_RIP"
+		"AbilityCastGestureSlot"		"DEFAULT"
+		"AbilityCastPoint"				"0.35"
+		"AbilityCastRange"				"750"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+		}
+	}	
 
 	//=================================================================================================================
 	// Undying: Flesh Golem
@@ -344,6 +385,38 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_bonus"			"30"
+			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"zombie_multiplier"			"2"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_aura_radius"		"375"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_incoming_damage"	"20"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_health_damage_pct"			"9"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_max_health_heal_pct_hero"		"15"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"remnants_max_health_heal_pct_non_hero"		"2"
 			}
 		}
 	}

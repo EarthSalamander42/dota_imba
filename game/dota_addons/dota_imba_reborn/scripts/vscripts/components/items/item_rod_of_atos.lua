@@ -250,9 +250,10 @@ end
 -- ROD OF ATOS MODIFIER --
 --------------------------
 
-function modifier_item_imba_rod_of_atos:IsHidden()		return true end
-function modifier_item_imba_rod_of_atos:IsPermanent()	return true end
-function modifier_item_imba_rod_of_atos:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_rod_of_atos:IsHidden() return true end
+function modifier_item_imba_rod_of_atos:IsPurgable() return false end
+function modifier_item_imba_rod_of_atos:RemoveOnDeath() return false end
+function modifier_item_imba_rod_of_atos:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_rod_of_atos:OnCreated()
 	self.ability	= self:GetAbility()

@@ -80,8 +80,10 @@ end
 -- AETHER OF SPECS MODIFIER --
 ------------------------------
 
-function modifier_item_imba_aether_specs:IsHidden()					return true end
-function modifier_item_imba_aether_specs:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_aether_specs:IsHidden()			return true end
+function modifier_item_imba_aether_specs:IsPurgable()		return false end
+function modifier_item_imba_aether_specs:RemoveOnDeath()	return false end
+function modifier_item_imba_aether_specs:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_aether_specs:OnCreated()
 	if self:GetAbility() then

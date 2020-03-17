@@ -574,3 +574,8 @@
 
 "DOTA_Tooltip_modifier_imba_mudgolem_cloak_aura_bonus"	        						"Cloak Aura"
 "DOTA_Tooltip_modifier_imba_mudgolem_cloak_aura_bonus_Description"	                    "Magic resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
+
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot"								"Spread Shot"
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_description"					"Attacks all enemies in range simultaneously. Only the main target of attacks will receive attack bonuses such as Critical Strike."
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_lore"						"The Dark Terminator does not in fact attack hundreds of times per second - its attacks are mostly illusory. The pain they cause, however, is very real."
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_Note0"						"Deos not affect buildings or ward-type units."

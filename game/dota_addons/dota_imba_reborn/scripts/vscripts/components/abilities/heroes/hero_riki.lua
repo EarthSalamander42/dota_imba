@@ -1807,7 +1807,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		local caster = ability:GetCaster()
 		local origin = caster:GetAbsOrigin()
 
-		if caster:HasScepter() then
+		if caster:HasScepter() and target then
 			local target = ability:GetCursorTarget()
 			origin = target:GetAbsOrigin()
 			caster:SetAbsOrigin(origin)

@@ -414,9 +414,8 @@ end
 ----------------------------------
 
 function modifier_item_imba_maelstrom:IsHidden()		return true end
-function modifier_item_imba_maelstrom:IsDebuff()		return false end
 function modifier_item_imba_maelstrom:IsPurgable()		return false end
-function modifier_item_imba_maelstrom:IsPermanent()		return true end
+function modifier_item_imba_maelstrom:RemoveOnDeath()	return false end
 function modifier_item_imba_maelstrom:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_maelstrom:OnCreated()

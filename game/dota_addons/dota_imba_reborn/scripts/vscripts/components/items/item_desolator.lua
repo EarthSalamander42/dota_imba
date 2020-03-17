@@ -37,11 +37,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_blight_stone == nil then modifier_item_imba_blight_stone = class({}) end
-function modifier_item_imba_blight_stone:IsHidden() return true end
-function modifier_item_imba_blight_stone:IsDebuff() return false end
-function modifier_item_imba_blight_stone:IsPurgable() return false end
-function modifier_item_imba_blight_stone:IsPermanent() return true end
-function modifier_item_imba_blight_stone:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_blight_stone:IsHidden()		return true end
+function modifier_item_imba_blight_stone:IsPurgable()		return false end
+function modifier_item_imba_blight_stone:RemoveOnDeath()	return false end
+function modifier_item_imba_blight_stone:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_blight_stone:OnCreated()
@@ -218,11 +218,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_desolator == nil then modifier_item_imba_desolator = class({}) end
-function modifier_item_imba_desolator:IsHidden() return true end
-function modifier_item_imba_desolator:IsDebuff() return false end
-function modifier_item_imba_desolator:IsPurgable() return false end
-function modifier_item_imba_desolator:IsPermanent() return true end
-function modifier_item_imba_desolator:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_desolator:IsHidden()		return true end
+function modifier_item_imba_desolator:IsPurgable()		return false end
+function modifier_item_imba_desolator:RemoveOnDeath()	return false end
+function modifier_item_imba_desolator:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_desolator:OnCreated()
@@ -419,11 +419,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_desolator_2 == nil then modifier_item_imba_desolator_2 = class({}) end
-function modifier_item_imba_desolator_2:IsHidden() return true end
-function modifier_item_imba_desolator_2:IsDebuff() return false end
-function modifier_item_imba_desolator_2:IsPurgable() return false end
-function modifier_item_imba_desolator_2:IsPermanent() return true end
-function modifier_item_imba_desolator_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_desolator_2:IsHidden()		return true end
+function modifier_item_imba_desolator_2:IsPurgable()		return false end
+function modifier_item_imba_desolator_2:RemoveOnDeath()	return false end
+function modifier_item_imba_desolator_2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_desolator_2:OnCreated()

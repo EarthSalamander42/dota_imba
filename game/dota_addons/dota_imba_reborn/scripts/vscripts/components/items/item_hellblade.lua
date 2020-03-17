@@ -202,10 +202,10 @@ if modifier_item_imba_hellblade == nil then
 	modifier_item_imba_hellblade = class({})
 end
 
-function modifier_item_imba_hellblade:IsHidden() return true end
-function modifier_item_imba_hellblade:IsPurgable() return false end
-function modifier_item_imba_hellblade:IsDebuff() return false end
-function modifier_item_imba_hellblade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_hellblade:IsHidden()		return true end
+function modifier_item_imba_hellblade:IsPurgable()		return false end
+function modifier_item_imba_hellblade:RemoveOnDeath()	return false end
+function modifier_item_imba_hellblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_hellblade:OnCreated()
 	-- Ability properties

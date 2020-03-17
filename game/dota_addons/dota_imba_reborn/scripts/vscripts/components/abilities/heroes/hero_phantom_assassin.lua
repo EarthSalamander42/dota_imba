@@ -835,7 +835,7 @@ function modifier_imba_blur_smoke:CheckState()
 end
 
 function modifier_imba_blur_smoke:GetPriority()
-	return MODIFIER_PRIORITY_NORMAL
+	return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
 function modifier_imba_blur_smoke:DeclareFunctions()
@@ -862,10 +862,17 @@ function modifier_imba_blur_smoke:OnCreated()
 
 		if IsServer() then
 			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+			
+			self.linger = false
+			
 			self:OnIntervalThink()
 			self:StartIntervalThink(FrameTime())
 		end
 	end
+end
+
+function modifier_imba_blur_smoke:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_imba_blur_smoke:OnIntervalThink()

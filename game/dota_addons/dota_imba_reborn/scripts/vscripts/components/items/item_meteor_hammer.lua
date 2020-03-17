@@ -274,8 +274,9 @@ end
 -- METEOR HAMMER MODIFIER --
 ----------------------------
 
-function modifier_item_imba_meteor_hammer:IsHidden()		return true end
-function modifier_item_imba_meteor_hammer:IsPermanent()		return true end
+function modifier_item_imba_meteor_hammer:IsHidden()			return true end
+function modifier_item_imba_meteor_hammer:IsPurgable()		return false end
+function modifier_item_imba_meteor_hammer:RemoveOnDeath()	return false end
 function modifier_item_imba_meteor_hammer:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_meteor_hammer:OnCreated()

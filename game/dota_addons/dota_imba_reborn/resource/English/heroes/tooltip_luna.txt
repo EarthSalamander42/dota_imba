@@ -5,7 +5,7 @@
 "DOTA_Tooltip_ability_imba_luna_lucent_beam_stun_duration"							"STUN DURATION:"
 "DOTA_Tooltip_ability_imba_luna_lucent_beam_beam_damage"								"BEAM DAMAGE:"
 "DOTA_Tooltip_ability_imba_luna_moon_glaive"											"Moon Glaives"
-"DOTA_Tooltip_ability_imba_luna_moon_glaive_Description"								"Empowers Luna's glaives, causing her attacks to bounce between enemy units. Deals less damage with each bounce.\n<font color='#FF7800'>Waxing Crescent:</font> When off cooldown, the initial attack impact splits into %bounces% additional glaives.\n<font color='#FF7800'>Waning Gibbous:</font> Moon Glaives can spell lifesteal."
+"DOTA_Tooltip_ability_imba_luna_moon_glaive_Description"								"Empowers Luna's glaives, causing her attacks to bounce between enemy units. Deals less damage with each bounce.\n<font color='#FF7800'>Waxing Crescent:</font> When off cooldown with bounce targets available, the initial attack impact splits into %bounces% additional glaives.\n<font color='#FF7800'>Waning Gibbous:</font> Moon Glaives can spell lifesteal."
 
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_Lore"									"Carefully sharpened, Luna's boomerang-like weapon cuts a wide swath through enemy numbers."
 "DOTA_Tooltip_ability_imba_luna_moon_glaive_range"									"BOUNCE RADIUS:"

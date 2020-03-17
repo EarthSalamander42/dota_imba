@@ -14,8 +14,8 @@
 "DOTA_Tooltip_modifier_imba_bloodrage_buff_stats"                      "Bloodrage"
 "DOTA_Tooltip_modifier_imba_bloodrage_buff_stats_Description"          "Taking and dealing increased damage. Also dealing damage over time to yourself and nearby units."
 
-"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy"                    "Blood Frenzy"
-"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy_Description"                     "In a frenzy! Moving extremely fast with no limits!"
+"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy"						"Blood Frenzy"
+"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy_Description"			"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 // Bloodseeker's Blood Rite
 "DOTA_Tooltip_ability_imba_bloodseeker_blood_bath"                      "Blood Rite"

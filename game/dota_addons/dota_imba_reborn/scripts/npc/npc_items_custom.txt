@@ -537,7 +537,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2095"
 		"BaseClass"						"item_lua"
-		"ScriptFile"					"components/items/item_mekansm.lua"
+		"ScriptFile"					"components/items/item_arcane_boots"
 		"AbilityTextureName"			"item_arcane_boots"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 
@@ -749,7 +749,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4675"
+		"ItemCost"						"4825"
 		"ItemShopTags"					"agi;int;str;armor;regen_health;boost_health;move_speed;boost_mana;mana_pool"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"guardian greaves"
@@ -763,7 +763,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"17"
+				"bonus_movement"		"17"
 			}
 			"02"
 			{
@@ -783,7 +783,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_regen"			"5"
+				"aura_health_regen"		"5"
 			}
 			"06"
 			{
@@ -793,27 +793,32 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_regen_bonus"	"20"
+				"aura_health_regen_bonus"	"20"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_armor_bonus"	"20"
+				"aura_armor_bonus"		"20"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1800"
+				"aura_bonus_threshold"	"20"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_base_health"		"500"
+				"aura_radius"			"1800"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_base_mana"		"200"
+				"replenish_health"		"500"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_mana"		"200"
 			}
 			"12"
 			{
@@ -822,18 +827,19 @@
 			}
 			"13"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mend_regen"			"0.6"
+				"var_type"				"FIELD_INTEGER"
+				"replenish_radius"		"1800"
 			}
+			
 			"14"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"mend_duration"			"20"
+				"var_type"				"FIELD_FLOAT"
+				"mend_regen"			"0.6"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_health_threshold"	"20"
+				"mend_duration"			"20"
 			}
 		}
 	}
@@ -5803,35 +5809,18 @@
 			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius_tooltip"			"175"
-			}
-			"15"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip"			"1.5"
-			}
-			"16"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_tooltip"			"125"
-				"CalculateSpellDamageTooltip"	"1"
-			}
-			"17"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"max_distance"				"2500"				
 			}
-			"18"
+			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_health"				"250"				
 			}
-			"19"
+			"16"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_mana"				"250"				
 			}
-			
 		}
 	}
 
@@ -10486,7 +10475,6 @@
 		"ItemAliases"					"hood;defiance"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
-		"AbilitySharedCooldown"			"hood"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10521,7 +10509,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"shield_health"					"325"
+				"barrier_block"					"325"
 			}
 			"05"
 			{
@@ -10587,7 +10575,6 @@
 		"ItemAliases"					"pipe"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
-		"AbilitySharedCooldown"			"hood"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10642,7 +10629,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"shield_health"					"400"
+				"barrier_block"					"400"
 			}
 			"09"
 			{

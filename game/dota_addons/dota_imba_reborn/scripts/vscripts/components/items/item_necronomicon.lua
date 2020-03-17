@@ -76,7 +76,8 @@ function Necronomicon( keys )
 		"necronomicon_archer_aoe",
 		"forest_troll_high_priest_mana_aura",
 		"big_thunder_lizard_wardrums_aura",
-		"imba_necronomicon_archer_multishot"
+		"imba_necronomicon_archer_multishot",
+		"imba_necronomicon_archer_spread_shot"
 	}
 
 	-- Upgrade melee minion abilities

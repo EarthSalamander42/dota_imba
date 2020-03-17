@@ -48,6 +48,11 @@ end
 -- Stats modifier (stackable)
 modifier_imba_haste_boots = modifier_imba_haste_boots or class({})
 
+function modifier_imba_haste_boots:IsHidden()		return true end
+function modifier_imba_haste_boots:IsPurgable()		return false end
+function modifier_imba_haste_boots:RemoveOnDeath()	return false end
+function modifier_imba_haste_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_haste_boots:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -57,19 +62,12 @@ function modifier_imba_haste_boots:OnCreated()
 	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
 end
 
-function modifier_imba_haste_boots:IsHidden() return true end
-function modifier_imba_haste_boots:IsPurgable() return false end
-function modifier_imba_haste_boots:IsDebuff() return false end
-function modifier_imba_haste_boots:IsPermanent() return true end
-function modifier_imba_haste_boots:RemoveOnDeath() return false end
-function modifier_imba_haste_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
 function modifier_imba_haste_boots:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE}
-
-	return decFuncs
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE
+	}
 end
 
 function modifier_imba_haste_boots:GetModifierPreAttack_BonusDamage()
@@ -166,10 +164,10 @@ function modifier_imba_haste_boots_buff:OnIntervalThink()
 end
 
 function modifier_imba_haste_boots_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		-- MODIFIER_PROPERTY_MOVESPEED_MAX
+	}
 end
 
 function modifier_imba_haste_boots_buff:GetModifierMoveSpeedBonus_Percentage()
@@ -181,6 +179,5 @@ end
 --end
 
 function modifier_imba_haste_boots_buff:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	return state
+	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 end

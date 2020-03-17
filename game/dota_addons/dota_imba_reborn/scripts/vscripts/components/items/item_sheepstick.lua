@@ -110,10 +110,10 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sheepstick == nil then modifier_item_imba_sheepstick = class({}) end
+
 function modifier_item_imba_sheepstick:IsHidden() return true end
-function modifier_item_imba_sheepstick:IsDebuff() return false end
 function modifier_item_imba_sheepstick:IsPurgable() return false end
-function modifier_item_imba_sheepstick:IsPermanent() return true end
+function modifier_item_imba_sheepstick:RemoveOnDeath() return false end
 function modifier_item_imba_sheepstick:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Attribute bonuses

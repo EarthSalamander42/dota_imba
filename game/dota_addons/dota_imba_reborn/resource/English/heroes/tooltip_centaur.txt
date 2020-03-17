@@ -10,25 +10,24 @@
 
 // Centaur Warrunner's Hoof Stomp
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp"                          "Hoof Stomp"
-"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"              "Slams the ground, stunning and damaging nearby enemies.\n<font color='#FF7800'>Gladiators' Pit:</font> Creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by any means, and the Warrunner, while inside it, takes reduced damage from all sources."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"              "Slams the ground, stunning and damaging nearby enemies.\n<font color='#FF7800'>Gladiators' Pit:</font> Creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by normal means, and the Warrunner, while inside it, takes %pit_dmg_reduction%%% reduced damage from all sources."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note0"                    "Enemies which enter the arena after its creation are also stuck inside."
-"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note1"                    "Enemies can escape the arena if they move more than 400 units instantly."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note1"                    "Enemies can escape the arena if they move more than %maximum_distance% units instantly."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note2"                    "Gladiators' Pit does not affect enemies that are spell-immune upon entering the pit."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Lore"                    "The champion of the pit can create his own arena with a mighty hoof stomp."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_stomp_damage"            "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_stun_duration"            "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_pit_duration"            "ARENA DURATION:"
-"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_pit_dmg_reduction"                    "%ARENA DAMAGE REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_hoof_stomp_stun"                            "Hoof Stomp"
 "DOTA_Tooltip_modifier_imba_hoof_stomp_stun_Description"                "Stunned by Hoof Stomp."
 
 "DOTA_Tooltip_modifier_imba_hoof_stomp_arena_debuff"                    "Gladiators' Arena"
-"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_debuff_Description"                    "Forced to stay at the arena for its duration."
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_debuff_Description"		"Forced to stay at the arena for its duration."
 
 "DOTA_Tooltip_modifier_imba_hoof_stomp_arena_buff"                      "Gladiator's Pride"
-"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_buff_Description"          "Taking less damage while in the arena."
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_buff_Description"          "Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% reduced damage while in the arena."
 
 // Centaur Warrunner's Double Edge
 "DOTA_Tooltip_ability_imba_centaur_double_edge"                        "Double Edge"

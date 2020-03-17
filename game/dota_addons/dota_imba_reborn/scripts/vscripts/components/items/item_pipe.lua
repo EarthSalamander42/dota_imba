@@ -16,14 +16,13 @@
 --
 
 item_imba_pipe = item_imba_pipe or class({})
-LinkLuaModifier("modifier_imba_pipe_passive", "components/items/item_pipe.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pipe_aura_emitter", "components/items/item_pipe.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_pipe", "components/items/item_pipe.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pipe_aura", "components/items/item_pipe.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pipe_active_bonus", "components/items/item_pipe.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hood_of_defiance_active_shield", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hood_of_defiance_barrier", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_pipe:GetIntrinsicModifierName()
-	return "modifier_imba_pipe_passive"
+	return "modifier_item_imba_pipe"
 end
 
 function item_imba_pipe:OnSpellStart()
@@ -47,8 +46,11 @@ function item_imba_pipe:OnSpellStart()
 		DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 		FIND_ANY_ORDER,
 		false)
+		
 	for _, unit in pairs(allies) do
-		unit:AddNewModifier(caster, self, "modifier_imba_hood_of_defiance_active_shield", {duration = duration, shield_health = shield_health})
+		unit:RemoveModifierByName("modifier_item_imba_hood_of_defiance_barrier")
+	
+		unit:AddNewModifier(caster, self, "modifier_item_imba_hood_of_defiance_barrier", {duration = duration})
 		-- Only heroes get the unreducable magic resistance
 		if unit:IsHero() then
 			unit:AddNewModifier(caster, self, "modifier_imba_pipe_active_bonus", {duration = duration, unreducable_magic_resist = unreducable_magic_resist})
@@ -59,94 +61,61 @@ end
 -----------------------------------------------------------------------------------------------------------
 --	Hood of Defiance stats modifier
 -----------------------------------------------------------------------------------------------------------
-modifier_imba_pipe_passive = modifier_imba_pipe_passive or class({})
+modifier_item_imba_pipe = modifier_item_imba_pipe or class({})
 
-function modifier_imba_pipe_passive:IsDebuff() return false end
-function modifier_imba_pipe_passive:IsHidden() return true end
-function modifier_imba_pipe_passive:IsPurgable() return false end
-function modifier_imba_pipe_passive:IsPurgeException() return false end
-function modifier_imba_pipe_passive:RemoveOnDeath() return false end
-function modifier_imba_pipe_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_pipe:IsHidden() return true end
+function modifier_item_imba_pipe:IsPurgable() return false end
+function modifier_item_imba_pipe:RemoveOnDeath() return false end
+function modifier_item_imba_pipe:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_pipe_passive:OnCreated( params )
-	self.parent = self:GetParent()
-	self.bonus_health_regen = self:GetAbility():GetSpecialValueFor("bonus_health_regen")
-	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("bonus_magic_resist")
-	if not self.parent:HasModifier("modifier_imba_pipe_aura_emitter") and IsServer() then
-		self.parent:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_pipe_aura_emitter", {})
-	end
-end
-
-function modifier_imba_pipe_passive:OnDestroy( params )
-	if not self:IsNull() and not self.parent:IsNull() and not self.parent:HasModifier("modifier_imba_pipe_passive") and IsServer() then
-		self.parent:RemoveModifierByName("modifier_imba_pipe_aura_emitter")
-	end
-end
-
-function modifier_imba_pipe_passive:DeclareFunctions()
-	local funcs = {
+function modifier_item_imba_pipe:DeclareFunctions()
+	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
-function modifier_imba_pipe_passive:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
-
-function modifier_imba_pipe_passive:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
-
-function modifier_imba_pipe_passive:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
-
-function modifier_imba_pipe_passive:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+function modifier_item_imba_pipe:GetModifierBonusStats_Strength()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	end
 end
 
-function modifier_imba_pipe_passive:GetModifierMagicalResistanceBonus()
-	return self.bonus_magic_resist
+function modifier_item_imba_pipe:GetModifierBonusStats_Agility()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	end
 end
 
------------------------------------------------------------------------------------------------------------
---	Pipe of Insight aura emitter
------------------------------------------------------------------------------------------------------------
-modifier_imba_pipe_aura_emitter = modifier_imba_pipe_aura_emitter or class({})
-
-function modifier_imba_pipe_aura_emitter:IsHidden() return true end
-function modifier_imba_pipe_aura_emitter:IsAura() return true end
-function modifier_imba_pipe_aura_emitter:IsDebuff() return false end
-function modifier_imba_pipe_aura_emitter:IsPurgable() return false end
-function modifier_imba_pipe_aura_emitter:IsPurgeException() return false end
-function modifier_imba_pipe_aura_emitter:RemoveOnDeath() return false end
-function modifier_imba_pipe_aura_emitter:IsAuraActiveOnDeath() return false end
-
-function modifier_imba_pipe_aura_emitter:OnCreated( params )
-	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
+function modifier_item_imba_pipe:GetModifierBonusStats_Intellect()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	end
 end
 
-function modifier_imba_pipe_aura_emitter:GetModifierAura()
-	return "modifier_imba_pipe_aura"
+function modifier_item_imba_pipe:GetModifierConstantHealthRegen()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	end
 end
 
-function modifier_imba_pipe_aura_emitter:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS
+function modifier_item_imba_pipe:GetModifierMagicalResistanceBonus()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_magic_resist")
+	end
 end
 
-function modifier_imba_pipe_aura_emitter:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
-end
+function modifier_item_imba_pipe:IsAura()						return true end
+function modifier_item_imba_pipe:IsAuraActiveOnDeath() 			return false end
 
-function modifier_imba_pipe_aura_emitter:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP
-end
-
-function modifier_imba_pipe_aura_emitter:GetAuraRadius()
-	return self.aura_radius
-end
+function modifier_item_imba_pipe:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_item_imba_pipe:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_item_imba_pipe:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_item_imba_pipe:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_item_imba_pipe:GetModifierAura()				return "modifier_imba_pipe_aura" end
 
 -----------------------------------------------------------------------------------------------------------
 --	Pipe of Insight aura, gives bonus health regen/magic resist and tenacity (DOES stack multiplicatively, unlike Hood)
@@ -165,12 +134,11 @@ function modifier_imba_pipe_aura:OnCreated( params )
 end
 
 function modifier_imba_pipe_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-	return funcs
 end
 
 function modifier_imba_pipe_aura:GetModifierConstantHealthRegen()
@@ -178,7 +146,9 @@ function modifier_imba_pipe_aura:GetModifierConstantHealthRegen()
 end
 
 function modifier_imba_pipe_aura:GetModifierMagicalResistanceBonus()
-	return self.bonus_magic_resist
+	if not self:GetParent():IsIllusion() then
+		return self.bonus_magic_resist
+	end
 end
 
 function modifier_imba_pipe_aura:GetModifierStatusResistanceStacking()
@@ -241,5 +211,9 @@ function modifier_imba_pipe_active_bonus:OnIntervalThink()
 end
 
 function modifier_imba_pipe_active_bonus:GetModifierMagicalResistanceBonus()
-	return self.magic_resist_compensation
+	if IsClient() then
+		return self.unreducable_magic_resist * 100
+	else
+		return self.magic_resist_compensation
+	end
 end

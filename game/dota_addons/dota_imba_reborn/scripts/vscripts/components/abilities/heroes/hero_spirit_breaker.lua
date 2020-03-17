@@ -1159,14 +1159,13 @@ end
 -- NETHER STRIKE VISION MODIFIER --
 -----------------------------------
 
+function modifier_imba_spirit_breaker_nether_strike_vision:IgnoreTenacity()	return true end
 function modifier_imba_spirit_breaker_nether_strike_vision:IsHidden()	return true end
 function modifier_imba_spirit_breaker_nether_strike_vision:IsPurgable()	return false end
 function modifier_imba_spirit_breaker_nether_strike_vision:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
 end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:GetModifierProvidesFOWVision()

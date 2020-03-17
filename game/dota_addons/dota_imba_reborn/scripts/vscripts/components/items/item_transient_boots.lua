@@ -148,7 +148,8 @@ function modifier_item_imba_transient_boots_break:RemoveOnDeath()	return false e
 ------------------------------
 
 function modifier_item_imba_transient_boots:IsHidden()		return true end
-function modifier_item_imba_transient_boots:IsPermanent()	return true end
+function modifier_item_imba_transient_boots:IsPurgable()		return false end
+function modifier_item_imba_transient_boots:RemoveOnDeath()	return false end
 function modifier_item_imba_transient_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_transient_boots:OnCreated()

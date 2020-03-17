@@ -60,13 +60,12 @@ end
 
 -------------------------------------------
 modifier_rapier_base_class = class({})
-function modifier_rapier_base_class:IsDebuff() return false end
+
 function modifier_rapier_base_class:IsHidden() return true end
 function modifier_rapier_base_class:IsPurgable() return false end
-function modifier_rapier_base_class:IsPurgeException() return false end
-function modifier_rapier_base_class:IsStunDebuff() return false end
 function modifier_rapier_base_class:RemoveOnDeath() return false end
 function modifier_rapier_base_class:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_rapier_base_class:OnDestroy()
 	if IsServer() then
 		self:StartIntervalThink(-1)

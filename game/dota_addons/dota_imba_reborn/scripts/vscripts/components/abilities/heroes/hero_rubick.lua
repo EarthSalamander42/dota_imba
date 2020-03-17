@@ -1078,6 +1078,19 @@ function imba_rubick_spellsteal:CastFilterResultTarget( hTarget )
 			self.failState = "nevercast"
 			return UF_FAIL_CUSTOM
 		end
+		
+		-- Straight up do not allow stealing banned abilities so Rubick doesn't get blank garbage
+		for _, banned_ability in pairs(self.banned_abilities) do
+			if self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == banned_ability then
+				return UF_FAIL_CUSTOM
+			elseif self:GetLastSpell(hTarget).secondarySpell and self:GetLastSpell(hTarget).secondarySpell.GetName and self:GetLastSpell(hTarget).secondarySpell:GetName() == banned_ability then
+				return UF_FAIL_CUSTOM
+			end
+		end
+		
+		if self:GetCaster():HasAbility("monkey_king_primal_spring") and self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == "monkey_king_tree_dance" then
+			return UF_FAIL_CUSTOM
+		end
 	end
 
 	local nResult = UnitFilter(
@@ -1101,7 +1114,17 @@ function imba_rubick_spellsteal:GetCustomCastErrorTarget( hTarget )
 		return "Target never casted an ability"
 	end
 	
-	return ""
+	for _, banned_ability in pairs(self.banned_abilities) do
+		if self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == banned_ability then
+			return "#dota_hud_error_spell_steal_banned_ability"
+		elseif self:GetLastSpell(hTarget).secondarySpell and self:GetLastSpell(hTarget).secondarySpell.GetName and self:GetLastSpell(hTarget).secondarySpell:GetName() == banned_ability then
+			return "#dota_hud_error_spell_steal_banned_ability"
+		end
+	end
+	
+	if self:GetCaster():HasAbility("monkey_king_primal_spring") and self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == "monkey_king_tree_dance" then
+		return "#dota_hud_error_spell_steal_monkey_king_tree_dance"
+	end
 end
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -1247,15 +1270,15 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 		secondary = hHero:FindAbilityByName(secondary_ability)
 	end
 
-	-- banned abilities from being stolen somehow
-	for _,banned_ability in pairs(self.banned_abilities) do
-		if primary ~= nil and primary:GetAbilityName() == banned_ability then
-			primary = nil
-		end
-		if secondary ~= nil and secondary:GetAbilityName() == banned_ability then
-			secondary = nil
-		end
-	end
+	-- -- banned abilities from being stolen somehow
+	-- for _,banned_ability in pairs(self.banned_abilities) do
+		-- if primary ~= nil and primary:GetAbilityName() == banned_ability then
+			-- primary = nil
+		-- end
+		-- if secondary ~= nil and secondary:GetAbilityName() == banned_ability then
+			-- secondary = nil
+		-- end
+	-- end
 	
 	-- find hero in list
 	local heroData = nil
@@ -1329,6 +1352,12 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents
+	
+	-- I have no idea wtf is going on but trying to get this ability to be (mostly) stolen correctly without abilities being out of slot
+	if self:GetCaster():HasAbility("monkey_king_primal_spring") then
+		self:GetCaster():RemoveAbility("monkey_king_primal_spring")
+	end
+	
 	-- Forget previous one
 	self:ForgetSpell()
 	-- print("Stolen spell: "..primarySpell:GetAbilityName())
@@ -1348,6 +1377,20 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.vortex = self:GetCaster():AddAbility( "imba_storm_spirit_electric_vortex" )
 		self.vortex:SetLevel( 4 )
 		self.vortex:SetStolen( true )
+	end
+
+	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
+		self:GetCaster():RemoveAbility("monkey_king_primal_spring_early")
+	end
+	
+	if primarySpell:GetAbilityName() == "monkey_king_tree_dance" then
+		self.CurrentSecondarySpell = self:GetCaster():AddAbility("monkey_king_primal_spring")
+		self.CurrentSecondarySpell:SetLevel(primarySpell:GetLevel())
+		self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
+		
+		-- local spring_early_ability = self:GetCaster():AddAbility("monkey_king_primal_spring_early")
+		-- spring_early_ability:SetHidden(true)
+		-- spring_early_ability:SetActivated(true)
 	end
 	
 	-- Vanilla Leshrac has some scepter thinker associated with Pulse Nova/Lightning Storm that is required, otherwise the lightning storms strike every frame -_-
@@ -1410,6 +1453,19 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		end
 		self.CurrentSpellOwner = spellData.stolenFrom
 	end
+	
+	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
+		self:GetCaster():FindAbilityByName("monkey_king_primal_spring_early"):SetHidden(true)
+	end
+	
+	-- One last check to see if the abilities are in the correct slots?
+	-- if self.CurrentPrimarySpell and self.CurrentPrimarySpell.GetAbilityIndex then
+		-- print(self.CurrentPrimarySpell:GetAbilityIndex())
+	-- end
+	
+	-- if self.CurrentSecondarySpell and self.CurrentSecondarySpell.GetAbilityIndex and self.CurrentSecondarySpell:GetAbilityIndex() ~= 4 then
+		-- self:GetCaster():SwapAbilities( self.CurrentSecondarySpell:GetAbilityName(), self:GetCaster():GetAbilityByIndex(4):GetAbilityName(), true, true )
+	-- end
 end
 -- Remove currently stolen spell
 function imba_rubick_spellsteal:ForgetSpell()

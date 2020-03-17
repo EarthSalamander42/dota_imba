@@ -524,6 +524,9 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 	caster:SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
 	SetCreatureHealth(caster, self:GetTalentSpecialValueFor("health_totem"), true)
 	caster:FindModifierByName("modifier_imba_juggernaut_healing_ward_passive"):ForceRefresh()
+	
+	-- Use this modifier to help with the client/server-side nonsense, as movement capability cannot be properly tracked (i.e. the IsTotem() function)
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_juggernaut_healing_ward_totem", {})
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
@@ -630,22 +633,19 @@ function modifier_imba_juggernaut_healing_ward_passive:IsPurgable()
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 		[MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
 	}
-	return state
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_DEATH
 	}
-
-	return funcs
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:GetModifierIncomingDamage_Percentage()
@@ -679,15 +679,12 @@ LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "components/abilit
 modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class({})
 
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
-	self.caster = self:GetCaster()
+	if not self:GetAbility() then self:Destroy() return end
 
-	if self:GetAbility() then
-		if IsTotem(self.caster) then
-			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
-		else
-			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec")
-		end
-	end
+	self.caster = self:GetCaster()
+	
+	self.heal_per_sec		= self:GetAbility():GetSpecialValueFor("heal_per_sec")
+	self.heal_per_sec_totem	= self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
 	
 	if not IsServer() then return end
 	
@@ -709,22 +706,34 @@ function modifier_imba_juggernaut_healing_ward_aura:GetEffectName()
 end
 
 function modifier_imba_juggernaut_healing_ward_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-
-	return funcs
 end
 
 function modifier_imba_juggernaut_healing_ward_aura:GetModifierHealthRegenPercentage()
-	return self.healing
+	if self:GetCaster():HasModifier("modifier_imba_juggernaut_healing_ward_totem") then
+		return self.heal_per_sec_totem
+	else
+		return self.heal_per_sec
+	end
 end
 
 function modifier_imba_juggernaut_healing_ward_aura:GetModifierAttackSpeedBonus_Constant()
 	return self:GetStackCount()
 end
 
+-------------------------------------------------
+-- MODIFIER_IMBA_JUGGERNAUT_HEALING_WARD_TOTEM --
+-------------------------------------------------
+
+LinkLuaModifier("modifier_imba_juggernaut_healing_ward_totem", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_juggernaut_healing_ward_totem	= modifier_imba_juggernaut_healing_ward_totem or class({})
+
+function modifier_imba_juggernaut_healing_ward_totem:IsHidden()		return true end
+function modifier_imba_juggernaut_healing_ward_totem:IsPurgable()	return false end
 
 -- BLADE DANCE --
 imba_juggernaut_blade_dance = imba_juggernaut_blade_dance or class({})

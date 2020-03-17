@@ -39,11 +39,10 @@ end
 -- Stats modifier (stackable)
 modifier_item_imba_heart = modifier_item_imba_heart or class({})
 
-function modifier_item_imba_heart:IsHidden() return true end
-function modifier_item_imba_heart:IsPurgable() return false end
-function modifier_item_imba_heart:IsDebuff() return false end
-function modifier_item_imba_heart:RemoveOnDeath() return false end
-function modifier_item_imba_heart:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_heart:IsHidden()		return true end
+function modifier_item_imba_heart:IsPurgable()		return false end
+function modifier_item_imba_heart:RemoveOnDeath()	return false end
+function modifier_item_imba_heart:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_heart:OnCreated()
 	-- Ability properties

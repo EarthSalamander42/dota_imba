@@ -195,21 +195,47 @@ function modifier_imba_flame_guard_aura:OnIntervalThink()
 	end
 end
 
+-- Firetoad's binary damage block system?...This isn't right at all
+-- function modifier_imba_flame_guard_aura:DeclareFunctions()
+	-- local funcs = {
+		-- MODIFIER_PROPERTY_AVOID_DAMAGE
+	-- }
+	-- return funcs
+-- end
+
+-- function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
+	-- if IsServer() then
+		-- if keys.damage_type == DAMAGE_TYPE_MAGICAL then
+			-- self.remaining_health = self.remaining_health - keys.original_damage
+			-- self:SetStackCount(self.remaining_health)
+			-- return 1
+		-- else
+			-- return 0
+		-- end
+	-- end
+-- end
+
 function modifier_imba_flame_guard_aura:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_AVOID_DAMAGE
-	}
-	return funcs
+	return {MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT}
 end
 
-function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
-	if IsServer() then
+function modifier_imba_flame_guard_aura:GetModifierIncomingSpellDamageConstant(keys)
+	if IsClient() then
+		return self.remaining_health
+	else
 		if keys.damage_type == DAMAGE_TYPE_MAGICAL then
-			self.remaining_health = self.remaining_health - keys.original_damage
-			self:SetStackCount(self.remaining_health)
-			return 1
-		else
-			return 0
+			if keys.original_damage >= self.remaining_health then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), self.remaining_health, nil)
+			
+				self:Destroy()
+				return self.remaining_health * (-1)
+			else
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), keys.original_damage, nil)
+			
+				self.remaining_health = self.remaining_health - keys.original_damage
+				self:SetStackCount(self.remaining_health)
+				return keys.original_damage * (-1)
+			end
 		end
 	end
 end
@@ -383,6 +409,9 @@ function modifier_imba_fire_remnant_charges:OnCreated(keys)
 	if IsServer() then
 		self:GetCaster().spirit_charges = 0
 		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+		
+		self.max_charges = self:GetStackCount()
+		
 		self.learned_charges_talent = false
 		self:StartIntervalThink(0.2)
 	end
@@ -394,12 +423,18 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 			local talent = self:GetParent():FindAbilityByName("special_bonus_ember_remnant_charges")
 			if talent and talent:GetLevel() > 0 then
 				self:SetStackCount(self:GetStackCount() + talent:GetSpecialValueFor("value"))
+				
+				self.max_charges = self:GetStackCount()
+				
 				self.learned_charges_talent = true
 			end
 		end
 		
 		if not self.learned_charges_scepter and self:GetCaster():HasScepter() then
 			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+			
+			self.max_charges = self:GetStackCount()
+			
 			self.learned_charges_scepter = true
 		end
 		
@@ -408,6 +443,22 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 			self:GetCaster().spirit_charges = 0
 			self:GetAbility():SetActivated(true)
 		end
+	end
+end
+
+function modifier_imba_fire_remnant_charges:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
+	}
+end
+
+function modifier_imba_fire_remnant_charges:OnAbilityFullyCast( params )
+	if params.unit ~= self:GetParent() then return end
+	
+	-- Remove this modifier if the ability no longer exists
+	if params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
+		self:SetStackCount(self.max_charges)
+		self:GetAbility():SetActivated(true)
 	end
 end
 
@@ -521,7 +572,7 @@ end
 function modifier_imba_fire_remnant_cooldown:OnDestroy()
 	if IsServer() then
 		local charges_modifier = self:GetParent():FindModifierByName("modifier_imba_fire_remnant_charges")
-		charges_modifier:SetStackCount(charges_modifier:GetStackCount() + 1)
+		charges_modifier:SetStackCount(math.min(charges_modifier:GetStackCount() + 1, charges_modifier.max_charges))
 
 		self:GetAbility():SetActivated(true)
 	end

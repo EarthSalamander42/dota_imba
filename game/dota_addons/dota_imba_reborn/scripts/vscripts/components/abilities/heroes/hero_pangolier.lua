@@ -2378,7 +2378,7 @@ function modifier_imba_pangolier_lucky_shot_heartpiercer:OnCreated()
 	-- end
 	
 	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_lucky_shot_status_resist") then
-		self:SetStackCount(self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_lucky_shot_status_resist"))
+		self:SetStackCount(self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_lucky_shot_status_resist") * (-1))
 	end
 end
 
@@ -2410,5 +2410,5 @@ end
 
 function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierStatusResistanceStacking()
 	--return self:GetStackCount() / (-100)
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount()
 end

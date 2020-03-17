@@ -35,24 +35,20 @@ function item_imba_initiate_robe:GetAbilityTextureName()
 end
 
 modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})
-function modifier_imba_initiate_robe_passive:IsDebuff() 		return false end
-function modifier_imba_initiate_robe_passive:IsHidden() 		return false end
-function modifier_imba_initiate_robe_passive:IsPermanent() 		return true end
-function modifier_imba_initiate_robe_passive:IsPurgable() 		return false end
-function modifier_imba_initiate_robe_passive:IsPurgeException() return false end
-function modifier_imba_initiate_robe_passive:IsStunDebuff() 	return false end
-function modifier_imba_initiate_robe_passive:RemoveOnDeath() 	return false end
-function modifier_imba_initiate_robe_passive:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_initiate_robe_passive:IsHidden()		return true end
+function modifier_imba_initiate_robe_passive:IsPurgable()		return false end
+function modifier_imba_initiate_robe_passive:RemoveOnDeath()	return false end
+function modifier_imba_initiate_robe_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_initiate_robe_passive:DeclareFunctions()
-	local decFuns = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
-	}	
-
-	return decFuns
+	}
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()

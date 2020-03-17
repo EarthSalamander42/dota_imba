@@ -81,9 +81,10 @@ end
 -- MODIFIER_ITEM_IMBA_DIFFUSAL --
 ---------------------------------
 
-function modifier_item_imba_diffusal:IsHidden()			return true end
+function modifier_item_imba_diffusal:IsHidden()		return true end
 function modifier_item_imba_diffusal:IsPurgable()		return false end
 function modifier_item_imba_diffusal:RemoveOnDeath()	return false end
+function modifier_item_imba_diffusal:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_diffusal:DeclareFunctions()
 	return {
@@ -270,6 +271,7 @@ end
 function modifier_item_imba_diffusal_2:IsHidden()		return true end
 function modifier_item_imba_diffusal_2:IsPurgable()		return false end
 function modifier_item_imba_diffusal_2:RemoveOnDeath()	return false end
+function modifier_item_imba_diffusal_2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_diffusal_2:DeclareFunctions()
 	return {

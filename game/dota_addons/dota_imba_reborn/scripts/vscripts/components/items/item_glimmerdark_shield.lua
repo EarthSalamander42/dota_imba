@@ -186,6 +186,9 @@ function modifier_item_imba_glimmerdark_shield:IsPurgable()
 	return false
 end
 
+function modifier_item_imba_glimmerdark_shield:RemoveOnDeath()	return false end
+function modifier_item_imba_glimmerdark_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 --------------------------------------------------------------------------------
 
 function modifier_item_imba_glimmerdark_shield:OnCreated( kv )

@@ -6,8 +6,6 @@
 "DOTA_Tooltip_ability_item_imba_sange_bonus_strength"			"+$str"
 "DOTA_Tooltip_ability_item_imba_sange_bonus_damage"				"+$damage"
 "DOTA_Tooltip_ability_item_imba_sange_bonus_status_resistance"	"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_sange_bonus_status_resistance_active"		"%STATUS RESISTANCE:"
-"DOTA_Tooltip_ability_item_imba_sange_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_sange_active"					"Shield"
 "DOTA_Tooltip_modifier_item_imba_sange_active_Description"		"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance."
@@ -20,8 +18,6 @@
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"		"+$attack"
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"			"+$agi"
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_ms"					"%+$move_speed"
-//"DOTA_Tooltip_ability_item_imba_yasha_bonus_evasion"			"%EVASION:"
-"DOTA_Tooltip_ability_item_imba_yasha_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_yasha_active"					"Sword Dance"
 "DOTA_Tooltip_modifier_item_imba_yasha_active_Description"		"Grants %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
@@ -34,11 +30,9 @@
 "DOTA_Tooltip_ability_item_imba_kaya_bonus_int"					"+$int"
 "DOTA_Tooltip_ability_item_imba_kaya_spell_amp"					"%+Spell Amplification"
 "DOTA_Tooltip_ability_item_imba_kaya_bonus_cdr"					"%+Manacost and Manaloss Reduction"
-"DOTA_Tooltip_ability_item_imba_kaya_bonus_cdr_active"			"CDR AND MANALOSS BUFF:"
-"DOTA_Tooltip_ability_item_imba_kaya_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_kaya_active"					"Spell Trader"
-"DOTA_Tooltip_modifier_item_imba_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% cooldown reduction on the next spell cast."
+"DOTA_Tooltip_modifier_item_imba_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% mana loss and cooldown reduction on the next spell cast."
 
 // Sange and Yasha
 "DOTA_Tooltip_Ability_item_imba_sange_yasha"					"#{DOTA_Tooltip_Ability_item_sange_and_yasha}"
@@ -51,33 +45,29 @@
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_agility"		"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_agility}"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_ms"			"%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_status_resistance"	"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_sange_yasha_active_duration"	"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active"				"Shield"
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
 
 // Heaven's Halberd
 "DOTA_Tooltip_ability_item_imba_heavens_halberd"					"#{DOTA_Tooltip_ability_item_heavens_halberd}"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"		"<h1>Active: Disarm</h1> Prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<h1><font color='#FF7800'>Active: Resilience</font></h1> Can be casted on allies to grant %bonus_status_resistance_active%%% status resistance for %disarm_range_duration% seconds.</font>"
+"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"		"<h1>Active: Disarm</h1> Prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<h1><font color='#FF7800'>Active: Resilience</font></h1> Can be cast on allies to grant %bonus_status_resistance_active%%% status resistance for %disarm_range_duration% seconds.</font>"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"				"This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"				"Disarm cannot be purged."
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_stack"			"%MAIM SLOW:"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_duration"		"MAIM DURATION:"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_damage"		"+$damage"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_strength"		"+$str"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_evasion"		"%+$evasion"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_status_resistance"	"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_active_duration"	"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_ally_buff"					"Heaven's Halberd"
-"DOTA_Tooltip_modifier_item_imba_heavens_halberd_ally_buff_Description"		"Disarm immunity. Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%."
+"DOTA_Tooltip_modifier_item_imba_heavens_halberd_ally_buff_Description"		"Status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_active_disarm"					"Heaven's Halberd"
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_active_disarm_Description"		"Disarmed."
 
 // Kaya and Sange
 "DOTA_Tooltip_Ability_item_imba_kaya_and_sange"						"Kaya and Sange"
-"DOTA_Tooltip_ability_item_imba_kaya_and_sange_Description"			"<h1><font color='#FF7800'>Active: Shield</font></h1> Grants %bonus_status_resistance_active%%% status resistance and %bonus_cdr_active%%% mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
+"DOTA_Tooltip_ability_item_imba_kaya_and_sange_Description"			"<h1><font color='#FF7800'>Active: Steadfast Spell</font></h1> Grants %bonus_status_resistance_active%%% status resistance and %bonus_cdr_active%%% mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
 // "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Lore"				"#{DOTA_Tooltip_ability_item_kaya_and_sange_Lore}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Note0"				"Movement speed bonus does not stack with itself or other Yasha upgrades."
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_intellect"		"+$int"
@@ -89,14 +79,13 @@
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_attack_speed"	"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_attack_speed}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_agility"		"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_agility}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_ms"			"%+$move_speed"
-"DOTA_Tooltip_ability_item_imba_kaya_and_sange_active_duration"		"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
-"DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active"				"Shield"
-"DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% mana loss and cooldown reduction."
+"DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active"				"Steadfast Spell"
+"DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% mana loss and cooldown reduction."
 
 // Yasha and Kaya
 "DOTA_Tooltip_Ability_item_imba_yasha_and_kaya"							"Yasha and Kaya"
-"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Description"				"<h1><font color='#FF7800'>Active: Shield</font></h1> Grants %bonus_evasion_active%%%  Evasion and %bonus_cdr_active%%  mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
+"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Description"				"<h1><font color='#FF7800'>Active: Spell Dance</font></h1> Grants %bonus_evasion_active%%%  Evasion and %bonus_cdr_active%%  mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
 // "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Lore"					"#{DOTA_Tooltip_ability_item_yasha_and_kaya_Lore}"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Note0"					"Movement speed bonus does not stack with itself or other Yasha upgrades."
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_intellect"			"+$int"
@@ -105,9 +94,6 @@
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_attack_speed"		"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_attack_speed}"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_agility"			"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_agility}"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_ms"				"%+$move_speed"
-//"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_evasion"			"%+$evasion"
-//"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_evasion_active"	"ACTIVE EVASION:"
-"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
-"DOTA_Tooltip_modifier_item_imba_yasha_and_kaya_active"					"Shield"
+"DOTA_Tooltip_modifier_item_imba_yasha_and_kaya_active"					"Spell Dance"
 "DOTA_Tooltip_modifier_item_imba_yasha_and_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion and %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% mana loss and cooldown reduction."

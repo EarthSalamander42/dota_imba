@@ -105,7 +105,9 @@ end
 -- MODIFIER_ITEM_IMBA_VALIANCE --
 ---------------------------------
 
-function modifier_item_imba_valiance:IsHidden()			return true end
+function modifier_item_imba_valiance:IsHidden()		return true end
+function modifier_item_imba_valiance:IsPurgable()		return false end
+function modifier_item_imba_valiance:RemoveOnDeath()	return false end
 function modifier_item_imba_valiance:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_valiance:OnCreated()

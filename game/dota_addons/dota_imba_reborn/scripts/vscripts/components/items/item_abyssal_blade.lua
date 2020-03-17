@@ -87,11 +87,10 @@ end
 -- Modifier (stackable, grants stats bonuses)
 modifier_imba_abyssal_blade = modifier_imba_abyssal_blade or class({})
 
-function modifier_imba_abyssal_blade:IsHidden() return true end
-function modifier_imba_abyssal_blade:IsPurgable() return false end
-function modifier_imba_abyssal_blade:IsDebuff() return false end
-function modifier_imba_abyssal_blade:IsPermanent() return true end
-function modifier_imba_abyssal_blade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end 
+function modifier_imba_abyssal_blade:IsHidden()			return true end
+function modifier_imba_abyssal_blade:IsPurgable()		return false end
+function modifier_imba_abyssal_blade:RemoveOnDeath()	return false end
+function modifier_imba_abyssal_blade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_abyssal_blade:OnCreated()
 	-- Ability properties

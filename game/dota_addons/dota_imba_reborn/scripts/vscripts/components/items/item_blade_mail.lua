@@ -64,7 +64,10 @@ end
 -- BLADE MAIL MODIFIER --
 -------------------------
 
-function modifier_item_imba_blade_mail:IsHidden()	return true end
+function modifier_item_imba_blade_mail:IsHidden()		return true end
+function modifier_item_imba_blade_mail:IsPurgable()		return false end
+function modifier_item_imba_blade_mail:RemoveOnDeath()	return false end
+function modifier_item_imba_blade_mail:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_blade_mail:OnCreated()
 	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
@@ -228,14 +231,16 @@ function modifier_item_imba_blade_mail_lacerate:OnDestroy()
 end
 
 function modifier_item_imba_blade_mail_lacerate:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
+	return {
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_item_imba_blade_mail_lacerate:GetModifierExtraHealthBonus()
 	return self:GetStackCount() * (-1)
 end
 
+function modifier_item_imba_blade_mail_lacerate:OnTooltip()
+	return self:GetStackCount()
+end

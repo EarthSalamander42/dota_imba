@@ -600,11 +600,6 @@ function modifier_imba_sacred_arrow_stun:IsHidden() return false end
 function modifier_imba_sacred_arrow_stun:IsStunDebuff() return true end
 function modifier_imba_sacred_arrow_stun:IsPurgeException() return true end
 
-function modifier_imba_sacred_arrow_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
-end
-
 function modifier_imba_sacred_arrow_stun:GetEffectName()
 	return "particles/generic_gameplay/generic_stunned.vpcf"
 end
@@ -613,11 +608,15 @@ function modifier_imba_sacred_arrow_stun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-function modifier_imba_sacred_arrow_stun:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ORDER,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
+function modifier_imba_sacred_arrow_stun:CheckState()
+	return {[MODIFIER_STATE_STUNNED] = true}
+end
 
-	return decFuncs
+function modifier_imba_sacred_arrow_stun:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_sacred_arrow_stun:OnOrder(keys)
@@ -1418,12 +1417,12 @@ function modifier_imba_moonlight_shadow_invis:OnIntervalThink()
 end
 
 function modifier_imba_moonlight_shadow_invis:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		MODIFIER_EVENT_ON_ATTACK}
-
-	return decFuncs
+		MODIFIER_EVENT_ON_ATTACK
+	}
 end
 
 function modifier_imba_moonlight_shadow_invis:GetModifierMoveSpeedBonus_Percentage()

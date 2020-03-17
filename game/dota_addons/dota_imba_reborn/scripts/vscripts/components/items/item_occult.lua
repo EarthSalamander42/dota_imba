@@ -32,6 +32,11 @@ end
 -- Stat modifier (stackable)
 modifier_imba_occult_mask = modifier_imba_occult_mask or class({})
 
+function modifier_imba_occult_mask:IsHidden()		return true end
+function modifier_imba_occult_mask:IsPurgable()		return false end
+function modifier_imba_occult_mask:RemoveOnDeath()	return false end
+function modifier_imba_occult_mask:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_occult_mask:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -59,13 +64,6 @@ function modifier_imba_occult_mask:OnDestroy()
 		end
 	end
 end
-
-function modifier_imba_occult_mask:IsHidden() return true end
-function modifier_imba_occult_mask:IsPurgable() return false end
-function modifier_imba_occult_mask:IsDebuff() return false end
-function modifier_imba_occult_mask:IsPermanent() return true end
-function modifier_imba_occult_mask:RemoveOnDeath() return false end
-function modifier_imba_occult_mask:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_occult_mask:DeclareFunctions()
 	local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,

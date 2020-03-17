@@ -109,13 +109,21 @@ function item_imba_witchblade:OnSpellStart()
 		end
 	end)
 	
+	-- Add the slow modifier
+	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
+
+	if slow_modifier then
+		slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
+	end
+	
 	-- If the target is not a hero (or a creep hero), root it
 	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_root", {duration = self.purge_root_duration})
+		local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
+		
+		if root_modifier then
+			root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
+		end
 	end
-
-	-- Add the slow modifier
-	target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
 	
 	-- IMBAfication: Internal Bypass
 	if target:IsMagicImmune() or target:IsBuilding() then
@@ -156,7 +164,7 @@ function modifier_item_imba_witchblade_slow:OnCreated()
 	self.combust_mana_loss						= self.ability:GetSpecialValueFor("combust_mana_loss")
 	self.severance_chance						= self.ability:GetSpecialValueFor("severance_chance")
 	
-	self.initial_slow 							= 100
+	self.initial_slow 							= -100
 	self.slow_intervals							= self.initial_slow / self.purge_rate
 	
 	if not IsServer() then return end
@@ -166,18 +174,21 @@ function modifier_item_imba_witchblade_slow:OnCreated()
 	self:StartIntervalThink((self.purge_slow_duration / self.purge_rate)* (1 - self.parent:GetStatusResistance()))
 end
 
+function modifier_item_imba_witchblade_slow:OnRefresh()
+	self:StartIntervalThink(-1)
+	self:OnCreated()
+end
+
 function modifier_item_imba_witchblade_slow:OnIntervalThink()
 	self:SetStackCount(self:GetStackCount() - self.slow_intervals)
 end
 
 function modifier_item_imba_witchblade_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_item_imba_witchblade_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount()
 end
 
 ------------------------------
@@ -185,11 +196,9 @@ end
 ------------------------------
 
 function modifier_item_imba_witchblade_root:CheckState(keys)
-	local state = {
-	[MODIFIER_STATE_ROOTED] = true
+	return {
+		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 -------------------------
@@ -197,7 +206,8 @@ end
 -------------------------
 
 function modifier_item_imba_witchblade:IsHidden()		return true end
-function modifier_item_imba_witchblade:IsPermanent()	return true end
+function modifier_item_imba_witchblade:IsPurgable()		return false end
+function modifier_item_imba_witchblade:RemoveOnDeath()	return false end
 function modifier_item_imba_witchblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_witchblade:OnCreated()

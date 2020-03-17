@@ -87,19 +87,22 @@ function modifier_item_imba_armlet_of_dementor_active:GetModifierBonusStats_Inte
 end
 
 function modifier_item_imba_armlet_of_dementor_active:GetModifierMagicalResistanceBonus()
-	if self.parent:IsIllusion() then return 0 end
-	
-	return self.mind_bonus_magic_res
+	if IsClient() or not self.parent:IsIllusion() then
+		return self.mind_bonus_magic_res
+	end
 end
 
 function modifier_item_imba_armlet_of_dementor_active:GetModifierSpellAmplify_Percentage()
-	return self.mind_bonus_spell_amp
+	if IsClient() or not self.parent:IsIllusion() then
+		return self.mind_bonus_spell_amp
+	end
 end
 
 function modifier_item_imba_armlet_of_dementor_active:OnManaGained(keys)
-	if keys.unit == self:GetParent() and not self:GetParent():IsIllusion() then
+	if keys.unit == self:GetParent() then
 		self:GetParent():SpendMana(keys.gain * self.mind_mana_drain_mult, self.ability)
 		
+		-- There's some weird glitch that prevents mana from going below some non-zero threshold when using SpendMana, but IDK how to fix that for now
 		if keys.gain >= self:GetParent():GetMana() then
 
 		end
@@ -111,7 +114,8 @@ end
 ---------------------------------
 
 function modifier_item_imba_armlet_of_dementor:IsHidden()		return true end
-function modifier_item_imba_armlet_of_dementor:IsPermanent()	return true end
+function modifier_item_imba_armlet_of_dementor:IsPurgable()		return false end
+function modifier_item_imba_armlet_of_dementor:RemoveOnDeath()	return false end
 function modifier_item_imba_armlet_of_dementor:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_armlet_of_dementor:OnCreated()
@@ -165,8 +169,6 @@ end
 --   - Armlet of Dementor
 --   - Arcane Nexus
 function modifier_item_imba_armlet_of_dementor:GetModifierSpellAmplify_Percentage()
-	if self.parent:IsIllusion() then return 0 end
-
 	if self:GetAbility():GetSecondaryCharges() == 1 and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
         return self.bonus_spell_amp
@@ -174,9 +176,7 @@ function modifier_item_imba_armlet_of_dementor:GetModifierSpellAmplify_Percentag
 end
 
 function modifier_item_imba_armlet_of_dementor:GetModifierPercentageCooldownStacking()
-	if self.parent:HasModifier("modifier_frantic") or self:GetStackCount() ~= 1 then
-		return 0
-	else
+	if self:GetAbility():GetSecondaryCharges() == 1 then
 		return self.bonus_spell_cd
 	end
 end

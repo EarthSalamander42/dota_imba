@@ -47,10 +47,10 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_cloak_of_flames_basic == nil then modifier_imba_cloak_of_flames_basic = class({}) end
+
 function modifier_imba_cloak_of_flames_basic:IsHidden() return true end
-function modifier_imba_cloak_of_flames_basic:IsDebuff() return false end
 function modifier_imba_cloak_of_flames_basic:IsPurgable() return false end
-function modifier_imba_cloak_of_flames_basic:IsPermanent() return true end
+function modifier_imba_cloak_of_flames_basic:RemoveOnDeath() return false end
 function modifier_imba_cloak_of_flames_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created
@@ -177,10 +177,10 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_basic == nil then modifier_imba_radiance_basic = class({}) end
+
 function modifier_imba_radiance_basic:IsHidden() return true end
-function modifier_imba_radiance_basic:IsDebuff() return false end
 function modifier_imba_radiance_basic:IsPurgable() return false end
-function modifier_imba_radiance_basic:IsPermanent() return true end
+function modifier_imba_radiance_basic:RemoveOnDeath() return false end
 function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created

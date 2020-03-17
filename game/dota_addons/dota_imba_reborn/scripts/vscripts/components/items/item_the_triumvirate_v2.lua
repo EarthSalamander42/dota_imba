@@ -210,7 +210,8 @@ end
 ---------------------------------
 
 function modifier_item_imba_the_triumvirate_v2:IsHidden()		return true end
-function modifier_item_imba_the_triumvirate_v2:IsPermanent()	return true end
+function modifier_item_imba_the_triumvirate_v2:IsPurgable()		return false end
+function modifier_item_imba_the_triumvirate_v2:RemoveOnDeath()	return false end
 function modifier_item_imba_the_triumvirate_v2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_the_triumvirate_v2:OnCreated()

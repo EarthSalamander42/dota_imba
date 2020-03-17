@@ -36,6 +36,11 @@ end
 -- Stats passive modifier (stacking)
 modifier_imba_assault_cuirass = class({})
 
+function modifier_imba_assault_cuirass:IsHidden()		return true end
+function modifier_imba_assault_cuirass:IsPurgable()		return false end
+function modifier_imba_assault_cuirass:RemoveOnDeath()	return false end
+function modifier_imba_assault_cuirass:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_assault_cuirass:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -94,11 +99,6 @@ end
 function modifier_imba_assault_cuirass:GetModifierBonusStats_Intellect()
 	return self.bonus_all_stats
 end
-
-function modifier_imba_assault_cuirass:IsHidden() return true end
-function modifier_imba_assault_cuirass:IsPurgable() return false end
-function modifier_imba_assault_cuirass:IsDebuff() return false end
-function modifier_imba_assault_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_assault_cuirass:OnDestroy()
 	if IsServer() then

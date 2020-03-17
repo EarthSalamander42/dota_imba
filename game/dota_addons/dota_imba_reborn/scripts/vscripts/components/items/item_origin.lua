@@ -150,38 +150,33 @@ function modifier_item_imba_origin_health:OnIntervalThink()
 	if not IsServer() then return end
 	
 	-- Applies flat damage and damage based on current HP in one instance
-	local damageTableHP = {
+	ApplyDamage({
 		victim 			= self.parent,
 		damage 			= self.health_damage_amount + (self.parent:GetHealth() * (self.enemy_hp_drain / 100)),
 		damage_type		= DAMAGE_TYPE_MAGICAL,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self.caster,
 		ability 		= self.ability
-	}
-	
-	ApplyDamage(damageTableHP)
+	})
 end
 
 function modifier_item_imba_origin_health:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_DISABLE_HEALING,
-		MODIFIER_PROPERTY_TOOLTIP,
-		MODIFIER_PROPERTY_TOOLTIP2
+		MODIFIER_PROPERTY_TOOLTIP
     }
-
-    return decFuncs
 end
 
 function modifier_item_imba_origin_health:GetDisableHealing()
 	return 1
 end
 
-function modifier_item_imba_origin_health:OnTooltip()
-	return self.health_damage_amount
-end
-
-function modifier_item_imba_origin_health:OnTooltip2()
-	return self.enemy_hp_drain
+function modifier_item_imba_origin_health:OnTooltip(keys)
+	if keys.fail_type == 0 then
+		return self.health_damage_amount
+	elseif keys.fail_type == 1 then
+		return self.enemy_hp_drain
+	end
 end
 
 ----------------------------------
@@ -214,13 +209,11 @@ function modifier_item_imba_origin_power:OnCreated()
 end
 
 function modifier_item_imba_origin_power:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
     }
-
-    return decFuncs
 end
 
 function modifier_item_imba_origin_power:GetModifierBonusStats_Strength()
@@ -268,13 +261,10 @@ function modifier_item_imba_origin_chaos:OnCreated()
 end
 
 function modifier_item_imba_origin_chaos:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_TOOLTIP,
-		MODIFIER_PROPERTY_TOOLTIP2
+		MODIFIER_PROPERTY_TOOLTIP
     }
-
-    return decFuncs
 end
 
 function modifier_item_imba_origin_chaos:OnTakeDamage(keys)
@@ -304,12 +294,12 @@ function modifier_item_imba_origin_chaos:OnTakeDamage(keys)
 	end
 end
 
-function modifier_item_imba_origin_chaos:OnTooltip()
-	return self.chaos_radius
-end
-
-function modifier_item_imba_origin_chaos:OnTooltip2()
-	return self.chaos_dmg_pct
+function modifier_item_imba_origin_chaos:OnTooltip(keys)
+	if keys.fail_type == 0 then
+		return self.chaos_dmg_pct
+	elseif keys.fail_type == 1 then
+		return self.chaos_radius
+	end
 end
 
 ---------------------
@@ -317,7 +307,8 @@ end
 ---------------------
 
 function modifier_item_imba_origin:IsHidden()		return true end
-function modifier_item_imba_origin:IsPermanent()		return true end
+function modifier_item_imba_origin:IsPurgable()		return false end
+function modifier_item_imba_origin:RemoveOnDeath()	return false end
 function modifier_item_imba_origin:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_origin:OnCreated()
@@ -353,7 +344,7 @@ function modifier_item_imba_origin:OnCreated()
 end
 
 function modifier_item_imba_origin:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -371,8 +362,6 @@ function modifier_item_imba_origin:DeclareFunctions()
 														-- Power is dealt in the str/agi/int functions (2)
 		MODIFIER_EVENT_ON_TAKEDAMAGE					-- Chaos (3)			
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_origin:GetModifierBonusStats_Strength()

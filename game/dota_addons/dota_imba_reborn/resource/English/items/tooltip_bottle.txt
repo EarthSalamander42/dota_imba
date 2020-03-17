@@ -8,7 +8,7 @@
 
 // Vanilla bottle IMBAfied
 "DOTA_Tooltip_ability_item_bottle"								"#{DOTA_Tooltip_ability_item_bottle}"
-"DOTA_Tooltip_ability_item_bottle_Description"					"#{DOTA_Tooltip_ability_item_bottle_Description}\n<h1><font color='#FF7800'>Passive: Arcane Water</font></h1> Bottle regeneration can not be interrupted."
+"DOTA_Tooltip_ability_item_bottle_Description"					"#{DOTA_Tooltip_ability_item_bottle_Description}\n<h1><font color='#FF7800'>Passive: Arcane Water</font></h1> Bottle regeneration cannot be interrupted."
 "DOTA_Tooltip_ability_item_bottle_Lore"							"#{DOTA_Tooltip_ability_item_bottle_Lore}"
 "DOTA_Tooltip_ability_item_bottle_Note0"						"#{DOTA_Tooltip_ability_item_bottle_Note0}"
 

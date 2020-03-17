@@ -98,10 +98,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_passive_effect == nil then modifier_imba_angelic_alliance_passive_effect = class({}) end
-function modifier_imba_angelic_alliance_passive_effect:IsHidden() return true end
-function modifier_imba_angelic_alliance_passive_effect:IsDebuff() return false end
-function modifier_imba_angelic_alliance_passive_effect:IsPurgable() return false end
-function modifier_imba_angelic_alliance_passive_effect:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_angelic_alliance_passive_effect:IsHidden()			return true end
+function modifier_imba_angelic_alliance_passive_effect:IsPurgable()		return false end
+function modifier_imba_angelic_alliance_passive_effect:RemoveOnDeath()	return false end
+function modifier_imba_angelic_alliance_passive_effect:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_angelic_alliance_passive_effect:OnCreated()
 	self.bonus_strength		= self:GetAbility():GetSpecialValueFor("bonus_strength")
@@ -183,7 +184,7 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 			return nil
 		end
 
-		if caster == target and RollPseudoRandom(chance, self) then				-- Disarm attacker when the wielder is the one getting hit
+		if caster == target and not keys.target:IsIllusion() and RollPseudoRandom(chance, self) then				-- Disarm attacker when the wielder is the one getting hit
 			if attacker:IsMagicImmune() then return end
 			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
 			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})

@@ -179,13 +179,8 @@ function imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list)
 	end
 end
 
-function imba_zuus_arc_lightning:GetCastRange()
-	local bonus_cast_range = 0
-	if self:GetCaster():HasTalent("special_bonus_imba_zuus_2") then 
-		bonus_cast_range = self:GetCaster():FindTalentValue("special_bonus_imba_zuus_2", "bonus_cast_range")
-	end
-
-	return self:GetSpecialValueFor("cast_range") + bonus_cast_range
+function imba_zuus_arc_lightning:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_zuus_2", "bonus_cast_range")
 end
 
 

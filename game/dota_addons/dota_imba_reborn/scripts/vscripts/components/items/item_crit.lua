@@ -35,11 +35,11 @@ function item_imba_lesser_crit:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_lesser_crit == nil then modifier_item_imba_lesser_crit = class({}) end
-function modifier_item_imba_lesser_crit:IsHidden() return true end
-function modifier_item_imba_lesser_crit:IsDebuff() return false end
-function modifier_item_imba_lesser_crit:IsPurgable() return false end
-function modifier_item_imba_lesser_crit:IsPermanent() return true end
-function modifier_item_imba_lesser_crit:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_lesser_crit:IsHidden()		return true end
+function modifier_item_imba_lesser_crit:IsPurgable()	return false end
+function modifier_item_imba_lesser_crit:RemoveOnDeath()	return false end
+function modifier_item_imba_lesser_crit:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lesser_crit:DeclareFunctions()
 	return {
@@ -78,11 +78,10 @@ function item_imba_greater_crit:GetIntrinsicModifierName()
 
 if modifier_item_imba_greater_crit == nil then modifier_item_imba_greater_crit = class({}) end
 
-function modifier_item_imba_greater_crit:IsHidden() return true end
-function modifier_item_imba_greater_crit:IsDebuff() return false end
-function modifier_item_imba_greater_crit:IsPurgable() return false end
-function modifier_item_imba_greater_crit:IsPermanent() return true end
-function modifier_item_imba_greater_crit:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_greater_crit:IsHidden()		return true end
+function modifier_item_imba_greater_crit:IsPurgable()	return false end
+function modifier_item_imba_greater_crit:RemoveOnDeath()	return false end
+function modifier_item_imba_greater_crit:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the damage increase counter when created
 function modifier_item_imba_greater_crit:OnCreated(keys)

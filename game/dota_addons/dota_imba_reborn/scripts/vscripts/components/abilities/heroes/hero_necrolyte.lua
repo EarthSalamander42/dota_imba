@@ -954,11 +954,9 @@ function modifier_imba_reapers_scythe_respawn:RemoveOnDeath()
 end
 
 function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_RESPAWN,
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_RESPAWN
+	}
 end
 
 function modifier_imba_reapers_scythe_respawn:OnRespawn( params )

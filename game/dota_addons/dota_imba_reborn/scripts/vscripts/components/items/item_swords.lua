@@ -46,11 +46,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sange == nil then modifier_item_imba_sange = class({}) end
-function modifier_item_imba_sange:IsHidden() return true end
-function modifier_item_imba_sange:IsDebuff() return false end
-function modifier_item_imba_sange:IsPurgable() return false end
-function modifier_item_imba_sange:IsPermanent() return true end
-function modifier_item_imba_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_sange:IsHidden()		return true end
+function modifier_item_imba_sange:IsPurgable()		return false end
+function modifier_item_imba_sange:RemoveOnDeath()	return false end
+function modifier_item_imba_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange:DeclareFunctions()
@@ -149,11 +149,12 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_heavens_halberd == nil then modifier_item_imba_heavens_halberd = class({}) end
-function modifier_item_imba_heavens_halberd:IsHidden() return true end
-function modifier_item_imba_heavens_halberd:IsDebuff() return false end
-function modifier_item_imba_heavens_halberd:IsPurgable() return false end
-function modifier_item_imba_heavens_halberd:IsPermanent() return true end
-function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_heavens_halberd:IsHidden()		return true end
+function modifier_item_imba_heavens_halberd:IsPurgable()		return false end
+function modifier_item_imba_heavens_halberd:RemoveOnDeath()	return false end
+function modifier_item_imba_heavens_halberd:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
@@ -266,11 +267,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_yasha == nil then modifier_item_imba_yasha = class({}) end
-function modifier_item_imba_yasha:IsHidden() return true end
-function modifier_item_imba_yasha:IsDebuff() return false end
-function modifier_item_imba_yasha:IsPurgable() return false end
-function modifier_item_imba_yasha:IsPermanent() return true end
-function modifier_item_imba_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_yasha:IsHidden()		return true end
+function modifier_item_imba_yasha:IsPurgable()		return false end
+function modifier_item_imba_yasha:RemoveOnDeath()	return false end
+function modifier_item_imba_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
@@ -357,11 +358,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya == nil then modifier_item_imba_kaya = class({}) end
-function modifier_item_imba_kaya:IsHidden() return true end
-function modifier_item_imba_kaya:IsDebuff() return false end
-function modifier_item_imba_kaya:IsPurgable() return false end
-function modifier_item_imba_kaya:IsPermanent() return true end
-function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_kaya:IsHidden()		return true end
+function modifier_item_imba_kaya:IsPurgable()		return false end
+function modifier_item_imba_kaya:RemoveOnDeath()	return false end
+function modifier_item_imba_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
@@ -444,6 +445,14 @@ function modifier_item_imba_kaya_active:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function modifier_item_imba_kaya_active:GetTexture()
+	if self:GetAbility():GetName() == "item_imba_kaya" then
+		return "item_kaya"
+	elseif self:GetAbility():GetName() == "item_imba_arcane_nexus" then
+		return "modifiers/imba_arcane_nexus"
+	end
+end
+
 function modifier_item_imba_kaya_active:OnCreated()
 	self.bonus_cdr_active = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
 end
@@ -494,11 +503,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sange_yasha == nil then modifier_item_imba_sange_yasha = class({}) end
-function modifier_item_imba_sange_yasha:IsHidden() return true end
-function modifier_item_imba_sange_yasha:IsDebuff() return false end
-function modifier_item_imba_sange_yasha:IsPurgable() return false end
-function modifier_item_imba_sange_yasha:IsPermanent() return true end
-function modifier_item_imba_sange_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_sange_yasha:IsHidden()		return true end
+function modifier_item_imba_sange_yasha:IsPurgable()		return false end
+function modifier_item_imba_sange_yasha:RemoveOnDeath()	return false end
+function modifier_item_imba_sange_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
@@ -612,11 +621,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_and_sange == nil then modifier_item_imba_kaya_and_sange = class({}) end
-function modifier_item_imba_kaya_and_sange:IsHidden() return true end
-function modifier_item_imba_kaya_and_sange:IsDebuff() return false end
-function modifier_item_imba_kaya_and_sange:IsPurgable() return false end
-function modifier_item_imba_kaya_and_sange:IsPermanent() return true end
-function modifier_item_imba_kaya_and_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_kaya_and_sange:IsHidden()		return true end
+function modifier_item_imba_kaya_and_sange:IsPurgable()		return false end
+function modifier_item_imba_kaya_and_sange:RemoveOnDeath()	return false end
+function modifier_item_imba_kaya_and_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya_and_sange:OnCreated()
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
@@ -761,11 +770,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_yasha_and_kaya == nil then modifier_item_imba_yasha_and_kaya = class({}) end
-function modifier_item_imba_yasha_and_kaya:IsHidden() return true end
-function modifier_item_imba_yasha_and_kaya:IsDebuff() return false end
-function modifier_item_imba_yasha_and_kaya:IsPurgable() return false end
-function modifier_item_imba_yasha_and_kaya:IsPermanent() return true end
-function modifier_item_imba_yasha_and_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_yasha_and_kaya:IsHidden()		return true end
+function modifier_item_imba_yasha_and_kaya:IsPurgable()		return false end
+function modifier_item_imba_yasha_and_kaya:RemoveOnDeath()	return false end
+function modifier_item_imba_yasha_and_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_yasha_and_kaya:OnCreated()
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
@@ -911,11 +920,11 @@ function item_imba_triumvirate:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_triumvirate == nil then modifier_item_imba_triumvirate = class({}) end
-function modifier_item_imba_triumvirate:IsHidden() return true end
-function modifier_item_imba_triumvirate:IsDebuff() return false end
-function modifier_item_imba_triumvirate:IsPurgable() return false end
-function modifier_item_imba_triumvirate:IsPermanent() return true end
-function modifier_item_imba_triumvirate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_triumvirate:IsHidden()		return true end
+function modifier_item_imba_triumvirate:IsPurgable()		return false end
+function modifier_item_imba_triumvirate:RemoveOnDeath()	return false end
+function modifier_item_imba_triumvirate:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate:DeclareFunctions()

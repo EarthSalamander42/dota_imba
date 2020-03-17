@@ -5,8 +5,6 @@
 "DOTA_Tooltip_ability_item_imba_blade_mail_Note0"							"Damage Return is calculated before any kind of reduction."
 "DOTA_Tooltip_ability_item_imba_blade_mail_Note1"							"Damage Return doesn't reflect damage from other forms of Blade Mail."
 "DOTA_Tooltip_ability_item_imba_blade_mail_Note2"							"Returned damage type is the same as it was received."
-"DOTA_Tooltip_ability_item_imba_blade_mail_Note3"							"Can pierce Spell Immunity if the original damage type does."
-"DOTA_Tooltip_ability_item_imba_blade_mail_Note4"							"Current health will not update to accomodate Lacerate health changes. This includes respawning after dying with the Lacerate modifier."
 "DOTA_Tooltip_ability_item_imba_blade_mail_bonus_damage"						"+$damage"
 "DOTA_Tooltip_ability_item_imba_blade_mail_bonus_armor"						"+$armor"
 "DOTA_Tooltip_ability_item_imba_blade_mail_bonus_intellect"					"+$int"
@@ -15,7 +13,7 @@
 "DOTA_Tooltip_modifier_item_imba_blade_mail_active_Description"		"Returning damage to attacking units."
 
 "DOTA_Tooltip_modifier_item_imba_blade_mail_lacerate"					"Blade Mail Lacerate"
-"DOTA_Tooltip_modifier_item_imba_blade_mail_lacerate_Description"		"Max health reduced by stack count."
+"DOTA_Tooltip_modifier_item_imba_blade_mail_lacerate_Description"		"Max health reduced by %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS%."
 
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail"									"Bladestorm Mail"
 
@@ -26,8 +24,6 @@
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_Note0"							"Damage Return is calculated before any kind of reduction."
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_Note1"							"Damage Return doesn't reflect damage from other forms of Blade Mail."
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_Note2"							"Returned damage type is the same as it was received."
-"DOTA_Tooltip_ability_item_imba_bladestorm_mail_Note3"							"Can pierce Spell Immunity if the original damage type does."
-"DOTA_Tooltip_ability_item_imba_bladestorm_mail_Note4"							"Current health will not update to accomodate Lacerate health changes. This includes respawning after dying with the Lacerate modifier."
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_bonus_damage"						"+$damage"
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_bonus_armor"						"+$armor"
 "DOTA_Tooltip_ability_item_imba_bladestorm_mail_bonus_intellect"					"+$int"

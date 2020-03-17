@@ -64,11 +64,10 @@ end
 
 modifier_item_imba_force_staff = modifier_item_imba_force_staff or class({})
 
-function modifier_item_imba_force_staff:IsHidden() return true end
-function modifier_item_imba_force_staff:IsPurgable() return false end
-function modifier_item_imba_force_staff:IsDebuff() return false end
-function modifier_item_imba_force_staff:RemoveOnDeath() return false end
-function modifier_item_imba_force_staff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_force_staff:IsHidden()		return true end
+function modifier_item_imba_force_staff:IsPurgable()		return false end
+function modifier_item_imba_force_staff:RemoveOnDeath()	return false end
+function modifier_item_imba_force_staff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_force_staff:OnCreated()
 	self:OnIntervalThink()
@@ -249,11 +248,10 @@ end
 
 modifier_item_imba_hurricane_pike = modifier_item_imba_hurricane_pike or class({})
 
-function modifier_item_imba_hurricane_pike:IsHidden() return true end
-function modifier_item_imba_hurricane_pike:IsPurgable() return false end
-function modifier_item_imba_hurricane_pike:IsDebuff() return false end
-function modifier_item_imba_hurricane_pike:RemoveOnDeath() return false end
-function modifier_item_imba_hurricane_pike:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_hurricane_pike:IsHidden()		return true end
+function modifier_item_imba_hurricane_pike:IsPurgable()		return false end
+function modifier_item_imba_hurricane_pike:RemoveOnDeath()	return false end
+function modifier_item_imba_hurricane_pike:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_hurricane_pike:OnCreated()
 	if IsServer() then

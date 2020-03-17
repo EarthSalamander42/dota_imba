@@ -251,7 +251,9 @@ function modifier_imba_chen_divine_favor:DeclareFunctions()
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE -- IMBAfication: Pure Devotion
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE, -- IMBAfication: Pure Devotion
+		
+		MODIFIER_PROPERTY_TOOLTIP
     }
 end
 
@@ -277,6 +279,10 @@ end
 
 function modifier_imba_chen_divine_favor:GetAbsoluteNoDamagePure()
 	return 1
+end
+
+function modifier_imba_chen_divine_favor:OnTooltip()
+	return self.heal_amp
 end
 
 --------------------------------
@@ -318,7 +324,9 @@ function modifier_imba_chen_divine_favor_aura_buff:DeclareFunctions()
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE -- IMBAfication: Pure Devotion
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE, -- IMBAfication: Pure Devotion
+		
+		MODIFIER_PROPERTY_TOOLTIP
     }
 end
 
@@ -340,6 +348,10 @@ function modifier_imba_chen_divine_favor_aura_buff:GetModifierPreAttack_BonusDam
 	else
 		return self.damage_bonus_aura
 	end
+end
+
+function modifier_imba_chen_divine_favor_aura_buff:OnTooltip()
+	return self.heal_amp_aura
 end
 
 ---------------------

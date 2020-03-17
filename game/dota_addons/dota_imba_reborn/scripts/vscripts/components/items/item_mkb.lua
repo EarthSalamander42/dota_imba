@@ -46,9 +46,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_javelin == nil then modifier_item_imba_javelin = class({}) end
-function modifier_item_imba_javelin:IsHidden() return true end
-function modifier_item_imba_javelin:IsPermanent() return true end
-function modifier_item_imba_javelin:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_javelin:IsHidden()		return true end
+function modifier_item_imba_javelin:IsPurgable()		return false end
+function modifier_item_imba_javelin:RemoveOnDeath()	return false end
+function modifier_item_imba_javelin:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_javelin:OnCreated()
 	self.ability	= self:GetAbility()
@@ -154,6 +156,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 modifier_item_imba_monkey_king_bar = modifier_item_imba_javelin
+
+function modifier_item_imba_monkey_king_bar:IsHidden()		return true end
+function modifier_item_imba_monkey_king_bar:IsPurgable()		return false end
+function modifier_item_imba_monkey_king_bar:RemoveOnDeath()	return false end
+function modifier_item_imba_monkey_king_bar:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_monkey_king_bar:OnCreated()
 	self.ability	= self:GetAbility()

@@ -152,12 +152,12 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
 	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
-		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), self:GetTalentSpecialValueFor("range")) / self:GetSpecialValueFor("speed"),
+		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
 		x			= position.x,
 		y 			= position.y,
 		z			= position.z
 	})
-
+	
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
 		caster:Heal(caster.time_walk_damage_taken, self:GetCaster())
@@ -285,19 +285,19 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_faceless_void_9")
-		local distance = (caster:GetAbsOrigin() - position):Length2D()
-		if distance > max_distance then distance = max_distance end
-
+		local max_distance = ability:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()
+		local distance = math.min((caster:GetAbsOrigin() - position):Length2D(), max_distance)
+		
+		-- Initialize variables for HorizontalMotion
 		self.velocity = ability:GetSpecialValueFor("speed")
-		self.direction = (position - caster:GetAbsOrigin()):Normalized()
+		self.direction = (position - self:GetParent():GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
 		
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() + self.direction * distance)
-		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetForwardVector(), true)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(particle, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, self:GetParent():GetAbsOrigin() + self.direction * distance)
+		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetForwardVector(), true)
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		-- Enemy effect handler
@@ -305,7 +305,8 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		self.ms_stolen = 0
 
 		self.frametime = FrameTime()
-		self:StartIntervalThink(FrameTime())
+		self:OnIntervalThink()
+		self:StartIntervalThink(self.frametime)
 	end
 end
 
@@ -396,13 +397,13 @@ function modifier_imba_faceless_void_time_walk_cast:OnDestroy()
 end
 
 function modifier_imba_faceless_void_time_walk_cast:HorizontalMotion( me, dt )
-	if IsServer() then
-		if self.distance_traveled <= self.distance then
-			self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + self.direction * self.velocity * math.min(dt, self.distance - self.distance_traveled))
-			self.distance_traveled = self.distance_traveled + self.velocity * math.min(dt, self.distance - self.distance_traveled)
-		else
-			self:Destroy()
-		end
+		print(self.distance_traveled)
+		print(self.distance)
+	if self.distance_traveled < self.distance then
+		self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self.direction * math.min(self.velocity * dt, self.distance - self.distance_traveled)))
+		self.distance_traveled = self.distance_traveled + math.min(self.velocity * dt, self.distance - self.distance_traveled)
+	else
+		self:Destroy()
 	end
 end
 
@@ -1211,7 +1212,9 @@ function modifier_imba_faceless_void_chronosphere_handler:OnCreated()
 		self.parent = self:GetParent()
 		self.caster = self:GetCaster()
 		self.mini_chrono = self:GetAbility().mini_chrono
-
+		
+		self.projectile_speed	= self:GetParent():GetProjectileSpeed()
+		
 		if self.parent == self.caster or self.parent:GetPlayerOwner() == self.caster:GetPlayerOwner() then
 			if not self.mini_chrono then
 				self:SetStackCount(1)
@@ -1230,7 +1233,10 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 	if IsServer() then
-
+	
+		self.projectile_speed	= 0
+		self.projectile_speed	= self:GetParent():GetProjectileSpeed()
+		
 		-- Normal frozen enemy gets interrupted all the time
 		if self:GetStackCount() == 0 then
 
@@ -1260,21 +1266,6 @@ function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 	end
 end
 
-function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
-	local funcs ={ 	MODIFIER_EVENT_ON_ORDER,
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
-		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- #8 TALENT: Void cleaves from attacks in chrono
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
-
-	return funcs
-end
-
 function modifier_imba_faceless_void_chronosphere_handler:CheckState()
 	local stacks = self:GetStackCount()
 	local state = {}
@@ -1293,12 +1284,32 @@ function modifier_imba_faceless_void_chronosphere_handler:CheckState()
 	elseif stacks == 1 or stacks == 4 then
 		state = {	[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 	end
+	
 	return state
 end
 
 function modifier_imba_faceless_void_chronosphere_handler:GetPriority()
 	if self:GetStackCount() == 0 then
 		return MODIFIER_PRIORITY_HIGH end
+end
+
+function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_MAX,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
+		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		-- #8 TALENT: Void cleaves from attacks in chrono
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+
+function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Max()
+	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
+		return self:GetAbility():GetSpecialValueFor("movement_speed") end
 end
 
 -- #3 TALENT: Void gains infinite movement speed in Chrono
@@ -1314,11 +1325,6 @@ function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_A
 	end
 end
 
-function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		return self:GetAbility():GetSpecialValueFor("movement_speed") end
-end
-
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierAttackSpeedBonus_Constant()
 	if self:GetStackCount() == 2 then
 		return self:GetAbility():GetSpecialValueFor("scepter_ally_as_slow") * -1 end
@@ -1330,13 +1336,13 @@ function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeedBo
 end
 
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierProjectileSpeedBonus()
-	if self:GetStackCount() == 2 then
-		return self:GetAbility():GetSpecialValueFor("scepter_ally_projectile_slow") * -1 end
+	if self:GetStackCount() == 2 and self.projectile_speed then
+		return self.projectile_speed * self:GetAbility():GetSpecialValueFor("scepter_ally_projectile_slow") * 0.01 * (-1) end
 end
 
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierPercentageCasttime()
 	if self:GetStackCount() == 2 then
-		return self:GetAbility():GetSpecialValueFor("scepter_ally_casttime_pcnt_debuff") * -0.01 end
+		return self:GetAbility():GetSpecialValueFor("scepter_ally_casttime_pcnt_debuff") * (-1) end
 end
 
 -- #8 TALENT: Void cleaves from attacks in chrono

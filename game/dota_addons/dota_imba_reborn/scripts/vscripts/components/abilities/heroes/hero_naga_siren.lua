@@ -48,7 +48,7 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 		-- "API Additions - Global (Server): * CreateIllusions( hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace ) Note: See script_help2 for supported modifier keys"
 		self.illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), {
 			outgoing_damage 			= image_out_dmg,
-			incoming_damage				= self:GetSpecialValueFor("incoming_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_damage_taken"),
+			incoming_damage				= self:GetSpecialValueFor("incoming_damage") - self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_damage_taken"),
 			bounty_base					= self:GetCaster():GetIllusionBounty(),
 			bounty_growth				= nil,
 			outgoing_damage_structure	= nil,
@@ -129,10 +129,12 @@ function modifier_imba_naga_siren_mirror_image_perfect_image:SetIllusionsStackCo
 	if self:GetAbility().illusions == nil then return end
 
 	for _, illusion in pairs(self:GetAbility().illusions) do
-		local modifier = illusion:FindModifierByName(self:GetName())
+		if illusion and not illusion:IsNull() then
+			local modifier = illusion:FindModifierByName(self:GetName())
 
-		if modifier then
-			modifier:SetStackCount(iStackCount)
+			if modifier then
+				modifier:SetStackCount(iStackCount)
+			end
 		end
 	end
 end
@@ -350,7 +352,8 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 						mod:SetStackCount(mod:GetStackCount() + 1)
 						damage = damage + (self:GetAbility():GetSpecialValueFor("wet_bonus_damage") * mod:GetStackCount())
 					else
-						mod = victim:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+						-- self:GetCaster():GetPlayerOwner():GetAssignedHero() is to allow the armor reduction talent from the real unit to apply
+						mod = victim:AddNewModifier(self:GetCaster():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
 						damage = damage + self:GetAbility():GetSpecialValueFor("wet_bonus_damage")
 					end
 					
@@ -380,12 +383,25 @@ modifier_imba_naga_siren_rip_tide_debuff = modifier_imba_naga_siren_rip_tide_deb
 function modifier_imba_naga_siren_rip_tide_debuff:IsDebuff() return true end
 function modifier_imba_naga_siren_rip_tide_debuff:GetEffectName() return "particles/units/heroes/hero_siren/naga_siren_riptide_debuff.vpcf" end
 
+function modifier_imba_naga_siren_rip_tide_debuff:GetTexture()
+	return "naga_siren_rip_tide"
+end
+
+function modifier_imba_naga_siren_rip_tide_debuff:OnCreated()
+	self.armor_reduction	= self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_rip_tide_armor")
+	self.wet_bonus_armor	= self:GetAbility():GetSpecialValueFor("wet_bonus_armor")
+end
+
+function modifier_imba_naga_siren_rip_tide_debuff:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_naga_siren_rip_tide_debuff:DeclareFunctions() return {
 	MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 } end
 
 function modifier_imba_naga_siren_rip_tide_debuff:GetModifierPhysicalArmorBonus()
-	return (self:GetAbility():GetSpecialValueFor("wet_bonus_armor") * self:GetStackCount()) + self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_3")
+	return (self.wet_bonus_armor * self:GetStackCount()) + self.armor_reduction
 end
 
 --=================================================================================================================
@@ -614,5 +630,39 @@ function modifier_imba_naga_siren_siren_temptation_debuff:OnDestroy()
 	if self.pfx then
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image	= modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image or class({})
+modifier_special_bonus_imba_naga_siren_rip_tide_armor				= modifier_special_bonus_imba_naga_siren_rip_tide_armor or class({})
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:RemoveOnDeath() 	return false end
+
+function imba_naga_siren_rip_tide:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_naga_siren_rip_tide_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_naga_siren_mirror_image_perfect_image"), "modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", {})
+	end
+end
+
+function imba_naga_siren_rip_tide:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_naga_siren_rip_tide_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_naga_siren_rip_tide_armor"), "modifier_special_bonus_imba_naga_siren_rip_tide_armor", {})
 	end
 end

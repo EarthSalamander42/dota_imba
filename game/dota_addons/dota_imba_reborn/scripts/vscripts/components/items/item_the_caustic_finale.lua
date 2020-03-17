@@ -49,6 +49,9 @@ function modifier_item_the_caustic_finale:IsPurgable()
 	return false
 end
 
+function modifier_item_the_caustic_finale:RemoveOnDeath()	return false end
+function modifier_item_the_caustic_finale:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 --------------------------------------------------------------------------------
 
 function modifier_item_the_caustic_finale:OnCreated( kv )

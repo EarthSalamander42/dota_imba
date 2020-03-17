@@ -45,9 +45,9 @@
 "DOTA_Tooltip_Ability_item_imba_angelic_alliance"                      "Angelic Alliance"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, %target_status_resistance%%% status resistance, and %target_evasion%%% evasion for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, disarms, and grants true sight on them for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker for %passive_disarm_duration% seconds. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Lore"                  "An artifact that originated in a world long destroyed. This blade was used to repel a godlike necromancer, who delighted in treachery and fooling heroes into working for him."
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"                "Illusions do not benefit from Angelic Light's passive disarm effect."
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"					"Illusions do not benefit from Divine Vengeance's passive disarm effect."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_evasion"			"%+$evasion"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_armor"          "+$armor"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_armor"			"+$armor"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_damage"          "+$damage"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_strength"		"+$str"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_agility"			"+$agi"
@@ -61,7 +61,7 @@
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff_Description"	"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and disarmed."
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_buff"                      "Angelic Light"
-"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_Description"          "Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement spead increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+"DOTA_Tooltip_modifier_imba_angelic_alliance_buff_Description"          "Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_buff_self"                      "Angelic Light"
 "DOTA_Tooltip_modifier_imba_angelic_alliance_buff_self_Description"          "Status resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
@@ -127,7 +127,7 @@
 
 // Black Queen Cape
 "DOTA_Tooltip_Ability_item_imba_black_queen_cape"              "Black Queen Cape"
-"DOTA_Tooltip_ability_item_imba_black_queen_cape_Description"               "<h1>Active: Decree of Protection</h1> Targeted ally hero or building gains magic immunity for %bkb_duration% seconds. Does not require charges.<br><br>If the target is an allied hero and there is at least one charge, it is spent, applying a healing effect on the ally. The healing effect is dispelled by any hero damage, unless the target is under the effect of Decree of Protection.<br><br>Gains charges every time an enemy hero dies within 1400 units. Only the closest Black Queen Cape to the dying hero will gain a charge."
+"DOTA_Tooltip_ability_item_imba_black_queen_cape_Description"               "<h1>Active: Decree of Protection</h1> Targeted ally hero or building gains magic immunity for %bkb_duration% seconds. Does not require charges.<br><br>If the target is an allied hero and there is at least one charge, it is spent, healing %heal% health over %heal_duration% seconds. The healing effect is dispelled by any hero damage, unless the target is under the effect of Decree of Protection.<br><br>Gains charges every time an enemy hero dies within %soultrap_range% units. Only the closest Black Queen Cape to the dying hero will gain a charge."
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_Lore"          "The ashes of the strongest queen reside within the very fibers that assemble the form of this cape."
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_Note0"                     "If there are currently no charges when gaining a charge, gains 2 charges."
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_strength"            "+$str"
@@ -137,12 +137,9 @@
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_armor"               "+$armor"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_mana_regen"          "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_health_regen"        "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_black_queen_cape_bkb_duration"              "MAGIC IMMUNITY DURATION:"
-"DOTA_Tooltip_ability_item_imba_black_queen_cape_heal"          "ALLY TOTAL HEAL:"
-"DOTA_Tooltip_ability_item_imba_black_queen_cape_heal_duration"             "HEAL DURATION:"
 
 "DOTA_Tooltip_modifier_imba_black_queen_cape_active_heal"                   "Healing Soul"
-"DOTA_Tooltip_modifier_imba_black_queen_cape_active_heal_Description"       "Healing over time."
+"DOTA_Tooltip_modifier_imba_black_queen_cape_active_heal_Description"       "Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen."
 
 "DOTA_Tooltip_modifier_imba_black_queen_cape_active_bkb"                    "Decree of Protection"
 "DOTA_Tooltip_modifier_imba_black_queen_cape_active_bkb_Description"        "Immune to magic."
@@ -335,16 +332,14 @@
 "DOTA_Tooltip_ability_item_imba_dagon_10_bonus_damage"          "+$damage"
 
 // Desolator
-"DOTA_Tooltip_Ability_item_imba_desolator"                      "Desolator"
-"DOTA_Tooltip_ability_item_imba_desolator_Description"          "<h1><font color='#FF7800'>Active: Orb of Corruption</font></h1> Launches a slow moving orb that continually deals minor physical damage to enemies touching it as long as they're in range, and applies Corruption to them.\n<h1>Passive: Corruption</h1> Your attacks reduce the target's armor by %armor_reduction% <font color='#FF7800'> and vision range by %vision_reduction%</font> for %duration% seconds."
-"DOTA_Tooltip_ability_item_imba_desolator_Lore"                "A wicked weapon, used in torturing political criminals."
-"DOTA_Tooltip_ability_item_imba_desolator_Note0"                "Both the passive and active effect work on buildings."
-"DOTA_Tooltip_ability_item_imba_desolator_projectile_length"                "ORB OF CORRUPTION RANGE:"
-"DOTA_Tooltip_Ability_item_imba_desolator_active_damage"                    "ORB DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_item_imba_desolator_damage"              "+$damage"
+"DOTA_Tooltip_Ability_item_imba_desolator"						"Desolator"
+"DOTA_Tooltip_ability_item_imba_desolator_Description"			"<h1><font color='#FF7800'>Active: Orb of Corruption</font></h1> Launches a slow moving orb that deals %active_damage% physical damage to enemies hit, and applies Corruption to them.<br><br>Range: %projectile_length%<br>Speed: %projectile_speed%\n<h1>Passive: Corruption</h1> Your attacks reduce the target's armor by %armor_reduction% <font color='#FF7800'> and vision range by %vision_reduction%</font> for %duration% seconds."
+"DOTA_Tooltip_ability_item_imba_desolator_Lore"					"A wicked weapon, used in torturing political criminals."
+"DOTA_Tooltip_ability_item_imba_desolator_Note0"				"Armor reduction works on buildings."
+"DOTA_Tooltip_ability_item_imba_desolator_damage"				"+$damage"
 
-"DOTA_Tooltip_modifier_item_imba_desolator_debuff"              "Corruption"
-"DOTA_Tooltip_modifier_item_imba_desolator_debuff_Description"              "Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, vision range reduced by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."
+"DOTA_Tooltip_modifier_item_imba_desolator_debuff"				"Corruption"
+"DOTA_Tooltip_modifier_item_imba_desolator_debuff_Description"	"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, vision range reduced by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."
 
 
 // Diffusal Blade
@@ -352,8 +347,8 @@
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_Description"		"<h1>Active: Inhibit</h1> <font color='#FF7800'>Purges</font> a target enemy and slows it for %purge_slow_duration% seconds. The slow decays over the duration. Non-hero enemies are also rooted for %purge_root_duration% seconds.<br><br>Range: %abilitycastrange%\n<h1>Passive: Manabreak</h1>Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana. <br><br>Burns %feedback_mana_burn_illusion_melee% mana per attack from melee illusions and %feedback_mana_burn_illusion_ranged% mana per attack from ranged illusions."
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_Note0"			"Mana Burn does not stack with other Diffusal Blade series items."
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_Lore"            "An enchanted blade that allows the user to cut straight into the enemy's soul."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_agi"                   "+$agi"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_int"                   "+$int"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_agility"		"+$agi"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_intellect"		"+$int"
 
 "DOTA_Tooltip_modifier_item_imba_diffusal_blade_slow"					"Diffusal Blade Inhibit"
 "DOTA_Tooltip_modifier_item_imba_diffusal_blade_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
@@ -406,21 +401,19 @@
 
 // Eye of Skadi
 "DOTA_Tooltip_Ability_item_imba_skadi"                          "Eye of Skadi"
-"DOTA_Tooltip_ability_item_imba_skadi_Description"              "<h1><font color='#FF7800'>Active: Dead Winter Reigns</font></h1> Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Effect radius, damage and root duration are based on your attributes:<br>Every 100 <font color='#FF0000'>strength</font> adds %radius_tooltip% range.<br>Every 100 <font color='#00FF00'>agility</font> adds %damage_tooltip% damage.<Br>Every 100 <font color='#4060FF'>intelligence</font> adds %duration_tooltip% seconds duration.\n<h1>Passive: Cold Attack</h1> <font color='#FF7800'>Any types of sourced damage</font> lower enemy attack speed by %slow_as% and movement speed by %slow_ms%%%. <font color='#FF7800'>The slow lasts longer on enemies closer to you (linear scaling from to %max_duration% seconds at minimum range to %min_duration% second at %slow_range_cap%, with no affect beyond %max_distance% range), and is not affected by melee or ranged usage.</font>"
-"DOTA_Tooltip_ability_item_imba_skadi_Lore"                    "Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
-"DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Activation grants flying vision in the same radius as the effect."
-"DOTA_Tooltip_ability_item_imba_skadi_base_radius"              "BASE RADIUS:"
-"DOTA_Tooltip_ability_item_imba_skadi_base_duration"            "BASE DURATION:"
-"DOTA_Tooltip_ability_item_imba_skadi_base_damage"              "BASE DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_skadi_Description"              "<h1><font color='#FF7800'>Active: Dead Winter Reigns</font></h1> Creates a zone of utter cold around you, damaging, mini-stunning, and rooting nearby enemies.<br><br>Effect Radius: %base_radius% + %radius_per_str% per <font color='#FF0000'>strength</font><br>Damage: %base_damage% + %damage_per_agi% per <font color='#00FF00'>agility</font><br>Root Duration: %base_duration% + %duration_per_int% per <font color='#4060FF'>intelligence</font> seconds\n<h1>Passive: Cold Attack</h1> <font color='#FF7800'>Any types of sourced damage</font> lower enemy attack speed by %slow_as% and movement speed by %slow_ms%%%. <font color='#FF7800'>The slow lasts longer on enemies closer to you, and is not affected by melee or ranged usage.</font>"
+"DOTA_Tooltip_ability_item_imba_skadi_Lore"						"Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
+"DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Activation grants ground vision in the same radius as the effect."
+"DOTA_Tooltip_ability_item_imba_skadi_Note1"                    "<font color='#FF7800'>Cold Attack's slow duration uses linear scaling from to %max_duration% seconds at minimum range to %min_duration% second at %slow_range_cap%, with no effect beyond %max_distance% range).</font>"
 "DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"          "+$all"
 "DOTA_Tooltip_ability_item_imba_skadi_bonus_health"				"+$health"
 "DOTA_Tooltip_ability_item_imba_skadi_bonus_mana"				"+$mana"
 
 "DOTA_Tooltip_modifier_item_imba_skadi_slow"                    "Wintergrasp"
-"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"                    "Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"		"Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_modifier_item_imba_skadi_freeze"                  "Dead Winter"
-"DOTA_Tooltip_modifier_item_imba_skadi_freeze_Description"                  "Rooted and unable to move."
+"DOTA_Tooltip_modifier_item_imba_skadi_freeze_Description"		"Rooted and unable to move."
 
 // Force Staff
 "DOTA_Tooltip_Ability_item_imba_force_staff"                "Force Staff"
@@ -438,15 +431,14 @@
 
 // Guardian Greaves
 "DOTA_Tooltip_Ability_item_imba_guardian_greaves"							"Guardian Greaves"
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_Description"               "<h1>Active: Mend</h1> Applies a basic dispel on the caster, then revitalizes allies in %aura_radius% radius, restoring %mend_base_health% health and %mend_base_mana% <font color='#FF7800'>+ %mend_mana_pct%%% of your mana pool in mana, then grants them %mend_regen%%% maximum health regeneration for %mend_duration% seconds.</font>\n<h1>Passive: Guardian Aura</h1> Increases nearby allies' health regeneration and armor. Grants bonus regeneration and armor to allies as their health goes down, up to %aura_max_regen_bonus% health regen and %aura_max_armor_bonus% armor when below %min_health_threshold%%% health.\n<h1><font color='#FF7800'>Passive: Undying Guardian</font></h1> Passively casts Mend if the owner's HP drops below %min_health_threshold%%% and it is off cooldown.\nMovement speed bonuses from multiple pairs of boots do not stack."
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_Description"				"<h1>Active: Mend</h1>Restores %replenish_health% health and %replenish_mana% <font color='#FF7800'>(+%mend_mana_pct%%% of your max mana)</font> mana to nearby allies, and removes most negative effects from the caster. <font color='#FF7800'>Also grants %mend_regen%%% maximum health regeneration for %mend_duration% seconds.</font><br><br>Radius: %replenish_radius%<br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>\n<h1>Passive: Guardian Aura</h1> Provides %aura_health_regen% health regeneration <font color='#FF7800'>and %aura_armor% armor</font> to allied units. If an allied hero's health falls below %aura_bonus_threshold%%%, they receive %aura_health_regen_bonus% health regeneration and %aura_armor_bonus% armor <font color='#FF7800'>Health regeneration and armor scales linearly from max health to threshold health, granting increased bonuses as the unit's health drops.</font>. <br><br>Radius: %aura_radius%\n<h1><font color='#FF7800'>Passive: Undying Guardian</font></h1> Passively casts Mend if the owner's health drops below %min_health_threshold%%% and the ability is not on cooldown.\nMovement speed bonuses from multiple pairs of boots do not stack."
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_Lore"						"One of many holy instruments constructed to honor the Omniscience."
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_Note0"                     "Guardian Aura's health-based bonuses apply only to heroes."
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_ms"                  "%+$move_speed"
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_Note0"						"The aura boost only applies to heroes."
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_Note1"						"<font color='#FF7800'>Mend has no heal stack limit duration.</font>"
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_movement"			"%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_mana"                "+$mana"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_all_stats"           "+$all"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_armor"               "+$armor"
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_aura_regen"                "BASE AURA REGEN:"
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_aura_armor"                "BASE AURA ARMOR:"
 
 "DOTA_Tooltip_modifier_item_imba_guardian_greaves_aura"                     "Guardian Aura"
 "DOTA_Tooltip_modifier_item_imba_guardian_greaves_aura_Description"         "Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regen and %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor."
@@ -460,6 +452,7 @@
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_Lore"				"Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets."
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_Note0"			"<font color='#FF7800'>If Transmute is cast on a target outside its cast range, and the target dies before the caster gets in range, Transmute will still activate.</font>"
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_Note1"			"Midas Touch does not stack with itself."
+"DOTA_Tooltip_ability_item_imba_hand_of_midas_Note2"			"<font color='#FF0000'>Transmute's gold gain is not affected by the map gold multiplier.</font>"
 "DOTA_Tooltip_ability_item_imba_hand_of_midas_bonus_attack_speed"           "+$attack"
 
 // Heart of Tarrasque
@@ -503,20 +496,18 @@
 
 // Hood of Defiance
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance"              "Hood of Defiance"
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Description"               "<h1>Active: Defiance</h1> Grants a shield that absorbs up to %shield_health% magical damage. <font color='#FF7800'> While Defiance is active, your magic resistance cannot be reduced below %unreducable_magic_resist%%%.</font>\n<h1><font color='#FF7800'>Passive: Warding Hood</font></h1> Increases Tenacity by %passive_tenacity_pct%%%. While Defiance is active, the Tenacity bonus increases to %active_tenacity_pct%%% for the duration."
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note0"                     "Barrier and Defiance cannot be dispelled by any means."
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note1"                     "Defiance continues applying the magic resistance buff even if the magical shield depletes from magical damage."
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Lore"          "A furred, magic resistant headpiece that is feared by wizards."
+"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Description"		"<h1>Active: Barrier</h1> Creates a spell shield that absorbs up to %barrier_block% magical damage.  Lasts %duration% seconds.\n<h1><font color='#FF7800'>Active: Defiance</font></h1> Applies a buff that prevents magic resistance from being reduced below %unreducable_magic_resist%%%. Lasts %duration% seconds.\n<h1><font color='#FF7800'>Passive: Warding Hood</font></h1> Passively increases status resistance by %passive_tenacity_pct%%%. While Defiance is active, the status resistance bonus increases to %active_tenacity_pct%%%."
+"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note0"                     "Stacks multiplicatively with other sources of spell resistance."
+"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note1"                     "Barrier and Defiance are undispellable."
+"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Lore"						"A furred, magic resistant headpiece that is feared by wizards."
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_bonus_health_regen"        "+$hp_regen"
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_bonus_magic_resist"        "%+$spell_resist"
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_unreducable_magic_resist"  "%DEFIANCE MINIMUM MAGIC RESISTANCE:"
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_duration"                  "DEFIANCE DURATION:"
 
-"DOTA_Tooltip_modifier_imba_hood_of_defiance_active_shield"                 "Barrier"
-"DOTA_Tooltip_modifier_imba_hood_of_defiance_active_shield_Description"     "Absorbs magical damage."
+"DOTA_Tooltip_modifier_item_imba_hood_of_defiance_barrier"                 "Barrier"
+"DOTA_Tooltip_modifier_item_imba_hood_of_defiance_barrier_Description"     "Magic shield that blocks %dMODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT% incoming magic damage."
 
 "DOTA_Tooltip_modifier_imba_hood_of_defiance_active_bonus"                  "Defiance"
-"DOTA_Tooltip_modifier_imba_hood_of_defiance_active_bonus_Description"      "Your magic resistance cannot be reduced below a certain point."
+"DOTA_Tooltip_modifier_imba_hood_of_defiance_active_bonus_Description"      "Magic resistance cannot be reduced below %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 // Hurricane Pike
 "DOTA_Tooltip_Ability_item_imba_hurricane_pike"               "Hurricane Pike"
@@ -826,23 +817,21 @@
 "DOTA_Tooltip_modifier_item_imba_orchid_debuff_Description"                 "Silenced. Will suffer magical damage at the end of the duration"
 
 // Pipe of Insight
-"DOTA_Tooltip_ability_item_imba_pipe"                         "Pipe of Insight"
-"DOTA_Tooltip_ability_item_imba_pipe_Description"             "<h1>Active: Greater Defiance</h1> Grants a shield to all allies in %aura_radius% range that absorbs up to %shield_health% magical damage, <font color='#FF7800'>and grants heroes a buff that prevents their magic resistance being decreased below %unreducable_magic_resist%%%.</font>\n<h1>Passive: Insight Aura</h1> Allies in %aura_range% radius have their magic resistance increased by %aura_bonus_magic_resist%%%, their health regen increased by %aura_bonus_health_regen% <font color='#FF7800'>and their status resistance increased by %aura_tenacity_pct%%%</font>.<br> While allies are affected by Greater Defiance, the status resistance bonus increases to %active_tenacity_pct%%%."
-"DOTA_Tooltip_ability_item_imba_pipe_Note0"                   "Barrier and Greater Defiance cannot be dispelled by any means."
-"DOTA_Tooltip_ability_item_imba_pipe_Note1"                   "Defiance continues applying the magic resistance buff even if the magical shield depletes from magical damage."
+"DOTA_Tooltip_ability_item_imba_pipe"							"Pipe of Insight"
+"DOTA_Tooltip_ability_item_imba_pipe_Description"				"<h1>Active: Barrier</h1>Gives a shield that blocks %barrier_block% magic damage to all nearby allies. Lasts %duration% seconds.<br><br>Radius: %aura_radius%\n<h1><font color='#FF7800'>Active: Greater Defiance</font></h1> Also applies a buff to all heroes within %aura_radius% radius that prevents magic resistance from being reduced below %unreducable_magic_resist%%%. Lasts %duration% seconds.\n<h1>Passive: Insight Aura</h1> Gives allied units %aura_health_regen% health regeneration and %magic_resistance_aura%%% maggic resistance.<br><br>Radius: %aura_radius%\n<h1><font color='#FF7800'>Passive: Warding Hood</font></h1> Passively increases status resistance by %aura_tenacity_pct%%%. While Greater Defiance is active, the status resistance bonus increases to %active_tenacity_pct%%%."
+"DOTA_Tooltip_ability_item_imba_pipe_Note0"						"Multiple instances of Barrier do not stack."
+"DOTA_Tooltip_ability_item_imba_pipe_Note1"						"Stacks multiplicatively with other sources of magic resistance."
+"DOTA_Tooltip_ability_item_imba_pipe_Note2"						"Barrier and Greater Defiance are undispellable."
 "DOTA_Tooltip_ability_item_imba_pipe_Lore"						"A powerful artifact of mysterious origin, it creates barriers against magical forces."
 "DOTA_Tooltip_ability_item_imba_pipe_stat_bonus"				"+$all"
 "DOTA_Tooltip_ability_item_imba_pipe_bonus_health_regen"		"+$hp_regen"
 "DOTA_Tooltip_ability_item_imba_pipe_bonus_magic_resist"		"%+$spell_resist"
-"DOTA_Tooltip_ability_item_imba_pipe_aura_radius"				"AURA RADIUS:"
-"DOTA_Tooltip_ability_item_imba_pipe_unreducable_magic_resist"             "%GREATER DEFIANCE MINIMUM MAGIC RESISTANCE:"
-"DOTA_Tooltip_ability_item_imba_pipe_duration"                 "GREATER DEFIANCE DURATION:"
 
-"DOTA_Tooltip_modifier_imba_pipe_aura"                         "Insight Aura"
-"DOTA_Tooltip_modifier_imba_pipe_aura_Description"             "Gaining bonus health regeneration and magic resistance. Debuff duration decreased."
+"DOTA_Tooltip_modifier_imba_pipe_aura"							"Insight Aura"
+"DOTA_Tooltip_modifier_imba_pipe_aura_Description"				"Regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP per second and increasing magic resistance by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Increasing status resistance by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
-"DOTA_Tooltip_modifier_imba_pipe_active_bonus"                 "Greater Defiance"
-"DOTA_Tooltip_modifier_imba_pipe_active_bonus_Description"                 "Your magic resistance cannot be reduced below a certain point."
+"DOTA_Tooltip_modifier_imba_pipe_active_bonus"					"Greater Defiance"
+"DOTA_Tooltip_modifier_imba_pipe_active_bonus_Description"		"Magic resistance cannot be reduced below %eMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 // Poor Man's Shield
 "DOTA_Tooltip_Ability_item_imba_poor_mans_shield"				"Poor Man's Shield"
@@ -859,8 +848,8 @@
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Description"		"<h1>Active: Combust</h1> Purges a target enemy and slows it for %purge_slow_duration% seconds. Each buff removed in this manner immediately burns %dispel_burn% mana, dealing it as magical damage. The slow decays over the duration. Non-hero enemies are also rooted for %purge_root_duration% seconds.<br><br>Range: %abilitycastrange%\n<h1>Passive: Manabreak</h1>Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana. <br><br>Burns %feedback_mana_burn_illusion_melee% mana per attack from melee illusions and %feedback_mana_burn_illusion_ranged% mana per attack from ranged illusions.\n<h1><font color='#FF7800'>Passive: Mana Combustion</font></h1> Has a %dispel_chance_pct%%% chance to combust one random buff from the enemy with every hit, burning %dispel_burn% mana and dealing it as magical damage."
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note0"				"Mana Burn does not stack with other Diffusal Blade series items."
 "DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Lore"				"The fabled Sword of Godec."
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_agi"			"+$agi"
-"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_int"			"+$int"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_agility"			"+$agi"
+"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_bonus_intellect"		"+$int"
 
 "DOTA_Tooltip_modifier_item_imba_diffusal_blade_2_slow"					"Purgeblade Combust"
 "DOTA_Tooltip_modifier_item_imba_diffusal_blade_2_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
@@ -882,7 +871,7 @@
 
 // Reverb Sabre
 "DOTA_Tooltip_Ability_item_imba_reverb_rapier"                  "Reverb Sabre"
-"DOTA_Tooltip_ability_item_imba_reverb_rapier_Description"        "<h1>Passive: Superb Reverb</h1> When off-cooldown, causes your attacks to hit <font color='#FF7800'>three</font> times in quick succession. Tri-attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#FF0000'>Does not work on ranged heroes.</font>"
+"DOTA_Tooltip_ability_item_imba_reverb_rapier_Description"        "<h1>Passive: Superb Reverb</h1> When off-cooldown, causes your attacks to hit three times in quick succession. Tri-attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#FF0000'>Does not work on ranged heroes.</font>"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Lore"           "Faced with the challenge of combining two Echo Sabres' magic into a single blade, the runesmiths of the Ruined City asked themselves only if they could - never if they should."
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Note0"          "Upon proccing, grants the user 720 attack speed or triples your current bonus, whichever is higher, until the next attack."
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_bonus_intellect"      "+$int"
@@ -905,18 +894,14 @@
 
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
-"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1>Heals the attacker for %lifesteal_pct%%% of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy hero grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations."
+"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1>Heals the attacker for %lifesteal_pct%%% of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy hero grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health. Each stack increases your maximum health by %soul_slaughter_hp_per_stack% and damage by %soul_slaughter_damage_per_stack% for %soul_slaughter_duration% seconds.<br>Stacks have independent durations."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
-"DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
-"DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
+"DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"			"+$str"
+"DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"			"+$damage"
 "DOTA_Tooltip_Ability_item_imba_satanic_status_resistance"		"%+Status Resistance"
-"DOTA_Tooltip_Ability_item_imba_satanic_lifesteal_pct"          "%LIFESTEAL:"
-"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_duration"            "SOUL SLAUGHTER DURATION:"
-"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_damage_per_stack"    "SOUL SLAUGHTER DAMAGE PER STACK:"
-"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_hp_per_stack"        "SOUL SLAUGHTER HP PER STACK:"
 
-"DOTA_Tooltip_modifier_imba_satanic_active"                    "Unholy Rage"
-"DOTA_Tooltip_modifier_imba_satanic_active_Description"                     "Gaining a huge amount of lifesteal."
+"DOTA_Tooltip_modifier_imba_satanic_active"						"Unholy Rage"
+"DOTA_Tooltip_modifier_imba_satanic_active_Description"			"Gaining a huge amount of lifesteal."
 
 "DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"					"Soul Slaughter"
 "DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"		"Slain heroes' souls grant you bonus health and damage."
@@ -1080,15 +1065,13 @@
 // Stygian Desolator
 
 "DOTA_Tooltip_Ability_item_imba_desolator_2"                    "Stygian Desolator"
-"DOTA_Tooltip_ability_item_imba_desolator_2_Description"                    "<h1><font color='#FF7800'>Active: Reaping Desolation</font></h1> Launches several slow moving orbs, each continually dealing minor physical damage to enemies touching it and applies Desolation to them. Multiple orbs can damage the same enemy.\n<h1>Passive: Desolation </h1> Your attacks reduce the target's armor by %armor_reduction% and vision range by %vision_reduction% for %duration% seconds."
-"DOTA_Tooltip_ability_item_imba_desolator_2_Lore"              "This vicious torture device completely ignores armor, cutting directly into enemies' flesh."
-"DOTA_Tooltip_ability_item_imba_desolator_2_Note0"              "Both the passive and active effect work on buildings."
-"DOTA_Tooltip_ability_item_imba_desolator_2_projectile_length"              "REAPING DESOLATION RANGE:"
-"DOTA_Tooltip_Ability_item_imba_desolator_2_active_damage"                  "ORB DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_item_imba_desolator_2_damage"            "+$damage"
+"DOTA_Tooltip_ability_item_imba_desolator_2_Description"		"<h1><font color='#FF7800'>Active: Reaping Desolation</font></h1> Launches %projectile_amount% slow moving orbs in a %projectile_cone% degree spread that deal %active_damage% physical damage to enemies hit, and apply Corruption to them.<br><br>Range: %projectile_length%<br>Speed: %projectile_speed%\n<h1>Passive: Corruption </h1> Your attacks reduce the target's armor by %armor_reduction% and vision range by %vision_reduction% for %duration% seconds."
+"DOTA_Tooltip_ability_item_imba_desolator_2_Lore"				"This vicious torture device decimates armor, cutting directly into enemies' flesh."
+"DOTA_Tooltip_ability_item_imba_desolator_2_Note0"				"Armor reduction works on buildings."
+"DOTA_Tooltip_ability_item_imba_desolator_2_damage"				"+$damage"
 
-"DOTA_Tooltip_modifier_item_imba_desolator_2_debuff"            "Desolation"
-"DOTA_Tooltip_modifier_item_imba_desolator_2_debuff_Description"            "Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, vision range reduced by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."
+"DOTA_Tooltip_modifier_item_imba_desolator_2_debuff"				"Corruption"
+"DOTA_Tooltip_modifier_item_imba_desolator_2_debuff_Description"	"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, vision range reduced by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."
 
 "DOTA_Tooltip_ability_item_the_caustic_finale"                "The Caustic Finale"
 "DOTA_Tooltip_ability_item_the_caustic_finale_Description"          "Passive: Caustic Finale - Attacks reduce a percentage of the target's armor.  This effect stacks up to %max_stack_count% times.  If the target dies under this effect, it explodes, dealing damage in an area of effect.\n"
@@ -1156,7 +1139,7 @@
 
 // Vladmir's Blood
 "DOTA_Tooltip_Ability_item_imba_vladmir_2"                      "Vladmir's Blood"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants %vampiric_aura%%% lifesteal <font color='#FF7800'>and spell steal</font>, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1>Grants %vampiric_aura%%% lifesteal and spell steal, %hp_regen_aura% health regeneration, %mana_regen_aura% mana regeneration, %damage_aura%%% bonus attack damage, and %armor_aura% armor to nearby allies. Illusions fully benefit from the lifesteal. <br><br>Radius: %aura_radius%"
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Lore"                "An eerie mask possessed by a fallen vampire's mighty bloodlust."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Note0"                "Vladmir's Aura is completely overriden and does not stack with Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"          "+$all"
@@ -1166,7 +1149,7 @@
 
 // Vladmir's Offering
 "DOTA_Tooltip_Ability_item_imba_vladmir"                        "Vladmir's Offering"
-"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1>Grants %vampiric_aura%%% lifesteal, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1>Grants %vampiric_aura%%% lifesteal, <font color='#FF7800'>%hp_regen_aura% health regeneration</font>, %mana_regen_aura% mana regeneration, <font color='#FF7800'>%damage_aura%%% bonus attack damage</font>, and %armor_aura% armor to nearby allies. <font color='#FF7800'>Illusions fully benefit from the lifesteal.</font> <br><br>Radius: %aura_radius%"
 "DOTA_Tooltip_ability_item_imba_vladmir_Lore"                  "An eerie mask that is haunted with the malice of a fallen vampire."
 "DOTA_Tooltip_ability_item_imba_vladmir_Note0"                  "Vladmir's Aura is completely overriden and does not stack with Vladmir's Blood's Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_stat_bonus"            "+$all"

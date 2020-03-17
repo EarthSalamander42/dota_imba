@@ -37,14 +37,12 @@ end
 
 -------------------------------------------
 modifier_imba_shotgun_passive = modifier_imba_shotgun_passive or class({})
-function modifier_imba_shotgun_passive:IsDebuff() return false end
+
 function modifier_imba_shotgun_passive:IsHidden() return true end
-function modifier_imba_shotgun_passive:IsPermanent() return true end
 function modifier_imba_shotgun_passive:IsPurgable() return false end
-function modifier_imba_shotgun_passive:IsPurgeException() return false end
-function modifier_imba_shotgun_passive:IsStunDebuff() return false end
 function modifier_imba_shotgun_passive:RemoveOnDeath() return false end
 function modifier_imba_shotgun_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_shotgun_passive:OnDestroy()
 	self:CheckUnique(false)
 end
@@ -217,14 +215,12 @@ function item_imba_starfury:GetAbilityTextureName()
 end
 -------------------------------------------
 modifier_imba_starfury_passive = modifier_imba_starfury_passive or class({})
-function modifier_imba_starfury_passive:IsDebuff() return false end
+
 function modifier_imba_starfury_passive:IsHidden() return true end
-function modifier_imba_starfury_passive:IsPermanent() return true end
 function modifier_imba_starfury_passive:IsPurgable() return false end
-function modifier_imba_starfury_passive:IsPurgeException() return false end
-function modifier_imba_starfury_passive:IsStunDebuff() return false end
 function modifier_imba_starfury_passive:RemoveOnDeath() return false end
 function modifier_imba_starfury_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_starfury_passive:OnDestroy()
 	self:CheckUnique(false)
 end

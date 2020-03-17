@@ -56,6 +56,11 @@ end
 -- Passive MoM modifier
 modifier_imba_mask_of_madness = class({})
 
+function modifier_imba_mask_of_madness:IsHidden()		return true end
+function modifier_imba_mask_of_madness:IsPurgable()		return false end
+function modifier_imba_mask_of_madness:RemoveOnDeath()	return false end
+function modifier_imba_mask_of_madness:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_mask_of_madness:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -107,22 +112,6 @@ function modifier_imba_mask_of_madness:OnDestroy()
 			ChangeAttackProjectileImba(self.caster)
 		end
 	end
-end
-
-function modifier_imba_mask_of_madness:IsHidden()
-	return true
-end
-
-function modifier_imba_mask_of_madness:IsPurgable()
-	return false
-end
-
-function modifier_imba_mask_of_madness:IsDebuff()
-	return false
-end
-
-function modifier_imba_mask_of_madness:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 

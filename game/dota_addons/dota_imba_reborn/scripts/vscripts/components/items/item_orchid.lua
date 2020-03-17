@@ -56,11 +56,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 modifier_item_imba_orchid = modifier_item_imba_orchid or class({})
-function modifier_item_imba_orchid:IsHidden() return true end
-function modifier_item_imba_orchid:IsDebuff() return false end
-function modifier_item_imba_orchid:IsPurgable() return false end
-function modifier_item_imba_orchid:IsPermanent() return true end
-function modifier_item_imba_orchid:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_orchid:IsHidden()		return true end
+function modifier_item_imba_orchid:IsPurgable()		return false end
+function modifier_item_imba_orchid:RemoveOnDeath()	return false end
+function modifier_item_imba_orchid:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_orchid:OnDestroy()
 	self:CheckUnique(false)
@@ -237,11 +237,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 modifier_item_imba_bloodthorn = modifier_item_imba_bloodthorn or class({})
-function modifier_item_imba_bloodthorn:IsHidden() return true end
-function modifier_item_imba_bloodthorn:IsDebuff() return false end
-function modifier_item_imba_bloodthorn:IsPurgable() return false end
-function modifier_item_imba_bloodthorn:IsPermanent() return true end
-function modifier_item_imba_bloodthorn:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_bloodthorn:IsHidden()		return true end
+function modifier_item_imba_bloodthorn:IsPurgable()		return false end
+function modifier_item_imba_bloodthorn:RemoveOnDeath()	return false end
+function modifier_item_imba_bloodthorn:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier when created
 function modifier_item_imba_bloodthorn:OnCreated()

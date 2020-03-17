@@ -55,6 +55,11 @@ end
 -- Satanic modifier
 modifier_imba_satanic = class({})
 
+function modifier_imba_satanic:IsHidden() return true end
+function modifier_imba_satanic:IsPurgable() return false end
+function modifier_imba_satanic:RemoveOnDeath() return false end
+function modifier_imba_satanic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_satanic:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -104,22 +109,6 @@ end
 
 function modifier_imba_satanic:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("status_resistance")
-end
-
-function modifier_imba_satanic:IsHidden()
-	return true
-end
-
-function modifier_imba_satanic:IsPurgable()
-	return false
-end
-
-function modifier_imba_satanic:IsDebuff()
-	return false
-end
-
-function modifier_imba_satanic:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 

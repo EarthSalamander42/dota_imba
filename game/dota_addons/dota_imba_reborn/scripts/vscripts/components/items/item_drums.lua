@@ -37,25 +37,14 @@ function item_imba_ancient_janggo:GetAbilityTextureName()
 end
 
 function item_imba_ancient_janggo:OnSpellStart()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local sound_cast = "DOTA_Item.DoE.Activate"
-	local modifier_active = "modifier_imba_drums_active"
-
-	-- Ability specials
-	local hero_multiplier = ability:GetSpecialValueFor("hero_multiplier")
-	local duration = ability:GetSpecialValueFor("duration")
-	local radius = ability:GetSpecialValueFor("radius")
-
 	-- Play cast sound effect
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOn("DOTA_Item.DoE.Activate", self:GetCaster())
 
 	-- Find all nearby allies
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-		caster:GetAbsOrigin(),
+	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+		self:GetCaster():GetAbsOrigin(),
 		nil,
-		radius,
+		self:GetSpecialValueFor("radius"),
 		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
@@ -68,7 +57,7 @@ function item_imba_ancient_janggo:OnSpellStart()
 
 		-- Illusions are treated as creeps
 		if ally:IsRealHero() then
-			stacks = stacks + hero_multiplier
+			stacks = stacks + self:GetSpecialValueFor("hero_multiplier")
 		else
 			stacks = stacks + 1
 		end
@@ -78,7 +67,7 @@ function item_imba_ancient_janggo:OnSpellStart()
 	for _,ally in pairs(allies) do
 		-- If the ally has Hellish Siege (Siege cuirass's active), do nothing
 		if not ally:HasModifier("modifier_imba_siege_cuirass_active") then
-			local modifier_active_handler = ally:AddNewModifier(caster, ability, modifier_active, {duration = duration})
+			local modifier_active_handler = ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_drums_active", {duration = self:GetSpecialValueFor("duration")})
 			if modifier_active_handler then
 				modifier_active_handler:SetStackCount(stacks)
 			end
@@ -109,12 +98,10 @@ function modifier_imba_drums_active:OnCreated()
 end
 
 function modifier_imba_drums_active:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_drums_active:GetModifierMoveSpeedBonus_Percentage()
@@ -128,6 +115,11 @@ end
 
 -- Stats modifier (stacks)
 modifier_imba_drums = class({})
+
+function modifier_imba_drums:IsHidden()		return true end
+function modifier_imba_drums:IsPurgable()		return false end
+function modifier_imba_drums:RemoveOnDeath()	return false end
+function modifier_imba_drums:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_drums:OnCreated()
 	-- Ability specials
@@ -145,13 +137,8 @@ function modifier_imba_drums:OnCreated()
 	end
 end
 
-function modifier_imba_drums:IsHidden() return true end
-function modifier_imba_drums:IsPurgable() return false end
-function modifier_imba_drums:IsDebuff() return false end
-function modifier_imba_drums:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
 function modifier_imba_drums:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -159,8 +146,6 @@ function modifier_imba_drums:DeclareFunctions()
 		
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_drums:GetModifierBonusStats_Intellect()

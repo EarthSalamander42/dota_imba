@@ -62,7 +62,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_1"            "+35 Stifling Dagger damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_2"            "+30 Phantom Strike bonus attack speed"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3"            "Triple Strike Stifling Dagger"
-"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3_Description"            "Launches a two extra Stifling Daggers towards random visible enemies within the cast range."
+"DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_3_Description"            "Launches two extra Stifling Daggers towards random visible enemies within the cast range."
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_4"            "+5% Phantom Strike bonus crit chance"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_5"            "+100% Coup de Grace crit damage"
 "DOTA_Tooltip_ability_special_bonus_imba_phantom_assassin_6"            "+2 Phantom Strike attacks"

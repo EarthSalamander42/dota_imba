@@ -1064,11 +1064,11 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'undying') and hero:GetName() == "npc_dota_hero_undying" then
 							ability_set = {
 								[0] = "imba_undying_decay",
-								-- [1] = "imba_void_spirit_dissimilate",
-								-- [2] = "imba_void_spirit_resonant_pulse",
-								-- [3] = "imba_void_spirit_void_stasis",
-								-- [4] = "imba_void_spirit_astral_step_helper",
-								-- [5] = "imba_void_spirit_astral_step",
+								[1] = "imba_undying_soul_rip",
+								[2] = "imba_undying_tombstone",
+								[3] = "imba_undying_flesh_golem_grab",
+								[4] = "generic_hidden",
+								[5] = "imba_undying_flesh_golem",
 								-- [6] = "special_bonus_attack_damage_25",
 								-- [7] = "special_bonus_hp_250",
 								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",

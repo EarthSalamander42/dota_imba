@@ -1,5 +1,6 @@
 -- Editors:
 --     Seinken, 05.03.2017
+--	   AltiV, 17.03.2020, and many times before that
 
 ---------------------------------
 -- 		   Thick Hide          --
@@ -30,12 +31,10 @@ function modifier_imba_thick_hide:OnCreated()
 end
 
 function modifier_imba_thick_hide:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_thick_hide:GetModifierIncomingDamage_Percentage()
@@ -58,8 +57,14 @@ end
 
 imba_centaur_hoof_stomp = class({})
 LinkLuaModifier("modifier_imba_hoof_stomp_stun", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_buff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_debuff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_hoof_stomp_arena_thinker_buff		= modifier_imba_hoof_stomp_arena_thinker_buff or class({})
+modifier_imba_hoof_stomp_arena_thinker_debuff	= modifier_imba_hoof_stomp_arena_thinker_debuff or class({})
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
@@ -73,250 +78,58 @@ function imba_centaur_hoof_stomp:GetCastRange(location, target)
 end
 
 function imba_centaur_hoof_stomp:OnSpellStart()
-	if IsServer() then
-		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self
-		local particle_stomp = "particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-		local particle_arena = "particles/hero/centaur/centaur_hoof_stomp_arena.vpcf"
-		local sound_cast = "Hero_Centaur.HoofStomp"
-		local cast_response = "centaur_cent_hoof_stomp_0"..RandomInt(1, 2)
-		local kill_response = "centaur_cent_hoof_stomp_0"..RandomInt(4, 5)
-		local modifier_arena_debuff = "modifier_imba_hoof_stomp_arena_debuff"
-		local modifier_arena_buff = "modifier_imba_hoof_stomp_arena_buff"
-		local modifier_stun = "modifier_imba_hoof_stomp_stun"
-		local arena_center = caster:GetAbsOrigin()
-		self.lastCasterLocation = nil
-
-		caster:RemoveModifierByName("modifier_imba_return_passive")
-		
-		if caster:HasAbility("imba_centaur_return") then
-			caster:AddNewModifier(caster,caster:FindAbilityByName("imba_centaur_return"),"modifier_imba_return_passive",{})
-		end
-
-		-- Ability specials
-		local radius = ability:GetSpecialValueFor("radius")
-		local stun_duration = ability:GetSpecialValueFor("stun_duration")
-		local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
-		local pit_duration = ability:GetSpecialValueFor("pit_duration")
-
-
-		-- Roll for cast response
-		local cast_response_chance = 50
-		local cast_response_roll = RandomInt(1, 100)
-		if cast_response_roll <= cast_response_chance then
-			EmitSoundOn(cast_response, caster)
-		end
-
-		-- Play cast sound
-		EmitSoundOn(sound_cast, caster)
-
-		-- Add stomp particle
-		local particle_stomp_fx = ParticleManager:CreateParticle(particle_stomp, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle_stomp_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(radius, 1, 1))
-		ParticleManager:SetParticleControl(particle_stomp_fx, 2, caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
-
-		-- Find all nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-			arena_center,
-			nil,
-			radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
-
-		for _, enemy in pairs(enemies) do
-			-- Deal damage to nearby non-magic immune enemies
-			if not enemy:IsMagicImmune() then
-				local damageTable = {victim = enemy,
-					attacker = caster,
-					damage = stomp_damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = ability}
-
-				ApplyDamage(damageTable)
-
-				-- Stun them
-				enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
-
-				-- Check if the damage killed enemy
-				if enemy:IsRealHero() and not enemy:IsAlive() then
-					kill_response_chance = 25
-					kill_response_roll = RandomInt(1, 100)
-
-					if kill_response_roll <= kill_response_chance then
-						EmitSoundOn(kill_response, caster)
-					end
-				end
-			end
-		end
+	-- Play cast sound
+	self:GetCaster():EmitSound("Hero_Centaur.HoofStomp")
 	
-		-- Prevents overlapping permanent particle effects from Hoof Stomp spam
-		if self.particle_arena_fx then
-			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
-		end
-		
-		-- Add arena particles for the duration
-		self.particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
-		Timers:CreateTimer(pit_duration, function()
-			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
-		end)
-
-		-- Index a modifier to send the modifier the arena center variable.
-		local modifier
-
-		-- Give buff to the caster
-		modifier = caster:AddNewModifier(caster, ability, modifier_arena_buff, {duration = pit_duration})
-		if modifier then
-			modifier.arena_center = arena_center
-		end
-
-		-- #2 Talent: Arena buff to allies as well
-		if caster:HasTalent("special_bonus_imba_centaur_2") then
-			-- Mark caster
-			caster.has_arena_talent2 = true
-
-			-- Find all nearby allies
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-				arena_center,
-				nil,
-				radius,
-				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-				FIND_ANY_ORDER,
-				false
-			)
-
-			for _,ally in pairs(allies) do
-				modifier = ally:AddNewModifier(caster, ability, modifier_arena_buff, {duration = pit_duration})
-				if modifier then
-					modifier.arena_center = arena_center
-				end
-			end
-		end
-
-		-- Give debuff to the enemies in the area
-		for _,enemy in pairs(enemies) do
-			modifier = enemy:AddNewModifier(caster, ability, modifier_arena_debuff, {duration = pit_duration})
-			if modifier then
-				modifier.arena_center = arena_center
-			end
-		end
-
-		-- Elapsed time
-		local elapsed_time = 0
-
-		-- Keep checking if the caster or new enemies came inside the arena
-		Timers:CreateTimer(FrameTime(), function()
-			-- Increase the elapsed time
-			elapsed_time = elapsed_time + FrameTime()
-
-			-- Resolve NPCs stuck into one another
-			ResolveNPCPositions(arena_center, radius)
-
-			if caster:HasTalent("special_bonus_imba_centaur_3") then
-				local arena_center = caster:GetAbsOrigin()
-				for _,enemy in pairs(enemies) do
-					modifier = enemy:FindModifierByName(modifier_arena_debuff)
-					if modifier then
-						modifier.arena_center = arena_center
-					end
-				end
-
-				-- Check if caster moved more then the allowed units in one frame, if he does stop this effect.
-				if self.lastCasterLocation then
-					local distance = (caster:GetAbsOrigin() - self.lastCasterLocation):Length2D()
-					if distance > caster:FindTalentValue("special_bonus_imba_centaur_3") then
-						caster:RemoveModifierByName(modifier_arena_buff)
-						ParticleManager:DestroyParticle(self.particle_arena_fx,true)
-						ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
-						return nil
-					end
-				end
-				self.lastCasterLocation = caster:GetAbsOrigin()
-
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 5, caster:GetAbsOrigin())
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())
-			end
-
-			-- Check caster, if he doesn't have the arena modifier and he's in the arena, give it to him again
-			if not caster:HasModifier(modifier_arena_buff) then
-				local distance = (caster:GetAbsOrigin() - arena_center):Length2D()
-				if distance <= radius then
-					modifier = caster:AddNewModifier(caster, ability, modifier_arena_buff, {duration = pit_duration - elapsed_time})
-					if modifier then
-						modifier.arena_center = arena_center
-					end
-				end
-			end
-
-			-- #2 Talent: Arena buff to allies as well (extend)
-			-- Check allies, same as caster
-			if caster.has_arena_talent2 then
-				-- Find all nearby allies
-				local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-					arena_center,
-					nil,
-					radius,
-					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-					FIND_ANY_ORDER,
-					false)
-
-				for _,ally in pairs(allies) do
-					if not ally:HasModifier(modifier_arena_buff) then
-						local distance = (ally:GetAbsOrigin() - arena_center):Length2D()
-						if distance <= radius then
-							modifier = ally:AddNewModifier(caster, ability, modifier_arena_buff, {duration = pit_duration - elapsed_time})
-							if modifier then
-								modifier.arena_center = arena_center
-							end
-						end
-					end
-				end
-			end
-
-			-- Check for new enemies
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-				arena_center,
-				nil,
-				radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NONE,
-				FIND_ANY_ORDER,
-				false)
-
-			for _,enemy in pairs(enemies) do
-				if not enemy:HasModifier(modifier_arena_debuff) then
-					modifier = enemy:AddNewModifier(caster, ability, modifier_arena_debuff, {duration = pit_duration - elapsed_time})
-					if modifier then
-						modifier.arena_center = arena_center
-					end
-				end
-			end
-
-			-- Check if the timer should repeat
-			if elapsed_time >= pit_duration then
-				return nil
-			else
-				return FrameTime()
-			end
-		end)
+	-- Roll for cast response
+	if self:GetCaster():GetName() == "npc_dota_hero_centaur" and RandomInt(1, 100) <= 50 then
+		EmitSoundOn("centaur_cent_hoof_stomp_0"..RandomInt(1, 2), self:GetCaster())
 	end
+
+	-- Add stomp particle
+	local particle_stomp_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_warstomp.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(particle_stomp_fx, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(self:GetSpecialValueFor("radius"), 1, 1))
+	ParticleManager:SetParticleControl(particle_stomp_fx, 2, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
+	
+	local stun_modifier = nil
+	self.enemy_entindex_table = {}
+	
+	-- Find all nearby enemies
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
+		self.enemy_entindex_table[enemy:entindex()] = true
+		
+		if not enemy:IsMagicImmune() then
+			-- "The stomp first applies the debuff, then the damage."
+			
+			-- Stun them
+			stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_hoof_stomp_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+			
+			if stun_modifier then
+				stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
+			end
+			
+			-- Deal damage to nearby non-magic immune enemies
+			ApplyDamage({
+				victim 			= enemy,
+				damage 			= self:GetSpecialValueFor("stomp_damage"),
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			-- Check if the damage killed enemy
+			if enemy:IsRealHero() and not enemy:IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_centaur" and RollPercentage(25) then
+				EmitSoundOn("centaur_cent_hoof_stomp_0"..RandomInt(4, 5), self:GetCaster())
+			end
+		end
+	end
+
+	-- IMBAfication: Gladiator's Pit
+	local buff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_buff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	local debuff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_debuff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 end
 
 -- Stun modifier
@@ -331,8 +144,7 @@ function modifier_imba_hoof_stomp_stun:GetEffectAttachType()
 end
 
 function modifier_imba_hoof_stomp_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_hoof_stomp_stun:IsDebuff()
@@ -347,113 +159,116 @@ function modifier_imba_hoof_stomp_stun:IsHidden()
 	return false
 end
 
+-------------------------------------------------
+-- MODIFIER_IMBA_HOOF_STOMP_ARENA_THINKER_BUFF --
+-------------------------------------------------
 
+function modifier_imba_hoof_stomp_arena_thinker_buff:OnCreated()
+	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
+end
 
--- Arena debuff (enemies)
-modifier_imba_hoof_stomp_arena_debuff = class({})
+function modifier_imba_hoof_stomp_arena_thinker_buff:IsAura()						return true end
+function modifier_imba_hoof_stomp_arena_thinker_buff:IsAuraActiveOnDeath() 			return false end
 
-function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraDuration()				return 0.25 end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraRadius()				return self.radius end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetModifierAura()				return "modifier_imba_hoof_stomp_arena_buff" end
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraEntityReject(target)	return target ~= self:GetCaster() and not self:GetCaster():HasTalent("special_bonus_imba_centaur_2") end
 
-	-- Ability specials
-	self.pit_dmg_reduction = self.ability:GetSpecialValueFor("pit_dmg_reduction")
-	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.maximum_distance = self.ability:GetSpecialValueFor("maximum_distance")
+---------------------------------------------------
+-- MODIFIER_IMBA_HOOF_STOMP_ARENA_THINKER_DEBUFF --
+---------------------------------------------------
 
-
-	-- Wait a game tick so indexing the arena center would complete, then start thinking.
-	if IsServer() then
-		Timers:CreateTimer(FrameTime(), function()
-			-- Start thinker
-			if not self:IsNull() then
-				self:StartIntervalThink(0)
-			end
-		end)
+function modifier_imba_hoof_stomp_arena_thinker_debuff:OnCreated(keys)
+	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
+	
+	if not IsServer() then return end
+	
+	self.particle_arena_fx = ParticleManager:CreateParticle("particles/hero/centaur/centaur_hoof_stomp_arena.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(self.particle_arena_fx, 0, self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(self.radius + 45, 1, 1))
+	self:AddParticle(self.particle_arena_fx, false, false, -1, false, false)
+	
+	self.enemy_entindex_table	= keys.enemy_entindex_table
+	
+	if self:GetAbility().enemy_entindex_table then
+		self.enemy_entindex_table = self:GetAbility().enemy_entindex_table
+		self:GetAbility().enemy_entindex_table	= nil
 	end
 end
 
-function modifier_imba_hoof_stomp_arena_debuff:OnIntervalThink()
-	if IsServer() then
-		if not self:GetCaster():HasModifier("modifier_imba_hoof_stomp_arena_buff") then self:Destroy() return end
-		-- Calculate distance
-		local distance = (self.parent:GetAbsOrigin() - self.arena_center):Length2D()
+function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAura()						return true end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAuraActiveOnDeath() 		return false end
 
-		-- If the parent is trying to leave the arena, teleport it back to the edge of it, unless it blinked far away (TP)
-		if distance-1 > self.radius and distance < self.maximum_distance then
-			-- Decide the location of the edge
-			local direction = (self.parent:GetAbsOrigin() - self.arena_center):Normalized()
-			local edge_point = self.arena_center + direction * self.radius
-
-			-- Set the enemy at the edge of the arena
-			self.parent:SetAbsOrigin(edge_point)
-		end
-	end
-end
-
-function modifier_imba_hoof_stomp_arena_debuff:IsPurgable()
-	return false
-end
-
-function modifier_imba_hoof_stomp_arena_debuff:IsDebuff()
-	return true
-end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraDuration()			return 0.25 end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraRadius()				return self.radius end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetModifierAura()			return "modifier_imba_hoof_stomp_arena_debuff" end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraEntityReject(target)	return self.enemy_entindex_table and not self.enemy_entindex_table[target:entindex()] and target:IsMagicImmune() end
 
 -- Arena buff
 modifier_imba_hoof_stomp_arena_buff = class({})
 
 function modifier_imba_hoof_stomp_arena_buff:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-
-	-- Ability specials
-	self.pit_dmg_reduction = self.ability:GetSpecialValueFor("pit_dmg_reduction")
-	self.radius = self.ability:GetSpecialValueFor("radius")
-
-	-- Wait a game tick so indexing the arena center would complete, then start thinking.
-	if IsServer() then
-		Timers:CreateTimer(FrameTime(), function()
-			-- Start thinker
-			if not self:IsNull() then
-				self:StartIntervalThink(0)
-			end
-		end)
-	end
-
-end
-
-function modifier_imba_hoof_stomp_arena_buff:OnIntervalThink()
-	if IsServer() then
-		-- Calculate distance
-		local distance = (self.parent:GetAbsOrigin() - self.arena_center):Length2D()
-
-		-- Check if the caster left the arena, if so, remove the modifier from it
-		if distance-100 > self.radius then
-			self:Destroy()
-		end
+	if self:GetAbility() then
+		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+		self.pit_dmg_reduction	= self:GetAbility():GetSpecialValueFor("pit_dmg_reduction") * (-1)
+	else
+		self.radius				= 350
+		self.pit_dmg_reduction	= -10
 	end
 end
 
 function modifier_imba_hoof_stomp_arena_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
 end
 
 function modifier_imba_hoof_stomp_arena_buff:GetModifierIncomingDamage_Percentage()
-	return self.pit_dmg_reduction * (-1)
+	return self.pit_dmg_reduction
 end
 
-function modifier_imba_hoof_stomp_arena_buff:IsPurgable()
-	return false
+-- Using this as an interval thinker
+function modifier_imba_hoof_stomp_arena_buff:CheckState()
+	if not IsServer() then return end
+	
+	if not self:GetAuraOwner() or (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.radius then
+		self:Destroy()
+	end
 end
 
-function modifier_imba_hoof_stomp_arena_buff:IsDebuff()
-	return false
+-- Arena debuff (enemies)
+modifier_imba_hoof_stomp_arena_debuff = class({})
+
+function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
+	if self:GetAbility() then
+		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+		self.maximum_distance	= self:GetAbility():GetSpecialValueFor("maximum_distance")
+	else
+		self.radius				= 350
+		self.maximum_distance	= 400
+	end
+	
+	self.position	= self:GetParent():GetAbsOrigin()
+end
+
+-- Using this as an interval thinker
+function modifier_imba_hoof_stomp_arena_debuff:CheckState()
+	if not IsServer() then return end
+	
+	if self:GetAuraOwner() then
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.radius and (self.position - self:GetParent():GetAbsOrigin()):Length2D() < self.maximum_distance then
+			FindClearSpaceForUnit(self:GetParent(), self:GetAuraOwner():GetAbsOrigin() + ((self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Normalized() * self.radius), false)
+		end
+		
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() <= self.radius then
+			self.position	= self:GetParent():GetAbsOrigin()
+		end
+	end
 end
 
 ---------------------------------

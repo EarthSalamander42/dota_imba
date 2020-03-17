@@ -119,11 +119,12 @@ end
 modifier_veil_passive = modifier_veil_passive or class({})
 
 -- Modifier properties
-function modifier_veil_passive:IsHidden() return true end
-function modifier_veil_passive:IsDebuff() return false end
-function modifier_veil_passive:IsPurgable() return false end
-function modifier_veil_passive:IsPermanent() return true end
-function modifier_veil_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_veil_passive:IsHidden()		return true end
+function modifier_veil_passive:IsPurgable()		return false end
+function modifier_veil_passive:RemoveOnDeath()	return false end
+function modifier_veil_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_veil_passive:IsAura() return true end
 
 function modifier_veil_passive:OnCreated()

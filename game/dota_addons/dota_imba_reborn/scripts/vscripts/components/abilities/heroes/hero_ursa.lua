@@ -830,6 +830,8 @@ function modifier_imba_fury_swipes_debuff:IsPurgable()
 end
 
 function modifier_imba_fury_swipes_debuff:OnCreated()
+	if not IsServer() then return end
+
 	if self:GetAbility() and self:GetParent():IsRoshan() then
 		self:SetDuration(self:GetAbility():GetSpecialValueFor("roshan_stack_duration"), true)
 	end

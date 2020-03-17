@@ -24,7 +24,7 @@
 
 // Bane's Brain Sap
 "DOTA_Tooltip_ability_imba_bane_brain_sap"								"Brain Sap"
-"DOTA_Tooltip_ability_imba_bane_brain_sap_Description"					"Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0 for a short duration.\n<font color='#FF7800'>Mind Feast:</font> Using Brain Sap on an enfeebled target consumes Enfeeble stacks on the target, and deals bonus damage to it depending on the stack count.\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Description"					"Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0 for a short duration.\n<font color='#FF7800'>Mind Feast:</font> Using Brain Sap on an enfeebled target consumes Enfeeble stacks on the target, and deals bonus damage to it depending on the stack count."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Lore"							"Atropos finds no greater pleasure than to harvest the fear he creates."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Note0"						"Self heal from Brain Sap is always the stated value, regardless of actual damage dealt."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Note1"						"Both damage and self heal scale with Spell Amp."

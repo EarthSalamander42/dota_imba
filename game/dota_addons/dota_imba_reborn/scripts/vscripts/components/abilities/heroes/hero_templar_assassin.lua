@@ -788,7 +788,7 @@ function modifier_imba_templar_assassin_trap_slow:OnCreated(params)
 	self.elapsedTime				= params.elapsedTime
 	
 	self.trap_duration_tooltip		= math.max(self:GetAbility():GetSpecialValueFor("trap_duration_tooltip"), self:GetAbility():GetSpecialValueFor("trap_duration"))
-	self.trap_bonus_damage			= self:GetAbility():GetTalentSpecialValueFor("trap_bonus_damage")
+	self.trap_bonus_damage			= self:GetAbility():GetSpecialValueFor("trap_bonus_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_templar_assassin_psionic_trap_damage")
 	self.trap_max_charge_duration	= self:GetAbility():GetSpecialValueFor("trap_max_charge_duration")
 	
 	self.interval					= 1
@@ -887,7 +887,7 @@ end
 
 function modifier_imba_templar_assassin_trap_eyes:GetTexture()	return "custom/templar_assassin/psionic_trap_eyes" end
 
-function modifier_imba_templar_assassin_trap_eyes:OnCreated()
+function modifier_imba_templar_assassin_trap_eyes:OnCreated(params)
 	if self:GetAbility() then
 		self.inhibit_eyes_vision_reduction	= self:GetAbility():GetSpecialValueFor("inhibit_eyes_vision_reduction")
 	elseif params then
@@ -1225,7 +1225,7 @@ function modifier_imba_templar_assassin_psionic_trap:OnCreated()
 	self.movement_speed_min			= self:GetAbility():GetSpecialValueFor("movement_speed_min")
 	self.movement_speed_max			= self:GetAbility():GetSpecialValueFor("movement_speed_max")
 	self.trap_duration_tooltip		= self:GetAbility():GetSpecialValueFor("trap_duration_tooltip")
-	self.trap_bonus_damage			= self:GetAbility():GetTalentSpecialValueFor("trap_bonus_damage")
+	self.trap_bonus_damage			= self:GetAbility():GetSpecialValueFor("trap_bonus_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_templar_assassin_psionic_trap_damage")
 	self.trap_max_charge_duration	= self:GetAbility():GetSpecialValueFor("trap_max_charge_duration")
 
 	self.inhibit_limbs_attack_slow			= self:GetAbility():GetSpecialValueFor("inhibit_limbs_attack_slow")
@@ -1408,17 +1408,31 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_templar_assassin_meld_armor_reduction		= class({})
+modifier_special_bonus_imba_templar_assassin_meld_armor_reduction		= modifier_special_bonus_imba_templar_assassin_meld_armor_reduction or class({})
+modifier_special_bonus_imba_templar_assassin_psionic_trap_damage		= modifier_special_bonus_imba_templar_assassin_psionic_trap_damage or class({})
 
 function modifier_special_bonus_imba_templar_assassin_meld_armor_reduction:IsHidden() 		return true end
 function modifier_special_bonus_imba_templar_assassin_meld_armor_reduction:IsPurgable() 	return false end
 function modifier_special_bonus_imba_templar_assassin_meld_armor_reduction:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_templar_assassin_psionic_trap_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_psionic_trap_damage:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_psionic_trap_damage:RemoveOnDeath() 	return false end
 
 function imba_templar_assassin_meld:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_templar_assassin_meld_armor_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_templar_assassin_meld_armor_reduction"), "modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", {})
+	end
+end
+
+function imba_templar_assassin_psionic_trap:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_templar_assassin_psionic_trap_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_templar_assassin_psionic_trap_damage"), "modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", {})
 	end
 end

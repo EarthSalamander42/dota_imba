@@ -64,7 +64,7 @@ function item_imba_skadi:OnSpellStart()
 		local damage = self:GetSpecialValueFor("base_damage")
 
 		-- Calculate cast parameters
-		if caster:IsRealHero() then
+		if caster:IsRealHero() and caster.GetStrength and caster.GetAgility and caster.GetIntellect then
 			radius = radius + caster:GetStrength() * self:GetSpecialValueFor("radius_per_str")
 			duration = duration + caster:GetIntellect() * self:GetSpecialValueFor("duration_per_int")
 			damage = damage + caster:GetAgility() * self:GetSpecialValueFor("damage_per_agi")
@@ -113,10 +113,10 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_skadi == nil then modifier_item_imba_skadi = class({}) end
+
 function modifier_item_imba_skadi:IsHidden() return true end
-function modifier_item_imba_skadi:IsDebuff() return false end
 function modifier_item_imba_skadi:IsPurgable() return false end
-function modifier_item_imba_skadi:IsPermanent() return true end
+function modifier_item_imba_skadi:RemoveOnDeath() return false end
 function modifier_item_imba_skadi:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the caster when created
@@ -158,50 +158,64 @@ end
 
 function modifier_item_imba_skadi:UpdateCastRange()
 	if IsServer() then
-		if self.parent:IsRealHero() then
-			local iradius = self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")
+		if self:GetParent().GetStrength then
+			self:SetStackCount(( self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")))
+		else
+			self:SetStackCount(self.radius)
 		end
-
-		self:SetStackCount(( self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")))
 	end
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_skadi:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS
 	}
-	return funcs
 end
 
 function modifier_item_imba_skadi:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
 
 function modifier_item_imba_skadi:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
 
 function modifier_item_imba_skadi:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
 
 function modifier_item_imba_skadi:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_health") end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
+end
 	
 function modifier_item_imba_skadi:GetModifierManaBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana") end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana")
+	end
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Skadi slow applier
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_skadi_unique == nil then modifier_item_imba_skadi_unique = class({}) end
+
 function modifier_item_imba_skadi_unique:IsHidden() return true end
-function modifier_item_imba_skadi_unique:IsDebuff() return false end
 function modifier_item_imba_skadi_unique:IsPurgable() return false end
-function modifier_item_imba_skadi_unique:IsPermanent() return true end
+function modifier_item_imba_skadi_unique:RemoveOnDeath() return false end
 
 -- Changes the caster's attack projectile, if applicable
 function modifier_item_imba_skadi_unique:OnCreated(keys)
@@ -226,10 +240,9 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_skadi_unique:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
-	return funcs
 end
 
 -- On-damage slow effect
@@ -295,11 +308,10 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_skadi_slow:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_skadi_slow:GetModifierAttackSpeedBonus_Constant()

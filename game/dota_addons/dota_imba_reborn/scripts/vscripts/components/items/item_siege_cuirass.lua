@@ -135,6 +135,11 @@ end
 -- Stats passive modifier (stacking)
 modifier_imba_siege_cuirass = class({})
 
+function modifier_imba_siege_cuirass:IsHidden() return true end
+function modifier_imba_siege_cuirass:IsPurgable() return false end
+function modifier_imba_siege_cuirass:RemoveOnDeath() return false end
+function modifier_imba_siege_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_siege_cuirass:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -199,12 +204,6 @@ end
 function modifier_imba_siege_cuirass:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
 end
-
-
-function modifier_imba_siege_cuirass:IsHidden() return true end
-function modifier_imba_siege_cuirass:IsPurgable() return false end
-function modifier_imba_siege_cuirass:IsDebuff() return false end
-function modifier_imba_siege_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_siege_cuirass:OnDestroy()
 	if IsServer() then

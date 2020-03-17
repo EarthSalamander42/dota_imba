@@ -11,12 +11,12 @@
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
-		"Ability1"		"undying_decay"
-		"Ability2"		"undying_soul_rip"
-		"Ability3"		"undying_tombstone"
-		"Ability4"		"generic_hidden"
+		"Ability1"		"imba_undying_decay"
+		"Ability2"		"imba_undying_soul_rip"
+		"Ability3"		"imba_undying_tombstone"
+		"Ability4"		"imba_undying_flesh_golem_grab"
 		"Ability5"		"generic_hidden"
-		"Ability6"		"undying_flesh_golem"
+		"Ability6"		"imba_undying_flesh_golem"
 		
 		"Ability10"		"special_bonus_cast_range_150"
 		"Ability11"		"special_bonus_hp_regen_6"

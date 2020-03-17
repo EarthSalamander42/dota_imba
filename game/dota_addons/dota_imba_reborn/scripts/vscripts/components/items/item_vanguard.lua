@@ -38,11 +38,11 @@ function item_imba_stout_shield:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_stout_shield == nil then modifier_item_imba_stout_shield = class({}) end
-function modifier_item_imba_stout_shield:IsHidden() return true end
-function modifier_item_imba_stout_shield:IsDebuff() return false end
-function modifier_item_imba_stout_shield:IsPurgable() return false end
-function modifier_item_imba_stout_shield:IsPermanent() return true end
-function modifier_item_imba_stout_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_stout_shield:IsHidden()		return true end
+function modifier_item_imba_stout_shield:IsPurgable()		return false end
+function modifier_item_imba_stout_shield:RemoveOnDeath()	return false end
+function modifier_item_imba_stout_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- -- Custom unique damage block property
 -- function modifier_item_imba_stout_shield:GetCustomDamageBlockUnique()
@@ -91,11 +91,11 @@ function item_imba_poor_mans_shield:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_poor_mans_shield == nil then modifier_item_imba_poor_mans_shield = class({}) end
-function modifier_item_imba_poor_mans_shield:IsHidden() return true end
-function modifier_item_imba_poor_mans_shield:IsDebuff() return false end
-function modifier_item_imba_poor_mans_shield:IsPurgable() return false end
-function modifier_item_imba_poor_mans_shield:IsPermanent() return true end
-function modifier_item_imba_poor_mans_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_poor_mans_shield:IsHidden()		return true end
+function modifier_item_imba_poor_mans_shield:IsPurgable()		return false end
+function modifier_item_imba_poor_mans_shield:RemoveOnDeath()	return false end
+function modifier_item_imba_poor_mans_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_poor_mans_shield:OnCreated()
 	self.bonus_agility			= self:GetAbility():GetSpecialValueFor("bonus_agility")
@@ -143,7 +143,7 @@ end
 ------------------------------------------------
 
 function modifier_item_imba_poor_mans_shield_active:GetTexture()
-	return "custom/imba_poor_mans_shield"
+	return "modifiers/imba_poor_mans_shield"
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -165,11 +165,11 @@ function item_imba_vanguard:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_vanguard == nil then modifier_item_imba_vanguard = class({}) end
-function modifier_item_imba_vanguard:IsHidden() return true end
-function modifier_item_imba_vanguard:IsDebuff() return false end
-function modifier_item_imba_vanguard:IsPurgable() return false end
-function modifier_item_imba_vanguard:IsPermanent() return true end
-function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_vanguard:IsHidden()		return true end
+function modifier_item_imba_vanguard:IsPurgable()		return false end
+function modifier_item_imba_vanguard:RemoveOnDeath()	return false end
+function modifier_item_imba_vanguard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_vanguard:OnCreated()
 	self.health			= self:GetAbility():GetSpecialValueFor("health")
@@ -256,11 +256,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_crimson_guard == nil then modifier_item_imba_crimson_guard = class({}) end
-function modifier_item_imba_crimson_guard:IsHidden() return true end
-function modifier_item_imba_crimson_guard:IsDebuff() return false end
-function modifier_item_imba_crimson_guard:IsPurgable() return false end
-function modifier_item_imba_crimson_guard:IsPermanent() return true end
-function modifier_item_imba_crimson_guard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_crimson_guard:IsHidden()		return true end
+function modifier_item_imba_crimson_guard:IsPurgable()		return false end
+function modifier_item_imba_crimson_guard:RemoveOnDeath()	return false end
+function modifier_item_imba_crimson_guard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_crimson_guard:OnCreated()
 	self.health					= self:GetAbility():GetSpecialValueFor("health")

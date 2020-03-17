@@ -199,11 +199,11 @@ function modifier_imba_shrapnel_attack:OnIntervalThink()
 end
 
 function modifier_imba_shrapnel_attack:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+	return {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_EVENT_ON_ORDER}
-
-	return decFuncs
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_shrapnel_attack:OnOrder(keys)
@@ -292,13 +292,6 @@ function modifier_imba_shrapnel_charges:OnCreated()
 		self.max_charge_count = self.ability:GetSpecialValueFor("max_charge_count")
 		self.charge_replenish_rate = self.ability:GetSpecialValueFor("charge_replenish_rate")
 
-		-- #4 Talent: Double max Shrapnel charges. Each recharge grants twice as much
-		if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
-			self.max_charge_count = self.max_charge_count * self.caster:FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")
-		else
-			self.max_charge_count = self.max_charge_count
-		end
-
 		-- -- If it the real one, set max charges
 		-- if self.caster:IsRealHero() then
 			self:SetStackCount(self.max_charge_count)
@@ -384,7 +377,7 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
 		else
 			lost_stack = false
 		end
-
+		
 		if not lost_stack then
 
 			-- If we're not at the max stacks yet, reset the timer
@@ -403,9 +396,7 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
 end
 
 function modifier_imba_shrapnel_charges:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-
-	return decFuncs
+	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 end
 
 function modifier_imba_shrapnel_charges:OnAbilityFullyCast(keys)
@@ -431,6 +422,8 @@ function modifier_imba_shrapnel_charges:IsDebuff() return false end
 
 -- #4 Talent: Doubles the maximum amount of Shrapnel charges and grants twice the amount of charges per recharge
 -- Triggers the "restart" of the charges modifier
+LinkLuaModifier("modifier_special_bonus_imba_sniper_4", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+
 modifier_special_bonus_imba_sniper_4 = modifier_special_bonus_imba_sniper_4 or class({})
 
 function modifier_special_bonus_imba_sniper_4:IsHidden() return true end
@@ -438,17 +431,23 @@ function modifier_special_bonus_imba_sniper_4:IsPurgable() return false end
 function modifier_special_bonus_imba_sniper_4:RemoveOnDeath() return false end
 
 
-function modifier_special_bonus_imba_sniper_4:OnCreated()
-	if IsServer() then
-		-- Talent properties
-		local modifier_charges = "modifier_imba_shrapnel_charges"
+-- function modifier_special_bonus_imba_sniper_4:OnCreated()
+	-- if not IsServer() then return end
+	
+	-- self:StartIntervalThink(FrameTime())
+-- end
 
-		local modifier_charges_handler = self:GetParent():FindModifierByName(modifier_charges)
-		if modifier_charges_handler then
-			modifier_charges_handler:OnCreated()
-		end
-	end
-end
+-- function modifier_special_bonus_imba_sniper_4:OnIntervalThink()
+	-- if self:GetParent():HasModifier("modifier_imba_shrapnel_charges") and self:GetCaster():HasAbility("imba_sniper_shrapnel") then
+		-- self:GetParent():FindModifierByName("modifier_imba_shrapnel_charges"):SetStackCount(math.min(self:GetStackCount() + math.max(self:GetCaster():FindAbilityByName("imba_sniper_shrapnel"):GetSpecialValueFor("max_charge_count") * (self:GetCaster():FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult") - 1), 0), self:GetCaster():FindAbilityByName("imba_sniper_shrapnel"):GetSpecialValueFor("max_charge_count") * (self:GetCaster():FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult"))))
+		
+		-- if self:GetParent():FindModifierByName("modifier_imba_shrapnel_charges"):GetStackCount() >= self:GetCaster():FindAbilityByName("imba_sniper_shrapnel"):GetSpecialValueFor("max_charge_count") * (self:GetCaster():FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")) then
+			-- self:GetParent():FindModifierByName("modifier_imba_shrapnel_charges"):SetDuration(-1, true)
+		-- end
+	-- end
+	
+	-- self:StartIntervalThink(-1)
+-- end
 
 -- Shrapnel slow aura modifier
 modifier_imba_shrapnel_aura = class({})
@@ -675,7 +674,7 @@ function modifier_imba_sniper_headshot:OnAttack(keys)
 end
 
 function modifier_imba_sniper_headshot:OnAttackLanded(keys)
-	if keys.attacker == self:GetParent() and not self:GetParent():IsIllusion() and keys.target and not keys.target:IsBuilding() and not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+	if keys.attacker == self:GetParent() and not self:GetParent():IsIllusion() and keys.target and not keys.target:IsBuilding() and not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsMagicImmune() then
 		if self.headshot_records[keys.record] then
 			-- "The knockback is not applied on units who are already affected by other sources of forced movement."
 			if keys.target.Custom_IsUnderForcedMovement and not keys.target:Custom_IsUnderForcedMovement() then	
@@ -1461,6 +1460,10 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 
 	-- Ability specials
 	local sight_duration = ability:GetSpecialValueFor("sight_duration")
+	
+	if self:GetAutoCastState() then
+		sight_duration = sight_duration + self:GetCaster():FindTalentValue("special_bonus_imba_sniper_6", "cast_point_increase")
+	end
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	-- Reset the animation before Sniper shoots
@@ -1584,23 +1587,24 @@ function imba_sniper_assassinate:OnSpellStart()
 	end
 
 	-- Fire projectiles!
-	local projectiles_fired = 0
+	local projectiles_fired	= 0
+	local bAutoCast			= self.bAutoCast
+	
 	Timers:CreateTimer(function()
 		-- Increment projectile count
 		projectiles_fired = projectiles_fired + 1
 
 		-- Fire projectile
-		self:FireAssassinateProjectile(targets, projectiles_fired)
+		self:FireAssassinateProjectile(targets, projectiles_fired, projectiles, bAutoCast)
 
 		-- Check if we need to fire more projectiles (#6 Talent)
 		if projectiles_fired < projectiles then
-			local refire_delay = caster:FindTalentValue("special_bonus_imba_sniper_6", "refire_delay")
-			return refire_delay
+			return caster:FindTalentValue("special_bonus_imba_sniper_6", "refire_delay")
 		end
 	end)
 end
 
-function imba_sniper_assassinate:FireAssassinateProjectile(targets, projectile_num)
+function imba_sniper_assassinate:FireAssassinateProjectile(targets, projectile_num, total_projectiles, bAutoCast)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self
@@ -1632,7 +1636,12 @@ function imba_sniper_assassinate:FireAssassinateProjectile(targets, projectile_n
 				bVisibleToEnemies = true,
 				bReplaceExisting = false,
 				bProvidesVision = false,
-				ExtraData = {projectile_num = projectile_num}
+				ExtraData = {
+					target_entindex		= target:entindex(),
+					projectile_num		= projectile_num,
+					total_projectiles	= total_projectiles,
+					bAutoCast			= bAutoCast
+				}
 			}
 
 			ProjectileManager:CreateTrackingProjectile(assassinate_projectile)
@@ -1641,11 +1650,6 @@ function imba_sniper_assassinate:FireAssassinateProjectile(targets, projectile_n
 end
 
 function imba_sniper_assassinate:OnProjectileHit_ExtraData(target, location, extradata)
-	-- If there was no target, do nothing
-	if not target then
-		return nil
-	end
-
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1659,12 +1663,17 @@ function imba_sniper_assassinate:OnProjectileHit_ExtraData(target, location, ext
 	-- Ability special
 	local damage = ability:GetSpecialValueFor("damage")
 	local ministun_duration = ability:GetSpecialValueFor("ministun_duration")
-
+	
 	-- If the target still has it, remove the crosshair modifier
-	if target:HasModifier(modifier_cross) then
-		target:RemoveModifierByName(modifier_cross)
+	if projectile_num == extradata.total_projectiles and EntIndexToHScript(extradata.target_entindex) then
+		EntIndexToHScript(extradata.target_entindex):RemoveModifierByName(modifier_cross)
 	end
-
+	
+	-- If there was no target, do nothing else
+	if not target then
+		return nil
+	end
+	
 	self:AssassinateHit(target, projectile_num)
 
 	-- Wait a small delay, then remove the primary target mark

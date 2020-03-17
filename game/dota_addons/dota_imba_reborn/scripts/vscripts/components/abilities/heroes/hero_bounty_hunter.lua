@@ -764,8 +764,8 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 					ParticleManager:ReleaseParticleIndex(self.money_particle)
 				end
 				
-				target:ModifyGold(-actual_gold_to_steal, false, 0)
-				attacker:ModifyGold(actual_gold_to_steal, false, 0)
+				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
+				attacker:ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)
 			end
 
@@ -1164,7 +1164,7 @@ function modifier_imba_track_debuff_mark:OnCreated()
 	self.target_crit_multiplier = self.ability:GetSpecialValueFor("target_crit_multiplier")
 
 	if IsServer() then
-		-- Adjust custom lobby gold settings to the gold
+		-- Adjust custom lobby gold settings to the gold (for some reason, this stuff isn't caught in the gold filter, so it seems to be manually done here)
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 		self.bonus_gold_self = self.bonus_gold_self * (custom_gold_bonus / 100)
 		self.bonus_gold_allies = self.bonus_gold_allies * (custom_gold_bonus / 100)
@@ -1317,7 +1317,7 @@ function modifier_imba_track_debuff_mark:OnDeath(keys)
 			end
 
 			-- Give money to the track caster
-			self.caster:ModifyGold(self.bonus_gold_self, true, 0)
+			self.caster:ModifyGold(self.bonus_gold_self, true, DOTA_ModifyGold_Unspecified)
 			SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, self.bonus_gold_self, nil)
 
 			-- Find caster's allies nearby
@@ -1334,7 +1334,7 @@ function modifier_imba_track_debuff_mark:OnDeath(keys)
 			for _,ally in pairs(allies) do
 				-- Give allies bonus allied gold, except caster
 				if ally ~= self.caster then
-					ally:ModifyGold(self.bonus_gold_allies, true, 0)
+					ally:ModifyGold(self.bonus_gold_allies, true, DOTA_ModifyGold_Unspecified)
 					SendOverheadEventMessage(ally, OVERHEAD_ALERT_GOLD, ally, self.bonus_gold_allies, nil)
 				end
 			end
@@ -1699,7 +1699,7 @@ function modifier_imba_headhunter_debuff_handler:OnHeroKilled(keys)
 				self.contract_gold = self.contract_gold * self.contract_gold_mult
 
 				-- Grant Bounty Hunter the gold for completing the contract
-				self.caster:ModifyGold(self.contract_gold, true, 0)
+				self.caster:ModifyGold(self.contract_gold, true, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, self.contract_gold, nil)
 
 				-- Remove the contract modifier from Bounty Hunter

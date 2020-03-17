@@ -21,10 +21,10 @@
 "DOTA_Tooltip_ability_item_imba_origin_bonus_mana_regen"		"+$mana_regen"
 
 "DOTA_Tooltip_modifier_item_imba_origin_health"					"Origin - Health"
-"DOTA_Tooltip_modifier_item_imba_origin_health_Description"		"Unable to heal, and taking a portion of current health as damage every tick."
+"DOTA_Tooltip_modifier_item_imba_origin_health_Description"		"Unable to heal, and taking %dMODIFIER_PROPERTY_TOOLTIP% + %dMODIFIER_PROPERTY_TOOLTIP%%% of current health as damage every tick."
 
 "DOTA_Tooltip_modifier_item_imba_origin_power"					"Origin - Power"
 "DOTA_Tooltip_modifier_item_imba_origin_power_Description"		"All stats reduced by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
 
 "DOTA_Tooltip_modifier_item_imba_origin_chaos"					"Origin - Chaos"
-"DOTA_Tooltip_modifier_item_imba_origin_chaos_Description"		"A large percentage of all damage received is dealt to allies within %dMODIFIER_PROPERTY_TOOLTIP% radius."
+"DOTA_Tooltip_modifier_item_imba_origin_chaos_Description"		"%dMODIFIER_PROPERTY_TOOLTIP%%% of all damage received is dealt to units (allies if debuff, enemies if buff) within %dMODIFIER_PROPERTY_TOOLTIP% radius."

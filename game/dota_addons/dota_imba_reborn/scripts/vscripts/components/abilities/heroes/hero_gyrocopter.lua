@@ -341,9 +341,9 @@ function imba_gyrocopter_homing_missile:OnSpellStart()
 
 	if not self:GetAutoCastState() then
 		missile:SetForwardVector((self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized())
-		-- missile:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
 	else
 		missile:SetForwardVector((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized())
+		missile:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
 	end
 	
 	-- The fuse isn't following the rope...
@@ -510,6 +510,8 @@ function modifier_imba_gyrocopter_homing_missile:OnCreated(keys)
 	self.lock_on_duration			= self:GetAbility():GetSpecialValueFor("lock_on_duration")
 	self.lock_on_attack_range_bonus	= self:GetAbility():GetSpecialValueFor("lock_on_attack_range_bonus")
 	
+	self.rc_turn_speed_degrees		= self:GetAbility():GetSpecialValueFor("rc_turn_speed_degrees")
+	
 	if not IsServer() then return end
 	
 	self.stun_duration				= self:GetAbility():GetTalentSpecialValueFor("stun_duration")
@@ -537,6 +539,17 @@ function modifier_imba_gyrocopter_homing_missile:OnCreated(keys)
 		self.target_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_gyrocopter/gyro_guided_missile_target.vpcf", PATTACH_OVERHEAD_FOLLOW, self.target, self:GetCaster():GetTeamNumber())
 		self:AddParticle(self.target_particle, false, false, -1, false, false)
 	end
+	
+	-- IMBAfication: R.C. Rocket
+	self.rocket_orders = {
+		[DOTA_UNIT_ORDER_MOVE_TO_POSITION]	= true,
+		[DOTA_UNIT_ORDER_MOVE_TO_TARGET]	= true,
+		[DOTA_UNIT_ORDER_ATTACK_MOVE]		= true,
+		[DOTA_UNIT_ORDER_ATTACK_TARGET]		= true,
+		
+		[DOTA_UNIT_ORDER_STOP]				= true,
+		[DOTA_UNIT_ORDER_HOLD_POSITION]		= true
+	}
 end
 
 -- Missile has hull radius of 24
@@ -577,7 +590,27 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 		-- print((self:GetParent():GetAbsOrigin() - self.target:GetAbsOrigin()):Length2D())
 		-- print(self.target:GetHullRadius())
 	else
-		self:GetParent():MoveToPosition(self:GetParent():GetAbsOrigin() + (self:GetParent():GetForwardVector() * self:GetParent():GetIdealSpeed()))
+		-- IMBAfication: R.C. Rocket
+		-- This is for how much the rocket can turn in degrees per interval think
+		if not self.angle or self.angle == 0 then
+			self.differential = 0
+		elseif self.angle > 0 then
+			self.differential = self.rc_turn_speed_degrees * self.interval
+		elseif self.angle < 0 then
+			self.differential = self.rc_turn_speed_degrees * self.interval * (-1)
+		end
+		
+		self:GetParent():MoveToPosition(self:GetParent():GetAbsOrigin() + RotatePosition(Vector(0, 0, 0), QAngle(0, self.differential * (-1), 0), self:GetParent():GetForwardVector() * self:GetParent():GetIdealSpeed()))
+		
+		if self.turn_counter then
+			self.turn_counter = self.turn_counter + math.min(math.abs(self.differential), math.abs(self.angle) - self.turn_counter)
+			
+			if self.turn_counter >= math.abs(self.angle) then
+				self.turn_counter	= nil
+				self.angle			= 0
+				self.differential	= 0
+			end
+		end
 	end
 	
 	if self.bAutoCast == 1 then
@@ -587,6 +620,7 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 		end
 	end
 	
+	-- Missile impact logic
 	if self.target and (self.target:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self:GetParent():GetHullRadius() and not (self:GetParent():HasModifier("modifier_item_imba_force_staff_active") or self:GetParent():HasModifier("modifier_item_imba_hurricane_pike_force_ally") or self:GetParent():HasModifier("modifier_item_imba_hurricane_pike_force_enemy") or self:GetParent():HasModifier("modifier_item_imba_lance_of_longinus_force_ally") or self:GetParent():HasModifier("modifier_item_imba_lance_of_longinus_force_enemy_melee")) then
 		self.target:EmitSound("Hero_Gyrocopter.HomingMissile.Target")
 		self.target:EmitSound("Hero_Gyrocopter.HomingMissile.Destroy")
@@ -609,8 +643,8 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 				ability 		= self:GetAbility()
 			})
 			
-			print((self:GetParent():GetIdealSpeed() * self.propulsion_speed_pct * 0.01))
-			print((math.max(self:GetElapsedTime() - self.pre_flight_time, 0) * self.propulsion_duration_pct * 0.01))
+			-- print((self:GetParent():GetIdealSpeed() * self.propulsion_speed_pct * 0.01))
+			-- print((math.max(self:GetElapsedTime() - self.pre_flight_time, 0) * self.propulsion_duration_pct * 0.01))
 			
 			if not self.target:IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_gyrocopter" then
 				if not self.responses then
@@ -695,7 +729,7 @@ function modifier_imba_gyrocopter_homing_missile:CheckState()
 		[MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP]						= true,
-		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS]	= not self.bAutoCast or self.bAutoCast == 0,
+		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS]	= (not self.bAutoCast or self.bAutoCast == 0) or self:GetParent():HasModifier("modifier_imba_gyrocopter_homing_missile_pre_flight"),
 		[MODIFIER_STATE_IGNORING_STOP_ORDERS]				= true
 	}
 end
@@ -709,7 +743,9 @@ function modifier_imba_gyrocopter_homing_missile:DeclareFunctions()
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
 		
-		MODIFIER_EVENT_ON_ATTACKED
+		MODIFIER_EVENT_ON_ATTACKED,
+		
+		MODIFIER_EVENT_ON_ORDER
 	}
 end
 
@@ -753,6 +789,23 @@ function modifier_imba_gyrocopter_homing_missile:OnAttacked(keys)
 			self:GetParent():EmitSound("Hero_Gyrocopter.HomingMissile.Destroy")
 			self:GetParent():Kill(nil, keys.attacker)
 			self:GetParent():AddNoDraw()
+		end
+	end
+end
+
+function modifier_imba_gyrocopter_homing_missile:OnOrder(keys)
+	if keys.unit == self:GetParent() and self.rocket_orders[keys.order_type] then
+		if keys.order_type == DOTA_UNIT_ORDER_STOP or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+			self.angle = 0
+		else
+			self.selected_pos = keys.new_pos
+			
+			if keys.target then
+				self.selected_pos = keys.target:GetAbsOrigin()
+			end
+			
+			self.angle			= AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(self.selected_pos - self:GetParent():GetAbsOrigin()).y)
+			self.turn_counter	= 0
 		end
 	end
 end

@@ -214,6 +214,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"lock_on_attack_range_bonus"		"200"
 			}
+			
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rc_turn_speed_degrees"	"180"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -360,7 +366,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"incoming_damage_pct"		"20"
+				"incoming_damage_pct"		"15"
 			}
 		}
 	}

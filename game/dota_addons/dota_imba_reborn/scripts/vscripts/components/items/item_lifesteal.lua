@@ -37,6 +37,11 @@ end
 -- morbid mask modifier
 modifier_imba_morbid_mask = class({})
 
+function modifier_imba_morbid_mask:IsHidden()		return true end
+function modifier_imba_morbid_mask:IsPurgable()		return false end
+function modifier_imba_morbid_mask:RemoveOnDeath()	return false end
+function modifier_imba_morbid_mask:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_morbid_mask:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -75,18 +80,6 @@ function modifier_imba_morbid_mask:OnDestroy()
 	end
 end
 
-function modifier_imba_morbid_mask:IsHidden()
-	return true
-end
-
-function modifier_imba_morbid_mask:IsPurgable()
-	return false
-end
-
-function modifier_imba_morbid_mask:IsDebuff()
-	return false
-end
-
 function modifier_imba_morbid_mask:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
@@ -94,7 +87,7 @@ end
 modifier_imba_morbid_mask_unique = class({})
 function modifier_imba_morbid_mask_unique:IsHidden() return true end
 function modifier_imba_morbid_mask_unique:IsPurgable() return false end
-function modifier_imba_morbid_mask_unique:IsDebuff() return false end
+function modifier_imba_morbid_mask_unique:RemoveOnDeath() return false end
 
 function modifier_imba_morbid_mask_unique:OnCreated()
 	-- Ability properties

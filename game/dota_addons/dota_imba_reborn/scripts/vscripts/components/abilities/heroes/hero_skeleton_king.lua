@@ -1073,18 +1073,15 @@ function modifier_imba_mortal_strike_buff:OnRefresh()
 end
 
 function modifier_imba_mortal_strike_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_HEALTH_BONUS}
 end
 
 function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
 	if self.caster:IsIllusion() then
 		return nil
 	end
-
-	local stacks = self:GetStackCount()
-	return stacks * self.stack_value
+	
+	return self:GetStackCount() * self.stack_value
 end
 
 
@@ -1946,7 +1943,8 @@ end
 --------------------------------
 imba_wraith_king_wraith_soul_strike = class({})
 LinkLuaModifier("modifier_imba_wraith_soul_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
-LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
+LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wraith_soul_strike_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_wraith_soul_strike:GetAbilityTextureName()
    return "ghost_frost_attack"
@@ -1972,14 +1970,18 @@ function modifier_imba_wraith_soul_strike:OnCreated()
 
 		-- Set starting stack count
 		self:SetStackCount(self.wraiths_attacks)
+		
+		if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
+			self:GetParent():AddNewModifier(self.owner, self:GetAbility(), "modifier_imba_wraith_soul_strike_talent", {})
+		end
 	end
 end
 
 function modifier_imba_wraith_soul_strike:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_wraith_soul_strike:OnAttack(keys)
@@ -2033,7 +2035,11 @@ function modifier_imba_wraith_soul_strike:OnAttackLanded(keys)
 		if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
 			local duration = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "duration")
 
-			target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration})
+			local slow_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
+			end
 		end
 	end
 end
@@ -2053,7 +2059,7 @@ function modifier_imba_wraith_soul_strike_slow:OnCreated()
 		self.ms_slow_pct = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "ms_slow_pct")
 
 		-- Set server count
-		self:SetStackCount(self.ms_slow_pct)
+		self:SetStackCount(self.ms_slow_pct * (-1))
 
 		self.ability:SetRefCountsModifiers(true)
 	end
@@ -2064,14 +2070,22 @@ function modifier_imba_wraith_soul_strike_slow:IsPurgable() return false end
 function modifier_imba_wraith_soul_strike_slow:IsDebuff() return true end
 
 function modifier_imba_wraith_soul_strike_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_wraith_soul_strike_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount()
 end
+
+---------------------------------------------
+-- MODIFIER_IMBA_WRAITH_SOUL_STRIKE_TALENT --
+---------------------------------------------
+
+-- This is just to display the wraith has the slowing talent, as requested by Flat...
+
+modifier_imba_wraith_soul_strike_talent	= modifier_imba_wraith_soul_strike_talent or class({})
+
+function modifier_imba_wraith_soul_strike_talent:IsPurgable()	return false end
 
 ---------------------
 -- TALENT HANDLERS --

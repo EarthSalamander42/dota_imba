@@ -69,7 +69,7 @@
 "DOTA_Tooltip_modifier_imba_pangolier_lucky_shot_silence_Description"	"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_pangolier_lucky_shot_heartpiercer"				"Lucky Shot Heartpiercer"
-"DOTA_Tooltip_modifier_imba_pangolier_lucky_shot_heartpiercer_Description"	"Armor nullified."
+"DOTA_Tooltip_modifier_imba_pangolier_lucky_shot_heartpiercer_Description"	"Armor nullified. Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell"						"#{DOTA_Tooltip_ability_pangolier_gyroshell}"
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_Description"			"#{DOTA_Tooltip_ability_pangolier_gyroshell_Description}\n<font color='#FF7800'>Keep rollin' rollin' rollin'!:</font> Each enemy hit will extend Rolling Thunder by %duration_extend% second."
@@ -110,4 +110,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_8"				"Swashbuckle now uses 40% of Pangolier's attack damage"
 
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist"				"Pierce Resistance"
-"DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist_description"	"Lucky Shot's Heartpiercer also reduces the enemy's status resistance by 20%. Calculation is only done once on modifier application."
+"DOTA_Tooltip_ability_special_bonus_imba_pangolier_lucky_shot_status_resist_description"	"Lucky Shot's Heartpiercer also reduces the enemy's status resistance by {s:value}%."

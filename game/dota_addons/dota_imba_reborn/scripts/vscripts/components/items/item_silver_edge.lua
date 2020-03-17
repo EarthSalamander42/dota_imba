@@ -250,10 +250,9 @@ end
 modifier_item_imba_silver_edge_passive = modifier_item_imba_silver_edge_passive or class({})
 
 -- Modifier properties
-function modifier_item_imba_silver_edge_passive:IsDebuff() return false end
-function modifier_item_imba_silver_edge_passive:IsHidden() return true end
-function modifier_item_imba_silver_edge_passive:IsPurgable() return false end
-function modifier_item_imba_silver_edge_passive:IsPermanent() return true end
+function modifier_item_imba_silver_edge_passive:IsHidden()		return true end
+function modifier_item_imba_silver_edge_passive:IsPurgable()	return false end
+function modifier_item_imba_silver_edge_passive:RemoveOnDeath() return false end
 function modifier_item_imba_silver_edge_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_silver_edge_passive:OnCreated()
@@ -261,9 +260,6 @@ function modifier_item_imba_silver_edge_passive:OnCreated()
 
 	-- Ability parameters
 	if self:GetParent():IsHero() and ability then
-		self.attack_damage_bonus    =   ability:GetSpecialValueFor("bonus_damage")
-		self.attack_speed_bonus     =   ability:GetSpecialValueFor("bonus_attack_speed")
-		self.bonus_all_stats		=	ability:GetSpecialValueFor("bonus_all_stats")
 		self:CheckUnique(true)
 	end
 end
@@ -280,11 +276,35 @@ function modifier_item_imba_silver_edge_passive:DeclareFunctions()
 	}
 end
 
-function modifier_item_imba_silver_edge_passive:GetModifierPreAttack_BonusDamage() return self.attack_damage_bonus end
-function modifier_item_imba_silver_edge_passive:GetModifierAttackSpeedBonus_Constant() return self.attack_speed_bonus end
-function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Strength() return self.bonus_all_stats end
-function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Agility() return self.bonus_all_stats end
-function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Intellect() return self.bonus_all_stats end
+function modifier_item_imba_silver_edge_passive:GetModifierPreAttack_BonusDamage()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
+end
+
+function modifier_item_imba_silver_edge_passive:GetModifierAttackSpeedBonus_Constant()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	end
+end
+
+function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Strength()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
+
+function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Agility()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
+
+function modifier_item_imba_silver_edge_passive:GetModifierBonusStats_Intellect()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
+end
 
 function modifier_item_imba_silver_edge_passive:OnTakeDamage(params)
 	if IsServer() then

@@ -5,12 +5,14 @@ LinkLuaModifier("modifier_item_imba_nullifier", "components/items/item_nullifier
 LinkLuaModifier("modifier_item_imba_nullifier_mute", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_nullifier_slow", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_nullifier_shudder", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_nullifier_objection_index", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_nullifier						= class({})
 modifier_item_imba_nullifier			= class({})
 modifier_item_imba_nullifier_mute		= class({})
 modifier_item_imba_nullifier_slow		= class({})
 modifier_item_imba_nullifier_shudder	= class({})
+modifier_item_imba_nullifier_objection_index	= modifier_item_imba_nullifier_objection_index or class({})
 
 item_imba_nullifier_2					= item_imba_nullifier
 
@@ -96,6 +98,11 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 				end
 			end
 			
+			-- Spell-reflect exception
+			if not nullifier_slot then
+				nullifier_slot = 0
+			end
+			
 			-- If Nullifier was in a slot (aka logic ends if item is out of inventory or in stash when projectile lands)
 			if nullifier_slot then
 				if target:GetItemInSlot(nullifier_slot) then
@@ -108,6 +115,9 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 					target:SwapItems((nullifier_slot + 1) % 6, 8)
 				end
 			end
+			
+			-- Hard-coded duration because it uses backpack cooldown for now
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_objection_index", {duration = 6})
 		end
 	end
 	
@@ -120,7 +130,8 @@ end
 ------------------------
 
 function modifier_item_imba_nullifier:IsHidden()		return true end
-function modifier_item_imba_nullifier:IsPermanent()	return true end
+function modifier_item_imba_nullifier:IsPurgable()		return false end
+function modifier_item_imba_nullifier:RemoveOnDeath()	return false end
 function modifier_item_imba_nullifier:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_nullifier:OnCreated()
@@ -137,15 +148,13 @@ function modifier_item_imba_nullifier:OnCreated()
 end
 
 function modifier_item_imba_nullifier:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_HEALTH_BONUS, 
 		MODIFIER_PROPERTY_MANA_BONUS 
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_nullifier:GetModifierPreAttack_BonusDamage()
@@ -209,19 +218,15 @@ function modifier_item_imba_nullifier_mute:OnCreated()
 end
 
 function modifier_item_imba_nullifier_mute:CheckState()
-	local state = {
-	[MODIFIER_STATE_MUTED] = true
+	return {
+		[MODIFIER_STATE_MUTED] = true
 	}
-
-	return state
 end
 
 function modifier_item_imba_nullifier_mute:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_nullifier_mute:OnAttackLanded(keys)
@@ -253,11 +258,9 @@ function modifier_item_imba_nullifier_slow:OnCreated()
 end
 
 function modifier_item_imba_nullifier_slow:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
     }
-	
-    return decFuncs
 end
 
 -- Based on vanilla testing, the 100% slow modifier applies but doesn't slow if the item doesn't exist (i.e. you destroy it)
@@ -270,9 +273,36 @@ end
 --------------------------------
 
 function modifier_item_imba_nullifier_shudder:CheckState()
-	local state = {
-	[MODIFIER_STATE_COMMAND_RESTRICTED] = true
+	return {
+		[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 	}
+end
 
-	return state
+--------------------------------------------------
+-- MODIFIER_ITEM_IMBA_NULLIFIER_OBJECTION_INDEX --
+--------------------------------------------------
+
+-- This modifier is just for visual purposes
+function modifier_item_imba_nullifier_objection_index:IsPurgable()		return false end
+function modifier_item_imba_nullifier_objection_index:RemoveOnDeath()	return false end
+function modifier_item_imba_nullifier_objection_index:IgnoreTenacity()	return true end
+
+-- Using this as a makeshift IntervalThinker...is this bad?
+function modifier_item_imba_nullifier_objection_index:CheckState()
+	if not IsServer() then return end
+	
+	-- DOTA_SHOP_HOME = 0
+	-- DOTA_SHOP_SIDE = 1
+	-- DOTA_SHOP_SECRET = 2
+	-- DOTA_SHOP_GROUND = 3
+	-- DOTA_SHOP_SIDE2 = 4
+	-- DOTA_SHOP_SECRET2 = 5
+	-- DOTA_SHOP_CUSTOM = 6
+	-- DOTA_SHOP_NONE = 7
+	for shop_type = 1, 7 do
+		if self:GetParent():IsInRangeOfShop(shop_type, true) then
+			self:Destroy()
+			return
+		end
+	end
 end

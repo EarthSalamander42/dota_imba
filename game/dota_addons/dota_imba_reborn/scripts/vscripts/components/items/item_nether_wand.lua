@@ -40,14 +40,12 @@ end
 
 -------------------------------------------
 modifier_imba_item_nether_wand_passive = modifier_imba_item_nether_wand_passive or class({})
-function modifier_imba_item_nether_wand_passive:IsDebuff() return false end
-function modifier_imba_item_nether_wand_passive:IsHidden() return true end
-function modifier_imba_item_nether_wand_passive:IsPermanent() return true end
-function modifier_imba_item_nether_wand_passive:IsPurgable() return false end
-function modifier_imba_item_nether_wand_passive:IsPurgeException() return false end
-function modifier_imba_item_nether_wand_passive:IsStunDebuff() return false end
-function modifier_imba_item_nether_wand_passive:RemoveOnDeath() return false end
-function modifier_imba_item_nether_wand_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_item_nether_wand_passive:IsHidden()		return true end
+function modifier_imba_item_nether_wand_passive:IsPurgable()		return false end
+function modifier_imba_item_nether_wand_passive:RemoveOnDeath()	return false end
+function modifier_imba_item_nether_wand_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_item_nether_wand_passive:OnDestroy()
 	self:CheckUnique(false)
 end
@@ -120,14 +118,12 @@ end
 -------------------------------------------
 
 modifier_item_imba_arcane_nexus_passive = modifier_item_imba_arcane_nexus_passive or class({})
-function modifier_item_imba_arcane_nexus_passive:IsDebuff() return false end
-function modifier_item_imba_arcane_nexus_passive:IsHidden() return true end
-function modifier_item_imba_arcane_nexus_passive:IsPermanent() return true end
-function modifier_item_imba_arcane_nexus_passive:IsPurgable() return false end
-function modifier_item_imba_arcane_nexus_passive:IsPurgeException() return false end
-function modifier_item_imba_arcane_nexus_passive:IsStunDebuff() return false end
-function modifier_item_imba_arcane_nexus_passive:RemoveOnDeath() return false end
-function modifier_item_imba_arcane_nexus_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_arcane_nexus_passive:IsHidden()		return true end
+function modifier_item_imba_arcane_nexus_passive:IsPurgable()		return false end
+function modifier_item_imba_arcane_nexus_passive:RemoveOnDeath()	return false end
+function modifier_item_imba_arcane_nexus_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 	self:CheckUnique(false)
 end
