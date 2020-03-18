@@ -433,9 +433,23 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 		if not self.learned_charges_scepter and self:GetCaster():HasScepter() then
 			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
 			
-			self.max_charges = self:GetStackCount()
+			self.max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges") + self:GetAbility():GetSpecialValueFor("scepter_additional_charges")
 			
 			self.learned_charges_scepter = true
+			
+			if self:GetStackCount() > 0 then
+				self:GetAbility():SetActivated(true)
+			end
+		elseif self.learned_charges_scepter and not self:GetCaster():HasScepter() then
+			self:SetStackCount(self:GetStackCount() - self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+			
+			self.max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges")
+			
+			self.learned_charges_scepter = false
+			
+			if self:GetStackCount() <= 0 then
+				self:GetAbility():SetActivated(false)
+			end
 		end
 		
 		if self:GetParent():IsAlive() and self:GetCaster().spirit_charges > 0 then
@@ -524,7 +538,7 @@ function modifier_imba_fire_remnant_state:OnIntervalThink()
 			-- Animate the slash
 			remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
 
-			print(caster:Script_GetAttackRange())
+			-- print(caster:Script_GetAttackRange())
 			
 			-- Pick a random enemy in range
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
@@ -597,15 +611,13 @@ end
 
 function modifier_imba_fire_remnant_dash:CheckState()
 	if IsServer() then
-		local state = {
+		return {
 			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 			[MODIFIER_STATE_INVULNERABLE] = true,
 			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 			[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 		}
-
-		return state
 	end
 end
 
