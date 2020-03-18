@@ -86,7 +86,7 @@
 "DOTA_Tooltip_modifier_imba_rot_slow_Description"				"Slowed and taking damage"
 
 "DOTA_Tooltip_modifier_imba_flesh_heap_stacks"					"Flesh Heap"
-"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and health regeneration"
+"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and magic resistance."
 
 "DOTA_Tooltip_modifier_imba_dismember_scepter"					"Swallowed"		
 "DOTA_Tooltip_modifier_imba_dismember_scepter_Description"		"Swallowed by pudge and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% health per second. Issue a command to eject."

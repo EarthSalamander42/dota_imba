@@ -365,8 +365,6 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:OnCreated()
 
 	self.turnrate   		= ability:GetSpecialValueFor("panic_turnrate_slow")
 	self.damage_reduction	= ability:GetSpecialValueFor("panic_damage_reduction")
-	self.heal_reduction		= ability:GetSpecialValueFor("heal_reduction")
-
 end
 
 function modifier_item_imba_silver_edge_invis_panic_debuff:CheckState()
@@ -379,8 +377,6 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
-		
-		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
 
@@ -394,15 +390,6 @@ end
 
 function modifier_item_imba_silver_edge_invis_panic_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
-end
-
-
-function modifier_item_imba_silver_edge_invis_panic_debuff:OnTooltip()
-	return self.heal_reduction
-end
-
-function modifier_item_imba_silver_edge_invis_panic_debuff:Custom_AllHealAmplify_Percentage()
-	return self.heal_reduction
 end
 
 ---------------------------------------------
@@ -420,6 +407,7 @@ function modifier_item_imba_silver_edge_invis_break_debuff:OnCreated()
 	local ability   =   self:GetAbility()
 
 	self.damage_reduction	=	ability:GetSpecialValueFor("panic_damage_reduction")
+	self.heal_reduction		=	ability:GetSpecialValueFor("heal_reduction") * (-1)
 
 end
 
@@ -431,7 +419,9 @@ end
 
 function modifier_item_imba_silver_edge_invis_break_debuff:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
 
@@ -442,6 +432,14 @@ function modifier_item_imba_silver_edge_invis_break_debuff:GetModifierTotalDamag
 	else
 		return self.damage_reduction
 	end
+end
+
+function modifier_item_imba_silver_edge_invis_break_debuff:OnTooltip()
+	return self.heal_reduction
+end
+
+function modifier_item_imba_silver_edge_invis_break_debuff:Custom_AllHealAmplify_Percentage()
+	return self.heal_reduction
 end
 
 --- PARTICLE FOR RANGED CLEAVE

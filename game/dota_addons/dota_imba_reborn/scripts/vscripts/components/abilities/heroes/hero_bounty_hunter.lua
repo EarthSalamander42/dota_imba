@@ -205,7 +205,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		-- end
 		
 		-- Aghanim's Scepter logic (Patch 7.25)
-		if self:GetCaster():HasScepter() and self:GetCaster():HasAbility("imba_bounty_hunter_jinada") and self:GetCaster():FindAbilityByName("imba_bounty_hunter_jinada"):IsTrained() then
+		if target:IsAlive() and self:GetCaster():HasScepter() and self:GetCaster():HasAbility("imba_bounty_hunter_jinada") and self:GetCaster():FindAbilityByName("imba_bounty_hunter_jinada"):IsTrained() then
 			local jinada_ability = self:GetCaster():FindAbilityByName("imba_bounty_hunter_jinada")
 		
 			damage = damage + jinada_ability:GetSpecialValueFor("bonus_damage")
@@ -677,75 +677,17 @@ end
 
 function modifier_imba_jinada_buff_crit:DeclareFunctions()
 	return {
-		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		
+		-- MODIFIER_EVENT_ON_ATTACK,
+		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 	}
 end
 
 function modifier_imba_jinada_buff_crit:GetModifierPreAttack_BonusDamage(keys)
-	if keys.target and not keys.target:IsBuilding() and not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+	if not self:GetParent():PassivesDisabled() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 		return self:GetAbility():GetSpecialValueFor("bonus_damage")
-	end
-end
-
-
--- function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys)
-	-- local attacker = keys.attacker
-	-- local target = keys.target
-
-	-- -- If this is an illusion, do nothing
-	-- if not self.parent:IsRealHero() then
-		-- return nil
-	-- end
-
-	-- -- If caster has break, do nothing
-	-- if attacker:PassivesDisabled() then
-		-- return nil
-	-- end
-
-	-- -- If the target is a building, do nothing
-	-- if target:IsBuilding() then
-		-- return nil
-	-- end
-
-	-- -- If an attack was already fired (ranged heroes), disable further critical strikes
-	-- if self.crit_attack_fired then
-		-- return nil
-	-- end
-
-	-- -- Prevent critical attacks on allies
-	-- if self.parent:GetTeamNumber() == target:GetTeamNumber() then
-		-- return nil
-	-- end
-
-	-- return self.crit_damage
--- end
-
-function modifier_imba_jinada_buff_crit:OnAttack(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		-- If this is an illusion, do nothing
-		if not attacker:IsRealHero() then
-			return nil
-		end
-
-		-- If target has break, do nothing
-		if attacker:PassivesDisabled() then
-			return nil
-		end
-
-		-- If the target is a building, do nothing
-		if target:IsBuilding() then
-			return nil
-		end
-
-		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
-			self.crit_attack_fired = true
-		end
 	end
 end
 
@@ -763,12 +705,7 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 		if attacker:PassivesDisabled() then
 			return nil
 		end
-
-		-- If the target is a building, do nothing
-		if target:IsBuilding() then
-			return nil
-		end
-
+		
 		-- Only apply on caster attacking enemies
 		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
 			self.parent:EmitSound("Hero_BountyHunter.Jinada")
@@ -808,6 +745,64 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 		end
 	end
 end
+
+-- function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys)
+	-- local attacker = keys.attacker
+	-- local target = keys.target
+
+	-- -- If this is an illusion, do nothing
+	-- if not self.parent:IsRealHero() then
+		-- return nil
+	-- end
+
+	-- -- If caster has break, do nothing
+	-- if attacker:PassivesDisabled() then
+		-- return nil
+	-- end
+
+	-- -- If the target is a building, do nothing
+	-- if target:IsBuilding() then
+		-- return nil
+	-- end
+
+	-- -- If an attack was already fired (ranged heroes), disable further critical strikes
+	-- if self.crit_attack_fired then
+		-- return nil
+	-- end
+
+	-- -- Prevent critical attacks on allies
+	-- if self.parent:GetTeamNumber() == target:GetTeamNumber() then
+		-- return nil
+	-- end
+
+	-- return self.crit_damage
+-- end
+
+-- function modifier_imba_jinada_buff_crit:OnAttack(keys)
+	-- if IsServer() then
+		-- local attacker = keys.attacker
+		-- local target = keys.target
+
+		-- -- If this is an illusion, do nothing
+		-- if not attacker:IsRealHero() then
+			-- return nil
+		-- end
+
+		-- -- If target has break, do nothing
+		-- if attacker:PassivesDisabled() then
+			-- return nil
+		-- end
+
+		-- -- If the target is a building, do nothing
+		-- if target:IsBuilding() then
+			-- return nil
+		-- end
+
+		-- if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+			-- self.crit_attack_fired = true
+		-- end
+	-- end
+-- end
 
 function modifier_imba_jinada_buff_crit:IsHidden()
 	if self.caster_buff then

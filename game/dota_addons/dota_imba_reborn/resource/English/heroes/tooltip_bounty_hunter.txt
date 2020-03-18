@@ -38,7 +38,7 @@
 "Dota_Tooltip_modifier_imba_jinada_debuff_slow_Description"						"Movement and attack speed slowed."
 
 "Dota_Tooltip_modifier_imba_jinada_buff_crit"									"Jinada"
-"Dota_Tooltip_modifier_imba_jinada_buff_crit_Description"						"Your next attack will crit and maim your target."
+"Dota_Tooltip_modifier_imba_jinada_buff_crit_Description"						"Your next attack will deal bonus damage."
 
 ////===============================================================================================================
 // Bounty Hunter's Shadow Walk
