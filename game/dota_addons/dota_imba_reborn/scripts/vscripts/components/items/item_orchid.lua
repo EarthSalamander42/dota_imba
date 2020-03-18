@@ -272,7 +272,7 @@ function modifier_item_imba_bloodthorn:DeclareFunctions()
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
+		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
 	}
 end
 
@@ -291,19 +291,19 @@ function modifier_item_imba_bloodthorn:GetModifierConstantManaRegen()
 function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,nil) end
 
--- Roll for the crit chance
-function modifier_item_imba_bloodthorn:GetModifierPreAttack_CriticalStrike(keys)
-	if self:GetAbility() then
-		local owner = self:GetParent()
+-- -- Roll for the crit chance
+-- function modifier_item_imba_bloodthorn:GetModifierPreAttack_CriticalStrike(keys)
+	-- if self:GetAbility() then
+		-- local owner = self:GetParent()
 
-		-- If this unit is the attacker, roll for a crit
-		if owner == keys.attacker then
-			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("crit_chance"), self) then
-				return self:GetAbility():GetSpecialValueFor("crit_damage")
-			end
-		end
-	end
-end
+		-- -- If this unit is the attacker, roll for a crit
+		-- if owner == keys.attacker then
+			-- if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("crit_chance"), self) then
+				-- return self:GetAbility():GetSpecialValueFor("crit_damage")
+			-- end
+		-- end
+	-- end
+-- end
 
 -----------------------------------------------------------------------------------------------------------
 --	Bloodthorn active debuff
