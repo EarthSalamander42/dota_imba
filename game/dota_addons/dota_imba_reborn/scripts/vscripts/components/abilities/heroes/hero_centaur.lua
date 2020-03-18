@@ -20,15 +20,7 @@ end
 -- Thick hide modifier
 modifier_imba_thick_hide = class({})
 
-function modifier_imba_thick_hide:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
-	-- Ability specials
-	self.damage_reduction_pct = self.ability:GetSpecialValueFor("damage_reduction_pct")
-	self.debuff_duration_red_pct = self.ability:GetSpecialValueFor("debuff_duration_red_pct")
-end
+function modifier_imba_thick_hide:IsHidden()	return true end
 
 function modifier_imba_thick_hide:DeclareFunctions()
 	return {
@@ -38,16 +30,15 @@ function modifier_imba_thick_hide:DeclareFunctions()
 end
 
 function modifier_imba_thick_hide:GetModifierIncomingDamage_Percentage()
-	-- Does nothing if hero has break
-	if self.caster:PassivesDisabled() then
-		return nil
+	if self:GetAbility() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("damage_reduction_pct") * (-1)
 	end
-
-	return self.damage_reduction_pct * (-1)
 end
 
 function modifier_imba_thick_hide:GetModifierStatusResistanceStacking()
-	return self.debuff_duration_red_pct
+	if self:GetAbility() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("debuff_duration_red_pct")
+	end
 end
 
 ---------------------------------

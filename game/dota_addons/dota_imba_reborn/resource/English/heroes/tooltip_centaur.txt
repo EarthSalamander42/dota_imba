@@ -1,12 +1,12 @@
 // Centaur Warrunner's Thick Hide
 "DOTA_Tooltip_ability_imba_centaur_thick_hide"                          "Thick Hide"
-"DOTA_Tooltip_ability_imba_centaur_thick_hide_Description"              "Bradwarden's skin is hard and thick, absorbing part of every spell and blow. Decreases damage received from all sources, as well as received debuff durations."
-"DOTA_Tooltip_ability_imba_centaur_thick_hide_Lore"                    "Centaurs are naturally tough, but the Warrunner's endless pride makes him go much beyond his race's natural limits."
-"DOTA_Tooltip_ability_imba_centaur_thick_hide_damage_reduction_pct"                 "%DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_centaur_thick_hide_debuff_duration_red_pct"              "%DEBUFF DURATION REDUCTION:"
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_Description"              "Bradwarden's skin is hard and thick, absorbing part of every spell and blow. Decreases damage received from all sources, as well as increasing status resistance."
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_Lore"							"Centaurs are naturally tough, but the Warrunner's endless pride makes him go much beyond his race's natural limits."
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_damage_reduction_pct"			"%DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_debuff_duration_red_pct"		"%STATUS RESISTANCE:"
 
-"DOTA_Tooltip_modifier_imba_thick_hide"                    "Thick Hide"
-"DOTA_Tooltip_modifier_imba_thick_hide_Description"                    "Reducing incoming damage and debuff durations."
+"DOTA_Tooltip_modifier_imba_thick_hide"									"Thick Hide"
+"DOTA_Tooltip_modifier_imba_thick_hide_Description"						"Reducing incoming damage and debuff durations."
 
 // Centaur Warrunner's Hoof Stomp
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp"                          "Hoof Stomp"
