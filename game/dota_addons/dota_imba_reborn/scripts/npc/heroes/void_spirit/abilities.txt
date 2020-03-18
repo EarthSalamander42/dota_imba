@@ -127,7 +127,7 @@
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_VoidSpirit.Dissimilate.Cast"
 		
-		"HasScepterUpgrade"								"1"
+		// "HasScepterUpgrade"								"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -217,6 +217,8 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_VoidSpirit.Pulse.Cast"
+		
+		"HasScepterUpgrade"								"1"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -273,13 +275,31 @@
 				"var_type"					"FIELD_INTEGER"
 				"return_projectile_speed"	"900"
 			}
-			
 			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2"
+				"RequiresScepter"			"1"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_restore_time"		"16"
+				"RequiresScepter"			"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"silence_duration_scepter"			"2.0"
+				"RequiresScepter"			"1"
+			}
+			
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"equal_exchange_attacks"	"2 3 4 5"
 			}
-			"09"
+			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"equal_exchange_duration"	"4"
