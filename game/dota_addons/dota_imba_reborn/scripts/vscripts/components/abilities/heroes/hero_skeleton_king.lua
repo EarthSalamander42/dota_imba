@@ -303,10 +303,10 @@ function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 end
 
 function modifier_imba_wraithfire_blast_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_wraithfire_blast_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -523,6 +523,7 @@ function modifier_imba_vampiric_aura_buff:OnCreated()
 	self.caster_heal = self.ability:GetSpecialValueFor("caster_heal")
 	self.heal_delay = self.ability:GetSpecialValueFor("heal_delay")
 	self.damage	= self.ability:GetSpecialValueFor("damage")
+	self.self_bonus	= self.ability:GetSpecialValueFor("self_bonus")
 end
 
 function modifier_imba_vampiric_aura_buff:OnRefresh()
@@ -592,6 +593,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 				-- Calculate lifesteal and heal the attacker
 				heal_amount = damage * lifesteal_pct * 0.01
+				
+				if self.parent == self.caster then
+					heal_amount = heal_amount * self.self_bonus
+				end
+				
 				self.parent:Heal(heal_amount, self.caster)
 
 			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
@@ -612,6 +618,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 				-- Calculate lifesteal and heal the attacker
 				heal_amount = damage * self.spellsteal_pct * 0.01
+				
+				if self.parent == self.caster then
+					heal_amount = heal_amount * self.self_bonus
+				end
+				
 				self.parent:Heal(heal_amount, self.caster)
 			end
 

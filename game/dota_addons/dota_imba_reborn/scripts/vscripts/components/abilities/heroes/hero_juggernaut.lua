@@ -1261,17 +1261,14 @@ function modifier_imba_juggernaut_blade_dance_passive:OnIntervalThink() -- accou
 end
 
 function modifier_imba_juggernaut_blade_dance_passive:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-
-	return funcs
 end
 
 if IsServer() then
-	function modifier_imba_juggernaut_blade_dance_passive:OnAttackStart(keys)
+	function modifier_imba_juggernaut_blade_dance_passive:GetModifierPreAttack_CriticalStrike(keys)
 		if self:GetParent():PassivesDisabled() then return nil end
 
 		if keys.attacker == self:GetParent() then
@@ -1287,15 +1284,6 @@ if IsServer() then
 
 				return self.crit
 			end
-		end
-	end
-
-	function modifier_imba_juggernaut_blade_dance_passive:GetModifierPreAttack_CriticalStrike(params)
-		if self:GetParent():PassivesDisabled() then return nil end
-		if self.critProc == true then
-			return self.crit
-		else
-			return nil
 		end
 	end
 
@@ -1344,12 +1332,14 @@ function modifier_imba_juggernaut_blade_dance_passive:HandleWindDance(bCrit)
 			return nil
 		end
 
-		local wind_dance = self:GetCaster():FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
-		if bCrit then
-			if not wind_dance then wind_dance = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_juggernaut_blade_dance_wind_dance", {duration = self:GetAbility():GetTalentSpecialValueFor("bonus_duration")}) end
-			wind_dance:ForceRefresh()
-		elseif wind_dance then
-			wind_dance:SetDuration(wind_dance:GetDuration(), true) -- does not roll refresh
+		if not self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") and not self:GetCaster():HasModifier("modifier_juggernaut_omnislash") then
+			local wind_dance = self:GetCaster():FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
+			if bCrit then
+				if not wind_dance then wind_dance = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_juggernaut_blade_dance_wind_dance", {duration = self:GetAbility():GetTalentSpecialValueFor("bonus_duration")}) end
+				wind_dance:ForceRefresh()
+			elseif wind_dance then
+				wind_dance:SetDuration(wind_dance:GetDuration(), true) -- does not roll refresh
+			end
 		end
 	end
 end
@@ -1360,11 +1350,13 @@ function modifier_imba_juggernaut_blade_dance_passive:HandleSecretBlade()
 		if self:GetCaster():HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice") then			
 			return nil
 		end
-
-		local secret_blade = self:GetCaster():FindModifierByName("modifier_imba_juggernaut_blade_dance_secret_blade")
 		
-		if not secret_blade then secret_blade = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_juggernaut_blade_dance_secret_blade", {duration = self:GetAbility():GetTalentSpecialValueFor("secret_blade_duration")}) end
-		secret_blade:ForceRefresh()
+		if not self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") and not self:GetCaster():HasModifier("modifier_juggernaut_omnislash") then
+			local secret_blade = self:GetCaster():FindModifierByName("modifier_imba_juggernaut_blade_dance_secret_blade")
+			
+			if not secret_blade then secret_blade = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_juggernaut_blade_dance_secret_blade", {duration = self:GetAbility():GetTalentSpecialValueFor("secret_blade_duration")}) end
+			secret_blade:ForceRefresh()
+		end
 	end
 end
 
@@ -1410,11 +1402,10 @@ function modifier_imba_juggernaut_blade_dance_wind_dance:OnRefresh()
 end
 
 function modifier_imba_juggernaut_blade_dance_wind_dance:DeclareFunctions()
-	funcs = {
-				MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-				MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-			}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_juggernaut_blade_dance_wind_dance:GetModifierMoveSpeedBonus_Percentage()
@@ -1523,11 +1514,11 @@ function imba_juggernaut_omni_slash:GetAbilityTextureName()
 end
 
 function imba_juggernaut_omni_slash:GetCooldown(level)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cooldown_scepter")
-	else
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cooldown_scepter")
+	-- else
 		return self.BaseClass.GetCooldown(self, level)
-	end
+	-- end
 end
 
 function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
@@ -1552,6 +1543,11 @@ end
 function imba_juggernaut_omni_slash:OnUpgrade()
 	if self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):GetLevel() == 1 then
 		self.omnislash_kill_count = 0
+	end
+	
+	-- For vanilla Swift Slash
+	if self:GetCaster():HasAbility("juggernaut_omni_slash") then
+		self:GetCaster():FindAbilityByName("juggernaut_omni_slash"):SetLevel(self:GetLevel())
 	end
 end
 
@@ -1652,11 +1648,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 
 		local omnislash_modifier_handler
 		
-		if self.caster:HasScepter() then
-			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
-		else
+		-- if self.caster:HasScepter() then
+			-- omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
+		-- else
 			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
-		end
+		-- end
 		
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
@@ -1693,11 +1689,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	else
 		local omnislash_modifier_handler
 		
-		if self.caster:HasScepter() then
-			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
-		else
+		-- if self.caster:HasScepter() then
+			-- omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
+		-- else
 			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
-		end
+		-- end
 
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
@@ -1708,11 +1704,6 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		-- Disable Blade Fury during Omnislash (vanilla)
 		if self.caster:HasAbility("imba_juggernaut_blade_fury") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_fury"):SetActivated(false)
-		end
-		
-		-- Disable Blade Dance during Omnislash 
-		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
-			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
 		end
 		
 		--if not self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
@@ -1742,7 +1733,8 @@ function modifier_imba_omni_slash_image:DeclareFunctions()
 end
 
 function modifier_imba_omni_slash_image:CheckState()
-	local state = {[MODIFIER_STATE_UNSELECTABLE] = true,
+	return {
+		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
@@ -1750,8 +1742,6 @@ function modifier_imba_omni_slash_image:CheckState()
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 	}
-
-	return state
 end
 
 function modifier_imba_omni_slash_image:OnCreated()
@@ -2080,11 +2070,6 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		-- Re-enable Blade Fury during Omnislash (vanilla)
 		if self.caster:HasAbility("imba_juggernaut_blade_fury") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_fury"):SetActivated(true)
-		end
-		
-		-- Re-enable Blade Dance during Omnislash
-		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
-			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
 		end
 
 		self.parent:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)

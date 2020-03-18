@@ -8,9 +8,11 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_Lore"					"While the shuriken may be small, Gondar's precise aim can cause critical damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_pull_duration"			"PULL DURATION:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_stun_duration"	"SCEPTER STUN DURATION:"
+//"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_stun_duration"	"SCEPTER STUN DURATION:"
+"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_cooldown"		"SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_scepter_cast_range"		"SCEPTER CAST RANGE:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a %scepter_throw_delay% second delay, and increases cast range and stun duration."
+"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Upgrades Shuriken Toss. Applies Jinada to it, reduces cooldown and increases cast range."
+//"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_aghanim_description"		"Hurls a second shuriken after a %scepter_throw_delay% second delay, and increases cast range and stun duration."
 
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned"								"Shuriken Toss"
 "DOTA_Tooltip_modifier_imba_shuriken_toss_stunned_Description"					"Stunned."
@@ -22,7 +24,10 @@
 // Bounty Hunter's Jinada
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada"								"Jinada"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next hit, dealing bonus damage and stealing some unreliable gold.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.<br><br>Cast Range: %cast_range%\n<font color='#FF7800'>Critical Strike:</font> Jinada also adds a %crit_damage%%% critical strike and maim, reducing movement speed by %ms_slow_pct%%% and attack speed by %as_slow% for %slow_duration% seconds."
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next hit, dealing bonus damage and stealing some unreliable gold.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.<br><br>Cast Range: %cast_range%"
+
+// \n<font color='#FF7800'>Critical Strike:</font> Jinada also adds a %crit_damage%%% critical strike and maim, reducing movement speed by %ms_slow_pct%%% and attack speed by %as_slow% for %slow_duration% seconds.
+
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note0"							"Activating Jinada requires mana, but the passive does not."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note1"							"<font color='#FF0000'>Gold gain is not affected by the map gold multiplier.</font>"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Lore"							"Whispering an enchantment he learned from Soruq to his faithful blades, Gondar targets vital tendons and joints to disable his opponents."

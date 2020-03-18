@@ -329,17 +329,13 @@ function imba_clinkz_death_pact_723:GetIntrinsicModifierName()
 end
 
 function imba_clinkz_death_pact_723:CastFilterResultTarget(hTarget)
-	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() <= self:GetSpecialValueFor("neutral_level") or
+	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() or
 	hTarget:GetClassname() == "npc_dota_clinkz_skeleton_archer" and hTarget:GetModifierStackCount("modifier_imba_burning_army", self:GetCaster()) == 0 then
 		return UF_SUCCESS
 		
 	-- IMBAfication: Soul High
 	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsConsideredHero() then
-		if hTarget:GetLevel() <= self:GetCaster():GetLevel() then
-			return UF_SUCCESS
-		else
-			return UF_FAIL_CUSTOM
-		end
+		return UF_SUCCESS
 	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsAncient() and hTarget:GetLevel() > self:GetSpecialValueFor("neutral_level") then
 		return UF_FAIL_CUSTOM
 	else

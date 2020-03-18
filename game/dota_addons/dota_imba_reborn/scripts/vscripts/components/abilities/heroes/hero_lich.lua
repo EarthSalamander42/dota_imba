@@ -1841,7 +1841,7 @@ function modifier_imba_lich_frost_shield:OnCreated()
 		self.hp_regen			= self.caster:FindTalentValue("special_bonus_imba_lich_9")
 
 		if self.parent:IsBuilding() then
-			self.hp_regen		= self.hp_regen * (self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficacy") / 100)
+			self.hp_regen		= self.hp_regen * (self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficiency") / 100)
 		end
 	end
 

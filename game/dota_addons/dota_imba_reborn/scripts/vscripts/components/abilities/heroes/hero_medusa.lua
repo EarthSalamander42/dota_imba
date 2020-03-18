@@ -135,15 +135,13 @@ end
 function modifier_imba_medusa_split_shot:IsHidden()	return true end
 
 function modifier_imba_medusa_split_shot:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		
 		MODIFIER_EVENT_ON_ORDER
     }
-
-    return decFuncs
 end
 
 function modifier_imba_medusa_split_shot:OnAttack(keys)

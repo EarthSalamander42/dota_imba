@@ -74,7 +74,7 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow_Description"	"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_max_damage"				"+{s:value} Ink Swell Max Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_cast_range"			"+600 Stroke of Fate Cast Range"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"		"+1 Hits to Kill Phantom"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_radius"					"+200 Ink Swell Radius"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_damage"				"+50% Stroke of Fate Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_cast_range"			"+{s:value} Stroke of Fate Cast Range"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"		"+{s:value} Hits to Kill Phantom"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_radius"					"+{s:value} Ink Swell Radius"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_damage"				"+{s:value}% Stroke of Fate Damage"

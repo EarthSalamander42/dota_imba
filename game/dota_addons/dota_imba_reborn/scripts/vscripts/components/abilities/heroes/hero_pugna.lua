@@ -837,6 +837,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"void_spirit_aether_remnant",
 			"imba_rubick_spellsteal",
 			"rubick_spell_steal",
+			"imba_bristleback_bristleback",
 			
 			"lone_druid_spirit_bear",
 			"imba_lone_druid_spirit_bear",
@@ -1271,7 +1272,7 @@ function modifier_imba_life_drain:OnCreated()
 
 	if IsServer() then
 		-- Extend break range by caster's Cast Range
-		self.break_distance_extend = self.break_distance_extend + GetCastRangeIncrease(self.caster)
+		self.break_distance_extend = self.break_distance_extend + self:GetCaster():GetCastRangeBonus()
 
 		-- Wait for the first tick, then start thinking
 		Timers:CreateTimer(self.tick_rate, function()

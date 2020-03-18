@@ -60,6 +60,14 @@ function imba_spirit_breaker_charge_of_darkness:GetIntrinsicModifierName()
 	return "modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker"
 end
 
+function imba_spirit_breaker_charge_of_darkness:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 	-- Debug line
 	self.charge_cancel_reason = nil
@@ -106,6 +114,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnCreated(params)
 		self.movement_speed		= self:GetAbility():GetTalentSpecialValueFor("movement_speed")
 		self.stun_duration		= self:GetAbility():GetSpecialValueFor("stun_duration")
 		self.bash_radius		= self:GetAbility():GetSpecialValueFor("bash_radius")
+		self.scepter_speed		= self:GetAbility():GetSpecialValueFor("scepter_speed")
 		
 		-- These aren't used
 		-- self.vision_radius		= self:GetAbility():GetSpecialValueFor("vision_radius")
@@ -379,7 +388,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness:GetDisableAutoAttack()
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierMoveSpeedBonus_Constant()
-	return self.movement_speed + self:GetStackCount()
+	if self:GetCaster():HasScepter() then
+		return self.movement_speed + self:GetStackCount() + self.scepter_speed
+	else
+		return self.movement_speed + self:GetStackCount()
+	end
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:GetOverrideAnimation()
@@ -915,19 +928,19 @@ function imba_spirit_breaker_nether_strike:OnUpgrade()
 end
 
 function imba_spirit_breaker_nether_strike:GetCooldown(nLevel)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cooldown_scepter")
-	else
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cooldown_scepter")
+	-- else
 		return self.BaseClass.GetCooldown(self, nLevel)
-	end
+	-- end
 end
 
 function imba_spirit_breaker_nether_strike:GetCastRange(location, target)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cast_range_scepter")
-	else
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cast_range_scepter")
+	-- else
 		return self.BaseClass.GetCastRange(self, location, target)
-	end
+	-- end
 end
 
 function imba_spirit_breaker_nether_strike:GetCastPoint()
@@ -1085,26 +1098,26 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		
 	damage_dealt = ApplyDamage(damageTable)
 
-	if self:GetCaster():HasScepter() then
-		for _, enemy in pairs(enemies) do
-			if enemy ~= target then
-				if greater_bash_ability and greater_bash_ability:IsTrained() then
-					greater_bash_ability:Bash(enemy, self:GetCaster())
-				end
+	-- if self:GetCaster():HasScepter() then
+		-- for _, enemy in pairs(enemies) do
+			-- if enemy ~= target then
+				-- if greater_bash_ability and greater_bash_ability:IsTrained() then
+					-- greater_bash_ability:Bash(enemy, self:GetCaster())
+				-- end
 				
-				local damageTable = {
-					victim 			= target,
-					damage 			= self:GetSpecialValueFor("damage"),
-					damage_type		= self:GetAbilityDamageType(),
-					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-					attacker 		= self:GetCaster(),
-					ability 		= self
-				}
+				-- local damageTable = {
+					-- victim 			= target,
+					-- damage 			= self:GetSpecialValueFor("damage"),
+					-- damage_type		= self:GetAbilityDamageType(),
+					-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					-- attacker 		= self:GetCaster(),
+					-- ability 		= self
+				-- }
 				
-				damage_dealt = ApplyDamage(damageTable)
-			end
-		end
-	end
+				-- damage_dealt = ApplyDamage(damageTable)
+			-- end
+		-- end
+	-- end
 	
 	-- IMBAfication: Planeswalker
 	if self:GetAutoCastState() then

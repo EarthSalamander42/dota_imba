@@ -192,6 +192,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"250 275 300 325"
+				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_radius"
 			}
 			"02"
 			{
@@ -268,7 +269,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_boost"			"80"
+				"speed_boost"			"250"
 			}
 			
 			"03"
@@ -510,6 +511,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"135"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_dark_seer_ion_shell_radius"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dark_seer_ion_shell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"125"
 			}
 		}
 	}

@@ -954,12 +954,10 @@ if IsServer() then
 	end
 
 	function modifier_imba_rupture_debuff_dot:DeclareFunctions()
-		local funcs = {
+		return {
 			MODIFIER_EVENT_ON_ABILITY_START,
 			MODIFIER_EVENT_ON_ATTACK_START,
 		}
-
-		return funcs
 	end
 
 	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
@@ -975,7 +973,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
 		if params.attacker == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
+			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.attackdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 				self.caster:Heal(self.castdamage, self.caster)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)

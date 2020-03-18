@@ -37,6 +37,14 @@ function item_imba_force_staff:CastFilterResultTarget(target)
 	end
 end
 
+function item_imba_force_staff:GetCastRange(location, target)
+	if not target or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("enemy_cast_range")
+	end
+end
+
 function item_imba_force_staff:OnSpellStart()
 	if not IsServer() then return end
 	local ability = self
@@ -92,12 +100,10 @@ function modifier_item_imba_force_staff:OnIntervalThink()
 end
 
 function modifier_item_imba_force_staff:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 	}
-
-	return decFuncs
 end
 
 function modifier_item_imba_force_staff:GetModifierConstantHealthRegen()
@@ -116,7 +122,7 @@ modifier_item_imba_force_staff_active = modifier_item_imba_force_staff_active or
 
 function modifier_item_imba_force_staff_active:IsDebuff() return false end
 function modifier_item_imba_force_staff_active:IsHidden() return true end
-function modifier_item_imba_force_staff_active:IsPurgable() return false end
+-- function modifier_item_imba_force_staff_active:IsPurgable() return false end
 function modifier_item_imba_force_staff_active:IsStunDebuff() return false end
 function modifier_item_imba_force_staff_active:IsMotionController()  return true end
 function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -402,7 +408,7 @@ modifier_item_imba_hurricane_pike_force_self = modifier_item_imba_hurricane_pike
 
 function modifier_item_imba_hurricane_pike_force_enemy:IsDebuff() return true end
 function modifier_item_imba_hurricane_pike_force_enemy:IsHidden() return true end
-function modifier_item_imba_hurricane_pike_force_enemy:IsPurgable() return false end
+-- function modifier_item_imba_hurricane_pike_force_enemy:IsPurgable() return false end
 function modifier_item_imba_hurricane_pike_force_enemy:IsStunDebuff() return false end
 function modifier_item_imba_hurricane_pike_force_enemy:IsMotionController()  return true end
 function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -459,7 +465,7 @@ end
 
 function modifier_item_imba_hurricane_pike_force_self:IsDebuff() return false end
 function modifier_item_imba_hurricane_pike_force_self:IsHidden() return true end
-function modifier_item_imba_hurricane_pike_force_self:IsPurgable() return false end
+-- function modifier_item_imba_hurricane_pike_force_self:IsPurgable() return false end
 function modifier_item_imba_hurricane_pike_force_self:IsStunDebuff() return false end
 function modifier_item_imba_hurricane_pike_force_self:IgnoreTenacity() return true end
 function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  return true end

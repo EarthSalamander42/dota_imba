@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature"									"Wrath of Nature"
-"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_Description"						"Damaging energy bounces around the map, striking enemies close to the cast point that are in vision. Each enemy hit beyond the first adds damage."
+"DOTA_Tooltip_ability_imba_furion_wrath_of_nature_Description"						"Damaging energy bounces around the map, striking enemies close to the cast point that are in vision. Each enemy hit beyond the first adds damage. Enemies that die under this spell grant you %kill_damage% bonus damage for %kill_damage_duration% seconds."
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_Lore"								"Nature's Prophet calls Verodicia's fury to strike down those who might ravage the wilderness."
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_Note0"								"Wrath of Nature will not hit units out of vision."
 "DOTA_Tooltip_ability_imba_furion_wrath_of_nature_Note1"								"Can be cast through the minimap; the nearest valid target will be selected."
@@ -19,6 +19,9 @@
 
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_aura"				"Nature's Wrath Bonus"
 "DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_aura_Description"	"Gaining %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage and %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% bonus health."
+
+"DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_damage_counter"					"Nature's Wrath Damage"
+"DOTA_Tooltip_modifier_imba_furion_wrath_of_nature_damage_counter_Description"		"Attack damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_furion_wrath_of_nature_boost"	"Wrath of Nature Kill Extension"
 "DOTA_Tooltip_Ability_special_bonus_imba_furion_wrath_of_nature_boost_Description"	"+{s:value} bonus treant damage/health stack on Wrath of Nature kill or buffered kill; stacks with Aghanim's Scepter effect, and also enables the kill tracker."

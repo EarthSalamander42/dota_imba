@@ -171,14 +171,6 @@ function modifier_item_imba_vanguard:IsPurgable()		return false end
 function modifier_item_imba_vanguard:RemoveOnDeath()	return false end
 function modifier_item_imba_vanguard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_vanguard:OnCreated()
-	self.health			= self:GetAbility():GetSpecialValueFor("health")
-	self.health_regen	= self:GetAbility():GetSpecialValueFor("health_regen")
-	self.block_damage_melee		= self:GetAbility():GetSpecialValueFor("block_damage_melee")
-	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
-	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
-end
-
 -- -- Custom unique damage block property
 -- function modifier_item_imba_vanguard:GetCustomDamageBlockUnique()
 	-- return self:GetAbility():GetSpecialValueFor("damage_block") end
@@ -193,17 +185,25 @@ function modifier_item_imba_vanguard:DeclareFunctions()
 end
 
 function modifier_item_imba_vanguard:GetModifierHealthBonus()
-	return self.health end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("health")
+	end
+end
 
 function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
-	return self.health_regen end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("health_regen")
+	end
+end
 
 function modifier_item_imba_vanguard:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
-		if not self:GetParent():IsRangedAttacker() then
-			return self.block_damage_melee
-		else
-			return self.block_damage_ranged
+	if self:GetAbility() then
+		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
+			if not self:GetParent():IsRangedAttacker() then
+				return self:GetAbility():GetSpecialValueFor("block_damage_melee")
+			else
+				return self:GetAbility():GetSpecialValueFor("block_damage_ranged")
+			end
 		end
 	end
 end

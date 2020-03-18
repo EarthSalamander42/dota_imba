@@ -496,7 +496,6 @@ end
 ------------------------
 
 function modifier_imba_dark_seer_ion_shell:OnCreated()
-	self.radius						= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage_per_second			= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
 	self.proton_explosion_radius	= self:GetAbility():GetSpecialValueFor("proton_explosion_radius")
 	self.proton_damage_pct			= self:GetAbility():GetSpecialValueFor("proton_damage_pct")
@@ -504,6 +503,8 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	self.interval 			= 0.1
 	
 	if not IsServer() then return end
+	
+	self.radius						= self:GetAbility():GetTalentSpecialValueFor("radius")
 	
 	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_lp")
 	
@@ -518,10 +519,11 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 end
 
 function modifier_imba_dark_seer_ion_shell:OnRefresh()
-	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage_per_second	= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
 	
 	if not IsServer() then return end
+	
+	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
 	
 	self:SetStackCount(0)
 end
@@ -669,31 +671,24 @@ end
 
 function modifier_imba_dark_seer_surge:CheckState()
 	return {
-		[MODIFIER_STATE_UNSLOWABLE] = true, -- Probably not needed cause of MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT not working which forces MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN again
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+		[MODIFIER_STATE_UNSLOWABLE]			= true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true
 	}
 end
 
 function modifier_imba_dark_seer_surge:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		-- MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT (wow who would have thought this thing still doesn't work /s)
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN
+    return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT
     }
-
-    return decFuncs
 end
 
-function modifier_imba_dark_seer_surge:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_dark_seer_surge:GetModifierMoveSpeedBonus_Constant()
 	return self.speed_boost
 end
 
--- function modifier_imba_dark_seer_surge:GetModifierIgnoreMovespeedLimit()
-	-- return 1
--- end
-
-function modifier_imba_dark_seer_surge:GetModifierMoveSpeed_AbsoluteMin()
-	return self.speed
+function modifier_imba_dark_seer_surge:GetModifierIgnoreMovespeedLimit()
+	return 1
 end
 
 ---------------------

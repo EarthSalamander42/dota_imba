@@ -97,4 +97,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_6"					"Ghostship now drags Kunkka along to its destination"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_7"					"Tidebringer now hits all enemies affected by Torrent"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_8"					"Rum absorbs damage instead of delaying it"
-"DOTA_Tooltip_ability_special_bonus_imba_kunkka_9"					"+60% Tidebringer Cleave"
+"DOTA_Tooltip_ability_special_bonus_imba_kunkka_9"					"+{s:value}% Tidebringer Cleave"

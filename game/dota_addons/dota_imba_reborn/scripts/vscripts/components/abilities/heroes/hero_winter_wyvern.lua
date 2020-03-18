@@ -698,11 +698,10 @@ function modifier_imba_winter_wyvern_cold_embrace_freeze:IsDebuff() return true 
 function modifier_imba_winter_wyvern_cold_embrace_freeze:IsPurgable() return true end
 function modifier_imba_winter_wyvern_cold_embrace_freeze:IsHidden() return false end
 function modifier_imba_winter_wyvern_cold_embrace_freeze:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_FROZEN] = true,
 		[MODIFIER_STATE_STUNNED] = true,
 	}
-	return state
 end
 
 function modifier_imba_winter_wyvern_cold_embrace_freeze:OnCreated()

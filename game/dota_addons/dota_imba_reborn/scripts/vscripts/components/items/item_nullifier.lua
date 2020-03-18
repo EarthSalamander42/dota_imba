@@ -2,6 +2,7 @@
 -- 	AltiV - June 8th, 2019
 
 LinkLuaModifier("modifier_item_imba_nullifier", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_nullifier_dispel", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_nullifier_mute", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_nullifier_slow", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_nullifier_shudder", "components/items/item_nullifier", LUA_MODIFIER_MOTION_NONE)
@@ -9,7 +10,8 @@ LinkLuaModifier("modifier_item_imba_nullifier_objection_index", "components/item
 
 item_imba_nullifier						= class({})
 modifier_item_imba_nullifier			= class({})
-modifier_item_imba_nullifier_mute		= class({})
+modifier_item_imba_nullifier_dispel		= class({})
+modifier_item_imba_nullifier_mute		= modifier_item_imba_nullifier_mute or class({})
 modifier_item_imba_nullifier_slow		= class({})
 modifier_item_imba_nullifier_shudder	= class({})
 modifier_item_imba_nullifier_objection_index	= modifier_item_imba_nullifier_objection_index or class({})
@@ -58,19 +60,19 @@ function item_imba_nullifier:OnSpellStart()
 	ProjectileManager:CreateTrackingProjectile(projectile)
 end
 
--- IMBAfication: Shudder
-function item_imba_nullifier:OnProjectileThink(location)
-	if self:GetLevel() >= 2 then
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("shudder_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+-- -- IMBAfication: Shudder
+-- function item_imba_nullifier:OnProjectileThink(location)
+	-- if self:GetLevel() >= 2 then
+		-- local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("shudder_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		
-		for _, enemy in pairs(enemies) do
-			if enemy ~= self.target and not enemy:HasModifier("modifier_item_imba_nullifier_shudder") then
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_shudder", {duration = self:GetSpecialValueFor("shudder_duration")}):SetDuration(self:GetSpecialValueFor("shudder_duration") * (1 - enemy:GetStatusResistance()), true)
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_slow", {duration = self:GetSpecialValueFor("shudder_duration")}):SetDuration(self:GetSpecialValueFor("shudder_duration") * (1 - enemy:GetStatusResistance()), true)
-			end
-		end
-	end
-end
+		-- for _, enemy in pairs(enemies) do
+			-- if enemy ~= self.target and not enemy:HasModifier("modifier_item_imba_nullifier_shudder") then
+				-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_shudder", {duration = self:GetSpecialValueFor("shudder_duration")}):SetDuration(self:GetSpecialValueFor("shudder_duration") * (1 - enemy:GetStatusResistance()), true)
+				-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_slow", {duration = self:GetSpecialValueFor("shudder_duration")}):SetDuration(self:GetSpecialValueFor("shudder_duration") * (1 - enemy:GetStatusResistance()), true)
+			-- end
+		-- end
+	-- end
+-- end
 
 function item_imba_nullifier:OnProjectileHit(target, location)
 	-- Check if a valid target has been hit
@@ -83,9 +85,20 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 		
 		-- ..and apply the purge, mute modifier, and slow modifier
 		target:Purge(true, false, false, false, false)
-		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_mute", {duration = self:GetSpecialValueFor("mute_duration")}):SetDuration(self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance()), true)
+		
+		local dispel_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_dispel", {duration = self:GetSpecialValueFor("mute_duration")})
+		
+		if dispel_modifier then
+			dispel_modifier:SetDuration(self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance()), true)
+		end
 		
 		if self:GetLevel() >= 2 then
+			local mute_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_mute", {duration = self:GetSpecialValueFor("mute_duration")})
+			
+			if mute_modifier then
+				mute_modifier:SetDuration(self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance()), true)
+			end
+			
 			-- IMBAfication: Objection Index
 			
 			-- First, determine what slot Nullifier EX is in
@@ -123,7 +136,6 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 	
 	self.target = nil
 end
-
 
 ------------------------
 -- NULLIFIER MODIFIER --
@@ -181,7 +193,7 @@ end
 -- NULLIFIER MUTE MODIFIER --
 -----------------------------
 
-function modifier_item_imba_nullifier_mute:GetEffectName()
+function modifier_item_imba_nullifier_dispel:GetEffectName()
 	if (self:GetAbility() and self:GetAbility():GetLevel() == 2) or self.level == 2 then
 		return "particles/items4_fx/nullifier_mute_debuff_2.vpcf"
 	else
@@ -189,11 +201,11 @@ function modifier_item_imba_nullifier_mute:GetEffectName()
 	end
 end
 
-function modifier_item_imba_nullifier_mute:GetStatusEffectName()
+function modifier_item_imba_nullifier_dispel:GetStatusEffectName()
 	return "particles/status_fx/status_effect_nullifier.vpcf"
 end
 
-function modifier_item_imba_nullifier_mute:OnCreated()
+function modifier_item_imba_nullifier_dispel:OnCreated()
 	self.level	= self:GetAbility():GetLevel()
 
 	if self:GetAbility() then
@@ -217,19 +229,19 @@ function modifier_item_imba_nullifier_mute:OnCreated()
 	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_nullifier_slow", {duration = self.slow_interval_duration}):SetDuration(self.slow_interval_duration * (1 - self:GetParent():GetStatusResistance()), true)
 end
 
-function modifier_item_imba_nullifier_mute:CheckState()
-	return {
-		[MODIFIER_STATE_MUTED] = true
-	}
+function modifier_item_imba_nullifier_dispel:CheckState()
+	if IsServer() then
+		self:GetParent():Purge(true, false, false, false, false)
+	end
 end
 
-function modifier_item_imba_nullifier_mute:DeclareFunctions()
+function modifier_item_imba_nullifier_dispel:DeclareFunctions()
     return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
     }
 end
 
-function modifier_item_imba_nullifier_mute:OnAttackLanded(keys)
+function modifier_item_imba_nullifier_dispel:OnAttackLanded(keys)
 	if not IsServer() then return end
 	
 	if keys.target == self:GetParent() then
@@ -237,11 +249,21 @@ function modifier_item_imba_nullifier_mute:OnAttackLanded(keys)
 	end	
 end
 
+---------------------------------------
+-- MODIFIER_ITEM_IMBA_NULLIFIER_MUTE --
+---------------------------------------
+
+function modifier_item_imba_nullifier_mute:CheckState()
+	return {
+		[MODIFIER_STATE_MUTED] = true
+	}
+end
+
 -----------------------------
 -- NULLIFIER SLOW MODIFIER --
 -----------------------------
 
-function modifier_item_imba_nullifier_mute:GetStatusEffectName()
+function modifier_item_imba_nullifier_dispel:GetStatusEffectName()
 	return "particles/status_fx/status_effect_nullifier_slow.vpcf"
 end
 

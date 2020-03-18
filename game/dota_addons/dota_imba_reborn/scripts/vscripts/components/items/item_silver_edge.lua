@@ -363,8 +363,9 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:IsPurgable() return t
 function modifier_item_imba_silver_edge_invis_panic_debuff:OnCreated()
 	local ability   =   self:GetAbility()
 
-	self.turnrate   		=   ability:GetSpecialValueFor("panic_turnrate_slow")
-	self.damage_reduction	=	ability:GetSpecialValueFor("panic_damage_reduction")
+	self.turnrate   		= ability:GetSpecialValueFor("panic_turnrate_slow")
+	self.damage_reduction	= ability:GetSpecialValueFor("panic_damage_reduction")
+	self.heal_reduction		= ability:GetSpecialValueFor("heal_reduction")
 
 end
 
@@ -378,6 +379,8 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+		
+		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
 
@@ -391,6 +394,15 @@ end
 
 function modifier_item_imba_silver_edge_invis_panic_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+
+function modifier_item_imba_silver_edge_invis_panic_debuff:OnTooltip()
+	return self.heal_reduction
+end
+
+function modifier_item_imba_silver_edge_invis_panic_debuff:Custom_AllHealAmplify_Percentage()
+	return self.heal_reduction
 end
 
 ---------------------------------------------

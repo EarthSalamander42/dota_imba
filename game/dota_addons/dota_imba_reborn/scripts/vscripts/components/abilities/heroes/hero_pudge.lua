@@ -1006,10 +1006,17 @@ end
 
 function modifier_imba_flesh_heap_stacks:DeclareFunctions()
 	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 	}
+end
+
+function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
+	if self:GetAbility() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("base_magic_resist")
+	end
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
@@ -1018,7 +1025,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
 			-- return self:GetAbility():GetSpecialValueFor("base_health_regen")
 			return 0 -- Non-vanilla interaction
 		else
-			return self:GetAbility():GetSpecialValueFor("base_health_regen") + self:GetAbility():GetSpecialValueFor("stack_health_regen") * math.min(self:GetStackCount(), self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4"))
+			return self:GetAbility():GetSpecialValueFor("stack_health_regen") * math.min(self:GetStackCount(), self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4"))
 		end
 	end
 end

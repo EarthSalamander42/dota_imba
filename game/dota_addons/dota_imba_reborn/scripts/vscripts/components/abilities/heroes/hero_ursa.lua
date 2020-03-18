@@ -927,10 +927,10 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			-- Calculate damage
 			damage = damage_per_stack * fury_swipes_stacks
 
-			-- Check for Enrage's multiplier
-			if caster:HasModifier(enrage_buff) then
-				damage = damage * enrage_swipes_multiplier
-			end
+			-- -- Check for Enrage's multiplier
+			-- if caster:HasModifier(enrage_buff) then
+				-- damage = damage * enrage_swipes_multiplier
+			-- end
 
 			-- Check for Deep Strike modifier, modify damage, apply particle and play sound if present
 			if fury_swipes_stacks % deep_stack_attacks == 0 then --divides with no remainder

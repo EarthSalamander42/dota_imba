@@ -70,31 +70,31 @@ function modifier_item_imba_pipe:GetAttributes() return MODIFIER_ATTRIBUTE_MULTI
 
 function modifier_item_imba_pipe:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		-- MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		-- MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		-- MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
 end
 
-function modifier_item_imba_pipe:GetModifierBonusStats_Strength()
-	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("stat_bonus")
-	end
-end
+-- function modifier_item_imba_pipe:GetModifierBonusStats_Strength()
+	-- if self:GetAbility() then
+		-- return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	-- end
+-- end
 
-function modifier_item_imba_pipe:GetModifierBonusStats_Agility()
-	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("stat_bonus")
-	end
-end
+-- function modifier_item_imba_pipe:GetModifierBonusStats_Agility()
+	-- if self:GetAbility() then
+		-- return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	-- end
+-- end
 
-function modifier_item_imba_pipe:GetModifierBonusStats_Intellect()
-	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("stat_bonus")
-	end
-end
+-- function modifier_item_imba_pipe:GetModifierBonusStats_Intellect()
+	-- if self:GetAbility() then
+		-- return self:GetAbility():GetSpecialValueFor("stat_bonus")
+	-- end
+-- end
 
 function modifier_item_imba_pipe:GetModifierConstantHealthRegen()
 	if self:GetAbility() then

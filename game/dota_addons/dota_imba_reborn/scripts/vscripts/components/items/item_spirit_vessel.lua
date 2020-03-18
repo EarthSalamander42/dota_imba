@@ -190,12 +190,10 @@ function modifier_item_imba_spirit_vessel_heal:OnCreated()
 end
 
 function modifier_item_imba_spirit_vessel_heal:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_TAKEDAMAGE
     }
-
-    return decFuncs
 end
 
 function modifier_item_imba_spirit_vessel_heal:GetModifierConstantHealthRegen()

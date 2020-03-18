@@ -311,12 +311,13 @@
 		"Ability11"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff
 		"Ability12"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
 		"Ability13"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
-		"Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit
+		"Ability14"					"special_bonus_attack_speed_60"
 		"Ability15"					"special_bonus_imba_bounty_hunter_9" // +X Jinada Gold Steal
 		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
 		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
 		
 		// Removed Talents
+		// "Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit // DISABLED
 		// "Ability15"					"special_bonus_imba_bounty_hunter_5" // Global Shuriken bounce range on all Tracked target
 	}
 
@@ -681,10 +682,10 @@
 		"Ability6"					"imba_earth_spirit_magnetize"
 
 		"Ability10"					"special_bonus_imba_earth_spirit_1"
-		"Ability11"					"special_bonus_attack_damage_50"
+		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_spell_amplify_15"
+		"Ability14"					"special_bonus_spell_amplify_20"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
@@ -718,7 +719,7 @@
 
 		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
-		"Ability12"					"special_bonus_magic_resistance_15"
+		"Ability12"					"special_bonus_magic_resistance_20"
 		"Ability13"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
@@ -906,8 +907,8 @@
 		"Ability1"					"imba_juggernaut_blade_fury"
 		"Ability2"					"imba_juggernaut_healing_ward"
 		"Ability3"					"imba_juggernaut_blade_dance"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"juggernaut_swift_slash"
+		"Ability5"					"juggernaut_omni_slash"
 		"Ability6"					"imba_juggernaut_omni_slash"
 
 		"Ability10"					"special_bonus_all_stats_6"
@@ -1292,7 +1293,7 @@
 		"Ability10"					"special_bonus_hp_225"
 		"Ability11"					"special_bonus_mp_225"
 		"Ability12"					"special_bonus_strength_15"
-		"Ability13"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_lifesteal_25"
 		"Ability14"					"special_bonus_movement_speed_40"
 		"Ability15"					"special_bonus_attack_damage_50"
 		"Ability16"					"special_bonus_imba_night_stalker_9"
@@ -2139,7 +2140,7 @@
 		"Ability6"					"imba_warlock_rain_of_chaos"
 
 		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
-		"Ability11"					"special_bonus_cast_range_150"
+		"Ability11"					"special_bonus_cast_range_175"
 		"Ability12"					"special_bonus_armor_10"
 		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"

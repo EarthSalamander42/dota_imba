@@ -2031,6 +2031,23 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration=self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
 				end
 			end
+			
+			-- Aghanim's Scepter logic (Patch 7.25)
+			if self:GetCaster():HasScepter() then
+				local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+				
+				local target_number = 0
+				
+				for _, enemy in pairs(enemies) do
+					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
+					
+					target_number = target_number + 1
+					
+					if target_number >= self:GetAbility():GetSpecialValueFor("scepter_count") then
+						break
+					end
+				end
+			end
 		end
 	end
 end

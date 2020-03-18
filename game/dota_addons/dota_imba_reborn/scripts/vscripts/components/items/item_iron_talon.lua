@@ -25,12 +25,8 @@ function item_imba_iron_talon:CastFilterResultTarget(hTarget)
 	-- However, since they all share the same name, it'll work on Techies' Proximity Mines too
 	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if (hTarget:IsCreep() or (hTarget:IsOther() and (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")))) and
-		not hTarget:IsRoshan() and (not hTarget:IsAncient()
-		or (hTarget:IsAncient() and
-		(not self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) >= self:GetSpecialValueFor("hunt_max") or self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) >= self:GetSpecialValueFor("hunt_max_ranged")))) then
+		not hTarget:IsRoshan() then
 			return UF_SUCCESS
-		elseif hTarget:IsAncient() and (not self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) < self:GetSpecialValueFor("hunt_max") or self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) < self:GetSpecialValueFor("hunt_max_ranged")) then
-			return UF_FAIL_CUSTOM
 		elseif hTarget:IsOther() and not (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")) then
 			return UF_FAIL_CUSTOM
 		end
@@ -38,6 +34,7 @@ function item_imba_iron_talon:CastFilterResultTarget(hTarget)
 
 	-- Otherwise just follow the standard unit filtering and use the standard cast errors
 	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	
 	return nResult
 end
 
@@ -45,9 +42,7 @@ function item_imba_iron_talon:GetCustomCastErrorTarget(hTarget)
 	if not IsServer() then return end
 
 	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then 
-		if hTarget:IsAncient() and (not self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) < self:GetSpecialValueFor("hunt_max") or self:GetCaster():IsRangedAttacker() and self:GetCaster():GetModifierStackCount("modifier_item_imba_iron_talon", self:GetCaster()) < self:GetSpecialValueFor("hunt_max_ranged")) then
-			return "Ability Can't Target Ancients Without Max 'The Hunt' Stacks"
-		elseif hTarget:IsOther() and not (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")) then
+		if hTarget:IsOther() and not (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")) then
 			return "Ability Can't Target This Ward-Type Unit"
 		end
 	end

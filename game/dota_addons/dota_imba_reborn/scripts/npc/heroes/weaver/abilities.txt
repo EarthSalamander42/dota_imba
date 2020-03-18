@@ -141,7 +141,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"225"
+				"speed"					"220 240 260 280"
 				"LinkedSpecialBonus"	"special_bonus_imba_weaver_shukuchi_hasted_speed"
 			}
 			"03"

@@ -836,7 +836,9 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
         self.particle_explode_fx = ParticleManager:CreateParticle(self.particle_explode, PATTACH_ABSORIGIN, self.parent)
         ParticleManager:SetParticleControl(self.particle_explode_fx, 0, self.parent:GetAbsOrigin())
         ParticleManager:ReleaseParticleIndex(self.particle_explode_fx)
-
+		
+		local slow_modifier = nil
+		 
         -- Find all nearby enemies
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
         self.parent:GetAbsOrigin(),
@@ -867,7 +869,11 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
             end
 
             -- Apply slow
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+            slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
+			end
         end
     end
 end
@@ -876,12 +882,15 @@ end
 modifier_imba_caustic_finale_debuff = class({})
 
 function modifier_imba_caustic_finale_debuff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
     -- Ability specials
     self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+	self.caustic_finale_slow_as	= self:GetAbility():GetSpecialValueFor("caustic_finale_slow_as")
 
     -- #5 Talent: Caustic Finale slow increase
     self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_sand_king_5")
@@ -892,18 +901,19 @@ function modifier_imba_caustic_finale_debuff:IsPurgable() return true end
 function modifier_imba_caustic_finale_debuff:IsDebuff() return true end
 
 function modifier_imba_caustic_finale_debuff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-    return decFuncs
+    return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_caustic_finale_debuff:GetModifierMoveSpeedBonus_Percentage()
     return self.ms_slow_pct * (-1)
 end
 
-
-
-
+function modifier_imba_caustic_finale_debuff:GetModifierAttackSpeedBonus_Constant()
+    return self.caustic_finale_slow_as
+end
 
 -------------------------------
 --         EPICENTER         --

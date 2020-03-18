@@ -342,7 +342,7 @@ modifier_item_imba_lance_of_longinus_force_self_ranged = modifier_item_imba_lanc
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsDebuff() return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsMotionController()  return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -398,7 +398,7 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_self_ranged:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_self_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IgnoreTenacity() return true end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsMotionController()  return true end
@@ -457,7 +457,7 @@ modifier_item_imba_lance_of_longinus_force_self_melee = modifier_item_imba_lance
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsDebuff() return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsMotionController()  return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -513,7 +513,7 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_self_melee:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_self_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IgnoreTenacity() return true end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsMotionController()  return true end

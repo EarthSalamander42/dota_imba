@@ -43,7 +43,7 @@
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Lore"										"Ish'Kafel once used his speed of mind to navigate the maze between the walls."
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Note0"									"Units with Surge cannot be slowed unless the Surge effect is removed."
 "DOTA_Tooltip_ability_imba_dark_seer_surge_duration"									"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-"DOTA_Tooltip_ability_imba_dark_seer_surge_speed_boost"								"%SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_dark_seer_surge_speed_boost"								"SPEED BONUS:"
 
 
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica"								"Prismatic Bisector"
@@ -75,12 +75,13 @@
 
 
 "DOTA_Tooltip_modifier_imba_dark_seer_surge"							"Surge"
-"DOTA_Tooltip_modifier_imba_dark_seer_surge_Description"				"Gaining phased and hasted movement, and moving at %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% increased move speed."
+"DOTA_Tooltip_modifier_imba_dark_seer_surge_Description"				"Gaining phased and hasted movement, and moving with %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% bonus move speed."
 
 
 "DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow"					"Prismatic Bisector Slow"
 "DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow_Description"		"Move speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and being attacked by yourself."
 
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_ion_shell_radius"							"+{s:value} Ion Shell Radius"
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_surge_cast_range"							"+{s:value} Surge Cast Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_vacuum_increased_duration"					"+{s:value}s Vacuum/Wormhole Pull/Push Duration"
 "DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"		"+{s:value}s Prismatic Bisector Slow Duration"

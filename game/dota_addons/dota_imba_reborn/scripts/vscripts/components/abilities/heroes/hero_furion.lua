@@ -5,12 +5,16 @@ LinkLuaModifier("modifier_imba_furion_wrath_of_nature", "components/abilities/he
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_aura", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE) 		-- As is this
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_thinker", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_spawn", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_stack", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_counter", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
 
 imba_furion_wrath_of_nature						= imba_furion_wrath_of_nature_spawn or class({})
 modifier_imba_furion_wrath_of_nature			= modifier_imba_furion_wrath_of_nature or class({})
 modifier_imba_furion_wrath_of_nature_aura		= modifier_imba_furion_wrath_of_nature_aura or class({})
 modifier_imba_furion_wrath_of_nature_thinker	= modifier_imba_furion_wrath_of_nature_thinker or class({})
 modifier_imba_furion_wrath_of_nature_spawn		= modifier_imba_furion_wrath_of_nature_spawn or class({})
+modifier_imba_furion_wrath_of_nature_damage_stack		= modifier_imba_furion_wrath_of_nature_damage_stack or class({})
+modifier_imba_furion_wrath_of_nature_damage_counter		= modifier_imba_furion_wrath_of_nature_damage_counter or class({})
 
 ---------------------------------
 -- IMBA_FURION_WRATH_OF_NATURE --
@@ -103,6 +107,8 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnCreated()
 	self.damage								= self:GetAbility():GetSpecialValueFor("damage")
 	self.damage_percent_add					= self:GetAbility():GetSpecialValueFor("damage_percent_add")
 	self.jump_delay							= self:GetAbility():GetSpecialValueFor("jump_delay")
+	self.kill_damage						= self:GetAbility():GetSpecialValueFor("kill_damage")
+	self.kill_damage_duration				= self:GetAbility():GetSpecialValueFor("kill_damage_duration")
 	self.damage_scepter						= self:GetAbility():GetSpecialValueFor("damage_scepter")
 	self.scepter_buffer						= self:GetAbility():GetSpecialValueFor("scepter_buffer")
 	self.treant_large_hp_bonus_tooltip		= self:GetAbility():GetSpecialValueFor("treant_large_hp_bonus_tooltip")
@@ -241,6 +247,14 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnIntervalThink()
 			
 			self.hit_enemies[enemy:entindex()] = true
 			
+			if not enemy:IsAlive() then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_damage_counter", {duration = self.kill_damage_duration})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_damage_stack", {
+					duration	= self.kill_damage_duration,
+					kill_damage	= self.kill_damage
+				})
+			end
+			
 			break
 		end
 	end
@@ -274,22 +288,63 @@ function modifier_imba_furion_wrath_of_nature_spawn:DeclareFunctions()
 end
 
 function modifier_imba_furion_wrath_of_nature_spawn:OnDeath(keys)
-	if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) and self:GetCaster():HasModifier("modifier_imba_furion_wrath_of_nature") then
-	
-		if self:GetCaster():HasScepter() then
-			if (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and self.treant_bonus_damage_hero then
-				self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage_hero)
-			elseif self.treant_bonus_damage then
-				self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage)
+	if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) then
+		if self:GetCaster():HasModifier("modifier_imba_furion_wrath_of_nature") then
+			if self:GetCaster():HasScepter() then
+				if (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and self.treant_bonus_damage_hero then
+					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage_hero)
+				elseif self.treant_bonus_damage then
+					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage)
+				end
 			end
+			
+			if self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") then
+				self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self:GetCaster():FindTalentValue("special_bonus_imba_furion_wrath_of_nature_boost"))
+			end
+			
+			self:Destroy()
 		end
-		
-		if self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") then
-			self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self:GetCaster():FindTalentValue("special_bonus_imba_furion_wrath_of_nature_boost"))
-		end
-		
-		self:Destroy()
 	end
+end
+
+-------------------------------------------------------
+-- MODIFIER_IMBA_FURION_WRATH_OF_NATURE_DAMAGE_STACK --
+-------------------------------------------------------
+
+function modifier_imba_furion_wrath_of_nature_damage_stack:IsHidden()		return true end
+function modifier_imba_furion_wrath_of_nature_damage_stack:IsPurgable()		return false end
+function modifier_imba_furion_wrath_of_nature_damage_stack:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_furion_wrath_of_nature_damage_stack:OnCreated(keys)
+	if not IsServer() then return end
+	
+	if self:GetParent():HasModifier("modifier_imba_furion_wrath_of_nature_damage_counter") then
+		self:SetStackCount(keys.kill_damage)
+		
+		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() + self:GetStackCount())
+	end
+end
+
+function modifier_imba_furion_wrath_of_nature_damage_stack:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasModifier("modifier_imba_furion_wrath_of_nature_damage_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() - self:GetStackCount())
+	end
+end
+
+---------------------------------------------------------
+-- MODIFIER_IMBA_FURION_WRATH_OF_NATURE_DAMAGE_COUNTER --
+---------------------------------------------------------
+
+function modifier_imba_furion_wrath_of_nature_damage_counter:IsPurgable()	return false end
+
+function modifier_imba_furion_wrath_of_nature_damage_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+end
+
+function modifier_imba_furion_wrath_of_nature_damage_counter:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
 end
 
 ---------------------

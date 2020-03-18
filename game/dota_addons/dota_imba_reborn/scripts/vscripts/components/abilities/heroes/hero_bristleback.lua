@@ -48,6 +48,14 @@ function imba_bristleback_viscous_nasal_goo:GetBehavior()
 	end
 end
 
+function imba_bristleback_viscous_nasal_goo:GetCastRange(location, target)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("radius_scepter") - self:GetCaster():GetCastRangeBonus()
+	else
+		return self.BaseClass.GetCastRange(self, location, target)
+	end
+end
+
 function imba_bristleback_viscous_nasal_goo:OnSpellStart()
 	self.caster	= self:GetCaster()
 	
@@ -209,12 +217,10 @@ function modifier_imba_bristleback_viscous_nasal_goo:OnRefresh()
 end
 
 function modifier_imba_bristleback_viscous_nasal_goo:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
         MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
     }
-
-    return decFuncs
 end
 
 function modifier_imba_bristleback_viscous_nasal_goo:GetModifierMoveSpeedBonus_Percentage()
@@ -260,7 +266,7 @@ function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnIntervalThink(
 				self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerOwner():GetPlayerID())
 			end	
 		else
-			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.caster), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
+			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.caster) + self.caster:GetCastRangeBonus(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
 			
 			if #enemies > 0 then
 				if self.caster.GetPlayerID then
@@ -422,10 +428,10 @@ function modifier_imba_bristleback_quill_spray:OnCreated()
 	self.quill_stack_duration	= self.ability:GetSpecialValueFor("quill_stack_duration")
 	self.max_damage				= self.ability:GetSpecialValueFor("max_damage")
 	self.projectile_speed		= self.ability:GetSpecialValueFor("projectile_speed")
-
-	self:IncrementStackCount()
 	
 	if not IsServer() then return end
+	
+	self:IncrementStackCount()
 	
 	-- Why does the normal particle emit so many quills
 	--if self:GetParent():IsCreep() then
@@ -516,6 +522,7 @@ end
 -- Bristleback --
 -----------------
 
+function imba_bristleback_bristleback:IsStealable()				return false end
 function imba_bristleback_bristleback:ResetToggleOnRespawn()	return true end
 
 function imba_bristleback_bristleback:GetIntrinsicModifierName()
@@ -558,12 +565,10 @@ function modifier_imba_bristleback_bristleback:OnRefresh()
 end
 
 function modifier_imba_bristleback_bristleback:DeclareFunctions()
-    local decFuncs = {
+    return {
         MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE
     }
-
-    return decFuncs
 end
 
 function modifier_imba_bristleback_bristleback:GetModifierIncomingDamage_Percentage(keys)
@@ -623,7 +628,7 @@ end
 
 function modifier_imba_bristleback_bristleback:OnTakeDamage( keys )
 	if keys.unit == self.parent then
-		if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then return end
+		if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS or not self.parent:HasAbility("imba_bristleback_quill_spray") or not self.parent:FindAbilityByName("imba_bristleback_quill_spray"):IsTrained() then return end
 	
 		-- Pretty inefficient to calculate this stuff twice but I don't want to make these class variables due to how much damage might stack in a single frame...
 		local forwardVector			= self.caster:GetForwardVector()

@@ -769,11 +769,11 @@
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note0"                      "The link will break if the target becomes invisible, out of world, invulnerable, go into the fog of war, or goes farther than the break distance."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note1"                      "Healing is proportional to the damage done, and can be reduced or amplified by magic damage reduction/amplification on the target."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_health_drain"              "HEALTH PER SECOND:"
-//"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"                   "SCEPTER HEALTH PER SECOND:"
+"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"		"SCEPTER DRAIN PER SECOND:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_duration"                  "MAX LENGTH:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_base_slow_pct"              "%BASE SLOW:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_slow_per_second"            "%SLOW PER SECOND:"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown."
+"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown and increases damage."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_cast_range"                "CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_pugna_life_drain_end"                        "Life Drain Cancel"
@@ -1091,15 +1091,16 @@
 // Sand King's Caustic Finale
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale"                    "Caustic Finale"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"                     "Sand King poisons his enemies with every attack. When the poison debuff expires, the poison inside the enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Potent Consistency:</font> Expiry damage is the same as the explosion damage.\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"			"Sand King's attacks inject a venom that causes enemy units to violently explode when its timer expires, or when the unit dies, damaging and slowing nearby enemies. <font color='#FF7800'>Expiry damage is the same as the explosion damage.</font>\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Lore"                "An injection from Crixalis makes one as brittle as the sands of his home."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note0"              "Also activates if the affected unit dies, or if the debuff is purged."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note1"              "Damaging an unit already affected by Caustic Finale does not refresh the debuff."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_poison_duration"                 "POISON DURATION:"
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_radius"              "EXPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow_pct"                     "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"                   "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow_pct"			"%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_caustic_finale_slow_as"			"ATTACK SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"		"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 
 "DOTA_Tooltip_modifier_imba_caustic_finale_poison"                      "Caustic Finale Poison"
 "DOTA_Tooltip_modifier_imba_caustic_finale_poison_Description"          "A poison is brewing inside your body and will explode when it expires."
