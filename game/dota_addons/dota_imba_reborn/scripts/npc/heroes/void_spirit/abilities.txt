@@ -278,7 +278,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"max_charges"		"2"
+				"max_charges_scepter"		"2" // Vanilla is max_charges, but this is to better deal with the generic modifier
 				"RequiresScepter"			"1"
 			}
 			"09"

@@ -2178,6 +2178,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"str_damage_reduction"	"100"
 				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
 			}
 		}
 	}
@@ -2381,7 +2382,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"100"
 			}
 		}
 	}
@@ -2465,7 +2466,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						"200"
 			}
 		}
 	}
@@ -28866,11 +28867,13 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"damage_reduction_scepter"			"50"
+				"RequiresScepter"					"1"	
 			}
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"splinter_radius_scepter"			"375"
+				"RequiresScepter"					"1"
 			}
 			"05"
 			{

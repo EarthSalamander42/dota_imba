@@ -377,11 +377,21 @@ function modifier_imba_tidehunter_kraken_shell:OnIntervalThink()
 		self:SetStackCount(0)
 		self.reset_timer = GameRules:GetDOTATime(true, true)
 	end
+	
+	-- Calculate stat bonuses
+	if not self.bInRiver and self:GetParent():GetAbsOrigin().z < 160 then
+		self:GetParent():CalculateStatBonus()
+		
+		self.bInRiver = true
+	elseif self.bInRiver and self:GetParent():GetAbsOrigin().z >= 160 then
+		self:GetParent():CalculateStatBonus()
+		
+		self.bInRiver = false
+	end
 end
 
 function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		-- MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT, 
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		
@@ -390,8 +400,6 @@ function modifier_imba_tidehunter_kraken_shell:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierPhysical_ConstantBlock()
@@ -421,13 +429,13 @@ function modifier_imba_tidehunter_kraken_shell:OnTakeDamage(keys)
 end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierBonusStats_Strength()
-	if self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
+	if self:GetAbility() and self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("aqueous_strength")
 	end
 end
 
 function modifier_imba_tidehunter_kraken_shell:GetModifierHealthRegenPercentage()
-	if self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
+	if self:GetAbility() and self:GetParent():GetAbsOrigin().z < 160 and not self:GetParent():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("aqueous_heal")
 	end
 end
@@ -446,16 +454,13 @@ function modifier_imba_tidehunter_kraken_shell_backstroke:OnCreated()
 end
 
 function modifier_imba_tidehunter_kraken_shell_backstroke:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_tidehunter_kraken_shell_backstroke:GetOverrideAnimation()
@@ -501,9 +506,7 @@ function modifier_imba_tidehunter_kraken_shell_greater_hardening:OnRefresh()
 end
 
 function modifier_imba_tidehunter_kraken_shell_greater_hardening:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
 end
 
 function modifier_imba_tidehunter_kraken_shell_greater_hardening:GetModifierMagicalResistanceBonus()
@@ -516,7 +519,7 @@ end
 
 function imba_tidehunter_anchor_smash:GetCastRange(location, target)
 	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_anchor_smash_handler", self:GetCaster()) == 0 then
-		return self.BaseClass.GetCastRange(self, location, target)
+		return self.BaseClass.GetCastRange(self, location, target) - self:GetCaster():GetCastRangeBonus()
 	else
 		return self:GetSpecialValueFor("throw_range")
 	end
@@ -654,9 +657,7 @@ function modifier_imba_tidehunter_anchor_smash:OnRefresh()
 end
 
 function modifier_imba_tidehunter_anchor_smash:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
 end
 
 function modifier_imba_tidehunter_anchor_smash:GetModifierBaseDamageOutgoing_Percentage()
@@ -679,14 +680,11 @@ end
 
  -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
 function modifier_imba_tidehunter_anchor_smash_suppression:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_tidehunter_anchor_smash_suppression:GetModifierPreAttack_BonusDamage()
@@ -712,9 +710,7 @@ function modifier_imba_tidehunter_anchor_smash_handler:IsHidden()		return true e
 function modifier_imba_tidehunter_anchor_smash_handler:IsPurgable()		return false end
 
 function modifier_imba_tidehunter_anchor_smash_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
-	
-	return decFuncs
+	return {MODIFIER_EVENT_ON_ORDER}
 end
 
 function modifier_imba_tidehunter_anchor_smash_handler:OnOrder(keys)
@@ -774,18 +770,14 @@ function modifier_imba_tidehunter_anchor_smash_throw:OnCreated(params)
 end
 
 function modifier_imba_tidehunter_anchor_smash_throw:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	
-	return state
+	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 end
 
 function modifier_imba_tidehunter_anchor_smash_throw:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MODEL_CHANGE,
 		MODIFIER_PROPERTY_VISUAL_Z_DELTA
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_tidehunter_anchor_smash_throw:GetModifierModelChange()
@@ -975,12 +967,10 @@ end
 function modifier_imba_tidehunter_ravage_handler:IsHidden()	return true end
 
 function modifier_imba_tidehunter_ravage_handler:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ORDER,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_tidehunter_ravage_handler:OnOrder(keys)
@@ -1113,16 +1103,21 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_tidehunter_greater_hardening", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_tidehunter_gush_armor", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tidehunter_greater_hardening	= modifier_special_bonus_imba_tidehunter_greater_hardening or class({})
+modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction	= modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction or class({})
+modifier_special_bonus_imba_tidehunter_greater_hardening				= modifier_special_bonus_imba_tidehunter_greater_hardening or class({})
+modifier_special_bonus_imba_tidehunter_gush_armor						= modifier_special_bonus_imba_tidehunter_gush_armor or class({})
+
+function modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction:IsHidden() 		return true end
+function modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction:IsPurgable() 		return false end
+function modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_tidehunter_greater_hardening:IsHidden() 		return true end
 function modifier_special_bonus_imba_tidehunter_greater_hardening:IsPurgable() 		return false end
 function modifier_special_bonus_imba_tidehunter_greater_hardening:RemoveOnDeath() 	return false end
-
-modifier_special_bonus_imba_tidehunter_gush_armor	= modifier_special_bonus_imba_tidehunter_gush_armor or class({})
 
 function modifier_special_bonus_imba_tidehunter_gush_armor:IsHidden() 		return true end
 function modifier_special_bonus_imba_tidehunter_gush_armor:IsPurgable()		return false end
@@ -1141,5 +1136,13 @@ function imba_tidehunter_kraken_shell:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_greater_hardening") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_greater_hardening") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_greater_hardening"), "modifier_special_bonus_imba_tidehunter_greater_hardening", {})
+	end
+end
+
+function imba_tidehunter_anchor_smash:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_anchor_smash_damage_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_anchor_smash_damage_reduction"), "modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction", {})
 	end
 end

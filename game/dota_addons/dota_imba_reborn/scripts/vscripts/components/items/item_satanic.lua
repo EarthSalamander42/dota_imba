@@ -77,6 +77,8 @@ function modifier_imba_satanic:GetModifierLifesteal()
 		else
 			return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
 		end
+	else
+		return 0
 	end
 end
 
