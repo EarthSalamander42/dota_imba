@@ -339,7 +339,7 @@ end
 function CDOTA_BaseNPC:GetLifesteal()
 	local lifesteal = 0
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierLifesteal then
+		if parent_modifier.GetModifierLifesteal and parent_modifier:GetModifierLifesteal() then
 			lifesteal = lifesteal + parent_modifier:GetModifierLifesteal()
 		end
 	end
@@ -350,7 +350,7 @@ end
 function CDOTA_BaseNPC:GetSpellLifesteal()
 	local lifesteal = 0
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierSpellLifesteal then
+		if parent_modifier.GetModifierSpellLifesteal and parent_modifier:GetModifierSpellLifesteal() then
 			lifesteal = lifesteal + parent_modifier:GetModifierSpellLifesteal()
 		end
 	end

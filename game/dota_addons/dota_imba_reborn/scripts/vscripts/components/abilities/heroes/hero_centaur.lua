@@ -45,9 +45,8 @@ end
 -- 		   Hoof Stomp          --
 ---------------------------------
 
-
 imba_centaur_hoof_stomp = class({})
-LinkLuaModifier("modifier_imba_hoof_stomp_stun", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
+
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_buff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_debuff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
@@ -62,10 +61,7 @@ function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 end
 
 function imba_centaur_hoof_stomp:GetCastRange(location, target)
-	local caster = self:GetCaster()
-	local base_range = self.BaseClass.GetCastRange(self, location, target)
-
-	return base_range
+	return self.BaseClass.GetCastRange(self, location, target) - self:GetCaster():GetCastRangeBonus()
 end
 
 function imba_centaur_hoof_stomp:OnSpellStart()
@@ -95,7 +91,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 			-- "The stomp first applies the debuff, then the damage."
 			
 			-- Stun them
-			stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_hoof_stomp_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+			stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
 			
 			if stun_modifier then
 				stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
@@ -121,33 +117,6 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 	-- IMBAfication: Gladiator's Pit
 	local buff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_buff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	local debuff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_debuff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-end
-
--- Stun modifier
-modifier_imba_hoof_stomp_stun = class({})
-
-function modifier_imba_hoof_stomp_stun:GetEffectName()
-	return "particles/generic_gameplay/generic_stunned.vpcf"
-end
-
-function modifier_imba_hoof_stomp_stun:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
-
-function modifier_imba_hoof_stomp_stun:CheckState()
-	return {[MODIFIER_STATE_STUNNED] = true}
-end
-
-function modifier_imba_hoof_stomp_stun:IsDebuff()
-	return true
-end
-
-function modifier_imba_hoof_stomp_stun:IsStunDebuff()
-	return true
-end
-
-function modifier_imba_hoof_stomp_stun:IsHidden()
-	return false
 end
 
 -------------------------------------------------
@@ -235,6 +204,8 @@ end
 -- Arena debuff (enemies)
 modifier_imba_hoof_stomp_arena_debuff = class({})
 
+function modifier_imba_hoof_stomp_arena_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	if self:GetAbility() then
 		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
@@ -245,12 +216,13 @@ function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	end
 	
 	self.position	= self:GetParent():GetAbsOrigin()
+	
+	-- Seems like CheckState() interavls aren't fast enough to prevent a sort of "glitchy" effect
+	self:OnIntervalThink()
+	self:StartIntervalThink(FrameTime())
 end
 
--- Using this as an interval thinker
-function modifier_imba_hoof_stomp_arena_debuff:CheckState()
-	if not IsServer() then return end
-	
+function modifier_imba_hoof_stomp_arena_debuff:OnIntervalThink()
 	if self:GetAuraOwner() then
 		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.radius and (self.position - self:GetParent():GetAbsOrigin()):Length2D() < self.maximum_distance then
 			FindClearSpaceForUnit(self:GetParent(), self:GetAuraOwner():GetAbsOrigin() + ((self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Normalized() * self.radius), false)
@@ -309,11 +281,9 @@ function imba_centaur_double_edge:OnSpellStart()
 
 		-- Ability specials
 		-- #4 Talent: Damage increased by 2*strength
-		local damage = ability:GetSpecialValueFor("damage") + (caster:FindTalentValue("special_bonus_imba_centaur_4") * caster:GetStrength())
+		local damage = ability:GetSpecialValueFor("damage") + (caster:GetStrength() * caster:FindTalentValue("special_bonus_imba_centaur_4") * 0.01)
 		local radius = ability:GetSpecialValueFor("radius")
-		local str_damage_reduction = ability:GetSpecialValueFor("str_damage_reduction")
-
-
+		
 		-- Cast responses are troublesome for this spell so they get their own section
 		-- Roll for a cast response
 		if RollPercentage(75) then
@@ -393,18 +363,17 @@ function imba_centaur_double_edge:OnSpellStart()
 		end
 
 		-- Calculate self damage, using Centaur's Strength
-		local strength = caster:GetStrength() * (str_damage_reduction/100)
-		local self_damage = damage - strength
+		local self_damage = math.max(damage - (self:GetCaster():GetStrength() * self:GetTalentSpecialValueFor("str_damage_reduction") * 0.01), 0)
 
 		-- Damage caster
-		local damageTable = {victim = caster,
+		ApplyDamage({
+			victim = caster,
 			attacker = caster,
 			damage = self_damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
-			ability = ability}
-
-		ApplyDamage(damageTable)
+			ability = ability
+		})
 	end
 end
 
@@ -489,20 +458,12 @@ function modifier_imba_return_aura:IsAura()
 	return true
 end
 
-function modifier_imba_return_aura:IsDebuff()
-	return false
-end
-
 function modifier_imba_return_aura:IsHidden()
 	return true
 end
 
 function modifier_imba_return_aura:IsPurgable()
 	return false
-end
-
-function modifier_imba_return_aura:IsPermanent()
-	return true
 end
 
 -- Return modifier
@@ -524,16 +485,11 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		local attacker = keys.attacker
 		local target = keys.unit
 		local particle_return = "particles/units/heroes/hero_centaur/centaur_return.vpcf"
-		local modifier_damage_block = "modifier_imba_return_damage_block"
 		local particle_block_msg = "particles/msg_fx/msg_block.vpcf"
 		-- Ability specials
 		local damage = ability:GetTalentSpecialValueFor("damage")
 		local str_pct_as_damage = ability:GetSpecialValueFor("str_pct_as_damage")
 		local damage_block = ability:GetSpecialValueFor("damage_block")
-		local block_duration = ability:GetSpecialValueFor("block_duration")
-
-		-- #1 Talent:Reduced self damage_block
-		str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")
 
 		-- Not inherited by illusions
 		if not target:IsRealHero() then
@@ -559,118 +515,96 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 				end
 			end
 
-			-- Centaur-Nyx Carcapace handler
-			if self.reflect_handler then return end
-			-- Note: Might remove this `if` this happens again
-			if attacker:FindModifierByName("modifier_imba_spiked_carapace") then
-				self.reflect_handler = true
-				Timers:CreateTimer(FrameTime(),function()
-					self.reflect_handler = false
-				end)
-			end
-
 			-- Add return particle
 			local particle_return_fx = ParticleManager:CreateParticle(particle_return, PATTACH_ABSORIGIN, parent)
 			ParticleManager:SetParticleControlEnt(particle_return_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle_return_fx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle_return_fx)
 
-			-- Calculate damage using Centaur's strength
-			local final_damage = damage + caster:GetStrength() * (str_pct_as_damage/100)
-
-			-- Apply damage on attacker
-			local damageTable = {victim = attacker,
-				attacker = parent,
-				damage = final_damage,
-				damage_type = DAMAGE_TYPE_PHYSICAL,
-				damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
-				ability = ability}
-
-			ApplyDamage(damageTable)
-
-			-- Add damage block modifier if parent doesn't have one
-			if not parent:HasModifier(modifier_damage_block) then
-				parent:AddNewModifier(parent, ability, modifier_damage_block, {})
+			-- Calculate damage using owner's strength
+			if self:GetParent().GetStrength then
+				damage = damage + (self:GetParent():GetStrength() * self:GetAbility():GetSpecialValueFor("str_pct_as_damage") * 0.01)
 			end
 
-			parent:AddNewModifier(parent, ability, "modifier_imba_return_damage_block_buff", {duration = block_duration})
+			-- Apply damage on attacker
+			ApplyDamage({
+				victim = attacker,
+				attacker = parent,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_PHYSICAL,
+				damage_flags = DOTA_DAMAGE_FLAG_REFLECTION,
+				ability = ability
+			})
+			
+			if self:GetParent() == self:GetCaster() then
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_return_damage_block", {duration = self:GetAbility():GetSpecialValueFor("block_duration")})
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_return_damage_block_buff", {
+					duration		= self:GetAbility():GetSpecialValueFor("block_duration"),
+					damage_block	= self:GetAbility():GetSpecialValueFor("damage_block")
+				})
+			end
 		end
 	end
 end
 
 function modifier_imba_return_passive:OnAttackLanded(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_stacks") then
-			return nil
-		end
-
-		-- Only apply if the parent is the victim and the attacker is on the opposite team
-		if self:GetParent() == target and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-			if attacker:IsHero() or attacker:IsTower() then
-				self:SetStackCount(self:GetStackCount() + 1)
-			end
+	if self:GetParent() == keys.target and self:GetParent() == self:GetCaster() and self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_stacks") and not self:GetParent():HasModifier("modifier_imba_return_bonus_damage") then
+		if keys.attacker:IsHero() or keys.attacker:IsTower() then
+			self:IncrementStackCount()
 		end
 	end
 end
 
 function modifier_imba_return_passive:IsHidden()
-	return false
+	return self:GetStackCount() <= 0 and self:GetParent() == self:GetCaster()
 end
 
 function modifier_imba_return_passive:IsPurgable()
 	return false
 end
 
-function modifier_imba_return_passive:IsDebuff()
-	return false
-end
-
 -- Damage block modifier
-modifier_imba_return_damage_block = class({})
-modifier_imba_return_damage_block_buff =({})
-
-
-function modifier_imba_return_damage_block:IsHidden() return false end
-function modifier_imba_return_damage_block:IsPurgable()	return false end
-function modifier_imba_return_damage_block:IsDebuff() return false end
+modifier_imba_return_damage_block		= modifier_imba_return_damage_block or class({})
+modifier_imba_return_damage_block_buff	= modifier_imba_return_damage_block_buff or class({})
 
 function modifier_imba_return_damage_block:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
+	if not self:GetAbility() then self:Destroy() return end
 
-	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
-
-	if IsServer() then
-		-- Start thinking
-		self:StartIntervalThink(0.1)
-	end
+	self.damage_block = self:GetAbility():GetSpecialValueFor("damage_block")
 end
 
-function modifier_imba_return_damage_block:OnIntervalThink()
-	local buffs = self:GetParent():FindAllModifiersByName("modifier_imba_return_damage_block_buff")
-	if #buffs > 0 then
-		self:SetStackCount(#buffs)
-	else
-		self:Destroy()
-	end
+function modifier_imba_return_damage_block:OnRefresh()
+	self:OnCreated()
 end
 
-function modifier_imba_return_damage_block:GetCustomDamageBlock()
-	return self.damage_block * self:GetStackCount()
+function modifier_imba_return_damage_block:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
 end
 
-function modifier_imba_return_damage_block_buff:IsDebuff()			return true end
+function modifier_imba_return_damage_block:GetModifierPhysical_ConstantBlock()
+	return self:GetStackCount()
+end
+
 function modifier_imba_return_damage_block_buff:IsHidden() 			return true end
-function modifier_imba_return_damage_block_buff:IsPurgable() 		return true end
-function modifier_imba_return_damage_block_buff:IsPurgeException() 	return true end
-function modifier_imba_return_damage_block_buff:IsStunDebuff() 		return false end
-function modifier_imba_return_damage_block_buff:RemoveOnDeath() 	return true end
 function modifier_imba_return_damage_block_buff:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_return_damage_block_buff:OnCreated(keys)
+	if not IsServer() then return end
+
+	self:SetStackCount(keys.damage_block)
+	
+	if self:GetParent():HasModifier("modifier_imba_return_damage_block") then
+		self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):GetStackCount() + self:GetStackCount())
+	end
+end
+
+function modifier_imba_return_damage_block_buff:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasModifier("modifier_imba_return_damage_block") then
+		self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):GetStackCount() - self:GetStackCount())
+	end
+end
 
 modifier_imba_return_bonus_damage = class({})
 
@@ -682,6 +616,10 @@ function modifier_imba_return_bonus_damage:GetEffectAttachType()
 	return "attach_attack1"
 end
 
+function modifier_imba_return_bonus_damage:OnCreated()
+	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
 function modifier_imba_return_bonus_damage:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
@@ -689,7 +627,7 @@ function modifier_imba_return_bonus_damage:DeclareFunctions()
 end
 
 function modifier_imba_return_bonus_damage:GetModifierBaseDamageOutgoing_Percentage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") * self:GetStackCount()
+	return self.bonus_damage * self:GetStackCount()
 end
 
 ---------------------------------
@@ -698,7 +636,7 @@ end
 
 imba_centaur_stampede = class({})
 LinkLuaModifier("modifier_imba_stampede_haste", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_stampede_trample_stun", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_centaur_stampede_scepter", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_slow", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_centaur_stampede:IsHiddenWhenStolen()
@@ -758,6 +696,10 @@ function imba_centaur_stampede:OnSpellStart()
 		-- Give them haste buff
 		for _,ally in pairs (allies) do
 			ally:AddNewModifier(caster, ability, modifier_haste, {duration = duration})
+			
+			if self:GetCaster():HasScepter() then
+				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_centaur_stampede_scepter", {duration = self:GetSpecialValueFor("duration")})
+			end
 		end
 	end
 end
@@ -772,7 +714,6 @@ function modifier_imba_stampede_haste:OnCreated()
 	self.parent = self:GetParent()
 	self.particle_stampede = "particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
 	self.scepter = self.caster:HasScepter()
-	self.modifier_trample_stun = "modifier_imba_stampede_trample_stun"
 	self.modifier_trample_slow = "modifier_imba_stampede_trample_slow"
 
 	-- Ability specials
@@ -833,7 +774,7 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 				ApplyDamage(damageTable)
 
 				-- Add stun and slow modifiers to the enemy
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_stun, {duration = self.stun_duration})
+				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration})
 				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_slow, {duration = self.stun_duration + self.slow_duration})
 
 				-- #8 Talent: Stampede duration increase per trampled enemy
@@ -857,6 +798,10 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 						if ally:HasModifier("modifier_imba_stampede_haste") then
 							local modifier_haste_handler = ally:FindModifierByName("modifier_imba_stampede_haste")
 							modifier_haste_handler:SetDuration(modifier_haste_handler:GetRemainingTime() + bonus_stampede_duration, true)
+							
+							if ally:HasModifier("modifier_imba_centaur_stampede_scepter") then
+								ally:FindModifierByName("modifier_imba_centaur_stampede_scepter"):SetDuration(ally:FindModifierByName("modifier_imba_centaur_stampede_scepter"):GetRemainingTime() + bonus_stampede_duration, true)
+							end
 						end
 					end
 				end
@@ -871,26 +816,14 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 end
 
 function modifier_imba_stampede_haste:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_stampede_haste:GetModifierMoveSpeed_AbsoluteMin()
 	return self.absolute_move_speed
-end
-
-function modifier_imba_stampede_haste:GetModifierIncomingDamage_Percentage()
-	-- Reduce incoming damage if caster has scepter
-	if self.scepter then
-		return self.damage_reduction_scepter * (-1)
-	end
-
-	return nil
 end
 
 function modifier_imba_stampede_haste:GetModifierStatusResistanceStacking()
@@ -898,17 +831,7 @@ function modifier_imba_stampede_haste:GetModifierStatusResistanceStacking()
 end
 
 function modifier_imba_stampede_haste:CheckState()
-	local state
-
-	-- Gain cliffwalk if the caster has scepter
-	if self.scepter then
-		state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
-	else
-		state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	end
-
-	return state
+	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 end
 
 function modifier_imba_stampede_haste:GetEffectName()
@@ -931,13 +854,35 @@ function modifier_imba_stampede_haste:IsDebuff()
 	return false
 end
 
--- Trample stun modifier
-modifier_imba_stampede_trample_stun = class({})
+--------------------------------------------
+-- MODIFIER_IMBA_CENTAUR_STAMPEDE_SCEPTER --
+--------------------------------------------
 
-function modifier_imba_stampede_trample_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+modifier_imba_centaur_stampede_scepter	= modifier_imba_centaur_stampede_scepter or class({})
 
-	return state
+-- Just because Shush wants some sort of visible indicator for when it's an Aghanim's Scepter Stampede...
+function modifier_imba_centaur_stampede_scepter:IsPurgable()	return false end
+
+function modifier_imba_centaur_stampede_scepter:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.damage_reduction_scepter	= self:GetAbility():GetSpecialValueFor("damage_reduction_scepter") * (-1)
+end
+
+function modifier_imba_centaur_stampede_scepter:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
+end
+
+function modifier_imba_centaur_stampede_scepter:GetModifierIncomingDamage_Percentage()
+	return self.damage_reduction_scepter
+end
+
+function modifier_imba_centaur_stampede_scepter:CheckState()
+	return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 end
 
 -- After-trample slow modifier
@@ -953,9 +898,7 @@ function modifier_imba_stampede_trample_slow:OnCreated()
 end
 
 function modifier_imba_stampede_trample_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_stampede_trample_slow:GetModifierMoveSpeedBonus_Percentage()

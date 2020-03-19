@@ -374,8 +374,8 @@
 		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
 		"Ability14"					"special_bonus_imba_centaur_9" // +X Retaliate Damage
 		"Ability15"					"special_bonus_strength_20"
-		"Ability16"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
-		"Ability17"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability16"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability17"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 		
 		// Removed Talents
 		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy

@@ -219,7 +219,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"-45 -55 -65 -75"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
+				//"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
+				"LinkedSpecialBonus"	"special_bonus_imba_tidehunter_anchor_smash_damage_reduction"
 			}
 			"03"
 			{
@@ -360,6 +361,34 @@
 		{
 			"particle" 									"particles/units/heroes/hero_monkey_king/monkey_king_jump_armor_debuff_model.vpcf"
 		}		
+	}
+
+	//=================================================================================================================
+	// Talent: Greater Hardening (increasing magic resistance on Kraken Shell purges)
+	//=================================================================================================================
+	"special_bonus_imba_tidehunter_anchor_smash_damage_reduction" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_tidehunter_anchor_smash"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-25"
+			}
+		}
 	}
 
 	//=================================================================================================================

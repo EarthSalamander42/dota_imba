@@ -15,12 +15,9 @@ function modifier_special_bonus_imba_lina_8:IsHidden() return true end
 function modifier_special_bonus_imba_lina_8:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_lina_8:DeclareFunctions()
-	local decFuncs =
-	{
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-
-	return decFuncs
 end
 
 function modifier_special_bonus_imba_lina_8:OnAttackLanded( params )
@@ -521,6 +518,116 @@ function modifier_imba_lsa_talent_magma:OnIntervalThink()
 
 			ApplyDamage(damage_table)
 		end
+	end
+end
+
+
+-- Version 2 with "cleaner" code; no IMBAfications for now, but might use this for a rework down the line.
+
+LinkLuaModifier("modifier_imba_lina_light_strike_array_v2_thinker", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lina_light_strike_array_v2_thinker_single", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+-------------------------------------
+-- IMBA_LINA_LIGHT_STRIKE_ARRAY_V2 --
+-------------------------------------
+
+imba_lina_light_strike_array_v2								= imba_lina_light_strike_array_v2 or class({})
+modifier_imba_lina_light_strike_array_v2_thinker			= modifier_imba_lina_light_strike_array_v2_thinker or class({})
+modifier_imba_lina_light_strike_array_v2_thinker_single		= modifier_imba_lina_light_strike_array_v2_thinker_single or class({})
+
+function imba_lina_light_strike_array_v2:GetAOERadius()
+	return self:GetSpecialValueFor("light_strike_array_aoe")
+end
+
+function imba_lina_light_strike_array_v2:OnSpellStart()
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_lina_light_strike_array_v2_thinker", {duration = self:GetSpecialValueFor("light_strike_array_delay_time")}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
+
+------------------------------------------------------
+-- MODIFIER_IMBA_LINA_LIGHT_STRIKE_ARRAY_V2_THINKER --
+------------------------------------------------------
+
+function modifier_imba_lina_light_strike_array_v2_thinker:OnCreated()
+	self.light_strike_array_aoe				= self:GetAbility():GetSpecialValueFor("light_strike_array_aoe")
+	self.light_strike_array_delay_time		= self:GetAbility():GetSpecialValueFor("light_strike_array_delay_time")
+	self.light_strike_array_stun_duration	= self:GetAbility():GetSpecialValueFor("light_strike_array_stun_duration")
+	
+	if not IsServer() then return end
+	
+	self.light_strike_array_damage			= self:GetAbility():GetTalentSpecialValueFor("light_strike_array_damage")
+	
+	self.damage_type						= self:GetAbility():GetAbilityDamageType()
+	
+	EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Ability.PreLightStrikeArray", self:GetCaster())
+	
+	local ray_team_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(ray_team_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(ray_team_particle, 1, Vector(self.light_strike_array_aoe, 0, 0))
+	ParticleManager:ReleaseParticleIndex(ray_team_particle)
+	
+	self:OnIntervalThink()
+	-- self:StartIntervalThink(-1)
+end
+
+function modifier_imba_lina_light_strike_array_v2_thinker:OnIntervalThink()
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_lina_light_strike_array_v2_thinker_single", {
+		duration							= self.light_strike_array_delay_time,
+		light_strike_array_aoe				= self.light_strike_array_aoe,
+		light_strike_array_stun_duration	= self.light_strike_array_stun_duration,
+		light_strike_array_damage			= self.light_strike_array_damage,
+		damage_type							= self.damage_type
+	}, self:GetParent():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_LINA_LIGHT_STRIKE_ARRAY_V2_THINKER_SINGLE --
+-------------------------------------------------------------
+
+function modifier_imba_lina_light_strike_array_v2_thinker_single:OnCreated(keys)
+	if not IsServer() then return end
+	
+	self.light_strike_array_aoe				= keys.light_strike_array_aoe
+	self.light_strike_array_stun_duration	= keys.light_strike_array_stun_duration
+	self.light_strike_array_damage			= keys.light_strike_array_damage
+	self.damage_type						= keys.damage_type
+	
+	EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Ability.PreLightStrikeArray", self:GetCaster())
+	
+	local ray_team_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(ray_team_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(ray_team_particle, 1, Vector(self.light_strike_array_aoe, 0, 0))
+	ParticleManager:ReleaseParticleIndex(ray_team_particle)
+end
+
+function modifier_imba_lina_light_strike_array_v2_thinker_single:OnDestroy()
+	if not IsServer() then return end
+	
+	EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Ability.LightStrikeArray", self:GetCaster())
+	
+	local array_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(array_particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(array_particle, 1, Vector(self.light_strike_array_aoe, 1, 1))
+	ParticleManager:ReleaseParticleIndex(array_particle)
+	
+	-- "Light Strike Array destroys trees within the affected radius."
+	GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self.light_strike_array_aoe, false)
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.light_strike_array_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		-- "Light Strike Array first applies the debuff, then the damage."
+		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.light_strike_array_stun_duration})
+		
+		if stun_modifier then
+			stun_modifier:SetDuration(self.light_strike_array_stun_duration * (1 - enemy:GetStatusResistance()), true)
+		end
+		
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self.light_strike_array_damage,
+			damage_type		= self.damage_type,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		})
 	end
 end
 

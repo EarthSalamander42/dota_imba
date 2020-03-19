@@ -111,9 +111,9 @@ function imba_void_spirit_dissimilate:OnSpellStart()
 		
 		local damage_radius	= self:GetSpecialValueFor("damage_radius")
 		
-		if self:GetCaster():HasScepter() then
-			damage_radius	= damage_radius * (100 + self:GetSpecialValueFor("scepter_size_increase_pct") * 0.01)
-		end
+		-- if self:GetCaster():HasScepter() then
+			-- damage_radius	= damage_radius * (100 + self:GetSpecialValueFor("scepter_size_increase_pct") * 0.01)
+		-- end
 		
 		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("damage_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false)) do
 			if ally ~= self:GetCaster() then
@@ -147,11 +147,11 @@ function modifier_imba_void_spirit_dissimilate:OnCreated()
 	-- Yeah IDK
 	self.particle_offset			= 25
 	
-	if self:GetCaster():HasScepter() then
-		self.first_ring_distance_offset	= self.first_ring_distance_offset * (100 + self.scepter_size_increase_pct) * 0.01
-		self.damage_radius 				= self.damage_radius * (100 + self.scepter_size_increase_pct) * 0.01
-		self.particle_offset			= self.particle_offset * (100 + self.scepter_size_increase_pct) * 0.01
-	end
+	-- if self:GetCaster():HasScepter() then
+		-- self.first_ring_distance_offset	= self.first_ring_distance_offset * (100 + self.scepter_size_increase_pct) * 0.01
+		-- self.damage_radius 				= self.damage_radius * (100 + self.scepter_size_increase_pct) * 0.01
+		-- self.particle_offset			= self.particle_offset * (100 + self.scepter_size_increase_pct) * 0.01
+	-- end
 	
 	if not IsServer() then return end
 	
@@ -347,6 +347,33 @@ end
 -- IMBA_VOID_SPIRIT_RESONANT_PULSE --
 -------------------------------------
 
+function imba_void_spirit_resonant_pulse:GetIntrinsicModifierName()
+	return "modifier_generic_charges"
+end
+
+function imba_void_spirit_resonant_pulse:GetCooldown(level)
+	if not self:GetCaster():HasScepter() then
+		return self.BaseClass.GetCooldown(self, level)
+	else
+		return 0
+	end
+end
+
+function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
+	if self:GetCaster():HasScepter() then
+		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
+			if mod:GetAbility() == self and not mod.initialized then
+				mod:OnCreated()
+				mod.initialized = true
+			end
+		end
+	end
+end
+
+function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
 function imba_void_spirit_resonant_pulse:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse.Cast")
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse")
@@ -406,6 +433,7 @@ end
 -- I guess make it 50 to be reasonable
 function modifier_imba_void_spirit_resonant_pulse_ring:OnCreated(keys)
 	self.speed	 					= self:GetAbility():GetSpecialValueFor("speed")
+	self.silence_duration_scepter	= self:GetAbility():GetSpecialValueFor("silence_duration_scepter")
 	self.return_projectile_speed	= self:GetAbility():GetSpecialValueFor("return_projectile_speed")
 	self.equal_exchange_duration	= self:GetAbility():GetSpecialValueFor("equal_exchange_duration")
 	
@@ -429,7 +457,7 @@ end
 
 function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 	self.ring_size = self:GetElapsedTime() * self.speed
-
+	
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		if not self.hit_enemies[enemy:entindex()] and ((enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D() >= self.ring_size - self.thickness then
 		
@@ -438,6 +466,14 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 			self.impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 			ParticleManager:SetParticleControlEnt(self.impact_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(self.impact_particle)
+			
+			if self:GetCaster():HasScepter() then
+				self.silence_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration_scepter})
+				
+				if self.silence_modifier then
+					self.silence_modifier:SetDuration(self.silence_duration_scepter * (1 - enemy:GetStatusResistance()), true)
+				end
+			end
 			
 			ApplyDamage({
 				victim 			= enemy,
@@ -629,7 +665,10 @@ function modifier_imba_void_spirit_resonant_pulse_equal_exchange:CheckState()
 end
 
 function modifier_imba_void_spirit_resonant_pulse_equal_exchange:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
 function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnAttackLanded(keys)
@@ -640,6 +679,10 @@ function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnAttackLanded(
 			self:Destroy()
 		end
 	end
+end
+
+function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnTooltip()
+	return self:GetStackCount()
 end
 
 -----------------------------------------
