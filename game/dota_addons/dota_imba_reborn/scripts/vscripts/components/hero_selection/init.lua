@@ -13,7 +13,6 @@ local herolist = {}
 local imbalist = {}
 local newlist = {}
 local customlist = {}
-local hotdisabledlist = {}
 local totalheroes = 0
 
 -- list all available heroes and get their primary attrs, and send it to client
@@ -22,7 +21,7 @@ function HeroSelection:Init()
 	self.spawnedPlayers = {}
 	self.attemptedSpawnPlayers = {}
 
-	local herolistFile = "scripts/npc/herolist/"..GetMapName()..".txt"
+	local herolistFile = "scripts/npc/herolist.txt"
 
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if KeyValues.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
@@ -43,13 +42,11 @@ function HeroSelection:Init()
 			customlist[key] = KeyValues.HeroKV[key].IsCustom
 		end
 
-		if value == 0 then
-			hotdisabledlist[key] = 1
-		else
-			totalheroes = totalheroes + 1
-			assert(key ~= FORCE_PICKED_HERO, "FORCE_PICKED_HERO cannot be a pickable hero")
-		end
+		totalheroes = totalheroes + 1
+		assert(key ~= FORCE_PICKED_HERO, "FORCE_PICKED_HERO cannot be a pickable hero")
 	end
+
+	print(api:GetDisabledHeroes())
 
 	CustomNetTables:SetTableValue("hero_selection", "herolist", {
 		gametype = GetMapName(),
@@ -57,7 +54,7 @@ function HeroSelection:Init()
 		imbalist = imbalist,
 		newlist = newlist,
 		customlist = customlist,
-		hotdisabledlist = hotdisabledlist,
+		hotdisabledlist = api:GetDisabledHeroes(),
 		mutation = IMBA_MUTATION,
 	})
 

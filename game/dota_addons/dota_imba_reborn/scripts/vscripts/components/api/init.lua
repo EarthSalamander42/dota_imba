@@ -358,6 +358,23 @@ function api:GetArmory(player_id)
 	end
 end
 
+function api:GetDisabledHeroes()
+	if self.disabled_heroes then
+		return self.disabled_heroes
+	end
+
+	self:Request("disabled-heroes", function(data)
+		print(data)
+		api.disabled_heroes = data
+
+		if callback ~= nil then
+			callback(data)
+		end
+	end, nil, "POST", {
+		map = GetMapName(),
+	});
+end
+
 function api:GetApiGameId()
 	return self.game_id
 end

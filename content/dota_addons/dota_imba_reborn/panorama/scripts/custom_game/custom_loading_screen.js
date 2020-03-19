@@ -1,5 +1,35 @@
 "use strict";
 
+var secret_key = {};
+
+var api = {
+	base : "http://api.frostrose-studio.com/",
+	urls : {
+		loadingScreenMessage : "imba/loading-screen-info",
+	},
+	getLoadingScreenMessage : function(success_callback, error_callback) {
+		$.AsyncWebRequest(api.base + api.urls.loadingScreenMessage, {
+			type : "GET",
+			dataType : "json",
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error) {
+					$.Msg("Error loading screen info");
+					error_callback();
+				} else {
+					$.Msg("Get loading screen info successful");
+					success_callback(obj);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error loading screen info" + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+}
+
 var view = {
 	title: $("#loading-title-text"),
 	text: $("#loading-content-text"),
@@ -42,6 +72,14 @@ function fetch() {
 		return;
 	}
 
+	secret_key = CustomNetTables.GetTableValue("game_options", "server_key");
+	if (secret_key == undefined) {
+		$.Schedule(0.1, fetch);
+		return;
+	} else {
+		secret_key = secret_key["1"];
+	}
+
 	if (Game.GetMapInfo().map_display_name == "imba_1v1")
 		DisableVoting();
 	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
@@ -52,10 +90,33 @@ function fetch() {
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
-//	view.title.text = $.Localize("#addon_game_name") + " " + game_version + " - " + $.Localize("#game_version_name");
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
-	view.text.text = $.Localize("#loading_screen_description");
-	view.link_text.text = $.Localize("#loading_screen_button");
+
+	api.getLoadingScreenMessage(function(data) {
+		var found_lang = false;
+		var result = data.data;
+		var english_row;
+
+		for (var i in result) {
+			var info = result[i];
+
+			if (info.lang == $.Localize("lang")) {
+				view.text.text = info.content;
+				view.link_text.text = info.link_text;
+				found_lang = true;
+				break;
+			} else if (info.lang == "en") {
+				english_row = info;
+			}
+		}
+
+		if (found_lang == false) {
+			view.text.text = english_row.content;
+			view.link_text.text = english_row.link_text;
+		}
+	}, function() {
+		// error callback
+	});
 
 //	$.Msg("Fetching and setting loading screen data");
 

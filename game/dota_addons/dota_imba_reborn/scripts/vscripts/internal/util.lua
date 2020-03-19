@@ -1187,25 +1187,25 @@ end
 -- needs to be tested before using it
 original_GetIntrinsicModifierName = CDOTABaseAbility.GetIntrinsicModifierName
 CDOTABaseAbility.GetIntrinsicModifierName = function(self, sModifierName)
-    print("Ability/Item:", self)
-    if self == nil then return end
+	print("Ability/Item:", self)
+	if self == nil then return end
 
-    print("type:", type(sModifierName))
-    if type(sModifierName) == "table" then
-        print("Table of intrinsic modifiers! yay!")
-        for index, modifier_name in pairs(sModifierName) do
-            print(index, modifier_name)
-            if not self.intrinsic_modifiers then self.intrinsic_modifiers = {} end
+	print("type:", type(sModifierName))
+	if type(sModifierName) == "table" then
+		print("Table of intrinsic modifiers! yay!")
+		for index, modifier_name in pairs(sModifierName) do
+			print(index, modifier_name)
+			if not self.intrinsic_modifiers then self.intrinsic_modifiers = {} end
 
-            local class = modifier_name.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
-            load(class)()
+			local class = modifier_name.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
+			load(class)()
 
-            local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, modifier_name, {})
-            table.insert(self.intrinsic_modifiers, mod)
-        end
-    else
-        return original_GetIntrinsicModifierName(self, sModifierName)
-    end
+			local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, modifier_name, {})
+			table.insert(self.intrinsic_modifiers, mod)
+		end
+	else
+		return original_GetIntrinsicModifierName(self, sModifierName)
+	end
 end
 
 -- Item added to inventory filter
@@ -1215,18 +1215,18 @@ GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
 	if unit:IsRealHero() then if unit:GetPlayerID() == -1 then return end end
 	local item = EntIndexToHScript(event.item_entindex_const)
 
-    if not unit:HasItemInInventory(item:GetAbilityName()) then
-        if not unit:HasItemInInventory(item:GetAbilityName()) then
-            print("Dropped item has multiple intrinsic modifiers, removing them")
-            for index, modifier_name in pairs(item.intrinsic_modifiers) do
-                if unit:HasModifier(modifier_name) then
-                    unit:RemoveModifierByName(modifier_name)
-                end
-            end
-        end
-    end
+	if not unit:HasItemInInventory(item:GetAbilityName()) then
+		if not unit:HasItemInInventory(item:GetAbilityName()) then
+			print("Dropped item has multiple intrinsic modifiers, removing them")
+			for index, modifier_name in pairs(item.intrinsic_modifiers) do
+				if unit:HasModifier(modifier_name) then
+					unit:RemoveModifierByName(modifier_name)
+				end
+			end
+		end
+	end
 
-   	return true
+	return true
 end, GameMode)
 --]]
 
@@ -1275,32 +1275,32 @@ end
 
 -- Example Usage:
 -- local t = {
-    -- 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
+	-- 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
 -- };
 
 -- Custom_ArrayRemove(t, function(t, i, j)
-    -- -- Return true to keep the value, or false to discard it.
-    -- local v = t[i];
-    -- return (v == 'a' or v == 'b' or v == 'f' or v == 'h'); // This keeps a, b, f, and h in the array while removing everything else
+	-- -- Return true to keep the value, or false to discard it.
+	-- local v = t[i];
+	-- return (v == 'a' or v == 'b' or v == 'f' or v == 'h'); // This keeps a, b, f, and h in the array while removing everything else
 -- end);
 
 function Custom_ArrayRemove(t, fnKeep)
-    local j, n = 1, #t;
+	local j, n = 1, #t;
 
-    for i=1,n do
-        if (fnKeep(i, j)) then
-            -- Move i's kept value to j's position, if it's not already there.
-            if (i ~= j) then
-                t[j] = t[i];
-                t[i] = nil;
-            end
-            j = j + 1; -- Increment position of where we'll place the next kept value.
-        else
-            t[i] = nil;
-        end
-    end
+	for i=1,n do
+		if (fnKeep(i, j)) then
+			-- Move i's kept value to j's position, if it's not already there.
+			if (i ~= j) then
+				t[j] = t[i];
+				t[i] = nil;
+			end
+			j = j + 1; -- Increment position of where we'll place the next kept value.
+		else
+			t[i] = nil;
+		end
+	end
 
-    return t;
+	return t;
 end
 
 function Custom_bIsStrongIllusion(unit)

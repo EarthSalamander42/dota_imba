@@ -42,7 +42,15 @@ function InitHeroSelection()  {
 		for (var j = 0; j < GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount(); j++) {
 			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
 				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j).GetChild(0).GetChild(0);
-				
+
+				$.Msg(herolist.hotdisabledlist)
+				if (herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "table" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
+					hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
+					hero_panel.GetParent().GetParent().AddClass("Banned")
+					hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
+					hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
+				}
+
 				if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 					hero_panel.GetParent().AddClass("IMBA_HeroCard");
 					hero_panel.GetParent().style.boxShadow = "inset #FF7800aa 0 0 5px 0";
@@ -173,6 +181,8 @@ function CheckForBannedHero() {
 
 		if (hero_tooltip.search(" (imba)"))
 			hero_tooltip = hero_tooltip.replace(" (imba)", "");
+
+		$.Msg(herolist.hotdisabledlist)
 
 		for (hero in herolist.hotdisabledlist) {
 			hero = hero.replace("npc_dota_hero_", "");
