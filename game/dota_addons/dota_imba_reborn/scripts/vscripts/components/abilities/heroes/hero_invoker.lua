@@ -423,7 +423,6 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_aghanim_buff:IsPurgable()	return false end
 		function modifier_imba_invoker_aghanim_buff:IsHidden() 		return true  end
 		function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
-		function modifier_imba_invoker_aghanim_buff:IsPermanent() 	return true  end
 		function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
 		function modifier_imba_invoker_aghanim_buff:OnCreated()
 			if IsServer() then
@@ -705,7 +704,6 @@ imba_invoker = imba_invoker or class({})
 	modifier_imba_invoker_invoke_buff = class({})
 	function modifier_imba_invoker_invoke_buff:IsPurgable()		return false end
 	function modifier_imba_invoker_invoke_buff:IsHidden() 		return true  end
-	function modifier_imba_invoker_invoke_buff:IsPermanent() 	return true  end
 	function modifier_imba_invoker_invoke_buff:RemoveOnDeath() 	return false end
 	function modifier_imba_invoker_invoke_buff:OnCreated()
 		if IsServer() then

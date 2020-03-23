@@ -263,6 +263,12 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"			"5"
 			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"certain_trigger_timer"		"13 12 11 10"
+			}
 		}
 	}
 

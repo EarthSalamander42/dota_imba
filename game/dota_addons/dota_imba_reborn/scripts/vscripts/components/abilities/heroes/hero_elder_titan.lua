@@ -640,7 +640,7 @@ function modifier_imba_elder_titan_natural_order_aura:IsAura() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsAuraActiveOnDeath() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsDebuff() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsHidden() return true end
-function modifier_imba_elder_titan_natural_order_aura:IsPermanent() return true end
+function modifier_imba_elder_titan_natural_order_aura:RemoveOnDeath() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsPurgable() return false end
 
 function modifier_imba_elder_titan_natural_order_aura:OnCreated()

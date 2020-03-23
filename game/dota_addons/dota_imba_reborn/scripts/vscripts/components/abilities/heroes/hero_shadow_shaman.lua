@@ -958,19 +958,19 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	local caster    =   self:GetCaster()
 	local ability   =   self:GetAbility()
 	local parent    =   self:GetParent()
-
+	
+	self.scepter_additional_targets	= ability:GetSpecialValueFor("scepter_additional_targets")
+	
 	self.snake_charmer_creep_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_count")
 	self.snake_charmer_hero_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_count")
 	
-	snake_charmer_creep_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_bat_reduction_pct")
-	snake_charmer_hero_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_bat_reduction_pct")
+	self.snake_charmer_creep_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_bat_reduction_pct")
+	self.snake_charmer_hero_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_bat_reduction_pct")
 
 	-- AGHANIM'S SCEPTER: Wards have more attack range
 	if caster:HasScepter() then
 		self.bonus_range    =   ability:GetSpecialValueFor("scepter_bonus_range")
 	end
-	-- Prevent some recursion with the scepter effect
-	self.main_attack    =   true
 	
 	if not IsServer() then return end
 	-- These things still get stuck sometimes (important for...reasons) so reassess the space again
@@ -1020,46 +1020,32 @@ function modifier_imba_mass_serpent_ward:OnAttackLanded(params) -- health handli
 	end
 end
 
-function modifier_imba_mass_serpent_ward:OnAttack(params)
-	if IsServer() then
-		if params.attacker == self:GetParent() and ability and not ability:IsNull() then
-			-- Ability properties
-			local parent    =   self:GetParent()
-			local caster    =   self:GetCaster()
-			local ability   =   self:GetAbility()
-			-- Ability parameters
-			local max_targets   =  ability:GetSpecialValueFor("scepter_additional_targets")
-
-			-- AGHANIM'S SCEPTER: Ward's attacks split shot
-			if caster:HasScepter() and self.main_attack then
-				self.main_attack = false
-
-				-- Look for a target in the attack range of the ward
-				local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
-					parent:GetAbsOrigin(),
-					nil,
-					parent:Script_GetAttackRange(),
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE +DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-					FIND_ANY_ORDER,
-					false)
-
-				-- "skip" the iteration if the main target was chosen
-				if CheckIfInTable(enemies, params.target, max_targets) then
-					max_targets = max_targets + 1
-				end
-
-				-- Send a attack projectile to the chosen enemies
-				for i=1, max_targets do
-					if enemies[i] ~= params.target and i <= #enemies then
-						parent:PerformAttack(enemies[i], false, true, true, true, true, false, false)
-
-						-- Recursion handling
-						Timers:CreateTimer(FrameTime(), function()
-							self.main_attack = true
-						end)
-					end
+function modifier_imba_mass_serpent_ward:OnAttack(keys)
+	-- AGHANIM'S SCEPTER: Ward's attacks split shot
+	if keys.attacker == self:GetParent() and not keys.no_attack_cooldown and self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasScepter() then
+		-- Look for a target in the attack range of the ward
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+			self:GetParent():GetAbsOrigin(),
+			nil,
+			self:GetParent():Script_GetAttackRange(),
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+			DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
+			FIND_ANY_ORDER,
+			false)
+			
+		local targets_aimed = 0
+		
+		-- Send a attack projectile to the chosen enemies
+		for i = 1, #enemies do
+			if enemies[i] ~= keys.target then
+				-- "Unlike most other instant attacks, the ones from the Serpent Wards do not proc any on-hit effects."
+				self:GetParent():PerformAttack(enemies[i], false, false, true, true, true, false, false)
+				
+				targets_aimed	= targets_aimed + 1
+				
+				if targets_aimed >= self.scepter_additional_targets then
+					break
 				end
 			end
 		end

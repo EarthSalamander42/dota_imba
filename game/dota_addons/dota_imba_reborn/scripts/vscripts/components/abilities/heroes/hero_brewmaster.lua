@@ -6,6 +6,9 @@ LinkLuaModifier("modifier_imba_brewmaster_thunder_clap_conductive_thinker", "com
 
 LinkLuaModifier("modifier_imba_brewmaster_cinder_brew", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler_passive", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brewmaster_drunken_brawler", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_brewmaster_primal_split", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
@@ -21,8 +24,11 @@ modifier_imba_brewmaster_cinder_brew				= modifier_imba_brewmaster_cinder_brew o
 modifier_imba_brewmaster_cinder_brew_thinker		= modifier_imba_brewmaster_cinder_brew_thinker or class({})
 modifier_imba_brewmaster_cinder_brew_thinker_aura	= modifier_imba_brewmaster_cinder_brew_thinker_aura or class({})
 
-imba_brewmaster_drunken_brawler						= imba_brewmaster_drunken_brawler or class({})
-modifier_imba_brewmaster_drunken_brawler			= modifier_imba_brewmaster_drunken_brawler or class({})
+imba_brewmaster_drunken_brawler							= imba_brewmaster_drunken_brawler or class({})
+modifier_imba_brewmaster_drunken_brawler_passive		= modifier_imba_brewmaster_drunken_brawler_passive or class({})
+modifier_imba_brewmaster_drunken_brawler_crit_cooldown	= modifier_imba_brewmaster_drunken_brawler_crit_cooldown or class({})
+modifier_imba_brewmaster_drunken_brawler_miss_cooldown	= modifier_imba_brewmaster_drunken_brawler_miss_cooldown or class({})
+modifier_imba_brewmaster_drunken_brawler				= modifier_imba_brewmaster_drunken_brawler or class({})
 
 imba_brewmaster_primal_split						= imba_brewmaster_primal_split or class({})
 modifier_imba_brewmaster_primal_split				= modifier_imba_brewmaster_primal_split or class({})
@@ -500,11 +506,90 @@ end
 -- IMBA_BREWMASTER_DRUNKEN_BRAWLER --
 -------------------------------------
 
+function imba_brewmaster_drunken_brawler:GetIntrinsicModifierName()
+	return "modifier_imba_brewmaster_drunken_brawler_passive"
+end
+
+function imba_brewmaster_drunken_brawler:GetAbilityTextureName()
+	if not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
+		return "custom/brewmaster/drunken_brawler_both"
+	elseif not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
+		return "custom/brewmaster/drunken_brawler_crit"
+	elseif self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
+		return "custom/brewmaster/drunken_brawler_miss"
+	else
+		return "brewmaster_drunken_brawler"
+	end
+end
+
 function imba_brewmaster_drunken_brawler:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Brewmaster.Brawler.Cast")
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_drunken_brawler", {duration = self:GetSpecialValueFor("duration")})
 end
+
+------------------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_DRUNKEN_BRAWLER_PASSIVE --
+------------------------------------------------------
+
+function modifier_imba_brewmaster_drunken_brawler_passive:IsHidden()		return true end
+function modifier_imba_brewmaster_drunken_brawler_passive:IsPurgable()		return false end
+function modifier_imba_brewmaster_drunken_brawler_passive:RemoveOnDeath()	return false end
+
+function modifier_imba_brewmaster_drunken_brawler_passive:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_FAIL
+	}
+end
+
+function modifier_imba_brewmaster_drunken_brawler_passive:GetModifierPreAttack_CriticalStrike()
+	if self:GetAbility() then
+		if not self:GetParent():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and not self:GetParent():HasModifier("modifier_imba_brewmaster_drunken_brawler") then
+			self.bCrit = true
+			return self:GetAbility():GetSpecialValueFor("crit_multiplier")
+		else
+			self.bCrit = false
+		end
+	end
+end
+
+function modifier_imba_brewmaster_drunken_brawler_passive:GetModifierEvasion_Constant()
+	if self:GetAbility() and not self:GetParent():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") and not self:GetParent():HasModifier("modifier_imba_brewmaster_drunken_brawler") then
+		return 100
+	end
+end
+
+function modifier_imba_brewmaster_drunken_brawler_passive:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and self.bCrit then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_brewmaster_drunken_brawler_crit_cooldown", {duration = self:GetAbility():GetSpecialValueFor("certain_trigger_timer")})
+	end
+end
+
+function modifier_imba_brewmaster_drunken_brawler_passive:OnAttackFail(keys)
+	if keys.target == self:GetParent() and not self:GetParent():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_brewmaster_drunken_brawler_miss_cooldown", {duration = self:GetAbility():GetSpecialValueFor("certain_trigger_timer")})
+	end
+end
+
+------------------------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_DRUNKEN_BRAWLER_CRIT_COOLDOWN --
+------------------------------------------------------------
+
+function modifier_imba_brewmaster_drunken_brawler_crit_cooldown:IsHidden()		return true end
+function modifier_imba_brewmaster_drunken_brawler_crit_cooldown:IsPurgable()	return false end
+function modifier_imba_brewmaster_drunken_brawler_crit_cooldown:RemoveOnDeath()	return false end
+
+------------------------------------------------------------
+-- MODIFIER_IMBA_BREWMASTER_DRUNKEN_BRAWLER_MISS_COOLDOWN --
+------------------------------------------------------------
+
+function modifier_imba_brewmaster_drunken_brawler_miss_cooldown:IsHidden()		return true end
+function modifier_imba_brewmaster_drunken_brawler_miss_cooldown:IsPurgable()	return false end
+function modifier_imba_brewmaster_drunken_brawler_miss_cooldown:RemoveOnDeath()	return false end
 
 ----------------------------------------------
 -- MODIFIER_IMBA_BREWMASTER_DRUNKEN_BRAWLER --
@@ -1074,6 +1159,7 @@ function imba_brewmaster_primal_unison:OnChannelFinish(bInterrupted)
 			for _, ent in pairs(Entities:FindAllByName("npc_dota_brewmaster_earth")) do
 				if ent:GetOwner() == self:GetCaster():GetOwner() then
 					ent:ForceKill(false)
+					FindClearSpaceForUnit(self:GetCaster():GetOwner(), ent:GetAbsOrigin(), true)
 				end
 			end
 			

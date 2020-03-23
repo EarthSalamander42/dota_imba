@@ -256,7 +256,6 @@ function modifier_imba_starfall_scepter_thinker:IsPurgable() return false end
 function modifier_imba_starfall_scepter_thinker:IsDebuff() return false end
 function modifier_imba_starfall_scepter_thinker:DestroyOnExpire() return false end
 function modifier_imba_starfall_scepter_thinker:RemoveOnDeath() return false end
-function modifier_imba_starfall_scepter_thinker:IsPermanent() return true end
 
 function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 	if IsServer() then

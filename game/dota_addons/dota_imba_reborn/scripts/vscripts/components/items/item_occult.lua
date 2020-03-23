@@ -141,9 +141,8 @@ end
 
 function modifier_imba_occult_mask_unique:IsHidden() return true end
 function modifier_imba_occult_mask_unique:IsPurgable() return false end
-function modifier_imba_occult_mask_unique:IsDebuff() return false end
-function modifier_imba_occult_mask_unique:IsPermanent() return true end
 function modifier_imba_occult_mask_unique:RemoveOnDeath() return false end
+
 function modifier_imba_occult_mask_unique:IsAura() return true end
 function modifier_imba_occult_mask_unique:GetAuraRadius() return self.radius end
 function modifier_imba_occult_mask_unique:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end

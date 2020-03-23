@@ -806,7 +806,6 @@ end
 
 
 
-function modifier_imba_shield_crash_buff:IsPermanent() return false end
 function modifier_imba_shield_crash_buff:IsHidden() return false end
 function modifier_imba_shield_crash_buff:IsPurgable() return true end
 function modifier_imba_shield_crash_buff:IsDebuff() return false end
@@ -1033,7 +1032,6 @@ modifier_imba_shield_crash_block = modifier_imba_shield_crash_block or class({})
 
 -- function modifier_imba_shield_crash_block:IsHidden() return false end
 -- function modifier_imba_shield_crash_block:IsPurgable() return false end --WHY THE FUCK IS THIS FAILING SOMETIMES?!
--- function modifier_imba_shield_crash_block:IsPermanent() return true end
 -- function modifier_imba_shield_crash_block:RemoveOnDeath() return false end
 -- function modifier_imba_shield_crash_block:IsDebuff() return false end
 
@@ -1426,7 +1424,7 @@ end
 function modifier_imba_heartpiercer_passive:IsHidden() return true end
 function modifier_imba_heartpiercer_passive:IsPurgable() return false end
 function modifier_imba_heartpiercer_passive:IsStealable() return false end
-function modifier_imba_heartpiercer_passive:IsPermanent() return true end
+function modifier_imba_heartpiercer_passive:RemoveOnDeath() return false end
 function modifier_imba_heartpiercer_passive:IsDebuff() return false end
 
 
@@ -1455,7 +1453,6 @@ end
 
 function modifier_imba_heartpiercer_delay:IsHidden() return false end
 function modifier_imba_heartpiercer_delay:IsPurgable() return true end
-function modifier_imba_heartpiercer_delay:IsPermanent() return false end
 function modifier_imba_heartpiercer_delay:IsDebuff() return true end
 
 --Heartpiercer debuff modifier
@@ -1582,7 +1579,6 @@ end
 
 function modifier_imba_heartpiercer_debuff:IsHidden() return false end
 function modifier_imba_heartpiercer_debuff:IsPurgable() return true end
-function modifier_imba_heartpiercer_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
 
 --Talent #5 fake modifier: It's just visual for the victim
@@ -1590,7 +1586,6 @@ modifier_imba_heartpiercer_talent_debuff = modifier_imba_heartpiercer_talent_deb
 
 function modifier_imba_heartpiercer_talent_debuff:IsHidden() return false end
 function modifier_imba_heartpiercer_talent_debuff:IsPurgable() return true end
-function modifier_imba_heartpiercer_talent_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_talent_debuff:IsDebuff() return true end
 
 --Talent #6 fake modifier: It's just visual for the victim
@@ -1598,7 +1593,6 @@ modifier_imba_heartpiercer_talent_debuff_2 = modifier_imba_heartpiercer_talent_d
 
 function modifier_imba_heartpiercer_talent_debuff_2:IsHidden() return false end
 function modifier_imba_heartpiercer_talent_debuff_2:IsPurgable() return true end
-function modifier_imba_heartpiercer_talent_debuff_2:IsPermanent() return false end
 function modifier_imba_heartpiercer_talent_debuff_2:IsDebuff() return true end
 
 
@@ -1755,7 +1749,6 @@ modifier_imba_gyroshell_impact_check = modifier_imba_gyroshell_impact_check or c
 
 function modifier_imba_gyroshell_impact_check:IsHidden() return true end
 function modifier_imba_gyroshell_impact_check:IsPurgable() return false end
-function modifier_imba_gyroshell_impact_check:IsPermanent() return false end
 function modifier_imba_gyroshell_impact_check:IsDebuff() return false end
 
 function modifier_imba_gyroshell_impact_check:OnCreated()

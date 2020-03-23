@@ -250,7 +250,7 @@ end
 
 function modifier_imba_shiva_aura:IsHidden() return true end
 function modifier_imba_shiva_aura:IsPurgable() return false end
-function modifier_imba_shiva_aura:IsPermanent() return true end
+function modifier_imba_shiva_aura:RemoveOnDeath() return false end
 
 ---------------------------------------
 -- Shiva's Guard Passive Aura Debuff --

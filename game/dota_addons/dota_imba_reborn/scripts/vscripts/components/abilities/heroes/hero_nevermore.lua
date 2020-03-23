@@ -1265,7 +1265,7 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 	end
 end
 
-function modifier_imba_necromastery_souls:IsPermanent() return true end
+function modifier_imba_necromastery_souls:RemoveOnDeath() return false end
 function modifier_imba_necromastery_souls:IsHidden() return false end
 function modifier_imba_necromastery_souls:IsPurgable() return false end
 function modifier_imba_necromastery_souls:IsDebuff() return false end
@@ -1559,6 +1559,8 @@ function imba_nevermore_requiem:OnAbilityPhaseStart()
 	else
 		self:GetCaster():EmitSound(self.sound)
 	end
+	
+	self.wings_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_wings.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 
 	-- Start cast animation
 	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_6)
@@ -1577,6 +1579,11 @@ function imba_nevermore_requiem:OnAbilityPhaseInterrupted()
 	self:GetCaster():RemoveModifierByName("modifier_imba_reqiuem_phase_buff")
 	
 	self:GetCaster():StopSound(self.sound)
+	
+	if self.wings_particle then
+		ParticleManager:DestroyParticle(self.wings_particle, true)
+		ParticleManager:ReleaseParticleIndex(self.wings_particle)
+	end
 end
 
 function imba_nevermore_requiem:OnSpellStart(death_cast)
@@ -1601,6 +1608,10 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
+
+	if self.wings_particle then
+		ParticleManager:ReleaseParticleIndex(self.wings_particle)
+	end
 
 	-- Remove phased movement from caster
 	caster:RemoveModifierByName(modifier_phase)
@@ -1670,8 +1681,10 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 	-- Calculate the first line location, in front of the caster
 	local line_position = caster:GetAbsOrigin() + caster:GetForwardVector() * travel_distance
 
-	-- Create the first line
-	CreateRequiemSoulLine(caster, ability, line_position, death_cast)
+	if stacks >= 1 then
+		-- Create the first line
+		CreateRequiemSoulLine(caster, ability, line_position, death_cast)
+	end
 
 	-- Calculate the location of every other line
 	local qangle_rotation_rate = 360 / line_count
@@ -1724,9 +1737,9 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	if scepter_line then
 		damage = damage * (scepter_line_damage_pct * 0.01)
 	end
-
-
-
+	
+	target:EmitSound("Hero_Nevermore.RequiemOfSouls.Damage")
+	
 	-- Damage the target
 	local damageTable = {victim = target,
 						damage = damage,
@@ -1740,6 +1753,17 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	-- If this line is a scepter line, heal the caster for the actual damage dealt
 	if scepter_line then
 		caster:Heal(damage_dealt, caster)
+	end
+	
+	-- F.E.A.R.
+	if not target:HasModifier("modifier_nevermore_requiem_fear") then
+		local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration")})
+		
+		if fear_modifier then
+			fear_modifier:SetDuration(self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()), true)
+		end
+	else
+		target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
 	end
 end
 

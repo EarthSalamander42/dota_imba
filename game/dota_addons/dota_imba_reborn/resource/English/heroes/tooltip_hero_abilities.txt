@@ -1205,15 +1205,16 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls."
 
 // \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
 
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"                "Can't steal the soul of units which don't have one in the first place."
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"                "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"                  "DAMAGE PER SOUL:"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"            "MAX SOULS:"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_temporary_souls_pct"          "%TEMPORARY SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"					"Can't steal the soul of units which don't have one in the first place."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"						"Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"				"MAX SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"			"DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_scepter_max_souls"		"SCEPTER MAX SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_aghanim_description"		"Increases max souls." 
 
 "DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
 "DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
@@ -1235,16 +1236,17 @@
 // Shadow Fiend's Requiem of Souls
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_requiem"                          "Requiem of Souls"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"              "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will have its movement speed and attack damage reduced. Consumes all temporary souls, and creates lines of energy for every %souls_per_line% souls captured through Necromastery. Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Lore"                      "The captured souls of those past slain are released to ravage their former allies."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Note0"                    "When dying, the caster first loses souls due to dying, then consumes all leftover temporary souls for Requiem."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Note1"                    "When Requiem is stolen by either Rubick or Nether Ward, they also get the same Necromastery stacks as Shadow Fiend currently have, but cannot increase or lose stacks in any way."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"              "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_slow_duration% seconds for each line hit. Lines of energy are created for every %requiem_soul_conversion% souls captured through Necromastery. <br><br> Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Remnants of Requiem:</font> Also reduces attack damage by %damage_reduction_pct%%% for %slow_duration% seconds. The movement speed reduction also lasts for this duration.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Lore"						"The captured souls of those past slain are released to ravage their former allies."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Note0"						"When dying, the caster first loses souls due to dying, then consumes all leftover temporary souls for Requiem."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Note1"						"When Requiem is stolen by either Rubick or Nether Ward, they also get the same Necromastery stacks as Shadow Fiend currently have, but cannot increase or lose stacks in any way."
+
+"DOTA_Tooltip_ability_imba_nevermore_requiem_abilitycastpoint"			"CAST DELAY:"
+"DOTA_Tooltip_ability_imba_nevermore_requiem_ms_slow_pct"				"%MOVEMENT REDUCTION:"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_damage_reduction_pct"                  "%ATTACK DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_ms_slow_pct"              "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_slow_duration"            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"               "%SCEPTER RETURNING LINES DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"                   "Souls now return to Shadow Fiend, damaging enemies again on their return, and healing him for all damage dealt. Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"	"%SCEPTER DAMAGE ON RETURN:"
+
+"DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"		"Causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend deals less damage, but heals Shadow Fiend for all the damage it dealt. <font color='#FF7800'>Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow.</font>"
 
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff"								"Requiem of Souls"
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
@@ -1260,7 +1262,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_2_Description"		"Necromastery can be activated to consume souls and heal 80 hp/soul. Will spare souls if he don't need them all to heal completely. Has a 12s cooldown."
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3"					"Necromastery Stack Cap Increase on Hero Kill"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3_Description"       "Permanently increases your soul stacks cap on Necromastery by 1 each time you kill an enemy hero."
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.5% lifesteal per Necromastery soul"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+{s:value}% lifesteal per Necromastery soul"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from affected heroes per second"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_6"                   "Shadowraze refreshes Requiem of Souls' debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_7"                   "Necromastery souls are not lost when dying"

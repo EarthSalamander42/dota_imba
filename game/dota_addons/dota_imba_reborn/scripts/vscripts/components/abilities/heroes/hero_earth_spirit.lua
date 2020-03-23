@@ -435,11 +435,9 @@ function modifier_imba_earths_mark:RefreshDuration(talentRefresh)
 end
 
 function modifier_imba_earths_mark:GetModifierMagicalResistanceBonus()
-	if self.caster:HasTalent("special_bonus_imba_earth_spirit_4") then
-		return self.caster:FindTalentValue("special_bonus_imba_earth_spirit_4") * self:GetStackCount() * -1
+	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasTalent("special_bonus_imba_earth_spirit_4") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_earth_spirit_4") * self:GetStackCount() * (-1)
 	end
-	
-	return 0
 end
 
 -----	Layout fix

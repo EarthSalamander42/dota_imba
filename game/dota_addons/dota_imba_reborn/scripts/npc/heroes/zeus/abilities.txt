@@ -625,7 +625,7 @@
 
 		"LinkedAbility"
 		{
-			"01"    "invoker_cold_snap"
+			"01"    "imba_zuus_thundergods_wrath"
 		}
 
 		// Special

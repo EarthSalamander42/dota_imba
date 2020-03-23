@@ -510,10 +510,9 @@ function modifier_imba_frost_arrows_buff:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
-function modifier_imba_frost_arrows_buff:IsPermanent() return true end
 function modifier_imba_frost_arrows_buff:IsHidden() return false end
 function modifier_imba_frost_arrows_buff:IsPurgable() return false end
-function modifier_imba_frost_arrows_buff:IsDebuff() return false end
+function modifier_imba_frost_arrows_buff:RemoveOnDeath() return false end
 
 function modifier_imba_frost_arrows_buff:OnCreated()
 	-- Ability properties

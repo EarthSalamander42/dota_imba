@@ -805,7 +805,7 @@ end
 -- to determine if we have talent selected. // naowin
 modifier_imba_fiery_soul_talent = class({})
 function modifier_imba_fiery_soul_talent:IsPassive() return true end
-function modifier_imba_fiery_soul_talent:IsPermanent() return true end
+function modifier_imba_fiery_soul_talent:RemoveOnDeath() return false end
 function modifier_imba_fiery_soul_talent:IsHidden() return true end
 
 modifier_imba_fiery_soul_counter = class({})

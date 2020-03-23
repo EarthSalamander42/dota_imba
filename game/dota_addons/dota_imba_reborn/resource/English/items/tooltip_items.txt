@@ -46,6 +46,7 @@
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>When cast on self, grants %target_status_resistance%%% status resistance for %duration_self% seconds.<br>When cast on an ally, grants them %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, %target_status_resistance%%% status resistance, and %target_evasion%%% evasion for %duration% seconds.<br>When cast on an enemy, removes %armor_change% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed, disarms, and grants true sight on them for %duration% seconds.<br><br>Removes the passive armor and disarm effect from the caster when used on a different target.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker for %passive_disarm_duration% seconds. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Lore"                  "An artifact that originated in a world long destroyed. This blade was used to repel a godlike necromancer, who delighted in treachery and fooling heroes into working for him."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"					"Illusions do not benefit from Divine Vengeance's passive disarm effect."
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_Note1"					"Yes, I know the debuff disarming enemies generally makes the attack speed reduction redundant. That's the consequence of getting all the effects of Heaven's Halberd and Solar Crest."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_evasion"			"%+$evasion"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_armor"			"+$armor"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_damage"          "+$damage"
@@ -992,20 +993,20 @@
 "DOTA_Tooltip_Ability_item_imba_skull_basher"                  "Skull Basher"
 "DOTA_Tooltip_Ability_item_imba_skull_basher_Description"                   "<h1>Passive: Bash</h1> Grants melee heroes a %bash_chance_melee%%  chance on hit to stun the target for %stun_duration% seconds and deal %bash_damage% bonus damage. Bash chance for ranged heroes is %bash_chance_ranged%% .\n<h1><font color='#FF7800'>Passive: Skull Crash</font></h1> When a bash occurs, the target's skull becomes fragile for %skull_break_duration% seconds. Bashing the same target again with Skull Basher will cause its skull to completely break, applying Break to it for %actual_break_duration% seconds."
 "DOTA_Tooltip_Ability_item_imba_skull_basher_Lore"              "A feared weapon in the right hands, this maul's ability to shatter the defenses of its opponents should not be underestimated."
-"DOTA_Tooltip_Ability_item_imba_skull_basher_Note0"            "Applying Skull Break consumes the fragility preparation modifier."
-"DOTA_Tooltip_Ability_item_imba_skull_basher_Note1"            "Heroes with a built in Bash ability cannot use Skull Basher."
-"DOTA_Tooltip_Ability_item_imba_skull_basher_Note2"            "Does not stack with other sources of bash such as Abyssal Blade."
-"DOTA_Tooltip_Ability_item_imba_skull_basher_bonus_damage"                  "+$damage"
-"DOTA_Tooltip_Ability_item_imba_skull_basher_bonus_strength"                "+$str"
+"DOTA_Tooltip_Ability_item_imba_skull_basher_Note0"				"#{DOTA_Tooltip_ability_item_basher_Note0}"
+"DOTA_Tooltip_Ability_item_imba_skull_basher_Note1"				"#{DOTA_Tooltip_ability_item_basher_Note1}"
+"DOTA_Tooltip_Ability_item_imba_skull_basher_Note2"				"Applying Skull Break consumes the fragility preparation modifier."
+"DOTA_Tooltip_Ability_item_imba_skull_basher_bonus_damage"		"+$damage"
+"DOTA_Tooltip_Ability_item_imba_skull_basher_bonus_strength"	"+$str"
 
 "DOTA_Tooltip_modifier_imba_skull_basher_bash"                  "Bash"
-"DOTA_Tooltip_modifier_imba_skull_basher_bash_Description"                  "Stunned by Skull Basher."
+"DOTA_Tooltip_modifier_imba_skull_basher_bash_Description"		"Stunned by Skull Basher."
 
-"DOTA_Tooltip_modifier_imba_skull_basher_skull_crash"          "Fragile Skull"
-"DOTA_Tooltip_modifier_imba_skull_basher_skull_crash_Description"           "Your skull is now fragile! Being Skull Bashed again will also Break you."
+"DOTA_Tooltip_modifier_imba_skull_basher_skull_crash"				"Fragile Skull"
+"DOTA_Tooltip_modifier_imba_skull_basher_skull_crash_Description"	"Your skull is now fragile! Being Skull Bashed again will also Break you."
 
-"DOTA_Tooltip_modifier_imba_skull_basher_skull_break"          "Skull Break"
-"DOTA_Tooltip_modifier_imba_skull_basher_skull_break_Description"           "Passives broken, along with your skull."
+"DOTA_Tooltip_modifier_imba_skull_basher_skull_break"				"Skull Break"
+"DOTA_Tooltip_modifier_imba_skull_basher_skull_break_Description"	"Passives broken, along with your skull."
 
 
 // Soul of Truth

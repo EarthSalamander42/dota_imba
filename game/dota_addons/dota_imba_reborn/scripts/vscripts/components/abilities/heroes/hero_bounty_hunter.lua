@@ -1391,11 +1391,6 @@ function modifier_imba_track_debuff_mark:GetPriority()
 	return MODIFIER_PRIORITY_HIGH
 end
 
-function modifier_imba_track_debuff_mark:IsPermanent()
-	return false
-end
-
-
 -- Allied haste modifier
 modifier_imba_track_buff_ms = modifier_imba_track_buff_ms or class({})
 

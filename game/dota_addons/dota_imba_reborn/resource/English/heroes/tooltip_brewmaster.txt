@@ -23,12 +23,13 @@
 
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler"							"Drunken Brawler"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Lore"						"When Mangix won his title as the Brewmaster of the Order of Oyo, he also claimed his place in the mastery of inebriation."
-"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Description"				"Goes into a drunken brawler state, granting you a chance to avoid attacks and to deal critical damage. Brewmaster moves with a varying amount of movement speed, alternating between %min_movement%%% slower and %max_movement%%% faster. Lasts %duration% seconds.\n<font color='#FF7800'>Redirective Flow:</font> Whenever an attack misses Brewmaster while he is affected by Drunken Brawler, the damage that would have been dealt is stored as bonus damage for Brewmaster's next attack. Stacks infinitely until an attack is isussed or the buff expires."
-"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Note0"						"Stacks diminishingly with other sources of Evasion."
+"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Description"				"Goes into a drunken brawler state, granting you a chance to avoid attacks and to deal critical damage. Brewmaster moves with a varying amount of movement speed, alternating between %min_movement%%% slower and %max_movement%%% faster. Lasts %duration% seconds.\n<font color='#FF7800'>Remnants of Drunken Brawler:</font> Drunken Brawler's critical damage and evasion chances will be 100% every %certain_trigger_timer% seconds. Only triggers if the standard buff is not currently active. Critical damage and evasion chances trigger individually from each other.\n<font color='#FF7800'>Redirective Flow:</font> Whenever an attack misses Brewmaster while he is affected by Drunken Brawler, the damage that would have been dealt is stored as bonus damage for Brewmaster's next attack. Stacks infinitely until an attack is isussed or the buff expires."
+"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Note0"					"Stacks diminishingly with other sources of Evasion."
+"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Note1"					"Remnants of Drunken Brawler's trigger cooldowns are not affected by cooldown reductions."
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_dodge_chance"				"%DODGE CHANCE:"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_crit_chance"				"%CRITICAL CHANCE:"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_crit_multiplier"			"%CRITICAL DAMAGE:"
-"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_duration"					"DURATION:"
 
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split"								"Primal Split"
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Lore"							"It isn't clear whether Mangix is consciously aware of his potent bond with nature, as it often occurs in the midst of a drunken stupor."

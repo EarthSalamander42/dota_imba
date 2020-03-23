@@ -177,6 +177,4 @@ function modifier_item_imba_hand_of_midas:IsHidden()
 	return true
 end
 
-function modifier_item_imba_hand_of_midas:IsPermanent()
-	return true
-end
+function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end

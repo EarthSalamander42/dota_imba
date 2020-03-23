@@ -18,10 +18,12 @@
 -- Author: Shush
 -- Date: 28/07/2016
 
+-- Editor: AltiV
+-- Date: 22/03/2020, and times before
+
 item_imba_skull_basher = item_imba_skull_basher or class({})
 
 LinkLuaModifier("modifier_imba_skull_basher", "components/items/item_skull_basher", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skull_basher_unique", "components/items/item_skull_basher", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skull_basher_bash", "components/items/item_skull_basher", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skull_basher_skull_crash", "components/items/item_skull_basher", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skull_basher_skull_break", "components/items/item_skull_basher", LUA_MODIFIER_MOTION_NONE)
@@ -39,198 +41,97 @@ function modifier_imba_skull_basher:IsPurgable() return false end
 function modifier_imba_skull_basher:RemoveOnDeath() return false end
 function modifier_imba_skull_basher:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_skull_basher:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-	self.modifier_self = "modifier_imba_skull_basher"
-	self.modifier_unique = "modifier_imba_skull_basher_unique"
-
-	-- Ability specials
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
-	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
-
-	if IsServer() then
-		-- Grant the unique modifier for bashing
-		if not self.caster:HasModifier(self.modifier_unique) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})
-		end
-	end
-end
-
-function modifier_imba_skull_basher:OnDestroy()
-	if IsServer() then
-		-- If there are no more skull bashers in inventory, remove the skull basher unique modifier altogether
-		if not self.caster:HasModifier(self.modifier_self) then
-			self.caster:RemoveModifierByName(self.modifier_unique)
-		end
-	end
-end
-
 function modifier_imba_skull_basher:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL
+	}
 end
 
 function modifier_imba_skull_basher:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_imba_skull_basher:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
 end
 
-
-
--- Unique modifier responsible for bashing the target
-modifier_imba_skull_basher_unique = modifier_imba_skull_basher_unique or class({})
-
-function modifier_imba_skull_basher_unique:IsHidden() return true end
-function modifier_imba_skull_basher_unique:IsPurgable() return false end
-function modifier_imba_skull_basher_unique:IsDebuff() return false end
-function modifier_imba_skull_basher_unique:IsPermanent() return true end
-
-function modifier_imba_skull_basher_unique:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-	self.modifier_bash = "modifier_imba_skull_basher_bash"
-	self.modifier_skull_crash = "modifier_imba_skull_basher_skull_crash"
-	self.modifier_skull_break = "modifier_imba_skull_basher_skull_break"
-
-	-- Ability specials
-	self.bonus_range_melee = self.ability:GetSpecialValueFor("bonus_range_melee")
-	self.bash_chance_melee = self.ability:GetSpecialValueFor("bash_chance_melee")
-	self.bash_chance_ranged = self.ability:GetSpecialValueFor("bash_chance_ranged")
-	self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
-	self.bash_damage = self.ability:GetSpecialValueFor("bash_damage")
-	self.skull_break_duration = self.ability:GetSpecialValueFor("skull_break_duration")
-	self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
-end
-
-function modifier_imba_skull_basher_unique:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
-		-- MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL}
-
-	return decFuncs
-end
-
--- function modifier_imba_skull_basher_unique:GetModifierAttackRangeBonus()
-	-- if not self.caster:IsRangedAttacker() then
-		-- return self.bonus_range_melee
-	-- end
--- end
-
-function modifier_imba_skull_basher_unique:OnAttack(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		-- Only apply if the attacker is the caster
-		if attacker == self.caster then
-
-			-- If the attacker is an illusion, do nothing
-			if self.caster:IsIllusion() then
-				return nil
+function modifier_imba_skull_basher:OnAttack(keys)
+	if self:GetAbility() and
+	keys.attacker == self:GetParent() and
+	keys.attacker:FindAllModifiersByName(self:GetName())[1] == self and
+	self:GetAbility():IsCooldownReady() and
+	not keys.attacker:IsIllusion() and
+	not keys.target:IsBuilding() and
+	not keys.target:IsOther() and
+	not keys.attacker:HasModifier("modifier_monkey_king_fur_army_soldier") and
+	not keys.attacker:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") and
+	not keys.attacker:HasItemInInventory("item_imba_abyssal_blade") then
+		if self:GetParent():IsRangedAttacker() then
+			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("bash_chance_ranged"), self) then
+				self.bash_proc = true
 			end
-
-			-- If the target is a building, do nothing
-			if target:IsBuilding() or target:IsOther() then
-				return nil
-			end
-			
-			-- Monkey King clones cannot utilize the bash
-			if attacker:HasModifier("modifier_monkey_king_fur_army_soldier") or attacker:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
-				return nil
-			end
-			
-			-- Teammates are allowed to bash each other
-			-- if attacker:GetTeamNumber() == target:GetTeamNumber() then
-				-- return nil
-			-- end
-
-			-- If the Skull Basher is on cooldown, do nothing
-			if not self.ability:IsCooldownReady() then
-				return nil
-			end
-
-			-- If the caster has an Abyssal Blade, do nothing
-			if self.caster:HasModifier("modifier_imba_abyssal_blade_unique") then
-				return nil
-			end
-
-			-- Check if this is a ranged or melee attacker
-			local chance
-			if self.caster:IsRangedAttacker() then
-				chance = self.bash_chance_ranged
-			else
-				chance = self.bash_chance_melee
-			end
-
-			-- Roll for a bash!
-			if RollPseudoRandom(chance, self) then
+		else
+			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("bash_chance_melee"), self) then
 				self.bash_proc = true
 			end
 		end
 	end
 end
 
-function modifier_imba_skull_basher_unique:OnAttackLanded(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		-- If the attacker is one of the forbidden heroes, do nothing
-		for _, restricted_hero in pairs(IMBA_DISABLED_SKULL_BASHER) do
-			if restricted_hero == attacker:GetUnitName() then
-				return nil
+function modifier_imba_skull_basher:OnAttackLanded(keys)
+	if self:GetAbility() and keys.attacker == self:GetParent() and self.bash_proc then
+		self.bash_proc = false
+		-- Make the ability go into cooldown
+		self:GetAbility():UseResources(false, false, true)
+		
+		-- If the attacker is one of the forbidden heroes, do not proc the bash
+		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
+			keys.target:EmitSound("DOTA_Item.SkullBasher")
+			
+			local bash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration")})
+			
+			if bash_modifier then
+				bash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance()), true)
 			end
 		end
-
-		-- Only apply if the caster is the attacker
-		if attacker == self.caster then
-
-			if self.bash_proc then
-				-- Bash bash bash
-				target:AddNewModifier(self.caster, self.ability, self.modifier_bash, {duration = self.stun_duration})
-
-				-- Make the ability go into cooldown
-				self.ability:UseResources(false, false, true)
-
-				-- If the target is not skull crashed yet, CRUSH IT!
-				if not target:HasModifier(self.modifier_skull_crash) then
-					target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
-				else
-					-- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
-					-- Consume skull crash modifier
-					target:RemoveModifierByName(self.modifier_skull_crash)
-
-					-- Apply BREAK!
-					target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
-				end
+		
+		-- IMBAfication: Skull Crash
+		-- If the target is not skull crashed yet, CRUSH IT!
+		if not keys.target:HasModifier("modifier_imba_skull_basher_skull_crash") then
+			local crash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_crash", {duration = self:GetAbility():GetSpecialValueFor("skull_break_duration")})
+			
+			if crash_modifier then
+				crash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("skull_break_duration") * (1 - keys.target:GetStatusResistance()), true)
 			end
+		else
+			-- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
+			-- Consume skull crash modifier
+			keys.target:RemoveModifierByName("modifier_imba_skull_basher_skull_crash")
 
-			self.bash_proc = false
+			-- Apply BREAK!
+			local break_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration")})
+
+			if break_modifier then
+				break_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance()), true)
+			end
 		end
 	end
 end
 
-function modifier_imba_skull_basher_unique:GetModifierProcAttack_BonusDamage_Magical()
-	if self.bash_proc then
-		return self.bash_damage
+function modifier_imba_skull_basher:GetModifierProcAttack_BonusDamage_Magical()
+	if self:GetAbility() and self.bash_proc then
+		return self:GetAbility():GetSpecialValueFor("bash_damage")
 	end
-
-	return nil
 end
-
 
 -- Bash modifier
 modifier_imba_skull_basher_bash = modifier_imba_skull_basher_bash or class({})
@@ -240,9 +141,7 @@ function modifier_imba_skull_basher_bash:IsPurgeException() return true end
 function modifier_imba_skull_basher_bash:IsStunDebuff() return true end
 
 function modifier_imba_skull_basher_bash:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_skull_basher_bash:GetEffectName()
@@ -254,9 +153,7 @@ function modifier_imba_skull_basher_bash:GetEffectAttachType()
 end
 
 function modifier_imba_skull_basher_bash:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
 end
 
 function modifier_imba_skull_basher_bash:GetOverrideAnimation()
@@ -281,9 +178,7 @@ function modifier_imba_skull_basher_skull_break:IsPurgable() return true end
 function modifier_imba_skull_basher_skull_break:IsDebuff() return true end
 
 function modifier_imba_skull_basher_skull_break:CheckState()
-	local state = {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
-
-	return state
+	return {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
 end
 
 function modifier_imba_skull_basher_skull_break:OnCreated()

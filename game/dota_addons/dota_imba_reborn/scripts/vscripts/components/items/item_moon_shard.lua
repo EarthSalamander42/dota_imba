@@ -195,11 +195,15 @@ function modifier_item_imba_moon_shard:DeclareFunctions()
 end
 
 function modifier_item_imba_moon_shard:GetModifierAttackSpeedBonus_Constant()
-	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	if self:GetAbility() then
+		return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	end
 end
 
 function modifier_item_imba_moon_shard:GetBonusNightVision()
-	return self:GetAbility():GetSpecialValueFor("bonus_night_vision")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_night_vision")
+	end
 end
 
 

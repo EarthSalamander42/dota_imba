@@ -340,23 +340,8 @@ function modifier_item_imba_spirit_vessel:IsPurgable() return false end
 function modifier_item_imba_spirit_vessel:RemoveOnDeath() return false end
 function modifier_item_imba_spirit_vessel:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_spirit_vessel:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.bonus_health				=	self.ability:GetSpecialValueFor("bonus_health")
-	self.bonus_movement_speed		=	self.ability:GetSpecialValueFor("bonus_movement_speed")
-	self.bonus_mana_regen			=	self.ability:GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_all_stats			=	self.ability:GetSpecialValueFor("bonus_all_stats")
-	self.bonus_armor				=	self.ability:GetSpecialValueFor("bonus_armor")
-	
-	self.soul_release_range_tooltip	=	self.ability:GetSpecialValueFor("soul_release_range_tooltip")
-end
-
 function modifier_item_imba_spirit_vessel:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
@@ -367,36 +352,48 @@ function modifier_item_imba_spirit_vessel:DeclareFunctions()
 		
 		MODIFIER_EVENT_ON_DEATH
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_movement_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Strength()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Agility()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Intellect()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierPhysicalArmorBonus()
-	return self.bonus_armor
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+	end
 end
 
 

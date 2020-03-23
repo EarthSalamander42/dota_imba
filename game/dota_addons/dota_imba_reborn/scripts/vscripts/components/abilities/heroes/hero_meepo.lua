@@ -6,7 +6,7 @@ function modifier_meepo_divided_we_stand_lua:IsHidden()
 	return true
 end
 
-function modifier_meepo_divided_we_stand_lua:IsPermanent()
+function modifier_meepo_divided_we_stand_lua:RemoveOnDeath()
 	return true
 end
 

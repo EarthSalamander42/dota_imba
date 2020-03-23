@@ -7318,95 +7318,95 @@
 	//=================================================================================================================
 	// Recipe: Imba Aeon Disk
 	//=================================================================================================================
-	"item_recipe_imba_aeon_disk"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"255"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+	//"item_recipe_imba_aeon_disk"
+	//{
+	//	// General
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"ID"							"255"
+	//	"BaseClass"						"item_datadriven"
+	//	"AbilityTextureName" 			"custom/imba_recipe"
+	//	"Model"							"models/props_gameplay/recipe.mdl"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1100"
-		"ItemShopTags"					""
+	//	// Item Info
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"ItemCost"						"1100"
+	//	"ItemShopTags"					""
 
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_aeon_disk"
-		"ItemRequirements"
-		{
-			"01"						"item_vitality_booster;item_energy_booster"
-		}
-	}
+	//	// Recipe
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"ItemRecipe"					"1"
+	//	"ItemResult"					"item_imba_aeon_disk"
+	//	"ItemRequirements"
+	//	{
+	//		"01"						"item_vitality_booster;item_energy_booster"
+	//	}
+	//}
 
 	//=================================================================================================================
 	// Imba Aeon Disk
 	//=================================================================================================================
-	"item_imba_aeon_disk"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"256"
-		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_aeon_disk_icon"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"ScriptFile"                    "components/items/item_aeon_disk.lua"
+	//"item_imba_aeon_disk"
+	//{
+	//	// General
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"ID"							"256"
+	//	"BaseClass"						"item_lua"
+	//	"AbilityTextureName" 			"custom/imba_aeon_disk_icon"
+	//	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	//	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	//	"ScriptFile"                    "components/items/item_aeon_disk.lua"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3100"
-		"ItemShopTags"					"str;regen_health;health_pool"
-		"ItemQuality"					"epic"
-		"ItemAliases"					"ad;aeon disk"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-		"ItemRequiresCharges"			"0"
+	//	// Item Info
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"ItemCost"						"3100"
+	//	"ItemShopTags"					"str;regen_health;health_pool"
+	//	"ItemQuality"					"epic"
+	//	"ItemAliases"					"ad;aeon disk"
+	//	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+	//	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	//	"ItemRequiresCharges"			"0"
 
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70"
+	//	// Stats
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"AbilityCooldown"				"70"
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"375"
-			}			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"375"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health_threshold_pct"			"70"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"status_resistance"		"75"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"				"2.5"
-			}
-			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"85"
-			}
-		}
-	}
+	//	// Special
+	//	//-------------------------------------------------------------------------------------------------------------
+	//	"AbilitySpecial"
+	//	{
+	//		"01"
+	//		{
+	//			"var_type"				"FIELD_INTEGER"
+	//			"bonus_health"			"375"
+	//		}			
+	//		"02"
+	//		{
+	//			"var_type"				"FIELD_INTEGER"
+	//			"bonus_mana"			"375"
+	//		}
+	//		"03"
+	//		{
+	//			"var_type"				"FIELD_FLOAT"
+	//			"health_threshold_pct"			"70"
+	//		}
+	//		"04"
+	//		{
+	//			"var_type"				"FIELD_INTEGER"
+	//			"status_resistance"		"75"
+	//		}
+	//		"05"
+	//		{
+	//			"var_type"				"FIELD_FLOAT"
+	//			"buff_duration"				"2.5"
+	//		}
+	//		
+	//		"06"
+	//		{
+	//			"var_type"				"FIELD_INTEGER"
+	//			"damage_reduction"		"85"
+	//		}
+	//	}
+	//}
 
 	//=================================================================================================================
 	// Aegis of the Immortal

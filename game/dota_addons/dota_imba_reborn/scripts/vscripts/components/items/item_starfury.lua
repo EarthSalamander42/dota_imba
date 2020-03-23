@@ -242,15 +242,13 @@ function modifier_imba_starfury_passive:OnCreated()
 end
 
 function modifier_imba_starfury_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_ATTACK_FAIL,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_FAIL,
+	}
 end
 
 function modifier_imba_starfury_passive:GetModifierAttackSpeedBonus_Constant()

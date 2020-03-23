@@ -56,12 +56,13 @@ function imba_alchemist_acid_spray:OnSpellStart()
 	local ability = self
 	local point = self:GetCursorPosition()
 	local team_id = caster:GetTeamNumber()
-	local cast_responses = {"alchemist_alch_ability_acid_01", "alchemist_alch_ability_acid_02", "alchemist_alch_ability_acid_03", "alchemist_alch_ability_acid_04", "alchemist_alch_ability_acid_05", "alchemist_alch_ability_acid_06", "alchemist_alch_ability_acid_07", "alchemist_alch_ability_acid_08", "alchemist_alch_ability_acid_09", "alchemist_alch_ability_acid_10", "alchemist_alch_ability_acid_11", "alchemist_alch_ability_acid_12"}
-	EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_alchemist" then
+		local cast_responses = {"alchemist_alch_ability_acid_01", "alchemist_alch_ability_acid_02", "alchemist_alch_ability_acid_03", "alchemist_alch_ability_acid_04", "alchemist_alch_ability_acid_05", "alchemist_alch_ability_acid_06", "alchemist_alch_ability_acid_07", "alchemist_alch_ability_acid_08", "alchemist_alch_ability_acid_09", "alchemist_alch_ability_acid_10", "alchemist_alch_ability_acid_11", "alchemist_alch_ability_acid_12"}
+		EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
+	end
 
-	local duration = ability:GetSpecialValueFor("duration")
-	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = duration}, point, team_id, false)
-	return true
+	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = self:GetSpecialValueFor("duration")}, point, team_id, false)
 end
 
 modifier_imba_acid_spray_thinker = modifier_imba_acid_spray_thinker or class({})
@@ -85,7 +86,11 @@ function modifier_imba_acid_spray_thinker:OnCreated(keys)
 
 		self.thinker:EmitSound("Hero_Alchemist.AcidSpray")
 
-		self.radius = self.ability:GetSpecialValueFor("radius")
+		self.radius			= self.ability:GetSpecialValueFor("radius")
+		self.tick_rate		= self.ability:GetSpecialValueFor("tick_rate")
+		self.damage			= self.ability:GetSpecialValueFor("damage")
+		self.stack_damage	= self.ability:GetSpecialValueFor("stack_damage")
+		self.ability_damage_type	= self.ability:GetAbilityDamageType()
 
 		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf", PATTACH_POINT_FOLLOW, self.thinker)
 		ParticleManager:SetParticleControl(self.particle, 0, (Vector(0, 0, 0)))
@@ -93,7 +98,26 @@ function modifier_imba_acid_spray_thinker:OnCreated(keys)
 		ParticleManager:SetParticleControl(self.particle, 15, (Vector(25, 150, 25)))
 		ParticleManager:SetParticleControl(self.particle, 16, (Vector(0, 0, 0)))
 
-		self:StartIntervalThink(0.1)
+		local units = FindUnitsInRadius(self.thinker:GetTeamNumber(),
+			self.thinker_loc,
+			nil,
+			self.radius,
+			self.ability_target_team,
+			self.ability_target_type,
+			self.ability_target_flags,
+			FIND_ANY_ORDER,
+			false)
+
+		for _,unit in pairs (units) do
+			if unit:HasModifier(self.modifier_spray) then
+				local modifier_spray_handler = unit:FindModifierByName(self.modifier_spray)
+				if modifier_spray_handler and not modifier_spray_handler.center then
+					modifier_spray_handler.center = self.thinker_loc
+				end
+			end
+		end
+
+		self:StartIntervalThink(self.tick_rate)
 	end
 end
 
@@ -107,13 +131,33 @@ function modifier_imba_acid_spray_thinker:OnIntervalThink()
 		self.ability_target_flags,
 		FIND_ANY_ORDER,
 		false)
-
+		
+	local damage = nil	
+	
 	for _,unit in pairs (units) do
 		if unit:HasModifier(self.modifier_spray) then
 			local modifier_spray_handler = unit:FindModifierByName(self.modifier_spray)
 			if modifier_spray_handler and not modifier_spray_handler.center then
 				modifier_spray_handler.center = self.thinker_loc
 			end
+			
+			
+			-- "The damage of multiple instances of Acid Spray fully stacks. The armor reduction, however, does not."
+			EmitSoundOn("Hero_Alchemist.AcidSpray.Damage", unit)
+			
+			damage = self.damage
+			
+			if unit:HasModifier("modifier_imba_acid_spray_debuff_dot") then
+				damage = damage + (self.stack_damage * unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot"):GetStackCount())
+			end
+			
+			ApplyDamage({
+				victim		= unit,
+				attacker	= self:GetCaster(),
+				damage		= damage,
+				damage_type	= self.ability_damage_type,
+				ability		= self.ability,
+			})
 		end
 	end
 end
@@ -159,20 +203,30 @@ function modifier_imba_acid_spray_handler:OnCreated()
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local unit = self:GetParent()
-
-		self.modifier = unit:AddNewModifier(caster, ability, "modifier_imba_acid_spray_debuff_dot", {})
-		self.modifier.damage = ability:GetSpecialValueFor("damage")
-		self.modifier.stack_damage = ability:GetSpecialValueFor("stack_damage")
+		
+		self.modifier = unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_acid_spray_debuff_dot", {})
+		
+		if self:GetAbility() then
+			self.modifier.damage		= ability:GetSpecialValueFor("damage")
+			self.modifier.stack_damage	= ability:GetSpecialValueFor("stack_damage")
+			self.tick_rate				= ability:GetSpecialValueFor("tick_rate")
+			
+		else
+			self.modifier.damage		= 25
+			self.modifier.stack_damage	= 5
+			self.tick_rate				= 1
+		end
 
 		-- #5 Talent: Greed stacks increase acid spray damage
-		if caster:HasTalent("special_bonus_imba_alchemist_5") then
+		if caster:HasTalent("special_bonus_imba_alchemist_5") and caster:HasModifier("modifier_imba_goblins_greed_passive") then
 			local greed_stacks	=	caster:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount()
 			local bonus_damage	=	(caster:FindTalentValue("special_bonus_imba_alchemist_5") / 100) * greed_stacks
 
 			self.modifier.damage = self.modifier.damage + bonus_damage
 		end
-		local tick_rate = ability:GetSpecialValueFor("tick_rate")
-		self:StartIntervalThink(tick_rate)
+		
+		local tick_rate = 
+		self:StartIntervalThink(self.tick_rate)
 	end
 end
 
@@ -186,10 +240,7 @@ function modifier_imba_acid_spray_handler:OnIntervalThink()
 end
 
 function modifier_imba_acid_spray_handler:DeclareFunctions()
-	local decFuncs={
-		MODIFIER_EVENT_ON_DEATH
-	}
-	return decFuncs
+	return {MODIFIER_EVENT_ON_DEATH}
 end
 
 -- #4 Talent : Enemies that die under the effect of Acid Spray spawn gold bags.
@@ -249,21 +300,23 @@ function modifier_imba_acid_spray_debuff_dot:IsPurgable()
 end
 
 function modifier_imba_acid_spray_debuff_dot:OnCreated()
-	self.caster = self:GetCaster()
-	local ability = self:GetAbility()
-	
-	if not ability then self:Destroy() return end
-	
-	self.armor_reduction		= ability:GetSpecialValueFor("armor_reduction")
-	self.stack_armor_reduction	= ability:GetSpecialValueFor("stack_armor_reduction")
-	self.max_stacks				= ability:GetSpecialValueFor("max_stacks")
-	self.movespeed_slow			= self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_1")
+	if self:GetAbility() then
+		self.armor_reduction		= self:GetAbility():GetSpecialValueFor("armor_reduction")
+		self.stack_armor_reduction	= self:GetAbility():GetSpecialValueFor("stack_armor_reduction")
+		self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
+		self.tick_rate				= self:GetAbility():GetSpecialValueFor("tick_rate")
+	else
+		self.armor_reduction		= 5
+		self.stack_armor_reduction	= 1
+		self.max_stacks				= 2
+		self.tick_rate				= 1
+	end
+
+	self.movespeed_slow			= self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_1") * (-1)
 	
 	if IsServer() then
-		self.ability_damage_type	= ability:GetAbilityDamageType()
-		
 		self:SetStackCount(1)
-		self:StartIntervalThink(ability:GetSpecialValueFor("tick_rate"))
+		self:StartIntervalThink(self.tick_rate)
 	end
 end
 
@@ -271,15 +324,6 @@ function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_
 	if IsServer() then
 		if aura_tick then
 			self:IncrementStackCount()
-		end
-		self.caster = self.caster or self:GetCaster()
-		self.ability = self.ability or self:GetAbility()
-
-		if self and self.caster and self.caster:IsIllusion() then --prevent ability from becoming nil if the illusion is dead for to long
-			if not self.caster:IsAlive() then
-				self.caster = self.caster:GetPlayerOwner():GetAssignedHero()
-				self.ability = self.caster:FindAbilityByName("imba_alchemist_acid_spray")
-		end
 		end
 
 		local unit = self:GetParent()
@@ -293,17 +337,6 @@ function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_
 			or consume_stacks
 			or (not unit:HasModifier("modifier_imba_acid_spray_handler")
 			and not unit:HasModifier("modifier_imba_chemical_rage_aura")) then
-			local damage = self.damage + self.stack_damage * self:GetStackCount()
-			
-			local damage_table = {
-				victim = unit,
-				attacker = self.caster,
-				damage = damage,
-				damage_type = self.ability_damage_type,
-				ability = self.ability,
-			}
-			ApplyDamage(damage_table)
-			EmitSoundOn("Hero_Alchemist.AcidSpray.Damage", unit)
 
 			if not aura_tick then
 				self:DecrementStackCount()
@@ -323,15 +356,9 @@ function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_
 end
 
 function modifier_imba_acid_spray_debuff_dot:OnStackCountChanged(old_stack_count)
-	self.caster = self.caster or self:GetCaster()
-	if self.caster:IsIllusion() then --prevent ability from becoming nil if the illusion is dead for to long
-		if not self.caster:IsAlive() then
-			self.caster = self.caster:GetPlayerOwner():GetAssignedHero()
-		end
-	end
 	local stack_count = self:GetStackCount()
 	
-	if self.caster:HasModifier("modifier_imba_chemical_rage_buff_haste") and self.max_stacks then
+	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasModifier("modifier_imba_chemical_rage_buff_haste") and self.max_stacks then
 		if self:GetAbility() then
 			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks") * 2
 		end
@@ -756,7 +783,7 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 		if not (integer == 0 and decimal <= 1) then
 			for k, v in pairs(allHeroes) do
 				if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-					local particle = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_OVERHEAD_FOLLOW, caster, PlayerResource:GetPlayer(v:GetPlayerID()))
+					local particle = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, caster)
 					ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle, 1, Vector(0, integer, decimal))
 					ParticleManager:SetParticleControl(particle, 2, Vector(digits, 0, 0))
@@ -1005,10 +1032,6 @@ function modifier_imba_goblins_greed_passive:RemoveOnDeath()
 	return false
 end
 
-function modifier_imba_goblins_greed_passive:IsPermanent()
-	return true
-end
-
 function modifier_imba_goblins_greed_passive:GetAttributes()
 	return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
 end
@@ -1040,9 +1063,9 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
 	if caster:PassivesDisabled() then
 		return
 	end
-
-	if caster == attacker and caster:GetTeamNumber() ~= unit:GetTeamNumber() then
-
+	
+	-- "Greevil's Greed triggers on every last hit Alchemist makes on units that have a death gold bounty, except for buildings, illusions and the Tempest Double."
+	if caster == attacker and not unit:IsBuilding() and not unit:IsIllusion() and not unit:IsTempestDouble() and caster:GetTeamNumber() ~= unit:GetTeamNumber() and unit.GetGoldBounty then
 		-- If the target is reincarnating, do nothing
 		if reincarnate then
 			return nil
@@ -1075,9 +1098,9 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
 		self:SetStackCount(stacks + stack_bonus)
 
 		Timers:CreateTimer(duration, function()
-			if not stacks then return nil end
-			stacks = self:GetStackCount()
-			self:SetStackCount(stacks - stack_bonus)
+			if not self or self:IsNull() or not stacks then return nil end
+			
+			self:SetStackCount(self:GetStackCount() - stack_bonus)
 		end)
 	end
 end
@@ -1238,13 +1261,16 @@ function modifier_imba_chemical_rage_handler:IsHidden()
 end
 
 function modifier_imba_chemical_rage_handler:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.transformation_time	= self:GetAbility():GetSpecialValueFor("transformation_time")
+
 	if IsServer() then
 		local caster = self:GetCaster()
 		if caster:GetUnitName() == "npc_dota_hero_alchemist" then
 			caster:StartGesture(ACT_DOTA_ALCHEMIST_CHEMICAL_RAGE_START)
 		end
-		local ability = self:GetAbility()
-		self:SetDuration(ability:GetSpecialValueFor("transformation_time"), false)
+		self:SetDuration(self.transformation_time, false)
 	end
 end
 
@@ -1283,6 +1309,13 @@ function modifier_imba_chemical_rage_buff_haste:AllowIllusionDuplicate()
 end
 
 function modifier_imba_chemical_rage_buff_haste:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.bonus_mana_regen	= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	self.bonus_health_regen	= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	self.bonus_movespeed	= self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+	self.base_attack_time	= self:GetAbility():GetSpecialValueFor("base_attack_time")
+
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -1291,7 +1324,12 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 		local particle_acid_aura = "particles/hero/alchemist/chemical_rage_acid_aura.vpcf"
 		-- Ability paramaters
 		self.ability			= 	caster:FindAbilityByName("imba_alchemist_acid_spray")
-		self.radius				=	self.ability:GetSpecialValueFor("radius")
+		
+		if self.ability then
+			self.radius			=	self.ability:GetSpecialValueFor("radius")
+		else
+			self.radius			=	0
+		end
 
 		local particle_acid_aura_fx = ParticleManager:CreateParticle(particle_acid_aura, PATTACH_ABSORIGIN_FOLLOW, parent)
 		ParticleManager:SetParticleControl(particle_acid_aura_fx, 0, parent:GetAbsOrigin())
@@ -1320,15 +1358,15 @@ function modifier_imba_chemical_rage_buff_haste:GetAuraRadius()
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetAuraSearchTeam()
-	return self.ability:GetAbilityTargetTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetAuraSearchType()
-	return self.ability:GetAbilityTargetType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetAuraSearchFlags()
-	return self.ability:GetAbilityTargetFlags()
+	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierAura()
@@ -1356,19 +1394,19 @@ function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseManaRegen()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	return self.bonus_mana_regen
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	return self.bonus_health_regen
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierMoveSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+	return self.bonus_movespeed
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseAttackTimeConstant()
-	return self:GetAbility():GetSpecialValueFor("base_attack_time")
+	return self.base_attack_time
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetEffectName()
@@ -1413,7 +1451,7 @@ function modifier_imba_chemical_rage_aura:OnCreated()
 		self.ability = caster:FindAbilityByName("imba_alchemist_acid_spray")
 		self.modifier = unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot")
 
-		if self.modifier then
+		if self.ability and self.modifier then
 			self.modifier.damage = self.ability:GetSpecialValueFor("damage")
 			self.modifier.stack_damage = self.ability:GetSpecialValueFor("stack_damage")
 			local tick_rate = self.ability:GetSpecialValueFor("tick_rate")
@@ -1469,17 +1507,25 @@ end
 modifier_imba_chemical_rage_aura_buff	=	modifier_imba_chemical_rage_aura_buff or class({})
 
 function modifier_imba_chemical_rage_aura_buff:OnCreated()
-	if IsServer() then
-		caster	=	self:GetCaster()
+	if not IsServer() then return end
 
-		self:SetStackCount(caster:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount())
+	if self:GetCaster():HasModifier("modifier_imba_goblins_greed_passive") then
+		self:SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount())
+	end
+	
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_chemical_rage_aura_buff:OnIntervalThink()
+	if self:GetCaster():HasModifier("modifier_imba_goblins_greed_passive") then
+		self:SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount())
 	end
 end
+
 function modifier_imba_chemical_rage_aura_buff:DeclareFunctions()
-	local decFuncs	=	{
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 	}
-	return decFuncs
 end
 
 function modifier_imba_chemical_rage_aura_buff:GetModifierPreAttack_BonusDamage()
@@ -1549,6 +1595,8 @@ imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
 function imba_alchemist_mammonite:GetAbilityTextureName()
 	return "custom/alchemist_mammonite"
 end
+
+function imba_alchemist_mammonite:IsStealable()	return false end
 
 function imba_alchemist_mammonite:OnToggle() return end
 
@@ -1620,4 +1668,22 @@ end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_alchemist.lua", MotionController)
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_1", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_alchemist_1		= modifier_special_bonus_imba_alchemist_1 or class({})
+
+function modifier_special_bonus_imba_alchemist_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_1:RemoveOnDeath() 	return false end
+
+function imba_alchemist_acid_spray:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_alchemist_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_alchemist_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_alchemist_1"), "modifier_special_bonus_imba_alchemist_1", {})
+	end
 end

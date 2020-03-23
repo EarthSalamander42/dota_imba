@@ -36,7 +36,6 @@ end
 
 modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})
 
-function modifier_imba_initiate_robe_passive:IsHidden()		return true end
 function modifier_imba_initiate_robe_passive:IsPurgable()		return false end
 function modifier_imba_initiate_robe_passive:RemoveOnDeath()	return false end
 function modifier_imba_initiate_robe_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
@@ -52,10 +51,6 @@ function modifier_imba_initiate_robe_passive:DeclareFunctions()
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
-	self.bonus_health			= self:GetAbility():GetSpecialValueFor("bonus_health")
-	self.bonus_mana				= self:GetAbility():GetSpecialValueFor("bonus_mana")
-	self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("mana_regen")
-	self.bonus_magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resist")
 	self.mana_conversion_rate 	= self:GetAbility():GetSpecialValueFor("mana_conversion_rate")
 	self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
 
@@ -76,8 +71,6 @@ function modifier_imba_initiate_robe_passive:OnCreated()
 end
 
 function modifier_imba_initiate_robe_passive:OnIntervalThink()
-	if not IsServer() then return end
-	
 	-- If mana percentage at any frame is lower than the frame before it, set stacks
 	if self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
 		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self.mana_conversion_rate * 0.01), self.max_stacks))
@@ -88,19 +81,27 @@ function modifier_imba_initiate_robe_passive:OnIntervalThink()
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierManaBonus()
-	return self.bonus_mana
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana")
+	end
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	end
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierMagicalResistanceBonus()
-	return self.bonus_magic_resistance
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_magic_resistance")
+	end
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierTotal_ConstantBlock(keys)

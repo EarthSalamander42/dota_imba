@@ -173,7 +173,7 @@ function modifier_veil_passive:GetAuraRadius()
 end
 
 function modifier_veil_passive:OnDestroy()
-	if IsServer() then
+	if IsServer() and self and not self:IsNull() and self:GetParent() and not self:GetParent():IsNull() then
 		self:GetParent():RemoveModifierByName("modifier_veil_buff_aura")
 	end
 end
@@ -206,9 +206,8 @@ modifier_veil_buff_aura = modifier_veil_buff_aura or class({})
 
 -- Modifier properties
 function modifier_veil_buff_aura:IsHidden() return true end
-function modifier_veil_buff_aura:IsDebuff() return false end
 function modifier_veil_buff_aura:IsPurgable() return false end
-function modifier_veil_buff_aura:IsPermanent() return true end
+function modifier_veil_buff_aura:RemoveOnDeath() return false end
 function modifier_veil_buff_aura:IsAura() return true end
 
 function modifier_veil_buff_aura:GetAuraSearchTeam()

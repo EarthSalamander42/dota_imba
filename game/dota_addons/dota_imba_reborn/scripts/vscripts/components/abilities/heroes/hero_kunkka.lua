@@ -97,10 +97,6 @@ function modifier_imba_ebb_and_flow_thinker:RemoveOnDeath()
 	return false
 end
 
-function modifier_imba_ebb_and_flow_thinker:IsPermanent()
-	return true
-end
-
 function modifier_imba_ebb_and_flow_thinker:IsPurgable()
 	return false
 end

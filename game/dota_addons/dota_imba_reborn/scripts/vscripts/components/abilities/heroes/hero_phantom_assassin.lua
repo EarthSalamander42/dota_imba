@@ -278,8 +278,7 @@ function modifier_imba_stifling_dagger_silence:OnCreated()
 end
 
 function modifier_imba_stifling_dagger_silence:CheckState()
-	local states = { [MODIFIER_STATE_SILENCED] = true, }
-	return states
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 function modifier_imba_stifling_dagger_silence:IsDebuff() 	return true end
@@ -295,8 +294,7 @@ function modifier_imba_stifling_dagger_silence:IsHidden()		return true end
 modifier_imba_stifling_dagger_bonus_damage = class({})
 
 function modifier_imba_stifling_dagger_bonus_damage:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE }
-	return funcs
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
 end
 
 function modifier_imba_stifling_dagger_bonus_damage:GetModifierPreAttack_BonusDamage()
@@ -594,8 +592,8 @@ function modifier_imba_blur:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
-	self.modifier_aura = "modifier_imba_blur_blur"
-	self.modifier_speed = "modifier_imba_blur_speed"
+	self.modifier_aura = "modifier_imba_blur_blur" -- Not on mini-map modifier
+	self.modifier_speed = "modifier_imba_blur_speed" -- IMBAfication: Swift and Silent
 
 	-- Ability specials
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
@@ -790,25 +788,9 @@ function modifier_imba_blur_blur:GetStatusEffectName()
 	return "particles/hero/phantom_assassin/blur_status_fx.vpcf"
 end
 
--- function modifier_imba_blur_blur:OnCreated()
-	-- if not IsServer() then return end
-
-	-- -- looks so ugly m8
--- --	self.blur_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
--- end
-
 function modifier_imba_blur_blur:CheckState()
 	return {[MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true}
 end
-
--- function modifier_imba_blur_blur:OnDestroy()
-	-- if not IsServer() then return end
-
-	-- if self.blur_particle then
-		-- ParticleManager:DestroyParticle(self.blur_particle, false)
-		-- ParticleManager:ReleaseParticleIndex(self.blur_particle)
-	-- end
--- end
 
 -------------------------------------------
 -- Blur invuln modifier
@@ -827,47 +809,20 @@ function modifier_imba_blur_smoke:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_blur_smoke:CheckState()
-	return {
-		[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true
-	}
-end
-
-function modifier_imba_blur_smoke:GetPriority()
-	return MODIFIER_PRIORITY_SUPER_ULTRA
-end
-
-function modifier_imba_blur_smoke:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
-end
-
-function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
-	return 1
-end
-
-function modifier_imba_blur_smoke:OnAttackLanded(keys)
-	if keys.attacker == self:GetParent() and keys.target:IsRoshan() then
-		self:SetDuration(math.min(self.fade_duration, self:GetRemainingTime()), true)
-	end
-end
 
 function modifier_imba_blur_smoke:OnCreated()
-	if self:GetAbility() and not self:GetAbility():IsNull() then
-		self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
-		self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
+	self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
 
-		if IsServer() then
-			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
-			
-			self.linger = false
-			
-			self:OnIntervalThink()
-			self:StartIntervalThink(FrameTime())
-		end
+	if IsServer() then
+		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+		
+		self.linger = false
+		
+		self:OnIntervalThink()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -899,6 +854,34 @@ end
 function modifier_imba_blur_smoke:OnRemoved()
 	if IsServer() then
 		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
+	end
+end
+
+function modifier_imba_blur_smoke:CheckState()
+	return {
+		[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true
+	}
+end
+
+function modifier_imba_blur_smoke:GetPriority()
+	return MODIFIER_PRIORITY_SUPER_ULTRA
+end
+
+function modifier_imba_blur_smoke:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
+	return 1
+end
+
+function modifier_imba_blur_smoke:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and keys.target:IsRoshan() then
+		self:SetDuration(math.min(self.fade_duration, self:GetRemainingTime()), true)
 	end
 end
 

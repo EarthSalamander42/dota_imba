@@ -603,7 +603,7 @@ function modifier_imba_rubick_null_field_aura:IsAura() return true end
 function modifier_imba_rubick_null_field_aura:IsAuraActiveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura:IsDebuff() return false end
 function modifier_imba_rubick_null_field_aura:IsHidden() return true end
-function modifier_imba_rubick_null_field_aura:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura:RemoveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura:IsPurgable() return false end
 
 -- Aura properties
@@ -634,7 +634,7 @@ function modifier_imba_rubick_null_field_aura_debuff:IsAura() return true end
 function modifier_imba_rubick_null_field_aura_debuff:IsAuraActiveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsDebuff() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsHidden() return true end
-function modifier_imba_rubick_null_field_aura_debuff:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura_debuff:RemoveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsPurgable() return false end
 
 -- Aura properties

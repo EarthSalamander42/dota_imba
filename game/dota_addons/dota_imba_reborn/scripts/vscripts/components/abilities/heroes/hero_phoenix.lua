@@ -2470,14 +2470,14 @@ function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath()
 		return true
 	end
 end
-function modifier_imba_phoenix_supernova_scepter_passive:IsPermanent() 				return true end
+function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive:AllowIllusionDuplicate() 	return true end
 
 function modifier_imba_phoenix_supernova_scepter_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MIN_HEALTH,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MIN_HEALTH,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_phoenix_supernova_scepter_passive:GetMinHealth()
@@ -2562,7 +2562,6 @@ function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgable() 	
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgeException() 		return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() 			return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPermanent() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() 	return false end
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated() 
 	if IsServer() then 
@@ -2643,7 +2642,6 @@ function modifier_imba_phoenix_burning_wings_buff:IsPurgable() 				return false 
 function modifier_imba_phoenix_burning_wings_buff:IsPurgeException() 		return false end
 function modifier_imba_phoenix_burning_wings_buff:IsStunDebuff() 			return false end
 function modifier_imba_phoenix_burning_wings_buff:RemoveOnDeath() 			return false end
-function modifier_imba_phoenix_burning_wings_buff:IsPermanent() 			return false end
 function modifier_imba_phoenix_burning_wings_buff:AllowIllusionDuplicate() 	return false end
 
 function modifier_imba_phoenix_burning_wings_buff:DeclareFunctions()		return {MODIFIER_EVENT_ON_TAKEDAMAGE} end

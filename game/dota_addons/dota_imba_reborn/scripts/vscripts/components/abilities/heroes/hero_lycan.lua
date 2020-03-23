@@ -903,8 +903,8 @@ function modifier_imba_feral_impulse_aura:IsHidden()
 	return true
 end
 
-function modifier_imba_feral_impulse_aura:IsPermanent()
-	return true
+function modifier_imba_feral_impulse_aura:RemoveOnDeath()
+	return false
 end
 
 function  modifier_imba_feral_impulse_aura:IsPurgable()
@@ -1414,8 +1414,8 @@ function modifier_imba_wolfsbane_aura:IsHidden()
 	return true
 end
 
-function modifier_imba_wolfsbane_aura:IsPermanent()
-	return true
+function modifier_imba_wolfsbane_aura:RemoveOnDeath()
+	return false
 end
 
 function  modifier_imba_wolfsbane_aura:IsPurgable()
@@ -1494,15 +1494,14 @@ function modifier_imba_wolfsbane_wolves:IsPurgable()
 	return false
 end
 
-function modifier_imba_wolfsbane_wolves:IsPermanent()
-	return true
+function modifier_imba_wolfsbane_wolves:RemoveOnDeath()
+	return false
 end
 
 function modifier_imba_wolfsbane_wolves:DeclareFunctions()	
-	local decFuncs = {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					}
-	
-	return decFuncs	
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}	
 end
 
 function modifier_imba_wolfsbane_wolves:GetModifierPreAttack_BonusDamage()		
@@ -1652,8 +1651,8 @@ function modifier_imba_wolfsbane_lycan:IsPurgable()
 	return false
 end
 
-function modifier_imba_wolfsbane_lycan:IsPermanent()
-	return true
+function modifier_imba_wolfsbane_lycan:RemoveOnDeath()
+	return false
 end
 
 function modifier_imba_wolfsbane_lycan:OnTooltip()
@@ -2317,7 +2316,7 @@ function modifier_imba_talent_wolf_packleader_aura:IsAura()					return true end
 function modifier_imba_talent_wolf_packleader_aura:IsAuraActiveOnDeath()	return false end
 function modifier_imba_talent_wolf_packleader_aura:IsDebuff() 				return false end
 function modifier_imba_talent_wolf_packleader_aura:IsHidden() 				return true end
-function modifier_imba_talent_wolf_packleader_aura:IsPermanent()			return true end
+function modifier_imba_talent_wolf_packleader_aura:RemoveOnDeath()			return false end
 function modifier_imba_talent_wolf_packleader_aura:IsPurgable()				return false end
 
 function modifier_imba_talent_wolf_packleader_aura:OnCreated()

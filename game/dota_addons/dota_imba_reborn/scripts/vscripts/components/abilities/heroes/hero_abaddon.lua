@@ -964,7 +964,6 @@ modifier_over_channel_handler = modifier_over_channel_handler or class({
 	IsHidden				= function(self) return false end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
-	IsPermanent				= function(self) return false end,
 	RemoveOnDeath			= function(self) return true end,
 	AllowIllusionDuplicate	= function(self) return false end -- Allow illusions to carry this particle modifier
 })

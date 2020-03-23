@@ -438,7 +438,6 @@ end
 -- function modifier_item_imba_greatwyrm_plate:IsHidden() return true end
 -- function modifier_item_imba_greatwyrm_plate:IsDebuff() return false end
 -- function modifier_item_imba_greatwyrm_plate:IsPurgable() return false end
--- function modifier_item_imba_greatwyrm_plate:IsPermanent() return true end
 -- function modifier_item_imba_greatwyrm_plate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- function modifier_item_imba_greatwyrm_plate:OnCreated()

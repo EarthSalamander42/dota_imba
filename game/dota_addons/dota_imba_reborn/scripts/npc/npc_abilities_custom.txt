@@ -1336,6 +1336,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
 				"CalculateSpellDamageTooltip"	"0"
+				"RequiresScepter"			"1"
 			}
 			"07"
 			{
@@ -1361,6 +1362,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_range"				"400"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -1422,11 +1424,11 @@
 			}
 			"06"
 			{
-				"var_type"								"FIELD_INTEGER"
+				"var_type"								"FIELD_FLOAT"
 				"base_damage"							"70 120 170 220"
 				"LinkedSpecialBonus"					"special_bonus_imba_axe_5"
 				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_MULTIPLY"
-				"LinkedSpecialBonusField"				"damage_multiplier"
+				"LinkedSpecialBonusField"				"damage_multiplier_tooltip"
 			}
 			"07"
 			{
@@ -1456,6 +1458,7 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"axe_culling_blade"
 		"MaxLevel"						"3"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -1683,8 +1686,13 @@
 			}
 			"02"
 			{
+				"var_type"      				"FIELD_INTEGER"
+				"damage_multiplier"        		"66"
+			}
+			"03"
+			{
 				"var_type"      				"FIELD_FLOAT"
-				"damage_multiplier"        		"0.66"
+				"damage_multiplier_tooltip"		"0.66"
 			}
 		}
 	}
@@ -31936,6 +31944,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"		"nevermore_necromastery"
 		"ScriptFile"				"components/abilities/heroes/hero_nevermore.lua"
+		"HasScepterUpgrade"			"1"
 
 
 		// Precache
@@ -32344,7 +32353,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0.5"
+				"value"	                    "0.4"
 			}
 		}
 	}

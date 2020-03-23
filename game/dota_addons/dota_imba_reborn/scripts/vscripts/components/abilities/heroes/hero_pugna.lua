@@ -848,7 +848,10 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"undying_flesh_golem",
 			"imba_undying_flesh_golem",
 			"dragon_knight_elder_dragon_form",
-			"imba_dragon_knight_elder_dragon_form"			
+			"imba_dragon_knight_elder_dragon_form",
+			
+			"imba_alchemist_unstable_concoction",
+			"imba_alchemist_chemical_rage"
 		}
 
 		-- Ignore items

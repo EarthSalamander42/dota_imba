@@ -27,8 +27,7 @@
 #base heroes/slark/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
-// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
-#base heroes/templar_assassin/hero.txt
+#base heroes/templar_assassin/hero.txt // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
 #base heroes/visage/hero.txt
@@ -37,8 +36,7 @@
 #base heroes/zeus/hero.txt
 #base heroes/windranger/hero.txt
 #base heroes/winter_wyvern/hero.txt
-// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
-// #base heroes/invoker/hero.txt
+// #base heroes/invoker/hero.txt // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
 
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
@@ -687,13 +685,13 @@
 		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_spell_amplify_20"
+		"Ability14"					"special_bonus_imba_earth_spirit_4"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
-		// "Ability13"					"special_bonus_imba_earth_spirit_4"
+		// "Ability14"					"special_bonus_spell_amplify_20"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
@@ -1688,7 +1686,7 @@
 		"Ability10"					"special_bonus_imba_nevermore_1"
 		"Ability11"					"special_bonus_attack_speed_20"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_movement_speed_30"
+		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
@@ -1696,7 +1694,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
-		// "Ability13"					"special_bonus_imba_nevermore_4" // "+0.5% lifesteal per Necromastery soul"
+		// "Ability13"					"special_bonus_movement_speed_30"
 		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 

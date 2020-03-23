@@ -4,9 +4,8 @@
 
 if modifier_custom_mechanics == nil then modifier_custom_mechanics = class({}) end
 function modifier_custom_mechanics:IsHidden() return true end
-function modifier_custom_mechanics:IsDebuff() return false end
 function modifier_custom_mechanics:IsPurgable() return false end
-function modifier_custom_mechanics:IsPermanent() return true end
+function modifier_custom_mechanics:RemoveOnDeath() return false end
 
 function modifier_custom_mechanics:OnCreated()
 	if IsServer() then

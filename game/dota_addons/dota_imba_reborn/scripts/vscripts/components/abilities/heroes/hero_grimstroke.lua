@@ -228,7 +228,7 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		-- "Stroke of Fate first applies the damage, then the debuff."
 		local damageTable = {
 			victim 			= target,
-			damage 			= (self:GetSpecialValueFor("damage") + (self:GetSpecialValueFor("bonus_damage_per_target") * EntIndexToHScript(data.stroke_dummy).hit_units)) * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_grimstroke_stroke_of_fate_damage"), 1),
+			damage 			= (self:GetSpecialValueFor("damage") + (self:GetSpecialValueFor("bonus_damage_per_target") * EntIndexToHScript(data.stroke_dummy).hit_units)) * math.max(1 + (self:GetCaster():FindTalentValue("special_bonus_imba_grimstroke_stroke_of_fate_damage") * 0.01), 1),
 			damage_type		= self:GetAbilityDamageType(),
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self:GetCaster(),

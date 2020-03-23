@@ -92,7 +92,7 @@ end
 function modifier_imba_stalker_in_the_night:IsHidden() return false end
 function modifier_imba_stalker_in_the_night:IsPurgable() return false end
 function modifier_imba_stalker_in_the_night:IsDebuff() return false end
-function modifier_imba_stalker_in_the_night:IsPermanent() return true end
+function modifier_imba_stalker_in_the_night:RemoveOnDeath() return false end
 
 function modifier_imba_stalker_in_the_night:DeclareFunctions()
 	return {--MODIFIER_PROPERTY_BONUS_DAY_VISION, 

@@ -1167,8 +1167,7 @@ end
 
 function modifier_imba_frost_armor_auto_cast:IsHidden() return true end
 function modifier_imba_frost_armor_auto_cast:IsPurgable() return false end
-function modifier_imba_frost_armor_auto_cast:IsDebuff() return false end
-function modifier_imba_frost_armor_auto_cast:IsPermanent() return true end
+function modifier_imba_frost_armor_auto_cast:RemoveOnDeath() return false end
 
 
 -----------------------------------

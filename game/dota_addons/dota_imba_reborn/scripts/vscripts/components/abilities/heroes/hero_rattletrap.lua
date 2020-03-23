@@ -243,11 +243,9 @@ function modifier_imba_rattletrap_battery_assault_percussive_maint:OnCreated()
 end
 
 function modifier_imba_rattletrap_battery_assault_percussive_maint:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
     }
-
-    return decFuncs
 end
 
 function modifier_imba_rattletrap_battery_assault_percussive_maint:OnAttackLanded(keys)
@@ -255,10 +253,10 @@ function modifier_imba_rattletrap_battery_assault_percussive_maint:OnAttackLande
 
 	if keys.target == self:GetParent() then
 		if (not self:GetAbility() or not self:GetAbility():GetAutoCastState()) then
-			if RollPercentage(self.percussive_maint_base_chance) then
+			if RollPseudoRandom(self.percussive_maint_base_chance, self) then
 				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault", {duration = FrameTime()})
 			end
-		elseif RollPercentage(self.percussive_maint_frag_chance) then
+		elseif RollPseudoRandom(self.percussive_maint_frag_chance, self) then
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault", {duration = FrameTime()})
 		end
 	end

@@ -116,10 +116,9 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_greater_crit_buff == nil then modifier_item_imba_greater_crit_buff = class({}) end
-function modifier_item_imba_greater_crit_buff:IsHidden() return false end
-function modifier_item_imba_greater_crit_buff:IsDebuff() return false end
-function modifier_item_imba_greater_crit_buff:IsPurgable() return false end
-function modifier_item_imba_greater_crit_buff:IsPermanent() return true end
+function modifier_item_imba_greater_crit_buff:IsHidden()		return false end
+function modifier_item_imba_greater_crit_buff:IsPurgable()		return false end
+function modifier_item_imba_greater_crit_buff:RemoveOnDeath()	return false end
 
 function modifier_item_imba_greater_crit_buff:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
@@ -154,7 +153,11 @@ function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrik
 end
 
 function modifier_item_imba_greater_crit_buff:OnAttackLanded(keys)
-	if keys.attacker == self:GetParent() and not self.bCrit and keys.original_damage > 0 then
-		self:SetStackCount(self:GetStackCount() + (self.crit_increase * #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit")))
+	if self:GetAbility() and keys.attacker == self:GetParent() and (keys.target and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
+		if not self.bCrit and keys.original_damage > 0 then
+			self:SetStackCount(self:GetStackCount() + (self.crit_increase * #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit")))
+		elseif self.bCrit then
+			keys.target:EmitSound("DOTA_Item.Daedelus.Crit")
+		end
 	end
 end

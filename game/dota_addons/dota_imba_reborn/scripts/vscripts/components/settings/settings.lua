@@ -592,9 +592,9 @@ UNIT_EQUIPMENT["npc_donator_companion_kiddo"] = {
 }
 
 IMBA_DISABLED_SKULL_BASHER = {
-	"npc_dota_hero_faceless_void",
-	"npc_dota_hero_slardar",
-	"npc_dota_hero_spirit_breaker"
+	["npc_dota_hero_faceless_void"] = true,
+	["npc_dota_hero_slardar"] = true,
+	["npc_dota_hero_spirit_breaker"] = true
 }
 
 IMBA_MODIFIER_IGNORE_FRANTIC = {

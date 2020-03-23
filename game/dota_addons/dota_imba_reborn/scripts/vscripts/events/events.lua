@@ -925,67 +925,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" then
-							ability_set = {
-								[0] = "imba_windranger_shackleshot",
-								[1] = "imba_windranger_powershot",
-								[2] = "imba_windranger_windrun",
-								[3] = "imba_windranger_advancement",
-								[4] = "imba_windranger_focusfire_vanilla_enhancer",
-								-- [5] = "imba_windranger_focusfire",
-								[5] = "windrunner_focusfire",
-								[6] = "special_bonus_mp_regen_4",
-								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
-								[8] = "special_bonus_imba_windranger_powershot_damage",
-								[9] = "special_bonus_attack_range_125",
-								[10] = "special_bonus_imba_windranger_windrun_invisibility",
-								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
-								[12] = "special_bonus_unique_windranger_8",
-								[13] = "special_bonus_cooldown_reduction_30",
-							}
-							upgraded = true
-						elseif string.find(text, 'templar') and hero:GetName() == "npc_dota_hero_templar_assassin" then
-							ability_set = {
-								[0] = "imba_templar_assassin_refraction",
-								[1] = "imba_templar_assassin_meld",
-								[2] = "imba_templar_assassin_psi_blades",
-								[3] = "imba_templar_assassin_trap",
-								[4] = "imba_templar_assassin_trap_teleport",
-								[5] = "imba_templar_assassin_psionic_trap",
-								[6] = "special_bonus_attack_speed_25",
-								[7] = "special_bonus_evasion_15",
-								[8] = "special_bonus_movement_speed_25",
-								[9] = "special_bonus_imba_templar_assassin_psionic_trap_damage",
-								[10] = "special_bonus_imba_templar_assassin_meld_dispels",
-								[11] = "special_bonus_imba_templar_assassin_meld_armor_reduction",
-								[12] = "special_bonus_imba_templar_assassin_meld_bash",
-								[13] = "special_bonus_imba_templar_assassin_refraction_instances"
-							}
-							upgraded = true
-						elseif string.find(text, 'slark') and hero:GetName() == "npc_dota_hero_slark" then
-							ability_set = {
-								[0] = "imba_slark_dark_pact",
-								[1] = "imba_slark_pounce",
-								[2] = "imba_slark_essence_shift",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_slark_shadow_dance",
-								[6] = "special_bonus_strength_10",
-								[7] = "special_bonus_agility_6",
-								[8] = "special_bonus_attack_speed_30",
-								[9] = "special_bonus_lifesteal_20",
-								[10] = "special_bonus_imba_slark_pounce_duration",
-								[11] = "special_bonus_imba_slark_dark_pact_damage",
-								[12] = "special_bonus_imba_slark_shadow_dance_duration",
-								[13] = "special_bonus_imba_slark_essence_shift_duration"
-							}
-							upgraded = true
-						elseif string.find(text, 'furion') and hero:GetName() == "npc_dota_hero_furion" then
-							ability_set = {
-								[5] = "imba_furion_wrath_of_nature",
-								[9] = "special_bonus_imba_furion_wrath_of_nature_boost",
-							}
-							upgraded = true
 						elseif string.find(text, 'brewmaster') and hero:GetName() == "npc_dota_hero_brewmaster" then
 							ability_set = {
 								[0] = "imba_brewmaster_thunder_clap",
@@ -1226,6 +1165,28 @@ function GameMode:OnPlayerChat(keys)
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
 				FindClearSpaceForUnit(caster, pos, false)
+			elseif str == "-addability" then
+				-- Mostly for vanilla ability testing
+			
+				-- Example: -addability 0:axe_berserkers_call
+			
+				text = string.gsub(text, str, "")
+				
+				local id = string.match(text, '%d+')
+				local ability_name = string.match(text, ":(.*)")
+				
+				if (type(tonumber(id)) == "number" and PlayerResource:GetPlayer(tonumber(id)) and PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero()) then
+					local new_ability = PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():AddAbility(ability_name)
+					
+					if new_ability and ability_name then
+						for index = 3, 4 do
+							if PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():GetAbilityByIndex(index):GetName() == "generic_hidden" then
+								PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():SwapAbilities(ability_name, "generic_hidden", true, false)
+								break
+							end
+						end
+					end
+				end
 			end
 		end
 	end
