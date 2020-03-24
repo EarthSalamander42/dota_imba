@@ -54,7 +54,7 @@
 				"damage"					"140 210 280 350"
 				//"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_grimstroke_stroke_of_fate_damage"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
 			}
 			"05"
 			{
@@ -62,7 +62,7 @@
 				"bonus_damage_per_target"	"24 36 48 60"
 				//"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_grimstroke_stroke_of_fate_damage"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
 			}
 			"06"
 			{

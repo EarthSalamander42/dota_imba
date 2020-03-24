@@ -27,8 +27,6 @@ function item_imba_witchblade:GetCooldown(level)
 end
 
 function item_imba_witchblade:OnSpellStart()
-	self:GetCaster()		= self:GetCaster()
-	
 	-- AbilitySpecials
 	self.bonus_agility							= self:GetSpecialValueFor("bonus_agility")
 	self.bonus_intellect						= self:GetSpecialValueFor("bonus_intellect")
@@ -144,8 +142,6 @@ end
 
 function modifier_item_imba_witchblade_slow:OnCreated()
 	self.ability	= self:GetAbility()
-	self:GetCaster()		= self:GetCaster()
-	self:GetParent()		= self:GetParent()
 	
 	if not self.ability then return end
 	

@@ -284,15 +284,13 @@
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_spell_power"		"%+Spell Amplification"
 
 // Daedalus
-"DOTA_Tooltip_Ability_item_imba_greater_crit"                  "Daedalus"
-"DOTA_Tooltip_ability_item_imba_greater_crit_Description"                   "<h1>Passive: Fairy-todo Kyanon</h1> Grants a chance to deal critical damage on your attacks.\n<h1><font color='#FF7800'>Passive: Power Overwhelming</font></h1> Every time your attacks do not crit, your critical hit multiplier increases by %crit_increase%%%. This bonus resets after you crit once. "
-"DOTA_Tooltip_ability_item_imba_greater_crit_Lore"              "A weapon of incredible power that is difficult for even the strongest of warriors to control."
-"DOTA_Tooltip_ability_item_imba_greater_crit_crit_chance"                   "%CRITICAL CHANCE:"
-"DOTA_Tooltip_ability_item_imba_greater_crit_base_crit_tooltip"             "%BASE CRITICAL DAMAGE:"
-"DOTA_Tooltip_ability_item_imba_greater_crit_bonus_damage"                  "+$damage"
+"DOTA_Tooltip_Ability_item_imba_greater_crit"					"Daedalus"
+"DOTA_Tooltip_ability_item_imba_greater_crit_Description"		"<h1>Passive: Critical Strike</h1>Grants each attack a %crit_chance%%% chance to deal %crit_multiplier%%% damage.\n<h1><font color='#FF7800'>Passive: Power Overwhelming</font></h1> Every time your attacks do not crit, your critical hit multiplier increases by %crit_increase%%%. This bonus resets after you crit once. "
+"DOTA_Tooltip_ability_item_imba_greater_crit_Lore"				"A weapon of incredible power that is difficult for even the strongest of warriors to control."
+"DOTA_Tooltip_ability_item_imba_greater_crit_bonus_damage"		"+$damage"
 
-"DOTA_Tooltip_modifier_item_imba_greater_crit_buff"            "Power Overwhelming"
-"DOTA_Tooltip_modifier_item_imba_greater_crit_buff_Description"             "Next critical hit will deal increased damage."
+"DOTA_Tooltip_modifier_item_imba_greater_crit_buff"					"Power Overwhelming"
+"DOTA_Tooltip_modifier_item_imba_greater_crit_buff_Description"		"Next critical hit will deal increased damage."
 
 // Dagon 6-9, // Boomstick
 "DOTA_Tooltip_Ability_item_imba_dagon_6"                        "Dagon 6"
